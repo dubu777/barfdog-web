@@ -12,6 +12,6 @@ export const bottomNavBarContainer = style({
   maxWidth: '600px',
   margin: '0 auto',
   height: '66px',
-  backgroundColor: 'white', // 레이아웃 확인용 임시 색상
+  backgroundColor: 'black', // 레이아웃 확인용 임시 색상
   zIndex: 20,
 });
