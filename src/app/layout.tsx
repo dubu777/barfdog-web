@@ -2,6 +2,7 @@ import "@/styles/reset.css";
 import "@/styles/global.css";
 import { themeClass } from "@/styles/theme.css";
 import { Metadata } from "next";
+import { rootLayoutContainer } from "@/styles/common.css";
 
 export const metadata: Metadata = {
   title: "바프독 | BARFDOG",
@@ -18,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={themeClass}>
-      <body>{children}</body>
+      <body>
+        {children}
+      </body>
     </html>
   );
 }
