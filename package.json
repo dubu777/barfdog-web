@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "NODE_ENV=development next dev -p 4000",
+    "build": "GENERATE_SOURCEMAP=false NODE_ENV='production' next build",
+    "start": "next start -p 4000",
+    "lint": "next lint",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.59.0",
