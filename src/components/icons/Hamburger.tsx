@@ -1,0 +1,12 @@
+import * as React from "react";
+import { SVGProps } from "react";
+
+const Hamburger = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="18" height="18" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M1 1H17" stroke={props.stroke} strokeWidth="1.7" strokeLinecap="round" />
+    <path d="M1 10H17" stroke={props.stroke} strokeWidth="1.7" strokeLinecap="round" />
+    <path d="M1 19H17" stroke={props.stroke} strokeWidth="1.7" strokeLinecap="round" />
+  </svg>
+);
+
+export default Hamburger;

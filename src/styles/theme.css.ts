@@ -3,13 +3,15 @@ import { createTheme } from "@vanilla-extract/css";
 // 예시 코드 - 추후 수정 
 export const [themeClass, themeVars] = createTheme({
   fontSize: {
-    xs: '0.6rem',
-    s: '0.875rem',
-    m: '1rem',
-    l: '1.25rem',
-    xl: '1.5rem',
-    xxl: '1.75rem',
-    heading: '2rem',
+    'title-xl': '26px',
+    'title-lg': '24px',
+    'title-md': '22px',
+    'text-xl': '20px',
+    'text-lg': '18px',
+    'text-md': '16px',
+    'text-sm': '14px',
+    'text-xs': '12px',
+    'text-2xs': '10px',
   },
   colors: {
     white: '#ffffff',
