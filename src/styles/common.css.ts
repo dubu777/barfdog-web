@@ -11,8 +11,3 @@ export const commonLayoutContainer = style({
   margin: '0 auto',
   backgroundColor: themeVars.colors.white,
 });
-
-
-export const rootLayoutContainer = style({
-  height: '100%',
-})

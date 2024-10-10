@@ -1,3 +1,4 @@
+import { themeClass } from "@/styles/theme.css";
 import {ReactNode} from "react";
 
 interface SurveyLayoutProps { 
@@ -5,7 +6,7 @@ interface SurveyLayoutProps {
 }
 export default function SurveyLayout({children}: SurveyLayoutProps) {
   return (
-    <div>
+    <div className={themeClass}>
       {children}
     </div>
   )

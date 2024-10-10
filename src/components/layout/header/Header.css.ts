@@ -40,3 +40,6 @@ export const headerMenuWrapper = style({
   gap: '19px',
   alignItems: 'center',
 });
+export const backButton = style({
+  cursor: 'pointer',
+});

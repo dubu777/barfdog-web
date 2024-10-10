@@ -4,7 +4,6 @@ import { themeClass } from "@/styles/theme.css";
 import { Metadata } from "next";
 import {
   commonLayoutContainer,
-  rootLayoutContainer,
 } from "@/styles/common.css";
 
 export const metadata: Metadata = {

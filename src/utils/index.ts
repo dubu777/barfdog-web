@@ -1,1 +1,1 @@
-// index.ts
+export * from './navigation';
