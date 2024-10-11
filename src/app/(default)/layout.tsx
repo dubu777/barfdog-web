@@ -1,6 +1,6 @@
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
-import { commonLayoutContainer } from "@/styles/common.css";
+// import { commonLayoutContainer } from "@/styles/common.css";
 import { ReactNode } from "react";
 
 interface DefaultLayoutProps {
