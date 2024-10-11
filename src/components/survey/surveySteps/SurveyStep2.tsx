@@ -2,8 +2,9 @@ import DefaultTextField from "@/components/common/defaultTextField/DefaultTextFi
 import * as styles from "./SurveySteps.css";
 import { SurveyFormData } from "@/types/survey";
 import { BASIC_INFO } from "@/constants";
+import RadioButtonList from "../radioButtonList/RadioButtonList";
 
-interface SurveyStep1Props {
+interface SurveyStep2Props {
   formData: SurveyFormData;
   handleChange: <K extends keyof SurveyFormData>(
     key: K,
@@ -14,11 +15,20 @@ interface SurveyStep1Props {
 export default function SurveyStep2({
   formData,
   handleChange,
-}: SurveyStep1Props) {
-
+}: SurveyStep2Props) {
+  
   return (
     <>
-      
+      <RadioButtonList
+        options={BASIC_INFO.gender.options}
+        name={BASIC_INFO.gender.name}
+        title={BASIC_INFO.gender.title}
+        selectedValue={formData.gender}
+        petName={formData.name}
+        onChange={(value) =>
+          handleChange(BASIC_INFO.gender.name, value as string)
+        }
+      />
     </>
   );
 }

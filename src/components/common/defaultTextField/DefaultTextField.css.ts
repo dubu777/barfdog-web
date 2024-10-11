@@ -26,7 +26,6 @@ export const textInputWrapper = style({
     },
     "&:focus-within": {
       borderColor: themeVars.borderColors.redAF,
-      boxShadow: `0 0 3px 1px rgba(186, 54, 60, 0.4)`,
     },
   },
 });

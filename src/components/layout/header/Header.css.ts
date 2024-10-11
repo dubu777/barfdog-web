@@ -10,6 +10,8 @@ export const headerContainer = recipe({
     margin: '0 auto',
     height: '62px',
     zIndex: 20,
+    display: 'flex',
+    alignItems: 'center',
   },
   variants: {
     type: {
@@ -32,7 +34,9 @@ export const headerContainer = recipe({
 export const headerWrapper = style({
   display: 'flex',
   justifyContent: 'space-between',
-  padding: '20px 18px',
+  alignItems: 'center',
+  padding: '0 20px',
+  width: '100%',
 });
 
 export const headerMenuWrapper = style({

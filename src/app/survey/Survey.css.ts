@@ -13,3 +13,8 @@ export const surveyContainer = style({
 export const surveyLayoutContainer = style({
   height: '100%',
 });
+
+export const surveyTitle = style({
+  fontSize: themeVars.fontSize["title-md"],
+  paddingBottom: "35px",
+});

@@ -23,28 +23,26 @@ const BASIC_INFO = {
     id: "name",
     name: "name",
     placeholder: "이름을 입력해주세요",
-    title: "반려견 이름",
+    title: "반려견 이름이 무엇인가요?",
   },
   gender: {
-    title: "반려견 성별",
+    title: "성별은 무엇인가요?",
     name: "gender",
     options: [
       { id: "gender-MALE", value: "MALE", label: "수컷" },
       { id: "gender-FEMALE", value: "FEMALE", label: "암컷" },
     ],
   },
-  birth: {
-    title: "반려견 출생년월",
-  },
-  oldDog: {
-    name: "oldDog",
-    options: {
-      id: "oldDog",
-      label: "노령견입니다.",
-    },
+  neutralization: {
+    title: "중성화 여부를 알려주세요",
+    name: "neutralization",
+    options: [
+      { id: "neutralization했습니다", value: true, label: "했습니다" },
+      { id: "neutralization안했습니다", value: false, label: "안했습니다" },
+    ],
   },
   dogSize: {
-    title: "반려견 크기",
+    title: "견종은 무엇인가요?",
     name: "dogSize",
     options: [
       { id: "dogSize-SMALL", value: "SMALL", label: "소형견" },
@@ -279,21 +277,24 @@ const BASIC_INFO = {
       "아나톨리아 셰퍼드(캉갈)"
     ],
   },
+  birth: {
+    title: "의 생일은 언제인가요?",
+  },
+  oldDog: {
+    name: "oldDog",
+    options: {
+      id: "oldDog",
+      label: "노령견입니다.",
+    },
+  },
   weight: {
     id: "weight",
-    title: "반려견 몸무게",
+    title: "의 몸무게는 얼마인가요?",
     name: "weight",
     unit: "kg",
     placeholder: "00.0",
   },
-  neutralization: {
-    title: "중성화 여부",
-    name: "neutralization",
-    options: [
-      { id: "neutralization했습니다", value: true, label: "했습니다" },
-      { id: "neutralization안했습니다", value: false, label: "안했습니다" },
-    ],
-  },
+
 } as const;
 
 

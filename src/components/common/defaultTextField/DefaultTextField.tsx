@@ -1,5 +1,6 @@
 'use client';
 
+import { surveyTitle } from '@/app/survey/Survey.css';
 import * as styles from './DefaultTextField.css';
 
 interface DefaultTextFieldProps {
@@ -27,7 +28,7 @@ export default function DefaultTextField({
 
   return (
     <label htmlFor={id} className={styles.textFieldContainer}>
-      {title && <h2 className={styles.surveyTitle}>{title}</h2>}
+      {title && <h2 className={surveyTitle}>{title}</h2>}
         <div className={styles.textInputWrapper}>
           <input
             className={styles.textInput}
