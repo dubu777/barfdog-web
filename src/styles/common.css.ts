@@ -7,7 +7,7 @@ export const commonLayoutContainer = style({
   width: '100%',
   minWidth: '320px',
   maxWidth: '600px',
-  minHeight: '100%',
+  height: '100%',
   margin: '0 auto',
   backgroundColor: themeVars.colors.white,
 });
