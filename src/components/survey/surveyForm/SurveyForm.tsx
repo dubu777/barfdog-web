@@ -6,6 +6,7 @@ import SurveyStep1 from "../surveySteps/SurveyStep1";
 import SurveyStep2 from "../surveySteps/SurveyStep2";
 import useStep from "@/hooks/useStep";
 import { sectionVariants } from "@/constants/motion";
+import SurveyPagination from "../surveyPagination/SurveyPagination";
 
 interface SurveyFormProps {
   formData: SurveyFormData;
@@ -48,14 +49,12 @@ console.log(formData);
           {steps[currentStep]}
         </motion.div>
       </AnimatePresence>
-      <div>
-        {!isFirstStep && <button onClick={handlePrevStep}>이전</button>}
-        {!isLastStep ? (
-          <button onClick={handleNextStep}>다음</button>
-        ) : (
-          <button>제출</button>
-        )}
-      </div>
+      <SurveyPagination 
+          handleNextStep={handleNextStep}
+          handlePrevStep={handlePrevStep}
+          isLastStep={isLastStep}
+          isFirstStep={isFirstStep}
+      />
     </div>
   );
 }
