@@ -2,6 +2,15 @@ import { createTheme } from "@vanilla-extract/css";
 
 // 예시 코드 - 추후 수정 
 export const [themeClass, themeVars] = createTheme({
+  height: {
+    innerHeight: 'calc(100vh - 140px)',
+  },
+  fontWeight: {
+    light: 400,
+    normal: 500,
+    semibold: 600,
+    bold: 700,
+  },
   fontSize: {
     'title-xl': '26px',
     'title-lg': '24px',
@@ -19,7 +28,7 @@ export const [themeClass, themeVars] = createTheme({
     mainRed: '#BE1A21',
     red: '#CA1010',
   },
-  fonColors: {
+  fontColors: {
     yellow: '#faff00',
     darkRed: '#AF3D3D',
     black: '#0E1108',

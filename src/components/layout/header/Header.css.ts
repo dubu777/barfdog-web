@@ -8,7 +8,7 @@ export const headerContainer = recipe({
     minWidth: '320px',
     maxWidth: '600px',
     margin: '0 auto',
-    height: '62px',
+    // height: '62px',
     zIndex: 20,
   },
   variants: {
