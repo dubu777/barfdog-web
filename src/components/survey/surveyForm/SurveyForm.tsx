@@ -1,43 +1,25 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { SurveyFormData } from "@/types/survey";
-import SurveyStep1 from "../surveySteps/SurveyStep1";
-import SurveyStep2 from "../surveySteps/SurveyStep2";
-import useStep from "@/hooks/useStep";
 import { sectionVariants } from "@/constants/motion";
-import SurveyPagination from "../surveyPagination/SurveyPagination";
+import * as styles from "./SurveyForm.css";
+import { ReactNode } from "react";
+
 
 interface SurveyFormProps {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
+  currentStep: number;
+  direction: number;
+  steps: ReactNode[];
 }
 
 export default function SurveyForm({
-  formData,
-  handleChange,
+  currentStep,
+  direction,
+  steps,
 }: SurveyFormProps) {
-  const steps = [
-    <SurveyStep1 formData={formData} handleChange={handleChange} />,
-    <SurveyStep2 formData={formData} handleChange={handleChange} />,
-  ];
-console.log(formData);
-
-  const {
-    currentStep,
-    handleNextStep,
-    handlePrevStep,
-    direction,
-    isLastStep,
-    isFirstStep,
-  } = useStep(steps.length);
 
   return (
-    // 테스트용 스타일
-    <div style={{ display: "flex", gap: "20px", flexDirection: "column" }}>
+    <div className={styles.surveyFormContainer}>
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentStep}
@@ -49,12 +31,6 @@ console.log(formData);
           {steps[currentStep]}
         </motion.div>
       </AnimatePresence>
-      <SurveyPagination 
-          handleNextStep={handleNextStep}
-          handlePrevStep={handlePrevStep}
-          isLastStep={isLastStep}
-          isFirstStep={isFirstStep}
-      />
     </div>
   );
 }

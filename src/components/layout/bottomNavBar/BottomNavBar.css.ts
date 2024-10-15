@@ -14,7 +14,7 @@ export const bottomNavBarContainer = style({
   margin: "0 auto",
   height: "66px",
   padding: '40px 10px',
-  zIndex: 20,
+  zIndex: 10,
 });
 
 export const bottomNavBarWrapper = style({

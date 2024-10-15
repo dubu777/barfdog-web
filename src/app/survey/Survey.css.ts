@@ -1,20 +1,18 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const surveyContainer = style({
+export const surveyLayoutContainer = style({
+  height: '100%',
+  width: '100%',
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  height: '100%',
-  padding: '32px 25px 0 25px',
-  backgroundColor: themeVars.backgroundColors.pinkFa,
+  justifyContent: 'center',
 });
 
-export const surveyLayoutContainer = style({
-  height: '100%',
-});
 
 export const surveyTitle = style({
-  fontSize: themeVars.fontSize["title-md"],
+  fontSize: themeVars.fontSize["title-sm"],
   paddingBottom: "35px",
 });
