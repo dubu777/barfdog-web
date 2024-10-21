@@ -35,7 +35,8 @@ export default function SurveyStep4({
           selectedValue={formData.dogType}
           options={BASIC_INFO.dogType.options}
           onChange={(value) => handleChange(BASIC_INFO.dogType.name, value)}
-          placeholder={BASIC_INFO.dogType.placeholder}
+          placeholder1={BASIC_INFO.dogType.placeholder1}
+          placeholder2={BASIC_INFO.dogType.placeholder2}
         />
     </div>
   );

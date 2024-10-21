@@ -7,14 +7,16 @@ import { expandFromTopVariants } from "@/constants";
 interface SearchableSelectProps {
   options: readonly string[];
   selectedValue: string;
-  placeholder: string;
+  placeholder1: string;
+  placeholder2: string;
   onChange: (value: string) => void;
 }
 
 export default function SearchableSelectBox({
   options,
   selectedValue,
-  placeholder,
+  placeholder1,
+  placeholder2,
   onChange,
 }: SearchableSelectProps ) {
   const { isOpen, onToggle, onClose, ref } = useModal();
@@ -36,7 +38,7 @@ export default function SearchableSelectBox({
   return (
     <div className={styles.selectWrapper} ref={ref}>
       <div className={styles.viewer} onClick={onToggle}>
-        {selectedValue || placeholder}
+        {selectedValue || placeholder1}
       </div>
       <AnimatePresence>
         {isOpen && (
@@ -50,7 +52,7 @@ export default function SearchableSelectBox({
           >
             <input
               type="text"
-              placeholder={placeholder}
+              placeholder={placeholder2}
               value={searchTerm}
               onChange={handleSearchChange}
               className={styles.inputStyle}

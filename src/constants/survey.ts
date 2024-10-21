@@ -53,7 +53,8 @@ const BASIC_INFO = {
   dogType: {
     title: "견종선택",
     name: "dogType",
-    placeholder: "견종을 선택해주세요.",
+    placeholder1: "견종을 선택해주세요.",
+    placeholder2: "견종을 입력해주세요.",
     options: [
       "품종 모름",
       "믹스",

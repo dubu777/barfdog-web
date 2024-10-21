@@ -3,22 +3,23 @@ import { themeVars } from '@/styles/theme.css';
 
 export const selectWrapper = style({
   position: 'relative',
-  width: '22.5rem',
+  width: '100%',
   minWidth: '12.5rem',
 });
 
 export const viewer = style({
   cursor: 'pointer',
   width: '100%',
-  backgroundColor: themeVars.backgroundColors.greyF7,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   borderRadius: '0.6rem',
   height: '3.125rem',
   marginBottom: '.25rem',
+  backgroundColor: themeVars.backgroundColors.white,
+  border: `1px solid ${themeVars.borderColors.greyDD}`,
   fontSize: themeVars.fontSize['text-md'],
-  boxShadow: 'inset 0px 0px 4px 0px rgba(0, 0, 0, 0.1)',
+  color: themeVars.fonColors.grey89,
 });
 
 export const optionsContainer = style({
@@ -26,7 +27,7 @@ export const optionsContainer = style({
   left: '50%',
   bottom: '0',
   transform: 'translate(-50%, 100%)',
-  width: '22.5rem',
+  width: '100%',
   height: '12.5rem',
   margin: 'auto',
   overflow: 'hidden',
