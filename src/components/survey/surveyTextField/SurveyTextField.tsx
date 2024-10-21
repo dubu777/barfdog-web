@@ -1,7 +1,7 @@
 'use client';
 
 import { surveyTitle } from '@/app/survey/Survey.css';
-import * as styles from './DefaultTextField.css';
+import * as styles from './SurveyTextField.css';
 
 interface DefaultTextFieldProps {
   id: string;
@@ -13,7 +13,7 @@ interface DefaultTextFieldProps {
   placeholder?: string;
 }
 
-export default function DefaultTextField({
+export default function SurveyTextField({
   id,
   name,
   value,

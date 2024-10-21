@@ -10,4 +10,6 @@ export const commonLayoutContainer = style({
   height: '100%',
   margin: '0 auto',
   backgroundColor: themeVars.colors.white,
+  borderRight: `1px solid ${themeVars.borderColors.greyED}`,
+  borderLeft: `1px solid ${themeVars.borderColors.greyED}`,
 });

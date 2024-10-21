@@ -48,8 +48,3 @@ export const textInput = style({
 export const unitStyle = style({
   color: themeVars.colors.mainRed
 });
-
-export const surveyTitle = style({
-  fontSize: themeVars.fontSize["title-md"],
-  paddingBottom: "35px",
-});

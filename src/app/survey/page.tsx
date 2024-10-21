@@ -34,6 +34,8 @@ export default function SurveyPage() {
         handlePrevStep={handlePrevStep}
         isLastStep={isLastStep}
         isFirstStep={isFirstStep}
+        currentStep={currentStep}
+        stepLength={steps.length}
       />
     </>
   );

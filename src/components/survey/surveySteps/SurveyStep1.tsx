@@ -1,4 +1,4 @@
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
+import DefaultTextField from "@/components/survey/surveyTextField/SurveyTextField";
 import * as styles from "./SurveySteps.css";
 import { SurveyFormData } from "@/types/survey";
 import { BASIC_INFO } from "@/constants";
@@ -17,7 +17,6 @@ export default function SurveyStep1({
 }: SurveyStep1Props) {
 
   return (
-    <>
       <DefaultTextField
         id={BASIC_INFO.name.id}
         title={BASIC_INFO.name.title}
@@ -26,6 +25,5 @@ export default function SurveyStep1({
         placeholder={BASIC_INFO.name.placeholder}
         onChange={(value) => handleChange(BASIC_INFO.name.name, value)}
       />
-    </>
   );
 }

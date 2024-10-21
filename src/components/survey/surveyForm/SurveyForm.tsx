@@ -27,6 +27,7 @@ export default function SurveyForm({
           initial={direction === 1 ? "hiddenRight" : "hiddenLeft"}
           animate="visible"
           custom={direction}
+          className={styles.surveyFormContainer}
         >
           {steps[currentStep]}
         </motion.div>

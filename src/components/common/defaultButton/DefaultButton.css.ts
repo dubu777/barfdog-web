@@ -8,7 +8,7 @@ export const defaultButtonStyle = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
+    transition: 'background-color 0.3s ease, opacity 0.3s ease',
     padding: '0 16px',
   },
   variants: {
@@ -26,7 +26,7 @@ export const defaultButtonStyle = recipe({
       black: {
         border: 'none',
         backgroundColor: themeVars.backgroundColors.black,
-        color: themeVars.fonColors.black,
+        color: themeVars.fonColors.white,
       },
       mainBorder: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
@@ -50,21 +50,31 @@ export const defaultButtonStyle = recipe({
       md: { fontSize: '16px', height: '40px', width: '100%' },
       lg: { fontSize: '16px', height: '45px', width: '100%' },
       xl: { fontSize: '20px', height: '50px', width: '100%' },
+      xxl: { fontSize: '20px', height: '54px', width: '100%' },
     },
     borderRadius: {
       sm: { borderRadius: '3px' },
       md: { borderRadius: '15.5px' },
       lg: { borderRadius: '22.5px' },
-      circle: { borderRadius: '50%' },
     },
-    bold: {
+    isBold: {
       true: { fontWeight: 700 },
       false: { fontWeight: 400 },
     },
-    disabled: {
+    isDisabled: {
       true: {
         cursor: 'not-allowed',
         opacity: 0.5,
+      },
+      false: {
+        cursor: 'pointer',
+        opacity: 1,
+      },
+    },
+    isHidden: {
+      true: {
+        cursor: 'default',
+        opacity: 0,
       },
       false: {
         cursor: 'pointer',
@@ -75,8 +85,8 @@ export const defaultButtonStyle = recipe({
   defaultVariants: {
     size: 'md',
     borderRadius: 'md',
-    bold: false,
-    disabled: false,
+    isBold: false,
+    isDisabled: false,
   },
 });
 

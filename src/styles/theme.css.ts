@@ -59,6 +59,7 @@ export const [themeClass, themeVars] = createTheme({
     grey7E: '#7E7E7E',
     greyDD: '#DDD',
     greyBB: '#BBBBBB',
+    greyED: '#EDEDED',
     black: '#0E1108',
   },
   buttonColors: {

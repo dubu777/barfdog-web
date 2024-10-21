@@ -1,7 +1,18 @@
+import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const radioButtonListContainer = recipe({
+export const surveyButtonListContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  width: '100%',
+})
+
+
+
+export const surveyButtonListWrapper = recipe({
   base: {
+    width: '100%',
   },
   variants: {
     type: {
@@ -15,7 +26,6 @@ export const radioButtonListContainer = recipe({
         flexDirection: 'column',
         justifyContent: 'center',
         gap: '19px',
-        padding: '0 3.75rem',
       },
       grid: {
         display: 'grid',

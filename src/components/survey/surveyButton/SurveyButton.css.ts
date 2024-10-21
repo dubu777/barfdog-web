@@ -2,14 +2,6 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const radioButtonContainer = style({
-  display: "flex",
-  flexDirection: 'column',
-  minWidth: '200px',
-});
-export const hiddenInputStyle = style({
-  display: 'none',
-});
 
 export const buttonStyle = recipe({
   base: {
@@ -39,8 +31,20 @@ export const buttonStyle = recipe({
         backgroundColor: themeVars.colors.white,
       },
     },
+    type: {
+      col: {
+        minWidth: '200px',
+      },
+      row: {
+        width: '100%',
+      },
+      grid: {
+
+      },
+    },
   },
   defaultVariants: {
     checked: false,
+    type: 'col',
   },
 });
