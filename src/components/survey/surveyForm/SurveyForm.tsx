@@ -22,12 +22,12 @@ export default function SurveyForm({
     <div className={styles.surveyFormContainer}>
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
+          className={styles.surveyFormWrapper}
           key={currentStep}
           variants={sectionVariants}
           initial={direction === 1 ? "hiddenRight" : "hiddenLeft"}
           animate="visible"
           custom={direction}
-          className={styles.surveyFormContainer}
         >
           {steps[currentStep]}
         </motion.div>

@@ -22,6 +22,8 @@ export default function SurveyPage() {
     isLastStep,
     isFirstStep,
   } = useStep(steps.length);
+  console.log(formData, 'form');
+  
   return (
     <>
       <Header type="redBackground" />

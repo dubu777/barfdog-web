@@ -1,5 +1,4 @@
 import { themeVars } from "@/styles/theme.css";
-import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 
@@ -9,9 +8,10 @@ export const buttonStyle = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
+    maxWidth: '200px',
     borderRadius: '9px',
     padding: '10px 20px',
-    border: `0.5px solid ${themeVars.borderColors.greyDD}`,
+    border: `1px solid ${themeVars.borderColors.greyDD}`,
     minHeight: '54px',
     fontSize: themeVars.fontSize["text-md"],
     transition: 'border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease',

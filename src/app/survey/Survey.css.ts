@@ -16,3 +16,9 @@ export const surveyTitle = style({
   fontSize: themeVars.fontSize["title-sm"],
   paddingBottom: "35px",
 });
+
+export const surveyInputWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: 'center',
+})

@@ -275,11 +275,18 @@ const BASIC_INFO = {
       "푸들(미니어처)",
       "푸들(스탠다드)",
       "푸들(토이)",
-      "아나톨리아 셰퍼드(캉갈)"
+      "아나톨리아 셰퍼드(캉갈)",
     ],
   },
   birth: {
-    title: "의 생일은 언제인가요?",
+    title: "출생일은 언제인가요?",
+  },
+  weight: {
+    id: "weight",
+    title: "몸무게는 얼마인가요?",
+    name: "weight",
+    unit: "kg",
+    placeholder: "몸무게를 입력해주세요",
   },
   oldDog: {
     name: "oldDog",
@@ -288,15 +295,59 @@ const BASIC_INFO = {
       label: "노령견입니다.",
     },
   },
-  weight: {
-    id: "weight",
-    title: "의 몸무게는 얼마인가요?",
-    name: "weight",
-    unit: "kg",
-    placeholder: "00.0",
-  },
-
 } as const;
 
+const ACTIVITY_INFO = {
+  dogStatus: {
+    title: "현재 상태는 어떤가요?",
+    name: "dogStatus",
+    options: [
+      { id: "dogStatus-HEALTHY", value: "HEALTHY", label: "건강해요" },
+      { id: "dogStatus-NEED_DIET", value: "NEED_DIET", label: "다이어트 필요" },
+      { id: "dogStatus-OBESITY", value: "OBESITY", label: "심각한 비만" },
+      { id: "dogStatus-PREGNANT", value: "PREGNANT", label: "임신한 상태" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+    ],
+  },
+  activityLevel: {
+    title: "활동량은 어떤가요?",
+    name: "activityLevel",
+    options: [
+      {
+        id: "activityLevel-VERY_MUCH",
+        value: "VERY_MUCH",
+        label: "매우 많아요",
+      },
+      { id: "activityLevel-MUCH", value: "MUCH", label: "많아요" },
+      { id: "activityLevel-NORMAL", value: "NORMAL", label: "보통" },
+      { id: "activityLevel-LITTLE", value: "LITTLE", label: "적어요" },
+      {
+        id: "activityLevel-VERY_LITTLE",
+        value: "VERY_LITTLE",
+        label: "매우 적어요",
+      },
+    ],
+  },
+  walkingCountPerWeek: {
+    title: "산책량은 어떤가요?",
+    id: "walkingCountPerWeek",
+    name: "walkingCountPerWeek",
+    frontWord: "주 평균",
+    placeholder: "횟수",
+    options: Array.from({ length: 7 }, (_, i) => `${i + 1}회`),
+  },
+  walkingTimePerOneTime: {
+    title: "일주일 산책 횟수",
+    id: "walkingTimePerOneTime",
+    name: "walkingTimePerOneTime",
+    frontWord: "1회 당",
+    placeholder: "시간",
+    options: Array.from({ length: 24 }, (_, i) => {
+      const hours = Math.floor(0.5 + i * 0.5);
+      const minutes = (0.5 + i * 0.5) % 1 === 0 ? "시간" : "시간 30분";
+      return `${hours}${minutes}`;
+    }),
+  }
+} as const;
 
-export {initialSurveyValue, BASIC_INFO}
+export { initialSurveyValue, BASIC_INFO, ACTIVITY_INFO };

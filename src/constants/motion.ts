@@ -11,10 +11,17 @@ const sectionVariants = {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 0.15,
+      duration: 0.25,
       ease: "easeInOut",
     },
   },
+  exit: {
+    x: 0,
+    opacity: 0,
+    transition: {
+      duration: 0.1,
+    },
+  }
 };
 
 const expandFromTopVariants = {

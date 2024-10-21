@@ -25,6 +25,7 @@ export const surveyButtonListWrapper = recipe({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'center',
         gap: '19px',
       },
       grid: {

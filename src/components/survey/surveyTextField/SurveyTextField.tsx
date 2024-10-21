@@ -2,6 +2,7 @@
 
 import { surveyTitle } from '@/app/survey/Survey.css';
 import * as styles from './SurveyTextField.css';
+import { getPetNameWithSuffix } from '@/utils';
 
 interface DefaultTextFieldProps {
   id: string;
@@ -11,6 +12,7 @@ interface DefaultTextFieldProps {
   title?: string;
   unit?: string;
   placeholder?: string;
+  petName?: string;
 }
 
 export default function SurveyTextField({
@@ -21,14 +23,19 @@ export default function SurveyTextField({
   title,
   unit,
   placeholder="",
+  petName,
 }: DefaultTextFieldProps) {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
 
+  const fullTitle = petName && title
+    ? getPetNameWithSuffix(petName, title) 
+    : title;
+  
   return (
     <label htmlFor={id} className={styles.textFieldContainer}>
-      {title && <h2 className={surveyTitle}>{title}</h2>}
+      <h2 className={surveyTitle}>{fullTitle}</h2>
         <div className={styles.textInputWrapper}>
           <input
             className={styles.textInput}

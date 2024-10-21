@@ -2,11 +2,13 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const textFieldContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "100%",
   cursor: "pointer",
-  width: '100%',
 });
-
-
 
 export const textInputWrapper = style({
   position: "relative",
@@ -14,9 +16,10 @@ export const textInputWrapper = style({
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-  height: '54px',
+  maxWidth: "300px",
+  height: "54px",
   borderRadius: "9px",
-  padding: '16px 19px',
+  padding: "16px 19px",
   border: `0.2px solid ${themeVars.borderColors.greyDD}`,
   backgroundColor: themeVars.colors.white,
   transition: "border-color 0.3s ease, box-shadow 0.3s ease",
@@ -34,7 +37,7 @@ export const textInput = style({
   position: "relative",
   display: "flex",
   alignItems: "center",
-  width: '100%',
+  width: "100%",
   fontSize: themeVars.fontSize["text-sm"],
   outline: "0",
   border: "0",
@@ -46,5 +49,5 @@ export const textInput = style({
 });
 
 export const unitStyle = style({
-  color: themeVars.colors.mainRed
+  color: themeVars.colors.mainRed,
 });
