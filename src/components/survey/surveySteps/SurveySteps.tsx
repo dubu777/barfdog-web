@@ -42,7 +42,6 @@ export const getSurveySteps = ({
   handleBlur,
   handleKeyDown,
 }: Props) => {
-  console.log("errr", errorMessages);
 
   return [
     <SurveyStep1
@@ -50,6 +49,7 @@ export const getSurveySteps = ({
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
+      errorMessages={errorMessages}
     />,
     <SurveyStep2 formData={formData} handleChange={handleChange} />,
     <SurveyStep3 formData={formData} handleChange={handleChange} />,

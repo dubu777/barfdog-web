@@ -7,9 +7,10 @@ import SurveyPagination from "@/components/survey/surveyPagination/SurveyPaginat
 import useStep from "@/hooks/useStep";
 import { getSurveySteps } from "@/components/survey/surveySteps/SurveySteps";
 import { useSurveyStore } from "@/store/useSurveyStore";
+import { StepProgressBar } from "@/components/survey/stepProgressBar/StepProgressBar";
 
 export default function SurveyPage() {
-  const {stepLength, canNextStep} = useSurveyStore()
+  const { stepLength, canNextStep } = useSurveyStore();
   const {
     currentStep,
     handleNextStep,
@@ -18,13 +19,8 @@ export default function SurveyPage() {
     isLastStep,
     isFirstStep,
   } = useStep(stepLength());
-  const {
-    formData,
-    errorMessages,
-    handleChange,
-    handleBlur,
-    handleKeyDown,
-  } = useForm(handleNextStep, currentStep);
+  const { formData, errorMessages, handleChange, handleBlur, handleKeyDown } =
+    useForm(handleNextStep, currentStep);
   const steps = getSurveySteps({
     formData,
     errorMessages,

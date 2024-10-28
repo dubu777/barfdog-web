@@ -30,7 +30,7 @@ export default function useForm(
     } else {
       setCanNextStep(false);
     }
-  }, [hasErrorMessages(stepKey), setCanNextStep, stepKey]);
+  }, [hasErrorMessages(stepKey), setCanNextStep, stepKey, formData]);
 
   // 폼 값 변경 처리 함수
   const handleChange = (
@@ -53,13 +53,22 @@ export default function useForm(
     if (
       key !== "name" &&
       key !== "weight" &&
+      key !== "priorityConcerns" &&
       !isMultiSelect &&
       !hasErrorMessages(stepKey)
     ) {
       handleNextStep();
     } else if (
+      key === "priorityConcerns" &&
+      formData["priorityConcerns"].length === 3 &&
+      isMultiSelect &&
+      !hasErrorMessages(stepKey)
+    ) {
+      setCanNextStep(true);
+    } else if (
       key !== "name" &&
       key !== "weight" &&
+      key !== "priorityConcerns" &&
       isMultiSelect &&
       !hasErrorMessages(stepKey)
     ) {

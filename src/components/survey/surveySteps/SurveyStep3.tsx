@@ -1,7 +1,6 @@
 import { SurveyFormData } from "@/types/survey";
 import { BASIC_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
-import { surveyValidation } from "@/utils";
 
 interface SurveyStep3Props {
   formData: SurveyFormData;

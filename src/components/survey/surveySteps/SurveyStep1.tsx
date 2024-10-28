@@ -1,6 +1,7 @@
 import { SurveyFormData } from "@/types/survey";
 import { BASIC_INFO } from "@/constants";
 import SurveyTextField from "@/components/survey/surveyTextField/SurveyTextField";
+import { ErrorValuesType } from "@/store/useSurveyStore";
 
 interface SurveyStep1Props {
   formData: SurveyFormData;
@@ -16,6 +17,7 @@ interface SurveyStep1Props {
     e: React.KeyboardEvent<HTMLInputElement>,
     key: keyof SurveyFormData
   ) => void;
+  errorMessages: ErrorValuesType,
 }
 
 export default function SurveyStep1({
@@ -23,9 +25,11 @@ export default function SurveyStep1({
   handleChange,
   handleBlur,
   handleKeyDown,
+  errorMessages,
 }: SurveyStep1Props) {
 
   return (
+    <>
       <SurveyTextField
         id={BASIC_INFO.name.id}
         title={BASIC_INFO.name.title}
@@ -36,5 +40,7 @@ export default function SurveyStep1({
         onBlur={(e) => handleBlur(e, BASIC_INFO.name.name)}
         onKeyDown={(e) => handleKeyDown(e, BASIC_INFO.name.name)} 
       />
+      <p>{errorMessages["step0"]["name"]}</p>
+    </>
   );
 }

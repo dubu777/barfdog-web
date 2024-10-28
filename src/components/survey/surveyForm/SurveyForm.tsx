@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { sectionVariants } from "@/constants/motion";
 import * as styles from "./SurveyForm.css";
 import { ReactNode } from "react";
+import { StepProgressBar } from "../stepProgressBar/StepProgressBar";
 
 
 interface SurveyFormProps {
@@ -20,6 +21,7 @@ export default function SurveyForm({
 
   return (
     <div className={styles.surveyFormContainer}>
+      <StepProgressBar currentStep={currentStep}/>
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           className={styles.surveyFormWrapper}

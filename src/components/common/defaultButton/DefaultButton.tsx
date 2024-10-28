@@ -25,7 +25,6 @@ export default function DefaultButton({
   isDisabled = false,
   isHidden = false,
 }: DefaultButtonProps) {
-  console.log(isDisabled, 'dddddddddddddd');
   
   return (
     <button
