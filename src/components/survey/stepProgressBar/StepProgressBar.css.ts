@@ -8,7 +8,7 @@ export const stepContainer = style({
   display: 'flex',
   justifyContent: 'center',
   gap: '100px',
-  color: themeVars.fonColors.mainRed,
+  color: themeVars.fontColors.mainRed,
   textAlign: 'center',
   position: 'relative',
   marginBottom: '50px',
@@ -69,10 +69,10 @@ export const stepNumber = recipe({
   variants: {
     active: {
       true: {
-        color: themeVars.fonColors.white
+        color: themeVars.fontColors.white
       },
       false: {
-        color: themeVars.fonColors.mainRed
+        color: themeVars.fontColors.mainRed
       },
     },
   },

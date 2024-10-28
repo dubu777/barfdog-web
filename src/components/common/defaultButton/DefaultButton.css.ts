@@ -20,12 +20,12 @@ export const defaultButtonStyle = recipe({
       white: {
         border: 'none',
         backgroundColor: themeVars.backgroundColors.white,
-        color: themeVars.fonColors.black,
+        color: themeVars.fontColors.black,
       },
       black: {
         border: 'none',
         backgroundColor: themeVars.backgroundColors.black,
-        color: themeVars.fonColors.white,
+        color: themeVars.fontColors.white,
       },
       mainBorder: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
@@ -35,7 +35,7 @@ export const defaultButtonStyle = recipe({
       grayBorder: {
         border: `1px solid ${themeVars.borderColors.greyBB}`,
         backgroundColor: themeVars.backgroundColors.white,
-        color: themeVars.fonColors.black,
+        color: themeVars.fontColors.black,
       },
       blackBorder: {
         border: `1px solid ${themeVars.borderColors.black}`,

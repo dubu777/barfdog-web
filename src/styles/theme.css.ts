@@ -20,7 +20,7 @@ export const [themeClass, themeVars] = createTheme({
     red: '#CA1010',
     black: '#0E1108',
   },
-  fonColors: {
+  fontColors: {
     white: '#ffffff',
     yellow: '#faff00',
     darkRed: '#AF3D3D',

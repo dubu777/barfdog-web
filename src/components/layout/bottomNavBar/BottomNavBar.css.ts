@@ -33,17 +33,17 @@ export const navItemWrapper = style({
 
 export const navText = recipe({
   base: {
-    color: themeVars.fonColors.black,
+    color: themeVars.fontColors.black,
     fontSize: themeVars.fontSize["text-xs"],
     marginTop: "5px",
   },
   variants: {
     active: {
       true: {
-        color: themeVars.fonColors.darkRed,
+        color: themeVars.fontColors.darkRed,
       },
       false: {
-        color: themeVars.fonColors.black,
+        color: themeVars.fontColors.black,
       },
     },
   },

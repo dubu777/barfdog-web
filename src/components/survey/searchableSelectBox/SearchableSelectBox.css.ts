@@ -19,7 +19,7 @@ export const viewer = style({
   backgroundColor: themeVars.backgroundColors.white,
   border: `1px solid ${themeVars.borderColors.greyDD}`,
   fontSize: themeVars.fontSize['text-md'],
-  color: themeVars.fonColors.grey89,
+  color: themeVars.fontColors.grey89,
 });
 
 export const optionsContainer = style({
