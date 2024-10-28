@@ -12,6 +12,7 @@ export const [themeClass, themeVars] = createTheme({
     bold: 700,
   },
   fontSize: {
+    'title-xxl': '28px',
     'title-xl': '26px',
     'title-lg': '24px',
     'title-md': '22px',
@@ -42,6 +43,7 @@ export const [themeClass, themeVars] = createTheme({
   },
   backgroundColors: {
     gradientPink: 'linear-gradient(146deg, rgba(255,255,255,0.1) 0%, rgba(202,16,16,0.2) 100%)',
+    darkOpacity: 'rgba(31, 31, 31, 0.5)',
     pinkF1: '#FFF1F1',
     pinkFa: '#FFFAFA',
     pinkFF: '#FFE0E1',
@@ -65,5 +67,5 @@ export const [themeClass, themeVars] = createTheme({
     greyAC: '#ACABAB',
     grey99: '#999999',
     grey7E: '#7E7E7E',
-  }
+  },
 });

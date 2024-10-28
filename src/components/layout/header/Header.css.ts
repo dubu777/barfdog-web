@@ -4,12 +4,10 @@ import { recipe } from '@vanilla-extract/recipes';
 
 export const headerContainer = recipe({
   base: {
-    width: '100%',
-    minWidth: '320px',
-    maxWidth: '600px',
-    margin: '0 auto',
-    // height: '62px',
-    zIndex: 20,
+    position: 'fixed',
+    top: 0,
+    background: themeVars.colors.white,
+    zIndex: 200,
   },
   variants: {
     type: {
@@ -32,14 +30,19 @@ export const headerContainer = recipe({
 export const headerWrapper = style({
   display: 'flex',
   justifyContent: 'space-between',
-  padding: '20px 18px',
+  padding: '18px 25px',
 });
 
 export const headerMenuWrapper = style({
   display: 'flex',
-  gap: '19px',
+  gap: '16px',
   alignItems: 'center',
 });
+
 export const backButton = style({
   cursor: 'pointer',
 });
+
+export const logo = style({
+  display: 'flex',
+})

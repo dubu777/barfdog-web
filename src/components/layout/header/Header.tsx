@@ -1,37 +1,44 @@
 "use client";
 
-import Image from "next/image";
 import * as styles from "./Header.css";
+import Link from "next/link";
+import Image from "next/image";
 import Logo from "/public/images/logo/logo-default.png";
 import LogoWhite from "/public/images/logo/logo-white.png";
-import MyPage from "/public/images/icons/mypage.png";
-import Cart from "/public/images/icons/cart.png";
-import Hamburger from "../../icons/Hamburger";
+import MyPage from "/public/images/icons/mypage.svg";
+import Cart from "/public/images/icons/cart.svg";
 import BackButton from "/public/images/icons/left-arrow.svg";
+import Hamburger from "../../icons/Hamburger";
+import TopBanner from "@/components/layout/banner/TopBanner";
 import { useBackNavigation } from "@/utils";
-import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCommonStore } from "@/store/commonStore";
+import { commonLayoutStyle } from "@/styles/common.css";
 
 interface HeaderProps {
   type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
 }
 
 export default function Header({ type = "default" }: HeaderProps) {
+  const pathname = usePathname();
+  const { setIsOpenSideNavBar } = useCommonStore();
   const hamburgerColor = type === "redBackground" ? "#ffffff" : "#4A4A4A";
   const goBack = useBackNavigation();
 
   return (
-    <header className={styles.headerContainer({ type })}>
+    <header className={`${commonLayoutStyle} ${styles.headerContainer({ type })}`}>
+      {pathname === '/' &&
+        <TopBanner />
+      }
       <section className={styles.headerWrapper}>
-        {type === "default" && (
-          <Link href="/">
-            <Image src={Logo} alt="사이트 로고" width={148} height={26} />
-          </Link>
-        )}
-        {type === "redBackground" && (
-          <Link href="/">
-            <Image src={LogoWhite} alt="화이트 로고" width={148} height={26} />
-          </Link>
-        )}
+        <Link href="/" className={styles.logo}>
+          <Image
+            src={type === "default" ? Logo : type === 'redBackground' && LogoWhite}
+            alt={type === 'redBackground' ? '화이트 로고' : '사이트 로고'}
+            width={148}
+            height={26}
+          />
+        </Link>
         {(type === "withBackButton" || type === "backButtonOnly") && (
           <BackButton onClick={goBack} className={styles.backButton} />
         )}
@@ -42,17 +49,14 @@ export default function Header({ type = "default" }: HeaderProps) {
             ) : (
               <>
                 <Link href="/mypage">
-                  <Image
-                    src={MyPage}
-                    alt="마이페이지"
-                    width={19.5}
-                    height={19.5}
-                  />
+                  <MyPage />
                 </Link>
                 <Link href="/cart">
-                  <Image src={Cart} alt="장바구니" width={20} height={20} />
+                  <Cart />
                 </Link>
-                <Hamburger stroke={hamburgerColor} />
+                <button onClick={() => setIsOpenSideNavBar(true)}>
+                  <Hamburger stroke={hamburgerColor} />
+                </button>
               </>
             )}
           </div>

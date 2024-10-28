@@ -1,3 +1,4 @@
+import { themeVars } from "@/styles/theme.css";
 import { globalStyle } from '@vanilla-extract/css';
 
 globalStyle('*', {
@@ -10,3 +11,13 @@ globalStyle('html, body', {
   width: '100%',
   height: '100%',
 });
+
+globalStyle('.swiper-pagination-bullet', {
+  border: `1px solid ${themeVars.colors.mainRed}`,
+  background: `${themeVars.colors.white} !important`,
+  opacity: '1 !important',
+})
+
+globalStyle('.swiper-pagination-bullet-active', {
+  background: `${themeVars.colors.mainRed} !important`,
+})
