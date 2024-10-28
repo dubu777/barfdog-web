@@ -19,6 +19,7 @@ export const surveyButtonListWrapper = recipe({
       row: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent: 'center',
         gap: '11px',
       },
       col: {
@@ -30,7 +31,7 @@ export const surveyButtonListWrapper = recipe({
       },
       grid: {
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr',
         justifyContent: 'center',
         columnGap: '19px',
         rowGap: '19px',

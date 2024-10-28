@@ -1,3 +1,5 @@
+import { formatTime } from "@/utils";
+
 const initialSurveyValue = {
   name: "",
   gender: "",
@@ -7,16 +9,71 @@ const initialSurveyValue = {
   dogType: "",
   weight: "",
   neutralization: null,
-  activityLevel: "NORMAL",
+  activityLevel: "",
   walkingCountPerWeek: "",
   walkingTimePerOneTime: "",
   dogStatus: "",
+  specificDogStatus: "",
+  specificDogStatusEtc: "NONE",
   snackCountLevel: "",
-  inedibleFood: "NONE",
-  inedibleFoodEtc: "",
+  waterCountLevel: "",
+  supplement: "",
+  supplementEtc: "NONE",
+  currentMeal: "",
+  inedibleFood: "",
+  inedibleFoodEtc: "NONE",
   recommendRecipeId: null,
   caution: "NONE",
+  cautionEtc: "NONE",
+  expectedPregnancyDay: "",
+  newToRawDiet: null,
+  priorityConcerns: "",
 } as const;
+
+const initialStepValues = {
+  step0: { name: false },
+  step1: { gender: false },
+  step2: { neutralization: false },
+  step3: { dogSize: false, dogType: false },
+  step4: { birth: false },
+  step5: { weight: false },
+  step6: {
+    dogStatus: false,
+    specificDogStatus: true,
+    specificDogStatusEtc: true,
+    expectedPregnancyDay: true,
+  },
+  step7: { activityLevel: false },
+  step8: { walkingCountPerWeek: false, walkingTimePerOneTime: false },
+  step9: { snackCountLevel: false },
+  step10: { waterCountLevel: false },
+  step11: { supplement: false, supplementEtc: true },
+  step12: { inedibleFood: false, inedibleFoodEtc: true },
+  step13: { currentMeal: false },
+  step14: { caution: false, cautionEtc: true },
+  step15: { newToRawDiet: false },
+  step16: { priorityConcerns: false },
+};
+
+const initialErrorValues = {
+  step0: { name: "" },
+  step1: { gender: "" },
+  step2: { neutralization: "" },
+  step3: { dogSize: "", dogType: "" },
+  step4: { birth: "" },
+  step5: { weight: "" },
+  step6: { dogStatus: "", specificDogStatus: null, expectedPregnancyDay: null },
+  step7: { activityLevel: "" },
+  step8: { walkingCountPerWeek: "", walkingTimePerOneTime: "" },
+  step9: { snackCountLevel: "" },
+  step10: { waterCountLevel: "" },
+  step11: { supplement: "", supplementEtc: null },
+  step12: { inedibleFood: "", inedibleFoodEtc: null },
+  step13: { currentMeal: "" },
+  step14: { caution: "", cautionEtc: null },
+  step15: { newToRawDiet: "" },
+  step16: { priorityConcerns: "" },
+};
 
 const BASIC_INFO = {
   name: {
@@ -26,24 +83,24 @@ const BASIC_INFO = {
     title: "반려견 이름이 무엇인가요?",
   },
   gender: {
-    title: "성별은 무엇인가요?",
     name: "gender",
+    title: "성별은 무엇인가요?",
     options: [
       { id: "gender-MALE", value: "MALE", label: "수컷" },
       { id: "gender-FEMALE", value: "FEMALE", label: "암컷" },
     ],
   },
   neutralization: {
-    title: "중성화 여부를 알려주세요",
     name: "neutralization",
+    title: "중성화 여부를 알려주세요",
     options: [
       { id: "neutralization했습니다", value: true, label: "했습니다" },
       { id: "neutralization안했습니다", value: false, label: "안했습니다" },
     ],
   },
   dogSize: {
-    title: "견종은 무엇인가요?",
     name: "dogSize",
+    title: "견종은 무엇인가요?",
     options: [
       { id: "dogSize-SMALL", value: "SMALL", label: "소형견" },
       { id: "dogSize-MIDDLE", value: "MIDDLE", label: "중형견" },
@@ -51,8 +108,8 @@ const BASIC_INFO = {
     ],
   },
   dogType: {
-    title: "견종선택",
     name: "dogType",
+    title: "견종선택",
     placeholder1: "견종을 선택해주세요.",
     placeholder2: "견종을 입력해주세요.",
     options: [
@@ -279,12 +336,27 @@ const BASIC_INFO = {
     ],
   },
   birth: {
+    name: "birth",
     title: "출생일은 언제인가요?",
+    years: Array.from({ length: 50 }, (_, i) => {
+      const year = new Date().getFullYear() - i;
+      return {
+        label: `${year}년`,
+        value: year.toString(),
+      };
+    }),
+    months: Array.from({ length: 12 }, (_, i) => {
+      const month = (i + 1).toString().padStart(2, "0");
+      return {
+        label: `${month}월`,
+        value: month,
+      };
+    }),
   },
   weight: {
     id: "weight",
-    title: "몸무게는 얼마인가요?",
     name: "weight",
+    title: "몸무게는 얼마인가요?",
     unit: "kg",
     placeholder: "몸무게를 입력해주세요",
   },
@@ -297,10 +369,10 @@ const BASIC_INFO = {
   },
 } as const;
 
-const ACTIVITY_INFO = {
+const HEALTH_INFO = {
   dogStatus: {
-    title: "현재 상태는 어떤가요?",
     name: "dogStatus",
+    title: "현재 상태는 어떤가요?",
     options: [
       { id: "dogStatus-HEALTHY", value: "HEALTHY", label: "건강해요" },
       { id: "dogStatus-NEED_DIET", value: "NEED_DIET", label: "다이어트 필요" },
@@ -310,8 +382,8 @@ const ACTIVITY_INFO = {
     ],
   },
   activityLevel: {
-    title: "활동량은 어떤가요?",
     name: "activityLevel",
+    title: "활동량은 어떤가요?",
     options: [
       {
         id: "activityLevel-VERY_MUCH",
@@ -329,25 +401,199 @@ const ACTIVITY_INFO = {
     ],
   },
   walkingCountPerWeek: {
-    title: "산책량은 어떤가요?",
     id: "walkingCountPerWeek",
     name: "walkingCountPerWeek",
+    title: "산책량은 어떤가요?",
     frontWord: "주 평균",
     placeholder: "횟수",
-    options: Array.from({ length: 7 }, (_, i) => `${i + 1}회`),
+    options: Array.from({ length: 20 }, (_, i) => {
+      const label = i === 19 ? `${i + 1} 회 이상` : `${i + 1} 회`;
+      return {
+        label,
+        value: (i + 1).toString(),
+      };
+    }),
   },
   walkingTimePerOneTime: {
-    title: "일주일 산책 횟수",
     id: "walkingTimePerOneTime",
     name: "walkingTimePerOneTime",
+    title: "일주일 산책 횟수",
     frontWord: "1회 당",
     placeholder: "시간",
-    options: Array.from({ length: 24 }, (_, i) => {
-      const hours = Math.floor(0.5 + i * 0.5);
-      const minutes = (0.5 + i * 0.5) % 1 === 0 ? "시간" : "시간 30분";
-      return `${hours}${minutes}`;
+    options: Array.from({ length: 6 }, (_, i) => {
+      const value = (i * 0.5 + 0.5).toString(); // 값은 0.5, 1, 1.5 등으로 설정
+      const label = i === 5 ? "3시간 이상" : formatTime(i * 0.5 + 0.5); // 마지막에 "3시간 이상" 추가, 나머지는 formatTime 사용
+      return {
+        label,
+        value,
+      };
     }),
-  }
+  },
+  snackCountLevel: {
+    name: "snackCountLevel",
+    title: "간식량은 어떤가요?",
+    options: [
+      {
+        id: "snackCountLevel-LITTLE",
+        value: "LITTLE",
+        label: "적어요",
+      },
+      {
+        id: "snackCountLevel-NORMAL",
+        value: "NORMAL",
+        label: "적당해요",
+      },
+      {
+        id: "snackCountLevel-MUCH",
+        value: "MUCH",
+        label: "많아요",
+      },
+    ],
+  },
+  waterCountLevel: {
+    name: "waterCountLevel",
+    title: "음수량은 어떤가요?",
+    options: [
+      {
+        id: "waterCountLevel-LITTLE",
+        value: "LITTLE",
+        label: "적어요",
+      },
+      {
+        id: "waterCountLevel-NORMAL",
+        value: "NORMAL",
+        label: "적당해요",
+      },
+      {
+        id: "waterCountLevel-MUCH",
+        value: "MUCH",
+        label: "많아요",
+      },
+    ],
+  },
+  supplement: {
+    name: "supplement",
+    title: "현재 먹고 있는 영양제는 무엇인가요?",
+    options: [
+      { id: "supplement-NONE", value: "NONE", label: "없어요" },
+      { id: "supplement-유산균", value: "유산균", label: "유산균" },
+      { id: "supplement-오메가", value: "오메가-3", label: "오메가-3" },
+      { id: "supplement-항산화", value: "항산화", label: "항산화" },
+      { id: "supplement-관절", value: "관절", label: "관절" },
+      { id: "supplement-눈", value: "눈", label: "눈" },
+      { id: "supplement-피부", value: "피부", label: "피부" },
+      { id: "supplement-면역력", value: "면역력", label: "면역력" },
+      { id: "supplement-심장", value: "심장", label: "심장" },
+      { id: "supplement-치아", value: "치아", label: "치아" },
+      { id: "supplement-종합", value: "종합", label: "종합" },
+      { id: "supplement-ETC", value: "ETC", label: "기타" },
+    ],
+  },
+  inedibleFood: {
+    name: "inedibleFood",
+    title: "못 먹는 재료가 있나요?",
+    options: [
+      { id: "inedibleFood-NONE", value: "NONE", label: "없어요" },
+      { id: "inedibleFood-닭", value: "닭", label: "닭" },
+      { id: "inedibleFood-칠면조", value: "칠면조", label: "칠면조" },
+      { id: "inedibleFood-소", value: "소", label: "소" },
+      { id: "inedibleFood-오리", value: "오리", label: "오리" },
+      { id: "inedibleFood-양", value: "양", label: "양" },
+      { id: "inedibleFood-ETC", value: "ETC", label: "기타" },
+    ],
+  },
+  currentMeal: {
+    name: "currentMeal",
+    title: "현재 먹고 있는 식사는 어떤 것인가요?",
+    options: [
+      { id: "currentMeal-건사료", value: "건사료", label: "건사료" },
+      {
+        id: "currentMeal-습식사료/캔",
+        value: "습식사료/캔",
+        label: "습식사료/캔",
+      },
+      { id: "currentMeal-생식", value: "생식", label: "생식" },
+      { id: "currentMeal-화식", value: "화식", label: "화식" },
+      { id: "currentMeal-수제사료", value: "수제사료", label: "수제사료" },
+      {
+        id: "currentMeal-동결건조사료",
+        value: "동결건조사료",
+        label: "동결건조사료",
+      },
+    ],
+  },
+  caution: {
+    name: "caution",
+    title: "건강적 특이사항, 질병이 있나요?",
+    options: [
+      { id: "caution-NONE", value: "NONE", label: "없어요" },
+      { id: "caution-관절염", value: "관절염", label: "관절염" },
+      { id: "caution-슬개골 탈구", value: "슬개골 탈구", label: "슬개골 탈구" },
+      { id: "caution-피부염", value: "피부염", label: "피부염" },
+      { id: "caution-당뇨병", value: "당뇨병", label: "당뇨병" },
+      { id: "caution-귀 염증", value: "귀 염증", label: "귀 염증" },
+      { id: "caution-눈물/안구", value: "눈물/안구", label: "눈물/안구" },
+      { id: "caution-치주염", value: "치주염", label: "치주염" },
+      { id: "caution-신장 질환", value: "신장 질환", label: "신장 질환" },
+      { id: "caution-간 질환", value: "간 질환", label: "간 질환" },
+      { id: "caution-췌장염", value: "췌장염", label: "췌장염" },
+      { id: "caution-심장 질환", value: "심장 질환", label: "심장 질환" },
+      { id: "caution-기타", value: "기타", label: "기타" },
+    ],
+  },
 } as const;
 
-export { initialSurveyValue, BASIC_INFO, ACTIVITY_INFO };
+const ADDITIONAL_INFO = {
+  newToRawDiet: {
+    name: "newToRawDiet",
+    title: "생식 급여가 처음인가요?",
+    options: [
+      { id: "newToRawDiet-Yes", value: true, label: "네" },
+      { id: "newToRawDiet-NO", value: false, label: "아니요" },
+    ],
+  },
+  priorityConcerns: {
+    name: "priorityConcerns",
+    title: "특별히 챙겨주고 싶은 부분은",
+    options: [
+      {
+        id: "recommendRecipeId-5",
+        value: "구토·설사·복통",
+        label: "구토·설사·복통",
+      },
+      {
+        id: "recommendRecipeId-6",
+        value: '체중 조절',
+        label: "체중 조절",
+      },
+      {
+        id: "recommendRecipeId-7",
+        value: "피로회복",
+        label: "피로회복",
+      },
+      {
+        id: "recommendRecipeId-8",
+        value: "눈물·눈곱",
+        label: "눈물·눈곱",
+      },
+      { id: "recommendRecipeId-9", value: "적은 음수량", label: "적은 음수량" },
+      { id: "recommendRecipeId-10", value: "피부·모질", label: "피부·모질" },
+      {
+        id: "recommendRecipeId-11",
+        value: "관절 건강",
+        label: "관절 건강",
+      },
+      { id: "recommendRecipeId-12", value: "자견 발육", label: "자견 발육" },
+      { id: "recommendRecipeId-13", value: "노령견 건강", label: "노령견 건강" },
+    ],
+  },
+} as const;
+
+export {
+  initialSurveyValue,
+  initialStepValues,
+  initialErrorValues,
+  BASIC_INFO,
+  HEALTH_INFO,
+  ADDITIONAL_INFO,
+};

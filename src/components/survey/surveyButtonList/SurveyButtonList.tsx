@@ -4,12 +4,11 @@ import { surveyTitle } from "@/app/survey/Survey.css";
 import { getPetNameWithSuffix } from "@/utils";
 import SurveyButton from "../surveyButton/SurveyButton";
 
-interface RadioButtonListProps {
+interface SurveyButtonListProps {
   options: readonly {
     id: string;
     value: string | boolean | number;
     label: string;
-    subText?: readonly string[];
   }[];
   name: string;
   selectedValue: string | boolean | number | (string | number | boolean)[] | null;
@@ -17,7 +16,7 @@ interface RadioButtonListProps {
   title: string;
   petName: string;
   layoutType?: "row" | "col" | "grid";
-  selectionType?: "single" | "multiple"; // 선택 타입 추가 (단일 또는 다중 선택)
+  isMultiSelect?: boolean;
 }
 
 export default function SurveyButtonList({
@@ -25,27 +24,13 @@ export default function SurveyButtonList({
   name,
   selectedValue,
   onChange,
-  layoutType = "col",
+  layoutType = "row",
   title,
   petName,
-  selectionType = "single",
-}: RadioButtonListProps) {
+  isMultiSelect = false,
+}: SurveyButtonListProps) {
   const fullTitle = getPetNameWithSuffix(petName, title);
   
-  // type(single, multipe)에 따른 선택 로직
-  const handleChange = (value: string | boolean | number) => {
-    if (selectionType === "multiple") {
-      const selectedArray = Array.isArray(selectedValue) ? selectedValue : [];
-      if (selectedArray.includes(value)) {
-        const newSelection = selectedArray.filter((v) => v !== value);
-        onChange(newSelection);
-      } else {
-        onChange([...selectedArray, value]);
-      }
-    } else {
-      onChange(value);
-    }
-  };
 
   return (
     <div className={styles.surveyButtonListContainer}>
@@ -58,13 +43,13 @@ export default function SurveyButtonList({
           name={name}
           value={option.value}
           isChecked={
-            selectionType === "multiple"
+            isMultiSelect
               ? Array.isArray(selectedValue) && selectedValue.includes(option.value)
               : selectedValue === option.value
           }
           label={option.label}
           layoutType={layoutType}
-          onChange={handleChange}
+          onChange={onChange}
         />
       ))}
       </div>

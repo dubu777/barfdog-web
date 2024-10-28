@@ -17,7 +17,7 @@ export const textInputWrapper = style({
   alignItems: "center",
   width: "100%",
   maxWidth: "300px",
-  height: "54px",
+  height: "45px",
   borderRadius: "9px",
   padding: "16px 19px",
   border: `0.2px solid ${themeVars.borderColors.greyDD}`,

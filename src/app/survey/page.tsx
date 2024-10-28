@@ -2,18 +2,14 @@
 
 import Header from "@/components/layout/header/Header";
 import useForm from "@/hooks/useForm";
-import { SurveyFormData } from "@/types/survey";
-import { initialSurveyValue } from "@/constants";
 import SurveyForm from "@/components/survey/surveyForm/SurveyForm";
 import SurveyPagination from "@/components/survey/surveyPagination/SurveyPagination";
 import useStep from "@/hooks/useStep";
 import { getSurveySteps } from "@/components/survey/surveySteps/SurveySteps";
+import { useSurveyStore } from "@/store/useSurveyStore";
 
 export default function SurveyPage() {
-  const { formData, handleChange } =
-    useForm<SurveyFormData>(initialSurveyValue);
-  // survey step 컴포넌트 불러오기
-  const steps = getSurveySteps({ formData, handleChange });
+  const {stepLength, canNextStep} = useSurveyStore()
   const {
     currentStep,
     handleNextStep,
@@ -21,9 +17,23 @@ export default function SurveyPage() {
     direction,
     isLastStep,
     isFirstStep,
-  } = useStep(steps.length);
-  console.log(formData, 'form');
-  
+  } = useStep(stepLength());
+  const {
+    formData,
+    errorMessages,
+    handleChange,
+    handleBlur,
+    handleKeyDown,
+  } = useForm(handleNextStep, currentStep);
+  const steps = getSurveySteps({
+    formData,
+    errorMessages,
+    handleChange,
+    handleBlur,
+    handleKeyDown,
+  });
+  console.log(formData, "form");
+
   return (
     <>
       <Header type="redBackground" />
@@ -39,6 +49,7 @@ export default function SurveyPage() {
         isFirstStep={isFirstStep}
         currentStep={currentStep}
         stepLength={steps.length}
+        canNextStep={canNextStep}
       />
     </>
   );

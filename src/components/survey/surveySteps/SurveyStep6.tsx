@@ -8,11 +8,21 @@ interface SurveyStep2Props {
     key: K,
     value: SurveyFormData[K]
   ) => void;
+  handleBlur: (
+    e: React.FocusEvent<HTMLInputElement>,
+    key: keyof SurveyFormData
+  ) => void;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    key: keyof SurveyFormData
+  ) => void;
 }
 
 export default function SurveyStep6({
   formData,
   handleChange,
+  handleBlur,
+  handleKeyDown,
 }: SurveyStep2Props) {
   return (
     <SurveyTextField
@@ -23,6 +33,8 @@ export default function SurveyStep6({
       placeholder={BASIC_INFO.weight.placeholder}
       petName={formData.name}
       onChange={(value) => handleChange(BASIC_INFO.weight.name, value)}
+      onBlur={(e) => handleBlur(e, BASIC_INFO.name.name)}
+      onKeyDown={(e) => handleKeyDown(e, BASIC_INFO.name.name)} 
       unit="kg"
     />
   );

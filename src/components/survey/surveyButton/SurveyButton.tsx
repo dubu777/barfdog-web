@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import * as styles from "./SurveyButton.css";
+import { useSurveyStore } from "@/store/useSurveyStore";
 
 interface SurveyButtonProps {
   id: string;
@@ -21,17 +22,13 @@ export default function SurveyButton({
   onChange,
   layoutType = 'col',
 }: SurveyButtonProps) {
-  const handleClick = () => {
-    onChange(value);
-  };
-
   return (
       <button
         type="button"
         id={id}
         name={name}
         className={styles.buttonStyle({ checked: isChecked, type: layoutType })}
-        onClick={handleClick}
+        onClick={() => onChange(value)}
       >
         {label}
       </button>

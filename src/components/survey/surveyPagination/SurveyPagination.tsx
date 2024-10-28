@@ -10,6 +10,7 @@ interface SurveyPaginationProps {
   isFirstStep: boolean;
   currentStep: number;
   stepLength: number;
+  canNextStep: boolean;
 }
 
 export default function SurveyPagination({
@@ -19,9 +20,11 @@ export default function SurveyPagination({
   isFirstStep,
   currentStep,
   stepLength,
+  canNextStep,
 }: SurveyPaginationProps) {
   const progressPercentage = ((currentStep + 1) / stepLength) * 100;
 
+console.log(canNextStep, 'can');
 
   return (
     <footer className={styles.surveyPaginationContainer}>
@@ -47,6 +50,7 @@ export default function SurveyPagination({
             type="main"
             size="xxl"
             borderRadius="lg"
+            isDisabled={!canNextStep}
           >
             다음
           </DefaultButton>
@@ -56,6 +60,7 @@ export default function SurveyPagination({
             type="black"
             size="xxl"
             borderRadius="lg"
+            isDisabled={!canNextStep}
           >
             제출
           </DefaultButton>

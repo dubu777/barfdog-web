@@ -26,7 +26,6 @@ export default function SurveyStep4({
         selectedValue={formData.dogSize}
         petName={formData.name}
         layoutType="row"
-        selectionType="single"
         onChange={(value) =>
           handleChange(BASIC_INFO.dogSize.name, value as string)
         }

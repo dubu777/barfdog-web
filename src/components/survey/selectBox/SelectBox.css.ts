@@ -21,7 +21,7 @@ export const inputField = style({
   height: '100%',
   outline: '0',
   padding: '4px 8px',
-  minHeight: '54px',
+  minHeight: '45px',
   borderRadius: '9px',
   border: `1px solid ${themeVars.borderColors.greyDD}`,
   cursor: 'pointer',

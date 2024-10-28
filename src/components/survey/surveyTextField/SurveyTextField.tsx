@@ -9,6 +9,8 @@ interface DefaultTextFieldProps {
   name: string;
   value: string;
   onChange: (value: string) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   title?: string;
   unit?: string;
   placeholder?: string;
@@ -20,6 +22,8 @@ export default function SurveyTextField({
   name,
   value,
   onChange,
+  onBlur,
+  onKeyDown,
   title,
   unit,
   placeholder="",
@@ -45,6 +49,8 @@ export default function SurveyTextField({
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}
+            onBlur={onBlur}
+            onKeyDown={onKeyDown} 
           />
           {unit && <p className={styles.unitStyle}>{unit}</p>}
         </div>

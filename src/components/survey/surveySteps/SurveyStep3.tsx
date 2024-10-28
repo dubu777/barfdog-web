@@ -1,19 +1,21 @@
 import { SurveyFormData } from "@/types/survey";
 import { BASIC_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { surveyValidation } from "@/utils";
 
-interface SurveyStep2Props {
+interface SurveyStep3Props {
   formData: SurveyFormData;
   handleChange: <K extends keyof SurveyFormData>(
     key: K,
-    value: SurveyFormData[K]
+    value: SurveyFormData[K],
+    isMultiSelect?: boolean
   ) => void;
 }
 
 export default function SurveyStep3({
   formData,
   handleChange,
-}: SurveyStep2Props) {
+}: SurveyStep3Props) {
   
   return (
       <SurveyButtonList
@@ -22,7 +24,6 @@ export default function SurveyStep3({
         title={BASIC_INFO.neutralization.title}
         selectedValue={formData.neutralization}
         petName={formData.name}
-        selectionType="single"
         onChange={(value) =>
           handleChange(BASIC_INFO.neutralization.name, value as boolean)
         }

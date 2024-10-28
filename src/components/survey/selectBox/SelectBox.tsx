@@ -5,9 +5,8 @@ import { expandFromTopVariants } from "@/constants";
 
 interface SelectBoxProps {
   id: string;
-  options: string[];
+  options: { label: string; value: string }[];
   placeholder: string;
-  unit?: string;
   frontWord?: string;
   onSelect: (value: string) => void;
   selectedValue?: string;
@@ -17,10 +16,9 @@ export default function SelectBox({
   id,
   options,
   placeholder,
-  unit,
   onSelect,
   frontWord,
-  selectedValue = "",
+  selectedValue,
 }: SelectBoxProps) {
   const { isOpen, onToggle, onClose, ref } = useModal();
 
@@ -28,6 +26,10 @@ export default function SelectBox({
     onSelect(value);
     onClose();
   };
+
+  const selectedLabel = options.find((option) => option.value === selectedValue)?.label || placeholder;
+console.log(selectedLabel, 'selectedLabel');
+console.log(selectedValue, 'selectedValue');
 
   return (
     <div className={styles.selectBoxContainer} ref={ref}>
@@ -39,13 +41,12 @@ export default function SelectBox({
           id={id}
           placeholder={placeholder}
           readOnly
-          value={selectedValue}
+          value={selectedLabel}
           onClick={(e) => {
             e.stopPropagation();
             onToggle();
           }}
         />
-        { unit && <p className={styles.unit}>{unit}</p>}
         <AnimatePresence>
           {isOpen && (
             <div className={styles.optionsContainer}>
@@ -59,12 +60,12 @@ export default function SelectBox({
               >
                 {options.map((option) => (
                   <p
-                    key={option}
-                    data-selected={option === selectedValue}
+                    key={option.value}
+                    data-selected={option.value === selectedValue}
                     className={styles.option}
-                    onClick={() => handleSelect(option)}
+                    onClick={() => handleSelect(option.value)}
                   >
-                    {option}
+                    {option.label}
                   </p>
                 ))}
               </motion.div>

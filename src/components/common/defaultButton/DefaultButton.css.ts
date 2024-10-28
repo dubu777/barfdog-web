@@ -7,7 +7,6 @@ export const defaultButtonStyle = recipe({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer',
     transition: 'background-color 0.3s ease, opacity 0.3s ease',
     padding: '0 16px',
   },
@@ -64,7 +63,7 @@ export const defaultButtonStyle = recipe({
     isDisabled: {
       true: {
         cursor: 'not-allowed',
-        opacity: 0.5,
+        opacity: 0.4,
       },
       false: {
         cursor: 'pointer',
@@ -82,6 +81,15 @@ export const defaultButtonStyle = recipe({
       },
     },
   },
+  compoundVariants: [
+    {
+      variants: { isDisabled: true, isHidden: false },
+      style: {
+        opacity: 0.4,
+        cursor: 'not-allowed',
+      },
+    },
+  ],
   defaultVariants: {
     size: 'md',
     borderRadius: 'md',
