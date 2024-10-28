@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "removeComments": true,
     "plugins": [
       {
         "name": "next"
