@@ -37,9 +37,10 @@ export const headerMenuWrapper = style({
   display: 'flex',
   gap: '16px',
   alignItems: 'center',
+  cursor: 'pointer',
 });
 
-export const backButton = style({
+export const headerButton = style({
   cursor: 'pointer',
 });
 

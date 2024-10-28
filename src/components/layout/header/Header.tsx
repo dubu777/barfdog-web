@@ -40,7 +40,7 @@ export default function Header({ type = "default" }: HeaderProps) {
           />
         </Link>
         {(type === "withBackButton" || type === "backButtonOnly") && (
-          <BackButton onClick={goBack} className={styles.backButton} />
+          <BackButton onClick={goBack} className={styles.headerButton} />
         )}
         {type !== "backButtonOnly" && (
           <div className={styles.headerMenuWrapper}>
@@ -54,7 +54,7 @@ export default function Header({ type = "default" }: HeaderProps) {
                 <Link href="/cart">
                   <Cart />
                 </Link>
-                <button onClick={() => setIsOpenSideNavBar(true)}>
+                <button onClick={() => setIsOpenSideNavBar(true)} className={styles.headerButton}>
                   <Hamburger stroke={hamburgerColor} />
                 </button>
               </>

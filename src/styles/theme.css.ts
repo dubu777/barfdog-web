@@ -60,6 +60,7 @@ export const [themeClass, themeVars] = createTheme({
     grey99: '#999999',
     grey85: '#858585',
     grey7E: '#7E7E7E',
+    black50: 'rgba(0, 0, 0, .5)'
   },
   buttonColors: {
     disabledRed: 'rgba(194, 40, 47, .6)',
