@@ -6,10 +6,10 @@ export const [themeClass, themeVars] = createTheme({
     innerHeight: 'calc(100vh - 140px)',
   },
   fontWeight: {
-    light: 400,
-    normal: 500,
-    semibold: 600,
-    bold: 700,
+    light: '400',
+    normal: '500',
+    semibold: '600',
+    bold: '700',
   },
   fontSize: {
     'title-xxl': '28px',
@@ -68,7 +68,7 @@ export const [themeClass, themeVars] = createTheme({
     grey99: '#999999',
     grey85: '#858585',
     grey7E: '#7E7E7E',
-    black50: 'rgba(0, 0, 0, .5)'
+    black50: 'rgba(0, 0, 0, .5)',
     greyDD: '#DDD',
     greyBB: '#BBBBBB',
     greyED: '#EDEDED',
