@@ -8,6 +8,7 @@ export const mainTitle = recipe({
     fontSize: '23px',
     zIndex: 100,
     lineHeight: 'normal',
+    textAlign: 'center',
   },
   variants: {
     size: {

@@ -32,7 +32,7 @@ const MainSurvey = () => {
           isBold={true}
           linkUrl={'/survey'}
         >
-          최근 리뷰 더 보기
+          AI 추천 문진 START!
         </DefaultButton>
       </div>
     </article>

@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import {mainSurveySlider} from "./MainSurvey.css";
 
 const MainSurveyImageSlider = ({ images }: { images: string[] }) => {
   return (
@@ -27,7 +28,7 @@ const MainSurveyImageSlider = ({ images }: { images: string[] }) => {
         className={styles.mainSliderContainer}
       >
         {images.map((img, index) => (
-          <SwiperSlide key={img}>
+          <SwiperSlide key={img} className={styles.mainSurveySlider}>
             <Image src={img} alt={`image${index}`} width={280} height={320} style={{ objectFit: 'contain' }} />
           </SwiperSlide>
         ))}

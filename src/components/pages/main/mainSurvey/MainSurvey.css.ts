@@ -26,3 +26,8 @@ export const mainSliderContainer = style({
   height: '100%',
   paddingBottom: '27px !important'
 })
+
+export const mainSurveySlider = style({
+  display: 'flex !important',
+  justifyContent: 'center',
+})

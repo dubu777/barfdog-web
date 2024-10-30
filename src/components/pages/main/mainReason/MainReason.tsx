@@ -10,8 +10,6 @@ import {useBreakpoints} from "@/hooks/useBreakpoints";
 import MainText from "@/components/pages/main/mainText/MainText";
 import {reasonBarfdogList} from "@/constants/mainData";
 
-
-
 const MainReason = () => {
   const { isMobile } = useBreakpoints();
   return (

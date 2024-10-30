@@ -23,7 +23,7 @@ const MainService = () => {
         </MainText>
       </div>
       <ul className={styles.mainServiceBox}>
-        {servicesByBarfdogList.map(item => (
+        {servicesByBarfdogList?.map(item => (
           <li key={item.key} className={styles.mainServiceListItem}>
             <MainText type='title' size='md'>
               {item.title}
