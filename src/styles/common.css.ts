@@ -58,3 +58,4 @@ export const ellipsis = recipe({
     }
   },
 })
+export const pointColor = style({ color: themeVars.colors.mainRed });

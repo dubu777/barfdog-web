@@ -89,6 +89,15 @@ export const defaultButtonStyle = recipe({
         cursor: 'not-allowed',
       },
     },
+    {
+      variants: { type: 'mainBorder' },
+      style: {
+        ':hover': {
+          background: themeVars.colors.mainRed,
+          color: themeVars.colors.white,
+        }
+      }
+    }
   ],
   defaultVariants: {
     size: 'md',

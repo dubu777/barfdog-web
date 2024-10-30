@@ -1,16 +1,16 @@
 'use client';
 
-import * as styles from './slider.css';
-import * as mainStyles from '../main.css';
+import * as styles from './MainReview.css';
 import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { ReviewDataProps } from "@/components/pages/main/MainReview";
+import { ReviewDataProps } from "@/components/pages/main/mainReview/MainReview";
+import MainText from "@/components/pages/main/mainText/MainText";
 import { ellipsis } from "@/styles/common.css";
 
-const ReviewCardSlider = ({ reviewData }: { reviewData: ReviewDataProps[] }) => {
+const MainReviewSlider = ({ reviewData }: { reviewData: ReviewDataProps[] }) => {
   const rate = 5;
   return (
     <div className={styles.mainSliderWrapper}>
@@ -31,13 +31,19 @@ const ReviewCardSlider = ({ reviewData }: { reviewData: ReviewDataProps[] }) => 
             className={styles.reviewSlideItem}
           >
             <div className={styles.reviewSlideContents}>
-              <h3
-                className={`${mainStyles.mainTitle({ size: 'md' })} ${styles.reviewSlideTitle}`}>
+              <MainText className={styles.reviewSlideTitle} type='title' size='md'>
                 {item.titleByAdmin}
-              </h3>
-              <p className={`${ellipsis({ lineSize: 'line3', whiteSpace: 'pre' })} ${mainStyles.mainDescription({ size: 'xs', color: 'black', align: 'left', weight: 'light' })}`}>
+              </MainText>
+              <MainText
+                type='description'
+                size='xs'
+                color='black'
+                align='left'
+                weight='light'
+                className={ellipsis({ lineSize: 'line3', whiteSpace: 'pre' })}
+              >
                 {item.contents}
-              </p>
+              </MainText>
             </div>
             <p className={styles.reviewRate}>
               {Array.from({length: rate}, (v, i) => i + 1).map((_, i) => (
@@ -70,4 +76,4 @@ const ReviewCardSlider = ({ reviewData }: { reviewData: ReviewDataProps[] }) => 
   );
 };
 
-export default ReviewCardSlider;
+export default MainReviewSlider;

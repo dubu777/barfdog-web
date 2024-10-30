@@ -1,7 +1,8 @@
-import * as styles from "@/components/pages/main/main.css";
+import * as styles from "./MainRecommend.css";
 import axiosInstance from "@/api/axiosInstance";
-import MainRecommendRecipes from "@/components/pages/main/MainRecommendRecipes";
-import HealthCheckSlider from "@/components/pages/main/slider/HealthCheckSlider";
+import MainRecommendRecipes from "@/components/pages/main/mainRecommend/MainRecommendRecipes";
+import MainHealthCheckSlider from "@/components/pages/main/mainRecommend/MainHealthCheckSlider";
+import MainText from "@/components/pages/main/mainText/MainText";
 
 interface MainRecipesDataProps {
   id: number;
@@ -33,20 +34,17 @@ const MainRecommend = async ({ mainRecipesData }: { mainRecipesData: MainRecipes
   return (
     <article className={styles.mainRecommendWrapper}>
       <>
-        <h2
-          className={styles.mainTitle({ size: 'titleLg' })}
-          style={{ marginBottom: '4px' }}
-        >
-          반려견 건강에 고민이 있다면?
-        </h2>
-        <p
-          className={styles.mainDescription({ size: 'sm' })}
-        >
+        <div style={{ marginBottom: '4px' }}>
+          <MainText type='title' size='titleLg'>
+            반려견 건강에 고민이 있다면?
+          </MainText>
+        </div>
+        <MainText type='description' size='sm' color='grey'>
           75만 데이터를 분석한 AI 추천 맞춤 식단 구독
-        </p>
+        </MainText>
       </>
       <div className={styles.recommendSlideContainer}>
-        <HealthCheckSlider />
+        <MainHealthCheckSlider />
         <MainRecommendRecipes recipeData={finalRecipeData}/>
       </div>
     </article>
