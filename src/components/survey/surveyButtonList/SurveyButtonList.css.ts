@@ -5,6 +5,7 @@ export const surveyButtonListContainer = style({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  alignItems: 'center',
   width: '100%',
 })
 

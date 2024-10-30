@@ -2,13 +2,14 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const surveyLayoutContainer = style({
-  height: '100%',
+  height: 'calc(100vh - 62px)',
   width: '100%',
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  marginTop: '62px',
 });
 
 
