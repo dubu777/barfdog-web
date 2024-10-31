@@ -1,13 +1,11 @@
 'use client';
 
-import React from 'react';
 import Image from "next/image";
 import * as styles from './MainSurvey.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import {mainSurveySlider} from "./MainSurvey.css";
 
 const MainSurveyImageSlider = ({ images }: { images: string[] }) => {
   return (

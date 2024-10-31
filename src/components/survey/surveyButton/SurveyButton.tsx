@@ -1,7 +1,5 @@
 "use client";
-import React from "react";
 import * as styles from "./SurveyButton.css";
-import { useSurveyStore } from "@/store/useSurveyStore";
 
 interface SurveyButtonProps {
   id: string;

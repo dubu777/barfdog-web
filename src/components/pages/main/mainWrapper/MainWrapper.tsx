@@ -1,4 +1,3 @@
-import React from 'react';
 import * as styles from "./MainWrapper.css";
 import MainVideo from "@/components/pages/main/mainVideo/MainVideo";
 import MainRecommend from "@/components/pages/main/mainRecommend/MainRecommend";

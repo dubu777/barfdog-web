@@ -1,4 +1,3 @@
-import React from 'react';
 import * as styles from './MainReview.css';
 import MainReviewSlider from "@/components/pages/main/mainReview/MainReviewSlider";
 import MainText from "@/components/pages/main/mainText/MainText";
