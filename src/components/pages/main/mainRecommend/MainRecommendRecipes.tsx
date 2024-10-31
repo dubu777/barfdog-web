@@ -4,11 +4,11 @@ import MainRecipesSlider from "@/components/pages/main/mainRecommend/MainRecipes
 import MainText from "@/components/pages/main/mainText/MainText";
 import { RecipeDetailDataProps } from "@/components/pages/main/mainRecommend/MainRecommend";
 import { HealthCheckList } from "@/constants/mainData";
-import { useSelectedHealthStore } from "@/store/mainStore";
+import { useMainStore } from "@/store/useMainStore";
 import {pointColor} from "@/styles/common.css";
 
 const MainRecommendRecipes = ({ recipeData }: { recipeData: RecipeDetailDataProps }) => {
-  const { selectedHealth } = useSelectedHealthStore();
+  const { selectedHealth } = useMainStore();
   const selectedHealthDetail = HealthCheckList.find(v => v.key === selectedHealth.key);
   return (
     <>

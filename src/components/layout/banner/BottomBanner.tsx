@@ -5,11 +5,11 @@ import * as styles from './Banner.css';
 import { themeVars } from "@/styles/theme.css";
 import Image from "next/image";
 import CloseButton from '/public/images/icons/close-white.png';
-import { useBannerStore } from "@/store/mainStore";
+import { useMainStore } from "@/store/useMainStore";
 import { orderDeadlineTimestamp } from "@/utils/orderDeadlineTimestamp";
 
 const BottomBanner = ({ orderDeadline }: { orderDeadline: string }) => {
-  const { isBottomBannerVisible, closeBottomBanner } = useBannerStore();
+  const { isBottomBannerVisible, closeBottomBanner } = useMainStore();
   const [timestamp, setTimestamp] = useState<string | null>(null);
 
   useEffect(() => {

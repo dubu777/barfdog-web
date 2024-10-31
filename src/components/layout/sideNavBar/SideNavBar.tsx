@@ -11,7 +11,7 @@ import InstaIcon from '/public/images/icons/insta.svg';
 import BlogIcon from '/public/images/icons/blog.svg';
 import YoutubeIcon from '/public/images/icons/youtube.svg';
 import { commonLayoutStyle } from "@/styles/common.css";
-import { useCommonStore } from "@/store/commonStore";
+import { useCommonStore } from "@/store/useCommonStore";
 import { AnimatePresence, motion } from "framer-motion";
 import { background, width, opacity } from './motion';
 import {navContainer} from "./SideNavBar.css";

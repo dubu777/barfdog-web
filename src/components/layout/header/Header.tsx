@@ -12,7 +12,7 @@ import Hamburger from "../../icons/Hamburger";
 import TopBanner from "@/components/layout/banner/TopBanner";
 import { useBackNavigation } from "@/utils";
 import { usePathname } from "next/navigation";
-import { useCommonStore } from "@/store/commonStore";
+import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
 
 interface HeaderProps {

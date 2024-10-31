@@ -7,12 +7,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import CheckWhite from '/public/images/icons/check-white.svg';
-import { useSelectedHealthStore } from "@/store/mainStore";
+import { useMainStore } from "@/store/useMainStore";
 import { HealthCheckList } from "@/constants/mainData";
 import MainText from "@/components/pages/main/mainText/MainText";
 
 const MainHealthCheckSlider = () => {
-  const { selectedHealth, setSelectedHealth } = useSelectedHealthStore();
+  const { selectedHealth, setSelectedHealth } = useMainStore();
 
   const handleSelectHealth = (key) => {
     setSelectedHealth({

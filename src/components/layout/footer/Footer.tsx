@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FooterArrow from '/public/images/icons/footer-arrow.png';
 import { commonLayoutStyle } from "@/styles/common.css";
-import { useBannerStore } from "@/store/mainStore";
+import { useMainStore } from "@/store/useMainStore";
 import { motion } from "framer-motion";
 
 const footerData = [
@@ -33,7 +33,7 @@ const footerData = [
 ]
 
 export default function Footer() {
-  const { isBottomBannerVisible } = useBannerStore();
+  const { isBottomBannerVisible } = useMainStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <footer className={`${commonLayoutStyle} ${styles.footerContainer({ isBottomBannerVisible: isBottomBannerVisible })}`}>

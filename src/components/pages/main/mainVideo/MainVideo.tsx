@@ -6,10 +6,10 @@ import Image from "next/image";
 import LogoWhite from "/public/images/logo/logo-white.png";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import MainText from "@/components/pages/main/mainText/MainText";
-import { useBannerStore } from "@/store/mainStore";
+import { useMainStore } from "@/store/useMainStore";
 
 const MainVideo = () => {
-  const { isTopBannerVisible } = useBannerStore();
+  const { isTopBannerVisible } = useMainStore();
   return (
     <article className={styles.mainVideoWrapper({ isTopBannerVisible: isTopBannerVisible })}>
       <video preload='none' muted autoPlay loop className={styles.mainVideo}>
