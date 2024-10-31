@@ -1,3 +1,4 @@
+import { SurveyFormInfo } from "@/types/survey";
 import { formatTime } from "@/utils";
 
 export const NUMBERS = {
@@ -5,7 +6,7 @@ export const NUMBERS = {
   petNameMaxLength: 10,
 } as const;
 
-export const SURVEY_FORM_INFO = {
+export const SURVEY_FORM_INFO: SurveyFormInfo = {
   step0: {
     name: {
       id: "name",
@@ -70,20 +71,24 @@ export const SURVEY_FORM_INFO = {
       id: "birth",
       inputType: "selectBox",
       title: "출생일은 언제인가요?",
-      years: Array.from({ length: 50 }, (_, i) => {
-        const year = new Date().getFullYear() - i;
-        return {
-          label: `${year}년`,
-          value: year.toString(),
-        };
-      }),
-      months: Array.from({ length: 12 }, (_, i) => {
-        const month = (i + 1).toString().padStart(2, "0");
-        return {
-          label: `${month}월`,
-          value: month,
-        };
-      }),
+      options: [
+        ...Array.from({ length: 50 }, (_, i) => {
+          const year = new Date().getFullYear() - i;
+          return {
+            id: "year",
+            label: `${year}년`,
+            value: year.toString(),
+          };
+        }),
+        ...Array.from({ length: 12 }, (_, i) => {
+          const month = (i + 1).toString().padStart(2, "0");
+          return {
+            id: "month",
+            label: `${month}월`,
+            value: month,
+          };
+        }),
+      ],
     },
   },
   step5: {
@@ -367,5 +372,4 @@ export const SURVEY_FORM_INFO = {
       ],
     },
   },
-  step17: {},
 } as const;
