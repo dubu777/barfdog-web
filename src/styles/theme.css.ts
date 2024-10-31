@@ -29,6 +29,7 @@ export const [themeClass, themeVars] = createTheme({
     mainRed: '#BE1A21',
     red: '#CA1010',
     black: '#0E1108',
+    lightGrey: '#DDDDDD'
   },
   fontColors: {
     white: '#ffffff',
@@ -58,6 +59,8 @@ export const [themeClass, themeVars] = createTheme({
     grey7E: '#7E7E7E',
     grey63: '#636363',
     black: '#0E1108',
+    kakao: '#FDDC3F',
+    naver: '#00C73C',
   },
   borderColors: {
     white: '#ffffff',

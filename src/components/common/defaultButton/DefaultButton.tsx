@@ -1,4 +1,3 @@
-import { recipe } from '@vanilla-extract/recipes';
 import * as styles from './DefaultButton.css';
 import { ReactNode } from 'react';
 import Link from "next/link";
@@ -14,6 +13,7 @@ interface DefaultButtonProps {
   isDisabled?: boolean;
   isHidden?: boolean;
   linkUrl?: string | null;
+  hover?: boolean;
 }
 
 export default function DefaultButton({
@@ -27,19 +27,20 @@ export default function DefaultButton({
   isDisabled = false,
   isHidden = false,
   linkUrl = null,
+  hover = true,
 }: DefaultButtonProps) {
   return (
     !linkUrl ?
       <button
         onClick={onClick}
-        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden })}
+        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover })}
         disabled={isDisabled || isHidden}
       >
         {icon && <span className={styles.iconStyle}>{icon}</span>}
         {children}
       </button>
       : <Link
-        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden })}
+        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover })}
         href={linkUrl}
       >
         {children}

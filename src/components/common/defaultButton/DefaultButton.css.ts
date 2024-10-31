@@ -80,6 +80,9 @@ export const defaultButtonStyle = recipe({
         opacity: 1,
       },
     },
+    hover: {
+      true: {}
+    }
   },
   compoundVariants: [
     {
@@ -90,7 +93,7 @@ export const defaultButtonStyle = recipe({
       },
     },
     {
-      variants: { type: 'mainBorder' },
+      variants: { type: 'mainBorder', hover: true },
       style: {
         ':hover': {
           background: themeVars.colors.mainRed,
@@ -104,6 +107,7 @@ export const defaultButtonStyle = recipe({
     borderRadius: 'md',
     isBold: false,
     isDisabled: false,
+    hover: true,
   },
 });
 
