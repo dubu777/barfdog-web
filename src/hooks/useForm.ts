@@ -49,7 +49,6 @@ export default function useForm(
     ) {
       handleNextStep();
     }
-
     if (
       key !== "name" &&
       key !== "weight" &&

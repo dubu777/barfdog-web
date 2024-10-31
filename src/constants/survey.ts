@@ -421,8 +421,8 @@ const HEALTH_INFO = {
     frontWord: "1회 당",
     placeholder: "시간",
     options: Array.from({ length: 6 }, (_, i) => {
-      const value = (i * 0.5 + 0.5).toString(); // 값은 0.5, 1, 1.5 등으로 설정
-      const label = i === 5 ? "3시간 이상" : formatTime(i * 0.5 + 0.5); // 마지막에 "3시간 이상" 추가, 나머지는 formatTime 사용
+      const value = (i * 0.5 + 0.5).toString();
+      const label = i === 5 ? "3시간 이상" : formatTime(i * 0.5 + 0.5);
       return {
         label,
         value,
