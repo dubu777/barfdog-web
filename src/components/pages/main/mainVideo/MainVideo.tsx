@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import * as styles from './MainVideo.css';
 import Image from "next/image";
 import LogoWhite from "/public/images/logo/logo-white.png";

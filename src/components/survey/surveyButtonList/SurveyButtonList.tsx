@@ -1,4 +1,3 @@
-import React from "react";
 import * as styles from "./SurveyButtonList.css";
 import { surveyTitle } from "@/app/survey/Survey.css";
 import { getPetNameWithSuffix } from "@/utils";

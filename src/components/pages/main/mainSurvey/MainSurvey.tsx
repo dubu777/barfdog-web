@@ -2,7 +2,6 @@ import * as styles from './MainSurvey.css';
 import MainSurveyImageSlider from "@/components/pages/main/mainSurvey/MainSurveyImageSlider";
 import MainText from "@/components/pages/main/mainText/MainText";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import React from "react";
 
 const images = [
   '/images/main/survey-1.png',

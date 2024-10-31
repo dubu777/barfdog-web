@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Image from "next/image";
 import * as styles from "./MainRecommend.css";
 import { Swiper, SwiperSlide } from 'swiper/react';

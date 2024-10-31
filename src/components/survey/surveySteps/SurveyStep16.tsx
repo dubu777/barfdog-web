@@ -1,5 +1,5 @@
 import { SurveyFormData } from "@/types/survey";
-import { ADDITIONAL_INFO, HEALTH_INFO } from "@/constants";
+import { ADDITIONAL_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 
 interface SurveyStep2Props {

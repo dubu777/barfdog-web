@@ -104,7 +104,7 @@ const SideNavBar = () => {
                 </button>
                 <motion.div className={styles.navWrapper}>
                  {categories.map(category => (
-                    <div className={styles.navContainer}>
+                    <div className={styles.navContainer} key={category.title}>
                       <h2 className={styles.navTitle}>{category.title}</h2>
                       <ul className={styles.navItems}>
                         {category.items.map(item => (
@@ -132,6 +132,7 @@ const SideNavBar = () => {
                                     >
                                       {item.subItems.map(subItem => (
                                         <motion.li
+                                          key={subItem.name}
                                           initial={{opacity: 0}}
                                           animate={{opacity: 1}}
                                           exit={{opacity: 0}}

@@ -1,4 +1,4 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { style } from '@vanilla-extract/css';
 import { themeVars } from '@/styles/theme.css';
 import { recipe } from '@vanilla-extract/recipes';
 

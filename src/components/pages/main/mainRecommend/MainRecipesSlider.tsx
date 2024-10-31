@@ -1,4 +1,3 @@
-import React from 'react';
 import * as styles from "./MainRecommend.css";
 import Image from "next/image";
 import Link from "next/link";

@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import * as styles from './MainService.css';
 import Image from "next/image";
 

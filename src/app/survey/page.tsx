@@ -7,7 +7,6 @@ import SurveyPagination from "@/components/survey/surveyPagination/SurveyPaginat
 import useStep from "@/hooks/useStep";
 import { getSurveySteps } from "@/components/survey/surveySteps/SurveySteps";
 import { useSurveyStore } from "@/store/useSurveyStore";
-import { StepProgressBar } from "@/components/survey/stepProgressBar/StepProgressBar";
 
 export default function SurveyPage() {
   const { stepLength, canNextStep } = useSurveyStore();
