@@ -1,7 +1,7 @@
 import { SurveyFormData } from "@/types/survey";
 import { BASIC_INFO } from "@/constants";
-import SurveyTextField from "@/components/survey/surveyTextField/SurveyTextField";
 import { ErrorValuesType } from "@/store/useSurveyStore";
+import SurveyTextField from "../surveyTextField/SurveyTextField";
 
 interface SurveyStep1Props {
   formData: SurveyFormData;

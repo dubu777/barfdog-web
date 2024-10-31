@@ -2,12 +2,12 @@
 
 import Header from "@/components/layout/header/Header";
 import useForm from "@/hooks/useForm";
-import SurveyForm from "@/components/survey/surveyForm/SurveyForm";
-import SurveyPagination from "@/components/survey/surveyPagination/SurveyPagination";
-import useStep from "@/hooks/useStep";
-import { getSurveySteps } from "@/components/survey/surveySteps/SurveySteps";
 import { useSurveyStore } from "@/store/useSurveyStore";
-import { StepProgressBar } from "@/components/survey/stepProgressBar/StepProgressBar";
+import useStep from "@/hooks/useStep";
+import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
+import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
+import SurveyPagination from "@/components/pages/survey/surveyPagination/SurveyPagination";
+
 
 export default function SurveyPage() {
   const { stepLength, canNextStep } = useSurveyStore();
