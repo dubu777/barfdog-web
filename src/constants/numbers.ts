@@ -71,23 +71,23 @@ export const SURVEY_FORM_INFO: SurveyFormInfo = {
       id: "birth",
       inputType: "selectBox",
       title: "출생일은 언제인가요?",
-      options: [
-        ...Array.from({ length: 50 }, (_, i) => {
-          const year = new Date().getFullYear() - i;
-          return {
-            id: "year",
-            label: `${year}년`,
-            value: year.toString(),
-          };
-        }),
-        ...Array.from({ length: 12 }, (_, i) => {
-          const month = (i + 1).toString().padStart(2, "0");
-          return {
-            id: "month",
-            label: `${month}월`,
-            value: month,
-          };
-        }),
+      linkedFields: [
+        {
+          id: "year",
+          label: "년",
+          options: Array.from({ length: 50 }, (_, i) => {
+            const year = new Date().getFullYear() - i;
+            return { label: `${year}년`, value: year.toString() };
+          }),
+        },
+        {
+          id: "month",
+          label: "월",
+          options: Array.from({ length: 12 }, (_, i) => {
+            const month = (i + 1).toString().padStart(2, "0");
+            return { label: `${month}월`, value: month };
+          }),
+        },
       ],
     },
   },

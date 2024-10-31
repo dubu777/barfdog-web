@@ -7,12 +7,13 @@ import { ReactNode } from "react";
 import { StepProgressBar } from "../stepProgressBar/StepProgressBar";
 import SurveyTextField from "../surveyTextField/SurveyTextField";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { SurveyField, SurveyFormInfo } from "@/types/survey";
 
 
 interface SurveyFormProps {
   currentStep: number;
   direction: number;
-  stepData: any;
+  stepData: SurveyFormInfo;
 }
 
 export default function SurveyForm({

@@ -50,7 +50,9 @@ interface SelectBoxField {
   title: string;
   frontWord?: string;
   placeholder?: string;
-  options: { label: string; value: string }[];
+  options?: { label: string; value: string }[];
+  multipleSelection?: boolean;
+  linkedFields?: { id: string; label: string; options: { label: string; value: string }[] }[]; // for linked select fields like year/month
 }
 
 interface SearchableSelectBoxField {
@@ -61,18 +63,13 @@ interface SearchableSelectBoxField {
   options: string[];
 }
 
-interface DateField {
-  id: string;
-  inputType: "date";
-  title: string;
-  years: { label: string; value: string }[];
-  months: { label: string; value: string }[];
-}
 
-type SurveyField = TextField | ButtonField | SelectBoxField | SearchableSelectBoxField | DateField;
+type SurveyFormInputType = "button" | "selectBox" | "searchableSelectBox" | "textField";
+
+type SurveyField = TextField | ButtonField | SelectBoxField | SearchableSelectBoxField;
 
 type StepFields = Record<string, SurveyField>;
 type SurveyFormInfo = Record<`step${number}`, StepFields>;
 
 
-export type{SurveyFormData, TextField, ButtonField, SelectBoxField, SearchableSelectBoxField, DateField, SurveyField, StepFields, SurveyFormInfo}
+export type{SurveyFormData, TextField, ButtonField, SurveyFormInputType, SelectBoxField, SearchableSelectBoxField, SurveyField, StepFields, SurveyFormInfo}
