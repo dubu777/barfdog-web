@@ -1,6 +1,6 @@
 "use client";
 
-import { surveyValidation } from "@/utils";
+import { isValidLength, surveyValidation } from "@/utils";
 import { SurveyFormData } from "@/types/survey";
 import { useSurveyStore } from "@/store/useSurveyStore";
 import { useEffect } from "react";
@@ -16,6 +16,9 @@ export default function useForm(
     updateErrorMessages,
     setCanNextStep,
     hasErrorMessages,
+    updateStepValues,
+    stepValues,
+    isStepComplete,
   } = useSurveyStore();
 
   // number 로 들어오는 current step 가공
@@ -25,12 +28,22 @@ export default function useForm(
   const stepKey = convertNumberToStepKey(currentStep);
 
   useEffect(() => {
-    if (!hasErrorMessages(stepKey)) {
+    if (
+      !hasErrorMessages(stepKey) &&
+      isStepComplete(stepKey) &&
+      (stepKey !== "step16" || formData.priorityConcerns.length === 3)
+    ) {
       setCanNextStep(true);
     } else {
       setCanNextStep(false);
     }
-  }, [hasErrorMessages(stepKey), setCanNextStep, stepKey, formData]);
+  }, [
+    hasErrorMessages(stepKey),
+    stepValues,
+    stepKey,
+    setCanNextStep,
+    formData.priorityConcerns.length,
+  ]);
 
   // 폼 값 변경 처리 함수
   const handleChange = (
@@ -41,6 +54,7 @@ export default function useForm(
     handleTryCatch(() => {
       surveyValidation[key](value);
       updateFormData(key, value, isMultiSelect);
+      updateStepValues(stepKey, key as string, value as string, isMultiSelect);
       updateErrorMessages(stepKey, key as string, null);
     }, key);
     if (
@@ -57,13 +71,6 @@ export default function useForm(
       !hasErrorMessages(stepKey)
     ) {
       handleNextStep();
-    } else if (
-      key === "priorityConcerns" &&
-      formData["priorityConcerns"].length === 3 &&
-      isMultiSelect &&
-      !hasErrorMessages(stepKey)
-    ) {
-      setCanNextStep(true);
     } else if (
       key !== "name" &&
       key !== "weight" &&
@@ -82,6 +89,7 @@ export default function useForm(
   ) => {
     const value = e.target.value;
     handleTryCatch(() => {
+      isValidLength(value, 1, 10);
       surveyValidation[key](value);
     }, key);
 
@@ -98,6 +106,7 @@ export default function useForm(
     const value = e.currentTarget.value;
     if (e.key === "Enter") {
       handleTryCatch(() => {
+        isValidLength(value, 1, 10);
         surveyValidation[key](value);
       }, key);
 
@@ -112,7 +121,7 @@ export default function useForm(
       funcs();
     } catch (error) {
       if (error instanceof Error) {
-        updateErrorMessages(stepKey, key as string, error.message); // key는 string으로 처리
+        updateErrorMessages(stepKey, key as string, error.message);
       }
     }
   };

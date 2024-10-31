@@ -24,8 +24,6 @@ export default function SurveyPagination({
 }: SurveyPaginationProps) {
   const progressPercentage = ((currentStep + 1) / stepLength) * 100;
 
-console.log(canNextStep, 'can');
-
   return (
     <footer className={styles.surveyPaginationContainer}>
       <div className={styles.progressBarContainer}>

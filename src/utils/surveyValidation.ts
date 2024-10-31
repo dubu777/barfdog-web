@@ -2,14 +2,6 @@
 
 import { SurveyFormData } from "@/types/survey";
 
-
-// 문자열이 비어있는지 확인하는 함수
-export const isNotEmpty = (str: string) => {
-  if (!str || str.trim() === "") {
-    throw new Error("항목을 입력해 주세요.");
-  }
-};
-
 // 숫자인지 확인하는 함수
 export const isNumber = (value: string | number) => {
   if (typeof value === "string" && !Number.isInteger(Number(value))) {
@@ -18,14 +10,9 @@ export const isNumber = (value: string | number) => {
 };
 
 // 문자열 길이가 적절한지 확인하는 함수
-export const isValidLength = (value: SurveyFormData[keyof SurveyFormData]) => {
-  if (typeof value === "string"  && (value.length < 1 || value.length > 10)) {
-    throw new Error("1자 이상 10자 이하로 입력해주세요.");
-  }
-};
-export const isNoneClick = (str: string) => {
-  if (str === "NONE") {
-    throw new Error("1자 이상 10자 이하로 입력해주세요.");
+export const isValidLength = (value: string, min: number, max: number) => {
+  if (typeof value === "string" && (value.length < min || value.length > max)) {
+    throw new Error(`${min}자 이상 ${max}자 이하로 작성해주세요.`);
   }
 };
 
@@ -34,7 +21,6 @@ export const isChecked = (value: SurveyFormData[keyof SurveyFormData]) => {
   if (value === null || value === "") {
     throw new Error("항목을 선택해 주세요.");
   }
-
   // 불리언 값이 있을 때는 에러를 발생시키지 않음
   if (typeof value === "boolean") {
     return; // 불리언 값이 있으면 통과
@@ -48,35 +34,25 @@ export const isChecked = (value: SurveyFormData[keyof SurveyFormData]) => {
 // 유효성 검증 적용
 export const surveyValidation: Record<
   keyof SurveyFormData,
-  (value: SurveyFormData[keyof SurveyFormData]) => void
+  (
+    value: SurveyFormData[keyof SurveyFormData],
+  ) => void
 > = {
-  name: (value: SurveyFormData[keyof SurveyFormData]) => {
-      isValidLength(value);
-  },
+  name: (value: SurveyFormData[keyof SurveyFormData]) => {},
   gender: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   birth: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isNotEmpty(value);
-    }
+    isChecked(value);
   },
   oldDog: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "boolean") {
-      isChecked(value); // boolean 값 처리
-    }
+    isChecked(value);
   },
   dogSize: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   dogType: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   weight: (value: SurveyFormData[keyof SurveyFormData]) => {
     if (typeof value === "string" || typeof value === "number") {
@@ -84,110 +60,63 @@ export const surveyValidation: Record<
     }
   },
   neutralization: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "boolean") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   activityLevel: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   walkingCountPerWeek: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   walkingTimePerOneTime: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   dogStatus: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   specificDogStatus: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   specificDogStatusEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   snackCountLevel: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   waterCountLevel: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   supplement: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
-
+    isChecked(value);
   },
   supplementEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   currentMeal: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   inedibleFood: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   inedibleFoodEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
-  recommendRecipeId: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string" && (!value || isNaN(Number(value)))) {
-      throw new Error("레시피 ID를 입력해 주세요.");
-    }
-  },
+  recommendRecipeId: (value: SurveyFormData[keyof SurveyFormData]) => {},
   caution: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   cautionEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   expectedPregnancyDay: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "string") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
   newToRawDiet: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (typeof value === "boolean") {
-      isChecked(value);
-    }
+    isChecked(value);
   },
-  priorityConcerns: (value: SurveyFormData[keyof SurveyFormData]) => {
-    if (Array.isArray(value)) {
-      if (value.length < 3) {
-        throw new Error("3개의 항목을 선택해 주세요.");
-      }
-    } else {
-      if (typeof value === "string") {
-      isChecked(value);
-    }
-  }
+  priorityConcerns: (
+    value: SurveyFormData[keyof SurveyFormData],
+  ) => {
+    isChecked(value);
   },
 };

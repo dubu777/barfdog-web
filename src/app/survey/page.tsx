@@ -28,7 +28,6 @@ export default function SurveyPage() {
     handleBlur,
     handleKeyDown,
   });
-  console.log(formData, "form");
 
   return (
     <>
