@@ -5,10 +5,10 @@ import {recipe} from "@vanilla-extract/recipes";
 
 export const sideNavBarWrapper = style([commonLayoutStyle, {
   position: 'fixed',
+  top: 0,
   width: '100%',
   height: '100vh',
-  zIndex: 300,
-  border: '1px solid red',
+  zIndex: 400,
   display: 'flex',
   justifyContent: 'flex-end',
 }])
@@ -57,6 +57,7 @@ export const navTitle = style({
 export const navItems = style({
   width: '100%',
   fontSize: themeVars.fontSize["text-md"],
+  textAlign: 'left',
   borderTop: `0.35px solid ${themeVars.borderColors.greyAC}`,
   borderBottom: `0.35px solid ${themeVars.borderColors.greyAC}`,
   padding: '21px 0 21px 19px',
@@ -64,15 +65,15 @@ export const navItems = style({
   flexDirection: 'column',
   alignItems: 'flex-start',
   gap: '21px',
-  selectors: {
-    // '&:last-child': {
-    //   borderBottom: 0,
-    // }
-  }
 })
 
 export const navItem = style({
   width: '100%',
+})
+
+export const navItemLink = style({
+  width: '100%',
+  textAlign: 'left',
 })
 
 export const subItemsTitle = style({
