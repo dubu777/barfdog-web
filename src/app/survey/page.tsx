@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/layout/header/Header";
-import useForm from "@/hooks/useForm";
+import useForm from "@/hooks/useSuveyForm";
 import { useSurveyStore } from "@/store/useSurveyStore";
 import useStep from "@/hooks/useStep";
 import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
