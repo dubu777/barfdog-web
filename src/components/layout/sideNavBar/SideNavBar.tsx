@@ -108,9 +108,11 @@ const SideNavBar = () => {
                       <h2 className={styles.navTitle}>{category.title}</h2>
                       <ul className={styles.navItems}>
                         {category.items.map(item => (
-                          <li className={styles.navItem}>
+                          <li className={styles.navItem} key={item.name}>
                             {!item.subItems
-                              ? <Link href={item.link}>{item.name}</Link>
+                              ? <Link href={item.link} className={styles.navItemLink}>
+                                {item.name}
+                              </Link>
                               : <>
                                 <button
                                   onClick={() => setOpenSubItems(!openSubItems)}

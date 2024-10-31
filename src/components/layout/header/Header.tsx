@@ -14,6 +14,7 @@ import { useBackNavigation } from "@/utils";
 import { usePathname } from "next/navigation";
 import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
+import { useAuthStore } from "@/store/useAuthSotre";
 
 interface HeaderProps {
   type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
@@ -22,6 +23,7 @@ interface HeaderProps {
 export default function Header({ type = "default" }: HeaderProps) {
   const pathname = usePathname();
   const { setIsOpenSideNavBar } = useCommonStore();
+  const { isLoggedIn } = useAuthStore();
   const hamburgerColor = type === "redBackground" ? "#ffffff" : "#4A4A4A";
   const goBack = useBackNavigation();
 
@@ -31,24 +33,28 @@ export default function Header({ type = "default" }: HeaderProps) {
         <TopBanner />
       }
       <section className={styles.headerWrapper}>
-        <Link href="/" className={styles.logo}>
-          <Image
-            src={type === "default" ? Logo : type === 'redBackground' && LogoWhite}
-            alt={type === 'redBackground' ? '화이트 로고' : '사이트 로고'}
-            width={148}
-            height={26}
-          />
-        </Link>
+        {type !== 'backButtonOnly' &&
+          <Link href="/" className={styles.logo}>
+            <Image
+              src={type === "default" ? Logo : type === 'redBackground' && LogoWhite}
+              alt={type === 'redBackground' ? '화이트 로고' : '사이트 로고'}
+              width={148}
+              height={26}
+            />
+          </Link>
+        }
         {(type === "withBackButton" || type === "backButtonOnly") && (
           <BackButton onClick={goBack} className={styles.headerButton} />
         )}
         {type !== "backButtonOnly" && (
           <div className={styles.headerMenuWrapper}>
             {type === "redBackground" ? (
-              <Hamburger stroke={hamburgerColor} />
+              <button onClick={() => setIsOpenSideNavBar(true)} className={styles.headerButton}>
+                <Hamburger stroke={hamburgerColor} />
+              </button>
             ) : (
               <>
-                <Link href="/mypage">
+                <Link href={!isLoggedIn ? "/login" : "/mypage"}>
                   <MyPage />
                 </Link>
                 <Link href="/cart">
