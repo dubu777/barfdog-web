@@ -8,7 +8,9 @@ export const defaultButtonStyle = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     transition: 'background-color 0.3s ease, opacity 0.3s ease',
-    padding: '0 16px',
+    gap: '10px',
+    textAlign: 'center',
+    lineHeight: '1',
   },
   variants: {
     type: {
@@ -99,5 +101,6 @@ export const defaultButtonStyle = recipe({
 });
 
 export const iconStyle = style({
-  marginRight: '8px',
+  display: 'flex',
+  alignItems: 'center',
 });

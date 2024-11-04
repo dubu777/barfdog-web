@@ -67,6 +67,13 @@ export default function useForm(
       key !== "name" &&
       key !== "weight" &&
       key !== "priorityConcerns" &&
+      key !== "inedibleFoodEtc" &&
+      key !== "specificDogStatusEtc" &&
+      key !== "cautionEtc" &&
+      key !== "supplementEtc" &&
+      key !== "supplement" &&
+      key !== "inedibleFood" &&
+      key !== "caution" &&
       !isMultiSelect &&
       !hasErrorMessages(stepKey)
     ) {
@@ -75,12 +82,20 @@ export default function useForm(
       key !== "name" &&
       key !== "weight" &&
       key !== "priorityConcerns" &&
+      key !== "inedibleFoodEtc" &&
+      key !== "specificDogStatusEtc" &&
+      key !== "cautionEtc" &&
+      key !== "supplementEtc" &&
+      key !== "supplement" &&
+      key !== "inedibleFood" &&
+      key !== "caution" &&
       isMultiSelect &&
       !hasErrorMessages(stepKey)
     ) {
       setCanNextStep(true);
     }
   };
+console.log('err', errorMessages);
 
   // 블러 이벤트 처리
   const handleBlur = (
@@ -89,8 +104,8 @@ export default function useForm(
   ) => {
     const value = e.target.value;
     handleTryCatch(() => {
-      isValidLength(value, 1, 10);
       surveyValidation[key](value);
+      isValidLength(value, 1, 10);
     }, key);
 
     if (!hasErrorMessages(stepKey)) {
@@ -106,8 +121,8 @@ export default function useForm(
     const value = e.currentTarget.value;
     if (e.key === "Enter") {
       handleTryCatch(() => {
-        isValidLength(value, 1, 10);
         surveyValidation[key](value);
+        isValidLength(value, 1, 10);
       }, key);
 
       if (!hasErrorMessages(stepKey)) {

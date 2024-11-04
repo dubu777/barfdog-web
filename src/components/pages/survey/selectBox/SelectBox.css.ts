@@ -5,6 +5,8 @@ export const selectBoxContainer = style({
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
+  width: '100%',
+  
 });
 
 export const selectInputWrapper = style({
@@ -15,28 +17,27 @@ export const selectInputWrapper = style({
 });
 
 export const inputField = style({
-  fontSize: themeVars.fontSize["text-md"],
-  textAlign: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: themeVars.fontSize["text-sm"],
   width: '100%',
   height: '100%',
-  outline: '0',
-  padding: '4px 8px',
   minHeight: '45px',
   borderRadius: '9px',
+  backgroundColor: themeVars.backgroundColors.white,
   border: `1px solid ${themeVars.borderColors.greyDD}`,
   cursor: 'pointer',
-  // zIndex: 3,
 });
 
 export const frontWord = style({
-  fontSize: themeVars.fontSize["text-md"],
-  marginRight: '13px',
+  fontSize: themeVars.fontSize["text-sm"],
   minWidth: '60px',
 });
 
 export const unit = style({
   position: 'absolute',
-  fontSize: themeVars.fontSize["text-md"],
+  fontSize: themeVars.fontSize["text-sm"],
   right: '1.25rem',
   top: '50%',
   transform: 'translateY(-50%)',
@@ -49,7 +50,7 @@ export const optionsContainer = style({
   width: '100%',
   zIndex: 2,
   borderRadius: '0.5rem',
-  fontSize: themeVars.fontSize["text-md"],
+  fontSize: themeVars.fontSize["text-sm"],
   boxShadow: '0 0 1.5625rem rgba(0, 0, 0, 0.1)',
   backgroundColor: themeVars.colors.white,
 });

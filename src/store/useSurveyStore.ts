@@ -39,7 +39,7 @@ export const useSurveyStore = create<SurveyStore>((set, get) => ({
         ? (state.formData[key] as SurveyFormData[keyof SurveyFormData][]) 
         : [];
   
-      // "NONE"이 이미 선택된 상태에서 다른 값을 추가할 경우 "NONE"을 제거
+      // NONE 또는 ETC가 이미 선택된 상태에서 다른 값을 추가할 경우 해당 항목을 제거
       const updatedSelections = selectedArray.includes("NONE")
         ? selectedArray.filter((item) => item !== "NONE")
         : selectedArray;

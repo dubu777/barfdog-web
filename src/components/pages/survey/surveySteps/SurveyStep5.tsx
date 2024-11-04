@@ -6,7 +6,7 @@ import SelectBox from "../selectBox/SelectBox";
 import { surveyInputWrapper, surveyTitle } from "@/app/survey/Survey.css";
 import { useState } from "react";
 import { getPetNameWithSuffix } from "@/utils";
-import { BASIC_INFO } from "@/constants";
+import { SURVEY_FORM_INFO } from "@/constants";
 
 interface SurveyStep2Props {
   formData: SurveyFormData;
@@ -30,11 +30,11 @@ console.log(year, 'year');
     setMonth(newMonth);
 
     if (newYear && newMonth) {
-      handleChange(BASIC_INFO.birth.name, `${newYear}${newMonth}`);
+      handleChange(SURVEY_FORM_INFO.birth.id, `${newYear}${newMonth}`);
     }
   };
 
-  const title = BASIC_INFO.birth.title
+  const title = SURVEY_FORM_INFO.birth.title
   const petName = formData.name
   const fullTitle = title && petName
   ? getPetNameWithSuffix(petName, title) 
@@ -46,7 +46,7 @@ console.log(year, 'year');
       <div className={styles.birthContainer}>
         <SelectBox
           id="yyyy"
-          options={BASIC_INFO.birth.years}
+          options={SURVEY_FORM_INFO.birth.years}
           placeholder="년도"
           onSelect={(value) => handleBirthChange(value, month)}
           selectedValue={year || formData.birth.slice(0, 4)}
@@ -54,7 +54,7 @@ console.log(year, 'year');
 
         <SelectBox
           id="mm"
-          options={BASIC_INFO.birth.months}
+          options={SURVEY_FORM_INFO.birth.months}
           placeholder="월"
           onSelect={(value) => handleBirthChange(year, value)}
           selectedValue={month || formData.birth.slice(4, 6)}

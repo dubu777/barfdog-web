@@ -3,7 +3,7 @@ import { themeVars } from '@/styles/theme.css';
 import { recipe } from '@vanilla-extract/recipes';
 
 export const stepContainer = style({
-  width: '600px',
+  width: '500px',
   height: '100px',
   display: 'flex',
   justifyContent: 'center',
@@ -11,11 +11,11 @@ export const stepContainer = style({
   color: themeVars.fontColors.mainRed,
   textAlign: 'center',
   position: 'relative',
-  marginBottom: '50px',
+  marginBottom: '35px',
 
   '@media': {
     'screen and (max-width: 500px)': {
-      width: '380px',
+      width: '280px',
       gap: '30px',
     },
   },
@@ -23,9 +23,9 @@ export const stepContainer = style({
 
 export const stepLine = style({
   position: 'absolute',
-  top: '30%',
+  top: '35%',
   height: '3px',
-  width: '60%',
+  width: '63%',
   backgroundColor: themeVars.backgroundColors.mainRed,
 });
 
@@ -78,9 +78,10 @@ export const stepNumber = recipe({
   },
 });
 export const activeStepNumber = style({
-  color: 'white',
+  color: themeVars.fontColors.white,
 });
 
 export const stepText = style({
-  color: '#be1a21',
+  color: themeVars.fontColors.mainRed,
+  fontSize: themeVars.fontSize['text-sm'],
 });

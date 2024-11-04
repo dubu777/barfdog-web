@@ -13,7 +13,7 @@ export const buttonStyle = recipe({
     padding: '10px 20px',
     border: `1px solid ${themeVars.borderColors.greyDD}`,
     height: '45px',
-    fontSize: themeVars.fontSize["text-md"],
+    fontSize: themeVars.fontSize["text-sm"],
     transition: 'border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease',
     cursor: 'pointer',
     backgroundColor: themeVars.colors.white,

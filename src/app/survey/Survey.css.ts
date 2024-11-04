@@ -2,16 +2,12 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const surveyLayoutContainer = style({
-  height: 'calc(100vh - 62px)',
+  minHeight: 'calc(100vh - 153px)',
   width: '100%',
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
   marginTop: '62px',
+  marginBottom: '50px',
+  backgroundColor: themeVars.backgroundColors.pinkFa,
 });
-
 
 export const surveyTitle = style({
   fontSize: themeVars.fontSize["title-sm"],
@@ -22,4 +18,5 @@ export const surveyInputWrapper = style({
   display: "flex",
   flexDirection: "column",
   alignItems: 'center',
+  minWidth: '300px',
 })

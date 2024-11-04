@@ -3,6 +3,8 @@ import * as styles from "./SearchableSelectBox.css";
 import useModal from "@/hooks/useModal";
 import { AnimatePresence, motion } from "framer-motion";
 import { expandFromTopVariants } from "@/constants";
+import DownIcon from "/public/images/icons/angle-down.svg";
+import UpIcon from "/public/images/icons/angle-up.svg";
 
 interface SearchableSelectProps {
   options: readonly string[];
@@ -18,7 +20,7 @@ export default function SearchableSelectBox({
   placeholder1,
   placeholder2,
   onChange,
-}: SearchableSelectProps ) {
+}: SearchableSelectProps) {
   const { isOpen, onToggle, onClose, ref } = useModal();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -38,7 +40,14 @@ export default function SearchableSelectBox({
   return (
     <div className={styles.selectWrapper} ref={ref}>
       <div className={styles.viewer} onClick={onToggle}>
-        {selectedValue || placeholder1}
+        {selectedValue ? (
+          <p>{selectedValue}</p>
+        ) : (
+          <div className={styles.viewerWrapper}>
+            <p>{placeholder1}</p>
+            {isOpen ? <UpIcon /> : <DownIcon />}
+          </div>
+        )}
       </div>
       <AnimatePresence>
         {isOpen && (
@@ -74,4 +83,4 @@ export default function SearchableSelectBox({
       </AnimatePresence>
     </div>
   );
-};
+}

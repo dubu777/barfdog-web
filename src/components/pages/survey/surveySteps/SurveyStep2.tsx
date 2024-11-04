@@ -1,5 +1,5 @@
 import { SurveyFormData } from "@/types/survey";
-import { BASIC_INFO } from "@/constants";
+import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 
 interface SurveyStep2Props {
@@ -18,13 +18,12 @@ export default function SurveyStep2({
   
   return (
       <SurveyButtonList
-        options={BASIC_INFO.gender.options}
-        name={BASIC_INFO.gender.name}
-        title={BASIC_INFO.gender.title}
+        options={SURVEY_FORM_INFO.gender.options}
+        title={SURVEY_FORM_INFO.gender.title}
         selectedValue={formData.gender}
         petName={formData.name}
         onChange={(value) =>
-          handleChange(BASIC_INFO.gender.name, value as string)
+          handleChange(SURVEY_FORM_INFO.gender.id, value as string)
         }
       />
   );

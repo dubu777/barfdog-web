@@ -1,7 +1,8 @@
 import { SurveyFormData } from "@/types/survey";
-import { BASIC_INFO } from "@/constants";
+import { SURVEY_FORM_INFO } from "@/constants";
 import { ErrorValuesType } from "@/store/useSurveyStore";
 import SurveyTextField from "../surveyTextField/SurveyTextField";
+import { errorMessage } from "./SurveySteps.css";
 
 interface SurveyStep1Props {
   formData: SurveyFormData;
@@ -31,16 +32,15 @@ export default function SurveyStep1({
   return (
     <>
       <SurveyTextField
-        id={BASIC_INFO.name.id}
-        title={BASIC_INFO.name.title}
-        name={BASIC_INFO.name.name}
+        id={SURVEY_FORM_INFO.name.id}
+        title={SURVEY_FORM_INFO.name.title}
         value={formData.name}
-        placeholder={BASIC_INFO.name.placeholder}
-        onChange={(value) => handleChange(BASIC_INFO.name.name, value)}
-        onBlur={(e) => handleBlur(e, BASIC_INFO.name.name)}
-        onKeyDown={(e) => handleKeyDown(e, BASIC_INFO.name.name)} 
+        placeholder={SURVEY_FORM_INFO.name.placeholder}
+        onChange={(value) => handleChange(SURVEY_FORM_INFO.name.id, value)}
+        onBlur={(e) => handleBlur(e, SURVEY_FORM_INFO.name.id)}
+        onKeyDown={(e) => handleKeyDown(e, SURVEY_FORM_INFO.name.id)}
       />
-      <p>{errorMessages["step0"]["name"]}</p>
+      <p className={errorMessage}>{errorMessages["step0"]["name"]}</p>
     </>
   );
 }

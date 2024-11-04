@@ -15,7 +15,8 @@ export const birthContainer = style({
   alignItems: "center",
   justifyContent: "space-between",
   gap: "1.25rem",
-  fontSize: themeVars.fontSize["text-md"],
+  fontSize: themeVars.fontSize["text-sm"],
+  width: '100%',
 });
 
 export const walkingContainer = style({
@@ -24,5 +25,12 @@ export const walkingContainer = style({
   alignItems: "center",
   justifyContent: "space-between",
   gap: "1.25rem",
-  fontSize: themeVars.fontSize["text-md"],
+  fontSize: themeVars.fontSize["text-sm"],
+  width: '100%',
+});
+
+export const errorMessage = style({
+  fontSize: themeVars.fontSize["text-xs"],
+  color: themeVars.fontColors.mainRed,
+  marginTop: '10px',
 });

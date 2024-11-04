@@ -5,7 +5,6 @@ import { useSurveyStore } from "@/store/useSurveyStore";
 
 interface SurveyButtonProps {
   id: string;
-  name: string;
   value: string | boolean | number;
   isChecked: boolean;
   label: string;
@@ -15,7 +14,6 @@ interface SurveyButtonProps {
 
 export default function SurveyButton({
   id,
-  name,
   value,
   isChecked,
   label,
@@ -26,7 +24,6 @@ export default function SurveyButton({
       <button
         type="button"
         id={id}
-        name={name}
         className={styles.buttonStyle({ checked: isChecked, type: layoutType })}
         onClick={() => onChange(value)}
       >

@@ -14,17 +14,17 @@ const initialSurveyValue = {
   walkingTimePerOneTime: "",
   dogStatus: "",
   specificDogStatus: "",
-  specificDogStatusEtc: "NONE",
+  specificDogStatusEtc: "",
   snackCountLevel: "",
   waterCountLevel: "",
   supplement: "",
-  supplementEtc: "NONE",
+  supplementEtc: "",
   currentMeal: "",
   inedibleFood: "",
-  inedibleFoodEtc: "NONE",
+  inedibleFoodEtc: "",
   recommendRecipeId: null,
   caution: "NONE",
-  cautionEtc: "NONE",
+  cautionEtc: "",
   expectedPregnancyDay: "",
   newToRawDiet: null,
   priorityConcerns: "",
@@ -75,32 +75,38 @@ const initialErrorValues = {
   step16: { priorityConcerns: "" },
 };
 
-const BASIC_INFO = {
+const SURVEY_FORM_INFO = {
   name: {
     id: "name",
-    name: "name",
-    placeholder: "이름을 입력해주세요",
+    inputType: "textField",
     title: "반려견 이름이 무엇인가요?",
+    placeholder: "이름을 입력해주세요",
   },
   gender: {
-    name: "gender",
+    id: "gender",
+    inputType: "button",
     title: "성별은 무엇인가요?",
+    isMultiSelect: false,
     options: [
       { id: "gender-MALE", value: "MALE", label: "수컷" },
       { id: "gender-FEMALE", value: "FEMALE", label: "암컷" },
     ],
   },
   neutralization: {
-    name: "neutralization",
+    id: "neutralization",
+    inputType: "button",
     title: "중성화 여부를 알려주세요",
+    isMultiSelect: false,
     options: [
       { id: "neutralization했습니다", value: true, label: "했습니다" },
       { id: "neutralization안했습니다", value: false, label: "안했습니다" },
     ],
   },
   dogSize: {
-    name: "dogSize",
+    id: "dogSize",
+    inputType: "button",
     title: "견종은 무엇인가요?",
+    isMultiSelect: false,
     options: [
       { id: "dogSize-SMALL", value: "SMALL", label: "소형견" },
       { id: "dogSize-MIDDLE", value: "MIDDLE", label: "중형견" },
@@ -108,8 +114,8 @@ const BASIC_INFO = {
     ],
   },
   dogType: {
-    name: "dogType",
-    title: "견종선택",
+    id: "dogType",
+    inputType: "searchableSelectBox",
     placeholder1: "견종을 선택해주세요.",
     placeholder2: "견종을 입력해주세요.",
     options: [
@@ -336,7 +342,8 @@ const BASIC_INFO = {
     ],
   },
   birth: {
-    name: "birth",
+    id: "birth",
+    inputType: "selectBox",
     title: "출생일은 언제인가요?",
     years: Array.from({ length: 50 }, (_, i) => {
       const year = new Date().getFullYear() - i;
@@ -355,35 +362,40 @@ const BASIC_INFO = {
   },
   weight: {
     id: "weight",
-    name: "weight",
+    inputType: "textField",
     title: "몸무게는 얼마인가요?",
-    unit: "kg",
     placeholder: "몸무게를 입력해주세요",
+    unit: "kg",
   },
-  oldDog: {
-    name: "oldDog",
-    options: {
-      id: "oldDog",
-      label: "노령견입니다.",
-    },
-  },
-} as const;
-
-const HEALTH_INFO = {
   dogStatus: {
-    name: "dogStatus",
+    id: "dogStatus",
+    inputType: "button",
     title: "현재 상태는 어떤가요?",
+    isMultiSelect: true,
     options: [
       { id: "dogStatus-HEALTHY", value: "HEALTHY", label: "건강해요" },
       { id: "dogStatus-NEED_DIET", value: "NEED_DIET", label: "다이어트 필요" },
       { id: "dogStatus-OBESITY", value: "OBESITY", label: "심각한 비만" },
       { id: "dogStatus-PREGNANT", value: "PREGNANT", label: "임신한 상태" },
       { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
+      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
     ],
   },
   activityLevel: {
-    name: "activityLevel",
+    id: "activityLevel",
+    inputType: "button",
     title: "활동량은 어떤가요?",
+    isMultiSelect: false,
     options: [
       {
         id: "activityLevel-VERY_MUCH",
@@ -402,7 +414,7 @@ const HEALTH_INFO = {
   },
   walkingCountPerWeek: {
     id: "walkingCountPerWeek",
-    name: "walkingCountPerWeek",
+    inputType: "selectBox",
     title: "산책량은 어떤가요?",
     frontWord: "주 평균",
     placeholder: "횟수",
@@ -416,7 +428,7 @@ const HEALTH_INFO = {
   },
   walkingTimePerOneTime: {
     id: "walkingTimePerOneTime",
-    name: "walkingTimePerOneTime",
+    inputType: "selectBox",
     title: "일주일 산책 횟수",
     frontWord: "1회 당",
     placeholder: "시간",
@@ -430,50 +442,32 @@ const HEALTH_INFO = {
     }),
   },
   snackCountLevel: {
-    name: "snackCountLevel",
+    id: "snackCountLevel",
+    inputType: "button",
     title: "간식량은 어떤가요?",
+    isMultiSelect: false,
     options: [
-      {
-        id: "snackCountLevel-LITTLE",
-        value: "LITTLE",
-        label: "적어요",
-      },
-      {
-        id: "snackCountLevel-NORMAL",
-        value: "NORMAL",
-        label: "적당해요",
-      },
-      {
-        id: "snackCountLevel-MUCH",
-        value: "MUCH",
-        label: "많아요",
-      },
+      { id: "snackCountLevel-LITTLE", value: "LITTLE", label: "적어요" },
+      { id: "snackCountLevel-NORMAL", value: "NORMAL", label: "적당해요" },
+      { id: "snackCountLevel-MUCH", value: "MUCH", label: "많아요" },
     ],
   },
   waterCountLevel: {
-    name: "waterCountLevel",
+    id: "waterCountLevel",
+    inputType: "button",
     title: "음수량은 어떤가요?",
+    isMultiSelect: false,
     options: [
-      {
-        id: "waterCountLevel-LITTLE",
-        value: "LITTLE",
-        label: "적어요",
-      },
-      {
-        id: "waterCountLevel-NORMAL",
-        value: "NORMAL",
-        label: "적당해요",
-      },
-      {
-        id: "waterCountLevel-MUCH",
-        value: "MUCH",
-        label: "많아요",
-      },
+      { id: "waterCountLevel-LITTLE", value: "LITTLE", label: "적어요" },
+      { id: "waterCountLevel-NORMAL", value: "NORMAL", label: "적당해요" },
+      { id: "waterCountLevel-MUCH", value: "MUCH", label: "많아요" },
     ],
   },
   supplement: {
-    name: "supplement",
+    id: "supplement",
+    inputType: "button",
     title: "현재 먹고 있는 영양제는 무엇인가요?",
+    isMultiSelect: true,
     options: [
       { id: "supplement-NONE", value: "NONE", label: "없어요" },
       { id: "supplement-유산균", value: "유산균", label: "유산균" },
@@ -489,9 +483,16 @@ const HEALTH_INFO = {
       { id: "supplement-ETC", value: "ETC", label: "기타" },
     ],
   },
+  supplementEtc: {
+    id: "supplementEtc",
+    name: "supplementEtc",
+    placeholder: "선택지에 없는 경우 기재해주세요.",
+  },
   inedibleFood: {
-    name: "inedibleFood",
+    id: "inedibleFood",
+    inputType: "button",
     title: "못 먹는 재료가 있나요?",
+    isMultiSelect: true,
     options: [
       { id: "inedibleFood-NONE", value: "NONE", label: "없어요" },
       { id: "inedibleFood-닭", value: "닭", label: "닭" },
@@ -502,9 +503,16 @@ const HEALTH_INFO = {
       { id: "inedibleFood-ETC", value: "ETC", label: "기타" },
     ],
   },
+  inedibleFoodEtc: {
+    id: "inedibleFoodEtc",
+    name: "inedibleFoodEtc",
+    placeholder: "선택지에 없는 경우 기재해주세요.",
+  },
   currentMeal: {
-    name: "currentMeal",
+    id: "currentMeal",
+    inputType: "button",
     title: "현재 먹고 있는 식사는 어떤 것인가요?",
+    isMultiSelect: true,
     options: [
       { id: "currentMeal-건사료", value: "건사료", label: "건사료" },
       {
@@ -523,8 +531,10 @@ const HEALTH_INFO = {
     ],
   },
   caution: {
-    name: "caution",
+    id: "caution",
+    inputType: "button",
     title: "건강적 특이사항, 질병이 있나요?",
+    isMultiSelect: true,
     options: [
       { id: "caution-NONE", value: "NONE", label: "없어요" },
       { id: "caution-관절염", value: "관절염", label: "관절염" },
@@ -538,53 +548,47 @@ const HEALTH_INFO = {
       { id: "caution-간 질환", value: "간 질환", label: "간 질환" },
       { id: "caution-췌장염", value: "췌장염", label: "췌장염" },
       { id: "caution-심장 질환", value: "심장 질환", label: "심장 질환" },
-      { id: "caution-기타", value: "기타", label: "기타" },
+      { id: "caution-기타", value: "ETC", label: "기타" },
     ],
   },
-} as const;
-
-const ADDITIONAL_INFO = {
+  cautionEtc: {
+    id: "cautionEtc",
+    name: "cautionEtc",
+    placeholder: "선택지에 없는 경우 기재해주세요.",
+  },
   newToRawDiet: {
-    name: "newToRawDiet",
+    id: "newToRawDiet",
+    inputType: "button",
     title: "생식 급여가 처음인가요?",
+    isMultiSelect: false,
     options: [
       { id: "newToRawDiet-Yes", value: true, label: "네" },
       { id: "newToRawDiet-NO", value: false, label: "아니요" },
     ],
   },
   priorityConcerns: {
-    name: "priorityConcerns",
-    title: "특별히 챙겨주고 싶은 부분은",
+    id: "priorityConcerns",
+    inputType: "button",
+    title: "고민되는 항목 우성 순위 3가지를 선택해주세요.",
+    isMultiSelect: true,
     options: [
       {
         id: "recommendRecipeId-5",
         value: "구토·설사·복통",
         label: "구토·설사·복통",
       },
-      {
-        id: "recommendRecipeId-6",
-        value: '체중 조절',
-        label: "체중 조절",
-      },
-      {
-        id: "recommendRecipeId-7",
-        value: "피로회복",
-        label: "피로회복",
-      },
-      {
-        id: "recommendRecipeId-8",
-        value: "눈물·눈곱",
-        label: "눈물·눈곱",
-      },
+      { id: "recommendRecipeId-6", value: "체중 조절", label: "체중 조절" },
+      { id: "recommendRecipeId-7", value: "피로회복", label: "피로회복" },
+      { id: "recommendRecipeId-8", value: "눈물·눈곱", label: "눈물·눈곱" },
       { id: "recommendRecipeId-9", value: "적은 음수량", label: "적은 음수량" },
       { id: "recommendRecipeId-10", value: "피부·모질", label: "피부·모질" },
-      {
-        id: "recommendRecipeId-11",
-        value: "관절 건강",
-        label: "관절 건강",
-      },
+      { id: "recommendRecipeId-11", value: "관절 건강", label: "관절 건강" },
       { id: "recommendRecipeId-12", value: "자견 발육", label: "자견 발육" },
-      { id: "recommendRecipeId-13", value: "노령견 건강", label: "노령견 건강" },
+      {
+        id: "recommendRecipeId-13",
+        value: "노령견 건강",
+        label: "노령견 건강",
+      },
     ],
   },
 } as const;
@@ -593,7 +597,5 @@ export {
   initialSurveyValue,
   initialStepValues,
   initialErrorValues,
-  BASIC_INFO,
-  HEALTH_INFO,
-  ADDITIONAL_INFO,
+  SURVEY_FORM_INFO,
 };

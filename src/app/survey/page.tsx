@@ -29,6 +29,7 @@ export default function SurveyPage() {
     handleKeyDown,
   });
 
+
   return (
     <>
       <Header type="redBackground" />

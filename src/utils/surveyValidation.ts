@@ -78,7 +78,7 @@ export const surveyValidation: Record<
     isChecked(value);
   },
   specificDogStatusEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    isChecked(value);
+
   },
   snackCountLevel: (value: SurveyFormData[keyof SurveyFormData]) => {
     isChecked(value);
@@ -90,7 +90,7 @@ export const surveyValidation: Record<
     isChecked(value);
   },
   supplementEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    isChecked(value);
+
   },
   currentMeal: (value: SurveyFormData[keyof SurveyFormData]) => {
     isChecked(value);
@@ -99,14 +99,14 @@ export const surveyValidation: Record<
     isChecked(value);
   },
   inedibleFoodEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    isChecked(value);
+
   },
   recommendRecipeId: (value: SurveyFormData[keyof SurveyFormData]) => {},
   caution: (value: SurveyFormData[keyof SurveyFormData]) => {
     isChecked(value);
   },
   cautionEtc: (value: SurveyFormData[keyof SurveyFormData]) => {
-    isChecked(value);
+
   },
   expectedPregnancyDay: (value: SurveyFormData[keyof SurveyFormData]) => {
     isChecked(value);

@@ -2,6 +2,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import * as styles from "./SelectBox.css";
 import useModal from "@/hooks/useModal";
 import { expandFromTopVariants } from "@/constants";
+import DownIcon from "/public/images/icons/angle-down.svg";
+import UpIcon from "/public/images/icons/angle-up.svg";
+import { viewerWrapper } from "../searchableSelectBox/SearchableSelectBox.css";
 
 interface SelectBoxProps {
   id: string;
@@ -27,26 +30,24 @@ export default function SelectBox({
     onClose();
   };
 
-  const selectedLabel = options.find((option) => option.value === selectedValue)?.label || placeholder;
-console.log(selectedLabel, 'selectedLabel');
-console.log(selectedValue, 'selectedValue');
+  const selectedLabel =
+    options.find((option) => option.value === selectedValue)?.label ||
+    placeholder;
 
   return (
     <div className={styles.selectBoxContainer} ref={ref}>
       {frontWord && <p className={styles.frontWord}>{frontWord}</p>}
       <div className={styles.selectInputWrapper}>
-        <input
-          className={styles.inputField}
-          type="text"
-          id={id}
-          placeholder={placeholder}
-          readOnly
-          value={selectedLabel}
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggle();
-          }}
-        />
+        <div className={styles.inputField} onClick={onToggle}>
+          {selectedValue ? (
+            <p>{selectedLabel}</p>
+          ) : (
+            <div className={viewerWrapper}>
+              <p>{placeholder}</p>
+              {isOpen ? <UpIcon /> : <DownIcon />}
+            </div>
+          )}
+        </div>
         <AnimatePresence>
           {isOpen && (
             <div className={styles.optionsContainer}>

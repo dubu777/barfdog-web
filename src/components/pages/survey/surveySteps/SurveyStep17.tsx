@@ -1,5 +1,5 @@
 import { SurveyFormData } from "@/types/survey";
-import { ADDITIONAL_INFO, HEALTH_INFO } from "@/constants";
+import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 
 interface SurveyStep17Props {
@@ -28,7 +28,7 @@ export default function SurveyStep17({
   handleChange,
 }: SurveyStep17Props) {
   const handlePriorityConcernsChange = (selectedLabel: string) => {
-    handleChange(ADDITIONAL_INFO.priorityConcerns.name, selectedLabel as string, true);
+    handleChange(SURVEY_FORM_INFO.priorityConcerns.id, selectedLabel as string, true);
 
     const priorityConcerns = formData.priorityConcerns
 
@@ -41,9 +41,8 @@ export default function SurveyStep17({
   };
   return (
       <SurveyButtonList
-        options={ADDITIONAL_INFO.priorityConcerns.options}
-        name={ADDITIONAL_INFO.priorityConcerns.name}
-        title={ADDITIONAL_INFO.priorityConcerns.title}
+        options={SURVEY_FORM_INFO.priorityConcerns.options}
+        title={SURVEY_FORM_INFO.priorityConcerns.title}
         selectedValue={formData.priorityConcerns}
         petName={formData.name}
         layoutType="grid"

@@ -1,5 +1,5 @@
 import { SurveyFormData } from "@/types/survey";
-import { HEALTH_INFO } from "@/constants";
+import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 
 interface SurveyStep2Props {
@@ -17,13 +17,12 @@ export default function SurveyStep11({
   
   return (
       <SurveyButtonList
-        options={HEALTH_INFO.waterCountLevel.options}
-        name={HEALTH_INFO.waterCountLevel.name}
-        title={HEALTH_INFO.waterCountLevel.title}
+        options={SURVEY_FORM_INFO.waterCountLevel.options}
+        title={SURVEY_FORM_INFO.waterCountLevel.title}
         selectedValue={formData.waterCountLevel}
         petName={formData.name}
         onChange={(value) =>
-          handleChange(HEALTH_INFO.waterCountLevel.name, value as string)
+          handleChange(SURVEY_FORM_INFO.waterCountLevel.id, value as string)
         }
       />
   );

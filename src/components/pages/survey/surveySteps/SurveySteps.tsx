@@ -60,6 +60,7 @@ export const getSurveySteps = ({
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
+      errorMessages={errorMessages}
     />,
     <SurveyStep7 formData={formData} handleChange={handleChange} />,
     <SurveyStep8 formData={formData} handleChange={handleChange} />,

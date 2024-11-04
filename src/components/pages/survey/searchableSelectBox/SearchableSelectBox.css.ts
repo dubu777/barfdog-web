@@ -18,7 +18,7 @@ export const viewer = style({
   marginBottom: '.25rem',
   backgroundColor: themeVars.backgroundColors.white,
   border: `1px solid ${themeVars.borderColors.greyDD}`,
-  fontSize: themeVars.fontSize['text-md'],
+  fontSize: themeVars.fontSize['text-sm'],
   color: themeVars.fontColors.grey89,
 });
 
@@ -34,6 +34,7 @@ export const optionsContainer = style({
   padding: '0.3125rem',
   backgroundColor: themeVars.colors.white,
   border: `0.0625rem solid ${themeVars.borderColors.greyBB}`,
+  fontSize: themeVars.fontSize['text-sm'],
   borderRadius: '0.25rem',
   zIndex: 10,
   boxShadow: '0 0 1.5625rem rgba(0, 0, 0, 0.1)',
@@ -52,7 +53,7 @@ export const optionsWrapper = style({
   },
 
   '::-webkit-scrollbar-track': {
-    backgroundColor: themeVars.borderColors.greyBB,
+    backgroundColor: themeVars.borderColors.greyDD,
     borderRadius: '10px',
   },
 });
@@ -72,7 +73,7 @@ export const option = style({
 
 export const inputStyle = style({
   width: '100%',
-  padding: '0.25rem',
+  padding: '0 15px',
   marginBottom: '0.5rem',
   height: '50px',
   outline: '0',
@@ -83,6 +84,14 @@ export const inputStyle = style({
       borderColor: themeVars.borderColors.mainRed,
     }
   }
+});
+
+export const viewerWrapper = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+  padding: '0 15px',
 });
 
 

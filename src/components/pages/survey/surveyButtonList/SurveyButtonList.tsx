@@ -1,8 +1,11 @@
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import * as styles from "./SurveyButtonList.css";
 import { surveyTitle } from "@/app/survey/Survey.css";
 import { getPetNameWithSuffix } from "@/utils";
 import SurveyButton from "../surveyButton/SurveyButton";
+import SurveyTextField from "../surveyTextField/SurveyTextField";
 
 interface SurveyButtonListProps {
   options: readonly {
@@ -10,7 +13,6 @@ interface SurveyButtonListProps {
     value: string | boolean | number;
     label: string;
   }[];
-  name: string;
   selectedValue: string | boolean | number | (string | number | boolean)[] | null;
   onChange: (value: string | number | boolean | (string | number | boolean)[]) => void;
   title: string;
@@ -21,16 +23,14 @@ interface SurveyButtonListProps {
 
 export default function SurveyButtonList({
   options,
-  name,
   selectedValue,
-  onChange,
   layoutType = "row",
+  onChange,
   title,
   petName,
   isMultiSelect = false,
 }: SurveyButtonListProps) {
   const fullTitle = getPetNameWithSuffix(petName, title);
-  
 
   return (
     <div className={styles.surveyButtonListContainer}>
@@ -40,7 +40,6 @@ export default function SurveyButtonList({
         <SurveyButton
           key={option.id}
           id={option.id}
-          name={name}
           value={option.value}
           isChecked={
             isMultiSelect
@@ -53,6 +52,7 @@ export default function SurveyButtonList({
         />
       ))}
       </div>
+
     </div>
   );
 }

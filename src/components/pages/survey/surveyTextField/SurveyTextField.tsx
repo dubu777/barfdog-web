@@ -6,7 +6,6 @@ import { getPetNameWithSuffix } from '@/utils';
 
 interface DefaultTextFieldProps {
   id: string;
-  name: string;
   value: string;
   onChange: (value: string) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -19,7 +18,6 @@ interface DefaultTextFieldProps {
 
 export default function SurveyTextField({
   id,
-  name,
   value,
   onChange,
   onBlur,
@@ -45,7 +43,6 @@ export default function SurveyTextField({
             className={styles.textInput}
             type="text"
             id={id}
-            name={name}
             placeholder={placeholder}
             value={value}
             onChange={handleInputChange}

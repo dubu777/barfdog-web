@@ -1,5 +1,5 @@
 import { SurveyFormData } from "@/types/survey";
-import { HEALTH_INFO } from "@/constants";
+import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 
 interface SurveyStep2Props {
@@ -17,14 +17,13 @@ export default function SurveyStep8({
   
   return (
       <SurveyButtonList
-        options={HEALTH_INFO.activityLevel.options}
-        name={HEALTH_INFO.activityLevel.name}
-        title={HEALTH_INFO.activityLevel.title}
+        options={SURVEY_FORM_INFO.activityLevel.options}
+        title={SURVEY_FORM_INFO.activityLevel.title}
         selectedValue={formData.activityLevel}
         petName={formData.name}
         layoutType="col"
         onChange={(value) =>
-          handleChange(HEALTH_INFO.activityLevel.name, value as string)
+          handleChange(SURVEY_FORM_INFO.activityLevel.id, value as string)
         }
       />
   );

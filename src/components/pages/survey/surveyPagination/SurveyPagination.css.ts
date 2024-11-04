@@ -3,11 +3,13 @@ import { style } from '@vanilla-extract/css';
 
 
 export const surveyPaginationContainer = style({
-  position: 'absolute',
+  position: 'fixed',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  maxWidth: '600px',
+  minWidth: '320px',
   left: 0,
   right: 0,
   bottom: 0,
@@ -21,9 +23,9 @@ export const surveyPaginationButtonWrapper = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  width: '280px',
+  width: '260px',
   gap: '35px',
-  padding: '20px 0',
+  padding: '18px 0',
 });
 
 export const progressBarContainer = style({

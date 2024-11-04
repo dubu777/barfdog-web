@@ -367,5 +367,4 @@ export const SURVEY_FORM_INFO = {
       ],
     },
   },
-  step17: {},
 } as const;

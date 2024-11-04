@@ -4,7 +4,7 @@ import { SurveyFormData } from "@/types/survey";
 import * as styles from "./SurveySteps.css";
 import SelectBox from "../selectBox/SelectBox";
 import { surveyInputWrapper, surveyTitle } from "@/app/survey/Survey.css";
-import { HEALTH_INFO } from "@/constants";
+import { SURVEY_FORM_INFO } from "@/constants";
 import { getPetNameWithSuffix } from "@/utils";
 
 interface SurveyStep2Props {
@@ -20,7 +20,7 @@ export default function SurveyStep9({
   handleChange,
 }: SurveyStep2Props) {
 
-  const title = HEALTH_INFO.walkingCountPerWeek.title
+  const title = SURVEY_FORM_INFO.walkingCountPerWeek.title
   const petName = formData.name
   const fullTitle = title && petName
   ? getPetNameWithSuffix(petName, title) 
@@ -31,27 +31,27 @@ export default function SurveyStep9({
       <h2 className={surveyTitle}>{fullTitle}</h2>
       <div className={styles.walkingContainer}>
         <SelectBox
-          id={HEALTH_INFO.walkingCountPerWeek.id}
-          options={HEALTH_INFO.walkingCountPerWeek.options}
-          placeholder={HEALTH_INFO.walkingCountPerWeek.placeholder}
-          frontWord={HEALTH_INFO.walkingCountPerWeek.frontWord}
+          id={SURVEY_FORM_INFO.walkingCountPerWeek.id}
+          options={SURVEY_FORM_INFO.walkingCountPerWeek.options}
+          placeholder={SURVEY_FORM_INFO.walkingCountPerWeek.placeholder}
+          frontWord={SURVEY_FORM_INFO.walkingCountPerWeek.frontWord}
           selectedValue={formData.walkingCountPerWeek}
           onSelect={(value) =>
             handleChange(
-              HEALTH_INFO.walkingCountPerWeek.name,
+              SURVEY_FORM_INFO.walkingCountPerWeek.id,
               value as string
             )
           }
         />
         <SelectBox
-          id={HEALTH_INFO.walkingTimePerOneTime.id}
-          options={HEALTH_INFO.walkingTimePerOneTime.options}
-          placeholder={HEALTH_INFO.walkingTimePerOneTime.placeholder}
-          frontWord={HEALTH_INFO.walkingTimePerOneTime.frontWord}
+          id={SURVEY_FORM_INFO.walkingTimePerOneTime.id}
+          options={SURVEY_FORM_INFO.walkingTimePerOneTime.options}
+          placeholder={SURVEY_FORM_INFO.walkingTimePerOneTime.placeholder}
+          frontWord={SURVEY_FORM_INFO.walkingTimePerOneTime.frontWord}
           selectedValue={formData.walkingTimePerOneTime}
           onSelect={(value) =>
             handleChange(
-              HEALTH_INFO.walkingTimePerOneTime.name,
+              SURVEY_FORM_INFO.walkingTimePerOneTime.id,
               value as string
             )
           }
