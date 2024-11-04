@@ -5,7 +5,7 @@ import { SurveyFormData } from "@/types/survey";
 import { useSurveyStore } from "@/store/useSurveyStore";
 import { useEffect } from "react";
 
-export default function useForm(
+export default function useSurveyForm(
   handleNextStep: () => void,
   currentStep: number
 ) {

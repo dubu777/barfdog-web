@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
     timeout: 1000,
     headers: {
         'Content-Type': 'application/json',
-        authorization: null,
+        authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsImlzcyI6ImJhcmZkb2ciLCJleHAiOjE3MzA3MTUyOTUsImVtYWlsIjoiZnJlc2hvdXJAbmF2ZXIuY29tIn0.Yl8hbxxeTac1doxZgizSuPy4FGGwbhKDONeTFEd7VoDwbp_-q8d8RPUZv8DwIMe1hoXYWTJ-ZDSa-ZXvjdMw_Q'
     }
 });
 

@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/layout/header/Header";
-import useForm from "@/hooks/useSuveyForm";
+import useSurveyForm from "@/hooks/useSuveyForm";
 import { useSurveyStore } from "@/store/useSurveyStore";
 import useStep from "@/hooks/useStep";
 import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
@@ -20,7 +20,7 @@ export default function SurveyPage() {
     isFirstStep,
   } = useStep(stepLength());
   const { formData, errorMessages, handleChange, handleBlur, handleKeyDown } =
-    useForm(handleNextStep, currentStep);
+  useSurveyForm(handleNextStep, currentStep);
   const steps = getSurveySteps({
     formData,
     errorMessages,
