@@ -26,19 +26,22 @@ export default function Header({ type = "default" }: HeaderProps) {
   const goBack = useBackNavigation();
 
   return (
-    <header className={`${commonLayoutStyle} ${styles.headerContainer({ type })}`}>
-      {pathname === '/' &&
-        <TopBanner />
-      }
+    <header
+      className={`${commonLayoutStyle} ${styles.headerContainer({ type })}`}
+    >
+      {pathname === "/" && <TopBanner />}
       <section className={styles.headerWrapper}>
-        <Link href="/" className={styles.logo}>
-          <Image
-            src={type === "default" ? Logo : type === 'redBackground' && LogoWhite}
-            alt={type === 'redBackground' ? '화이트 로고' : '사이트 로고'}
-            width={148}
-            height={26}
-          />
-        </Link>
+        {type === "default" && (
+          <Link href="/">
+            <Image src={Logo} alt="사이트 로고" width={148} height={26} />
+          </Link>
+        )}
+        {type === "redBackground" && (
+          <Link href="/">
+            <Image src={LogoWhite} alt="화이트 로고" width={148} height={26} />
+          </Link>
+        )}
+
         {(type === "withBackButton" || type === "backButtonOnly") && (
           <BackButton onClick={goBack} className={styles.headerButton} />
         )}
@@ -54,7 +57,10 @@ export default function Header({ type = "default" }: HeaderProps) {
                 <Link href="/cart">
                   <Cart />
                 </Link>
-                <button onClick={() => setIsOpenSideNavBar(true)} className={styles.headerButton}>
+                <button
+                  onClick={() => setIsOpenSideNavBar()}
+                  className={styles.headerButton}
+                >
                   <Hamburger stroke={hamburgerColor} />
                 </button>
               </>
