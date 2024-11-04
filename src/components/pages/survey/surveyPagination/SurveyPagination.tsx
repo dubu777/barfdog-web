@@ -7,6 +7,7 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 // import RightArrowIcon from "/public/images/icons/angle-right-white.svg"
 import RightArrowIcon from "/public/images/icons/right-arrow-white.svg"
 import LeftArrowIcon from "/public/images/icons/left-arrow-red.svg"
+import { useRouter } from "next/navigation";
 
 interface SurveyPaginationProps {
   handleNextStep: () => void;
@@ -28,7 +29,13 @@ export default function SurveyPagination({
   canNextStep,
 }: SurveyPaginationProps) {
   const progressPercentage = ((currentStep + 1) / stepLength) * 100;
-
+  
+  // 결과 레시피 추천 페이지 테스트 이동 용
+  const router = useRouter();
+  const handleResultPageTest = () => {
+    const id = 3704;
+    router.push(`survey/result?id=${id}`)
+  }
   return (
     <footer className={styles.surveyPaginationContainer}>
       <div className={styles.progressBarContainer}>
@@ -61,7 +68,7 @@ export default function SurveyPagination({
           </DefaultButton>
         ) : (
           <DefaultButton
-            onClick={() => {}}
+            onClick={handleResultPageTest}
             type="black"
             size="lg"
             borderRadius="lg"
