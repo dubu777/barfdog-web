@@ -38,7 +38,9 @@ export const textFieldStyle = recipe({
   },
   variants: {
     size: {
-
+      sm: {
+        height: '40px',
+      }
     },
     isActive: {
       true: {

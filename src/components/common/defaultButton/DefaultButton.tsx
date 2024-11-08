@@ -14,6 +14,7 @@ interface DefaultButtonProps {
   isHidden?: boolean;
   linkUrl?: string | null;
   hover?: boolean;
+  isActive?: boolean;
 }
 
 export default function DefaultButton({
@@ -28,12 +29,13 @@ export default function DefaultButton({
   isHidden = false,
   linkUrl = null,
   hover = true,
+  isActive = false,
 }: DefaultButtonProps) {
   return (
     !linkUrl ?
       <button
         onClick={onClick}
-        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover })}
+        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover, isActive })}
         disabled={isDisabled || isHidden}
       >
         {icon && <span className={styles.iconStyle}>{icon}</span>}

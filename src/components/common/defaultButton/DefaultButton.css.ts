@@ -82,6 +82,9 @@ export const defaultButtonStyle = recipe({
     },
     hover: {
       true: {}
+    },
+    isActive: {
+      true: {}
     }
   },
   compoundVariants: [
@@ -99,6 +102,13 @@ export const defaultButtonStyle = recipe({
           background: themeVars.colors.mainRed,
           color: themeVars.colors.white,
         }
+      }
+    },
+    {
+      variants: { type: 'grayBorder', isActive: true },
+      style: {
+        border: `1px solid ${themeVars.borderColors.mainRed}`,
+        color: themeVars.borderColors.mainRed,
       }
     }
   ],
