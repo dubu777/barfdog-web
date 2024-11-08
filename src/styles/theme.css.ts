@@ -3,7 +3,8 @@ import { createTheme } from "@vanilla-extract/css";
 // 예시 코드 - 추후 수정 
 export const [themeClass, themeVars] = createTheme({
   height: {
-    innerHeight: 'calc(100vh - 140px)',
+    innerHeight: 'calc(100vh - 142px)',
+    mypageInnerHeight: 'calc(100vh - 142px - 120px)',
   },
   fontWeight: {
     light: '400',
@@ -29,11 +30,12 @@ export const [themeClass, themeVars] = createTheme({
     mainRed: '#BE1A21',
     red: '#CA1010',
     black: '#0E1108',
-    lightGrey: '#DDDDDD'
+    lightGrey: '#bdbdbd'
   },
   fontColors: {
     white: '#ffffff',
     yellow: '#faff00',
+    green: '#11B418',
     darkRed: '#AF3D3D',
     mainRed: '#BE1A21',
     greyA8: '#A8A8A8',
@@ -49,6 +51,8 @@ export const [themeClass, themeVars] = createTheme({
     white: '#ffffff',
     gradientPink: 'linear-gradient(146deg, rgba(255,255,255,0.1) 0%, rgba(202,16,16,0.2) 100%)',
     darkOpacity: 'rgba(31, 31, 31, 0.5)',
+    darkOpacity90: 'rgba(99, 99, 99, 0.9)',
+    greyOpacity: 'rgba(217, 217, 217, 0.15)',
     pinkF1: '#FFF1F1',
     pinkFa: '#FFFAFA',
     pinkFF: '#FFE0E1',
@@ -58,6 +62,8 @@ export const [themeClass, themeVars] = createTheme({
     grey99: '#999999',
     grey7E: '#7E7E7E',
     grey63: '#636363',
+    greyA6: '#A6A4A4',
+    greyD9: '#D9D9D9',
     black: '#0E1108',
     kakao: '#FDDC3F',
     naver: '#00C73C',
@@ -75,6 +81,7 @@ export const [themeClass, themeVars] = createTheme({
     greyDD: '#DDD',
     greyBB: '#BBBBBB',
     greyED: '#EDEDED',
+    grey79: '#797979',
     black: '#0E1108',
   },
   buttonColors: {

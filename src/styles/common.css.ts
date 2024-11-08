@@ -59,3 +59,12 @@ export const ellipsis = recipe({
   },
 })
 export const pointColor = style({ color: themeVars.colors.mainRed });
+
+
+export const defaultWidth = style({
+  minWidth: '335px',
+  width: '80%',
+  marginTop: 0,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+})
