@@ -1,6 +1,7 @@
 import { createTheme } from "@vanilla-extract/css";
 
-// 예시 코드 - 추후 수정 
+// 예시 코드 - 추후 수정
+
 export const [themeClass, themeVars] = createTheme({
   height: {
     innerHeight: 'calc(100vh - 140px)',
