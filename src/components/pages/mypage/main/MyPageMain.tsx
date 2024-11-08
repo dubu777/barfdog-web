@@ -1,14 +1,14 @@
 'use client';
+import { useEffect } from "react";
 import * as styles from "./MyPageMain.css";
 import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
 import EditButton from "/public/images/icons/edit.svg";
 import Badge from "@/components/common/badge/Badge";
-import {DogData, MyPageInfoData} from "@/types/myPage";
-import MyPageMenu from "@/components/pages/mypage/main/MenuLink/MenuLink";
 import DogList from "@/components/pages/mypage/main/DogList/DogList";
-import {useEffect} from "react";
-import {useAuthStore} from "@/store/useAuthSotre";
+import MyPageMenu from "@/components/pages/mypage/main/MenuLink/MenuLink";
+import { DogData, MyPageInfoData } from "@/types/myPage";
+import { useAuthStore } from "@/store/useAuthSotre";
 
 interface MyPageMainProps {
   myPageData: MyPageInfoData;

@@ -34,7 +34,6 @@ const menuLink: MyPageMenuType[] = [
   },
 ];
 
-
 const MyPageMenu = () => {
   return (
     <article>

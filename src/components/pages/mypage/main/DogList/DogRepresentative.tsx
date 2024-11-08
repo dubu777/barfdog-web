@@ -1,7 +1,7 @@
+import { useState } from "react";
 import * as styles from "@/components/pages/mypage/main/DogList/DogList.css";
 import RedFlag from "/public/images/icons/flag-red.svg";
 import DefaultFlag from "/public/images/icons/flag-default.svg";
-import {useState} from "react";
 import AlertModal from "@/components/common/alertModal/AlertModal";
 
 interface DogRepresentativeProps {

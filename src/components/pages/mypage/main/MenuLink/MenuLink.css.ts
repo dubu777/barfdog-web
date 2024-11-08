@@ -1,6 +1,6 @@
-import {style} from "@vanilla-extract/css";
-import {themeVars} from "@/styles/theme.css";
-import {defaultWidth} from "@/styles/common.css";
+import { style } from "@vanilla-extract/css";
+import { themeVars } from "@/styles/theme.css";
+import { defaultWidth } from "@/styles/common.css";
 
 export const menuContainer = style([defaultWidth, {
   display: 'flex',

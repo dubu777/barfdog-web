@@ -5,9 +5,9 @@ import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Badge from "@/components/common/badge/Badge";
 import DogButtonControls from "@/components/pages/mypage/main/DogList/DogButtonControls";
+import DogRepresentative from "@/components/pages/mypage/main/DogList/DogRepresentative";
 import { DogData } from "@/types/myPage";
 import { SUBSCRIBE_STATUS } from "@/constants/myPage";
-import DogRepresentative from "@/components/pages/mypage/main/DogList/DogRepresentative";
 
 interface MyPageDogCardProps {
   noData: boolean;

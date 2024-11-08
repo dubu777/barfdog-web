@@ -6,6 +6,7 @@ interface SubscriptionButtonProps {
   title: string;
   color?: 'red';
 }
+
 const SubscriptionButton = ({ title, linkUrl, color }: SubscriptionButtonProps) => {
   return (
     <DefaultButton

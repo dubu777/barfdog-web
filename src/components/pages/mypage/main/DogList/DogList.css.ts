@@ -1,7 +1,7 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
-import {defaultWidth} from "@/styles/common.css";
+import { defaultWidth } from "@/styles/common.css";
 
 export const dogsInfoBox = style({
   marginBottom: '29px',

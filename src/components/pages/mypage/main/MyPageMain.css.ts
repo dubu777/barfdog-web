@@ -1,8 +1,7 @@
-import {style} from "@vanilla-extract/css";
-import {themeVars} from "@/styles/theme.css";
-import {recipe} from "@vanilla-extract/recipes";
-import {defaultWidth} from "@/styles/common.css";
-
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
+import { themeVars } from "@/styles/theme.css";
+import { defaultWidth } from "@/styles/common.css";
 
 export const mainContainer = style({
   height: themeVars.height.innerHeight,
@@ -63,7 +62,6 @@ export const editMypageButton = style({
   right: 0,
   top: 0,
 })
-
 
 export const myPageBanner = style({
   width: '100%',
