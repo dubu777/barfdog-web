@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import * as styles from "./SurveyButtonList.css";
 import { surveyTitle } from "@/app/survey/Survey.css";
-import { getPetNameWithSuffix } from "@/utils";
+import { getNameWithPossessiveSuffix } from "@/utils";
 import SurveyButton from "../surveyButton/SurveyButton";
 import SurveyTextField from "../surveyTextField/SurveyTextField";
 
@@ -30,7 +30,7 @@ export default function SurveyButtonList({
   petName,
   isMultiSelect = false,
 }: SurveyButtonListProps) {
-  const fullTitle = getPetNameWithSuffix(petName, title);
+  const fullTitle = getNameWithPossessiveSuffix(petName, title);
 
   return (
     <div className={styles.surveyButtonListContainer}>

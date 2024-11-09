@@ -28,4 +28,44 @@ interface SurveyFormData {
   priorityConcerns: string;
 }
 
-export type{SurveyFormData}
+interface RecipeDto {
+  id: number;
+  name: string;
+  description: string;
+  pricePerGram: number;
+  gramPerKcal: number;
+  imgUrl: string;
+  inStock: boolean;
+}
+
+interface FoodAnalysis {
+  oneDayRecommendGram: number;
+  oneDayRecommendKcal: number;
+  oneMealRecommendGram: number;
+}
+
+interface Links {
+  query_orderSheet_subscribe: {
+    href: string;
+  };
+  self: {
+    href: string;
+  };
+}
+
+interface SurveyResult {
+  dogId: number;
+  dogName: string;
+  foodAnalysis: FoodAnalysis;
+  recipeDtoList: RecipeDto[];
+  recommendRecipeDescription: string;
+  recommendRecipeId: number;
+  recommendRecipeImgUrl: string;
+  recommendRecipeName: string;
+  subscribeId: number;
+  subscribeStatus: string;
+  uiNameEnglish: string;
+  uiNameKorean: string;
+  _links: Links;
+}
+export type { SurveyFormData, SurveyResult, RecipeDto, FoodAnalysis };

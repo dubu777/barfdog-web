@@ -20,7 +20,7 @@ export default function SurveyForm({
 }: SurveyFormProps) {
 
   return (
-    <div className={styles.surveyFormContainer}>
+    <section className={styles.surveyFormContainer}>
       <StepProgressBar currentStep={currentStep}/>
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
@@ -34,6 +34,6 @@ export default function SurveyForm({
           {steps[currentStep]}
         </motion.div>
       </AnimatePresence>
-    </div>
+    </section>
   );
 }

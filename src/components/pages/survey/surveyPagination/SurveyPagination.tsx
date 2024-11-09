@@ -33,8 +33,8 @@ export default function SurveyPagination({
   // 결과 레시피 추천 페이지 테스트 이동 용
   const router = useRouter();
   const handleResultPageTest = () => {
-    const id = 3704;
-    router.push(`survey/result?id=${id}`)
+    const id = 3709;
+    router.push(`/survey/result?id=${id}`)
   }
   return (
     <footer className={styles.surveyPaginationContainer}>

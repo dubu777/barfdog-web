@@ -20,3 +20,13 @@ export const surveyInputWrapper = style({
   alignItems: 'center',
   minWidth: '300px',
 })
+
+
+export const subscribeShopContainer = style({
+  width: '100%',
+  marginTop: '62px',
+});
+export const subscribeShopWrapper = style({
+  width: '100%',
+  padding: '20px 0 80px 0',
+});

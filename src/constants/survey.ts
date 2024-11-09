@@ -85,7 +85,7 @@ const SURVEY_FORM_INFO = {
   gender: {
     id: "gender",
     inputType: "button",
-    title: "성별은 무엇인가요?",
+    title: "의 성별은 무엇인가요?",
     isMultiSelect: false,
     options: [
       { id: "gender-MALE", value: "MALE", label: "수컷" },
@@ -95,7 +95,7 @@ const SURVEY_FORM_INFO = {
   neutralization: {
     id: "neutralization",
     inputType: "button",
-    title: "중성화 여부를 알려주세요",
+    title: "의 중성화 여부를 알려주세요",
     isMultiSelect: false,
     options: [
       { id: "neutralization했습니다", value: true, label: "했습니다" },
@@ -105,7 +105,7 @@ const SURVEY_FORM_INFO = {
   dogSize: {
     id: "dogSize",
     inputType: "button",
-    title: "견종은 무엇인가요?",
+    title: "의 견종은 무엇인가요?",
     isMultiSelect: false,
     options: [
       { id: "dogSize-SMALL", value: "SMALL", label: "소형견" },
@@ -344,7 +344,7 @@ const SURVEY_FORM_INFO = {
   birth: {
     id: "birth",
     inputType: "selectBox",
-    title: "출생일은 언제인가요?",
+    title: "의 출생일은 언제인가요?",
     years: Array.from({ length: 50 }, (_, i) => {
       const year = new Date().getFullYear() - i;
       return {
@@ -363,14 +363,14 @@ const SURVEY_FORM_INFO = {
   weight: {
     id: "weight",
     inputType: "textField",
-    title: "몸무게는 얼마인가요?",
+    title: "의 몸무게는 얼마인가요?",
     placeholder: "몸무게를 입력해주세요",
     unit: "kg",
   },
   dogStatus: {
     id: "dogStatus",
     inputType: "button",
-    title: "현재 상태는 어떤가요?",
+    title: "의 현재 상태는 어떤가요?",
     isMultiSelect: true,
     options: [
       { id: "dogStatus-HEALTHY", value: "HEALTHY", label: "건강해요" },
@@ -394,7 +394,7 @@ const SURVEY_FORM_INFO = {
   activityLevel: {
     id: "activityLevel",
     inputType: "button",
-    title: "활동량은 어떤가요?",
+    title: "의 활동량은 어떤가요?",
     isMultiSelect: false,
     options: [
       {
@@ -415,7 +415,7 @@ const SURVEY_FORM_INFO = {
   walkingCountPerWeek: {
     id: "walkingCountPerWeek",
     inputType: "selectBox",
-    title: "산책량은 어떤가요?",
+    title: "의 산책량은 어떤가요?",
     frontWord: "주 평균",
     placeholder: "횟수",
     options: Array.from({ length: 20 }, (_, i) => {
@@ -429,7 +429,7 @@ const SURVEY_FORM_INFO = {
   walkingTimePerOneTime: {
     id: "walkingTimePerOneTime",
     inputType: "selectBox",
-    title: "일주일 산책 횟수",
+    title: "의 일주일 산책 횟수",
     frontWord: "1회 당",
     placeholder: "시간",
     options: Array.from({ length: 6 }, (_, i) => {
@@ -444,7 +444,7 @@ const SURVEY_FORM_INFO = {
   snackCountLevel: {
     id: "snackCountLevel",
     inputType: "button",
-    title: "간식량은 어떤가요?",
+    title: "의 간식량은 어떤가요?",
     isMultiSelect: false,
     options: [
       { id: "snackCountLevel-LITTLE", value: "LITTLE", label: "적어요" },
@@ -455,7 +455,7 @@ const SURVEY_FORM_INFO = {
   waterCountLevel: {
     id: "waterCountLevel",
     inputType: "button",
-    title: "음수량은 어떤가요?",
+    title: "의 음수량은 어떤가요?",
     isMultiSelect: false,
     options: [
       { id: "waterCountLevel-LITTLE", value: "LITTLE", label: "적어요" },
@@ -466,7 +466,7 @@ const SURVEY_FORM_INFO = {
   supplement: {
     id: "supplement",
     inputType: "button",
-    title: "현재 먹고 있는 영양제는 무엇인가요?",
+    title: "의 현재 먹고 있는 영양제는 무엇인가요?",
     isMultiSelect: true,
     options: [
       { id: "supplement-NONE", value: "NONE", label: "없어요" },
@@ -491,7 +491,7 @@ const SURVEY_FORM_INFO = {
   inedibleFood: {
     id: "inedibleFood",
     inputType: "button",
-    title: "못 먹는 재료가 있나요?",
+    title: "의 못 먹는 재료가 있나요?",
     isMultiSelect: true,
     options: [
       { id: "inedibleFood-NONE", value: "NONE", label: "없어요" },
@@ -511,7 +511,7 @@ const SURVEY_FORM_INFO = {
   currentMeal: {
     id: "currentMeal",
     inputType: "button",
-    title: "현재 먹고 있는 식사는 어떤 것인가요?",
+    title: "의 현재 먹고 있는 식사는 어떤 것인가요?",
     isMultiSelect: true,
     options: [
       { id: "currentMeal-건사료", value: "건사료", label: "건사료" },
@@ -533,7 +533,7 @@ const SURVEY_FORM_INFO = {
   caution: {
     id: "caution",
     inputType: "button",
-    title: "건강적 특이사항, 질병이 있나요?",
+    title: "의 건강적 특이사항, 질병이 있나요?",
     isMultiSelect: true,
     options: [
       { id: "caution-NONE", value: "NONE", label: "없어요" },
@@ -559,7 +559,7 @@ const SURVEY_FORM_INFO = {
   newToRawDiet: {
     id: "newToRawDiet",
     inputType: "button",
-    title: "생식 급여가 처음인가요?",
+    title: "의 생식 급여가 처음인가요?",
     isMultiSelect: false,
     options: [
       { id: "newToRawDiet-Yes", value: true, label: "네" },
@@ -569,7 +569,7 @@ const SURVEY_FORM_INFO = {
   priorityConcerns: {
     id: "priorityConcerns",
     inputType: "button",
-    title: "고민되는 항목 우성 순위 3가지를 선택해주세요.",
+    title: "의 고민되는 항목 우성 순위 3가지를 선택해주세요.",
     isMultiSelect: true,
     options: [
       {
@@ -593,9 +593,146 @@ const SURVEY_FORM_INFO = {
   },
 } as const;
 
+export interface RecipeTempData {
+  id: number;
+  name: string;
+  imageURL: string;
+  description: string[];
+  type: "single" | "double";
+}
+
+const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
+  5: {
+    id: 5,
+    name: "스타터 프리미엄",
+    imageURL: "/images/recipe/starter_premium.png",
+    description: [
+      "주재료: 닭, 칠면조",
+      "첫 생식에 추천",
+      "부드러워 소화에 적은 부담",
+    ],
+    type: "double",
+  },
+  6: {
+    id: 6,
+    name: "터키앤비프",
+    imageURL: "/images/recipe/turkey_and_beef.png",
+    description: [
+      "주재료: 칠면조, 소",
+      "성장기 자견에게 추천",
+      "영양 보충 & 면역력 강화",
+    ],
+    type: "double",
+  },
+  7: {
+    id: 7,
+    name: "덕앤램",
+    imageURL: "/images/recipe/duck_and_lamb.png",
+    description: [
+      "주재료: 오리, 양",
+      "기력회복이 필요하다면 추천",
+      "관절 강화 & 근력 회복",
+    ],
+    type: "double",
+  },
+  8: {
+    id: 8,
+    name: "램앤비프",
+    imageURL: "/images/recipe/lamb_and_beef.png",
+    description: [
+      "주재료: 소, 양",
+      "푸석푸석한 모질이라면 추천",
+      "윤기나는 피부와 모질",
+    ],
+    type: "double",
+  },
+  9: {
+    id: 9,
+    name: "프리미엄 치킨",
+    imageURL: "/images/recipe/premium_chicken.png",
+    description: ["주재료: 닭", "전 연령 추천", "관절 강화 & 소화 흡수율 높음"],
+    type: "single",
+  },
+  10: {
+    id: 10,
+    name: "프리미엄 터키",
+    imageURL: "/images/recipe/premium_turkey.png",
+    description: [
+      "주재료: 칠면조",
+      "성장기 자견에게 추천",
+      "영양 보충 & 면역력 강화",
+    ],
+    type: "single",
+  },
+  11: {
+    id: 11,
+    name: "프리미엄 램",
+    imageURL: "/images/recipe/premium_lamb.png",
+    description: ["주재료: 양", "활동량이 많다면 추천", "피로회복 & 피모관리"],
+    type: "single",
+  },
+  12: {
+    id: 12,
+    name: "프리미엄 비프",
+    imageURL: "/images/recipe/premium_beef.png",
+    description: ["주재료: 소", "전 연령 추천", "체중관리 & 빈혈회복"],
+    type: "single",
+  },
+};
+const INEDIBLE_FOOD_TO_ID: Record<string, string> = {
+  "없음": "0",
+  "닭": "1",
+  "칠면조": "2",
+  "오리": "3",
+  "양": "4",
+  "소": "5",
+  "캥거루": "6",
+  "토끼": "7",
+  "말": "8",
+  "염소": "9",
+  "메추리": "10",
+  "돼지": "11",
+  "황태": "12",
+  "타조": "13",
+  "ETC": "14",
+};
+
+const ID_TO_INEDIBLE_FOOD: Record<string, string> = {
+  "0": "없음",
+  "1": "닭",
+  "2": "칠면조",
+  "3": "오리",
+  "4": "양",
+  "5": "소",
+  "6": "캥거루",
+  "7": "토끼",
+  "8": "말",
+  "9": "염소",
+  "10": "메추리",
+  "11": "돼지",
+  "12": "황태",
+  "13": "타조",
+  "14": "ETC",
+};
+
+const ID_TO_INGREDIENT_LIST: Record<string, string[]> = {
+  '5': ['닭', '칠면조'],
+  '6': ['칠면조', '소'],
+  '7': ['오리', '양'],
+  '8': ['소', '양'],
+  '9': ['닭'],
+  '10': ['칠면소'],
+  '11': ['양'],
+  '12': ['소'],
+} as const 
+
 export {
   initialSurveyValue,
   initialStepValues,
   initialErrorValues,
   SURVEY_FORM_INFO,
+  RECIPE_TEMP_DATA,
+  INEDIBLE_FOOD_TO_ID,
+  ID_TO_INEDIBLE_FOOD,
+  ID_TO_INGREDIENT_LIST,
 };
