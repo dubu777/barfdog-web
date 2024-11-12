@@ -21,6 +21,7 @@ export default function RecipeSelection({ id }: RecipeSelectionProps) {
   );
   console.log("recipeData", recipeData);
 
+  const [prefix, recipeWord, suffix] = recipeSelectionTitle.split("레시피");
 
   // double과 single 레시피로 필터링 - 임시로 Api 데이터 변경전까지
   const doubleRecipes = Object.values(RECIPE_TEMP_DATA).filter(
@@ -32,9 +33,12 @@ export default function RecipeSelection({ id }: RecipeSelectionProps) {
   return (
     <section className={styles.recipeSelectionContainer}>
       <div className={styles.subscribeTextWrapper}>
-        <h2 className={styles.subscribeText({ type: "mainTitle" })}>
-          {recipeSelectionTitle}
+        <h2 className={styles.subscribeText({ type: "mainTitle",  })}>
+          {prefix}
+          <span className={styles.subscribeText({type: 'mainTitle', color: 'black'})}>레시피</span>
+          {recipeWord}
         </h2>
+
         <p className={styles.subscribeText({ type: "description" })}>
           <b>최대 2가지</b>까지 레시피 선택이 가능합니다.
         </p>

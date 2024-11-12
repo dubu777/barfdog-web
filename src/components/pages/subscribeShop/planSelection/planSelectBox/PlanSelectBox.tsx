@@ -5,17 +5,25 @@ import FullPlanActive from "/public/images/survey/full_plan_active.svg";
 import HalfPlan from "/public/images/survey/half_plan.svg";
 import HalfPlanActive from "/public/images/survey/half_plan_active.svg";
 
-export default function PlanSelectBox() {
+interface PlanSelectBoxProps {
+  title: string;
+  content: string[];
+}
+
+
+export default function PlanSelectBox({title, content}: PlanSelectBoxProps) {
   return (
     <div className={styles.planBoxContainer({isSelected: false})}>
     {/* <div className={styles.planBoxWrapper}> */}
       <div className={styles.planTitleWrapper}>
-        <span className={subscribeText({type: 'recipeTitle'})}>풀플랜</span>
+        <span className={subscribeText({type: 'recipeTitle'})}>{title}</span>
         <FullPlan />
       </div>
       <div className={styles.planBoxDivider({isSelected: false})}/>
       <div className={styles.planContentWrapper}>
-      <span className={subscribeText({type: 'recipeTitle'})}>하루 2팩 / 2주 간격 배송 / 총 28팩</span>
+        {content.map((word) => (
+          <span className={subscribeText({type: 'recipeTitle'})}>{word}</span>
+        ))}
       </div>
       {/* </div> */}
     </div>

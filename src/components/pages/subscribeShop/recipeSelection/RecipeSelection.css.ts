@@ -35,15 +35,13 @@ export const recipesWrapper = style({
 
 export const subscribeText = recipe({
   base: {
-      fontSize: themeVars.fontSize["text-xs"],
       lineHeight: 'normal',
-      color: themeVars.fontColors.grey42,
   },
   variants: {
       type: {
           mainTitle: {
               fontSize: themeVars.fontSize["text-xl"],
-              color: themeVars.fontColors.grey42,
+              color: themeVars.fontColors.grey77,
               fontWeight: themeVars.fontWeight.semibold,
           },
           title: {
@@ -74,14 +72,23 @@ export const subscribeText = recipe({
               textDecoration: "underline",
           },
       },
+      isBold: {
+        true: {
+          fontWeight: themeVars.fontWeight.semibold,
+        },
+        false: {
+
+        },
+      },
       color: {
         black: themeVars.fontColors.grey42,
-        gray: themeVars.fontColors.grey4F,
+        gray: themeVars.fontColors.grey77,
       }
 
   },
   defaultVariants: {
       type: 'description',
       color: 'black',
+      isBold: false,
   }
 });

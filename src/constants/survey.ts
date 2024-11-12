@@ -1,4 +1,8 @@
 import { formatTime } from "@/utils";
+import FullPlan from "/public/images/survey/full_plan.svg";
+import FullPlanActive from "/public/images/survey/full_plan_active.svg";
+import HalfPlan from "/public/images/survey/half_plan.svg";
+import HalfPlanActive from "/public/images/survey/half_plan_active.svg";
 
 const initialSurveyValue = {
   name: "",
@@ -680,21 +684,21 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   },
 };
 const INEDIBLE_FOOD_TO_ID: Record<string, string> = {
-  "없음": "0",
-  "닭": "1",
-  "칠면조": "2",
-  "오리": "3",
-  "양": "4",
-  "소": "5",
-  "캥거루": "6",
-  "토끼": "7",
-  "말": "8",
-  "염소": "9",
-  "메추리": "10",
-  "돼지": "11",
-  "황태": "12",
-  "타조": "13",
-  "ETC": "14",
+  없음: "0",
+  닭: "1",
+  칠면조: "2",
+  오리: "3",
+  양: "4",
+  소: "5",
+  캥거루: "6",
+  토끼: "7",
+  말: "8",
+  염소: "9",
+  메추리: "10",
+  돼지: "11",
+  황태: "12",
+  타조: "13",
+  ETC: "14",
 };
 
 const ID_TO_INEDIBLE_FOOD: Record<string, string> = {
@@ -716,15 +720,45 @@ const ID_TO_INEDIBLE_FOOD: Record<string, string> = {
 };
 
 const ID_TO_INGREDIENT_LIST: Record<string, string[]> = {
-  '5': ['닭', '칠면조'],
-  '6': ['칠면조', '소'],
-  '7': ['오리', '양'],
-  '8': ['소', '양'],
-  '9': ['닭'],
-  '10': ['칠면소'],
-  '11': ['양'],
-  '12': ['소'],
-} as const 
+  "5": ["닭", "칠면조"],
+  "6": ["칠면조", "소"],
+  "7": ["오리", "양"],
+  "8": ["소", "양"],
+  "9": ["닭"],
+  "10": ["칠면소"],
+  "11": ["양"],
+  "12": ["소"],
+} as const;
+
+type Plan = "FULL" | "HALF" | "TOPPING" | "TOPPING_HALF";
+
+interface PlanInfo {
+  key: Plan;
+  title: string;
+  content: string[];
+}
+const PLAN_SELECT_INFO: PlanInfo[] = [
+  {
+    key: "FULL",
+    title: "풀플랜",
+    content: ["하루", "2팩", "/", "2주 간격 배송", "/", "총 28팩"],
+  },
+  {
+    key: "HALF",
+    title: "하프플랜",
+    content: ["하루", "1팩", "/", "4주 간격 배송", "/", "총 28팩"],
+  },
+  {
+    key: "TOPPING",
+    title: "토핑 풀플랜",
+    content: ["하루", "2팩", "/", "2주 간격 배송", "/", "총 28팩"],
+  },
+  {
+    key: "TOPPING_HALF",
+    title: "토핑 하프플랜",
+    content: ["하루", "1팩", "/", "4주 간격 배송", "/", "총 28팩"],
+  },
+];
 
 export {
   initialSurveyValue,
@@ -735,4 +769,5 @@ export {
   INEDIBLE_FOOD_TO_ID,
   ID_TO_INEDIBLE_FOOD,
   ID_TO_INGREDIENT_LIST,
+  PLAN_SELECT_INFO,
 };
