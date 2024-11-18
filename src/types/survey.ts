@@ -53,7 +53,7 @@ interface Links {
   };
 }
 
-interface SurveyResult {
+interface RecipeData {
   dogId: number;
   dogName: string;
   foodAnalysis: FoodAnalysis;
@@ -68,4 +68,115 @@ interface SurveyResult {
   uiNameKorean: string;
   _links: Links;
 }
-export type { SurveyFormData, SurveyResult, RecipeDto, FoodAnalysis };
+
+interface ActivityAnalysis {
+  avgActivityLevel: string;
+  activityGroupOneCount: number;
+  activityGroupTwoCount: number;
+  activityGroupThreeCount: number;
+  activityGroupFourCount: number;
+}
+
+interface AgeAnalysis {
+  avgAgeMonth: number;
+  ageGroupOneCount: number;
+  ageGroupTwoCount: number;
+  ageGroupThreeCount: number;
+  ageGroupFourCount: number;
+}
+
+interface SnackAnalysis {
+  avgSnackCountInLargeDog: number;
+  avgSnackCountInMiddleDog: number;
+  avgSnackCountInSmallDog: number;
+  mySnackCount: number;
+}
+
+interface WalkingAnalysis {
+  highRankPercent: number;
+  walkingCountPerWeek: number;
+  totalWalingTime: number;
+  avgWalkingTimeInCity: number;
+  avgWalkingTimeInAge: number;
+}
+
+interface WeightAnalysis {
+  avgWeight: number;
+  weightGroupOneCount: number;
+  weightGroupTwoCount: number;
+  weightGroupThreeCount: number;
+  weightGroupFourCount: number;
+}
+
+interface FoodAnalysis {
+  oneDayRecommendKcal: number;
+  oneDayRecommendGram: number;
+  oneMealRecommendGram: number;
+}
+
+interface DogActivity {
+  activityLevel: string;
+  walkingCountPerWeek: number;
+  walkingTimePerOneTime: number;
+}
+
+interface ResultData {
+  lastSurveyDate: string;
+  myDogName: string;
+  dogSize: string;
+  dogActivity: DogActivity;
+  ageAnalysis: AgeAnalysis;
+  activityAnalysis: ActivityAnalysis;
+  avgCautionCountAmongSameSizeDog: number;
+  avgScoreAmongAllDogs: number;
+  avgScoreAmongSameSizeDog: number;
+  avgSupplementCountAmongSameSizeDog: number;
+  avgWaterScore: number;
+  caution: string;
+  cautionCount: number;
+  cautionEtc: string;
+  cookedDietCountAmongSameSizeDog: number;
+  currentMeal: string;
+  dogBirthday: string;
+  dogCountByDogSize: number;
+  dogId: number;
+  dogStatus: string;
+  dogType: string;
+  dogWeight: number;
+  dryDietCountAmongSameSizeDog: number;
+  foodAnalysis: FoodAnalysis;
+  freezeDriedDietCountAmongSameSizeDog: number;
+  healthyCount: number;
+  homemadeDietCountAmongSameSizeDog: number;
+  inedibleFood: string;
+  inedibleFoodEtc: string;
+  lactatingCount: number;
+  needDietCount: number;
+  neutralization: boolean;
+  newToRawDiet: boolean;
+  obesityCount: number;
+  pregnantCount: number;
+  priorityConcerns: string;
+  rawDietCountAmongSameSizeDog: number;
+  score: number;
+  scoreRankPercentAmongAllDogs: number;
+  scoreRankPercentAmongSameSizeDog: number;
+  snackAnalysis: SnackAnalysis;
+  specificDogStatus: string;
+  specificDogStatusEtc: string;
+  supplement: string;
+  supplementCount: number;
+  supplementEtc: string;
+  thinCount: number;
+  topDogStatusAmongSameSizeDog: string;
+  topWaterCountLevelAmongSameSizeDog: string;
+  totalDogCount: number;
+  walkingAnalysis: WalkingAnalysis;
+  waterCountLevel: string;
+  weightAnalysis: WeightAnalysis;
+}
+
+
+
+
+export type { SurveyFormData, RecipeDto, FoodAnalysis, ResultData, RecipeData };

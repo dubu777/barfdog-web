@@ -1,26 +1,21 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import * as styles from "./RecipeBadge.css";
-import { ID_TO_INEDIBLE_FOOD } from "@/constants";
 
 interface RecipeBadgeProps {
   ingredientList: string[];
   isRecommend: boolean;
+  inedibleFood: string;
 }
 
 export default function RecipeBadge({
   ingredientList,
   isRecommend,
+  inedibleFood,
 }: RecipeBadgeProps) {
-  const searchParams = useSearchParams();
-  const inedibleFoodIds = searchParams.get("inedibleFood");
-  console.log("inedibleFood in badge", inedibleFoodIds);
-  console.log("ingredientList in badge", ingredientList);
 
-  const inedibleFoodNames = inedibleFoodIds
+  const inedibleFoodNames = inedibleFood
     ?.split(",")
-    .map((id) => ID_TO_INEDIBLE_FOOD[id.trim()])
     .filter((name) => name !== undefined);
 
   const hasInedibleIngredient = inedibleFoodNames?.some((name) =>

@@ -5,7 +5,6 @@ interface useSubscribeProps {}
 export default function useSubscribe() {
   const [selectedRecipes, setSelectedRecipes] = useState<number[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const [dogName, setDogName] = useState<string>("");
   const maxRecipesSelections = 2;
   const handleSelectedRecipe = (recipeId: number) => {
     if (selectedRecipes.includes(recipeId)) {
@@ -23,15 +22,9 @@ export default function useSubscribe() {
     setSelectedPlan(planName);
   };
 
-  const updateDogName = (name: string) => {
-    setDogName(name)
-  }
-
   return {
     selectedPlan,
     selectedRecipes,
-    dogName,
-    updateDogName,
     handleSelectedPlan,
     handleSelectedRecipe,
     

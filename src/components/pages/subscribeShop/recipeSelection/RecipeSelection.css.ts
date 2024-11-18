@@ -96,9 +96,20 @@ export const subscribeText = recipe({
         color: themeVars.fontColors.darkRed,
       },
       false: {
-
+      },
+    },
+    align: {
+      right: {
+        textAlign: 'right',
+      },
+      left: {
+        textAlign: 'left',
+      },
+      center: {
+        textAlign: 'center',
       }
     }
+    
   },
   defaultVariants: {
     type: "description",
