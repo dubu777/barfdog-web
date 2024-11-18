@@ -3,17 +3,20 @@
 import * as styles from "./RecipeSelection.css";
 import { getNameWithObjectSuffix } from "@/utils";
 import { UI_MESSAGES } from "@/constants/message";
-import RecipeCard from "../recipeCard/RecipeCard";
+import RecipeCard from "./recipeCard/RecipeCard";
 import { RECIPE_TEMP_DATA } from "@/constants";
 import { useGetSurveyRecipe } from "@/api/queries/useGetSurveyRecipe";
-import { useGetSurveyResult } from "@/api/queries/useGetSurveyResult";
+import { useEffect } from "react";
 
 interface RecipeSelectionProps {
-  id: number;
+  reportId: number;
+  selectedRecipes: number[];
+  onRecipeSelect: (recipeId: number) => void;
+  onUpdateDogName: (dogName: string) => void;
 }
 
-export default function RecipeSelection({ id }: RecipeSelectionProps) {
-  const { data: recipeData } = useGetSurveyRecipe(id);
+export default function RecipeSelection({ reportId, selectedRecipes ,onRecipeSelect, onUpdateDogName }: RecipeSelectionProps) {
+  const { data: recipeData } = useGetSurveyRecipe(reportId);
 
   const recipeSelectionTitle = getNameWithObjectSuffix(
     recipeData.dogName,
@@ -22,6 +25,10 @@ export default function RecipeSelection({ id }: RecipeSelectionProps) {
   console.log("recipeData", recipeData);
 
   const [prefix, recipeWord, suffix] = recipeSelectionTitle.split("레시피");
+  
+  useEffect(() => {
+    onUpdateDogName(recipeData.dogName)
+  }, [recipeData])
 
   // double과 single 레시피로 필터링 - 임시로 Api 데이터 변경전까지
   const doubleRecipes = Object.values(RECIPE_TEMP_DATA).filter(
@@ -33,14 +40,14 @@ export default function RecipeSelection({ id }: RecipeSelectionProps) {
   return (
     <section className={styles.recipeSelectionContainer}>
       <div className={styles.subscribeTextWrapper}>
-        <h2 className={styles.subscribeText({ type: "mainTitle",  })}>
+        <h2 className={styles.subscribeText({ type: "mainTitle", color: 'gray'})}>
           {prefix}
-          <span className={styles.subscribeText({type: 'mainTitle', color: 'black'})}>레시피</span>
+          <span className={styles.subscribeText({type: 'mainTitle', color: 'black', isBold: true})}>레시피</span>
           {recipeWord}
         </h2>
 
-        <p className={styles.subscribeText({ type: "description" })}>
-          <b>최대 2가지</b>까지 레시피 선택이 가능합니다.
+        <p className={styles.subscribeText({ type: "subtitle" })}>
+          <span style={{ color: '#1d1d1f', fontWeight: '600'}}>최대 2가지</span>까지 레시피 선택이 가능합니다.
         </p>
       </div>
       <div className={styles.recipesWrapper}>
@@ -49,7 +56,7 @@ export default function RecipeSelection({ id }: RecipeSelectionProps) {
         </h2>
         <div className={styles.recipeCardWrapper}>
           {doubleRecipes.map((recipeTempData, _) => (
-            <RecipeCard key={recipeTempData.name} recipeTempData={recipeTempData} recommendId={recipeData.recommendRecipeId}/>
+            <RecipeCard key={recipeTempData.name} recipeTempData={recipeTempData} recommendId={recipeData.recommendRecipeId} selectedRecipes={selectedRecipes} onRecipeCardSelect={onRecipeSelect}/>
           ))}
         </div>
       </div>
@@ -59,7 +66,7 @@ export default function RecipeSelection({ id }: RecipeSelectionProps) {
         </h2>
         <div className={styles.recipeCardWrapper}>
           {singleRecipes.map((recipeTempData, _) => (
-            <RecipeCard key={recipeTempData.name} recipeTempData={recipeTempData} recommendId={recipeData.recommendRecipeId}/>
+            <RecipeCard key={recipeTempData.name} recipeTempData={recipeTempData} recommendId={recipeData.recommendRecipeId} selectedRecipes={selectedRecipes} onRecipeCardSelect={onRecipeSelect}/>
           ))}
         </div>
       </div>

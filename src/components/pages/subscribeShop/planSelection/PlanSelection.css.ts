@@ -5,4 +5,5 @@ export const planSelectionContainer = style({
   flexDirection: 'column',
   alignItems: 'center',
   width: '100%',
+  gap: '10px',
 });

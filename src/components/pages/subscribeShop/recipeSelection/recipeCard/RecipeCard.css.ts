@@ -1,16 +1,34 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
-export const recipeCardContainer = style({
-  position: 'relative',
-  width: "170px",
-  backgroundColor: themeVars.backgroundColors.white,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  borderRadius: "10px",
-  boxShadow: "2px 4px 12px #00000014",
-  cursor: "pointer",
+export const recipeCardContainer = recipe({
+  base: {
+    position: 'relative',
+    width: "170px",
+    backgroundColor: themeVars.backgroundColors.white,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    borderRadius: "10px",
+    boxShadow: "2px 4px 12px #00000014",
+    cursor: "pointer",
+  },
+  variants: {
+    isSelected: {
+      true: 
+      {
+        outline: `1px solid ${themeVars.borderColors.mainRed}`,
+      },
+      false: {
+        outline: '1px solid transparent',
+      }
+    }
+  },
+  defaultVariants: {
+    isSelected: false
+  }
+
 });
 
 export const recipeImageWrapper = style({

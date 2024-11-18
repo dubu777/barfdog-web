@@ -8,20 +8,24 @@ export const planBoxContainer = recipe({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '360px',
-    height: '40px',
+    width: '100%',
+    maxWidth: '360px',
+    height: '41px',
     borderRadius: '20px',
-    padding: '0 30px'
+    padding: '0 25px',
+    transition: 'background-color 0.3s ease, border 0.3s ease'
   },
   variants:{
     isSelected: {
       true: {
         border: `1px solid ${themeVars.borderColors.darkRed}`,
         color: themeVars.fontColors.darkRed,
+        backgroundColor: '#FFE0E1',
       },
       false: {
-        border: `1px solid ${themeVars.borderColors.black}`,
+        border: `1px solid ${themeVars.borderColors.greyBB}`,
         color: themeVars.fontColors.black,
+        backgroundColor: themeVars.backgroundColors.white,
       },
     }
   },
@@ -38,13 +42,14 @@ export const planTitleWrapper = style({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flex: 1,
+    flex: 1.25,
 })
 
 export const planContentWrapper = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  gap: '3px',
   flex: 3,
 })
 

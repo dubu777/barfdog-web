@@ -23,10 +23,20 @@ export const surveyInputWrapper = style({
 
 
 export const subscribeShopContainer = style({
+  position: 'relative',
   width: '100%',
   marginTop: '62px',
+  display: 'flex',
+  justifyContent: 'center',
 });
+export const summaryWrapper = style({
+  position: 'absolute',
+  bottom: '0',
+  width: '100%',
+});
+
 export const subscribeShopWrapper = style({
+  maxWidth: '360px',
   width: '100%',
   padding: '20px 0 80px 0',
 });

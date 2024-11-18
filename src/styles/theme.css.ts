@@ -42,11 +42,13 @@ export const [themeClass, themeVars] = createTheme({
     grey4F: '#4F4F4F',
     grey42: '#424242',
     grey4D: '#4D4D4D',
+    grey6E: '#6E6E73',
     grey77: '#777777',
     grey9C: '#9C9C9C',
     grey4a: '#4A4A4A',
     grey38: '#383838',
     black: '#0E1108',
+    black1D: '#1D1D1F',
   },
   backgroundColors: {
     white: '#ffffff',

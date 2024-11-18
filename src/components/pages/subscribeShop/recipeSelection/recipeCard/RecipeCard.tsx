@@ -1,28 +1,33 @@
 import Image from "next/image";
 import * as styles from "./RecipeCard.css";
 import { ID_TO_INGREDIENT_LIST, RecipeTempData } from "@/constants";
-import { subscribeText } from "../recipeSelection/RecipeSelection.css";
+import { subscribeText } from "../RecipeSelection.css";
 import { motion } from "framer-motion";
-import RecipeBadge from "../recipeBadge/RecipeBadge";
+import RecipeBadge from "./recipeBadge/RecipeBadge";
+
 
 interface RecipeCardProps {
   recipeTempData: RecipeTempData;
   recommendId: number;
+  selectedRecipes: number[];
+  onRecipeCardSelect: (recipeId: number) => void;
 }
 
-export default function RecipeCard({ recipeTempData, recommendId }: RecipeCardProps) {
+export default function RecipeCard({ recipeTempData, recommendId, selectedRecipes, onRecipeCardSelect }: RecipeCardProps) {
   console.log(recipeTempData, "recipeTempData");
+
   const isRecommend = recommendId === recipeTempData.id;
   return (
     <motion.div
-      className={styles.recipeCardContainer}
+      className={styles.recipeCardContainer({ isSelected: selectedRecipes.includes(recipeTempData.id)})}
       whileHover={{
-        y: -3, // 살짝 커지게 설정
-        boxShadow: "4px 8px 18px rgba(0, 0, 0, 0.1)", // 그림자 강조
+        y: -3,
+        boxShadow: "4px 8px 18px rgba(0, 0, 0, 0.1)",
       }}
       transition={{
         duration: 0.2,
       }}
+      onClick={() => onRecipeCardSelect(recipeTempData.id)}
     >
       <RecipeBadge ingredientList={ID_TO_INGREDIENT_LIST[recipeTempData.id]} isRecommend={isRecommend}/>
       <div className={styles.recipeImageWrapper}>
