@@ -1,6 +1,6 @@
 "use client";
 
-import useSubscribe from "@/hooks/useSubscribe";
+import useSubscription from "@/hooks/useSubscription";
 import RecipeSelection from "@/components/pages/subscribeShop/recipeSelection/RecipeSelection";
 import PlanSelection from "@/components/pages/subscribeShop/planSelection/PlanSelection";
 import * as styles from "@/app/survey/Survey.css";
@@ -25,7 +25,7 @@ export default function SubscribeShopContent({
     selectedRecipes,
     handleSelectedPlan,
     handleSelectedRecipe,
-  } = useSubscribe();
+  } = useSubscription();
 
   return (
     <div className={styles.subscribeShopWrapper}>

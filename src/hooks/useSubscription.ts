@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-interface useSubscribeProps {}
+interface useSubscriptionProps {}
 
-export default function useSubscribe() {
+export default function useSubscription() {
   const [selectedRecipes, setSelectedRecipes] = useState<number[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const maxRecipesSelections = 2;
