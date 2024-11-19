@@ -1,6 +1,7 @@
 import { createTheme } from "@vanilla-extract/css";
 
-// 예시 코드 - 추후 수정 
+// 예시 코드 - 추후 수정
+
 export const [themeClass, themeVars] = createTheme({
   height: {
     innerHeight: 'calc(100vh - 140px)',
@@ -29,6 +30,7 @@ export const [themeClass, themeVars] = createTheme({
     mainRed: '#BE1A21',
     red: '#CA1010',
     black: '#0E1108',
+    lightGrey: '#DDDDDD'
   },
   fontColors: {
     white: '#ffffff',
@@ -66,6 +68,8 @@ export const [themeClass, themeVars] = createTheme({
     grey63: '#636363',
     greyEE: '#EEEEEE',
     black: '#0E1108',
+    kakao: '#FDDC3F',
+    naver: '#00C73C',
   },
   borderColors: {
     white: '#ffffff',

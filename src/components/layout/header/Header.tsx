@@ -12,8 +12,9 @@ import Hamburger from "../../icons/Hamburger";
 import TopBanner from "@/components/layout/banner/TopBanner";
 import { useBackNavigation } from "@/utils";
 import { usePathname } from "next/navigation";
-import { useCommonStore } from "@/store/commonStore";
+import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
+import { useAuthStore } from "@/store/useAuthSotre";
 
 interface HeaderProps {
   type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
@@ -22,6 +23,7 @@ interface HeaderProps {
 export default function Header({ type = "default" }: HeaderProps) {
   const pathname = usePathname();
   const { setIsOpenSideNavBar } = useCommonStore();
+  const { isLoggedIn } = useAuthStore();
   const hamburgerColor = type === "redBackground" ? "#ffffff" : "#4A4A4A";
   const goBack = useBackNavigation();
 
@@ -48,10 +50,12 @@ export default function Header({ type = "default" }: HeaderProps) {
         {type !== "backButtonOnly" && (
           <div className={styles.headerMenuWrapper}>
             {type === "redBackground" ? (
-              <Hamburger stroke={hamburgerColor} />
+              <button onClick={() => setIsOpenSideNavBar()} className={styles.headerButton}>
+                <Hamburger stroke={hamburgerColor} />
+              </button>
             ) : (
               <>
-                <Link href="/mypage">
+                <Link href={!isLoggedIn ? "/login" : "/mypage"}>
                   <MyPage />
                 </Link>
                 <Link href="/cart">

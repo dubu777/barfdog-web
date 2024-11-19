@@ -3,10 +3,10 @@
 import * as styles from './Banner.css';
 import Image from "next/image";
 import CloseButton from '/public/images/icons/close-white.png';
-import { useBannerStore } from "@/store/mainStore";
+import { useMainStore } from "@/store/useMainStore";
 
 const TopBanner = () => {
-  const { isTopBannerVisible, closeTopBanner } = useBannerStore();
+  const { isTopBannerVisible, closeTopBanner } = useMainStore();
   return (
     isTopBannerVisible &&
       <div className={styles.bannerContainer({ position: 'top' })}>

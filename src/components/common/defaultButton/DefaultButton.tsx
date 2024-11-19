@@ -1,17 +1,19 @@
-import { recipe } from '@vanilla-extract/recipes';
 import * as styles from './DefaultButton.css';
 import { ReactNode } from 'react';
+import Link from "next/link";
 
 interface DefaultButtonProps {
   children?: ReactNode;
   type?: 'main' | 'white' | 'black' | 'mainBorder' | 'grayBorder' | 'blackBorder',
   icon?: JSX.Element | null;
-  onClick: () => void;
+  onClick?: () => void;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   borderRadius?: 'sm' | 'md' | 'lg';
   isBold?: boolean;
   isDisabled?: boolean;
   isHidden?: boolean;
+  linkUrl?: string | null;
+  hover?: boolean;
 }
 
 export default function DefaultButton({
@@ -24,16 +26,24 @@ export default function DefaultButton({
   isBold = false,
   isDisabled = false,
   isHidden = false,
+  linkUrl = null,
+  hover = true,
 }: DefaultButtonProps) {
-  
   return (
-    <button
-      onClick={onClick}
-      className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden })}
-      disabled={isDisabled || isHidden}
-    >
-      {icon && <span className={styles.iconStyle}>{icon}</span>}
-      {children}
-    </button>
+    !linkUrl ?
+      <button
+        onClick={onClick}
+        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover })}
+        disabled={isDisabled || isHidden}
+      >
+        {icon && <span className={styles.iconStyle}>{icon}</span>}
+        {children}
+      </button>
+      : <Link
+        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover })}
+        href={linkUrl}
+      >
+        {children}
+      </Link>
   );
 }

@@ -1,14 +1,13 @@
 'use client';
 
-import React from 'react';
 import Image from "next/image";
-import * as styles from './slider.css';
+import * as styles from './MainSurvey.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-const SurveyImageSlider = ({ images }: { images: string[] }) => {
+const MainSurveyImageSlider = ({ images }: { images: string[] }) => {
   return (
     <div className={styles.mainSliderWrapper}>
       <Swiper
@@ -27,7 +26,7 @@ const SurveyImageSlider = ({ images }: { images: string[] }) => {
         className={styles.mainSliderContainer}
       >
         {images.map((img, index) => (
-          <SwiperSlide key={img}>
+          <SwiperSlide key={img} className={styles.mainSurveySlider}>
             <Image src={img} alt={`image${index}`} width={280} height={320} style={{ objectFit: 'contain' }} />
           </SwiperSlide>
         ))}
@@ -36,4 +35,4 @@ const SurveyImageSlider = ({ images }: { images: string[] }) => {
   );
 };
 
-export default SurveyImageSlider;
+export default MainSurveyImageSlider;

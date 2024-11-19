@@ -1,17 +1,17 @@
 'use client';
 
-import React from 'react';
 import Image from "next/image";
-import * as mainStyles from "@/components/pages/main/main.css";
+import * as styles from "./MainRecommend.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import CheckWhite from '/public/images/icons/check-white.svg';
-import { useSelectedHealthStore } from "@/store/mainStore";
+import { useMainStore } from "@/store/useMainStore";
 import { HealthCheckList } from "@/constants/mainData";
+import MainText from "@/components/pages/main/mainText/MainText";
 
-const HealthCheckSlider = () => {
-  const { selectedHealth, setSelectedHealth } = useSelectedHealthStore();
+const MainHealthCheckSlider = () => {
+  const { selectedHealth, setSelectedHealth } = useMainStore();
 
   const handleSelectHealth = (key) => {
     setSelectedHealth({
@@ -23,33 +23,31 @@ const HealthCheckSlider = () => {
     <Swiper
       slidesPerView='auto'
       spaceBetween={18}
-      className={mainStyles.recommendSlideList()}
+      className={styles.recommendSlideList()}
     >
       {HealthCheckList.map(health => (
         <SwiperSlide
           key={health.key}
-          className={mainStyles.recommendSlideBox({ type: 'healthCheck' })}
+          className={styles.recommendSlideBox({ type: 'healthCheck' })}
         >
           <div
-            className={mainStyles.recommendSlideItem}
+            className={styles.recommendSlideItem}
             onClick={() => handleSelectHealth(health.key)}
           >
-            <h3
-              className={`${mainStyles.healthCheckTitle} ${mainStyles.mainTitle({ size: 'md', color: 'white' })}`}
-            >
+            <MainText className={styles.healthCheckTitle} type='title' size='md' color='white'>
               {health.name}
-            </h3>
+            </MainText>
             <Image
               src={health.imageUrl}
               alt={`${health.key} image`}
               width={139}
               height={182}
               priority={false}
-              className={mainStyles.recommendSlideImage({ type: 'healthCheck' })}
+              className={styles.recommendSlideImage({ type: 'healthCheck' })}
             />
           </div>
           {selectedHealth.key === health.key && selectedHealth.isChecked &&
-          <div className={mainStyles.healthCheckFakeBg}>
+          <div className={styles.healthCheckFakeBg}>
             <CheckWhite />
           </div>
           }
@@ -59,4 +57,4 @@ const HealthCheckSlider = () => {
   );
 };
 
-export default HealthCheckSlider;
+export default MainHealthCheckSlider;
