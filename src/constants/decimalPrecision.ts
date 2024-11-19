@@ -1,0 +1,8 @@
+
+const DECIMAL_PRECISION = {
+  ONE_MEAL_GRAM_PRECISION : 1,
+  ONE_DAY_KCAL_PRECISION : 1,
+} as const
+
+
+export {DECIMAL_PRECISION}

@@ -8,6 +8,8 @@ import SummaryBar from "../summaryBar/SummaryBar";
 import SelectedProductInfo from "../selectedProductInfo/SelectedProductInfo";
 import { useGetSurveyRecipe } from "@/api/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/queries/useGetSurveyResult";
+import { calculateOneMealGrams } from "@/utils/subscription/mealCalculations";
+import { isOriginSubscriber } from "@/utils/subscription/subscriptionUtils";
 
 interface SubscribeShopContentProps {
   reportId: number;
@@ -27,6 +29,14 @@ export default function SubscribeShopContent({
     handleSelectedRecipe,
   } = useSubscription();
 
+  const oneMealGram = calculateOneMealGrams({
+    selectedRecipeIds: selectedRecipes,
+    recipeDtoList: recipeData.recipeDtoList,
+    oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
+    isOriginSubscriber: isOriginSubscriber(recipeData.subscribeId)
+  })
+  
+  console.log('oneMealGram', oneMealGram);
   return (
     <div className={styles.subscribeShopWrapper}>
       <RecipeSelection
