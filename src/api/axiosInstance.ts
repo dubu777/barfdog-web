@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
     timeout: 1000,
     headers: {
         'Content-Type': 'application/json',
-        authorization: process.env.NEXT_PUBLIC_ACCESSE_TOKEN,
+        authorization: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
     }
 });
 
