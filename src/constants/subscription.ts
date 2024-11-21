@@ -32,8 +32,16 @@ export const subscribePlanInfo = {
     totalNumberOfPacks: 28,
     maxRecipeCount: 1,
   },
+  // 삭제 예정
+  TOPPING: {
+    NAME: 'TOPPING',
+    KOR: '토핑 플랜',
+    numberOfPacksPerDay: 1,
+    weeklyPaymentCycle: 4,
+    totalNumberOfPacks: 20,
+    maxRecipeCount: 1,
+  },
 };
-
 
 export const originSubscribeIdList = [
   27, 50, 98, 110, 115, 116, 125, 130, 134, 137, 139, 140, 190, 206, 213, 215,
@@ -47,3 +55,20 @@ export const originSubscribeIdList = [
   3743, 3772, 3783, 3788, 3804, 3830, 3864, 3893, 3895, 3903, 3907, 3912, 3914,
   3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
+
+export const subscribeStatus = {
+  // BEFORE_PAYMENT: '구독 비활성',
+  // SURVEY_COMPLETED: '구독 비활성',
+  // SUBSCRIBING: '구독 활성',
+  // SUBSCRIBE_PENDING: '구독 비활성',
+  // SUBSCRIBE_CANCEL: '구독 비활성',
+  // SUBSCRIBE_WILL_CANCEL: '구독 취소예정',
+  // ADMIN: '관리자구독',
+  BEFORE_PAYMENT: '구독 전',
+  SURVEY_COMPLETED: '설문 완료',
+  SUBSCRIBE_WILL_CANCEL: '구독 취소 예정',
+  SUBSCRIBE_CANCEL: '구독 취소',
+  SUBSCRIBING: '구독 중',
+  SUBSCRIBE_PENDING: '구독 보류', // = 실질적으로 "결제 전" 상태와 동일
+  ADMIN: '관리자 구독',
+}

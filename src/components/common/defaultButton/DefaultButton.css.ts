@@ -29,6 +29,11 @@ export const defaultButtonStyle = recipe({
         backgroundColor: themeVars.backgroundColors.black,
         color: themeVars.fontColors.white,
       },
+      gray: {
+        border: 'none',
+        backgroundColor: themeVars.buttonColors.greyB9,
+        color: themeVars.fontColors.white,
+      },
       mainBorder: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
         backgroundColor: themeVars.backgroundColors.white,
@@ -87,7 +92,10 @@ export const defaultButtonStyle = recipe({
       true: {}
     },
     isActive: {
-      true: {}
+      true: {
+        backgroundColor: themeVars.backgroundColors.mainRed,
+        color: themeVars.colors.white,
+      }
     }
   },
   compoundVariants: [
@@ -111,7 +119,7 @@ export const defaultButtonStyle = recipe({
       variants: { type: 'grayBorder', isActive: true },
       style: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
-        color: themeVars.borderColors.mainRed,
+        color: themeVars.colors.white,
       }
     }
   ],

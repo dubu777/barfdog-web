@@ -1,5 +1,5 @@
-import {useRouter} from "next/navigation";
-import {useCallback} from "react";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 type QueryParams = Record<string, string | number | boolean>;
 

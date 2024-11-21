@@ -63,40 +63,6 @@ export interface RewardData {
   createdTime: string | Date;
 }
 
-
-interface OrderItem {
-  id: number;
-  name: string;
-}
-
-interface RecipeDto {
-  thumbnailUrl: string;
-  recipeName: string;
-}
-
-interface OrderDto {
-  id: number;
-  merchantUid: string;
-  orderDate: string | Date;
-  orderStatus: string;
-  paymentPrice: number;
-}
-
-interface SubscribeOrderDto extends OrderDto {
-  orderId: number;
-  subscribeId: number;
-  dogName: string;
-  subscribeCount: number;
-  paymentMethod: string;
-  customerUid: string | null;
-  paid: boolean;
-}
-
-export interface SubscribeOrderData {
-  recipeDto: RecipeDto;
-  subscribeOrderDto: SubscribeOrderDto;
-}
-
 export interface SubscribeDto {
   id: number;
   subscribeStatus: string;
@@ -121,64 +87,36 @@ export interface SubscribeDto {
   subscriptionMonth?: null | number | string;
 }
 
-export interface GeneralOrderData {
-  itemNameList: OrderItem[];
-  orderDto: OrderDto;
-  thumbnailUrl: string;
+
+export interface AddressDto {
+  deliveryName?: null | string;
+  recipientName: string;
+  phoneNumber: string;
+  zipcode: string;
+  street: string;
+  detailAddress: string;
+  request?: null | string;
 }
 
-export interface OrderDetailDto extends OrderCancel {
-  orderId?: number;
-  merchantUid?: string;
-  paymentDate?: string;
-  deliveryNumber?: null | number | string;
-  deliveryCode?: null | number | string;
-  transUniqueCd?: null | number | string;
-  arrivalDate?: null | number | string;
-  orderPrice?: number;
-  deliveryPrice?: number;
-  discountGrade?: number;
-  discountTotal?: number;
-  discountReward?: number;
-  discountCoupon?: number;
-  overDiscount?: number;
-  paymentPrice?: number;
-  paymentMethod?: string;
-  name?: string;
-  phone?: string;
-  zipcode?: string;
-  street?: string;
-  detailAddress?: string;
-  request?: null | number | string;
-  orderStatus?: string;
-  package?: boolean;
+export interface SubscribeAddressData {
+  currentAddress: AddressDto;
+  nextAddress: AddressDto
+  nextDeliveryDate: string;
 }
 
-interface OrderCancel {
-  cancelReason: string;
-  cancelDetailReason: string;
-  cancelRequestDate: string;
-  cancelConfirmDate: string;
+export interface ManageSubscribeData {
+  itemNames: string;
+  recipeNames: string;
+  subscribeDto: SubscribeDto;
 }
 
-interface SelectOptionDtoList {
-  itemOptionId: number;
-  amount: number;
-}
-
-export interface OrderItemDtoList {
-  orderItemId: number;
-  thumbnailUrl: string;
-  selectOptionDtoList: SelectOptionDtoList[];
-  itemId: number;
-  itemName: string;
-  amount: number;
-  finalPrice: number;
-  discountAmount: number;
-  status: string;
-  saveReward: number;
-  category: string;
-  orderCancel: OrderCancel;
-  orderReturn?: null;
-  orderExchange?: null;
+export interface BenefitDto {
+  benefitExpiredDate: string;
+  benefitId: number;
+  benefitName: string;
+  benefitRequestDate?: null | string | Date;
+  benefitStatus: string;
+  benefitUsedDate?: null | string | Date;
+  benefitValue: number;
+  subscribeId: number;
 }

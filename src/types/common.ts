@@ -3,7 +3,8 @@ export type SearchParamProps = {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 export type DefaultObjectType = {
-  name: string;
-  value: string | number;
+  name: string | Element;
+  value: string | number | Record<string, string | number> | Element;
+  visible?: boolean;
   child?: { name: string; value: string }[];
 }

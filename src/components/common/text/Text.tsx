@@ -4,8 +4,8 @@ import * as styles from "./Text.css";
 interface MainTextProps {
   children?: ReactNode;
   type: 'title' | 'description';
-  size: 'xs' | 'sm' | 'md' | 'lg' | 'titleLg' | 'titleXl' | 'titleXXl';
-  color?: 'white';
+  size: 'xs' | 'sm' | 'md' | 'lg' | 'titleMd' | 'titleLg' | 'titleXl' | 'titleXXl';
+  color?: 'white' | 'red';
   weight?: 'normal';
   align?: string;
   className?: HTMLAttributes<string | undefined>;

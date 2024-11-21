@@ -4,7 +4,7 @@ import {themeVars} from "@/styles/theme.css";
 export const title = recipe({
   base: {
     fontStyle: 'normal',
-    fontWeight: themeVars.fontWeight.bold,
+    fontWeight: themeVars.fontWeight.normal,
     fontSize: '23px',
     zIndex: 100,
     lineHeight: 'normal',
@@ -15,11 +15,15 @@ export const title = recipe({
       md: {
         fontSize: themeVars.fontSize["text-md"],
         fontWeight: themeVars.fontWeight.semibold,
-        // letterSpacing: '-0.04em',
       },
       lg: {
         fontSize: themeVars.fontSize["text-lg"],
         letterSpacing: '-0.05em',
+      },
+      titleMd: {
+        fontSize: themeVars.fontSize["title-md"],
+        fontWeight: themeVars.fontWeight.semibold,
+        letterSpacing: '-0.06em',
       },
       titleLg: {
         fontSize: themeVars.fontSize["title-lg"],
@@ -106,6 +110,9 @@ export const description = recipe({
       },
       left: {
         textAlign: 'left',
+      },
+      right: {
+        textAlign: 'right',
       }
     },
     weight: {
