@@ -1,12 +1,13 @@
 "use client";
 
 import Header from "@/components/layout/header/Header";
-import useForm from "@/hooks/useForm";
-import SurveyForm from "@/components/survey/surveyForm/SurveyForm";
-import SurveyPagination from "@/components/survey/surveyPagination/SurveyPagination";
-import useStep from "@/hooks/useStep";
-import { getSurveySteps } from "@/components/survey/surveySteps/SurveySteps";
+import useSurveyForm from "@/hooks/useSuveyForm";
 import { useSurveyStore } from "@/store/useSurveyStore";
+import useStep from "@/hooks/useStep";
+import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
+import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
+import SurveyPagination from "@/components/pages/survey/surveyPagination/SurveyPagination";
+import * as styles from './Survey.css';
 
 export default function SurveyPage() {
   const { stepLength, canNextStep } = useSurveyStore();
@@ -19,7 +20,7 @@ export default function SurveyPage() {
     isFirstStep,
   } = useStep(stepLength());
   const { formData, errorMessages, handleChange, handleBlur, handleKeyDown } =
-    useForm(handleNextStep, currentStep);
+  useSurveyForm(handleNextStep, currentStep);
   const steps = getSurveySteps({
     formData,
     errorMessages,
@@ -27,10 +28,10 @@ export default function SurveyPage() {
     handleBlur,
     handleKeyDown,
   });
-  console.log(formData, "form");
+
 
   return (
-    <>
+    <div className={styles.surveyLayoutContainer}>
       <Header type="redBackground" />
       <SurveyForm
         currentStep={currentStep}
@@ -46,6 +47,6 @@ export default function SurveyPage() {
         stepLength={steps.length}
         canNextStep={canNextStep}
       />
-    </>
+    </div>
   );
 }

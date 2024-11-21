@@ -12,8 +12,8 @@ export const bottomNavBarContainer = style({
   minWidth: "320px",
   maxWidth: "600px",
   margin: "0 auto",
-  height: "66px",
-  padding: '40px 10px',
+  height: "60px",
+  padding: '20px 15px',
   zIndex: 200,
   background: themeVars.colors.white,
 });

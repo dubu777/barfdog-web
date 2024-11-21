@@ -8,7 +8,9 @@ export const defaultButtonStyle = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     transition: 'background-color 0.3s ease, opacity 0.3s ease',
-    padding: '0 16px',
+    gap: '10px',
+    textAlign: 'center',
+    lineHeight: '1',
   },
   variants: {
     type: {
@@ -44,7 +46,8 @@ export const defaultButtonStyle = recipe({
       },
     },
     size: {
-      xs: { fontSize: '12px', height: '23px', padding: '8px' },
+      xxs: { fontSize: '10px', height: '19px', padding: '0 8px' },
+      xs: { fontSize: '12px', height: '23px', padding: '0 8px' },
       sm: { fontSize: '13px', height: '30px', width: '100%' },
       md: { fontSize: '16px', height: '40px', width: '100%' },
       lg: { fontSize: '16px', height: '45px', width: '100%' },
@@ -122,5 +125,6 @@ export const defaultButtonStyle = recipe({
 });
 
 export const iconStyle = style({
-  marginRight: '8px',
+  display: 'flex',
+  alignItems: 'center',
 });

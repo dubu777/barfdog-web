@@ -1,6 +1,7 @@
 import { createTheme } from "@vanilla-extract/css";
 
-// 예시 코드 - 추후 수정 
+// 예시 코드 - 추후 수정
+
 export const [themeClass, themeVars] = createTheme({
   height: {
     innerHeight: 'calc(100vh - 142px)',
@@ -43,9 +44,15 @@ export const [themeClass, themeVars] = createTheme({
     grey89: '#898989',
     grey5A: '#5A5A5A',
     grey4F: '#4F4F4F',
+    grey42: '#424242',
+    grey4D: '#4D4D4D',
+    grey6E: '#6E6E73',
+    grey77: '#777777',
+    grey9C: '#9C9C9C',
     grey4a: '#4A4A4A',
     grey38: '#383838',
     black: '#0E1108',
+    black1D: '#1D1D1F',
   },
   backgroundColors: {
     white: '#ffffff',
@@ -56,6 +63,7 @@ export const [themeClass, themeVars] = createTheme({
     pinkF1: '#FFF1F1',
     pinkFa: '#FFFAFA',
     pinkFF: '#FFE0E1',
+    darkRed: '#AF3D3D',
     mainRed: '#BE1A21',
     greyF7: '#F7F7F7',
     greyF2: '#F2F2F2',
@@ -64,6 +72,7 @@ export const [themeClass, themeVars] = createTheme({
     grey63: '#636363',
     greyA6: '#A6A4A4',
     greyD9: '#D9D9D9',
+    greyEE: '#EEEEEE',
     black: '#0E1108',
     kakao: '#FDDC3F',
     naver: '#00C73C',
@@ -73,6 +82,7 @@ export const [themeClass, themeVars] = createTheme({
     redB8: '#B8363B',
     redAF: '#AF3D3D',
     mainRed: '#BE1A21',
+    darkRed: '#AF3D3D',
     greyAC: '#ACABAB',
     grey99: '#999999',
     grey85: '#858585',
