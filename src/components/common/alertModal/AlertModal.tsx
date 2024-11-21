@@ -1,6 +1,6 @@
 import * as styles from './AlertModal.css';
 import { motion } from "framer-motion";
-import {createPortal} from "react-dom";
+import Portal from "@/components/common/portal/Portal";
 
 interface AlertModalProps {
   isOpen: boolean;
@@ -11,8 +11,8 @@ interface AlertModalProps {
 
 const AlertModal = ({ isOpen, onClose, onConfirm, message }: AlertModalProps) => {
   if (!isOpen) return null;
-  return createPortal(
-    <div className={styles.overlayStyle} onClick={onClose}>
+  return (
+    <Portal onClose={onClose}>
       <motion.div
         className={styles.modalStyle}
         onClick={(e) => e.stopPropagation()}
@@ -27,8 +27,7 @@ const AlertModal = ({ isOpen, onClose, onConfirm, message }: AlertModalProps) =>
           <button onClick={onConfirm} className={styles.confirmButtonStyle}>네</button>
         </div>
       </motion.div>
-    </div>,
-    document.body
+    </Portal>
   );
 };
 

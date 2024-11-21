@@ -62,3 +62,7 @@ button {
     border: none;
     padding: 0;
 }
+
+abbr[title] {
+    text-decoration: none;
+}

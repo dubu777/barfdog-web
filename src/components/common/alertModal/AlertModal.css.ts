@@ -1,22 +1,8 @@
 import {style} from "@vanilla-extract/css";
-import {commonLayoutStyle} from "@/styles/common.css";
 import {themeVars} from "@/styles/theme.css";
 
-export const overlayStyle = style([commonLayoutStyle, {
-  height: '100vh',
-  position: 'fixed',
-  top: 0,
-  left: '50%',
-  transform: 'translateX(-50%)',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 1000,
-}]);
-
 export const modalStyle = style({
-  width: '50%',
+  minWidth: '50%',
   backgroundColor: themeVars.colors.white,
   borderRadius: '8px',
   padding: '32px 22px 24px',

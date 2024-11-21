@@ -67,4 +67,10 @@ export const defaultWidth = style({
   marginTop: 0,
   marginLeft: 'auto',
   marginRight: 'auto',
+  marginBottom: '60px',
 })
+
+export const inlineBlockSpan = style({
+  display: 'inline-block',
+  marginLeft: '8px',
+});
