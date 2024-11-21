@@ -8,8 +8,8 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as styles from "../Survey.css";
-import { prefetchGetSurveyRecipe } from "@/api/queries/useGetSurveyRecipe";
-import { prefetchGetSurveyResult } from "@/api/queries/useGetSurveyResult";
+import { prefetchGetSurveyRecipe } from "@/api/queries/survey/useGetSurveyRecipe";
+import { prefetchGetSurveyResult } from "@/api/queries/survey/useGetSurveyResult";
 import SubscribeShopContent from "@/components/pages/subscribeShop/subscribeShopContent/SubscribeShopContent";
 
 export default async function SubscribeShopPage({

@@ -8,7 +8,7 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as styles from "../Survey.css";
-import { prefetchGetSurveyResult } from "@/api/queries/useGetSurveyResult";
+import { prefetchGetSurveyResult } from "@/api/queries/survey/useGetSurveyResult";
 import SurveyResult from "@/components/pages/result/surveyResult/SurveyResult";
 
 

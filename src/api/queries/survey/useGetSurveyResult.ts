@@ -1,6 +1,6 @@
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { getSurveyResult } from "../survey";
+import { getSurveyResult } from "../../survey";
 
 
 export function useGetSurveyResult(id: number) {

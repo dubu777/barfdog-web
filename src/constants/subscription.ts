@@ -5,7 +5,6 @@ export const subscribePlanInfo = {
     numberOfPacksPerDay: 2,
     weeklyPaymentCycle: 2,
     totalNumberOfPacks: 28,
-    maxRecipeCount: 2,
   },
   HALF: {
     id: 'HALF',
@@ -13,7 +12,6 @@ export const subscribePlanInfo = {
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 28,
-    maxRecipeCount: 1,
   },
 
   TOPPING_FULL: {
@@ -22,7 +20,6 @@ export const subscribePlanInfo = {
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 2,
     totalNumberOfPacks: 28,
-    maxRecipeCount: 1,
   },
   TOPPING_HALF: {
     id: 'TOPPING_HALF',
@@ -30,10 +27,10 @@ export const subscribePlanInfo = {
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 28,
-    maxRecipeCount: 1,
   },
-};
+} as const;
 
+export type PlanName = keyof typeof subscribePlanInfo;
 
 export const originSubscribeIdList = [
   27, 50, 98, 110, 115, 116, 125, 130, 134, 137, 139, 140, 190, 206, 213, 215,
@@ -47,3 +44,4 @@ export const originSubscribeIdList = [
   3743, 3772, 3783, 3788, 3804, 3830, 3864, 3893, 3895, 3903, 3907, 3912, 3914,
   3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
+

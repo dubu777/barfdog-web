@@ -1,5 +1,5 @@
 "use client";
-import { useGetSurveyResult } from "@/api/queries/useGetSurveyResult";
+import { useGetSurveyResult } from "@/api/queries/survey/useGetSurveyResult";
 import { INEDIBLE_FOOD_TO_ID } from "@/constants";
 import Link from "next/link";
 

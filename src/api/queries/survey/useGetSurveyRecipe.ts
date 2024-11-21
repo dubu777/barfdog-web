@@ -1,5 +1,5 @@
 import { QueryClient, useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { getSurveyRecipe } from "../survey";
+import { getSurveyRecipe } from "../../survey";
 import { queryKeys } from "@/constants/queryKeys";
 
 

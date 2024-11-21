@@ -1,6 +1,6 @@
 'use client'
 
-import { useGetSurveyResult } from "@/api/queries/useGetSurveyResult";
+import { useGetSurveyResult } from "@/api/queries/survey/useGetSurveyResult";
 import { subscribeText } from "../recipeSelection/RecipeSelection.css";
 import * as styles from "./SelectedProductInfo.css";
 import { ResultData } from "@/types";

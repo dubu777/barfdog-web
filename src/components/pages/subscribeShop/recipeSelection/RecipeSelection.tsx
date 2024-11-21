@@ -5,7 +5,7 @@ import { getNameWithObjectSuffix } from "@/utils";
 import { UI_MESSAGES } from "@/constants/message";
 import RecipeCard from "./recipeCard/RecipeCard";
 import { RECIPE_TEMP_DATA } from "@/constants";
-import { useGetSurveyRecipe } from "@/api/queries/useGetSurveyRecipe";
+import { useGetSurveyRecipe } from "@/api/queries/survey/useGetSurveyRecipe";
 import { useEffect } from "react";
 import { RecipeData } from "@/types";
 

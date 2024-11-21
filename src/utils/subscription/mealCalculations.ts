@@ -2,7 +2,7 @@ import { DECIMAL_PRECISION } from "@/constants";
 import { RecipeDto } from "@/types";
 
 
-type SubscribeRecipeInfo = {
+interface calculateOneMealGramsProps {
   selectedRecipeIds: number[];
   recipeDtoList: RecipeDto[];
   oneDayRecommendKcal: number;
@@ -22,7 +22,7 @@ export const calculateOneMealGrams = ({
   recipeDtoList,
   oneDayRecommendKcal,
   isOriginSubscriber = false,
-}: SubscribeRecipeInfo) => {
+}: calculateOneMealGramsProps) => {
   // 데이터 유효성 검사
   if (
     !Array.isArray(selectedRecipeIds) ||
@@ -64,9 +64,10 @@ export const calculateOneMealGrams = ({
         recipeId: recipe.id,
         recipeName: recipe.name,
         oneMealGram,
+        pricePerGram: recipe.pricePerGram,
       };
     })
-    .filter(Boolean); // null 값 제거
+    .filter((meal): meal is NonNullable<typeof meal> => meal !== null);
 };
 
 // 하루 권장 칼로리를 소수점 제한하여 반환하는 함수

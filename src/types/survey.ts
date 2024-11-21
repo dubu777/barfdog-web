@@ -175,8 +175,14 @@ interface ResultData {
   waterCountLevel: string;
   weightAnalysis: WeightAnalysis;
 }
+interface SubscribePlan {
+  id: string;
+  label: string;
+  numberOfPacksPerDay: number;
+  weeklyPaymentCycle: number;
+  totalNumberOfPacks: number;
+  maxRecipeCount: number;
+};
 
 
-
-
-export type { SurveyFormData, RecipeDto, FoodAnalysis, ResultData, RecipeData };
+export type { SubscribePlan, SurveyFormData, RecipeDto, FoodAnalysis, ResultData, RecipeData };

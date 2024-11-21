@@ -8,6 +8,7 @@ import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveyStep
 import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
 import SurveyPagination from "@/components/pages/survey/surveyPagination/SurveyPagination";
 import * as styles from './Survey.css';
+import { originSubscribeIdList } from "@/constants";
 
 export default function SurveyPage() {
   const { stepLength, canNextStep } = useSurveyStore();
@@ -28,7 +29,6 @@ export default function SurveyPage() {
     handleBlur,
     handleKeyDown,
   });
-
 
   return (
     <div className={styles.surveyLayoutContainer}>
