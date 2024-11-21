@@ -1,8 +1,6 @@
 import { PlanName, subscribePlanInfo } from "@/constants";
 
-export const SUBSCRIBE_PRICE_CUTOFF_UNIT = 10;
-
-// 기존 구독자 가격 조정 함수
+// 기존 구독자 가격 조정을 위한 함수
 export const adjustPriceForSubscriber = (
   pricePerGram: number,
   recipeName: string,
@@ -23,75 +21,78 @@ export const adjustPriceForSubscriber = (
 export const calculatePerPackPrice = (
   pricePerGram: number,
   oneMealGram: number,
-  discountPercent: number
+  discountPercent: number // 플랜별 할인율
 ): number => {
-  const perPackPrice = pricePerGram * oneMealGram;
-  return Math.floor(
-    (perPackPrice * (1 - discountPercent / 100)) / SUBSCRIBE_PRICE_CUTOFF_UNIT
-  ) * SUBSCRIBE_PRICE_CUTOFF_UNIT;
+  const perPackPrice = pricePerGram * oneMealGram; // 할인 적용 안된 한 팩 가격
+  return Math.floor(perPackPrice * (1 - discountPercent / 100)); // 할인 적용된 한팩 가격, 소숫점 버림
 };
-
 
 // 구독 가격 계산 함수
 export const calculateSubscribePrice = ({
-  selectedRecipeMeals,
-  selectedPlan,
-  isOriginSubscriber,
+  selectedRecipeMeals, // 선택한 레시피의 정보 => 한 팩 그램 수(oneMealGram), 그램 당 가격(pricePerGram), recipeId, recipeName
+  selectedPlan, // 선택한 플랜(ex - FULL, HALF)
+  isOriginSubscriber, // 기존 구독자 판별, 가격 인상 전 고객 확인
   discountPercent = 0,
 }: {
-  selectedRecipeMeals: { recipeId: number; recipeName: string; oneMealGram: number; pricePerGram: number }[];
+  selectedRecipeMeals: {
+    recipeId: number;
+    recipeName: string;
+    oneMealGram: number;
+    pricePerGram: number;
+  }[];
   selectedPlan: PlanName | null;
   isOriginSubscriber: boolean;
   discountPercent?: number;
 }) => {
-  // 플랜 정보 가져오기
+  // 선택된 플랜의 총 팩 수 가져옴
   const totalNumberOfPacks =
-  selectedPlan && subscribePlanInfo[selectedPlan]
-    ? subscribePlanInfo[selectedPlan].totalNumberOfPacks
-    : 0;
+    selectedPlan && subscribePlanInfo[selectedPlan]
+      ? subscribePlanInfo[selectedPlan].totalNumberOfPacks
+      : 0;
 
-  // 각 레시피별 가격 계산
-  const recipePrices = selectedRecipeMeals.map(({ recipeId, recipeName, oneMealGram, pricePerGram }) => {
-    const adjustedPricePerGram = adjustPriceForSubscriber(
-      pricePerGram,
-      recipeName,
-      isOriginSubscriber
-    );
+  // 각 레시피별 가격 계산해서 배열로 만듬
+  const recipePriceDetails = selectedRecipeMeals.map(
+    ({ recipeId, recipeName, oneMealGram, pricePerGram }) => {
+      const adjustedPricePerGram = adjustPriceForSubscriber(
+        pricePerGram,
+        recipeName,
+        isOriginSubscriber
+      );
 
-    const perPackPrice = Math.floor(
-      (adjustedPricePerGram * oneMealGram * (1 - discountPercent / 100)) /
-        SUBSCRIBE_PRICE_CUTOFF_UNIT
-    ) * SUBSCRIBE_PRICE_CUTOFF_UNIT;
+      // 할인 적용된 한 팩 가격
+      const discountedPackPrice =
+        adjustedPricePerGram * oneMealGram * (1 - discountPercent / 100);
 
-    return {
-      recipeId,
-      recipeName,
-      perPackPrice,
-      originPrice: totalNumberOfPacks * adjustedPricePerGram * oneMealGram,
-      salePrice: totalNumberOfPacks * perPackPrice,
-    };
-  });
+      return {
+        recipeId,
+        recipeName,
+        discountedPackPrice, // 해당 레시피의 할인 적용된 한팩 가격
+        originPrice: totalNumberOfPacks * adjustedPricePerGram * oneMealGram, // 해당 레시피의 총 원가
+        salePrice: totalNumberOfPacks * discountedPackPrice, // 해당 레시피의 총 할인 적용된 가격
+      };
+    }
+  );
 
   // 총 원가 및 총 할인 적용된 가격 계산
-  const totalOriginalPrice = recipePrices.reduce(
-    (acc, { originPrice }) => acc + originPrice,
-    0
-  );
+  const totalOriginalPriceAllRecipes =
+    recipePriceDetails.reduce((acc, { originPrice }) => acc + originPrice, 0) /
+    recipePriceDetails.length;
 
-  const totalDiscountedPrice = recipePrices.reduce(
-    (acc, { salePrice }) => acc + salePrice,
-    0
-  );
+  const totalDiscountedPriceAllRecipes =
+    recipePriceDetails.reduce((acc, { salePrice }) => acc + salePrice, 0) /
+    recipePriceDetails.length;
 
-  // 전체 평균 가격 계산
-  const avgPrice =
-    recipePrices.reduce((acc, { perPackPrice }) => acc + perPackPrice, 0) /
-    recipePrices.length;
+  // 전체 평균 팩당 가격 계산
+  const averagePackPrice =
+    recipePriceDetails.reduce(
+      (acc, { discountedPackPrice }) => acc + discountedPackPrice,
+      0
+    ) / recipePriceDetails.length;
 
   return {
-    avgPrice: Math.floor(avgPrice), // 평균 가격
-    recipePrices, // 레시피별 가격
-    totalOriginalPrice: Math.floor(totalOriginalPrice),
-    totalDiscountedPrice: Math.floor(totalDiscountedPrice),
+    averagePackPrice: Math.floor(averagePackPrice), // 전체 평균 팩당 가격 계산
+    recipePriceDetails, // 레시피별 가격 상세 정보
+    totalOriginalPriceAllRecipes: Math.floor(totalOriginalPriceAllRecipes),
+    totalDiscountedPriceAllRecipes: Math.floor(totalDiscountedPriceAllRecipes),
   };
 };

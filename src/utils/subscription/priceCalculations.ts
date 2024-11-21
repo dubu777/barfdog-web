@@ -1,6 +1,10 @@
 import { subscribePlanType } from '/store/TYPE/subscribePlanType';
 
 export const subscribePriceCutOffUnit = 10; // 구독상품 > 10원 단위 절사.
+
+
+// 선택한 모든 레시피 가격 계산
+// calcSubscribeItemPrice 함수(한 팩 가격, 할인 전 가격, 할인 후 가격, 래시피 이름을 반환)를 반복문을 통해 돌면서 선택한 모든 레시피 가격 정보 반환 
 export const calcSubscribePrice = ({
   discountPercent = 0,
   oneMealGrams = [],
@@ -138,3 +142,4 @@ export const calcSubscribeItemsAvgPrice = (subscribePriceList) => {
   //   salePrice: Math.floor(salePrice / cutOffUnit) * cutOffUnit, // ! 판매가: 1원 단위 절사
   // };
 };
+

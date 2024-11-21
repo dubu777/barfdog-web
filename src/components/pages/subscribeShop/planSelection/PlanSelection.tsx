@@ -49,7 +49,8 @@ export default function PlanSelection({
       {PLAN_SELECT_INFO.map(({ key, title, content }) => (
         <PlanSelectBox
           key={key}
-          PlanName={key}
+          planName={key}
+          title={title}
           content={content}
           selectedPlan={selectedPlan}
           onPlanBoxSelect={onPlanSelect}

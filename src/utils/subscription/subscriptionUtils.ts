@@ -5,6 +5,25 @@ export function isOriginSubscriber(id: number): boolean {
   return originSubscribeIdList.includes(id);
 }
 
+export const adjustedPricePerGram = (
+  pricePerGram: number,
+  recipeName: string,
+  isOriginSubscriber: boolean
+): number => {
+  const priceMap: Record<string, number> = {
+    "STARTER PREMIUM +": 35.649,
+    "TURKEY&BEEF +": 39.9,
+    "DUCK&LAMB +": 40.452,
+    "LAMB&BEEF +": 45.414,
+  };
+
+  // 기존 구독자이고, 해당 레시피가 priceMap에 있다면 고정 가격 반환
+  return isOriginSubscriber && priceMap[recipeName]
+    ? priceMap[recipeName]
+    : pricePerGram; // 아니라면 기본 pricePerGram 반환
+};
+
+
 export type RecipeInfo = {
   name: string;
   pricePerGram: number;

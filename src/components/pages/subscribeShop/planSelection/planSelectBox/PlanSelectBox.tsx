@@ -7,23 +7,24 @@ import HalfPlan from "/public/images/survey/half_plan.svg";
 import HalfPlanActive from "/public/images/survey/half_plan_active.svg";
 
 interface PlanSelectBoxProps {
-  PlanName: PlanName;
+  planName: PlanName;
+  title: string;
   content: string[];
   selectedPlan: string | null;
   onPlanBoxSelect: (planName: PlanName) => void;
 }
 
 
-export default function PlanSelectBox({PlanName, content, selectedPlan, onPlanBoxSelect}: PlanSelectBoxProps) {
-  const isSelected = selectedPlan === PlanName;
+export default function PlanSelectBox({planName, title, content, selectedPlan, onPlanBoxSelect}: PlanSelectBoxProps) {
+  const isSelected = selectedPlan === planName;
   
   return (
-    <div className={styles.planBoxContainer({isSelected})} onClick={() => onPlanBoxSelect(PlanName)}>
+    <div className={styles.planBoxContainer({isSelected})} onClick={() => onPlanBoxSelect(planName)}>
     {/* <div className={styles.planBoxWrapper}> */}
       <div className={styles.planTitleWrapper}>
-        <span className={subscribeText({type: 'recipeTitle', isSelected})}>{PlanName}</span>
-        {PlanName === 'FULL' && (isSelected ? <FullPlanActive /> : <FullPlan />)}
-        {PlanName === 'HALF' && (isSelected ? <HalfPlanActive /> : <HalfPlan />)}
+        <span className={subscribeText({type: 'recipeTitle', isSelected})}>{title}</span>
+        {planName === 'FULL' && (isSelected ? <FullPlanActive /> : <FullPlan />)}
+        {planName === 'HALF' && (isSelected ? <HalfPlanActive /> : <HalfPlan />)}
       </div>
       <div className={styles.planBoxDivider(({isSelected}))}/>
       <div className={styles.planContentWrapper}>
