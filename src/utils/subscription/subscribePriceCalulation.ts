@@ -73,11 +73,12 @@ export const calculateSubscribePrice = ({
     }
   );
 
-  // 총 원가 및 총 할인 적용된 가격 계산
+  // 총 원가
   const totalOriginalPriceAllRecipes =
     recipePriceDetails.reduce((acc, { originPrice }) => acc + originPrice, 0) /
     recipePriceDetails.length;
 
+  // 총 할인 적용된 가격
   const totalDiscountedPriceAllRecipes =
     recipePriceDetails.reduce((acc, { salePrice }) => acc + salePrice, 0) /
     recipePriceDetails.length;
