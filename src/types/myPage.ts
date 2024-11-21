@@ -64,21 +64,7 @@ export interface RewardData {
 }
 
 
-export interface AddressDto {
-  deliveryName?: null | string;
-  recipientName: string;
-  phoneNumber: string;
-  zipcode: string;
-  street: string;
-  detailAddress: string;
-  request?: null | string;
-}
 
-export interface SubscribeAddressData {
-  currentAddress: AddressDto;
-  nextAddress: AddressDto
-  nextDeliveryDate: string;
-}
 
 export interface ManageSubscribeData {
   itemNames: string;

@@ -1,38 +1,55 @@
+'use client';
 import * as styles from "@/components/pages/mypage/main/DogList/DogList.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
+import { useRouter } from "next/navigation";
+import { useMypageStore } from "@/store/useMypageStore";
 
 interface SubscriptionButtonProps {
-  linkUrl: string;
+  linkUrl?: string;
   title: string;
   color?: 'red';
+  onClick?: () => void;
 }
 
-const SubscriptionButton = ({ title, linkUrl, color }: SubscriptionButtonProps) => {
+const SubscriptionButton = ({ title, linkUrl, color, onClick }: SubscriptionButtonProps) => {
+  const router = useRouter();
   return (
     <DefaultButton
       type={color === 'red' ? 'mainBorder' :'grayBorder'}
       size='sm'
-      linkUrl={linkUrl}
+      onClick={onClick ? onClick : () => router.push(linkUrl)}
     >
       {title}
     </DefaultButton>
   )
 }
 
-const DogButtonControls = ({ status, subscribeId }: { status: string, subscribeId: number | string }) => {
+interface DogButtonControlsProps {
+  status: string;
+  subscribeId: string | number;
+  dogName: string;
+}
+
+const DogButtonControls = ({ status, subscribeId, dogName }: DogButtonControlsProps) => {
   const subscribing = status === 'SUBSCRIBING';
   const beforeSubscribe = status === 'BEFORE_PAYMENT' || status === 'SURVEY_COMPLETED';
   const pendingSubscribe = status === 'SUBSCRIBE_PENDING' || status === 'SUBSCRIBE_CANCEL';
   const wilCancelSubscribe = status === 'SUBSCRIBE_WILL_CANCEL';
+  const { setSubscribeDogName } = useMypageStore();
+  const router = useRouter();
 
+  const handleAddressWithDogName = () => {
+    setSubscribeDogName(dogName)
+    router.push(`/mypage/subscribe/deliveryAddress/${subscribeId}`);
+  }
   const DelayDelivery = () => (
-    <SubscriptionButton title={'배송 미루기'} linkUrl={`/mypage/delayDelivery/${subscribeId}`} />
+    <SubscriptionButton title={'배송 미루기'} linkUrl={`/mypage/subscribe/delayDelivery/${subscribeId}`} />
   )
   const DeliveryAddress = () => (
-    <SubscriptionButton title={'구독 배송지 관리'} linkUrl='' />
+    <SubscriptionButton title={'구독 배송지 관리'} onClick={handleAddressWithDogName} />
   )
   const ManageSubscription = () => (
-    <SubscriptionButton title={'구독 관리'} linkUrl='' />
+    <SubscriptionButton title={'구독 관리'} linkUrl='/mypage/subscribe' />
   )
   const PaymentSubscription = () => (
     <SubscriptionButton title={'구독 결제하기'} color='red' linkUrl='' />

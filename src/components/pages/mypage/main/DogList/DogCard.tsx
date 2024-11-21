@@ -7,7 +7,7 @@ import Badge from "@/components/common/badge/Badge";
 import DogButtonControls from "@/components/pages/mypage/main/DogList/DogButtonControls";
 import DogRepresentative from "@/components/pages/mypage/main/DogList/DogRepresentative";
 import { DogData } from "@/types/myPage";
-import { SUBSCRIBE_STATUS } from "@/constants/myPage";
+import { subscribeStatus } from "@/constants";
 
 interface MyPageDogCardProps {
   noData: boolean;
@@ -15,7 +15,7 @@ interface MyPageDogCardProps {
 }
 
 const DogCard = ({ dog, noData }: MyPageDogCardProps) => {
-  const subscribeStatus = SUBSCRIBE_STATUS[dog?.subscribeStatus];
+  const subscribeStatusKR = subscribeStatus[dog?.subscribeStatus];
   return (
     <div className={styles.dogSlide({ representative: dog?.representative || dog?.subscribeStatus === 'SUBSCRIBING', noDogData: noData })}>
       <DogRepresentative noData={noData} representativeDog={dog?.representative} />
@@ -23,7 +23,7 @@ const DogCard = ({ dog, noData }: MyPageDogCardProps) => {
         className={styles.subscribeStatus}
         color={!noData && dog?.subscribeStatus === 'SUBSCRIBING' && 'red'}
       >
-        {!noData ? subscribeStatus : '구독 전'}
+        {!noData ? subscribeStatusKR : '구독 전'}
       </Badge>
       <div className={styles.dogContent}>
         <Image src={dog.pictureUrl ? dog.pictureUrl : NoImage} alt='반려견 이미지' width={67} height={67} style={{ borderRadius: '50%' }} />
@@ -44,6 +44,7 @@ const DogCard = ({ dog, noData }: MyPageDogCardProps) => {
       <DogButtonControls
         subscribeId={dog?.subscribeId}
         status={!noData ? dog?.subscribeStatus : 'BEFORE_PAYMENT'}
+        dogName={dog?.name}
       />
       {noData &&
         <div className={styles.noDogDataContainer}>

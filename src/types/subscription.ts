@@ -1,3 +1,4 @@
+import {AddressDto} from "@/types/myPage";
 
 export interface SubscribeDto {
   id: number;
@@ -21,4 +22,20 @@ export interface SubscribeDto {
   couponName?: null;
   previousOrderConfirmDate?: null;
   subscriptionMonth?: null | number | string;
+}
+
+export interface SubscribeAddressData {
+  currentAddress: AddressDto;
+  nextAddress: AddressDto
+  nextDeliveryDate: string;
+}
+
+export interface AddressDto {
+  deliveryName?: null | string;
+  recipientName: string;
+  phoneNumber: string;
+  zipcode: string;
+  street: string;
+  detailAddress: string;
+  request?: null | string;
 }

@@ -1,0 +1,28 @@
+import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from 'yup';
+
+export function useFormHandler<T>(schema: yup.ObjectSchema<any>, defaultValues: T) {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+    watch,
+    setValue
+  } = useForm<T>({
+    resolver: yupResolver(schema),
+    defaultValues,
+    mode: 'onChange',
+  });
+
+  return {
+    control,
+    handleSubmit,
+    errors,
+    isValid,
+    reset,
+    watch,
+    setValue,
+  };
+}

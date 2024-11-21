@@ -16,6 +16,7 @@ const MyPageHeader = () => {
     '/mypage/manageCard': '카드관리',
     '/mypage/inviteFriends': '친구초대',
     '/mypage/review': '리뷰',
+    '/mypage/subscribe': '구독 관리',
   };
 
   const getTitle = () => {
@@ -25,8 +26,14 @@ const MyPageHeader = () => {
     if (pathname.includes('/mypage/orderHistory/')) {
       return '주문 상세';
     }
-    if (pathname.includes('/mypage/delayDelivery/')) {
+    if (pathname.includes('/mypage/subscribe/delayDelivery/')) {
       return '배송 미루기';
+    }
+    if (pathname.includes('/mypage/subscribe/deliveryAddress/')) {
+      return '구독 배송지 관리';
+    }
+    if (pathname.includes('/mypage/subscribe/packageBenefit/')) {
+      return '패키지 혜택';
     }
     return '';
   };
