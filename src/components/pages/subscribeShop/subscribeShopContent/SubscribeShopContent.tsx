@@ -12,6 +12,8 @@ import { isOriginSubscriber, isToppingPlan } from "@/utils/subscription/subscrip
 import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
 import { useGetDiscountInfo } from "@/api/queries/subscription/useGetDiscountInfo";
 import { getDiscountPercent } from "@/utils/subscription/getDiscountPercent";
+import FooterButton from "../footerButton/FooterButton";
+import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
 
 interface SubscribeShopContentProps {
   reportId: number;
@@ -71,6 +73,10 @@ export default function SubscribeShopContent({
     isOriginSubscriber: isOrigin,
   });
 
+  const isCompleted =
+  !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
+  subscribePriceData.totalOriginalPriceAllRecipes !== 0;
+console.log('isCompleted', isCompleted);
 
   console.log("selectedRecipeMeals>>>>>>>>", selectedRecipeMeals);
   console.log("subscribePriceData>>>>>>>>", subscribePriceData);
@@ -93,6 +99,10 @@ export default function SubscribeShopContent({
       />
       <SelectedProductInfo subscribePriceData={subscribePriceData} selectedRecipeMeals={selectedRecipeMeals} selectedPlan={selectedPlan} selectedVolume={selectedVolume} handleSelectedVolume={handleSelectedVolume} oneMealGramWithVolume={oneMealGramWithVolume}/>
       {/* <SummaryBar /> */}
+      <FooterButton isDisabled={!isCompleted}>
+        결제하러 가기
+        <RightArrowIcon/>
+      </FooterButton>
     </div>
   );
 }
