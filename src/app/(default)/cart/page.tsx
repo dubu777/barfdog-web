@@ -1,6 +1,7 @@
+import Cart from "@/components/pages/cart/Cart";
 
-export default function CartPage() {
+export default async function CartPage() {
   return (
-    <></>
+    <Cart />
   )
 }
