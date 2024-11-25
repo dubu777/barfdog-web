@@ -15,6 +15,7 @@ interface DefaultTextFieldProps {
   isDisabled?: boolean;
   isHidden?: boolean;
   className?: HTMLAttributes<string | undefined>;
+  onSubmit?: () => void;
 }
 const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
   children,
@@ -30,10 +31,14 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
   isDisabled = false,
   isHidden = false,
   className,
+  onSubmit
 }, ref) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
+    if (e.key === "Enter" && onSubmit) {
+      onSubmit();
+    }
   };
 
   return (

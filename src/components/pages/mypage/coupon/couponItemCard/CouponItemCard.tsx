@@ -35,12 +35,12 @@ const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
       </Text>
       <div className={styles.couponControls({ allTarget: allTarget })}>
         {(allTarget || subscribeTarget) &&
-        <DefaultButton type='black' size='sm' borderRadius='sm'>
+        <DefaultButton linkUrl='/survey' type='black' size='sm' borderRadius='sm' >
           구독에 바로 사용
         </DefaultButton>
         }
         {(allTarget || generalTarget) &&
-        <DefaultButton type='blackBorder' size='sm' borderRadius='sm'>
+        <DefaultButton linkUrl='/store?itemType=ALL' type='blackBorder' size='sm' borderRadius='sm'>
           스토어에 바로 사용
         </DefaultButton>
         }

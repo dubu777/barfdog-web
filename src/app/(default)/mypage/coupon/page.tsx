@@ -1,9 +1,21 @@
+import { Suspense } from "react";
 import Coupon from "@/components/pages/mypage/coupon/Coupon";
-import axiosInstance from "@/api/axiosInstance";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { prefetchGetCouponList } from "@/api/queries/useGetCoupons";
 
 export default async function CouponPage() {
-  const couponResponse = await axiosInstance.get('/api/coupons');
+  const queryClient = new QueryClient();
+  await prefetchGetCouponList(queryClient);
+  const dehydrateState = dehydrate(queryClient);
+
   return (
-    <Coupon couponListData={couponResponse.data.couponsPageDto._embedded.queryCouponsDtoList}/>
+    <HydrationBoundary state={dehydrateState}>
+      <ErrorBoundary fallback={<div>사용 가능한 쿠폰이 없습니다.</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Coupon />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrationBoundary>
   )
 }
