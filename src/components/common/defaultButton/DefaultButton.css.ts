@@ -8,6 +8,7 @@ export const defaultButtonStyle = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     transition: 'background-color 0.3s ease, opacity 0.3s ease',
+    padding: '0 16px',
     gap: '10px',
     textAlign: 'center',
     lineHeight: '1',
@@ -27,6 +28,11 @@ export const defaultButtonStyle = recipe({
       black: {
         border: 'none',
         backgroundColor: themeVars.backgroundColors.black,
+        color: themeVars.fontColors.white,
+      },
+      gray: {
+        border: 'none',
+        backgroundColor: themeVars.buttonColors.greyB9,
         color: themeVars.fontColors.white,
       },
       mainBorder: {
@@ -85,6 +91,12 @@ export const defaultButtonStyle = recipe({
     },
     hover: {
       true: {}
+    },
+    isActive: {
+      true: {
+        backgroundColor: themeVars.backgroundColors.mainRed,
+        color: themeVars.colors.white,
+      }
     }
   },
   compoundVariants: [
@@ -102,6 +114,13 @@ export const defaultButtonStyle = recipe({
           background: themeVars.colors.mainRed,
           color: themeVars.colors.white,
         }
+      }
+    },
+    {
+      variants: { type: 'grayBorder', isActive: true },
+      style: {
+        border: `1px solid ${themeVars.borderColors.mainRed}`,
+        color: themeVars.colors.white,
       }
     }
   ],

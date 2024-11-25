@@ -4,12 +4,17 @@ import { themeVars } from "@/styles/theme.css";
 export const checkboxContainer = recipe({
   base: {
     display: 'flex',
-    gap: '10px'
+    gap: '10px',
+    cursor: 'pointer',
   },
   variants: {
     labelPosition: {
       right: {
         flexDirection: 'row-reverse'
+      },
+      bottom: {
+        flexDirection: 'column-reverse',
+        alignItems: 'center',
       }
     }
   }
@@ -18,7 +23,8 @@ export const checkboxContainer = recipe({
 export const checkboxLabel = recipe({
   base: {
     lineHeight: 'normal',
-    fontSize: themeVars.fontSize["text-sm"]
+    fontSize: themeVars.fontSize["text-sm"],
+    cursor: 'pointer',
   },
   variants: {
     isHidden: {
@@ -40,6 +46,7 @@ export const checkboxStyle = recipe({
     appearance: 'none',
     borderRadius: '3px',
     position: 'relative',
+    cursor: 'pointer',
     ':after': {
       content: '',
       display: 'block',

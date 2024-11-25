@@ -1,10 +1,10 @@
 import * as styles from './DefaultButton.css';
-import { ReactNode } from 'react';
+import {HTMLAttributes, ReactNode} from 'react';
 import Link from "next/link";
 
 interface DefaultButtonProps {
   children?: ReactNode;
-  type?: 'main' | 'white' | 'black' | 'mainBorder' | 'grayBorder' | 'blackBorder',
+  type?: 'main' | 'white' | 'black' | 'gray' | 'mainBorder' | 'grayBorder' | 'blackBorder',
   icon?: JSX.Element | null;
   onClick?: () => void;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
@@ -14,6 +14,9 @@ interface DefaultButtonProps {
   isHidden?: boolean;
   linkUrl?: string | null;
   hover?: boolean;
+  isActive?: boolean;
+  isSubmit?: boolean;
+  className?: HTMLAttributes<string | undefined>;
 }
 
 export default function DefaultButton({
@@ -28,12 +31,16 @@ export default function DefaultButton({
   isHidden = false,
   linkUrl = null,
   hover = true,
+  isActive = false,
+  className,
+  isSubmit = false,
 }: DefaultButtonProps) {
   return (
     !linkUrl ?
       <button
+        type={isSubmit ? 'submit' : 'button'}
         onClick={onClick}
-        className={styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover })}
+        className={`${styles.defaultButtonStyle({ type, size, borderRadius, isBold, isDisabled, isHidden, hover: hover, isActive })} ${className || ''}`}
         disabled={isDisabled || isHidden}
       >
         {icon && <span className={styles.iconStyle}>{icon}</span>}

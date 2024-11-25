@@ -9,6 +9,8 @@ export const textFieldContainer = style({
 export const textFieldLabel = recipe({
   base: {
     width: '100%',
+    textAlign: 'left',
+    marginBottom: '13px'
   },
   variants: {
     isHidden: {
@@ -38,7 +40,9 @@ export const textFieldStyle = recipe({
   },
   variants: {
     size: {
-
+      sm: {
+        height: '40px',
+      }
     },
     isActive: {
       true: {

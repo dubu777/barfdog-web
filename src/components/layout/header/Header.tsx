@@ -14,7 +14,8 @@ import { useBackNavigation } from "@/utils";
 import { usePathname } from "next/navigation";
 import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
-import { useAuthStore } from "@/store/useAuthSotre";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useCartStore } from "@/store/useCartStore";
 
 interface HeaderProps {
   type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
@@ -24,6 +25,7 @@ export default function Header({ type = "default" }: HeaderProps) {
   const pathname = usePathname();
   const { setIsOpenSideNavBar } = useCommonStore();
   const { isLoggedIn } = useAuthStore();
+  const { count } = useCartStore();
   const hamburgerColor = type === "redBackground" ? "#ffffff" : "#4A4A4A";
   const goBack = useBackNavigation();
 
@@ -58,7 +60,8 @@ export default function Header({ type = "default" }: HeaderProps) {
                 <Link href={!isLoggedIn ? "/login" : "/mypage"}>
                   <MyPage />
                 </Link>
-                <Link href="/cart">
+                <Link href="/cart" className={styles.cartButton}>
+                  {count !== 0 && <div className={styles.cartCount}>{count}</div>}
                   <Cart />
                 </Link>
                 <button

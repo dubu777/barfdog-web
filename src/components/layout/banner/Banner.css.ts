@@ -28,7 +28,7 @@ export const bannerContainer = recipe({
         background: themeVars.colors.mainRed,
       },
       bottom: {
-        bottom: '80px',
+        bottom: '60px',
       }
     }
   }

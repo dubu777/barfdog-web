@@ -1,5 +1,6 @@
 import { PlanName } from "@/constants";
 import { RecipeDto } from "./survey";
+import {AddressDto} from "@/types/myPage";
 
 interface PlanDiscountResponseDto {
   createdDate: string; // 생성 날짜 (ISO 형식)
@@ -93,3 +94,61 @@ export type {
   CalculateSubscribePriceInput,
   CalculateSubscribePriceOutput,
 };
+
+
+export interface SubscribeDto {
+  id: number;
+  subscribeStatus: string;
+  dogId: number;
+  dogName: string;
+  cancelReason?: null | string;
+  subscribeCount: number;
+  plan: string;
+  oneMealGramsPerRecipe: string;
+  oneDayRecommendKcal: number;
+  nextPaymentDate: string;
+  countSkipOneTime: number;
+  countSkipOneWeek: number;
+  nextPaymentPrice: number;
+  discountCoupon: number;
+  discountGrade: number;
+  overDiscount: number;
+  nextDeliveryDate: string;
+  usingMemberCouponId?: null;
+  couponName?: null;
+  previousOrderConfirmDate?: null;
+  subscriptionMonth?: null | number | string;
+}
+
+export interface SubscribeAddressData {
+  currentAddress: AddressDto;
+  nextAddress: AddressDto
+  nextDeliveryDate: string;
+}
+
+export interface AddressDto {
+  deliveryName?: null | string;
+  recipientName: string;
+  phoneNumber: string;
+  zipcode: string;
+  street: string;
+  detailAddress: string;
+  request?: null | string;
+}
+
+export interface ManageSubscribeData {
+  itemNames: string;
+  recipeNames: string;
+  subscribeDto: SubscribeDto;
+}
+
+export interface BenefitDto {
+  benefitExpiredDate: string;
+  benefitId: number;
+  benefitName: string;
+  benefitRequestDate?: null | string | Date;
+  benefitStatus: string;
+  benefitUsedDate?: null | string | Date;
+  benefitValue: number;
+  subscribeId: number;
+}

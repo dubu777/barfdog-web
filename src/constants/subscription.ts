@@ -61,5 +61,23 @@ const originSubscribeIdList = [
   3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
 
+export const subscribeStatus = {
+  // BEFORE_PAYMENT: '구독 비활성',
+  // SURVEY_COMPLETED: '구독 비활성',
+  // SUBSCRIBING: '구독 활성',
+  // SUBSCRIBE_PENDING: '구독 비활성',
+  // SUBSCRIBE_CANCEL: '구독 비활성',
+  // SUBSCRIBE_WILL_CANCEL: '구독 취소예정',
+  // ADMIN: '관리자구독',
+  BEFORE_PAYMENT: '구독 전',
+  SURVEY_COMPLETED: '설문 완료',
+  SUBSCRIBE_WILL_CANCEL: '구독 취소 예정',
+  SUBSCRIBE_CANCEL: '구독 취소',
+  SUBSCRIBING: '구독 중',
+  SUBSCRIBE_PENDING: '구독 보류', // = 실질적으로 "결제 전" 상태와 동일
+  ADMIN: '관리자 구독',
+}
+
+
 export { subscribePlanInfo, toppingOption, originSubscribeIdList, kcalPerGramMap };
 export type PlanName = keyof typeof subscribePlanInfo;
