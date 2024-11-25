@@ -3,7 +3,7 @@ import * as styles from "./RewardsFilter.css";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { DefaultObjectType } from "@/types/common";
-import { RewardFilterType } from "@/types/myPage";
+import { RewardFilterType } from "@/types/reward";
 import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import SelectBox from "@/components/common/selectBox/SelectBox";

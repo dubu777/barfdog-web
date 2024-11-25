@@ -2,7 +2,7 @@ import * as styles from "./CouponItemCard.css";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { formatDate } from "@/utils/dateUtils";
-import { CouponData } from "@/types/myPage";
+import { CouponData } from "@/types/coupon";
 
 const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
   const won = coupon.discountType === 'FLAT_RATE';

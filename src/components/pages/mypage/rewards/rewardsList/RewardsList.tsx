@@ -1,7 +1,7 @@
 import * as styles from "./RewardsList.css";
 import Text from "@/components/common/text/Text";
 import { formatDate } from "@/utils/dateUtils";
-import { RewardData } from "@/types/myPage";
+import { RewardData } from "@/types/reward";
 
 interface RewardsListProps {
   rewardList: RewardData[];

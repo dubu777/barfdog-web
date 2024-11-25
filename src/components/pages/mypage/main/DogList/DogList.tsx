@@ -4,7 +4,7 @@ import { Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import DogCard from "@/components/pages/mypage/main/DogList/DogCard";
-import { DogData } from "@/types/myPage";
+import { DogData } from "@/types/dogs";
 
 const DogList = ({ dogsData }: { dogsData: DogData[] }) => {
   const representativeDog = dogsData.find(dog => dog.representative);

@@ -1,6 +1,6 @@
 'use client';
 import * as styles from "./Rewards.css";
-import { RewardData } from "@/types/myPage";
+import { RewardData } from "@/types/reward";
 import Text from "@/components/common/text/Text";
 import RewardsFilter from "@/components/pages/mypage/rewards/rewardsFilter/RewardsFilter";
 import RewardsList from "@/components/pages/mypage/rewards/rewardsList/RewardsList";

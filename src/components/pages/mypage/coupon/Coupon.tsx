@@ -4,7 +4,7 @@ import Text from "@/components/common/text/Text";
 import CouponItemCard from "@/components/pages/mypage/coupon/couponItemCard/CouponItemCard";
 import ApplyCoupon from "@/components/pages/mypage/coupon/applyCoupon/ApplyCoupon";
 import { useGetCoupons } from "@/api/queries/useGetCoupons";
-import { CouponData } from "@/types/myPage";
+import { CouponData } from "@/types/coupon";
 
 const Coupon = () => {
   const { data: couponData } = useGetCoupons();

@@ -6,7 +6,7 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Badge from "@/components/common/badge/Badge";
 import DogButtonControls from "@/components/pages/mypage/main/DogList/DogButtonControls";
 import DogRepresentative from "@/components/pages/mypage/main/DogList/DogRepresentative";
-import { DogData } from "@/types/myPage";
+import { DogData } from "@/types/dogs";
 import { subscribeStatus } from "@/constants";
 
 interface MyPageDogCardProps {
