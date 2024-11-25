@@ -7,21 +7,21 @@ import UpIcon from "/public/images/icons/angle-up.svg";
 import { viewerWrapper } from "../searchableSelectBox/SearchableSelectBox.css";
 
 interface SelectBoxProps {
-  id: string;
   options: { label: string; value: string }[];
   placeholder: string;
   frontWord?: string;
   onSelect: (value: string) => void;
-  selectedValue?: string;
+  selectedValue?: string | null;
+  size?: 'lg' | 'md';
 }
 
 export default function SelectBox({
-  id,
   options,
   placeholder,
   onSelect,
   frontWord,
   selectedValue,
+  size = 'lg',
 }: SelectBoxProps) {
   const { isOpen, onToggle, onClose, ref } = useModal();
 
@@ -38,7 +38,7 @@ export default function SelectBox({
     <div className={styles.selectBoxContainer} ref={ref}>
       {frontWord && <p className={styles.frontWord}>{frontWord}</p>}
       <div className={styles.selectInputWrapper}>
-        <div className={styles.inputField} onClick={onToggle}>
+        <div className={styles.inputField({size})} onClick={onToggle}>
           {selectedValue ? (
             <p>{selectedLabel}</p>
           ) : (

@@ -45,7 +45,6 @@ console.log(year, 'year');
       <h2 className={surveyTitle}>{fullTitle}</h2>
       <div className={styles.birthContainer}>
         <SelectBox
-          id="yyyy"
           options={SURVEY_FORM_INFO.birth.years}
           placeholder="년도"
           onSelect={(value) => handleBirthChange(value, month)}
@@ -53,7 +52,6 @@ console.log(year, 'year');
         />
 
         <SelectBox
-          id="mm"
           options={SURVEY_FORM_INFO.birth.months}
           placeholder="월"
           onSelect={(value) => handleBirthChange(year, value)}

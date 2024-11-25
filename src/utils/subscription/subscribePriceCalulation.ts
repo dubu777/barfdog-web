@@ -1,4 +1,5 @@
 import { PlanName, subscribePlanInfo } from "@/constants";
+import { CalculateSubscribePriceInput, CalculateSubscribePriceOutput } from "@/types";
 
 // 기존 구독자 가격 조정을 위한 함수
 export const adjustPriceForSubscriber = (
@@ -33,17 +34,7 @@ export const calculateSubscribePrice = ({
   selectedPlan, // 선택한 플랜(ex - FULL, HALF)
   isOriginSubscriber, // 기존 구독자 판별, 가격 인상 전 고객 확인
   discountPercent = 0,
-}: {
-  selectedRecipeMeals: {
-    recipeId: number;
-    recipeName: string;
-    oneMealGram: number;
-    pricePerGram: number;
-  }[];
-  selectedPlan: PlanName | null;
-  isOriginSubscriber: boolean;
-  discountPercent?: number;
-}) => {
+}: CalculateSubscribePriceInput): CalculateSubscribePriceOutput => {
   // 선택된 플랜의 총 팩 수 가져옴
   const totalNumberOfPacks =
     selectedPlan && subscribePlanInfo[selectedPlan]
@@ -66,7 +57,7 @@ export const calculateSubscribePrice = ({
       return {
         recipeId,
         recipeName,
-        discountedPackPrice, // 해당 레시피의 할인 적용된 한팩 가격
+        discountedPackPrice: Math.round(discountedPackPrice), // 해당 레시피의 할인 적용된 한팩 가격
         originPrice: totalNumberOfPacks * adjustedPricePerGram * oneMealGram, // 해당 레시피의 총 원가
         salePrice: totalNumberOfPacks * discountedPackPrice, // 해당 레시피의 총 할인 적용된 가격
       };

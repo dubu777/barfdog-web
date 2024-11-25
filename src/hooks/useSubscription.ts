@@ -1,11 +1,12 @@
 import { PlanName } from "@/constants";
 import { useState } from "react";
 
-interface useSubscriptionProps {}
 
 export default function useSubscription() {
   const [selectedRecipes, setSelectedRecipes] = useState<number[]>([]);
   const [selectedPlan, setSelectedPlan] = useState<PlanName | null>(null);
+  const [selectedVolume, setSelectedVolume] = useState<string | null>('0.8');
+
   const maxRecipesSelections = 2;
   const handleSelectedRecipe = (recipeId: number) => {
     if (selectedRecipes.includes(recipeId)) {
@@ -23,11 +24,16 @@ export default function useSubscription() {
     setSelectedPlan(planName);
   };
 
+  const handleSelectedVolume = (value: string) => {
+    setSelectedVolume(value)
+  }
+
   return {
     selectedPlan,
     selectedRecipes,
+    selectedVolume,
     handleSelectedPlan,
     handleSelectedRecipe,
-    
+    handleSelectedVolume,
   };
 }

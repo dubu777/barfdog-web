@@ -1,38 +1,54 @@
-export const subscribePlanInfo = {
+const subscribePlanInfo = {
   FULL: {
-    id: 'FULL',
-    label: '풀 플랜',
+    id: "FULL",
+    label: "풀 플랜",
     numberOfPacksPerDay: 2,
     weeklyPaymentCycle: 2,
     totalNumberOfPacks: 28,
   },
   HALF: {
-    id: 'HALF',
-    label: '하프 플랜',
+    id: "HALF",
+    label: "하프 플랜",
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 28,
   },
 
   TOPPING_FULL: {
-    id: 'TOPPING_FULL',
-    label: '토핑 풀플랜',
+    id: "TOPPING_FULL",
+    label: "토핑 풀플랜",
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 2,
     totalNumberOfPacks: 28,
   },
   TOPPING_HALF: {
-    id: 'TOPPING_HALF',
-    label: '토핑 하프플랜',
+    id: "TOPPING_HALF",
+    label: "토핑 하프플랜",
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 28,
   },
 } as const;
 
-export type PlanName = keyof typeof subscribePlanInfo;
+const toppingOption = {
+  options: [
+    { label: "80%", value: '0.8' },
+    { label: "60%", value: '0.6' },
+    { label: "40%", value: '0.4' },
+    { label: "20%", value: '0.2' },
+  ],
+};
 
-export const originSubscribeIdList = [
+
+const kcalPerGramMap: Record<string, number> = {
+  "STARTER PREMIUM +": 1.49462,
+  "TURKEY&BEEF +": 1.46324,
+  "DUCK&LAMB +": 1.47532,
+  "LAMB&BEEF +": 1.55097,
+};
+
+
+const originSubscribeIdList = [
   27, 50, 98, 110, 115, 116, 125, 130, 134, 137, 139, 140, 190, 206, 213, 215,
   216, 229, 242, 263, 285, 319, 324, 355, 386, 391, 404, 452, 509, 565, 619,
   788, 795, 868, 891, 896, 1055, 1086, 1360, 1462, 1550, 1649, 1666, 1673, 1936,
@@ -45,3 +61,5 @@ export const originSubscribeIdList = [
   3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
 
+export { subscribePlanInfo, toppingOption, originSubscribeIdList, kcalPerGramMap };
+export type PlanName = keyof typeof subscribePlanInfo;

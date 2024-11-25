@@ -59,7 +59,7 @@ export const subscribeText = recipe({
       },
       body: {
         fontSize: themeVars.fontSize["text-md"],
-        color: themeVars.fontColors.grey4F,
+        color: themeVars.fontColors.grey42,
       },
       subtext: {
         fontSize: themeVars.fontSize["text-xs"],

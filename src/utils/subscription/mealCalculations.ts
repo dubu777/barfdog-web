@@ -1,20 +1,5 @@
-import { DECIMAL_PRECISION } from "@/constants";
-import { RecipeDto } from "@/types";
-
-
-interface calculateOneMealGramsProps {
-  selectedRecipeIds: number[];
-  recipeDtoList: RecipeDto[];
-  oneDayRecommendKcal: number;
-  isOriginSubscriber?: boolean;
-};
-
-const kcalPerGramMap: Record<string, number> = {
-  "STARTER PREMIUM +": 1.49462,
-  "TURKEY&BEEF +": 1.46324,
-  "DUCK&LAMB +": 1.47532,
-  "LAMB&BEEF +": 1.55097,
-};
+import { DECIMAL_PRECISION, kcalPerGramMap } from "@/constants";
+import { calculateOneMealGramsInput, calculateOneMealGramsOutput, calculateOneMealGramsWithVolumeInput, RecipeDto } from "@/types";
 
 // 한 끼 무게를 계산하는 함수
 export const calculateOneMealGrams = ({
@@ -22,7 +7,7 @@ export const calculateOneMealGrams = ({
   recipeDtoList,
   oneDayRecommendKcal,
   isOriginSubscriber = false,
-}: calculateOneMealGramsProps) => {
+}: calculateOneMealGramsInput): calculateOneMealGramsOutput[] => {
   // 데이터 유효성 검사
   if (
     !Array.isArray(selectedRecipeIds) ||
@@ -69,6 +54,44 @@ export const calculateOneMealGrams = ({
     })
     .filter((meal): meal is NonNullable<typeof meal> => meal !== null);
 };
+
+
+// 토핑 플랜 선택시 용량에 따른 한끼 무게 계산
+export const calculateOneMealGramsWithVolume = ({
+  selectedRecipeIds,
+  recipeDtoList,
+  oneDayRecommendKcal,
+  isOriginSubscriber = false,
+  selectedVolume,
+}: calculateOneMealGramsWithVolumeInput): calculateOneMealGramsOutput[] => {
+  // 기본 한 끼 무게 계산
+  const baseMealGrams = calculateOneMealGrams({
+    selectedRecipeIds,
+    recipeDtoList,
+    oneDayRecommendKcal,
+    isOriginSubscriber,
+  });
+
+  // 토핑 용량이 선택되지 않은 경우 기본값 반환
+  if (!selectedVolume) {
+    return baseMealGrams;
+  }
+
+  // 토핑 용량 적용하여 계산
+  const volumeMultiplier = parseFloat(selectedVolume);
+  if (isNaN(volumeMultiplier) || volumeMultiplier <= 0) {
+    console.warn("Invalid topping volume selected:", selectedVolume);
+    return baseMealGrams;
+  }
+
+  return baseMealGrams.map((meal) => ({
+    ...meal,
+    oneMealGram: parseFloat(
+      (meal.oneMealGram * volumeMultiplier).toFixed(DECIMAL_PRECISION.ONE_MEAL_GRAM_PRECISION)
+    ),
+  }));
+};
+
 
 // 하루 권장 칼로리를 소수점 제한하여 반환하는 함수
 export const calculateDailyRecommendedKcal = (kcal: number) => {
