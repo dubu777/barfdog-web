@@ -39,3 +39,20 @@ export interface AddressDto {
   detailAddress: string;
   request?: null | string;
 }
+
+export interface ManageSubscribeData {
+  itemNames: string;
+  recipeNames: string;
+  subscribeDto: SubscribeDto;
+}
+
+export interface BenefitDto {
+  benefitExpiredDate: string;
+  benefitId: number;
+  benefitName: string;
+  benefitRequestDate?: null | string | Date;
+  benefitStatus: string;
+  benefitUsedDate?: null | string | Date;
+  benefitValue: number;
+  subscribeId: number;
+}

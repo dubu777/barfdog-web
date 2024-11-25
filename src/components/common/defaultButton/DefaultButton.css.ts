@@ -8,6 +8,7 @@ export const defaultButtonStyle = recipe({
     alignItems: 'center',
     justifyContent: 'center',
     transition: 'background-color 0.3s ease, opacity 0.3s ease',
+    padding: '0 16px',
     gap: '10px',
     textAlign: 'center',
     lineHeight: '1',

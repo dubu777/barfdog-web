@@ -3,9 +3,9 @@ import * as styles from './DefaultCheckbox.css';
 interface DefaultCheckboxProps {
   id: string;
   name: string;
-  value: string | number;
+  value: string | number | boolean;
   label?: string;
-  labelPosition?: 'left' | 'right';
+  labelPosition?: 'left' | 'right' | 'bottom';
   onChange: (value: string) => void;
 }
 
