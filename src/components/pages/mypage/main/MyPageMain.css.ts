@@ -4,8 +4,8 @@ import { themeVars } from "@/styles/theme.css";
 import { defaultWidth } from "@/styles/common.css";
 
 export const mainContainer = style({
-  height: themeVars.height.innerHeight,
-  marginTop: '62px'
+  minHeight: themeVars.height.innerHeight,
+  marginTop: '62px',
 })
 
 export const userInfoBox = style([defaultWidth, {

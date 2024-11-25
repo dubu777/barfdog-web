@@ -9,6 +9,7 @@ import 'swiper/css/pagination';
 import { ReviewDataProps } from "@/components/pages/main/mainReview/MainReview";
 import MainText from "@/components/pages/main/mainText/MainText";
 import { ellipsis } from "@/styles/common.css";
+import {Fragment} from "react";
 
 const MainReviewSlider = ({ reviewData }: { reviewData: ReviewDataProps[] }) => {
   const rate = 5;
@@ -47,7 +48,7 @@ const MainReviewSlider = ({ reviewData }: { reviewData: ReviewDataProps[] }) => 
             </div>
             <p className={styles.reviewRate}>
               {Array.from({length: rate}, (v, i) => i + 1).map((_, i) => (
-                <>★</>
+                <Fragment key={i}>★</Fragment>
               ))}
             </p>
             <Image

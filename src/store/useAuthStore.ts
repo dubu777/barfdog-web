@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {initialUserInfo, UserInfoData} from "@/types/auth";
+import {initialUserInfo, UserInfoData} from "@/types/user";
 
 interface AuthStore {
   isLoggedIn: boolean;
@@ -12,5 +12,5 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   isLoggedIn: true,
   setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
   userInfo: initialUserInfo,
-  setUserInfo: (userInfo) => set({ userInfo })
+  setUserInfo: (userInfo) => set({ userInfo }),
 }))

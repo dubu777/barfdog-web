@@ -27,9 +27,9 @@ const DogList = ({ dogsData }: { dogsData: DogData[] }) => {
           modules={[Scrollbar]}
           className={styles.dogsList}
         >
-          {newDogsData.map(dog => (
+          {newDogsData.map((dog, index) => (
             <SwiperSlide
-              key={dog.id}
+              key={`${dog.id}-${index}`}
               className={styles.dogSlider}
             >
               <DogCard dog={dog} noData={false} />

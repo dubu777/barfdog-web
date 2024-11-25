@@ -3,7 +3,7 @@ import * as styles from "./InviteFriends.css";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { copyToClipboard } from "@/utils/copyToClipboard";
-import { useAuthStore } from "@/store/useAuthSotre";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const InviteFriends = () => {
   const { userInfo } = useAuthStore();

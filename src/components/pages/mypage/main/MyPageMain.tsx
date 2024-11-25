@@ -8,7 +8,7 @@ import Badge from "@/components/common/badge/Badge";
 import DogList from "@/components/pages/mypage/main/DogList/DogList";
 import MyPageMenu from "@/components/pages/mypage/main/MenuLink/MenuLink";
 import { DogData, MyPageInfoData } from "@/types/myPage";
-import { useAuthStore } from "@/store/useAuthSotre";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface MyPageMainProps {
   myPageData: MyPageInfoData;
