@@ -14,8 +14,6 @@ export const commonLayoutContainer = style([commonLayoutStyle, {
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: themeVars.colors.white,
-  borderRight: `1px solid ${themeVars.borderColors.greyED}`,
-  borderLeft: `1px solid ${themeVars.borderColors.greyED}`,
   '-ms-user-select': 'none',
   '-moz-user-select': '-moz-none',
   '-webkit-user-select': 'none',

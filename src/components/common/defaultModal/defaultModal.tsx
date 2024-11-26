@@ -1,6 +1,5 @@
-
 import modalScroll from "@/utils/modal";
-import * as styles from "./defaultModal.css";
+import * as styles from "./DefaultModal.css";
 import ModalPortal from "./ModalPortal";
 import { useEffect } from "react";
 
@@ -10,7 +9,7 @@ interface IModalProps {
   onClose: () => void;
 }
 
-export default function Modal({ children, isVisible, onClose }: IModalProps) {
+export default function DefaultModal({ children, isVisible, onClose }: IModalProps) {
   const { preventScroll, allowScroll } = modalScroll();
 
   useEffect(() => {
@@ -28,9 +27,7 @@ export default function Modal({ children, isVisible, onClose }: IModalProps) {
       {isVisible && (
         <ModalPortal>
           <div className={styles.modalBackground} onClick={onClose}>
-            <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-              {children}
-            </div>
+            {children}
           </div>
         </ModalPortal>
       )}

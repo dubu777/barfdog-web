@@ -7,7 +7,7 @@ export const modalBackground = style({
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.4)',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -18,7 +18,8 @@ export const modalContent = style({
   background: themeVars.backgroundColors.white,
   padding: '20px',
   borderRadius: '10px',
-  width: '300px',
+  width: '100%',
+  maxWidth: '300px',
   height: '300px',
   overflowY: 'auto',
 });

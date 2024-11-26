@@ -15,6 +15,9 @@ import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
 import SelectedProductInfo from "./selectedProductInfo/SelectedProductInfo";
 import PlanSelection from "./planSelection/PlanSelection";
 import RecipeSelection from "./recipeSelection/RecipeSelection";
+import Modal from "@/components/common/defaultModal/DefaultModal";
+import useModal from "@/hooks/useModal";
+import AlertModal from "@/components/common/alertModal/AlertModal";
 
 interface SubscribeShopContentProps {
   reportId: number;
@@ -86,6 +89,8 @@ console.log('isCompleted', isCompleted);
   console.log("recipeData", recipeData);
   console.log("resultData", resultData);
 
+  const { isOpen, onToggle, onClose, ref } = useModal();
+
   return (
     <div className={styles.subscribeShopWrapper}>
       <RecipeSelection
@@ -101,10 +106,27 @@ console.log('isCompleted', isCompleted);
       />
       <SelectedProductInfo subscribePriceData={subscribePriceData} selectedRecipeMeals={selectedRecipeMeals} selectedPlan={selectedPlan} selectedVolume={selectedVolume} handleSelectedVolume={handleSelectedVolume} oneMealGramWithVolume={oneMealGramWithVolume}/>
       {/* <SummaryBar /> */}
-      <FooterButton isDisabled={!isCompleted}>
+      <FooterButton isDisabled={!isCompleted} onClick={onToggle}>
         결제하러 가기
         <RightArrowIcon/>
       </FooterButton>
+      <Modal isVisible={isOpen} onClose={onClose}>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+        <p>123</p>
+      </Modal>
+      {/* <AlertModal
+        isOpen={true}
+        onClose={()=>{}}
+        onConfirm={() => {}}
+        >
+        <div>
+          <div>
+          이대로 변경하시겠습니까?
+          </div>
+        </div>
+      </AlertModal> */}
     </div>
   );
 }

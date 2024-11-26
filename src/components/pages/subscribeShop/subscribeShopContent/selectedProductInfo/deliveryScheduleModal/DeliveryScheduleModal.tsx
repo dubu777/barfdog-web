@@ -1,5 +1,5 @@
 
-import Modal from "@/components/common/defaultModal/defaultModal";
+import Modal from "@/components/common/defaultModal/DefaultModal";
 import React from "react";
 
 
