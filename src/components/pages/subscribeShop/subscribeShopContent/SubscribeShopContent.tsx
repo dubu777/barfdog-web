@@ -15,9 +15,7 @@ import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
 import SelectedProductInfo from "./selectedProductInfo/SelectedProductInfo";
 import PlanSelection from "./planSelection/PlanSelection";
 import RecipeSelection from "./recipeSelection/RecipeSelection";
-import Modal from "@/components/common/defaultModal/DefaultModal";
 import useModal from "@/hooks/useModal";
-import AlertModal from "@/components/common/alertModal/AlertModal";
 
 interface SubscribeShopContentProps {
   reportId: number;
@@ -110,12 +108,6 @@ console.log('isCompleted', isCompleted);
         결제하러 가기
         <RightArrowIcon/>
       </FooterButton>
-      <Modal isVisible={isOpen} onClose={onClose}>
-        <p>123</p>
-        <p>123</p>
-        <p>123</p>
-        <p>123</p>
-      </Modal>
       {/* <AlertModal
         isOpen={true}
         onClose={()=>{}}
