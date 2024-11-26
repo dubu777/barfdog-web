@@ -1,10 +1,8 @@
 "use client";
 
 import useSubscription from "@/hooks/useSubscription";
-import RecipeSelection from "@/components/pages/subscribeShop/recipeSelection/RecipeSelection";
-import PlanSelection from "@/components/pages/subscribeShop/planSelection/PlanSelection";
 import * as styles from "@/app/survey/Survey.css";
-import SelectedProductInfo from "../selectedProductInfo/SelectedProductInfo";
+
 import { useGetSurveyRecipe } from "@/api/queries/survey/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/queries/survey/useGetSurveyResult";
 import { calculateOneMealGrams, calculateOneMealGramsWithVolume } from "@/utils/subscription/mealCalculations";
@@ -14,6 +12,9 @@ import { useGetDiscountInfo } from "@/api/queries/subscription/useGetDiscountInf
 import { getDiscountPercent } from "@/utils/subscription/getDiscountPercent";
 import FooterButton from "../footerButton/FooterButton";
 import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
+import SelectedProductInfo from "./selectedProductInfo/SelectedProductInfo";
+import PlanSelection from "./planSelection/PlanSelection";
+import RecipeSelection from "./recipeSelection/RecipeSelection";
 
 interface SubscribeShopContentProps {
   reportId: number;
@@ -38,7 +39,8 @@ export default function SubscribeShopContent({
 
   // 기존 구독자 여부 확인 함수
   const isOrigin = isOriginSubscriber(recipeData.subscribeId);
-
+  console.log('isorgin???????????', isOrigin);
+  console.log('recipeData.subscribeId???????????', recipeData.subscribeId);
   // 서버에서 받아온 플랜별 할인율에서 선택 플랜 할인율 찾아 적용
   const discountPercent = getDiscountPercent(discountData, selectedPlan);
 

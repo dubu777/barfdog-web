@@ -1,4 +1,4 @@
-import { PlanName, subscribePlanInfo } from "@/constants";
+import { subscribePlanInfo } from "@/constants";
 import { CalculateSubscribePriceInput, CalculateSubscribePriceOutput } from "@/types";
 
 // 기존 구독자 가격 조정을 위한 함수
@@ -7,6 +7,8 @@ export const adjustPriceForSubscriber = (
   recipeName: string,
   isOriginSubscriber: boolean
 ): number => {
+  console.log('isorgin???????????', isOriginSubscriber);
+  
   const priceMap: Record<string, number> = {
     "STARTER PREMIUM +": 35.649,
     "TURKEY&BEEF +": 39.9,
