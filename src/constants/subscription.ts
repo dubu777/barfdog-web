@@ -1,3 +1,11 @@
+export {
+  subscribePlanInfo,
+  toppingOption,
+  originSubscribeIdList,
+  kcalPerGramMap,
+  subscribeStatus
+};
+
 const subscribePlanInfo = {
   FULL: {
     id: "FULL",
@@ -59,7 +67,7 @@ const originSubscribeIdList = [
   3914, 3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
 
-export const subscribeStatus = {
+const subscribeStatus = {
   // BEFORE_PAYMENT: '구독 비활성',
   // SURVEY_COMPLETED: '구독 비활성',
   // SUBSCRIBING: '구독 활성',
@@ -76,10 +84,5 @@ export const subscribeStatus = {
   ADMIN: "관리자 구독",
 };
 
-export {
-  subscribePlanInfo,
-  toppingOption,
-  originSubscribeIdList,
-  kcalPerGramMap,
-};
+
 export type PlanName = keyof typeof subscribePlanInfo;

@@ -1,3 +1,5 @@
+export {ERROR_MESSAGES, UI_MESSAGES}
+
 const ERROR_MESSAGES = {
   INVALID_LENGTH: '정보를 입력해주세요',
   INVALID_ONLY_NUMBER: "숫자만 입력해주세요.",
@@ -14,4 +16,3 @@ const UI_MESSAGES = {
 } as const;
 
 
-export {ERROR_MESSAGES, UI_MESSAGES}

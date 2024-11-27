@@ -1,3 +1,5 @@
+export {queryKeys}
+
 const queryKeys = {
   SURVEY: 'survey',
   GET_SURVEY_RECIPE: 'getSurveyRecipe',
@@ -5,5 +7,3 @@ const queryKeys = {
   SUBSCRIPTION: 'subscription',
   GET_DISCOUNT_INFO: 'getDiscountInfo',
 } as const
-
-export {queryKeys}
