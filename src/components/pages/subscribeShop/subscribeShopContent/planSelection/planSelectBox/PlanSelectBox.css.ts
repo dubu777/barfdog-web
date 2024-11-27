@@ -20,7 +20,7 @@ export const planBoxContainer = recipe({
       true: {
         border: `1px solid ${themeVars.borderColors.darkRed}`,
         color: themeVars.fontColors.darkRed,
-        backgroundColor: '#FFE0E1',
+        backgroundColor: themeVars.backgroundColors.pinkFF,
       },
       false: {
         border: `1px solid ${themeVars.borderColors.greyBB}`,

@@ -16,6 +16,7 @@ import SelectedProductInfo from "./selectedProductInfo/SelectedProductInfo";
 import PlanSelection from "./planSelection/PlanSelection";
 import RecipeSelection from "./recipeSelection/RecipeSelection";
 import useModal from "@/hooks/useModal";
+import DeliveryScheduleModal from "./selectedProductInfo/deliveryScheduleModal/DeliveryScheduleModal";
 
 interface SubscribeShopContentProps {
   reportId: number;
@@ -108,17 +109,7 @@ console.log('isCompleted', isCompleted);
         결제하러 가기
         <RightArrowIcon/>
       </FooterButton>
-      {/* <AlertModal
-        isOpen={true}
-        onClose={()=>{}}
-        onConfirm={() => {}}
-        >
-        <div>
-          <div>
-          이대로 변경하시겠습니까?
-          </div>
-        </div>
-      </AlertModal> */}
+      <DeliveryScheduleModal isVisible={isOpen} onClose={onClose}/>
     </div>
   );
 }

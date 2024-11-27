@@ -1,5 +1,5 @@
 // 생산 및 수령 예정일 계산
-export const getProductionDates = (dateString: string, planWeeklyPaymentCycle = 0) => {
+export const getProductionDates = (dateString?: string, planWeeklyPaymentCycle = 0) => {
   const formatDate = (date) =>
     `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}.`;
 

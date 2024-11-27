@@ -12,6 +12,7 @@ export const defaultButtonStyle = recipe({
     gap: '10px',
     textAlign: 'center',
     lineHeight: '1',
+    verticalAlign: 'middle',
   },
   variants: {
     type: {
@@ -54,8 +55,8 @@ export const defaultButtonStyle = recipe({
     size: {
       xxs: { fontSize: '10px', height: '19px', padding: '0 8px' },
       xs: { fontSize: '12px', height: '23px', padding: '0 8px' },
-      sm: { fontSize: '13px', height: '30px', width: '100%' },
-      md: { fontSize: '16px', height: '40px', width: '100%' },
+      sm: { fontSize: '13px', height: '35px', width: '100%' },
+      md: { fontSize: '14px', height: '40px', width: '100%' },
       lg: { fontSize: '16px', height: '45px', width: '100%' },
       xl: { fontSize: '20px', height: '50px', width: '100%' },
       xxl: { fontSize: '20px', height: '54px', width: '100%' },
@@ -107,15 +108,26 @@ export const defaultButtonStyle = recipe({
         cursor: 'not-allowed',
       },
     },
-    {
-      variants: { type: 'mainBorder', hover: true },
-      style: {
-        ':hover': {
-          background: themeVars.colors.mainRed,
-          color: themeVars.colors.white,
-        }
-      }
-    },
+    // hover 시 효과 추가 시 적용
+    // {
+    //   variants: { type: 'main', hover: true },
+    //   style: {
+    //     ':hover': {
+    //       background: themeVars.backgroundColors.pinkFF,
+    //       border: `1px solid ${themeVars.borderColors.mainRed}`,
+    //       color: themeVars.fontColors.mainRed,
+    //     }
+    //   }
+    // },
+    // {
+    //   variants: { type: 'mainBorder', hover: true },
+    //   style: {
+    //     ':hover': {
+    //       background: themeVars.backgroundColors.pinkFF,
+    //       color: themeVars.fontColors.mainRed,
+    //     }
+    //   }
+    // },
     {
       variants: { type: 'grayBorder', isActive: true },
       style: {
