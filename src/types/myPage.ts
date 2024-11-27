@@ -1,18 +1,29 @@
-export interface MyPageMemberDto {
+export type {
+  MyPageMemberDto,
+  MyPageRepresentiveDogDto,
+  MyPageInfoData,
+  DogData,
+  CouponData,
+  RewardFilterType,
+  RewardData,
+};
+
+interface MyPageMemberDto {
   id: number;
   grade: string;
   memberName: string;
   myRecommendationCode: string;
   reward: string;
 }
-export interface MyPageRepresentiveDogDto {
+
+interface MyPageRepresentiveDogDto {
   dogName: string;
   inStock: boolean;
   recipeName: string;
   thumbnailUrl?: null | string;
 }
 
-export interface MyPageInfoData {
+interface MyPageInfoData {
   couponCount: number;
   deliveryCount: number;
   mypageDogDtoList?: null | DogData[];
@@ -20,7 +31,7 @@ export interface MyPageInfoData {
   mypageRepresentiveDogDto: MyPageRepresentiveDogDto;
 }
 
-export interface DogData {
+interface DogData {
   id: number;
   name: string;
   representative: boolean;
@@ -39,7 +50,7 @@ export interface DogData {
   subscribeStatus: string;
 }
 
-export interface CouponData {
+interface CouponData {
   id: number;
   name: string;
   status: string;
@@ -54,14 +65,11 @@ export interface CouponData {
   expiredDate: string | Date;
 }
 
-export type RewardFilterType = 'ALL' | 'SAVED' | 'USED' | 'EXPIRED';
+type RewardFilterType = "ALL" | "SAVED" | "USED" | "EXPIRED";
 
-export interface RewardData {
+interface RewardData {
   name: string;
   tradeReward: number;
   rewardStatus: string;
   createdTime: string | Date;
 }
-
-
-

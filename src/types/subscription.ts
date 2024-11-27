@@ -1,6 +1,25 @@
 import { PlanName } from "@/constants";
 import { RecipeDto } from "./survey";
 
+export type {
+  PlanDiscountResponseDto,
+  Links,
+  Embedded,
+  PlanDiscountResponse,
+  RecipeMeal,
+  CalculateSubscribePriceInput,
+  RecipePriceDetails,
+  CalculateSubscribePriceOutput,
+  calculateOneMealGramsInput,
+  calculateOneMealGramsOutput,
+  calculateOneMealGramsWithVolumeInput,
+  SubscribeDto,
+  SubscribeAddressData,
+  AddressDto,
+  ManageSubscribeData,
+  BenefitDto,
+};
+
 interface PlanDiscountResponseDto {
   createdDate: string;
   modifiedDate: string;
@@ -10,7 +29,6 @@ interface PlanDiscountResponseDto {
   toppingFull: number;
   toppingHalf: number;
 }
-
 
 interface Link {
   href: string;
@@ -23,7 +41,6 @@ interface Links {
 interface Embedded {
   planDiscountResponseDtoList: PlanDiscountResponseDto[]; // 할인 정보 리스트
 }
-
 
 interface PlanDiscountResponse {
   _embedded: Embedded; // 중첩된 데이터
@@ -84,22 +101,7 @@ interface calculateOneMealGramsWithVolumeInput {
   selectedVolume?: string | null;
 }
 
-export type {
-  calculateOneMealGramsInput,
-  calculateOneMealGramsOutput,
-  calculateOneMealGramsWithVolumeInput,
-  PlanDiscountResponse,
-  CalculateSubscribePriceInput,
-  CalculateSubscribePriceOutput,
-};
-
-
-
-
-
-
-
-export interface SubscribeDto {
+interface SubscribeDto {
   id: number;
   subscribeStatus: string;
   dogId: number;
@@ -123,13 +125,13 @@ export interface SubscribeDto {
   subscriptionMonth?: null | number | string;
 }
 
-export interface SubscribeAddressData {
+interface SubscribeAddressData {
   currentAddress: AddressDto;
-  nextAddress: AddressDto
+  nextAddress: AddressDto;
   nextDeliveryDate: string;
 }
 
-export interface AddressDto {
+interface AddressDto {
   deliveryName?: null | string;
   recipientName: string;
   phoneNumber: string;
@@ -139,13 +141,13 @@ export interface AddressDto {
   request?: null | string;
 }
 
-export interface ManageSubscribeData {
+interface ManageSubscribeData {
   itemNames: string;
   recipeNames: string;
   subscribeDto: SubscribeDto;
 }
 
-export interface BenefitDto {
+interface BenefitDto {
   benefitExpiredDate: string;
   benefitId: number;
   benefitName: string;

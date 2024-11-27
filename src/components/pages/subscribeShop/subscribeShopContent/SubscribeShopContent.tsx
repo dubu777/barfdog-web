@@ -88,7 +88,11 @@ console.log('isCompleted', isCompleted);
   console.log("recipeData", recipeData);
   console.log("resultData", resultData);
 
-  const { isOpen, onToggle, onClose, ref } = useModal();
+  const { isOpen, onToggle, onClose } = useModal();
+
+  const handlePayment = () => {
+
+  }
 
   return (
     <div className={styles.subscribeShopWrapper}>
@@ -109,7 +113,7 @@ console.log('isCompleted', isCompleted);
         결제하러 가기
         <RightArrowIcon/>
       </FooterButton>
-      <DeliveryScheduleModal isVisible={isOpen} onClose={onClose}/>
+      <DeliveryScheduleModal isVisible={isOpen} onClose={onClose} onClickConfirm={handlePayment}/>
     </div>
   );
 }

@@ -1,8 +1,13 @@
-export type SearchParamProps = {
+export type {
+  SearchParamProps,
+  DefaultObjectType
+}
+
+type SearchParamProps = {
   param: { id: string | number };
   searchParams: { [key: string]: string | string[] | undefined }
 }
-export type DefaultObjectType = {
+type DefaultObjectType = {
   name: string | Element;
   value: string | number | Record<string, string | number> | Element;
   visible?: boolean;

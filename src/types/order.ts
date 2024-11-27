@@ -1,3 +1,9 @@
+export type {
+  SubscribeOrderData,
+  GeneralOrderData,
+  OrderDetailDto,
+  OrderItemDtoList,
+};
 
 interface OrderItem {
   id: number;
@@ -27,24 +33,47 @@ interface SubscribeOrderDto extends OrderDto {
   paid: boolean;
 }
 
-export interface SubscribeOrderData {
+interface OrderCancel {
+  cancelReason: string;
+  cancelDetailReason: string;
+  cancelRequestDate: string;
+  cancelConfirmDate: string;
+}
+
+interface SelectOptionDtoList {
+  itemOptionId: number;
+  amount: number;
+}
+
+interface OrderItemDtoList {
+  orderItemId: number;
+  thumbnailUrl: string;
+  selectOptionDtoList: SelectOptionDtoList[];
+  itemId: number;
+  itemName: string;
+  amount: number;
+  finalPrice: number;
+  discountAmount: number;
+  status: string;
+  saveReward: number;
+  category: string;
+  orderCancel: OrderCancel;
+  orderReturn?: null;
+  orderExchange?: null;
+}
+
+interface SubscribeOrderData {
   recipeDto: RecipeDto;
   subscribeOrderDto: SubscribeOrderDto;
 }
 
-export interface GeneralOrderData {
+interface GeneralOrderData {
   itemNameList: OrderItem[];
   orderDto: OrderDto;
   thumbnailUrl: string;
 }
 
-export interface SubscribeOrderData {
-  recipeDto: RecipeDto;
-  subscribeOrderDto: SubscribeOrderDto;
-}
-
-
-export interface OrderDetailDto extends OrderCancel {
+interface OrderDetailDto extends OrderCancel {
   orderId?: number;
   merchantUid?: string;
   paymentDate?: string;
@@ -69,33 +98,4 @@ export interface OrderDetailDto extends OrderCancel {
   request?: null | number | string;
   orderStatus?: string;
   package?: boolean;
-}
-
-interface OrderCancel {
-  cancelReason: string;
-  cancelDetailReason: string;
-  cancelRequestDate: string;
-  cancelConfirmDate: string;
-}
-
-interface SelectOptionDtoList {
-  itemOptionId: number;
-  amount: number;
-}
-
-export interface OrderItemDtoList {
-  orderItemId: number;
-  thumbnailUrl: string;
-  selectOptionDtoList: SelectOptionDtoList[];
-  itemId: number;
-  itemName: string;
-  amount: number;
-  finalPrice: number;
-  discountAmount: number;
-  status: string;
-  saveReward: number;
-  category: string;
-  orderCancel: OrderCancel;
-  orderReturn?: null;
-  orderExchange?: null;
 }

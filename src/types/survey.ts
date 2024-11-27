@@ -1,3 +1,5 @@
+export type { SubscribePlan, SurveyFormData, RecipeDto, FoodAnalysis, ResultData, RecipeData };
+
 interface SurveyFormData {
   name: string;
   gender: string;
@@ -120,6 +122,7 @@ interface DogActivity {
   walkingTimePerOneTime: number;
 }
 
+
 interface ResultData {
   lastSurveyDate: string;
   myDogName: string;
@@ -185,4 +188,3 @@ interface SubscribePlan {
 };
 
 
-export type { SubscribePlan, SurveyFormData, RecipeDto, FoodAnalysis, ResultData, RecipeData };
