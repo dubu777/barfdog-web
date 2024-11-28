@@ -53,7 +53,7 @@ const Cart = () => {
           <DefaultButton
             type='mainBorder'
             size='xs'
-            borderRadius='xs'
+            borderRadius='sm'
             onClick={handleDeleteSelected}
             isDisabled={selectedItems.length === 0}
           >

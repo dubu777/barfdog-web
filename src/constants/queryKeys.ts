@@ -15,4 +15,6 @@ const queryKeys = {
   GET_SUBSCRIBE_BY_ID: 'getSubscribeById',
   SUBSCRIPTION: 'subscription',
   GET_DISCOUNT_INFO: 'getDiscountInfo',
+  CART: 'cart',
+  GET_CART_DATA: 'getCartData',
 } as const

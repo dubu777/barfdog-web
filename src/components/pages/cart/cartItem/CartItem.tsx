@@ -55,7 +55,7 @@ const CartItem = ({ item, options, totalPrice, isSelected, onSelect }: CartItemP
           }}
         />
       </div>
-      <Text className={styles.totalPrice} type='title' size='titleMd' weight='bold' color='black'>{totalPrice.toLocaleString()}원</Text>
+      <Text className={styles.totalPrice} type='title' size='titleMd' weight='bold'>{totalPrice.toLocaleString()}원</Text>
     </li>
   );
 };
