@@ -31,7 +31,6 @@ export default function SurveyStep9({
       <h2 className={surveyTitle}>{fullTitle}</h2>
       <div className={styles.walkingContainer}>
         <SelectBox
-          id={SURVEY_FORM_INFO.walkingCountPerWeek.id}
           options={SURVEY_FORM_INFO.walkingCountPerWeek.options}
           placeholder={SURVEY_FORM_INFO.walkingCountPerWeek.placeholder}
           frontWord={SURVEY_FORM_INFO.walkingCountPerWeek.frontWord}
@@ -44,7 +43,6 @@ export default function SurveyStep9({
           }
         />
         <SelectBox
-          id={SURVEY_FORM_INFO.walkingTimePerOneTime.id}
           options={SURVEY_FORM_INFO.walkingTimePerOneTime.options}
           placeholder={SURVEY_FORM_INFO.walkingTimePerOneTime.placeholder}
           frontWord={SURVEY_FORM_INFO.walkingTimePerOneTime.frontWord}

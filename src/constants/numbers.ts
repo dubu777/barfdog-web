@@ -1,4 +1,4 @@
-
-export const NUMBERS = {
+export { NUMBERS }
+const NUMBERS = {
 
 } as const;

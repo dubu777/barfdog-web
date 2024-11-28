@@ -15,7 +15,7 @@ export const bottomNavBarContainer = style({
   height: "60px",
   padding: '20px 15px',
   zIndex: 200,
-  background: themeVars.colors.white,
+  backgroundColor: themeVars.colors.white,
 });
 
 export const bottomNavBarWrapper = style({

@@ -18,7 +18,7 @@ export const recipeCardContainer = recipe({
     isSelected: {
       true: 
       {
-        outline: `1px solid ${themeVars.borderColors.mainRed}`,
+        outline: `2px solid ${themeVars.borderColors.mainRed}`,
       },
       false: {
         outline: '1px solid transparent',

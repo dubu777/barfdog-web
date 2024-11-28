@@ -1,5 +1,6 @@
 import { style, globalStyle } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const selectBoxContainer = style({
   display: 'flex',
@@ -16,18 +17,33 @@ export const selectInputWrapper = style({
   width: '100%',
 });
 
-export const inputField = style({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontSize: themeVars.fontSize["text-sm"],
-  width: '100%',
-  height: '100%',
-  minHeight: '45px',
-  borderRadius: '9px',
-  backgroundColor: themeVars.backgroundColors.white,
-  border: `1px solid ${themeVars.borderColors.greyDD}`,
-  cursor: 'pointer',
+export const inputField = recipe({
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: themeVars.fontSize["text-sm"],
+    width: '100%',
+    height: '100%',
+    borderRadius: '9px',
+    backgroundColor: themeVars.backgroundColors.white,
+    border: `1px solid ${themeVars.borderColors.greyDD}`,
+    cursor: 'pointer',
+  },
+variants: {
+  size: {
+    lg: {
+      minHeight: '45px',
+    },
+    md: {
+      minHeight: '35px',
+    },
+  },
+},
+defaultVariants: {
+  size: 'lg'
+}
+
 });
 
 export const frontWord = style({

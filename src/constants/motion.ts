@@ -1,3 +1,5 @@
+export {sectionVariants, expandFromTopVariants}
+
 const sectionVariants = {
   hiddenLeft: {
     x: -100,
@@ -48,4 +50,3 @@ const expandFromTopVariants = {
 };
 
 
-export {sectionVariants, expandFromTopVariants}

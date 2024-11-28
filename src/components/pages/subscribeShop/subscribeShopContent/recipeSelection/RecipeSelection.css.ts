@@ -54,12 +54,16 @@ export const subscribeText = recipe({
       },
       recipeTitle: {
         fontSize: themeVars.fontSize["text-sm"],
-        color: themeVars.fontColors.grey4D,
+        color: themeVars.fontColors.black1D,
         fontWeight: themeVars.fontWeight.semibold,
       },
       body: {
         fontSize: themeVars.fontSize["text-md"],
-        color: themeVars.fontColors.grey4F,
+        color: themeVars.fontColors.grey42,
+      },
+      content: {
+        fontSize: themeVars.fontSize["text-sm"],
+        color: themeVars.fontColors.grey42,
       },
       subtext: {
         fontSize: themeVars.fontSize["text-xs"],
@@ -89,6 +93,9 @@ export const subscribeText = recipe({
       },
       gray: {
         color: themeVars.fontColors.grey6E,
+      },
+      red: {
+        color: themeVars.fontColors.mainRed,
       },
     },
     isSelected: {

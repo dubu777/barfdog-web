@@ -1,6 +1,110 @@
-import { PlanKey, subscribeStatus } from "@/constants";
+import { subscribePlanInfo, subscribeStatus } from "@/constants";
+import { RecipeDto } from "./survey";
 
-export type SubscribeStatusKey = keyof typeof subscribeStatus;
+export type {
+  PlanDiscountResponseDto,
+  Links,
+  Embedded,
+  PlanDiscountResponse,
+  RecipeMeal,
+  CalculateSubscribePriceInput,
+  RecipePriceDetails,
+  CalculateSubscribePriceOutput,
+  calculateOneMealGramsInput,
+  calculateOneMealGramsOutput,
+  calculateOneMealGramsWithVolumeInput,
+  SubscribeByIdDto,
+  SubscribesDto,
+  SubscribeAddressData,
+  AddressDto,
+  ManageSubscribeData,
+  BenefitDto,
+  BenefitStatus,
+  SubscribeSkipType,
+  SubscribeStatusKey,
+  PlanKey,
+};
+
+interface PlanDiscountResponseDto {
+  createdDate: string;
+  modifiedDate: string;
+  full: number;
+  half: number;
+  topping: number;
+  toppingFull: number;
+  toppingHalf: number;
+}
+
+interface Link {
+  href: string;
+}
+
+interface Links {
+  self: Link; // 현재 리소스에 대한 링크
+}
+
+interface Embedded {
+  planDiscountResponseDtoList: PlanDiscountResponseDto[]; // 할인 정보 리스트
+}
+
+interface PlanDiscountResponse {
+  _embedded: Embedded; // 중첩된 데이터
+  _links: Links; // 하이퍼미디어 링크
+}
+
+interface RecipeMeal {
+  recipeId: number;
+  recipeName: string;
+  oneMealGram: number;
+  pricePerGram: number;
+}
+
+// SubscribePrice 계산 함수 입력 타입
+interface CalculateSubscribePriceInput {
+  selectedRecipeMeals: RecipeMeal[];
+  selectedPlan: PlanName | null;
+  isOriginSubscriber: boolean;
+  discountPercent?: number;
+}
+
+// RecipePriceDetails 타입 (개별 레시피 계산 결과)
+interface RecipePriceDetails {
+  recipeId: number;
+  recipeName: string;
+  discountedPackPrice: number;
+  originPrice: number;
+  salePrice: number;
+}
+
+// SubscribePrice 계산 함수 출력 타입
+interface CalculateSubscribePriceOutput {
+  averagePackPrice: number;
+  recipePriceDetails: RecipePriceDetails[];
+  totalOriginalPriceAllRecipes: number;
+  totalDiscountedPriceAllRecipes: number;
+}
+
+interface calculateOneMealGramsInput {
+  selectedRecipeIds: number[];
+  recipeDtoList: RecipeDto[];
+  oneDayRecommendKcal: number;
+  isOriginSubscriber?: boolean;
+}
+
+interface calculateOneMealGramsOutput {
+  recipeId: number;
+  recipeName: string;
+  oneMealGram: number;
+  pricePerGram: number;
+}
+
+interface calculateOneMealGramsWithVolumeInput {
+  selectedRecipeIds: number[];
+  recipeDtoList: RecipeDto[];
+  oneDayRecommendKcal: number;
+  isOriginSubscriber?: boolean;
+  selectedVolume?: string | null;
+}
 
 interface DefaultSubscribeDto {
   plan: string;
@@ -16,7 +120,7 @@ interface DefaultSubscribeDto {
   nextDeliveryDate: string | null;
 }
 
-export interface SubscribeByIdDto extends DefaultSubscribeDto {
+interface SubscribeByIdDto extends DefaultSubscribeDto {
   id: number;
   subscribeStatus: SubscribeStatusKey;
   dogId: number;
@@ -31,7 +135,7 @@ export interface SubscribeByIdDto extends DefaultSubscribeDto {
   previousOrderConfirmDate?: null | string;
 }
 
-export interface SubscribesDto extends DefaultSubscribeDto {
+interface SubscribesDto extends DefaultSubscribeDto {
   subscribeId: number;
   pictureUrl?: null | string,
   status: SubscribeStatusKey;
@@ -41,14 +145,13 @@ export interface SubscribesDto extends DefaultSubscribeDto {
   shippingLeft: number;
 }
 
-
-export interface SubscribeAddressData {
+interface SubscribeAddressData {
   currentAddress: AddressDto;
-  nextAddress: AddressDto
+  nextAddress: AddressDto;
   nextDeliveryDate: string;
 }
 
-export interface AddressDto {
+interface AddressDto {
   deliveryName?: null | string;
   recipientName: string;
   phoneNumber: string;
@@ -58,13 +161,13 @@ export interface AddressDto {
   request?: null | string;
 }
 
-export interface ManageSubscribeData {
+interface ManageSubscribeData {
   itemNames: string;
   recipeNames: string;
   subscribeDto: SubscribesDto;
 }
 
-export interface BenefitDto {
+interface BenefitDto {
   benefitExpiredDate: string;
   benefitId: number;
   benefitName: string;
@@ -75,6 +178,12 @@ export interface BenefitDto {
   subscribeId: number;
 }
 
-export type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
+type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
 
-export type SubscribeSkipType = 'ONCE' | 'WEEK';
+type SubscribeSkipType = 'ONCE' | 'WEEK';
+
+type SubscribeStatusKey = keyof typeof subscribeStatus;
+
+type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
+
+type PlanName = keyof typeof subscribePlanInfo;

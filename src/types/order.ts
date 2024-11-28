@@ -1,3 +1,13 @@
+export type {
+  SubscribeOrderData,
+  GeneralOrderData,
+  OrderDetailDto,
+  OrderItemDtoList,
+  MixedOrderData,
+  OrderDetailData,
+  MergeOrderAndRecipe,
+  PaymentMethod,
+};
 
 interface OrderItem {
   id: number;
@@ -28,21 +38,49 @@ interface SubscribeOrderDto extends OrderDto {
   paid: boolean;
 }
 
-export interface GeneralOrderData {
+interface OrderCancel {
+  cancelReason: string;
+  cancelDetailReason: string;
+  cancelRequestDate: string;
+  cancelConfirmDate: string;
+}
+
+interface SelectOptionDtoList {
+  itemOptionId: number;
+  amount: number;
+}
+
+interface OrderItemDtoList {
+  orderItemId: number;
+  thumbnailUrl: string;
+  selectOptionDtoList: SelectOptionDtoList[];
+  itemId: number;
+  itemName: string;
+  amount: number;
+  finalPrice: number;
+  discountAmount: number;
+  status: string;
+  saveReward: number;
+  category: string;
+  orderCancel: OrderCancel;
+  orderReturn?: null;
+  orderExchange?: null;
+}
+
+interface SubscribeOrderData {
+  recipeDto: RecipeDto;
+  subscribeOrderDto: SubscribeOrderDto;
+}
+
+interface GeneralOrderData {
   itemNameList: OrderItem[];
   orderDto: OrderDto;
   thumbnailUrl: string;
 }
 
-export interface SubscribeOrderData {
-  recipeDto: RecipeDto;
-  orderDto: OrderDto;
-  subscribeOrderDto: SubscribeOrderDto;
-}
+type MixedOrderData = (GeneralOrderData | SubscribeOrderData)[];
 
-export type MixedOrderData = (GeneralOrderData | SubscribeOrderData)[];
-
-export interface OrderDetailDto extends OrderCancel {
+interface OrderDetailDto extends OrderCancel {
   orderId?: number;
   merchantUid?: string;
   itemId?: number;
@@ -90,19 +128,15 @@ interface SelectOptionDtoList {
   amount: number;
 }
 
-export interface OrderItemDtoList {
-  orderItemId: number;
-  thumbnailUrl: string;
-  selectOptionDtoList: SelectOptionDtoList[];
-  itemId: number;
-  itemName: string;
-  amount: number;
-  finalPrice: number;
-  discountAmount: number;
-  status: string;
-  saveReward: number;
-  category: string;
-  orderCancel: OrderCancel;
-  orderReturn?: null;
-  orderExchange?: null;
+interface OrderDetailData {
+  orderDto: OrderDetailDto;
+  orderItemDtoList: OrderItemDtoList[];
+  savedRewardTotal: number;
+  recipeNames?: string;
 }
+
+interface MergeOrderAndRecipe extends OrderDetailData {
+  recipeDto?: RecipeDto;
+}
+
+type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";

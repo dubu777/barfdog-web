@@ -26,6 +26,7 @@ export default function RootLayout({
           <div className={`${commonLayoutContainer} ${inter.className}`}>
             {children}
           </div>
+          <div id="modal-root" />
         </ReactQueryProvider>
       </body>
     </html>

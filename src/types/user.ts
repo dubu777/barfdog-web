@@ -1,4 +1,6 @@
-export interface UserInfoData {
+export type { UserInfoData }
+
+interface UserInfoData {
   grade: string;
   id: number;
   memberName: string;

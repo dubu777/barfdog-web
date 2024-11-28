@@ -1,4 +1,11 @@
-export interface CartItemDto {
+export type {
+  CartItemDto,
+  CartItemOptionDto,
+  BasketDto,
+  DeliveryConstant,
+};
+
+interface CartItemDto {
   amount: number;
   basketId: number;
   deliveryFree: boolean;
@@ -9,20 +16,20 @@ export interface CartItemDto {
   thumbnailUrl: string;
 }
 
-export interface CartItemOptionDto {
+interface CartItemOptionDto {
   id: number;
   name: string;
   optionPrice: number;
   amount: number;
 }
 
-export interface BasketDto {
+interface BasketDto {
   itemDto: CartItemDto;
   itemOptionDtoList: CartItemOptionDto[];
   totalPrice: number;
 }
 
-export interface DeliveryConstant {
+interface DeliveryConstant {
   freeCondition: number;
   price: number;
 }
