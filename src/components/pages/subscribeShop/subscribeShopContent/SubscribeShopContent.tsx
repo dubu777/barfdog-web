@@ -2,13 +2,9 @@
 
 import useSubscription from "@/hooks/useSubscription";
 import * as styles from "@/app/survey/Survey.css";
-
-import { useGetSurveyRecipe } from "@/api/queries/survey/useGetSurveyRecipe";
-import { useGetSurveyResult } from "@/api/queries/survey/useGetSurveyResult";
 import { calculateOneMealGrams, calculateOneMealGramsWithVolume } from "@/utils/subscription/mealCalculations";
 import { isOriginSubscriber, isToppingPlan } from "@/utils/subscription/subscriptionUtils";
 import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
-import { useGetDiscountInfo } from "@/api/queries/subscription/useGetDiscountInfo";
 import { getDiscountPercent } from "@/utils/subscription/getDiscountPercent";
 import FooterButton from "../footerButton/FooterButton";
 import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
@@ -17,6 +13,12 @@ import PlanSelection from "./planSelection/PlanSelection";
 import RecipeSelection from "./recipeSelection/RecipeSelection";
 import useModal from "@/hooks/useModal";
 import DeliveryScheduleModal from "./selectedProductInfo/deliveryScheduleModal/DeliveryScheduleModal";
+import { validatePaymentBody } from "@/utils/subscription/validatePaymentBody";
+import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
+import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSubscription";
+import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
+import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
+
 
 interface SubscribeShopContentProps {
   reportId: number;
@@ -27,7 +29,8 @@ export default function SubscribeShopContent({
 }: SubscribeShopContentProps) {
   const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
-  const { data: discountData } = useGetDiscountInfo();
+  const { data: discountData } = useGetPlanDiscount();
+console.log(' recipeData.subscribeId;',  recipeData.subscribeId);
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
@@ -41,8 +44,7 @@ export default function SubscribeShopContent({
 
   // 기존 구독자 여부 확인 함수
   const isOrigin = isOriginSubscriber(recipeData.subscribeId);
-  console.log('isorgin???????????', isOrigin);
-  console.log('recipeData.subscribeId???????????', recipeData.subscribeId);
+  
   // 서버에서 받아온 플랜별 할인율에서 선택 플랜 할인율 찾아 적용
   const discountPercent = getDiscountPercent(discountData, selectedPlan);
 
@@ -80,19 +82,44 @@ export default function SubscribeShopContent({
   const isCompleted =
   !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
   subscribePriceData.totalOriginalPriceAllRecipes !== 0;
-console.log('isCompleted', isCompleted);
 
-  console.log("selectedRecipeMeals>>>>>>>>", selectedRecipeMeals);
-  console.log("subscribePriceData>>>>>>>>", subscribePriceData);
-  console.log("oneMealGramWithVolume>>>>>>>>", oneMealGramWithVolume);
-  console.log("recipeData", recipeData);
-  console.log("resultData", resultData);
+  // console.log("selectedRecipeMeals>>>>>>>>", selectedRecipeMeals);
+  // console.log("subscribePriceData>>>>>>>>", subscribePriceData);
+  // console.log("oneMealGramWithVolume>>>>>>>>", oneMealGramWithVolume);
+  // console.log("recipeData", recipeData);
+  // console.log("resultData", resultData);
 
   const { isOpen, onToggle, onClose } = useModal();
 
-  const handlePayment = () => {
+  const { mutate: createSubscription } = useCreateSubscription({
+    onSuccess: (data) => {
 
-  }
+      console.log("data Subscription Created>>>>>>>>>:", data);
+    },
+    onError: (error) => {
+      console.error("Error Creating Subscription:", error);
+    },
+  });
+
+  const handlePayment = () => {
+    const body = {
+      plan: selectedPlan,
+      recipeIdList: selectedRecipes,
+      nextPaymentPrice: subscribePriceData.totalDiscountedPriceAllRecipes,
+      oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
+      subscribeItemList: null,
+    };
+
+    const validationError = validatePaymentBody(body);
+    if (validationError) {
+      alert(validationError);
+      return;
+    }
+
+    const subscribeId = recipeData.subscribeId;
+    
+    createSubscription({ subscribeId, body });
+  };
 
   return (
     <div className={styles.subscribeShopWrapper}>

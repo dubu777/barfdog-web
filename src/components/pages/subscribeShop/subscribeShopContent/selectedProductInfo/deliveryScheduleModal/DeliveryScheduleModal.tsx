@@ -6,7 +6,6 @@ import Image from "next/image";
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
 import { calculateDeliveryDates } from "@/utils/subscription/calculateDeliveryDates";
 import { formatDateToKorean } from "@/utils/formatDateToKorean";
-import { getProductionDates } from "@/utils/getProductionDates";
 
 interface DeliveryScheduleModalProps {
   isVisible: boolean;
@@ -20,7 +19,6 @@ export default function DeliveryScheduleModal({
   onClickConfirm,
 }: DeliveryScheduleModalProps) {
   const { shipmentDate } = calculateDeliveryDates();
-  console.log("shipmentDate", shipmentDate);
 
   return (
     <DefaultModal

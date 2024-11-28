@@ -21,13 +21,13 @@ export default function RecipeBadge({
   const hasInedibleIngredient = inedibleFoodNames?.some((name) =>
     ingredientList.includes(name)
   );
-  console.log(
-    "정보",
-    hasInedibleIngredient,
-    inedibleFoodNames,
-    ingredientList,
-    isRecommend
-  );
+  // console.log(
+  //   "정보",
+  //   hasInedibleIngredient,
+  //   inedibleFoodNames,
+  //   ingredientList,
+  //   isRecommend
+  // );
 
   const badgeType = isRecommend
     ? "recommend"

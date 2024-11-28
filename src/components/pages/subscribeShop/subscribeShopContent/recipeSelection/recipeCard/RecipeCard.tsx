@@ -20,7 +20,7 @@ export default function RecipeCard({
   inedibleFood,
   onRecipeCardSelect,
 }: RecipeCardProps) {
-  console.log(recipeTempData, "recipeTempData");
+  // console.log(recipeTempData, "recipeTempData");
 
   const isRecommend = recommendId === recipeTempData.id;
   return (

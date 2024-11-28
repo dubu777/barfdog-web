@@ -1,5 +1,5 @@
 import { RecipeData, ResultData } from "@/types/survey";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../axiosInstance";
 
 
 const getSurveyRecipe = async (id: number): Promise<RecipeData> => {
@@ -12,8 +12,5 @@ const getSurveyResult = async (id: number): Promise<ResultData> => {
 
   return data
 }
-
-
-
 
 export {getSurveyRecipe, getSurveyResult}

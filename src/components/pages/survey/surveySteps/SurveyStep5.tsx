@@ -23,7 +23,7 @@ export default function SurveyStep5({
 
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
-console.log(year, 'year');
+// console.log(year, 'year');
 
   const handleBirthChange = (newYear: string, newMonth: string) => {
     setYear(newYear);
