@@ -12,7 +12,6 @@ import { RewardData, RewardListData } from "@/types/reward";
 const Rewards = () => {
   const { data: rewardsData, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetRewards();
   const { ref, inView } = useInView();
-  console.log('rewardsData', rewardsData);
 
   // const currentPageAfterScroll = rewardsData?.pageParams?.[rewardsData.pageParams.length - 1] ?? 0;
   // const currentPage = rewardsData?.pages[0]?.page.number;
@@ -23,9 +22,6 @@ const rewardList = rewardsData?.pages
   .reduce((acc, curr) => acc.concat(curr), [] as RewardData[]);
   const totalReward = rewardsData?.pages[0]?.totalReward ?? 0;
   const totalCount = rewardsData?.pages[0]?.totalCount ?? 0;
-
-
-  console.log(inView, hasNextPage, !isFetchingNextPage)
 
   useEffect(() => {
     if (inView && !isFetchingNextPage) {

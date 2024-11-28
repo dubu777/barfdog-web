@@ -6,7 +6,7 @@ import NoImage from "/public/images/icons/noImage.png";
 import EditButton from "/public/images/icons/edit.svg";
 import Badge from "@/components/common/badge/Badge";
 import DogList from "@/components/pages/mypage/main/dogList/DogList";
-import MyPageMenu from "@/components/pages/mypage/main/MenuLink/MenuLink";
+import MyPageMenu from "@/components/pages/mypage/main/menuLink/MenuLink";
 import { MyPageMemberDto, MyPageRepresentiveDogDto } from "@/types/myPage";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useGetMypageInfo } from "@/api/queries/useGetMypageInfo";

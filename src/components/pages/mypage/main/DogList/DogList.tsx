@@ -18,7 +18,7 @@ const DogList = ({ dogsData }: { dogsData: DogData[] }) => {
     )
   ];
   const noData = newDogsData.length < 1;
-  console.log(newDogsData)
+  
   return (
     <article className={styles.dogsInfoBox}>
       {noData ?
@@ -36,12 +36,13 @@ const DogList = ({ dogsData }: { dogsData: DogData[] }) => {
           className={styles.dogsList}
         >
           {newDogsData.map((dog, index) => (
-            dog && <SwiperSlide
-              key={`${dog.id}-${index}`}
-              className={styles.dogSlider}
-            >
-              <DogCard dog={dog} noData={false} />
-            </SwiperSlide>
+            dog && 
+              <SwiperSlide
+                key={`${dog.id}-${index}`}
+                className={styles.dogSlider}
+              >
+                <DogCard dog={dog} noData={false} />
+              </SwiperSlide>
           ))}
           <div className={styles.dogListScrollbar} />
         </Swiper>
