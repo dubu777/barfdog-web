@@ -1,4 +1,5 @@
-import { originSubscribeIdList, PlanName } from "@/constants";
+import { originSubscribeIdList } from "@/constants";
+import { PlanName } from "@/types";
 
 export function isOriginSubscriber(id: number): boolean {
   return originSubscribeIdList.includes(id);

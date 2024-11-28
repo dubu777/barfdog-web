@@ -1,4 +1,4 @@
-import { PlanName } from "@/constants";
+import { PlanName } from "@/types";
 
 import * as styles from "./PlanSelectBox.css";
 import FullPlan from "/public/images/survey/full_plan.svg";
