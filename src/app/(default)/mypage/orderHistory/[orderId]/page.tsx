@@ -1,5 +1,6 @@
 import axiosInstance from "@/api/axiosInstance";
 import OrderDetail from "@/components/pages/mypage/orderHistory/[orderId]/orderDetail/OrderDetail";
+import { MergeOrderAndRecipe, OrderDetailData, RecipeDto } from "@/types/order";
 
 interface OrderDetailPageProps {
   params: {
@@ -9,11 +10,12 @@ interface OrderDetailPageProps {
     type: string;
   }
 }
-const mergeOrderAndRecipe = (data) => {
+
+const mergeOrderAndRecipe = (data: MergeOrderAndRecipe) => {
   return {
     ...data,
     orderItemDtoList: data.orderItemDtoList
-      ? [...data.orderItemDtoList] : undefined,
+      ? [...data.orderItemDtoList] : [],
     orderDto: {
       ...data.orderDto,
       ...data.recipeDto

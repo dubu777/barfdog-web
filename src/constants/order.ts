@@ -20,8 +20,11 @@ export const ORDER_STATUS = {
   CONFIRM: '배송완료',
   FAILED: '취소됨',
 }
-export const PAYMENT = {
-  KAKAO_PAY: '카카오 페이',
-  NAVER_PAY: '네이버 페이',
-  CREDIT_CARD: '카드 결제',
-}
+
+export type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
+
+export const PAYMENT: Record<PaymentMethod, string> = {
+  KAKAO_PAY: "카카오페이",
+  NAVER_PAY: "네이버페이",
+  CREDIT_CARD: "신용카드",
+};

@@ -7,7 +7,7 @@ export function useGetDogs() {
   return useSuspenseQuery<DogData[]>({
     queryKey: [queryKeys.GET_DOGS],
     queryFn: getDogs,
-    initialData: (data: DogData[]) => data,
+    initialData: [] as DogData[],
   });
 }
 

@@ -1,4 +1,4 @@
-import {style} from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 export const couponInputContainer = style({
   display: 'flex',
@@ -6,6 +6,7 @@ export const couponInputContainer = style({
   alignItems: 'center',
   marginTop: '17px',
 });
+
 export const couponInput = style({
   width: '80%',
 

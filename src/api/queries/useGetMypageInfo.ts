@@ -7,7 +7,7 @@ export function useGetMypageInfo() {
   return useSuspenseQuery<MyPageInfoData>({
     queryKey: [queryKeys.MYPAGE, queryKeys.GET_MYPAGE_INFO],
     queryFn: getMypageInfo,
-    initialData: (data: MyPageInfoData) => data,
+    initialData: {} as MyPageInfoData,
   });
 }
 

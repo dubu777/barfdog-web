@@ -1,19 +1,37 @@
 'use client';
 import * as styles from "./Rewards.css";
-import { RewardData } from "@/types/reward";
+import { useEffect } from "react";
 import Text from "@/components/common/text/Text";
 import RewardsFilter from "@/components/pages/mypage/rewards/rewardsFilter/RewardsFilter";
 import RewardsList from "@/components/pages/mypage/rewards/rewardsList/RewardsList";
 import RewardsQuestionModal from "@/components/pages/mypage/rewards/rewardsQuestionModal/RewardsQuestionModal";
+import { useInView } from "react-intersection-observer";
+import { useGetRewards } from "@/api/queries/useGetRewards";
+import { RewardData, RewardListData } from "@/types/reward";
 
-interface RewardsProps {
-  rewardList: RewardData[];
-  totalReward: number;
-  totalCount: number;
-}
+const Rewards = () => {
+  const { data: rewardsData, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetRewards();
+  const { ref, inView } = useInView();
+  console.log('rewardsData', rewardsData);
 
-const Rewards = ({ rewardsData }: { rewardsData: RewardsProps }) => {
-  const { rewardList, totalReward, totalCount } = rewardsData;
+  // const currentPageAfterScroll = rewardsData?.pageParams?.[rewardsData.pageParams.length - 1] ?? 0;
+  // const currentPage = rewardsData?.pages[0]?.page.number;
+  // const totalPages = rewardsData?.pages[0]?.page.totalPages;
+
+const rewardList = rewardsData?.pages
+  ?.map((page: RewardListData) => page.rewardList)
+  .reduce((acc, curr) => acc.concat(curr), [] as RewardData[]);
+  const totalReward = rewardsData?.pages[0]?.totalReward ?? 0;
+  const totalCount = rewardsData?.pages[0]?.totalCount ?? 0;
+
+
+  console.log(inView, hasNextPage, !isFetchingNextPage)
+
+  useEffect(() => {
+    if (inView && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
   return (
     <section className={styles.rewardsContainer}>
       <article className={styles.totalRewardsBox}>
@@ -22,7 +40,7 @@ const Rewards = ({ rewardsData }: { rewardsData: RewardsProps }) => {
           <RewardsQuestionModal />
         </div>
         <p className={styles.totalReward}>
-          <b className={styles.total}>{totalReward.toLocaleString()}</b> 원
+          <b className={styles.total}>{totalReward?.toLocaleString()}</b> 원
         </p>
         <ul className={styles.rewardInfoBox}>
           <li className={styles.rewardInfo}>
@@ -36,7 +54,10 @@ const Rewards = ({ rewardsData }: { rewardsData: RewardsProps }) => {
         </ul>
       </article>
       <RewardsFilter totalCount={totalCount}  />
-      <RewardsList rewardList={rewardList} />
+      <RewardsList rewardList={rewardList || []} />
+      <div ref={ref} style={{ height: 50, background: isFetchingNextPage ? 'lightgray' : 'transparent' }}>
+        {isFetchingNextPage ? "Loading more..." : hasNextPage ? "Load more on scroll" : "No more data"}
+      </div>
     </section>
   );
 };

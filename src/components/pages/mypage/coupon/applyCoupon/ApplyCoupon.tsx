@@ -11,18 +11,18 @@ const ApplyCoupon = () => {
   const [code, setCode] = useState<string>('');
   const [succeedModal, setSucceedModal] = useState<boolean>(false);
 
-  const { refetch } = useGetCoupons();
-  const { mutate, isLoading } = useMutation({
+  const { refetch, isLoading } = useGetCoupons();
+  const { mutate } = useMutation({
     mutationFn: applyCoupon,
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       await setSucceedModal(true);
       await refetch();
       await setCode('');
     },
-    onError: (error) => {
-      console.error(error);
-      alert(error.response.data.errors[0].defaultMessage);
-    },
+    // onError: (error) => {
+    //   console.error(error);
+    //   alert(error.response.data.errors[0].defaultMessage);
+    // },
   });
   const handleUpdateCoupon = () => mutate({ code });
   return (
@@ -36,7 +36,7 @@ const ApplyCoupon = () => {
           id='code'
           name='code'
           value={code}
-          onChange={(value) => setCode(value)}
+          onChange={(value) => typeof value === 'string' && setCode(value)}
           onSubmit={handleUpdateCoupon}
         />
       </div>
