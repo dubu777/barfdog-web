@@ -11,12 +11,12 @@ const ManageSubscribe = ({ subscribeDataList }: { subscribeDataList: ManageSubsc
         플랜 및 레시피 변경 시 재결제가 이뤄질 수 있습니다.
       </Text>
       <article className={styles.subscribeList}>
-        {subscribeDataList.map(subscribeData => {
-          console.log(subscribeData);
-          return (
-          <SubscribeCard key={subscribeData.subscribeDto.subscribeId} subscribeData={subscribeData}/>
-        )
-        })}
+        {subscribeDataList.map(subscribeData => (
+          <SubscribeCard 
+            key={subscribeData.subscribeDto.subscribeId} 
+            subscribeData={subscribeData}
+          />
+        ))}
       </article>
     </section>
   );

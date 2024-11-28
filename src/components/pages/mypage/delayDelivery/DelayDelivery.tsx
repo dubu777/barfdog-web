@@ -29,8 +29,6 @@ const DelayDelivery = ({ subscribeId }: { subscribeId: string | number }) => {
       ? new Date(defaultProductionDates.productionDate ?? '') 
       : new Date(selectedDelay?.productionDate);
   
-  console.log(subscribeData)
-  console.log(selectedDelay)
   return (
     <section className={styles.delayDeliveryContainer}>
       <div className={styles.dogName}>

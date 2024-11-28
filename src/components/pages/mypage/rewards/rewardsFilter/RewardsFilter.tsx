@@ -48,9 +48,7 @@ const RewardsFilter = ({ totalCount }: { totalCount: number }) => {
   return (
     <>
     <article className={styles.rewardFilterContainer}>
-      {statusFilter.map(filter => {
-        console.log(filter)
-        return (
+      {statusFilter.map(filter => (
         <DefaultButton
           key={filter.id}
           type='grayBorder'
@@ -61,8 +59,7 @@ const RewardsFilter = ({ totalCount }: { totalCount: number }) => {
         >
           {filter.name}
         </DefaultButton>
-      )
-      })}
+      ))}
     </article>
     <div className={styles.rewardListHeader}>
       <p>총 {totalCount}건</p>

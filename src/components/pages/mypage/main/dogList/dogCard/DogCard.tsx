@@ -16,12 +16,10 @@ interface MyPageDogCardProps {
 }
 
 const DogCard = ({ dog, noData }: MyPageDogCardProps) => {
-  // const dog = {};
   const subscribeStatusKR = dog && subscribeStatus[dog.subscribeStatus];
   const productionDates = 
     dog && typeof dog.nextDeliveryDate === 'string' 
     ? getProductionDates(dog.nextDeliveryDate) : undefined;
-  console.log();
   
   return (
     <div className={styles.dogSlide({ representative: dog && dog.representative || dog && dog.subscribeStatus === 'SUBSCRIBING', noDogData: noData })}>

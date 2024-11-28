@@ -11,7 +11,6 @@ interface OrderGeneralInfoProps {
 }
 
 const OrderGeneralInfo = ({ type, orderDto }: OrderGeneralInfoProps) => {
-  console.log(orderDto)
   const orderInfoList: DefaultObjectType[] = [
     {id: '주문상태', name: '주문상태', value: ORDER_STATUS[orderDto?.orderStatus as keyof typeof ORDER_STATUS] || '-'},
     {id: '주문번호', name: '주문번호', value: orderDto.merchantUid},
