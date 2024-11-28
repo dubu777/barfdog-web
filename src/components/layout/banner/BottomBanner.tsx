@@ -10,7 +10,7 @@ import { orderDeadlineTimestamp } from "@/utils/orderDeadlineTimestamp";
 
 const BottomBanner = ({ orderDeadline }: { orderDeadline: string }) => {
   const { isBottomBannerVisible, closeBottomBanner } = useMainStore();
-  const [timestamp, setTimestamp] = useState<string | null>(null);
+  const [timestamp, setTimestamp] = useState<string | null | undefined>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {

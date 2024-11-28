@@ -6,7 +6,7 @@ const getDDay = (dDayIndex: number, todayIndex: number) => {
   return (dDayIndex - todayIndex + weekNum) % weekNum;
 }
 
-export const orderDeadlineTimestamp = (dayString) => {
+export const orderDeadlineTimestamp = (dayString: string) => {
   // [0, 1, 2, 3, 4, 5, 6]
   const dayStringArr = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   const dDayIndex = dayStringArr.indexOf(dayString);

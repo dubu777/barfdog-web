@@ -1,3 +1,5 @@
+import { PaymentMethod } from "@/types";
+
 export {ORDER_STATUS, PAYMENT}
 
 // 결제 전, 결제완료, 생산 중, 배송준비 중, 배송 시작, 배송 중, 배송완료, 취소됨, 환불됨
@@ -22,9 +24,9 @@ const ORDER_STATUS = {
   CONFIRM: '배송완료',
   FAILED: '취소됨',
 }
-const PAYMENT = {
-  KAKAO_PAY: '카카오 페이',
-  NAVER_PAY: '네이버 페이',
-  CREDIT_CARD: '카드 결제',
-}
 
+const PAYMENT: Record<PaymentMethod, string> = {
+  KAKAO_PAY: "카카오페이",
+  NAVER_PAY: "네이버페이",
+  CREDIT_CARD: "신용카드",
+};

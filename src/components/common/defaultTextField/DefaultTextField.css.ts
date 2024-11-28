@@ -34,7 +34,7 @@ export const textFieldStyle = recipe({
     '::placeholder': {
       color: themeVars.colors.lightGrey,
     },
-    '&:focus': {
+    ':focus': {
       border: `1px solid ${themeVars.colors.red}`,
     },
   },
@@ -42,6 +42,9 @@ export const textFieldStyle = recipe({
     size: {
       sm: {
         height: '40px',
+      },
+      md: {
+        
       }
     },
     isActive: {
@@ -55,7 +58,9 @@ export const textFieldStyle = recipe({
       }
     },
     isHidden: {
-
+      true: {
+        
+      }
     }
   }
 })

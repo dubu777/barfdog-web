@@ -5,25 +5,30 @@ import Text from "@/components/common/text/Text";
 import CalendarComponent from "@/components/common/calendar/Calendar";
 import DelayDeliveryCheckbox from "@/components/pages/mypage/delayDelivery/delayDeliveryCheckbox/DelayDeliveryCheckbox";
 import { getProductionDates } from "@/utils/getProductionDates";
-import { SubscribeDto } from "@/types/subscription";
+import { useGetSubscribe } from "@/api/queries/useGetSubscribe";
+import { SubscribeSkipType } from "@/types/subscription";
 
 export interface DelayListProps {
-  value: string;
+  value: SubscribeSkipType;
   name: string;
   productionDate: string;
   receivingDate: string;
 }
 
-const DelayDelivery = ({ subscribeData }: { subscribeData: SubscribeDto }) => {
+const DelayDelivery = ({ subscribeId }: { subscribeId: string | number }) => {
+  const { data: subscribeData } = useGetSubscribe(Number(subscribeId));
+
   const [selectedDelay, setSelectedDelay] = useState<DelayListProps | null>(null);
-
   const defaultProductionDates = getProductionDates(subscribeData.nextDeliveryDate);
-
-  const calendarValue = !selectedDelay
-    ? [new Date(defaultProductionDates.productionDate), new Date(defaultProductionDates.receivingDate)]
-    : [new Date(selectedDelay?.productionDate), new Date(selectedDelay?.receivingDate)];
-  const activeCalendarStartDate = !selectedDelay ? new Date(defaultProductionDates.productionDate) : new Date(selectedDelay?.productionDate);
-
+  const calendarValue = 
+    !selectedDelay
+      ? [new Date(defaultProductionDates.productionDate ?? ''), new Date(defaultProductionDates.receivingDate ?? '')]
+      : [new Date(selectedDelay?.productionDate), new Date(selectedDelay?.receivingDate)];
+  const activeCalendarStartDate = 
+    !selectedDelay 
+      ? new Date(defaultProductionDates.productionDate ?? '') 
+      : new Date(selectedDelay?.productionDate);
+  
   return (
     <section className={styles.delayDeliveryContainer}>
       <div className={styles.dogName}>
@@ -35,7 +40,11 @@ const DelayDelivery = ({ subscribeData }: { subscribeData: SubscribeDto }) => {
         생산 예정일: {defaultProductionDates?.productionDate} <br/>
         수령 예정일: {defaultProductionDates?.receivingDate}
       </Text>
-      <DelayDeliveryCheckbox subscribeData={subscribeData} selectedDelay={selectedDelay} setSelectedDelay={setSelectedDelay} />
+      <DelayDeliveryCheckbox
+        subscribeData={subscribeData}
+        selectedDelay={selectedDelay}
+        setSelectedDelay={setSelectedDelay}
+      />
       <CalendarComponent
         activeStartDate={activeCalendarStartDate}
         value={calendarValue}

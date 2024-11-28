@@ -38,12 +38,10 @@ const PackageBenefit = ({ benefitsResponseData }: { benefitsResponseData: Benefi
 
   return (
     <section className={styles.benefitsContainer}>
-      {!diagnosticDevice && !topperRandom ?
-      <div className={styles.noBenefits}>
+      {(!diagnosticDevice && !topperRandom) ?
         <Text type='description' size='md' color='grey' weight='normal'>
           선택 가능한 혜택이 없습니다.
         </Text>
-      </div>
         :<>
           <div className={styles.benefitsTitle}>
             <Text type='title' size='md' weight='normal'>이 패키지에 포함된 혜택을 선택해주세요</Text>
@@ -53,22 +51,26 @@ const PackageBenefit = ({ benefitsResponseData }: { benefitsResponseData: Benefi
             benefitsResponseData={benefitsResponseData}
           />
           <div className={styles.benefitsControls}>
-            <DefaultCheckbox
-              id={diagnosticDevice.benefitName}
-              name={diagnosticDevice.benefitName}
-              value={selectedBenefits.includes(diagnosticDevice.benefitId)}
-              label='진단기기 체험'
-              labelPosition='bottom'
-              onChange={() => handleSelectBenefit(diagnosticDevice.benefitId)}
-            />
-            <DefaultCheckbox
-              id={topperRandom.benefitName}
-              name={topperRandom.benefitName}
-              value={selectedBenefits.includes(topperRandom.benefitId)}
-              label={`토퍼 발송\n (랜덤)`}
-              labelPosition='bottom'
-              onChange={() => handleSelectBenefit(topperRandom.benefitId)}
-            />
+            {diagnosticDevice && 
+              <DefaultCheckbox
+                id={diagnosticDevice.benefitName}
+                name={diagnosticDevice.benefitName}
+                value={selectedBenefits.includes(diagnosticDevice.benefitId)}
+                label='진단기기 체험'
+                labelPosition='bottom'
+                onChange={() => handleSelectBenefit(diagnosticDevice.benefitId)}
+              />
+            }
+            {topperRandom && 
+              <DefaultCheckbox
+                id={topperRandom.benefitName}
+                name={topperRandom.benefitName}
+                value={selectedBenefits.includes(topperRandom.benefitId)}
+                label={`토퍼 발송\n (랜덤)`}
+                labelPosition='bottom'
+                onChange={() => handleSelectBenefit(topperRandom.benefitId)}
+              />
+            }
           </div>
           <RadiusSubmitButton
             title='신청하기'

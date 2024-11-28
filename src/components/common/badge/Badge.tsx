@@ -4,7 +4,7 @@ import {ReactNode} from "react";
 
 interface BadgeProps {
   children?: ReactNode;
-  color?: string;
+  color?: 'red';
   className?: string;
 }
 
@@ -14,6 +14,6 @@ export default function Badge({
   className,
 }: BadgeProps) {
   return (
-    <p className={`${styles.badge({ color })} ${className ? className : ''}`}>{children}</p>
+    <p className={`${styles.badge({ color: color })} ${className ? className : ''}`}>{children}</p>
   );
 }

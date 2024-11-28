@@ -34,7 +34,7 @@ const OrderPriceInfo = ({ orderDto }: { orderDto: OrderDetailDto }) => {
         title={
           <div className={styles.orderPriceBox}>
             <span>냉동 배송 완료</span>
-            <div className={styles.deliveryInfo}>
+            <div>
               <span>
                 {orderDto?.deliveryCode === 'EPOST' ? '우체국' : '대한통운'}
               </span>

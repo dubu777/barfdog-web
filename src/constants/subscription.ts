@@ -1,12 +1,15 @@
-export {
-  subscribePlanInfo,
-  toppingOption,
-  originSubscribeIdList,
-  kcalPerGramMap,
-  subscribeStatus
-};
+import { PlanKey } from "@/types";
 
-const subscribePlanInfo = {
+export { subscribeStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscribePlanInfo, }
+
+const subscribePlanInfo: Record<PlanKey, {
+  id: string;
+  label: string;
+  numberOfPacksPerDay: number;
+  weeklyPaymentCycle: number;
+  totalNumberOfPacks: number;
+  maxRecipeCount?: number;
+}> = {
   FULL: {
     id: "FULL",
     label: "풀 플랜",
@@ -21,7 +24,6 @@ const subscribePlanInfo = {
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 28,
   },
-
   TOPPING_FULL: {
     id: "TOPPING_FULL",
     label: "토핑 풀플랜",
@@ -35,6 +37,16 @@ const subscribePlanInfo = {
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 28,
+    maxRecipeCount: 1,
+  },
+  // 삭제 예정
+  TOPPING: {
+    id: 'TOPPING',
+    label: '토핑 플랜',
+    numberOfPacksPerDay: 1,
+    weeklyPaymentCycle: 4,
+    totalNumberOfPacks: 20,
+    maxRecipeCount: 1,
   },
 } as const;
 
@@ -53,7 +65,6 @@ const kcalPerGramMap: Record<string, number> = {
   "DUCK&LAMB +": 1.47532,
   "LAMB&BEEF +": 1.55097,
 };
-
 const originSubscribeIdList = [
   27, 50, 98, 110, 115, 116, 125, 130, 134, 137, 139, 140, 190, 206, 213, 215,
   216, 229, 242, 263, 285, 319, 324, 355, 386, 391, 404, 452, 509, 565, 619,
@@ -67,7 +78,7 @@ const originSubscribeIdList = [
   3914, 3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
 
-const subscribeStatus = {
+const subscribeStatus: Record<string, string> = {
   // BEFORE_PAYMENT: '구독 비활성',
   // SURVEY_COMPLETED: '구독 비활성',
   // SUBSCRIBING: '구독 활성',
@@ -85,4 +96,3 @@ const subscribeStatus = {
 };
 
 
-export type PlanName = keyof typeof subscribePlanInfo;

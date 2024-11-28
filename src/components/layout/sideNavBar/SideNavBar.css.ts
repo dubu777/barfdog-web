@@ -11,6 +11,9 @@ export const sideNavBarWrapper = style([commonLayoutStyle, {
   zIndex: 400,
   display: 'flex',
   justifyContent: 'flex-end',
+  border: '1px solid orange',
+  margin: '0 auto',
+  // overflow: 'hidden'
 }])
 export const sideNavBarContainer = style({
   width: '70%',
@@ -18,6 +21,7 @@ export const sideNavBarContainer = style({
   background: themeVars.colors.white,
   position: 'relative',
   padding: '100px 18px 36px',
+  border: '1px solid red'
 
 })
 export const closeBtn = style({

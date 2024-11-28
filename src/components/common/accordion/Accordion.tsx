@@ -4,7 +4,7 @@ import * as styles from './Accordion.css';
 import AccordionIcon from '/public/images/icons/accordion.svg';
 
 interface AccordionProps {
-  title: string | Element;
+  title: string | ReactNode;
   children?: ReactNode;
   open?: boolean;
   showArrow?: boolean;

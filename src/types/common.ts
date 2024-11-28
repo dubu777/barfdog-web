@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
   QueryKey,
   UseMutationOptions,
@@ -7,15 +8,17 @@ import {
 export type { SearchParamProps, DefaultObjectType, UseMutationCustomOptions, UseQueryCustomOptions };
 
 type SearchParamProps = {
-  param: { id: string | number };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+  param: { [key: string]: string | number };
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
 type DefaultObjectType = {
-  name: string | Element;
-  value: string | number | Record<string, string | number> | Element;
+  id: string | number;
+  name: string | ReactNode;
+  value: string | number | ReactNode;
   visible?: boolean;
-  child?: { name: string; value: string }[];
-};
+  child?: { id: string | number; name: string; value: string; visible?: boolean }[];
+}
 
 type UseMutationCustomOptions<TData = unknown, TVariables = unknown, TError = unknown> = Omit<
   UseMutationOptions<TData, TError, TVariables, unknown>,
@@ -26,3 +29,6 @@ type UseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
   UseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
   "queryKey"
 >;
+
+
+

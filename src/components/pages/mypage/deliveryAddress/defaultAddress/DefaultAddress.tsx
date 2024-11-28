@@ -28,12 +28,13 @@ const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) =>
   const handleChangeType = (type: string) => {
     pushWithQuery(pathname, { changeType: type })
   }
+  
   return (
-    <section className={styles.addressContainer}>
+    <section>
       <h2 className={styles.addressInfoTitle}>
         반려견마다 다른 배송지를 설정할 수 있습니다.<br/>
         <span className={pointColor}>
-        변경 후 '최종 저장'을 눌러야 저장됩니다.
+        변경 후 &apos;최종 저장&apos;을 눌러야 저장됩니다.
       </span>
       </h2>
       <article className={styles.addressBox}>
@@ -41,13 +42,13 @@ const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) =>
           <Text type='title' size='md' align='left'>{subscribeDogName}(이)네</Text>
         </div>
         <div className={styles.addressContents}>
-          <Text type='title' size='md' align='left' color='black'>현재 배송지</Text>
+          <Text type='title' size='md' align='left'>현재 배송지</Text>
           <Text type='description' size='md' align='left' color='black' weight='normal'>
             ({currentData.zipcode}) {currentData.street}, <br/>
             {currentData.detailAddress}
           </Text>
           <Text type='description' size='sm' align='left' color='black'>
-            {currentData.recipientName}<span className={styles.phoneNumber}>{formatPhoneNumber(currentData.phoneNumber)}</span>
+            {currentData.recipientName}<span>{formatPhoneNumber(currentData.phoneNumber)}</span>
           </Text>
         </div>
         <div className={styles.addressContents}>
@@ -57,7 +58,7 @@ const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) =>
             {emptyValue(nextData?.detailAddress, '나머지 주소')}
           </Text>
           <Text type='description' size='sm' align='left' color='grey'>
-            {emptyValue(nextData?.recipientName)}&nbsp;<span className={styles.contentSpan}>{formatPhoneNumber(nextData?.phoneNumber)}</span>
+            {emptyValue(nextData?.recipientName)}&nbsp;<span>{formatPhoneNumber(nextData?.phoneNumber)}</span>
           </Text>
         </div>
         <div className={styles.productionDates}>
@@ -69,8 +70,8 @@ const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) =>
         <div className={styles.changeButtons}>
           {changeTypeList.map(type => (
             <DefaultButton
-              key={type.value}
-              onClick={() => handleChangeType(type.value)}
+              key={type.id}
+              onClick={() => handleChangeType(String(type.value))}
               type='blackBorder'
               borderRadius='lg'
             >

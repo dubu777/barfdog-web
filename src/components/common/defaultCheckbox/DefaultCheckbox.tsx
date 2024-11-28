@@ -1,12 +1,13 @@
+import { ChangeEvent } from 'react';
 import * as styles from './DefaultCheckbox.css';
 
 interface DefaultCheckboxProps {
   id: string;
   name: string;
-  value: string | number | boolean;
+  value: boolean;
   label?: string;
-  labelPosition?: 'left' | 'right' | 'bottom';
-  onChange: (value: string) => void;
+  labelPosition?: 'right' | 'bottom';
+  onChange: (value: string | boolean) => void;
 }
 
 export default function DefaultCheckbox({
@@ -21,7 +22,7 @@ export default function DefaultCheckbox({
     onChange(!e.target.checked);
   };
   return (
-    <div className={styles.checkboxContainer({ labelPosition })}>
+    <div className={styles.checkboxContainer({ labelPosition: labelPosition })}>
       <label htmlFor={id} className={styles.checkboxLabel({ isHidden: label === '' })}>
         {label}
       </label>
@@ -29,7 +30,7 @@ export default function DefaultCheckbox({
         type='checkbox'
         id={id}
         name={name}
-        value={value}
+        checked={value}
         onChange={handleCheckboxChange}
         style={{ appearance: 'none' }}
         className={styles.checkboxStyle({ isChecked: value })}

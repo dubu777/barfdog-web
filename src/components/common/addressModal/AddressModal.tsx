@@ -13,10 +13,12 @@ interface AlertModalProps {
 
 const AddressModal = ({ isOpen, onClose, onSelectAddressData }: AlertModalProps) => {
   if (!isOpen) return null;
+
   const handleComplete = (data: Address) => {
     onSelectAddressData(data);
     onClose();
   }
+  
   return (
     <Portal onClose={onClose}>
       <AnimatePresence>

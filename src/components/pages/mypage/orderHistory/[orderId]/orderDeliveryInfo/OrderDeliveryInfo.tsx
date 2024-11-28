@@ -10,17 +10,17 @@ interface OrderGeneralInfoProps {
 
 const OrderDeliveryInfo = ({ type, orderDto }: OrderGeneralInfoProps) => {
   const orderDeliveryInfoList: DefaultObjectType[] = [
-    {name: '받는분', value: type === 'subscribe' ? orderDto.recipientName : orderDto.name},
-    {name: '핸드폰', value: type === 'subscribe' ? orderDto.recipientPhone : orderDto.phone},
-    {name: '배송방법', value: '택배배송'},
-    {name: '배송주소', value: `${orderDto.street} ${orderDto.detailAddress}`},
-    {name: '배송요청사항', value: orderDto.request ? orderDto.request : '-'},
+    {id: '받는분', name: '받는분', value: type === 'subscribe' ? orderDto.recipientName : orderDto.name},
+    {id: '핸드폰', name: '핸드폰', value: type === 'subscribe' ? orderDto.recipientPhone : orderDto.phone},
+    {id: '배송방법', name: '배송방법', value: '택배배송'},
+    {id: '배송주소', name: '배송주소', value: `${orderDto.street} ${orderDto.detailAddress}`},
+    {id: '배송요청사항', name: '배송요청사항', value: orderDto.request ? orderDto.request : '-'},
   ]
   return (
     <Accordion title='배송정보'>
       <ul className={styles.orderInfoContainer}>
         {orderDeliveryInfoList.map(info => (
-          <li key={info.name} className={styles.orderInfo({})}>
+          <li key={info.id} className={styles.orderInfo({})}>
             <p className={styles.infoTitle}>{info.name}</p>
             <p>{info.value}</p>
           </li>

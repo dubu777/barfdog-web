@@ -4,7 +4,7 @@ import RightArrowIcon from "/public/images/icons/right-arrow-black.svg";
 import Text from "@/components/common/text/Text";
 import Badge from "@/components/common/badge/Badge";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { subscribePlanInfo, subscribeStatus } from "@/constants";
+import { PlanKey, subscribePlanInfo, subscribeStatus } from "@/constants";
 import { formatDate } from "@/utils/dateUtils";
 import { getProductionDates } from "@/utils/getProductionDates";
 import { getNextPaymentPrice } from "@/utils/getNextPaymentPrice";
@@ -13,62 +13,68 @@ import { ManageSubscribeData } from "@/types/subscription";
 import { DefaultObjectType } from "@/types/common";
 
 const SubscribeCard = ({ subscribeData }: { subscribeData: ManageSubscribeData }) => {
-  const { subscribeDto: data } = subscribeData;
-  const isPackageData = !!data.subscriptionMonth && data.packagePrice !== -1;
-  const productionDates = getProductionDates(subscribeData.nextDeliveryDate);
-  console.log(data)
+  const { subscribeDto } = subscribeData;
+  const isPackageData = !!subscribeDto.subscriptionMonth && subscribeDto.packagePrice !== -1;
+  const productionDates = getProductionDates(subscribeDto.nextDeliveryDate);
 
   const subscribeInfoList: DefaultObjectType[] = [
     {
+      id: '현재 패키지',
       name: '현재 패키지',
-      value: `${data.subscriptionMonth}개월`,
+      value: `${subscribeDto.subscriptionMonth}개월`,
       visible: isPackageData,
     },
     {
+      id: '현재 플랜',
       name: '현재 플랜',
-      value: subscribePlanInfo[data?.plan]?.label || '-',
+      value: subscribePlanInfo[subscribeDto?.plan as PlanKey]?.label || '-',
       visible: true,
     },
     {
+      id: '현재 레시피',
       name: '현재 레시피',
       value: subscribeData.recipeNames,
       visible: true,
     },
     {
+      id: '다음 결제일',
       name: '다음 결제일',
-      value: data.nextPaymentDate ? formatDate(data.nextPaymentDate, 'onlyDate') : '-',
+      value: subscribeDto.nextPaymentDate ? formatDate(subscribeDto.nextPaymentDate, 'onlyDate') : '-',
       visible: !isPackageData,
     },
     {
+      id: '구독 금액',
       name: '구독 금액',
       value: `${getNextPaymentPrice({
-        originPrice: data.nextPaymentPrice,
-        discountCoupon: data.discountCoupon,
-        discountGrade: data.discountGrade,
-        overDiscount: data.overDiscount,
+        originPrice: subscribeDto.nextPaymentPrice,
+        discountCoupon: subscribeDto.discountCoupon,
+        discountGrade: subscribeDto.discountGrade,
+        overDiscount: subscribeDto.overDiscount,
       })}원`,
-      visible: data.status === 'SUBSCRIBING' && !isPackageData,
+      visible: subscribeDto.status === 'SUBSCRIBING' && !isPackageData,
     },
     {
+      id: '패키지 금액',
       name: '패키지 금액',
-      value: `${data?.packagePrice?.toLocaleString()}원`,
+      value: `${subscribeDto?.packagePrice?.toLocaleString()}원`,
       visible: isPackageData,
     },
     {
+      id: '패키지 기간',
       name: '패키지 기간',
-      value: `${getPackagePeriod(data.startDate, data.subscriptionMonth)} (${data.shippingLeft}회 남음)`,
+      value: `${getPackagePeriod(subscribeDto.startDate, subscribeDto.subscriptionMonth)} (${subscribeDto.shippingLeft}회 남음)`,
       visible: isPackageData,
     },
   ]
   return (
     <div className={styles.subscribeCard}>
       <Text type='title' size='md' align='left' className={styles.subscribeName}>
-        {data.dogName}(이)의 AI 추천 식단
-        <Badge color={data.status === 'SUBSCRIBING' && 'red'}>
-          {subscribeStatus[data.status]}
+        {subscribeDto.dogName}(이)의 AI 추천 식단
+        <Badge color={subscribeDto.status === 'SUBSCRIBING' ? 'red' : undefined}>
+          {subscribeStatus[subscribeDto.status]}
         </Badge>
       </Text>
-      {data.status === 'SUBSCRIBING' &&
+      {subscribeDto.status === 'SUBSCRIBING' &&
         <Text type='description' size='sm' color='black' className={styles.productionDates}>
           <span className={styles.productionDate}>생산 예정일: {productionDates.productionDate}</span>
           <span>수령 예정일: {productionDates.receivingDate}</span>
@@ -77,7 +83,7 @@ const SubscribeCard = ({ subscribeData }: { subscribeData: ManageSubscribeData }
       <div className={styles.subscribeInfo}>
         {subscribeInfoList.map(info => (
           subscribeData.recipeNames && info.visible &&
-          <Text type='description' size='sm' color='black' key={info.name}>
+          <Text type='description' size='sm' color='black' key={info.id}>
             <span className={styles.infoName}>
               - {info.name}:
             </span>
@@ -87,17 +93,17 @@ const SubscribeCard = ({ subscribeData }: { subscribeData: ManageSubscribeData }
       </div>
       <div className={styles.subscribeControls}>
         {isPackageData &&
-          <div className={styles.packageButton}>
+          <div>
             <DefaultButton
               type='blackBorder'
               size='sm'
-              linkUrl={`/mypage/subscribe/packageBenefit/${data.subscribeId}`}
+              linkUrl={`/mypage/subscribe/packageBenefit/${subscribeDto.subscribeId}`}
             >
               패키지 혜택
             </DefaultButton>
           </div>
         }
-        <div className={styles.packageButton}>
+        <div>
           <DefaultButton
             type='blackBorder'
             size='sm'

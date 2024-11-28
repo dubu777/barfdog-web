@@ -7,9 +7,11 @@ export const delayDeliveryContainer = style([defaultWidth, {
   position: 'relative',
   marginBottom: '60px',
 }])
+
 export const dogName = style({
   marginBottom: '15px'
 })
+
 export const defaultProduction = style({
   lineHeight: '1.5 !important',
   marginBottom: '20px',

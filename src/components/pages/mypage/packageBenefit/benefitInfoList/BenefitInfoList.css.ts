@@ -9,14 +9,16 @@ export const benefitsBox = style({
   background: 'white',
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
   // boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.25)'
   // filter: 'drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25))'
 });
 
+export const benefitItem = style({
+  marginBottom: '20px',
+});
+
 export const benefitItemInfo = style({
-  marginTop: '5px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '3px',
+  fontSize: themeVars.fontSize["text-sm"],
+  whiteSpace: 'pre-line',
+  lineHeight: 0.8
 });

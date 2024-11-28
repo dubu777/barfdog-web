@@ -10,7 +10,7 @@ export const getNextPaymentPrice = ({
   discountCoupon = 0,
   discountGrade = 0,
   overDiscount = 0,
-}: Price): number => {
+}: Price): number | string => {
   // nextPaymentPrice 구독 상품의 할인율 포함 계산의 필요성이 예상되어 아래 내용 참고 후 리펙터링된 함수.
   // (! 서버에서 subscribe > nextPaymentPrice 는 실제 다음구독의 결제금액이 아니라, 구독 상품의 원가이다.)
 

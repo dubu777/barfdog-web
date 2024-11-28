@@ -12,6 +12,7 @@ export const goBackButton = style({
   marginRight: 'auto',
   cursor: 'pointer',
 })
+
 export const title = style({
   width: '100%',
   textAlign: 'center',

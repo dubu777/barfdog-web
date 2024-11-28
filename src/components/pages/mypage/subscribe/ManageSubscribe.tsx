@@ -12,7 +12,10 @@ const ManageSubscribe = ({ subscribeDataList }: { subscribeDataList: ManageSubsc
       </Text>
       <article className={styles.subscribeList}>
         {subscribeDataList.map(subscribeData => (
-          <SubscribeCard key={subscribeData.subscribeDto.subscribeId} subscribeData={subscribeData}/>
+          <SubscribeCard 
+            key={subscribeData.subscribeDto.subscribeId} 
+            subscribeData={subscribeData}
+          />
         ))}
       </article>
     </section>

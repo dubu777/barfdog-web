@@ -47,11 +47,17 @@ export const title = recipe({
       },
     },
     weight: {
+      light: {
+        fontWeight: themeVars.fontWeight.light,
+      },
       normal: {
         fontWeight: themeVars.fontWeight.normal,
       },
       semibold: {
         fontWeight: themeVars.fontWeight.semibold,
+      },
+      bold: {
+        fontWeight: themeVars.fontWeight.bold,
       },
     },
     align: {

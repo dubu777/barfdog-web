@@ -1,10 +1,8 @@
 import * as styles from './BenefitInfoList.css';
 import Text from "@/components/common/text/Text";
 import { DefaultObjectType } from "@/types/common";
-import { BenefitDto } from "@/types/subscription";
+import { BenefitDto, BenefitStatus } from "@/types/subscription";
 import { BenefitName, BenefitsData } from "@/components/pages/mypage/packageBenefit/PackageBenefit";
-
-type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
 
 const BenefitInfoList = ({ benefitsResponseData }: { benefitsResponseData: BenefitDto[] }) => {
   const findBenefitByStatus = (status: BenefitStatus | null, benefitName: BenefitName, isTotal = false) => {
@@ -37,41 +35,37 @@ const BenefitInfoList = ({ benefitsResponseData }: { benefitsResponseData: Benef
 
   const benefitContentList: DefaultObjectType[] = [
     {
+      id: '남은 횟수',
       name: '남은 횟수',
-      value: {
-        diagnosticDevice: `( ${benefitsData.available.diagnosticDevice} / ${benefitsData.total.diagnosticDevice}회 )`,
-        topperRandom: `( ${benefitsData.available.topperRandom} / ${benefitsData.total.topperRandom}회 )`,
-      },
+      value: `
+        진단기기 ( ${benefitsData.available.diagnosticDevice} / ${benefitsData.total.diagnosticDevice}회 ) \n
+        토퍼 ( ${benefitsData.available.topperRandom} / ${benefitsData.total.topperRandom}회 )
+      `,
     },
     {
+      id: '신청 대기중',
       name: '신청 대기중',
-      value: {
-        diagnosticDevice: `${benefitsData.requested.diagnosticDevice} 회`,
-        topperRandom: `${benefitsData.requested.topperRandom} 회`,
-      },
+      value: `
+        진단기기: ${benefitsData.requested.diagnosticDevice} 회 \n
+        토퍼: ${benefitsData.requested.topperRandom} 회
+      `,
     },
     {
+      id: '신청 완료',
       name: '신청 완료',
-      value: {
-        diagnosticDevice: `${benefitsData.used.diagnosticDevice} 회`,
-        topperRandom: `${benefitsData.used.topperRandom} 회`,
-      },
+      value: `
+        진단기기: ${benefitsData.used.diagnosticDevice} 회 \n
+        토퍼: ${benefitsData.used.topperRandom} 회
+      `,
     },
   ]
 
   return (
     <article className={styles.benefitsBox}>
       {benefitContentList.map((benefit, index) => (
-        <div key={benefit.name}>
+        <div key={benefit.id} className={styles.benefitItem}>
           <Text type='description' size='md' color='black'>{benefit.name}</Text>
-          <ul className={styles.benefitItemInfo}>
-            <Text type='description' size='sm' color='black'>
-              진단기기{index !== 0 && ':'} {benefit.value.diagnosticDevice}
-            </Text>
-            <Text type='description' size='sm' color='black'>
-              토퍼{index !== 0 && ':'} {benefit.value.topperRandom}
-            </Text>
-          </ul>
+            <p className={styles.benefitItemInfo}>{benefit?.value}</p>
         </div>
       ))}
     </article>

@@ -1,15 +1,15 @@
 // 생산 및 수령 예정일 계산
-export const getProductionDates = (dateString?: string, planWeeklyPaymentCycle = 0) => {
-  const formatDate = (date) =>
+export const getProductionDates = (dateString: string | null, planWeeklyPaymentCycle = 0) => {
+  const formatDate = (date: Date) =>
     `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}.`;
 
-  const addWeeks = (date, weeks) => {
+  const addWeeks = (date: Date, weeks: number) => {
     const newDate = new Date(date);
     newDate.setDate(date.getDate() + weeks * 7);  // weeks를 일수로 변환하여 더함
     return newDate;
   };
 
-  const calculateProductionDate = (date) => {
+  const calculateProductionDate = (date: Date) => {
     const dayOfWeek = date.getDay();
     const newDate = new Date(date);
 
@@ -23,7 +23,7 @@ export const getProductionDates = (dateString?: string, planWeeklyPaymentCycle =
     return newDate;
   };
 
-  const calculateReceivingDate = (prodDate) => {
+  const calculateReceivingDate = (prodDate: Date) => {
     const newDate = new Date(prodDate);
     newDate.setDate(prodDate.getDate() + 5);  // 생산 예정일의 다음 수요일
     return newDate;
@@ -42,9 +42,10 @@ export const getProductionDates = (dateString?: string, planWeeklyPaymentCycle =
     receivingDate = new Date(dateString);
     receivingDate.setDate(receivingDate.getDate() + 1); // 수령일은 배송일의 다음날
   } else {
+    console.log('// 배송일이 없을 경우 (구독 안함)')
     // 배송일이 없을 경우 (구독 안함)
+    
     const today = new Date();
-
     // 생산 예정일 계산
     productionDate = calculateProductionDate(today);
 
@@ -63,8 +64,8 @@ export const getProductionDates = (dateString?: string, planWeeklyPaymentCycle =
   }
 
   return {
-    productionDate: formatDate(productionDate),
-    shipmentDate: shipmentDate ? formatDate(shipmentDate) : undefined,
-    receivingDate: formatDate(receivingDate),
+    productionDate: dateString ? formatDate(productionDate) : null,
+    shipmentDate: dateString ? shipmentDate ? formatDate(shipmentDate) : undefined : null,
+    receivingDate: dateString ? formatDate(receivingDate) : null,
   };
 };

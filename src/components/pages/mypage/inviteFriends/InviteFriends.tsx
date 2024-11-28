@@ -27,7 +27,7 @@ const InviteFriends = () => {
           </DefaultButton>
         </div>
       </div>
-      <div className={styles.inviteInfoBox}>
+      <div>
         <Text type='title' size='md' weight='normal' className={styles.infoText}>
           친구 초대하면 <br/>
           <b>친구도 나도 3,000원 적립</b>

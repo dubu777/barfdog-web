@@ -18,7 +18,7 @@ const Portal = ({ children, onClose }: PortalProps) => {
     }
   }, []);
   return mounted ? createPortal(
-    <div className={styles.overlayStyle} onClick={onClose ? onClose : null}>
+    <div className={styles.overlayStyle} onClick={onClose ? onClose : undefined}>
       {children}
     </div>
     , document.body) : null;
