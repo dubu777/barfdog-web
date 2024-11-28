@@ -8,23 +8,23 @@ export const accordionContainer = style({
 });
 
 export const accordionButton = recipe({
- base: {
-   display: 'flex',
-   justifyContent: 'space-between',
-   width: '100%',
-   padding: '18px 12px',
-   fontWeight: themeVars.fontSize["text-md"],
-   fontSize: themeVars.fontWeight.bold,
-   borderTop: `1px solid ${themeVars.borderColors.greyBB}`,
-   cursor: 'pointer',
- },
-  variants: {
-   noChildren: {
-     true: {
-       cursor: 'default',
-     }
-   }
-  }
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    padding: '18px 12px',
+    fontWeight: themeVars.fontSize["text-md"],
+    fontSize: themeVars.fontWeight.bold,
+    borderTop: `1px solid ${themeVars.borderColors.greyBB}`,
+    cursor: 'pointer',
+  },
+    variants: {
+    noChildren: {
+      true: {
+        cursor: 'default',
+      }
+    }
+    }
 });
 
 export const accordionIcon = recipe({

@@ -10,5 +10,5 @@ export interface CouponData {
   description: string;
   discountDegree: number;
   discountType: string;
-  expiredDate: string | Date;
+  expiredDate: string;
 }

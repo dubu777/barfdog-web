@@ -1,28 +1,46 @@
-import {AddressDto} from "@/types/myPage";
+import { PlanKey, subscribeStatus } from "@/constants";
 
-export interface SubscribeDto {
-  id: number;
-  subscribeStatus: string;
-  dogId: number;
-  dogName: string;
-  cancelReason?: null | string;
-  subscribeCount: number;
+export type SubscribeStatusKey = keyof typeof subscribeStatus;
+
+interface DefaultSubscribeDto {
   plan: string;
-  oneMealGramsPerRecipe: string;
-  oneDayRecommendKcal: number;
-  nextPaymentDate: string;
+  dogName: string;
   countSkipOneTime: number;
   countSkipOneWeek: number;
+  nextPaymentDate: string;
   nextPaymentPrice: number;
   discountCoupon: number;
   discountGrade: number;
   overDiscount: number;
-  nextDeliveryDate: string;
-  usingMemberCouponId?: null;
-  couponName?: null;
-  previousOrderConfirmDate?: null;
-  subscriptionMonth?: null | number | string;
+  subscriptionMonth: number;
+  nextDeliveryDate: string | null;
 }
+
+export interface SubscribeByIdDto extends DefaultSubscribeDto {
+  id: number;
+  subscribeStatus: SubscribeStatusKey;
+  dogId: number;
+  dogName: string;
+  cancelReason?: null | string;
+  subscribeCount: number;
+  plan: PlanKey;
+  oneMealGramsPerRecipe: string;
+  oneDayRecommendKcal: number;
+  usingMemberCouponId?: null | number;
+  couponName?: null | string;
+  previousOrderConfirmDate?: null | string;
+}
+
+export interface SubscribesDto extends DefaultSubscribeDto {
+  subscribeId: number;
+  pictureUrl?: null | string,
+  status: SubscribeStatusKey;
+  startDate: string;
+  packagePrice: number;
+  packageOriginalPrice: number;
+  shippingLeft: number;
+}
+
 
 export interface SubscribeAddressData {
   currentAddress: AddressDto;
@@ -43,7 +61,7 @@ export interface AddressDto {
 export interface ManageSubscribeData {
   itemNames: string;
   recipeNames: string;
-  subscribeDto: SubscribeDto;
+  subscribeDto: SubscribesDto;
 }
 
 export interface BenefitDto {
@@ -56,3 +74,7 @@ export interface BenefitDto {
   benefitValue: number;
   subscribeId: number;
 }
+
+export type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
+
+export type SubscribeSkipType = 'ONCE' | 'WEEK';

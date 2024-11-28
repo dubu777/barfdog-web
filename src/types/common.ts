@@ -1,10 +1,14 @@
+import { ReactNode } from "react";
+
 export type SearchParamProps = {
-  param: { id: string | number };
+  param: { [key: string]: string | number };
   searchParams: { [key: string]: string | string[] | undefined }
 }
+
 export type DefaultObjectType = {
-  name: string | Element;
-  value: string | number | Record<string, string | number> | Element;
+  id: string | number;
+  name: string | ReactNode;
+  value: string | number | ReactNode;
   visible?: boolean;
-  child?: { name: string; value: string }[];
+  child?: { id: string | number; name: string; value: string; visible?: boolean }[];
 }

@@ -1,13 +1,13 @@
 import * as styles from './AlertModal.css';
 import { motion } from "framer-motion";
 import Portal from "@/components/common/portal/Portal";
-import {useEffect} from "react";
+import {ReactNode, useEffect} from "react";
 
 interface AlertModalProps {
   isOpen: boolean;
   onClose: () => void;
   onConfirm?: () => void;
-  message: string | Element;
+  message: string | ReactNode;
   isAutoClose?: boolean;
 }
 

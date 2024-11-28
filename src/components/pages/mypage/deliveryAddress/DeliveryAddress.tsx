@@ -8,14 +8,21 @@ const changeTypeList: DefaultObjectType[] = [
   {
     name: '1회 변경',
     value: 'once',
+    id: 'once',
   },
   {
     name: '영구 변경',
     value: 'permanent',
+    id: 'permanent',
   },
 ]
 
-const DeliveryAddress = ({ addressData, changeType }: { addressData: SubscribeAddressData }) => {
+interface DeliveryAddress {
+  addressData: SubscribeAddressData;
+  changeType: string | undefined;
+}
+
+const DeliveryAddress = ({ addressData, changeType }: DeliveryAddress) => {
   return (
     <section className={styles.addressContainer}>
       {!changeType

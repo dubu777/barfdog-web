@@ -4,14 +4,16 @@ import AddressModal from "@/components/common/addressModal/AddressModal";
 import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import { AddressDto } from "@/types/subscription";
 import { Control, Controller } from "react-hook-form";
+import { Address } from 'react-daum-postcode';
 
 interface SearchAddressProps {
   addressValues: AddressDto;
   openAddressModal: boolean;
-  setOpenAddressModal: () => void;
-  handleSelectAddressData: () => void;
-  control: Control<T, any>;
+  setOpenAddressModal: (openAddressModal: boolean) => void;
+  handleSelectAddressData: (data: Address) => void;
+  control: Control<AddressDto>;
 }
+
 const SearchAddress = ({ addressValues, openAddressModal, setOpenAddressModal, handleSelectAddressData, control }: SearchAddressProps) => {
   return (
     <>

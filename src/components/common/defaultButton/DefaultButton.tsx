@@ -16,7 +16,7 @@ interface DefaultButtonProps {
   hover?: boolean;
   isActive?: boolean;
   isSubmit?: boolean;
-  className?: HTMLAttributes<string | undefined>;
+  className?: HTMLAttributes<string | undefined> | string;
 }
 
 export default function DefaultButton({

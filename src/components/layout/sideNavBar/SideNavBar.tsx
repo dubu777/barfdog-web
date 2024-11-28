@@ -13,8 +13,6 @@ import YoutubeIcon from '/public/images/icons/youtube.svg';
 import { commonLayoutStyle } from "@/styles/common.css";
 import { useCommonStore } from "@/store/useCommonStore";
 import { AnimatePresence, motion } from "framer-motion";
-import { background, width, opacity } from './motion';
-import {navContainer} from "./SideNavBar.css";
 
 interface SubItem {
   name: string;
@@ -75,96 +73,115 @@ const SideNavBar = () => {
     } else document.body. style.overflow = 'unset';
   }, [isOpenSideNavBar]);
 
+
+  const backgroundVariants = {
+    initial: { opacity: 0 },
+    open: { opacity: 1 },
+    closed: { opacity: 0 },
+  };
+
+  const sideNavBarVariants = {
+    initial: { x: '0' },
+    open: { x: '100%' },
+    closed: { x: '0' },
+  };
+
+  const opacity = {
+    initial: { opacity: 0 },
+    open: { opacity: 1, transition: {duration: 0.35, delay: 0.35}, },
+    closed: { opacity: 0, transition: {duration: 0.35} }
+  }
+
   return (
     <AnimatePresence mode={'wait'}>
       {isOpenSideNavBar &&
         <div className={`${commonLayoutStyle} ${styles.sideNavBarWrapper}`}>
           <motion.div
-            variants={background}
+            variants={backgroundVariants}
             initial='initial'
             animate={isOpenSideNavBar ? 'open' : 'closed'}
             className={styles.background}
             onClick={setIsOpenSideNavBar}
           />
+          <motion.div
+            variants={sideNavBarVariants}
+            animate='enter'
+            initial='initial'
+            exit='exit'
+            className={styles.sideNavBarContainer}
+          >
             <motion.div
-              variants={width}
-              animate='enter'
+              variants={opacity}
               initial='initial'
-              exit='exit'
-              className={styles.sideNavBarContainer}
+              animate='open'
+              exit='closed'
             >
-              <motion.div
-                variants={opacity}
-                initial='initial'
-                animate='open'
-                exit='closed'
-              >
-                <button onClick={setIsOpenSideNavBar} className={styles.closeBtn}>
-                  <Image src={CloseButton} alt='close button' width={10} height={10} />
-                </button>
-                <motion.div className={styles.navWrapper}>
-                 {categories.map(category => (
-                    <div className={styles.navContainer} key={category.title}>
-                      <h2 className={styles.navTitle}>{category.title}</h2>
-                      <ul className={styles.navItems}>
-                        {category.items.map(item => (
-                          <li className={styles.navItem} key={item.name}>
-                            {!item.subItems
-                              ? <Link href={item.link} className={styles.navItemLink}>
+              <button onClick={setIsOpenSideNavBar} className={styles.closeBtn}>
+                <Image src={CloseButton} alt='close button' width={10} height={10} />
+              </button>
+              <motion.div className={styles.navWrapper}>
+              {categories.map(category => (
+                  <div className={styles.navContainer} key={category.title}>
+                    <h2 className={styles.navTitle}>{category.title}</h2>
+                    <ul className={styles.navItems}>
+                      {category.items.map(item => (
+                        <li className={styles.navItem} key={item.name}>
+                          {!item.subItems && item.link
+                            ? <Link href={item.link} className={styles.navItemLink}>
+                              {item.name}
+                            </Link>
+                            : <>
+                              <button
+                                onClick={() => setOpenSubItems(!openSubItems)}
+                                className={styles.subItemsTitle}
+                              >
                                 {item.name}
-                              </Link>
-                              : <>
-                                <button
-                                  onClick={() => setOpenSubItems(!openSubItems)}
-                                  className={styles.subItemsTitle}
-                                >
-                                  {item.name}
-                                  <span className={styles.arrowIcon({ isOpen: openSubItems })}>
-                                    <Image src={SubItemsToggleIcon} alt='arrow icon' />
-                                  </span>
-                                </button>
-                                <AnimatePresence>
-                                  {openSubItems &&
-                                    <motion.ul
-                                      initial={{height: 0, opacity: 0}}
-                                      animate={{height: '84px', opacity: 1}}
-                                      className={styles.subItemsContainer}
-                                    >
-                                      {item.subItems.map(subItem => (
-                                        <motion.li
-                                          key={subItem.name}
-                                          initial={{opacity: 0}}
-                                          animate={{opacity: 1}}
-                                          exit={{opacity: 0}}
-                                          className={styles.subItem}
-                                        >
-                                          <Link href={subItem.link}>
-                                            {subItem.name}
-                                          </Link>
-                                        </motion.li>
-                                      ))}
-                                    </motion.ul>
-                                  }
-                                </AnimatePresence>
-                              </>
-                            }
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </motion.div>
-                <div className={styles.snsContainer}>
-                  <Link href='https://pf.kakao.com/_WixbrK'><KakaoIcon /></Link>
-                  <Link href='https://www.instagram.com/barfdog_official/'><InstaIcon /></Link>
-                  <Link href='https://blog.naver.com/barfdog'><BlogIcon /></Link>
-                  <Link href='https://blog.naver.com/barfdog'><YoutubeIcon /></Link>
-                </div>
+                                <span className={styles.arrowIcon({ isOpen: openSubItems })}>
+                                  <Image src={SubItemsToggleIcon} alt='arrow icon' />
+                                </span>
+                              </button>
+                              <AnimatePresence>
+                                {openSubItems &&
+                                  <motion.ul
+                                    initial={{height: 0, opacity: 0}}
+                                    animate={{height: '84px', opacity: 1}}
+                                    className={styles.subItemsContainer}
+                                  >
+                                    {item.subItems && item.subItems.map(subItem => (
+                                      <motion.li
+                                        key={subItem.name}
+                                        initial={{opacity: 0}}
+                                        animate={{opacity: 1}}
+                                        exit={{opacity: 0}}
+                                        className={styles.subItem}
+                                      >
+                                        <Link href={subItem.link}>
+                                          {subItem.name}
+                                        </Link>
+                                      </motion.li>
+                                    ))}
+                                  </motion.ul>
+                                }
+                              </AnimatePresence>
+                            </>
+                          }
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </motion.div>
+              <div className={styles.snsContainer}>
+                <Link href='https://pf.kakao.com/_WixbrK'><KakaoIcon /></Link>
+                <Link href='https://www.instagram.com/barfdog_official/'><InstaIcon /></Link>
+                <Link href='https://blog.naver.com/barfdog'><BlogIcon /></Link>
+                <Link href='https://blog.naver.com/barfdog'><YoutubeIcon /></Link>
+              </div>
             </motion.div>
-          </div>
-        }
-      </AnimatePresence>
+          </motion.div>
+        </div>
+      }
+    </AnimatePresence>
   );
 };
 

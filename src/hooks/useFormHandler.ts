@@ -1,8 +1,8 @@
-import { useForm } from 'react-hook-form';
+import { DefaultValues, FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from 'yup';
 
-export function useFormHandler<T>(schema: yup.ObjectSchema<any>, defaultValues: T) {
+export function useFormHandler<T extends FieldValues>(schema: yup.ObjectSchema<any>, defaultValues: DefaultValues<T>) {
   const {
     control,
     handleSubmit,

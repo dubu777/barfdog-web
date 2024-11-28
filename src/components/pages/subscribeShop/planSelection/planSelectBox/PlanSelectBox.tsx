@@ -1,5 +1,5 @@
 import { subscribeText } from "../../recipeSelection/RecipeSelection.css";
-import * as styles from "./PlanselectBox.css";
+import * as styles from "./PlanSelectBox.css";
 import FullPlan from "/public/images/survey/full_plan.svg";
 import FullPlanActive from "/public/images/survey/full_plan_active.svg";
 import HalfPlan from "/public/images/survey/half_plan.svg";

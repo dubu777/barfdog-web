@@ -4,63 +4,69 @@ import Badge from "@/components/common/badge/Badge";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { ORDER_STATUS, PAYMENT } from "@/constants";
 import { formatDate } from "@/utils/dateUtils";
-import { GeneralOrderData, SubscribeOrderData } from "@/types/order";
+import { GeneralOrderData, SubscribeOrderData, MixedOrderData } from "@/types/order";
 import { DefaultObjectType } from "@/types/common";
 
 const orderContents: DefaultObjectType[] = [
   {
     name: '주문명',
     value: 'orderName',
+    id: 'orderName',
   },
   {
     name: '주문 번호',
     value: 'orderId',
+    id: 'orderId',
   },
   {
     name: '결제 방법',
     value: 'payment',
+    id: 'payment',
   },
   {
     name: '결제 금액',
     value: 'orderPrice',
+    id: 'orderPrice',
   },
   {
     name: '주문 상태',
     value: 'orderStatus',
+    id: 'orderStatus',
   },
 ]
 
-const OrderHistoryList = ({ orderList }: { orderList: GeneralOrderData[] | SubscribeOrderData[]  }) => {
+const OrderHistoryList = ({ orderList }: { orderList: MixedOrderData  }) => {
   return (
     <ul className={styles.orderListContainer}>
       {orderList.map(item => {
-        const type = item.recipeDto ? 'subscribe' : 'general';
-        const orderId = item.orderDto?.id ? item.orderDto?.id : item.orderDto?.orderId;
+        const type = (item as SubscribeOrderData).recipeDto !== undefined ? 'subscribe' : 'general';
+        const orderId = type === 'general' ? item.orderDto?.id : item.orderDto?.orderId;
         return (
           <li key={orderId}>
             <div className={styles.itemHeader}>
               <p>{formatDate(item.orderDto?.orderDate, 'fullDateTimeKR')}</p>
-              <Badge color={item.orderDto.orderStatus === 'BEFORE_PAYMENT' && 'red'}>
-                {ORDER_STATUS[item.orderDto.orderStatus]}
+              <Badge color={item.orderDto.orderStatus === 'BEFORE_PAYMENT' ? 'red' : undefined}>
+                {ORDER_STATUS[item.orderDto.orderStatus as keyof typeof ORDER_STATUS]}
               </Badge>
             </div>
             <div className={styles.itemContents}>
               {orderContents.map(content => {
                 const orderValue = {
-                  orderName: type === 'general'
-                    ? item.itemNameList?.length > 1
-                      ? `${item?.itemNameList[0].name}외 ${item.itemNameList.length - 1}건`
-                      : item.itemNameList[0].name
-                    : item.recipeDto.recipeName,
+                  orderName: 
+                    type === 'general'
+                      ? (item as GeneralOrderData).itemNameList?.length > 1
+                        ? `${(item as GeneralOrderData).itemNameList[0].name}외 ${(item as GeneralOrderData).itemNameList.length - 1}건`
+                        : (item as GeneralOrderData).itemNameList[0].name
+                      : (item as SubscribeOrderData).recipeDto.recipeName,
                   orderId: item.orderDto.merchantUid,
-                  payment: type === 'general' ? '' : PAYMENT[item.orderDto.paymentMethod],
+                  payment: type === 'general' ? '' : PAYMENT[(item as SubscribeOrderData).orderDto.paymentMethod as keyof typeof PAYMENT] || '-',
                   orderPrice: `${item.orderDto.paymentPrice.toLocaleString()}원`,
-                  orderStatus: ORDER_STATUS[item.orderDto.orderStatus],
+                  orderStatus: ORDER_STATUS[item.orderDto.orderStatus as keyof typeof ORDER_STATUS],
                 }
                 return (
-                  <dl key={content.value} className={styles.itemContent}>
+                  <dl key={content.id} className={styles.itemContent}>
                     <dt className={styles.contentTitle}>{content.name}</dt>
-                    <dd>{orderValue[content.value]}</dd>
+                    <dd>{orderValue[content.value as keyof typeof orderValue]}</dd>
                   </dl>
                 )
               })}

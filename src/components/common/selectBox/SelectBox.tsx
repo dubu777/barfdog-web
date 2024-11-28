@@ -47,9 +47,6 @@ export default function SelectBox({
             onToggle();
           }}
         />
-        {/*{forFilter &&*/}
-        {/*  <Image src={ArrowIcon} alt='drop down' style={{ transform: 'rotate(180deg)' }} />*/}
-        {/*}*/}
         <AnimatePresence>
           {isOpen && (
             <div className={styles.optionsContainer}>

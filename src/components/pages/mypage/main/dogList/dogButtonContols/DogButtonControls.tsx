@@ -1,5 +1,5 @@
 'use client';
-import * as styles from "@/components/pages/mypage/main/DogList/DogList.css";
+import * as styles from "../DogList.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useRouter } from "next/navigation";
 import { useMypageStore } from "@/store/useMypageStore";
@@ -17,7 +17,7 @@ const SubscriptionButton = ({ title, linkUrl, color, onClick }: SubscriptionButt
     <DefaultButton
       type={color === 'red' ? 'mainBorder' :'grayBorder'}
       size='sm'
-      onClick={onClick ? onClick : () => router.push(linkUrl)}
+      onClick={onClick ? onClick : () => linkUrl ? router.push(linkUrl) : undefined}
     >
       {title}
     </DefaultButton>

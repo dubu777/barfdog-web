@@ -1,25 +1,45 @@
-import React, {HTMLAttributes, ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import * as styles from "./Text.css";
 
-interface MainTextProps {
+interface TextPropsBase {
   children?: ReactNode;
-  type: 'title' | 'description';
-  size: 'xs' | 'sm' | 'md' | 'lg' | 'titleMd' | 'titleLg' | 'titleXl' | 'titleXXl';
-  color?: 'white' | 'red';
-  weight?: 'normal';
-  align?: string;
-  className?: HTMLAttributes<string | undefined>;
-  pageName?: string;
+  weight?: 'light' | 'normal' | 'bold';
+  className?: string;
+  pageName?: 'myPage' | undefined;
 }
 
-export default function Text({ children, type = 'title', size, color, weight, align, className, pageName }: MainTextProps) {
-  return (
-    type === 'title' ?
-      <h2 className={`${styles.title({ size, color, weight, align })} ${className ? className : ''}`}>
+interface TitleProps {
+  type: 'title';
+  size: 'md' | 'lg' | 'titleMd' | 'titleLg' | 'titleXl' | 'titleXXl';
+  align?: 'left' | undefined;
+  color?: 'white' | 'red';
+}
+
+interface DescriptionProps {
+  type: 'description';
+  size: 'xs' | 'sm' | 'md';
+  align?: 'left' | 'right' | 'center'; 
+  color?: 'white' | 'red' | 'grey' | 'black';
+}
+
+type TextProps =
+  | (TextPropsBase & TitleProps)
+  | (TextPropsBase & DescriptionProps);
+
+export default function Text({ 
+  children, type, size, color, weight, align, className, pageName 
+}: TextProps) {
+  if(type === 'title') {
+    return (
+      <h2 className={`${styles.title({ size, color, weight, align })} ${className || ''}`}>
         {children}
       </h2>
-      : <p className={`${styles.description({ size, color, weight, align, pageName })} ${className ? className : ''}`}>
+    )
+  } else {
+    return (
+      <p className={`${styles.description({ size, color, weight, align, pageName })} ${className || ''}`}>
           {children}
         </p>
-  );
+    )
+  }
 };

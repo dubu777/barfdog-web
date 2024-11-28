@@ -1,5 +1,4 @@
 import {style} from "@vanilla-extract/css";
-import {defaultWidth} from "@/styles/common.css";
 import {themeVars} from "@/styles/theme.css";
 import {recipe} from "@vanilla-extract/recipes";
 

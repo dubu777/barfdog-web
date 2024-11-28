@@ -1,9 +1,10 @@
+import { LooseValue } from "react-calendar/dist/esm/shared/types.js";
 import * as styles from "./Calendar.css";
 import dynamic from "next/dynamic";
 
 interface CalendarComponentProps {
-  value: Date | string;
-  activeStartDate?: Date | string;
+  value: Date | string | Date[] | [Date, Date];
+  activeStartDate?: Date | undefined;
   onChange?: () => void;
 }
 
@@ -19,11 +20,11 @@ const CalendarComponent = ({ value, onChange, activeStartDate }: CalendarCompone
     <Calendar
       locale='ko'
       onChange={onChange}
-      value={value}
+      value={value as unknown as LooseValue}
       activeStartDate={activeStartDate}
       formatDay={formatCalendarDay}
       className={styles.calendarContainer}
-      tileClassName={({ date, view }) => {
+      tileClassName={({ date }) => {
         if (date.toDateString() === new Date().toDateString()) {
           return styles.calendarTileNow;
         }

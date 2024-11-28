@@ -5,7 +5,7 @@ import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
 import EditButton from "/public/images/icons/edit.svg";
 import Badge from "@/components/common/badge/Badge";
-import DogList from "@/components/pages/mypage/main/DogList/DogList";
+import DogList from "@/components/pages/mypage/main/dogList/DogList";
 import MyPageMenu from "@/components/pages/mypage/main/MenuLink/MenuLink";
 import { MyPageMemberDto, MyPageRepresentiveDogDto } from "@/types/myPage";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -24,7 +24,7 @@ const MyPageMain = () => {
     if (userData) {
       setUserInfo(userData)
     }
-  }, [])
+  }, [userData, setUserInfo])
 
   return (
     <section className={styles.mainContainer}>

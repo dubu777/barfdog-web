@@ -1,16 +1,17 @@
 import * as styles from "./OrderHistory.css";
-import { GeneralOrderData, SubscribeOrderData } from "@/types/order";
+import { GeneralOrderData, MixedOrderData, SubscribeOrderData } from "@/types/order";
 import OrderHistoryFilter from "@/components/pages/mypage/orderHistory/orderHistoryFilter/OrderHistoryFilter";
 import OrderHistoryList from "@/components/pages/mypage/orderHistory/orderHistoryList/OrderHistoryList";
 
 interface OrderHistoryProps {
-  subscribeOrderData: SubscribeOrderData[] | undefined;
-  generalOrderData: GeneralOrderData[] | undefined;
+  subscribeOrderData: SubscribeOrderData[];
+  generalOrderData: GeneralOrderData[];
 }
 
+
 const OrderHistory = ({ generalOrderData, subscribeOrderData }: OrderHistoryProps) => {
-  const totalData: GeneralOrderData | SubscribeOrderData =
-    [...generalOrderData, ...subscribeOrderData]?.sort((a, b) => new Date(b.orderDto.orderDate) - new Date(a.orderDto.orderDate));
+  const totalData: MixedOrderData =
+    [...generalOrderData, ...subscribeOrderData]?.sort((a, b) => new Date(b.orderDto.orderDate).getTime() - new Date(a.orderDto.orderDate).getTime());
   return (
     <section className={styles.orderHistoryContainer}>
       <OrderHistoryFilter />

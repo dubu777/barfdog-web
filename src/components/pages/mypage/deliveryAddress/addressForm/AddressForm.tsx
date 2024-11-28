@@ -14,12 +14,13 @@ import { AddressDto } from "@/types/subscription";
 import { Controller } from 'react-hook-form';
 import { addressSchema, defaultAddressValues } from "@/utils/addressValidation";
 import { useFormHandler } from "@/hooks/useFormHandler";
+import { Address } from 'react-daum-postcode';
 
 interface FormFieldListProps {
-  id: string;
+  id: "deliveryName" | "recipientName" | "phoneNumber" | "request" | "zipcode" | "street" | "detailAddress" | 'address';
   label?: string;
   placeholder?: string;
-  type?: string;
+  type?: "number" | "text" | "button" | undefined;
 }
 
 const formFieldList: FormFieldListProps[] = [
@@ -64,16 +65,16 @@ const AddressForm = ({ changeTypeList, nextDeliveryDate }: AddressFormProps) => 
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
   const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
 
-  const { control, handleSubmit, errors, reset, watch, setValue, isValid } = useFormHandler(addressSchema, defaultAddressValues);
+  const { control, handleSubmit, reset, watch, setValue, isValid } = useFormHandler(addressSchema, defaultAddressValues);
   const addressValues = watch();
 
-  const handleSelectAddressData = (addressData) => {
+  const handleSelectAddressData = (addressData: Address) => {
     setValue('zipcode', addressData.zonecode);
     setValue('street', addressData.address);
   }
   const onSubmit = (data: AddressDto) => {
     console.log('data', data)
-    // reset();
+    reset();
   }
   return (
     <AnimatePresence>
@@ -102,7 +103,7 @@ const AddressForm = ({ changeTypeList, nextDeliveryDate }: AddressFormProps) => 
                     type={input.type}
                     id={input.id}
                     name={input.id}
-                    value={field.value}
+                    value={field.value ?? ''}
                     onChange={(value) => field.onChange(value)}
                     label={input.label}
                     placeholder={input.placeholder}

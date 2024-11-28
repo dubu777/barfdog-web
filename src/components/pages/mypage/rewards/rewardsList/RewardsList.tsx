@@ -11,7 +11,7 @@ const RewardsList = ({ rewardList }: RewardsListProps) => {
   return (
     <article className={styles.rewardListContainer}>
       <ul className={styles.rewardListContents}>
-        {rewardList.map((reward, index) => (
+        {rewardList?.map((reward, index) => (
           <li className={styles.rewardItem} key={`${reward.name}${index}`}>
             <div>
               <Text type='description' size='msm' color='grey' weight='normal' align='left'>

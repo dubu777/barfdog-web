@@ -1,4 +1,13 @@
-export const subscribePlanInfo = {
+export type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
+
+export const subscribePlanInfo: Record<PlanKey, {
+  id: string;
+  label: string;
+  numberOfPacksPerDay: number;
+  weeklyPaymentCycle: number;
+  totalNumberOfPacks: number;
+  maxRecipeCount: number;
+}> = {
   FULL: {
     id: 'FULL',
     label: '풀 플랜',
@@ -34,8 +43,8 @@ export const subscribePlanInfo = {
   },
   // 삭제 예정
   TOPPING: {
-    NAME: 'TOPPING',
-    KOR: '토핑 플랜',
+    id: 'TOPPING',
+    label: '토핑 플랜',
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 20,
@@ -56,7 +65,7 @@ export const originSubscribeIdList = [
   3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
 
-export const subscribeStatus = {
+export const subscribeStatus: Record<string, string> = {
   // BEFORE_PAYMENT: '구독 비활성',
   // SURVEY_COMPLETED: '구독 비활성',
   // SUBSCRIBING: '구독 활성',

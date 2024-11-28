@@ -11,58 +11,65 @@ import SelectBox from "@/components/common/selectBox/SelectBox";
 const statusFilter: DefaultObjectType[] = [
   {
     name: '전체',
-    value: 'ALL',
+    value: 'ALL' as RewardFilterType,
+    id: 'ALL',
   },
   {
     name: '적립',
-    value: 'SAVED',
+    value: 'SAVED' as RewardFilterType,
+    id: 'SAVED',
   },
   {
     name: '사용',
-    value: 'USED',
+    value: 'USED' as RewardFilterType,
+    id: 'USED',
   },
   {
     name: '소멸',
-    value: 'EXPIRED',
+    value: 'EXPIRED' as RewardFilterType,
+    id: 'EXPIRED',
   },
 ]
 
 const RewardsFilter = ({ totalCount }: { totalCount: number }) => {
   const [isActive, setIsActive] = useState<string>('ALL');
-  const [selectedMonth, setSelectedMonth] = useState(3)
+  const [selectedMonth, setSelectedMonth] = useState<string>('3')
   const { pushWithQuery } = useDynamicQueryPush();
   const pathname = usePathname();
 
-  const handleStatusFilterChange = async (status: RewardFilterType) => {
+  const handleStatusFilterChange = async (status: string) => {
     pushWithQuery(pathname, { status: status })
     setIsActive(status)
   }
-  const handleDateFilterChange = async (value: number) => {
+  const handleDateFilterChange = async (value: string) => {
     pushWithQuery(pathname, { month: value })
     setSelectedMonth(value)
   }
   return (
     <>
     <article className={styles.rewardFilterContainer}>
-      {statusFilter.map(filter => (
+      {statusFilter.map(filter => {
+        console.log(filter)
+        return (
         <DefaultButton
-          key={filter.value}
+          key={filter.id}
           type='grayBorder'
           borderRadius='sm'
           size='sm'
           isActive={isActive === filter.value}
-          onClick={() => handleStatusFilterChange(filter.value)}
+          onClick={() => handleStatusFilterChange(String(filter.value))}
         >
           {filter.name}
         </DefaultButton>
-      ))}
+      )
+      })}
     </article>
     <div className={styles.rewardListHeader}>
       <p>총 {totalCount}건</p>
       <div className={styles.selectedMonth}>
         <SelectBox
           id="month"
-          options={[{ label: '3개월', value: 3 }, { label: '6개월', value: 6 }, { label: '12개월', value: 12 }]}
+          options={[{ label: '3개월', value: '3' }, { label: '6개월', value: '6' }, { label: '12개월', value: '12' }]}
           forFilter
           onSelect={(value) => handleDateFilterChange(value)}
           selectedValue={selectedMonth}

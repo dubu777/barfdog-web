@@ -1,12 +1,14 @@
+import { subscribeStatus } from "@/constants";
+
 export interface DogData {
   id: number;
   name: string;
   representative: boolean;
   birth: string;
-  plan: string;
+  plan: keyof typeof subscribeStatus;
   gender: string;
   itemNames: string;
-  nextDeliveryDate?: null | string | Date;
+  nextDeliveryDate?: null | string;
   dogPictureId?: null | string | number;
   pictureName?: null | string;
   pictureUrl?: null | string;

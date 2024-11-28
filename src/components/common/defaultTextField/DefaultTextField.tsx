@@ -1,9 +1,9 @@
 import * as styles from './DefaultTextField.css';
-import {forwardRef, HTMLAttributes, ReactNode} from 'react';
+import {ChangeEvent, forwardRef, HTMLAttributes, ReactNode, KeyboardEvent} from 'react';
 
 interface DefaultTextFieldProps {
   type?: 'text' | 'number' | 'button';
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  size?: 'sm' | 'md';
   children?: ReactNode;
   id: string;
   name: string;
@@ -14,7 +14,7 @@ interface DefaultTextFieldProps {
   isActive?: boolean;
   isDisabled?: boolean;
   isHidden?: boolean;
-  className?: HTMLAttributes<string | undefined>;
+  className?: HTMLAttributes<string | undefined> |string;
   onSubmit?: () => void;
 }
 const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
@@ -34,11 +34,15 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
   onSubmit
 }, ref) => {
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-    if (e.key === "Enter" && onSubmit) {
-      onSubmit();
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement> | KeyboardEvent<HTMLInputElement>,) => {
+    if(onChange) {
+      onChange(e.currentTarget.value);
     }
+    if('key' in e) {
+      if (e.key === "Enter" && onSubmit) {
+        onSubmit();
+      }
+    } 
   };
 
   return (

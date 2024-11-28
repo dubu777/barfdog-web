@@ -3,7 +3,6 @@ import { defaultWidth } from "@/styles/common.css";
 import { themeVars } from "@/styles/theme.css";
 
 export const benefitsContainer = style([defaultWidth,{
-  // border: '1px solid red',
   height: themeVars.height.mypageInnerHeight,
   position: 'relative',
 }])
