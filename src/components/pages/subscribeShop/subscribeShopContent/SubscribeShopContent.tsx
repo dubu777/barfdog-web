@@ -27,7 +27,9 @@ interface SubscribeShopContentProps {
 export default function SubscribeShopContent({
   reportId,
 }: SubscribeShopContentProps) {
-  const { data: recipeData } = useGetSurveyRecipe(reportId);
+  const { data: recipeData } = useGetSurveyRecipe(reportId, {
+    staleTime: 1000* 60 * 5,
+  });
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
 console.log(' recipeData.subscribeId;',  recipeData.subscribeId);

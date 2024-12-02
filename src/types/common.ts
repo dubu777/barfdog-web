@@ -3,6 +3,7 @@ import {
   QueryKey,
   UseMutationOptions,
   UseQueryOptions,
+  UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 
 export type { SearchParamProps, DefaultObjectType, UseMutationCustomOptions, UseQueryCustomOptions };
@@ -27,6 +28,11 @@ type UseMutationCustomOptions<TData = unknown, TVariables = unknown, TError = un
 
 type UseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
   UseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
+  "queryKey"
+>;
+
+export type UseSuspenseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
+  UseSuspenseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
   "queryKey"
 >;
 
