@@ -1,10 +1,10 @@
 import { QueryClient, useSuspenseQuery, UseSuspenseQueryOptions } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { getSurveyResult } from "../../survey/survey";
-import { ResultData, UseQueryCustomOptions } from "@/types";
+import { ResultData, UseQueryCustomOptions, UseSuspenseQueryCustomOptions } from "@/types";
 
 
-export function useGetSurveyResult(id: number, queryOptions?: UseSuspenseQueryOptions<ResultData>) {
+export function useGetSurveyResult(id: number, queryOptions?: UseSuspenseQueryCustomOptions<ResultData>) {
   return useSuspenseQuery({
     queryFn: () => getSurveyResult(Number(id)),
     queryKey: [queryKeys.SURVEY, queryKeys.GET_SURVEY_RESULT, id],

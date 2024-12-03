@@ -18,6 +18,7 @@ import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscoun
 import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSubscription";
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
+import { useGetOrderSheet } from "@/api/subscription/queries/useGetOrderSheet";
 
 
 interface SubscribeShopContentProps {
@@ -27,12 +28,11 @@ interface SubscribeShopContentProps {
 export default function SubscribeShopContent({
   reportId,
 }: SubscribeShopContentProps) {
-  const { data: recipeData } = useGetSurveyRecipe(reportId, {
-    staleTime: 1000* 60 * 5,
-  });
+  const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
-console.log(' recipeData.subscribeId;',  recipeData.subscribeId);
+  const { data: orderSheetData } = useGetOrderSheet(recipeData.subscribeId);
+console.log('orderSheetData', orderSheetData);
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
@@ -85,17 +85,10 @@ console.log(' recipeData.subscribeId;',  recipeData.subscribeId);
   !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
   subscribePriceData.totalOriginalPriceAllRecipes !== 0;
 
-  // console.log("selectedRecipeMeals>>>>>>>>", selectedRecipeMeals);
-  // console.log("subscribePriceData>>>>>>>>", subscribePriceData);
-  // console.log("oneMealGramWithVolume>>>>>>>>", oneMealGramWithVolume);
-  // console.log("recipeData", recipeData);
-  // console.log("resultData", resultData);
-
   const { isOpen, onToggle, onClose } = useModal();
 
   const { mutate: createSubscription } = useCreateSubscription({
     onSuccess: (data) => {
-
       console.log("data Subscription Created>>>>>>>>>:", data);
     },
     onError: (error) => {
