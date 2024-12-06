@@ -1,11 +1,10 @@
-import { PlanName } from "@/constants";
-
 import * as styles from "./PlanSelectBox.css";
 import FullPlan from "/public/images/survey/full_plan.svg";
 import FullPlanActive from "/public/images/survey/full_plan_active.svg";
 import HalfPlan from "/public/images/survey/half_plan.svg";
 import HalfPlanActive from "/public/images/survey/half_plan_active.svg";
 import { subscribeText } from "../../recipeSelection/RecipeSelection.css";
+import { PlanName } from "@/types";
 
 interface PlanSelectBoxProps {
   planName: PlanName;

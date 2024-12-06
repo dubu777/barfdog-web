@@ -1,20 +1,17 @@
 "use client";
 
-
 import * as styles from "./SelectedProductInfo.css";
 import {
   calculateOneMealGramsOutput,
   CalculateSubscribePriceOutput,
-  ResultData,
+  PlanName,
 } from "@/types";
-import { PlanName, toppingOption } from "@/constants";
+import { toppingOption } from "@/constants";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import {
   getPackCount,
   isToppingPlan,
 } from "@/utils/subscription/subscriptionUtils";
-
-import DeliveryScheduleModal from "./deliveryScheduleModal/DeliveryScheduleModal";
 import { subscribeText } from "../recipeSelection/RecipeSelection.css";
 import SelectBox from "@/components/pages/survey/selectBox/SelectBox";
 
@@ -139,7 +136,6 @@ export default function SelectedProductInfo({
           </p>
         </div>
       </div>
-      <DeliveryScheduleModal isVisible={false} onClose={() => {}}/>
     </section>
   );
 }

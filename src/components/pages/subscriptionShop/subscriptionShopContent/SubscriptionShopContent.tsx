@@ -4,7 +4,6 @@ import useSubscription from "@/hooks/useSubscription";
 import * as styles from "@/app/survey/Survey.css";
 import { calculateOneMealGrams, calculateOneMealGramsWithVolume } from "@/utils/subscription/mealCalculations";
 import { isOriginSubscriber, isToppingPlan } from "@/utils/subscription/subscriptionUtils";
-import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
 import { getDiscountPercent } from "@/utils/subscription/getDiscountPercent";
 import FooterButton from "../footerButton/FooterButton";
 import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
@@ -19,20 +18,28 @@ import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSub
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import { useGetOrderSheet } from "@/api/subscription/queries/useGetOrderSheet";
+import { useRouter } from "next/navigation";
+import { useGetDogs } from "@/api/dog/queries/useGetDogs";
+import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
 
 
-interface SubscribeShopContentProps {
+
+interface SubscriptionShopContentProps {
   reportId: number;
 }
 
-export default function SubscribeShopContent({
+export default function SubscriptionShopContent({
   reportId,
-}: SubscribeShopContentProps) {
+}: SubscriptionShopContentProps) {
+  const router = useRouter()
   const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
   const { data: orderSheetData } = useGetOrderSheet(recipeData.subscribeId);
 console.log('orderSheetData', orderSheetData);
+console.log('recipeData.subscribeId', recipeData.subscribeId);
+console.log('recipeData', recipeData);
+
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
@@ -89,6 +96,7 @@ console.log('orderSheetData', orderSheetData);
 
   const { mutate: createSubscription } = useCreateSubscription({
     onSuccess: (data) => {
+      // router.push(`/order/order-sheet/subscription/%{recipeData.subscribeId}`)
       console.log("data Subscription Created>>>>>>>>>:", data);
     },
     onError: (error) => {
@@ -104,6 +112,7 @@ console.log('orderSheetData', orderSheetData);
       oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
       subscribeItemList: null,
     };
+console.log('body', body);
 
     const validationError = validatePaymentBody(body);
     if (validationError) {

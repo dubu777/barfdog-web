@@ -20,6 +20,7 @@ export default function useSurveyForm(
     stepValues,
     isStepComplete,
   } = useSurveyStore();
+console.log(formData);
 
   // number 로 들어오는 current step 가공
   const convertNumberToStepKey = (stepNumber: number): string => {

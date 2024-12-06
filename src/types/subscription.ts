@@ -27,6 +27,7 @@ export type {
   SubscribeSkipType,
   SubscribeStatusKey,
   PlanKey,
+  PlanName,
 };
 
 

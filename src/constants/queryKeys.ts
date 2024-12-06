@@ -8,7 +8,6 @@ const queryKeys = {
   GET_COUPON_LIST: 'getCouponList',
   MYPAGE: 'mypage',
   GET_MYPAGE_INFO: 'getMypageInfo',
-  GET_DOGS: 'getDogs',
   REWARDS: 'rewards',
   GET_REWARDS_LIST: 'getRewards',
   SUBSCRIBE: 'subscribe',
@@ -16,4 +15,6 @@ const queryKeys = {
   SUBSCRIPTION: 'subscription',
   GET_PLAN_DISCOUNT: 'getPlanDiscount',
   GET_ORDER_SHEET: 'getOrderSheet',
+  DOG: 'dog',
+  GET_DOGS: 'getDogs'
 } as const

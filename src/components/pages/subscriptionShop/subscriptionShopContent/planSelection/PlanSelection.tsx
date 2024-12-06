@@ -1,11 +1,12 @@
 import PlanSelectBox from "./planSelectBox/PlanSelectBox";
 import FullPlanIcon from "/public/images/survey/full_plan.svg";
 import * as styles from "./PlanSelection.css";
-import { PLAN_SELECT_INFO, PlanName } from "@/constants";
+import { PLAN_SELECT_INFO } from "@/constants";
 
 import { getNameWithObjectSuffix } from "@/utils";
 import { UI_MESSAGES } from "@/constants/message";
 import { subscribeText, subscribeTextWrapper } from "../recipeSelection/RecipeSelection.css";
+import { PlanName } from "@/types";
 
 interface PlanSelectionProps {
   selectedPlan: string | null;

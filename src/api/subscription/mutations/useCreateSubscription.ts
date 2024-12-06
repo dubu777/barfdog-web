@@ -1,5 +1,5 @@
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { PaymentBody, SubscriptionData, SubscriptionResponse, UseMutationCustomOptions } from "@/types";
+import { useMutation } from "@tanstack/react-query";
+import { PaymentBody, UseMutationCustomOptions } from "@/types";
 import { createSubscription } from "../subscription";
 
 
