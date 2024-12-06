@@ -1,8 +1,9 @@
 import axiosInstance from "../axiosInstance";
 import {
+  BenefitDto,
   OrderSheetResponse,
   PaymentBody,
-  PlanDiscountResponse,
+  PlanDiscountResponse, SubscribeAddressData, SubscribeListData,
   SubscriptionByIdDto,
 } from "@/types/subscription";
 
@@ -27,10 +28,32 @@ const createSubscription = async (
   return response;
 };
 
-const getSubscriptionById = async (subscribeId: number): Promise<SubscriptionByIdDto> => {
+const getSubscriptionById = async (subscribeId: string): Promise<SubscriptionByIdDto> => {
   const { data } = await axiosInstance.get(`/api/subscribes/${subscribeId}`);
   return data.subscribeDto;
 }
 
+const getSubscribeList = async (page = 0, size = 999): Promise<SubscribeListData[]> => {
+  const { data } = await axiosInstance.get(`/api/subscribes?page=${page}&size=${size}`);
+  return data._embedded.querySubscribesDtoList;
+};
 
-export {getPlanDiscount, createSubscription, getOrderSheet, getSubscriptionById}
+const getPackageBenefits = async (subscribeId: string): Promise<BenefitDto[]> => {
+  const { data } = await axiosInstance.get(`/api/subscribes/benefits/${subscribeId}`);
+  return data._embedded.subscribeBenefitDtoList;
+}
+
+const getDeliveryAddress = async (subscribeId: string): Promise<SubscribeAddressData> => {
+  const { data } = await axiosInstance.get(`/api/address/subscribe/${subscribeId}`);
+  return data;
+}
+
+export {
+  getPlanDiscount,
+  createSubscription,
+  getOrderSheet,
+  getSubscriptionById,
+  getPackageBenefits,
+  getSubscribeList,
+  getDeliveryAddress,
+}

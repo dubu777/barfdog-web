@@ -6,6 +6,7 @@ import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox
 import RadiusSubmitButton from "@/components/common/radiusSubmitButton/RadiusSubmitButton";
 import BenefitInfoList from "@/components/pages/mypage/packageBenefit/benefitInfoList/BenefitInfoList";
 import { BenefitDto } from "@/types/subscription";
+import { useGetPackageBenefits } from "@/api/subscription/queries/useGetPackageBenefits";
 
 interface BenefitStatusLength {
   diagnosticDevice: number;
@@ -21,10 +22,11 @@ export interface BenefitsData {
 
 export type BenefitName = 'DIAGNOSTIC_DEVICE' | 'TOPPER_RANDOM';
 
-const PackageBenefit = ({ benefitsResponseData }: { benefitsResponseData: BenefitDto[] }) => {
+const PackageBenefit = ({ subscribeId }: { subscribeId: string }) => {
+  const { data: packageBenefitsData } = useGetPackageBenefits(subscribeId);
   const [selectedBenefits, setSelectedBenefits] = useState<number[]>([]);
 
-  const findBenefitItem = (benefitName: BenefitName) => benefitsResponseData.find(benefit => benefit.benefitStatus === 'AVAILABLE' && benefit.benefitName === benefitName) || null;
+  const findBenefitItem = (benefitName: BenefitName) => packageBenefitsData.find(benefit => benefit.benefitStatus === 'AVAILABLE' && benefit.benefitName === benefitName) || null;
   const diagnosticDevice: BenefitDto | null = findBenefitItem('DIAGNOSTIC_DEVICE');
   const topperRandom: BenefitDto | null = findBenefitItem('TOPPER_RANDOM');
 
@@ -48,7 +50,7 @@ const PackageBenefit = ({ benefitsResponseData }: { benefitsResponseData: Benefi
             <Text type='description' size='sm' color='red'>혜택 선택 시 다음 출고 시 포함되어 발송됩니다.</Text>
           </div>
           <BenefitInfoList
-            benefitsResponseData={benefitsResponseData}
+            packageBenefitsData={packageBenefitsData}
           />
           <div className={styles.benefitsControls}>
             {diagnosticDevice && 

@@ -104,7 +104,7 @@ interface OrderDetailDto extends OrderCancel {
   discountCoupon: number;
   overDiscount: number;
   paymentPrice: number;
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
   name?: string;
   phone?: string;
   zipcode?: string;

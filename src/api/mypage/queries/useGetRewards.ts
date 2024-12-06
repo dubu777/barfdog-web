@@ -1,7 +1,7 @@
-import {QueryClient, useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
-import {queryKeys} from "@/constants/queryKeys";
-import {getRewardList} from "../mypage";
-import {RewardListData} from "@/types/reward";
+import { QueryClient, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/constants/queryKeys";
+import { getRewardList } from "../mypage";
+import { RewardListData } from "@/types/reward";
 
 export { useGetRewards, prefetchGetRewards };
 
@@ -29,7 +29,7 @@ function useGetRewards() {
 }
 
 async function prefetchGetRewards(queryClient: QueryClient) {
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchQuery<RewardListData>({
     queryKey: getRewardsQueryKey,
         queryFn: async () => {
       const data = await getRewardList({ pageParam: 0, size: 5 });

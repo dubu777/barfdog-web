@@ -15,7 +15,7 @@ function useGetOrderDetail(orderId: string, type: OrderDetailType) {
 }
 
 async function prefetchGetOrderDetail(queryClient: QueryClient, orderId: string, type: OrderDetailType) {
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchQuery<MergeOrderAndRecipe>({
     queryKey: [queryKeys.ORDER, queryKeys.ORDER_DETAIL, orderId],
     queryFn: () => getOrderDetail(orderId, type),
   });

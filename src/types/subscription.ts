@@ -17,7 +17,7 @@ export type {
   SubscribesDto,
   SubscribeAddressData,
   AddressDto,
-  ManageSubscribeData,
+  SubscribeListData,
   BenefitDto,
   PaymentBody,
   SubscriptionResponse,
@@ -238,7 +238,7 @@ interface AddressDto {
   request?: null | string;
 }
 
-interface ManageSubscribeData {
+interface SubscribeListData {
   itemNames: string;
   recipeNames: string;
   subscribeDto: SubscribesDto;

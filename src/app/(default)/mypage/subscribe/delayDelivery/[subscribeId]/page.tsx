@@ -6,7 +6,7 @@ import {prefetchGetSubscriptionById} from "@/api/subscription/queries/useGetSubs
 
 interface DelayDeliveryPageParams {
   params: {
-    subscribeId: number;
+    subscribeId: string;
   }
 }
 

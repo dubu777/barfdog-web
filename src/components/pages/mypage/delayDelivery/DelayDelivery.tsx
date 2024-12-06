@@ -15,8 +15,8 @@ export interface DelayListProps {
   receivingDate: string;
 }
 
-const DelayDelivery = ({ subscribeId }: { subscribeId: string | number }) => {
-  const { data: subscribeData } = useGetSubscriptionById(Number(subscribeId));
+const DelayDelivery = ({ subscribeId }: { subscribeId: string }) => {
+  const { data: subscribeData } = useGetSubscriptionById(subscribeId);
 
   const [selectedDelay, setSelectedDelay] = useState<DelayListProps | null>(null);
   const defaultProductionDates = getProductionDates(subscribeData.nextDeliveryDate);

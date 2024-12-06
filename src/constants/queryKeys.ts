@@ -21,4 +21,7 @@ const queryKeys = {
   ORDER_DETAIL: 'orderDetail',
   GET_SUBSCRIBE_ORDER_LIST: 'getSubscribeOrderList',
   GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
+  GET_SUBSCRIBE_LIST: 'getSubscribeList',
+  GET_PACKAGE_BENEFITS: 'getPackageBenefits',
+  GET_DELIVERY_ADDRESS: 'getDeliveryAddress',
 } as const

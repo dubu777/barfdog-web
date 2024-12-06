@@ -1,8 +1,9 @@
+'use client';
 import * as styles from './DeliveryAddress.css';
 import AddressForm from "@/components/pages/mypage/deliveryAddress/addressForm/AddressForm";
 import DefaultAddress from "@/components/pages/mypage/deliveryAddress/defaultAddress/DefaultAddress";
-import { SubscribeAddressData } from "@/types/subscription";
 import { DefaultObjectType } from "@/types/common";
+import { useGetDeliveryAddress } from "@/api/subscription/queries/useGetDeliveryAddress";
 
 const changeTypeList: DefaultObjectType[] = [
   {
@@ -17,12 +18,13 @@ const changeTypeList: DefaultObjectType[] = [
   },
 ]
 
-interface DeliveryAddress {
-  addressData: SubscribeAddressData;
+interface DeliveryAddressProps {
+  subscribeId: string;
   changeType: string | undefined;
 }
 
-const DeliveryAddress = ({ addressData, changeType }: DeliveryAddress) => {
+const DeliveryAddress = ({ subscribeId, changeType }: DeliveryAddressProps) => {
+  const { data: addressData } = useGetDeliveryAddress(subscribeId);
   return (
     <section className={styles.addressContainer}>
       {!changeType

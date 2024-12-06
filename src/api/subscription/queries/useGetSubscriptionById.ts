@@ -5,17 +5,17 @@ import { SubscriptionByIdDto } from "@/types/subscription";
 
 export { useGetSubscriptionById, prefetchGetSubscriptionById };
 
-function useGetSubscriptionById(subscribeId: number) {
+function useGetSubscriptionById(subscribeId: string) {
   return useSuspenseQuery<SubscriptionByIdDto>({
     queryKey: [queryKeys.SUBSCRIPTION, queryKeys.GET_SUBSCRIPTION_BY_ID, subscribeId],
     queryFn: () => getSubscriptionById(subscribeId),
   });
 }
 
-async function prefetchGetSubscriptionById(queryClient: QueryClient, subscribeId: number) {
+async function prefetchGetSubscriptionById(queryClient: QueryClient, subscribeId: string) {
   await queryClient.prefetchQuery({
     queryKey: [queryKeys.SUBSCRIPTION, queryKeys.GET_SUBSCRIPTION_BY_ID, subscribeId],
-    queryFn: () => getSubscriptionById(Number(subscribeId)),
+    queryFn: () => getSubscriptionById(subscribeId),
   });
 }
 

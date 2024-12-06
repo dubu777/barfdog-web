@@ -1,5 +1,5 @@
 import axiosInstance from "@/api/axiosInstance";
-import { MyPageInfoData, RewardListData, RewardResponse, SubscribeSkipType } from "@/types";
+import {CouponData, MyPageInfoData, RewardListData, RewardResponse, SubscribeSkipType} from "@/types";
 
 export { getMypageInfo, getCouponList, applyCoupon, getRewardList, skipSubscribe }
 
@@ -8,14 +8,13 @@ const getMypageInfo = async (): Promise<MyPageInfoData> => {
   return data;
 }
 
-const getCouponList = async () => {
+const getCouponList = async (): Promise<CouponData[]> => {
   const { data } = await axiosInstance.get('/api/coupons');
-  return data;
+  return data.couponsPageDto._embedded.queryCouponsDtoList;
 }
 
 const applyCoupon = async (body: { code: string }) => {
   const { data } = await axiosInstance.put('/api/coupons/code', body);
-  console.log(data)
   return data;
 }
 
