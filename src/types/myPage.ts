@@ -3,9 +3,6 @@ export type {
   MyPageRepresentiveDogDto,
   MyPageInfoData,
   DogData,
-  CouponData,
-  RewardFilterType,
-  RewardData,
 };
 
 interface MyPageMemberDto {
@@ -48,28 +45,4 @@ interface DogData {
   subscribeId: number;
   subscribeCount: number;
   subscribeStatus: string;
-}
-
-interface CouponData {
-  id: number;
-  name: string;
-  status: string;
-  amount: number;
-  remaining: number;
-  availableMaxDiscount: number;
-  availableMinPrice: number;
-  couponTarget: string;
-  description: string;
-  discountDegree: number;
-  discountType: string;
-  expiredDate: string | Date;
-}
-
-type RewardFilterType = "ALL" | "SAVED" | "USED" | "EXPIRED";
-
-interface RewardData {
-  name: string;
-  tradeReward: number;
-  rewardStatus: string;
-  createdTime: string | Date;
 }

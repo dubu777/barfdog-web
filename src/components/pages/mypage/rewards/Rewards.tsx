@@ -6,7 +6,7 @@ import RewardsFilter from "@/components/pages/mypage/rewards/rewardsFilter/Rewar
 import RewardsList from "@/components/pages/mypage/rewards/rewardsList/RewardsList";
 import RewardsQuestionModal from "@/components/pages/mypage/rewards/rewardsQuestionModal/RewardsQuestionModal";
 import { useInView } from "react-intersection-observer";
-import { useGetRewards } from "@/api/queries/useGetRewards";
+import { useGetRewards } from "@/api/mypage/queries/useGetRewards";
 import { RewardData, RewardListData } from "@/types/reward";
 
 const Rewards = () => {
@@ -18,8 +18,8 @@ const Rewards = () => {
   // const totalPages = rewardsData?.pages[0]?.page.totalPages;
 
 const rewardList = rewardsData?.pages
-  ?.map((page: RewardListData) => page.rewardList)
-  .reduce((acc, curr) => acc.concat(curr), [] as RewardData[]);
+    ?.map((page: RewardListData) => page.rewardList)
+    .reduce((acc, curr) => acc.concat(curr), [] as RewardData[]);
   const totalReward = rewardsData?.pages[0]?.totalReward ?? 0;
   const totalCount = rewardsData?.pages[0]?.totalCount ?? 0;
 

@@ -14,6 +14,7 @@ interface DefaultTextFieldProps {
   isActive?: boolean;
   isDisabled?: boolean;
   isHidden?: boolean;
+  isError?: boolean;
   className?: HTMLAttributes<string | undefined> |string;
   onSubmit?: () => void;
 }
@@ -30,21 +31,25 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
   isActive = false,
   isDisabled = false,
   isHidden = false,
+  isError = false,
   className,
   onSubmit
 }, ref) => {
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement> | KeyboardEvent<HTMLInputElement>,) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if(onChange) {
       onChange(e.currentTarget.value);
     }
-    if('key' in e) {
-      if (e.key === "Enter" && onSubmit) {
-        onSubmit();
-      }
-    } 
   };
 
+  const handleSubmit = (e: KeyboardEvent<HTMLInputElement>,) => {
+    if('key' in e) {
+      if (e.key === 'Enter' && onSubmit) {
+        e.preventDefault();
+        onSubmit();
+      }
+    }
+  }
   return (
     <label htmlFor={id} className={styles.textFieldContainer}>
       <h3 className={styles.textFieldLabel({ isHidden: label === '' })}>{label}</h3>
@@ -57,8 +62,8 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
         placeholder={placeholder}
         onChange={handleInputChange}
         onBlur={handleInputChange}
-        onKeyDown={handleInputChange}
-        className={`${styles.textFieldStyle({ size, isActive, isDisabled, isHidden })} ${className || ''}`}
+        onKeyDown={handleSubmit}
+        className={`${styles.textFieldStyle({ size, isActive, isDisabled, isHidden, isError })} ${className || ''}`}
         disabled={isDisabled || isHidden}
       />
       {children}

@@ -9,8 +9,8 @@ import DogList from "@/components/pages/mypage/main/dogList/DogList";
 import MyPageMenu from "@/components/pages/mypage/main/menuLink/MenuLink";
 import { MyPageMemberDto, MyPageRepresentiveDogDto } from "@/types/myPage";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useGetMypageInfo } from "@/api/queries/useGetMypageInfo";
-import { useGetDogs } from "@/api/queries/useGetDogs";
+import { useGetMypageInfo } from "@/api/mypage/queries/useGetMypageInfo";
+import { useGetDogs } from "@/api/dog/queries/useGetDogs";
 
 const MyPageMain = () => {
   const { data: myPageData } = useGetMypageInfo();

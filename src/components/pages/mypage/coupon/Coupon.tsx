@@ -3,7 +3,7 @@ import * as styles from "./Coupon.css";
 import Text from "@/components/common/text/Text";
 import CouponItemCard from "@/components/pages/mypage/coupon/couponItemCard/CouponItemCard";
 import ApplyCoupon from "@/components/pages/mypage/coupon/applyCoupon/ApplyCoupon";
-import { useGetCoupons } from "@/api/queries/useGetCoupons";
+import { useGetCoupons } from "@/api/mypage/queries/useGetCoupons";
 import { CouponData } from "@/types/coupon";
 
 const Coupon = () => {

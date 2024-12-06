@@ -1,11 +1,17 @@
-import {QueryClient, useInfiniteQuery} from "@tanstack/react-query";
+import {QueryClient, useInfiniteQuery, useQueryClient} from "@tanstack/react-query";
 import {queryKeys} from "@/constants/queryKeys";
-import {getRewardList} from "@/api/reward";
+import {getRewardList} from "../mypage";
 import {RewardListData} from "@/types/reward";
 
-export function useGetRewards() {
+export { useGetRewards, prefetchGetRewards };
+
+const getRewardsQueryKey = [queryKeys.REWARDS, queryKeys.GET_REWARDS_LIST];
+
+function useGetRewards() {
+  const queryClient = useQueryClient();
+
   return useInfiniteQuery<RewardListData, Error>({
-    queryKey: [queryKeys.REWARDS, queryKeys.GET_REWARDS_LIST],
+    queryKey: getRewardsQueryKey,
     queryFn: async ({ pageParam = 0 }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
       const data = await getRewardList({ pageParam: pageNumber, size: 5 });
@@ -18,11 +24,13 @@ export function useGetRewards() {
       return nextPage < page.totalPages ? nextPage : undefined;
     },
     initialPageParam: 0,
+    initialData: () => queryClient.getQueryData(getRewardsQueryKey),
   });
 }
-export async function prefetchGetRewards(queryClient: QueryClient) {
+
+async function prefetchGetRewards(queryClient: QueryClient) {
   await queryClient.prefetchQuery({
-    queryKey: [queryKeys.REWARDS, queryKeys.GET_REWARDS_LIST],
+    queryKey: getRewardsQueryKey,
         queryFn: async () => {
       const data = await getRewardList({ pageParam: 0, size: 5 });
       return {

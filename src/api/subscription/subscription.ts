@@ -1,5 +1,10 @@
 import axiosInstance from "../axiosInstance";
-import { OrderSheetResponse, PaymentBody, PlanDiscountResponse, SubscriptionData, SubscriptionResponse } from "@/types/subscription";
+import {
+  OrderSheetResponse,
+  PaymentBody,
+  PlanDiscountResponse,
+  SubscriptionByIdDto,
+} from "@/types/subscription";
 
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse> => {
@@ -22,6 +27,10 @@ const createSubscription = async (
   return response;
 };
 
+const getSubscriptionById = async (subscribeId: number): Promise<SubscriptionByIdDto> => {
+  const { data } = await axiosInstance.get(`/api/subscribes/${subscribeId}`);
+  return data.subscribeDto;
+}
 
 
-export {getPlanDiscount, createSubscription, getOrderSheet}
+export {getPlanDiscount, createSubscription, getOrderSheet, getSubscriptionById}

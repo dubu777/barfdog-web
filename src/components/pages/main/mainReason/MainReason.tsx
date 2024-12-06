@@ -7,7 +7,7 @@ import Link from "next/link";
 import RightArrow from "/public/images/icons/right-arrow-red.svg";
 import {useBreakpoints} from "@/hooks/useBreakpoints";
 import MainText from "@/components/pages/main/mainText/MainText";
-import {reasonBarfdogList} from "@/constants/mainData";
+import {reasonBarfdogList} from "@/constants";
 
 const MainReason = () => {
   const { isMobile } = useBreakpoints();

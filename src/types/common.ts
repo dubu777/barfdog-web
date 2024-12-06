@@ -12,7 +12,7 @@ type SearchParamProps = {
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-type DefaultObjectType = {
+interface DefaultObjectType {
   id: string | number;
   name: string | ReactNode;
   value: string | number | ReactNode;

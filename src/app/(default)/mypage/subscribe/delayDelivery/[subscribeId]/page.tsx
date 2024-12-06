@@ -2,8 +2,7 @@ import DelayDelivery from "@/components/pages/mypage/delayDelivery/DelayDelivery
 import {dehydrate, HydrationBoundary, QueryClient} from "@tanstack/react-query";
 import {ErrorBoundary} from "react-error-boundary";
 import {Suspense} from "react";
-import {prefetchGetSubscribe} from "@/api/queries/useGetSubscribe";
-import { SearchParamProps } from "@/types/common";
+import {prefetchGetSubscriptionById} from "@/api/subscription/queries/useGetSubscriptionById";
 
 interface DelayDeliveryPageParams {
   params: {
@@ -14,7 +13,7 @@ interface DelayDeliveryPageParams {
 export default async function DelayDeliveryPage({ params }: DelayDeliveryPageParams) {
 
   const queryClient = new QueryClient();
-  await prefetchGetSubscribe(queryClient, params.subscribeId);
+  await prefetchGetSubscriptionById(queryClient, params.subscribeId);
   const dehydrateState = dehydrate(queryClient);
 
   return (

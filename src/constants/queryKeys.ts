@@ -12,8 +12,9 @@ const queryKeys = {
   REWARDS: 'rewards',
   GET_REWARDS_LIST: 'getRewards',
   SUBSCRIBE: 'subscribe',
-  GET_SUBSCRIBE_BY_ID: 'getSubscribeById',
+  GET_SUBSCRIPTION_BY_ID: 'getSubscriptionById',
   SUBSCRIPTION: 'subscription',
   GET_PLAN_DISCOUNT: 'getPlanDiscount',
   GET_ORDER_SHEET: 'getOrderSheet',
+  SKIP_SUBSCRIPTION: 'skipSubscription',
 } as const
