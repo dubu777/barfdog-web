@@ -1,15 +1,14 @@
 import * as styles from "../orderDetail/OrderDetail.css";
 import Image from "next/image";
 import Accordion from "@/components/common/accordion/Accordion";
-import { OrderDetailDataProps } from "../orderDetail/OrderDetail";
-import { OrderDetailDto, OrderItemDtoList } from "@/types/order";
+import { MergeOrderAndRecipe, OrderDetailDto, OrderItemDtoList } from "@/types/order";
 
 interface OrderItemProps {
   item: OrderDetailDto | OrderItemDtoList;
   recipeNames?: string;
 }
 
-const OrderItemsInfo = ({ orderDetailData }: { orderDetailData: OrderDetailDataProps }) => {
+const OrderItemsInfo = ({ orderDetailData }: { orderDetailData: MergeOrderAndRecipe }) => {
   const { orderDto, recipeNames, orderItemDtoList } = orderDetailData;
   const OrderItem = ({ item, recipeNames }: OrderItemProps) => {
     const { itemId, itemName, thumbnailUrl } = item;

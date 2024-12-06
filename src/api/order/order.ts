@@ -1,1 +1,34 @@
-//
+import axiosInstance from "@/api/axiosInstance";
+import {GeneralOrderData, MergeOrderAndRecipe, SubscribeOrderData, SubscribeOrderDto} from "@/types";
+
+export { getOrderDetail, getSubscribeOrderList, getGeneralOrderList };
+
+const getSubscribeOrderList = async (page: number, size: number): Promise<SubscribeOrderData[]> => {
+  const { data } = await axiosInstance.get(`/api/orders/subscribe?page=${page}&size=${size}`);
+  return (
+    data._embedded?.querySubscribeOrdersDtoList.map(({ subscribeOrderDto, ...rest }: { subscribeOrderDto: SubscribeOrderDto }) => ({
+      orderDto: subscribeOrderDto,
+      ...rest,
+    })) || []
+  );
+}
+
+const getGeneralOrderList = async (page: number, size: number): Promise<GeneralOrderData[]> => {
+  const { data } = await axiosInstance.get(`/api/orders/general?page=${page}&size=${size}`);
+  return data._embedded?.queryGeneralOrdersDtoList || [];
+}
+
+const getOrderDetail = async (orderId: string, type: string): Promise<MergeOrderAndRecipe> => {
+  const { data } = await axiosInstance.get(`/api/orders/${orderId}/${type}`);
+  const mergeOrderAndRecipe: MergeOrderAndRecipe = {
+      ...data,
+      orderItemDtoList: data.orderItemDtoList ? [...data.orderItemDtoList] : [],
+      orderDto: {
+        ...data.orderDto,
+        ...data.recipeDto
+      },
+      recipeDto: undefined
+  }
+
+  return mergeOrderAndRecipe || null;
+}

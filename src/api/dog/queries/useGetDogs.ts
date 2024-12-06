@@ -12,7 +12,6 @@ function useGetDogs() {
     queryKey: [queryKeys.GET_DOGS],
     queryFn: getDogs,
     initialData: () => queryClient.getQueryData([queryKeys.GET_DOGS]),
-
   });
 }
 

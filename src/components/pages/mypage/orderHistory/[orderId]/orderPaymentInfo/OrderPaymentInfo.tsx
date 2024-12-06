@@ -3,7 +3,7 @@ import * as styles from "../orderDetail/OrderDetail.css";
 import Accordion from "@/components/common/accordion/Accordion";
 import { DefaultObjectType } from "@/types/common";
 import { OrderDetailDto } from "@/types/order";
-import { PAYMENT, PaymentMethod} from "@/constants";
+import { PAYMENT } from "@/constants";
 
 interface OrderPaymentInfoProps {
   type: string;
@@ -12,7 +12,7 @@ interface OrderPaymentInfoProps {
 
 const OrderPaymentInfo = ({ type, orderDto }: OrderPaymentInfoProps) => {
   const orderPaymentList: DefaultObjectType[] = [
-    { id: '주문 금액', name: '주문 금액', value: `${orderDto.orderPrice.toLocaleString()}원` || '-' },
+    { id: '주문 금액', name: '주문 금액', value: `${orderDto.orderPrice?.toLocaleString() || 0}원` || '-' },
     { id: '배송비', name: '배송비', value: type === 'subscribe' ? '정기 구독 무료' : orderDto.deliveryPrice },
     {
       id: '총 할인금액',
@@ -58,7 +58,7 @@ const OrderPaymentInfo = ({ type, orderDto }: OrderPaymentInfoProps) => {
       ]
 
     },
-    { id: '결제 금액', name: '결제 금액', value: `${orderDto.paymentPrice.toLocaleString()}원` },
+    { id: '결제 금액', name: '결제 금액', value: `${orderDto.paymentPrice?.toLocaleString() || 0}원` },
     {
       id: '적립예정금액',
       name: '적립예정금액',
@@ -69,7 +69,7 @@ const OrderPaymentInfo = ({ type, orderDto }: OrderPaymentInfoProps) => {
             ? orderDto.saveRewardTotal?.toLocaleString() 
             : 0}원` }
     ,
-    { id: '결제 방법', name: '결제 방법', value: PAYMENT[orderDto.paymentMethod as PaymentMethod] || '-' },
+    { id: '결제 방법', name: '결제 방법', value: PAYMENT[orderDto.paymentMethod] || '-' },
   ]
   return (
     <Accordion title='결제정보'>

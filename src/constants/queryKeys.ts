@@ -17,4 +17,8 @@ const queryKeys = {
   GET_PLAN_DISCOUNT: 'getPlanDiscount',
   GET_ORDER_SHEET: 'getOrderSheet',
   SKIP_SUBSCRIPTION: 'skipSubscription',
+  ORDER: 'order',
+  ORDER_DETAIL: 'orderDetail',
+  GET_SUBSCRIBE_ORDER_LIST: 'getSubscribeOrderList',
+  GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
 } as const
