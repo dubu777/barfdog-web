@@ -16,7 +16,7 @@ interface CartItemProps {
 
 const CartItem = ({ item, options, totalPrice, isSelected, onSelect }: CartItemProps) => {
   const samePrice = item.salePrice === item.originalPrice;
-  const { updateItemAmount}  = useCartStore();
+  const { updateItemAmount }  = useCartStore();
 
   return (
     <li className={styles.cartItem} key={item.itemId}>
@@ -50,7 +50,6 @@ const CartItem = ({ item, options, totalPrice, isSelected, onSelect }: CartItemP
           min={1}
           initialCount={item.amount}
           onChange={(value) => {
-            const diff = value - item.amount;
             updateItemAmount(item.basketId, value);
           }}
         />

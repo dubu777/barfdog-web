@@ -74,7 +74,12 @@ const Cart = () => {
         </ul>
       </article>
       <CartPriceInfo />
-      <DefaultButton type='main' borderRadius='sm' size='lg'>
+      <DefaultButton
+        type='main'
+        borderRadius='sm'
+        size='lg'
+        isDisabled={selectedItems.length < 1}
+      >
         총 {selectedItems.length}건 주문하기
       </DefaultButton>
     </section>
