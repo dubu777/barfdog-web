@@ -7,7 +7,6 @@ export const adjustPriceForSubscriber = (
   recipeName: string,
   isOriginSubscriber: boolean
 ): number => {
-  console.log('isorgin???????????', isOriginSubscriber);
   
   const priceMap: Record<string, number> = {
     "STARTER PREMIUM +": 35.649,

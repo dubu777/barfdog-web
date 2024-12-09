@@ -1,14 +1,34 @@
 import { ReactNode } from "react";
+import {
+  QueryKey,
+  UseMutationOptions,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 
-export type SearchParamProps = {
+export type { SearchParamProps, DefaultObjectType, UseMutationCustomOptions, UseQueryCustomOptions };
+
+type SearchParamProps = {
   param: { [key: string]: string | number };
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export type DefaultObjectType = {
+interface DefaultObjectType {
   id: string | number;
   name: string | ReactNode;
   value: string | number | ReactNode;
   visible?: boolean;
   child?: { id: string | number; name: string; value: string; visible?: boolean }[];
 }
+
+type UseMutationCustomOptions<TData = unknown, TVariables = unknown, TError = unknown> = Omit<
+  UseMutationOptions<TData, TError, TVariables, unknown>,
+  "mutationFn"
+>;
+
+type UseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
+  UseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
+  "queryKey"
+>;
+
+
+

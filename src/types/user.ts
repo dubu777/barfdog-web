@@ -7,10 +7,3 @@ interface UserInfoData {
   myRecommendationCode: string;
   reward: number | null | string | undefined;
 }
-export const initialUserInfo = {
-  grade: '',
-  id: 0,
-  memberName: '',
-  myRecommendationCode: '',
-  reward: null,
-}

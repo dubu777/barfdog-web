@@ -1,11 +1,9 @@
 export type {
   MyPageMemberDto,
-  MyPageRepresentiveDogDto,
+  MyPageRepresentativeDogDto,
   MyPageInfoData,
   DogData,
-  CouponData,
-  RewardFilterType,
-  RewardData,
+  MyPageBannerData,
 };
 
 interface MyPageMemberDto {
@@ -16,7 +14,7 @@ interface MyPageMemberDto {
   reward: string;
 }
 
-interface MyPageRepresentiveDogDto {
+interface MyPageRepresentativeDogDto {
   dogName: string;
   inStock: boolean;
   recipeName: string;
@@ -50,26 +48,18 @@ interface DogData {
   subscribeStatus: string;
 }
 
-interface CouponData {
+interface MyPageBannerImageUrl {
+  pc: string;
+  mobile: string;
+}
+
+interface MyPageBannerData {
   id: number;
   name: string;
   status: string;
-  amount: number;
-  remaining: number;
-  availableMaxDiscount: number;
-  availableMinPrice: number;
-  couponTarget: string;
-  description: string;
-  discountDegree: number;
-  discountType: string;
-  expiredDate: string | Date;
-}
-
-type RewardFilterType = "ALL" | "SAVED" | "USED" | "EXPIRED";
-
-interface RewardData {
-  name: string;
-  tradeReward: number;
-  rewardStatus: string;
-  createdTime: string | Date;
+  filenamePc: string;
+  filenameMobile: string;
+  pcLinkUrl: string;
+  mobileLinkUrl: string;
+  imageUrl: MyPageBannerImageUrl;
 }

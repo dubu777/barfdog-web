@@ -13,17 +13,94 @@ export type {
   calculateOneMealGramsInput,
   calculateOneMealGramsOutput,
   calculateOneMealGramsWithVolumeInput,
-  SubscribeByIdDto,
+  SubscriptionByIdDto,
   SubscribesDto,
   SubscribeAddressData,
   AddressDto,
-  ManageSubscribeData,
+  SubscribeListData,
   BenefitDto,
+  PaymentBody,
+  SubscriptionResponse,
+  SubscriptionData,
+  OrderSheetResponse,
   BenefitStatus,
   SubscribeSkipType,
   SubscribeStatusKey,
   PlanKey,
 };
+
+
+interface OrderSheetResponse {
+  brochure: boolean;
+  coupons: Coupon[];
+  defaultAddress: DefaultAddress;
+  email: string;
+  grade: string;
+  gradeDiscountPercent: number;
+  name: string;
+  nextDeliveryDate: string; // ISO 8601 형식
+  phoneNumber: string;
+  recipeNameList: string[];
+  reward: number;
+  subscribeDto: SubscribeDto;
+  _links: Links;
+}
+
+interface Coupon {
+  availableMaxDiscount: number;
+  availableMinPrice: number;
+  discountDegree: number; // 할인율 또는 금액
+  discountType: "FIXED_RATE" | "FIXED_AMOUNT"; // 할인 유형
+  expiredDate: string;
+  memberCouponId: number;
+  name: string; // 쿠폰 이름
+  remaining: number; // 남은 쿠폰 수
+}
+
+interface DefaultAddress {
+  deliveryName: string | null;
+  zipcode: string;
+  city: string;
+  street: string;
+  detailAddress: string;
+}
+
+interface SubscribeDto {
+  id: number;
+  plan: string; 
+  nextPaymentPrice: number;
+  discountGrade: number;
+  oneMealGramsPerRecipe: string;
+}
+
+interface Links {
+  self: Link;
+  order_subscribe: Link;
+}
+
+interface Link {
+  href: string; 
+}
+
+interface SubscriptionResponse<T> {
+  isDone: boolean;
+  status: number;
+  error: string;
+  data: T;
+}
+
+interface SubscriptionData {
+  [key: string]: any; // 실제 데이터 구조에 따라 수정 필요
+}
+
+
+interface PaymentBody {
+  plan: PlanName | null;
+  recipeIdList: number[];
+  nextPaymentPrice: number;
+  oneDayRecommendKcal: number;
+  subscribeItemList: string[] | null;
+}
 
 interface PlanDiscountResponseDto {
   createdDate: string;
@@ -120,7 +197,7 @@ interface DefaultSubscribeDto {
   nextDeliveryDate: string | null;
 }
 
-interface SubscribeByIdDto extends DefaultSubscribeDto {
+interface SubscriptionByIdDto extends DefaultSubscribeDto {
   id: number;
   subscribeStatus: SubscribeStatusKey;
   dogId: number;
@@ -161,7 +238,7 @@ interface AddressDto {
   request?: null | string;
 }
 
-interface ManageSubscribeData {
+interface SubscribeListData {
   itemNames: string;
   recipeNames: string;
   subscribeDto: SubscribesDto;

@@ -5,17 +5,16 @@ import AlertModal from "@/components/common/alertModal/AlertModal";
 import RadiusSubmitButton from "@/components/common/radiusSubmitButton/RadiusSubmitButton";
 import { getProductionDates } from "@/utils/getProductionDates";
 import { pointColor } from "@/styles/common.css";
-import { PlanKey, subscribePlanInfo } from "@/constants";
-import { SubscribeByIdDto, SubscribeSkipType } from "@/types/subscription";
+import { subscribePlanInfo } from "@/constants";
+import { PlanKey, SubscriptionByIdDto } from "@/types";
 import { DelayListProps } from "../DelayDelivery";
-import {useMutation} from "@tanstack/react-query";
-import {skipSubscribe} from "@/api/subscribe";
-import {useGetSubscribe} from "@/api/queries/useGetSubscribe";
+import { useSkipSubscription } from "@/api/mypage/mutations/useSkipSubscription";
+import { useToastStore } from "@/store/useToastStore";
 
 interface DelayDeliveryCheckboxProps {
   selectedDelay: DelayListProps | null;
   setSelectedDelay: (selectedDelay: DelayListProps | null) => void;
-  subscribeData: SubscribeByIdDto;
+  subscribeData: SubscriptionByIdDto;
 }
 
 const DelayDeliveryCheckbox = ({ subscribeData, selectedDelay, setSelectedDelay }: DelayDeliveryCheckboxProps) => {
@@ -23,7 +22,6 @@ const DelayDeliveryCheckbox = ({ subscribeData, selectedDelay, setSelectedDelay 
     isOpenModal: false,
     checkedInfo: false,
   });
-  const [succeedModal, setSucceedModal] = useState<boolean>(false);
   const oneWeekAfterProductionDates = getProductionDates(subscribeData.nextDeliveryDate, 1);
   const onceAfterProductionDates = getProductionDates(subscribeData.nextDeliveryDate, subscribePlanInfo[subscribeData.plan as PlanKey].weeklyPaymentCycle);
   const delayList: DelayListProps[] = [
@@ -40,30 +38,24 @@ const DelayDeliveryCheckbox = ({ subscribeData, selectedDelay, setSelectedDelay 
       receivingDate: onceAfterProductionDates.receivingDate ?? '-',
     },
   ]
-
-  const { refetch } = useGetSubscribe(subscribeData.id);
-  const { mutate } = useMutation({
-    mutationFn: ({ skipType }: { skipType: SubscribeSkipType }) => skipSubscribe(subscribeData.id, skipType),
-    onSuccess: async (data) => {
-      console.log('success', data)
-      await setSucceedModal(true);
-      await setSelectedDelay(null);
-      await setFinalConfirm({
-        isOpenModal: false,
-        checkedInfo: false,
-      });
-      await refetch();
-    },
-    // onError: (error: Error) => {
-    //   console.error(error);
-    //   if(error.response) {
-    //     alert(error.response.data.errors[0].defaultMessage);
-    //   }
-    // },
-  });
-  const handleSkipSubscribe = () => {
+  const { addToast } = useToastStore();
+  const { mutate } = useSkipSubscription(subscribeData.id);
+  const handleSkipSubscription = () => {
     if(selectedDelay !== null) {
-      mutate({ skipType: selectedDelay.value })
+      mutate(
+        { skipType: selectedDelay.value },
+        {
+          onSuccess: () => {
+            addToast('배송이 성공적으로 미뤄졌습니다!', 'success')
+
+            setSelectedDelay(null);
+            setFinalConfirm({
+              isOpenModal: false,
+              checkedInfo: false,
+            });
+          }
+        }
+      )
     }
   }
 
@@ -87,7 +79,7 @@ const DelayDeliveryCheckbox = ({ subscribeData, selectedDelay, setSelectedDelay 
       onClick={() => 
         !finalConfirm.checkedInfo 
         ? setFinalConfirm({...finalConfirm, isOpenModal: true}) 
-        : handleSkipSubscribe()
+        : handleSkipSubscription()
       }
       disabled={selectedDelay === null}
     />
@@ -104,12 +96,6 @@ const DelayDeliveryCheckbox = ({ subscribeData, selectedDelay, setSelectedDelay 
           이대로 변경하시겠습니까?
         </div>
       }
-    />
-    <AlertModal
-      isAutoClose
-      isOpen={succeedModal}
-      onClose={() => setSucceedModal(false)}
-      message='배송이 성공적으로 미뤄졌습니다!'
     />
     </>
   );

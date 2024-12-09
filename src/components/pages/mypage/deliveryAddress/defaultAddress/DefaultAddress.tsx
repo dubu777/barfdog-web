@@ -7,7 +7,7 @@ import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
-import { useMypageStore } from "@/store/useMypageStore";
+import { useMyPageStore } from "@/store/useMypageStore";
 import { getProductionDates } from "@/utils/getProductionDates";
 import { SubscribeAddressData } from "@/types/subscription";
 import { DefaultObjectType } from "@/types/common";
@@ -19,7 +19,7 @@ interface DefaultAddressProps {
 
 const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) => {
   const { currentAddress: currentData, nextAddress: nextData, nextDeliveryDate } = addressData;
-  const { subscribeDogName } = useMypageStore();
+  const { subscribeDogName } = useMyPageStore();
   const { pushWithQuery } = useDynamicQueryPush();
   const defaultProductionDates = getProductionDates(nextDeliveryDate);
   const pathname = usePathname();

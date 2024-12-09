@@ -8,9 +8,9 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as styles from "../Survey.css";
-import { prefetchGetSurveyRecipe } from "@/api/queries/survey/useGetSurveyRecipe";
-import { prefetchGetSurveyResult } from "@/api/queries/survey/useGetSurveyResult";
 import SubscribeShopContent from "@/components/pages/subscribeShop/subscribeShopContent/SubscribeShopContent";
+import { prefetchGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
+import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 
 export default async function SubscribeShopPage({
   searchParams,

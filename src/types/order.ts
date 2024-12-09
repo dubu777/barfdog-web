@@ -1,12 +1,15 @@
 export type {
+  RecipeDto,
   SubscribeOrderData,
   GeneralOrderData,
   OrderDetailDto,
+  SubscribeOrderDto,
   OrderItemDtoList,
-  MixedOrderData,
+  MergeOrderData,
   OrderDetailData,
   MergeOrderAndRecipe,
   PaymentMethod,
+  OrderDetailType,
 };
 
 interface OrderItem {
@@ -69,7 +72,7 @@ interface OrderItemDtoList {
 
 interface SubscribeOrderData {
   recipeDto: RecipeDto;
-  subscribeOrderDto: SubscribeOrderDto;
+  orderDto: SubscribeOrderDto;
 }
 
 interface GeneralOrderData {
@@ -78,7 +81,7 @@ interface GeneralOrderData {
   thumbnailUrl: string;
 }
 
-type MixedOrderData = (GeneralOrderData | SubscribeOrderData)[];
+type MergeOrderData = (GeneralOrderData | SubscribeOrderData)[];
 
 interface OrderDetailDto extends OrderCancel {
   orderId?: number;
@@ -101,7 +104,7 @@ interface OrderDetailDto extends OrderCancel {
   discountCoupon: number;
   overDiscount: number;
   paymentPrice: number;
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
   name?: string;
   phone?: string;
   zipcode?: string;
@@ -140,3 +143,5 @@ interface MergeOrderAndRecipe extends OrderDetailData {
 }
 
 type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
+
+type OrderDetailType = 'general' | 'subscribe';

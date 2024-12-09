@@ -5,7 +5,7 @@ import Text from "@/components/common/text/Text";
 import CalendarComponent from "@/components/common/calendar/Calendar";
 import DelayDeliveryCheckbox from "@/components/pages/mypage/delayDelivery/delayDeliveryCheckbox/DelayDeliveryCheckbox";
 import { getProductionDates } from "@/utils/getProductionDates";
-import { useGetSubscribe } from "@/api/queries/useGetSubscribe";
+import { useGetSubscriptionById } from "@/api/subscription/queries/useGetSubscriptionById";
 import { SubscribeSkipType } from "@/types/subscription";
 
 export interface DelayListProps {
@@ -15,8 +15,8 @@ export interface DelayListProps {
   receivingDate: string;
 }
 
-const DelayDelivery = ({ subscribeId }: { subscribeId: string | number }) => {
-  const { data: subscribeData } = useGetSubscribe(Number(subscribeId));
+const DelayDelivery = ({ subscribeId }: { subscribeId: string }) => {
+  const { data: subscribeData } = useGetSubscriptionById(subscribeId);
 
   const [selectedDelay, setSelectedDelay] = useState<DelayListProps | null>(null);
   const defaultProductionDates = getProductionDates(subscribeData.nextDeliveryDate);
@@ -28,7 +28,7 @@ const DelayDelivery = ({ subscribeId }: { subscribeId: string | number }) => {
     !selectedDelay 
       ? new Date(defaultProductionDates.productionDate ?? '') 
       : new Date(selectedDelay?.productionDate);
-  
+
   return (
     <section className={styles.delayDeliveryContainer}>
       <div className={styles.dogName}>

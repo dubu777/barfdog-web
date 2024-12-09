@@ -4,15 +4,15 @@ import RightArrowIcon from "/public/images/icons/right-arrow-black.svg";
 import Text from "@/components/common/text/Text";
 import Badge from "@/components/common/badge/Badge";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { PlanKey, subscribePlanInfo, subscribeStatus } from "@/constants";
+import { subscribePlanInfo, subscribeStatus } from "@/constants";
 import { formatDate } from "@/utils/dateUtils";
 import { getProductionDates } from "@/utils/getProductionDates";
 import { getNextPaymentPrice } from "@/utils/getNextPaymentPrice";
 import { getPackagePeriod } from "@/utils/getPackagePeriod";
-import { ManageSubscribeData } from "@/types/subscription";
+import { PlanKey, SubscribeListData } from "@/types/subscription";
 import { DefaultObjectType } from "@/types/common";
 
-const SubscribeCard = ({ subscribeData }: { subscribeData: ManageSubscribeData }) => {
+const SubscribeCard = ({ subscribeData }: { subscribeData: SubscribeListData }) => {
   const { subscribeDto } = subscribeData;
   const isPackageData = !!subscribeDto.subscriptionMonth && subscribeDto.packagePrice !== -1;
   const productionDates = getProductionDates(subscribeDto.nextDeliveryDate);

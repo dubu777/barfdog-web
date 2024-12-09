@@ -95,7 +95,7 @@ export default function useSurveyForm(
       setCanNextStep(true);
     }
   };
-console.log('err', errorMessages);
+// console.log('err', errorMessages);
 
   // 블러 이벤트 처리
   const handleBlur = (

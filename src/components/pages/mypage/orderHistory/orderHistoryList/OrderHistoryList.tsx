@@ -4,7 +4,7 @@ import Badge from "@/components/common/badge/Badge";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { ORDER_STATUS, PAYMENT } from "@/constants";
 import { formatDate } from "@/utils/dateUtils";
-import { GeneralOrderData, SubscribeOrderData, MixedOrderData } from "@/types/order";
+import { GeneralOrderData, SubscribeOrderData, MergeOrderData } from "@/types/order";
 import { DefaultObjectType } from "@/types/common";
 
 const orderContents: DefaultObjectType[] = [
@@ -35,7 +35,7 @@ const orderContents: DefaultObjectType[] = [
   },
 ]
 
-const OrderHistoryList = ({ orderList }: { orderList: MixedOrderData  }) => {
+const OrderHistoryList = ({ orderList }: { orderList: MergeOrderData }) => {
   return (
     <ul className={styles.orderListContainer}>
       {orderList.map(item => {
