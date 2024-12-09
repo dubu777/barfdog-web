@@ -1,6 +1,6 @@
 import { QueryClient, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { getCouponList } from "../mypage";
+import { getCouponList } from "../myPage";
 import { CouponData } from "@/types";
 
 export { useGetCoupons, prefetchGetCouponList };

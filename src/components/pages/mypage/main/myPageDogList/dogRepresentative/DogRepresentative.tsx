@@ -1,5 +1,6 @@
+'use client';
 import { useState } from "react";
-import * as styles from "../DogList.css";
+import * as styles from "../MyPageDogList.css";
 import RedFlag from "/public/images/icons/flag-red.svg";
 import DefaultFlag from "/public/images/icons/flag-default.svg";
 import AlertModal from "@/components/common/alertModal/AlertModal";

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { skipSubscribe } from "@/api/mypage/mypage";
+import { skipSubscribe } from "@/api/mypage/myPage";
 import { queryKeys } from "@/constants";
 import { SubscribeSkipType } from "@/types";
 

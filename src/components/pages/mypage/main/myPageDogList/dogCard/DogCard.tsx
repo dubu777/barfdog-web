@@ -1,11 +1,11 @@
-import * as styles from "../DogList.css";
+import * as styles from "../MyPageDogList.css";
 import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Badge from "@/components/common/badge/Badge";
-import DogButtonControls from "@/components/pages/mypage/main/dogList/dogButtonContols/DogButtonControls";
-import DogRepresentative from "@/components/pages/mypage/main/dogList/dogRepresentative/DogRepresentative";
+import DogButtonControls from "@/components/pages/mypage/main/myPageDogList/dogButtonContols/DogButtonControls";
+import DogRepresentative from "@/components/pages/mypage/main/myPageDogList/dogRepresentative/DogRepresentative";
 import { DogData } from "@/types/dogs";
 import { subscribeStatus } from "@/constants";
 import {getProductionDates} from "@/utils/getProductionDates";

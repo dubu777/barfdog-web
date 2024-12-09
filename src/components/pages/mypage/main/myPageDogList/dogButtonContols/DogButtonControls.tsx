@@ -1,8 +1,8 @@
 'use client';
-import * as styles from "../DogList.css";
+import * as styles from "../MyPageDogList.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useRouter } from "next/navigation";
-import { useMypageStore } from "@/store/useMypageStore";
+import { useMyPageStore } from "@/store/useMypageStore";
 
 interface SubscriptionButtonProps {
   linkUrl?: string;
@@ -35,7 +35,7 @@ const DogButtonControls = ({ status, subscribeId, dogName }: DogButtonControlsPr
   const beforeSubscribe = status === 'BEFORE_PAYMENT' || status === 'SURVEY_COMPLETED';
   const pendingSubscribe = status === 'SUBSCRIBE_PENDING' || status === 'SUBSCRIBE_CANCEL';
   const wilCancelSubscribe = status === 'SUBSCRIBE_WILL_CANCEL';
-  const { setSubscribeDogName } = useMypageStore();
+  const { setSubscribeDogName } = useMyPageStore();
   const router = useRouter();
 
   const handleAddressWithDogName = () => {

@@ -5,7 +5,7 @@ interface MypageStore {
   setSubscribeDogName: (subscribeDogName: string) => void;
 }
 
-export const useMypageStore = create<MypageStore>((set, get) => ({
+export const useMyPageStore = create<MypageStore>((set, get) => ({
   subscribeDogName: '',
   setSubscribeDogName: (subscribeDogName) => set({ subscribeDogName }),
 }))

@@ -1,4 +1,4 @@
-import * as styles from "./MenuLink.css";
+import * as styles from "./MyPageMenu.css";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -7,7 +7,7 @@ interface MyPageMenuType {
   url: string;
 }
 
-const menuLink: MyPageMenuType[] = [
+const myPageMenu: MyPageMenuType[] = [
   {
     url: '/orderHistory',
     name: '주문내역',
@@ -38,7 +38,7 @@ const MyPageMenu = () => {
   return (
     <article>
       <ul className={styles.menuContainer}>
-        {menuLink.map(menu => (
+        {myPageMenu.map(menu => (
           <li
             key={menu.url}
             className={styles.menuItem}

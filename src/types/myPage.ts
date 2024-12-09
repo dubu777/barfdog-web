@@ -1,8 +1,9 @@
 export type {
   MyPageMemberDto,
-  MyPageRepresentiveDogDto,
+  MyPageRepresentativeDogDto,
   MyPageInfoData,
   DogData,
+  MyPageBannerData,
 };
 
 interface MyPageMemberDto {
@@ -13,7 +14,7 @@ interface MyPageMemberDto {
   reward: string;
 }
 
-interface MyPageRepresentiveDogDto {
+interface MyPageRepresentativeDogDto {
   dogName: string;
   inStock: boolean;
   recipeName: string;
@@ -45,4 +46,20 @@ interface DogData {
   subscribeId: number;
   subscribeCount: number;
   subscribeStatus: string;
+}
+
+interface MyPageBannerImageUrl {
+  pc: string;
+  mobile: string;
+}
+
+interface MyPageBannerData {
+  id: number;
+  name: string;
+  status: string;
+  filenamePc: string;
+  filenameMobile: string;
+  pcLinkUrl: string;
+  mobileLinkUrl: string;
+  imageUrl: MyPageBannerImageUrl;
 }

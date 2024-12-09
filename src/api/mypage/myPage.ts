@@ -1,10 +1,10 @@
 import axiosInstance from "@/api/axiosInstance";
-import {CouponData, MyPageInfoData, RewardListData, RewardResponse, SubscribeSkipType} from "@/types";
+import { CouponData, MyPageBannerData, MyPageInfoData, RewardListData, RewardResponse, SubscribeSkipType } from "@/types";
 
-export { getMypageInfo, getCouponList, applyCoupon, getRewardList, skipSubscribe }
+export { getMyPageInfo, getMyPageBanner, getCouponList, applyCoupon, getRewardList, skipSubscribe }
 
-const getMypageInfo = async (): Promise<MyPageInfoData> => {
-  const { data }: { data: MyPageInfoData } = await axiosInstance.get('/api/mypage');
+const getMyPageInfo = async (): Promise<MyPageInfoData> => {
+  const { data }: { data: MyPageInfoData } = await axiosInstance.get('/api/mypage/');
   return data;
 }
 
@@ -43,9 +43,27 @@ const skipSubscribe = async (subscribeId: number, skipType: SubscribeSkipType) =
     id: subscribeId,
     type: skipType
   }
-  console.log('body', body)
   const { data } = await axiosInstance.post(`/api/subscribes/${subscribeId}/skip/week`, body);
   return data;
+}
+
+const getMyPageBanner = async (): Promise<MyPageBannerData> => {
+  const { data } = await axiosInstance.get('/api/banners/myPage');
+  const { id, name, status, filenamePc, filenameMobile, pcLinkUrl, mobileLinkUrl, _links } = data;
+
+  return {
+    id,
+    name,
+    status,
+    filenamePc,
+    filenameMobile,
+    pcLinkUrl,
+    mobileLinkUrl,
+    imageUrl: {
+      pc: _links?.thumbnail_pc?.href,
+      mobile: _links?.thumbnail_mobile?.href,
+    },
+  };
 }
 
 
