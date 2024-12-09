@@ -1,7 +1,7 @@
 'use client';
 import { ReactNode, useEffect } from "react";
 import { useCartStore } from "@/store/useCartStore";
-import { useGetCart } from "@/api/queries/useGetCart";
+import { useGetCart } from "@/api/cart/queries/useGetCart";
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const { setCartData } = useCartStore();

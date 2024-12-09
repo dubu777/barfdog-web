@@ -93,14 +93,21 @@ export const useCartStore = create<CartStore>((set, get) => ({
       return item;
     });
 
-    const updatedCartData = { ...cartData, basketDtoList: updatedBasketDtoList }
-    const filteredBasketDtoList = filterSelectedBasketDtoList(updatedCartData, selectedItems);
+    const updatedCartData = { ...cartData, basketDtoList: updatedBasketDtoList };
+
+    const updatedSelectedItems = selectedItems.includes(basketId)
+      ? selectedItems
+      : [...selectedItems, basketId];
+
+    const filteredBasketDtoList = filterSelectedBasketDtoList(updatedCartData, updatedSelectedItems);
     const filteredCartData = { ...updatedCartData, basketDtoList: filteredBasketDtoList };
+
     const calculatedPrices = calculateSummary(filteredCartData);
 
     set({
       cartData: updatedCartData,
       calculatedPrices,
+      selectedItems: updatedSelectedItems,
     })
   },
   // 장바구니 선택한 항목 업데이트 시 (선택한 항목을 기반으로 ID Array 업데이트 및 요약 정보 다시 계산)
