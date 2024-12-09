@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import CheckWhite from '/public/images/icons/check-white.svg';
 import { useMainStore } from "@/store/useMainStore";
-import { HealthCheckList } from "@/constants/mainData";
+import { HealthCheckList } from "@/constants";
 import MainText from "@/components/pages/main/mainText/MainText";
 
 const MainHealthCheckSlider = () => {

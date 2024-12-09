@@ -6,8 +6,9 @@ import {
   calculateOneMealGramsOutput,
   CalculateSubscribePriceOutput,
   ResultData,
+  PlanName,
 } from "@/types";
-import { PlanName, toppingOption } from "@/constants";
+import { toppingOption } from "@/constants";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import {
   getPackCount,

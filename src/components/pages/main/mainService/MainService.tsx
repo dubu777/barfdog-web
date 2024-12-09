@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import { useBreakpoints } from "@/hooks/useBreakpoints";
 import MainText from "@/components/pages/main/mainText/MainText";
-import {servicesByBarfdogList} from "@/constants/mainData";
+import {servicesByBarfdogList} from "@/constants";
 
 const MainService = () => {
   const { isMobile } = useBreakpoints();

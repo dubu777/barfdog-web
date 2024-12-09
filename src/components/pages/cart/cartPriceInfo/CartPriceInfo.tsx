@@ -8,26 +8,31 @@ const CartPriceInfo = () => {
   const { productTotalPrice, discount, deliveryFee, totalOrderPrice, diffDeliveryFee }  = calculatedPrices;
   const infoList: DefaultObjectType[] = [
     {
+      id: '상품 금액',
       name: '상품 금액',
       value: productTotalPrice,
       visible: true,
     },
     {
+      id: '할인',
       name: '할인',
       value: discount,
       visible: true,
     },
     {
+      id: '배송비',
       name: '배송비',
       value: deliveryFee,
       visible: true,
     },
     {
+      id: '무료배송',
       name: '',
       value: <Text type='description' size='sm' color='red'>{diffDeliveryFee.toLocaleString()}원 추가 시 <b>무료배송</b></Text>,
       visible: productTotalPrice !== 0 && diffDeliveryFee !== 0,
     },
     {
+      id: '총 주문 금액',
       name: <b>총 주문 금액</b>,
       value: <Text type='title' size='titleLg' color='red'>{productTotalPrice === 0 ? 0 : totalOrderPrice.toLocaleString()}원</Text>,
       visible: true,
@@ -38,12 +43,12 @@ const CartPriceInfo = () => {
       <ul className={styles.priceInfoList}>
         {infoList.map((info, index) => (
           info.visible &&
-          <li key={`${info.name}${index}`} className={styles.priceInfo}>
+          <li key={`${info.id}${index}`} className={styles.priceInfo}>
             <Text type='description' size='md' color='black' weight='normal'>
               {info.name}
             </Text>
             {typeof info.value === 'number' ?
-              <Text type='description' size='lg' color='black' weight='normal'>
+              <Text type='description' size='md' color='black' weight='normal'>
                 {info.value.toLocaleString()}원
               </Text>
               : info.value

@@ -1,9 +1,11 @@
+'use client'
 import * as styles from './ManageSubscribe.css';
 import Text from "@/components/common/text/Text";
 import SubscribeCard from "@/components/pages/mypage/subscribe/subscribeCard/SubscribeCard";
-import { ManageSubscribeData } from "@/types/subscription";
+import { useGetSubscribeList } from "@/api/subscription/queries/useGetSubscribeList";
 
-const ManageSubscribe = ({ subscribeDataList }: { subscribeDataList: ManageSubscribeData[] }) => {
+const ManageSubscribe = () => {
+  const { data: subscribeListData } = useGetSubscribeList(0);
   return (
     <section className={styles.subscribeContainer}>
       <Text type='title' size='md' color='red' weight='normal' className={styles.subscribeTitle}>
@@ -11,9 +13,9 @@ const ManageSubscribe = ({ subscribeDataList }: { subscribeDataList: ManageSubsc
         플랜 및 레시피 변경 시 재결제가 이뤄질 수 있습니다.
       </Text>
       <article className={styles.subscribeList}>
-        {subscribeDataList.map(subscribeData => (
-          <SubscribeCard 
-            key={subscribeData.subscribeDto.subscribeId} 
+        {subscribeListData.map(subscribeData => (
+          <SubscribeCard
+            key={subscribeData.subscribeDto.subscribeId}
             subscribeData={subscribeData}
           />
         ))}

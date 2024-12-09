@@ -3,12 +3,11 @@ import * as styles from "./Coupon.css";
 import Text from "@/components/common/text/Text";
 import CouponItemCard from "@/components/pages/mypage/coupon/couponItemCard/CouponItemCard";
 import ApplyCoupon from "@/components/pages/mypage/coupon/applyCoupon/ApplyCoupon";
-import { useGetCoupons } from "@/api/queries/useGetCoupons";
-import { CouponData } from "@/types/coupon";
+import { useGetCoupons } from "@/api/mypage/queries/useGetCoupons";
 
 const Coupon = () => {
-  const { data: couponData } = useGetCoupons();
-  const couponListData: CouponData[] = couponData.couponsPageDto._embedded.queryCouponsDtoList;
+  const { data: couponListData } = useGetCoupons();
+
   return (
     <div className={styles.couponContainer}>
       <Text type='title' size='md' align='left'>쿠폰 등록</Text>

@@ -5,3 +5,5 @@ export * from './common';
 export * from './myPage';
 export * from './order';
 export * from './user';
+export * from './reward';
+export * from './coupon';

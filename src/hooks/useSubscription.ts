@@ -1,4 +1,4 @@
-import { PlanName } from "@/constants";
+import { PlanName } from "@/types";
 import { useState } from "react";
 
 

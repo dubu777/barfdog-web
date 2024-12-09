@@ -1,5 +1,6 @@
 import {create} from "zustand";
-import {initialUserInfo, UserInfoData} from "@/types/user";
+import {UserInfoData} from "@/types/user";
+import {initialUserInfo} from "@/constants";
 
 interface AuthStore {
   isLoggedIn: boolean;

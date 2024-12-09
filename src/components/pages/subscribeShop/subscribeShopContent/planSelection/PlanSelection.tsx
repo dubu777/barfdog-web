@@ -1,7 +1,8 @@
 import PlanSelectBox from "./planSelectBox/PlanSelectBox";
 import FullPlanIcon from "/public/images/survey/full_plan.svg";
 import * as styles from "./PlanSelection.css";
-import { PLAN_SELECT_INFO, PlanName } from "@/constants";
+import { PLAN_SELECT_INFO } from "@/constants";
+import { PlanName } from "@/types";
 
 import { getNameWithObjectSuffix } from "@/utils";
 import { UI_MESSAGES } from "@/constants/message";

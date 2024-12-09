@@ -1,6 +1,6 @@
 import { PlanKey } from "@/types";
 
-export { subscribeStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscribePlanInfo, }
+export { subscribeStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscribePlanInfo }
 
 const subscribePlanInfo: Record<PlanKey, {
   id: string;

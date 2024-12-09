@@ -1,28 +1,15 @@
 import { create } from "zustand";
-import { BasketDto, DeliveryConstant } from "@/types/cart";
-
-interface CartSummary {
-  productTotalPrice: number;
-  discount: number;
-  deliveryFee: number;
-  totalOrderPrice: number;
-  diffDeliveryFee: number;
-}
-
-interface CartData {
-  basketDtoList: BasketDto[];
-  deliveryConstant: DeliveryConstant;
-}
+import { CartData, CartSummary } from "@/types/cart";
 
 interface CartStore {
   count: number;
   cartData: CartData | null;
   setCartData: (cartData: CartData) => void;
-  calculateSummary: (cartData: cartData) => CartSummary;
+  calculateSummary: (cartData: CartData) => CartSummary;
   updateItemAmount: (basketId: number, amount: number) => void;
   selectedItems: number[];
   setSelectedItems: (selectedItems: number[]) => void;
-  calculatedPrices: CartSummary | null;
+  calculatedPrices: CartSummary;
 }
 
 const initialCalculatedPrices = {

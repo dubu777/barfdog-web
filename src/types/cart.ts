@@ -3,6 +3,8 @@ export type {
   CartItemOptionDto,
   BasketDto,
   DeliveryConstant,
+  CartSummary,
+  CartData,
 };
 
 interface CartItemDto {
@@ -32,4 +34,17 @@ interface BasketDto {
 interface DeliveryConstant {
   freeCondition: number;
   price: number;
+}
+
+interface CartSummary {
+  productTotalPrice: number;
+  discount: number;
+  deliveryFee: number;
+  totalOrderPrice: number;
+  diffDeliveryFee: number;
+}
+
+interface CartData {
+  basketDtoList: BasketDto[];
+  deliveryConstant: DeliveryConstant;
 }
