@@ -1,6 +1,5 @@
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import { MyPageInfoData } from "@/types/myPage";
 import { getMainDeadlineBanner } from "@/api/main/main";
 
 export { useGetMainDeadlineBanner, prefetchGetMainDeadlineBanner }
@@ -9,7 +8,7 @@ const getMainBannerQueryKey = [queryKeys.MAIN, queryKeys.GET_MAIN_DEADLINE_BANNE
 
 function useGetMainDeadlineBanner() {
   const queryClient = useQueryClient();
-  return useQuery<MyPageInfoData>({
+  return useQuery<string>({
     queryKey: getMainBannerQueryKey,
     queryFn: getMainDeadlineBanner,
     initialData: () => queryClient.getQueryData(getMainBannerQueryKey),
@@ -17,7 +16,7 @@ function useGetMainDeadlineBanner() {
 }
 
 async function prefetchGetMainDeadlineBanner(queryClient: QueryClient) {
-  await queryClient.prefetchQuery<MyPageInfoData>({
+  await queryClient.prefetchQuery<string>({
     queryKey: getMainBannerQueryKey,
     queryFn: getMainDeadlineBanner,
   });

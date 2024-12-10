@@ -5,10 +5,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { RecipeDto, SelectedHealthInfo } from "@/types";
-import MainText from "@/components/pages/main/mainText/MainText";
+import Text from "@/components/common/text/Text";
 
 interface MainRecipesSliderProps {
-  recipeData: RecipeDto;
+  recipeData: RecipeDto[];
   selectedHealthDetail: SelectedHealthInfo;
 }
 
@@ -37,14 +37,14 @@ const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: MainRecipesSlid
             />
             <div className={styles.recipesContentBox}>
               <div style={{ marginTop: '5px' }}>
-                <MainText type='description' size='sm' color='black' weight='normal' align='left'>
+                <Text type='description' size='sm' color='black' weight='normal' align='left'>
                   {recipe.name}
-                </MainText>
+                </Text>
               </div>
-              <MainText className={styles.recipesPrice} type='description' size='sm' color='black' weight='normal' align='left'>
+              <Text className={styles.recipesPrice} type='description' size='sm' color='black' weight='normal' align='left'>
                 <span>1팩당 (100g)</span>
                 <span>{(recipe.pricePerGram * 100).toLocaleString('ko-KR')}원</span>
-              </MainText>
+              </Text>
             </div>
           </Link>
         </SwiperSlide>

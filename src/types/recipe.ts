@@ -1,4 +1,4 @@
-export { RecipeDto };
+export type { RecipeDto };
 
 interface RecipeDto {
   id: number;

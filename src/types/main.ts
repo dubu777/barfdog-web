@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export {
   MainBannerDto,
   MainBestReviewsDto,
@@ -82,7 +84,7 @@ interface SelectedHealthData {
 interface SelectedHealthInfo {
   key: SelectedHealthType;
   name: string;
-  imgUrl: string;
+  imgUrl: string | StaticImageData;
   description: string;
   recommendRecipes: string[];
 }

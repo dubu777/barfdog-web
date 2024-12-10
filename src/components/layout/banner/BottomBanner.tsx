@@ -13,10 +13,12 @@ const BottomBanner = () => {
   const [timestamp, setTimestamp] = useState<string | null | undefined>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTimestamp(deadlineBannerTimestamp(deadlineBanner))
-    }, 100)
-    return () => clearInterval(interval)
+    if(deadlineBanner) {
+      const interval = setInterval(() => {
+        setTimestamp(deadlineBannerTimestamp(deadlineBanner))
+      }, 100)
+      return () => clearInterval(interval)
+    }
   }, [deadlineBanner]);
 
   return (

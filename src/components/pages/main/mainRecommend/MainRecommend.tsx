@@ -1,29 +1,34 @@
 import * as styles from "./MainRecommend.css";
 import MainRecommendRecipes from "@/components/pages/main/mainRecommend/MainRecommendRecipes";
 import MainHealthCheckSlider from "@/components/pages/main/mainRecommend/MainHealthCheckSlider";
-import MainText from "@/components/pages/main/mainText/MainText";
 import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
 import { useGetRecipeList } from "@/api/recipes/queries/useGetRecipeList";
-import { MainRecipeDto, RecipeDto } from "@/types/main";
+import { MainRecipeDto, RecipeDto } from "@/types";
+import Text from "@/components/common/text/Text";
 
 const MainRecommend = () => {
   const { data: mainInfoData } = useGetMainInfo();
-  const { recipeDtoList: mainRecipesData }: MainRecipeDto[] = mainInfoData;
+  const mainRecipesData: MainRecipeDto[] = mainInfoData?.recipeDtoList ?? [];
 
   const { data: recipesDetailData } = useGetRecipeList();
-  const finalRecipeData: RecipeDto[] = recipesDetailData.map((recipe, index) => recipe.id === mainRecipesData[index].id ? {'imgUrl': mainRecipesData[index].imageUrl2, ...recipe} : recipe);
+  const finalRecipeData: RecipeDto[] 
+    = (recipesDetailData ?? []).map((recipe, index) => 
+      recipe.id === mainRecipesData[index].id 
+        ? { ...recipe, imgUrl: mainRecipesData[index].imageUrl2 } 
+        : recipe
+      );
 
   return (
     <article className={styles.mainRecommendWrapper}>
       <>
-        <div style={{ marginBottom: '4px' }}>
-          <MainText type='title' size='titleLg'>
+        <div className={styles.recommendTitle}>
+          <Text type='title' size='titleLg' weight='bold'>
             반려견 건강에 고민이 있다면?
-          </MainText>
+          </Text>
         </div>
-        <MainText type='description' size='sm' color='grey'>
+        <Text type='description' size='sm' color='grey'>
           75만 데이터를 분석한 AI 추천 맞춤 식단 구독
-        </MainText>
+        </Text>
       </>
       <div className={styles.recommendSlideContainer}>
         <MainHealthCheckSlider />

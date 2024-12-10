@@ -6,12 +6,13 @@ import 'swiper/css/pagination';
 import CheckWhite from '/public/images/icons/check-white.svg';
 import { useMainStore } from "@/store/useMainStore";
 import { HealthCheckList } from "@/constants";
-import MainText from "@/components/pages/main/mainText/MainText";
+import Text from "@/components/common/text/Text";
+import { SelectedHealthType } from "@/types";
 
 const MainHealthCheckSlider = () => {
   const { selectedHealth, setSelectedHealth } = useMainStore();
 
-  const handleSelectHealth = (key) => {
+  const handleSelectHealth = (key: SelectedHealthType) => {
     setSelectedHealth({
       key: key,
       isChecked: true
@@ -32,9 +33,9 @@ const MainHealthCheckSlider = () => {
             className={styles.recommendSlideItem}
             onClick={() => handleSelectHealth(health.key)}
           >
-            <MainText className={styles.healthCheckTitle} type='title' size='md' color='white'>
+            <Text className={styles.healthCheckTitle} type='title' size='md' color='white'>
               {health.name}
-            </MainText>
+            </Text>
             <Image
               src={health.imgUrl}
               alt={`${health.key} image`}
