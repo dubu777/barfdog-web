@@ -1,17 +1,15 @@
-'use client';
-
 import * as styles from './MainReview.css';
 import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { ReviewDataProps } from "@/components/pages/main/mainReview/MainReview";
 import MainText from "@/components/pages/main/mainText/MainText";
 import { ellipsis } from "@/styles/common.css";
-import {Fragment} from "react";
+import { Fragment } from "react";
+import { MainBestReviewsDto } from "@/types";
 
-const MainReviewSlider = ({ reviewData }: { reviewData: ReviewDataProps[] }) => {
+const MainReviewSlider = ({ reviewData }: { reviewData: MainBestReviewsDto[] }) => {
   const rate = 5;
   return (
     <div className={styles.mainSliderWrapper}>

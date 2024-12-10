@@ -4,11 +4,16 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { RecipeDetailDataProps } from "@/components/pages/main/mainRecommend/MainRecommend";
+import { RecipeDto, SelectedHealthInfo } from "@/types";
 import MainText from "@/components/pages/main/mainText/MainText";
 
-const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: { recipeData: RecipeDetailDataProps[], selectedHealthDetail: HealthCheckDetailProps }) => {
-  const recipeFilterData = recipeData.filter(recipe => selectedHealthDetail.recommendRecipes?.some(recommend => recipe.name.includes(recommend)));
+interface MainRecipesSliderProps {
+  recipeData: RecipeDto;
+  selectedHealthDetail: SelectedHealthInfo;
+}
+
+const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: MainRecipesSliderProps ) => {
+  const recipeFilterData: RecipeDto[] = recipeData.filter(recipe => selectedHealthDetail.recommendRecipes?.some(recommend => recipe.name.includes(recommend)));
   return (
     <Swiper
       slidesPerView='auto'
@@ -23,7 +28,7 @@ const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: { recipeData: R
         >
           <Link href={`/store/${recipe.id}`}>
             <Image
-              src={recipe.imageUrl}
+              src={recipe.imgUrl}
               alt={recipe.name}
               width={163}
               height={163}

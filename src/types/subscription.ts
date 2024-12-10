@@ -1,5 +1,5 @@
 import { subscribePlanInfo, subscribeStatus } from "@/constants";
-import { RecipeDto } from "./survey";
+import { RecipeDto } from "./recipe";
 
 export type {
   PlanDiscountResponseDto,

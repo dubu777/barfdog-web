@@ -1,23 +1,23 @@
-'use client';
-
 import { useEffect, useState } from "react";
 import * as styles from './Banner.css';
 import { themeVars } from "@/styles/theme.css";
 import Image from "next/image";
 import CloseButton from '/public/images/icons/close-white.png';
 import { useMainStore } from "@/store/useMainStore";
-import { orderDeadlineTimestamp } from "@/utils/orderDeadlineTimestamp";
+import { deadlineBannerTimestamp } from "@/utils/deadlineBannerTimestamp";
+import { useGetMainDeadlineBanner } from "@/api/main/queries/useGetMainBanner";
 
-const BottomBanner = ({ orderDeadline }: { orderDeadline: string }) => {
+const BottomBanner = () => {
+  const { data: deadlineBanner } = useGetMainDeadlineBanner();
   const { isBottomBannerVisible, closeBottomBanner } = useMainStore();
   const [timestamp, setTimestamp] = useState<string | null | undefined>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimestamp(orderDeadlineTimestamp(orderDeadline))
+      setTimestamp(deadlineBannerTimestamp(deadlineBanner))
     }, 100)
     return () => clearInterval(interval)
-  }, [orderDeadline]);
+  }, [deadlineBanner]);
 
   return (
     isBottomBannerVisible &&

@@ -1,5 +1,3 @@
-'use client';
-
 import Image from "next/image";
 import * as styles from "./MainRecommend.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -38,7 +36,7 @@ const MainHealthCheckSlider = () => {
               {health.name}
             </MainText>
             <Image
-              src={health.imageUrl}
+              src={health.imgUrl}
               alt={`${health.key} image`}
               width={139}
               height={182}

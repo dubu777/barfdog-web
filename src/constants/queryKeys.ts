@@ -28,4 +28,9 @@ const queryKeys = {
   GET_SUBSCRIBE_LIST: 'getSubscribeList',
   GET_PACKAGE_BENEFITS: 'getPackageBenefits',
   GET_DELIVERY_ADDRESS: 'getDeliveryAddress',
+  MAIN: 'main',
+  GET_MAIN_INFO: 'getMainInfo',
+  GET_MAIN_DEADLINE_BANNER: 'getMainDeadlineBanner',
+  RECIPE: 'recipe',
+  GET_RECIPE_LIST: 'getRecipeList',
 } as const

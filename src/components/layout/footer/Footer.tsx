@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from "react";
 import * as styles from './Footer.css';
 import Image from "next/image";

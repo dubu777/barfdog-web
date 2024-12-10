@@ -1,35 +1,17 @@
 import * as styles from "./MainRecommend.css";
-import axiosInstance from "@/api/axiosInstance";
 import MainRecommendRecipes from "@/components/pages/main/mainRecommend/MainRecommendRecipes";
 import MainHealthCheckSlider from "@/components/pages/main/mainRecommend/MainHealthCheckSlider";
 import MainText from "@/components/pages/main/mainText/MainText";
+import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
+import { useGetRecipeList } from "@/api/recipes/queries/useGetRecipeList";
+import { MainRecipeDto, RecipeDto } from "@/types/main";
 
-interface MainRecipesDataProps {
-  id: number;
-  name: string;
-  description: string;
-  uiNameKorean: string;
-  uiNameEnglish: string;
-  filename1: string;
-  filename2: string;
-  imageUrl1: string;
-  imageUrl2: string;
-}
+const MainRecommend = () => {
+  const { data: mainInfoData } = useGetMainInfo();
+  const { recipeDtoList: mainRecipesData }: MainRecipeDto[] = mainInfoData;
 
-export interface RecipeDetailDataProps extends RecipesDataProps {
-  description: string;
-  leaked: string;
-  ingredients: string;
-  modifiedDate: string;
-  gramPerKcal: number;
-  pricePerGram: number;
-  inStock: boolean;
-}
-
-const MainRecommend = async ({ mainRecipesData }: { mainRecipesData: MainRecipesDataProps }) => {
-  const recipesResponse = await axiosInstance.get('/api/recipes');
-  const recipesDetailData = recipesResponse.data._embedded.recipeListResponseDtoList.sort((a, b) => a.id - b.id);
-  const finalRecipeData: RecipeDetailDataProps = recipesDetailData.map((recipe, index) => recipe.id === mainRecipesData[index].id ? {'imageUrl': mainRecipesData[index].imageUrl2, ...recipe} : recipe);
+  const { data: recipesDetailData } = useGetRecipeList();
+  const finalRecipeData: RecipeDto[] = recipesDetailData.map((recipe, index) => recipe.id === mainRecipesData[index].id ? {'imgUrl': mainRecipesData[index].imageUrl2, ...recipe} : recipe);
 
   return (
     <article className={styles.mainRecommendWrapper}>

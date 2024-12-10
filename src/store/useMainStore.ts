@@ -1,13 +1,9 @@
 import {create} from "zustand";
-
-export type SelectedHealthType = {
-  key: string;
-  isChecked: boolean;
-}
+import { SelectedHealthData } from "@/types";
 
 interface MainStore {
-  selectedHealth: SelectedHealthType;
-  setSelectedHealth: ({ key: string, isChecked: boolean }) => void;
+  selectedHealth: SelectedHealthData;
+  setSelectedHealth: ({ key, isChecked}: SelectedHealthData) => void;
   isTopBannerVisible: boolean;
   isBottomBannerVisible: boolean;
   closeTopBanner: () => void;

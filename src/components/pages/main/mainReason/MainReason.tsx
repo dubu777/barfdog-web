@@ -1,13 +1,10 @@
-'use client';
-
 import * as styles from './MainReason.css';
 import Image from "next/image";
 import Link from "next/link";
-
 import RightArrow from "/public/images/icons/right-arrow-red.svg";
-import {useBreakpoints} from "@/hooks/useBreakpoints";
 import MainText from "@/components/pages/main/mainText/MainText";
-import {reasonBarfdogList} from "@/constants";
+import { reasonBarfdogList } from "@/constants";
+import { useBreakpoints } from "@/hooks/useBreakpoints";
 
 const MainReason = () => {
   const { isMobile } = useBreakpoints();

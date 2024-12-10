@@ -7,3 +7,5 @@ export * from './order';
 export * from './user';
 export * from './reward';
 export * from './coupon';
+export * from './recipe';
+export * from './main';

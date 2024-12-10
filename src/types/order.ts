@@ -1,5 +1,4 @@
 export type {
-  RecipeDto,
   SubscribeOrderData,
   GeneralOrderData,
   OrderDetailDto,
@@ -17,7 +16,7 @@ interface OrderItem {
   name: string;
 }
 
-interface RecipeDto {
+interface OrderRecipeDto {
   thumbnailUrl: string;
   recipeName: string;
 }
@@ -71,7 +70,7 @@ interface OrderItemDtoList {
 }
 
 interface SubscribeOrderData {
-  recipeDto: RecipeDto;
+  recipeDto: OrderRecipeDto;
   orderDto: SubscribeOrderDto;
 }
 
@@ -139,7 +138,7 @@ interface OrderDetailData {
 }
 
 interface MergeOrderAndRecipe extends OrderDetailData {
-  recipeDto?: RecipeDto;
+  recipeDto?: OrderRecipeDto;
 }
 
 type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";

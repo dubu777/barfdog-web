@@ -1,15 +1,13 @@
-'use client';
-
 import MainRecipesSlider from "@/components/pages/main/mainRecommend/MainRecipesSlider";
 import MainText from "@/components/pages/main/mainText/MainText";
-import { RecipeDetailDataProps } from "@/components/pages/main/mainRecommend/MainRecommend";
 import { HealthCheckList } from "@/constants";
 import { useMainStore } from "@/store/useMainStore";
-import {pointColor} from "@/styles/common.css";
+import { pointColor } from "@/styles/common.css";
+import { RecipeDto, SelectedHealthInfo } from "@/types";
 
-const MainRecommendRecipes = ({ recipeData }: { recipeData: RecipeDetailDataProps }) => {
+const MainRecommendRecipes = ({ recipeData }: { recipeData: RecipeDto[] }) => {
   const { selectedHealth } = useMainStore();
-  const selectedHealthDetail = HealthCheckList.find(v => v.key === selectedHealth.key);
+  const selectedHealthDetail: SelectedHealthInfo = HealthCheckList.find(v => v.key === selectedHealth.key);
   return (
     <>
       <div>
