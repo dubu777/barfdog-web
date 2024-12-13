@@ -62,14 +62,3 @@ export const editMypageButton = style({
   right: 0,
   top: 0,
 })
-
-export const myPageBanner = style({
-  width: '100%',
-  height: '49px',
-  background: themeVars.colors.black,
-  color: themeVars.colors.white,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-})
-

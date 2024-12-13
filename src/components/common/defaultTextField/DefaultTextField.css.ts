@@ -61,6 +61,11 @@ export const textFieldStyle = recipe({
       true: {
         
       }
-    }
+    },
+    isError: {
+      true: {
+        border: `1px solid ${themeVars.colors.red}`,
+      }
+    },
   }
 })

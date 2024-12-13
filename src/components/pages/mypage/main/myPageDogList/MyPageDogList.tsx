@@ -1,12 +1,15 @@
-import * as styles from "./DogList.css";
+'use client';
+import * as styles from "./MyPageDogList.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
-import DogCard from "@/components/pages/mypage/main/dogList/dogCard/DogCard";
-import { DogData } from "@/types/dogs";
+import DogCard from "@/components/pages/mypage/main/myPageDogList/dogCard/DogCard";
+import { useGetDogs } from "@/api/dog/queries/useGetDogs";
 
-const DogList = ({ dogsData }: { dogsData: DogData[] }) => {
+const MyPageDogList = () => {
+  const { data: dogsData } = useGetDogs();
+
   const representativeDog = dogsData.find(dog => dog.representative);
   const subscribingDogs = dogsData.filter(dog => dog.nextDeliveryDate && dog.subscribeStatus === 'SUBSCRIBING');
   const newDogsData = [
@@ -51,4 +54,4 @@ const DogList = ({ dogsData }: { dogsData: DogData[] }) => {
   );
 };
 
-export default DogList;
+export default MyPageDogList;

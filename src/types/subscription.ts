@@ -13,11 +13,11 @@ export type {
   calculateOneMealGramsInput,
   calculateOneMealGramsOutput,
   calculateOneMealGramsWithVolumeInput,
-  SubscribeByIdDto,
+  SubscriptionByIdDto,
   SubscribesDto,
   SubscribeAddressData,
   AddressDto,
-  ManageSubscribeData,
+  SubscribeListData,
   BenefitDto,
   PaymentBody,
   SubscriptionResponse,
@@ -198,7 +198,7 @@ interface DefaultSubscribeDto {
   nextDeliveryDate: string | null;
 }
 
-interface SubscribeByIdDto extends DefaultSubscribeDto {
+interface SubscriptionByIdDto extends DefaultSubscribeDto {
   id: number;
   subscribeStatus: SubscribeStatusKey;
   dogId: number;
@@ -239,7 +239,7 @@ interface AddressDto {
   request?: null | string;
 }
 
-interface ManageSubscribeData {
+interface SubscribeListData {
   itemNames: string;
   recipeNames: string;
   subscribeDto: SubscribesDto;

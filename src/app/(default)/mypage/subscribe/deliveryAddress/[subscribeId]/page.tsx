@@ -1,5 +1,8 @@
+import { Suspense } from "react";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { prefetchGetDeliveryAddress } from "@/api/subscription/queries/useGetDeliveryAddress";
 import DeliveryAddress from "@/components/pages/mypage/deliveryAddress/DeliveryAddress";
-import axiosInstance from "@/api/axiosInstance";
 
 interface ManageShippingAddressPageProps {
   params: { subscribeId: string };
@@ -7,12 +10,23 @@ interface ManageShippingAddressPageProps {
 }
 
 export default async function ManageShippingAddressPage({ params, searchParams }: ManageShippingAddressPageProps) {
-  const addressResponse = await axiosInstance.get(`/api/address/subscribe/${params.subscribeId}`);
   const changeType = searchParams.changeType || undefined;
+  const { subscribeId } = params;
+
+  const queryClient = new QueryClient();
+  await prefetchGetDeliveryAddress(queryClient, subscribeId);
+  const dehydrateState = dehydrate(queryClient);
   return (
-    <DeliveryAddress
-      addressData={addressResponse.data}
-      changeType={changeType}
-    />
+    <HydrationBoundary state={dehydrateState}>
+      <ErrorBoundary fallback={<div>구독 배송지가 없습니다.</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <DeliveryAddress
+            changeType={changeType}
+            subscribeId={subscribeId}
+          />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrationBoundary>
+
   )
 }

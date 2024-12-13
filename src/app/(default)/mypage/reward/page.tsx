@@ -2,7 +2,7 @@ import Rewards from "@/components/pages/mypage/rewards/Rewards";
 import {dehydrate, HydrationBoundary, QueryClient} from "@tanstack/react-query";
 import {ErrorBoundary} from "react-error-boundary";
 import {Suspense} from "react";
-import {prefetchGetRewards} from "@/api/queries/useGetRewards";
+import {prefetchGetRewards} from "@/api/mypage/queries/useGetRewards";
 
 export default async function RewardPage() {
   // const rewardsData = {

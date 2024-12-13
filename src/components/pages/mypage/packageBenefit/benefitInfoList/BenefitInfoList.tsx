@@ -4,9 +4,9 @@ import { DefaultObjectType } from "@/types/common";
 import { BenefitDto, BenefitStatus } from "@/types/subscription";
 import { BenefitName, BenefitsData } from "@/components/pages/mypage/packageBenefit/PackageBenefit";
 
-const BenefitInfoList = ({ benefitsResponseData }: { benefitsResponseData: BenefitDto[] }) => {
+const BenefitInfoList = ({ packageBenefitsData }: { packageBenefitsData: BenefitDto[] }) => {
   const findBenefitByStatus = (status: BenefitStatus | null, benefitName: BenefitName, isTotal = false) => {
-    return benefitsResponseData.filter(
+    return packageBenefitsData.filter(
       benefit =>
         isTotal
           ? benefit.benefitName === benefitName
@@ -62,7 +62,7 @@ const BenefitInfoList = ({ benefitsResponseData }: { benefitsResponseData: Benef
 
   return (
     <article className={styles.benefitsBox}>
-      {benefitContentList.map((benefit, index) => (
+      {benefitContentList.map((benefit) => (
         <div key={benefit.id} className={styles.benefitItem}>
           <Text type='description' size='md' color='black'>{benefit.name}</Text>
             <p className={styles.benefitItemInfo}>{benefit?.value}</p>

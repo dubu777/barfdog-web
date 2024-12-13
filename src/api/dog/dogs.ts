@@ -3,7 +3,6 @@ import { DogData } from "@/types";
 import axiosInstance from "../axiosInstance";
 
 
-
 const getDogs = async (): Promise<DogData[]> => {
   const {data} = await axiosInstance.get('/api/dogs');
 
@@ -11,6 +10,4 @@ const getDogs = async (): Promise<DogData[]> => {
 }
 
 
-
-                          
 export { getDogs }

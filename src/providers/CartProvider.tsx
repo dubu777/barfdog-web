@@ -1,27 +1,20 @@
 'use client';
-import axiosInstance from "@/api/axiosInstance";
 import { ReactNode, useEffect } from "react";
 import { useCartStore } from "@/store/useCartStore";
+import { useGetCart } from "@/api/cart/queries/useGetCart";
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
   const { setCartData } = useCartStore();
+  const { data: cartData } = useGetCart();
 
   useEffect(() => {
-    const fetchCartData = async () => {
-      try {
-        const cartResponse = await axiosInstance.get('/api/baskets');
-        setCartData(cartResponse.data);
-      } catch (error) {
-        console.error('Failed to fetch cart data:', error);
-      }
-    };
-    fetchCartData();
-  }, [setCartData]);
-
+    if (cartData) {
+      setCartData(cartData);
+    }
+  }, [cartData, setCartData]);
+  
   return (
-    <>
-      {children}
-    </>
+    <>{children}</>
   );
 };
 
