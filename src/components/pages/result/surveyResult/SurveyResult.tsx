@@ -15,7 +15,7 @@ console.log('resultData', resultData);
       <Link
         style={{ color: "white" }}
         href={{
-          pathname: `/survey/subscription-shop`,
+          pathname: `/survey/subscription-shop?id=${id}`,
         }}
       >
         구독 샵 이동

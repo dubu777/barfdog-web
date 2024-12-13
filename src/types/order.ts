@@ -7,6 +7,7 @@ export type {
   OrderDetailData,
   MergeOrderAndRecipe,
   PaymentMethod,
+  AddressResponse,
 };
 
 interface OrderItem {
@@ -137,6 +138,19 @@ interface OrderDetailData {
 
 interface MergeOrderAndRecipe extends OrderDetailData {
   recipeDto?: RecipeDto;
+}
+
+interface AddressResponse {
+  id: number;
+  city: string;
+  street: string;
+  zipcode: string;
+  detailAddress: string;
+  phoneNumber: string;
+  recipientName: string;
+  deliveryName: string | null;
+  default: boolean;
+  request: string | null;
 }
 
 type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";

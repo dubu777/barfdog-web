@@ -14,7 +14,10 @@ const queryKeys = {
   GET_SUBSCRIBE_BY_ID: 'getSubscribeById',
   SUBSCRIPTION: 'subscription',
   GET_PLAN_DISCOUNT: 'getPlanDiscount',
-  GET_ORDER_SHEET: 'getOrderSheet',
   DOG: 'dog',
-  GET_DOGS: 'getDogs'
+  GET_DOGS: 'getDogs',
+  ORDER: 'order',
+  GET_SUBSCRIPTION_ORDER_SHEET: 'getSubscriptionOrderSheet',
+  GET_GENERAL_ORDER_SHEET: 'getGeneralOrderSheet',
+  GET_ADDRESS: 'getAddress',
 } as const

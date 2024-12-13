@@ -6,7 +6,7 @@ import {
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 
-export type { SearchParamProps, DefaultObjectType, UseMutationCustomOptions, UseQueryCustomOptions };
+export type { SearchParamProps, DefaultObjectType, UseMutationCustomOptions, UseQueryCustomOptions, UseSuspenseQueryCustomOptions };
 
 type SearchParamProps = {
   param: { [key: string]: string | number };
@@ -31,7 +31,7 @@ type UseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
   "queryKey"
 >;
 
-export type UseSuspenseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
+type UseSuspenseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
   UseSuspenseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
   "queryKey"
 >;

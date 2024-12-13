@@ -2,8 +2,14 @@
 
 import useSubscription from "@/hooks/useSubscription";
 import * as styles from "@/app/survey/Survey.css";
-import { calculateOneMealGrams, calculateOneMealGramsWithVolume } from "@/utils/subscription/mealCalculations";
-import { isOriginSubscriber, isToppingPlan } from "@/utils/subscription/subscriptionUtils";
+import {
+  calculateOneMealGrams,
+  calculateOneMealGramsWithVolume,
+} from "@/utils/subscription/mealCalculations";
+import {
+  isOriginSubscriber,
+  isToppingPlan,
+} from "@/utils/subscription/subscriptionUtils";
 import { getDiscountPercent } from "@/utils/subscription/getDiscountPercent";
 import FooterButton from "../footerButton/FooterButton";
 import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
@@ -14,15 +20,12 @@ import useModal from "@/hooks/useModal";
 import DeliveryScheduleModal from "./selectedProductInfo/deliveryScheduleModal/DeliveryScheduleModal";
 import { validatePaymentBody } from "@/utils/subscription/validatePaymentBody";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
-import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSubscription";
+import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
-import { useGetOrderSheet } from "@/api/subscription/queries/useGetOrderSheet";
 import { useRouter } from "next/navigation";
 import { useGetDogs } from "@/api/dog/queries/useGetDogs";
 import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
-
-
 
 interface SubscriptionShopContentProps {
   reportId: number;
@@ -31,15 +34,11 @@ interface SubscriptionShopContentProps {
 export default function SubscriptionShopContent({
   reportId,
 }: SubscriptionShopContentProps) {
-  const router = useRouter()
+  const router = useRouter();
   const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
-  const { data: orderSheetData } = useGetOrderSheet(recipeData.subscribeId);
-console.log('orderSheetData', orderSheetData);
-console.log('recipeData.subscribeId', recipeData.subscribeId);
-console.log('recipeData', recipeData);
-
+  const { data: dogsData } = useGetDogs();
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
@@ -53,7 +52,7 @@ console.log('recipeData', recipeData);
 
   // 기존 구독자 여부 확인 함수
   const isOrigin = isOriginSubscriber(recipeData.subscribeId);
-  
+
   // 서버에서 받아온 플랜별 할인율에서 선택 플랜 할인율 찾아 적용
   const discountPercent = getDiscountPercent(discountData, selectedPlan);
 
@@ -72,11 +71,11 @@ console.log('recipeData', recipeData);
     oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
     selectedVolume,
     isOriginSubscriber: isOrigin,
-  })
+  });
 
   // 토핑 플랜 여부에 따라 가격 계산 함수에 들어갈 값을 유동적으로 넣기 위해
   const recipeMealsToCalculate =
-  isToppingPlan(selectedPlan) && oneMealGramWithVolume.length > 0
+    isToppingPlan(selectedPlan) && oneMealGramWithVolume.length > 0
       ? oneMealGramWithVolume
       : selectedRecipeMeals;
 
@@ -89,20 +88,12 @@ console.log('recipeData', recipeData);
   });
 
   const isCompleted =
-  !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
-  subscribePriceData.totalOriginalPriceAllRecipes !== 0;
+    !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
+    subscribePriceData.totalOriginalPriceAllRecipes !== 0;
 
   const { isOpen, onToggle, onClose } = useModal();
 
-  const { mutate: createSubscription } = useCreateSubscription({
-    onSuccess: (data) => {
-      // router.push(`/order/order-sheet/subscription/%{recipeData.subscribeId}`)
-      console.log("data Subscription Created>>>>>>>>>:", data);
-    },
-    onError: (error) => {
-      console.error("Error Creating Subscription:", error);
-    },
-  });
+  const { mutate: updateSubscription } = useUpdateSubscription();
 
   const handlePayment = () => {
     const body = {
@@ -112,17 +103,23 @@ console.log('recipeData', recipeData);
       oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
       subscribeItemList: null,
     };
-console.log('body', body);
+    console.log("body", body);
 
     const validationError = validatePaymentBody(body);
     if (validationError) {
       alert(validationError);
       return;
     }
-
-    const subscribeId = recipeData.subscribeId;
-    
-    createSubscription({ subscribeId, body });
+    updateSubscription(
+      { subscribeId: recipeData.subscribeId, body },
+      {
+        onSuccess: async () => {
+          router.push(
+            `/order/order-sheet/subscription/${recipeData.subscribeId}`
+          );
+        },
+      }
+    );
   };
 
   return (
@@ -138,13 +135,24 @@ console.log('body', body);
         selectedPlan={selectedPlan}
         dogName={resultData.myDogName}
       />
-      <SelectedProductInfo subscribePriceData={subscribePriceData} selectedRecipeMeals={selectedRecipeMeals} selectedPlan={selectedPlan} selectedVolume={selectedVolume} handleSelectedVolume={handleSelectedVolume} oneMealGramWithVolume={oneMealGramWithVolume}/>
+      <SelectedProductInfo
+        subscribePriceData={subscribePriceData}
+        selectedRecipeMeals={selectedRecipeMeals}
+        selectedPlan={selectedPlan}
+        selectedVolume={selectedVolume}
+        handleSelectedVolume={handleSelectedVolume}
+        oneMealGramWithVolume={oneMealGramWithVolume}
+      />
       {/* <SummaryBar /> */}
       <FooterButton isDisabled={!isCompleted} onClick={onToggle}>
         결제하러 가기
-        <RightArrowIcon/>
+        <RightArrowIcon />
       </FooterButton>
-      <DeliveryScheduleModal isVisible={isOpen} onClose={onClose} onClickConfirm={handlePayment}/>
+      <DeliveryScheduleModal
+        isVisible={isOpen}
+        onClose={onClose}
+        onClickConfirm={handlePayment}
+      />
     </div>
   );
 }

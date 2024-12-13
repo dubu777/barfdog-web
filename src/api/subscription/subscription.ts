@@ -8,19 +8,18 @@ const getPlanDiscount = async (): Promise<PlanDiscountResponse> => {
   return data
 }
 
-const getOrderSheet = async (subscribeId: number): Promise<OrderSheetResponse> => {
-  const {data} = await axiosInstance.get(`/api/orders/sheet/subscribe/${subscribeId}`);
-
-  return data
-}
-
-const createSubscription = async (
+export interface RequestCreateSubscription {
   subscribeId: number,
   body: PaymentBody
-): Promise<any> => {
+}
+
+const updateSubscription = async ({
+  subscribeId,
+  body
+}: RequestCreateSubscription): Promise<any> => {
   const response = await axiosInstance.put(`/api/subscribes/${subscribeId}`, body);
   return response;
 };
 
 
-export {getPlanDiscount, createSubscription, getOrderSheet}
+export {getPlanDiscount, updateSubscription}
