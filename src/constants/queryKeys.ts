@@ -31,3 +31,53 @@ const queryKeys = {
   GET_DELIVERY_ADDRESS: 'getDeliveryAddress',
   GET_ADDRESS: 'getAddress',
 } as const
+
+
+export const queryKeys2 = {
+  SURVEY: {
+    BASE: 'survey',
+    GET_RECIPE: 'getSurveyRecipe',
+    GET_RESULT: 'getSurveyResult',
+  },
+  COUPON: {
+    BASE: 'coupon',
+    GET_LIST: 'getCouponList',
+  },
+  MYPAGE: {
+    BASE: 'mypage',
+    GET_INFO: 'getMyPageInfo',
+    GET_BANNER: 'getMyPageBanner',
+  },
+  REWARDS: {
+    BASE: 'rewards',
+    GET_LIST: 'getRewards',
+  },
+  SUBSCRIPTION: {
+    BASE: 'subscription',
+    GET_DISCOUNT_INFO: 'getDiscountInfo',
+    GET_BY_ID: 'getSubscriptionById',
+    SKIP: 'skipSubscription',
+  },
+  CART: {
+    BASE: 'cart',
+    GET_DATA: 'getCartData',
+  },
+  PLAN: {
+    BASE: 'plan',
+    GET_DISCOUNT: 'getPlanDiscount',
+  },
+  DOG: {
+    BASE: 'dog',
+    GET_LIST: 'getDogs',
+  },
+  ORDER: {
+    BASE: 'order',
+    GET_SHEET: 'getOrderSheet',
+    DETAIL: 'orderDetail',
+    GET_SUBSCRIBE_LIST: 'getSubscribeList',
+    GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
+    GET_SUBSCRIBE_ORDER_LIST: 'getSubscribeOrderList',
+    GET_DELIVERY: 'getDeliveryAddress',
+    GET_ADDRESS: 'getAddress',
+  },
+} as const;
