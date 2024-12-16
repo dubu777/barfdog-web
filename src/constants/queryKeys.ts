@@ -24,6 +24,8 @@ const queryKeys = {
   SKIP_SUBSCRIPTION: 'skipSubscription',
   ORDER: 'order',
   ORDER_DETAIL: 'orderDetail',
+  GET_SUBSCRIPTION_ORDER_SHEET: 'getSubscriptionOrderSheet',
+  GET_GENERAL_ORDER_SHEET: 'getGeneralOrderSheet',
   GET_SUBSCRIBE_ORDER_LIST: 'getSubscribeOrderList',
   GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
   GET_SUBSCRIBE_LIST: 'getSubscribeList',

@@ -10,7 +10,7 @@ const getOrderSheet = async (subscribeId: number): Promise<OrderSheetResponse> =
   return data
 }
 
-const getAddress = async (): Promise<AddressResponse> => {
+const getAddress = async (): Promise<AddressResponse[]> => {
   const {data} = await axiosInstance.get(`/api/address`);
 
   return data._embedded.addressResponseDtoList

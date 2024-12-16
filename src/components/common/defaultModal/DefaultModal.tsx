@@ -15,6 +15,9 @@ interface DefaultModalProps {
   confirmText?: string;
   scroll?: boolean;
   onClickConfirm?: () => void;
+  extraButton?: boolean;
+  extraButtonText?: string;
+  onClickExtraButton?: () => void;
 }
 
 export default function DefaultModal({
@@ -27,6 +30,9 @@ export default function DefaultModal({
   confirmText,
   scroll,
   onClickConfirm,
+  extraButton,
+  extraButtonText,
+  onClickExtraButton,
 }: DefaultModalProps) {
   return (
     <DefaultModalBackground isVisible={isVisible} onClose={onClose}>
@@ -45,7 +51,7 @@ export default function DefaultModal({
             />
           </div>
         )}
-        <div className={styles.modalContentWrapper({scroll})}>{children}</div>
+        <div className={styles.modalContentWrapper({ scroll })}>{children}</div>
         {type === "alert" && (
           <div className={styles.modalButtonWrapper}>
             <DefaultButton type="mainBorder" size="sm" onClick={onClose}>
@@ -55,6 +61,11 @@ export default function DefaultModal({
               {confirmText}
             </DefaultButton>
           </div>
+        )}
+        {extraButton && (
+          <DefaultButton size="md" onClick={onClickExtraButton} borderRadius="sm">
+            {extraButtonText}
+          </DefaultButton>
         )}
       </div>
     </DefaultModalBackground>

@@ -1,25 +1,41 @@
-'use client'
-
-import { useGetOrderSheet } from "@/api/order/queries/useGetOrderSheet";
+import {
+  prefetchGetOrderSheet,
+} from "@/api/order/queries/useGetOrderSheet";
 import * as styles from "../../../Order.css";
-import OrderInfo from "@/components/pages/order/orderInfo/OrderInfo";
+import OrderInfo from "@/components/pages/order/orderContainer/orderInfo/OrderInfo";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import OrderContainer from "@/components/pages/order/orderContainer/OrderContainer";
 
 interface SubscriptionPageProps {
-  params: {subscribeId: number}
+  params: { subscribeId: number };
 }
 
-
-export default function SubscriptionPage({
+export default async function SubscriptionPage({
   params,
 }: SubscriptionPageProps) {
-  const { subscribeId } = params
+  const { subscribeId } = params;
+  const queryClient = new QueryClient();
 
-const { data: orderSheetData } = useGetOrderSheet(subscribeId)
-console.log('orderSheetData>>>', orderSheetData);
+  await prefetchGetOrderSheet(queryClient, subscribeId);
+  const dehydrateState = dehydrate(queryClient);
 
   return (
-    <div className={styles.subscriptionContainer}>
-      <OrderInfo />
-  </div>
-  )
+    <div className={styles.orderPageContainer}>
+      <HydrationBoundary state={dehydrateState}>
+        {/* 재시도 버튼 개발 예정 */}
+        <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+          {/* 로딩 컴포넌트 개발 예정 */}
+          <Suspense fallback={<div>Loading...</div>}>
+            <OrderContainer subscribeId={subscribeId}/>
+          </Suspense>
+        </ErrorBoundary>
+      </HydrationBoundary>
+    </div>
+  );
 }

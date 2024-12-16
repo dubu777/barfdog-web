@@ -1,5 +1,5 @@
 import * as styles from "./DeliveryScheduleModal.css";
-import { subscribeText } from "../../recipeSelection/RecipeSelection.css";
+import { subscribeText } from "../recipeSelection/RecipeSelection.css";
 import RightArrowIcon from "public/images/icons/right-arrow-red.svg";
 import ScheduleImage from "public/images/icons/schedule.png";
 import Image from "next/image";

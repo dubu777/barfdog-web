@@ -1,7 +1,7 @@
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { DogData, UseSuspenseQueryCustomOptions } from "@/types";
-import { getDogs } from "../dogs";
+import { getDogs } from "../dog";
 
 
 export { useGetDogs, prefetchGetDogs };

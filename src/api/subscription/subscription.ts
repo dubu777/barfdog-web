@@ -7,6 +7,15 @@ import {
   SubscriptionByIdDto,
 } from "@/types/subscription";
 
+export {
+  getPlanDiscount,
+  getSubscriptionById,
+  getPackageBenefits,
+  getSubscribeList,
+  getDeliveryAddress,
+  updateSubscription,
+}
+
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse> => {
   const {data} = await axiosInstance.get('/api/planDiscount');
@@ -47,11 +56,3 @@ const getDeliveryAddress = async (subscribeId: string): Promise<SubscribeAddress
   return data;
 }
 
-export {
-  getPlanDiscount,
-  getSubscriptionById,
-  getPackageBenefits,
-  getSubscribeList,
-  getDeliveryAddress,
-  updateSubscription,
-}
