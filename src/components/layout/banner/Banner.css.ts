@@ -4,20 +4,17 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const bannerContainer = recipe({
   base: {
+    width: "100%",
+    minWidth: "320px",
+    maxWidth: "600px",
     height: '40px',
-    justifyContent: 'center',
-    alignItems: 'center',
+    margin: "0 auto",
     color: themeVars.colors.white,
     background: themeVars.colors.black,
     position: "fixed",
     left: 0,
     right: 0,
     bottom: 0,
-    display: "flex",
-    width: "100%",
-    minWidth: "320px",
-    maxWidth: "600px",
-    margin: "0 auto",
     zIndex: 200,
     fontSize: themeVars.fontSize["text-sm"],
   },
@@ -25,16 +22,29 @@ export const bannerContainer = recipe({
     position: {
       top: {
         position: 'relative',
-        background: themeVars.colors.mainRed,
       },
       bottom: {
         bottom: '60px',
+        display: "flex",
+        justifyContent: 'center',
+        alignItems: 'center',
       }
     }
   }
 })
+
+export const banner = style({
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
 export const closeBtn = style({
   position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
   right: '26px',
   cursor: 'pointer',
   '@media': {

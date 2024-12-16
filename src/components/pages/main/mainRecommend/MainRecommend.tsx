@@ -9,11 +9,11 @@ import Text from "@/components/common/text/Text";
 const MainRecommend = () => {
   const { data: mainInfoData } = useGetMainInfo();
   const mainRecipesData: MainRecipeDto[] = mainInfoData?.recipeDtoList ?? [];
-
+  console.log(mainInfoData)
   const { data: recipesDetailData } = useGetRecipeList();
   const finalRecipeData: RecipeDto[] 
     = (recipesDetailData ?? []).map((recipe, index) => 
-      recipe.id === mainRecipesData[index].id 
+      recipe.id === mainRecipesData[index]?.id
         ? { ...recipe, imgUrl: mainRecipesData[index].imageUrl2 } 
         : recipe
       );

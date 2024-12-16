@@ -3,6 +3,7 @@ import { prefetchGetMainInfo } from "@/api/main/queries/useGetMainInfo";
 import { prefetchGetMainDeadlineBanner } from "@/api/main/queries/useGetMainBanner";
 import { prefetchGetRecipeList } from "@/api/recipes/queries/useGetRecipeList";
 import MainWrapper from "@/components/pages/main/mainWrapper/MainWrapper";
+import Popup from "@/components/layout/popup/Popup";
 
 export default async function MainPage() {
   const queryClient = new QueryClient();
@@ -14,6 +15,7 @@ export default async function MainPage() {
   return (
     <HydrationBoundary state={dehydrateState}>
       <MainWrapper />
+      <Popup />
     </HydrationBoundary>
   )
 }

@@ -1,6 +1,6 @@
 import { StaticImageData } from "next/image";
 
-export {
+export type {
   MainBannerDto,
   MainBestReviewsDto,
   MainRecipeDto,
@@ -10,6 +10,7 @@ export {
   SelectedHealthType,
   SelectedHealthData,
   SelectedHealthInfo,
+  PopupPosition,
 };
 
 interface MainBannerDto {
@@ -49,7 +50,7 @@ interface MainRecipeDto {
 
 interface MainPopupBannerDto {
   id: number;
-  position: string;
+  position: PopupPosition;
   name: string;
   leakedOrder: number;
   pcFilename: string;
@@ -88,5 +89,7 @@ interface SelectedHealthInfo {
   description: string;
   recommendRecipes: string[];
 }
+
+type PopupPosition = 'LEFT' | 'CENTER' | 'RIGHT';
 
 type SelectedHealthType = 'Diarrhea' | 'WeightManagement' | 'FatigueRecovery' | 'Vomiting' |'WaterIntake' | 'CoatCare' |'JointHealth' | 'PuppyDevelopment' | 'SeniorHealth';
