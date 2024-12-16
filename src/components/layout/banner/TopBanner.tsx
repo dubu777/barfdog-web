@@ -1,20 +1,36 @@
 'use client';
-
 import * as styles from './Banner.css';
 import Image from "next/image";
 import CloseButton from '/public/images/icons/close-white.png';
 import { useMainStore } from "@/store/useMainStore";
+import {useGetMainInfo} from "@/api/main/queries/useGetMainInfo";
+import {MainTopBannerDto} from "@/types";
+import DOMPurify from "dompurify";
+import Link from "next/link";
 
 const TopBanner = () => {
   const { isTopBannerVisible, closeTopBanner } = useMainStore();
+  const { data: mainInfoData, isLoading, isError } = useGetMainInfo();
+  const topBanner: MainTopBannerDto | undefined = mainInfoData?.topBannerDto; 
+
+  if (isLoading || isError || !topBanner || !isTopBannerVisible) return null;
+
+  const sanitizedHTML = topBanner?.name ? DOMPurify.sanitize(topBanner?.name) : '';
   return (
-    isTopBannerVisible &&
-      <div className={styles.bannerContainer({ position: 'top' })}>
-        <p><b>국내 최초</b> 반려견 <b>1:1</b> 맞춤 생식 정기배송 서비스, 바프독!</p>
-        <button onClick={closeTopBanner} className={styles.closeBtn}>
-          <Image src={CloseButton} alt='close button' width={10} height={10} />
-        </button>
-      </div>
+    <div
+      className={styles.bannerContainer({ position: 'top' })}
+      style={{
+        backgroundColor: topBanner.backgroundColor,
+        color: topBanner.fontColor,
+      }}
+    >
+      <Link href={topBanner.pcLinkUrl} className={styles.banner}>
+        <p dangerouslySetInnerHTML={{ __html: sanitizedHTML}} />
+      </Link>
+      <button onClick={closeTopBanner} className={styles.closeBtn}>
+        <Image src={CloseButton} alt='close button' width={10} height={10} />
+      </button>
+    </div>
   );
 };
 

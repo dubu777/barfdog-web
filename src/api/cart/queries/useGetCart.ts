@@ -1,6 +1,6 @@
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import { getCartData } from "@/api/cart";
+import { getCartData } from "@/api/cart/cart";
 
 export { useGetCart, prefetchGetCartData };
 

@@ -4,11 +4,16 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { RecipeDetailDataProps } from "@/components/pages/main/mainRecommend/MainRecommend";
-import MainText from "@/components/pages/main/mainText/MainText";
+import { RecipeDto, SelectedHealthInfo } from "@/types";
+import Text from "@/components/common/text/Text";
 
-const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: { recipeData: RecipeDetailDataProps[], selectedHealthDetail: HealthCheckDetailProps }) => {
-  const recipeFilterData = recipeData.filter(recipe => selectedHealthDetail.recommendRecipes?.some(recommend => recipe.name.includes(recommend)));
+interface MainRecipesSliderProps {
+  recipeData: RecipeDto[];
+  selectedHealthDetail: SelectedHealthInfo;
+}
+
+const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: MainRecipesSliderProps ) => {
+  const recipeFilterData: RecipeDto[] = recipeData.filter(recipe => selectedHealthDetail.recommendRecipes?.some(recommend => recipe.name.includes(recommend)));
   return (
     <Swiper
       slidesPerView='auto'
@@ -23,7 +28,7 @@ const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: { recipeData: R
         >
           <Link href={`/store/${recipe.id}`}>
             <Image
-              src={recipe.imageUrl}
+              src={recipe.imgUrl}
               alt={recipe.name}
               width={163}
               height={163}
@@ -32,14 +37,14 @@ const MainRecipesSlider = ({ recipeData, selectedHealthDetail }: { recipeData: R
             />
             <div className={styles.recipesContentBox}>
               <div style={{ marginTop: '5px' }}>
-                <MainText type='description' size='sm' color='black' weight='normal' align='left'>
+                <Text type='description' size='sm' color='black' weight='normal' align='left'>
                   {recipe.name}
-                </MainText>
+                </Text>
               </div>
-              <MainText className={styles.recipesPrice} type='description' size='sm' color='black' weight='normal' align='left'>
+              <Text className={styles.recipesPrice} type='description' size='sm' color='black' weight='normal' align='left'>
                 <span>1팩당 (100g)</span>
                 <span>{(recipe.pricePerGram * 100).toLocaleString('ko-KR')}원</span>
-              </MainText>
+              </Text>
             </div>
           </Link>
         </SwiperSlide>
