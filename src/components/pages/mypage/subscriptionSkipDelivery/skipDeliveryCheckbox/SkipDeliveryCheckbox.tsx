@@ -58,7 +58,6 @@ const SkipDeliveryCheckbox = ({ subscriptionDetail, selectedSkip, setSelectedSki
       )
     }
   }
-
   return (
     <>
     <article className={styles.skipCheckContainer}>

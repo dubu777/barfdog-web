@@ -15,10 +15,9 @@ export interface SkipListProps {
   receivingDate: string;
 }
 
-const SubscriptionSkipDelivery = ({ subscribeId }: { subscribeId: string }) => {
-  const { data: subscriptionDetail } = useGetSubscriptionDetail(subscribeId, { staleTime: 0 });
+const SubscriptionSkipDelivery = ({ subscribeId }: { subscribeId: number }) => {
+  const { data: subscriptionDetail } = useGetSubscriptionDetail(subscribeId);
 
-  console.log(subscriptionDetail);
   const [selectedSkip, setSelectedSkip] = useState<SkipListProps | null>(null);
   const defaultProductionDates = getProductionDates(subscriptionDetail.nextDeliveryDate);
 
