@@ -1,4 +1,4 @@
-import { QueryClient, useSuspenseQuery, UseSuspenseQueryOptions } from "@tanstack/react-query";
+import { QueryClient, useSuspenseQuery  } from "@tanstack/react-query";
 import { getSurveyRecipe } from "../../survey/survey";
 import { queryKeys } from "@/constants/queryKeys";
 import { RecipeData, UseSuspenseQueryCustomOptions } from "@/types";
@@ -7,7 +7,7 @@ import { RecipeData, UseSuspenseQueryCustomOptions } from "@/types";
 export function useGetSurveyRecipe(id: number, queryOptions?: UseSuspenseQueryCustomOptions<RecipeData>) {
   return useSuspenseQuery({
     queryFn: () => getSurveyRecipe(Number(id)),
-    queryKey: [queryKeys.SURVEY, queryKeys.GET_SURVEY_RECIPE, id],
+    queryKey: [queryKeys.SURVEY.BASE, queryKeys.SURVEY.GET_SURVEY_RECIPE, id],
     ...queryOptions,
   })
 }
@@ -15,6 +15,6 @@ export function useGetSurveyRecipe(id: number, queryOptions?: UseSuspenseQueryCu
 export async function prefetchGetSurveyRecipe(queryClient: QueryClient, id: number) {
     await queryClient.prefetchQuery({
       queryFn: () => getSurveyRecipe(Number(id)),
-      queryKey: [queryKeys.SURVEY, queryKeys.GET_SURVEY_RECIPE, id],
+      queryKey: [queryKeys.SURVEY.BASE, queryKeys.SURVEY.GET_SURVEY_RECIPE, id],
     });
 }

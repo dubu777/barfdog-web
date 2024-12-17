@@ -1,8 +1,8 @@
 import axiosInstance from "../axiosInstance";
 import { AddressResponse, OrderSheetResponse } from "@/types";
-import {GeneralOrderData, MergeOrderAndRecipe, SubscribeOrderData, SubscribeOrderDto} from "@/types";
+import { GeneralOrderData, MergeOrderAndRecipe, SubscriptionOrderData } from "@/types";
 
-export { getOrderDetail, getSubscribeOrderList, getGeneralOrderList, getOrderSheet, getAddress };
+export { getOrderDetail, getSubscriptionOrderList, getGeneralOrderList, getOrderSheet, getAddress };
 
 const getOrderSheet = async (subscribeId: number): Promise<OrderSheetResponse> => {
   const {data} = await axiosInstance.get(`/api/orders/sheet/subscribe/${subscribeId}`);
@@ -17,7 +17,7 @@ const getAddress = async (): Promise<AddressResponse> => {
 }
 
 
-const getSubscribeOrderList = async (page: number, size: number): Promise<SubscribeOrderData[]> => {
+const getSubscriptionOrderList = async (page: number, size: number): Promise<SubscriptionOrderData[]> => {
   const { data } = await axiosInstance.get(`/api/orders/subscribe?page=${page}&size=${size}`);
   return (
     data._embedded?.querySubscribeOrdersDtoList.map(({ subscribeOrderDto, ...rest }: { subscribeOrderDto: SubscribeOrderDto }) => ({

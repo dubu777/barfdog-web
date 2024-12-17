@@ -1,9 +1,9 @@
 import axiosInstance from "@/api/axiosInstance";
-import { CartData } from "@/types";
+import { CartInfo } from "@/types";
 
-export { getCartData };
+export { getCartInfo };
 
-const getCartData = async (): Promise<CartData> => {
+const getCartInfo = async (): Promise<CartInfo> => {
     const { data } = await axiosInstance.get('/api/baskets');
     return data;
 }

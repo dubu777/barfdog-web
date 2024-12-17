@@ -2,7 +2,7 @@ import {KeyboardEvent, MouseEvent, useState} from "react";
 import * as styles from "./ApplyCoupon.css";
 import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { useGetCoupons } from "@/api/mypage/queries/useGetCoupons";
+import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
 import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
 import { useToastStore } from "@/store/useToastStore";
 import { AxiosError, isAxiosError } from "axios";
@@ -10,7 +10,7 @@ import { AxiosError, isAxiosError } from "axios";
 const ApplyCoupon = () => {
   const [couponCode, setCouponCode] = useState<string>('');
   const [applyErrorMessage, setApplyErrorMessage] = useState<string>('');
-  const { isLoading } = useGetCoupons();
+  const { isLoading } = useGetCouponList();
   const { mutate } = useApplyCoupon();
   const { addToast } = useToastStore();
 
@@ -33,7 +33,7 @@ const ApplyCoupon = () => {
           setCouponCode('');
           addToast('쿠폰이 성공적으로 발행되었습니다!', 'success')
         },
-        onError: (error: Error | AxiosError) => {
+        onError: (error: Error | AxiosError| unknown) => {
           if (isAxiosError(error)) {
             const defaultMessage =
               error.response?.data?.errors?.[0]?.defaultMessage || '쿠폰 적용에 실패했습니다.';

@@ -1,11 +1,11 @@
 import {create} from "zustand";
 
 interface MypageStore {
-  subscribeDogName: string;
-  setSubscribeDogName: (subscribeDogName: string) => void;
+  subscriptionDogName: string;
+  setSubscriptionDogName: (subscriptionDogName: string) => void;
 }
 
 export const useMyPageStore = create<MypageStore>((set, get) => ({
-  subscribeDogName: '',
-  setSubscribeDogName: (subscribeDogName) => set({ subscribeDogName }),
+  subscriptionDogName: '',
+  setSubscriptionDogName: (subscriptionDogName) => set({ subscriptionDogName }),
 }))

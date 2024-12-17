@@ -1,4 +1,4 @@
-import { subscribePlanInfo } from "@/constants";
+import { subscriptionPlanInfo } from "@/constants";
 import { CalculateSubscribePriceInput, CalculateSubscribePriceOutput } from "@/types";
 
 // 기존 구독자 가격 조정을 위한 함수
@@ -38,8 +38,8 @@ export const calculateSubscribePrice = ({
 }: CalculateSubscribePriceInput): CalculateSubscribePriceOutput => {
   // 선택된 플랜의 총 팩 수 가져옴
   const totalNumberOfPacks =
-    selectedPlan && subscribePlanInfo[selectedPlan]
-      ? subscribePlanInfo[selectedPlan].totalNumberOfPacks
+    selectedPlan && subscriptionPlanInfo[selectedPlan]
+      ? subscriptionPlanInfo[selectedPlan].totalNumberOfPacks
       : 0;
 
   // 각 레시피별 가격 계산해서 배열로 만듬

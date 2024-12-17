@@ -5,25 +5,25 @@ import { Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import DogCard from "@/components/pages/mypage/main/myPageDogList/dogCard/DogCard";
-import { useGetDogs } from "@/api/dog/queries/useGetDogs";
+import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 
 const MyPageDogList = () => {
-  const { data: dogsData } = useGetDogs();
+  const { data: dogList } = useGetDogList();
 
-  const representativeDog = dogsData.find(dog => dog.representative);
-  const subscribingDogs = dogsData.filter(dog => dog.nextDeliveryDate && dog.subscribeStatus === 'SUBSCRIBING');
-  const newDogsData = [
+  const representativeDog = dogList.find(dog => dog.representative);
+  const subscribingDogs = dogList.filter(dog => dog.nextDeliveryDate && dog.subscribeStatus === 'SUBSCRIBING');
+  const newDogList = [
     ...subscribingDogs, 
     representativeDog, 
-    ...dogsData.filter(dog => 
+    ...dogList.filter(dog =>
       !dog.representative 
       || (!dog.nextDeliveryDate && dog.subscribeStatus !== 'SUBSCRIBING')
     )
   ];
-  const noData = newDogsData.length < 1;
+  const noData = newDogList.length < 1;
   
   return (
-    <article className={styles.dogsInfoBox}>
+    <article className={styles.dogInfoBox}>
       {noData ?
         <DogCard noData={true} />
         : <Swiper
@@ -36,9 +36,9 @@ const MyPageDogList = () => {
             el: `.${styles.dogListScrollbar}`,
           }}
           modules={[Scrollbar]}
-          className={styles.dogsList}
+          className={styles.dogList}
         >
-          {newDogsData.map((dog, index) => (
+          {newDogList.map((dog, index) => (
             dog && 
               <SwiperSlide
                 key={`${dog.id}-${index}`}

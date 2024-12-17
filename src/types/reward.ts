@@ -1,17 +1,20 @@
-export {
+export type {
   RewardFilterType,
   RewardData,
   RewardListData,
   RewardResponse,
+  RewardListDataWithTotals,
 };
 
 type RewardFilterType = 'ALL' | 'SAVED' | 'USED' | 'EXPIRED';
 
+type RewardStatus = 'SAVED' | 'USED';
+
 interface RewardData {
   name: string;
   tradeReward: number;
-  rewardStatus: string;
-  createdTime: string | Date;
+  rewardStatus: RewardStatus;
+  createdTime: string;
 }
 
 interface Page {
@@ -24,6 +27,9 @@ interface Page {
 interface RewardListData {
   page: Page;
   rewardList: RewardData[];
+}
+
+interface RewardListDataWithTotals extends RewardListData {
   totalCount: number;
   totalReward: number;
 }

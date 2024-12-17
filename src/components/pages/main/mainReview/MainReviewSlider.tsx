@@ -64,7 +64,7 @@ const MainReviewSlider = ({ reviewData }: { reviewData: MainBestReviewsDto[] }) 
                   : item.username}{' '}
                 보호자님
               </p>
-              <p className={styles.reviewSlideSubscribeType}>
+              <p className={styles.reviewSlideSubscriptionType}>
                 {item.orderType === 'subscribe' ? '정기구독' : '일반구매' }
               </p>
             </div>

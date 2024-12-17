@@ -2,7 +2,7 @@
 
 import { useGetOrderSheet } from "@/api/order/queries/useGetOrderSheet";
 import * as styles from "./OrderInfo.css";
-import { useGetAddress } from "@/api/order/queries/useGetAddress";
+import { useGetOrderAddress } from "@/api/order/queries/useGetOrderAddress";
 
 
 interface OrderInfoProps {
@@ -10,7 +10,7 @@ interface OrderInfoProps {
 }
 
 export default function OrderInfo({}: OrderInfoProps) {
-  const { data: addressData } = useGetAddress();
+  const { data: addressData } = useGetOrderAddress();
   console.log('addressData', addressData);
   
   return(

@@ -26,13 +26,13 @@ const MyPageHeader = () => {
     if (pathname.includes('/mypage/orderHistory/')) {
       return '주문 상세';
     }
-    if (pathname.includes('/mypage/subscribe/delayDelivery/')) {
+    if (pathname.includes('/mypage/subscribe/skipDelivery/')) {
       return '배송 미루기';
     }
-    if (pathname.includes('/mypage/subscribe/deliveryAddress/')) {
+    if (pathname.includes('/mypage/subscribe/address/')) {
       return '구독 배송지 관리';
     }
-    if (pathname.includes('/mypage/subscribe/packageBenefit/')) {
+    if (pathname.includes('/mypage/subscribe/benefits/')) {
       return '패키지 혜택';
     }
     return '';

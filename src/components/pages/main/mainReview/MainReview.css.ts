@@ -38,7 +38,7 @@ export const reviewSlideItem = style({
 
 export const reviewSlideImage = style({
   width: '100% !important',
-  position: 'relative !important',
+  position: 'relative',
   borderRadius: '7px',
   objectFit: 'cover',
   marginBottom: '1rem',
@@ -78,7 +78,7 @@ export const reviewSlideBottomInfo = style({
   color: themeVars.fontColors.grey4a,
 })
 
-export const reviewSlideSubscribeType = style({
+export const reviewSlideSubscriptionType = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-end',

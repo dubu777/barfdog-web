@@ -8,10 +8,10 @@ import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";
 
 const Cart = () => {
-  const { cartData, setCartData, selectedItems, setSelectedItems } = useCartStore();
+  const { cartInfo, setCartInfo, selectedItems, setSelectedItems } = useCartStore();
 
-  if (!cartData || cartData.basketDtoList.length === 0) return <p>Loading...</p>;
-  const isSelectedAllChecked = selectedItems.length === cartData.basketDtoList.length;
+  if (!cartInfo || cartInfo.basketDtoList.length === 0) return <p>Loading...</p>;
+  const isSelectedAllChecked = selectedItems.length === cartInfo.basketDtoList.length;
 
   const handleItemSelect = (basketId: number) => {
     setSelectedItems(
@@ -22,18 +22,18 @@ const Cart = () => {
   }
 
   const handleSelectAll = () => {
-    if (selectedItems.length === cartData.basketDtoList.length) {
+    if (selectedItems.length === cartInfo.basketDtoList.length) {
       setSelectedItems([]);
     } else {
-      const allBasketIds = cartData.basketDtoList.map((item) => item.itemDto.basketId);
+      const allBasketIds = cartInfo.basketDtoList.map((item) => item.itemDto.basketId);
       setSelectedItems(allBasketIds);
     }
   }
 
   const handleDeleteSelected = () => {
-    const updatedBasketDtoList = cartData.basketDtoList.filter((item) => !selectedItems.includes(item.itemDto.basketId));
-    const updatedCartData = { ...cartData, basketDtoList: updatedBasketDtoList };
-    setCartData(updatedCartData);
+    const updatedBasketDtoList = cartInfo.basketDtoList.filter((item) => !selectedItems.includes(item.itemDto.basketId));
+    const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
+    setCartInfo(updatedCartInfo);
     setSelectedItems([]);
   }
 
@@ -61,7 +61,7 @@ const Cart = () => {
           </DefaultButton>
         </div>
         <ul className={styles.cartItemList}>
-          {cartData.basketDtoList.map(basketItem => (
+          {cartInfo.basketDtoList.map(basketItem => (
             <CartItem
               key={basketItem.itemDto.basketId}
               item={basketItem.itemDto}

@@ -1,18 +1,17 @@
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import { RecipeDto } from "@/types";
+import { QueryClient, useQuery } from "@tanstack/react-query";
+import {RecipeDto, UseQueryCustomOptions} from "@/types";
 import { queryKeys } from "@/constants";
 import { getRecipeList } from "@/api/recipes/recipes";
 
 export { useGetRecipeList, prefetchGetRecipeList }
 
-const getRecipeListQueryKey = [queryKeys.RECIPE, queryKeys.GET_RECIPE_LIST];
+const getRecipeListQueryKey = [queryKeys.RECIPE.BASE, queryKeys.RECIPE.GET_RECIPE_LIST];
 
-function useGetRecipeList() {
-  const queryClient = useQueryClient();
+function useGetRecipeList(queryOptions?: UseQueryCustomOptions<RecipeDto[]>) {
   return useQuery<RecipeDto[]>({
     queryKey: getRecipeListQueryKey,
     queryFn: getRecipeList,
-    initialData: () => queryClient.getQueryData(getMainBannerQueryKey),
+    ...queryOptions,
   });
 }
 

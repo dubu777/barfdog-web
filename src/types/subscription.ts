@@ -1,4 +1,4 @@
-import { subscribePlanInfo, subscribeStatus } from "@/constants";
+import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 import { RecipeDto } from "./recipe";
 
 export type {
@@ -13,19 +13,19 @@ export type {
   calculateOneMealGramsInput,
   calculateOneMealGramsOutput,
   calculateOneMealGramsWithVolumeInput,
-  SubscriptionByIdDto,
-  SubscribesDto,
-  SubscribeAddressData,
+  SubscriptionDetailDto,
+  SubscriptionDto,
+  SubscriptionAddressData,
   AddressDto,
-  SubscribeListData,
+  SubscriptionListData,
   BenefitDto,
   PaymentBody,
   SubscriptionResponse,
   SubscriptionData,
   OrderSheetResponse,
   BenefitStatus,
-  SubscribeSkipType,
-  SubscribeStatusKey,
+  SubscriptionSkipType,
+  SubscriptionStatusKey,
   PlanKey,
   PlanName,
 };
@@ -184,7 +184,7 @@ interface calculateOneMealGramsWithVolumeInput {
   selectedVolume?: string | null;
 }
 
-interface DefaultSubscribeDto {
+interface DefaultSubscriptionDto {
   plan: string;
   dogName: string;
   countSkipOneTime: number;
@@ -198,9 +198,9 @@ interface DefaultSubscribeDto {
   nextDeliveryDate: string | null;
 }
 
-interface SubscriptionByIdDto extends DefaultSubscribeDto {
+interface SubscriptionDetailDto extends DefaultSubscriptionDto {
   id: number;
-  subscribeStatus: SubscribeStatusKey;
+  subscribeStatus: SubscriptionStatusKey;
   dogId: number;
   dogName: string;
   cancelReason?: null | string;
@@ -213,17 +213,17 @@ interface SubscriptionByIdDto extends DefaultSubscribeDto {
   previousOrderConfirmDate?: null | string;
 }
 
-interface SubscribesDto extends DefaultSubscribeDto {
+interface SubscriptionDto extends DefaultSubscriptionDto {
   subscribeId: number;
   pictureUrl?: null | string,
-  status: SubscribeStatusKey;
+  status: SubscriptionStatusKey;
   startDate: string;
   packagePrice: number;
   packageOriginalPrice: number;
   shippingLeft: number;
 }
 
-interface SubscribeAddressData {
+interface SubscriptionAddressData {
   currentAddress: AddressDto;
   nextAddress: AddressDto;
   nextDeliveryDate: string;
@@ -239,10 +239,10 @@ interface AddressDto {
   request?: null | string;
 }
 
-interface SubscribeListData {
+interface SubscriptionListData {
   itemNames: string;
   recipeNames: string;
-  subscribeDto: SubscribesDto;
+  subscribeDto: SubscriptionDto;
 }
 
 interface BenefitDto {
@@ -258,10 +258,10 @@ interface BenefitDto {
 
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
 
-type SubscribeSkipType = 'ONCE' | 'WEEK';
+type SubscriptionSkipType = 'ONCE' | 'WEEK';
 
-type SubscribeStatusKey = keyof typeof subscribeStatus;
+type SubscriptionStatusKey = keyof typeof subscriptionStatus;
 
 type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
 
-type PlanName = keyof typeof subscribePlanInfo;
+type PlanName = keyof typeof subscriptionPlanInfo;

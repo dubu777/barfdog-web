@@ -24,7 +24,7 @@ import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSub
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import { useRouter } from "next/navigation";
-import { useGetDogs } from "@/api/dog/queries/useGetDogs";
+import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
 
 interface SubscriptionShopContentProps {
@@ -38,7 +38,7 @@ export default function SubscriptionShopContent({
   const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
-  const { data: dogsData } = useGetDogs();
+  const { data: dogList } = useGetDogList();
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
