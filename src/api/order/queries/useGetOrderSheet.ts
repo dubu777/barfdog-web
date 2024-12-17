@@ -17,6 +17,6 @@ export function useGetOrderSheet(subscribeId: number, queryOptions?: UseSuspense
 export async function prefetchGetOrderSheet(queryClient: QueryClient, subscribeId: number) {
     await queryClient.prefetchQuery({
       queryFn: () => getOrderSheet(subscribeId),
-      queryKey: [queryKeys.ORDER, queryKeys.GET_SUBSCRIPTION_ORDER_SHEET, subscribeId],
+      queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_ORDER_SHEET, subscribeId],
     });
 }

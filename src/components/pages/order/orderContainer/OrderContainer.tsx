@@ -3,6 +3,7 @@
 import { useGetOrderSheet } from "@/api/order/queries/useGetOrderSheet";
 // import * as styles from "./OrderInfo.css";
 import OrderInfo from "./orderInfo/OrderInfo";
+import PackageSelection from "./packageSelection/PackageSelection";
 
 
 interface OrderContainerProps {
@@ -17,6 +18,7 @@ export default function OrderContainer({subscribeId}: OrderContainerProps) {
   return(
     <div >
       <OrderInfo />
+      <PackageSelection />
     </div>
   )
 }

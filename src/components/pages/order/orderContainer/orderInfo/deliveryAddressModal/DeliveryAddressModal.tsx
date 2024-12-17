@@ -1,15 +1,13 @@
 "use client";
 
-import { useGetAddress } from "@/api/order/queries/useGetAddress";
 import * as styles from "./DeliveryAddressModal.css";
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
-import { subscribeText } from "@/components/pages/subscriptionShop/subscriptionShopContent/recipeSelection/RecipeSelection.css";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useState } from "react";
 import { AddressResponse } from "@/types";
 import AddressList from "./addressList/AddressList";
 import AddAddressForm from "./addAddressForm/AddAddressForm";
 import EditAddressForm from "./editAddressForm/EditAddressForm";
+import { useGetOrderAddress } from "@/api/order/queries/useGetOrderAddress";
 
 interface DeliveryAddressModalProps {
   isVisible: boolean;
@@ -22,7 +20,7 @@ export default function DeliveryAddressModal({
   isVisible,
   onClose,
 }: DeliveryAddressModalProps) {
-  const { data: addressData } = useGetAddress();
+  const { data: addressData } = useGetOrderAddress();
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
@@ -40,9 +38,8 @@ export default function DeliveryAddressModal({
 
   };
 
-
   const handleDeleteAddress = () => {
-
+    
   };
 
   const handleBackToList = () => {

@@ -45,7 +45,7 @@ export const subscribeText = recipe({
       },
       title: {
         fontSize: themeVars.fontSize["text-lg"],
-        color: themeVars.fontColors.grey42,
+        color: themeVars.fontColors.black1D,
         fontWeight: themeVars.fontWeight.normal,
       },
       subtitle: {

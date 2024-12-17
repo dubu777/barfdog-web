@@ -4,7 +4,7 @@ import { AddressResponse, UseSuspenseQueryCustomOptions } from "@/types";
 import { getAddress } from "../order";
 
 
-export function useGetOrderAddress(queryOptions?: UseSuspenseQueryCustomOptions<AddressResponse>) {
+export function useGetOrderAddress(queryOptions?: UseSuspenseQueryCustomOptions<AddressResponse[]>) {
   return useSuspenseQuery({
     queryFn: () => getAddress(),
     queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_ORDER_ADDRESS],
