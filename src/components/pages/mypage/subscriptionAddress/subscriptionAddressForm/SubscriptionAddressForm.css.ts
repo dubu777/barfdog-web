@@ -16,8 +16,5 @@ export const confirmModal = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
-  lineHeight: 1.3
-  // width: '100%',
-  // textAlign: 'left',
-  // marginBottom: '13px'
+  lineHeight: 1.3,
 });
