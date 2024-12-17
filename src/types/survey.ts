@@ -1,4 +1,6 @@
-export type { SubscribePlan, SurveyFormData, RecipeDto, FoodAnalysis, ResultData, RecipeData };
+import {RecipeDto} from "@/types/recipe";
+
+export type { SubscribePlan, SurveyFormData, FoodAnalysis, ResultData, RecipeData };
 
 interface SurveyFormData {
   name: string;
@@ -28,16 +30,6 @@ interface SurveyFormData {
   expectedPregnancyDay: string;
   newToRawDiet: boolean | null;
   priorityConcerns: string;
-}
-
-interface RecipeDto {
-  id: number;
-  name: string;
-  description: string;
-  pricePerGram: number;
-  gramPerKcal: number;
-  imgUrl: string;
-  inStock: boolean;
 }
 
 interface FoodAnalysis {

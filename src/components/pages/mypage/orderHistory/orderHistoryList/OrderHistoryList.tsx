@@ -4,7 +4,7 @@ import Badge from "@/components/common/badge/Badge";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { ORDER_STATUS, PAYMENT } from "@/constants";
 import { formatDate } from "@/utils/dateUtils";
-import { GeneralOrderData, SubscribeOrderData, MergeOrderData } from "@/types/order";
+import { GeneralOrderData, SubscriptionOrderData, MergeOrderData } from "@/types/order";
 import { DefaultObjectType } from "@/types/common";
 
 const orderContents: DefaultObjectType[] = [
@@ -39,7 +39,7 @@ const OrderHistoryList = ({ orderList }: { orderList: MergeOrderData }) => {
   return (
     <ul className={styles.orderListContainer}>
       {orderList.map(item => {
-        const type = (item as SubscribeOrderData).recipeDto !== undefined ? 'subscribe' : 'general';
+        const type = (item as SubscriptionOrderData).recipeDto !== undefined ? 'subscribe' : 'general';
         const orderId = type === 'general' ? item.orderDto?.id : item.orderDto?.orderId;
         return (
           <li key={orderId}>
@@ -57,9 +57,9 @@ const OrderHistoryList = ({ orderList }: { orderList: MergeOrderData }) => {
                       ? (item as GeneralOrderData).itemNameList?.length > 1
                         ? `${(item as GeneralOrderData).itemNameList[0].name}외 ${(item as GeneralOrderData).itemNameList.length - 1}건`
                         : (item as GeneralOrderData).itemNameList[0].name
-                      : (item as SubscribeOrderData).recipeDto.recipeName,
+                      : (item as SubscriptionOrderData).recipeDto.recipeName,
                   orderId: item.orderDto.merchantUid,
-                  payment: type === 'general' ? '' : PAYMENT[(item as SubscribeOrderData).orderDto.paymentMethod as keyof typeof PAYMENT] || '-',
+                  payment: type === 'general' ? '' : PAYMENT[(item as SubscriptionOrderData).orderDto.paymentMethod as keyof typeof PAYMENT] || '-',
                   orderPrice: `${item.orderDto.paymentPrice.toLocaleString()}원`,
                   orderStatus: ORDER_STATUS[item.orderDto.orderStatus as keyof typeof ORDER_STATUS],
                 }

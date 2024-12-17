@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { CartData, CartSummary } from "@/types/cart";
+import { CartInfo, CartSummary } from "@/types/cart";
 
 interface CartStore {
   count: number;
-  cartData: CartData | null;
-  setCartData: (cartData: CartData) => void;
-  calculateSummary: (cartData: CartData) => CartSummary;
+  cartInfo: CartInfo | null;
+  setCartInfo: (cartInfo: CartInfo) => void;
+  calculateSummary: (cartInfo: CartInfo) => CartSummary;
   updateItemAmount: (basketId: number, amount: number) => void;
   selectedItems: number[];
   setSelectedItems: (selectedItems: number[]) => void;
@@ -20,65 +20,65 @@ const initialCalculatedPrices = {
   totalOrderPrice: 0,
 }
 
-const filterSelectedBasketDtoList = (cartData: CartData, selectedItems: number[]) =>
-  cartData.basketDtoList.filter(item => selectedItems.includes(item.itemDto.basketId));
+const filterSelectedBasketDtoList = (cartInfo: CartInfo, selectedItems: number[]) =>
+  cartInfo.basketDtoList.filter(item => selectedItems.includes(item.itemDto.basketId));
 
 export const useCartStore = create<CartStore>((set, get) => ({
   count: 0,
-  cartData: null,
+  cartInfo: null,
   selectedItems: [],
   calculatedPrices: initialCalculatedPrices,
   // 주문 요약 정보 계산
-  calculateSummary: (cartData) => {
+  calculateSummary: (cartInfo) => {
     // 할인 금액 (discount),
     // 상품 총 금액 (productTotalPrice)
     // 배송비 (deliveryFee)
     // 최종 주문 금액 (totalOrderPrice)
     // 무료 배송 조건까지 필요한 금액 (diffDeliveryFee)
-    const discount = cartData.basketDtoList.reduce(
+    const discount = cartInfo.basketDtoList.reduce(
       (sum, item) => sum + (item.itemDto.originalPrice - item.itemDto.salePrice) * item.itemDto.amount,
       0
     );
-    const productTotalPrice = cartData.basketDtoList.reduce((sum, item) => sum + item.totalPrice, 0) + discount;
+    const productTotalPrice = cartInfo.basketDtoList.reduce((sum, item) => sum + item.totalPrice, 0) + discount;
     const deliveryFee =
-      productTotalPrice >= cartData.deliveryConstant.freeCondition
+      productTotalPrice >= cartInfo.deliveryConstant.freeCondition
         ? 0
-        : cartData.deliveryConstant.price;
+        : cartInfo.deliveryConstant.price;
     const totalOrderPrice = productTotalPrice - discount + deliveryFee;
     const diffDeliveryFee =
-      productTotalPrice >= cartData.deliveryConstant.freeCondition
+      productTotalPrice >= cartInfo.deliveryConstant.freeCondition
         ? 0
-        : cartData.deliveryConstant.freeCondition - totalOrderPrice;
+        : cartInfo.deliveryConstant.freeCondition - totalOrderPrice;
 
     return { productTotalPrice, discount, deliveryFee, totalOrderPrice, diffDeliveryFee };
   },
   // 장바구니 데이터 초기화 및 전체 데이터를 업데이트 시 (전체선택 상태 기본값 설정 및 장바구니 항목 수, 선택된 항목 업데이트 및 요약 정보 계산)
-  setCartData: (cartData) => {
+  setCartInfo: (cartInfo) => {
     const { calculateSummary } = get();
-    if (!cartData) {
+    if (!cartInfo) {
       console.error("Invalid cart data");
       return;
     }
 
-    const allBasketIds = cartData.basketDtoList.map((item) => item.itemDto.basketId);
-    const calculatedPrices = calculateSummary(cartData);
+    const allBasketIds = cartInfo.basketDtoList.map((item) => item.itemDto.basketId);
+    const calculatedPrices = calculateSummary(cartInfo);
 
     set({
-      cartData,
-      count: cartData.basketDtoList.length,
+      cartInfo,
+      count: cartInfo.basketDtoList.length,
       selectedItems: allBasketIds,
       calculatedPrices,
     })
   },
   // 장바구니 개별 항목 수량 변경 시 (선택된 항목에 맞춘 데이터 필터링, 특정 항목 수량 업데이트 후 총 가격 계산 및 요약 정보 계산)
   updateItemAmount: (basketId, newAmount) => {
-    const { cartData, calculateSummary, selectedItems } = get();
-    if (!cartData) {
+    const { cartInfo, calculateSummary, selectedItems } = get();
+    if (!cartInfo) {
       console.error("Cart data is not available");
       return;
     }
 
-    const updatedBasketDtoList = cartData.basketDtoList.map((item) => {
+    const updatedBasketDtoList = cartInfo.basketDtoList.map((item) => {
       if (item.itemDto.basketId === basketId) {
         const updatedAmount = Math.max(1, newAmount);
         const updatedTotalPrice =
@@ -93,34 +93,34 @@ export const useCartStore = create<CartStore>((set, get) => ({
       return item;
     });
 
-    const updatedCartData = { ...cartData, basketDtoList: updatedBasketDtoList };
+    const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
 
     const updatedSelectedItems = selectedItems.includes(basketId)
       ? selectedItems
       : [...selectedItems, basketId];
 
-    const filteredBasketDtoList = filterSelectedBasketDtoList(updatedCartData, updatedSelectedItems);
-    const filteredCartData = { ...updatedCartData, basketDtoList: filteredBasketDtoList };
+    const filteredBasketDtoList = filterSelectedBasketDtoList(updatedCartInfo, updatedSelectedItems);
+    const filteredCartInfo = { ...updatedCartInfo, basketDtoList: filteredBasketDtoList };
 
-    const calculatedPrices = calculateSummary(filteredCartData);
+    const calculatedPrices = calculateSummary(filteredCartInfo);
 
     set({
-      cartData: updatedCartData,
+      cartInfo: updatedCartInfo,
       calculatedPrices,
       selectedItems: updatedSelectedItems,
     })
   },
   // 장바구니 선택한 항목 업데이트 시 (선택한 항목을 기반으로 ID Array 업데이트 및 요약 정보 다시 계산)
   setSelectedItems: (selectedItems) => {
-    const { cartData, calculateSummary } = get();
-    if (!cartData) {
+    const { cartInfo, calculateSummary } = get();
+    if (!cartInfo) {
       console.error("Cart data is not available");
       return;
     }
 
-    const selectedBasketDtoList = filterSelectedBasketDtoList(cartData, selectedItems);
-    const filteredCartData = { ...cartData, basketDtoList: selectedBasketDtoList };
-    const calculatedPrices = calculateSummary(filteredCartData);
+    const selectedBasketDtoList = filterSelectedBasketDtoList(cartInfo, selectedItems);
+    const filteredCartInfo = { ...cartInfo, basketDtoList: selectedBasketDtoList };
+    const calculatedPrices = calculateSummary(filteredCartInfo);
 
     set({ selectedItems, calculatedPrices });
   },

@@ -1,3 +1,4 @@
+'use client';
 import * as styles from "./MainWrapper.css";
 import MainVideo from "@/components/pages/main/mainVideo/MainVideo";
 import MainRecommend from "@/components/pages/main/mainRecommend/MainRecommend";
@@ -8,22 +9,17 @@ import MainService from "@/components/pages/main/mainService/MainService";
 import Footer from "@/components/layout/footer/Footer";
 import BottomBanner from "@/components/layout/banner/BottomBanner";
 
-interface MainWrapperProps {
-  mainData: any;
-  orderDeadline: string;
-}
-
-const MainWrapper = ({ mainData, orderDeadline }: MainWrapperProps) => {
+const MainWrapper = () => {
   return (
     <section className={styles.mainContainer}>
       <MainVideo />
-      <MainRecommend mainRecipesData={mainData.recipeDtoList.sort((a, b) => a.id - b.id)} />
-      <MainReview reviewData={mainData.queryBestReviewsDtoList} />
+      <MainRecommend />
+      <MainReview />
       <MainReason />
       <MainSurvey />
       <MainService />
       <Footer />
-      <BottomBanner orderDeadline={orderDeadline} />
+      <BottomBanner />
     </section>
   );
 };

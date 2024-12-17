@@ -8,6 +8,10 @@ export const mainRecommendWrapper = style({
   color: themeVars.colors.black,
 })
 
+export const recommendTitle = style({
+  marginBottom: '4px',
+})
+
 export const recommendSlideContainer = style({
   paddingLeft: '20px',
 })

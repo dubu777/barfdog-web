@@ -1,12 +1,19 @@
 import { ReactNode } from "react";
 import {
-  QueryKey,
+  QueryKey, UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 
-export type { SearchParamProps, DefaultObjectType, UseMutationCustomOptions, UseQueryCustomOptions, UseSuspenseQueryCustomOptions };
+export type {
+  SearchParamProps,
+  DefaultObjectType,
+  UseMutationCustomOptions,
+  UseQueryCustomOptions,
+  UseSuspenseQueryCustomOptions,
+  UseInfiniteQueryCustomOptions
+};
 
 type SearchParamProps = {
   param: { [key: string]: string | number };
@@ -36,5 +43,7 @@ type UseSuspenseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData>
   "queryKey"
 >;
 
-
-
+type UseInfiniteQueryCustomOptions<TQueryFnData = unknown, TError = unknown, TData = TQueryFnData> = Omit<
+  UseInfiniteQueryOptions<TQueryFnData, TError, TData, QueryKey>,
+  "queryKey" | "queryFn"
+>;

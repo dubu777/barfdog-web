@@ -1,15 +1,15 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { prefetchGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import { prefetchGetDogs } from "@/api/dog/queries/useGetDogs";
+import { prefetchGetDogList } from "@/api/dog/queries/useGetDogList";
+import { prefetchGetMyPageBanner } from "@/api/mypage/queries/useGetMypageBanner";
 import MyPageMain from "@/components/pages/mypage/main/MyPageMain";
-import {prefetchGetMyPageBanner} from "@/api/mypage/queries/useGetMypageBanner";
 
 export default async function MyPagePage() {
   const queryClient = new QueryClient();
 
   await prefetchGetMyPageInfo(queryClient);
   await prefetchGetMyPageBanner(queryClient);
-  await prefetchGetDogs(queryClient);
+  await prefetchGetDogList(queryClient);
 
   const dehydrateState = dehydrate(queryClient);
 

@@ -1,85 +1,55 @@
 export {queryKeys}
 
 const queryKeys = {
-  SURVEY: 'survey',
-  GET_SURVEY_RECIPE: 'getSurveyRecipe',
-  GET_SURVEY_RESULT: 'getSurveyResult',
-  COUPON: 'coupon',
-  GET_COUPON_LIST: 'getCouponList',
-  MYPAGE: 'mypage',
-  GET_MYPAGE_INFO: 'getMyPageInfo',
-  GET_MYPAGE_BANNER: 'getMyPageBanner',
-  REWARDS: 'rewards',
-  GET_REWARDS_LIST: 'getRewards',
-  SUBSCRIBE: 'subscribe',
-  GET_SUBSCRIPTION_BY_ID: 'getSubscriptionById',
-  SUBSCRIPTION: 'subscription',
-  GET_DISCOUNT_INFO: 'getDiscountInfo',
-  CART: 'cart',
-  GET_CART_DATA: 'getCartData',
-  GET_PLAN_DISCOUNT: 'getPlanDiscount',
-  DOG: 'dog',
-  GET_DOGS: 'getDogs',
-  GET_ORDER_SHEET: 'getOrderSheet',
-  SKIP_SUBSCRIPTION: 'skipSubscription',
-  ORDER: 'order',
-  ORDER_DETAIL: 'orderDetail',
-  GET_SUBSCRIPTION_ORDER_SHEET: 'getSubscriptionOrderSheet',
-  GET_GENERAL_ORDER_SHEET: 'getGeneralOrderSheet',
-  GET_SUBSCRIBE_ORDER_LIST: 'getSubscribeOrderList',
-  GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
-  GET_SUBSCRIBE_LIST: 'getSubscribeList',
-  GET_PACKAGE_BENEFITS: 'getPackageBenefits',
-  GET_DELIVERY_ADDRESS: 'getDeliveryAddress',
-  GET_ADDRESS: 'getAddress',
-} as const
-
-
-export const queryKeys2 = {
   SURVEY: {
     BASE: 'survey',
-    GET_RECIPE: 'getSurveyRecipe',
-    GET_RESULT: 'getSurveyResult',
+    GET_SURVEY_RECIPE: 'getSurveyRecipe',
+    GET_SURVEY_RESULT: 'getSurveyResult',
   },
   COUPON: {
     BASE: 'coupon',
-    GET_LIST: 'getCouponList',
+    GET_COUPON_LIST: 'getCouponList',
   },
   MYPAGE: {
     BASE: 'mypage',
-    GET_INFO: 'getMyPageInfo',
-    GET_BANNER: 'getMyPageBanner',
+    GET_MYPAGE_INFO: 'getMyPageInfo',
+    GET_MYPAGE_BANNER: 'getMyPageBanner',
   },
-  REWARDS: {
-    BASE: 'rewards',
-    GET_LIST: 'getRewards',
+  REWARD: {
+    BASE: 'reward',
+    GET_REWARD_LIST: 'getRewardList',
   },
   SUBSCRIPTION: {
     BASE: 'subscription',
-    GET_DISCOUNT_INFO: 'getDiscountInfo',
-    GET_BY_ID: 'getSubscriptionById',
-    SKIP: 'skipSubscription',
+    GET_PLAN_DISCOUNT: 'getPlanDiscount',
+    GET_SUBSCRIPTION_LIST: 'getSubscriptionList',
+    GET_SUBSCRIPTION_DETAIL: 'getSubscriptionDetail',
+    GET_SUBSCRIPTION_ADDRESS: 'getSubscriptionAddress',
+    GET_SUBSCRIPTION_BENEFITS: 'getSubscriptionBenefits',
   },
   CART: {
     BASE: 'cart',
-    GET_DATA: 'getCartData',
-  },
-  PLAN: {
-    BASE: 'plan',
-    GET_DISCOUNT: 'getPlanDiscount',
+    GET_CART_INFO: 'getCartInfo',
   },
   DOG: {
     BASE: 'dog',
-    GET_LIST: 'getDogs',
+    GET_DOG_LIST: 'getDogList',
   },
   ORDER: {
     BASE: 'order',
-    GET_SHEET: 'getOrderSheet',
-    DETAIL: 'orderDetail',
-    GET_SUBSCRIBE_LIST: 'getSubscribeList',
+    GET_ORDER_SHEET: 'getOrderSheet',
+    GET_ORDER_DETAIL: 'getOrderDetail',
     GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
-    GET_SUBSCRIBE_ORDER_LIST: 'getSubscribeOrderList',
-    GET_DELIVERY: 'getDeliveryAddress',
-    GET_ADDRESS: 'getAddress',
+    GET_SUBSCRIPTION_ORDER_LIST: 'getSubscriptionOrderList',
+    GET_ORDER_ADDRESS: 'getOrderAddress',
   },
+  MAIN: {
+    BASE: 'main',
+    GET_MAIN_INFO: 'getMainInfo',
+    GET_MAIN_DEADLINE_BANNER: 'getMainDeadlineBanner',
+  },
+  RECIPE: {
+    BASE: 'recipe',
+    GET_RECIPE_LIST: 'getRecipeList',
+  }
 } as const;

@@ -1,8 +1,8 @@
 import { PlanKey } from "@/types";
 
-export { subscribeStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscribePlanInfo }
+export { subscriptionStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscriptionPlanInfo }
 
-const subscribePlanInfo: Record<PlanKey, {
+const subscriptionPlanInfo: Record<PlanKey, {
   id: string;
   label: string;
   numberOfPacksPerDay: number;
@@ -78,7 +78,7 @@ const originSubscribeIdList = [
   3914, 3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
 ];
 
-const subscribeStatus: Record<string, string> = {
+const subscriptionStatus: Record<string, string> = {
   // BEFORE_PAYMENT: '구독 비활성',
   // SURVEY_COMPLETED: '구독 비활성',
   // SUBSCRIBING: '구독 활성',

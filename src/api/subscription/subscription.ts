@@ -1,20 +1,10 @@
 import axiosInstance from "../axiosInstance";
 import {
   BenefitDto,
-  OrderSheetResponse,
   PaymentBody,
-  PlanDiscountResponse, SubscribeAddressData, SubscribeListData,
-  SubscriptionByIdDto,
+  PlanDiscountResponse, SubscriptionAddressData, SubscriptionListData,
+  SubscriptionDetailDto, SubscriptionSkipType,
 } from "@/types/subscription";
-
-export {
-  getPlanDiscount,
-  getSubscriptionById,
-  getPackageBenefits,
-  getSubscribeList,
-  getDeliveryAddress,
-  updateSubscription,
-}
 
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse> => {
@@ -36,23 +26,42 @@ const updateSubscription = async ({
   return response;
 };
 
-const getSubscriptionById = async (subscribeId: string): Promise<SubscriptionByIdDto> => {
+const getSubscriptionDetail = async (subscribeId: string): Promise<SubscriptionDetailDto> => {
   const { data } = await axiosInstance.get(`/api/subscribes/${subscribeId}`);
   return data.subscribeDto;
 }
 
-const getSubscribeList = async (page = 0, size = 999): Promise<SubscribeListData[]> => {
+const getSubscriptionList = async (page = 0, size = 999): Promise<SubscriptionListData[]> => {
   const { data } = await axiosInstance.get(`/api/subscribes?page=${page}&size=${size}`);
   return data._embedded.querySubscribesDtoList;
 };
 
-const getPackageBenefits = async (subscribeId: string): Promise<BenefitDto[]> => {
+const getSubscriptionBenefits = async (subscribeId: string): Promise<BenefitDto[]> => {
   const { data } = await axiosInstance.get(`/api/subscribes/benefits/${subscribeId}`);
   return data._embedded.subscribeBenefitDtoList;
 }
 
-const getDeliveryAddress = async (subscribeId: string): Promise<SubscribeAddressData> => {
+const getSubscriptionAddress = async (subscribeId: string): Promise<SubscriptionAddressData> => {
   const { data } = await axiosInstance.get(`/api/address/subscribe/${subscribeId}`);
   return data;
 }
 
+const skipSubscription = async (subscribeId: number, skipType: SubscriptionSkipType) => {
+  const body = {
+    id: subscribeId,
+    type: skipType
+  }
+  const { data } = await axiosInstance.post(`/api/subscribes/${subscribeId}/skip/week`, body);
+  return data;
+}
+
+
+export {
+  getPlanDiscount,
+  getSubscriptionDetail,
+  getSubscriptionBenefits,
+  getSubscriptionList,
+  getSubscriptionAddress,
+  updateSubscription,
+  skipSubscription,
+}

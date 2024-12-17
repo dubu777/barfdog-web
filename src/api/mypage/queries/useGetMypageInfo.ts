@@ -1,18 +1,18 @@
-import { QueryClient, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { getMyPageInfo } from "@/api/mypage/myPage";
 import { queryKeys } from "@/constants";
 import { MyPageInfoData } from "@/types/myPage";
+import { UseSuspenseQueryCustomOptions } from "@/types";
 
 export { useGetMyPageInfo, prefetchGetMyPageInfo }
 
-const getMyPageInfoQueryKey = [queryKeys.MYPAGE, queryKeys.GET_MYPAGE_INFO];
+const getMyPageInfoQueryKey = [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_MYPAGE_INFO];
 
-function useGetMyPageInfo() {
-  const queryClient = useQueryClient();
+function useGetMyPageInfo(queryOptions?: UseSuspenseQueryCustomOptions<MyPageInfoData>){
   return useSuspenseQuery<MyPageInfoData>({
     queryKey: getMyPageInfoQueryKey,
     queryFn: getMyPageInfo,
-    initialData: () => queryClient.getQueryData(getMyPageInfoQueryKey),
+    ...queryOptions,
   });
 }
 

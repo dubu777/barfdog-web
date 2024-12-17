@@ -4,7 +4,7 @@ export type {
   BasketDto,
   DeliveryConstant,
   CartSummary,
-  CartData,
+  CartInfo,
 };
 
 interface CartItemDto {
@@ -44,7 +44,7 @@ interface CartSummary {
   diffDeliveryFee: number;
 }
 
-interface CartData {
+interface CartInfo {
   basketDtoList: BasketDto[];
   deliveryConstant: DeliveryConstant;
 }

@@ -1,17 +1,17 @@
 'use client';
 import { ReactNode, useEffect } from "react";
 import { useCartStore } from "@/store/useCartStore";
-import { useGetCart } from "@/api/cart/queries/useGetCart";
+import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const { setCartData } = useCartStore();
-  const { data: cartData } = useGetCart();
+  const { setCartInfo } = useCartStore();
+  const { data: cartInfo } = useGetCartInfo();
 
   useEffect(() => {
-    if (cartData) {
-      setCartData(cartData);
+    if (cartInfo) {
+      setCartInfo(cartInfo);
     }
-  }, [cartData, setCartData]);
+  }, [cartInfo, setCartInfo]);
   
   return (
     <>{children}</>

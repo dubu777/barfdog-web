@@ -19,6 +19,7 @@ export const commonLayoutContainer = style([commonLayoutStyle, {
   '-webkit-user-select': 'none',
   '-khtml-user-select': 'none',
   'user-select': 'none',
+  position: 'relative',
 }]);
 
 export const ellipsis = recipe({

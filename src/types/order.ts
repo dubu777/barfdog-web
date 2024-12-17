@@ -1,9 +1,8 @@
 export type {
-  RecipeDto,
-  SubscribeOrderData,
+  SubscriptionOrderData,
   GeneralOrderData,
   OrderDetailDto,
-  SubscribeOrderDto,
+  SubscriptionOrderDto,
   OrderItemDtoList,
   MergeOrderData,
   OrderDetailData,
@@ -18,7 +17,7 @@ interface OrderItem {
   name: string;
 }
 
-interface RecipeDto {
+interface OrderRecipeDto {
   thumbnailUrl: string;
   recipeName: string;
 }
@@ -33,7 +32,7 @@ interface OrderDto {
   paymentMethod?: string;
 }
 
-interface SubscribeOrderDto extends OrderDto {
+interface SubscriptionOrderDto extends OrderDto {
   orderId: number;
   subscribeId: number;
   dogName: string;
@@ -71,9 +70,9 @@ interface OrderItemDtoList {
   orderExchange?: null;
 }
 
-interface SubscribeOrderData {
-  recipeDto: RecipeDto;
-  orderDto: SubscribeOrderDto;
+interface SubscriptionOrderData {
+  recipeDto: OrderRecipeDto;
+  orderDto: SubscriptionOrderDto;
 }
 
 interface GeneralOrderData {
@@ -82,7 +81,7 @@ interface GeneralOrderData {
   thumbnailUrl: string;
 }
 
-type MergeOrderData = (GeneralOrderData | SubscribeOrderData)[];
+type MergeOrderData = (GeneralOrderData | SubscriptionOrderData)[];
 
 interface OrderDetailDto extends OrderCancel {
   orderId?: number;
@@ -140,7 +139,7 @@ interface OrderDetailData {
 }
 
 interface MergeOrderAndRecipe extends OrderDetailData {
-  recipeDto?: RecipeDto;
+  recipeDto?: OrderRecipeDto;
 }
 
 interface AddressResponse {

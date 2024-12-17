@@ -1,10 +1,10 @@
 import axiosInstance from "@/api/axiosInstance";
-import { CouponData, MyPageBannerData, MyPageInfoData, RewardListData, RewardResponse, SubscribeSkipType } from "@/types";
+import { CouponData, MyPageBannerData, MyPageInfoData, RewardListData, RewardListDataWithTotals, RewardResponse } from "@/types";
 
-export { getMyPageInfo, getMyPageBanner, getCouponList, applyCoupon, getRewardList, skipSubscribe }
+export { getMyPageInfo, getMyPageBanner, getCouponList, applyCoupon, getRewardList }
 
 const getMyPageInfo = async (): Promise<MyPageInfoData> => {
-  const { data }: { data: MyPageInfoData } = await axiosInstance.get('/api/mypage/');
+  const { data }: { data: MyPageInfoData } = await axiosInstance.get('/api/mypage');
   return data;
 }
 
@@ -21,31 +21,29 @@ const applyCoupon = async (body: { code: string }) => {
 const getRewardList = async ({
   pageParam = 0,
   size = 5,
-}: { pageParam: number; size: number }): Promise<RewardListData> => {
+}: { pageParam: number; size: number }): Promise<RewardListData | RewardListDataWithTotals> => {
   const { data } = await axiosInstance.get<RewardResponse>(`/api/rewards`, {
     params: { page: pageParam, size },
   });
+
   const rewardList = data?.pagedModel?._embedded?.queryRewardsDtoList || [];
   const totalReward = data?.reward || 0;
   const totalCount = data?.pagedModel?.page?.totalElements || 0;
   const page = data?.pagedModel?.page || { number: 0, totalPages: 1 };
 
-  return {
-    totalReward,
-    rewardList,
-    totalCount,
-    page,
-  };
-};
-
-const skipSubscribe = async (subscribeId: number, skipType: SubscribeSkipType) => {
-  const body = {
-    id: subscribeId,
-    type: skipType
+  if(pageParam === 0) {
+      return {
+      totalReward,
+      rewardList,
+      totalCount,
+      page,
+    }
   }
-  const { data } = await axiosInstance.post(`/api/subscribes/${subscribeId}/skip/week`, body);
-  return data;
-}
+  return {
+    rewardList,
+    page,
+  }
+};
 
 const getMyPageBanner = async (): Promise<MyPageBannerData> => {
   const { data } = await axiosInstance.get('/api/banners/myPage');

@@ -35,17 +35,17 @@ const DogButtonControls = ({ status, subscribeId, dogName }: DogButtonControlsPr
   const beforeSubscribe = status === 'BEFORE_PAYMENT' || status === 'SURVEY_COMPLETED';
   const pendingSubscribe = status === 'SUBSCRIBE_PENDING' || status === 'SUBSCRIBE_CANCEL';
   const wilCancelSubscribe = status === 'SUBSCRIBE_WILL_CANCEL';
-  const { setSubscribeDogName } = useMyPageStore();
+  const { setSubscriptionDogName } = useMyPageStore();
   const router = useRouter();
 
   const handleAddressWithDogName = () => {
-    setSubscribeDogName(dogName)
-    router.push(`/mypage/subscribe/deliveryAddress/${subscribeId}`);
+    setSubscriptionDogName(dogName)
+    router.push(`/mypage/subscribe/address/${subscribeId}`);
   }
-  const DelayDelivery = () => (
-    <SubscriptionButton title={'배송 미루기'} linkUrl={`/mypage/subscribe/delayDelivery/${subscribeId}`} />
+  const SubscriptionSkipDelivery = () => (
+    <SubscriptionButton title={'배송 미루기'} linkUrl={`/mypage/subscribe/skipDelivery/${subscribeId}`} />
   )
-  const DeliveryAddress = () => (
+  const SubscriptionAddress = () => (
     <SubscriptionButton title={'구독 배송지 관리'} onClick={handleAddressWithDogName} />
   )
   const ManageSubscription = () => (
@@ -64,8 +64,8 @@ const DogButtonControls = ({ status, subscribeId, dogName }: DogButtonControlsPr
     <div className={styles.subscribeControlsBox}>
       {subscribing &&
         <>
-          <DelayDelivery />
-          <DeliveryAddress />
+          <SubscriptionSkipDelivery />
+          <SubscriptionAddress />
           <ManageSubscription />
         </>
       }
@@ -81,7 +81,7 @@ const DogButtonControls = ({ status, subscribeId, dogName }: DogButtonControlsPr
       {wilCancelSubscribe &&
       <>
         <Resubscribe />
-        <DeliveryAddress />
+        <SubscriptionAddress />
         <ManageSubscription />
       </>
       }

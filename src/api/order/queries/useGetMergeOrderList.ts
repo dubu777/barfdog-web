@@ -1,22 +1,22 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import {getGeneralOrderList, getSubscribeOrderList} from "@/api/order/order";
-import {GeneralOrderData, MergeOrderData, SubscribeOrderData} from "@/types";
+import {getGeneralOrderList, getSubscriptionOrderList} from "@/api/order/order";
+import {GeneralOrderData, MergeOrderData, SubscriptionOrderData} from "@/types";
 
 export { useMergeOrderList };
 
 function useMergeOrderList() {
   const page = 0;
   const {
-    data: subscribeOrderData,
+    data: SubscriptionOrderData,
     fetchNextPage: fetchNextSubscribePage,
     hasNextPage: hasNextSubscribePage,
     isFetchingNextPage: isFetchingNextSubscribePage
-  } = useInfiniteQuery<SubscribeOrderData[], Error>({
-    queryKey: [queryKeys.ORDER, queryKeys.GET_SUBSCRIBE_ORDER_LIST, page],
+  } = useInfiniteQuery<SubscriptionOrderData[], Error>({
+    queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_SUBSCRIPTION_ORDER_LIST, page],
     queryFn: ({ pageParam = 0 }) => { 
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
-      return getSubscribeOrderList(pageNumber, 5)
+      return getSubscriptionOrderList(pageNumber, 5)
     },
     getNextPageParam: (lastPage, pages) => {
       return lastPage.length ? pages.length : undefined;
@@ -29,7 +29,7 @@ function useMergeOrderList() {
     hasNextPage: hasNextGeneralPage,
     isFetchingNextPage: isFetchingNextGeneralPage
   } = useInfiniteQuery<GeneralOrderData[], Error>({
-    queryKey: [queryKeys.ORDER, queryKeys.GET_GENERAL_ORDER_LIST, page],
+    queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_GENERAL_ORDER_LIST, page],
       queryFn: ({ pageParam = 0 }) => { 
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
       return getGeneralOrderList(pageNumber, 5)
@@ -41,7 +41,7 @@ function useMergeOrderList() {
   })
   
   const totalData: MergeOrderData = [
-    ...(subscribeOrderData?.pages.flat() ?? []),
+    ...(SubscriptionOrderData?.pages.flat() ?? []),
     ...(generalOrderData?.pages.flat() ?? []),
   ].sort((a, b) =>
     new Date(b.orderDto.orderDate).getTime() - new Date(a.orderDto.orderDate).getTime()

@@ -3,11 +3,11 @@ import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 import { defaultWidth } from "@/styles/common.css";
 
-export const dogsInfoBox = style({
+export const dogInfoBox = style({
   marginBottom: '29px',
 });
 
-export const dogsList = style({
+export const dogList = style({
   height: '100%',
   paddingTop: '4px !important',
 })
@@ -87,7 +87,7 @@ export const dogContent = style({
   marginBottom: '19px',
 });
 
-export const subscribeStatus = style({
+export const subscriptionStatus = style({
   display: 'inline-block',
   position: 'absolute',
   top: '24px',

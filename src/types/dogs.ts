@@ -1,4 +1,4 @@
-import { subscribeStatus } from "@/constants";
+import { subscriptionStatus } from "@/constants";
 
 export { DogData };
 
@@ -7,7 +7,7 @@ interface DogData {
   name: string;
   representative: boolean;
   birth: string;
-  plan: keyof typeof subscribeStatus;
+  plan: keyof typeof subscriptionStatus;
   gender: string;
   itemNames: string;
   nextDeliveryDate?: null | string;
