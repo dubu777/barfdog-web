@@ -1,6 +1,6 @@
 'use client';
 import * as styles from './SubscriptionAddress.css';
-import AddressForm from "@/components/pages/mypage/subscriptionAddress/addressForm/AddressForm";
+import SubscriptionAddressForm from "@/components/pages/mypage/subscriptionAddress/subscriptionAddressForm/SubscriptionAddressForm";
 import DefaultAddress from "@/components/pages/mypage/subscriptionAddress/defaultAddress/DefaultAddress";
 import { DefaultObjectType } from "@/types/common";
 import { useGetSubscriptionAddress } from "@/api/subscription/queries/useGetSubscriptionAddress";
@@ -29,7 +29,7 @@ const SubscriptionAddress = ({ subscribeId, changeType }: SubscriptionAddressPro
     <section className={styles.addressContainer}>
       {!changeType
         ? <DefaultAddress addressData={addressData} changeTypeList={changeTypeList} />
-        : <AddressForm nextDeliveryDate={addressData.nextDeliveryDate} changeTypeList={changeTypeList} />
+        : <SubscriptionAddressForm nextDeliveryDate={addressData.nextDeliveryDate} changeTypeList={changeTypeList} />
       }
     </section>
   );
