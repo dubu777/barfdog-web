@@ -25,7 +25,7 @@ const MyPageInfo = () => {
     <article className={styles.userInfoBox}>
       <Image src={NoImage} alt='사용자 이미지' width={89} height={89} />
       <div>
-        <p className={styles.infoText({ type: 'parents', })}>{representativeDogData.dogName} 보호자</p>
+        <p className={styles.infoText({ type: 'parents', })}>{representativeDogData?.dogName} 보호자</p>
         <h2 className={styles.infoText({ type: 'username', })}>
           <b className={styles.infoText({ size: 'lg' })}>{userData.memberName}</b> 님
           <Badge>{userData.grade}</Badge>

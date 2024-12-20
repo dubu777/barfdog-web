@@ -1,6 +1,7 @@
 'use client';
+import { useRef } from "react";
 import * as styles from "./MyPageDogList.css";
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import { Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
@@ -15,18 +16,30 @@ const MyPageDogList = () => {
   const newDogList = [
     ...subscribingDogs, 
     representativeDog, 
-    ...dogList.filter(dog =>
-      !dog.representative 
-      || (!dog.nextDeliveryDate && dog.subscribeStatus !== 'SUBSCRIBING')
-    )
+    ...dogList
+      .filter(dog =>
+        !dog.representative
+        && !(dog.nextDeliveryDate && dog.subscribeStatus === 'SUBSCRIBING')
+      )
   ];
   const noData = newDogList.length < 1;
-  
+
+  const swiperRef = useRef<SwiperRef | null>(null);
+  const resetSwiper = () => {
+    if (swiperRef.current) {
+      const swiperInstance = swiperRef.current.swiper;
+      if (swiperInstance) {
+        swiperInstance.slideTo(1);
+      }
+    }
+  }
+
   return (
     <article className={styles.dogInfoBox}>
       {noData ?
-        <DogCard noData={true} />
+        <DogCard noData={true} resetSwiper={undefined} />
         : <Swiper
+          ref={swiperRef}
           slidesPerView='auto'
           centeredSlides={true}
           spaceBetween={18}
@@ -44,7 +57,7 @@ const MyPageDogList = () => {
                 key={`${dog.id}-${index}`}
                 className={styles.dogSlider}
               >
-                <DogCard dog={dog} noData={false} />
+                <DogCard dog={dog} noData={false} resetSwiper={resetSwiper} />
               </SwiperSlide>
           ))}
           <div className={styles.dogListScrollbar} />

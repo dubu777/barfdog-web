@@ -13,17 +13,23 @@ import { getProductionDates } from "@/utils/getProductionDates";
 interface MyPageDogCardProps {
   noData: boolean;
   dog?: DogData;
+  resetSwiper: (() => void) | undefined;
 }
 
-const DogCard = ({ dog, noData }: MyPageDogCardProps) => {
+const DogCard = ({ dog, noData, resetSwiper }: MyPageDogCardProps) => {
   const subscriptionStatusKR = dog && subscriptionStatus[dog.subscribeStatus];
   const productionDates = 
     dog && typeof dog.nextDeliveryDate === 'string' 
     ? getProductionDates(dog.nextDeliveryDate) : undefined;
-  
+
   return (
     <div className={styles.dogSlide({ representative: dog && dog.representative || dog && dog.subscribeStatus === 'SUBSCRIBING', noDogData: noData })}>
-      <DogRepresentative noData={noData} representativeDog={dog ? dog.representative : false} />
+      <DogRepresentative
+        noData={noData}
+        representativeDog={dog ? dog.representative : false}
+        dogId={dog ? dog.id : 0}
+        resetSwiper={dog?.id ? resetSwiper : undefined}
+      />
       <Badge
         className={styles.subscriptionStatus}
         color={!noData && dog?.subscribeStatus === 'SUBSCRIBING' ? 'red' : undefined}
