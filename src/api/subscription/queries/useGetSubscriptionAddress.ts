@@ -5,7 +5,7 @@ import { getSubscriptionAddress } from "@/api/subscription/subscription";
 
 export { useGetSubscriptionAddress, prefetchGetSubscriptionAddress };
 
-function useGetSubscriptionAddress(subscribeId: string, queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionAddressData>) {
+function useGetSubscriptionAddress(subscribeId: number, queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionAddressData>) {
   return useSuspenseQuery<SubscriptionAddressData>({
     queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_ADDRESS, subscribeId],
     queryFn: () => getSubscriptionAddress(subscribeId),
@@ -13,7 +13,7 @@ function useGetSubscriptionAddress(subscribeId: string, queryOptions?: UseSuspen
   })
 }
 
-async function prefetchGetSubscriptionAddress(queryClient: QueryClient, subscribeId: string) {
+async function prefetchGetSubscriptionAddress(queryClient: QueryClient, subscribeId: number) {
   await queryClient.prefetchQuery<SubscriptionAddressData>({
     queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_ADDRESS, subscribeId],
     queryFn: () => getSubscriptionAddress(subscribeId),

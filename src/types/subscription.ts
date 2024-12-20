@@ -235,6 +235,7 @@ interface AddressDto {
   phoneNumber: string;
   zipcode: string;
   street: string;
+  city: string;
   detailAddress: string;
   request?: null | string;
 }

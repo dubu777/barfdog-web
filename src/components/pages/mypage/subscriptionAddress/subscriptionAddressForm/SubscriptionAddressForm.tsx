@@ -1,7 +1,7 @@
 'use client';
 import * as styles from './SubscriptionAddressForm.css';
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { pointColor } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
@@ -11,22 +11,36 @@ import { DefaultObjectType } from "@/types/common";
 import { AddressDto } from "@/types/subscription";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { addressSchema, defaultAddressValues } from "@/utils/addressValidation";
+import {useUpdateSubscriptionAddress} from "@/api/subscription/mutations/useUpdateSubscriptionAddress";
+import {useToastStore} from "@/store/useToastStore";
 
 interface AddressFormProps {
+  subscribeId: number;
   changeTypeList: DefaultObjectType[];
   nextDeliveryDate: string;
 }
 
-const SubscriptionAddressForm = ({ changeTypeList, nextDeliveryDate }: AddressFormProps) => {
+const SubscriptionAddressForm = ({ subscribeId, changeTypeList, nextDeliveryDate }: AddressFormProps) => {
   const searchParams = useSearchParams();
-  const shippingChangeType = changeTypeList.find(type => type.value === searchParams.get('changeType'));
+  const shippingChangeType = changeTypeList.find(type => type?.value === searchParams.get('changeType'));
   const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
 
-  const { control, watch, setValue, isValid, handleSubmit, reset } = useFormHandler(addressSchema, defaultAddressValues);
-  const onSubmit = (data: AddressDto) => {
-    console.log('data', data)
-    // setOpenConfirmModal(false);
-    // reset();
+  const { control, watch, setValue, isValid, handleSubmit } = useFormHandler(addressSchema, defaultAddressValues);
+  const { mutate } = useUpdateSubscriptionAddress(subscribeId, shippingChangeType?.value as string);
+  const { addToast } = useToastStore();
+  const router = useRouter();
+
+  const handleUpdateSubscriptionAddress = (data: AddressDto) => {
+    mutate(
+      { body: data },
+      {
+        onSuccess: () => {
+          setOpenConfirmModal(false);
+          addToast(`${shippingChangeType?.name}이 완료되었습니다!`, 'success');
+          router.replace(window.location.pathname);
+        }
+      }
+    )
   }
 
   return (
@@ -54,7 +68,7 @@ const SubscriptionAddressForm = ({ changeTypeList, nextDeliveryDate }: AddressFo
         <AlertModal
           isOpen={openConfirmModal}
           onClose={() => setOpenConfirmModal(false)}
-          onConfirm={handleSubmit(onSubmit)}
+          onConfirm={handleSubmit(handleUpdateSubscriptionAddress)}
           message={
             <div className={styles.confirmModal}>
               <p><b>{shippingChangeType?.name}</b>을 선택하셨습니다.</p>
