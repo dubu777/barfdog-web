@@ -3,7 +3,6 @@
 import * as styles from "./OrderInfo.css";
 import useModal from "@/hooks/useModal";
 import DeliveryAddressModal from "./deliveryAddressModal/DeliveryAddressModal";
-import { subscribeText } from "@/components/pages/subscriptionShop/subscriptionShopContent/recipeSelection/RecipeSelection.css";
 
 interface OrderInfoProps {}
 

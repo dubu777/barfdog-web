@@ -1,3 +1,5 @@
+import { Coupon } from "./subscription";
+
 export type {
   SubscriptionOrderData,
   GeneralOrderData,
@@ -10,7 +12,68 @@ export type {
   PaymentMethod,
   AddressResponse,
   OrderDetailType,
+  GeneralOrderSheetResponse,
+  GeneralOrderSheetRequest,
 };
+
+
+interface GeneralOrderSheetRequest {
+  orderItemDtoList: {
+    itemDto: {
+      itemId: number;
+      amount: number;
+    };
+    itemOptionDtoList: {
+      itemOptionId: number;
+      amount: number;
+    }[];
+  }[];
+}
+
+interface GeneralOrderItem {
+  itemId: number;
+  amount: number;
+  name: string;
+  itemType: string;
+  selectOptionDtoList?: {
+    itemOptionId: number;
+    amount: number;
+    name: string;
+    price: number;
+  }[];
+  memberCouponId: number | null;
+  discountAmount: number;
+  originalOrderLinePrice: number;
+  orderLinePrice: number;
+  deliveryFree: boolean;
+}
+
+interface DefaultAddress {
+  deliveryName: string | null;
+  zipcode: string;
+  city: string;
+  street: string;
+  detailAddress: string;
+}
+
+interface GeneralOrderSheetResponse {
+  brochure: boolean;
+  coupons: Coupon[];
+  defaultAddress: DefaultAddress;
+  deliveryId: number;
+  deliveryPrice: number;
+  email: string;
+  freeCondition: number;
+  name: string;
+  orderItemDtoList: OrderItem[];
+  orderPrice: number;
+  phoneNumber: string;
+  reward: number;
+  _links: {
+    self: { href: string };
+    order_general: { href: string };
+  };
+}
 
 interface OrderItem {
   id: number;

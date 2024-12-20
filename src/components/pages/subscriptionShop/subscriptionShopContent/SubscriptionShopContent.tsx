@@ -12,7 +12,6 @@ import {
 } from "@/utils/subscription/subscriptionUtils";
 import { getDiscountPercent } from "@/utils/subscription/getDiscountPercent";
 import FooterButton from "../footerButton/FooterButton";
-import RightArrowIcon from "/public/images/icons/right-arrow-white.svg";
 import SelectedProductInfo from "./selectedProductInfo/SelectedProductInfo";
 import PlanSelection from "./planSelection/PlanSelection";
 import RecipeSelection from "./recipeSelection/RecipeSelection";
@@ -23,9 +22,9 @@ import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSub
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import { useRouter } from "next/navigation";
-import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
 import DeliveryScheduleModal from "./deliveryScheduleModal/DeliveryScheduleModal";
+import Image from "next/image";
 
 interface SubscriptionShopContentProps {
   reportId: number;
@@ -36,10 +35,8 @@ export default function SubscriptionShopContent({
 }: SubscriptionShopContentProps) {
   const router = useRouter();
   const { data: recipeData } = useGetSurveyRecipe(reportId);
-
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
-  const { data: dogList } = useGetDogList();
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
@@ -124,7 +121,7 @@ export default function SubscriptionShopContent({
   };
 
   return (
-    <div className={styles.subscribeShopWrapper}>
+    <main className={styles.subscribeShopWrapper}>
       <RecipeSelection
         onRecipeSelect={handleSelectedRecipe}
         selectedRecipes={selectedRecipes}
@@ -144,16 +141,25 @@ export default function SubscriptionShopContent({
         handleSelectedVolume={handleSelectedVolume}
         oneMealGramWithVolume={oneMealGramWithVolume}
       />
-      {/* <SummaryBar /> */}
-      <FooterButton isDisabled={!isCompleted} onClick={onToggle}>
+      <FooterButton
+        isDisabled={!isCompleted}
+        onClick={onToggle}
+        aria-label="결제 페이지로 이동"
+      >
         결제하러 가기
-        <RightArrowIcon />
+        <Image
+          src="/images/icons/right-arrow-white.svg"
+          alt="결제 진행 화살표"
+          width={18}
+          height={18}
+          priority
+        />
       </FooterButton>
       <DeliveryScheduleModal
         isVisible={isOpen}
         onClose={onClose}
         onClickConfirm={handlePayment}
       />
-    </div>
+    </main>
   );
 }

@@ -22,16 +22,17 @@ export type {
   PaymentBody,
   SubscriptionResponse,
   SubscriptionData,
-  OrderSheetResponse,
+  SubscriptionOrderSheetResponse,
   BenefitStatus,
   SubscriptionSkipType,
   SubscriptionStatusKey,
   PlanKey,
   PlanName,
+  Coupon,
 };
 
 
-interface OrderSheetResponse {
+interface SubscriptionOrderSheetResponse {
   brochure: boolean;
   coupons: Coupon[];
   defaultAddress: DefaultAddress;
@@ -39,7 +40,7 @@ interface OrderSheetResponse {
   grade: string;
   gradeDiscountPercent: number;
   name: string;
-  nextDeliveryDate: string; // ISO 8601 형식
+  nextDeliveryDate: string;
   phoneNumber: string;
   recipeNameList: string[];
   reward: number;

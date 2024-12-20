@@ -30,8 +30,9 @@ export default function DeliveryAddressModal({
   const switchToAddAddress = () => {
     setViewMode("add");
   };
-  const switchToEditAddress = () => {
+  const switchToEditAddress = (address: AddressResponse) => {
     setViewMode("edit");
+    setSelectedAddress(address)
   };
 
   const handleSelectAddress = () => {
@@ -39,7 +40,7 @@ export default function DeliveryAddressModal({
   };
 
   const handleDeleteAddress = () => {
-    
+
   };
 
   const handleBackToList = () => {

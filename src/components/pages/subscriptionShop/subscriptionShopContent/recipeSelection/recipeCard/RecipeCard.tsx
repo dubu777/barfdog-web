@@ -20,7 +20,6 @@ export default function RecipeCard({
   inedibleFood,
   onRecipeCardSelect,
 }: RecipeCardProps) {
-  // console.log(recipeTempData, "recipeTempData");
 
   const isRecommend = recommendId === recipeTempData.id;
   return (
@@ -66,7 +65,6 @@ export default function RecipeCard({
             </p>
           ))}
         </div>
-        {/* <button className={styles.detailButton}>자세히 알아보기</button> */}
         <button className={subscribeText({ type: "link" })}>
           자세히 알아보기
         </button>

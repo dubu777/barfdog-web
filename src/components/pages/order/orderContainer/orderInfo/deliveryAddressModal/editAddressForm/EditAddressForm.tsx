@@ -6,7 +6,9 @@ interface EditAddressFormProps {
 }
 
 export default function EditAddressForm({address, onBack}: EditAddressFormProps) {
+  console.log('address', address);
+  
   return (
-    <>수정</>
+    <h1>배송지 수정 컴포넌트</h1>
   )
 }

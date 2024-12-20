@@ -1,8 +1,5 @@
-import {
-  prefetchGetOrderSheet,
-} from "@/api/order/queries/useGetOrderSheet";
+
 import * as styles from "../../../Order.css";
-import OrderInfo from "@/components/pages/order/orderContainer/orderInfo/OrderInfo";
 import {
   dehydrate,
   HydrationBoundary,
@@ -11,18 +8,20 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import OrderContainer from "@/components/pages/order/orderContainer/OrderContainer";
+import { prefetchGetSubscriptionOrderSheet } from "@/api/order/queries/useGetSubscriptionOrderSheet";
 
 interface SubscriptionPageProps {
-  params: { subscribeId: number };
+  params: { subscribeId: string };
 }
 
 export default async function SubscriptionPage({
   params,
 }: SubscriptionPageProps) {
   const { subscribeId } = params;
+  const numericSubscribeId = Number(subscribeId);
+  
   const queryClient = new QueryClient();
-
-  await prefetchGetOrderSheet(queryClient, subscribeId);
+  await prefetchGetSubscriptionOrderSheet(queryClient, numericSubscribeId);
   const dehydrateState = dehydrate(queryClient);
 
   return (
@@ -32,7 +31,7 @@ export default async function SubscriptionPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<div>Loading...</div>}>
-            <OrderContainer subscribeId={subscribeId}/>
+            <OrderContainer subscribeId={numericSubscribeId}/>
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>

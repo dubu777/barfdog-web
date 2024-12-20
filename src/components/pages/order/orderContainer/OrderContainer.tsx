@@ -1,6 +1,7 @@
 'use client'
 
-import { useGetOrderSheet } from "@/api/order/queries/useGetOrderSheet";
+
+import { useGetSubscriptionOrderSheet } from "@/api/order/queries/useGetSubscriptionOrderSheet";
 // import * as styles from "./OrderInfo.css";
 import OrderInfo from "./orderInfo/OrderInfo";
 import PackageSelection from "./packageSelection/PackageSelection";
@@ -11,7 +12,7 @@ interface OrderContainerProps {
 }
 
 export default function OrderContainer({subscribeId}: OrderContainerProps) {
-  const { data: orderSheetData } = useGetOrderSheet(subscribeId);
+  const { data: orderSheetData } = useGetSubscriptionOrderSheet(subscribeId);
 
   console.log('orderSheetData', orderSheetData);
   
