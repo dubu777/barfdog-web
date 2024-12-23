@@ -1,6 +1,4 @@
 import * as styles from "../MyPageDogList.css";
-import Image from "next/image";
-import NoImage from "/public/images/icons/noImage.png";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Badge from "@/components/common/badge/Badge";
@@ -9,6 +7,7 @@ import DogRepresentative from "@/components/pages/mypage/main/myPageDogList/dogR
 import { DogData } from "@/types/dogs";
 import { subscriptionStatus } from "@/constants";
 import { getProductionDates } from "@/utils/getProductionDates";
+import DogImage from "@/components/pages/mypage/main/myPageDogList/dogImage/DogImage";
 
 interface MyPageDogCardProps {
   noData: boolean;
@@ -37,7 +36,13 @@ const DogCard = ({ dog, noData, resetSwiper }: MyPageDogCardProps) => {
         {!noData ? subscriptionStatusKR : '구독 전'}
       </Badge>
       <div className={styles.dogContent}>
-        <Image src={dog && dog.pictureUrl ? dog.pictureUrl : NoImage} alt='반려견 이미지' width={67} height={67} style={{ borderRadius: '50%' }} />
+        {dog && 
+          <DogImage
+            dogId={dog.id}
+            dogPictureUrl={dog.pictureUrl as string}
+            dogPictureName={dog.pictureName as string}
+          />
+        }
         <div>
           <div style={{ marginBottom: '7px' }}>
             <Text type='description' size='sm' weight='bold' pageName='myPage'>{!noData && dog ? dog.name : '멍댕이'}</Text>
