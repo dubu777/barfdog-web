@@ -17,6 +17,11 @@ export const userInfoBox = style([defaultWidth, {
   position: 'relative',
 }])
 
+export const representativeDogImage = style({
+  borderRadius: '50%',
+  objectFit: 'cover',
+})
+
 export const infoText = recipe({
   base: {
     textAlign: 'left',

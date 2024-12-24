@@ -1,13 +1,13 @@
 'use client';
 import * as styles from "./MypageInfo.css";
+import { useEffect } from "react";
 import Image from "next/image";
 import Badge from "@/components/common/badge/Badge";
 import NoImage from "/public/images/icons/noImage.png";
 import EditButton from "/public/images/icons/edit.svg";
-import {useGetMyPageInfo} from "@/api/mypage/queries/useGetMypageInfo";
-import {MyPageMemberDto, MyPageRepresentativeDogDto} from "@/types";
-import {useAuthStore} from "@/store/useAuthStore";
-import {useEffect} from "react";
+import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
+import { MyPageMemberDto , MyPageRepresentativeDogDto} from "@/types";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const MyPageInfo = () => {
   const { data: myPageData } = useGetMyPageInfo();
@@ -23,7 +23,13 @@ const MyPageInfo = () => {
   }, [userData, setUserInfo])
   return (
     <article className={styles.userInfoBox}>
-      <Image src={NoImage} alt='사용자 이미지' width={89} height={89} />
+      <Image
+        src={representativeDogData.thumbnailUrl ? representativeDogData.thumbnailUrl : NoImage}
+        alt='사용자 이미지'
+        width={89}
+        height={89}
+        className={styles.representativeDogImage}
+      />
       <div>
         <p className={styles.infoText({ type: 'parents', })}>{representativeDogData?.dogName} 보호자</p>
         <h2 className={styles.infoText({ type: 'username', })}>
