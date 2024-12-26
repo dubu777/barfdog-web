@@ -14,7 +14,51 @@ export type {
   OrderDetailType,
   GeneralOrderSheetResponse,
   GeneralOrderSheetRequest,
+  GeneralOrderItem,
+  GeneralOrderRequest
 };
+
+interface GeneralOrderRequest {
+  orderItemDtoList: OrderItemDto[];
+  deliveryDto: DeliveryDto;
+  deliveryId: number; // 묶음 배송 ID
+  orderPrice: number; // 총 상품 가격
+  deliveryPrice: number; // 배송비
+  discountTotal: number; // 총 할인 금액
+  discountReward: number; // 적립금 할인 금액
+  discountCoupon: number; // 쿠폰 할인 금액
+  paymentPrice: number; // 최종 결제 금액
+  overDiscount: number; // 초과 할인 금액
+  paymentMethod: "CREDIT_CARD" | "NAVER_PAY" | "KAKAO_PAY"; // 결제 수단
+  agreePrivacy: boolean; // 개인정보 제공 동의 여부
+  brochure: boolean; // 브로슈어 수령 여부
+}
+
+// 각 상품 정보 타입
+interface OrderItemDto {
+  itemId: number; // 상품 ID
+  amount: number; // 상품 수량
+  selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
+  memberCouponId?: number; // 쿠폰 ID (옵션)
+  discountAmount: number; // 할인 금액
+  finalPrice: number; // 최종 상품 가격
+}
+
+// 상품 옵션 정보 타입
+interface SelectOptionDto {
+  itemOptionId: number; // 옵션 ID
+  amount: number; // 옵션 수량
+}
+
+// 배송 정보 타입
+interface DeliveryDto {
+  name: string; // 수령자 이름
+  phone: string; // 수령자 전화번호
+  zipcode: string; // 우편번호
+  street: string; // 도로명 주소
+  detailAddress: string; // 상세 주소
+  request: string; // 배송 요청사항
+}
 
 
 interface GeneralOrderSheetRequest {

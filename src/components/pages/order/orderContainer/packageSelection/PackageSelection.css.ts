@@ -20,5 +20,5 @@ export const packageSelectionWrapper = style({
 export const packageSelectionCard = style({
   width: '140px',
   height: '150px',
-  backgroundColor: themeVars.backgroundColors.grey7E,
+  backgroundColor: themeVars.backgroundColors.greyA6,
 })

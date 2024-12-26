@@ -15,6 +15,12 @@ export type {
   UseInfiniteQueryCustomOptions
 };
 
+declare global {
+  interface Window {
+    IMP?: any;
+  }
+}
+
 type SearchParamProps = {
   param: { [key: string]: string | number };
   searchParams: { [key: string]: string | string[] | undefined }

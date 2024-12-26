@@ -1,13 +1,11 @@
 "use client";
 
-import { StepProgressBar } from "../stepProgressBar/StepProgressBar";
 import * as styles from "./SurveyPagination.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-// import LeftArrowIcon from "/public/images/icons/angle-left-red.svg"
-// import RightArrowIcon from "/public/images/icons/angle-right-white.svg"
 import RightArrowIcon from "/public/images/icons/right-arrow-white.svg"
 import LeftArrowIcon from "/public/images/icons/left-arrow-red.svg"
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface SurveyPaginationProps {
   handleNextStep: () => void;
@@ -52,7 +50,13 @@ export default function SurveyPagination({
           borderRadius="lg"
           isHidden={isFirstStep}
         >
-          <LeftArrowIcon />
+          <Image
+            src={"/images/icons/left-arrow-red.svg"}
+            width={18}
+            height={18}
+            alt="left arrow"
+          />
+          {/* <LeftArrowIcon /> */}
           이전
         </DefaultButton>
         {!isLastStep ? (
@@ -64,7 +68,13 @@ export default function SurveyPagination({
             isDisabled={!canNextStep}
           >
             다음
-            <RightArrowIcon/>
+            {/* <RightArrowIcon/> */}
+            <Image
+            src={"/images/icons/right-arrow-white.svg"}
+            width={18}
+            height={18}
+            alt="right arrow"
+            />
           </DefaultButton>
         ) : (
           <DefaultButton
