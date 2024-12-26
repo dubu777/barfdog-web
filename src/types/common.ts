@@ -41,7 +41,9 @@ type UseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
 type UseSuspenseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
   UseSuspenseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
   "queryKey"
->;
+> & {
+  keepPreviousData?: boolean;
+};
 
 type UseInfiniteQueryCustomOptions<TQueryFnData = unknown, TError = unknown, TData = TQueryFnData> = Omit<
   UseInfiniteQueryOptions<TQueryFnData, TError, TData, QueryKey>,

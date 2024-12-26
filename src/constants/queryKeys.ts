@@ -51,5 +51,12 @@ const queryKeys = {
   RECIPE: {
     BASE: 'recipe',
     GET_RECIPE_LIST: 'getRecipeList',
+  },
+  COMMUNITY: {
+    NOTICE: {
+      BASE: 'notice',
+      GET_NOTICE_LIST: 'getNoticeList',
+      GET_NOTICE_DETAIL: 'getNoticeDetail',
+    }
   }
 } as const;

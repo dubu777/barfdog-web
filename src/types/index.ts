@@ -9,3 +9,4 @@ export * from './reward';
 export * from './coupon';
 export * from './recipe';
 export * from './main';
+export * from './community';
