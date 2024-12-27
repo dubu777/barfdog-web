@@ -1,7 +1,7 @@
+import { QueryParams } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-type QueryParams = Record<string, string | number | boolean>;
 
 const useDynamicQueryPush = () => {
   const router = useRouter();

@@ -57,6 +57,12 @@ const queryKeys = {
       BASE: 'notice',
       GET_NOTICE_LIST: 'getNoticeList',
       GET_NOTICE_DETAIL: 'getNoticeDetail',
+    },
+    BLOG: {
+      BASE: 'blog',
+      GET_BLOG_ARTICLE_LIST: 'getBlogArticleList',
+      GET_BLOG_LIST: 'getBlogList',
+      GET_BLOG_DETAIL: 'getBlogDetail',
     }
   }
 } as const;

@@ -31,37 +31,38 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
     ))
   }
   return (
-    <div className={styles.paginationContainer}>
-      <button
-        onClick={() => handlePageChange(0)}
-        disabled={isFirstPage}
-        className={styles.numberButton({})}
-      >
-        <DoubleArrow />
-      </button>
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={isFirstPage}
-        className={styles.numberButton({ type: 'prev' })}
-      >
-        <Arrow />
-      </button>
-      {renderPageNumbers()}
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={isLastPage}
-        className={styles.numberButton({ type: 'next' })}
-      >
-        <Arrow />
-      </button>
-      <button
-        onClick={() => handlePageChange(totalPages - 1)}
-        disabled={isLastPage}
-        className={styles.numberButton({ type: 'last' })}
-      >
-        <DoubleArrow />
-      </button>
-    </div>
+    totalPages !== 0 &&
+      <div className={styles.paginationContainer}>
+        <button
+          onClick={() => handlePageChange(0)}
+          disabled={isFirstPage}
+          className={styles.numberButton({})}
+        >
+          <DoubleArrow />
+        </button>
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={isFirstPage}
+          className={styles.numberButton({ type: 'prev' })}
+        >
+          <Arrow />
+        </button>
+        {renderPageNumbers()}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={isLastPage}
+          className={styles.numberButton({ type: 'next' })}
+        >
+          <Arrow />
+        </button>
+        <button
+          onClick={() => handlePageChange(totalPages - 1)}
+          disabled={isLastPage}
+          className={styles.numberButton({ type: 'last' })}
+        >
+          <DoubleArrow />
+        </button>
+      </div>
   );
 };
 

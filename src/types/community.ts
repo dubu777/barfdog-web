@@ -1,10 +1,16 @@
 export type {
   NoticeList,
-  NoticeListItem,
+  CommunityListItem,
+  CommunityItem,
   NoticeDetail,
+  BlogCategory,
+  BlogArticle,
+  BlogListItem,
+  BlogList,
+  BlogDetail,
+  CommunityCategory,
 };
-
-interface NoticeListItem {
+interface CommunityListItem {
   id : number;
   title: string;
   createdDate: string;
@@ -18,16 +24,49 @@ interface Page {
 }
 
 interface NoticeList {
-  noticeList: NoticeListItem[];
+  noticeList: CommunityListItem[];
   page: Page
 }
 
-interface NoticeItem extends NoticeListItem {
+interface CommunityItem extends CommunityListItem {
   contents: string;
 }
 
 interface NoticeDetail {
-  noticeDto: NoticeItem;
-  previous: NoticeListItem | null,
-  next: NoticeListItem | null,
+  noticeDto: CommunityItem;
+  previous: CommunityListItem | null,
+  next: CommunityListItem | null,
 }
+
+interface BlogArticle {
+  id: number;
+  number: number;
+  url: string;
+  category: string;
+  title: string;
+  createdDate: string;
+}
+
+interface BlogListItem {
+  id: number;
+  category: string;
+  title: string;
+  contents: string;
+  createdDate: string;
+  url: string;
+}
+
+interface BlogList {
+  blogList: BlogListItem[];
+  page: Page
+}
+
+interface BlogDetail {
+  blogDetail: CommunityItem;
+  previous: CommunityListItem | null;
+  next: CommunityListItem | null;
+}
+
+type BlogCategory = 'all' | 'nutrition' | 'health' | 'life';
+
+type CommunityCategory = 'notice' | 'blog';

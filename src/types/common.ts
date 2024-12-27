@@ -12,7 +12,8 @@ export type {
   UseMutationCustomOptions,
   UseQueryCustomOptions,
   UseSuspenseQueryCustomOptions,
-  UseInfiniteQueryCustomOptions
+  UseInfiniteQueryCustomOptions,
+  QueryParams,
 };
 
 type SearchParamProps = {
@@ -49,3 +50,5 @@ type UseInfiniteQueryCustomOptions<TQueryFnData = unknown, TError = unknown, TDa
   UseInfiniteQueryOptions<TQueryFnData, TError, TData, QueryKey>,
   "queryKey" | "queryFn"
 >;
+
+type QueryParams = Record<string, string | number | boolean>;

@@ -1,5 +1,5 @@
 import { themeVars } from './theme.css';
-import { style } from '@vanilla-extract/css';
+import {globalStyle, style} from '@vanilla-extract/css';
 import { recipe } from "@vanilla-extract/recipes";
 
 export const commonLayoutStyle = style({
@@ -44,6 +44,13 @@ export const ellipsis = recipe({
       line3: {
         '-webkit-line-clamp': '3',
       },
+      line4: {
+        '-webkit-line-clamp': '4',
+      },
+      line5: {
+        '-webkit-line-clamp': '5',
+        lineHeight: 'normal'
+      },
     },
     wordBreak: {
       keep: {
@@ -53,6 +60,14 @@ export const ellipsis = recipe({
     whiteSpace: {
       pre: {
         whiteSpace: 'pre-line',
+      }
+    },
+    align: {
+      center: {
+        textAlign: 'center'
+      },
+      left: {
+        textAlign: 'left',
       }
     }
   },
@@ -72,4 +87,28 @@ export const defaultWidth = style({
 export const inlineBlockSpan = style({
   display: 'inline-block',
   marginLeft: '8px',
+});
+
+
+export const sanitizedHTML = style({})
+
+globalStyle(`${sanitizedHTML} *`, {
+  textAlign: 'unset',
+  font: 'auto'
+});
+
+globalStyle(`${sanitizedHTML} img`, {
+  width: '100%',
+  maxWidth: '600px',
+  height: 'auto',
+  display: 'block',
+  margin: '0 auto',
+});
+
+globalStyle(`${sanitizedHTML} h2`, {
+  fontSize: themeVars.fontSize["title-md"],
+});
+
+globalStyle(`${sanitizedHTML} b, strong`, {
+  fontWeight: themeVars.fontWeight.bold,
 });

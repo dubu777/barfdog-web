@@ -8,11 +8,14 @@ import { formatDate } from "@/utils/dateUtils";
 import { usePagination } from "@/hooks/usePagination";
 import { prefetchGetNoticeList, useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
 import { useQueryClient } from '@tanstack/react-query';
+import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
 
 const NoticeList = () => {
   const queryClient = useQueryClient();
+  const { pushWithQuery } = useDynamicQueryPush();
   const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
     prefetchFn: (page: number) => prefetchGetNoticeList(queryClient, page),
+    pushWithQuery,
   })
 
   const paginationProps = useMemo(() => ({ // 불필요한 props 객체 재생성 방지
