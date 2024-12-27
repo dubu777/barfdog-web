@@ -1,7 +1,7 @@
-import {style} from "@vanilla-extract/css";
-import {commonLayoutStyle} from "@/styles/common.css";
-import {themeVars} from "@/styles/theme.css";
-import {recipe} from "@vanilla-extract/recipes";
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
+import { commonLayoutStyle } from "@/styles/common.css";
+import { themeVars } from "@/styles/theme.css";
 
 export const sideNavBarWrapper = style([commonLayoutStyle, {
   position: 'fixed',
@@ -11,25 +11,25 @@ export const sideNavBarWrapper = style([commonLayoutStyle, {
   zIndex: 400,
   display: 'flex',
   justifyContent: 'flex-end',
-  border: '1px solid orange',
   margin: '0 auto',
   // overflow: 'hidden'
 }])
+
 export const sideNavBarContainer = style({
   width: '70%',
   height: '100%',
   background: themeVars.colors.white,
   position: 'relative',
   padding: '100px 18px 36px',
-  border: '1px solid red'
-
 })
+
 export const closeBtn = style({
   position: 'absolute',
   right: 20,
   top: 20,
   cursor: 'pointer',
 })
+
 export const background = style({
   background: themeVars.backgroundColors.darkOpacity,
   width: '100%',
@@ -78,6 +78,7 @@ export const navItem = style({
 export const navItemLink = style({
   width: '100%',
   textAlign: 'left',
+  cursor: 'pointer',
 })
 
 export const subItemsTitle = style({
