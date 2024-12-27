@@ -34,9 +34,12 @@ export default function SubscriptionShopContent({
   reportId,
 }: SubscriptionShopContentProps) {
   const router = useRouter();
+  const { isOpen, onToggle, onClose } = useModal();
   const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
+  const { mutate: updateSubscription } = useUpdateSubscription();
+
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
@@ -89,10 +92,6 @@ export default function SubscriptionShopContent({
     !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
     subscribePriceData.totalOriginalPriceAllRecipes !== 0;
 
-  const { isOpen, onToggle, onClose } = useModal();
-
-  const { mutate: updateSubscription } = useUpdateSubscription();
-
   const handlePayment = () => {
     const body = {
       plan: selectedPlan,
@@ -101,7 +100,6 @@ export default function SubscriptionShopContent({
       oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
       subscribeItemList: null,
     };
-    console.log("body", body);
 
     const validationError = validatePaymentBody(body);
     if (validationError) {
@@ -113,7 +111,7 @@ export default function SubscriptionShopContent({
       {
         onSuccess: async () => {
           router.push(
-            `/order/order-sheet/subscription/${recipeData.subscribeId}`
+            `/order/order-sheet/subscription?subscribeId=${recipeData.subscribeId}`
           );
         },
       }

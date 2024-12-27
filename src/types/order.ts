@@ -15,7 +15,10 @@ export type {
   GeneralOrderSheetResponse,
   GeneralOrderSheetRequest,
   GeneralOrderItem,
-  GeneralOrderRequest
+  GeneralOrderRequest,
+  OrderItemDto,
+  OrderItem,
+  GeneralOrderItemDto,
 };
 
 interface GeneralOrderRequest {
@@ -60,18 +63,19 @@ interface DeliveryDto {
   request: string; // 배송 요청사항
 }
 
+interface GeneralOrderItemDto {
+  itemDto: {
+    itemId: number;
+    amount: number;
+  };
+  itemOptionDtoList: {
+    itemOptionId: number;
+    amount: number;
+  }[];
+}
 
 interface GeneralOrderSheetRequest {
-  orderItemDtoList: {
-    itemDto: {
-      itemId: number;
-      amount: number;
-    };
-    itemOptionDtoList: {
-      itemOptionId: number;
-      amount: number;
-    }[];
-  }[];
+  orderItemDtoList: GeneralOrderItemDto[];
 }
 
 interface GeneralOrderItem {
