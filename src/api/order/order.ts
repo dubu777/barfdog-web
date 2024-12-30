@@ -1,8 +1,8 @@
 import axiosInstance from "../axiosInstance";
-import { AddressResponse, GeneralOrderRequest, GeneralOrderSheetRequest, GeneralOrderSheetResponse, SubscriptionOrderDto, SubscriptionOrderSheetResponse } from "@/types";
+import { AddressResponse, CreateGeneralOrderRequest, CreateGeneralOrderResponse, GeneralOrderSheetRequest, GeneralOrderSheetResponse, SubscriptionOrderDto, SubscriptionOrderSheetResponse } from "@/types";
 import { GeneralOrderData, MergeOrderAndRecipe, SubscriptionOrderData } from "@/types";
 
-export { getOrderDetail, getSubscriptionOrderList, getGeneralOrderList, getSubscriptionOrderSheet, getAddress, getGeneralOrderSheet, createGeneralOrder };
+export { getOrderDetail, getSubscriptionOrderList, getGeneralOrderList, getSubscriptionOrderSheet, getAddress, getGeneralOrderSheet, createGeneralOrderSheet };
 
 const getSubscriptionOrderSheet = async (subscribeId: number): Promise<SubscriptionOrderSheetResponse> => {
   const {data} = await axiosInstance.get(`/api/orders/sheet/subscribe/${subscribeId}`);
@@ -16,6 +16,13 @@ const getGeneralOrderSheet = async (body: GeneralOrderSheetRequest): Promise<Gen
 
   return data
 }
+
+const createGeneralOrderSheet = async (body: CreateGeneralOrderRequest): Promise<CreateGeneralOrderResponse> => {
+  const {data} = await axiosInstance.post('/api/orders/general', body);
+
+  return data
+}
+
 
 const getAddress = async (): Promise<AddressResponse[]> => {
   const {data} = await axiosInstance.get(`/api/address`);
@@ -52,10 +59,4 @@ const getOrderDetail = async (orderId: string, type: string): Promise<MergeOrder
   }
 
   return mergeOrderAndRecipe || null;
-}
-
-const createGeneralOrder = async (body: GeneralOrderRequest) => {
-  const { data } = await axiosInstance.post('/api/orders/general', body);
-
-  return data;
 }

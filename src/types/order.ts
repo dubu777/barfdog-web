@@ -15,28 +15,48 @@ export type {
   GeneralOrderSheetResponse,
   GeneralOrderSheetRequest,
   GeneralOrderItem,
-  GeneralOrderRequest,
   OrderItemDto,
   OrderItem,
   GeneralOrderItemDto,
+  CreateGeneralOrderResponse,
+  CreateGeneralOrderRequest,
 };
 
-interface GeneralOrderRequest {
-  orderItemDtoList: OrderItemDto[];
-  deliveryDto: DeliveryDto;
-  deliveryId: number; // 묶음 배송 ID
-  orderPrice: number; // 총 상품 가격
-  deliveryPrice: number; // 배송비
-  discountTotal: number; // 총 할인 금액
-  discountReward: number; // 적립금 할인 금액
-  discountCoupon: number; // 쿠폰 할인 금액
-  paymentPrice: number; // 최종 결제 금액
-  overDiscount: number; // 초과 할인 금액
-  paymentMethod: "CREDIT_CARD" | "NAVER_PAY" | "KAKAO_PAY"; // 결제 수단
-  agreePrivacy: boolean; // 개인정보 제공 동의 여부
-  brochure: boolean; // 브로슈어 수령 여부
+interface CreateGeneralOrderResponse {
+  id: number; // 주문 id
+  merchantUid: string; // 주문 넘버
+  status: string; // 주문 상태
+  _links: {
+    self: {
+      href: string; // self 링크
+    };
+    success_generalOrder: {
+      href: string; // 결제 성공 링크
+    };
+    fail_generalOrder: {
+      href: string; // 결제 실패 링크
+    };
+    profile: {
+      href: string; // API 문서 링크
+    };
+  };
 }
 
+interface CreateGeneralOrderRequest {
+  orderItemDtoList: OrderItemDto[];
+  deliveryDto: DeliveryDto;
+  deliveryId: number | null;
+  orderPrice: number;
+  deliveryPrice: number;
+  discountTotal: number;
+  discountReward: number;
+  discountCoupon: number;
+  overDiscount: number;
+  paymentPrice: number;
+  paymentMethod: PaymentMethod;
+  agreePrivacy: boolean;
+  brochure: boolean;
+}
 // 각 상품 정보 타입
 interface OrderItemDto {
   itemId: number; // 상품 ID

@@ -1,4 +1,4 @@
-export { CouponData };
+export type { CouponData };
 
 interface CouponData {
   id: number;

@@ -1,6 +1,6 @@
 import { subscriptionStatus } from "@/constants";
 
-export { DogData };
+export type { DogData };
 
 interface DogData {
   id: number;

@@ -12,6 +12,7 @@ import PackageSelection from "../orderContainer/packageSelection/PackageSelectio
 import PaymentMethod from "../orderContainer/paymentMethod/PaymentMethod";
 import { usePersistOrderStore } from "@/store/usePersistOrderStore";
 import { useGetGeneralOrderSheet } from "@/api/order/queries/useGetGeneralOrderSheet";
+import { useCreateGeneralOrder } from "@/api/order/mutations/useCreateGeneralOrder";
 
 
 interface GeneralOrderContainerProps {
@@ -24,7 +25,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const {orderItemList} = usePersistOrderStore();
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
   const { mutate: getGeneralOrderSheet } = useGetGeneralOrderSheet();
-
+  const { mutate: createGeneralOrder } = useCreateGeneralOrder();
   const body = {
     orderItemDtoList: orderItemList,
   }
@@ -64,27 +65,28 @@ console.log('orderItemList', orderItemList);
 
   // 일반 결제 요청 함수
   const generalPayment = () => {
-    if (!isScriptLoaded || !window.IMP) {
-      console.error("IMP 스크립트가 로드되지 않았습니다.");
-      return;
-    }
+    
 
-    const IMP = window.IMP;
-    IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
+    // if (!isScriptLoaded || !window.IMP) {
+    //   console.error("IMP 스크립트가 로드되지 않았습니다.");
+    //   return;
+    // }
 
-    IMP.request_pay({
-      pg: pgType.GENERAL[paymentMethod],
-      pay_method: paymentMethod,
-      merchant_uid: "merchant_" + new Date().getTime(),
-      name: "주문명:결제테스트",
-      amount: 14000,
-      buyer_email: "",
-      buyer_name: "구매자",
-      buyer_tel: "010-1234-5678",
-      buyer_addr: "서울특별시 강남구 신사동 661-16",
-      buyer_postcode: "06018",
-      m_redirect_url: "https://www.yourdomain.com/payments/complete",
-    }
+    // const IMP = window.IMP;
+    // IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
+
+    // IMP.request_pay({
+    //   pg: pgType.GENERAL[paymentMethod],
+    //   pay_method: paymentMethod,
+    //   merchant_uid: "merchant_" + new Date().getTime(),
+    //   name: "주문명:결제테스트",
+    //   amount: 14000,
+    //   buyer_email: "",
+    //   buyer_name: "구매자",
+    //   buyer_tel: "010-1234-5678",
+    //   buyer_addr: "서울특별시 강남구 신사동 661-16",
+    //   buyer_postcode: "06018",
+    //   m_redirect_url: "https://www.yourdomain.com/payments/complete",
     // }, function (res) {
     //   if (res.success) {
     //     var msg = "결제가 완료되었습니다.";
@@ -98,7 +100,7 @@ console.log('orderItemList', orderItemList);
     //   }
     //   alert(msg);
     // }
-    );
+    // );
   }
 
   

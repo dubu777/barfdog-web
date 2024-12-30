@@ -6,7 +6,7 @@ interface PackageSelectionProps {}
 
 export default function PackageSelection({}: PackageSelectionProps) {
 
-  const temp = [1,2,3,4]
+  const temp = [12,6,3,0]
 
   return (
     <div className={styles.packageSelectionContainer}>

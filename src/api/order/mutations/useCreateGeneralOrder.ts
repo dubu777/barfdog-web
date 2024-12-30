@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { UseMutationCustomOptions } from "@/types";
-import { createGeneralOrder } from "../order";
+import { createGeneralOrderSheet } from "../order";
 
 
 export function useCreateGeneralOrder(mutationOptions?: UseMutationCustomOptions) {
   return useMutation({
-    mutationFn: createGeneralOrder,
+    mutationFn: createGeneralOrderSheet,
     ...mutationOptions,
   })
 }
