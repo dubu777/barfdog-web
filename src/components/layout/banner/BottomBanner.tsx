@@ -25,7 +25,7 @@ const BottomBanner = () => {
     isBottomBannerVisible &&
       <div className={styles.bannerContainer({ position: 'bottom' })}>
         <p className={styles.bottomBanner}>
-          <span style={{ color: themeVars.fontColors.yellow }}>AI 추천 맞춤 식단 정기 구독</span>
+          <span style={{ color: themeVars.fontColors.yellowGreen }}>AI 추천 맞춤 식단 정기 구독</span>
           <span className={styles.bannerTimestamp}>
             {timestamp !== null && timestamp}
           </span>

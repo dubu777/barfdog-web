@@ -6,10 +6,6 @@ const useSanitizedHTML = (html: string, lineLimit?: number, maxLength = 119) => 
   const [sanitizedHTML, setSanitizedHTML] = useState<string>('');
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // const cleanHTML = DOMPurify.sanitize(html, {
-      //   ALLOWED_TAGS: ['p', 'br', 'h1', 'h2', 'h3'],
-      //   ALLOWED_ATTR: [],
-      // });
       const cleanHTML = DOMPurify.sanitize(html);
       setSanitizedHTML(cleanHTML || '');
     }
@@ -32,7 +28,6 @@ const useSanitizedHTML = (html: string, lineLimit?: number, maxLength = 119) => 
       ? `${limitedLines.slice(0, maxLength - 3)}...`
       : limitedLines;
   } else {
-    console.log('!??!')
     return sanitizedHTML;
   }
 }

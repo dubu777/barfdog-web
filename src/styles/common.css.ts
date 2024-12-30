@@ -1,5 +1,5 @@
 import { themeVars } from './theme.css';
-import {globalStyle, style} from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from "@vanilla-extract/recipes";
 
 export const commonLayoutStyle = style({
@@ -37,6 +37,7 @@ export const ellipsis = recipe({
         display: 'block',
         webkitLineClamp: 'none',
         webkitBoxOrient: 'none',
+        lineHeight: 'normal'
       },
       line2: {
         '-webkit-line-clamp': '2',
@@ -49,7 +50,6 @@ export const ellipsis = recipe({
       },
       line5: {
         '-webkit-line-clamp': '5',
-        lineHeight: 'normal'
       },
     },
     wordBreak: {

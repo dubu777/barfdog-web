@@ -35,7 +35,8 @@ export const [themeClass, themeVars] = createTheme({
   },
   fontColors: {
     white: '#ffffff',
-    yellow: '#faff00',
+    yellowGreen: '#faff00',
+    yellow: '#ffe500',
     green: '#11B418',
     darkRed: '#AF3D3D',
     mainRed: '#BE1A21',

@@ -1,3 +1,5 @@
+import { Page } from "@/types";
+
 export type {
   NoticeList,
   CommunityListItem,
@@ -14,13 +16,6 @@ interface CommunityListItem {
   id : number;
   title: string;
   createdDate: string;
-}
-
-interface Page {
-  size: number;
-  totalElements: number;
-  totalPages: number;
-  number: number;
 }
 
 interface NoticeList {

@@ -64,5 +64,11 @@ const queryKeys = {
       GET_BLOG_LIST: 'getBlogList',
       GET_BLOG_DETAIL: 'getBlogDetail',
     }
+  },
+  REVIEW: {
+    BASE: 'review',
+    GET_BEST_REVIEW_LIST: 'getBestReviewList',
+    GET_REVIEW_LIST: 'getReviewList',
+    GET_REVIEW_DETAIL: 'getReviewDetail',
   }
 } as const;

@@ -14,6 +14,7 @@ export type {
   UseSuspenseQueryCustomOptions,
   UseInfiniteQueryCustomOptions,
   QueryParams,
+  Page,
 };
 
 type SearchParamProps = {
@@ -52,3 +53,10 @@ type UseInfiniteQueryCustomOptions<TQueryFnData = unknown, TError = unknown, TDa
 >;
 
 type QueryParams = Record<string, string | number | boolean>;
+
+interface Page {
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  number: number;
+}

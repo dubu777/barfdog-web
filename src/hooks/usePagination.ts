@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { QueryParams } from "@/types";
+import { useSearchParams } from "next/navigation";
 
 interface UsePaginationProps {
   prefetchFn: (page: number) => Promise<void>;
@@ -8,7 +9,10 @@ interface UsePaginationProps {
 }
 
 export function usePagination({ prefetchFn, pushWithQuery }: UsePaginationProps) {
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const searchParams = useSearchParams();
+  const pageParam = Number(searchParams.get('page')) - 1 || 0;
+
+  const [currentPage, setCurrentPage] = useState<number>(pageParam || 0);
   const [totalPages, setTotalPages] = useState<number>(1);
   const queryClient = useQueryClient();
 

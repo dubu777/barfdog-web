@@ -10,3 +10,4 @@ export * from './coupon';
 export * from './recipe';
 export * from './main';
 export * from './community';
+export * from './review';

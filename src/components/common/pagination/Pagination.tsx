@@ -19,17 +19,32 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
     }
   }
 
-  const renderPageNumbers = () => {
-    return Array.from({ length: totalPages }, (_, index) => (
-      <button
-        key={index}
-        onClick={() => handlePageChange(index)}
-        className={styles.numberButton({ active: index === currentPage }) || ''}
-      >
-        {index + 1}
-      </button>
-    ))
-  }
+  const generatePageNumbers = () => {
+    const range: (number | string)[] = [];
+    const maxVisibleButtons = 5; // 최대 표시할 버튼 수
+
+    if (totalPages <= maxVisibleButtons + 2) {
+      // 전체 페이지가 적을 경우 모든 페이지를 표시
+      for (let i = 1; i <= totalPages; i++) {
+        range.push(i);
+      }
+    } else {
+      // 많은 페이지일 경우
+      if (currentPage <= 3) {
+        // 현재 페이지가 앞부분일 때
+        range.push(1, 2, 3, 4, 5, "...", totalPages);
+      } else if (currentPage >= totalPages - 3) {
+        // 현재 페이지가 뒷부분일 때
+        range.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        // 현재 페이지가 중간일 때
+        range.push(1, "...", currentPage, currentPage + 1, currentPage + 2, "...", totalPages);
+      }
+    }
+
+    return range;
+  };
+
   return (
     totalPages !== 0 &&
       <div className={styles.paginationContainer}>
@@ -47,7 +62,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
         >
           <Arrow />
         </button>
-        {renderPageNumbers()}
+        {generatePageNumbers().map((page, index) => (
+          <button
+            key={index}
+            onClick={() => typeof page === "number" && handlePageChange(page-1)}
+            disabled={page === "..."}
+            className={styles.numberButton({ active: page === currentPage + 1 }) || ''}
+          >
+            {page}
+          </button>
+        ))}
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={isLastPage}
