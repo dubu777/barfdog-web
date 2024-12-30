@@ -8,13 +8,11 @@ export const itemListHeader = style({
   marginBottom: '20px'
 })
 
-
 export const reviewList = style({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   marginTop: '50px',
-  padding: '0 20px',
 })
 
 export const reviewItem = recipe({

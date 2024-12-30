@@ -1,6 +1,6 @@
 'use client';
 import * as styles from './ReviewItemList.css';
-import { useEffect, useMemo } from "react";
+import {useEffect, useMemo, useState} from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetReviewList, useGetReviewList } from "@/api/review/queries/useGetReviewList";
 import { usePagination } from "@/hooks/usePagination";
@@ -8,9 +8,15 @@ import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
 import Pagination from "@/components/common/pagination/Pagination";
 import Text from "@/components/common/text/Text";
 import ReviewItem from "@/components/pages/reivew/reviewList/reviewItemList/reviewItem/ReviewItem";
+import SelectBox from "@/components/common/selectBox/SelectBox";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const ReviewItemList = () => {
   const queryClient = useQueryClient();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [selectedSortBy, setSelectedSortBy] = useState<string>(searchParams.get('sortBy') || 'RECENT');
+
   const { pushWithQuery } = useDynamicQueryPush();
   const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
     prefetchFn: (page: number) => prefetchGetReviewList(queryClient, page),
@@ -28,12 +34,24 @@ const ReviewItemList = () => {
     if (data.page) {
       setPaginationData(data.page)
     }
-  }, [data.page, setPaginationData])
+  }, [data.page, setPaginationData]);
+
+  const handleSortByFilterChange = async (sortFilter: string) => {
+    pushWithQuery(pathname, { sortBy: sortFilter });
+    setSelectedSortBy(sortFilter)
+  }
 
   return (
     <article>
       <div className={styles.itemListHeader}>
         <Text type='title' size='titleLg' weight='bold' align='left'>리뷰</Text>
+        <SelectBox
+          id="sortBy"
+          options={[{ label: '최근순', value: 'RECENT' }, { label: '등록순', value: 'REGISTRATION' }, { label: '판매량순', value: 'SALEAMOUNT' }]}
+          forFilter
+          onSelect={(value) => handleSortByFilterChange(value)}
+          selectedValue={selectedSortBy}
+        />
       </div>
       <ul className={styles.reviewList}>
         <li className={styles.reviewItem({ isHeader: true })}>

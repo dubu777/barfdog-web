@@ -24,9 +24,10 @@ export default function SelectBox({
 }: SelectBoxProps) {
   const { isOpen, onToggle, onClose, ref } = useModal();
 
-  const handleSelect = (value: string) => {
-    onSelect(value);
+  const handleSelect = (e: MouseEvent, value: string) => {
+    e.stopPropagation();
     onClose();
+    onSelect(value);
   };
 
   const selectedLabel = options.find((option) => option.value === selectedValue)?.label || placeholder;
@@ -47,32 +48,32 @@ export default function SelectBox({
             onToggle();
           }}
         />
-        <AnimatePresence>
-          {isOpen && (
-            <div className={styles.optionsContainer}>
-              <motion.div
-                className={styles.optionsWrapper}
-                key="selectBox"
-                variants={expandFromTopVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                {options.map((option) => (
-                  <p
-                    key={option.value}
-                    data-selected={option.value === selectedValue}
-                    className={styles.option}
-                    onClick={() => handleSelect(option.value)}
-                  >
-                    {option.label}
-                  </p>
-                ))}
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
       </label>
+      <AnimatePresence>
+        {isOpen && (
+          <div className={styles.optionsContainer}>
+            <motion.div
+              className={styles.optionsWrapper}
+              key="selectBox"
+              variants={expandFromTopVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              {options.map((option) => (
+                <p
+                  key={option.value}
+                  data-selected={option.value === selectedValue}
+                  className={styles.option}
+                  onClick={(e) => handleSelect(e, option.value)}
+                >
+                  {option.label}
+                </p>
+              ))}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

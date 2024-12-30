@@ -6,6 +6,8 @@ export const selectBoxContainer = style({
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
+  zIndex: 300,
+  position: 'relative',
 });
 
 export const selectInputWrapper = style({
@@ -26,6 +28,7 @@ export const selectInputWrapper = style({
     background: `url('/images/icons/filter-arrow.png') no-repeat center center / 10px 5px`,
   }
 });
+
 export const inputField = recipe({
  base: {
    fontSize: themeVars.fontSize["text-md"],
@@ -38,7 +41,6 @@ export const inputField = recipe({
    borderRadius: '9px',
    border: `1px solid ${themeVars.borderColors.greyDD}`,
    cursor: 'pointer',
-   // zIndex: 3,
  },
   variants: {
    forFilter: {
@@ -61,14 +63,6 @@ export const frontWord = style({
   minWidth: '60px',
 });
 
-export const unit = style({
-  position: 'absolute',
-  fontSize: themeVars.fontSize["text-md"],
-  right: '1.25rem',
-  top: '50%',
-  transform: 'translateY(-50%)',
-});
-
 export const optionsContainer = style({
   position: 'absolute',
   left: '0',
@@ -80,8 +74,6 @@ export const optionsContainer = style({
   boxShadow: '0 0 1.5625rem rgba(0, 0, 0, 0.1)',
   backgroundColor: themeVars.colors.white,
 });
-
-
 
 export const optionsWrapper = style({
   maxHeight: '12.5rem',

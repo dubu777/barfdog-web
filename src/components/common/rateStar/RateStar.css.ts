@@ -1,6 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {themeVars} from "@/styles/theme.css";
-import {recipe} from "@vanilla-extract/recipes";
+import { themeVars } from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const rate = recipe({
   base: {

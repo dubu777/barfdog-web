@@ -1,5 +1,4 @@
 import * as styles from './Pagination.css';
-
 import Arrow from '/public/images/icons/pagination-arrow.svg';
 import DoubleArrow from '/public/images/icons/pagination-double-arrow.svg';
 

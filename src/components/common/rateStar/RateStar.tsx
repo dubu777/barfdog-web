@@ -1,5 +1,5 @@
 import * as styles from './RateStar.css';
-import {Fragment} from "react";
+import { Fragment } from "react";
 
 interface RateStar {
   rateLength: number;
@@ -8,7 +8,7 @@ interface RateStar {
 
 const RateStar = ({ rateLength, color = 'red' }: RateStar) => {
   return (
-     <span className={styles.rate({ color })}>
+    <span className={styles.rate({ color })}>
       {Array.from({length: rateLength}, (v, i) => i + 1).map((_, i) => (
         <Fragment key={i}>★</Fragment>
       ))}
