@@ -1,0 +1,76 @@
+import * as styles from './WrittenReview.css';
+import { useEffect, useMemo } from "react";
+import Image from "next/image";
+import Pagination from "@/components/common/pagination/Pagination";
+import Text from "@/components/common/text/Text";
+import DefaultButton from "@/components/common/defaultButton/DefaultButton";
+import RateStar from "@/components/common/rateStar/RateStar";
+import { reviewStatus, reviewType } from "@/constants";
+import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePagination } from "@/hooks/usePagination";
+import { prefetchGetWrittenReviewList, useGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
+
+const WrittenReview = ({ onInit }: { onInit: () => void }) => {
+  const queryClient = useQueryClient();
+  const { pushWithQuery } = useDynamicQueryPush();
+
+  const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
+    prefetchFn: (page: number) => prefetchGetWrittenReviewList(queryClient, page),
+    pushWithQuery,
+  })
+  const paginationProps = useMemo(() => ({
+    currentPage,
+    totalPages,
+    onPageChange,
+  }), [currentPage, totalPages, onPageChange]);
+
+  const { data } = useGetWrittenReviewList(currentPage);
+  const writtenReviewList = data.writtenReviewList;
+  console.log('writtenReviewList', writtenReviewList)
+
+  useEffect(() => {
+    if (data.page) {
+      setPaginationData(data.page);
+    }
+  }, [data.page, setPaginationData]);
+
+  useEffect(() => {
+    onInit();
+  }, [onInit])
+
+  return (
+    <article className={styles.writtenReviewContainer}>
+      <ul className={styles.writtenList}>
+        {writtenReviewList.map(review => (
+          <li key={review.id} className={styles.writtenReview}>
+            <div className={styles.reviewInfo}>
+              <div className={styles.reviewTitle}>
+                {review.thumbnailUrl && 
+                  <Image src={review.thumbnailUrl} alt={review.title} width={50} height={50} className={styles.reviewImage} />
+                }
+                <div>
+                  <Text type='description' size='sm' color='black' weight='bold' align='left'>{review.title}</Text>
+                  <Text type='description' size='xs' color='black' align='left'>({reviewType[review.reviewType]})</Text>
+                </div>
+              </div>
+              <RateStar rateLength={review.star} color='yellow' align='left' />
+              <Text type='description' size='sm' color='grey' align='left'>{review.contents}</Text>
+              <Text type='description' size='xs' color='grey' align='left'>{review.createdDate}</Text>
+            </div>
+            <Text className={styles.reviewStatus} type='description' size='sm' color='black'>{reviewStatus[review.status]}</Text>
+            <div className={styles.writtenButtonControls}>
+              <DefaultButton type='mainBorder' borderRadius='sm'>수정</DefaultButton>
+              <DefaultButton type='grayBorder' borderRadius='sm'>삭제</DefaultButton>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <Pagination
+        {...paginationProps}
+      />
+    </article>
+  );
+};
+
+export default WrittenReview;

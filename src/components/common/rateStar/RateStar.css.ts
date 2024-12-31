@@ -18,6 +18,14 @@ export const rate = recipe({
       black: {
         color: themeVars.colors.black,
       }
+    },
+    align: {
+      left: {
+        textAlign: 'left',
+      },
+      center: {
+        textAlign: 'center',
+      },
     }
   }
 })

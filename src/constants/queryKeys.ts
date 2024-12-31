@@ -70,5 +70,7 @@ const queryKeys = {
     GET_BEST_REVIEW_LIST: 'getBestReviewList',
     GET_REVIEW_LIST: 'getReviewList',
     GET_REVIEW_DETAIL: 'getReviewDetail',
+    GET_WRITABLE_REVIEW_LIST: 'getWritableReviewList',
+    GET_WRITTEN_REVIEW_LIST: 'getWrittenReviewList',
   }
 } as const;
