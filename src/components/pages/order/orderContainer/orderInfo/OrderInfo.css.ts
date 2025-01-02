@@ -26,8 +26,7 @@ export const orderItemListWrapper = style({
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
-  border: `1px solid ${themeVars.borderColors.grey79}`,
-  borderRadius: '20px',
+  borderBottom: `1px solid ${themeVars.borderColors.grey79}`,
   gap: '10px',
 })
 

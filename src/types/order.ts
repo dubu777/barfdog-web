@@ -66,7 +66,7 @@ interface OrderItemDto {
   itemId: number; // 상품 ID
   amount: number; // 상품 수량
   selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
-  memberCouponId?: number; // 쿠폰 ID (옵션)
+  memberCouponId?: number | null; // 쿠폰 ID (옵션)
   discountAmount: number; // 할인 금액
   finalPrice: number; // 최종 상품 가격
 }
@@ -79,12 +79,12 @@ interface SelectOptionDto {
 
 // 배송 정보 타입
 interface DeliveryDto {
-  name: string; // 수령자 이름
-  phone: string; // 수령자 전화번호
-  zipcode: string; // 우편번호
-  street: string; // 도로명 주소
-  detailAddress: string; // 상세 주소
-  request: string; // 배송 요청사항
+  name: string | null; // 수령자 이름
+  phone: string | null; // 수령자 전화번호
+  zipcode: string | null; // 우편번호
+  street: string | null; // 도로명 주소
+  detailAddress: string | null; // 상세 주소
+  request: string | null; // 배송 요청사항
 }
 
 interface GeneralOrderItemDto {

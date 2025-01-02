@@ -12,7 +12,7 @@ import { formatDate } from "@/utils/dateUtils";
 interface CouponCardProps {
   coupon: Coupon;
   selectedItemPrice: number;
-  selectedCouponId?: number | null;
+  selectedCouponId?: number;
   onSelectCoupon: (couponId: number, discountAmount: number) => void;
 }
 
@@ -22,20 +22,22 @@ export default function CouponCard({
   selectedCouponId,
   onSelectCoupon,
 }: CouponCardProps) {
+  const { isAppliedCoupon } = useOrderStore();
+
+  // 쿠폰 할인 계산 유틸 함수
   const { couponDiscountAmount, couponDiscountInfo } = calculateCouponDiscount(
     coupon,
     selectedItemPrice
   );
-
+  // 쿠폰이 유효한지 여부 확인 유틸 함수
   const isValid = isValidCoupon(
     coupon,
     selectedItemPrice,
     couponDiscountAmount
   );
 
-  console.log(coupon.name, couponDiscountAmount, couponDiscountInfo, isValid);
-
-  if (!isValid) return null;
+  // 쿠폰이 유효하지 않거나 이미 적용된 쿠폰인 경우 null 반환
+  if (!isValid || isAppliedCoupon(coupon.memberCouponId)) return null;
   return (
     <div
       className={styles.couponCardContainer({

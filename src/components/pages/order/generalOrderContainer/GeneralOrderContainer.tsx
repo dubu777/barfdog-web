@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 
 // import * as styles from "./OrderInfo.css";
 
@@ -13,34 +12,69 @@ import { usePersistOrderStore } from "@/store/usePersistOrderStore";
 import { useGetGeneralOrderSheet } from "@/api/order/queries/useGetGeneralOrderSheet";
 import { useCreateGeneralOrder } from "@/api/order/mutations/useCreateGeneralOrder";
 import { GeneralOrderItem, GeneralOrderSheetResponse } from "@/types";
+import { useOrderStore } from "@/store/useOrderStore";
 
-
-interface GeneralOrderContainerProps {
-}
+interface GeneralOrderContainerProps {}
 
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
-
+  // 상태관리
   const { paymentMethod } = usePaymentStore();
-  const {orderItemList} = usePersistOrderStore();
+  const { updateGeneralOrderBody } = useOrderStore();
+  const { orderItemList } = usePersistOrderStore();
+  const [orderSheetData, setOrderSheetData] =
+    useState<GeneralOrderSheetResponse | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
+
+  // API 호출 ( 일반 결제 시트 정보 가져오기, 일반 결제 정보 저장 )
   const { mutate: getGeneralOrderSheet } = useGetGeneralOrderSheet();
   const { mutate: createGeneralOrder } = useCreateGeneralOrder();
-  const [orderSheetData, setOrderSheetData] = useState<GeneralOrderSheetResponse | null>(null);
-  const body = {
-    orderItemDtoList: orderItemList,
-  }
 
+  const requestBody = {
+    orderItemDtoList: orderItemList,
+  };
+
+  // 일반 결제 시트 정보 가져온 후, 일반 결제 request body 업데이트
   useEffect(() => {
-    getGeneralOrderSheet(body, {
+    getGeneralOrderSheet(requestBody, {
       onSuccess: (data) => {
-        console.log('getGeneralOrderSheet-data', data);
         setOrderSheetData(data);
+
+        // 초기 상태 업데이트
+        updateGeneralOrderBody({
+          orderItemDtoList: data.orderItemDtoList.map((item) => ({
+            itemId: item.itemId,
+            amount: item.amount,
+            selectOptionDtoList: (item.optionDtoList ?? []).map((option) => ({
+              itemOptionId: option.optionId,
+              amount: option.amount,
+            })),
+            memberCouponId: null,
+            discountAmount: 0,
+            finalPrice: item.orderLinePrice,
+          })),
+          deliveryDto: {
+            name: data.name,
+            phone: data.phoneNumber,
+            zipcode: data.defaultAddress.zipcode,
+            street: data.defaultAddress.street,
+            detailAddress: data.defaultAddress.detailAddress,
+            request: "",
+          },
+          deliveryId: data.deliveryId,
+          orderPrice: data.orderPrice,
+          deliveryPrice: data.deliveryPrice,
+          discountTotal: 0,
+          discountReward: 0,
+          discountCoupon: 0,
+          overDiscount: 0,
+          paymentPrice: data.orderPrice,
+          brochure: data.brochure,
+        });
       },
     });
-  }, [orderItemList]);
+  }, [getGeneralOrderSheet, orderItemList]);
 
-console.log('orderItemList', orderItemList);
-
+  console.log("orderItemList", orderItemList);
 
   // 결제 관련 코드 ========================================================
   // 포트원 스크립트 로드 및 로드 확인
@@ -59,22 +93,17 @@ console.log('orderItemList', orderItemList);
       document.body.removeChild(script);
     };
   }, []);
-  
-  const handlePaymentSubmit = () => {
-    
-  }
+
+  const handlePaymentSubmit = () => {};
 
   // 일반 결제 요청 함수
   const generalPayment = () => {
-    
     // if (!isScriptLoaded || !window.IMP) {
     //   console.error("IMP 스크립트가 로드되지 않았습니다.");
     //   return;
     // }
-
     // const IMP = window.IMP;
     // IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
-
     // IMP.request_pay({
     //   pg: pgType.GENERAL[paymentMethod],
     //   pay_method: paymentMethod,
@@ -101,18 +130,20 @@ console.log('orderItemList', orderItemList);
     //   alert(msg);
     // }
     // );
-  }
+  };
 
-  
-  
+  // 결제 관련 코드 ========================================================
 
-// 결제 관련 코드 ========================================================
-
-  return(
-    <div >
-      <OrderInfo type="general" generalOrderSheetData={orderSheetData}/>
+  return (
+    <div>
+      <OrderInfo type="general" generalOrderSheetData={orderSheetData} />
       <PaymentMethod />
-      <button style={{width: '100%', height: '50px', backgroundColor: "gray"}} onClick={handlePaymentSubmit}>결제하기</button>
+      <button
+        style={{ width: "100%", height: "50px", backgroundColor: "gray" }}
+        onClick={handlePaymentSubmit}
+      >
+        결제하기
+      </button>
     </div>
-  )
+  );
 }

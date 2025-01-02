@@ -5,7 +5,7 @@ import useModal from "@/hooks/useModal";
 import DeliveryAddressModal from "./deliveryAddressModal/DeliveryAddressModal";
 import { GeneralOrderSheetResponse } from "@/types";
 import CouponModal from "./couponModal/CouponModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOrderStore } from "@/store/useOrderStore";
 
 interface OrderInfoProps {
@@ -17,11 +17,18 @@ export default function OrderInfo({
   type,
   generalOrderSheetData,
 }: OrderInfoProps) {
+  // 상태관리
   const [selectedItemPrice, setSelectedItemPrice] = useState<number>(0);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
-  const {getAppliedCouponDiscount, generalOrderBody} = useOrderStore();
-  console.log('generalOrderBody', generalOrderBody);
-  
+  const {
+    getAppliedCouponDiscount,
+    generalOrderBody,
+    updateGeneralOrderBody,
+    cancelAppliedCoupon,
+  } = useOrderStore();
+  console.log("generalOrderBody", generalOrderBody);
+
+  // 모달 상태 훅
   const {
     isOpen: isDeliveryModalOpen,
     onToggle: toggleDeliveryModal,
@@ -34,11 +41,20 @@ export default function OrderInfo({
     onClose: closeCouponModal,
   } = useModal();
 
-  const handleActiveCouponModal = (itemPrice: number, itemId: number) => {
-    setSelectedItemPrice(itemPrice)
-    setSelectedItemId(itemId)
-    toggleCouponModal();
-  }
+  // 쿠폰 적용/변경 버튼 클릭 함수
+  const handleCouponButtonClick = (itemPrice: number, itemId: number) => {
+    const appliedDiscount = getAppliedCouponDiscount(itemId); // 쿠폰이 적용되어 있는지 확인
+    if (appliedDiscount) {
+      // 쿠폰이 적용되어 있다면 취소
+      cancelAppliedCoupon(itemId);
+      toggleCouponModal();
+    } else {
+      // 쿠폰이 적용되어 있지 않다면 쿠폰 모달 오픈
+      setSelectedItemPrice(itemPrice);
+      setSelectedItemId(itemId);
+      toggleCouponModal();
+    }
+  };
   return (
     <div className={styles.orderInfoContainer}>
       <h1>주문/결제</h1>
@@ -52,12 +68,23 @@ export default function OrderInfo({
               <div>{orderItem.name}</div>
               <div>{orderItem.amount}개</div>
               <div>{orderItem.orderLinePrice}원</div>
-              <div>{getAppliedCouponDiscount(orderItem.itemId) ? `-${getAppliedCouponDiscount(orderItem.itemId)}원` : "0원"}</div>
+              <div>
+                {getAppliedCouponDiscount(orderItem.itemId)
+                  ? `-${getAppliedCouponDiscount(orderItem.itemId)}원`
+                  : "0원"}
+              </div>
               <button
                 className={styles.couponButton}
-                onClick={()=> handleActiveCouponModal(orderItem.orderLinePrice, orderItem.itemId)}
+                onClick={() =>
+                  handleCouponButtonClick(
+                    orderItem.orderLinePrice,
+                    orderItem.itemId
+                  )
+                }
               >
-                쿠폰 적용
+                {getAppliedCouponDiscount(orderItem.itemId)
+                  ? "쿠폰 변경"
+                  : "쿠폰 적용"}
               </button>
             </div>
             <div>
