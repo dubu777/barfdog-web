@@ -20,8 +20,11 @@ export type {
   GeneralOrderItemDto,
   CreateGeneralOrderResponse,
   CreateGeneralOrderRequest,
+  OrderType,
+  DeliveryDto,
 };
 
+// 일반 결제 주문 정보 저장 응답
 interface CreateGeneralOrderResponse {
   id: number; // 주문 id
   merchantUid: string; // 주문 넘버
@@ -42,6 +45,7 @@ interface CreateGeneralOrderResponse {
   };
 }
 
+// 일반 결제 주문 정보 저장 요청
 interface CreateGeneralOrderRequest {
   orderItemDtoList: OrderItemDto[];
   deliveryDto: DeliveryDto;
@@ -94,8 +98,16 @@ interface GeneralOrderItemDto {
   }[];
 }
 
+// 일반 주문 시트 조회 요청
 interface GeneralOrderSheetRequest {
   orderItemDtoList: GeneralOrderItemDto[];
+}
+
+interface OptionDto {
+  optionId: number;
+  name: string;
+  price: number;
+  amount: number;
 }
 
 interface GeneralOrderItem {
@@ -103,18 +115,14 @@ interface GeneralOrderItem {
   amount: number;
   name: string;
   itemType: string;
-  selectOptionDtoList?: {
-    itemOptionId: number;
-    amount: number;
-    name: string;
-    price: number;
-  }[];
-  memberCouponId: number | null;
+  optionDtoList?: OptionDto[];
+  orderLinePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
+  originalOrderLinePrice: number; // 자체 할인 전 상품 + 옵션 가격 총 가격
   discountAmount: number;
-  originalOrderLinePrice: number;
-  orderLinePrice: number;
+  memberCouponId: number | null;
   deliveryFree: boolean;
 }
+
 
 interface DefaultAddress {
   deliveryName: string | null;
@@ -124,6 +132,7 @@ interface DefaultAddress {
   detailAddress: string;
 }
 
+// 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
   brochure: boolean;
   coupons: Coupon[];
@@ -133,7 +142,7 @@ interface GeneralOrderSheetResponse {
   email: string;
   freeCondition: number;
   name: string;
-  orderItemDtoList: OrderItem[];
+  orderItemDtoList: GeneralOrderItem[];
   orderPrice: number;
   phoneNumber: string;
   reward: number;
@@ -289,3 +298,5 @@ interface AddressResponse {
 type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
 
 type OrderDetailType = 'general' | 'subscribe';
+
+type OrderType = "subscription" | "general";

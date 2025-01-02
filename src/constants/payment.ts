@@ -1,12 +1,12 @@
 
 
-const paymentMethod = {
+const PAYMENT_METHOD = {
   CREDIT_CARD:'card',
   KAKAO_PAY:'kakaopay',
   NAVER_PAY:'naverpay',
 } as const;
 
-const pgType ={
+const PG_TYPE ={
   GENERAL:{
     card: `kcp.${process.env.NEXT_PUBLIC_IAMPORT_GENERAL_ORDER_SITECODE}`,
     kakaopay: `kakaopay.${process.env.NEXT_PUBLIC_IAMPORT_GENERAL_EASYPAY_KAKAO_CID}`,
@@ -19,9 +19,9 @@ const pgType ={
   }
 }
 
-const packageInfo = {
+const PACKAGE_INFO = {
   TWELVE: {
-    value: 12, //! 서버에 전송할 값 (개월수)
+    value: 12, // 서버에 전송할 값 (개월수)
     label: '12개월 패키지',
     discount: 20, // 할인율 (%)
     freeKit: 2, // 무료 진단기기 횟수
@@ -62,8 +62,8 @@ const packageInfo = {
     freeSkip: true,
     freeDelivery: true,
   },
-};
+} as const;
 
 const IAMPORT_MIN_PAYMENT_PRICE = 100;
 
-export { paymentMethod, pgType, packageInfo, IAMPORT_MIN_PAYMENT_PRICE };
+export { PAYMENT_METHOD, PG_TYPE, PACKAGE_INFO, IAMPORT_MIN_PAYMENT_PRICE };

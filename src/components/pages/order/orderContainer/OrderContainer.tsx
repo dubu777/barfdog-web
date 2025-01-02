@@ -8,7 +8,7 @@ import PackageSelection from "./packageSelection/PackageSelection";
 import PaymentMethod from "./paymentMethod/PaymentMethod";
 import { useEffect, useState } from "react";
 import { usePaymentStore } from "@/store/usePaymentStore";
-import { pgType } from "@/constants/payment";
+import { PG_TYPE } from "@/constants/payment";
 
 
 interface OrderContainerProps {
@@ -55,7 +55,7 @@ export default function OrderContainer({subscribeId}: OrderContainerProps) {
     IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
 
     IMP.request_pay({
-      pg: pgType.GENERAL[paymentMethod],
+      pg: PG_TYPE.GENERAL[paymentMethod],
       pay_method: paymentMethod,
       merchant_uid: "merchant_" + new Date().getTime(),
       name: "주문명:결제테스트",
@@ -90,7 +90,7 @@ export default function OrderContainer({subscribeId}: OrderContainerProps) {
 
   return(
     <div >
-      <OrderInfo />
+      <OrderInfo type="subscription"/>
       <PackageSelection />
       <PaymentMethod />
       <button onClick={handlePaymentSubmit}>결제하기</button>

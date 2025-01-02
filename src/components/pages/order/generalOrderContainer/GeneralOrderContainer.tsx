@@ -1,22 +1,21 @@
 'use client'
 
 
-import { useGetSubscriptionOrderSheet } from "@/api/order/queries/useGetSubscriptionOrderSheet";
 // import * as styles from "./OrderInfo.css";
 
 import { useEffect, useState } from "react";
 import { usePaymentStore } from "@/store/usePaymentStore";
-import { pgType } from "@/constants/payment";
+import { PG_TYPE } from "@/constants/payment";
 import OrderInfo from "../orderContainer/orderInfo/OrderInfo";
 import PackageSelection from "../orderContainer/packageSelection/PackageSelection";
 import PaymentMethod from "../orderContainer/paymentMethod/PaymentMethod";
 import { usePersistOrderStore } from "@/store/usePersistOrderStore";
 import { useGetGeneralOrderSheet } from "@/api/order/queries/useGetGeneralOrderSheet";
 import { useCreateGeneralOrder } from "@/api/order/mutations/useCreateGeneralOrder";
+import { GeneralOrderItem, GeneralOrderSheetResponse } from "@/types";
 
 
 interface GeneralOrderContainerProps {
-
 }
 
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
@@ -26,6 +25,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
   const { mutate: getGeneralOrderSheet } = useGetGeneralOrderSheet();
   const { mutate: createGeneralOrder } = useCreateGeneralOrder();
+  const [orderSheetData, setOrderSheetData] = useState<GeneralOrderSheetResponse | null>(null);
   const body = {
     orderItemDtoList: orderItemList,
   }
@@ -34,6 +34,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     getGeneralOrderSheet(body, {
       onSuccess: (data) => {
         console.log('getGeneralOrderSheet-data', data);
+        setOrderSheetData(data);
       },
     });
   }, [orderItemList]);
@@ -66,7 +67,6 @@ console.log('orderItemList', orderItemList);
   // 일반 결제 요청 함수
   const generalPayment = () => {
     
-
     // if (!isScriptLoaded || !window.IMP) {
     //   console.error("IMP 스크립트가 로드되지 않았습니다.");
     //   return;
@@ -110,7 +110,7 @@ console.log('orderItemList', orderItemList);
 
   return(
     <div >
-      <OrderInfo />
+      <OrderInfo type="general" generalOrderSheetData={orderSheetData}/>
       <PaymentMethod />
       <button style={{width: '100%', height: '50px', backgroundColor: "gray"}} onClick={handlePaymentSubmit}>결제하기</button>
     </div>

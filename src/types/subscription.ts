@@ -1,5 +1,6 @@
 import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 import { RecipeDto } from "./recipe";
+import { DiscountType } from "./coupon";
 
 export type {
   PlanDiscountResponseDto,
@@ -50,9 +51,9 @@ interface SubscriptionOrderSheetResponse {
 
 interface Coupon {
   availableMaxDiscount: number;
-  availableMinPrice: number;
+  availableMinPrice: number; // 최소 사용 금액
   discountDegree: number; // 할인율 또는 금액
-  discountType: "FIXED_RATE" | "FIXED_AMOUNT"; // 할인 유형
+  discountType: DiscountType; // 할인 유형
   expiredDate: string;
   memberCouponId: number;
   name: string; // 쿠폰 이름

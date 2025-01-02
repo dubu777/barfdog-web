@@ -28,7 +28,7 @@ export const modalContainer = recipe({
     },
     scroll: {
       true: {
-        height: '450px',
+        height: '500px',
       },
       false: {
       },

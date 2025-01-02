@@ -1,4 +1,4 @@
-export type { CouponData };
+export type { CouponData, DiscountType, DiscountUnitType };
 
 interface CouponData {
   id: number;
@@ -11,6 +11,10 @@ interface CouponData {
   couponTarget: string;
   description: string;
   discountDegree: number;
-  discountType: string;
+  discountType: DiscountType;
   expiredDate: string;
 }
+
+type DiscountType = 'FLAT_RATE' | 'FIXED_RATE';
+
+type DiscountUnitType = '%' | '원';

@@ -1,4 +1,3 @@
-import { PaymentMethod } from '@/constants/payment';
 import { PaymentMethodType } from '@/types/payment';
 import { create } from 'zustand';
 
