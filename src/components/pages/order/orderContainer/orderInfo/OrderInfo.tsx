@@ -43,7 +43,7 @@ export default function OrderInfo({
 
   // 쿠폰 적용/변경 버튼 클릭 함수
   const handleCouponButtonClick = (itemPrice: number, itemId: number) => {
-    const appliedDiscount = getAppliedCouponDiscount(itemId); // 쿠폰이 적용되어 있는지 확인
+    const appliedDiscount = !!getAppliedCouponDiscount(itemId); // 쿠폰이 적용되어 있는지 확인
     if (appliedDiscount) {
       // 쿠폰이 적용되어 있다면 취소
       cancelAppliedCoupon(itemId);
@@ -55,26 +55,41 @@ export default function OrderInfo({
       toggleCouponModal();
     }
   };
+
   return (
     <div className={styles.orderInfoContainer}>
       <h1>주문/결제</h1>
       <div className={styles.orderListBox} onClick={toggleDeliveryModal}>
         배송지
       </div>
-      <div className={styles.orderItemListWrapper}>
+      <div className={styles.gridContainer}>
+        <div className={styles.gridHeader}>
+          <div>상품 정보</div>
+          <div>수량</div>
+          <div>총 주문 금액</div>
+          <div>쿠폰 할인</div>
+          <div>쿠폰 적용</div>
+        </div>
         {generalOrderSheetData?.orderItemDtoList.map((orderItem) => (
-          <div key={orderItem.itemId} className={styles.orderItemListWrapper}>
-            <div className={styles.orderItemWrapper}>
+          <div key={orderItem.itemId} className={styles.gridRow}>
+            <div>
               <div>{orderItem.name}</div>
-              <div>{orderItem.amount}개</div>
-              <div>{orderItem.orderLinePrice}원</div>
-              <div>
-                {getAppliedCouponDiscount(orderItem.itemId)
-                  ? `-${getAppliedCouponDiscount(orderItem.itemId)}원`
-                  : "0원"}
-              </div>
+              {orderItem.optionDtoList?.map((option) => (
+                <div key={option.optionId}>
+                  {option.name} {option.amount}개
+                </div>
+              ))}
+            </div>
+            <div>{orderItem.amount}개</div>
+            <div>{orderItem.orderLinePrice}원</div>
+            <div>
+              {!!getAppliedCouponDiscount(orderItem.itemId)
+                ? `-${getAppliedCouponDiscount(orderItem.itemId)}원`
+                : "0원"}
+            </div>
+            <div>
               <button
-                className={styles.couponButton}
+                className={styles.couponButton({ isApplied: !!getAppliedCouponDiscount(orderItem.itemId) })}
                 onClick={() =>
                   handleCouponButtonClick(
                     orderItem.orderLinePrice,
@@ -82,17 +97,10 @@ export default function OrderInfo({
                   )
                 }
               >
-                {getAppliedCouponDiscount(orderItem.itemId)
+                {!!getAppliedCouponDiscount(orderItem.itemId)
                   ? "쿠폰 변경"
                   : "쿠폰 적용"}
               </button>
-            </div>
-            <div>
-              {orderItem.optionDtoList?.map((option) => (
-                <div key={option.optionId}>
-                  {option.name} {option.amount}개
-                </div>
-              ))}
             </div>
           </div>
         ))}

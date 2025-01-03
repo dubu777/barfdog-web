@@ -49,7 +49,7 @@ const generalOrderBody: CreateGeneralOrderRequest = {
   discountCoupon: 0,
   overDiscount: 0,
   paymentPrice: 0,
-  paymentMethod: "CREDIT_CARD",
+  paymentMethod: "NAVER_PAY",
   agreePrivacy: false,
   brochure: false,
 };

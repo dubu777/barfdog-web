@@ -25,6 +25,7 @@ interface OrderState {
   isAppliedCoupon: (couponId: number) => boolean;
   setOrderItemDtoList: (orderItemDtoList: OrderItemDto[]) => void;
   setDeliveryDto: (deliveryDto: DeliveryDto) => void;
+  isDefaultAddress: (deliveryId: number) => boolean;
   setPaymentMethod: (paymentMethod: PaymentMethod) => void;
   setAgreePrivacy: (agree: boolean) => void;
 }
@@ -39,6 +40,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       },
     })),
 
+  // 쿠폰 관련 상태
   selectedCoupon: null,
   setSelectedCoupon: (coupon) =>
     set(() => ({
@@ -93,13 +95,8 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     );
     return !!appliedItem;
   },
-  setOrderItemDtoList: (orderItemDtoList) =>
-    set((state) => ({
-      generalOrderBody: {
-        ...state.generalOrderBody,
-        orderItemDtoList,
-      },
-    })),
+
+  // 배송지 관련 상태
   setDeliveryDto: (deliveryDto) =>
     set((state) => ({
       generalOrderBody: {
@@ -107,6 +104,19 @@ export const useOrderStore = create<OrderState>((set, get) => ({
         deliveryDto,
       },
     })),
+    // 기본 배송지 확인 - 추후에 defaultAddress에 Id가 추가되면 수정 필요
+    isDefaultAddress: (deliveryId) => {
+    return get().generalOrderBody.deliveryId === deliveryId;
+  },
+
+  setOrderItemDtoList: (orderItemDtoList) =>
+    set((state) => ({
+      generalOrderBody: {
+        ...state.generalOrderBody,
+        orderItemDtoList,
+      },
+    })),
+
   setPaymentMethod: (paymentMethod) =>
     set((state) => ({
       generalOrderBody: {

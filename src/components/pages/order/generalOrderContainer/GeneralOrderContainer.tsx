@@ -38,6 +38,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     getGeneralOrderSheet(requestBody, {
       onSuccess: (data) => {
         setOrderSheetData(data);
+console.log('getGeneralOrderSheet data', data);
 
         // 초기 상태 업데이트
         updateGeneralOrderBody({
