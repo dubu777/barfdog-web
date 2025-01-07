@@ -1,6 +1,10 @@
 export {queryKeys}
 
 const queryKeys = {
+  COMMON: {
+    BASE: 'common',
+    UPLOAD_IMAGE: 'uploadImage'
+  },
   SURVEY: {
     BASE: 'survey',
     GET_SURVEY_RECIPE: 'getSurveyRecipe',
@@ -69,8 +73,9 @@ const queryKeys = {
     BASE: 'review',
     GET_BEST_REVIEW_LIST: 'getBestReviewList',
     GET_REVIEW_LIST: 'getReviewList',
-    GET_REVIEW_DETAIL: 'getReviewDetail',
+    GET_BEST_REVIEW_DETAIL: 'getBestReviewDetail',
     GET_WRITABLE_REVIEW_LIST: 'getWritableReviewList',
     GET_WRITTEN_REVIEW_LIST: 'getWrittenReviewList',
+    GET_REVIEW_DETAIL: 'getReviewDetail',
   }
 } as const;

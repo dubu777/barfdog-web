@@ -1,5 +1,7 @@
 'use client';
-import * as styles from './Review.css';
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import * as styles from './ReviewList.css';
 import Tabs from "@/components/common/tabs/Tabs";
 import WritableReview from "@/components/pages/mypage/review/writableReview/WritableReview";
 import WrittenReview from "@/components/pages/mypage/review/writtenReview/WrittenReview";
@@ -14,16 +16,31 @@ const Review = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  
+
+  const tap = searchParams.get('tab');
+  const checkTabIndex = (!tap || tap === 'writable') ? 0 : 1 || 0;
+
   const tabs = [
     {
       label: '작성 가능한 후기',
-      content: <WritableReview onInit={() => console.log('WritableReview initialized')} />,
+      content:
+        <ErrorBoundary fallback={<div>작성 가능한 리뷰가 없습니다.</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <WritableReview onInit={() => console.log('WritableReview initialized')} />
+          </Suspense>
+        </ErrorBoundary>
+      ,
       onInit: () => handleTabInit('writable'),
     },
     {
       label: '작성한 후기',
-      content: <WrittenReview onInit={() => console.log('WrittenReview initialized')} />,
+      content:
+            <WrittenReview onInit={() => console.log('WrittenReview initialized')} />
+       // <ErrorBoundary fallback={<div>작성한 리뷰가 없습니다.</div>}>
+       //    <Suspense fallback={<div>Loading...</div>}>
+       //    </Suspense>
+       //  </ErrorBoundary>
+      ,
       onInit: () => handleTabInit('written'),
     },
   ]
@@ -36,8 +53,6 @@ const Review = () => {
       await prefetchGetWritableReviewList(queryClient, 0);
     }
   }
-
-  const checkTabIndex = (!searchParams.get('tab') || searchParams.get('tab') === 'writable') ? 0 : 1 || 0;
 
   return (
     <section className={styles.reviewContainer}>

@@ -2,14 +2,15 @@ import * as styles from './ReviewItem.css';
 import { ellipsis } from "@/styles/common.css";
 import { reviewItem } from "@/components/pages/reivew/reviewList/reviewItemList/ReviewItemList.css";
 import Image from "next/image";
+import NoImage from "/public/images/icons/noImage.png";
 import PictureIcon from '/public/images/icons/picture-icon.png';
 import Accordion from "@/components/common/accordion/Accordion";
 import Text from "@/components/common/text/Text";
 import RateStar from "@/components/common/rateStar/RateStar";
-import { ReviewImage, ReviewItem } from "@/types";
+import { ReviewImage, ReviewListItem } from "@/types";
 
 interface ReviewItemProps {
-  review: ReviewItem;
+  review: ReviewListItem;
   reviewImageList: ReviewImage[];
 }
 
@@ -25,7 +26,7 @@ const ReviewDetailItem = ({ review, reviewImageList }: ReviewItemProps) => {
               {review.id}
             </Text>
             <p>
-              <Image src={review.thumbnailUrl} alt={`reviewImage-${review.id}`} width={50} height={50} />
+              <Image src={review.thumbnailUrl ? review.thumbnailUrl : NoImage} alt={`reviewImage-${review.id}`} width={50} height={50} />
             </p>
             <p>
               <RateStar rateLength={review.star} color='yellow' />

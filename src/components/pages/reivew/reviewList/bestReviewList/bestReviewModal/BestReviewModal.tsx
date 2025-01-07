@@ -8,7 +8,7 @@ import { Pagination, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
+import { useGetBestReviewDetail } from "@/api/review/queries/useGetBestReviewDetail";
 
 interface BestReviewModalProps {
   isOpen: boolean;
@@ -17,7 +17,7 @@ interface BestReviewModalProps {
 }
 
 const BestReviewModal = ({ isOpen, onClose, reviewId }: BestReviewModalProps) => {
-  const { data: reviewDetail } = useGetReviewDetail(reviewId);
+  const { data: reviewDetail } = useGetBestReviewDetail(reviewId);
   const review = reviewDetail.reviewDto;
   const reviewImageList = reviewDetail.reviewImageDtoList;
   return (

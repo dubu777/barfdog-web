@@ -1,19 +1,31 @@
 import * as styles from './RateStar.css';
-import { Fragment } from "react";
-
-interface RateStar {
+interface RateStarProps {
   rateLength: number;
+  value?: number;
   color?: 'yellow' | 'red' | 'black';
-  align?: 'center' | 'left'
+  align?: 'center' | 'left';
+  onChange?: (newRating: number) => void;
+  isEdit?: boolean;
 }
 
-const RateStar = ({ rateLength, color = 'red', align = 'center' }: RateStar) => {
+const RateStar = ({ rateLength, color = 'red', align = 'center', value, onChange, isEdit = false }: RateStarProps) => {
+  const handleClick = (index: number) => {
+    if(onChange) {
+      onChange(index + 1);
+    }
+  }
   return (
-    <span className={styles.rate({ color, align })}>
-      {Array.from({length: rateLength}, (v, i) => i + 1).map((_, i) => (
-        <Fragment key={i}>★</Fragment>
+    <div>
+      {Array.from({ length: rateLength }, (v, i) => i + 1).map((_, i) => (
+        <span
+          key={i}
+          className={styles.rate({ color, align, empty: value ? i >= value : false, isEdit })}
+          onClick={() => value ? handleClick(i) : undefined}
+        >
+          ★
+        </span>
       ))}
-    </span>
+    </div>
   );
 };
 

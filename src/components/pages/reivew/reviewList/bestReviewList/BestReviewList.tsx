@@ -10,7 +10,7 @@ import 'swiper/css/scrollbar';
 import Text from "@/components/common/text/Text";
 import useModal from "@/hooks/useModal";
 import { useQueryClient } from "@tanstack/react-query";
-import { prefetchGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
+import { prefetchGetBestReviewDetail } from "@/api/review/queries/useGetBestReviewDetail";
 import { useGetBestReviewList } from "@/api/review/queries/useGetBestReviewList";
 import BestReviewModal from "@/components/pages/reivew/reviewList/bestReviewList/bestReviewModal/BestReviewModal";
 import RateStar from "@/components/common/rateStar/RateStar";
@@ -24,7 +24,7 @@ const BestReviewList = () => {
   const queryClient = useQueryClient();
 
   const handleSelectReview = async (reviewId: number) => {
-    await prefetchGetReviewDetail(queryClient, reviewId)
+    await prefetchGetBestReviewDetail(queryClient, reviewId)
     setReviewId(reviewId);
     onToggle();
   }
@@ -48,7 +48,7 @@ const BestReviewList = () => {
             className={styles.bestReview}
           >
             <div onClick={() => handleSelectReview(review.id)}>
-              <Image src={review.imageUrl} alt={review.titleByAdmin || review.username} width={240} height={240} className={styles.bestReviewImage} />
+              <Image src={review.imageUrl} alt={review.titleByAdmin ? review.titleByAdmin : review.username ? review.username : ''} width={240} height={240} className={styles.bestReviewImage} />
               <div className={styles.bestReviewInfo}>
                 <div className={styles.bestReviewTop}>
                   <RateStar rateLength={rate} />

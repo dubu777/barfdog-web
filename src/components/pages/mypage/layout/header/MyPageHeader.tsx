@@ -1,8 +1,8 @@
 'use client';
 import * as styles from "./MyPageHeader.css";
 import BackButton from "/public/images/icons/left-arrow.svg";
-import {useBackNavigation} from "@/utils";
-import {usePathname} from "next/navigation";
+import { useBackNavigation } from "@/utils";
+import { usePathname } from "next/navigation";
 
 const MyPageHeader = () => {
   const goBack = useBackNavigation();
@@ -34,6 +34,9 @@ const MyPageHeader = () => {
     }
     if (pathname.includes('/mypage/subscribe/benefits/')) {
       return '패키지 혜택';
+    }
+    if (pathname.includes('/mypage/review/')) {
+      return '리뷰 작성';
     }
     return '';
   };

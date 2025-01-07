@@ -1,7 +1,24 @@
 import axiosInstance from "@/api/axiosInstance";
-import { ReviewDetail, ReviewList, WritableReviewList, WrittenReviewList } from "@/types/review";
+import {
+  BestReviewDetail, CreateReviewDetail,
+  ReviewDetail,
+  ReviewList,
+  UpdateReviewDetail,
+  WritableReviewList,
+  WrittenReviewList
+} from "@/types/review";
 
-export { getBestReviewList, getReviewList, getReviewDetail, getWritableReviewList, getWrittenReviewList };
+export {
+  getBestReviewList,
+  getReviewList,
+  getBestReviewDetail,
+  getWritableReviewList,
+  getWrittenReviewList,
+  getReviewDetail,
+  updateReviewDetail,
+  createReviewDetail,
+  deleteReview,
+};
 
 const getBestReviewList = async () => {
   const { data } = await axiosInstance.get(`/api/reviews/best`);
@@ -16,7 +33,7 @@ const getReviewList = async (page = 0, size = 10): Promise<ReviewList> => {
   };
 };
 
-const getReviewDetail = async (reviewId: number): Promise<ReviewDetail> => {
+const getBestReviewDetail = async (reviewId: number): Promise<BestReviewDetail> => {
   const { data } = await axiosInstance.get(`/api/reviews/${reviewId}/community`);
   return data;
 }
@@ -36,3 +53,23 @@ const getWrittenReviewList = async (page = 0, size = 10): Promise<WrittenReviewL
     writtenReviewList: data?._embedded?.queryReviewsDtoList || [],
   };
 };
+
+const getReviewDetail = async (reviewId: number): Promise<ReviewDetail> => {
+  const { data } = await axiosInstance.get(`/api/reviews/${reviewId}`);
+  return data;
+}
+
+const updateReviewDetail = async (reviewId: number, body: UpdateReviewDetail) => {
+  const { data } = await axiosInstance.put(`/api/reviews/${reviewId}`, body);
+  return data;
+}
+
+const createReviewDetail = async (body: CreateReviewDetail) => {
+  const { data } = await axiosInstance.post(`/api/reviews`, body);
+  return data;
+}
+
+const deleteReview = async (reviewId: number) => {
+  const { data } = await axiosInstance.delete(`/api/reviews/${reviewId}`);
+  return data;
+}

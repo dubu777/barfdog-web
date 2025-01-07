@@ -1,7 +1,17 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
+import {recipe} from "@vanilla-extract/recipes";
 
-export const writtenReviewContainer = style({ })
+export const writtenReviewContainer = recipe({
+  base: {},
+  variants: {
+    isEmpty: {
+      true: {
+        padding: '50px 0 150px',
+      }
+    }
+  }
+})
 
 export const writtenList = style({ })
 

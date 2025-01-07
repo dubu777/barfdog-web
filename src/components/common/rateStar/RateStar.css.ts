@@ -6,6 +6,7 @@ export const rate = recipe({
     fontSize: themeVars.fontSize["text-lg"],
     textAlign: 'right',
     marginBottom: '5px',
+    transition: 'all .35s'
   },
   variants: {
     color: {
@@ -19,6 +20,11 @@ export const rate = recipe({
         color: themeVars.colors.black,
       }
     },
+    empty: {
+      true: {
+        color: themeVars.colors.lightGrey,
+      },
+    },
     align: {
       left: {
         textAlign: 'left',
@@ -26,6 +32,13 @@ export const rate = recipe({
       center: {
         textAlign: 'center',
       },
+    },
+    isEdit: {
+      true: {
+        fontSize: themeVars.fontSize["title-lg"],
+        cursor: 'pointer',
+        margin: '0 2px'
+      }
     }
   }
 })

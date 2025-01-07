@@ -3,9 +3,10 @@ import { Page } from "@/types";
 
 export type {
   BestReviewItem,
+  BestReviewDetail,
   ReviewList,
   ReviewDetail,
-  ReviewItem,
+  ReviewListItem,
   ReviewImage,
   WrittenReviewItem,
   WrittenReviewList,
@@ -13,6 +14,11 @@ export type {
   WritableReviewList,
   ReviewType,
   ReviewStatus,
+  ReviewDetailItem,
+  ReviewDetailImage,
+  ReviewFormData,
+  UpdateReviewDetail,
+  CreateReviewDetail,
 };
 
 interface BaseReviewItem {
@@ -30,7 +36,7 @@ interface BestReviewItem extends BaseReviewItem {
   orderType: string;
 }
 
-interface ReviewItem extends BaseReviewItem{
+interface ReviewListItem extends BaseReviewItem{
   username: string;
   writtenDate: string;
   orderType?: string;
@@ -41,13 +47,13 @@ interface ReviewImage {
   url: string;
 }
 
-interface ReviewDetail {
-  reviewDto: ReviewItem;
+interface BestReviewDetail {
+  reviewDto: ReviewListItem;
   reviewImageDtoList: ReviewImage[];
 }
 
 interface ReviewList {
-  reviewList: ReviewDetail[];
+  reviewList: BestReviewDetail[];
   page: Page;
 }
 
@@ -78,6 +84,53 @@ interface WritableReviewItem {
 interface WritableReviewList {
   writableReviewList: WritableReviewItem[];
   page: Page;
+}
+
+interface ReviewDetailItem extends BaseReviewItem{
+  title: string;
+  writtenDate: string;
+  name?: string;
+  reviewType?: ReviewType;
+}
+
+interface ReviewDetailImage extends ReviewImage {
+  id: number;
+}
+
+interface ReviewDetail {
+  reviewDto: ReviewDetailItem;
+  reviewImageDtoList: ReviewDetailImage[];
+}
+
+interface ReviewFormData {
+  id: number;
+  title: string;
+  reviewType: ReviewType | null;
+
+  name?: string;
+  thumbnailUrl?: string;
+  writtenDate?: string;
+  star?: number;
+  titleByAdmin?: null | string;
+  contents?: string;
+
+  targetId?: number;
+  imageUrl?: string;
+  orderedDate?: string;
+}
+
+interface UpdateReviewDetail {
+  contents: string;
+  star: number;
+  addImageIdList?: number[];
+  deleteImageIdList?: number[];
+}
+
+interface CreateReviewDetail extends UpdateReviewDetail{
+  id: number;
+  targetId: number;
+  reviewType: ReviewType | null;
+  reviewImageIdList: number[];
 }
 
 type ReviewType = keyof typeof reviewType;
