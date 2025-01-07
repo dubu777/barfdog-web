@@ -1,7 +1,22 @@
 import axiosInstance from "@/api/axiosInstance";
-import { CouponData, MyPageBannerData, MyPageInfoData, RewardListData, RewardListDataWithTotals, RewardResponse } from "@/types";
+import {
+  CouponData, InviteRewardList,
+  MyPageBannerData,
+  MyPageInfoData,
+  RewardListData,
+  RewardListDataWithTotals,
+  RewardResponse,
+} from "@/types";
 
-export { getMyPageInfo, getMyPageBanner, getCouponList, applyCoupon, getRewardList }
+export {
+  getMyPageInfo,
+  getMyPageBanner,
+  getCouponList,
+  applyCoupon,
+  getRewardList,
+  getInviteRewardList,
+  applyRecommendCode,
+}
 
 const getMyPageInfo = async (): Promise<MyPageInfoData> => {
   const { data }: { data: MyPageInfoData } = await axiosInstance.get('/api/mypage');
@@ -64,5 +79,21 @@ const getMyPageBanner = async (): Promise<MyPageBannerData> => {
   };
 }
 
+const getInviteRewardList = async (page = 0, size = 10): Promise<InviteRewardList> => {
+  const { data } = await axiosInstance.get(`/api/rewards/invite?page=${page}&size=${size}`);
+  const { recommend, joinedCount, orderedCount, totalRewards, pagedModel } = data;
+  console.log(data)
+  return {
+    recommend,
+    joinedCount,
+    orderedCount,
+    totalRewards,
+    rewardList: pagedModel?._embedded?.queryRewardsDtoList || [],
+    page: pagedModel?.page,
+  };
+}
 
-
+const applyRecommendCode = async (body: { recommendCode: string }) => {
+  const { data } = await axiosInstance.put('/api/rewards/recommend', body);
+  return data;
+}
