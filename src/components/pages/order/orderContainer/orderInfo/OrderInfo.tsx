@@ -4,33 +4,39 @@ import * as styles from "./OrderInfo.css";
 import useModal from "@/hooks/useModal";
 import DeliveryAddressModal from "./deliveryAddressModal/DeliveryAddressModal";
 import {
+  DeliveryDto,
   GeneralOrderSheetResponse,
+  OrderType,
   SubscriptionOrderSheetResponse,
 } from "@/types";
 import CouponModal from "./couponModal/CouponModal";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { useOrderStore } from "@/store/useOrderStore";
 import { ErrorBoundary } from "react-error-boundary";
 import { ORDER_TYPE } from "@/constants";
 
 interface OrderInfoProps {
-  type: "general" | "subscription";
+  orderType: OrderType;
   generalOrderSheetData?: GeneralOrderSheetResponse | null;
   subscriptionOrderSheetData?: SubscriptionOrderSheetResponse | null;
+  deliveryDto: DeliveryDto;
 }
 
 export default function OrderInfo({
-  type,
+  orderType,
   generalOrderSheetData,
   subscriptionOrderSheetData,
+  deliveryDto,
 }: OrderInfoProps) {
   // 상태관리
   const [selectedItemPrice, setSelectedItemPrice] = useState<number>(0);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const {
     getAppliedCouponDiscount,
-    generalOrderBody,
     cancelAppliedCoupon,
+    getRequestBody,
+    isBundleDelivery,
+    generalOrderBody,
     subscriptionOrderBody,
   } = useOrderStore();
   console.log("generalOrderBody", generalOrderBody);
@@ -38,7 +44,7 @@ export default function OrderInfo({
 
   // 쿠폰 데이터 결정
   const couponData =
-    type === ORDER_TYPE.GENERAL
+    orderType === ORDER_TYPE.GENERAL
       ? generalOrderSheetData?.coupons ?? []
       : subscriptionOrderSheetData?.coupons ?? [];
 
@@ -63,7 +69,7 @@ export default function OrderInfo({
     const appliedDiscount = !!getAppliedCouponDiscount(itemId); // 쿠폰이 적용되어 있는지 확인
     if (appliedDiscount) {
       // 쿠폰이 적용되어 있다면 취소
-      cancelAppliedCoupon(type, itemId);
+      cancelAppliedCoupon(orderType, itemId);
       toggleCouponModal();
     } else {
       // 쿠폰이 적용되어 있지 않다면 쿠폰 모달 오픈
@@ -77,21 +83,50 @@ export default function OrderInfo({
   const isAppliedCoupon = !!subscriptionOrderBody.memberCouponId;
   const handleSubscriptionCouponButtonClick = (itemPrice: number) => {
     if (isAppliedCoupon) {
-      cancelAppliedCoupon(type, null);
+      cancelAppliedCoupon(orderType, null);
       toggleCouponModal();
     } else {
       setSelectedItemPrice(itemPrice);
       toggleCouponModal();
     }
   };
+  
+  const handleGetRequestBody = () => {
+    const requestBody = getRequestBody(orderType)
+    console.log("getRequestBody", requestBody);
+    
+  }
+  
 
   return (
     <div className={styles.orderInfoContainer}>
       <h1>주문/결제</h1>
-      <div className={styles.orderListBox} onClick={toggleDeliveryModal}>
-        배송지
+      <div className={styles.orderListBox} >
+        {isBundleDelivery ? (
+          <div>묶음 배송지로 배송됩니다.</div>
+        ) : (
+          <div>
+          <div>
+            {deliveryDto.name}
+          </div>
+          <div>
+            {deliveryDto.street}
+          </div>
+          <div>
+            {deliveryDto.zipcode}
+          </div>
+          <div>
+            {deliveryDto.detailAddress}
+          </div>
+          <div>
+            {deliveryDto.phone}
+          </div>
+          <button className={styles.addressButton} onClick={toggleDeliveryModal}>배송지 변경</button>
+          </div>
+        )}
+
       </div>
-      {type === ORDER_TYPE.GENERAL && generalOrderSheetData && (
+      {orderType === ORDER_TYPE.GENERAL && generalOrderSheetData && (
         <div className={styles.gridContainer}>
           <div className={styles.gridHeader}>
             <div>상품 정보</div>
@@ -139,7 +174,7 @@ export default function OrderInfo({
         </div>
       )}
 
-      {type === ORDER_TYPE.SUBSCRIPTION && subscriptionOrderSheetData && (
+      {orderType === ORDER_TYPE.SUBSCRIPTION && subscriptionOrderSheetData && (
         <div className={styles.subscriptionItemWrapper}>
           {subscriptionOrderSheetData.recipeNameList.map((orderItem) => (
             <div className={styles.subscriptionItemWrapper} key={orderItem}>
@@ -160,11 +195,12 @@ export default function OrderInfo({
           </div>
         </div>
       )}
-
+      <button onClick={handleGetRequestBody}>리퀘스트 바디 요청</button>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<div>Loading...</div>}>
           <DeliveryAddressModal
+            orderType={orderType}
             isVisible={isDeliveryModalOpen}
             onClose={closeDeliveryModal}
           />
@@ -176,7 +212,7 @@ export default function OrderInfo({
         selectedItemPrice={selectedItemPrice}
         selectedItemId={selectedItemId}
         couponData={couponData}
-        type={type}
+        orderType={orderType}
       />
     </div>
   );

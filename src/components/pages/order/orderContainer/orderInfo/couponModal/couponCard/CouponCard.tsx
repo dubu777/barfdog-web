@@ -12,14 +12,14 @@ import { ORDER_TYPE } from "@/constants";
 
 interface CouponCardProps {
   coupon: Coupon;
-  type: OrderType;
+  orderType: OrderType;
   selectedItemPrice: number;
   selectedCouponId?: number;
 }
 
 export default function CouponCard({
   coupon,
-  type,
+  orderType,
   selectedItemPrice,
   selectedCouponId,
 }: CouponCardProps) {
@@ -41,7 +41,7 @@ console.log('selectedItemPrice', selectedItemPrice);
 
   
   // 쿠폰이 유효하지 않거나 이미 적용된 쿠폰인 경우 null 반환
-  const isValidCoupons = type === ORDER_TYPE.GENERAL ? (!isValid || isAppliedCoupon(coupon.memberCouponId)) : !isValid
+  const isValidCoupons = orderType === ORDER_TYPE.GENERAL ? (!isValid || isAppliedCoupon(coupon.memberCouponId)) : !isValid
   if (isValidCoupons) return null;
   return (
     <div
@@ -53,7 +53,6 @@ console.log('selectedItemPrice', selectedItemPrice);
       }
     >
       <div>{coupon.name}</div>
-      <div>{coupon.remaining}개</div>
       <div>{formatDate(coupon.expiredDate, "onlyDate")}</div>
       <div>{couponDiscountInfo}</div>
       <div>- {couponDiscountAmount}원</div>

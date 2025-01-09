@@ -1,6 +1,7 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
+import { color } from "framer-motion";
 
 
 export const orderInfoContainer = style({
@@ -13,12 +14,17 @@ export const orderInfoContainer = style({
 
 export const orderListBox = style({
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'space-evenly',
   alignItems: 'center',
   width: '100%',
-  height: '50px',
   border: `1px solid ${themeVars.borderColors.grey79}`,
   borderRadius: '20px',
+})
+
+export const addressButton = style({
+  padding: '5px 8px',
+  backgroundColor: themeVars.backgroundColors.grey7E,
+  color: themeVars.colors.white,
 })
 
 export const orderItemListWrapper = style({

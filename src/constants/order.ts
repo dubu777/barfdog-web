@@ -1,6 +1,6 @@
-import { CreateGeneralOrderRequest, CreateSubscriptionOrderRequest, OrderType, OrderTypeKey, PaymentMethod } from "@/types";
+import { CreateGeneralOrderRequest, CreateSubscriptionOrderRequest, DeliveryDto, OrderType, OrderTypeKey, PaymentMethod } from "@/types";
 
-export {ORDER_STATUS, PAYMENT, generalOrderBody, subscriptionOrderBody, ORDER_TYPE}
+export {ORDER_STATUS, PAYMENT, generalOrderBody, subscriptionOrderBody, ORDER_TYPE, initialDeliveryDto}
 
 // 결제 전, 결제완료, 생산 중, 배송준비 중, 배송 시작, 배송 중, 배송완료, 취소됨, 환불됨
 const ORDER_STATUS = {
@@ -86,3 +86,12 @@ const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {
   GENERAL: "general",
   SUBSCRIPTION: "subscription",
 } as const
+
+const initialDeliveryDto: DeliveryDto = {
+  name: null,
+  phone: null,
+  zipcode: null,
+  street: null,
+  detailAddress: null,
+  request: null,
+};

@@ -3,15 +3,14 @@
 // import * as styles from "./OrderInfo.css";
 
 import { useEffect, useState } from "react";
-import { usePaymentStore } from "@/store/usePaymentStore";
 import { PG_TYPE } from "@/constants/payment";
 import OrderInfo from "../orderContainer/orderInfo/OrderInfo";
 import PackageSelection from "../orderContainer/packageSelection/PackageSelection";
 import PaymentMethod from "../orderContainer/paymentMethod/PaymentMethod";
 import { usePersistOrderStore } from "@/store/usePersistOrderStore";
-import { useGetGeneralOrderSheet } from "@/api/order/queries/useGetGeneralOrderSheet";
+import { useCachedGeneralOrderSheet, useGetGeneralOrderSheet } from "@/api/order/queries/useGetGeneralOrderSheet";
 import { useCreateGeneralOrder } from "@/api/order/mutations/useCreateGeneralOrder";
-import { GeneralOrderItem, GeneralOrderSheetResponse } from "@/types";
+import { CreateGeneralOrderRequest, GeneralOrderSheetResponse } from "@/types";
 import { useOrderStore } from "@/store/useOrderStore";
 import { BundleDeliverySelector } from "./bundleDeliverySelector/BundleDeliverySelector";
 import { ORDER_TYPE } from "@/constants";
@@ -20,74 +19,81 @@ interface GeneralOrderContainerProps {}
 
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   // 상태관리
-  const { paymentMethod } = usePaymentStore();
-  const { updateOrderBody, isBundleDelivery, setIsBundleDelivery } = useOrderStore();
+  const {
+    updateOrderBody,
+    isBundleDelivery,
+    generalOrderBody,
+    setDeliveryDto,
+    deliveryDto,
+    setDeliveryId,
+    getRequestBody,
+    getDeliveryId,
+  } = useOrderStore();
   const { orderItemList } = usePersistOrderStore();
-  const [orderSheetData, setOrderSheetData] =
-    useState<GeneralOrderSheetResponse | null>(null);
+
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
 
-
   // API 호출 ( 일반 결제 시트 정보 가져오기, 일반 결제 정보 저장 )
-  const { mutate: getGeneralOrderSheet } = useGetGeneralOrderSheet();
   const { mutate: createGeneralOrder } = useCreateGeneralOrder();
 
   const requestBody = {
     orderItemDtoList: orderItemList,
   };
 
+  const {data: generalOrderSheet} = useCachedGeneralOrderSheet(requestBody)
+  console.log('generalData', generalOrderSheet);
+  
+
   // 일반 결제 시트 정보 가져온 후, 일반 결제 request body 업데이트
   useEffect(() => {
-    getGeneralOrderSheet(requestBody, {
-      onSuccess: (data) => {
-        setOrderSheetData(data);
-        console.log("getGeneralOrderSheet data", data);
+
+        console.log("getGeneralOrderSheet generalOrderSheet", generalOrderSheet);
 
         // 초기 상태 업데이트
-        updateOrderBody({
-          orderItemDtoList: data.orderItemDtoList.map((item) => ({
-            itemId: item.itemId,
-            amount: item.amount,
-            selectOptionDtoList: (item.optionDtoList ?? []).map((option) => ({
-              itemOptionId: option.optionId,
-              amount: option.amount,
+        updateOrderBody(
+          {
+            orderItemDtoList: generalOrderSheet.orderItemDtoList.map((item) => ({
+              itemId: item.itemId,
+              amount: item.amount,
+              selectOptionDtoList: (item.optionDtoList ?? []).map((option) => ({
+                itemOptionId: option.optionId,
+                amount: option.amount,
+              })),
+              memberCouponId: null,
+              discountAmount: 0,
+              finalPrice: item.orderLinePrice,
             })),
-            memberCouponId: null,
-            discountAmount: 0,
-            finalPrice: item.orderLinePrice,
-          })),
-          deliveryDto: isBundleDelivery
-            ? {
-                name: null,
-                phone: null,
-                zipcode: null,
-                street: null,
-                detailAddress: null,
-                request: null,
-              }
-            : {
-                name: data.name,
-                phone: data.phoneNumber,
-                zipcode: data.defaultAddress.zipcode,
-                street: data.defaultAddress.street,
-                detailAddress: data.defaultAddress.detailAddress,
-                request: "",
-              },
-          deliveryId: isBundleDelivery ? data.deliveryId : null,
-          orderPrice: data.orderPrice,
-          deliveryPrice: data.deliveryPrice,
-          discountTotal: 0,
-          discountReward: 0,
-          discountCoupon: 0,
-          overDiscount: 0,
-          paymentPrice: data.orderPrice,
-          brochure: data.brochure,
-        }, ORDER_TYPE.GENERAL);
-      },
-    });
-  }, [getGeneralOrderSheet, orderItemList, isBundleDelivery]);
+            deliveryDto: {
+              name: generalOrderSheet.name,
+              phone: generalOrderSheet.phoneNumber,
+              zipcode: generalOrderSheet.defaultAddress.zipcode,
+              street: generalOrderSheet.defaultAddress.street,
+              detailAddress: generalOrderSheet.defaultAddress.detailAddress,
+              request: "",
+            },
+            deliveryId: generalOrderSheet.deliveryId,
+            orderPrice: generalOrderSheet.orderPrice,
+            deliveryPrice: generalOrderSheet.deliveryPrice,
+            discountTotal: 0,
+            discountReward: 0,
+            discountCoupon: 0,
+            overDiscount: 0,
+            paymentPrice: generalOrderSheet.orderPrice,
+            brochure: generalOrderSheet.brochure,
+          },
+          ORDER_TYPE.GENERAL
+        );
+        setDeliveryId(generalOrderSheet.deliveryId);
+        setDeliveryDto({
+          name: generalOrderSheet.name,
+          phone: generalOrderSheet.phoneNumber,
+          zipcode: generalOrderSheet.defaultAddress.zipcode,
+          street: generalOrderSheet.defaultAddress.street,
+          detailAddress: generalOrderSheet.defaultAddress.detailAddress,
+          request: "",
+        });
 
-  console.log("orderItemList", orderItemList);
+  }, [generalOrderSheet, orderItemList]);
 
   // 결제 관련 코드 ========================================================
   // 포트원 스크립트 로드 및 로드 확인
@@ -107,7 +113,21 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     };
   }, []);
 
-  const handlePaymentSubmit = () => {};
+  const handlePaymentSubmit = () => {
+    const requestBody = getRequestBody(ORDER_TYPE.GENERAL)
+    console.log('requestBody>>>>', {...requestBody, deliveryId: getDeliveryId()});
+    
+    createGeneralOrder(requestBody as CreateGeneralOrderRequest, {
+      onSuccess: (data) => {
+        console.log('createGeneralOrder', data);
+      },
+      onError: (err) => {
+        console.log('createGeneralOrder-error', err);
+        
+      }
+    })
+
+  };
 
   // 일반 결제 요청 함수
   const generalPayment = () => {
@@ -149,11 +169,12 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
 
   return (
     <div>
-      <OrderInfo type={ORDER_TYPE.GENERAL} generalOrderSheetData={orderSheetData} />
-      <BundleDeliverySelector
-        isBundleDelivery={isBundleDelivery}
-        setIsBundleDelivery={setIsBundleDelivery}
+      <OrderInfo
+        orderType={ORDER_TYPE.GENERAL}
+        generalOrderSheetData={generalOrderSheet}
+        deliveryDto={deliveryDto}
       />
+      <BundleDeliverySelector />
       <PaymentMethod />
       <button
         style={{ width: "100%", height: "50px", backgroundColor: "gray" }}

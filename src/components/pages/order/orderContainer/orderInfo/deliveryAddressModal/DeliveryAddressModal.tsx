@@ -3,7 +3,7 @@
 import * as styles from "./DeliveryAddressModal.css";
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
 import { useState } from "react";
-import { AddressResponse, DeliveryDto } from "@/types";
+import { AddressResponse, DeliveryDto, OrderType } from "@/types";
 import AddressList from "./addressList/AddressList";
 import AddAddressForm from "./addAddressForm/AddAddressForm";
 import EditAddressForm from "./editAddressForm/EditAddressForm";
@@ -11,6 +11,7 @@ import { useGetOrderAddress } from "@/api/order/queries/useGetOrderAddress";
 import { useOrderStore } from "@/store/useOrderStore";
 
 interface DeliveryAddressModalProps {
+  orderType: OrderType;
   isVisible: boolean;
   onClose: () => void;
 }
@@ -18,6 +19,7 @@ interface DeliveryAddressModalProps {
 type ViewMode = "list" | "add" | "edit";
 
 export default function DeliveryAddressModal({
+  orderType,
   isVisible,
   onClose,
 }: DeliveryAddressModalProps) {
@@ -25,7 +27,7 @@ export default function DeliveryAddressModal({
   const { data: addressData } = useGetOrderAddress();
 
   // 상태관리
-  const {setDeliveryDto} = useOrderStore();
+  const { updateOrderBody, setDeliveryDto } = useOrderStore();
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
@@ -66,7 +68,7 @@ export default function DeliveryAddressModal({
         street: null,
         detailAddress: null,
         request: null,
-      })
+      });
     } else {
       setDeliveryDto(deliveryDto);
     }
@@ -87,6 +89,7 @@ export default function DeliveryAddressModal({
       {viewMode === "list" && (
         <AddressList
           addressData={addressData}
+          orderType={orderType}
           // isDefaultAddress={isDefaultAddress}
           onAddAddress={switchToAddAddress}
           onEditAddress={switchToEditAddress}

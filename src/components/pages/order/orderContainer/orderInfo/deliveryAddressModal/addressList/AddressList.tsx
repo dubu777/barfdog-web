@@ -1,19 +1,21 @@
 import * as styles from "../DeliveryAddressModal.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { subscribeText } from "@/components/pages/subscriptionShop/subscriptionShopContent/recipeSelection/RecipeSelection.css";
-import { AddressResponse, DeliveryDto } from "@/types";
+import { AddressResponse, DeliveryDto, OrderType } from "@/types";
 
 interface AddressListProps {
   addressData: AddressResponse[];
+  orderType: OrderType,
   // isDefaultAddress: (deliveryId: number) => boolean;
   onAddAddress: () => void;
   onEditAddress: (address: AddressResponse) => void;
-  onSelectAddress: (deliveryDto: DeliveryDto, deliveryId: number) => void;
+  onSelectAddress: (deliveryDto: DeliveryDto) => void;
   onDeleteAddress: (addressId: number) => void;
 }
 
 export default function AddressList({
   addressData,
+  orderType,
   // isDefaultAddress,
   onAddAddress,
   onEditAddress,
@@ -58,8 +60,7 @@ export default function AddressList({
                       street: data.street,
                       detailAddress: data.detailAddress,
                       request: data.request,
-                    },
-                    data.id
+                    }
                   )
                 }
               >

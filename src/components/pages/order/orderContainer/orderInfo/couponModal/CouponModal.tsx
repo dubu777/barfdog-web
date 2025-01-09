@@ -13,7 +13,7 @@ import { ORDER_TYPE } from "@/constants";
 interface CouponModalProps {
   isVisible: boolean;
   onClose: () => void;
-  type: OrderType;
+  orderType: OrderType;
   selectedItemPrice: number;
   selectedItemId?: number | null;
   couponData?: Coupon[] | null;
@@ -22,7 +22,7 @@ interface CouponModalProps {
 export default function CouponModal({
   isVisible,
   onClose,
-  type,
+  orderType,
   selectedItemPrice,
   selectedItemId,
   couponData,
@@ -35,8 +35,8 @@ export default function CouponModal({
   const handleApplyCoupon = () => {
     if (selectedCoupon) {
       updateAppliedCoupon(
-        type,
-        type === ORDER_TYPE.GENERAL ? selectedItemId ?? null : null,
+        orderType,
+        orderType === ORDER_TYPE.GENERAL ? selectedItemId ?? null : null,
         selectedCoupon.couponId,
         selectedCoupon.discountAmount
       );
@@ -49,8 +49,6 @@ export default function CouponModal({
     setSelectedCoupon(null); // 쿠폰 선택 초기화
     onClose();
   };
-
-  console.log("selectedCoupon", selectedCoupon);
 
   return (
     <DefaultModal
@@ -65,7 +63,7 @@ export default function CouponModal({
             <CouponCard
               key={coupon.memberCouponId}
               coupon={coupon}
-              type={type}
+              orderType={orderType}
               selectedItemPrice={selectedItemPrice}
               selectedCouponId={selectedCoupon?.couponId}
             />

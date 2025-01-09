@@ -42,6 +42,7 @@ const queryKeys = {
     GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
     GET_SUBSCRIPTION_ORDER_LIST: 'getSubscriptionOrderList',
     GET_ORDER_ADDRESS: 'getOrderAddress',
+    GET_GENERAL_ORDER_SHEET: 'getGeneralOrderSheet',
   },
   MAIN: {
     BASE: 'main',
