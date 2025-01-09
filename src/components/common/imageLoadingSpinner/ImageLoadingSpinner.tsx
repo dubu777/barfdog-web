@@ -1,0 +1,42 @@
+import * as styles from './ImageLoadingSpinner.css';
+import Image from "next/image";
+import { useState } from "react";
+
+interface ImageLoadingSpinnerProps {
+  src: string;
+  alt: string;
+  fill?: boolean;
+  width?: number;
+  height?: number;
+  objectFit?: 'cover' | 'contain';
+  className?: string;
+}
+
+const Loader = () => (
+  <span className={styles.loader} />
+)
+
+const ImageLoadingSpinner = ({ src, alt, fill = false, width, height, objectFit = 'cover', className }: ImageLoadingSpinnerProps) => {
+  const [loading, setLoading] = useState(true);
+  const handleLoadingComplete = () => {
+    setLoading(false);
+  }
+  return (
+    <div className={styles.imageLoadingSpinner} style={{ height: height }}>
+      {loading && <Loader />}
+      <Image
+        src={src}
+        alt={alt}
+        fill={fill}
+        sizes={fill ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' : undefined}
+        width={!fill ? width : undefined}
+        height={!fill ? height : undefined}
+        objectFit={objectFit}
+        onLoadingComplete={() => handleLoadingComplete}
+        className={className || ''}
+      />
+    </div>
+  );
+};
+
+export default ImageLoadingSpinner;

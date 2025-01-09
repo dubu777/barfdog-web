@@ -77,6 +77,7 @@ export const [themeClass, themeVars] = createTheme({
     black: '#0E1108',
     kakao: '#FDDC3F',
     naver: '#00C73C',
+    orange: '#ff7247',
   },
   borderColors: {
     white: '#ffffff',

@@ -11,3 +11,4 @@ export * from './recipe';
 export * from './main';
 export * from './community';
 export * from './review';
+export * from './store';

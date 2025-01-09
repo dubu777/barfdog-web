@@ -31,7 +31,7 @@ const DogCard = ({ dog, noData, resetSwiper }: MyPageDogCardProps) => {
       />
       <Badge
         className={styles.subscriptionStatus}
-        color={!noData && dog?.subscribeStatus === 'SUBSCRIBING' ? 'red' : undefined}
+        color={!noData && dog?.subscribeStatus === 'SUBSCRIBING' ? 'redBorder' : undefined}
       >
         {!noData ? subscriptionStatusKR : '구독 전'}
       </Badge>

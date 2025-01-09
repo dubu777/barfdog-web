@@ -45,7 +45,7 @@ const OrderHistoryList = ({ orderList }: { orderList: MergeOrderData }) => {
           <li key={orderId}>
             <div className={styles.itemHeader}>
               <p>{formatDate(item.orderDto?.orderDate, 'fullDateTimeKR')}</p>
-              <Badge color={item.orderDto.orderStatus === 'BEFORE_PAYMENT' ? 'red' : undefined}>
+              <Badge color={item.orderDto.orderStatus === 'BEFORE_PAYMENT' ? 'redBorder' : undefined}>
                 {ORDER_STATUS[item.orderDto.orderStatus as keyof typeof ORDER_STATUS]}
               </Badge>
             </div>

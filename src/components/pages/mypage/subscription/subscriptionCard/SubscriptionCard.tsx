@@ -70,7 +70,7 @@ const SubscriptionCard = ({ subscriptionDetail }: { subscriptionDetail: Subscrip
     <div className={styles.subscriptionCard}>
       <Text type='title' size='md' align='left' className={styles.subscriptionName}>
         {subscribeDto.dogName}(이)의 AI 추천 식단
-        <Badge color={subscribeDto.status === 'SUBSCRIBING' ? 'red' : undefined}>
+        <Badge color={subscribeDto.status === 'SUBSCRIBING' ? 'redBorder' : undefined}>
           {subscriptionStatus[subscribeDto.status]}
         </Badge>
       </Text>

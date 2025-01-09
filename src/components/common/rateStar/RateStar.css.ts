@@ -1,6 +1,30 @@
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
+export const rateBox = recipe({
+  base: {
+    display: 'flex',
+  },
+  variants: {
+    align: {
+      left: {
+        justifyContent: 'flex-start',
+      },
+      center: {
+        justifyContent: 'center',
+      },
+      right: {
+        justifyContent: 'flex-end'
+      }
+    },
+    inlineBlock: {
+      true: {
+        display: 'inline-block'
+      }
+    }
+  }
+})
+
 export const rate = recipe({
   base: {
     fontSize: themeVars.fontSize["text-lg"],

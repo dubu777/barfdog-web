@@ -78,5 +78,9 @@ const queryKeys = {
     GET_WRITABLE_REVIEW_LIST: 'getWritableReviewList',
     GET_WRITTEN_REVIEW_LIST: 'getWrittenReviewList',
     GET_REVIEW_DETAIL: 'getReviewDetail',
+  },
+  STORE: {
+    BASE: 'store',
+    GET_STORE_ITEM_LIST: 'getStoreItemList',
   }
 } as const;

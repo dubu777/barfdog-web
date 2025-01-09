@@ -1,7 +1,8 @@
-import { motion, AnimatePresence } from "framer-motion";
 import * as styles from "./SelectBox.css";
-import useModal from "@/hooks/useModal";
+import { MouseEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { expandFromTopVariants } from "@/constants";
+import useModal from "@/hooks/useModal";
 
 interface SelectBoxProps {
   id: string;
@@ -24,7 +25,7 @@ export default function SelectBox({
 }: SelectBoxProps) {
   const { isOpen, onToggle, onClose, ref } = useModal();
 
-  const handleSelect = (e: MouseEvent, value: string) => {
+  const handleSelect = (e: MouseEvent<HTMLParagraphElement>, value: string) => {
     e.stopPropagation();
     onClose();
     onSelect(value);
@@ -49,8 +50,8 @@ export default function SelectBox({
           }}
         />
       </label>
-      <AnimatePresence>
-        {isOpen && (
+      {isOpen && (
+        <AnimatePresence>
           <div className={styles.optionsContainer}>
             <motion.div
               className={styles.optionsWrapper}
@@ -72,8 +73,8 @@ export default function SelectBox({
               ))}
             </motion.div>
           </div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
+      )}
     </div>
   );
 }
