@@ -1,115 +1,99 @@
-interface DeliveryInfo {
-  deliveryFreeConditionPrice: number | null;
-}
+import { ORDER_TYPE } from "@/constants";
+import { IAMPORT_MIN_PAYMENT_PRICE, PACKAGE_INFO } from "@/constants/payment";
+import { useOrderStore } from "@/store/useOrderStore";
+import { GeneralOrderSheetResponse, OrderType, SubscriptionOrderSheetResponse } from "@/types";
 
-interface Form {
-  selfInfo?: {
-    reward: number;
-    discountGrade?: number;
-  };
-  discountReward: number;
-  discountCoupon?: number;
-  deliveryPrice: number;
-  orderPrice: number;
-  subscriptionMonth?: number | null;
-  orderItemDtoList?: {
-    discountAmount: number;
-    deliveryFree: boolean;
-  }[];
-  bundle?: boolean;
-}
-
-interface Info {
-  subscribeDto: {
-    plan: string;
-    originPrice: number;
-  };
-}
 
 export const calcOrderSheetPrices = (
-  form: Form,
-  orderType: 'general' | 'subscribe' = 'general',
-  deliveryInfo: DeliveryInfo = { deliveryFreeConditionPrice: null },
-  info: Info
+  orderType: OrderType,
+  generalOrderSheetData?: GeneralOrderSheetResponse,
+  subscriptionOrderSheetData?: SubscriptionOrderSheetResponse
 ) => {
+  const {
+    isBundleDelivery,
+    generalOrderBody,
+    subscriptionOrderBody,
+    packageMonth,
+  } = useOrderStore();
+
   // 배송비 계산
-  const calculateDeliveryPrice = (
-    orderType: 'general' | 'subscribe',
-    form: Form,
-    deliveryInfo: DeliveryInfo
-  ): number => {
-    if (orderType === 'subscribe') return 0;
+  const calculateDeliveryPrice = (): number => {
+    if (orderType === ORDER_TYPE.SUBSCRIPTION) return 0;
 
     const isFreeDelivery =
-      form.bundle ||
-      (deliveryInfo.deliveryFreeConditionPrice &&
-        form.orderPrice >= deliveryInfo.deliveryFreeConditionPrice) ||
-      !(form.orderItemDtoList?.some((item) => !item.deliveryFree) ?? false);
+      isBundleDelivery ||
+      (generalOrderSheetData?.freeCondition &&
+        generalOrderSheetData.orderPrice >= generalOrderSheetData.freeCondition) ||
+      !(generalOrderSheetData?.orderItemDtoList?.some((item) => !item.deliveryFree) ?? false);
 
-    return isFreeDelivery ? 0 : form.deliveryPrice;
+    return isFreeDelivery ? 0 : generalOrderSheetData?.deliveryPrice ?? 0;
   };
 
   // 쿠폰 할인 계산
-  const calculateDiscountCoupon = (
-    orderItemDtoList?: { discountAmount: number }[]
-  ): number => {
-    return orderItemDtoList?.reduce((acc, item) => acc + item.discountAmount, 0) ?? 0;
+  const calculateDiscountCoupon = (): number => {
+    return generalOrderBody?.orderItemDtoList?.reduce(
+      (acc, item) => acc + (item.discountAmount || 0),
+      0
+    ) ?? 0;
   };
 
   // 등급 할인 계산
-  const calculateDiscountGrade = (
-    orderType: 'general' | 'subscribe',
-    discountGrade?: number
-  ): number => {
-    return orderType === 'subscribe' ? (discountGrade ?? 0) : 0;
+  const calculateDiscountGrade = (): number => {
+    return orderType === ORDER_TYPE.SUBSCRIPTION
+      ? subscriptionOrderBody?.discountGrade ?? 0
+      : 0;
   };
 
   // 패키지 할인 계산
-  const calculatePackageDiscount = (
-    orderType: 'general' | 'subscribe',
-    subscriptionMonth: number | null | undefined,
-    info: Info
-  ): number => {
-    if (orderType !== 'subscribe' || subscriptionMonth === null) return 0;
+  const calculatePackageDiscount = (): number => {
+    if (orderType === ORDER_TYPE.GENERAL || !packageMonth) return 0;
 
-    const subscriptionType = Object.values(subscriptionMonthType).find(
-      (type) => type.VALUE === subscriptionMonth
+    const packageType = Object.values(PACKAGE_INFO).find(
+      (type) => type.value === packageMonth
     );
 
-    if (!subscriptionType) return 0;
+    if (!packageType || packageType.discount === 0 || !subscriptionOrderSheetData) return 0;
 
-    const isFullPlan = ['FULL', 'TOPPING_FULL'].includes(info.subscribeDto.plan);
-    const isHalfPlan = ['HALF', 'TOPPING_HALF'].includes(info.subscribeDto.plan);
+    const isFullPlan = ["FULL", "TOPPING_FULL"].includes(subscriptionOrderSheetData.subscribeDto.plan);
+    const isHalfPlan = ["HALF", "TOPPING_HALF"].includes(subscriptionOrderSheetData.subscribeDto.plan);
+
     const deliveryCount = isFullPlan
-      ? subscriptionType.fullDeliveryCount
+      ? packageType.fullDeliveryCount
       : isHalfPlan
-      ? subscriptionType.halfDeliveryCount
+      ? packageType.halfDeliveryCount
       : 1;
 
     return Math.floor(
-      info.subscribeDto.originPrice * deliveryCount * (subscriptionType.discount / 100)
+      (subscriptionOrderSheetData.subscribeDto.nextPaymentPrice) *
+        deliveryCount *
+        (packageType.discount / 100)
     );
   };
 
   // 주요 변수 계산
-  const orderPrice = Number(form.orderPrice);
-  const discountReward = Number(form.discountReward);
-  const deliveryPrice = calculateDeliveryPrice(orderType, form, deliveryInfo);
-  const discountCoupon = calculateDiscountCoupon(form.orderItemDtoList);
-  const discountGrade = calculateDiscountGrade(orderType, form.selfInfo?.discountGrade);
-  const discountSubscriptionMonth = calculatePackageDiscount(
-    orderType,
-    form.subscriptionMonth,
-    info
-  );
+  const orderPrice = orderType === ORDER_TYPE.GENERAL
+    ? generalOrderBody.orderPrice
+    : subscriptionOrderBody.orderPrice;
+
+  const discountReward = orderType === ORDER_TYPE.GENERAL
+    ? generalOrderBody.discountReward
+    : subscriptionOrderBody.discountReward;
+
+  const userTotalReward = orderType === ORDER_TYPE.GENERAL
+    ? generalOrderSheetData?.reward ?? 0
+    : subscriptionOrderSheetData?.reward ?? 0;
+  
+  const deliveryPrice = calculateDeliveryPrice();
+  const discountCoupon = calculateDiscountCoupon();
+  const discountGrade = calculateDiscountGrade();
+  const discountSubscriptionMonth = calculatePackageDiscount();
 
   // 총 할인 및 결제 금액 계산
-  const discountTotal =
-    discountReward + discountCoupon + discountGrade + discountSubscriptionMonth;
-  const calcedPaymentPrice = orderPrice + deliveryPrice - discountTotal;
-  const paymentPrice = Math.max(calcedPaymentPrice, IAMPORT_MIN_PAYMENT_PRICE);
+  const discountTotal = discountReward + discountCoupon + discountGrade + discountSubscriptionMonth;
+  const calculatedPaymentPrice = orderPrice + deliveryPrice - discountTotal;
+  const paymentPrice = Math.max(calculatedPaymentPrice, IAMPORT_MIN_PAYMENT_PRICE);
   const availableMaxDiscount = paymentPrice - IAMPORT_MIN_PAYMENT_PRICE;
-  const userTotalReward = form.selfInfo?.reward ?? 0;
+
   const availableMaxReward = Math.min(availableMaxDiscount, userTotalReward);
 
   return {

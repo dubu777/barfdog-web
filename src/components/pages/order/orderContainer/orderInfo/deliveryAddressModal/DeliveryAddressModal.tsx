@@ -25,11 +25,11 @@ export default function DeliveryAddressModal({
   const { data: addressData } = useGetOrderAddress();
 
   // 상태관리
-  const {setDeliveryDto, isDefaultAddress} = useOrderStore();
+  const {setDeliveryDto} = useOrderStore();
   const [viewMode, setViewMode] = useState<ViewMode>("list");
-  const [selectedDeliveryId, setSelectedDeliveryId] = useState<number | null>(null);
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
+  const { isBundleDelivery } = useOrderStore();
 
   console.log("addressData", addressData);
 
@@ -56,10 +56,20 @@ export default function DeliveryAddressModal({
     }
   };
 
-  // 배송지 선택
-  const handleSelectAddress = (deliveryDto: DeliveryDto, deliveryId: number) => {
-    setDeliveryDto(deliveryDto);
-    setSelectedDeliveryId(deliveryId);
+  // 배송지 선택 - 묶음 배송시 배송지 정보 null로 초기화
+  const handleSelectAddress = (deliveryDto: DeliveryDto) => {
+    if (isBundleDelivery) {
+      setDeliveryDto({
+        name: null,
+        phone: null,
+        zipcode: null,
+        street: null,
+        detailAddress: null,
+        request: null,
+      })
+    } else {
+      setDeliveryDto(deliveryDto);
+    }
     onClose();
   };
 
@@ -77,8 +87,7 @@ export default function DeliveryAddressModal({
       {viewMode === "list" && (
         <AddressList
           addressData={addressData}
-          selectedDeliveryId={selectedDeliveryId}
-          isDefaultAddress={isDefaultAddress}
+          // isDefaultAddress={isDefaultAddress}
           onAddAddress={switchToAddAddress}
           onEditAddress={switchToEditAddress}
           onSelectAddress={handleSelectAddress}

@@ -30,6 +30,7 @@ export type {
   PlanKey,
   PlanName,
   Coupon,
+  SubscribeDto,
 };
 
 

@@ -9,6 +9,7 @@ import PaymentMethod from "./paymentMethod/PaymentMethod";
 import { useEffect, useState } from "react";
 import { usePaymentStore } from "@/store/usePaymentStore";
 import { PG_TYPE } from "@/constants/payment";
+import { calcOrderSheetPrices } from "@/utils/order/calculatePaymentDetail";
 
 
 interface OrderContainerProps {
@@ -16,11 +17,11 @@ interface OrderContainerProps {
 }
 
 export default function OrderContainer({subscribeId}: OrderContainerProps) {
-  const { data: orderSheetData } = useGetSubscriptionOrderSheet(subscribeId);
+  const { data: subscriptionOrderSheetData } = useGetSubscriptionOrderSheet(subscribeId);
   const { paymentMethod } = usePaymentStore();
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
-
-  console.log('orderSheetData', orderSheetData);
+  // const {} = calcOrderSheetPrices();
+  console.log('subscriptionOrderSheetData', subscriptionOrderSheetData);
 
   // 결제 관련 코드 ========================================================
   // 포트원 스크립트 로드 및 로드 확인
@@ -90,7 +91,7 @@ export default function OrderContainer({subscribeId}: OrderContainerProps) {
 
   return(
     <div >
-      <OrderInfo type="subscription"/>
+      <OrderInfo type="subscription" subscriptionOrderSheetData={subscriptionOrderSheetData}/>
       <PackageSelection />
       <PaymentMethod />
       <button onClick={handlePaymentSubmit}>결제하기</button>

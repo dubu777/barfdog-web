@@ -2,27 +2,28 @@
 
 import { useOrderStore } from "@/store/useOrderStore";
 import * as styles from "./CouponCard.css";
-import { Coupon } from "@/types";
+import { Coupon, OrderType } from "@/types";
 import {
   calculateCouponDiscount,
   isValidCoupon,
 } from "@/utils/coupon/couponUtils";
 import { formatDate } from "@/utils/dateUtils";
+import { ORDER_TYPE } from "@/constants";
 
 interface CouponCardProps {
   coupon: Coupon;
+  type: OrderType;
   selectedItemPrice: number;
   selectedCouponId?: number;
-  onSelectCoupon: (couponId: number, discountAmount: number) => void;
 }
 
 export default function CouponCard({
   coupon,
+  type,
   selectedItemPrice,
   selectedCouponId,
-  onSelectCoupon,
 }: CouponCardProps) {
-  const { isAppliedCoupon } = useOrderStore();
+  const { isAppliedCoupon, updateSelectedCoupon } = useOrderStore();
 
   // 쿠폰 할인 계산 유틸 함수
   const { couponDiscountAmount, couponDiscountInfo } = calculateCouponDiscount(
@@ -35,16 +36,20 @@ export default function CouponCard({
     selectedItemPrice,
     couponDiscountAmount
   );
+console.log('isValid', isValid);
+console.log('selectedItemPrice', selectedItemPrice);
 
+  
   // 쿠폰이 유효하지 않거나 이미 적용된 쿠폰인 경우 null 반환
-  if (!isValid || isAppliedCoupon(coupon.memberCouponId)) return null;
+  const isValidCoupons = type === ORDER_TYPE.GENERAL ? (!isValid || isAppliedCoupon(coupon.memberCouponId)) : !isValid
+  if (isValidCoupons) return null;
   return (
     <div
       className={styles.couponCardContainer({
         isSelected: selectedCouponId === coupon.memberCouponId,
       })}
       onClick={() =>
-        onSelectCoupon(coupon.memberCouponId, couponDiscountAmount)
+        updateSelectedCoupon(coupon.memberCouponId, couponDiscountAmount)
       }
     >
       <div>{coupon.name}</div>

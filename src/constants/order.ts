@@ -1,6 +1,6 @@
-import { CreateGeneralOrderRequest, PaymentMethod } from "@/types";
+import { CreateGeneralOrderRequest, CreateSubscriptionOrderRequest, OrderType, OrderTypeKey, PaymentMethod } from "@/types";
 
-export {ORDER_STATUS, PAYMENT, generalOrderBody}
+export {ORDER_STATUS, PAYMENT, generalOrderBody, subscriptionOrderBody, ORDER_TYPE}
 
 // 결제 전, 결제완료, 생산 중, 배송준비 중, 배송 시작, 배송 중, 배송완료, 취소됨, 환불됨
 const ORDER_STATUS = {
@@ -53,3 +53,36 @@ const generalOrderBody: CreateGeneralOrderRequest = {
   agreePrivacy: false,
   brochure: false,
 };
+
+
+const subscriptionOrderBody: CreateSubscriptionOrderRequest = {
+  customerUid: "",
+  memberCouponId: null,
+  deliveryDto: {
+    name: "",
+    phone: "",
+    zipcode: "",
+    street: "",
+    detailAddress: "",
+    request: "",
+  },
+  deliveryPrice: 0,
+  discountCoupon: 0,
+  discountGrade: 0,
+  discountReward: 0,
+  discountSubscriptionMonth: 0,
+  discountTotal: 0,
+  nextDeliveryDate: "",
+  orderPrice: 0,
+  overDiscount: 0,
+  paymentMethod: "NAVER_PAY",
+  paymentPrice: 0,
+  subscriptionMonth: null,
+  agreePrivacy: false,
+  brochure: false,
+};
+
+const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {
+  GENERAL: "general",
+  SUBSCRIPTION: "subscription",
+} as const

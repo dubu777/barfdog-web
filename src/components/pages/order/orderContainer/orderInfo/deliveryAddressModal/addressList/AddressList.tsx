@@ -5,8 +5,7 @@ import { AddressResponse, DeliveryDto } from "@/types";
 
 interface AddressListProps {
   addressData: AddressResponse[];
-  selectedDeliveryId: number | null;
-  isDefaultAddress: (deliveryId: number) => boolean;
+  // isDefaultAddress: (deliveryId: number) => boolean;
   onAddAddress: () => void;
   onEditAddress: (address: AddressResponse) => void;
   onSelectAddress: (deliveryDto: DeliveryDto, deliveryId: number) => void;
@@ -15,8 +14,7 @@ interface AddressListProps {
 
 export default function AddressList({
   addressData,
-  selectedDeliveryId,
-  isDefaultAddress,
+  // isDefaultAddress,
   onAddAddress,
   onEditAddress,
   onSelectAddress,
@@ -36,7 +34,8 @@ export default function AddressList({
       {addressData.map((data) => (
         <div
           className={styles.deliveryInfoBox({
-            isSelected: isDefaultAddress(data.id),
+            // isSelected: isDefaultAddress(data.id),
+            isSelected: false,
           })}
           key={data.id}
         >
@@ -64,7 +63,7 @@ export default function AddressList({
                   )
                 }
               >
-                {selectedDeliveryId === data.id ? "선택됨" : "선택"}
+                선택
               </button>
             </div>
 

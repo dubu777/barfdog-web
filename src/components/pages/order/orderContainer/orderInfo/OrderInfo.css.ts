@@ -33,6 +33,9 @@ export const gridContainer = style({
   display: "grid",
   gridTemplateColumns: "3.5fr 1fr 1fr 1fr 1fr",
   gap: "10px",
+  border: `1px solid ${themeVars.borderColors.grey79}`,
+  padding: '20px',
+  borderRadius: '20px',
 });
 
 export const gridHeader = style({
@@ -77,3 +80,13 @@ export const couponButton = recipe({
   },
 })
 
+export const subscriptionItemWrapper = style({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  gap: '10px',
+  padding: '20px',
+  border: `1px solid ${themeVars.borderColors.grey79}`,
+  borderRadius: '20px',
+})

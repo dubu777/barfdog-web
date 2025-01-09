@@ -2,20 +2,21 @@
 
 import * as styles from "./CouponModal.css";
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
-import { GeneralOrderSheetResponse, OrderType } from "@/types";
+import { Coupon, OrderType } from "@/types";
 import { calculateCouponDiscount } from "@/utils/coupon/couponUtils";
 import { useState } from "react";
 import CouponCard from "./couponCard/CouponCard";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useOrderStore } from "@/store/useOrderStore";
+import { ORDER_TYPE } from "@/constants";
 
 interface CouponModalProps {
   isVisible: boolean;
   onClose: () => void;
   type: OrderType;
   selectedItemPrice: number;
-  selectedItemId: number | null;
-  generalOrderSheetData?: GeneralOrderSheetResponse | null;
+  selectedItemId?: number | null;
+  couponData?: Coupon[] | null;
 }
 
 export default function CouponModal({
@@ -24,26 +25,18 @@ export default function CouponModal({
   type,
   selectedItemPrice,
   selectedItemId,
-  generalOrderSheetData,
+  couponData,
 }: CouponModalProps) {
   const { updateAppliedCoupon, setSelectedCoupon, selectedCoupon } =
     useOrderStore();
-
-  // 쿠폰 선택 함수
-  const handleSelectCoupon = (couponId: number, discountAmount: number) => {
-    if (selectedCoupon?.couponId === couponId) {
-      // 이미 선택된 쿠폰이면 선택 해제
-      setSelectedCoupon(null);
-    } else {
-      setSelectedCoupon({ couponId, discountAmount });
-    }
-  };
+  
 
   // 쿠폰 적용 함수
   const handleApplyCoupon = () => {
-    if (selectedItemId && selectedCoupon) {
+    if (selectedCoupon) {
       updateAppliedCoupon(
-        selectedItemId,
+        type,
+        type === ORDER_TYPE.GENERAL ? selectedItemId ?? null : null,
         selectedCoupon.couponId,
         selectedCoupon.discountAmount
       );
@@ -67,20 +60,18 @@ export default function CouponModal({
       size="lg"
       scroll
     >
-      {type === "general" && (
         <div>
-          {generalOrderSheetData?.coupons.map((coupon) => (
+          {couponData?.map((coupon) => (
             <CouponCard
               key={coupon.memberCouponId}
               coupon={coupon}
+              type={type}
               selectedItemPrice={selectedItemPrice}
-              onSelectCoupon={handleSelectCoupon}
               selectedCouponId={selectedCoupon?.couponId}
             />
           ))}
           <DefaultButton onClick={handleApplyCoupon}>쿠폰 적용</DefaultButton>
         </div>
-      )}
     </DefaultModal>
   );
 }

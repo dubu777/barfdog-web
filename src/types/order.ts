@@ -22,7 +22,30 @@ export type {
   CreateGeneralOrderRequest,
   OrderType,
   DeliveryDto,
+  CreateSubscriptionOrderRequest,
+  OrderTypeKey,
 };
+
+interface CreateSubscriptionOrderRequest {
+  customerUid: string; // 고유 사용자 ID
+  memberCouponId?: number | null; // 적용된 쿠폰 ID
+  deliveryDto: DeliveryDto; // 배송지 정보
+  deliveryPrice: number; // 배송비
+  discountCoupon: number; // 쿠폰 할인 금액
+  discountGrade: number; // 등급 할인 금액
+  discountReward: number; // 적립금 할인 금액
+  discountSubscriptionMonth: number; // 구독 기간 할인 금액
+  discountTotal: number; // 총 할인 금액
+  nextDeliveryDate: string; // 다음 배송 날짜
+  orderPrice: number; // 주문 금액
+  overDiscount: number; // 초과 할인 금액
+  paymentMethod: PaymentMethod; // 결제 방식
+  paymentPrice: number; // 실제 결제 금액
+  subscriptionMonth: number | null; // 구독 기간 (개월)
+  agreePrivacy: boolean; // 개인정보 제공 동의 여부
+  brochure: boolean; // 브로슈어 수령 여부
+}
+
 
 // 일반 결제 주문 정보 저장 응답
 interface CreateGeneralOrderResponse {
@@ -300,3 +323,5 @@ type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
 type OrderDetailType = 'general' | 'subscribe';
 
 type OrderType = "subscription" | "general";
+
+type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";

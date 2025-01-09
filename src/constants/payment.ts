@@ -1,3 +1,4 @@
+import { PackageInfo } from "@/types";
 
 
 const PAYMENT_METHOD = {
@@ -18,18 +19,17 @@ const PG_TYPE ={
     naverpay: `naverpay`
   }
 }
-
-const PACKAGE_INFO = {
+const PACKAGE_INFO: Record<string, PackageInfo>= {
   TWELVE: {
-    value: 12, // 서버에 전송할 값 (개월수)
+    value: 12,
     label: '12개월 패키지',
-    discount: 20, // 할인율 (%)
-    freeKit: 2, // 무료 진단기기 횟수
-    freeTopper: 2, // 무료 토퍼랜덤 횟수
-    freeSkip: true, // 무제한 건너뛰기
-    freeDelivery: true, // 무료 배송
-    fullDeliveryCount: 26, // 풀플랜 무료배송 횟수
-    halfDeliveryCount: 13, // 하프플랜 무료배송 횟수
+    discount: 20,
+    freeKit: 2,
+    freeTopper: 2,
+    freeSkip: true,
+    freeDelivery: true,
+    fullDeliveryCount: 26,
+    halfDeliveryCount: 13,
   },
   SIX: {
     value: 6,
@@ -56,11 +56,13 @@ const PACKAGE_INFO = {
   ONE: {
     value: null,
     label: '정기 구독',
-    discount: false,
+    discount: 0,
     freeKit: false,
     freeTopper: false,
     freeSkip: true,
     freeDelivery: true,
+    fullDeliveryCount: 0,
+    halfDeliveryCount: 0,
   },
 } as const;
 

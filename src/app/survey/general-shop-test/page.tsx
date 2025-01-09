@@ -34,12 +34,12 @@ export default function GeneralShopTest() {
       },
       itemOptionDtoList: [
         {
-          itemOptionId: 27,
-          amount: 2,
+          itemOptionId: 18,
+          amount: 1,
         },
         {
-          itemOptionId: 28,
-          amount: 2,
+          itemOptionId: 27,
+          amount: 1,
         },
       ],
     },

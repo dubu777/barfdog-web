@@ -13,17 +13,20 @@ import { useGetGeneralOrderSheet } from "@/api/order/queries/useGetGeneralOrderS
 import { useCreateGeneralOrder } from "@/api/order/mutations/useCreateGeneralOrder";
 import { GeneralOrderItem, GeneralOrderSheetResponse } from "@/types";
 import { useOrderStore } from "@/store/useOrderStore";
+import { BundleDeliverySelector } from "./bundleDeliverySelector/BundleDeliverySelector";
+import { ORDER_TYPE } from "@/constants";
 
 interface GeneralOrderContainerProps {}
 
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   // 상태관리
   const { paymentMethod } = usePaymentStore();
-  const { updateGeneralOrderBody } = useOrderStore();
+  const { updateOrderBody, isBundleDelivery, setIsBundleDelivery } = useOrderStore();
   const { orderItemList } = usePersistOrderStore();
   const [orderSheetData, setOrderSheetData] =
     useState<GeneralOrderSheetResponse | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
+
 
   // API 호출 ( 일반 결제 시트 정보 가져오기, 일반 결제 정보 저장 )
   const { mutate: getGeneralOrderSheet } = useGetGeneralOrderSheet();
@@ -38,10 +41,10 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     getGeneralOrderSheet(requestBody, {
       onSuccess: (data) => {
         setOrderSheetData(data);
-console.log('getGeneralOrderSheet data', data);
+        console.log("getGeneralOrderSheet data", data);
 
         // 초기 상태 업데이트
-        updateGeneralOrderBody({
+        updateOrderBody({
           orderItemDtoList: data.orderItemDtoList.map((item) => ({
             itemId: item.itemId,
             amount: item.amount,
@@ -53,15 +56,24 @@ console.log('getGeneralOrderSheet data', data);
             discountAmount: 0,
             finalPrice: item.orderLinePrice,
           })),
-          deliveryDto: {
-            name: data.name,
-            phone: data.phoneNumber,
-            zipcode: data.defaultAddress.zipcode,
-            street: data.defaultAddress.street,
-            detailAddress: data.defaultAddress.detailAddress,
-            request: "",
-          },
-          deliveryId: data.deliveryId,
+          deliveryDto: isBundleDelivery
+            ? {
+                name: null,
+                phone: null,
+                zipcode: null,
+                street: null,
+                detailAddress: null,
+                request: null,
+              }
+            : {
+                name: data.name,
+                phone: data.phoneNumber,
+                zipcode: data.defaultAddress.zipcode,
+                street: data.defaultAddress.street,
+                detailAddress: data.defaultAddress.detailAddress,
+                request: "",
+              },
+          deliveryId: isBundleDelivery ? data.deliveryId : null,
           orderPrice: data.orderPrice,
           deliveryPrice: data.deliveryPrice,
           discountTotal: 0,
@@ -70,10 +82,10 @@ console.log('getGeneralOrderSheet data', data);
           overDiscount: 0,
           paymentPrice: data.orderPrice,
           brochure: data.brochure,
-        });
+        }, ORDER_TYPE.GENERAL);
       },
     });
-  }, [getGeneralOrderSheet, orderItemList]);
+  }, [getGeneralOrderSheet, orderItemList, isBundleDelivery]);
 
   console.log("orderItemList", orderItemList);
 
@@ -137,7 +149,11 @@ console.log('getGeneralOrderSheet data', data);
 
   return (
     <div>
-      <OrderInfo type="general" generalOrderSheetData={orderSheetData} />
+      <OrderInfo type={ORDER_TYPE.GENERAL} generalOrderSheetData={orderSheetData} />
+      <BundleDeliverySelector
+        isBundleDelivery={isBundleDelivery}
+        setIsBundleDelivery={setIsBundleDelivery}
+      />
       <PaymentMethod />
       <button
         style={{ width: "100%", height: "50px", backgroundColor: "gray" }}
