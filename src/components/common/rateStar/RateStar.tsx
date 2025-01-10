@@ -8,9 +8,19 @@ interface RateStarProps {
   onChange?: (newRating: number) => void;
   isEdit?: boolean;
   inlineBlock?: boolean;
+  size?: 'xxl';
 }
 
-const RateStar = ({ rateLength, color = 'red', align = 'center', value, onChange, isEdit = false, inlineBlock = false }: RateStarProps) => {
+const RateStar = ({
+  rateLength,
+  color = 'red',
+  align = 'center',
+  value,
+  onChange,
+  isEdit = false,
+  inlineBlock = false,
+  size,
+}: RateStarProps) => {
   const handleClick = (index: number) => {
     if(onChange) {
       onChange(index + 1);
@@ -21,7 +31,7 @@ const RateStar = ({ rateLength, color = 'red', align = 'center', value, onChange
       {Array.from({ length: rateLength }, (v, i) => i + 1).map((_, i) => (
         <span
           key={i}
-          className={styles.rate({ color, align, empty: value === 0 || value ? i >= value : false, isEdit })}
+          className={styles.rate({ color, align, empty: value === 0 || value ? i >= value : false, isEdit, size })}
           onClick={() => value ? handleClick(i) : undefined}
         >
           ★

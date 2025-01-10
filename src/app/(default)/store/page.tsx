@@ -1,4 +1,4 @@
-import Store from "@/components/pages/store/Store";
+import StoreList from "@/components/pages/store/storeList/StoreList";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
 
@@ -8,7 +8,7 @@ export default async function StorePage() {
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>
-      <Store />
+      <StoreList />
     </HydrationBoundary>
   )
 }

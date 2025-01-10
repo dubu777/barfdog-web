@@ -2,6 +2,7 @@ import { reviewStatus, reviewType } from "@/constants";
 import { Page } from "@/types";
 
 export type {
+  BaseReviewItem,
   BestReviewItem,
   BestReviewDetail,
   ReviewList,
@@ -25,7 +26,7 @@ interface BaseReviewItem {
   id: number;
   thumbnailUrl?: string;
   star: number;
-  titleByAdmin: null | string;
+  titleByAdmin?: null | string;
   contents: string;
   username?: string;
 }

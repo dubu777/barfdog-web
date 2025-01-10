@@ -1,6 +1,5 @@
 import * as styles from './Tabs.css';
-import { ReactNode, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { ReactNode, useState } from "react";
 
 interface Tab {
   label: string;
@@ -11,27 +10,17 @@ interface Tab {
 interface TabsProps {
   tabs: Tab[];
   defaultIndex?: number;
+  type?: 'button' | 'text';
 }
 
-const Tabs = ({ tabs, defaultIndex = 0 }: TabsProps) => {
+const Tabs = ({ tabs, defaultIndex = 0, type = 'text' }: TabsProps) => {
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
-  const searchParams = useSearchParams();
 
   const handleTabChange = (index: number) => {
     setActiveIndex(index);
     tabs[index]?.onInit?.();
   }
-
-  useEffect(() => {
-    const tab = searchParams.get('tab');
-    if (tab) {
-      setActiveIndex(tab === 'writable' ? 0 : 1);
-    } else {
-      if (tab === null) {
-        setActiveIndex(0);
-      }
-    }
-  }, [searchParams])
+  console.log('activeIndex', activeIndex)
 
   return (
     <div className={styles.tabsContainer}>
@@ -39,7 +28,7 @@ const Tabs = ({ tabs, defaultIndex = 0 }: TabsProps) => {
         {tabs.map((tab, index) => (
           <button
             key={index}
-            className={styles.tabButton({ active: activeIndex === index })}
+            className={styles.tabButton({ active: activeIndex === index, type: type })}
             onClick={() => handleTabChange(index)}
           >
             {tab.label}

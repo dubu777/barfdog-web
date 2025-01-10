@@ -4,10 +4,11 @@ import { useSearchParams } from "next/navigation";
 
 interface UsePaginationProps {
   prefetchFn: (page: number) => Promise<void>;
-  pushWithQuery: (path: string, newQuery: QueryParams) => void;
+  pushWithQuery: (path: string, newQuery: QueryParams, removeQueryKeys?: string[], preserveScroll?: boolean) => void;
+  preserveScroll?: boolean;
 }
 
-export function usePagination({ prefetchFn, pushWithQuery }: UsePaginationProps) {
+export function usePagination({ prefetchFn, pushWithQuery, preserveScroll = false }: UsePaginationProps) {
   const searchParams = useSearchParams();
   const pageParam = Number(searchParams.get('page')) > 0 && (Number(searchParams.get('page')) - 1) || 0;
 
@@ -17,7 +18,7 @@ export function usePagination({ prefetchFn, pushWithQuery }: UsePaginationProps)
   const onPageChange = useCallback(async (page: number) => {
       if (page < 0 || page >= totalPages) return;
 
-      pushWithQuery(window.location.pathname, { page: page + 1 });
+      pushWithQuery(window.location.pathname, { page: page + 1 }, [], preserveScroll);
       await prefetchFn(page);
 
     },[totalPages, prefetchFn, pushWithQuery]

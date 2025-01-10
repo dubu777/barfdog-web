@@ -82,5 +82,7 @@ const queryKeys = {
   STORE: {
     BASE: 'store',
     GET_STORE_ITEM_LIST: 'getStoreItemList',
+    GET_STORE_ITEM_DETAIL: 'getStoreItemDetail',
+    GET_STORE_ITEM_REVIEW_LIST: 'getStoreItemReviewList',
   }
 } as const;

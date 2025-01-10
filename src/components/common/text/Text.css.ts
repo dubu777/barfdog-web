@@ -1,5 +1,5 @@
-import {recipe} from "@vanilla-extract/recipes";
-import {themeVars} from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
+import { themeVars } from "@/styles/theme.css";
 
 export const title = recipe({
   base: {
@@ -45,6 +45,9 @@ export const title = recipe({
       red: {
         color: themeVars.colors.mainRed
       },
+      grey: {
+        color: `${themeVars.fontColors.grey89} !important`,
+      },
     },
     weight: {
       light: {
@@ -65,6 +68,11 @@ export const title = recipe({
         textAlign: 'left',
       },
     },
+    isEmpty: {
+      true: {
+        padding: '60px 0'
+      }
+    }
   },
   defaultVariants: {
     size: 'titleLg',
@@ -137,6 +145,16 @@ export const description = recipe({
         color: themeVars.colors.black,
         lineHeight: 1.5,
         textAlign: 'left',
+      }
+    },
+    lineHeight: {
+      inherit: {
+        lineHeight: 'inherit'
+      }
+    },
+    isEmpty: {
+      true: {
+        padding: '60px 0'
       }
     }
   },

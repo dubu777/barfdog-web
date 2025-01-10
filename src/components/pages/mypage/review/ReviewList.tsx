@@ -1,5 +1,5 @@
 'use client';
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as styles from './ReviewList.css';
 import Tabs from "@/components/common/tabs/Tabs";
@@ -17,8 +17,20 @@ const Review = () => {
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
 
-  const tap = searchParams.get('tab');
-  const checkTabIndex = (!tap || tap === 'writable') ? 0 : 1 || 0;
+  const tab = searchParams.get('tab');
+  const checkTabIndex = (!tab || tab === 'writable') ? 0 : 1 || 0;
+
+  const [tabsDefaultIndex, setTabsDefaultIndex] = useState(checkTabIndex);
+
+  useEffect(() => {
+    if (tab) {
+      setTabsDefaultIndex(tab === 'writable' ? 0 : 1);
+    } else {
+      if (tab === null) {
+        setTabsDefaultIndex(0);
+      }
+    }
+  }, [tab, searchParams]);
 
   const tabs = [
     {
@@ -56,7 +68,7 @@ const Review = () => {
 
   return (
     <section className={styles.reviewContainer}>
-      <Tabs tabs={tabs} defaultIndex={checkTabIndex} />
+      <Tabs tabs={tabs} defaultIndex={tabsDefaultIndex} />
     </section>
   );
 };

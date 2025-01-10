@@ -2,10 +2,14 @@ import { QueryParams } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-
 const useDynamicQueryPush = () => {
   const router = useRouter();
-  const pushWithQuery = useCallback((path: string, newQuery: QueryParams) => {
+  const pushWithQuery = useCallback((
+    path: string,
+    newQuery: QueryParams,
+    removeQueryKeys?: string[],
+    preserveScroll: boolean = false,
+  ) => {
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
     const searchParams = url.searchParams;
@@ -14,7 +18,11 @@ const useDynamicQueryPush = () => {
       searchParams.set(key, String(value));
     });
 
-    router.push(`${path}?${searchParams.toString()}`);
+    if (removeQueryKeys) {
+      removeQueryKeys.forEach(key => searchParams.delete(key));
+    }
+
+    router.push(`${path}?${searchParams.toString()}`, { scroll: !preserveScroll });
   }, [router]);
 
   return { pushWithQuery };

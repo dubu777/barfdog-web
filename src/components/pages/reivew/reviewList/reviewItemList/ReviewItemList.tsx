@@ -49,7 +49,7 @@ const ReviewItemList = () => {
           id="sortBy"
           options={[{ label: '최근순', value: 'RECENT' }, { label: '등록순', value: 'REGISTRATION' }, { label: '판매량순', value: 'SALEAMOUNT' }]}
           forFilter
-          onSelect={(value) => handleSortByFilterChange(value)}
+          onSelect={(value) => handleSortByFilterChange(value as string)}
           selectedValue={selectedSortBy}
         />
       </div>

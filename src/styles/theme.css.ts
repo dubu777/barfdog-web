@@ -64,6 +64,7 @@ export const [themeClass, themeVars] = createTheme({
     pinkF1: '#FFF1F1',
     pinkFa: '#FFFAFA',
     pinkFF: '#FFE0E1',
+    purpleFF: '#f8f8ff',
     darkRed: '#AF3D3D',
     mainRed: '#BE1A21',
     greyF7: '#F7F7F7',

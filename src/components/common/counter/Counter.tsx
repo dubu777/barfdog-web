@@ -1,5 +1,4 @@
 'use client';
-import { useState } from "react";
 import * as styles from './Counter.css';
 
 interface CounterProps {
@@ -8,6 +7,8 @@ interface CounterProps {
   initialCount?: number;
   step?: number;
   onChange?: (value: number) => void;
+  fullWidth?: boolean;
+  className?: string;
 }
 
 const Counter = ({
@@ -15,33 +16,31 @@ const Counter = ({
   max = Infinity,
   initialCount = 0,
   step = 1,
-  onChange
+  onChange,
+  fullWidth = false,
+  className,
 }:
   CounterProps) => {
-  const [count, setCount] = useState<number>(initialCount)
-
   const handleIncrement = () => {
-    if (count + step <= max) {
-      const newValue = count + step;
-      setCount(newValue);
+    if (initialCount + step <= max) {
+      const newValue = initialCount + step;
       onChange?.(newValue);
     }
   }
   const handleDecrement = () => {
-    if (count - step >= min) {
-      const newValue = count - step;
-      setCount(newValue);
+    if (initialCount - step >= min) {
+      const newValue = initialCount - step;
       onChange?.(newValue);
     }
   }
 
   return (
-    <div className={styles.counterContainer}>
-      <button onClick={handleDecrement} disabled={count <= min} className={styles.countButton}>
+    <div className={`${styles.counterContainer({ fullWidth: fullWidth })} ${className || ''}`}>
+      <button onClick={handleDecrement} disabled={initialCount <= min} className={styles.countButton}>
         -
       </button>
-      <p className={styles.count}>{count}</p>
-      <button onClick={handleIncrement} disabled={count >= max} className={styles.countButton}>
+      <p className={styles.count}>{initialCount}</p>
+      <button onClick={handleIncrement} disabled={initialCount >= max} className={styles.countButton}>
         +
       </button>
     </div>

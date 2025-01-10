@@ -9,7 +9,6 @@ export const tabHeaders = style({
   justifyContent: 'space-around',
   alignItems: 'center',
   padding: '10px 0',
-  borderBottom: `1px solid ${themeVars.borderColors.greyBB}`
 });
 
 export const tabButton = recipe({
@@ -17,21 +16,31 @@ export const tabButton = recipe({
     cursor: 'pointer',
     fontSize: themeVars.fontSize["text-md"],
     position: 'relative',
-    ':after': {
-      content: '',
-      display: 'block',
-      width: '120%',
-      height: '3px',
-      background: themeVars.colors.red,
-      position: 'absolute',
-      bottom: '-11px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      opacity: 0,
-      transition: 'all .35s',
-    },
   },
   variants: {
+    type: {
+      button: {
+        width: '100%',
+        height: '50px',
+        background: themeVars.backgroundColors.greyF7,
+        border: `1px solid ${themeVars.backgroundColors.greyF7}`
+      },
+      text: {
+        ':after': {
+          content: '',
+          display: 'block',
+          width: '120%',
+          height: '3px',
+          background: themeVars.colors.red,
+          position: 'absolute',
+          bottom: '-11px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          opacity: 0,
+          transition: 'all .35s',
+        },
+      }
+    },
     active: {
       true: {
         ':after': {
@@ -39,7 +48,15 @@ export const tabButton = recipe({
         },
       }
     }
-  }
+  },
+  compoundVariants: [
+    {
+      variants: { type: 'button', active: true },
+      style: {
+        background: themeVars.colors.white,
+      },
+    },
+  ]
 });
 
 export const tabContent = style({});

@@ -63,6 +63,12 @@ export const rate = recipe({
         cursor: 'pointer',
         margin: '0 2px'
       }
+    },
+    size: {
+      xxl: {
+        fontSize: themeVars.fontSize["title-xxl"],
+        margin: '0 2.5px'
+      }
     }
   }
 })
