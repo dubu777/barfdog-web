@@ -24,7 +24,7 @@ const ItemDetail = ({ itemId }: ItemDetailProps) => {
   return (
     <section className={styles.itemDetailContainer}>
       <ItemHero itemDetail={itemDetail} />
-      <ItemPurchase />
+      <ItemPurchase itemId={itemId} />
       <ItemContent itemDetail={itemDetail} />
     </section>
   );

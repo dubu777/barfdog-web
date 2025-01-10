@@ -31,10 +31,10 @@ const ItemOptions = ({ itemOptionListData }: ItemOptionsProps) => {
     remaining: option.remaining,
     count: 0,
   }));
-  const { selectedOptions, addOption, removeOption, updateOptionCount, totalPrice, amount, updateAmount } = useStoreItemStore();
+  const { selectedOptions, addOption, removeOption, updateOptionCount, totalPrice, itemAmount, updateItemAmount } = useStoreItemStore();
 
-  const handleUpdateAmount = (amount: number) => {
-    updateAmount(amount);
+  const handleUpdateItemAmount = (itemAmount: number) => {
+    updateItemAmount(itemAmount);
   }
 
   const handleSelect = (option: ItemOption) => {
@@ -54,7 +54,7 @@ const ItemOptions = ({ itemOptionListData }: ItemOptionsProps) => {
           수량선택
         </Text>
         <div className={heroStyles.infoValue}>
-          <Counter min={1} initialCount={amount} fullWidth onChange={(value) => handleUpdateAmount(value)} />
+          <Counter min={1} initialCount={itemAmount} fullWidth onChange={(value) => handleUpdateItemAmount(value)} />
         </div>
       </div>
       <div className={heroStyles.itemInfo}>
@@ -66,12 +66,13 @@ const ItemOptions = ({ itemOptionListData }: ItemOptionsProps) => {
             <SelectBox
               id="selectedOption"
               options={itemOptionList}
-              onSelect={(selected) => handleSelect(selected as ItemOption)}
+              onSelect={(selected: ItemOption) => handleSelect(selected as ItemOption)}
               fullWidth
               objectValue
-              placeholder='상품 선택'
+              placeholder={itemOptionList.length === 0 ? '상품 옵션이 없습니다.' : '상품 옵션 선택'}
               placeholderPosition='left'
               optionSize='sm'
+              isDisabled={itemOptionList.length === 0}
             />
           </div>
         </div>

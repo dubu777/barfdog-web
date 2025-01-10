@@ -13,10 +13,10 @@ interface ItemOption {
 interface StoreItemStore {
   itemPrice: number; // 상품 기본 가격
   totalPrice: number; // 총 가격
-  amount: number; // 상품 수량
+  itemAmount: number; // 상품 수량
   selectedOptions: ItemOption[]; // 선택된 옵션 목록
   setItemPrice: (price: number) => void; // 초기 상품 가격 설정
-  updateAmount: (amount: number) => void; // 상품 수량 업데이트
+  updateItemAmount: (itemAmount: number) => void; // 상품 수량 업데이트
   addOption: (option: ItemOption) => void; // 옵션 추가
   updateOptionCount: (value: number, count: number) => void; // 옵션 수량 업데이트
   removeOption: (value: number) => void; // 옵션 제거
@@ -30,18 +30,18 @@ const calculateOptionsTotal = (options: { count: number, price: number }[]) => {
 export const useStoreItemStore = create<StoreItemStore>((set, get) => ({
   itemPrice: 0,
   totalPrice: 0,
-  amount: 1,
+  itemAmount: 1,
   selectedOptions: [],
 
   setItemPrice: (price) => set(() => ({
     itemPrice: price,
     totalPrice: price,
   })),
-  updateAmount: (amount) => set((state) => {
+  updateItemAmount: (itemAmount) => set((state) => {
     const optionsTotal = calculateOptionsTotal(state.selectedOptions);
-    const newTotalPrice = state.itemPrice * amount + optionsTotal;
+    const newTotalPrice = state.itemPrice * itemAmount + optionsTotal;
     return {
-      amount,
+      itemAmount,
       totalPrice: newTotalPrice,
     }
   }),
@@ -55,7 +55,7 @@ export const useStoreItemStore = create<StoreItemStore>((set, get) => ({
       )
       : [...state.selectedOptions, { ...option, count: 1 }];
     const optionsTotal = calculateOptionsTotal(updatedOptions);
-    const newTotalPrice = state.itemPrice * state.amount + optionsTotal;
+    const newTotalPrice = state.itemPrice * state.itemAmount + optionsTotal;
     return {
       selectedOptions: updatedOptions,
       totalPrice: newTotalPrice
@@ -64,7 +64,7 @@ export const useStoreItemStore = create<StoreItemStore>((set, get) => ({
   updateOptionCount: (value, count) => set((state) => {
     const updatedOptions = state.selectedOptions.map(option => option.value === value ? { ...option, count } : option);
     const optionsTotal = calculateOptionsTotal(updatedOptions);
-    const newTotalPrice = state.itemPrice * state.amount + optionsTotal;
+    const newTotalPrice = state.itemPrice * state.itemAmount + optionsTotal;
     return {
       selectedOptions: updatedOptions,
       totalPrice: newTotalPrice
@@ -72,7 +72,7 @@ export const useStoreItemStore = create<StoreItemStore>((set, get) => ({
   }),
   removeOption: (value) => set((state) => {
     const updatedOptions = state.selectedOptions.filter(option => option.value !== value);
-    const newTotalPrice = state.itemPrice * state.amount + calculateOptionsTotal(updatedOptions);
+    const newTotalPrice = state.itemPrice * state.itemAmount + calculateOptionsTotal(updatedOptions);
     console.log(updatedOptions, newTotalPrice)
     return {
       selectedOptions: updatedOptions,
@@ -82,7 +82,11 @@ export const useStoreItemStore = create<StoreItemStore>((set, get) => ({
   calculateTotalPrice: () => set((state) => {
     const optionsTotal = calculateOptionsTotal(state.selectedOptions);
     return {
-      totalPrice: state.itemPrice * state.amount + optionsTotal,
+      totalPrice: state.itemPrice * state.itemAmount + optionsTotal,
     }
   }),
+  resetStore: () => set({
+    itemAmount: 1,
+    selectedOptions: [],
+  })
 }))

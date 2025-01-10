@@ -16,6 +16,7 @@ type SelectBoxProps<T extends { label: string; value: string | number }> = {
   fullWidth?: boolean;
   objectValue?: boolean;
   optionSize?: 'sm';
+  isDisabled?: boolean;
 }
 
 export default function SelectBox<T extends { label: string; value: string | number }>({
@@ -30,10 +31,11 @@ export default function SelectBox<T extends { label: string; value: string | num
   fullWidth = false,
   objectValue = false,
   optionSize,
+  isDisabled,
 }: SelectBoxProps<T>) {
   const { isOpen, onToggle, onClose, ref } = useModal();
 
-  const handleSelect = (e: MouseEvent<HTMLParagraphElement>, value: any) => {
+  const handleSelect = (e: MouseEvent<HTMLParagraphElement>, value: T | string | number) => {
     e.stopPropagation();
     onClose();
     onSelect(value);
@@ -52,13 +54,14 @@ export default function SelectBox<T extends { label: string; value: string | num
           placeholder={placeholder}
           readOnly
           value={selectedLabel}
+          disabled={isDisabled}
           onClick={(e) => {
             e.stopPropagation();
             onToggle();
           }}
         />
       </label>
-      {isOpen && (
+      {!isDisabled && isOpen && (
         <AnimatePresence>
           <div className={styles.optionsContainer}>
             <motion.div

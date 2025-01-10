@@ -63,6 +63,9 @@ export const inputField = recipe({
     borderRadius: '9px',
     border: `1px solid ${themeVars.borderColors.greyDD}`,
     cursor: 'pointer',
+    ':disabled': {
+      cursor: 'auto'
+    }
   },
     variants: {
     forFilter: {
