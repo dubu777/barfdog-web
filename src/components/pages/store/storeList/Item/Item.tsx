@@ -1,4 +1,4 @@
-import * as styles from './StoreItem.css';
+import * as styles from './Item.css';
 import Link from "next/link";
 import Badge from "@/components/common/badge/Badge";
 import Text from "@/components/common/text/Text";
@@ -10,11 +10,11 @@ interface StoreItemProps {
   item: StoreItemListData;
 }
 
-const StoreItem = ({ item }: StoreItemProps) => {
+const Item = ({ item }: StoreItemProps) => {
   const itemTags = item.itemIcons.split(',').filter(value => value !== '') as ItemTagType[];
   return (
     <li key={item.id} className={styles.storeItem}>
-      <Link href={''} className={styles.storeLink}>
+      <Link href={`/store/${item.id}`} className={styles.storeLink}>
         <div className={styles.itemImageBox}>
           {itemTags.length > 0 &&
           <div className={styles.itemTags}>
@@ -61,4 +61,4 @@ const StoreItem = ({ item }: StoreItemProps) => {
   );
 };
 
-export default StoreItem;
+export default Item;

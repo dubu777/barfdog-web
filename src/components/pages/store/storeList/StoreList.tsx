@@ -1,20 +1,20 @@
-import * as styles from './Store.css';
+import * as styles from './StoreList.css';
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import StoreItemList from "@/components/pages/store/storeItemList/StoreItemList";
-import StoreFilter from "@/components/pages/store/storeFilter/StoreFilter";
+import ItemList from "@/components/pages/store/storeList/itemList/ItemList";
+import ItemFilter from "@/components/pages/store/storeList/itemFilter/ItemFilter";
 
-const Store = () => {
+const StoreList = () => {
   return (
     <section className={styles.storeContainer}>
-      <StoreFilter />
+      <ItemFilter />
       <ErrorBoundary fallback={<div>상품이 없습니다.</div>}>
         <Suspense fallback={<div>Loading...</div>}>
-          <StoreItemList />
+          <ItemList />
         </Suspense>
       </ErrorBoundary>
     </section>
   );
 };
 
-export default Store;
+export default StoreList;

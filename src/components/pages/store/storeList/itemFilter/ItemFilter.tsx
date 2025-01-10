@@ -1,5 +1,5 @@
 'use client';
-import * as styles from './StoreFilter.css';
+import * as styles from './ItemFilter.css';
 import { usePathname, useSearchParams } from "next/navigation";
 import Text from "@/components/common/text/Text";
 import SelectBox from "@/components/common/selectBox/SelectBox";
@@ -9,7 +9,7 @@ import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
 
-const StoreFilter = () => {
+const ItemFilter = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { pushWithQuery } = useDynamicQueryPush();
@@ -71,4 +71,4 @@ const StoreFilter = () => {
   );
 };
 
-export default StoreFilter;
+export default ItemFilter;
