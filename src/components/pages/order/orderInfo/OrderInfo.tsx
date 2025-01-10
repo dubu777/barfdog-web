@@ -2,18 +2,18 @@
 
 import * as styles from "./OrderInfo.css";
 import useModal from "@/hooks/useModal";
-import DeliveryAddressModal from "./deliveryAddressModal/DeliveryAddressModal";
 import {
   DeliveryDto,
   GeneralOrderSheetResponse,
   OrderType,
   SubscriptionOrderSheetResponse,
 } from "@/types";
-import CouponModal from "./couponModal/CouponModal";
 import { Suspense, useState } from "react";
 import { useOrderStore } from "@/store/useOrderStore";
 import { ErrorBoundary } from "react-error-boundary";
 import { ORDER_TYPE } from "@/constants";
+import DeliveryAddressModal from "../deliveryAddressModal/DeliveryAddressModal";
+import CouponModal from "../couponModal/CouponModal";
 
 interface OrderInfoProps {
   orderType: OrderType;
@@ -90,13 +90,6 @@ export default function OrderInfo({
       toggleCouponModal();
     }
   };
-  
-  const handleGetRequestBody = () => {
-    const requestBody = getRequestBody(orderType)
-    console.log("getRequestBody", requestBody);
-    
-  }
-  
 
   return (
     <div className={styles.orderInfoContainer}>
@@ -195,7 +188,6 @@ export default function OrderInfo({
           </div>
         </div>
       )}
-      <button onClick={handleGetRequestBody}>리퀘스트 바디 요청</button>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<div>Loading...</div>}>

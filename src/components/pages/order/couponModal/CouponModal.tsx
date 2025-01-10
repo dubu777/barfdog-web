@@ -3,8 +3,6 @@
 import * as styles from "./CouponModal.css";
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
 import { Coupon, OrderType } from "@/types";
-import { calculateCouponDiscount } from "@/utils/coupon/couponUtils";
-import { useState } from "react";
 import CouponCard from "./couponCard/CouponCard";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useOrderStore } from "@/store/useOrderStore";
@@ -37,6 +35,7 @@ export default function CouponModal({
       updateAppliedCoupon(
         orderType,
         orderType === ORDER_TYPE.GENERAL ? selectedItemId ?? null : null,
+        selectedItemPrice,
         selectedCoupon.couponId,
         selectedCoupon.discountAmount
       );

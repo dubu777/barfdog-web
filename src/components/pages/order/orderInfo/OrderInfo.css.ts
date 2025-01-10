@@ -17,6 +17,7 @@ export const orderListBox = style({
   justifyContent: 'space-evenly',
   alignItems: 'center',
   width: '100%',
+  minHeight: '120px',
   border: `1px solid ${themeVars.borderColors.grey79}`,
   borderRadius: '20px',
 })

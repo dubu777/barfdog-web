@@ -5,10 +5,8 @@ import { useRouter } from "next/navigation";
 
 export default function GeneralShopTest() {
   const router = useRouter();
-  const { orderItemList, setOrderItemList, clearOrderItemList } =
+  const { orderItemDtoList, setOrderItemDtoList, clearOrderItemDtoList } =
     usePersistOrderStore();
-  
-    console.log('orderItemList' ,orderItemList);
     
   const orderItemListData = [
     {
@@ -46,7 +44,7 @@ export default function GeneralShopTest() {
   ];
   const generalPaymentTest = () => {
     console.log("일반상점테스트");
-    setOrderItemList(orderItemListData);
+    setOrderItemDtoList(orderItemListData);
     router.push('/order/order-sheet/general');
   };
   return (

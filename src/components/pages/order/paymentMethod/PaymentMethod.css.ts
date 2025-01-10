@@ -7,6 +7,7 @@ export const paymentMethodContainer = style({
   flexDirection: 'column',
   width: '100%',
   gap: '20px',
+  marginBottom: '20px',
 });
 
 

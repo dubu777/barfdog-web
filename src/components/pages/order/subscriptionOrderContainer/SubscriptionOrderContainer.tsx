@@ -3,22 +3,21 @@
 
 import { useGetSubscriptionOrderSheet } from "@/api/order/queries/useGetSubscriptionOrderSheet";
 // import * as styles from "./OrderInfo.css";
-import OrderInfo from "./orderInfo/OrderInfo";
-import PackageSelection from "./packageSelection/PackageSelection";
-import PaymentMethod from "./paymentMethod/PaymentMethod";
+import OrderInfo from "../orderInfo/OrderInfo";
+import PackageSelection from "../packageSelection/PackageSelection";
+import PaymentMethod from "../paymentMethod/PaymentMethod";
 import { useEffect, useState } from "react";
 import { usePaymentStore } from "@/store/usePaymentStore";
 import { PG_TYPE } from "@/constants/payment";
-import { calcOrderSheetPrices } from "@/utils/order/calculatePaymentDetail";
 import { ORDER_TYPE } from "@/constants";
 import { useOrderStore } from "@/store/useOrderStore";
 
 
-interface OrderContainerProps {
+interface SubscriptionOrderContainerProps {
   subscribeId: number;
 }
 
-export default function OrderContainer({subscribeId}: OrderContainerProps) {
+export default function SubscriptionOrderContainer({subscribeId}: SubscriptionOrderContainerProps) {
   const { data: subscriptionOrderSheetData } = useGetSubscriptionOrderSheet(subscribeId);
   const { paymentMethod } = usePaymentStore();
   const {deliveryDto} = useOrderStore();

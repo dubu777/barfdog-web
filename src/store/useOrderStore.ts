@@ -13,11 +13,6 @@ import {
 } from "@/types";
 import { create } from "zustand";
 
-interface CommonOrderBody {
-  deliveryDto: DeliveryDto;
-  paymentMethod: PaymentMethod;
-}
-
 interface OrderState {
   generalOrderBody: CreateGeneralOrderRequest;
   subscriptionOrderBody: CreateSubscriptionOrderRequest;
@@ -27,6 +22,9 @@ interface OrderState {
   isBundleDelivery: boolean;
   packageMonth: number | null;
   deliveryId: number | null;
+  userTotalReward: number;
+  appliedReward: number;
+  setReward: (reward: number) => void;
   getDeliveryId: () => void;
   setDeliveryId: (deliveryId: number | null) => void;
   updateOrderBody: (
@@ -44,6 +42,7 @@ interface OrderState {
   updateAppliedCoupon: (
     type: OrderType,
     itemId: number | null,
+    itemPrice: number,
     couponId: number,
     discountAmount: number
   ) => void;
@@ -70,6 +69,12 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   deliveryDto: initialDeliveryDto,
   paymentMethod: "NAVER_PAY",
   deliveryId: null,
+  userTotalReward: 0,
+  appliedReward: 0,
+  setReward: (reward) =>
+    set(() => ({
+      userTotalReward: reward
+    })),
   setDeliveryId: (deliveryId) =>
     set(() => ({
       deliveryId,
@@ -134,7 +139,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       selectedCoupon: coupon,
     })),
   // 쿠폰 적용
-  updateAppliedCoupon: (type, itemId, couponId, discountAmount) =>
+  updateAppliedCoupon: (type, itemId, itemPrice, couponId, discountAmount) =>
     set((state) => {
       if (type === ORDER_TYPE.GENERAL) {
         const updatedItems = state.generalOrderBody.orderItemDtoList.map(
@@ -144,6 +149,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
                   ...item,
                   memberCouponId: couponId,
                   discountAmount,
+                  finalPrice: itemPrice - discountAmount,
                 }
               : item
         );

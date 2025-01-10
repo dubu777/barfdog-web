@@ -1,25 +1,87 @@
-import { QueryClient, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { getGeneralOrderSheet } from "../order";
 import { GeneralOrderSheetRequest, UseMutationCustomOptions } from "@/types";
-import { queryKeys } from "@/constants";
+import { ORDER_TYPE, queryKeys } from "@/constants";
+import { useOrderStore } from "@/store/useOrderStore";
 
-
-// get 요청으로 해야 할 것을 request body가 복잡해서 post로 보내는 중
-export function useGetGeneralOrderSheet(queryClient: QueryClient, mutationOptions?: UseMutationCustomOptions) {
-  const getCacheKey = (variables: GeneralOrderSheetRequest) => [queryKeys.ORDER.GET_GENERAL_ORDER_SHEET, variables];
+// 캐싱 및 상태 업데이트
+export function useGetGeneralOrderSheet(
+  mutationOptions?: UseMutationCustomOptions
+) {
+  const getCacheKey = (variables: GeneralOrderSheetRequest) => [
+    queryKeys.ORDER.GET_GENERAL_ORDER_SHEET,
+    variables,
+  ];
+  const { updateOrderBody, setDeliveryDto, setDeliveryId, setReward } = useOrderStore();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: getGeneralOrderSheet,
     onSuccess: (data, variables) => {
-      // POST 요청 결과를 캐싱
+      // 캐싱
+      console.log("data", data);
+
       const cacheKey = getCacheKey(variables);
       queryClient.setQueryData(cacheKey, data);
+      // 초기 상태 업데이트
+      updateOrderBody(
+        {
+          orderItemDtoList: data.orderItemDtoList.map((item) => ({
+            itemId: item.itemId,
+            amount: item.amount,
+            selectOptionDtoList: (item.optionDtoList ?? []).map((option) => ({
+              itemOptionId: option.optionId,
+              amount: option.amount,
+            })),
+            memberCouponId: null,
+            discountAmount: 0,
+            finalPrice: item.orderLinePrice,
+          })),
+          deliveryDto: {
+            name: data.name,
+            phone: data.phoneNumber,
+            zipcode: data.defaultAddress.zipcode,
+            street: data.defaultAddress.street,
+            detailAddress: data.defaultAddress.detailAddress,
+            request: "",
+          },
+          deliveryId: data.deliveryId,
+          orderPrice: data.orderPrice,
+          deliveryPrice: data.deliveryPrice,
+          discountTotal: 0,
+          discountReward: 0,
+          discountCoupon: 0,
+          overDiscount: 0,
+          paymentPrice: data.orderPrice,
+          brochure: data.brochure,
+        },
+        ORDER_TYPE.GENERAL
+      );
+      setDeliveryId(null);
+      setDeliveryDto({
+        name: data.name,
+        phone: data.phoneNumber,
+        zipcode: data.defaultAddress.zipcode,
+        street: data.defaultAddress.street,
+        detailAddress: data.defaultAddress.detailAddress,
+        request: "",
+      });
+      setReward(data.reward);
+    },
+    onError: (err) => {
+      console.log("err", err);
     },
     ...mutationOptions,
   });
 }
-
 // post 요청 캐싱
-export function useCachedGeneralOrderSheet(variables: GeneralOrderSheetRequest) {
+export function useCachedGeneralOrderSheet(
+  variables: GeneralOrderSheetRequest
+) {
   const cacheKey = [queryKeys.ORDER.GET_GENERAL_ORDER_SHEET, variables];
   return useSuspenseQuery({
     queryFn: () => getGeneralOrderSheet(variables),

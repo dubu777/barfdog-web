@@ -4,9 +4,9 @@
 
 import { useEffect, useState } from "react";
 import { PG_TYPE } from "@/constants/payment";
-import OrderInfo from "../orderContainer/orderInfo/OrderInfo";
-import PackageSelection from "../orderContainer/packageSelection/PackageSelection";
-import PaymentMethod from "../orderContainer/paymentMethod/PaymentMethod";
+import OrderInfo from "../orderInfo/OrderInfo";
+import PackageSelection from "../packageSelection/PackageSelection";
+import PaymentMethod from "../paymentMethod/PaymentMethod";
 import { usePersistOrderStore } from "@/store/usePersistOrderStore";
 import { useCachedGeneralOrderSheet, useGetGeneralOrderSheet } from "@/api/order/queries/useGetGeneralOrderSheet";
 import { useCreateGeneralOrder } from "@/api/order/mutations/useCreateGeneralOrder";
@@ -14,86 +14,35 @@ import { CreateGeneralOrderRequest, GeneralOrderSheetResponse } from "@/types";
 import { useOrderStore } from "@/store/useOrderStore";
 import { BundleDeliverySelector } from "./bundleDeliverySelector/BundleDeliverySelector";
 import { ORDER_TYPE } from "@/constants";
+import PaymentSummary from "../orderSummary/OrderSummary";
 
 interface GeneralOrderContainerProps {}
 
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   // 상태관리
   const {
-    updateOrderBody,
-    isBundleDelivery,
+
     generalOrderBody,
-    setDeliveryDto,
     deliveryDto,
-    setDeliveryId,
     getRequestBody,
     getDeliveryId,
+    userTotalReward,
+    appliedReward,
   } = useOrderStore();
-  const { orderItemList } = usePersistOrderStore();
-
+  const { orderItemDtoList } = usePersistOrderStore();
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
-
-  // API 호출 ( 일반 결제 시트 정보 가져오기, 일반 결제 정보 저장 )
   const { mutate: createGeneralOrder } = useCreateGeneralOrder();
+  const { mutate: fetchGeneralOrderSheet } = useGetGeneralOrderSheet();
+  // API 호출 ( 일반 결제 시트 정보 가져오기, 일반 결제 정보 저장 )
+  const {data: generalOrderSheetData} = useCachedGeneralOrderSheet({orderItemDtoList})
 
-  const requestBody = {
-    orderItemDtoList: orderItemList,
-  };
-
-  const {data: generalOrderSheet} = useCachedGeneralOrderSheet(requestBody)
-  console.log('generalData', generalOrderSheet);
-  
-
-  // 일반 결제 시트 정보 가져온 후, 일반 결제 request body 업데이트
   useEffect(() => {
+    fetchGeneralOrderSheet({orderItemDtoList})
+  }, [orderItemDtoList])
 
-        console.log("getGeneralOrderSheet generalOrderSheet", generalOrderSheet);
-
-        // 초기 상태 업데이트
-        updateOrderBody(
-          {
-            orderItemDtoList: generalOrderSheet.orderItemDtoList.map((item) => ({
-              itemId: item.itemId,
-              amount: item.amount,
-              selectOptionDtoList: (item.optionDtoList ?? []).map((option) => ({
-                itemOptionId: option.optionId,
-                amount: option.amount,
-              })),
-              memberCouponId: null,
-              discountAmount: 0,
-              finalPrice: item.orderLinePrice,
-            })),
-            deliveryDto: {
-              name: generalOrderSheet.name,
-              phone: generalOrderSheet.phoneNumber,
-              zipcode: generalOrderSheet.defaultAddress.zipcode,
-              street: generalOrderSheet.defaultAddress.street,
-              detailAddress: generalOrderSheet.defaultAddress.detailAddress,
-              request: "",
-            },
-            deliveryId: generalOrderSheet.deliveryId,
-            orderPrice: generalOrderSheet.orderPrice,
-            deliveryPrice: generalOrderSheet.deliveryPrice,
-            discountTotal: 0,
-            discountReward: 0,
-            discountCoupon: 0,
-            overDiscount: 0,
-            paymentPrice: generalOrderSheet.orderPrice,
-            brochure: generalOrderSheet.brochure,
-          },
-          ORDER_TYPE.GENERAL
-        );
-        setDeliveryId(generalOrderSheet.deliveryId);
-        setDeliveryDto({
-          name: generalOrderSheet.name,
-          phone: generalOrderSheet.phoneNumber,
-          zipcode: generalOrderSheet.defaultAddress.zipcode,
-          street: generalOrderSheet.defaultAddress.street,
-          detailAddress: generalOrderSheet.defaultAddress.detailAddress,
-          request: "",
-        });
-
-  }, [generalOrderSheet, orderItemList]);
+  console.log('generalData', generalOrderSheetData);
+  console.log('generalOrderBody', generalOrderBody);
+  
 
   // 결제 관련 코드 ========================================================
   // 포트원 스크립트 로드 및 로드 확인
@@ -115,7 +64,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
 
   const handlePaymentSubmit = () => {
     const requestBody = getRequestBody(ORDER_TYPE.GENERAL)
-    console.log('requestBody>>>>', {...requestBody, deliveryId: getDeliveryId()});
+    console.log('requestBody>>>>', requestBody);
     
     createGeneralOrder(requestBody as CreateGeneralOrderRequest, {
       onSuccess: (data) => {
@@ -171,10 +120,11 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     <div>
       <OrderInfo
         orderType={ORDER_TYPE.GENERAL}
-        generalOrderSheetData={generalOrderSheet}
+        generalOrderSheetData={generalOrderSheetData}
         deliveryDto={deliveryDto}
       />
       <BundleDeliverySelector />
+      <PaymentSummary orderType={ORDER_TYPE.GENERAL} generalOrderSheetData={generalOrderSheetData} orderPrice={generalOrderSheetData.orderPrice} userTotalReward={userTotalReward} appliedReward={appliedReward} />
       <PaymentMethod />
       <button
         style={{ width: "100%", height: "50px", backgroundColor: "gray" }}

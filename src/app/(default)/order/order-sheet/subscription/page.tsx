@@ -7,8 +7,8 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import OrderContainer from "@/components/pages/order/orderContainer/OrderContainer";
 import { prefetchGetSubscriptionOrderSheet } from "@/api/order/queries/useGetSubscriptionOrderSheet";
+import SubscriptionOrderContainer from "@/components/pages/order/subscriptionOrderContainer/SubscriptionOrderContainer";
 
 interface SubscriptionPageProps {
   searchParams: Record<string, string | string[] | undefined>;
@@ -30,7 +30,7 @@ export default async function SubscriptionPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<div>Loading...</div>}>
-            <OrderContainer subscribeId={subscribeId}/>
+            <SubscriptionOrderContainer subscribeId={subscribeId}/>
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>
