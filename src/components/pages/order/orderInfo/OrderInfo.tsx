@@ -93,6 +93,7 @@ export default function OrderInfo({
 
   return (
     <div className={styles.orderInfoContainer}>
+      
       <h1>주문/결제</h1>
       <div className={styles.orderListBox} >
         {isBundleDelivery ? (

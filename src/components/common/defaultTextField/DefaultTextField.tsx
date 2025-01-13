@@ -7,8 +7,8 @@ interface DefaultTextFieldProps {
   children?: ReactNode;
   id: string;
   name: string;
-  label?: string;
   value: string | number;
+  label?: string;
   onChange?: (value: string | number) => void;
   placeholder?: string;
   isActive?: boolean;

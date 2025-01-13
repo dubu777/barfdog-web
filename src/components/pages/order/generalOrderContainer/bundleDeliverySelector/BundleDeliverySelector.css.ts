@@ -8,7 +8,6 @@ export const bundleDeliverySelectorContainer = style({
   width: "100%",
   justifyContent: "space-between",
   alignItems: "center",
-  margin: "20px 0",
 })
 
 export const bundleDeliverySelectorBox = recipe({

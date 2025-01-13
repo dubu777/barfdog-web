@@ -108,26 +108,6 @@ export const defaultButtonStyle = recipe({
         cursor: 'not-allowed',
       },
     },
-    // hover 시 효과 추가 시 적용
-    // {
-    //   variants: { type: 'main', hover: true },
-    //   style: {
-    //     ':hover': {
-    //       background: themeVars.backgroundColors.pinkFF,
-    //       border: `1px solid ${themeVars.borderColors.mainRed}`,
-    //       color: themeVars.fontColors.mainRed,
-    //     }
-    //   }
-    // },
-    // {
-    //   variants: { type: 'mainBorder', hover: true },
-    //   style: {
-    //     ':hover': {
-    //       background: themeVars.backgroundColors.pinkFF,
-    //       color: themeVars.fontColors.mainRed,
-    //     }
-    //   }
-    // },
     {
       variants: { type: 'grayBorder', isActive: true },
       style: {

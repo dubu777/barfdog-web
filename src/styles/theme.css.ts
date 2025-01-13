@@ -51,6 +51,7 @@ export const [themeClass, themeVars] = createTheme({
     grey9C: '#9C9C9C',
     grey4a: '#4A4A4A',
     grey38: '#383838',
+    grey2B: '#2B2B2B',
     black: '#0E1108',
     black1D: '#1D1D1F',
   },
@@ -72,6 +73,7 @@ export const [themeClass, themeVars] = createTheme({
     grey63: '#636363',
     greyA6: '#A6A4A4',
     greyEE: '#EEEEEE',
+    grey50: '#F8F9FB',
     greyD9: 'rgba(217, 217, 217, .3)',
     black: '#0E1108',
     kakao: '#FDDC3F',
@@ -92,6 +94,7 @@ export const [themeClass, themeVars] = createTheme({
     greyBB: '#BBBBBB',
     greyED: '#EDEDED',
     grey79: '#797979',
+    grey50: '#F8F9FB',
     black: '#0E1108',
   },
   buttonColors: {
@@ -103,5 +106,107 @@ export const [themeClass, themeVars] = createTheme({
     grey99: '#999999',
     grey7E: '#7E7E7E',
     black: '#0E1108',
-  }
+  },
+  typography: {
+    display: {
+      display1: {
+        fontWeight: '700',
+        fontSize: '40px',
+        lineHeight: '160%',
+        letterSpacing: '-0.6px',
+      },
+      display2: {
+        fontWeight: '700',
+        fontSize: '32px',
+        lineHeight: '150%',
+        letterSpacing: '-0.6px',
+      },
+    },
+    title: {
+      title1: {
+        fontWeight: '700',
+        fontSize: '28px',
+        lineHeight: '150%',
+        letterSpacing: '-0.6px',
+      },
+      title2: {
+        fontWeight: '700',
+        fontSize: '24px',
+        lineHeight: '150%',
+        letterSpacing: '-0.6px',
+      },
+      title3: {
+        fontWeight: '700',
+        fontSize: '22px',
+        lineHeight: '150%',
+        letterSpacing: '-0.6px',
+      },
+      title4: {
+        fontWeight: '700',
+        fontSize: '20px',
+        lineHeight: '150%',
+        letterSpacing: '-0.6px',
+      },
+    },
+    headline: {
+      headline1: {
+        fontWeight: '700',
+        fontSize: '20px',
+        lineHeight: '160%',
+        letterSpacing: '0',
+      },
+      headline2: {
+        fontWeight: '700',
+        fontSize: '18px',
+        lineHeight: '140%',
+        letterSpacing: '0',
+      },
+    },
+    label: {
+      label1: {
+        fontWeight: '500',
+        fontSize: '16px',
+        lineHeight: '150%',
+        letterSpacing: '-0.4px',
+      },
+      label2: {
+        fontWeight: '500',
+        fontSize: '14px',
+        lineHeight: '150%',
+        letterSpacing: '-0.4px',
+      },
+      label3: {
+        fontWeight: '700',
+        fontSize: '12px',
+        lineHeight: '140%',
+        letterSpacing: '0',
+      },
+      label4: {
+        fontWeight: '400',
+        fontSize: '12px',
+        lineHeight: '140%',
+        letterSpacing: '0',
+      },
+    },
+    body: {
+      body1: {
+        fontWeight: '400',
+        fontSize: '16px',
+        lineHeight: '150%',
+        letterSpacing: '-0.4px',
+      },
+      body2: {
+        fontWeight: '400',
+        fontSize: '14px',
+        lineHeight: '160%',
+        letterSpacing: '0',
+      },
+      caption: {
+        fontWeight: '400',
+        fontSize: '12px',
+        lineHeight: '140%',
+        letterSpacing: '0',
+      },
+    },
+  },
 });

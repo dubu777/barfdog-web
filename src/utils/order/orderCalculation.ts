@@ -2,28 +2,31 @@ import { ORDER_TYPE } from "@/constants";
 import { IAMPORT_MIN_PAYMENT_PRICE, PACKAGE_INFO } from "@/constants/payment";
 import { useOrderStore } from "@/store/useOrderStore";
 import {
-  GeneralOrderSheetResponse,
+  GeneralOrderItem,
   OrderType,
-  SubscriptionOrderSheetResponse,
 } from "@/types";
 
-interface CalculateOrderSummaryProps {
+interface OrderCalculationProps {
   orderType: OrderType;
-  generalOrderSheetData?: GeneralOrderSheetResponse;
-  subscriptionOrderSheetData?: SubscriptionOrderSheetResponse;
   userTotalReward: number;
   appliedReward: number;
   orderPrice: number;
+  freeCondition?: number;
+  deliveryPrice?: number;
+  orderItemDtoList?: GeneralOrderItem[];
+  plan?: string;
 }
 
 export const orderCalculation = ({
   orderType,
-  generalOrderSheetData,
-  subscriptionOrderSheetData,
-  orderPrice,
-  userTotalReward,
-  appliedReward,
-}: CalculateOrderSummaryProps) => {
+  orderPrice, // 원금
+  userTotalReward, // 보유 적립금
+  appliedReward, // 적용한 적립금
+  freeCondition, // 배송비 무료 금액
+  deliveryPrice,
+  orderItemDtoList,
+  plan,
+}: OrderCalculationProps) => {
   const {
     isBundleDelivery,
     generalOrderBody,
@@ -31,24 +34,16 @@ export const orderCalculation = ({
     packageMonth,
   } = useOrderStore();
 
-
-
   // 배송비
   const calculateDeliveryFee = (): number => {
-    if (orderType === ORDER_TYPE.SUBSCRIPTION || !generalOrderSheetData) return 0;
+    if (orderType === ORDER_TYPE.SUBSCRIPTION) return 0;
 
     const isFreeDelivery =
       isBundleDelivery ||
-      (generalOrderSheetData?.freeCondition &&
-        generalOrderSheetData.orderPrice >=
-          generalOrderSheetData.freeCondition) ||
-      !(
-        generalOrderSheetData?.orderItemDtoList?.some(
-          (item) => !item.deliveryFree
-        ) ?? false
-      );
+      (freeCondition && orderPrice >= freeCondition) ||
+      !(orderItemDtoList?.some((item) => !item.deliveryFree) ?? false);
 
-    return isFreeDelivery ? 0 : generalOrderSheetData?.deliveryPrice ?? 0;
+    return isFreeDelivery ? 0 : deliveryPrice ?? 0;
   };
 
   // 총 쿠폰 할인 금액
@@ -61,7 +56,7 @@ export const orderCalculation = ({
         ) ?? 0
       );
     } else {
-      return (subscriptionOrderBody.discountCoupon)
+      return subscriptionOrderBody.discountCoupon;
     }
   };
 
@@ -80,19 +75,10 @@ export const orderCalculation = ({
       (type) => type.value === packageMonth
     );
 
-    if (
-      !packageType ||
-      packageType.discount === 0 ||
-      !subscriptionOrderSheetData
-    )
-      return 0;
+    if (!packageType || packageType.discount === 0 || !plan) return 0;
 
-    const isFullPlan = ["FULL", "TOPPING_FULL"].includes(
-      subscriptionOrderSheetData.subscribeDto.plan
-    );
-    const isHalfPlan = ["HALF", "TOPPING_HALF"].includes(
-      subscriptionOrderSheetData.subscribeDto.plan
-    );
+    const isFullPlan = ["FULL", "TOPPING_FULL"].includes(plan);
+    const isHalfPlan = ["HALF", "TOPPING_HALF"].includes(plan);
 
     const deliveryCount = isFullPlan
       ? packageType.fullDeliveryCount
@@ -101,9 +87,7 @@ export const orderCalculation = ({
       : 1;
 
     return Math.floor(
-      subscriptionOrderSheetData.subscribeDto.nextPaymentPrice *
-        deliveryCount *
-        (packageType.discount / 100)
+      orderPrice * deliveryCount * (packageType.discount / 100)
     );
   };
 
@@ -112,48 +96,35 @@ export const orderCalculation = ({
     const totalCouponDiscount = calculateTotalCouponDiscount();
     const discountGrade = calculateGradeDiscount();
     const packageDiscount = calculatePackageDiscount();
-    return appliedReward + totalCouponDiscount + discountGrade + packageDiscount
-  }
+    return (
+      appliedReward + totalCouponDiscount + discountGrade + packageDiscount
+    );
+  };
 
   // 최종 결제 금액
   const calculateFinalPaymentAmount = () => {
-    const totalDiscount = calculateTotalDiscount()
+    const totalDiscount = calculateTotalDiscount();
     const deliveryPrice = calculateDeliveryFee();
-    return Math.max(orderPrice + deliveryPrice - totalDiscount, IAMPORT_MIN_PAYMENT_PRICE)
-  }
+    return Math.max(
+      orderPrice + deliveryPrice - totalDiscount,
+      IAMPORT_MIN_PAYMENT_PRICE
+    );
+  };
 
   // 적용 가능한 최대 적립금 - 모두사용
   const calculateMaxRewardAmount = () => {
     const finalPaymentAmount = calculateFinalPaymentAmount();
     const availableMaxDiscount = finalPaymentAmount - IAMPORT_MIN_PAYMENT_PRICE;
     return Math.min(availableMaxDiscount, userTotalReward);
-  }
-
-  // const deliveryPrice = calculateDeliveryFee();
-  // const discountCoupon = calculateTotalCouponDiscount();
-  // const packageDiscount = calculatePackageDiscount();
-
-  // 총 할인 및 결제 금액 계산
-  // const discountTotal =
-  //   discountReward + discountCoupon + discountGrade + discountSubscriptionMonth;
-  // const calculatedPaymentPrice = orderPrice + deliveryPrice - discountTotal;
-  // const paymentPrice = Math.max(
-  //   calculatedPaymentPrice,
-  //   IAMPORT_MIN_PAYMENT_PRICE
-  // );
-  // const availableMaxDiscount = paymentPrice - IAMPORT_MIN_PAYMENT_PRICE;
-
-  // const availableMaxReward = Math.min(availableMaxDiscount, userTotalReward);
+  };
 
   return {
-    // discountReward,
-    // discountCoupon,
-    // discountGrade,
-    // discountSubscriptionMonth,
-    // discountTotal,
-    // paymentPrice,
-    // availableMaxDiscount,
-    // deliveryPrice,
-    // availableMaxReward,
+    deliveryFee: calculateDeliveryFee(),
+    finalPaymentAmount: calculateFinalPaymentAmount(),
+    gradeDiscount: calculateGradeDiscount(),
+    maxRewardAmount: calculateMaxRewardAmount(),
+    packageDiscount: calculatePackageDiscount(),
+    totalCouponDiscount: calculateTotalCouponDiscount(),
+    totalDiscount: calculateTotalDiscount(),
   };
 };
