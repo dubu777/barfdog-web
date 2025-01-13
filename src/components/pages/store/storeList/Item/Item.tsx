@@ -39,7 +39,7 @@ const Item = ({ item }: StoreItemProps) => {
               : `${item.salePrice.toLocaleString()} 원`
             }
           </Text>
-          {item.inStock &&
+          {!item.inStock &&
           <Badge color='grey' borderRadius='none'>품절</Badge>
           }
         </div>
