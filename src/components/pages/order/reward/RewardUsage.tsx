@@ -5,6 +5,9 @@ import DefaultTextField from "@/components/common/defaultTextField/DefaultTextFi
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useState } from "react";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
+import InputField from "@/components/common/inputField/InputField";
+import useForm from "@/hooks/useForm";
+import { validateAddPost, validateReward } from "@/utils/validate";
 
 interface RewardUsageProps {
   userTotalReward: number;
@@ -12,7 +15,15 @@ interface RewardUsageProps {
 }
 
 export default function RewardUsage ({userTotalReward, appliedReward}: RewardUsageProps) {
-  const [inputValue, setInputValue] = useState("")
+  const applyReward = useForm({
+    initialValue: {
+      appliedReward: 0,
+      userTotalReward: 0,
+    },
+    validate: validateReward,
+  });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  };
   return (
     <div className={styles.orderSheetWrapper}>
       <div className={styles.orderSheetTitleWrapper}>
@@ -20,7 +31,10 @@ export default function RewardUsage ({userTotalReward, appliedReward}: RewardUsa
       <DefaultText type="label4">{formatNumberWithCommas(userTotalReward)}원 보유</DefaultText>
       </div>
         <div className={styles.orderSheetContentWrapper({direction: 'row'})}>
-          <DefaultTextField type="number" id="reward" name="reward" value={inputValue}/>
+          <InputField
+            {...applyReward.getInputProps("appliedReward")}
+            placeholder="0"
+          />
           <DefaultButton type="gray" size="sm" >전액사용</DefaultButton>
         </div>
     </div>

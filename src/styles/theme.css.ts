@@ -31,7 +31,59 @@ export const [themeClass, themeVars] = createTheme({
     mainRed: '#BE1A21',
     red: '#CA1010',
     black: '#0E1108',
-    lightGrey: '#bdbdbd'
+    lightGrey: '#bdbdbd',
+    // color 디자인 시스템
+    primary: {
+      red: '#AF1F24',
+      red50: '#E99291',
+      red20: '#F4C7C1',
+      red10: '#FAE1DF',
+    },
+    secondary: {
+      redDark: '#AA0919',
+      rose: '#DD7373',
+      pastelRed: '#F85A5A',
+      pastelPink: '#FFA6A6',
+      lightPink: '#FFECEC',
+      pinkWhite: '#FFF6F6',
+    },
+    semantic: {
+      blue: {
+        blue600: '#0050C8',
+        blue400: '#357AF1',
+        blue300: '#69A2FF',
+        blue200: '#A4C6FF',
+        blue100: '#D3E5FF',
+        blue50: '#EDF5FF',
+      },
+      yellow: {
+        yellow600: '#FFC200',
+        yellow500: '#FFDE6B',
+        yellow400: '#FFE08C',
+        yellow300: '#FFEDAE',
+        yellow200: '#FFF6CE',
+        yellow100: '#FFFAE6',
+        yellow50: '#FFFEF6',
+      },
+    },
+    gray: {
+      gray900: '#262626',
+      gray800: '#424242',
+      gray700: '#616161',
+      gray600: '#757575',
+      gray500: '#9E9E9E',
+      gray400: '#BDBDBD',
+      gray300: '#D6D6D6',
+      gray200: '#E0E0E0',
+      gray100: '#EEEEEE',
+      gray50: '#F7F7F7',
+      gray0: '#FFFFFF',
+    },
+    dimmed: {
+      dimmed60: 'rgba(0, 0, 0, 0.6)',
+      dimmed40: 'rgba(0, 0, 0, 0.4)',
+      dimmed20: 'rgba(0, 0, 0, 0.2)',
+    },
   },
   fontColors: {
     white: '#ffffff',
@@ -55,6 +107,7 @@ export const [themeClass, themeVars] = createTheme({
     black: '#0E1108',
     black1D: '#1D1D1F',
   },
+
   backgroundColors: {
     white: '#ffffff',
     gradientPink: 'linear-gradient(146deg, rgba(255,255,255,0.1) 0%, rgba(202,16,16,0.2) 100%)',
@@ -107,6 +160,7 @@ export const [themeClass, themeVars] = createTheme({
     grey7E: '#7E7E7E',
     black: '#0E1108',
   },
+  // typography 디자인 시스템
   typography: {
     display: {
       display1: {
