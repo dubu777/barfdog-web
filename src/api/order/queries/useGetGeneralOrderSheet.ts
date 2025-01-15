@@ -6,8 +6,9 @@ import {
 } from "@tanstack/react-query";
 import { getGeneralOrderSheet } from "../order";
 import { GeneralOrderSheetRequest, UseMutationCustomOptions } from "@/types";
-import { ORDER_TYPE, queryKeys } from "@/constants";
+import { ORDER_TYPE } from "@/constants/order";
 import { useOrderStore } from "@/store/useOrderStore";
+import { queryKeys } from "@/constants";
 
 // 캐싱 및 상태 업데이트
 export function useGetGeneralOrderSheet(
@@ -17,14 +18,12 @@ export function useGetGeneralOrderSheet(
     queryKeys.ORDER.GET_GENERAL_ORDER_SHEET,
     variables,
   ];
-  const { updateOrderBody, setDeliveryDto, setDeliveryId, setReward } = useOrderStore();
+  const { updateOrderBody, setDeliveryDto, setDeliveryId, setUserTotalReward } = useOrderStore();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: getGeneralOrderSheet,
     onSuccess: (data, variables) => {
       // 캐싱
-      console.log("data", data);
-
       const cacheKey = getCacheKey(variables);
       queryClient.setQueryData(cacheKey, data);
       // 초기 상태 업데이트
@@ -70,7 +69,7 @@ export function useGetGeneralOrderSheet(
         detailAddress: data.defaultAddress.detailAddress,
         request: "",
       });
-      setReward(data.reward);
+      setUserTotalReward(data.reward);
     },
     onError: (err) => {
       console.log("err", err);

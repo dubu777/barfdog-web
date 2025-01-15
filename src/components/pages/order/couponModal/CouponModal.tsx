@@ -25,7 +25,7 @@ export default function CouponModal({
   selectedItemId,
   couponData,
 }: CouponModalProps) {
-  const { updateAppliedCoupon, setSelectedCoupon, selectedCoupon } =
+  const { updateAppliedCoupon, setSelectedCoupon, selectedCoupon, maxAvailableDiscount } =
     useOrderStore();
   
 

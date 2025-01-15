@@ -37,12 +37,12 @@ export default function Header({ type = "default" }: HeaderProps) {
       <section className={styles.headerWrapper}>
         {type === "default" && (
           <Link href="/">
-            <Image src={Logo} alt="사이트 로고" width={148} height={26} />
+            <Image src={Logo} alt="사이트 로고" width={148} height={26} priority />
           </Link>
         )}
         {type === "redBackground" && (
           <Link href="/">
-            <Image src={LogoWhite} alt="화이트 로고" width={148} height={26} />
+            <Image src={LogoWhite} alt="화이트 로고" width={148} height={26} priority />
           </Link>
         )}
 

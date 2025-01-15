@@ -4,11 +4,13 @@ import { themeVars } from '@/styles/theme.css';
 
 export const container = recipe({
   base: {
+    position: 'relative',
     border: `1px solid ${themeVars.colors.gray.gray200}`,
     padding: '10px',
     transition: '0.3s ease',
     cursor: 'text',
     width: '100%',
+    borderRadius: '8px'
   },
   variants: {
     disabled: {
@@ -38,7 +40,6 @@ export const input = recipe({
     color: themeVars.colors.gray.gray900,
     border: 'none',
     outline: 'none',
-    padding: '0',
     width: '100%',
     backgroundColor: 'transparent',
   },
@@ -46,13 +47,15 @@ export const input = recipe({
     disabled: {
       true: {
         color: themeVars.colors.gray.gray300,
+        backgroundColor: themeVars.colors.gray.gray200,
       },
     },
   },
 });
 
 export const errorText = style({
+  position: 'absolute',
   color: themeVars.colors.primary.red,
-  fontSize: '12px',
-  marginTop: '5px',
+  top: 'calc(100% + 5px)',
+  left: '0', 
 });

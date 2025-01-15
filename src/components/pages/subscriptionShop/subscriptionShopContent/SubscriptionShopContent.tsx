@@ -22,7 +22,7 @@ import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSub
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import { useRouter } from "next/navigation";
-import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalulation";
+import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalculation";
 import DeliveryScheduleModal from "./deliveryScheduleModal/DeliveryScheduleModal";
 import Image from "next/image";
 

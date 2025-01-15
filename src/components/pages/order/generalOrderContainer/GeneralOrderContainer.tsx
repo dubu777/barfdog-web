@@ -16,12 +16,13 @@ import { useCreateGeneralOrder } from "@/api/order/mutations/useCreateGeneralOrd
 import { CreateGeneralOrderRequest, GeneralOrderSheetResponse } from "@/types";
 import { useOrderStore } from "@/store/useOrderStore";
 import { BundleDeliverySelector } from "./bundleDeliverySelector/BundleDeliverySelector";
-import { ORDER_TYPE } from "@/constants";
+
 import OrderSummary from "../orderSummary/OrderSummary";
 import DeliveryAddress from "../deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 import OrderItem from "../orderItem/OrderItem";
 import RewardUsage from "../reward/RewardUsage";
+import { ORDER_TYPE } from "@/constants";
 
 interface GeneralOrderContainerProps {}
 
@@ -31,10 +32,12 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     generalOrderBody,
     deliveryDto,
     getRequestBody,
-    getDeliveryId,
     userTotalReward,
     appliedReward,
+    setAppliedReward,
     isBundleDelivery,
+    maxAvailableDiscount,
+    setMaxAvailableDiscount,
   } = useOrderStore();
   const { orderItemDtoList } = usePersistOrderStore();
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
@@ -46,11 +49,14 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   });
 
   useEffect(() => {
-    fetchGeneralOrderSheet({ orderItemDtoList });
+    if (orderItemDtoList && orderItemDtoList.length > 0) {
+      fetchGeneralOrderSheet({ orderItemDtoList });
+    }
   }, [orderItemDtoList]);
 
   console.log("generalData", generalOrderSheetData);
   console.log("generalOrderBody", generalOrderBody);
+  console.log("appliedReward", appliedReward);
 
   // 결제 관련 코드 ========================================================
   // 포트원 스크립트 로드 및 로드 확인
@@ -146,9 +152,14 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         freeCondition={generalOrderSheetData.freeCondition}
         deliveryPrice={generalOrderSheetData.deliveryPrice}
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
+        setMaxAvailableDiscount={setMaxAvailableDiscount}
       />
       <Divider />
-      <RewardUsage userTotalReward={userTotalReward} appliedReward={appliedReward}/>
+      <RewardUsage
+        userTotalReward={userTotalReward}
+        maxAvailableDiscount={maxAvailableDiscount}
+        setAppliedReward={setAppliedReward}
+      />
       <Divider />
       <PaymentMethod />
       <button

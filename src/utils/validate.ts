@@ -62,9 +62,8 @@ function validateDogName(values: {dogName: string}) {
 }
 
 function validateReward(values: { appliedReward: number; userTotalReward: number }) {
-  const errors: Record<"appliedReward" | "userTotalReward", string> = {
+  const errors = {
     appliedReward: "",
-    userTotalReward: "",
   };
 
   if (isNaN(values.appliedReward)) {

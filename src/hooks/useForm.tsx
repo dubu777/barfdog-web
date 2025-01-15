@@ -41,5 +41,5 @@ export default function useForm<T>({
     setErrors(newErrors);
   }, [validate, values]);
 
-  return { values, errors, touched, getInputProps };
+  return { values, errors, touched, getInputProps, handleChange };
 }

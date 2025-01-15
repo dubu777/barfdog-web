@@ -27,11 +27,10 @@ export default function DeliveryAddressModal({
   const { data: addressData } = useGetOrderAddress();
 
   // 상태관리
-  const { updateOrderBody, setDeliveryDto } = useOrderStore();
+  const { setDeliveryDto, isBundleDelivery } = useOrderStore();
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
-  const { isBundleDelivery } = useOrderStore();
 
   console.log("addressData", addressData);
 

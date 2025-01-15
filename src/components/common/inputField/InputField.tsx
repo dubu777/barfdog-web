@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React, { forwardRef, useRef, ForwardedRef, ReactNode } from 'react';
+import React, { forwardRef, useRef, ForwardedRef, ReactNode } from "react";
 
-import * as styles from './InputField.css';
-import { mergeRefs } from '@/utils';
-import DefaultText from '../defaultText/DefaultText';
+import * as styles from "./InputField.css";
+import { mergeRefs } from "@/utils";
+import DefaultText from "../defaultText/DefaultText";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -13,9 +13,18 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
 }
 
-
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ disabled = false, error, touched, onChange, icon = null, ...props }, ref) => {
+  (
+    {
+      disabled = false,
+      error,
+      touched,
+      onChange,
+      icon = null,
+      ...props
+    },
+    ref
+  ) => {
     const innerRef = useRef<HTMLInputElement | null>(null);
 
     const handlePressInput = () => {
@@ -30,23 +39,27 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         })}
         onClick={handlePressInput}
       >
-        <div className={icon ? styles.innerContainer : undefined}>
+        <div className={icon ? styles.innerContainer : undefined}> 
           {icon}
           <input
-            ref={ref ? mergeRefs(innerRef, ref) : innerRef}
+            ref={ref ? mergeRefs(innerRef, ref) : innerRef} // inputField 에서 사용하고 있는 ref 와 받아오는 ref 둘다 사용하기 위해
             disabled={disabled}
             className={styles.input({ disabled })}
+            type={props.type}
             onChange={(e) => {
               onChange?.(e);
             }}
             {...props}
           />
         </div>
-        {touched && error && <DefaultText type="caption" className={styles.errorText}>{error}</DefaultText>}
+        {touched && error && (
+          <DefaultText type="caption" className={styles.errorText}>
+            {error}
+          </DefaultText>
+        )}
       </div>
     );
   }
 );
-InputField.displayName = 'InputField';
 
 export default InputField;

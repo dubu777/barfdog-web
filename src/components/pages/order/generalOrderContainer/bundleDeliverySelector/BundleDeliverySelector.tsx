@@ -1,8 +1,7 @@
 import { useOrderStore } from "@/store/useOrderStore";
 import * as styles from "./BundleDeliverySelector.css";
-import { initialDeliveryDto } from "@/constants";
-import { useEffect } from "react";
 import { orderSheetWrapper } from "../../OrderSheetCommon.css";
+import { initialDeliveryDto } from "@/config/orderInitialValues";
 
 interface BundleDeliverySelectorProps {
 
