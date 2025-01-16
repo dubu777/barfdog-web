@@ -3,6 +3,8 @@ import { SURVEY_FORM_INFO } from "@/constants";
 import { ErrorValuesType } from "@/store/useSurveyStore";
 import SurveyTextField from "../surveyTextField/SurveyTextField";
 import { errorMessage } from "./SurveySteps.css";
+import Button from "@/components/common/button/Button";
+
 
 interface SurveyStep1Props {
   formData: SurveyFormData;
@@ -18,7 +20,7 @@ interface SurveyStep1Props {
     e: React.KeyboardEvent<HTMLInputElement>,
     key: keyof SurveyFormData
   ) => void;
-  errorMessages: ErrorValuesType,
+  errorMessages: ErrorValuesType;
 }
 
 export default function SurveyStep1({
@@ -28,7 +30,6 @@ export default function SurveyStep1({
   handleKeyDown,
   errorMessages,
 }: SurveyStep1Props) {
-
   return (
     <>
       <SurveyTextField

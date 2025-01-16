@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function GeneralShopTest() {
   const router = useRouter();
-  const { orderItemDtoList, setOrderItemDtoList, clearOrderItemDtoList } =
+  const { setOrderItemDtoList, clearOrderItemDtoList } =
     usePersistOrderStore();
     
   const orderItemListData = [
