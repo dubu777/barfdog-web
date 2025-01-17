@@ -32,8 +32,6 @@ export default function DeliveryAddressModal({
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
 
-  console.log("addressData", addressData);
-
   // 배송지 추가 모드로 전환
   const switchToAddAddress = () => {
     setViewMode("add");

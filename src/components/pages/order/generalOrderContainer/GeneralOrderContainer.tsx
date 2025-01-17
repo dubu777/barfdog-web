@@ -38,6 +38,8 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     isBundleDelivery,
     maxAvailableDiscount,
     setMaxAvailableDiscount,
+    setMaxAvailableReward,
+    maxAvailableReward,
   } = useOrderStore();
   const { orderItemDtoList } = usePersistOrderStore();
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
@@ -78,11 +80,11 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
 
   const handlePaymentSubmit = () => {
     const requestBody = getRequestBody(ORDER_TYPE.GENERAL);
-    console.log("requestBody>>>>", requestBody);
+    console.log("requestBody>>>>>>>>>>>>>>>>>>>>>>>>>", requestBody);
 
     createGeneralOrder(requestBody as CreateGeneralOrderRequest, {
       onSuccess: (data) => {
-        console.log("createGeneralOrder", data);
+        console.log("createGeneralOrder????????????????", data);
       },
       onError: (err) => {
         console.log("createGeneralOrder-error", err);
@@ -147,17 +149,16 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       <OrderSummary
         orderType={ORDER_TYPE.GENERAL}
         orderPrice={generalOrderSheetData.orderPrice}
-        userTotalReward={userTotalReward}
-        appliedReward={appliedReward}
         freeCondition={generalOrderSheetData.freeCondition}
         deliveryPrice={generalOrderSheetData.deliveryPrice}
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
         setMaxAvailableDiscount={setMaxAvailableDiscount}
+        setMaxAvailableReward={setMaxAvailableReward}
       />
       <Divider />
       <RewardUsage
         userTotalReward={userTotalReward}
-        maxAvailableDiscount={maxAvailableDiscount}
+        maxAvailableReward={maxAvailableReward}
         setAppliedReward={setAppliedReward}
       />
       <Divider />

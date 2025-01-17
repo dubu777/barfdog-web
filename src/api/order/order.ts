@@ -17,11 +17,17 @@ const getGeneralOrderSheet = async (body: GeneralOrderSheetRequest): Promise<Gen
   return data
 }
 
-const createGeneralOrderSheet = async (body: CreateGeneralOrderRequest): Promise<CreateGeneralOrderResponse> => {
-  const {data} = await axiosInstance.post('/api/orders/general', body);
+const createGeneralOrderSheet = async (body: CreateGeneralOrderRequest): Promise<any> => {
+  const data = await axiosInstance.post('/api/orders/general', body);
 
   return data
 }
+// test 중
+// const createGeneralOrderSheet = async (body: CreateGeneralOrderRequest): Promise<CreateGeneralOrderResponse> => {
+//   const {data} = await axiosInstance.post('/api/orders/general', body);
+
+//   return data
+// }
 
 
 const getAddress = async (): Promise<AddressResponse[]> => {

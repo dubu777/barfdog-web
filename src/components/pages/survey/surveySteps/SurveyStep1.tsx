@@ -41,6 +41,9 @@ export default function SurveyStep1({
         onBlur={(e) => handleBlur(e, SURVEY_FORM_INFO.name.id)}
         onKeyDown={(e) => handleKeyDown(e, SURVEY_FORM_INFO.name.id)}
       />
+      <Button type="primary" variant="outline" icon="left-arrow-red" iconPosition="right" size="sm">
+        버튼 테스트
+      </Button>
       <p className={errorMessage}>{errorMessages["step0"]["name"]}</p>
     </>
   );

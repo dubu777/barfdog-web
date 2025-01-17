@@ -15,6 +15,7 @@ import { ORDER_TYPE } from "@/constants";
 import DeliveryAddressModal from "../deliveryAddressModal/DeliveryAddressModal";
 import CouponModal from "../couponModal/CouponModal";
 import { orderSheetWrapper } from "../OrderSheetCommon.css";
+import Button from "@/components/common/button/Button";
 
 interface OrderItemProps {
   orderType: OrderType;

@@ -11,37 +11,47 @@ export default function GeneralShopTest() {
   const orderItemListData = [
     {
       itemDto: {
-        itemId: 9,
-        amount: 1,
-      },
-      itemOptionDtoList: [
-        {
-          itemOptionId: 33,
-          amount: 2,
-        },
-        {
-          itemOptionId: 34,
-          amount: 2,
-        },
-      ],
-    },
-    {
-      itemDto: {
         itemId: 10,
         amount: 2,
       },
       itemOptionDtoList: [
-        {
-          itemOptionId: 18,
-          amount: 1,
-        },
-        {
-          itemOptionId: 27,
-          amount: 1,
-        },
       ],
     },
   ];
+  // const orderItemListData = [
+  //   {
+  //     itemDto: {
+  //       itemId: 9,
+  //       amount: 1,
+  //     },
+  //     itemOptionDtoList: [
+  //       {
+  //         itemOptionId: 33,
+  //         amount: 2,
+  //       },
+  //       {
+  //         itemOptionId: 34,
+  //         amount: 2,
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     itemDto: {
+  //       itemId: 10,
+  //       amount: 2,
+  //     },
+  //     itemOptionDtoList: [
+  //       {
+  //         itemOptionId: 18,
+  //         amount: 1,
+  //       },
+  //       {
+  //         itemOptionId: 27,
+  //         amount: 1,
+  //       },
+  //     ],
+  //   },
+  // ];
   const generalPaymentTest = () => {
     console.log("일반상점테스트");
     setOrderItemDtoList(orderItemListData);

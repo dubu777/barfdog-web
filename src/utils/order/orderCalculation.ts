@@ -1,10 +1,7 @@
 import { ORDER_TYPE } from "@/constants";
 import { IAMPORT_MIN_PAYMENT_PRICE, PACKAGE_INFO } from "@/constants/payment";
 import { useOrderStore } from "@/store/useOrderStore";
-import {
-  GeneralOrderItem,
-  OrderType,
-} from "@/types";
+import { GeneralOrderItem, OrderType } from "@/types";
 
 interface OrderCalculationProps {
   orderType: OrderType;
@@ -111,22 +108,29 @@ export const orderCalculation = ({
     );
   };
 
-  // 적용 가능한 최대 적립금 - 모두사용
+  // 적용 가능한 최대 할인
   const calculateMaxAvailableDiscount = () => {
     const finalPaymentAmount = calculateFinalPaymentAmount();
     const availableMaxDiscount = finalPaymentAmount - IAMPORT_MIN_PAYMENT_PRICE;
     return Math.min(availableMaxDiscount, userTotalReward);
   };
 
-  console.log('calculateTotalDiscount-총 할인', calculateTotalDiscount());
-  console.log('calculateDeliveryFee- 배송비', calculateDeliveryFee());
-  console.log('calculateFinalPaymentAmount- 최종가격', calculateFinalPaymentAmount());
-  console.log('calculateGradeDiscount-등급할인', calculateGradeDiscount());
-  console.log('calculateMaxRewardAmount-최대 적용 가능 적립금', calculateMaxAvailableDiscount());
-  console.log('calculatePackageDiscount-패키지', calculatePackageDiscount());
-  console.log('calculateTotalCouponDiscount-쿠폰할인', calculateTotalCouponDiscount());
-  console.log('appliedReward-적립금', appliedReward);
-  
+  // 적용 가능한 최대 적립금 - 모두사용
+  const calculateMaxAvailableReward = () => {
+    const deliveryPrice = calculateDeliveryFee();
+    const totalCouponDiscount = calculateTotalCouponDiscount();
+    const discountGrade = calculateGradeDiscount();
+    const packageDiscount = calculatePackageDiscount();
+    const availableMaxReward =
+      orderPrice -
+      deliveryPrice -
+      totalCouponDiscount -
+      discountGrade -
+      packageDiscount -
+      IAMPORT_MIN_PAYMENT_PRICE;
+    return Math.min(availableMaxReward, userTotalReward);
+  };
+
   return {
     deliveryFee: calculateDeliveryFee(),
     finalPaymentAmount: calculateFinalPaymentAmount(),
@@ -135,5 +139,6 @@ export const orderCalculation = ({
     packageDiscount: calculatePackageDiscount(),
     totalCouponDiscount: calculateTotalCouponDiscount(),
     totalDiscount: calculateTotalDiscount(),
+    maxAvailableReward: calculateMaxAvailableReward(),
   };
 };

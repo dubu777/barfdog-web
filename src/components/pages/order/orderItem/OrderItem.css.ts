@@ -13,7 +13,7 @@ export const orderInfoContainer = style({
 
 export const gridContainer = style({
   display: "grid",
-  gridTemplateColumns: "3.5fr 1fr 1fr 1fr 1fr",
+  gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
   gap: "8px",
 });
 

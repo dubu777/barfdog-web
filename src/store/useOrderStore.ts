@@ -1,5 +1,8 @@
-
-import { initialDeliveryDto, initialGeneralOrderBody, initialSubscriptionOrderBody } from "@/config/orderInitialValues";
+import {
+  initialDeliveryDto,
+  initialGeneralOrderBody,
+  initialSubscriptionOrderBody,
+} from "@/config/orderInitialValues";
 import { ORDER_TYPE } from "@/constants";
 import {
   CreateGeneralOrderRequest,
@@ -9,7 +12,6 @@ import {
   PaymentMethod,
 } from "@/types";
 import { create } from "zustand";
-
 
 interface OrderState {
   generalOrderBody: CreateGeneralOrderRequest;
@@ -23,6 +25,17 @@ interface OrderState {
   userTotalReward: number;
   appliedReward: number;
   maxAvailableDiscount: number;
+  maxAvailableReward: number;
+  discountTotal: number;
+  discountCoupon: number;
+  deliveryPrice: number;
+  paymentPrice: number;
+  setMaxAvailableReward: (amount: number) => void;
+  setPaymentPrice: (amount: number) => void;
+  setDiscountTotal: (amount: number) => void;
+  setDiscountCoupon: (amount: number) => void;
+  setDeliveryPrice: (amount: number) => void;
+
   setMaxAvailableDiscount: (reward: number) => void;
   setUserTotalReward: (reward: number) => void;
   setAppliedReward: (reward: number) => void;
@@ -62,7 +75,6 @@ interface OrderState {
 }
 
 export const useOrderStore = create<OrderState>((set, get) => ({
-  
   generalOrderBody: initialGeneralOrderBody,
   subscriptionOrderBody: initialSubscriptionOrderBody,
   selectedCoupon: null,
@@ -74,17 +86,43 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   userTotalReward: 0,
   appliedReward: 0,
   maxAvailableDiscount: 0,
+  maxAvailableReward: 0,
+  discountTotal: 0,
+  discountCoupon: 0,
+  deliveryPrice: 0,
+  paymentPrice: 0,
+  setMaxAvailableReward: (amount) =>
+    set(() => ({
+      maxAvailableReward: Number(amount),
+    })),
+  setPaymentPrice: (amount) =>
+    set(() => ({
+      paymentPrice: Number(amount),
+    })),
+  setDiscountTotal: (amount) =>
+    set(() => ({
+      discountTotal: Number(amount),
+    })),
+  setDiscountCoupon: (amount) =>
+    set(() => ({
+      discountCoupon: Number(amount),
+    })),
+  setDeliveryPrice: (amount) =>
+    set(() => ({
+      deliveryPrice: Number(amount),
+    })),
+
   setMaxAvailableDiscount: (reward) =>
     set(() => ({
-      maxAvailableDiscount: Number(reward)
+      maxAvailableDiscount: Number(reward),
     })),
   setUserTotalReward: (reward) =>
     set(() => ({
-      userTotalReward: Number(reward)
+      userTotalReward: Number(reward),
     })),
   setAppliedReward: (reward) =>
     set(() => ({
-      appliedReward: Number(reward)
+      appliedReward: Number(reward),
     })),
   setDeliveryId: (deliveryId) =>
     set(() => ({
@@ -118,10 +156,23 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       paymentMethod,
       deliveryId,
       deliveryDto,
+      deliveryPrice,
+      discountCoupon,
+      discountTotal,
+      appliedReward,
+      paymentPrice,
     } = get();
-  
-    const commonBody = { deliveryDto, paymentMethod };
-  
+
+    const commonBody = {
+      deliveryDto,
+      paymentMethod,
+      deliveryPrice,
+      discountTotal,
+      discountCoupon,
+      discountReward: appliedReward,
+      paymentPrice,
+    };
+
     if (orderType === ORDER_TYPE.GENERAL) {
       return {
         ...generalOrderBody,
@@ -129,7 +180,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
         deliveryId,
       } as CreateGeneralOrderRequest;
     }
-  
+
     return {
       ...subscriptionOrderBody,
       ...commonBody,
@@ -142,7 +193,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     if (isBundle) {
       return get().generalOrderBody.deliveryId;
     }
-    return null
+    return null;
   },
   // 쿠폰 관련 상태
   setSelectedCoupon: (coupon) =>

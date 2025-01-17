@@ -10,11 +10,11 @@ import { validateReward } from "@/utils/validate";
 
 interface RewardUsageProps {
   userTotalReward: number;
-  maxAvailableDiscount: number;
+  maxAvailableReward: number;
   setAppliedReward: (reward: number) => void;
 }
 
-export default function RewardUsage ({userTotalReward, maxAvailableDiscount, setAppliedReward}: RewardUsageProps) {
+export default function RewardUsage ({userTotalReward, maxAvailableReward, setAppliedReward}: RewardUsageProps) {
   // userTotalReward 무한 렌더링 방지
   const validate = useMemo(() => {
     return (values: { appliedReward: number }) =>
@@ -43,8 +43,8 @@ export default function RewardUsage ({userTotalReward, maxAvailableDiscount, set
 
   // 최대 적립금 적용
   const handleMaxReward = () => {
-    reward.handleChange("appliedReward", maxAvailableDiscount);
-    setAppliedReward(maxAvailableDiscount);
+    reward.handleChange("appliedReward", maxAvailableReward);
+    setAppliedReward(maxAvailableReward);
   }
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function RewardUsage ({userTotalReward, maxAvailableDiscount, set
   }, [reward.values.appliedReward, setAppliedReward]);
 
 console.log('useForm-reward',reward);
-console.log('maxAvailableDiscount-reward',maxAvailableDiscount);
+console.log('maxAvailableReward-reward',maxAvailableReward);
 
   return (
     <div className={styles.orderSheetWrapper}>

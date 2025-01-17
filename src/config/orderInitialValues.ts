@@ -23,7 +23,7 @@ const initialGeneralOrderBody: CreateGeneralOrderRequest = {
   overDiscount: 0,
   paymentPrice: 0,
   paymentMethod: "NAVER_PAY",
-  agreePrivacy: false,
+  agreePrivacy: true,
   brochure: false,
 };
 
@@ -50,7 +50,7 @@ const initialSubscriptionOrderBody: CreateSubscriptionOrderRequest = {
   paymentMethod: "NAVER_PAY",
   paymentPrice: 0,
   subscriptionMonth: null,
-  agreePrivacy: false,
+  agreePrivacy: true,
   brochure: false,
 };
 

@@ -7,6 +7,7 @@ import CouponCard from "./couponCard/CouponCard";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useOrderStore } from "@/store/useOrderStore";
 import { ORDER_TYPE } from "@/constants";
+import { useState } from "react";
 
 interface CouponModalProps {
   isVisible: boolean;
@@ -27,11 +28,17 @@ export default function CouponModal({
 }: CouponModalProps) {
   const { updateAppliedCoupon, setSelectedCoupon, selectedCoupon, maxAvailableDiscount } =
     useOrderStore();
-  
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);  
 
   // 쿠폰 적용 함수
   const handleApplyCoupon = () => {
     if (selectedCoupon) {
+      // calculateCouponDiscount 호출
+      if (couponDiscount > maxAvailableDiscount) {
+        alert(`적용 가능한 최대 할인 금액(${maxAvailableDiscount}원)을 초과합니다.`)
+        return;
+      }
+
       updateAppliedCoupon(
         orderType,
         orderType === ORDER_TYPE.GENERAL ? selectedItemId ?? null : null,
@@ -65,6 +72,7 @@ export default function CouponModal({
               orderType={orderType}
               selectedItemPrice={selectedItemPrice}
               selectedCouponId={selectedCoupon?.couponId}
+              setCouponDiscount={setCouponDiscount}
             />
           ))}
           <DefaultButton onClick={handleApplyCoupon}>쿠폰 적용</DefaultButton>

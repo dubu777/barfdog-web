@@ -9,12 +9,14 @@ import {
 } from "@/utils/coupon/couponUtils";
 import { formatDate } from "@/utils/dateUtils";
 import { ORDER_TYPE } from "@/constants";
+import { useEffect } from "react";
 
 interface CouponCardProps {
   coupon: Coupon;
   orderType: OrderType;
   selectedItemPrice: number;
   selectedCouponId?: number;
+  setCouponDiscount: (amount: number) => void;
 }
 
 export default function CouponCard({
@@ -22,6 +24,7 @@ export default function CouponCard({
   orderType,
   selectedItemPrice,
   selectedCouponId,
+  setCouponDiscount,
 }: CouponCardProps) {
   const { isAppliedCoupon, updateSelectedCoupon } = useOrderStore();
 
@@ -36,12 +39,18 @@ export default function CouponCard({
     selectedItemPrice,
     couponDiscountAmount
   );
-console.log('isValid', isValid);
-console.log('selectedItemPrice', selectedItemPrice);
+  console.log("isValid", isValid);
+  console.log("selectedItemPrice", selectedItemPrice);
 
-  
+  useEffect(() => {
+    setCouponDiscount(couponDiscountAmount);
+  }, [couponDiscountAmount]);
+
   // 쿠폰이 유효하지 않거나 이미 적용된 쿠폰인 경우 null 반환
-  const isValidCoupons = orderType === ORDER_TYPE.GENERAL ? (!isValid || isAppliedCoupon(coupon.memberCouponId)) : !isValid
+  const isValidCoupons =
+    orderType === ORDER_TYPE.GENERAL
+      ? !isValid || isAppliedCoupon(coupon.memberCouponId)
+      : !isValid;
   if (isValidCoupons) return null;
   return (
     <div
