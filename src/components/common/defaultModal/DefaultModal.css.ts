@@ -12,7 +12,7 @@ export const modalContainer = recipe({
     borderRadius: '10px',
     width: '100%',
     overflowY: 'hidden',
-    margin: '0 16px'
+    margin: '0 16px',
   },
   variants: {
     size: {
@@ -25,6 +25,9 @@ export const modalContainer = recipe({
       lg: {
         maxWidth: '420px',
       },
+      xl: {
+        maxWidth: '600px',
+      }
     },
     scroll: {
       true: {
@@ -34,6 +37,15 @@ export const modalContainer = recipe({
       },
     },
   },
+  compoundVariants: [
+    {
+      variants: { size: 'xl', scroll: true },
+      style: {
+        height: 'auto',
+        maxHeight: '600px',
+      },
+    }
+  ],
 })
 
 export const modalContentWrapper = recipe({

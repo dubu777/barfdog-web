@@ -10,7 +10,7 @@ import AddressForm from "@/components/common/addressForm/AddressForm";
 import { DefaultObjectType } from "@/types/common";
 import { AddressDto } from "@/types/subscription";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { addressSchema, defaultAddressValues } from "@/utils/addressValidation";
+import { addressSchema, defaultAddressValues } from "@/utils/validation/addressValidation";
 import {useUpdateSubscriptionAddress} from "@/api/subscription/mutations/useUpdateSubscriptionAddress";
 import {useToastStore} from "@/store/useToastStore";
 

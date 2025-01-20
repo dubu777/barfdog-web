@@ -231,8 +231,8 @@ interface SubscriptionAddressData {
 
 interface AddressDto {
   deliveryName?: null | string;
-  recipientName: string;
-  phoneNumber: string;
+  recipientName?: string;
+  phoneNumber?: string;
   zipcode: string;
   street: string;
   city: string;

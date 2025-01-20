@@ -5,6 +5,9 @@ const queryKeys = {
     BASE: 'common',
     UPLOAD_IMAGE: 'uploadImage'
   },
+  AUTH: {
+    BASE: 'auth',
+  },
   SURVEY: {
     BASE: 'survey',
     GET_SURVEY_RECIPE: 'getSurveyRecipe',

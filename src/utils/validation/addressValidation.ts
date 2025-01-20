@@ -17,6 +17,7 @@ export const defaultAddressValues: AddressDto = {
   phoneNumber: '',
   zipcode: '',
   street: '',
+  city: '',
   detailAddress: '',
   request: '',
 }

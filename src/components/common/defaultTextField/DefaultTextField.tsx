@@ -1,8 +1,8 @@
 import * as styles from './DefaultTextField.css';
-import {ChangeEvent, forwardRef, HTMLAttributes, ReactNode, KeyboardEvent} from 'react';
+import { ChangeEvent, forwardRef, HTMLAttributes, ReactNode, KeyboardEvent } from 'react';
 
 interface DefaultTextFieldProps {
-  type?: 'text' | 'number' | 'button';
+  type?: 'text' | 'number' | 'button' | 'password';
   size?: 'sm' | 'md';
   children?: ReactNode;
   id: string;
@@ -15,9 +15,11 @@ interface DefaultTextFieldProps {
   isDisabled?: boolean;
   isHidden?: boolean;
   isError?: boolean;
+  isPhoneNumber?: boolean;
   className?: HTMLAttributes<string | undefined> |string;
   onSubmit?: () => void;
 }
+
 const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
   children,
   type = 'text',
@@ -32,13 +34,18 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
   isDisabled = false,
   isHidden = false,
   isError = false,
+  isPhoneNumber = false,
   className,
   onSubmit
 }, ref) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.currentTarget.value;
+    if (isPhoneNumber && inputValue.length > 11) {
+      return;
+    }
     if(onChange) {
-      onChange(e.currentTarget.value);
+      onChange(inputValue);
     }
   };
 
