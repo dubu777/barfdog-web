@@ -4,7 +4,7 @@ export * from './cart';
 export * from './common';
 export * from './myPage';
 export * from './order';
-export * from './user';
+export * from './auth/user';
 export * from './reward';
 export * from './coupon';
 export * from './recipe';
