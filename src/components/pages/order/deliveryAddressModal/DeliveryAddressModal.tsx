@@ -14,6 +14,8 @@ interface DeliveryAddressModalProps {
   orderType: OrderType;
   isVisible: boolean;
   onClose: () => void;
+  setDeliveryDto: (delivery: DeliveryDto) => void;
+  isBundleDelivery: boolean;
 }
 
 type ViewMode = "list" | "add" | "edit";
@@ -21,13 +23,14 @@ type ViewMode = "list" | "add" | "edit";
 export default function DeliveryAddressModal({
   orderType,
   isVisible,
+  isBundleDelivery,
   onClose,
+  setDeliveryDto,
 }: DeliveryAddressModalProps) {
   // address API 호출
   const { data: addressData } = useGetOrderAddress();
 
   // 상태관리
-  const { setDeliveryDto, isBundleDelivery } = useOrderStore();
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
@@ -87,7 +90,6 @@ export default function DeliveryAddressModal({
         <AddressList
           addressData={addressData}
           orderType={orderType}
-          // isDefaultAddress={isDefaultAddress}
           onAddAddress={switchToAddAddress}
           onEditAddress={switchToEditAddress}
           onSelectAddress={handleSelectAddress}

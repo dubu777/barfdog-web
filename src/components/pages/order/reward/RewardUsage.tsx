@@ -1,4 +1,3 @@
-
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "../OrderSheetCommon.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
@@ -7,14 +6,15 @@ import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import InputField from "@/components/common/inputField/InputField";
 import useForm from "@/hooks/useForm";
 import { validateReward } from "@/utils/validate";
+import { useRewardStore } from "@/store/order/useRewardStore";
 
 interface RewardUsageProps {
-  userTotalReward: number;
-  maxAvailableReward: number;
-  setAppliedReward: (reward: number) => void;
+
 }
 
-export default function RewardUsage ({userTotalReward, maxAvailableReward, setAppliedReward}: RewardUsageProps) {
+export default function RewardUsage({}: RewardUsageProps) {
+  const { userTotalReward, maxAvailableReward, setAppliedReward } =
+    useRewardStore();
   // userTotalReward 무한 렌더링 방지
   const validate = useMemo(() => {
     return (values: { appliedReward: number }) =>
@@ -37,7 +37,7 @@ export default function RewardUsage ({userTotalReward, maxAvailableReward, setAp
       e.target.value = reward.values.appliedReward.toString();
       return;
     }
-    
+
     reward.handleChange("appliedReward", inputValue);
   };
 
@@ -45,38 +45,42 @@ export default function RewardUsage ({userTotalReward, maxAvailableReward, setAp
   const handleMaxReward = () => {
     reward.handleChange("appliedReward", maxAvailableReward);
     setAppliedReward(maxAvailableReward);
-  }
+  };
 
   useEffect(() => {
     if (!!reward.errors.appliedReward) return;
     setAppliedReward(reward.values.appliedReward);
   }, [reward.values.appliedReward, setAppliedReward]);
 
-console.log('useForm-reward',reward);
-console.log('maxAvailableReward-reward',maxAvailableReward);
+  console.log("useForm-reward", reward);
+  console.log("maxAvailableReward-reward", maxAvailableReward);
 
   return (
     <div className={styles.orderSheetWrapper}>
       <div className={styles.orderSheetTitleWrapper}>
-      <DefaultText type="title4">적립금</DefaultText>
-      <DefaultText type="label4">{formatNumberWithCommas(userTotalReward)}원 보유</DefaultText>
+        <DefaultText type="title4">적립금</DefaultText>
+        <DefaultText type="label4">
+          {formatNumberWithCommas(userTotalReward)}원 보유
+        </DefaultText>
       </div>
-        <div className={styles.orderSheetContentWrapper({direction: 'row'})}>
-          <InputField
-            {...reward.getInputProps("appliedReward")}
-            placeholder="0"
-            type="number"
-            error={reward.errors.appliedReward}
-            touched={reward.touched.appliedReward}
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              if (e.target.value === "0") {
-                e.target.value = "";
-              }
-            }}
-          />
-          <DefaultButton type="gray" size="sm" onClick={handleMaxReward}>전액사용</DefaultButton>
-        </div>
+      <div className={styles.orderSheetContentWrapper({ direction: "row" })}>
+        <InputField
+          {...reward.getInputProps("appliedReward")}
+          placeholder="0"
+          type="number"
+          error={reward.errors.appliedReward}
+          touched={reward.touched.appliedReward}
+          onChange={handleInputChange}
+          onFocus={(e) => {
+            if (e.target.value === "0") {
+              e.target.value = "";
+            }
+          }}
+        />
+        <DefaultButton type="gray" size="sm" onClick={handleMaxReward}>
+          전액사용
+        </DefaultButton>
+      </div>
     </div>
-  )
+  );
 }

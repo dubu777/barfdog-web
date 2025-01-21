@@ -3,25 +3,21 @@
 import * as styles from "./OrderItem.css";
 import useModal from "@/hooks/useModal";
 import {
-  DeliveryDto,
   GeneralOrderSheetResponse,
   OrderType,
   SubscriptionOrderSheetResponse,
 } from "@/types";
 import { Suspense, useState } from "react";
-import { useOrderStore } from "@/store/useOrderStore";
 import { ErrorBoundary } from "react-error-boundary";
 import { ORDER_TYPE } from "@/constants";
-import DeliveryAddressModal from "../deliveryAddressModal/DeliveryAddressModal";
 import CouponModal from "../couponModal/CouponModal";
 import { orderSheetWrapper } from "../OrderSheetCommon.css";
-import Button from "@/components/common/button/Button";
+import { useOrderStore2 } from "@/store/order/useOrderStore2";
 
 interface OrderItemProps {
   orderType: OrderType;
   generalOrderSheetData?: GeneralOrderSheetResponse | null;
   subscriptionOrderSheetData?: SubscriptionOrderSheetResponse | null;
-  deliveryDto: DeliveryDto;
 }
 
 export default function OrderItem({
@@ -33,11 +29,11 @@ export default function OrderItem({
   const [selectedItemPrice, setSelectedItemPrice] = useState<number>(0);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const {
-    getAppliedCouponDiscount,
-    cancelAppliedCoupon,
     generalOrderBody,
     subscriptionOrderBody,
-  } = useOrderStore();
+    getAppliedCouponDiscount,
+    cancelAppliedCoupon,
+  } = useOrderStore2();
   console.log("generalOrderBody", generalOrderBody);
   console.log("subscriptionOrderBody", subscriptionOrderBody);
 
@@ -80,8 +76,8 @@ export default function OrderItem({
   };
 
   return (
-      <div className={orderSheetWrapper}>
-    <div className={styles.orderInfoContainer}>
+    <div className={orderSheetWrapper}>
+      <div className={styles.orderInfoContainer}>
         {orderType === ORDER_TYPE.GENERAL && generalOrderSheetData && (
           <div className={styles.gridContainer}>
             <div className={styles.gridHeader}>

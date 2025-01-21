@@ -9,6 +9,9 @@ import { GeneralOrderSheetRequest, UseMutationCustomOptions } from "@/types";
 import { ORDER_TYPE } from "@/constants/order";
 import { useOrderStore } from "@/store/useOrderStore";
 import { queryKeys } from "@/constants";
+import { useOrderStore2 } from "@/store/order/useOrderStore2";
+import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useRewardStore } from "@/store/order/useRewardStore";
 
 // 캐싱 및 상태 업데이트
 export function useGetGeneralOrderSheet(
@@ -18,7 +21,9 @@ export function useGetGeneralOrderSheet(
     queryKeys.ORDER.GET_GENERAL_ORDER_SHEET,
     variables,
   ];
-  const { updateOrderBody, setDeliveryDto, setDeliveryId, setUserTotalReward } = useOrderStore();
+  const { updateOrderBody } = useOrderStore2();
+  const { setDeliveryDto, setDeliveryId } = useDeliveryStore();
+  const { setUserTotalReward } = useRewardStore();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: getGeneralOrderSheet,

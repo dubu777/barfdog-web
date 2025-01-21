@@ -1,6 +1,5 @@
 "use client";
 
-import { useOrderStore } from "@/store/useOrderStore";
 import * as styles from "./CouponCard.css";
 import { Coupon, OrderType } from "@/types";
 import {
@@ -17,6 +16,8 @@ interface CouponCardProps {
   selectedItemPrice: number;
   selectedCouponId?: number;
   setCouponDiscount: (amount: number) => void;
+  isAppliedCoupon: (couponId: number) => boolean;
+  updateSelectedCoupon: (couponId: number, discountAmount: number) => void;
 }
 
 export default function CouponCard({
@@ -25,9 +26,9 @@ export default function CouponCard({
   selectedItemPrice,
   selectedCouponId,
   setCouponDiscount,
+  isAppliedCoupon,
+  updateSelectedCoupon,
 }: CouponCardProps) {
-  const { isAppliedCoupon, updateSelectedCoupon } = useOrderStore();
-
   // 쿠폰 할인 계산 유틸 함수
   const { couponDiscountAmount, couponDiscountInfo } = calculateCouponDiscount(
     coupon,
@@ -39,8 +40,6 @@ export default function CouponCard({
     selectedItemPrice,
     couponDiscountAmount
   );
-  console.log("isValid", isValid);
-  console.log("selectedItemPrice", selectedItemPrice);
 
   useEffect(() => {
     setCouponDiscount(couponDiscountAmount);

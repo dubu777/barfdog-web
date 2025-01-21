@@ -1,6 +1,6 @@
 "use client";
 
-import { usePersistOrderStore } from "@/store/usePersistOrderStore";
+import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
 import { useRouter } from "next/navigation";
 
 export default function GeneralShopTest() {

@@ -1,4 +1,4 @@
-import { GeneralOrderItemDto, OrderItem } from '@/types';
+import { GeneralOrderItemDto } from '@/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

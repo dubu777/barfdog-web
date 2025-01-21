@@ -1,22 +1,27 @@
 import { useOrderStore } from "@/store/useOrderStore";
 import * as styles from "./BundleDeliverySelector.css";
-import { orderSheetWrapper } from "../../OrderSheetCommon.css";
+import { orderSheetWrapper } from "../OrderSheetCommon.css";
 import { initialDeliveryDto } from "@/config/orderInitialValues";
+import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { DeliveryDto } from "@/types";
 
 interface BundleDeliverySelectorProps {
-
+  deliveryId: number | null;
+  deliveryDto: DeliveryDto;
 }
 
-export function BundleDeliverySelector({}: BundleDeliverySelectorProps) {
-  const {isBundleDelivery, setIsBundleDelivery, setDeliveryDto, setDeliveryId, generalOrderBody} = useOrderStore();
+export default function BundleDeliverySelector({deliveryId, deliveryDto}: BundleDeliverySelectorProps) {
+  // const {isBundleDelivery, setIsBundleDelivery, setDeliveryDto, setDeliveryId, generalOrderBody} = useOrderStore();
+  const {isBundleDelivery, setIsBundleDelivery, setDeliveryDto, setDeliveryId} = useDeliveryStore();
+
 const handleBundleClick = () => {
   setIsBundleDelivery(true);
   setDeliveryDto(initialDeliveryDto);
-  setDeliveryId(generalOrderBody.deliveryId)
+  setDeliveryId(deliveryId)
 }
 const handleSingleClick = () => {
   setIsBundleDelivery(false)
-  setDeliveryDto(generalOrderBody.deliveryDto)
+  setDeliveryDto(deliveryDto)
   setDeliveryId(null)
 }
   return ( 

@@ -1,5 +1,7 @@
 import { ORDER_TYPE } from "@/constants";
 import { IAMPORT_MIN_PAYMENT_PRICE, PACKAGE_INFO } from "@/constants/payment";
+import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useOrderStore2 } from "@/store/order/useOrderStore2";
 import { useOrderStore } from "@/store/useOrderStore";
 import { GeneralOrderItem, OrderType } from "@/types";
 
@@ -22,15 +24,12 @@ export const orderCalculation = ({
   freeCondition, // 배송비 무료 금액
   deliveryPrice,
   orderItemDtoList,
-  plan,
 }: OrderCalculationProps) => {
   const {
-    isBundleDelivery,
     generalOrderBody,
     subscriptionOrderBody,
-    packageMonth,
-  } = useOrderStore();
-
+  } = useOrderStore2();
+  const {isBundleDelivery} = useDeliveryStore()
   // 배송비
   const calculateDeliveryFee = (): number => {
     if (orderType === ORDER_TYPE.SUBSCRIPTION) return 0;
@@ -65,36 +64,35 @@ export const orderCalculation = ({
   };
 
   // 패키지 할인 금액
-  const calculatePackageDiscount = (): number => {
-    if (orderType === ORDER_TYPE.GENERAL || !packageMonth) return 0;
+  // const calculatePackageDiscount = (): number => {
+  //   if (orderType === ORDER_TYPE.GENERAL || !packageMonth) return 0;
 
-    const packageType = Object.values(PACKAGE_INFO).find(
-      (type) => type.value === packageMonth
-    );
+  //   const packageType = Object.values(PACKAGE_INFO).find(
+  //     (type) => type.value === packageMonth
+  //   );
 
-    if (!packageType || packageType.discount === 0 || !plan) return 0;
+  //   if (!packageType || packageType.discount === 0 || !plan) return 0;
 
-    const isFullPlan = ["FULL", "TOPPING_FULL"].includes(plan);
-    const isHalfPlan = ["HALF", "TOPPING_HALF"].includes(plan);
+  //   const isFullPlan = ["FULL", "TOPPING_FULL"].includes(plan);
+  //   const isHalfPlan = ["HALF", "TOPPING_HALF"].includes(plan);
 
-    const deliveryCount = isFullPlan
-      ? packageType.fullDeliveryCount
-      : isHalfPlan
-      ? packageType.halfDeliveryCount
-      : 1;
+  //   const deliveryCount = isFullPlan
+  //     ? packageType.fullDeliveryCount
+  //     : isHalfPlan
+  //     ? packageType.halfDeliveryCount
+  //     : 1;
 
-    return Math.floor(
-      orderPrice * deliveryCount * (packageType.discount / 100)
-    );
-  };
+  //   return Math.floor(
+  //     orderPrice * deliveryCount * (packageType.discount / 100)
+  //   );
+  // };
 
   // 총 할인 금액
   const calculateTotalDiscount = () => {
     const totalCouponDiscount = calculateTotalCouponDiscount();
     const discountGrade = calculateGradeDiscount();
-    const packageDiscount = calculatePackageDiscount();
     return (
-      appliedReward + totalCouponDiscount + discountGrade + packageDiscount
+      appliedReward + totalCouponDiscount + discountGrade 
     );
   };
 
@@ -120,13 +118,11 @@ export const orderCalculation = ({
     const deliveryPrice = calculateDeliveryFee();
     const totalCouponDiscount = calculateTotalCouponDiscount();
     const discountGrade = calculateGradeDiscount();
-    const packageDiscount = calculatePackageDiscount();
     const availableMaxReward =
       orderPrice -
       deliveryPrice -
       totalCouponDiscount -
       discountGrade -
-      packageDiscount -
       IAMPORT_MIN_PAYMENT_PRICE;
     return Math.min(availableMaxReward, userTotalReward);
   };
@@ -136,7 +132,6 @@ export const orderCalculation = ({
     finalPaymentAmount: calculateFinalPaymentAmount(),
     gradeDiscount: calculateGradeDiscount(),
     maxAvailableDiscount: calculateMaxAvailableDiscount(),
-    packageDiscount: calculatePackageDiscount(),
     totalCouponDiscount: calculateTotalCouponDiscount(),
     totalDiscount: calculateTotalDiscount(),
     maxAvailableReward: calculateMaxAvailableReward(),

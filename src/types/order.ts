@@ -24,7 +24,26 @@ export type {
   DeliveryDto,
   CreateSubscriptionOrderRequest,
   OrderTypeKey,
+  SuccessGeneralPaymentRequest,
+  SuccessGeneralOrderResponse,
 };
+
+interface SuccessGeneralPaymentRequest {
+  impUid: string;
+  merchantUid: string;
+  discountReward: number;
+}
+
+interface SuccessGeneralOrderResponse {
+  _links: {
+    self: {
+      href: string; // 현재 API 엔드포인트
+    };
+    profile: {
+      href: string; // 관련 API 문서 링크
+    };
+  };
+}
 
 interface CreateSubscriptionOrderRequest {
   customerUid: string; // 고유 사용자 ID
@@ -46,26 +65,15 @@ interface CreateSubscriptionOrderRequest {
   brochure: boolean; // 브로슈어 수령 여부
 }
 
-
 // 일반 결제 주문 정보 저장 응답
 interface CreateGeneralOrderResponse {
-  id: number; // 주문 id
-  merchantUid: string; // 주문 넘버
-  status: string; // 주문 상태
-  _links: {
-    self: {
-      href: string; // self 링크
-    };
-    success_generalOrder: {
-      href: string; // 결제 성공 링크
-    };
-    fail_generalOrder: {
-      href: string; // 결제 실패 링크
-    };
-    profile: {
-      href: string; // API 문서 링크
-    };
+  data: {
+    id: number;
+    merchantUid: string;
+    status: string; // 'BEFORE_PAYMENT'와 같은 상태
+    _links?: Record<string, any>; // 필요한 경우 구체적으로 선언
   };
+  status: number; // HTTP 상태 코드
 }
 
 // 일반 결제 주문 정보 저장 요청

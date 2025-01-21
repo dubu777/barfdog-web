@@ -17,7 +17,7 @@ interface OrderState {
   generalOrderBody: CreateGeneralOrderRequest;
   subscriptionOrderBody: CreateSubscriptionOrderRequest;
   selectedCoupon: { couponId: number; discountAmount: number } | null;
-  deliveryDto: DeliveryDto; // 삭제 예정
+  deliveryDto: DeliveryDto;
   paymentMethod: PaymentMethod;
   isBundleDelivery: boolean;
   packageMonth: number | null;
@@ -65,7 +65,7 @@ interface OrderState {
   getAppliedCouponDiscount: (itemId: number) => number | undefined;
   isAppliedCoupon: (couponId: number) => boolean;
 
-  setDeliveryDto: (delivery: DeliveryDto) => void; // 삭제 예정
+  setDeliveryDto: (delivery: DeliveryDto) => void;
   setPaymentMethod: (method: PaymentMethod) => void;
   isDefaultAddress: (deliveryId: number) => boolean;
 

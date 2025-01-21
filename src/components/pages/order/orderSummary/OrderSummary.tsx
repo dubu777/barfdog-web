@@ -7,7 +7,8 @@ import { GeneralOrderItem, OrderType } from "@/types";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
 import { useEffect } from "react";
-import { useOrderStore } from "@/store/useOrderStore";
+import { useRewardStore } from "@/store/order/useRewardStore";
+import { useDiscountStore } from "@/store/order/useDiscountStore";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
@@ -16,8 +17,6 @@ interface OrderSummaryPropsProps {
   deliveryPrice?: number;
   orderItemDtoList?: GeneralOrderItem[];
   plan?: string;
-  setMaxAvailableDiscount: (reward: number) => void;
-  setMaxAvailableReward: (reward: number) => void;
 }
 
 export default function OrderSummary({
@@ -27,23 +26,20 @@ export default function OrderSummary({
   deliveryPrice,
   orderItemDtoList,
   plan,
-  setMaxAvailableDiscount,
-  setMaxAvailableReward,
 }: OrderSummaryPropsProps) {
+  const { userTotalReward, appliedReward } = useRewardStore();
   const {
-    userTotalReward,
-    appliedReward,
     setPaymentPrice,
     setDeliveryPrice,
     setDiscountCoupon,
     setDiscountTotal,
-  } = useOrderStore();
-
+    setMaxAvailableDiscount,
+  } = useDiscountStore();
+  const { setMaxAvailableReward } = useRewardStore();
   const {
     finalPaymentAmount,
     deliveryFee,
     gradeDiscount,
-    packageDiscount,
     totalCouponDiscount,
     totalDiscount,
     maxAvailableDiscount,
@@ -62,10 +58,10 @@ export default function OrderSummary({
   useEffect(() => {
     setMaxAvailableDiscount(maxAvailableDiscount);
     setMaxAvailableReward(maxAvailableReward);
-    setDeliveryPrice(deliveryFee)
-    setDiscountCoupon(totalCouponDiscount)
-    setDiscountTotal(totalDiscount)
-    setPaymentPrice(finalPaymentAmount)
+    setDeliveryPrice(deliveryFee);
+    setDiscountCoupon(totalCouponDiscount);
+    setDiscountTotal(totalDiscount);
+    setPaymentPrice(finalPaymentAmount);
   }, [maxAvailableDiscount]);
   return (
     <div className={styles.orderSheetWrapper}>
@@ -109,12 +105,6 @@ export default function OrderSummary({
               <DefaultText type="label2">쿠폰 사용</DefaultText>
               <DefaultText type="label2">
                 {formatNumberWithCommas(totalCouponDiscount)}원
-              </DefaultText>
-            </div>
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">패키지 할인</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(packageDiscount)}원
               </DefaultText>
             </div>
             <div className={styles.orderSheetContentBox}>

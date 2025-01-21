@@ -2,29 +2,21 @@
 
 import * as styles from "../OrderSheetCommon.css";
 import useModal from "@/hooks/useModal";
-import {
-  DeliveryDto,
-  OrderType,
-} from "@/types";
+import { DeliveryDto, OrderType } from "@/types";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import DeliveryAddressModal from "../deliveryAddressModal/DeliveryAddressModal";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 
 interface DeliveryAddressProps {
   orderType: OrderType;
-  deliveryDto: DeliveryDto;
-  isBundleDelivery: boolean;
 }
 
-export default function DeliveryAddress({
-  orderType,
-  deliveryDto,
-  isBundleDelivery,
-}: DeliveryAddressProps) {
+export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
   // 모달 상태 훅
   const { isOpen, onToggle, onClose } = useModal();
-
+  const { deliveryDto, isBundleDelivery, setDeliveryDto } = useDeliveryStore();
   return (
     <div className={styles.orderSheetWrapper}>
       {isBundleDelivery ? (
@@ -38,7 +30,9 @@ export default function DeliveryAddress({
               <DefaultText type="label4">배송지 변경</DefaultText>
             </button>
           </div>
-          <div className={styles.orderSheetContentWrapper({direction: "col"})}>
+          <div
+            className={styles.orderSheetContentWrapper({ direction: "col" })}
+          >
             <DefaultText type="body2">{deliveryDto.name}</DefaultText>
             <DefaultText type="body2">{deliveryDto.phone}</DefaultText>
             <DefaultText type="body2">
@@ -55,6 +49,8 @@ export default function DeliveryAddress({
             orderType={orderType}
             isVisible={isOpen}
             onClose={onClose}
+            isBundleDelivery={isBundleDelivery}
+            setDeliveryDto={setDeliveryDto}
           />
         </Suspense>
       </ErrorBoundary>

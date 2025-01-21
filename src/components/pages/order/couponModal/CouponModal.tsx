@@ -8,6 +8,9 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useOrderStore } from "@/store/useOrderStore";
 import { ORDER_TYPE } from "@/constants";
 import { useState } from "react";
+import { useCouponStore } from "@/store/order/useCouponStore";
+import { useOrderStore2 } from "@/store/order/useOrderStore2";
+import { useDiscountStore } from "@/store/order/useDiscountStore";
 
 interface CouponModalProps {
   isVisible: boolean;
@@ -26,16 +29,20 @@ export default function CouponModal({
   selectedItemId,
   couponData,
 }: CouponModalProps) {
-  const { updateAppliedCoupon, setSelectedCoupon, selectedCoupon, maxAvailableDiscount } =
-    useOrderStore();
-  const [couponDiscount, setCouponDiscount] = useState<number>(0);  
+  const { selectedCoupon, setSelectedCoupon, updateSelectedCoupon } =
+    useCouponStore();
+  const { maxAvailableDiscount } = useDiscountStore();
+  const { updateAppliedCoupon, isAppliedCoupon } = useOrderStore2();
+  const [couponDiscount, setCouponDiscount] = useState<number>(0);
 
   // 쿠폰 적용 함수
   const handleApplyCoupon = () => {
     if (selectedCoupon) {
       // calculateCouponDiscount 호출
       if (couponDiscount > maxAvailableDiscount) {
-        alert(`적용 가능한 최대 할인 금액(${maxAvailableDiscount}원)을 초과합니다.`)
+        alert(
+          `적용 가능한 최대 할인 금액(${maxAvailableDiscount}원)을 초과합니다.`
+        );
         return;
       }
 
@@ -64,19 +71,21 @@ export default function CouponModal({
       size="lg"
       scroll
     >
-        <div>
-          {couponData?.map((coupon) => (
-            <CouponCard
-              key={coupon.memberCouponId}
-              coupon={coupon}
-              orderType={orderType}
-              selectedItemPrice={selectedItemPrice}
-              selectedCouponId={selectedCoupon?.couponId}
-              setCouponDiscount={setCouponDiscount}
-            />
-          ))}
-          <DefaultButton onClick={handleApplyCoupon}>쿠폰 적용</DefaultButton>
-        </div>
+      <div>
+        {couponData?.map((coupon) => (
+          <CouponCard
+            key={coupon.memberCouponId}
+            coupon={coupon}
+            orderType={orderType}
+            selectedItemPrice={selectedItemPrice}
+            selectedCouponId={selectedCoupon?.couponId}
+            setCouponDiscount={setCouponDiscount}
+            isAppliedCoupon={isAppliedCoupon}
+            updateSelectedCoupon={updateSelectedCoupon}
+          />
+        ))}
+        <DefaultButton onClick={handleApplyCoupon}>쿠폰 적용</DefaultButton>
+      </div>
     </DefaultModal>
   );
 }

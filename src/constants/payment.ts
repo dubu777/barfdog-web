@@ -9,14 +9,14 @@ const PAYMENT_METHOD = {
 
 const PG_TYPE ={
   GENERAL:{
-    card: `kcp.${process.env.NEXT_PUBLIC_IAMPORT_GENERAL_ORDER_SITECODE}`,
-    kakaopay: `kakaopay.${process.env.NEXT_PUBLIC_IAMPORT_GENERAL_EASYPAY_KAKAO_CID}`,
-    naverpay: `naverpay`,
+    CREDIT_CARD: `kcp.${process.env.NEXT_PUBLIC_IAMPORT_GENERAL_ORDER_SITECODE}`,
+    KAKAO_PAY: `kakaopay.${process.env.NEXT_PUBLIC_IAMPORT_GENERAL_EASYPAY_KAKAO_CID}`,
+    NAVER_PAY: `naverpay`,
   },
   SUBSCRIBE:{
-    card: `kcp_billing.${process.env.NEXT_PUBLIC_IAMPORT_SUBSCRIBE_SITECODE}`,
-    kakaopay: `kakaopay.${process.env.NEXT_PUBLIC_IAMPORT_SUBSCRIBE_EASYPAY_KAKAO_CID}`,
-    naverpay: `naverpay`
+    CREDIT_CARD: `kcp_billing.${process.env.NEXT_PUBLIC_IAMPORT_SUBSCRIBE_SITECODE}`,
+    KAKAO_PAY: `kakaopay.${process.env.NEXT_PUBLIC_IAMPORT_SUBSCRIBE_EASYPAY_KAKAO_CID}`,
+    NAVER_PAY: `naverpay`
   }
 }
 const PACKAGE_INFO: Record<string, PackageInfo>= {
