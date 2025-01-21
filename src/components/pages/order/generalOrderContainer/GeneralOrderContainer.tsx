@@ -51,8 +51,8 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     }
   }, [orderItemDtoList]);
 
-  console.log("generalData", generalOrderSheetData);
-  console.log("generalOrderBody", generalOrderBody);
+  // console.log("generalData", generalOrderSheetData);
+  // console.log("generalOrderBody", generalOrderBody);
 
   // 아임포트 스크립트 로드
   useEffect(() => {

@@ -11,7 +11,6 @@ interface BundleDeliverySelectorProps {
 }
 
 export default function BundleDeliverySelector({deliveryId, deliveryDto}: BundleDeliverySelectorProps) {
-  // const {isBundleDelivery, setIsBundleDelivery, setDeliveryDto, setDeliveryId, generalOrderBody} = useOrderStore();
   const {isBundleDelivery, setIsBundleDelivery, setDeliveryDto, setDeliveryId} = useDeliveryStore();
 
 const handleBundleClick = () => {

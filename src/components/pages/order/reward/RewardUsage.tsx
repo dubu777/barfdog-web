@@ -52,8 +52,6 @@ export default function RewardUsage({}: RewardUsageProps) {
     setAppliedReward(reward.values.appliedReward);
   }, [reward.values.appliedReward, setAppliedReward]);
 
-  console.log("useForm-reward", reward);
-  console.log("maxAvailableReward-reward", maxAvailableReward);
 
   return (
     <div className={styles.orderSheetWrapper}>

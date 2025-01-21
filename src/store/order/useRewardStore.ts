@@ -14,9 +14,9 @@ export const useRewardStore = create<RewardState>((set) => ({
   appliedReward: 0,
   maxAvailableReward: 0,
 
-  setUserTotalReward: (reward) => set({ userTotalReward: reward }),
+  setUserTotalReward: (reward) => set({ userTotalReward: Number(reward) }),
 
-  setAppliedReward: (reward) => set({ appliedReward: reward }),
+  setAppliedReward: (reward) => set({ appliedReward: Number(reward) }),
 
-  setMaxAvailableReward: (reward) => set({ maxAvailableReward: reward }),
+  setMaxAvailableReward: (reward) => set({ maxAvailableReward: Number(reward) }),
 }));

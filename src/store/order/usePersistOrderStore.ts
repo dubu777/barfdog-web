@@ -17,7 +17,7 @@ export const usePersistOrderStore = create(
       clearOrderItemDtoList: () => set({ orderItemDtoList: [] }),
     }),
     {
-      name: 'general-order', // localStorage 키 이름
+      name: 'general-order',
     }
   )
 );

@@ -29,13 +29,10 @@ export default function OrderItem({
   const [selectedItemPrice, setSelectedItemPrice] = useState<number>(0);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
   const {
-    generalOrderBody,
     subscriptionOrderBody,
     getAppliedCouponDiscount,
     cancelAppliedCoupon,
   } = useOrderStore2();
-  console.log("generalOrderBody", generalOrderBody);
-  console.log("subscriptionOrderBody", subscriptionOrderBody);
 
   // 쿠폰 데이터 결정
   const couponData =

@@ -24,8 +24,8 @@ export const useDiscountStore = create<DiscountState>((set) => ({
   paymentPrice: 0,
 
   setMaxAvailableDiscount: (reward) => set({maxAvailableDiscount: Number(reward)}),
-  setDiscountTotal: (amount) => set({ discountTotal: amount }),
-  setDiscountCoupon: (amount) => set({ discountCoupon: amount }),
-  setDeliveryPrice: (amount) => set({ deliveryPrice: amount }),
-  setPaymentPrice: (amount) => set({ paymentPrice: amount }),
+  setDiscountTotal: (amount) => set({ discountTotal: Number(amount) }),
+  setDiscountCoupon: (amount) => set({ discountCoupon: Number(amount) }),
+  setDeliveryPrice: (amount) => set({ deliveryPrice: Number(amount) }),
+  setPaymentPrice: (amount) => set({ paymentPrice: Number(amount) }),
 }));
