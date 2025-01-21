@@ -74,7 +74,6 @@ export const useOrderStore2 = create<OrderState>((set, get) => ({
       discountTotal,
       deliveryPrice,
       paymentPrice,
-      appliedReward,
     };
 
     if (orderType === ORDER_TYPE.GENERAL) {
