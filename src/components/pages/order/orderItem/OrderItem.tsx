@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ORDER_TYPE } from "@/constants";
 import CouponModal from "../couponModal/CouponModal";
 import { orderSheetWrapper } from "../OrderSheetCommon.css";
-import { useOrderStore2 } from "@/store/order/useOrderStore2";
+import { useOrderStore } from "@/store/order/useOrderStore";
 
 interface OrderItemProps {
   orderType: OrderType;
@@ -32,7 +32,7 @@ export default function OrderItem({
     subscriptionOrderBody,
     getAppliedCouponDiscount,
     cancelAppliedCoupon,
-  } = useOrderStore2();
+  } = useOrderStore();
 
   // 쿠폰 데이터 결정
   const couponData =

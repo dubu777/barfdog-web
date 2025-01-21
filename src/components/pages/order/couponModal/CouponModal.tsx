@@ -5,11 +5,10 @@ import DefaultModal from "@/components/common/defaultModal/DefaultModal";
 import { Coupon, OrderType } from "@/types";
 import CouponCard from "./couponCard/CouponCard";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { useOrderStore } from "@/store/useOrderStore";
 import { ORDER_TYPE } from "@/constants";
 import { useState } from "react";
 import { useCouponStore } from "@/store/order/useCouponStore";
-import { useOrderStore2 } from "@/store/order/useOrderStore2";
+import { useOrderStore } from "@/store/order/useOrderStore";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 
 interface CouponModalProps {
@@ -32,7 +31,7 @@ export default function CouponModal({
   const { selectedCoupon, setSelectedCoupon, updateSelectedCoupon } =
     useCouponStore();
   const { maxAvailableDiscount } = useDiscountStore();
-  const { updateAppliedCoupon, isAppliedCoupon } = useOrderStore2();
+  const { updateAppliedCoupon, isAppliedCoupon } = useOrderStore();
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
 
   // 쿠폰 적용 함수

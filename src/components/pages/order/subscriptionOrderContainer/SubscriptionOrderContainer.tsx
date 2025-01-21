@@ -6,7 +6,7 @@ import PaymentMethod from "../paymentMethod/PaymentMethod";
 import { useEffect, useState } from "react";
 import { usePaymentStore } from "@/store/order/usePaymentStore";
 import { ORDER_TYPE } from "@/constants";
-import { useOrderStore } from "@/store/useOrderStore";
+
 import OrderSummary from "../orderSummary/OrderSummary";
 
 interface SubscriptionOrderContainerProps {
@@ -21,7 +21,6 @@ export default function SubscriptionOrderContainer({
   const { paymentMethod } = usePaymentStore();
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
 
-  const { deliveryDto, setMaxAvailableReward, setMaxAvailableDiscount } = useOrderStore();
   console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
 
   // 결제 관련 코드 ========================================================

@@ -74,7 +74,7 @@ interface OrderState {
   setPackageMonth: (month: number | null) => void;
 }
 
-export const useOrderStore = create<OrderState>((set, get) => ({
+export const useOrderStore3 = create<OrderState>((set, get) => ({
   generalOrderBody: initialGeneralOrderBody,
   subscriptionOrderBody: initialSubscriptionOrderBody,
   selectedCoupon: null,

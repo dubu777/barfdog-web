@@ -8,7 +8,6 @@ import AddressList from "./addressList/AddressList";
 import AddAddressForm from "./addAddressForm/AddAddressForm";
 import EditAddressForm from "./editAddressForm/EditAddressForm";
 import { useGetOrderAddress } from "@/api/order/queries/useGetOrderAddress";
-import { useOrderStore } from "@/store/useOrderStore";
 
 interface DeliveryAddressModalProps {
   orderType: OrderType;

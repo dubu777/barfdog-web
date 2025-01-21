@@ -7,9 +7,8 @@ import {
 import { getGeneralOrderSheet } from "../order";
 import { GeneralOrderSheetRequest, UseMutationCustomOptions } from "@/types";
 import { ORDER_TYPE } from "@/constants/order";
-import { useOrderStore } from "@/store/useOrderStore";
 import { queryKeys } from "@/constants";
-import { useOrderStore2 } from "@/store/order/useOrderStore2";
+import { useOrderStore } from "@/store/order/useOrderStore";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { useRewardStore } from "@/store/order/useRewardStore";
 
@@ -21,7 +20,7 @@ export function useGetGeneralOrderSheet(
     queryKeys.ORDER.GET_GENERAL_ORDER_SHEET,
     variables,
   ];
-  const { updateOrderBody } = useOrderStore2();
+  const { updateOrderBody } = useOrderStore();
   const { setDeliveryDto, setDeliveryId } = useDeliveryStore();
   const { setUserTotalReward } = useRewardStore();
   const queryClient = useQueryClient();

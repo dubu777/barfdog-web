@@ -1,8 +1,7 @@
 import { ORDER_TYPE } from "@/constants";
-import { IAMPORT_MIN_PAYMENT_PRICE, PACKAGE_INFO } from "@/constants/payment";
+import { IAMPORT_MIN_PAYMENT_PRICE } from "@/constants/payment";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
-import { useOrderStore2 } from "@/store/order/useOrderStore2";
-import { useOrderStore } from "@/store/useOrderStore";
+import { useOrderStore } from "@/store/order/useOrderStore";
 import { GeneralOrderItem, OrderType } from "@/types";
 
 interface OrderCalculationProps {
@@ -28,7 +27,7 @@ export const orderCalculation = ({
   const {
     generalOrderBody,
     subscriptionOrderBody,
-  } = useOrderStore2();
+  } = useOrderStore();
   const {isBundleDelivery} = useDeliveryStore()
   // 배송비
   const calculateDeliveryFee = (): number => {

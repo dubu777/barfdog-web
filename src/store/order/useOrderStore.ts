@@ -42,7 +42,7 @@ interface OrderState {
 
 }
 
-export const useOrderStore2 = create<OrderState>((set, get) => ({
+export const useOrderStore = create<OrderState>((set, get) => ({
   generalOrderBody: initialGeneralOrderBody,
   subscriptionOrderBody: initialSubscriptionOrderBody,
 
@@ -71,6 +71,7 @@ export const useOrderStore2 = create<OrderState>((set, get) => ({
       deliveryDto,
       paymentMethod,
       discountCoupon,
+      discountReward: appliedReward,
       discountTotal,
       deliveryPrice,
       paymentPrice,

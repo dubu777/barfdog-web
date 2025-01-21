@@ -16,7 +16,7 @@ import Divider from "@/components/common/divider/Divider";
 import { ORDER_TYPE } from "@/constants";
 import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
-import { useOrderStore2 } from "@/store/order/useOrderStore2";
+import { useOrderStore } from "@/store/order/useOrderStore";
 import { usePaymentStore } from "@/store/order/usePaymentStore";
 import PaymentMethod from "../paymentMethod/PaymentMethod";
 import RewardUsage from "../reward/RewardUsage";
@@ -33,7 +33,7 @@ interface GeneralPaymentProps {
 
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   // 상태관리
-  const { generalOrderBody, getRequestBody } = useOrderStore2();
+  const { generalOrderBody, getRequestBody } = useOrderStore();
   const { paymentMethod } = usePaymentStore();
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
   const [isScriptLoaded, setIsScriptLoaded] = useState<boolean>(false);
@@ -50,9 +50,6 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       fetchGeneralOrderSheet({ orderItemDtoList });
     }
   }, [orderItemDtoList]);
-
-  // console.log("generalData", generalOrderSheetData);
-  // console.log("generalOrderBody", generalOrderBody);
 
   // 아임포트 스크립트 로드
   useEffect(() => {
