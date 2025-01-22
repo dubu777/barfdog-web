@@ -1,7 +1,7 @@
 import axiosInstance from "@/api/axiosInstance";
 import {
   BestReviewDetail, CreateReviewDetail,
-  ReviewDetail,
+  ReviewDetail, ReviewImage,
   ReviewList,
   UpdateReviewDetail,
   WritableReviewList,
@@ -15,6 +15,7 @@ export {
   getWritableReviewList,
   getWrittenReviewList,
   getReviewDetail,
+  getReviewDetailImages,
   updateReviewDetail,
   createReviewDetail,
   deleteReview,
@@ -57,6 +58,11 @@ const getWrittenReviewList = async (page = 0, size = 10): Promise<WrittenReviewL
 const getReviewDetail = async (reviewId: number): Promise<ReviewDetail> => {
   const { data } = await axiosInstance.get(`/api/reviews/${reviewId}`);
   return data;
+}
+
+const getReviewDetailImages = async (reviewId: number): Promise<ReviewImage[]> => {
+  const { data } = await axiosInstance.get(`/api/reviews/${reviewId}/images`);
+  return data._embedded.queryReviewImagesDtoList || [];
 }
 
 const updateReviewDetail = async (reviewId: number, body: UpdateReviewDetail) => {

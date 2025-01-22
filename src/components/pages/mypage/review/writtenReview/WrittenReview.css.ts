@@ -31,9 +31,38 @@ export const reviewInfo = style({
   gap: '10px',
 })
 
+export const reviewImageButton = recipe({
+  base: {
+    position: 'relative',
+    width: '150px',
+    height: '150px',
+  },
+  variants: {
+    openReviewImages: {
+      true: {
+        cursor: 'pointer',
+      }
+    }
+  }
+})
+
 export const reviewImage = style({
   border: `1px solid ${themeVars.borderColors.greyDD}`,
   objectFit: 'cover',
+})
+
+export const imageCount = style({
+  width: '30px',
+  height: '30px',
+  position: 'absolute',
+  bottom: 0,
+  right: 0,
+  background: themeVars.colors.black,
+  color: themeVars.colors.white,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  fontSize: themeVars.fontSize["text-sm"]
 })
 
 export const reviewTitle = style({

@@ -5,14 +5,14 @@ import Image from "next/image";
 import Pagination from "@/components/common/pagination/Pagination";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { Page, WritableReviewItem } from "@/types";
+import {  WritableReviewItem } from "@/types";
 import { reviewType } from "@/constants";
 import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetWritableReviewList, useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
 import { useReviewStore } from "@/store/useReviewStore";
-import {formatDate} from "@/utils/dateUtils";
+import { formatDate } from "@/utils/dateUtils";
 
 const WritableReview = ({ onInit }: { onInit: () => void }) => {
   const queryClient = useQueryClient();
@@ -31,7 +31,7 @@ const WritableReview = ({ onInit }: { onInit: () => void }) => {
 
   const { data } = useGetWritableReviewList(currentPage);
   const writableReviewList = data?.writableReviewList || [];
-  console.log('writableReviewList', writableReviewList)
+
   const { setReviewFormData } = useReviewStore();
 
   useEffect(() => {
@@ -48,9 +48,8 @@ const WritableReview = ({ onInit }: { onInit: () => void }) => {
     setReviewFormData(review);
     router.push(`/mypage/review/create`)
   }
+  console.log('writableReviewList', data)
 
-  console.log('writableReviewList', writableReviewList)
-  // console.log('uniqueList', uniqueList)
   return (
     <article className={styles.writableReviewContainer({ isEmpty: writableReviewList.length === 0 })}>
       {writableReviewList.length === 0
