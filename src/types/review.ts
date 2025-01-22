@@ -121,6 +121,7 @@ interface ReviewFormData {
 }
 
 interface UpdateReviewDetail {
+  orderId: number;
   contents: string;
   star: number;
   addImageIdList?: number[];

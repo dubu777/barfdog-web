@@ -64,6 +64,7 @@ const ReviewForm = ({ type, reviewDetail, reviewImageDtoList, handleSubmitForm }
   const onSubmit: SubmitHandler<ReviewFormValues> = (data) => {
     const body: CreateReviewDetail | UpdateReviewDetail = type === 'update'
       ? {
+        orderId: reviewDetail.orderId,
         contents: data.contents,
         star : data.star,
         addImageIdList,
@@ -72,6 +73,7 @@ const ReviewForm = ({ type, reviewDetail, reviewImageDtoList, handleSubmitForm }
       : {
         id : reviewDetail.id,
         targetId : reviewDetail.targetId,
+        orderId: reviewDetail.orderId,
         reviewType : reviewDetail.reviewType,
         contents: data.contents,
         star : data.star,

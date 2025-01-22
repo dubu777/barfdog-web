@@ -6,13 +6,14 @@ import { copyToClipboard } from "@/utils/copyToClipboard";
 import { useAuthStore } from "@/store/useAuthStore";
 import {useToastStore} from "@/store/useToastStore";
 import InviteRewardList from "@/components/pages/mypage/inviteFriends/inviteRewardList/InviteRewardList";
+import {useMyPageStore} from "@/store/useMypageStore";
 
 const InviteFriends = () => {
-  const { userInfo } = useAuthStore();
+  const { mypageUserInfo } = useMyPageStore();
   const { addToast } = useToastStore();
-  console.log('userInfo', userInfo)
+  console.log('mypageUserInfo', mypageUserInfo)
   const handleCopyCode = async () => {
-    await copyToClipboard(userInfo.myRecommendationCode);
+    await copyToClipboard(mypageUserInfo.myRecommendationCode);
     addToast('복사가 완료되었습니다!', 'success')
   };
 
@@ -25,7 +26,7 @@ const InviteFriends = () => {
             나의 추천코드
           </Text>
           <Text type='title' size='titleLg' weight='normal'>
-            {userInfo?.myRecommendationCode}
+            {mypageUserInfo?.myRecommendationCode}
           </Text>
           <div className={styles.referralCodeButtons}>
             <DefaultButton type='blackBorder' borderRadius='sm'>

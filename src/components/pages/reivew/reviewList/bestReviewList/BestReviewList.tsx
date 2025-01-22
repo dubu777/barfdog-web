@@ -53,7 +53,7 @@ const BestReviewList = () => {
                 <div className={styles.bestReviewTop}>
                   <RateStar rateLength={rate} />
                   <Text type='description' size='xs' color='grey' align='center'>
-                    {review.orderType === 'item' ? '일반구매': '정기구독'}품
+                    {review.orderType === 'item' ? '일반구매': '정기구독'}
                   </Text>
                 </div>
                 <Text type='description' size='sm' color='grey' align='left' className={ellipsis({ lineSize: 'line3' })}>

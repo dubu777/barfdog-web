@@ -5,7 +5,7 @@ import { UpdateReviewDetail, UseMutationCustomOptions } from "@/types";
 
 export { useUpdateReviewDetail };
 
-function useUpdateReviewDetail(reviewId: number, mutationOptions?: UseMutationCustomOptions) {
+function useUpdateReviewDetail(reviewId: number, page = 0, mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (body: UpdateReviewDetail) => updateReviewDetail(reviewId, body),

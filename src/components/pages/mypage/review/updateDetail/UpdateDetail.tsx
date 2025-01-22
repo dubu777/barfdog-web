@@ -22,6 +22,7 @@ const UpdateDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   }
 
   const handleSubmit = (body: UpdateReviewDetail) => {
+    // 업데이트 후 뒤로가기 클릭시 리스트 invalidQueries 적용 필요
     mutate(body, {
       onSuccess: () => {
         addToast('리뷰 수정이 완료되었습니다!', 'success')

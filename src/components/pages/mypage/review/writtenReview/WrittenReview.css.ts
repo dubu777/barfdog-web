@@ -32,7 +32,8 @@ export const reviewInfo = style({
 })
 
 export const reviewImage = style({
-  border: `1px solid ${themeVars.borderColors.greyDD}`
+  border: `1px solid ${themeVars.borderColors.greyDD}`,
+  objectFit: 'cover',
 })
 
 export const reviewTitle = style({

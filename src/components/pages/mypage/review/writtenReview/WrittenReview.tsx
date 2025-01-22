@@ -35,7 +35,7 @@ const WrittenReview = ({ onInit }: { onInit: () => void }) => {
   const { data } = useGetWrittenReviewList(currentPage);
   const writtenReviewList = data?.writtenReviewList;
 
-  const { mutate } = useDeleteReview()
+  const { mutate } = useDeleteReview(currentPage);
 
   const { setReviewFormData } = useReviewStore();
   const { addToast } = useToastStore();
@@ -80,7 +80,7 @@ const WrittenReview = ({ onInit }: { onInit: () => void }) => {
               <div className={styles.reviewInfo}>
                 <div className={styles.reviewTitle}>
                   {review.thumbnailUrl &&
-                    <Image src={review.thumbnailUrl} alt={review.title} width={50} height={50} className={styles.reviewImage}/>
+                    <Image src={review.thumbnailUrl} alt={review.title} width={50} height={50} className={styles.reviewImage} />
                   }
                   <div>
                     <Text type='description' size='sm' color='black' weight='bold' align='left'>{review.title}</Text>
@@ -90,7 +90,7 @@ const WrittenReview = ({ onInit }: { onInit: () => void }) => {
                 <RateStar rateLength={review.star} color='yellow' align='left' />
                 <Text type='description' size='sm' color='grey' align='left'>{review.contents}</Text>
                 {review.imageUrl &&
-                  <Image src={review.imageUrl} alt={review.title} width={150} height={150} />
+                  <Image src={review.imageUrl} alt={review.title} width={150} height={150} className={styles.reviewImage} />
                 }
                 <Text type='description' size='xs' color='grey' align='left'>{review.createdDate}</Text>
               </div>

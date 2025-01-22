@@ -8,19 +8,20 @@ import EditButton from "/public/images/icons/edit.svg";
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 import { MyPageMemberDto , MyPageRepresentativeDogDto} from "@/types";
 import { useAuthStore } from "@/store/useAuthStore";
+import {useMyPageStore} from "@/store/useMypageStore";
 
 const MyPageInfo = () => {
   const { data: myPageData } = useGetMyPageInfo();
 
   const userData: MyPageMemberDto = myPageData.mypageMemberDto;
   const representativeDogData: MyPageRepresentativeDogDto = myPageData.mypageRepresentiveDogDto;
-  const { setUserInfo } = useAuthStore();
+  const { setMypageUserInfo } = useMyPageStore();
 
   useEffect(() => {
     if (userData) {
-      setUserInfo(userData)
+      setMypageUserInfo(userData)
     }
-  }, [userData, setUserInfo])
+  }, [userData, setMypageUserInfo])
   return (
     <article className={styles.userInfoBox}>
       <Image

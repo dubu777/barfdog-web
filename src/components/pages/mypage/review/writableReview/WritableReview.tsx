@@ -12,6 +12,7 @@ import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetWritableReviewList, useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
 import { useReviewStore } from "@/store/useReviewStore";
+import {formatDate} from "@/utils/dateUtils";
 
 const WritableReview = ({ onInit }: { onInit: () => void }) => {
   const queryClient = useQueryClient();
@@ -30,22 +31,14 @@ const WritableReview = ({ onInit }: { onInit: () => void }) => {
 
   const { data } = useGetWritableReviewList(currentPage);
   const writableReviewList = data?.writableReviewList || [];
-  const uniqueList = writableReviewList.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
-
+  console.log('writableReviewList', writableReviewList)
   const { setReviewFormData } = useReviewStore();
 
   useEffect(() => {
-    const page: Page = {
-      number: currentPage,
-      size: data.page.size,
-      totalPages: Math.ceil(uniqueList.length / data.page.size),
-      totalElements: uniqueList.length,
+    if (data.page) {
+      setPaginationData(data.page);
     }
-    setPaginationData(page)
-    // if (data.page) {
-    //   setPaginationData(data.page);
-    // }
-  }, [data.page, setPaginationData, uniqueList.length, currentPage])
+  }, [data.page, setPaginationData, writableReviewList.length, currentPage])
 
   useEffect(() => {
     onInit();
@@ -57,23 +50,24 @@ const WritableReview = ({ onInit }: { onInit: () => void }) => {
   }
 
   console.log('writableReviewList', writableReviewList)
-  console.log('uniqueList', uniqueList)
+  // console.log('uniqueList', uniqueList)
   return (
-    <article className={styles.writableReviewContainer({ isEmpty: uniqueList.length === 0 })}>
-      {uniqueList.length === 0
+    <article className={styles.writableReviewContainer({ isEmpty: writableReviewList.length === 0 })}>
+      {writableReviewList.length === 0
         ? <Text type='description' size='sm' color='grey'>
           작성 가능한 리뷰가 없습니다.
         </Text>
         :
         <>
         <ul className={styles.writableList}>
-          {uniqueList
+          {writableReviewList
             .map(review => (
               <li key={review.id} className={styles.writableReview}>
                 <Image src={review.imageUrl} alt={review.title} width={100} height={100} />
                 <div className={styles.reviewInfo}>
                   <Text type='description' size='md' weight='bold' color='black'>{review.title}</Text>
                   <Text type='description' size='sm' color='grey'>{reviewType[review.reviewType]}</Text>
+                  <Text type='description' size='sm' color='grey'>주문 일자: {formatDate(review.orderedDate, 'fullDateTime')}</Text>
                 </div>
                 <div className={styles.createReviewButton}>
                   <DefaultButton
