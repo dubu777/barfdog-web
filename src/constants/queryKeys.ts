@@ -37,12 +37,12 @@ const queryKeys = {
   },
   ORDER: {
     BASE: 'order',
-    GET_ORDER_SHEET: 'getOrderSheet',
+    GET_SUBSCRIPTION_ORDER: 'getSubscriptionOrder',
     GET_ORDER_DETAIL: 'getOrderDetail',
     GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
     GET_SUBSCRIPTION_ORDER_LIST: 'getSubscriptionOrderList',
     GET_ORDER_ADDRESS: 'getOrderAddress',
-    GET_GENERAL_ORDER_SHEET: 'getGeneralOrderSheet',
+    GET_GENERAL_ORDER: 'getGeneralOrder',
   },
   MAIN: {
     BASE: 'main',

@@ -3,6 +3,7 @@ import {
   AddressResponse,
   CreateGeneralOrderRequest,
   CreateGeneralOrderResponse,
+  CreateSubscriptionOrderRequest,
   GeneralOrderSheetRequest,
   GeneralOrderSheetResponse,
   SubscriptionOrderDto,
@@ -20,15 +21,16 @@ export {
   getOrderDetail,
   getSubscriptionOrderList,
   getGeneralOrderList,
-  getSubscriptionOrderSheet,
+  getSubscriptionOrder,
   getAddress,
-  getGeneralOrderSheet,
-  createGeneralOrderSheet,
+  getGeneralOrder,
+  createGeneralOrder,
   successGeneralPayment,
   failGeneralPayment,
+  createSubscriptionOrder,
 };
 
-const getSubscriptionOrderSheet = async (
+const getSubscriptionOrder = async (
   subscribeId: number
 ): Promise<SubscriptionOrderSheetResponse> => {
   const { data } = await axiosInstance.get(
@@ -39,7 +41,7 @@ const getSubscriptionOrderSheet = async (
 };
 
 // 일반 결제 주문 정보 조회
-const getGeneralOrderSheet = async (
+const getGeneralOrder = async (
   body: GeneralOrderSheetRequest
 ): Promise<GeneralOrderSheetResponse> => {
   const { data } = await axiosInstance.post("/api/orders/sheet/general", body);
@@ -48,7 +50,7 @@ const getGeneralOrderSheet = async (
 };
 
 // 일반 결제 주문 정보 저장
-const createGeneralOrderSheet = async (
+const createGeneralOrder = async (
   body: CreateGeneralOrderRequest
 ): Promise<CreateGeneralOrderResponse> => {
   const data = await axiosInstance.post("/api/orders/general", body);
@@ -74,6 +76,22 @@ const successGeneralPayment = async ({
 // 일반 결제 주문 실패
 const failGeneralPayment = async (id: number): Promise<any> => {
   const { data } = await axiosInstance.post(`/api/orders/${id}/general/fail`);
+
+  return data;
+};
+
+// 구독 결제 주문 정보 저장
+const createSubscriptionOrder = async ({
+  subscribeId,
+  body,
+}: {
+  subscribeId: number;
+  body: CreateSubscriptionOrderRequest;
+}): Promise<any> => {
+  const data = await axiosInstance.post(
+    `/api/orders/subscribe/${subscribeId}`,
+    body
+  );
 
   return data;
 };

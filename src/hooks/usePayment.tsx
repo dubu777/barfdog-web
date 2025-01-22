@@ -1,9 +1,22 @@
 import { useState, useEffect } from "react";
-import { GeneralOrderSheetResponse, GeneralPortOneResponse, PaymentMethod, SubscriptionOrderSheetResponse, SubscriptionPortOneResponse } from "@/types";
-import { CreateGeneralOrderRequest, CreateSubscriptionOrderRequest } from "@/types";
-import { PAYMENT_METHOD, PG_TYPE } from "@/constants";
+import {
+  GeneralOrderSheetResponse,
+  GeneralPortOneRequest,
+  OrderType,
+  PaymentMethod,
+  PaymentRequestParams,
+  PortOneResponseMap,
+  SubscriptionOrderSheetResponse,
+  SubscriptionPortOneRequest,
+  CreateGeneralOrderRequest,
+  CreateSubscriptionOrderRequest,
+} from "@/types";
+import { ORDER_TYPE, PAYMENT_METHOD, PG_TYPE } from "@/constants";
 import useDeviceState from "@/hooks/useDeviceState";
-import { getNaverPayGeneralPaymentParam, getNaverPaySubscriptionPaymentParam } from "@/utils/order/naverPayParams";
+import {
+  getNaverPayGeneralPaymentParam,
+  getNaverPaySubscriptionPaymentParam,
+} from "@/utils/order/naverPayParams";
 import { getPaymentDisplayAmount } from "@/utils/order/getPaymentDisplayAmount";
 
 interface GeneralPaymentDataParams {
@@ -11,23 +24,21 @@ interface GeneralPaymentDataParams {
   id: number;
   merchantUid: string;
   generalOrderSheetData: GeneralOrderSheetResponse;
-  paymentMethod: PaymentMethod;
+  isMobileDevice: boolean;
 }
 
 interface SubscriptionPaymentDataParams {
   requestBody: CreateSubscriptionOrderRequest;
-  customerUid: string;
   subscriptionOrderSheetData: SubscriptionOrderSheetResponse;
-  paymentMethod: PaymentMethod;
+  isMobileDevice: boolean;
 }
 
-/**
- * 공통 훅: 결제 처리 (일반 및 구독 결제)
- */
+
+// 공통 훅: 결제 처리
 export function usePayment() {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
 
-  // 아임포트 스크립트 로드
+  // IMP 스크립트 로드
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
@@ -40,11 +51,12 @@ export function usePayment() {
     };
   }, []);
 
-  // 결제 요청 함수
-  const requestPayment = (
-    paymentData: any,
-    callback: (response: GeneralPortOneResponse | SubscriptionPortOneResponse) => void
-  ) => {
+  // 결제 요청
+  const requestPayment = <T extends OrderType>({
+    orderType,
+    paymentData,
+    callback, // 결제 완료 후 콜백 함수
+  }: PaymentRequestParams<T>) => {
     if (!isScriptLoaded || !window.IMP) {
       console.error("IMP 스크립트가 로드되지 않았습니다.");
       return;
@@ -53,7 +65,15 @@ export function usePayment() {
     const IMP = window.IMP;
     IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
 
-    IMP.request_pay(paymentData, callback);
+    IMP.request_pay(paymentData, (response: PortOneResponseMap[T]) => {
+      if (orderType === ORDER_TYPE.GENERAL) {
+        callback(response);
+      } else if (orderType === ORDER_TYPE.SUBSCRIPTION) {
+        callback(response);
+      } else {
+        console.error("결제 응답 데이터가 올바르지 않습니다.");
+      }
+    });
   };
 
   return { requestPayment };
@@ -67,29 +87,31 @@ export function createGeneralPaymentData({
   id,
   merchantUid,
   generalOrderSheetData,
-  paymentMethod,
-}: GeneralPaymentDataParams) {
-  const { isMobileDevice } = useDeviceState();
-  const itemList = generalOrderSheetData.orderItemDtoList;
+  isMobileDevice,
+}: GeneralPaymentDataParams): GeneralPortOneRequest {
+  const { paymentMethod, paymentPrice, deliveryDto } = requestBody;
+  const { orderItemDtoList, email, name } = generalOrderSheetData;
+
+  const itemList = orderItemDtoList;
   const itemName = itemList.map((item) => item.name).join(", ");
 
   const baseData = {
     pg: PG_TYPE.GENERAL[paymentMethod],
     pay_method: PAYMENT_METHOD[paymentMethod],
     merchant_uid: merchantUid,
-    amount: requestBody.paymentPrice,
+    amount: paymentPrice,
     name: itemName,
-    buyer_email: generalOrderSheetData.email,
-    buyer_name: generalOrderSheetData.name,
-    buyer_tel: requestBody.deliveryDto.phone,
-    buyer_addr: `${requestBody.deliveryDto.street}, ${requestBody.deliveryDto.detailAddress}`,
-    buyer_postcode: requestBody.deliveryDto.zipcode,
+    buyer_email: email,
+    buyer_name: name,
+    buyer_tel: deliveryDto.phone ?? "",
+    buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
+    buyer_postcode: deliveryDto.zipcode ?? "",
     m_redirect_url: `${window.location.origin}/order/loading/${id}`,
   };
 
   if (paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPayGeneralPaymentParam({
-      items: generalOrderSheetData.orderItemDtoList,
+      items: orderItemDtoList,
       isMobile: isMobileDevice,
     });
 
@@ -106,11 +128,12 @@ export function createGeneralPaymentData({
  */
 export function createSubscriptionPaymentData({
   requestBody,
-  customerUid,
   subscriptionOrderSheetData,
-  paymentMethod,
-}: SubscriptionPaymentDataParams) {
-  const { isMobileDevice } = useDeviceState();
+  isMobileDevice,
+}: SubscriptionPaymentDataParams): SubscriptionPortOneRequest {
+  const { paymentMethod, paymentPrice, deliveryDto, customerUid } = requestBody;
+  const { email, name, subscribeDto, recipeNameList } =
+    subscriptionOrderSheetData;
 
   const baseData = {
     pg: PG_TYPE.SUBSCRIPTION[paymentMethod],
@@ -118,21 +141,21 @@ export function createSubscriptionPaymentData({
     merchant_uid: null,
     customer_uid: customerUid,
     amount: getPaymentDisplayAmount({
-      paymentMethod,
-      originAmount: requestBody.paymentPrice,
+      paymentMethod: paymentMethod,
+      originAmount: paymentPrice,
     }),
-    name: subscriptionOrderSheetData.recipeNameList.join(", "),
-    buyer_email: subscriptionOrderSheetData.email,
-    buyer_name: subscriptionOrderSheetData.name,
-    buyer_tel: requestBody.deliveryDto.phone,
-    buyer_addr: `${requestBody.deliveryDto.street}, ${requestBody.deliveryDto.detailAddress}`,
-    buyer_postcode: requestBody.deliveryDto.zipcode,
+    name: recipeNameList.join(", "),
+    buyer_email: email,
+    buyer_name: name,
+    buyer_tel: deliveryDto.phone ?? "",
+    buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
+    buyer_postcode: deliveryDto.zipcode ?? "",
     m_redirect_url: `${window.location.origin}/order/loading/subscribe`,
   };
 
   if (paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({
-      subscribeId: subscriptionOrderSheetData.subscribeDto.id,
+      subscribeId: subscribeDto.id,
       isMobile: isMobileDevice,
     });
 

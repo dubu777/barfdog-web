@@ -4,7 +4,7 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { getGeneralOrderSheet } from "../order";
+import { getGeneralOrder } from "../order";
 import { GeneralOrderSheetRequest, UseMutationCustomOptions } from "@/types";
 import { ORDER_TYPE } from "@/constants/order";
 import { queryKeys } from "@/constants";
@@ -13,11 +13,11 @@ import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { useRewardStore } from "@/store/order/useRewardStore";
 
 // 캐싱 및 상태 업데이트
-export function useGetGeneralOrderSheet(
+export function useGetGeneralOrder(
   mutationOptions?: UseMutationCustomOptions
 ) {
   const getCacheKey = (variables: GeneralOrderSheetRequest) => [
-    queryKeys.ORDER.GET_GENERAL_ORDER_SHEET,
+    queryKeys.ORDER.GET_GENERAL_ORDER,
     variables,
   ];
   const { updateOrderBody } = useOrderStore();
@@ -25,7 +25,7 @@ export function useGetGeneralOrderSheet(
   const { setUserTotalReward } = useRewardStore();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: getGeneralOrderSheet,
+    mutationFn: getGeneralOrder,
     onSuccess: (data, variables) => {
       // 캐싱
       const cacheKey = getCacheKey(variables);
@@ -82,12 +82,12 @@ export function useGetGeneralOrderSheet(
   });
 }
 // post 요청 캐싱
-export function useCachedGeneralOrderSheet(
+export function useCachedGeneralOrder(
   variables: GeneralOrderSheetRequest
 ) {
-  const cacheKey = [queryKeys.ORDER.GET_GENERAL_ORDER_SHEET, variables];
+  const cacheKey = [queryKeys.ORDER.GET_GENERAL_ORDER, variables];
   return useSuspenseQuery({
-    queryFn: () => getGeneralOrderSheet(variables),
+    queryFn: () => getGeneralOrder(variables),
     queryKey: cacheKey,
   });
 }

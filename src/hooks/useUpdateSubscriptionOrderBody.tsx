@@ -9,7 +9,7 @@ import { useOrderStore } from "@/store/order/useOrderStore";
 import { generateCustomerUid } from "@/utils/order/generateCustomerUid";
 
 export function useUpdateSubscriptionOrderBody(
-  subscriptionOrderSheetData: SubscriptionOrderSheetResponse
+  subscriptionOrderSheetData: SubscriptionOrderSheetResponse,
 ) {
   const { updateOrderBody } = useOrderStore();
   const { setDiscountTotal } = useDiscountStore();
