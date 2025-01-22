@@ -13,7 +13,7 @@ const PG_TYPE ={
     KAKAO_PAY: `kakaopay.${process.env.NEXT_PUBLIC_IAMPORT_GENERAL_EASYPAY_KAKAO_CID}`,
     NAVER_PAY: `naverpay`,
   },
-  SUBSCRIBE:{
+  SUBSCRIPTION:{
     CREDIT_CARD: `kcp_billing.${process.env.NEXT_PUBLIC_IAMPORT_SUBSCRIBE_SITECODE}`,
     KAKAO_PAY: `kakaopay.${process.env.NEXT_PUBLIC_IAMPORT_SUBSCRIBE_EASYPAY_KAKAO_CID}`,
     NAVER_PAY: `naverpay`

@@ -1,40 +1,58 @@
 import { useState, useEffect } from "react";
 
-export default function useDeviceState() {
-  const [deviceState, setDeviceState] = useState({
+// 반환 타입 정의
+interface DeviceState {
+  isMobileWidth: boolean;
+  isMobileDevice: boolean;
+  deviceWidth: number;
+}
+
+// Debounce 함수 추가
+const debounce = (func: () => void, delay: number) => {
+  let timer: NodeJS.Timeout;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(func, delay);
+  };
+};
+
+export default function useDeviceState(): DeviceState {
+  const [deviceState, setDeviceState] = useState<DeviceState>({
     isMobileWidth: false,
     isMobileDevice: false,
     deviceWidth: 0,
   });
 
+  // 모바일 디바이스 여부 확인 함수
+  const checkIsMobileDevice = (): boolean => {
+    if ("userAgentData" in navigator) {
+      return (navigator as any).userAgentData.mobile || false;
+    }
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  };
+
+  // 디바이스 상태 업데이트 함수
+  const updateDeviceState = () => {
+    const deviceWidth = window.innerWidth;
+    setDeviceState({
+      isMobileWidth: deviceWidth <= 600,
+      isMobileDevice: checkIsMobileDevice(),
+      deviceWidth,
+    });
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-    const getIsMobileDevice = () =>
-      ("userAgentData" in navigator
-        ? (navigator as any).userAgentData.mobile
-        : /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) || false;
-    const updateDeviceState = () => {
-      const deviceWidth = window.innerWidth;
-      const isMobileWidth = deviceWidth <= 600;
-      const isMobileDevice = getIsMobileDevice();
-
-      setDeviceState({
-        isMobileWidth, // 모바일 너비
-        isMobileDevice, //  모바일 기기
-        deviceWidth,
-      });
-    };
 
     // 초기 상태 설정
     updateDeviceState();
 
-    // 리사이즈 이벤트 등록
-    window.addEventListener("resize", updateDeviceState);
+    // 리사이즈 이벤트 핸들러에 debounce 적용
+    const debouncedUpdate = debounce(updateDeviceState, 100);
+    window.addEventListener("resize", debouncedUpdate);
 
     return () => {
-      // 리스너 제거
-      window.removeEventListener("resize", updateDeviceState);
+      window.removeEventListener("resize", debouncedUpdate);
     };
   }, []);
 

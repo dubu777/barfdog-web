@@ -22,6 +22,8 @@ import PaymentMethod from "../paymentMethod/PaymentMethod";
 import RewardUsage from "../reward/RewardUsage";
 import OrderSummary from "../orderSummary/OrderSummary";
 import OrderItem from "../orderItem/OrderItem";
+import { getNaverPayGeneralPaymentParam } from "@/utils/order/naverPayParams";
+import useDeviceState from "@/hooks/useDeviceState";
 
 interface GeneralOrderContainerProps {}
 
@@ -32,6 +34,7 @@ interface GeneralPaymentProps {
 }
 
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
+  const {isMobileDevice} = useDeviceState();
   // 상태관리
   const { generalOrderBody, getRequestBody } = useOrderStore();
   const { paymentMethod } = usePaymentStore();
@@ -65,25 +68,20 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     };
   }, []);
 
-  // 일반 결제 요청 함수
-  const generalPayment = ({
-    requestBody,
-    id,
-    merchantUid,
-  }: GeneralPaymentProps) => {
-    if (!isScriptLoaded || !window.IMP) {
-      console.error("IMP 스크립트가 로드되지 않았습니다.");
-      return;
-    }
-    const IMP = window.IMP;
-    IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
+// 포트원 request data 생성 함수  
+  const createPaymentData = (
+    requestBody: CreateGeneralOrderRequest,
+    id: number,
+    merchantUid: string
+  ) => {
+
     const itemList = generalOrderSheetData.orderItemDtoList;
     const firstItemName = `${itemList[0].name}`;
     const itemName = `${firstItemName} ${
       itemList.length > 1 ? `외 ${itemList.length - 1}개` : ""
     }`;
-    // 포트원 request
-    const paymentData = {
+
+    const baseData = {
       pg: PG_TYPE.GENERAL[paymentMethod],
       pay_method: PAYMENT_METHOD[paymentMethod],
       merchant_uid: merchantUid,
@@ -97,11 +95,41 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       m_redirect_url: `${window.location.origin}/order/loading/${id}`,
     };
 
-    IMP.request_pay(paymentData, async (res: GeneralPortOneResponse) => {
-      const { success, imp_uid, merchant_uid, error_msg } = res;
-      if (success) {
-        // 결제 성공
-        try {
+    if (paymentMethod === "NAVER_PAY") {
+      const naverPayData = getNaverPayGeneralPaymentParam({
+        items: generalOrderSheetData.orderItemDtoList,
+        isMobile: isMobileDevice,
+      });
+
+      if (!naverPayData) throw new Error("네이버페이 결제 데이터 생성 실패");
+
+      return { ...baseData, ...naverPayData };
+    }
+
+    return baseData;
+  };
+
+
+  // 일반 결제 요청 함수
+  const generalPayment = ({
+    requestBody,
+    id,
+    merchantUid,
+  }: GeneralPaymentProps) => {
+    if (!isScriptLoaded || !window.IMP) {
+      console.error("IMP 스크립트가 로드되지 않았습니다.");
+      return;
+    }
+
+    const IMP = window.IMP;
+    IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
+
+  try {
+      const paymentData = createPaymentData(requestBody, id, merchantUid);
+
+      IMP.request_pay(paymentData, async (res: GeneralPortOneResponse) => {
+        const { success, imp_uid, merchant_uid, error_msg } = res;
+        if (success) {
           successGeneralPayment(
             {
               id,
@@ -116,25 +144,17 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
                 window.location.href = `/order/order-completed`;
                 clearOrderItemDtoList();
               },
-              onError: (error) => {
-                console.error("결제 성공 처리 중 에러 발생:", error);
-              },
             }
           );
-        } catch (error) {
-          console.error("결제 성공 처리 에러", error);
-        }
-      } else {
-        // 결제 실패 시 처리
-        try {
+        } else {
           failGeneralPayment(id);
           console.error("결제 실패:", error_msg);
           window.location.href = `/order/order-failed`;
-        } catch (error) {
-          console.error("결제 실패 처리 에러", error);
         }
-      }
-    });
+      });
+    } catch (error) {
+      console.error("결제 데이터 생성 오류:", error);
+    }
   };
 
   // 결제하기 클릭시 호출
