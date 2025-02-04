@@ -14,9 +14,10 @@ export const loginButton = recipe({
     justifyContent: 'center',
     gap: '8px',
     position: 'relative',
+    cursor: 'pointer'
   },
   variants: {
-    type: {
+    provider: {
       kakao: {
         background: themeVars.backgroundColors.kakao,
         color: themeVars.colors.black,

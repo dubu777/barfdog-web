@@ -35,11 +35,13 @@ interface SignUpFormValues {
 		receiveEmail: boolean;
 		over14YearsOld: boolean;
 		thirdPolicy?: boolean;
-	},
+	};
 	allianceInfo?: {
 		alliance: 'cb' | null,
 		alliancePolicy: boolean,
-	},
+	};
+	provider?: string;
+	providerId?: string;
 }
 
 type SignUpTermsModal = 'servicePolicy' | 'privacyPolicy' | 'alliancePolicy';

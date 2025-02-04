@@ -1,6 +1,7 @@
+import { useState } from "react";
 import * as styles from './ImageLoadingSpinner.css';
 import Image from "next/image";
-import { useState } from "react";
+import Loader from "@/components/common/loader/Loader";
 
 interface ImageLoadingSpinnerProps {
   src: string;
@@ -11,10 +12,6 @@ interface ImageLoadingSpinnerProps {
   objectFit?: 'cover' | 'contain';
   className?: string;
 }
-
-const Loader = () => (
-  <span className={styles.loader} />
-)
 
 const ImageLoadingSpinner = ({ src, alt, fill = false, width, height, objectFit = 'cover', className }: ImageLoadingSpinnerProps) => {
   const [loading, setLoading] = useState(true);

@@ -1,6 +1,7 @@
 import * as yup from 'yup';
-import { SignUpFormValues } from "@/types/auth/signUp";
-import { FindUserEmail, TemporaryPassword } from "@/types/auth/findAccount";
+import { FindUserEmail, TemporaryPassword, ConnectSnsPassword } from "@/types/auth/findAccount";
+import { LoginUserInfo } from "@/types";
+import { SignUpFormValues } from '@/types/auth/signUp';
 
 export {
 	signUpSchema,
@@ -11,6 +12,8 @@ export {
 	defaultSendTempPwValues,
 	loginSchema,
 	defaultLoginValues,
+	connectSnsSchema,
+	defaultConnectSnsValue,
 };
 
 const signUpSchema = yup.object().shape({
@@ -40,32 +43,46 @@ const signUpSchema = yup.object().shape({
 	recommendCode: yup.string().max(20, '추천코드는 최대 20자까지 입력 가능합니다.'),
 })
 
-const defaultSignUpValues: SignUpFormValues = {
-	name: '',
-	email: '',
-	password: '',
-	confirmPassword: '',
-	phoneNumber: '',
-	address: {
-		zipcode: '',
-		city: '',
-		street: '',
-		detailAddress: '',
-	},
-	birthday: '',
-	gender: 'NONE',
-	recommendCode: '',
-	agreement: {
-		servicePolicy: false,
-		privacyPolicy: false,
-		receiveSms: false,
-		receiveEmail: false,
-		over14YearsOld: false,
-	},
-	allianceInfo: {
-		alliance: null,
-		alliancePolicy: false,
-	},
+const defaultSignUpValues = (loginUserInfo: LoginUserInfo | undefined) => {
+	const signUpValues: SignUpFormValues = {
+		name: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+		phoneNumber: '',
+		address: {
+			zipcode: '',
+			city: '',
+			street: '',
+			detailAddress: '',
+		},
+		birthday: '',
+		gender: 'NONE',
+		recommendCode: '',
+		agreement: {
+			servicePolicy: false,
+			privacyPolicy: false,
+			receiveSms: false,
+			receiveEmail: false,
+			over14YearsOld: false,
+		},
+		allianceInfo: {
+			alliance: null,
+			alliancePolicy: false,
+		},
+	}
+	if (loginUserInfo) {
+		const { data, provider, providerId } = loginUserInfo;
+		signUpValues.name = data.name;
+		signUpValues.email = data.email;
+		signUpValues.phoneNumber = data.mobile.split('-').join('');
+		signUpValues.birthday = new Date(`${data.birthyear}-${data.birthday}`);
+		signUpValues.gender = data.gender === 'F' ? 'FEMALE' : data.gender === 'M' ? 'MALE' : 'NONE';
+
+		signUpValues.provider = provider;
+		signUpValues.providerId = providerId;
+	}
+	return signUpValues;
 };
 
 const findUserEmailSchema = yup.object().shape({
@@ -113,4 +130,14 @@ const defaultLoginValues = (initialUserEmail: string | null) => {
 	} 
 };
 
+const connectSnsSchema = yup.object().shape({
+	password: yup
+		.string()
+		.min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+		.matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
+		.required('비밀번호는 필수입니다.'),
+})
 
+const defaultConnectSnsValue: ConnectSnsPassword = {
+	password: '',
+}

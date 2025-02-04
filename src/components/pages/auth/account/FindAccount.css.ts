@@ -41,3 +41,22 @@ export const resultButtons = style({
 	flexDirection: 'column',
 	gap: '10px',
 })
+
+export const connectSnsContainer = style({
+	padding: '0 100px',
+	height: '100vh',
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	alignItems: 'center',
+})
+
+export const connectSnsPassword = style({
+	width: '60%',
+	margin: '40px auto 20px',
+})
+
+export const connectSnsSubmitButton = style({
+	width: '60%',
+	margin: '0 auto',
+})
