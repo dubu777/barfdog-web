@@ -1,21 +1,23 @@
 import axiosInstance from "../axiosInstance";
 import {
   AddressResponse,
-  CreateGeneralOrderRequest,
-  CreateGeneralOrderResponse,
-  CreateSubscriptionOrderRequest,
+  SaveGeneralOrderRequest,
+  SaveOrderResponse,
+  SaveSubscriptionOrderRequest,
   GeneralOrderSheetRequest,
   GeneralOrderSheetResponse,
   SubscriptionOrderDto,
   SubscriptionOrderSheetResponse,
   SuccessGeneralOrderResponse,
   SuccessGeneralPaymentRequest,
+  CreateSubscriptionOrderRequest,
 } from "@/types";
 import {
   GeneralOrderData,
   MergeOrderAndRecipe,
   SubscriptionOrderData,
 } from "@/types";
+import axios from "axios";
 
 export {
   getOrderDetail,
@@ -24,9 +26,10 @@ export {
   getSubscriptionOrder,
   getAddress,
   getGeneralOrder,
-  createGeneralOrder,
+  saveGeneralOrder,
   successGeneralPayment,
   failGeneralPayment,
+  saveSubscriptionOrder,
   createSubscriptionOrder,
 };
 
@@ -50,9 +53,9 @@ const getGeneralOrder = async (
 };
 
 // 일반 결제 주문 정보 저장
-const createGeneralOrder = async (
-  body: CreateGeneralOrderRequest
-): Promise<CreateGeneralOrderResponse> => {
+const saveGeneralOrder = async (
+  body: SaveGeneralOrderRequest
+): Promise<SaveOrderResponse> => {
   const data = await axiosInstance.post("/api/orders/general", body);
 
   return data;
@@ -81,13 +84,13 @@ const failGeneralPayment = async (id: number): Promise<any> => {
 };
 
 // 구독 결제 주문 정보 저장
-const createSubscriptionOrder = async ({
+const saveSubscriptionOrder = async ({
   subscribeId,
   body,
 }: {
   subscribeId: number;
-  body: CreateSubscriptionOrderRequest;
-}): Promise<any> => {
+  body: SaveSubscriptionOrderRequest;
+}): Promise<SaveOrderResponse> => {
   const data = await axiosInstance.post(
     `/api/orders/subscribe/${subscribeId}`,
     body
@@ -96,6 +99,21 @@ const createSubscriptionOrder = async ({
   return data;
 };
 
+
+const createSubscriptionOrder = async (body: CreateSubscriptionOrderRequest
+): Promise<any> => {
+  const localOrigin = window.location.origin;
+  const data = await axios({
+    method: 'POST',
+    url: `${localOrigin}/api/iamport/iamportSubscribe`,
+    data: body,
+    timeout: 60000,
+  })
+
+  return data;
+};
+
+// 배송지 정보 조회
 const getAddress = async (): Promise<AddressResponse[]> => {
   const { data } = await axiosInstance.get(`/api/address`);
 

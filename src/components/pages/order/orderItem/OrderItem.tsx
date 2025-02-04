@@ -131,7 +131,6 @@ export default function OrderItem({
                   {orderItem}
                 </div>
               ))}
-              <div>
                 <button
                   className={styles.couponButton({
                     isApplied: isAppliedCoupon,
@@ -144,7 +143,6 @@ export default function OrderItem({
                 >
                   쿠폰 적용
                 </button>
-              </div>
             </div>
           )}
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>

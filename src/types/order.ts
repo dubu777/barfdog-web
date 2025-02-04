@@ -18,11 +18,11 @@ export type {
   OrderItemDto,
   OrderItem,
   GeneralOrderItemDto,
-  CreateGeneralOrderResponse,
-  CreateGeneralOrderRequest,
+  SaveOrderResponse,
+  SaveGeneralOrderRequest,
   OrderType,
   DeliveryDto,
-  CreateSubscriptionOrderRequest,
+  SaveSubscriptionOrderRequest,
   OrderTypeKey,
   SuccessGeneralPaymentRequest,
   SuccessGeneralOrderResponse,
@@ -30,7 +30,7 @@ export type {
 
 interface SuccessGeneralPaymentRequest {
   impUid: string;
-  merchantUid: string;
+  merchantUid: string | null;
   discountReward: number;
 }
 
@@ -45,7 +45,8 @@ interface SuccessGeneralOrderResponse {
   };
 }
 
-interface CreateSubscriptionOrderRequest {
+
+interface SaveSubscriptionOrderRequest {
   customerUid: string; // 고유 사용자 ID
   memberCouponId?: number | null; // 적용된 쿠폰 ID
   deliveryDto: DeliveryDto; // 배송지 정보
@@ -65,8 +66,8 @@ interface CreateSubscriptionOrderRequest {
   brochure: boolean; // 브로슈어 수령 여부
 }
 
-// 일반 결제 주문 정보 저장 응답
-interface CreateGeneralOrderResponse {
+// 구독, 일반 결제 주문 정보 저장 응답
+interface SaveOrderResponse {
   data: {
     id: number;
     merchantUid: string;
@@ -77,7 +78,7 @@ interface CreateGeneralOrderResponse {
 }
 
 // 일반 결제 주문 정보 저장 요청
-interface CreateGeneralOrderRequest {
+interface SaveGeneralOrderRequest {
   orderItemDtoList: OrderItemDto[];
   deliveryDto: DeliveryDto;
   deliveryId: number | null;

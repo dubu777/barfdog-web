@@ -34,6 +34,7 @@ export const couponButton = recipe({
   padding: '2px 3px',
   borderRadius: '5px',
   fontSize: themeVars.fontSize["text-sm"],
+  width: '100px',
   },
   variants: {
     isApplied: {
@@ -59,6 +60,5 @@ export const subscriptionItemWrapper = style({
   width: '100%',
   gap: '10px',
   padding: '20px',
-  border: `1px solid ${themeVars.borderColors.grey79}`,
   borderRadius: '20px',
 })

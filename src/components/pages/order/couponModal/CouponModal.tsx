@@ -34,6 +34,7 @@ export default function CouponModal({
   const { updateAppliedCoupon, isAppliedCoupon } = useOrderStore();
   const [couponDiscount, setCouponDiscount] = useState<number>(0);
 
+
   // 쿠폰 적용 함수
   const handleApplyCoupon = () => {
     if (selectedCoupon) {

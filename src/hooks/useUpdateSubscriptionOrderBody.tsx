@@ -1,18 +1,20 @@
 import { useEffect } from "react";
 import {
-  CreateSubscriptionOrderRequest,
+  SaveSubscriptionOrderRequest,
   SubscriptionOrderSheetResponse,
 } from "@/types";
-import { useDiscountStore } from "@/store/order/useDiscountStore";
 import { ORDER_TYPE } from "@/constants";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import { generateCustomerUid } from "@/utils/order/generateCustomerUid";
+import { useRewardStore } from "@/store/order/useRewardStore";
+import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 
 export function useUpdateSubscriptionOrderBody(
   subscriptionOrderSheetData: SubscriptionOrderSheetResponse,
 ) {
   const { updateOrderBody } = useOrderStore();
-  const { setDiscountTotal } = useDiscountStore();
+  const { setDeliveryDto } = useDeliveryStore();
+  const { setUserTotalReward } = useRewardStore();
   const customerUid = generateCustomerUid();
 
   useEffect(() => {
@@ -22,13 +24,13 @@ export function useUpdateSubscriptionOrderBody(
       nextDeliveryDate,
       name,
       phoneNumber,
+      reward,
     } = subscriptionOrderSheetData;
 
     const discountGrade = subscribeDto.discountGrade || 0;
 
-    setDiscountTotal(subscribeDto.nextPaymentPrice - discountGrade);
 
-    const updatedBody: CreateSubscriptionOrderRequest = {
+    const updatedBody: SaveSubscriptionOrderRequest = {
       customerUid,
       memberCouponId: null,
       deliveryDto: {
@@ -44,7 +46,7 @@ export function useUpdateSubscriptionOrderBody(
       discountGrade,
       discountReward: 0,
       discountSubscriptionMonth: 0,
-      discountTotal: subscribeDto.nextPaymentPrice - discountGrade,
+      discountTotal: 0,
       nextDeliveryDate,
       orderPrice: subscribeDto.nextPaymentPrice,
       overDiscount: 0,
@@ -56,5 +58,14 @@ export function useUpdateSubscriptionOrderBody(
     };
 
     updateOrderBody(updatedBody, ORDER_TYPE.SUBSCRIPTION);
+    setDeliveryDto({
+      name: name, // 수령자 이름
+      phone: phoneNumber,
+      zipcode: defaultAddress.zipcode,
+      street: defaultAddress.street,
+      detailAddress: defaultAddress.detailAddress,
+      request: "",
+    });
+    setUserTotalReward(reward);
   }, [subscriptionOrderSheetData]);
 }

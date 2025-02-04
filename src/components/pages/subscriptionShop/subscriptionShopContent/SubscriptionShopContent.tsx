@@ -40,6 +40,8 @@ export default function SubscriptionShopContent({
   const { data: discountData } = useGetPlanDiscount();
   const { mutate: updateSubscription } = useUpdateSubscription();
 
+  console.log("recipeData", recipeData);
+  
 
   // 레시피, 플랜 상태 관리 커스텀 훅
   const {
@@ -100,6 +102,7 @@ export default function SubscriptionShopContent({
       oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
       subscribeItemList: null,
     };
+console.log("body", body);
 
     const validationError = validatePaymentBody(body);
     if (validationError) {
@@ -114,7 +117,11 @@ export default function SubscriptionShopContent({
             `/order/order-sheet/subscription?subscribeId=${recipeData.subscribeId}`
           );
         },
-      }
+        onError: (err) => {
+          console.error("updateSubscription-error", err);
+        },
+      },
+
     );
   };
 

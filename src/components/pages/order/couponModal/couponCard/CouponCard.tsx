@@ -41,9 +41,10 @@ export default function CouponCard({
     couponDiscountAmount
   );
 
-  useEffect(() => {
-    setCouponDiscount(couponDiscountAmount);
-  }, [couponDiscountAmount]);
+  const handleSelectCoupon = () => {
+    updateSelectedCoupon(coupon.memberCouponId, couponDiscountAmount);
+    setCouponDiscount(couponDiscountAmount); // 상태 업데이트를 직접 호출
+  };
 
   // 쿠폰이 유효하지 않거나 이미 적용된 쿠폰인 경우 null 반환
   const isValidCoupons =
@@ -56,9 +57,7 @@ export default function CouponCard({
       className={styles.couponCardContainer({
         isSelected: selectedCouponId === coupon.memberCouponId,
       })}
-      onClick={() =>
-        updateSelectedCoupon(coupon.memberCouponId, couponDiscountAmount)
-      }
+      onClick={handleSelectCoupon}
     >
       <div>{coupon.name}</div>
       <div>{formatDate(coupon.expiredDate, "onlyDate")}</div>

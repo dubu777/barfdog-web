@@ -71,7 +71,7 @@ interface DefaultAddress {
 
 interface SubscribeDto {
   id: number;
-  plan: string; 
+  plan: PlanName; 
   nextPaymentPrice: number;
   discountGrade: number;
   oneMealGramsPerRecipe: string;

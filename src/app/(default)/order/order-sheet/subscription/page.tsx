@@ -7,8 +7,9 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
+
 import SubscriptionOrderContainer from "@/components/pages/order/subscriptionOrderContainer/SubscriptionOrderContainer";
+import { prefetchGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
 
 interface SubscriptionPageProps {
   searchParams: Record<string, string | string[] | undefined>;

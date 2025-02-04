@@ -2,7 +2,7 @@
 
 import * as styles from "../OrderSheetCommon.css";
 import useModal from "@/hooks/useModal";
-import { DeliveryDto, OrderType } from "@/types";
+import { OrderType } from "@/types";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import DeliveryAddressModal from "../deliveryAddressModal/DeliveryAddressModal";

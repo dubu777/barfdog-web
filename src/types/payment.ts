@@ -1,7 +1,22 @@
 import { GeneralOrderItem, OrderType } from "./order";
 
-
-export type { PaymentMethodType, PackageInfo, GeneralPortOneResponse, SubscriptionPortOneResponse, NaverPayGeneralParamInput, NaverPayGeneralParamOutput, NaverPayGeneralProducts, NaverPaySubscriptionInput, NaverPaySubscriptionOutput, GeneralPortOneRequest, SubscriptionPortOneRequest, PaymentRequestParams, PortOneRequestMap, PortOneResponseMap };
+export type {
+  PaymentMethodType,
+  PackageInfo,
+  GeneralPortOneResponse,
+  SubscriptionPortOneResponse,
+  NaverPayGeneralParamInput,
+  NaverPayGeneralParamOutput,
+  NaverPayGeneralProducts,
+  NaverPaySubscriptionInput,
+  NaverPaySubscriptionOutput,
+  GeneralPortOneRequest,
+  SubscriptionPortOneRequest,
+  PaymentRequestParams,
+  PortOneRequestMap,
+  PortOneResponseMap,
+  CreateSubscriptionOrderRequest,
+};
 interface PackageInfo {
   value: number | null;
   label: string;
@@ -31,7 +46,6 @@ interface PackageInfo {
 //   error_msg?: string; // 카드 승인 번호 (카드 결제 시)
 // }
 
-
 // 정기 결제 데이터 인터페이스
 interface NaverPaySubscriptionOutput {
   naverPopupMode: boolean;
@@ -44,7 +58,6 @@ interface NaverPaySubscriptionInput {
   isMobile: boolean;
 }
 
-
 // 일반 상품 정보 인터페이스
 interface NaverPayGeneralProducts {
   categoryType: NaverPayCategoryType;
@@ -53,7 +66,6 @@ interface NaverPayGeneralProducts {
   name: string; // 상품명
   count: number; // 상품 수량
 }
-
 
 interface NaverPayGeneralItem {
   itemId: number;
@@ -118,18 +130,19 @@ interface CommonPortOneResponse {
   success: boolean;
   imp_uid: string; // 아임포트 거래 고유 ID
   error_msg?: string; // 에러 메시지 (결제 실패 시)
+  merchant_uid: string | null; // 상점 거래 고유 ID
 }
 
 // GeneralPortOneResponse 정의
 interface GeneralPortOneResponse extends CommonPortOneResponse {
-  merchant_uid: string; // 상점 거래 고유 ID
+   // 상점 거래 고유 ID
 }
 
 // SubscriptionPortOneResponse 정의
 interface SubscriptionPortOneResponse extends CommonPortOneResponse {
   customer_uid: string; // 상점 거래 고유 ID
-  error_code: number; // 에러 코드
 }
+
 
 // 결제 응답 타입 매핑
 type PortOneResponseMap = {
@@ -150,12 +163,23 @@ interface PaymentRequestParams<T extends OrderType> {
   callback: (response: PortOneResponseMap[T]) => void;
 }
 
+interface CreateSubscriptionOrderRequest {
+  customer_uid: string;
+  memberCouponId?: number | null;
+  amount: number;
+  name: string;
+  buyer_name: string;
+  buyer_tel: string;
+  buyer_email: string;
+  buyer_addr: string;
+  buyer_postcode: string;
+}
 
 // 네이버페이 카테고리 타입 및 ID 정의
-type NaverPayCategoryType = 'PRODUCT' | 'FOOD' | 'ETC';
-type NaverPayCategoryId = 'GENERAL' | 'DELIVERY' | 'ETC';
+type NaverPayCategoryType = "PRODUCT" | "FOOD" | "ETC";
+type NaverPayCategoryId = "GENERAL" | "DELIVERY" | "ETC";
 
 // 주문 아이템 타입 및 인터페이스
-type NaverPayGeneralItemType = 'RAW' | 'GOODS' | 'TOPPING';
+type NaverPayGeneralItemType = "RAW" | "GOODS" | "TOPPING";
 
 type PaymentMethodType = "card" | "naverpay" | "kakaopay";

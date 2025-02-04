@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import {
-  CreateGeneralOrderRequest,
-  CreateSubscriptionOrderRequest,
+  SaveGeneralOrderRequest,
+  SaveSubscriptionOrderRequest,
   OrderType,
 } from "@/types";
 import {
@@ -16,17 +16,17 @@ import { useDiscountStore } from "./useDiscountStore";
 import { useRewardStore } from "./useRewardStore";
 
 interface OrderState {
-  generalOrderBody: CreateGeneralOrderRequest;
-  subscriptionOrderBody: CreateSubscriptionOrderRequest;
+  generalOrderBody: SaveGeneralOrderRequest;
+  subscriptionOrderBody: SaveSubscriptionOrderRequest;
   updateOrderBody: (
     updates: Partial<
-      CreateGeneralOrderRequest | CreateSubscriptionOrderRequest
+      SaveGeneralOrderRequest | SaveSubscriptionOrderRequest
     >,
     orderType: OrderType
   ) => void;
   getRequestBody: (
     orderType: OrderType
-  ) => CreateGeneralOrderRequest | CreateSubscriptionOrderRequest;
+  ) => SaveGeneralOrderRequest | SaveSubscriptionOrderRequest;
   updateAppliedCoupon: (
     type: OrderType,
     itemId: number | null,
@@ -67,7 +67,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     const { appliedReward } = useRewardStore.getState();
 
     const commonBody = {
-      deliveryDto,
+      // deliveryDto,
       paymentMethod,
       discountCoupon,
       discountReward: appliedReward,
@@ -77,10 +77,18 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     };
 
     if (orderType === ORDER_TYPE.GENERAL) {
-      return { ...generalOrderBody, ...commonBody, deliveryId } as CreateGeneralOrderRequest;
+      return { ...generalOrderBody, ...commonBody, deliveryId } as SaveGeneralOrderRequest;
     }
 
-    return { ...subscriptionOrderBody, ...commonBody } as CreateSubscriptionOrderRequest;
+    return { ...subscriptionOrderBody, ...commonBody,  deliveryDto: {
+        detailAddress: deliveryDto.detailAddress,
+        name: deliveryDto.name,
+        phone: deliveryDto.phone,
+        request: deliveryDto.request,
+        street: deliveryDto.street,
+        zipcode: deliveryDto.zipcode,
+        deliveryName: "테스트 이름"
+      }  } as SaveSubscriptionOrderRequest;
   },
     // 쿠폰 적용
     updateAppliedCoupon: (type, itemId, itemPrice, couponId, discountAmount) =>

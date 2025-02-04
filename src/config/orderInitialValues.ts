@@ -1,10 +1,10 @@
 import {
-  CreateGeneralOrderRequest,
-  CreateSubscriptionOrderRequest,
+  SaveGeneralOrderRequest,
+  SaveSubscriptionOrderRequest,
   DeliveryDto,
 } from "@/types";
 
-const initialGeneralOrderBody: CreateGeneralOrderRequest = {
+const initialGeneralOrderBody: SaveGeneralOrderRequest = {
   orderItemDtoList: [],
   deliveryDto: {
     name: "",
@@ -27,7 +27,7 @@ const initialGeneralOrderBody: CreateGeneralOrderRequest = {
   brochure: false,
 };
 
-const initialSubscriptionOrderBody: CreateSubscriptionOrderRequest = {
+const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
   customerUid: "",
   memberCouponId: null,
   deliveryDto: {

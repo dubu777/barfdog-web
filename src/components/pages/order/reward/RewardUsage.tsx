@@ -65,7 +65,7 @@ export default function RewardUsage({}: RewardUsageProps) {
         <InputField
           {...reward.getInputProps("appliedReward")}
           placeholder="0"
-          type="number"
+          type="text"
           error={reward.errors.appliedReward}
           touched={reward.touched.appliedReward}
           onChange={handleInputChange}

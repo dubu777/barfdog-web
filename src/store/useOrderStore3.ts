@@ -5,8 +5,8 @@ import {
 } from "@/config/orderInitialValues";
 import { ORDER_TYPE } from "@/constants";
 import {
-  CreateGeneralOrderRequest,
-  CreateSubscriptionOrderRequest,
+  SaveGeneralOrderRequest,
+  SaveSubscriptionOrderRequest,
   DeliveryDto,
   OrderType,
   PaymentMethod,
@@ -14,8 +14,8 @@ import {
 import { create } from "zustand";
 
 interface OrderState {
-  generalOrderBody: CreateGeneralOrderRequest;
-  subscriptionOrderBody: CreateSubscriptionOrderRequest;
+  generalOrderBody: SaveGeneralOrderRequest;
+  subscriptionOrderBody: SaveSubscriptionOrderRequest;
   selectedCoupon: { couponId: number; discountAmount: number } | null;
   deliveryDto: DeliveryDto;
   paymentMethod: PaymentMethod;
@@ -43,13 +43,13 @@ interface OrderState {
   setDeliveryId: (deliveryId: number | null) => void;
   updateOrderBody: (
     updates: Partial<
-      CreateGeneralOrderRequest | CreateSubscriptionOrderRequest
+      SaveGeneralOrderRequest | SaveSubscriptionOrderRequest
     >,
     orderType: OrderType
   ) => void;
   getRequestBody: (
     orderType: OrderType
-  ) => CreateGeneralOrderRequest | CreateSubscriptionOrderRequest;
+  ) => SaveGeneralOrderRequest | SaveSubscriptionOrderRequest;
   setSelectedCoupon: (
     coupon: { couponId: number; discountAmount: number } | null
   ) => void;
@@ -178,13 +178,13 @@ export const useOrderStore3 = create<OrderState>((set, get) => ({
         ...generalOrderBody,
         ...commonBody,
         deliveryId,
-      } as CreateGeneralOrderRequest;
+      } as SaveGeneralOrderRequest;
     }
 
     return {
       ...subscriptionOrderBody,
       ...commonBody,
-    } as CreateSubscriptionOrderRequest;
+    } as SaveSubscriptionOrderRequest;
   },
   setDeliveryDto: (delivery) => set(() => ({ deliveryDto: delivery })),
   setPaymentMethod: (method) => set(() => ({ paymentMethod: method })),

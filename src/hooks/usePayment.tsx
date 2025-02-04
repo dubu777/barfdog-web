@@ -8,8 +8,8 @@ import {
   PortOneResponseMap,
   SubscriptionOrderSheetResponse,
   SubscriptionPortOneRequest,
-  CreateGeneralOrderRequest,
-  CreateSubscriptionOrderRequest,
+  SaveGeneralOrderRequest,
+  SaveSubscriptionOrderRequest,
 } from "@/types";
 import { ORDER_TYPE, PAYMENT_METHOD, PG_TYPE } from "@/constants";
 import useDeviceState from "@/hooks/useDeviceState";
@@ -20,7 +20,7 @@ import {
 import { getPaymentDisplayAmount } from "@/utils/order/getPaymentDisplayAmount";
 
 interface GeneralPaymentDataParams {
-  requestBody: CreateGeneralOrderRequest;
+  requestBody: SaveGeneralOrderRequest;
   id: number;
   merchantUid: string;
   generalOrderSheetData: GeneralOrderSheetResponse;
@@ -28,7 +28,7 @@ interface GeneralPaymentDataParams {
 }
 
 interface SubscriptionPaymentDataParams {
-  requestBody: CreateSubscriptionOrderRequest;
+  requestBody: SaveSubscriptionOrderRequest;
   subscriptionOrderSheetData: SubscriptionOrderSheetResponse;
   isMobileDevice: boolean;
 }
