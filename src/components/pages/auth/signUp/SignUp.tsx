@@ -7,10 +7,12 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { defaultSignUpValues, signUpSchema } from "@/utils/validation/authValidation";
 import { SignUpFormValues } from "@/types/auth/signUp";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const SignUp = () => {
-	const { handleSubmit, control, watch, errors, setValue } = useFormHandler<SignUpFormValues>(signUpSchema, defaultSignUpValues);
-
+	const { loginUserInfo } = useAuthStore();
+	const { handleSubmit, control, watch, errors, setValue } = useFormHandler<SignUpFormValues>(signUpSchema, defaultSignUpValues(loginUserInfo));
+	console.log('loginUserInfo', loginUserInfo)
 	const onSubmit = (data: SignUpFormValues) => {
 		console.log('formData', data);
 	}

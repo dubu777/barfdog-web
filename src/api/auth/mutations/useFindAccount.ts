@@ -4,16 +4,16 @@ import { findUserEmail, sendTemporaryPassword } from "@/api/auth/auth";
 
 export { useFindUserEmail, useSendTemporaryPassword };
 
-function useFindUserEmail(queryOptions?: UseMutationCustomOptions) {
+function useFindUserEmail(mutationOptions?: UseMutationCustomOptions) {
 	return useMutation({
 		mutationFn: ({name, phoneNumber}: { name: string, phoneNumber: string }) => findUserEmail(name, phoneNumber),
-		...queryOptions,
+		...mutationOptions,
 	})
 }
 
-function useSendTemporaryPassword(queryOptions?: UseMutationCustomOptions) {
+function useSendTemporaryPassword(mutationOptions?: UseMutationCustomOptions) {
 	return useMutation({
 		mutationFn: (body: { email: string, name: string, phoneNumber: string }) => sendTemporaryPassword(body),
-		...queryOptions,
+		...mutationOptions,
 	})
 }

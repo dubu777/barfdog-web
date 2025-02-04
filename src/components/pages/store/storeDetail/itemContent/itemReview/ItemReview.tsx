@@ -10,7 +10,7 @@ import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetStoreItemReviewList, useGetStoreItemReviewList } from "@/api/store/queries/useGetStoreItemReviewList";
-import { getMaskUserName } from "@/utils/getMaskUserName";
+import { maskString } from "@/utils/maskString";
 
 interface ItemReviewProps {
   itemId: number;
@@ -77,7 +77,7 @@ const ItemReview = ({ itemId }: ItemReviewProps) => {
                       <div className={styles.accordionTitleRight}>
                         {reviewDetail.username && 
                           <Text type='description' size='sm' color='black' align='right' className={ellipsis({ lineSize: 'line1' })}>
-                            {getMaskUserName(reviewDetail.username)}
+                            {maskString(reviewDetail.username, 1)}
                           </Text>
                         }
                         <Text type='description' size='sm' color='grey' align='right'>

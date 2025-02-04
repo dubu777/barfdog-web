@@ -7,7 +7,6 @@ interface CartStore {
   count: number;
   cartInfo: CartInfo | null;
   setCartInfo: (cartInfo: CartInfo) => void;
-  calculateSummary: (cartInfo: CartInfo) => CartSummary;
   updateItemAmount: (basketId: number, amount: number) => void;
   selectedItems: number[];
   setSelectedItems: (selectedItems: number[]) => void;
