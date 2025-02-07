@@ -52,5 +52,8 @@ const queryKeys = {
   RECIPE: {
     BASE: 'recipe',
     GET_RECIPE_LIST: 'getRecipeList',
-  }
+  },
+  IAMPORT: {
+    BASE: 'iamport',
+  },
 } as const;

@@ -2,49 +2,33 @@ import { GeneralOrderItem, OrderType } from "./order";
 
 export type {
   PaymentMethodType,
-  PackageInfo,
-  GeneralPortOneResponse,
-  SubscriptionPortOneResponse,
+  GeneralIamportResponse,
+  SubscriptionIamportResponse,
   NaverPayGeneralParamInput,
   NaverPayGeneralParamOutput,
   NaverPayGeneralProducts,
   NaverPaySubscriptionInput,
   NaverPaySubscriptionOutput,
-  GeneralPortOneRequest,
-  SubscriptionPortOneRequest,
+  GeneralIamportRequest,
+  SubscriptionIamportRequest,
   PaymentRequestParams,
-  PortOneRequestMap,
-  PortOneResponseMap,
-  CreateSubscriptionOrderRequest,
+  IamportRequestMap,
+  IamportResponseMap,
+  CreateIamportSubscriptionPaymentRequest,
+  IamportSubscribeResponse,
 };
-interface PackageInfo {
-  value: number | null;
-  label: string;
-  discount: number;
-  freeKit: boolean | number;
-  freeTopper: boolean | number;
-  freeSkip: boolean;
-  freeDelivery: boolean;
-  fullDeliveryCount: number;
-  halfDeliveryCount: number;
+
+
+
+interface IamportSubscribeResponse {
+  code: number;
+  message: string;
+  response?: {
+    imp_uid: string;
+    status: string;
+    fail_reason?: string;
+  };
 }
-
-// interface GeneralPortOneResponse {
-//   success: boolean;
-//   imp_uid: string; // 아임포트 거래 고유 ID
-//   merchant_uid: string; // 상점 거래 고유 ID
-//   paid_amount: number; // 결제 금액
-//   apply_num?: string; // 카드 승인 번호 (카드 결제 시)
-//   error_msg?: string; // 에러 메시지 (결제 실패 시)
-// }
-
-// interface SubscriptionPortOneResponse {
-//   success: boolean;
-//   imp_uid: string; // 아임포트 거래 고유 ID
-//   customer_uid: string; // 상점 거래 고유 ID
-//   error_code: number; // 결제 금액
-//   error_msg?: string; // 카드 승인 번호 (카드 결제 시)
-// }
 
 // 정기 결제 데이터 인터페이스
 interface NaverPaySubscriptionOutput {
@@ -94,8 +78,8 @@ interface NaverPayGeneralParamInput {
 }
 
 // General 결제 데이터 타입
-interface GeneralPortOneRequest {
-  pg: string;
+interface GeneralIamportRequest {
+  channelKey: string;
   pay_method: string;
   merchant_uid: string | null;
   amount: number;
@@ -110,8 +94,8 @@ interface GeneralPortOneRequest {
 }
 
 // Subscription 결제 데이터 타입
-interface SubscriptionPortOneRequest {
-  pg: string;
+interface SubscriptionIamportRequest {
+  channelKey: string;
   pay_method: string;
   merchant_uid: string | null;
   customer_uid: string;
@@ -126,44 +110,44 @@ interface SubscriptionPortOneRequest {
   [key: string]: any; // 추가 데이터 (e.g., NAVER_PAY 관련)
 }
 
-interface CommonPortOneResponse {
+interface CommonIamportResponse {
   success: boolean;
   imp_uid: string; // 아임포트 거래 고유 ID
   error_msg?: string; // 에러 메시지 (결제 실패 시)
   merchant_uid: string | null; // 상점 거래 고유 ID
 }
 
-// GeneralPortOneResponse 정의
-interface GeneralPortOneResponse extends CommonPortOneResponse {
+// GeneralIamportResponse 정의
+interface GeneralIamportResponse extends CommonIamportResponse {
    // 상점 거래 고유 ID
 }
 
-// SubscriptionPortOneResponse 정의
-interface SubscriptionPortOneResponse extends CommonPortOneResponse {
+// SubscriptionIamportResponse 정의
+interface SubscriptionIamportResponse extends CommonIamportResponse {
   customer_uid: string; // 상점 거래 고유 ID
 }
 
 
 // 결제 응답 타입 매핑
-type PortOneResponseMap = {
-  general: GeneralPortOneResponse;
-  subscription: SubscriptionPortOneResponse;
+type IamportResponseMap = {
+  general: GeneralIamportResponse;
+  subscription: SubscriptionIamportResponse;
 };
 
 // 결제 요청 타입 매핑
-type PortOneRequestMap = {
-  general: GeneralPortOneRequest;
-  subscription: SubscriptionPortOneRequest;
+type IamportRequestMap = {
+  general: GeneralIamportRequest;
+  subscription: SubscriptionIamportRequest;
 };
 
 // PaymentRequestParams 타입 정의
 interface PaymentRequestParams<T extends OrderType> {
   orderType: T;
-  paymentData: PortOneRequestMap[T];
-  callback: (response: PortOneResponseMap[T]) => void;
+  paymentData: IamportRequestMap[T];
+  callback: (response: IamportResponseMap[T]) => void;
 }
 
-interface CreateSubscriptionOrderRequest {
+interface CreateIamportSubscriptionPaymentRequest {
   customer_uid: string;
   memberCouponId?: number | null;
   amount: number;

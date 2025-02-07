@@ -7,7 +7,7 @@ import {
   useGetGeneralOrder,
 } from "@/api/order/queries/useGetGeneralOrder";
 import { useSaveGeneralOrder } from "@/api/order/mutations/useSaveGeneralOrder";
-import { SaveGeneralOrderRequest, GeneralPortOneResponse } from "@/types";
+import { SaveGeneralOrderRequest, GeneralIamportResponse } from "@/types";
 import BundleDeliverySelector from "../bundleDeliverySelector/BundleDeliverySelector";
 import DeliveryAddress from "../deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
@@ -20,7 +20,7 @@ import PaymentMethod from "../paymentMethod/PaymentMethod";
 import RewardUsage from "../reward/RewardUsage";
 import OrderSummary from "../orderSummary/OrderSummary";
 import OrderItem from "../orderItem/OrderItem";
-import { createGeneralPaymentData, usePayment } from "@/hooks/usePayment";
+import { buildGeneralPaymentRequest, usePayment } from "@/hooks/usePayment";
 import useDeviceState from "@/hooks/useDeviceState";
 
 interface GeneralOrderContainerProps {}
@@ -38,7 +38,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     orderItemDtoList,
   });
   const { isMobileDevice } = useDeviceState();
-  const { requestPayment } = usePayment();
+  const { requestIamportPayment } = usePayment();
 
   useEffect(() => {
     if (orderItemDtoList && orderItemDtoList.length > 0) {
@@ -56,7 +56,7 @@ const handlePaymentSubmit = () => {
   createGeneralOrder(requestBody as SaveGeneralOrderRequest, {
     onSuccess: (data) => {
       if (data.status === 200) {
-        const paymentData = createGeneralPaymentData({
+        const paymentData = buildGeneralPaymentRequest({
           requestBody: requestBody as SaveGeneralOrderRequest,
           id: data.data.id,
           merchantUid: data.data.merchantUid,
@@ -64,11 +64,11 @@ const handlePaymentSubmit = () => {
           isMobileDevice,
         });
 
-        requestPayment({
+        requestIamportPayment({
           orderType: ORDER_TYPE.GENERAL,
           paymentData,
           callback: (response) => {
-            const res = response as GeneralPortOneResponse;
+            const res = response as GeneralIamportResponse;
             
             // 포트원 결제 성공 시 
             if (res.success) {

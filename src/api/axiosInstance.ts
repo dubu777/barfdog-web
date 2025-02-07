@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const getCookie = function (name: string) {
     if (typeof window !== "undefined") {
         const value = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);

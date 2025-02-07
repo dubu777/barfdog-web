@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 import {
   GeneralOrderSheetResponse,
-  GeneralPortOneRequest,
+  GeneralIamportRequest,
   OrderType,
-  PaymentMethod,
   PaymentRequestParams,
-  PortOneResponseMap,
+  IamportResponseMap,
   SubscriptionOrderSheetResponse,
-  SubscriptionPortOneRequest,
+  SubscriptionIamportRequest,
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
 } from "@/types";
-import { ORDER_TYPE, PAYMENT_METHOD, PG_TYPE } from "@/constants";
-import useDeviceState from "@/hooks/useDeviceState";
+import { ORDER_TYPE, PAYMENT_METHOD, PG_CHANNEL_KEY } from "@/constants";
 import {
   getNaverPayGeneralPaymentParam,
   getNaverPaySubscriptionPaymentParam,
@@ -52,7 +50,7 @@ export function usePayment() {
   }, []);
 
   // 결제 요청
-  const requestPayment = <T extends OrderType>({
+  const requestIamportPayment = <T extends OrderType>({
     orderType,
     paymentData,
     callback, // 결제 완료 후 콜백 함수
@@ -65,7 +63,7 @@ export function usePayment() {
     const IMP = window.IMP;
     IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
 
-    IMP.request_pay(paymentData, (response: PortOneResponseMap[T]) => {
+    IMP.request_pay(paymentData, (response: IamportResponseMap[T]) => {
       if (orderType === ORDER_TYPE.GENERAL) {
         callback(response);
       } else if (orderType === ORDER_TYPE.SUBSCRIPTION) {
@@ -76,19 +74,19 @@ export function usePayment() {
     });
   };
 
-  return { requestPayment };
+  return { requestIamportPayment };
 }
 
 /**
  * 일반 결제 데이터 생성
  */
-export function createGeneralPaymentData({
+export function buildGeneralPaymentRequest({
   requestBody,
   id,
   merchantUid,
   generalOrderSheetData,
   isMobileDevice,
-}: GeneralPaymentDataParams): GeneralPortOneRequest {
+}: GeneralPaymentDataParams): GeneralIamportRequest {
   const { paymentMethod, paymentPrice, deliveryDto } = requestBody;
   const { orderItemDtoList, email, name } = generalOrderSheetData;
 
@@ -96,7 +94,7 @@ export function createGeneralPaymentData({
   const itemName = itemList.map((item) => item.name).join(", ");
 
   const baseData = {
-    pg: PG_TYPE.GENERAL[paymentMethod],
+    channelKey: PG_CHANNEL_KEY.GENERAL[paymentMethod],
     pay_method: PAYMENT_METHOD[paymentMethod],
     merchant_uid: merchantUid,
     amount: paymentPrice,
@@ -126,17 +124,17 @@ export function createGeneralPaymentData({
 /**
  * 구독 결제 데이터 생성
  */
-export function createSubscriptionPaymentData({
+export function buildSubscriptionPaymentRequest({
   requestBody,
   subscriptionOrderSheetData,
   isMobileDevice,
-}: SubscriptionPaymentDataParams): SubscriptionPortOneRequest {
+}: SubscriptionPaymentDataParams): SubscriptionIamportRequest {
   const { paymentMethod, paymentPrice, deliveryDto, customerUid } = requestBody;
   const { email, name, subscribeDto, recipeNameList } =
     subscriptionOrderSheetData;
 
   const baseData = {
-    pg: PG_TYPE.SUBSCRIPTION[paymentMethod],
+    channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentMethod],
     pay_method: PAYMENT_METHOD["CREDIT_CARD"],
     merchant_uid: null,
     customer_uid: customerUid,

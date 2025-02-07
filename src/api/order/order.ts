@@ -10,7 +10,6 @@ import {
   SubscriptionOrderSheetResponse,
   SuccessGeneralOrderResponse,
   SuccessGeneralPaymentRequest,
-  CreateSubscriptionOrderRequest,
 } from "@/types";
 import {
   GeneralOrderData,
@@ -30,7 +29,6 @@ export {
   successGeneralPayment,
   failGeneralPayment,
   saveSubscriptionOrder,
-  createSubscriptionOrder,
 };
 
 const getSubscriptionOrder = async (
@@ -99,19 +97,6 @@ const saveSubscriptionOrder = async ({
   return data;
 };
 
-
-const createSubscriptionOrder = async (body: CreateSubscriptionOrderRequest
-): Promise<any> => {
-  const localOrigin = window.location.origin;
-  const data = await axios({
-    method: 'POST',
-    url: `${localOrigin}/api/iamport/iamportSubscribe`,
-    data: body,
-    timeout: 60000,
-  })
-
-  return data;
-};
 
 // 배송지 정보 조회
 const getAddress = async (): Promise<AddressResponse[]> => {
