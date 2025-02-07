@@ -155,6 +155,7 @@ export function buildSubscriptionPaymentRequest({
     const naverPayData = getNaverPaySubscriptionPaymentParam({
       subscribeId: subscribeDto.id,
       isMobile: isMobileDevice,
+      
     });
 
     if (!naverPayData) throw new Error("네이버페이 구독 데이터 생성 실패");

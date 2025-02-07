@@ -11,6 +11,7 @@ import RewardUsage from "../reward/RewardUsage";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import {
   SaveSubscriptionOrderRequest,
+  SubscriptionIamportRequest,
   SubscriptionIamportResponse,
 } from "@/types";
 import { useUpdateSubscriptionOrderBody } from "@/hooks/useUpdateSubscriptionOrderBody";
@@ -23,6 +24,10 @@ import { useSaveSubscriptionOrder } from "@/api/order/mutations/useSaveSubscript
 import { calculateOriginPrice } from "@/utils/order/calculateOriginPrice";
 import { useGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
 import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
+import { useValidateSubscriptionPayment } from "@/api/order/mutations/useValidateSubscriptionPayment";
+import { useInvalidSubscriptionPayment } from "@/api/order/mutations/useInvalidSubscriptionPayment";
+import { useSuccessSubscriptionPayment } from "@/api/order/mutations/useSuccessSubscriptionPayment";
+import { useFailSubscriptionPayment } from "@/api/order/mutations/useFailSubscriptionPayment";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -35,9 +40,13 @@ export default function SubscriptionOrderContainer({
 
   const { data: subscriptionOrderSheetData } =
     useGetSubscriptionOrder(subscribeId);
-  const { mutateAsync: saveSubscriptionOrder } = useSaveSubscriptionOrder();
-  const { mutateAsync: createIamportSubscriptionPayment } =
+  const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
+  const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment();
+  const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
+  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
+  const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
+  const { mutateAsync: failPayment } = useFailSubscriptionPayment();
   const { requestIamportPayment } = usePayment();
   const { isMobileDevice } = useDeviceState();
   const originPrice = calculateOriginPrice(
@@ -57,18 +66,18 @@ export default function SubscriptionOrderContainer({
       console.log("requestBody", requestBody);
 
       // 주문 정보 저장 요청
-      const saveSubscriptionResponse = await saveSubscriptionOrder({
+      const saveSubscriptionResponse = await saveOrder({
         subscribeId,
         body: requestBody,
       });
 
-      console.log("saveSubscriptionOrder", saveSubscriptionResponse);
-      
-
       if (saveSubscriptionResponse.status !== 200) {
-        throw new Error(`구독 주문 저장 실패 (status: ${saveSubscriptionResponse.status})`);
+        throw new Error(
+          `구독 주문 저장 실패 (status: ${saveSubscriptionResponse.status})`
+        );
       }
-console.log();
+
+      console.log("saveOrder", saveSubscriptionResponse);
 
       // 아임포트 결제 요청 데이터 생성
       const paymentData = buildSubscriptionPaymentRequest({
@@ -84,124 +93,106 @@ console.log();
         callback: async (response) => {
           console.log("아임포트 결제 응답", response);
           const res = response as SubscriptionIamportResponse;
-          const { success, customer_uid, error_msg } = res;
-
-          if (success) {
-            const orderData = {
-              customer_uid,
-              merchant_uid: saveSubscriptionResponse.data.merchantUid, // 서버로부터 받은 주문번호
-              amount: requestBody.paymentPrice, //  ! [중요] 결제금액 변경(변조) 여부 검증 대상.
-              name: paymentData.itemName,
-              buyer_name: paymentData.buyer_name,
-              buyer_tel: paymentData.buyer_tel,
-              buyer_email: paymentData.buyer_email, // 구매자 이메일
-              buyer_addr: paymentData.buyer_addr, // 구매자 주소
-              buyer_postcode: paymentData.buyer_postcode,
-            };
-
-            try {
-              // 아임포트(subscribe/payment/again) 빌링키 발급 및 결제
-              const iamportResponse = await createIamportSubscriptionPayment(
-                orderData
-              );
-              console.log("아임포트 결제 성공", iamportResponse);
-
-              const { code, response, message } = iamportResponse;
-              
-              if (code !== 0) {
-                throw new Error(`서버 결제 완료 처리 실패: ${message}`);
-              }
-
-              console.log("결제 성공", response);
-            } catch (error) {
-              console.error("createIamportSubscriptionPayment-실패", error);
-            }
-          }
-        },
-      });
+          await handleIamportPaymentResponse({
+            res,
+            merchant_uid: saveSubscriptionResponse.data.merchantUid,
+            orderId: saveSubscriptionResponse.data.id,
+            paymentData,
+            requestBody,
+          });
+        }
+        });
     } catch (error) {
-      console.error("saveSubscriptionOrder-error", error);
+      console.error("saveOrder-error", error);
     }
   };
 
-  // // 결제 요청
-  // const handlePaymentSubmit = () => {
-  //   const requestBody = getRequestBody(
-  //     ORDER_TYPE.SUBSCRIPTION
-  //   ) as SaveSubscriptionOrderRequest;
-  //   console.log("requestBody", requestBody);
+// 아임포트 결제 응답 처리
+const handleIamportPaymentResponse = async ({
+  res,
+  merchant_uid,
+  orderId,
+  paymentData,
+  requestBody,
+}: {
+  res: SubscriptionIamportResponse;
+  merchant_uid: string;
+  orderId: number;
+  paymentData: SubscriptionIamportRequest;
+  requestBody: SaveSubscriptionOrderRequest;
+}) => {
+  const { success, customer_uid, error_msg } = res;
+  if (!success) {
+    console.error("아임포트 결제 실패", error_msg);
+    return;
+  }
+  const orderData = {
+    customer_uid,
+    merchant_uid,
+    amount: requestBody.paymentPrice,
+    name: paymentData.name,
+    buyer_name: paymentData.buyer_name,
+    buyer_tel: paymentData.buyer_tel,
+    buyer_email: paymentData.buyer_email,
+    buyer_addr: paymentData.buyer_addr,
+    buyer_postcode: paymentData.buyer_postcode,
+  };
 
-  //   saveSubscriptionOrder(
-  //     { subscribeId, body: requestBody },
-  //     {
-  //       onSuccess: (data) => {
-  //         console.log("saveSubscriptionOrder", data);
+  try {
+    // 아임포트 최종 결제(빌링키 발급) 요청
+    const iamportResponse = await createIamportPayment(orderData);
+    console.log("아임포트 결제 성공", iamportResponse);
 
-  //         if (data.status === 200) {
-  //           const paymentData = buildSubscriptionPaymentRequest({
-  //             requestBody: requestBody as SaveSubscriptionOrderRequest,
-  //             subscriptionOrderSheetData,
-  //             isMobileDevice,
-  //           });
-  //           requestIamportPayment({
-  //             orderType: ORDER_TYPE.SUBSCRIPTION,
-  //             paymentData,
-  //             callback: (response) => {
-  //               const res = response as SubscriptionIamportResponse;
-  //               const { success, customer_uid, error_msg, merchant_uid } = res;
-  //               // 포트원 결제 성공 시
-  //               console.log("res", res);
+    const { code, response: finalResponse, message } = iamportResponse;
+    // 
+    if (code !== 0) {
+      throw new Error(`서버 결제 완료 처리 실패: ${message}`);
+    }
 
-  //               if (success) {
-  //                 const orderData = {
-  //                   customer_uid,
-  //                   merchant_uid, // 서버로부터 받은 주문번호
-  //                   amount: requestBody.paymentPrice, //  ! [중요] 결제금액 변경(변조) 여부 검증 대상.
-  //                   name: paymentData.itemName,
-  //                   buyer_name: paymentData.buyer_name,
-  //                   buyer_tel: paymentData.buyer_tel,
-  //                   buyer_email: paymentData.buyer_email, // 구매자 이메일
-  //                   buyer_addr: paymentData.buyer_addr, // 구매자 주소
-  //                   buyer_postcode: paymentData.buyer_postcode,
-  //                 };
-  //                 createIamportSubscriptionPayment(orderData, {
-  //                   onSuccess: (data) => {
-  //                     console.log(
-  //                       "createIamportSubscriptionPayment-성공",
-  //                       data
-  //                     );
+    // 결제 최종 응답이 없거나 상태가 "paid"가 아니면 바로 실패 처리
+    if (!finalResponse || finalResponse.status !== "paid") {
+      const failReason = finalResponse?.fail_reason || "알 수 없는 결제 실패";
+      throw new Error(`결제 실패: ${failReason}`);
+    }
+    console.log("결제 성공 - createIamportPayment", finalResponse);
 
-  //                     // code기 0이면 성공, 0이 아니면 실패
-  //                     const { code, response, message } = data;
-  //                     if (code === 0) {
-  //                       console.log("결제 성공", response);
-  //                       return;
-  //                     } else {
-  //                       console.error("결제 실패", message);
-  //                     }
-  //                     // window.location.href = `/order/order-completed`;
-  //                   },
-  //                   onError: (err) => {
-  //                     console.error(
-  //                       "createIamportSubscriptionPayment-실패",
-  //                       err
-  //                     );
-  //                   },
-  //                 });
-  //                 console.log("결제 성공", res);
-  //               } else {
-  //                 console.error("결제 실패", res);
-  //               }
-  //             },
-  //           });
-  //         }
-  //       },
-  //       onError: (err) => {
-  //         console.error("saveSubscriptionOrder-error", err);
-  //       },
-  //     }
-  //   );
-  // };
+    // 최종 검증을 위한 본문 구성
+    const finalBody = {
+      customerUid: customer_uid,
+      discountReward: requestBody.discountReward,
+      impUid: finalResponse.imp_uid,
+      merchantUid: merchant_uid,
+    };
+
+    // 결제 금액 검증
+    const isValidPayment = await validatePayment({
+      orderId,
+      impUid: finalResponse.imp_uid,
+    });
+    console.log("validateSubscriptionPayment", isValidPayment);
+
+    // 결제 검증 성공 시 최종 결제 완료 처리
+    if (isValidPayment) {
+      const successResponse = await successPayment({
+        orderId,
+        body: finalBody,
+      });
+      console.log("successSubscriptionPayment-결제 최종 성공", successResponse);
+    } else {
+      // 검증 실패 시 invalidPayment (재검증 및 주문 취소) 처리 후, 실패 처리 API 호출
+      const invalidResponse = await invalidPayment({
+        orderId,
+        body: finalBody,
+      });
+      console.log("invalidSubscriptionPayment-결제 재 검증 및 실패 처리", invalidResponse);
+      // 실패 처리 API 호출
+      const failResponse = await failPayment(orderId);
+      console.log("failSubscriptionPayment-결제 실패 처리", failResponse);
+    }
+  } catch (error) {
+    console.error("createIamportPayment-실패", error);
+  }
+};
 
   return (
     <div>

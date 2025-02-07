@@ -16,6 +16,10 @@ export type {
   IamportResponseMap,
   CreateIamportSubscriptionPaymentRequest,
   IamportSubscribeResponse,
+  SuccessSubscriptionPaymentRequest,
+  SuccessSubscriptionPaymentResponse,
+  InvalidSubscriptionPaymentResponse,
+  ValidateSubscriptionPaymentResponse,
 };
 
 
@@ -33,8 +37,8 @@ interface IamportSubscribeResponse {
 // 정기 결제 데이터 인터페이스
 interface NaverPaySubscriptionOutput {
   naverPopupMode: boolean;
-  naverChainId: string; // 네이버페이 그룹형 가맹점용 chain id
   naverProductCode: string; // 동일한 고객이 동일상품에 대해 중복으로 반복결제 등록하는 것을 방지하기 위한 파라미터
+  naverProductCount: number; // 상품 수량
 }
 
 interface NaverPaySubscriptionInput {
@@ -51,30 +55,37 @@ interface NaverPayGeneralProducts {
   count: number; // 상품 수량
 }
 
-interface NaverPayGeneralItem {
-  itemId: number;
-  amount: number;
-  itemType: NaverPayGeneralItemType;
-  name: string;
-  selectOptionDtoList: any[];
-  memberCouponId: number | null;
-  discountAmount: number;
-  originalOrderLinePrice: number;
-  orderLinePrice: number;
-  deliveryFree: boolean;
-}
 
 // 일반 결제 데이터 인터페이스
 interface NaverPayGeneralParamOutput {
-  name: string;
+  // name: string;
   naverPopupMode: boolean;
-  naverChainId: string;
+  // naverChainId: string;
   naverProducts: NaverPayGeneralProducts[];
 }
 
 interface NaverPayGeneralParamInput {
   items: GeneralOrderItem[];
   isMobile: boolean;
+}
+
+interface SuccessSubscriptionPaymentRequest {
+  customerUid: string;
+  discountReward: number;
+  impUid: string;
+  merchantUid: string;
+}
+
+interface ValidateSubscriptionPaymentResponse {
+  valid: boolean;
+}
+
+interface SuccessSubscriptionPaymentResponse {
+  // 성공 응답
+}
+
+interface InvalidSubscriptionPaymentResponse {
+  // 취소 검증 및 실패 응답
 }
 
 // General 결제 데이터 타입

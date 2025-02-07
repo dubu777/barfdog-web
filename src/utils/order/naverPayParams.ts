@@ -16,9 +16,9 @@ export const getNaverPayGeneralPaymentParam = ({
   }));
 
   return {
-    name: items[0].name, // 첫 번째 상품명
+    // name: items[0].name, // 첫 번째 상품명
     naverPopupMode: !isMobile, // 모바일 환경에서는 리디렉션 사용
-    naverChainId: process.env.NEXT_PUBLIC_NAVERPAY_GENERAL_CHAIN_ID ?? '',
+    // naverChainId: process.env.NEXT_PUBLIC_NAVERPAY_GENERAL_CHAIN_ID ?? '',
     naverProducts, // 변환된 상품 정보
   };
 };
@@ -34,7 +34,7 @@ export const getNaverPaySubscriptionPaymentParam = ({
   const suffix = `-orderTime-${Date.now()}`;
   return {
     naverPopupMode: !isMobile, // 모바일 환경에서는 리디렉션 사용
-    naverChainId: process.env.NEXT_PUBLIC_NAVERPAY_SUBSCRIBE_CHAIN_ID ?? '',
     naverProductCode: `subscribe-item-${subscribeId}${suffix}`, // 고유 상품 코드 생성
+    naverProductCount: 1, // 정기 결제는 1회만 결제
   };
 };
