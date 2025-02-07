@@ -22,18 +22,24 @@ import OrderSummary from "../orderSummary/OrderSummary";
 import OrderItem from "../orderItem/OrderItem";
 import { buildGeneralPaymentRequest, usePayment } from "@/hooks/usePayment";
 import useDeviceState from "@/hooks/useDeviceState";
+import { useRouter } from "next/navigation";
 
 interface GeneralOrderContainerProps {}
 
-
+interface handleIamportResponseParams {
+  res: GeneralIamportResponse;
+  orderId: number;
+  requestBody: SaveGeneralOrderRequest;
+}
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
+  const router = useRouter();
   // 상태관리
   const { generalOrderBody, getRequestBody } = useOrderStore();
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
-  const { mutate: createGeneralOrder } = useSaveGeneralOrder();
-  const { mutate: fetchGeneralOrder } = useGetGeneralOrder();
-  const { mutate: successGeneralPayment } = useSuccessGeneralPayment();
-  const { mutate: failGeneralPayment } = useFailGeneralPayment();
+  const { mutateAsync: createGeneralOrder } = useSaveGeneralOrder();
+  const { mutateAsync: fetchGeneralOrder } = useGetGeneralOrder();
+  const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
+  const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
   const { data: generalOrderSheetData } = useCachedGeneralOrder({
     orderItemDtoList,
   });
@@ -46,72 +52,82 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
     }
   }, [orderItemDtoList]);
 
-  // console.log("generalOrderSheetData", generalOrderSheetData);
-// 결제 요청 함수
-const handlePaymentSubmit = () => {
-  const requestBody = getRequestBody(ORDER_TYPE.GENERAL);
-  console.log("requestBody", requestBody);
-  
-  // 일반 주문 생성 후 결제 요청
-  createGeneralOrder(requestBody as SaveGeneralOrderRequest, {
-    onSuccess: (data) => {
-      if (data.status === 200) {
-        const paymentData = buildGeneralPaymentRequest({
-          requestBody: requestBody as SaveGeneralOrderRequest,
-          id: data.data.id,
-          merchantUid: data.data.merchantUid,
-          generalOrderSheetData,
-          isMobileDevice,
-        });
 
-        requestIamportPayment({
-          orderType: ORDER_TYPE.GENERAL,
-          paymentData,
-          callback: (response) => {
-            const res = response as GeneralIamportResponse;
-            
-            // 포트원 결제 성공 시 
-            if (res.success) {
-              console.log("결제 성공:", res);
-              
-              successGeneralPayment(
-                {
-                  id: data.data.id,
-                  body: {
-                    impUid: res.imp_uid,
-                    merchantUid: res.merchant_uid,
-                    discountReward: requestBody.discountReward,
-                  },
-                },
-                {
-                  onSuccess: () => {
-                    // window.location.href = `/order/order-completed`;
-                    // clearOrderItemDtoList();
-                  },
-                }
-              );
-            } else {
-              failGeneralPayment(data.data.id);
-              console.error("결제 실패:", res);
-              // window.location.href = `/order/order-failed`;
-            }
-          },
-        });
-      } else {
-        console.error("결제 요청 실패: 서버 검증 실패");
+  // 아임포트 결제 응답 처리
+  const handleIamportResponse = async ({
+    res,
+    orderId,
+    requestBody,
+  }: handleIamportResponseParams) => {
+    if (res.success) {
+      console.log("결제 성공:", res);
+      // 최종 결제 성공 처리
+      await successGeneralPayment({
+        id: orderId,
+        body: {
+          impUid: res.imp_uid,
+          merchantUid: res.merchant_uid,
+          discountReward: requestBody.discountReward,
+        },
+      });
+      // 결제 성공 후 추가 작업(예: 페이지 이동, 상태 초기화)
+      router.push('/order/order-completed')
+      clearOrderItemDtoList();
+    } else {
+      // 결제 실패 처리
+      await failGeneralPayment(orderId);
+      console.error("결제 실패:", res);
+      // 결제 실패 후 추가 작업(예: 페이지 이동)
+      router.push('/order/order-failed')
+    }
+  };
+
+  // 결제 요청
+  const handlePaymentSubmit = async () => {
+    const requestBody = getRequestBody(
+      ORDER_TYPE.GENERAL
+    ) as SaveGeneralOrderRequest;
+    console.log("requestBody", requestBody);
+
+    try {
+      // 일반 주문 생성(저장) 요청
+      const createOrderResponse = await createGeneralOrder(requestBody);
+
+      if (createOrderResponse.status !== 200) {
+        throw new Error("결제 요청 실패: 서버 검증 실패")
       }
-    },
-    onError: (err) => {
-      console.error("createGeneralOrder-error", err);
-    },
-  });
-};
+
+      // 결제 요청 데이터 생성
+      const paymentData = buildGeneralPaymentRequest({
+        requestBody: requestBody,
+        id: createOrderResponse.data.id,
+        merchantUid: createOrderResponse.data.merchantUid,
+        generalOrderSheetData,
+        isMobileDevice,
+      });
+
+      // iamport 결제 요청: 콜백 내 로직은 별도 함수로 분리
+      requestIamportPayment({
+        orderType: ORDER_TYPE.GENERAL,
+        paymentData,
+        callback: async (response) => {
+          const res = response as GeneralIamportResponse;
+          await handleIamportResponse({
+            res,
+            orderId: createOrderResponse.data.id,
+            requestBody,
+          });
+        },
+      });
+    } catch (error) {
+      console.error("createGeneralOrder 에러:", error);
+      router.push("/order/order-failed");
+    }
+  };
 
   return (
     <div>
-      <DeliveryAddress
-        orderType={ORDER_TYPE.GENERAL}
-      />
+      <DeliveryAddress orderType={ORDER_TYPE.GENERAL} />
       <Divider />
       <BundleDeliverySelector
         deliveryId={generalOrderBody.deliveryId}
