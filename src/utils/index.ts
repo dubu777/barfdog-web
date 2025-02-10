@@ -6,7 +6,6 @@ export * from './subscription/mealCalculations'
 export * from './subscription/subscribePriceCalculation'
 export * from './subscription/subscriptionUtils'
 export * from './subscription/validatePaymentBody'
-export * from './addressValidation';
 export * from './copyToClipboard';
 export * from './dateUtils';
 export * from './deadlineBannerTimestamp';
