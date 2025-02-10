@@ -1,6 +1,6 @@
 import * as styles from "../DeliveryAddressModal.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { subscribeText } from "@/components/pages/subscriptionShop/subscriptionShopContent/recipeSelection/RecipeSelection.css";
+import { subscribeText } from "@/components/pages/selectRecipe/selectRecipeContainer/recipeSelection/RecipeSelection.css";
 import { AddressResponse, DeliveryDto, OrderType } from "@/types";
 
 interface AddressListProps {

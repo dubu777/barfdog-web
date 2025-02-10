@@ -36,8 +36,8 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   // 상태관리
   const { generalOrderBody, getRequestBody } = useOrderStore();
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
+  const { mutateAsync: getGeneralOrder } = useGetGeneralOrder();
   const { mutateAsync: createGeneralOrder } = useSaveGeneralOrder();
-  const { mutateAsync: fetchGeneralOrder } = useGetGeneralOrder();
   const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
   const { data: generalOrderSheetData } = useCachedGeneralOrder({
@@ -48,7 +48,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
 
   useEffect(() => {
     if (orderItemDtoList && orderItemDtoList.length > 0) {
-      fetchGeneralOrder({ orderItemDtoList });
+      getGeneralOrder({ orderItemDtoList });
     }
   }, [orderItemDtoList]);
 

@@ -26,13 +26,13 @@ import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalc
 import DeliveryScheduleModal from "./deliveryScheduleModal/DeliveryScheduleModal";
 import Image from "next/image";
 
-interface SubscriptionShopContentProps {
+interface SelectRecipeContainerProps {
   reportId: number;
 }
 
-export default function SubscriptionShopContent({
+export default function SelectRecipeContainer({
   reportId,
-}: SubscriptionShopContentProps) {
+}: SelectRecipeContainerProps) {
   const router = useRouter();
   const { isOpen, onToggle, onClose } = useModal();
   const { data: recipeData } = useGetSurveyRecipe(reportId);

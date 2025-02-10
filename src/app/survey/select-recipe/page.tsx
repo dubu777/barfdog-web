@@ -7,16 +7,16 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import * as styles from "../../survey/Survey.css";
+import * as styles from "../Survey.css";
 import { prefetchGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
-import SubscriptionShopContent from "@/components/pages/subscriptionShop/subscriptionShopContent/SubscriptionShopContent";
+import SelectRecipeContainer from "@/components/pages/selectRecipe/selectRecipeContainer/SelectRecipeContainer";
 
 interface SubscriptionShopPageProps {
   searchParams: Record<string, string | string[] | undefined>;
 }
 
-export default async function SubscriptionShopPage({
+export default async function SelectRecipePage({
   searchParams,
 }: SubscriptionShopPageProps) {
   const reportId = Number(searchParams.id);
@@ -36,7 +36,7 @@ export default async function SubscriptionShopPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<div>Loading...</div>}>
-            <SubscriptionShopContent reportId={reportId} />
+            <SelectRecipeContainer reportId={reportId} />
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>
