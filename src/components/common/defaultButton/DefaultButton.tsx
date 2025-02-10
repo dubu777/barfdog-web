@@ -1,5 +1,5 @@
 import * as styles from './DefaultButton.css';
-import {HTMLAttributes, ReactNode} from 'react';
+import { ReactNode } from 'react';
 import Link from "next/link";
 
 interface DefaultButtonProps {
@@ -7,6 +7,7 @@ interface DefaultButtonProps {
   type?: 'main' | 'white' | 'black' | 'gray' | 'mainBorder' | 'grayBorder' | 'blackBorder',
   icon?: JSX.Element | null;
   onClick?: () => void;
+  onSubmit?: () => void;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   borderRadius?: 'sm' | 'md' | 'lg';
   isBold?: boolean;
@@ -16,7 +17,7 @@ interface DefaultButtonProps {
   hover?: boolean;
   isActive?: boolean;
   isSubmit?: boolean;
-  className?: HTMLAttributes<string | undefined> | string;
+  className?: string;
 }
 
 export default function DefaultButton({

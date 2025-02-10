@@ -1,6 +1,4 @@
 import * as styles from "../MyPageDogList.css";
-import Image from "next/image";
-import NoImage from "/public/images/icons/noImage.png";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Badge from "@/components/common/badge/Badge";
@@ -9,29 +7,42 @@ import DogRepresentative from "@/components/pages/mypage/main/myPageDogList/dogR
 import { DogData } from "@/types/dogs";
 import { subscriptionStatus } from "@/constants";
 import { getProductionDates } from "@/utils/getProductionDates";
+import DogImage from "@/components/pages/mypage/main/myPageDogList/dogImage/DogImage";
 
 interface MyPageDogCardProps {
   noData: boolean;
   dog?: DogData;
+  resetSwiper: (() => void) | undefined;
 }
 
-const DogCard = ({ dog, noData }: MyPageDogCardProps) => {
+const DogCard = ({ dog, noData, resetSwiper }: MyPageDogCardProps) => {
   const subscriptionStatusKR = dog && subscriptionStatus[dog.subscribeStatus];
   const productionDates = 
     dog && typeof dog.nextDeliveryDate === 'string' 
     ? getProductionDates(dog.nextDeliveryDate) : undefined;
-  
+
   return (
     <div className={styles.dogSlide({ representative: dog && dog.representative || dog && dog.subscribeStatus === 'SUBSCRIBING', noDogData: noData })}>
-      <DogRepresentative noData={noData} representativeDog={dog ? dog.representative : false} />
+      <DogRepresentative
+        noData={noData}
+        representativeDog={dog ? dog.representative : false}
+        dogId={dog ? dog.id : 0}
+        resetSwiper={dog?.id ? resetSwiper : undefined}
+      />
       <Badge
         className={styles.subscriptionStatus}
-        color={!noData && dog?.subscribeStatus === 'SUBSCRIBING' ? 'red' : undefined}
+        color={!noData && dog?.subscribeStatus === 'SUBSCRIBING' ? 'redBorder' : undefined}
       >
         {!noData ? subscriptionStatusKR : '구독 전'}
       </Badge>
       <div className={styles.dogContent}>
-        <Image src={dog && dog.pictureUrl ? dog.pictureUrl : NoImage} alt='반려견 이미지' width={67} height={67} style={{ borderRadius: '50%' }} />
+        {dog && 
+          <DogImage
+            dogId={dog.id}
+            dogPictureUrl={dog.pictureUrl as string}
+            dogPictureName={dog.pictureName as string}
+          />
+        }
         <div>
           <div style={{ marginBottom: '7px' }}>
             <Text type='description' size='sm' weight='bold' pageName='myPage'>{!noData && dog ? dog.name : '멍댕이'}</Text>

@@ -60,3 +60,7 @@ globalStyle('.react-calendar__navigation', {
 globalStyle('.react-calendar__navigation button', {
   cursor: 'default !important'
 });
+
+globalStyle('.react-calendar__month-view__days', {
+  marginTop: '1rem !important'
+});

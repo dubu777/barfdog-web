@@ -10,12 +10,12 @@ interface DogData {
   plan: keyof typeof subscriptionStatus;
   gender: string;
   itemNames: string;
-  nextDeliveryDate?: null | string;
+  nextDeliveryDate?: string | null;
   dogPictureId?: null | string | number;
   pictureName?: null | string;
   pictureUrl?: null | string;
   recipeNames: string;
-  startDate?: null | string | Date;
+  startDate?: null | string;
   subscribeId: number;
   subscribeCount: number;
   subscribeStatus: string;

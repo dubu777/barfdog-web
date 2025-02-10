@@ -21,3 +21,11 @@ globalStyle('.swiper-pagination-bullet', {
 globalStyle('.swiper-pagination-bullet-active', {
   background: `${themeVars.colors.mainRed} !important`,
 })
+
+globalStyle('.swiper-button-prev, .swiper-button-next', {
+  color: `${themeVars.colors.white} !important`,
+})
+
+globalStyle('.swiper-button-next:after, .swiper-button-prev:after', {
+  fontSize: '30px !important',
+})

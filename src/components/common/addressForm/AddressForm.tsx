@@ -56,9 +56,12 @@ interface AddressFormProps {
 const AddressForm = ({ control, watch, setValue, isValid, onSubmit, confirmText }: AddressFormProps) => {
   const addressValues = watch();
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
+
   const handleSelectAddressData = (addressData: Address) => {
-    setValue('zipcode', addressData.zonecode);
-    setValue('street', addressData.address);
+    const { zonecode, address, sido } = addressData;
+    setValue('zipcode', zonecode);
+    setValue('street', address);
+    setValue('city', sido);
   }
 
   return (

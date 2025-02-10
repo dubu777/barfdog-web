@@ -6,7 +6,7 @@ import { UseSuspenseQueryCustomOptions } from "@/types";
 
 export { useGetSubscriptionDetail, prefetchGetSubscriptionDetail };
 
-function useGetSubscriptionDetail(subscribeId: string, queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionDetailDto>) {
+function useGetSubscriptionDetail(subscribeId: number, queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionDetailDto>) {
   return useSuspenseQuery<SubscriptionDetailDto>({
     queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, subscribeId],
     queryFn: () => getSubscriptionDetail(subscribeId),
@@ -14,7 +14,7 @@ function useGetSubscriptionDetail(subscribeId: string, queryOptions?: UseSuspens
   });
 }
 
-async function prefetchGetSubscriptionDetail(queryClient: QueryClient, subscribeId: string) {
+async function prefetchGetSubscriptionDetail(queryClient: QueryClient, subscribeId: number) {
   await queryClient.prefetchQuery({
     queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, subscribeId],
     queryFn: () => getSubscriptionDetail(subscribeId),

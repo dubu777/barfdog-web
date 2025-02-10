@@ -9,7 +9,7 @@ interface DefaultModalProps {
   children: ReactNode;
   isVisible: boolean;
   onClose: () => void;
-  size: "sm" | "md" | "lg";
+  size: "sm" | "md" | "lg" | "xl";
   type: "alert" | "info";
   cancelText?: string;
   confirmText?: string;

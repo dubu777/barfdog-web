@@ -15,11 +15,12 @@ export interface SkipListProps {
   receivingDate: string;
 }
 
-const SubscriptionSkipDelivery = ({ subscribeId }: { subscribeId: string }) => {
+const SubscriptionSkipDelivery = ({ subscribeId }: { subscribeId: number }) => {
   const { data: subscriptionDetail } = useGetSubscriptionDetail(subscribeId);
 
   const [selectedSkip, setSelectedSkip] = useState<SkipListProps | null>(null);
   const defaultProductionDates = getProductionDates(subscriptionDetail.nextDeliveryDate);
+
   const calendarValue = 
     !selectedSkip
       ? [new Date(defaultProductionDates.productionDate ?? ''), new Date(defaultProductionDates.receivingDate ?? '')]

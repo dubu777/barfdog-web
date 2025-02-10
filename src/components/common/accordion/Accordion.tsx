@@ -8,15 +8,17 @@ interface AccordionProps {
   children?: ReactNode;
   open?: boolean;
   showArrow?: boolean;
+  buttonClassName?: string;
+  contentClassName?: string;
 }
 
-const Accordion = ({ title, children, open = false, showArrow = true }: AccordionProps) => {
+const Accordion = ({ title, children, open = false, showArrow = true, buttonClassName, contentClassName }: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(open);
   const toggleAccordion = () => setIsOpen(!isOpen);
 
   return (
     <div className={styles.accordionContainer}>
-      <button onClick={toggleAccordion} className={styles.accordionButton({ noChildren: !children })}>
+      <button onClick={toggleAccordion} className={`${styles.accordionButton({ noChildren: !children })} ${buttonClassName || ''}`}>
         {title}
         {showArrow &&
           <span className={styles.accordionIcon({ isOpen: isOpen })}>
@@ -31,7 +33,7 @@ const Accordion = ({ title, children, open = false, showArrow = true }: Accordio
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           className={styles.accordionMotionDiv}
         >
-          <div className={styles.accordionContent}>{children}</div>
+          <div className={`${styles.accordionContent} ${contentClassName || ''}`}>{children}</div>
         </motion.div>
       }
     </div>

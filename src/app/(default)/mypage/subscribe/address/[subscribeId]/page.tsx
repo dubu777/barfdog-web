@@ -11,7 +11,7 @@ interface ManageShippingAddressPageProps {
 
 export default async function ManageShippingAddressPage({ params, searchParams }: ManageShippingAddressPageProps) {
   const changeType = searchParams.changeType || undefined;
-  const { subscribeId } = params;
+  const subscribeId = Number(params.subscribeId);
 
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionAddress(queryClient, subscribeId);

@@ -11,12 +11,16 @@ interface SearchAddressProps {
   openAddressModal: boolean;
   setOpenAddressModal: (openAddressModal: boolean) => void;
   handleSelectAddressData: (data: Address) => void;
-  control: Control<AddressDto>;
+  control: Control<AddressDto | any>;
+  isInAddressObject?: boolean;
+  flexDirection?: 'column';
+  className?: string;
+  size?: 'sm' | 'md';
 }
 
-const SearchAddress = ({ addressValues, openAddressModal, setOpenAddressModal, handleSelectAddressData, control }: SearchAddressProps) => {
+const SearchAddress = ({addressValues, openAddressModal, setOpenAddressModal, handleSelectAddressData, control, isInAddressObject, flexDirection, className, size = 'md' }: SearchAddressProps) => {
   return (
-    <>
+    <div className={`${styles.searchAddressContainer({ flexDirection })} ${className || ''}`}>
       <DefaultButton
         type='gray'
         size='lg'
@@ -42,15 +46,19 @@ const SearchAddress = ({ addressValues, openAddressModal, setOpenAddressModal, h
             type='text'
             id='zipcode'
             name='zipcode'
-            isDisabled
-            value={field.value && `(${field.value}) ${addressValues.street}`}
+            size={size}
+            value={
+              !addressValues.zipcode && !addressValues.street
+                ? '(우편번호) 주소'
+                : `(${addressValues.zipcode ? addressValues.zipcode : field.value}) ${addressValues.street}`
+            }
             placeholder='(우편번호) 주소'
             className={styles.searchAddressInput}
           />
         }
       />
       <Controller
-        name='detailAddress'
+        name={isInAddressObject ? 'address.detailAddress': 'detailAddress'}
         control={control}
         render={({ field }) =>
           <DefaultTextField
@@ -62,10 +70,11 @@ const SearchAddress = ({ addressValues, openAddressModal, setOpenAddressModal, h
             onChange={(value) => field.onChange(value)}
             placeholder='나머지 주소'
             className={styles.searchAddressInput}
+            size={size}
           />
         }
       />
-    </>
+    </div>
   );
 };
 

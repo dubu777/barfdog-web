@@ -1,4 +1,4 @@
-import {useState, useCallback, useRef, useEffect, ReactNode, CSSProperties} from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 export default function useModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,6 @@ export default function useModal() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen, handleClickOutside]);
-
 
   return {
     isOpen,

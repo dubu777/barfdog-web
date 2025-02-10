@@ -9,9 +9,7 @@ export const checkboxContainer = recipe({
   },
   variants: {
     labelPosition: {
-      right: {
-        flexDirection: 'row-reverse'
-      },
+      right: {},
       bottom: {
         flexDirection: 'column-reverse',
         alignItems: 'center',

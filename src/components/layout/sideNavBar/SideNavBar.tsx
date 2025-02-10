@@ -1,6 +1,6 @@
 'use client';
-
 import React, {useEffect, useState} from 'react';
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import * as styles from './SideNavBar.css';
@@ -50,7 +50,7 @@ const categories: Category[] = [
     title: "제품",
     items: [
       { name: "스토어", link: "/store" },
-      { name: "리뷰", link: "/reviews" },
+      { name: "리뷰", link: "/review" },
     ],
   },
   {
@@ -64,6 +64,7 @@ const categories: Category[] = [
   },
 ]
 const SideNavBar = () => {
+  const router = useRouter();
   const { isOpenSideNavBar, setIsOpenSideNavBar } = useCommonStore();
   const [openSubItems, setOpenSubItems] = useState<boolean>(false);
 
@@ -90,6 +91,11 @@ const SideNavBar = () => {
     initial: { opacity: 0 },
     open: { opacity: 1, transition: {duration: 0.35, delay: 0.35}, },
     closed: { opacity: 0, transition: {duration: 0.35} }
+  }
+
+  const handleLinkClick = (link: string) => {
+    setIsOpenSideNavBar(false);
+    router.push(link);
   }
 
   return (
@@ -127,9 +133,9 @@ const SideNavBar = () => {
                       {category.items.map(item => (
                         <li className={styles.navItem} key={item.name}>
                           {!item.subItems && item.link
-                            ? <Link href={item.link} className={styles.navItemLink}>
+                            ? <button onClick={() => handleLinkClick(item.link)} className={styles.navItemLink}>
                               {item.name}
-                            </Link>
+                            </button>
                             : <>
                               <button
                                 onClick={() => setOpenSubItems(!openSubItems)}

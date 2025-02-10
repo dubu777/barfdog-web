@@ -87,7 +87,8 @@ export const [themeClass, themeVars] = createTheme({
   },
   fontColors: {
     white: '#ffffff',
-    yellow: '#faff00',
+    yellowGreen: '#faff00',
+    yellow: '#ffe500',
     green: '#11B418',
     darkRed: '#AF3D3D',
     mainRed: '#BE1A21',
@@ -117,6 +118,7 @@ export const [themeClass, themeVars] = createTheme({
     pinkF1: '#FFF1F1',
     pinkFa: '#FFFAFA',
     pinkFF: '#FFE0E1',
+    purpleFF: '#f8f8ff',
     darkRed: '#AF3D3D',
     mainRed: '#BE1A21',
     greyF7: '#F7F7F7',
@@ -131,6 +133,7 @@ export const [themeClass, themeVars] = createTheme({
     black: '#0E1108',
     kakao: '#FDDC3F',
     naver: '#00C73C',
+    orange: '#ff7247',
   },
   borderColors: {
     white: '#ffffff',

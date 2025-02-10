@@ -6,21 +6,21 @@ import SubscriptionSkipDelivery from "@/components/pages/mypage/subscriptionSkip
 
 interface SkipDeliveryPageParams {
   params: {
-    subscribeId: string;
+    subscribeId: number;
   }
 }
 
 export default async function SkipDeliveryPage({ params }: SkipDeliveryPageParams) {
-
+  const subscribeId = Number(params.subscribeId);
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionDetail(queryClient, params.subscribeId);
+  await prefetchGetSubscriptionDetail(queryClient, subscribeId);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>페이지 접근이 불가합니다.</div>}>
         <Suspense fallback={<div>Loading...</div>}>
-          <SubscriptionSkipDelivery subscribeId={params.subscribeId} />
+          <SubscriptionSkipDelivery subscribeId={subscribeId} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

@@ -1,4 +1,5 @@
 'use client';
+import { useEffect } from "react";
 import * as styles from "./MainWrapper.css";
 import MainVideo from "@/components/pages/main/mainVideo/MainVideo";
 import MainRecommend from "@/components/pages/main/mainRecommend/MainRecommend";
@@ -8,8 +9,20 @@ import MainSurvey from "@/components/pages/main/mainSurvey/MainSurvey";
 import MainService from "@/components/pages/main/mainService/MainService";
 import Footer from "@/components/layout/footer/Footer";
 import BottomBanner from "@/components/layout/banner/BottomBanner";
+import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import Cookies from "js-cookie";
+import {useAuthStore} from "@/store/useAuthStore";
 
 const MainWrapper = () => {
+  const { pushWithQuery } = useDynamicQueryPush();
+  const { userInfo } = useAuthStore();
+
+  useEffect(() => {
+    Cookies.set('alliance', 'cb');
+    if (Cookies.get('alliance')) {
+      pushWithQuery('/', {}, ['alliance']);
+    }
+  }, [pushWithQuery]);
   return (
     <section className={styles.mainContainer}>
       <MainVideo />

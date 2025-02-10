@@ -1,40 +1,50 @@
-import { ChangeEvent } from 'react';
+'use client';
+import { ChangeEvent, forwardRef, ReactNode } from 'react';
 import * as styles from './DefaultCheckbox.css';
 
 interface DefaultCheckboxProps {
   id: string;
   name: string;
-  value: boolean;
-  label?: string;
+  value: boolean | undefined;
+  label?: string | ReactNode;
   labelPosition?: 'right' | 'bottom';
   onChange: (value: string | boolean) => void;
 }
 
-export default function DefaultCheckbox({
+const DefaultCheckbox = forwardRef<HTMLInputElement, DefaultCheckboxProps>(
+({
   id,
   name,
   value,
   label = '',
-  labelPosition,
+  labelPosition = 'right',
   onChange,
-  }: DefaultCheckboxProps) {
+  ...rest
+}, ref) => {
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChange(!e.target.checked);
+    console.log(e.target.checked)
+    onChange(e.target.checked);
   };
   return (
-    <div className={styles.checkboxContainer({ labelPosition: labelPosition })}>
-      <label htmlFor={id} className={styles.checkboxLabel({ isHidden: label === '' })}>
-        {label}
-      </label>
+    <div className={styles.checkboxContainer({labelPosition: labelPosition})}>
       <input
+        ref={ref}
         type='checkbox'
         id={id}
         name={name}
-        checked={value}
+        checked={!!value}
         onChange={handleCheckboxChange}
-        style={{ appearance: 'none' }}
-        className={styles.checkboxStyle({ isChecked: value })}
+        style={{appearance: 'none'}}
+        className={styles.checkboxStyle({isChecked: value})}
+        {...rest}
       />
+      <label htmlFor={id} className={styles.checkboxLabel({isHidden: label === ''})}>
+        {label}
+      </label>
     </div>
   );
-}
+})
+
+DefaultCheckbox.displayName = 'DefaultCheckbox';
+
+export default DefaultCheckbox;

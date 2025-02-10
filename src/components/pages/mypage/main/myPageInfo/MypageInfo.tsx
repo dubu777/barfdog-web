@@ -1,31 +1,38 @@
 'use client';
 import * as styles from "./MypageInfo.css";
+import { useEffect } from "react";
 import Image from "next/image";
 import Badge from "@/components/common/badge/Badge";
 import NoImage from "/public/images/icons/noImage.png";
 import EditButton from "/public/images/icons/edit.svg";
-import {useGetMyPageInfo} from "@/api/mypage/queries/useGetMypageInfo";
-import {MyPageMemberDto, MyPageRepresentativeDogDto} from "@/types";
-import {useAuthStore} from "@/store/useAuthStore";
-import {useEffect} from "react";
+import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
+import { MyPageMemberDto , MyPageRepresentativeDogDto} from "@/types";
+import { useAuthStore } from "@/store/useAuthStore";
+import {useMyPageStore} from "@/store/useMypageStore";
 
 const MyPageInfo = () => {
   const { data: myPageData } = useGetMyPageInfo();
 
   const userData: MyPageMemberDto = myPageData.mypageMemberDto;
   const representativeDogData: MyPageRepresentativeDogDto = myPageData.mypageRepresentiveDogDto;
-  const { setUserInfo } = useAuthStore();
+  const { setMypageUserInfo } = useMyPageStore();
 
   useEffect(() => {
     if (userData) {
-      setUserInfo(userData)
+      setMypageUserInfo(userData)
     }
-  }, [userData, setUserInfo])
+  }, [userData, setMypageUserInfo])
   return (
     <article className={styles.userInfoBox}>
-      <Image src={NoImage} alt='사용자 이미지' width={89} height={89} />
+      <Image
+        src={representativeDogData.thumbnailUrl ? representativeDogData.thumbnailUrl : NoImage}
+        alt='사용자 이미지'
+        width={89}
+        height={89}
+        className={styles.representativeDogImage}
+      />
       <div>
-        <p className={styles.infoText({ type: 'parents', })}>{representativeDogData.dogName} 보호자</p>
+        <p className={styles.infoText({ type: 'parents', })}>{representativeDogData?.dogName} 보호자</p>
         <h2 className={styles.infoText({ type: 'username', })}>
           <b className={styles.infoText({ size: 'lg' })}>{userData.memberName}</b> 님
           <Badge>{userData.grade}</Badge>

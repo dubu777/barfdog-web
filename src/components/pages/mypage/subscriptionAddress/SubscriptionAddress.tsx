@@ -8,8 +8,8 @@ import { useGetSubscriptionAddress } from "@/api/subscription/queries/useGetSubs
 const changeTypeList: DefaultObjectType[] = [
   {
     name: '1회 변경',
-    value: 'once',
-    id: 'once',
+    value: 'onetime',
+    id: 'onetime',
   },
   {
     name: '영구 변경',
@@ -19,17 +19,25 @@ const changeTypeList: DefaultObjectType[] = [
 ]
 
 interface SubscriptionAddressProps {
-  subscribeId: string;
+  subscribeId: number;
   changeType: string | undefined;
 }
 
 const SubscriptionAddress = ({ subscribeId, changeType }: SubscriptionAddressProps) => {
   const { data: addressData } = useGetSubscriptionAddress(subscribeId);
+
   return (
     <section className={styles.addressContainer}>
       {!changeType
-        ? <DefaultAddress addressData={addressData} changeTypeList={changeTypeList} />
-        : <SubscriptionAddressForm nextDeliveryDate={addressData.nextDeliveryDate} changeTypeList={changeTypeList} />
+        ? <DefaultAddress 
+            addressData={addressData} 
+            changeTypeList={changeTypeList}
+          />
+        : <SubscriptionAddressForm
+            subscribeId={subscribeId}
+            nextDeliveryDate={addressData.nextDeliveryDate}
+            changeTypeList={changeTypeList}
+          />
       }
     </section>
   );

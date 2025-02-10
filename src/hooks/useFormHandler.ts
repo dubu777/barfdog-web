@@ -4,6 +4,7 @@ import * as yup from 'yup';
 
 export function useFormHandler<T extends FieldValues>(schema: yup.ObjectSchema<any>, defaultValues: DefaultValues<T>) {
   const {
+    register,
     control,
     handleSubmit,
     formState: { errors, isValid },
@@ -17,6 +18,7 @@ export function useFormHandler<T extends FieldValues>(schema: yup.ObjectSchema<a
   });
 
   return {
+    register,
     control,
     handleSubmit,
     errors,
