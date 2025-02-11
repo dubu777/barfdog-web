@@ -17,27 +17,17 @@ export default function PlanSelection({
   onPlanSelect,
   selectedPlan,
 }: PlanSelectionProps) {
-  const planSelectionTitle = getNameWithObjectSuffix(
-    dogName,
-    UI_MESSAGES.PLAN_TITLE
-  );
-  const [prefix, planWord, suffix] = planSelectionTitle.split("플랜");
+  // const planSelectionTitle = getNameWithObjectSuffix(
+  //   dogName,
+  //   UI_MESSAGES.PLAN_TITLE
+  // );
+  // const [prefix, planWord, suffix] = planSelectionTitle.split("플랜");
 
   return (
     <section className={styles.planSelectionContainer}>
       <div className={subscribeTextWrapper}>
         <h2 className={subscribeText({ type: "mainTitle", color: "gray" })}>
-          {prefix}
-          <span
-            className={subscribeText({
-              type: "mainTitle",
-              color: "black",
-              isBold: true,
-            })}
-          >
-            플랜
-          </span>
-          {planWord}
+          {dogName}의 {UI_MESSAGES.PLAN_TITLE}
         </h2>
         <p className={subscribeText({ type: "subtitle" })}>
           {UI_MESSAGES.PLAN_SUBTITLE}

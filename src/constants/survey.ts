@@ -12,7 +12,6 @@ export {
   PLAN_SELECT_INFO,
 };
 
-
 const initialSurveyValue = {
   name: "",
   gender: "",
@@ -599,7 +598,8 @@ export interface RecipeTempData {
   id: number;
   name: string;
   imageURL: string;
-  description: string[];
+  ingredients: string[];
+  efficacy: string[];
   type: "single" | "double";
 }
 
@@ -608,76 +608,64 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
     id: 5,
     name: "스타터 프리미엄",
     imageURL: "/images/recipe/starter_premium.png",
-    description: [
-      "주재료: 닭, 칠면조",
-      "첫 생식에 추천",
-      "부드러워 소화에 적은 부담",
-    ],
+    ingredients: ["닭", "칠면조"],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "double",
   },
   6: {
     id: 6,
     name: "터키앤비프",
     imageURL: "/images/recipe/turkey_and_beef.png",
-    description: [
-      "주재료: 칠면조, 소",
-      "성장기 자견에게 추천",
-      "영양 보충 & 면역력 강화",
-    ],
+ingredients: ["칠면조", "소"],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "double",
   },
   7: {
     id: 7,
     name: "덕앤램",
     imageURL: "/images/recipe/duck_and_lamb.png",
-    description: [
-      "주재료: 오리, 양",
-      "기력회복이 필요하다면 추천",
-      "관절 강화 & 근력 회복",
-    ],
+ingredients: ["오리", "양"],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "double",
   },
   8: {
     id: 8,
     name: "램앤비프",
     imageURL: "/images/recipe/lamb_and_beef.png",
-    description: [
-      "주재료: 소, 양",
-      "푸석푸석한 모질이라면 추천",
-      "윤기나는 피부와 모질",
-    ],
+ingredients: ["양", "소"],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "double",
   },
   9: {
     id: 9,
     name: "프리미엄 치킨",
     imageURL: "/images/recipe/premium_chicken.png",
-    description: ["주재료: 닭", "전 연령 추천", "관절 강화 & 소화 흡수율 높음"],
+    ingredients: ["닭"],
+        efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
   10: {
     id: 10,
     name: "프리미엄 터키",
     imageURL: "/images/recipe/premium_turkey.png",
-    description: [
-      "주재료: 칠면조",
-      "성장기 자견에게 추천",
-      "영양 보충 & 면역력 강화",
-    ],
+ingredients: ["칠면조"],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
   11: {
     id: 11,
     name: "프리미엄 램",
     imageURL: "/images/recipe/premium_lamb.png",
-    description: ["주재료: 양", "활동량이 많다면 추천", "피로회복 & 피모관리"],
+ingredients: [""],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
   12: {
     id: 12,
     name: "프리미엄 비프",
     imageURL: "/images/recipe/premium_beef.png",
-    description: ["주재료: 소", "전 연령 추천", "체중관리 & 빈혈회복"],
+ingredients: ["양"],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
 };
@@ -757,4 +745,3 @@ const PLAN_SELECT_INFO: PlanInfo[] = [
     content: ["하루", "1팩", "/", "4주 간격 배송", "/", "총 28팩"],
   },
 ];
-

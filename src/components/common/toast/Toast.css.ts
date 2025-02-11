@@ -17,7 +17,7 @@ export const toastContainer = style({
 export const toast = recipe({
   base: {
     padding: '12px 20px',
-    backgroundColor: themeVars.colors.white,
+    backgroundColor: themeVars.colors.gray.gray0,
     borderRadius: '8px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     fontSize: '14px',
@@ -33,16 +33,16 @@ export const toast = recipe({
         border: `1px solid ${themeVars.fontColors.green}`
       },
       error: {
-        color: themeVars.colors.mainRed,
-        border: `1px solid ${themeVars.colors.mainRed}`
+        color: themeVars.colors.red.red,
+        border: `1px solid ${themeVars.colors.red.red}`
       },
       warning: {
         color: 'orange',
         border: `1px solid orange`
       },
       info: {
-        color: themeVars.colors.lightGrey,
-        border: `1px solid ${themeVars.colors.lightGrey}`
+        color: themeVars.colors.gray.gray400,
+        border: `1px solid ${themeVars.colors.gray.gray400}`
       },
     }
   }

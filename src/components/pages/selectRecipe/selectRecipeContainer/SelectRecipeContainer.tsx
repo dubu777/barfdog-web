@@ -90,9 +90,9 @@ export default function SelectRecipeContainer({
     isOriginSubscriber: isOrigin,
   });
 
-  const isCompleted =
-    !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
-    subscribePriceData.totalOriginalPriceAllRecipes !== 0;
+  // const isCompleted =
+  //   !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
+  //   subscribePriceData.totalOriginalPriceAllRecipes !== 0;
 
   const handlePayment = () => {
     const body = {
@@ -125,6 +125,18 @@ console.log("body", body);
     );
   };
 
+
+
+  const handleGoToOrderOption = () => {
+    const params = new URLSearchParams();
+    selectedRecipes.forEach(id => params.append("recipeId", String(id)));
+    router.push(`/order/select-options?${params.toString()}`);
+  };
+
+
+  const isCompleted = selectedRecipes.length
+
+
   return (
     <main className={styles.subscribeShopWrapper}>
       <RecipeSelection
@@ -133,32 +145,12 @@ console.log("body", body);
         recipeData={recipeData}
         inedibleFood={resultData.inedibleFood}
       />
-      <PlanSelection
-        onPlanSelect={handleSelectedPlan}
-        selectedPlan={selectedPlan}
-        dogName={resultData.myDogName}
-      />
-      <SelectedProductInfo
-        subscribePriceData={subscribePriceData}
-        selectedRecipeMeals={selectedRecipeMeals}
-        selectedPlan={selectedPlan}
-        selectedVolume={selectedVolume}
-        handleSelectedVolume={handleSelectedVolume}
-        oneMealGramWithVolume={oneMealGramWithVolume}
-      />
+
       <FooterButton
         isDisabled={!isCompleted}
-        onClick={onToggle}
-        aria-label="결제 페이지로 이동"
+        onClick={handleGoToOrderOption}
       >
-        결제하러 가기
-        <Image
-          src="/images/icons/right-arrow-white.svg"
-          alt="결제 진행 화살표"
-          width={18}
-          height={18}
-          priority
-        />
+        주문하기
       </FooterButton>
       <DeliveryScheduleModal
         isVisible={isOpen}

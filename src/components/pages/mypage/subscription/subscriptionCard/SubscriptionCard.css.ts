@@ -31,7 +31,7 @@ export const productionDate = style({
     display: 'block',
     width: '1px',
     height: '70%',
-    background: themeVars.colors.black,
+    background: themeVars.colors.gray.gray900,
     position: 'absolute',
     top: '50%',
     right: '-9px',

@@ -2,20 +2,22 @@
 
 import { ReactNode } from "react";
 import * as styles from "./FooterButton.css";
+import Button from "@/components/common/button/Button";
 
 
 interface FooterButtonProps {
   children: ReactNode;
   icon?: JSX.Element | null;
   isDisabled: boolean;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: () => void;
 }
 
 export default function FooterButton({children, icon, isDisabled, onClick}: FooterButtonProps) {
   return (
-    <button className={styles.footerButtonContainer({isDisabled})} disabled={isDisabled} onClick={onClick}>
-      {children}
-      {icon && <span>{icon}</span>}
-    </button>
+    <div className={styles.footerButtonContainer}>
+      <Button type="primary" variant="solid" size="lg" disabled={isDisabled} onClick={onClick} fullWidth>
+        {children}
+      </Button>
+    </div>
   );
 }

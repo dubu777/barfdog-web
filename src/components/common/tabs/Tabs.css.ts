@@ -31,7 +31,7 @@ export const tabButton = recipe({
           display: 'block',
           width: '120%',
           height: '3px',
-          background: themeVars.colors.red,
+          background: themeVars.colors.red.red,
           position: 'absolute',
           bottom: '-11px',
           left: '50%',
@@ -53,7 +53,7 @@ export const tabButton = recipe({
     {
       variants: { type: 'button', active: true },
       style: {
-        background: themeVars.colors.white,
+        background: themeVars.colors.gray.gray0,
       },
     },
   ]

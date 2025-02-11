@@ -27,15 +27,15 @@ export const textFieldStyle = recipe({
     height: '50px',
     borderRadius: '5px',
     padding: '0 20px',
-    border: `1px solid ${themeVars.colors.lightGrey}`,
+    border: `1px solid ${themeVars.colors.gray.gray400}`,
     color: themeVars.fontColors.grey38,
     transition: 'all .35s',
     outline: 'none',
     '::placeholder': {
-      color: themeVars.colors.lightGrey,
+      color: themeVars.colors.gray.gray400,
     },
     ':focus': {
-      border: `1px solid ${themeVars.colors.red}`,
+      border: `1px solid ${themeVars.colors.red.red}`,
     },
   },
   variants: {
@@ -64,7 +64,7 @@ export const textFieldStyle = recipe({
     },
     isError: {
       true: {
-        border: `1px solid ${themeVars.colors.red}`,
+        border: `1px solid ${themeVars.colors.red.red}`,
       }
     },
   }

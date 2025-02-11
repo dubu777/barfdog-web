@@ -11,7 +11,7 @@ export const counterContainer = recipe({
     border: `1px solid #ddd`,
     borderRadius: '8px',
     padding: '10px',
-    background: themeVars.colors.white
+    background: themeVars.colors.gray.gray0
   },
   variants: {
     fullWidth: {

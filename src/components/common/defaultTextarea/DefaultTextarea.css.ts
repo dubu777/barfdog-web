@@ -36,17 +36,17 @@ export const textarea = style({
   minHeight: '260px',
   height: '100%',
   padding: '1rem',
-  border: `1px solid ${themeVars.colors.lightGrey}`,
+  border: `1px solid ${themeVars.colors.gray.gray400}`,
   color: themeVars.fontColors.grey38,
   borderRadius: '5px',
   transition: 'all .35s',
   outline: 'none',
   resize: 'vertical',
   '::placeholder': {
-    color: themeVars.colors.lightGrey,
+    color: themeVars.colors.gray.gray400,
   },
   ':focus': {
-    border: `1px solid ${themeVars.colors.red}`,
+    border: `1px solid ${themeVars.colors.red.red}`,
   },
 })
 
@@ -55,7 +55,7 @@ export const charCount = style({
   bottom: '1rem',
   right: '1rem',
   fontSize: themeVars.fontSize["text-sm"],
-  color: themeVars.colors.lightGrey,
+  color: themeVars.colors.gray.gray400,
 })
 
 export const errorText = style({

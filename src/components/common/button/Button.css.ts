@@ -4,30 +4,24 @@ import { themeVars } from "@/styles/theme.css";
 // 버튼 크기
 export const buttonStyles = {
   sm: style({
-    padding: "7px 16px",
-    fontSize: "16px",
+    padding: "4px 6px",
+    fontSize: "14px",
     borderRadius: "8px",
-    height: '36px',
   }),
   md: style({
     padding: "10px 24px",
     fontSize: "16px",
     borderRadius: "8px",
-    height: '42px',
   }),
   lg: style({
     padding: "12px 28px",
     fontSize: "16px",
     borderRadius: "8px",
-    height: '46px',
   }),
   content: style({
     display: "inline-flex",
     alignItems: "center",
     columnGap: "8px",
-  }),
-  fullWidth: style({
-    width: "100%",
   }),
 };
 
@@ -35,8 +29,8 @@ export const buttonStyles = {
 export const buttonVariants = {
   solid: {
     primary: style({
-      backgroundColor: themeVars.colors.primary.red,
-      color: themeVars.colors.white,
+      backgroundColor: themeVars.colors.red.red,
+      color: themeVars.colors.gray.gray0,
       border: "none",
       cursor: "pointer",
     }),
@@ -44,14 +38,14 @@ export const buttonVariants = {
   outline: {
     primary: style({
       backgroundColor: "transparent",
-      border: `1px solid ${themeVars.colors.primary.red}`,
-      color: themeVars.colors.primary.red,
+      border: `1px solid ${themeVars.colors.red.red}`,
+      color: themeVars.colors.red.red,
       cursor: "pointer",
     }),
     secondary: style({
       backgroundColor: "transparent",
       border: `1px solid ${themeVars.colors.gray.gray300}`,
-      color: themeVars.colors.primary.red,
+      color: themeVars.colors.red.red,
       cursor: "pointer",
     }),
     assistive: style({
@@ -64,7 +58,7 @@ export const buttonVariants = {
   text: {
     primary: style({
       backgroundColor: "transparent",
-      color: themeVars.colors.primary.red,
+      color: themeVars.colors.red.red,
       cursor: "pointer",
       border: "none",
     }),
@@ -81,8 +75,8 @@ export const buttonVariants = {
 export const disabledVariants = {
   solid: {
     primary: style({
-      backgroundColor: themeVars.colors.gray.gray100,
-      color: themeVars.colors.gray.gray300,
+      backgroundColor: themeVars.colors.gray.gray300,
+      color: themeVars.colors.gray.gray0,
       cursor: "not-allowed",
     }),
   },

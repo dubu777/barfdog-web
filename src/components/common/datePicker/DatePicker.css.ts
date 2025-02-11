@@ -14,7 +14,7 @@ globalStyle(`${datePickerContainer} .react-date-picker`, {
 globalStyle(`${datePickerContainer} .react-date-picker__wrapper`, {
 	borderRadius: '5px',
 	padding: '0 20px',
-	border: `1px solid ${themeVars.colors.lightGrey}`
+	border: `1px solid ${themeVars.colors.gray.gray400}`
 })
 
 globalStyle(`${datePickerContainer} .react-date-picker__inputGroup`, {
@@ -22,7 +22,7 @@ globalStyle(`${datePickerContainer} .react-date-picker__inputGroup`, {
 })
 
 globalStyle(`${datePickerContainer} .react-date-picker__button:enabled:hover .react-date-picker__button__icon, .react-date-picker__button:enabled:focus .react-date-picker__button__icon`, {
-	stroke: themeVars.colors.mainRed,
+	stroke: themeVars.colors.red.red,
 })
 
 globalStyle(`${datePickerContainer} .react-date-picker__inputGroup__input:invalid`, {
@@ -30,11 +30,11 @@ globalStyle(`${datePickerContainer} .react-date-picker__inputGroup__input:invali
 })
 
 globalStyle(`${datePickerContainer} .react-calendar__tile--now, .react-calendar__tile--now:enabled:hover, .react-calendar__tile--now:enabled:focus`, {
-	border: `1px solid ${themeVars.colors.mainRed}`,
-	background: `${themeVars.colors.white} !important`,
+	border: `1px solid ${themeVars.colors.red.red}`,
+	background: `${themeVars.colors.gray.gray0} !important`,
 })
 
 globalStyle(`${datePickerContainer} .react-calendar__tile--active, .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus`, {
-	background: `${themeVars.colors.mainRed} !important`,
-	color: `${themeVars.colors.white} !important`,
+	background: `${themeVars.colors.red.red} !important`,
+	color: `${themeVars.colors.gray.gray0} !important`,
 })

@@ -1,6 +1,6 @@
 import * as styles from "./SurveyButtonList.css";
 import { surveyTitle } from "@/app/survey/Survey.css";
-import { getNameWithPossessiveSuffix } from "@/utils";
+import { getNameWithPossessiveSuffix2 } from "@/utils";
 import SurveyButton from "../surveyButton/SurveyButton";
 
 interface SurveyButtonListProps {
@@ -26,7 +26,7 @@ export default function SurveyButtonList({
   petName,
   isMultiSelect = false,
 }: SurveyButtonListProps) {
-  const fullTitle = getNameWithPossessiveSuffix(petName, title);
+  const fullTitle = getNameWithPossessiveSuffix2(petName, title);
 
   return (
     <div className={styles.surveyButtonListContainer}>

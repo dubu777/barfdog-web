@@ -52,7 +52,7 @@ export const infoText = recipe({
           display: 'block',
           width: '15px',
           height: '1px',
-          background: themeVars.colors.black,
+          background: themeVars.colors.gray.gray900,
           position: 'absolute',
           left: 0,
           bottom: '-8px',

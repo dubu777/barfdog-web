@@ -13,7 +13,7 @@ export const commonLayoutContainer = style([commonLayoutStyle, {
   minHeight: '100%',
   display: 'flex',
   flexDirection: 'column',
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
   '-ms-user-select': 'none',
   '-moz-user-select': '-moz-none',
   '-webkit-user-select': 'none',
@@ -72,7 +72,7 @@ export const ellipsis = recipe({
     }
   },
 })
-export const pointColor = style({ color: themeVars.colors.mainRed });
+export const pointColor = style({ color: themeVars.colors.red.red });
 
 
 export const defaultWidth = style({

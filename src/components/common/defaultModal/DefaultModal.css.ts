@@ -64,7 +64,7 @@ export const modalContentWrapper = recipe({
           width: '8px',
         },
         '::-webkit-scrollbar-thumb': {
-          backgroundColor: themeVars.colors.white,
+          backgroundColor: themeVars.colors.gray.gray0,
           border: `1px solid ${themeVars.borderColors.greyBB}`,
           borderRadius: '10px',
         },

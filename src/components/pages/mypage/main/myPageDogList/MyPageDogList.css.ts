@@ -18,7 +18,7 @@ export const dogSlider = style({
 
 export const dogSlide = recipe({
   base: {
-    border: `1px solid ${themeVars.colors.lightGrey}`,
+    border: `1px solid ${themeVars.colors.gray.gray400}`,
     width: '100%',
     height: '100%',
     borderRadius: '3px',
@@ -28,7 +28,7 @@ export const dogSlide = recipe({
   variants: {
     representative: {
       true: {
-        border: `1px solid ${themeVars.colors.mainRed}`,
+        border: `1px solid ${themeVars.colors.red.red}`,
       }
     },
     noDogData: {
@@ -113,7 +113,7 @@ export const productionDate = style({
     display: 'block',
     width: '1px',
     height: '100%',
-    background: themeVars.colors.black,
+    background: themeVars.colors.gray.gray900,
     position: 'absolute',
     top: '0',
     right: '-9px',

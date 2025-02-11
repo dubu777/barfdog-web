@@ -5,7 +5,7 @@ import * as styles from "./SurveySteps.css";
 import SelectBox from "../selectBox/SelectBox";
 import { surveyInputWrapper, surveyTitle } from "@/app/survey/Survey.css";
 import { useState } from "react";
-import { getNameWithPossessiveSuffix } from "@/utils";
+import { getNameWithPossessiveSuffix2 } from "@/utils";
 import { SURVEY_FORM_INFO } from "@/constants";
 
 interface SurveyStep2Props {
@@ -37,7 +37,7 @@ export default function SurveyStep5({
   const title = SURVEY_FORM_INFO.birth.title
   const petName = formData.name
   const fullTitle = title && petName
-  ? getNameWithPossessiveSuffix(petName, title) 
+  ? getNameWithPossessiveSuffix2(petName, title) 
   : title;
 
   return (

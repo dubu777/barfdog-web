@@ -5,20 +5,20 @@ import { recipe } from "@vanilla-extract/recipes";
 export const recipeCardContainer = recipe({
   base: {
     position: 'relative',
-    width: "170px",
-    backgroundColor: themeVars.backgroundColors.white,
+    width: "100%",
+    backgroundColor: themeVars.colors.gray.gray0,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    borderRadius: "10px",
-    boxShadow: "2px 4px 12px #00000014",
+    borderRadius: "12px",
+    padding: '16px',
     cursor: "pointer",
   },
   variants: {
     isSelected: {
       true: 
       {
-        outline: `2px solid ${themeVars.borderColors.mainRed}`,
+        outline: `1px solid ${themeVars.colors.red.red}`,
       },
       false: {
         outline: '1px solid transparent',
@@ -30,6 +30,44 @@ export const recipeCardContainer = recipe({
   }
 
 });
+
+
+
+export const recipeCardTitleWrapper = style({
+  width: "100%",
+  display: "flex",
+  justifyContent: 'space-between',
+});
+
+export const recipeCardContentWrapper = style({
+  width: "100%",
+  display: "flex",
+  justifyContent: 'space-between',
+});
+
+export const recipeCardLeftWrapper = style({
+  width: "100%",
+  display: "flex",
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  gap: "12px",
+  marginTop: '18px',
+});
+
+export const ingredientsWrapper = style({
+  width: "100%",
+  display: "flex",
+  justifyContent: 'flex-start',
+  gap: '8px',
+});
+
+export const recipeCardBadgeWrapper = style({
+  width: "100%",
+  display: "flex",
+  justifyContent: 'flex-start',
+  gap: '4px',
+});
+
 
 export const recipeImageWrapper = style({
   width: "100%",

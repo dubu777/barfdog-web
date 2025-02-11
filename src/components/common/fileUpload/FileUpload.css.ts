@@ -43,8 +43,8 @@ export const fileInputLabel = style({
   borderRadius: '5px',
   padding: '5px 8px',
   textAlign: 'center',
-  background: themeVars.colors.red,
-  color: themeVars.colors.white,
+  background: themeVars.colors.red.red,
+  color: themeVars.colors.gray.gray0,
   fontSize: themeVars.fontSize["text-sm"],
   cursor: 'pointer',
 })

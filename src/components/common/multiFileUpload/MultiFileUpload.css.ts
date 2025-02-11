@@ -18,7 +18,7 @@ export const fileUploadTitle = style({
 export const subTitle = style({
   fontSize: themeVars.fontSize["text-sm"],
   fontWeight: themeVars.fontWeight.normal,
-  color: themeVars.colors.red,
+  color: themeVars.colors.red.red,
 })
 
 export const fileUpload = style({
@@ -41,7 +41,7 @@ export const uploadLabel = style({
     display: 'block',
     width: '2px',
     height: '20px',
-    background: themeVars.colors.white,
+    background: themeVars.colors.gray.gray0,
     position: 'absolute',
     top: '40%',
     left: '50%',
@@ -52,7 +52,7 @@ export const uploadLabel = style({
     display: 'block',
     width: '2px',
     height: '20px',
-    background: themeVars.colors.white,
+    background: themeVars.colors.gray.gray0,
     position: 'absolute',
     top: '40%',
     left: '50%',

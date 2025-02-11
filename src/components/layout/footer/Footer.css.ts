@@ -6,7 +6,7 @@ export const footerContainer = recipe({
   base: {
     zIndex: 20,
     backgroundColor: themeVars.backgroundColors.grey7E,
-    color: themeVars.colors.white,
+    color: themeVars.colors.gray.gray0,
     padding: '14px 25px',
   },
   variants: {
@@ -24,7 +24,7 @@ export const footerContainer = recipe({
 export const footerButton = recipe({
   base: {
     width: '100%',
-    color: themeVars.colors.white,
+    color: themeVars.colors.gray.gray0,
     textAlign: 'left',
     display: 'flex',
     alignItems: 'center',
@@ -82,7 +82,7 @@ export const terms = style({
     display: 'block',
     width: '1px',
     height: '90%',
-    background: themeVars.colors.white,
+    background: themeVars.colors.gray.gray0,
     position: 'absolute',
     left: '-10px',
     top: '50%',

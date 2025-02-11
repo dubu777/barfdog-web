@@ -2,35 +2,61 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const recipeSelectionContainer = style({
+export const recipeSelectContainer = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
 });
 
-export const subscribeTextWrapper = style({
+export const recipeSelectTitleWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  width: "100%",
+  gap: "12px",
+});
+
+export const recipeSelectWrapper = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
+  gap: "40px",
+});
+
+export const recipeSelectBox = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  width: "100%",
+});
+
+export const recipeTitleWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  width: "100%",
   marginBottom: "20px",
-  gap: "5px",
+});
+
+export const meatTypeButtonWrapper = style({
+  display: "flex",
+  justifyContent: "flex-start",
+  width: "100%",
+  marginTop: "40px",
+  marginBottom: "24px",
+  gap: '6px',
 });
 
 export const recipeCardWrapper = style({
-  display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
-  gap: "20px",
-  marginTop: "20px",
-});
-
-export const recipesWrapper = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  marginBottom: "40px",
+  width: "100%",
+  gap: "16px",
 });
+
 
 export const subscribeText = recipe({
   base: {

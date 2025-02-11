@@ -22,7 +22,7 @@ export const container = recipe({
     },
     error: {
       true: {
-        borderColor: themeVars.colors.primary.red,
+        borderColor: themeVars.colors.red.red,
       },
     },
   },
@@ -55,7 +55,7 @@ export const input = recipe({
 
 export const errorText = style({
   position: 'absolute',
-  color: themeVars.colors.primary.red,
+  color: themeVars.colors.red.red,
   top: 'calc(100% + 5px)',
   left: '0', 
 });

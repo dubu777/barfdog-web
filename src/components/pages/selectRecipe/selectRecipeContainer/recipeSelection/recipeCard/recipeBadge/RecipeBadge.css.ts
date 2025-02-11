@@ -1,35 +1,14 @@
 import { themeVars } from "@/styles/theme.css";
-import { recipe } from "@vanilla-extract/recipes";
+import { style } from "@vanilla-extract/css";
 
-export const recipeBadgeContainer = recipe({
-  base: {
-    position: 'absolute',
-    zIndex: 1,
-    left: '5px',
-    top: '-5px',
-    height: '20px',
-    textAlign: 'center',
-    padding: '0 7px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '10px',
-    color: themeVars.fontColors.white,
-    fontWeight: themeVars.fontWeight.semibold,
-    fontSize: themeVars.fontSize["text-2xs"],
-    lineHeight: '1',
-  },
-  variants: {
-    type: {
-      'recommend': {
-        backgroundColor: themeVars.backgroundColors.mainRed
-      },
-      'inedible': {
-        backgroundColor: themeVars.backgroundColors.black        
-      },
-      'none': {
-      },
-    }
-  },
+export const recipeBadgeContainer = style({
+
+    padding: '8px 12px',
+    borderRadius: '8px',
+    backgroundColor: themeVars.colors.red.pinkWhite,
+    color: themeVars.colors.red.red,
+    border: `solid 1px ${themeVars.colors.red.pastelPink}`,
+    width: "100%",
+    marginTop: "10px",
 });
 

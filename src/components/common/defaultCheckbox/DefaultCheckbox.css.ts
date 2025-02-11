@@ -37,7 +37,7 @@ export const checkboxStyle = recipe({
   base: {
     width: '20px',
     height: '20px',
-    background: themeVars.colors.lightGrey,
+    background: themeVars.colors.gray.gray400,
     padding: 0,
     margin: 0,
     transition: 'all .35s',
@@ -58,7 +58,7 @@ export const checkboxStyle = recipe({
   variants: {
     isChecked: {
       true: {
-        background: themeVars.colors.red,
+        background: themeVars.colors.red.red,
       }
     },
   }

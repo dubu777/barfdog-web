@@ -19,9 +19,9 @@ export const skipCheckButton = recipe({
   variants: {
     active: {
       true: {
-        border: `1px solid ${themeVars.colors.mainRed}`,
+        border: `1px solid ${themeVars.colors.red.red}`,
         background: themeVars.backgroundColors.pinkFF,
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
       }
     }
   }
@@ -47,7 +47,7 @@ export const cycleTitle = recipe({
     active: {
       true: {
         ':after': {
-          background: themeVars.colors.mainRed,
+          background: themeVars.colors.red.red,
         }
       }
     }

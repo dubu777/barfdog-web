@@ -100,7 +100,14 @@ export const textStyles = {
 };
 
 export const fontColors = {
-  white: style({ color: themeVars.fontColors.white }),
-  mainRed: style({ color: themeVars.fontColors.mainRed }),
-  grey2B: style({ color: themeVars.fontColors.grey2B }),
+  white: style({ color: themeVars.colors.gray.gray0 }),
+  red: style({ color: themeVars.colors.red.red }),
+  gray900: style({ color: themeVars.colors.gray.gray900 }),
+  gray600: style({ color: themeVars.colors.gray.gray600 }),
+};
+
+export const alignStyles = {
+  left: style({ textAlign: 'left' }),
+  center: style({ textAlign: 'center' }),
+  right: style({ textAlign: 'right' }),
 };

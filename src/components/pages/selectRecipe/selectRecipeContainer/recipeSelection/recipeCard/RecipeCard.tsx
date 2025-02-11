@@ -4,6 +4,8 @@ import { ID_TO_INGREDIENT_LIST, RecipeTempData } from "@/constants";
 import { subscribeText } from "../RecipeSelection.css";
 import { motion } from "framer-motion";
 import RecipeBadge from "./recipeBadge/RecipeBadge";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import Button from "@/components/common/button/Button";
 
 interface RecipeCardProps {
   recipeTempData: RecipeTempData;
@@ -20,55 +22,58 @@ export default function RecipeCard({
   inedibleFood,
   onRecipeCardSelect,
 }: RecipeCardProps) {
-
   const isRecommend = recommendId === recipeTempData.id;
+  const ingredientsText = recipeTempData.ingredients
+    ?.filter((i) => i.trim() !== "")
+    .join(", ");
+
   return (
     <motion.div
       className={styles.recipeCardContainer({
         isSelected: selectedRecipes.includes(recipeTempData.id),
       })}
       whileHover={{
-        y: -3,
-        boxShadow: "4px 8px 18px rgba(0, 0, 0, 0.1)",
+        y: -1,
+        boxShadow: "2px 4px 12px rgba(0, 0, 0, 0.1)",
       }}
       transition={{
         duration: 0.2,
       }}
       onClick={() => onRecipeCardSelect(recipeTempData.id)}
     >
+      <div className={styles.recipeCardTitleWrapper}>
+        <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
+        <Button type="assistive" variant="text" size="content">
+          자세히
+        </Button>
+      </div>
+      <div className={styles.recipeCardContentWrapper}>
+      <div className={styles.recipeCardLeftWrapper}>
+        <div className={styles.ingredientsWrapper}>
+          <DefaultText type="body2">주재료</DefaultText>
+          <DefaultText type="body2">{ingredientsText}</DefaultText>
+        </div>
+        <div className={styles.recipeCardBadgeWrapper}>
+          {recipeTempData.efficacy.map((text, idx) => (
+            <Button key={idx} type="assistive" variant="outline" size="sm">
+              {text}
+            </Button>
+          ))}
+        </div>
+      </div>
+      <Image
+        src={recipeTempData.imageURL}
+        alt="레시피 이미지"
+        width={88}
+        height={88}
+      />
+      </div>
       <RecipeBadge
-        ingredientList={ID_TO_INGREDIENT_LIST[recipeTempData.id]}
+        ingredientsText={ingredientsText}
         isRecommend={isRecommend}
         inedibleFood={inedibleFood}
       />
-      <div className={styles.recipeImageWrapper}>
-        <Image
-          src={recipeTempData.imageURL}
-          alt="레시피 이미지"
-          width={155}
-          height={155}
-        />
-      </div>
-      <div className={styles.recipeDescriptionWrapper}>
-        <div className={styles.recipeTitleWrapper}>
-          <p className={subscribeText({ type: "recipeTitle" })}>
-            {recipeTempData.name}
-          </p>
-        </div>
-        <div className={styles.recipeDescripionBox}>
-          {recipeTempData.description.map((text, idx) => (
-            <p
-              key={`${text}-${idx}`}
-              className={subscribeText({ type: "description" })}
-            >
-              {text}
-            </p>
-          ))}
-        </div>
-        <button className={subscribeText({ type: "link" })}>
-          자세히 알아보기
-        </button>
-      </div>
+
     </motion.div>
   );
 }

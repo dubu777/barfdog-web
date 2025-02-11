@@ -40,7 +40,6 @@ export default async function SelectRecipePage({
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>
-      <BottomNavBar />
     </div>
   );
 }

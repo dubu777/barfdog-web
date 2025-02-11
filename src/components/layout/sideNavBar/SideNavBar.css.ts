@@ -18,7 +18,7 @@ export const sideNavBarWrapper = style([commonLayoutStyle, {
 export const sideNavBarContainer = style({
   width: '70%',
   height: '100%',
-  background: themeVars.colors.white,
+  background: themeVars.colors.gray.gray0,
   position: 'relative',
   padding: '100px 18px 36px',
 })

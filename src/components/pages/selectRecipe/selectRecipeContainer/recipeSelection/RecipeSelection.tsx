@@ -1,11 +1,13 @@
 "use client";
 
 import * as styles from "./RecipeSelection.css";
-import { getNameWithObjectSuffix } from "@/utils";
+import { getNameWithPossessiveSuffix } from "@/utils";
 import { UI_MESSAGES } from "@/constants/message";
 import RecipeCard from "./recipeCard/RecipeCard";
 import { RECIPE_TEMP_DATA } from "@/constants";
 import { RecipeData } from "@/types";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import Button from "@/components/common/button/Button";
 
 interface RecipeSelectionProps {
   recipeData: RecipeData;
@@ -20,13 +22,6 @@ export default function RecipeSelection({
   inedibleFood,
   onRecipeSelect,
 }: RecipeSelectionProps) {
-  const recipeSelectionTitle = getNameWithObjectSuffix(
-    recipeData.dogName,
-    UI_MESSAGES.RECIPE_TITLE
-  );
-
-  const [prefix, recipeWord, suffix] = recipeSelectionTitle.split("레시피");
-
   // double과 single 레시피로 필터링 - 임시로 Api 데이터 변경전까지
   const doubleRecipes = Object.values(RECIPE_TEMP_DATA).filter(
     (recipe) => recipe.type === "double"
@@ -35,63 +30,66 @@ export default function RecipeSelection({
     (recipe) => recipe.type === "single"
   );
   return (
-    <section className={styles.recipeSelectionContainer}>
-      <div className={styles.subscribeTextWrapper}>
-        <h2
-          className={styles.subscribeText({ type: "mainTitle", color: "gray" })}
-        >
-          {prefix}
-          <span
-            className={styles.subscribeText({
-              type: "mainTitle",
-              color: "black",
-              isBold: true,
-            })}
-          >
-            레시피
-          </span>
-          {recipeWord}
-        </h2>
+    <section className={styles.recipeSelectContainer}>
+      <div className={styles.recipeSelectTitleWrapper}>
+        <DefaultText type="title4">
+          {getNameWithPossessiveSuffix(recipeData.dogName)}의<br />
+          {UI_MESSAGES.RECIPE_TITLE}
+        </DefaultText>
+        <DefaultText type="body2" color="gray600">
+          최대 2가지 레시피 선택할 수 있어요
+        </DefaultText>
+      </div>
+      <div className={styles.meatTypeButtonWrapper}>
+        <Button type="assistive" variant="outline" size="sm" fullWidth={false}>
+          더블 미트
+        </Button>
+        <Button type="assistive" variant="outline" size="sm" fullWidth={false}>
+          싱글 미트
+        </Button>
+      </div>
 
-        <p className={styles.subscribeText({ type: "subtitle" })}>
-          <span style={{ color: "#1d1d1f", fontWeight: "600" }}>
-            최대 2가지
-          </span>
-          까지 레시피 선택이 가능합니다.
-        </p>
-      </div>
-      <div className={styles.recipesWrapper}>
-        <h2 className={styles.subscribeText({ type: "title" })}>
-          <b>더블미트</b>(복합 단백질) 레시피
-        </h2>
-        <div className={styles.recipeCardWrapper}>
-          {doubleRecipes.map((recipeTempData, _) => (
-            <RecipeCard
-              key={recipeTempData.name}
-              recipeTempData={recipeTempData}
-              recommendId={recipeData.recommendRecipeId}
-              selectedRecipes={selectedRecipes}
-              onRecipeCardSelect={onRecipeSelect}
-              inedibleFood={inedibleFood}
-            />
-          ))}
+      <div className={styles.recipeSelectWrapper}>
+        <div className={styles.recipeSelectBox}>
+          <div className={styles.recipeTitleWrapper}>
+            <DefaultText type="title4">더블미트 레시피</DefaultText>
+            <DefaultText type="body2" color="gray600">
+              복합 단백질
+            </DefaultText>
+          </div>
+          <div className={styles.recipeCardWrapper}>
+            {doubleRecipes.map((recipeTempData, _) => (
+              <RecipeCard
+                key={recipeTempData.name}
+                recipeTempData={recipeTempData}
+                recommendId={recipeData.recommendRecipeId}
+                selectedRecipes={selectedRecipes}
+                onRecipeCardSelect={onRecipeSelect}
+                inedibleFood={inedibleFood}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      <div className={styles.recipesWrapper}>
-        <h2 className={styles.subscribeText({ type: "title" })}>
-          <b>싱글미트</b>(단일 단백질) 레시피
-        </h2>
-        <div className={styles.recipeCardWrapper}>
-          {singleRecipes.map((recipeTempData, _) => (
-            <RecipeCard
-              key={recipeTempData.name}
-              recipeTempData={recipeTempData}
-              recommendId={recipeData.recommendRecipeId}
-              selectedRecipes={selectedRecipes}
-              onRecipeCardSelect={onRecipeSelect}
-              inedibleFood={inedibleFood}
-            />
-          ))}
+
+        <div className={styles.recipeSelectBox}>
+          <div className={styles.recipeTitleWrapper}>
+            <DefaultText type="title4">싱글미트 레시피</DefaultText>
+            <DefaultText type="body2" color="gray600">
+              단일 단백질
+            </DefaultText>
+          </div>
+          <div className={styles.recipeCardWrapper}>
+            {singleRecipes.map((recipeTempData, _) => (
+              <RecipeCard
+                key={recipeTempData.name}
+                recipeTempData={recipeTempData}
+                recommendId={recipeData.recommendRecipeId}
+                selectedRecipes={selectedRecipes}
+                onRecipeCardSelect={onRecipeSelect}
+                inedibleFood={inedibleFood}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -57,7 +57,7 @@ export const deliveryButton = recipe({
   variants: {
     isButton: {
       true: {
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
         textDecoration: 'underline',
       }
     }

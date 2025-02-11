@@ -2,7 +2,7 @@
 
 import { surveyTitle } from '@/app/survey/Survey.css';
 import * as styles from './SurveyTextField.css';
-import { getNameWithPossessiveSuffix } from '@/utils';
+import { getNameWithPossessiveSuffix2 } from '@/utils';
 
 interface DefaultTextFieldProps {
   id: string;
@@ -32,7 +32,7 @@ export default function SurveyTextField({
   };
 
   const fullTitle = petName && title
-    ? getNameWithPossessiveSuffix(petName, title) 
+    ? getNameWithPossessiveSuffix2(petName, title) 
     : title;
   
   return (

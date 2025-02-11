@@ -50,7 +50,7 @@ export const findById = style({
     display: 'block',
     width: '1px',
     height: '100%',
-    background: themeVars.colors.black,
+    background: themeVars.colors.gray.gray900,
     position: 'absolute',
     top: 0,
     right: '-10px',

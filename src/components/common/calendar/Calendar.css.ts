@@ -27,12 +27,12 @@ export const calendarTile = style({
       cursor: 'default !important',
     },
     '&.react-calendar__tile--active, &.react-calendar__tile--hasActive': {
-      background: `${themeVars.colors.mainRed} !important`,
-      color: `${themeVars.colors.white} !important`,
+      background: `${themeVars.colors.red.red} !important`,
+      color: `${themeVars.colors.gray.gray0} !important`,
     },
     '&.react-calendar__tile--rangeStart, &.react-calendar__tile--rangeEnd': {
       background: `${themeVars.backgroundColors.pinkFF} !important`,
-      color: `${themeVars.colors.black} !important`,
+      color: `${themeVars.colors.gray.gray900} !important`,
     },
   },
 });
@@ -45,8 +45,8 @@ export const calendarTileNow = style({
   marginBottom: '5px',
   selectors: {
     '&:hover': {
-      background: `${themeVars.colors.mainRed} !important`,
-      color: `${themeVars.colors.white} !important`,
+      background: `${themeVars.colors.red.red} !important`,
+      color: `${themeVars.colors.gray.gray0} !important`,
       cursor: 'default',
     },
   },

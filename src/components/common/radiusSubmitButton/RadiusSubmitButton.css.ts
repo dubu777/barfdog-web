@@ -4,8 +4,8 @@ import {themeVars} from "@/styles/theme.css";
 export const submitButton = style({
   width: '100%',
   height: '46px',
-  background: themeVars.colors.mainRed,
-  color: themeVars.colors.white,
+  background: themeVars.colors.red.red,
+  color: themeVars.colors.gray.gray0,
   borderTopLeftRadius: '30px',
   borderTopRightRadius: '30px',
   marginTop: 'auto',
@@ -15,7 +15,7 @@ export const submitButton = style({
   fontWeight: themeVars.fontWeight.semibold,
   cursor: 'pointer',
   ':disabled': {
-    background: themeVars.colors.lightGrey,
+    background: themeVars.colors.gray.gray400,
     cursor: 'default'
   }
 })

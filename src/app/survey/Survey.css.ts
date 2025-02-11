@@ -25,7 +25,7 @@ export const surveyInputWrapper = style({
 export const subscribeShopContainer = style({
   position: 'relative',
   width: '100%',
-  marginTop: '62px',
+  marginTop: '59px',
   display: 'flex',
   justifyContent: 'center',
 });
@@ -36,7 +36,7 @@ export const summaryWrapper = style({
 });
 
 export const subscribeShopWrapper = style({
-  maxWidth: '360px',
   width: '100%',
-  padding: '20px 0 150px 0',
+  backgroundColor: themeVars.colors.gray.gray50,
+  padding: '20px 20px 123px 20px',
 });

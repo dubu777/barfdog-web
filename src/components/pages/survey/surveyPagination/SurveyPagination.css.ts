@@ -15,7 +15,7 @@ export const surveyPaginationContainer = style({
   bottom: 0,
   margin: "0 auto",
   width: '100%',
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
   zIndex: 10,
 });
 
