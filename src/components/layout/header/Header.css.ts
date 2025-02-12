@@ -6,7 +6,7 @@ export const headerContainer = recipe({
   base: {
     position: 'fixed',
     top: 0,
-    backgroundColor: themeVars.colors.gray.gray0,
+    backgroundColor: "inherit",
     zIndex: 200,
   },
   variants: {
@@ -17,7 +17,6 @@ export const headerContainer = recipe({
         backgroundColor: themeVars.colors.red.red,
       },
       withBackButton: {
-        backgroundColor: themeVars.colors.gray.gray50,
       },
       backButtonOnly: {
       },

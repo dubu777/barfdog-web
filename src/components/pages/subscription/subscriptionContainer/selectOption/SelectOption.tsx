@@ -1,57 +1,40 @@
 "use client";
 
-import useSubscription from "@/hooks/useSubscription";
-import * as styles from "@/app/survey/Survey.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import * as styles from "./SelectOption.css";
+import Divider from "@/components/common/divider/Divider";
+import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
+import { useRouter } from "next/navigation";
 import {
   calculateOneMealGrams,
   calculateOneMealGramsWithVolume,
-} from "@/utils/subscription/mealCalculations";
-import {
+  calculateSubscribePrice,
+  getDiscountPercent,
   isOriginSubscriber,
   isToppingPlan,
-} from "@/utils/subscription/subscriptionUtils";
-import { getDiscountPercent } from "@/utils/subscription/getDiscountPercent";
-import FooterButton from "../footerButton/FooterButton";
-import SelectedProductInfo from "./selectedProductInfo/SelectedProductInfo";
-import PlanSelection from "./planSelection/PlanSelection";
-import RecipeSelection from "./recipeSelection/RecipeSelection";
-import useModal from "@/hooks/useModal";
-import { validatePaymentBody } from "@/utils/subscription/validatePaymentBody";
+  validatePaymentBody,
+} from "@/utils";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
-import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
-import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
-import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
-import { useRouter } from "next/navigation";
-import { calculateSubscribePrice } from "@/utils/subscription/subscribePriceCalculation";
-import DeliveryScheduleModal from "./deliveryScheduleModal/DeliveryScheduleModal";
-import Image from "next/image";
+import { PlanName, RecipeData, ResultData } from "@/types";
 
-interface SelectRecipeContainerProps {
-  reportId: number;
+interface SelectOptionProps {
+  recipeData: RecipeData;
+  resultData: ResultData;
+  selectedRecipes: number[];
+  selectedPlan: PlanName | null;
+  selectedVolume: string | null;
 }
 
-export default function SelectRecipeContainer({
-  reportId,
-}: SelectRecipeContainerProps) {
+export default function SelectOption({
+  recipeData,
+  resultData,
+  selectedRecipes,
+  selectedPlan,
+  selectedVolume,
+}: SelectOptionProps) {
   const router = useRouter();
-  const { isOpen, onToggle, onClose } = useModal();
-  const { data: recipeData } = useGetSurveyRecipe(reportId);
-  const { data: resultData } = useGetSurveyResult(reportId);
   const { data: discountData } = useGetPlanDiscount();
   const { mutate: updateSubscription } = useUpdateSubscription();
-
-  console.log("recipeData", recipeData);
-  
-
-  // 레시피, 플랜 상태 관리 커스텀 훅
-  const {
-    selectedPlan,
-    selectedRecipes,
-    selectedVolume,
-    handleSelectedPlan,
-    handleSelectedRecipe,
-    handleSelectedVolume,
-  } = useSubscription();
 
   // 기존 구독자 여부 확인 함수
   const isOrigin = isOriginSubscriber(recipeData.subscribeId);
@@ -102,7 +85,7 @@ export default function SelectRecipeContainer({
       oneDayRecommendKcal: resultData.foodAnalysis.oneDayRecommendKcal,
       subscribeItemList: null,
     };
-console.log("body", body);
+    console.log("body", body);
 
     const validationError = validatePaymentBody(body);
     if (validationError) {
@@ -120,43 +103,28 @@ console.log("body", body);
         onError: (err) => {
           console.error("updateSubscription-error", err);
         },
-      },
-
+      }
     );
   };
 
-
-
-  const handleGoToOrderOption = () => {
-    const params = new URLSearchParams();
-    selectedRecipes.forEach(id => params.append("recipeId", String(id)));
-    router.push(`/order/select-options?${params.toString()}`);
-  };
-
-
-  const isCompleted = selectedRecipes.length
-
-
   return (
-    <main className={styles.subscribeShopWrapper}>
-      <RecipeSelection
-        onRecipeSelect={handleSelectedRecipe}
-        selectedRecipes={selectedRecipes}
-        recipeData={recipeData}
-        inedibleFood={resultData.inedibleFood}
-      />
-
-      <FooterButton
-        isDisabled={!isCompleted}
-        onClick={handleGoToOrderOption}
-      >
-        주문하기
-      </FooterButton>
-      <DeliveryScheduleModal
-        isVisible={isOpen}
-        onClose={onClose}
-        onClickConfirm={handlePayment}
-      />
-    </main>
+    <section className={styles.selectOptionContainer}>
+      <DefaultText type="title4">급여량</DefaultText>
+      <div className={styles.mealAmountTextWrapper}>
+        <div className={styles.mealAmountTextRow}>
+          <DefaultText type="body1">한 끼 칼로리</DefaultText>
+          <DefaultText type="body1">000</DefaultText>
+        </div>
+        <div className={styles.mealAmountTextRow}>
+          <DefaultText type="body1">한 끼 권장 급여량</DefaultText>
+          <DefaultText type="body1">000</DefaultText>
+        </div>
+        <div className={styles.mealAmountTextRow}>
+          <DefaultText type="body1">구독 급여량</DefaultText>
+          <DefaultText type="body1">000</DefaultText>
+        </div>
+      </div>
+      <Divider />
+    </section>
   );
 }

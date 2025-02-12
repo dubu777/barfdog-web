@@ -1,6 +1,5 @@
 "use client";
 
-import Header from "@/components/layout/header/Header";
 import useSurveyForm from "@/hooks/useSuveyForm";
 import { useSurveyStore } from "@/store/useSurveyStore";
 import useStep from "@/hooks/useStep";
@@ -31,7 +30,6 @@ export default function SurveyPage() {
 
   return (
     <div className={styles.surveyLayoutContainer}>
-      <Header type="redBackground" />
       <SurveyForm
         currentStep={currentStep}
         direction={direction}

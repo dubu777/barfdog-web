@@ -9,15 +9,15 @@ interface FooterButtonProps {
   children: ReactNode;
   icon?: JSX.Element | null;
   isDisabled: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export default function FooterButton({children, icon, isDisabled, onClick}: FooterButtonProps) {
   return (
-    <div className={styles.footerButtonContainer}>
+    <footer className={styles.footerButtonContainer}>
       <Button type="primary" variant="solid" size="lg" disabled={isDisabled} onClick={onClick} fullWidth>
         {children}
       </Button>
-    </div>
+    </footer>
   );
 }

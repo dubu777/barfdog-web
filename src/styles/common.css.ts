@@ -10,7 +10,6 @@ export const commonLayoutStyle = style({
 })
 
 export const commonLayoutContainer = style([commonLayoutStyle, {
-  minHeight: '100%',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: themeVars.colors.gray.gray0,
@@ -91,6 +90,7 @@ export const inlineBlockSpan = style({
 
 
 export const sanitizedHTML = style({})
+
 
 globalStyle(`${sanitizedHTML} *`, {
   textAlign: 'unset',
