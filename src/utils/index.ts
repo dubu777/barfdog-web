@@ -12,7 +12,6 @@ export * from './deadlineBannerTimestamp';
 export * from './formatDateToKorean';
 export * from './formatNumberWithCommas';
 export * from './formatPhoneNumber';
-export * from './formatTime';
 export * from './getNextPaymentPrice';
 export * from './getPackagePeriod';
 export * from './getProductionDates';

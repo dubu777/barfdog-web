@@ -16,8 +16,8 @@ import {
 } from "@/utils";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import { PlanName, RecipeData, ResultData } from "@/types";
-import MealAmount from "./mealAmount/MealAmount";
 import MealFrequency from "./mealFrequency/MealFrequency";
+import MealAmount from "./mealAmount/MealAmount";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
 import PaymentAmount from "./paymentAmount/PaymentAmount";
 
