@@ -1,6 +1,7 @@
 import axiosInstance from "@/api/axiosInstance";
 import {
-  CouponData, InviteRewardList,
+  CouponData,
+  InviteRewardList,
   MyPageBannerData,
   MyPageInfoData,
   RewardListData,

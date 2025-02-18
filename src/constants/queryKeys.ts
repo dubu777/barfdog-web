@@ -23,6 +23,7 @@ const queryKeys = {
     BASE: 'mypage',
     GET_MYPAGE_INFO: 'getMyPageInfo',
     GET_MYPAGE_BANNER: 'getMyPageBanner',
+    GET_CONNECTED_SNS: 'getConnectedSns',
   },
   REWARD: {
     BASE: 'reward',
