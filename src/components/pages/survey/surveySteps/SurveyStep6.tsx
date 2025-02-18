@@ -4,7 +4,7 @@ import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 
-interface SurveyStep2Props {
+interface SurveyStepProps {
   handleChange: () => void;
   handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (
@@ -23,7 +23,7 @@ export default function SurveyStep6({
   control,
   petName,
   errors,
-}: SurveyStep2Props) {
+}: SurveyStepProps) {
 
   return (
     <>

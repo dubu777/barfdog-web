@@ -4,7 +4,7 @@ import SurveyTextField from "../surveyTextField/SurveyTextField";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, useWatch } from "react-hook-form";
 
-interface SurveyStep2Props {
+interface SurveyStepProps {
   handleChange: () => void;
   handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (
@@ -23,7 +23,7 @@ export default function SurveyStep12({
   handleNextStep,
   control,
   petName,
-}: SurveyStep2Props) {
+}: SurveyStepProps) {
   // useWatch를 이용하여 'step12.supplement'의 값을 구독합니다.
   const supplementValue = useWatch({ control, name: "step12.supplement" });
   // ETC가 포함되어 있으면 추가 입력 필드를 보여줍니다.

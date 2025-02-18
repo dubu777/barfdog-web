@@ -6,7 +6,7 @@ import SearchableSelectBox from "../searchableSelectBox/SearchableSelectBox";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller } from "react-hook-form";
 
-interface SurveyStep2Props {
+interface SurveyStepProps {
   handleChange: () => void;
   control: Control<SurveyStepValues>;
   petName: string;
@@ -16,7 +16,7 @@ export default function SurveyStep4({
   handleChange,
   control,
   petName,
-}: SurveyStep2Props) {
+}: SurveyStepProps) {
   return (
     <div className={styles.surveyStep4Container}>
       <Controller

@@ -6,7 +6,7 @@ import SurveyTextField from "../surveyTextField/SurveyTextField";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, useWatch } from "react-hook-form";
 
-interface SurveyStep2Props {
+interface SurveyStepProps {
   handleChange: () => void;
   handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => Promise<void>;
@@ -22,7 +22,7 @@ export default function SurveyStep15({
   handleNextStep,
   control,
   petName,
-}: SurveyStep2Props) {
+}: SurveyStepProps) {
   // useWatch를 이용해 caution 값을 구독합니다.
   const cautionValue = useWatch({ control, name: "step15.caution" });
   const showEtcField = Array.isArray(cautionValue) && cautionValue.includes("ETC");

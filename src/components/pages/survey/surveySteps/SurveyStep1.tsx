@@ -6,7 +6,7 @@ import {
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 
-interface SurveyStep1Props {
+interface SurveyStepProps {
   handleChange: () => void;
   handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (
@@ -23,7 +23,7 @@ export default function SurveyStep1({
   handleKeyDown,
   control,
   errors,
-}: SurveyStep1Props) {
+}: SurveyStepProps) {
   return (
     <>
       <Controller

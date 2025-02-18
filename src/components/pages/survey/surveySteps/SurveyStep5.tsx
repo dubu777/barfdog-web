@@ -10,7 +10,7 @@ import { SURVEY_FORM_INFO } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller } from "react-hook-form";
 
-interface SurveyStep5Props {
+interface SurveyStepProps {
   handleChange: () => void;
   control: Control<SurveyStepValues>;
   petName: string;
@@ -20,7 +20,7 @@ export default function SurveyStep5({
   control,
   handleChange,
   petName,
-}: SurveyStep5Props) {
+}: SurveyStepProps) {
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
 

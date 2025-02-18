@@ -9,7 +9,7 @@ import { getNameWithPossessiveSuffix2 } from "@/utils";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller } from "react-hook-form";
 
-interface SurveyStep2Props {
+interface SurveyStepProps {
   handleChange: () => void;
   control: Control<SurveyStepValues>;
   petName: string;
@@ -19,7 +19,7 @@ export default function SurveyStep9({
   handleChange,
   control,
   petName,
-}: SurveyStep2Props) {
+}: SurveyStepProps) {
   const title = SURVEY_FORM_INFO.walkingCountPerWeek.title;
   const fullTitle = petName ? getNameWithPossessiveSuffix2(petName, title) : title;
 

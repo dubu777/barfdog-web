@@ -4,7 +4,7 @@ import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller } from "react-hook-form";
 
-interface SurveyStep2Props {
+interface SurveyStepProps {
   handleChange: () => void;
   control: Control<SurveyStepValues>;
   petName: string;
@@ -14,7 +14,7 @@ export default function SurveyStep14({
   handleChange,
   control,
   petName,
-}: SurveyStep2Props) {
+}: SurveyStepProps) {
   
   return (
     <Controller

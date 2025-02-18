@@ -1,7 +1,6 @@
 import Image from "next/image";
 import * as styles from "./RecipeCard.css";
-import { ID_TO_INGREDIENT_LIST, RecipeTempData } from "@/constants";
-import { subscribeText } from "../RecipeSelection.css";
+import { RecipeTempData } from "@/constants";
 import { motion } from "framer-motion";
 import RecipeBadge from "./recipeBadge/RecipeBadge";
 import DefaultText from "@/components/common/defaultText/DefaultText";

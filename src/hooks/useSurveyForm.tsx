@@ -2,34 +2,8 @@ import { DefaultValues, Path, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SurveyStepKeys } from "@/utils/validation/surveyValidation";
+import { SURVEY_NO_AUTO_NEXT_STEP, SURVEY_OPTIONAL_FIELDS } from "@/constants";
 
-export interface UseFormHandlerOptions {
-  mode?: "onChange" | "onBlur" | "onSubmit" | "onTouched" | "all";
-  reValidateMode?: "onChange" | "onBlur" | "onSubmit";
-}
-
-// 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리합니다.
-const noAutoNextStepSet = new Set<SurveyStepKeys>([
-  "step1",
-  "step6",
-  "step12",
-  "step13",
-  "step15",
-]);
-
-// defaultNoneFields도 Set을 사용하여 제외할 필드들을 관리합니다.
-const defaultNoneFields = new Set([
-  // step7
-  "specificDogStatus",
-  "specificDogStatusEtc",
-  "expectedPregnancyDay",
-  // step12
-  "supplementEtc",
-  // step13
-  "inedibleFoodEtc",
-  // step15
-  "cautionEtc",
-]);
 
 /**
  * useSurveyForm 훅은 Yup 스키마와 React Hook Form을 결합하여 폼 상태와 유효성 검증을 쉽게 관리할 수 있도록 도와줍니다.
@@ -63,9 +37,9 @@ export function useSurveyForm<S extends yup.ObjectSchema<any>>(
     const stepValues = watch(currentStepKey as Path<yup.InferType<S>>);
     if (!stepValues) return false;
 
-    // defaultNoneFields에 포함된 필드는 검증에서 제외하고, 나머지 필드에 대해 값이 채워졌는지 확인합니다.
+    // optionalFields에 포함된 필드는 검증에서 제외하고, 나머지 필드에 대해 값이 채워졌는지 확인합니다.
     const allFilled = Object.entries(stepValues).every(([key, value]) => {
-      if (defaultNoneFields.has(key)) return true;
+      if (SURVEY_OPTIONAL_FIELDS.has(key)) return true;
       if (typeof value === "string") {
         return value.trim() !== "";
       }
@@ -82,7 +56,7 @@ export function useSurveyForm<S extends yup.ObjectSchema<any>>(
   const handleChange = async () => {
     const valid = await trigger(currentStepKey as Path<yup.InferType<S>>);
     // 자동 넘김이 허용되어 있지 않은 스텝이면 아무 작업도 하지 않음
-    if (noAutoNextStepSet.has(currentStepKey)) return;
+    if (SURVEY_NO_AUTO_NEXT_STEP.has(currentStepKey)) return;
 
     // 현재 스텝의 모든 필드가 채워지고 에러가 없으면 다음 스텝으로 넘어갑니다.
     if (valid && isCanNextStep()) {

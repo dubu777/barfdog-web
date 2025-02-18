@@ -6,7 +6,7 @@ import SurveyTextField from "../surveyTextField/SurveyTextField";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, useWatch } from "react-hook-form";
 
-interface SurveyStep2Props {
+interface SurveyStepProps {
   handleChange: () => void;
   handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => Promise<void>;
@@ -22,7 +22,7 @@ export default function SurveyStep13({
   handleNextStep,
   control,
   petName,
-}: SurveyStep2Props) {
+}: SurveyStepProps) {
   // useWatch로 'step13.inedibleFood'를 구독하여 ETC 선택 여부를 판단합니다.
   const inedibleFoodValue = useWatch({ control, name: "step13.inedibleFood" });
   const showEtcField = Array.isArray(inedibleFoodValue) && inedibleFoodValue.includes("ETC");

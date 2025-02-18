@@ -1,91 +1,14 @@
 import { formatTime } from "@/utils/formatTime";
+import { SurveyStepKeys } from "@/utils/validation/surveyValidation";
 
 export {
-  initialSurveyValue,
-  initialStepValues,
-  initialErrorValues,
   SURVEY_FORM_INFO,
   RECIPE_TEMP_DATA,
-  INEDIBLE_FOOD_TO_ID,
-  ID_TO_INEDIBLE_FOOD,
-  ID_TO_INGREDIENT_LIST,
-  PLAN_SELECT_INFO,
+  SURVEY_NO_AUTO_NEXT_STEP,
+  SURVEY_OPTIONAL_FIELDS,
 };
 
-const initialSurveyValue = {
-  name: "",
-  gender: "",
-  birth: "",
-  oldDog: false,
-  dogSize: "",
-  dogType: "",
-  weight: "",
-  neutralization: null,
-  activityLevel: "",
-  walkingCountPerWeek: "",
-  walkingTimePerOneTime: "",
-  dogStatus: "",
-  specificDogStatus: "",
-  specificDogStatusEtc: "",
-  snackCountLevel: "",
-  waterCountLevel: "",
-  supplement: "",
-  supplementEtc: "",
-  currentMeal: "",
-  inedibleFood: "",
-  inedibleFoodEtc: "",
-  recommendRecipeId: null,
-  caution: "NONE",
-  cautionEtc: "",
-  expectedPregnancyDay: "",
-  newToRawDiet: null,
-  priorityConcerns: "",
-} as const;
 
-const initialStepValues = {
-  step0: { name: "" },
-  step1: { gender: "" },
-  step2: { neutralization: "" },
-  step3: { dogSize: "", dogType: "" },
-  step4: { birth: "" },
-  step5: { weight: "" },
-  step6: {
-    dogStatus: "",
-    specificDogStatus: "NONE",
-    specificDogStatusEtc: "NONE",
-    expectedPregnancyDay: "NONE",
-  },
-  step7: { activityLevel: "" },
-  step8: { walkingCountPerWeek: "", walkingTimePerOneTime: "" },
-  step9: { snackCountLevel: "" },
-  step10: { waterCountLevel: "" },
-  step11: { supplement: "", supplementEtc: "NONE" },
-  step12: { inedibleFood: "", inedibleFoodEtc: "NONE" },
-  step13: { currentMeal: "" },
-  step14: { caution: "", cautionEtc: "NONE" },
-  step15: { newToRawDiet: "" },
-  step16: { priorityConcerns: "" },
-};
-
-const initialErrorValues = {
-  step0: { name: "" },
-  step1: { gender: "" },
-  step2: { neutralization: "" },
-  step3: { dogSize: "", dogType: "" },
-  step4: { birth: "" },
-  step5: { weight: "" },
-  step6: { dogStatus: "", specificDogStatus: null, expectedPregnancyDay: null },
-  step7: { activityLevel: "" },
-  step8: { walkingCountPerWeek: "", walkingTimePerOneTime: "" },
-  step9: { snackCountLevel: "" },
-  step10: { waterCountLevel: "" },
-  step11: { supplement: "", supplementEtc: null },
-  step12: { inedibleFood: "", inedibleFoodEtc: null },
-  step13: { currentMeal: "" },
-  step14: { caution: "", cautionEtc: null },
-  step15: { newToRawDiet: "" },
-  step16: { priorityConcerns: "" },
-};
 
 const SURVEY_FORM_INFO = {
   name: {
@@ -456,79 +379,27 @@ ingredients: ["양"],
     type: "single",
   },
 };
-const INEDIBLE_FOOD_TO_ID: Record<string, string> = {
-  없음: "0",
-  닭: "1",
-  칠면조: "2",
-  오리: "3",
-  양: "4",
-  소: "5",
-  캥거루: "6",
-  토끼: "7",
-  말: "8",
-  염소: "9",
-  메추리: "10",
-  돼지: "11",
-  황태: "12",
-  타조: "13",
-  ETC: "14",
-};
 
-const ID_TO_INEDIBLE_FOOD: Record<string, string> = {
-  "0": "없음",
-  "1": "닭",
-  "2": "칠면조",
-  "3": "오리",
-  "4": "양",
-  "5": "소",
-  "6": "캥거루",
-  "7": "토끼",
-  "8": "말",
-  "9": "염소",
-  "10": "메추리",
-  "11": "돼지",
-  "12": "황태",
-  "13": "타조",
-  "14": "ETC",
-};
 
-const ID_TO_INGREDIENT_LIST: Record<string, string[]> = {
-  "5": ["닭", "칠면조"],
-  "6": ["칠면조", "소"],
-  "7": ["오리", "양"],
-  "8": ["소", "양"],
-  "9": ["닭"],
-  "10": ["칠면조"],
-  "11": ["양"],
-  "12": ["소"],
-} as const;
+// 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
+const SURVEY_NO_AUTO_NEXT_STEP = new Set<SurveyStepKeys>([
+  "step1",
+  "step6",
+  "step12",
+  "step13",
+  "step15",
+]);
 
-type Plan = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF";
-
-interface PlanInfo {
-  key: Plan;
-  title: string;
-  content: string[];
-}
-const PLAN_SELECT_INFO: PlanInfo[] = [
-  {
-    key: "FULL",
-    title: "풀플랜",
-    content: ["하루", "2팩", "/", "2주 간격 배송", "/", "총 28팩"],
-  },
-  {
-    key: "HALF",
-    title: "하프플랜",
-    content: ["하루", "1팩", "/", "4주 간격 배송", "/", "총 28팩"],
-  },
-  {
-    key: "TOPPING_FULL",
-    title: "토핑 풀플랜",
-    content: ["하루", "2팩", "/", "2주 간격 배송", "/", "총 28팩"],
-  },
-  {
-    key: "TOPPING_HALF",
-    title: "토핑 하프플랜",
-    content: ["하루", "1팩", "/", "4주 간격 배송", "/", "총 28팩"],
-  },
-];
+// 빈 값이어도 검증 통과 시킬 필드들을 관리합니다.
+const SURVEY_OPTIONAL_FIELDS = new Set([
+  // step7
+  "specificDogStatus",
+  "specificDogStatusEtc",
+  "expectedPregnancyDay",
+  // step12
+  "supplementEtc",
+  // step13
+  "inedibleFoodEtc",
+  // step15
+  "cautionEtc",
+]);
