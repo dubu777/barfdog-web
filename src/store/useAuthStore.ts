@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { TemporaryUserEmail, TemporaryPassword } from "@/types/auth/findAccount";
+import { TemporaryUserEmail, TemporaryPassword } from "@/types";
 import { LoginUserInfo, UserInfo } from "@/types";
 
 interface AuthStore {

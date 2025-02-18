@@ -18,6 +18,7 @@ interface DefaultTextFieldProps {
   isPhoneNumber?: boolean;
   className?: HTMLAttributes<string | undefined> |string;
   onSubmit?: () => void;
+  labelPosition?: 'top' | 'left';
 }
 
 const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
@@ -36,7 +37,8 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
   isError = false,
   isPhoneNumber = false,
   className,
-  onSubmit
+  onSubmit,
+  labelPosition = 'top',
 }, ref) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,8 +60,8 @@ const DefaultTextField = forwardRef<HTMLInputElement, DefaultTextFieldProps>(({
     }
   }
   return (
-    <label htmlFor={id} className={styles.textFieldContainer}>
-      <h3 className={styles.textFieldLabel({ isHidden: label === '' })}>{label}</h3>
+    <label htmlFor={id} className={styles.textFieldContainer({ labelPosition })}>
+      <h3 className={styles.textFieldLabel({ isHidden: label === '', labelPosition })}>{label}</h3>
       <input
         ref={ref}
         type={type}

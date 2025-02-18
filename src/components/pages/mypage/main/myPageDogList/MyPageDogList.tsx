@@ -11,8 +11,8 @@ import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 const MyPageDogList = () => {
   const { data: dogList } = useGetDogList();
 
-  const representativeDog = dogList.find(dog => dog.representative);
-  const subscribingDogs = dogList.filter(dog => dog.nextDeliveryDate && dog.subscribeStatus === 'SUBSCRIBING');
+  const representativeDog = dogList?.find(dog => dog.representative);
+  const subscribingDogs = dogList?.filter(dog => dog.nextDeliveryDate && dog.subscribeStatus === 'SUBSCRIBING');
   const newDogList = [
     ...subscribingDogs, 
     representativeDog, 
@@ -22,7 +22,8 @@ const MyPageDogList = () => {
         && !(dog.nextDeliveryDate && dog.subscribeStatus === 'SUBSCRIBING')
       )
   ];
-  const noData = newDogList.length < 1;
+
+  const noData = dogList.length < 1;
 
   const swiperRef = useRef<SwiperRef | null>(null);
   const resetSwiper = () => {

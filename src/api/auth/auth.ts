@@ -1,7 +1,18 @@
 import axios from "axios";
 import axiosInstance from "@/api/axiosInstance";
-import { TemporaryUserEmail, TemporaryPassword, ConnectSns } from "@/types/auth/findAccount";
-import { LoginUserInfo, SnSProvider, UserType } from "@/types";
+import {
+	TemporaryUserEmail,
+	TemporaryPassword,
+	ConnectSns,
+	SetPassword,
+	ChangePassword,
+	UpdateUserInfo,
+	GetUserInfo,
+	ConnectSnsSuccess,
+	LoginUserInfo, 
+	SnSProvider, 
+	UserType
+} from "@/types";
 
 export {
 	findUserEmail,
@@ -11,6 +22,13 @@ export {
 	connectSns,
 	getAccessTokenByNaver,
 	loginWithProvider,
+	getNeedToSetPassword,
+	setPassword,
+	changePassword,
+	getConnectedSns,
+	disconnectSns,
+	getAuthNumber,
+	updateUserInfo,
 };
 
 const findUserEmail = async (name: string, phoneNumber: string): Promise<TemporaryUserEmail> => {
@@ -23,15 +41,47 @@ const sendTemporaryPassword = async (body: TemporaryPassword) => {
 	return data;
 }
 
-const getUserInfo = async () => {
+const connectSns = async (body: ConnectSns): Promise<ConnectSnsSuccess> => {
+	const { data } = await axiosInstance.post(`/api/connectSns`, body);
+	return data;
+}
+
+const getConnectedSns = async (): Promise<SnSProvider | null> => {
+	const { data } = await axiosInstance.get('/api/members/sns');
+	return data?.provider || null;
+}
+
+const disconnectSns = async () => {
+	return await axiosInstance.delete('/api/members/sns');
+}
+
+const getNeedToSetPassword = async (): Promise<boolean> => {
+	const { data } = await axiosInstance.get('/api/members/sns/password');
+	return data.needToSetPassword;
+}
+
+const setPassword = async (body: SetPassword) => {
+	return await axiosInstance.post('/api/members/sns/password', body);
+}
+
+const changePassword = async (body: ChangePassword) => {
+	return await axiosInstance.put('/api/members/password', body);
+}
+
+const getAuthNumber = async (body: { phoneNumber: string }) => {
+	const { data } = await axiosInstance.post('/api/join/phoneAuth', body);
+	return data;
+}
+
+const getUserInfo = async (): Promise<GetUserInfo> => {
 	const { data } = await axiosInstance.get(`/api/members`);
 	return data;
 }
 
-const connectSns = async (body: ConnectSns) => {
-	const { data } = await axiosInstance.post(`/api/connectSns`, body);
-	return data;
+const updateUserInfo = async (body: UpdateUserInfo) => {
+	return await axiosInstance.put('/api/members', body);
 }
+
 
 const login = async (formData: { email: string; password: string; tokenValidDays: number }) => {
 	const response = await axiosInstance.post('/api/login', formData);
@@ -69,8 +119,9 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 		if (!loginResponse) {
 			throw new Error("응답이 없습니다.");
 		}
+		console.log('loginResponse', loginResponse)
 
-		let userType: UserType;
+		let userType: UserType = 'NON_MEMBER';
 		let token: string | null = null;
 		const resultCode = Number(loginResponse.resultcode);
 		const message = CodeMessage[resultCode as keyof typeof CodeMessage] || loginResponse.message;
@@ -83,17 +134,20 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 				userType = 'MEMBER';
 				break;
 			case 253:
-			case 200:
 				userType = 'MEMBER_WITH_SMS_KAKAO';
 				token = provider === 'kakao' ? headers.authorization : null;
 				break;
 			case 254:
-			case 200:
 				userType = 'MEMBER_WITH_SMS_NAVER';
 				token = provider === 'naver' ? headers.authorization : null;
 				break;
+			case 200:
+				token = headers.authorization;
+				break;
 			default:
-				throw new Error(`알 수 없는 응답 코드: ${resultCode}`);
+				console.log(resultCode);
+				break;
+				// throw new Error(`알 수 없는 응답 코드: ${resultCode}`);
 		}
 
 		return {
@@ -135,6 +189,7 @@ const CodeMessage: Record<number, string> = {
 	403: '호출 권한이 없습니다.',
 	404: '해당 데이터가 없습니다.',
 } as const;
+
 /*
 - response body에 resultcode, message 값 / 설명
   024, Authentication failed / 인증에 실패했습니다.

@@ -1,9 +1,22 @@
 import { recipe } from "@vanilla-extract/recipes";
-import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const textFieldContainer = style({
-  width: '100%',
+export const textFieldContainer = recipe({
+  base: {
+    width: '100%',
+  },
+  variants: {
+    labelPosition: {
+      top: {
+
+      },
+      left: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }
+    }
+  }
 })
 
 export const textFieldLabel = recipe({
@@ -16,6 +29,13 @@ export const textFieldLabel = recipe({
     isHidden: {
       true: {
         display: 'none',
+      }
+    },
+    labelPosition: {
+      top: { },
+      left: {
+        width: '40%',
+        marginBottom: 0,
       }
     }
   }

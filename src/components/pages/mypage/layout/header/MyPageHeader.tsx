@@ -17,6 +17,7 @@ const MyPageHeader = () => {
     '/mypage/inviteFriends': '친구초대',
     '/mypage/review': '리뷰',
     '/mypage/subscribe': '구독 관리',
+    '/mypage/account': '계정 정보',
   };
 
   const getTitle = () => {
@@ -37,6 +38,18 @@ const MyPageHeader = () => {
     }
     if (pathname.includes('/mypage/review/')) {
       return '리뷰 작성';
+    }
+    if (pathname.includes('/mypage/account/set-password')) {
+      return '비밀번호 생성';
+    }
+    if (pathname.includes('/mypage/account/change-password')) {
+      return '비밀번호 변경';
+    }
+    if (pathname.includes('/mypage/account/connected-sns')) {
+      return '연동 SNS';
+    }
+    if (pathname.includes('/mypage/account/user-info')) {
+      return '회원 정보 변경';
     }
     return '';
   };

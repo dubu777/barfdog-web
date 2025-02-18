@@ -1,6 +1,6 @@
 import { UseMutationCustomOptions } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { ConnectSns } from "@/types/auth/findAccount";
+import { ConnectSns } from "@/types";
 import { connectSns } from "@/api/auth/auth";
 
 export { useConnectSns };
