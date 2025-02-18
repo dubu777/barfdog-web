@@ -1,8 +1,10 @@
 'use client'
+import { SurveyStepKeys } from '@/utils/validation/surveyValidation';
 import { useState } from 'react';
 
 interface UseStepReturnType {
   currentStep: number;
+  currentStepKey: SurveyStepKeys;
   handleNextStep: () => void;
   handlePrevStep: () => void;
   isLastStep: boolean;
@@ -11,11 +13,11 @@ interface UseStepReturnType {
 }
 
 export default function useStep(totalSteps: number): UseStepReturnType {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(0);
 
   const handleNextStep = () => {
-    if (currentStep < totalSteps - 1) {
+    if (currentStep < totalSteps) {
       setDirection(1);
       setCurrentStep((prev) => prev + 1);
     }
@@ -28,12 +30,14 @@ export default function useStep(totalSteps: number): UseStepReturnType {
     }
   };
 
+  const currentStepKey = `step${currentStep}` as SurveyStepKeys
   return {
     currentStep,
+    currentStepKey,
     handleNextStep,
     handlePrevStep,
     direction,
-    isLastStep: currentStep === totalSteps - 1,
-    isFirstStep: currentStep === 0,
+    isLastStep: currentStep === totalSteps,
+    isFirstStep: currentStep === 1,
   };
 }

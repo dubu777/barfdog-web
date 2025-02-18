@@ -1,8 +1,11 @@
-import { DefaultValues, FieldValues, useForm } from 'react-hook-form';
+import { DefaultValues, FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from 'yup';
+import * as yup from "yup";
 
-export function useFormHandler<T extends FieldValues>(schema: yup.ObjectSchema<any>, defaultValues: DefaultValues<T>) {
+export function useFormHandler<T extends FieldValues>(
+  schema: yup.ObjectSchema<any>,
+  defaultValues: DefaultValues<T>
+) {
   const {
     register,
     control,
@@ -10,11 +13,11 @@ export function useFormHandler<T extends FieldValues>(schema: yup.ObjectSchema<a
     formState: { errors, isValid },
     reset,
     watch,
-    setValue
+    setValue,
   } = useForm<T>({
     resolver: yupResolver(schema),
     defaultValues,
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   return {

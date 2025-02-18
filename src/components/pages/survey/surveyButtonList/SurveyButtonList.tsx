@@ -11,6 +11,7 @@ interface SurveyButtonListProps {
   }[];
   selectedValue: string | boolean | number | (string | number | boolean)[] | null;
   onChange: (value: string | number | boolean | (string | number | boolean)[]) => void;
+  handleNextStep?: () => void;
   title: string;
   petName: string;
   layoutType?: "row" | "col" | "grid";
@@ -22,11 +23,42 @@ export default function SurveyButtonList({
   selectedValue,
   layoutType = "row",
   onChange,
+  handleNextStep,
   title,
   petName,
   isMultiSelect = false,
 }: SurveyButtonListProps) {
   const fullTitle = getNameWithPossessiveSuffix2(petName, title);
+
+
+  const handleButtonClick = (clickedValue: string | number | boolean) => {
+    if (isMultiSelect) {
+      if (clickedValue === "NONE") {
+        // "NONE" 선택 시 다른 값은 모두 제거하고 "NONE"만 선택합니다.
+        onChange(["NONE"]);
+      } else {
+        // "NONE" 이외의 값 선택 시 기존 선택에서 "NONE"은 제거하고 토글합니다.
+        const currentSelection = Array.isArray(selectedValue)
+          ? selectedValue
+          : [];
+        const filteredSelection = currentSelection.filter(
+          (item) => item !== "NONE"
+        );
+        const alreadySelected = filteredSelection.includes(clickedValue);
+        const newSelection = alreadySelected
+          ? filteredSelection.filter((item) => item !== clickedValue)
+          : [...filteredSelection, clickedValue];
+        onChange(newSelection);
+      }
+    } else {
+      onChange(clickedValue);
+    }
+    // 선택한 값이 "NONE"이면, handleNextStep이 정의되어 있을 경우 호출
+    if (clickedValue === "NONE" && handleNextStep) {
+      handleNextStep();
+    }
+  };
+
 
   return (
     <div className={styles.surveyButtonListContainer}>
@@ -44,7 +76,7 @@ export default function SurveyButtonList({
           }
           label={option.label}
           layoutType={layoutType}
-          onChange={onChange}
+          onChange={() => handleButtonClick(option.value)}
         />
       ))}
       </div>

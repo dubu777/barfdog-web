@@ -1,6 +1,6 @@
 // 실제 검증 함수
 
-import { SurveyFormData } from "@/types/survey";
+
 
 // 숫자인지 확인하는 함수
 export const isNumber = (value: string | number) => {

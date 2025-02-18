@@ -1,50 +1,57 @@
-import { SurveyFormData } from "@/types/survey";
 import { SURVEY_FORM_INFO } from "@/constants";
-import { ErrorValuesType } from "@/store/useSurveyStore";
 import SurveyTextField from "../surveyTextField/SurveyTextField";
-import { errorMessage } from "./SurveySteps.css";
-import Button from "@/components/common/button/Button";
-
+import {
+  SurveyStepValues,
+} from "@/utils/validation/surveyValidation";
+import { Control, Controller, FieldErrors } from "react-hook-form";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
 interface SurveyStep1Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
-  handleBlur: (
-    e: React.FocusEvent<HTMLInputElement>,
-    key: keyof SurveyFormData
-  ) => void;
+  handleChange: () => void;
+  handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
-    key: keyof SurveyFormData
-  ) => void;
-  errorMessages: ErrorValuesType;
+    fieldName: string
+  ) => Promise<void>;
+  control: Control<SurveyStepValues>;
+  errors: FieldErrors<SurveyStepValues>;
 }
 
 export default function SurveyStep1({
-  formData,
   handleChange,
   handleBlur,
   handleKeyDown,
-  errorMessages,
+  control,
+  errors,
 }: SurveyStep1Props) {
   return (
     <>
-      <SurveyTextField
-        id={SURVEY_FORM_INFO.name.id}
-        title={SURVEY_FORM_INFO.name.title}
-        value={formData.name}
-        placeholder={SURVEY_FORM_INFO.name.placeholder}
-        onChange={(value) => handleChange(SURVEY_FORM_INFO.name.id, value)}
-        onBlur={(e) => handleBlur(e, SURVEY_FORM_INFO.name.id)}
-        onKeyDown={(e) => handleKeyDown(e, SURVEY_FORM_INFO.name.id)}
+      <Controller
+        name="step1.name"
+        control={control}
+        render={({ field }) => (
+          <SurveyTextField
+            id={SURVEY_FORM_INFO.name.id}
+            title={SURVEY_FORM_INFO.name.title}
+            value={field.value}
+            placeholder={SURVEY_FORM_INFO.name.placeholder}
+            onChange={(value) => {
+              field.onChange(value);
+              handleChange();
+            }}
+            onBlur={() => {
+              field.onBlur();
+              handleBlur(field.name);
+            }}
+            onKeyDown={(e) => handleKeyDown(e, field.name)}
+          />
+        )}
       />
-      <Button type="primary" variant="outline" icon="left-arrow-red" iconPosition="right" size="sm">
-        버튼 테스트
-      </Button>
-      <p className={errorMessage}>{errorMessages["step0"]["name"]}</p>
+      {errors && (
+        <DefaultText type="caption">
+          {errors.step6?.weight?.message}
+        </DefaultText>
+      )}
     </>
   );
 }

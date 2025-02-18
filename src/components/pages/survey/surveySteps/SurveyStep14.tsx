@@ -1,32 +1,38 @@
-import { SurveyFormData } from "@/types/survey";
+
 import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Control, Controller } from "react-hook-form";
 
 interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K],
-    isMultiSelect?: boolean
-  ) => void;
+  handleChange: () => void;
+  control: Control<SurveyStepValues>;
+  petName: string;
 }
 
 export default function SurveyStep14({
-  formData,
   handleChange,
+  control,
+  petName,
 }: SurveyStep2Props) {
   
   return (
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.currentMeal.options}
-        title={SURVEY_FORM_INFO.currentMeal.title}
-        selectedValue={formData.currentMeal}
-        petName={formData.name}
-        layoutType="grid"
-        isMultiSelect
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.currentMeal.id, value as string, true)
-        }
-      />
+    <Controller
+      name="step14.currentMeal"
+      control={control}
+      render={({ field }) => (
+        <SurveyButtonList
+          options={SURVEY_FORM_INFO.currentMeal.options}
+          title={SURVEY_FORM_INFO.currentMeal.title}
+          selectedValue={field.value}
+          petName={petName}
+          layoutType="grid"
+          onChange={(value) => {
+            field.onChange(value);
+            handleChange();
+          }}
+        />
+      )}
+    />
   );
 }

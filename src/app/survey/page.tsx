@@ -1,32 +1,57 @@
 "use client";
 
-import useSurveyForm from "@/hooks/useSuveyForm";
-import { useSurveyStore } from "@/store/useSurveyStore";
 import useStep from "@/hooks/useStep";
 import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
 import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
 import SurveyPagination from "@/components/pages/survey/surveyPagination/SurveyPagination";
-import * as styles from './Survey.css';
+import * as styles from "./Survey.css";
+import { useSurveyForm } from "@/hooks/useSurveyForm";
+import {
+  defaultStepValues,
+  surveyStepsSchema,
+} from "@/utils/validation/surveyValidation";
 
 export default function SurveyPage() {
-  const { stepLength, canNextStep } = useSurveyStore();
   const {
     currentStep,
+    currentStepKey,
     handleNextStep,
     handlePrevStep,
     direction,
     isLastStep,
     isFirstStep,
-  } = useStep(stepLength());
-  const { formData, errorMessages, handleChange, handleBlur, handleKeyDown } =
-  useSurveyForm(handleNextStep, currentStep);
-  const steps = getSurveySteps({
-    formData,
-    errorMessages,
+  } = useStep(17);
+
+  const {
+    handleSubmit,
+    control,
+    watch,
+    errors,
+    isValid,
+    isCanNextStep,
     handleChange,
     handleBlur,
     handleKeyDown,
+  } = useSurveyForm<typeof surveyStepsSchema>(
+    surveyStepsSchema,
+    defaultStepValues,
+    currentStepKey,
+    handleNextStep
+  );
+
+  const petName = watch("step1.name") ?? "";
+  const steps = getSurveySteps({
+    handleChange,
+    handleBlur,
+    handleKeyDown,
+    handleNextStep,
+    control,
+    errors,
+    petName,
   });
+
+  console.log("watch", watch());
+  console.log("errors", errors);
 
   return (
     <div className={styles.surveyLayoutContainer}>
@@ -42,7 +67,7 @@ export default function SurveyPage() {
         isFirstStep={isFirstStep}
         currentStep={currentStep}
         stepLength={steps.length}
-        canNextStep={canNextStep}
+        canNextStep={isCanNextStep}
       />
     </div>
   );

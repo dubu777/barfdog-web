@@ -1,56 +1,73 @@
-import { SurveyFormData } from "@/types/survey";
+
 import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 import { useEffect, useState } from "react";
 import SurveyTextField from "../surveyTextField/SurveyTextField";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Control, Controller, useWatch } from "react-hook-form";
 
 interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K],
-    isMultiSelect?: boolean
-  ) => void;
+  handleChange: () => void;
+  handleBlur: (fieldName: string) => Promise<void>;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => Promise<void>;
+  handleNextStep: () => void;
+  control: Control<SurveyStepValues>;
+  petName: string;
 }
 
 export default function SurveyStep13({
-  formData,
   handleChange,
+  handleBlur,
+  handleKeyDown,
+  handleNextStep,
+  control,
+  petName,
 }: SurveyStep2Props) {
-  const [showEtcField, setShowEtcField] = useState(false);
-
-  useEffect(() => {
-    if (
-      Array.isArray(formData.inedibleFood) &&
-      formData.inedibleFood.includes("ETC")
-    ) {
-      setShowEtcField(true);
-    } else {
-      setShowEtcField(false);
-    }
-  }, [formData.inedibleFood]);
+  // useWatch로 'step13.inedibleFood'를 구독하여 ETC 선택 여부를 판단합니다.
+  const inedibleFoodValue = useWatch({ control, name: "step13.inedibleFood" });
+  const showEtcField = Array.isArray(inedibleFoodValue) && inedibleFoodValue.includes("ETC");
 
   return (
     <>
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.inedibleFood.options}
-        title={SURVEY_FORM_INFO.inedibleFood.title}
-        selectedValue={formData.inedibleFood}
-        petName={formData.name}
-        layoutType="grid"
-        isMultiSelect
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.inedibleFood.id, value as string, true)
-        }
+      <Controller
+        name="step13.inedibleFood"
+        control={control}
+        render={({ field }) => (
+          <SurveyButtonList
+            options={SURVEY_FORM_INFO.inedibleFood.options}
+            title={SURVEY_FORM_INFO.inedibleFood.title}
+            selectedValue={field.value}
+            petName={petName}
+            layoutType="grid"
+            isMultiSelect
+            handleNextStep={handleNextStep}
+            onChange={(value) => {
+              field.onChange(value);
+              handleChange();
+            }}
+          />
+        )}
       />
       {showEtcField && (
-        <SurveyTextField
-          id={SURVEY_FORM_INFO.inedibleFoodEtc.id}
-          value={formData.inedibleFoodEtc}
-          onChange={(value) =>
-            handleChange(SURVEY_FORM_INFO.inedibleFoodEtc.id, value)
-          }
-          placeholder={SURVEY_FORM_INFO.inedibleFoodEtc.placeholder}
+        <Controller
+          name="step13.inedibleFoodEtc"
+          control={control}
+          render={({ field }) => (
+            <SurveyTextField
+              id={SURVEY_FORM_INFO.inedibleFoodEtc.id}
+              value={field.value}
+              placeholder={SURVEY_FORM_INFO.inedibleFoodEtc.placeholder}
+              onChange={(value) => {
+                field.onChange(value);
+                handleChange();
+              }}
+              onBlur={() => {
+                field.onBlur();
+                handleBlur(field.name);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, field.name)}
+            />
+          )}
         />
       )}
     </>
