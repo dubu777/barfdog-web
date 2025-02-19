@@ -26,7 +26,7 @@ export default function SurveyStep12({
 }: SurveyStepProps) {
   // useWatch를 이용하여 'step12.supplement'의 값을 구독합니다.
   const supplementValue = useWatch({ control, name: "step12.supplement" });
-  // ETC가 포함되어 있으면 추가 입력 필드를 보여줍니다.
+  // ETC가 포함되어 있으면 추가 입력 필드를 보여줌.
   const showEtcField =
     Array.isArray(supplementValue) && supplementValue.includes("ETC");
 

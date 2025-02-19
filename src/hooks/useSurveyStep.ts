@@ -2,7 +2,7 @@
 import { SurveyStepKeys } from '@/utils/validation/surveyValidation';
 import { useState } from 'react';
 
-interface UseStepReturnType {
+interface useSurveyStepReturnType {
   currentStep: number;
   currentStepKey: SurveyStepKeys;
   handleNextStep: () => void;
@@ -12,7 +12,7 @@ interface UseStepReturnType {
   direction: number;
 }
 
-export default function useStep(totalSteps: number): UseStepReturnType {
+export default function useSurveyStep(totalSteps: number): useSurveyStepReturnType {
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(0);
 

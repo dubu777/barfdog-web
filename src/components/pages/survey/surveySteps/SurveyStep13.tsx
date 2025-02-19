@@ -23,7 +23,6 @@ export default function SurveyStep13({
   control,
   petName,
 }: SurveyStepProps) {
-  // useWatch로 'step13.inedibleFood'를 구독하여 ETC 선택 여부를 판단합니다.
   const inedibleFoodValue = useWatch({ control, name: "step13.inedibleFood" });
   const showEtcField = Array.isArray(inedibleFoodValue) && inedibleFoodValue.includes("ETC");
 

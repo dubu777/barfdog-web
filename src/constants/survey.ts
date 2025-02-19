@@ -6,6 +6,7 @@ export {
   RECIPE_TEMP_DATA,
   SURVEY_NO_AUTO_NEXT_STEP,
   SURVEY_OPTIONAL_FIELDS,
+  NONE_VALUE,
 };
 
 
@@ -403,3 +404,5 @@ const SURVEY_OPTIONAL_FIELDS = new Set([
   // step15
   "cautionEtc",
 ]);
+
+const NONE_VALUE = "NONE";

@@ -37,15 +37,22 @@ export function useSurveyForm<S extends yup.ObjectSchema<any>>(
     const stepValues = watch(currentStepKey as Path<yup.InferType<S>>);
     if (!stepValues) return false;
 
-    // optionalFields에 포함된 필드는 검증에서 제외하고, 나머지 필드에 대해 값이 채워졌는지 확인합니다.
+    // optionalFields에 포함된 필드는 allFilled 검증에서 제외
     const allFilled = Object.entries(stepValues).every(([key, value]) => {
       if (SURVEY_OPTIONAL_FIELDS.has(key)) return true;
+      // 문자열인 경우: 공백 제거 후 빈 문자열 아닌지 확인
       if (typeof value === "string") {
         return value.trim() !== "";
       }
+      // 배열일 경우: 배열 길이가 0보다 큰지 확인
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      }
+      // 그 외 경우(boolean): null 또는 undefined가 아닌지 확인
       return value !== null && value !== undefined;
     });
 
+    // 예시) step4.dogSize, step4.dogType
     const stepErrorKeys = Object.keys(errors).filter((key) =>
       key.startsWith(currentStepKey)
     );

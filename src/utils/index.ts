@@ -19,5 +19,4 @@ export * from './koreanSuffix';
 export * from './mergeRefs';
 export * from './modal';
 export * from './navigation';
-export * from './surveyValidation';
 export * from './validate';

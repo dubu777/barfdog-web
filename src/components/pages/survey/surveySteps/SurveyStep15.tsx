@@ -23,7 +23,6 @@ export default function SurveyStep15({
   control,
   petName,
 }: SurveyStepProps) {
-  // useWatch를 이용해 caution 값을 구독합니다.
   const cautionValue = useWatch({ control, name: "step15.caution" });
   const showEtcField = Array.isArray(cautionValue) && cautionValue.includes("ETC");
 

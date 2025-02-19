@@ -1,6 +1,6 @@
 "use client";
 
-import useStep from "@/hooks/useStep";
+import useSurveyStep from "@/hooks/useSurveyStep";
 import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
 import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
 import SurveyPagination from "@/components/pages/survey/surveyPagination/SurveyPagination";
@@ -20,7 +20,7 @@ export default function SurveyPage() {
     direction,
     isLastStep,
     isFirstStep,
-  } = useStep(17);
+  } = useSurveyStep(17);
 
   const {
     handleSubmit,
