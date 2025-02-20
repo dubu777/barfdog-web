@@ -7,7 +7,7 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/usePagination";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { prefetchGetInviteRewardList, useGetInviteRewardList } from "@/api/mypage/queries/useGetInviteRewardList";
 import { useApplyRecommendCode } from "@/api/mypage/mutations/useApplyRecommendCode";
 import { useToastStore } from "@/store/useToastStore";

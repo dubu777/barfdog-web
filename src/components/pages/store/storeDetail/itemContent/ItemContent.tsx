@@ -8,7 +8,7 @@ import { sanitizedHTML } from "@/styles/common.css";
 import Tabs from "@/components/common/tabs/Tabs";
 import RefundExchangeGuide from "@/components/common/refundExchangeGuide/RefundExchangeGuide";
 import ItemReview from "@/components/pages/store/storeDetail/itemContent/itemReview/ItemReview";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 
 interface ItemContentProps {
   itemDetail: StoreItemDetail;

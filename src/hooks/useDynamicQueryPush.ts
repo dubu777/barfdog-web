@@ -2,7 +2,7 @@ import { QueryParams } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
-const useDynamicQueryPush = () => {
+export function useDynamicQueryPush() {
   const router = useRouter();
   const pushWithQuery = useCallback((
     path: string,
@@ -27,4 +27,3 @@ const useDynamicQueryPush = () => {
 
   return { pushWithQuery };
 }
-export default useDynamicQueryPush;

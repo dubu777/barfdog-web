@@ -5,7 +5,7 @@ import * as styles from './ReviewList.css';
 import Tabs from "@/components/common/tabs/Tabs";
 import WritableReview from "@/components/pages/mypage/review/writableReview/WritableReview";
 import WrittenReview from "@/components/pages/mypage/review/writtenReview/WrittenReview";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePathname, useSearchParams } from "next/navigation";
 import { prefetchGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
 import { useQueryClient } from "@tanstack/react-query";

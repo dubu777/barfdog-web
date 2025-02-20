@@ -10,7 +10,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/usePagination";
 import Text from "@/components/common/text/Text";
 import Pagination from "@/components/common/pagination/Pagination";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 import { formatDate } from "@/utils/dateUtils";
 import { BlogCategory } from "@/types";

@@ -6,7 +6,7 @@ import RateStar from "@/components/common/rateStar/RateStar";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Accordion from "@/components/common/accordion/Accordion";
 import Pagination from "@/components/common/pagination/Pagination";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetStoreItemReviewList, useGetStoreItemReviewList } from "@/api/store/queries/useGetStoreItemReviewList";
