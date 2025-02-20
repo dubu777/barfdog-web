@@ -79,7 +79,6 @@ const SignUpTerms = ({ control, watch, setValue }: SignUpTermsProps) => {
 		setValue('agreement', {
 			servicePolicy: checked,
 			privacyPolicy: checked,
-			alliancePolicy: checked,
 			receiveSms: checked,
 			receiveEmail: checked,
 			over14YearsOld: checked,

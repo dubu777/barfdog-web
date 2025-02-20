@@ -45,19 +45,26 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 				router.push(`/account/connect-sns?providerId=${data.providerId}`);
 				break;
 			}
+			//
 			case 'MEMBER_WITH_SMS_KAKAO': {
 				// 회원 (카카오 연동)
 				if (provider === 'naver') {
 					alert("카카오 간편로그인이 연동된 계정입니다. 카카오로 로그인해주세요.");
 					router.push('/login');
-				} else router.push('/');
+				} else {
+					// 연동 확인 후 추가 로그인 처리 필요 (토큰값)
+					router.push('/');
+				}
 				break;
 			}
 			case 'MEMBER_WITH_SMS_NAVER': {
 				if (provider === 'kakao') {
 					alert("네이버 간편로그인이 연동된 계정입니다. 네이버로 로그인해주세요.");
 					router.push('/login');
-				} else router.push('/');
+				} else {
+					// 연동 확인 후 추가 로그인 처리 필요 (토큰값)
+					router.push('/');
+				}
 				break;
 			}
 			default: {
