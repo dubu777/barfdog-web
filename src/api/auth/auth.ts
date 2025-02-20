@@ -11,7 +11,8 @@ import {
 	ConnectSnsSuccess,
 	LoginUserInfo, 
 	SnSProvider, 
-	UserType
+	UserType,
+	GetAuthNumber
 } from "@/types";
 
 export {
@@ -68,7 +69,7 @@ const changePassword = async (body: ChangePassword) => {
 	return await axiosInstance.put('/api/members/password', body);
 }
 
-const getAuthNumber = async (body: { phoneNumber: string }) => {
+const getAuthNumber = async (body: { phoneNumber: string }): Promise<GetAuthNumber> => {
 	const { data } = await axiosInstance.post('/api/join/phoneAuth', body);
 	return data;
 }
@@ -97,7 +98,6 @@ const getAccessTokenByNaver = async (code: string) => {
 		{}
 	)
 	if (!tokenResponse.access_token) throw new Error('네이버 토큰 발급 실패');
-	console.log('tokenResponse', tokenResponse);
 	return tokenResponse;
 }
 
@@ -119,7 +119,6 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 		if (!loginResponse) {
 			throw new Error("응답이 없습니다.");
 		}
-		console.log('loginResponse', loginResponse)
 
 		let userType: UserType = 'NON_MEMBER';
 		let token: string | null = null;

@@ -23,7 +23,6 @@ const ItemPurchase = ({ itemId }: ItemPurchaseProps) => {
   };
   const handleAddToCart = () => {
     // 로그인 여부 확인 및 적용 필요
-    console.log('body', body)
     mutate(
       { body: body as UpdateCartInfo }, {
         onSuccess: () => {

@@ -10,7 +10,7 @@ import { useFindUserEmail } from "@/api/auth/mutations/useFindAccount";
 import { useToastStore } from "@/store/useToastStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { defaultFindUserEmailValues, findUserEmailSchema } from "@/utils/validation/authValidation";
-import { FindUserEmail } from "@/types/auth/findAccount";
+import { FindUserEmail } from "@/types";
 
 const FindEmail = () => {
 	const router = useRouter();

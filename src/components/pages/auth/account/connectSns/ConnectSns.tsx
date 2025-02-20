@@ -1,17 +1,18 @@
 'use client';
 import * as styles from '../FindAccount.css';
+import axios from 'axios';
+import { useRouter } from "next/navigation";
 import Text from "@/components/common/text/Text";
 import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { Controller } from "react-hook-form";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { defaultConnectSnsValue, connectSnsSchema } from "@/utils/validation/authValidation";
-import { ConnectSnsPassword } from "@/types/auth/findAccount";
+import { ConnectSnsPassword } from "@/types";
 import { useConnectSns } from "@/api/auth/mutations/useConnectSns";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToastStore } from "@/store/useToastStore";
 import { maskString } from "@/utils/maskString";
-import axios from 'axios';
 
 const ConnectSns = () => {
 	const { loginUserInfo } = useAuthStore();
@@ -19,6 +20,7 @@ const ConnectSns = () => {
 	const { handleSubmit, control, errors, isValid } = useFormHandler<ConnectSnsPassword>(connectSnsSchema, defaultConnectSnsValue);
 	const { mutate } = useConnectSns();
 	const { addToast } = useToastStore();
+	const router = useRouter();
 
 	console.log('loginUserInfo', loginUserInfo)
 	console.log('isValid', isValid)
@@ -39,7 +41,13 @@ const ConnectSns = () => {
 			body,
 			{
 				onSuccess: (data) => {
-					console.log(data)
+					if (data.email && data.provider) {
+						// 로그인 작업 필요
+						addToast('SNS 연동이 완료되었습니다!', 'success');
+						router.push('/');
+					} else {
+						addToast('SNS 연동에 실패했습니다.', 'error');
+					}
 
 				},
 				onError: (error) => {
@@ -47,13 +55,12 @@ const ConnectSns = () => {
 					if(axios.isAxiosError(error)) {
 						const errorData = error.response?.data.errors[0];
 						if (errorData) {
-							addToast(errorData.defaultMessage, 'error');
+							addToast(errorData.defaultMessage || 'SNS 연동에 실패했습니다.', 'error');
 						}
 					}
 				}
 			}
 		)
-		console.log('body', body);
 	}
 	return (
 		<section className={styles.connectSnsContainer}>

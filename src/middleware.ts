@@ -2,7 +2,6 @@ import { getNeedToSetPassword } from "@/api/auth/auth";
 import { NextResponse } from "next/server";
 
 export async function middleware(req: Request) {
-	console.log('Middleware 실행됨!'); // 실행 로그 확인
 	console.log('요청된 URL:', req.url);
 
 	// 현재 경로 확인
@@ -15,7 +14,7 @@ export async function middleware(req: Request) {
 		'/mypage/account/connected-sns',
 		'/mypage/account/set-password',
 	];
-	console.log('pathsRequiringPasswordSetup', pathsRequiringPasswordSetup)
+	
 	// 조건에 맞는 경로로 접근 시, 패스워드 설정 여부를 체크
 	if (pathsRequiringPasswordSetup.includes(pathname)) {
 		const needToSetPassword = await getNeedToSetPassword();

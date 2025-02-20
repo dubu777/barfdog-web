@@ -3,7 +3,7 @@ import Link from "next/link";
 import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import { Control, Controller, SubmitHandler, UseFormHandleSubmit } from "react-hook-form";
-import { LoginFormValues } from "@/types/auth/login";
+import { LoginFormValues } from "@/types";
 
 interface LoginFormProps {
   control: Control<LoginFormValues>;

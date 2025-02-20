@@ -2,15 +2,21 @@ import { DefaultValues, FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from 'yup';
 
-export function useFormHandler<T extends FieldValues>(schema: yup.ObjectSchema<any>, defaultValues: DefaultValues<T>) {
+export function useFormHandler<T extends FieldValues>(
+  schema: yup.ObjectSchema<any>,
+  defaultValues: DefaultValues<T>,
+) {
   const {
     register,
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
+    trigger,
     reset,
     watch,
-    setValue
+    setValue,
+    setError,
+    clearErrors,
   } = useForm<T>({
     resolver: yupResolver(schema),
     defaultValues,
@@ -23,8 +29,12 @@ export function useFormHandler<T extends FieldValues>(schema: yup.ObjectSchema<a
     handleSubmit,
     errors,
     isValid,
+    isDirty,
+    trigger,
     reset,
     watch,
     setValue,
+    setError,
+    clearErrors,
   };
 }

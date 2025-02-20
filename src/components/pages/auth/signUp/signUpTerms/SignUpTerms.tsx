@@ -2,13 +2,13 @@ import * as styles from './SignUpTerms.css';
 import { Fragment, useEffect, useState } from "react";
 import Text from "@/components/common/text/Text";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
-import { DefaultObjectType } from "@/types";
+import { DefaultObjectType, SignUpFormValues, SignUpTermsModal } from "@/types";
 import { Controller, Control, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { SignUpFormValues, SignUpTermsModal } from "@/types/auth/signUp";
 import useModal from "@/hooks/useModal";
 import ServicePolicy from "@/components/pages/auth/signUp/signUpTerms/termsModal/ServicePolicy";
 import PrivacyPolicy from "@/components/pages/auth/signUp/signUpTerms/termsModal/PrivacyPolicy";
 import AlliancePolicy from "@/components/pages/auth/signUp/signUpTerms/termsModal/AlliancePolicy";
+import ReceiveTerms from "@/components/common/receiveTerms/ReceiveTerms";
 import Cookies from "js-cookie";
 
 interface AgreementFormFields extends DefaultObjectType {
@@ -56,10 +56,6 @@ interface SignUpTermsProps {
 const SignUpTerms = ({ control, watch, setValue }: SignUpTermsProps) => {
 	const agreementValues = watch('agreement');
 	const allChecked = Object.values(agreementValues).every(value => value === true);
-	const receiveChecked = Object.values({
-		receiveSms: agreementValues.receiveSms,
-		receiveEmail: agreementValues.receiveEmail,
-	}).every(value => value === true);
 
 	const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
 	const [isReceiveAllChecked, setIsReceiveAllChecked] = useState<boolean>(false);
@@ -76,27 +72,21 @@ const SignUpTerms = ({ control, watch, setValue }: SignUpTermsProps) => {
 
 	useEffect(() => {
 		setIsAllChecked(allChecked);
-		setIsReceiveAllChecked(receiveChecked)
-	}, [agreementValues, allChecked, receiveChecked]);
+	}, [agreementValues, allChecked]);
 
 	const handleAllAgreeChange = (checked: boolean) => {
 		setIsAllChecked(checked);
 		setValue('agreement', {
 			servicePolicy: checked,
 			privacyPolicy: checked,
+			alliancePolicy: checked,
 			receiveSms: checked,
 			receiveEmail: checked,
 			over14YearsOld: checked,
 		})
-	}
-
-	const handleAllReceiveChange = (checked: boolean) => {
-		setIsReceiveAllChecked(checked);
-		setValue('agreement', {
-			...agreementValues,
-			receiveSms: checked,
-			receiveEmail: checked,
-		});
+		setValue('allianceInfo', {
+			alliancePolicy: checked,
+		})
 	}
 
 	const handleTermsModalOpen = (termsType: SignUpTermsModal) => {
@@ -168,45 +158,14 @@ const SignUpTerms = ({ control, watch, setValue }: SignUpTermsProps) => {
 											</>
 										)
 										: (
-											<div className={styles.receiveList}>
-												<DefaultCheckbox
-													id='receiveAll'
-													name='receiveAll'
-													label='무료배송, 할인쿠폰 등 혜택/정보 수신 동의 (선택)'
-													labelPosition='right'
-													value={isReceiveAllChecked}
-													onChange={(value) => handleAllReceiveChange(value as boolean)}
-												/>
-												<div className={styles.receiveAgreement}>
-													<Controller
-														name='agreement.receiveSms'
-														control={control}
-														render={({ field }) => (
-															<DefaultCheckbox
-																id='agreement.receiveSms'
-																label='SMS'
-																{...field}
-															/>
-														)}
-													/>
-													<Controller
-														name='agreement.receiveEmail'
-														control={control}
-														render={({ field }) => (
-															<DefaultCheckbox
-																id='agreement.receiveEmail'
-																label='이메일'
-																{...field}
-															/>
-														)}
-													/>
-												</div>
-												<div className={styles.receiveAgreementInfo}>
-													<Text type='description' size='sm' color='red'>
-														ㄴ 모두 동의 시 적립금 1,000원 적립 (첫 구매확정 후 적용)
-													</Text>
-												</div>
-											</div>
+											<ReceiveTerms
+												isSignUp
+												control={control}
+												watch={watch}
+												setValue={setValue}
+												isReceiveAllChecked={isReceiveAllChecked}
+												setIsReceiveAllChecked={setIsReceiveAllChecked}
+											/>
 										)
 									}
 								</li>

@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { SnSProvider } from '@/types';
+import { setCookie } from "@/utils/cookie";
+import { AUTH_CONFIG } from "@/constants/auth";
 
 interface LoginRedirectProps {
 	searchParams: {
@@ -19,8 +21,7 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 	const provider = searchParams.provider;
 	const { data, error, isError } = useLoginWithProvider(provider, code);
 	const { setLoginUserInfo } = useAuthStore();
-	// console.log(code)
-	// console.log(authType)
+
 	console.log('useLoginWithProvider data', data)
 	useEffect(() => {
 		console.log('resultCode!!')
@@ -62,12 +63,14 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 				} else router.push('/');
 				break;
 			}
-			// default: {
-			// 	router.push('/');
-			// }
+			default: {
+				if(data.token) {
+					setCookie(AUTH_CONFIG.LOGIN_COOKIE, data.token, 10);
+					router.push('/');
+				}
+			}
 		}
 	}, [data, router])
-	// }, [data, router, error?.message, isError, provider, setLoginUserInfo])
 	return (
 		<div className={styles.loginRedirectContainer}>
 			<Loader />

@@ -11,7 +11,7 @@ export { useEmailLogin };
 
 function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 	const { pushWithQuery } = useDynamicQueryPush();
-	console.log('useLogin')
+
 	return useMutation({
 		mutationFn: async (formData: { email: string, password: string, tokenValidDays: number }) => {
 			try {
@@ -36,37 +36,22 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 				pushWithQuery('/', data.temporaryPassword ? { tempPw: true } : {});
 
 				return data;
-			} catch(error: unknown) {
+			} catch(error) {
 				const errorMessage =
 					axios.isAxiosError(error) && error.response
-						? error.response.data?.message || "로그인에 실패했습니다."
+						? error.response.data?.errors?.[0].defaultMessage || "로그인에 실패했습니다."
 						: "네트워크 오류가 발생했습니다.";
 				
-				console.error("로그인 실패:", error);
+				console.log("로그인 실패:", error);
 				alert(errorMessage);
-				throw new Error(errorMessage);
+				throw new Error(String(error));
 			}
 		},
 		onSuccess: async (data) => {
 			console.log('로그인 성공', data);
 		},
 		onError: (error) => {
-			let errorStatus: number | undefined;
-			let errorMessage = "서버 장애입니다. 잠시 후 다시 시도해주세요.";
-
-			if (axios.isAxiosError(error)) {
-				errorStatus = error.response?.status;
-
-				if (error.response?.data?.errors?.[0]?.defaultMessage) {
-				errorMessage = error.response.data.errors[0].defaultMessage;
-				} else if (errorStatus === 400 || errorStatus === 404) {
-				errorMessage =
-					"아이디 또는 비밀번호가 정확하지 않습니다. \n계정정보를 확인해주세요.";
-				}
-			}
-
 			console.log("로그인 실패", error);
-			alert(errorMessage);
 		},
 		...mutationOptions,
 	})

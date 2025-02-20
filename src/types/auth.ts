@@ -1,4 +1,4 @@
-import {AddressDto} from "@/types/index";
+import { AddressDto } from "@/types/index";
 
 export type {
 	LoginFormValues,
@@ -22,7 +22,8 @@ export type {
 	UserInfoFormFields,
 	UpdateUserInfo,
 	GetUserInfo,
-	IsValidUpdateUserInfo
+	IsValidUpdateUserInfo,
+	GetAuthNumber
 };
 
 // 로그인
@@ -133,6 +134,8 @@ interface SignUpFormValues {
 	};
 	provider?: string;
 	providerId?: string;
+	defaultPhoneNumber?: string;
+	hasCheckedAuthNumber?: boolean;
 }
 
 // 마이페이지 회원 정보 수정
@@ -147,28 +150,35 @@ interface UserInfoFormFields {
 }
 
 interface GetUserInfo extends UpdateUserInfo{
-	email: string;
-	memberId: string | null;
-	provider: string | null;
-	providerId: number | null;
+	memberId?: string | null;
+	provider?: string | null;
+	providerId?: number | null;
 }
 
 interface UpdateUserInfo {
-	defaultPhoneNumber: string;
 	address: AddressDto;
 	birthday: string;
 	gender: string;
 	name: string;
-	password: string;
+	password: string | null;
 	phoneNumber: string;
 	receiveEmail: boolean;
 	receiveSms: boolean;
-	authNumber: string | null;
-	hasCheckedAuthNumber: boolean;
+	email?: string;
+	authNumber?: string | null;
+	defaultPhoneNumber?: string;
+	hasCheckedAuthNumber?: boolean;
 }
 
 interface IsValidUpdateUserInfo {
 	changedPhoneNumber: boolean;
 	authNumber: string | null;
 	checkedAuthNumber: boolean;
+}
+
+interface GetAuthNumber {
+	responseCode: number;
+	status: number;
+	msg: null | string,
+	authNumber: null | string;
 }
