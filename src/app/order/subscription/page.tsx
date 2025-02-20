@@ -13,6 +13,8 @@ export default async function SubscriptionPage({
   searchParams,
 }: SubscriptionPageProps) {
   const reportId = Number(searchParams.reportId);
+  console.log(reportId);
+  
   const queryClient = new QueryClient();
 
   // 서버에서 데이터 prefetching
