@@ -15,21 +15,22 @@ const FindPasswordResult = () => {
 	const { pushWithQuery } = useDynamicQueryPush();
 	const { addToast } = useToastStore();
 
+	// 새로고침 이슈 O -> persist 적용 필요
 	if (!tempPwUserInfo) {
 		return null;
 	}
-	console.log(tempPwUserInfo)
+
 	const handleResendTempPw = () => {
-		console.log('tempPwUserInfo', tempPwUserInfo)
+		// 1분 타이머 적용
 		start();
 		mutate(
 			tempPwUserInfo,
 			{
 				onSuccess:() => {
-					start();
 					console.log('onSuccess')
 				},
 				onError: () => {
+					stop();
 					addToast('일치하는 정보를 찾을 수 없습니다.', 'error');
 				}
 			}

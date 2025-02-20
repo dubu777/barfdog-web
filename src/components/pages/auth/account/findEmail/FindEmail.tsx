@@ -24,7 +24,6 @@ const FindEmail = () => {
 			{ name: data.name, phoneNumber: data.phoneNumber },
 			{
 				onSuccess: (data) => {
-					console.log('onSuccess data', data)
 					addToast('아이디가 성공적으로 확인되었습니다!', 'success');
 					setTempEmailUserInfo(data);
 					setTimeout(() => {

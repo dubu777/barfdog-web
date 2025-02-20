@@ -13,7 +13,6 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({ control, handleSubmit, handleLogin, isValid }: LoginFormProps) => {
-  console.log(isValid)
   return (
     <form className={styles.loginForm}>
       <span className={styles.lineBox}>

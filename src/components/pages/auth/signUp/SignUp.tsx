@@ -12,7 +12,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 const SignUp = () => {
 	const { loginUserInfo } = useAuthStore();
 	const { handleSubmit, control, watch, errors, setValue, setError } = useFormHandler<SignUpFormValues>(signUpSchema, defaultSignUpValues(loginUserInfo));
-	console.log('loginUserInfo', loginUserInfo)
+
 	const onSubmit = (data: SignUpFormValues) => {
 		console.log('formData', data);
 	}

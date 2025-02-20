@@ -124,25 +124,37 @@ const UserInfoForm = <T extends boolean>({
 	openAddressModal,
 	setOpenAddressModal,
 }: UserInfoFormProps<T>) => {
+	const formValues = watch();
 	const filteredUserInfoFormFields = useMemo(() => 
-		isSignUp 
-		? userInfoFormFields 
-		: userInfoFormFields.filter(field => !field.isSignUp)
+		isSignUp
+			// sns 간편로그인 정책으로 인하여, 회원가입단계에서 비밀번호 설정불가함으로 인한 field 제외
+			? 'providerId' in formValues && !!formValues.providerId
+				? userInfoFormFields.filter(field => field.id !== 'password' && field.id !== 'confirmPassword')
+				: userInfoFormFields
+			: userInfoFormFields.filter(field => !field.isSignUp)
 	, [isSignUp]);
 
 	const [authNumber, setAuthNumber] = useState<string | null>(null);
 	const { mutate: mutateAuthNumber } = useGetAuthNumber();
 	const { addToast } = useToastStore();
 
-	const phoneNumber = watch('phoneNumber' as Path<FormValues<T>>);
-	const defaultPhoneNumber = watch('defaultPhoneNumber' as Path<FormValues<T>>);
-	const hasCheckedAuthNumber = watch('hasCheckedAuthNumber' as Path<FormValues<T>>);
-	const watcherAuthNumber = watch('authNumber' as Path<FormValues<T>>);
+	const phoneNumber = formValues.phoneNumber;
+	const defaultPhoneNumber = formValues.defaultPhoneNumber;
+	const hasCheckedAuthNumber = formValues.hasCheckedAuthNumber;
+	const watcherAuthNumber = formValues.authNumber;
+
+	// defaultPhoneNumber, hasCheckedAuthNumber, authNumber: formValues 에서 검증 역할이며 실제 formData 는 아니므로 제외 필요
+	// 이벤트 발생시 플로우 및 상태값 변화
+	// 1. 휴대폰 번호 변경시 phoneNumber error
+	// 2. 인증번호 받기 클릭시 authNumber error (phoneNumber clear)
+	// 3. 인증번호 확인 클릭시 모든 error clear, hasCheckedAuthNumber true
+	// 휴대폰 번호 변경시: defaultPhoneNumber !== phoneNumber => authNumber !== null && hasCheckedAuthNumber 검증 필요
 
 	const handleEmailDuplication = useCallback(() => {
-
+		// 이메일 중복 확인
 	},[]);
 
+	// 인증번호 받기
 	const handleGetAuthNumber = useCallback(() => {
 		if (!phoneNumber) return;
 
@@ -151,6 +163,7 @@ const UserInfoForm = <T extends boolean>({
 			{
 				onSuccess: (data) => {
 					console.log('data', data)
+					// 다이렉트센드 에서 받아오는 데이터 형태로 msg null 값이어야 성공
 					if(data.authNumber && data.responseCode === 200 && data.msg === null) {
 						setAuthNumber(data.authNumber);
 						addToast('인증번호가 발송되었습니다!', 'success');
@@ -169,16 +182,16 @@ const UserInfoForm = <T extends boolean>({
 		)
 	},[watch, mutateAuthNumber, setValue, setError, addToast]);
 
+	// 인증번호 확인
 	const handleCheckAuthNumber = useCallback(() => {
 		if (!authNumber || !watcherAuthNumber) return;
 
+		// 인증번호 확인 검증은 발급받은 인증번호를 상태값에 저장 후 비교
 		if (watcherAuthNumber === authNumber) {
 			addToast('인증 되었습니다!', 'success');
 			clearErrors?.('authNumber' as Path<FormValues<T>>);
 			setValue('hasCheckedAuthNumber' as Path<FormValues<T>>, true as PathValue<FormValues<T>, Path<FormValues<T>>>);
-			// setValue('hasCheckedAuthNumber' as keyof FormValues<T>, true);
 		} else {
-			// addToast('인증번호를 확인해주세요.', 'error');
 			setError('authNumber' as Path<FormValues<T>>, { message: '인증번호를 확인해주세요.' });
 		}
 	},[watch, authNumber, setError, addToast]);

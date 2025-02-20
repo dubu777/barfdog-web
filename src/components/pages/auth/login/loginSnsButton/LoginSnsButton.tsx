@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import * as styles from "./LoginSnsButtons.css";
 import Image from "next/image";
@@ -13,7 +12,6 @@ interface LoginSnsButtonProps {
 
 const LoginSnsButton = ({ provider, lastLoginActivity }: LoginSnsButtonProps) => {
   const router = useRouter();
-  const naverRef = useRef<HTMLButtonElement>(null);
 
   const handleLogin = () => {
     const redirectUri = provider === 'naver'
@@ -30,7 +28,6 @@ const LoginSnsButton = ({ provider, lastLoginActivity }: LoginSnsButtonProps) =>
 
   return (
     <>
-    <button ref={naverRef} id='naverIdLogin' style={{ display: 'none' }} />
     <button onClick={handleLogin} className={styles.loginButton({ provider: provider, lastLoginActivity: lastLoginActivity })}>
       {lastLoginActivity &&
         <span className={styles.lastLoginActivity}>최근로그인</span>

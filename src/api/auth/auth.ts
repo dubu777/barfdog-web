@@ -105,12 +105,14 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 	try {
 		let body;
 		if (provider === 'naver') {
+			// 네이버
 			const { access_token } = await getAccessTokenByNaver(code);
 			body = {
 				accessToken: access_token,
 				tokenValidDays: 10,
 			};
 		} else {
+			// 카카오
 			body = { code };
 		}
 
@@ -144,9 +146,9 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 				token = headers.authorization;
 				break;
 			default:
-				console.log(resultCode);
-				break;
+				// 하단 에러 코드에 대한 default 처리 필요
 				// throw new Error(`알 수 없는 응답 코드: ${resultCode}`);
+				break;
 		}
 
 		return {

@@ -15,28 +15,27 @@ import { useToastStore } from "@/store/useToastStore";
 import { maskString } from "@/utils/maskString";
 
 const ConnectSns = () => {
+	const router = useRouter();
+
 	const { loginUserInfo } = useAuthStore();
 	const userEmail = loginUserInfo?.data?.email;
+
 	const { handleSubmit, control, errors, isValid } = useFormHandler<ConnectSnsPassword>(connectSnsSchema, defaultConnectSnsValue);
 	const { mutate } = useConnectSns();
 	const { addToast } = useToastStore();
-	const router = useRouter();
-
-	console.log('loginUserInfo', loginUserInfo)
-	console.log('isValid', isValid)
 
 	const onSubmit = (data: ConnectSnsPassword) => {
 		if(!loginUserInfo) return;
 
+		// provider: SNS 명칭, providerId: API 로 전달받은 SNS 고유값
 		const body = {
 			password: data.password,
-			phoneNumber: loginUserInfo.data.mobile.replace(/-/g, ''), // 본인 휴대폰번호 ! Q. 국제번호일경우 => 처리 방침 ?
-			provider: loginUserInfo.provider, // SNS 업체
-			providerId: loginUserInfo.providerId, // sns 고유값
-			tokenValidDays: null, // null 일 경우, 서버 최소 토큰유지: 2시간
+			phoneNumber: loginUserInfo.data.mobile.replace(/-/g, ''),
+			provider: loginUserInfo.provider,
+			providerId: loginUserInfo.providerId,
+			tokenValidDays: null,
 		}
-		// 현재 비밀번호로 테스트 불가한 상태 추가 작업 필요
-		// response 데이터 값의 휴대폰번호가 DB 데이터와 상이함 확인 필요
+		// 현재 관리자 비밀번호로 테스트 불가한 상태 확인 필요
 		mutate(
 			body,
 			{
@@ -48,7 +47,6 @@ const ConnectSns = () => {
 					} else {
 						addToast('SNS 연동에 실패했습니다.', 'error');
 					}
-
 				},
 				onError: (error) => {
 					console.log('error', error)
@@ -91,7 +89,7 @@ const ConnectSns = () => {
 					type='main'
 					borderRadius='sm'
 					onClick={handleSubmit(onSubmit)}
-					// isDisabled={!isValid}
+					isDisabled={!isValid}
 				>
 					연동하기
 				</DefaultButton>

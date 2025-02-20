@@ -14,9 +14,6 @@ interface SignUpFormProps {
 
 const SignUpForm = ({ control, watch, errors, setValue, setError }: SignUpFormProps) => {
 	const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
-	const formValues = watch();
-	console.log(formValues)
-	console.log(errors)
 
 	return (
 		<UserInfoForm

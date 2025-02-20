@@ -10,8 +10,6 @@ interface RedirectLoginPageProps {
 
 export default function RedirectLoginPage({ searchParams }: RedirectLoginPageProps) {
 	return (
-		<>
-			<LoginRedirect searchParams={searchParams} />
-		</>
+		<LoginRedirect searchParams={searchParams} />
 	)
 }

@@ -25,7 +25,6 @@ const FindPassword = () => {
 			name: data.name,
 			phoneNumber: data.phoneNumber,
 		}
-		console.log('body', body)
 		mutate(
 			body,
 			{

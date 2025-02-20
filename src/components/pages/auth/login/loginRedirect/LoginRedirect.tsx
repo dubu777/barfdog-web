@@ -22,9 +22,7 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 	const { data, error, isError } = useLoginWithProvider(provider, code);
 	const { setLoginUserInfo } = useAuthStore();
 
-	console.log('useLoginWithProvider data', data)
 	useEffect(() => {
-		console.log('resultCode!!')
 		if (!data) return;
 
 		if (isError) {
@@ -35,7 +33,6 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 
 		const userType = data.userType;
 		setLoginUserInfo(data);
-		console.log('userType', userType)
 
 		switch (userType) {
 			case 'NON_MEMBER': {
