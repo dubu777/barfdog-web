@@ -10,7 +10,7 @@ import { useFindUserEmail } from "@/api/auth/mutations/useFindAccount";
 import { useToastStore } from "@/store/useToastStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { defaultFindUserEmailValues, findUserEmailSchema } from "@/utils/validation/authValidation";
-import { FindUserEmail } from "@/types/auth/findAccount";
+import { FindUserEmail } from "@/types";
 
 const FindEmail = () => {
 	const router = useRouter();
@@ -24,7 +24,6 @@ const FindEmail = () => {
 			{ name: data.name, phoneNumber: data.phoneNumber },
 			{
 				onSuccess: (data) => {
-					console.log('onSuccess data', data)
 					addToast('아이디가 성공적으로 확인되었습니다!', 'success');
 					setTempEmailUserInfo(data);
 					setTimeout(() => {

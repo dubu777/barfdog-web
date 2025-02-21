@@ -71,7 +71,10 @@ const nextConfig = {
         permanent: true,
       }
     ]
-  }
+  },
+  experimental: {
+    middlewarePrefetch: 'flexible',
+  },
 };
 
 export default withVanillaExtract(nextConfig);

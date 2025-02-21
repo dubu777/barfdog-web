@@ -12,7 +12,6 @@ export const bestReviewScrollbar = style({
   height: '8px',
   backgroundColor: themeVars.backgroundColors.greyD9,
   borderRadius: '8px',
-  border: '1px solid red'
 });
 
 globalStyle(`${bestReviewScrollbar} .swiper-scrollbar-drag`, {

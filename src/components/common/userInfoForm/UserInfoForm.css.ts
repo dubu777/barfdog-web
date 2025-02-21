@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const signupFormContainer = style({
+export const userInfoFormContainer = style({
 	paddingBottom: '40px',
 	borderBottom: `1px solid ${themeVars.borderColors.greyDD}`,
 	margin: '40px 0 0',
@@ -10,16 +10,16 @@ export const signupFormContainer = style({
 	gap: '1rem',
 })
 
-export const signupInputBox = style({
+export const userInfoInputBox = style({
 	display: 'flex',
 	justifyContent: 'space-between',
 })
 
-export const signupLabel = style({
- width: '30%',
+export const userInfoLabel = style({
+	width: '30%',
 })
 
-export const signupInput = style({
+export const userInfoInput = style({
 	width: '70%',
 })
 

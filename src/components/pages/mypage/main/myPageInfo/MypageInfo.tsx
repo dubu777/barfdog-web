@@ -7,14 +7,13 @@ import NoImage from "/public/images/icons/noImage.png";
 import EditButton from "/public/images/icons/edit.svg";
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 import { MyPageMemberDto , MyPageRepresentativeDogDto} from "@/types";
-import { useAuthStore } from "@/store/useAuthStore";
-import {useMyPageStore} from "@/store/useMypageStore";
+import { useMyPageStore } from "@/store/useMypageStore";
 
 const MyPageInfo = () => {
   const { data: myPageData } = useGetMyPageInfo();
 
-  const userData: MyPageMemberDto = myPageData.mypageMemberDto;
-  const representativeDogData: MyPageRepresentativeDogDto = myPageData.mypageRepresentiveDogDto;
+  const userData: MyPageMemberDto = myPageData?.mypageMemberDto;
+  const representativeDogData: MyPageRepresentativeDogDto = myPageData?.mypageRepresentiveDogDto;
   const { setMypageUserInfo } = useMyPageStore();
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const MyPageInfo = () => {
   return (
     <article className={styles.userInfoBox}>
       <Image
-        src={representativeDogData.thumbnailUrl ? representativeDogData.thumbnailUrl : NoImage}
+        src={representativeDogData?.thumbnailUrl || NoImage}
         alt='사용자 이미지'
         width={89}
         height={89}

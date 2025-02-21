@@ -29,7 +29,7 @@ axiosInstance.interceptors.request.use(
       if (token) {
           console.log('token', token)
 
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = `${token.includes('Bearer') ? '' : 'Bearer '}${token}`;
       }
       // const accessToken = getCookie('ACCESS_COOKIE');
       // const refreshToken = getCookie('REFRESH_COOKIE');

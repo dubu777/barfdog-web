@@ -38,7 +38,7 @@ const SearchAddress = ({addressValues, openAddressModal, setOpenAddressModal, ha
         />
       }
       <Controller
-        name='zipcode'
+        name={isInAddressObject ? 'address.zipcode': 'zipcode'}
         control={control}
         render={({ field }) =>
           <DefaultTextField
@@ -47,6 +47,7 @@ const SearchAddress = ({addressValues, openAddressModal, setOpenAddressModal, ha
             id='zipcode'
             name='zipcode'
             size={size}
+            isDisabled
             value={
               !addressValues.zipcode && !addressValues.street
                 ? '(우편번호) 주소'

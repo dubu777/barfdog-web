@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { SnSProvider } from '@/types';
+import { setCookie } from "@/utils/cookie";
+import { AUTH_CONFIG } from "@/constants/auth";
 
 interface LoginRedirectProps {
 	searchParams: {
@@ -19,11 +21,8 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 	const provider = searchParams.provider;
 	const { data, error, isError } = useLoginWithProvider(provider, code);
 	const { setLoginUserInfo } = useAuthStore();
-	// console.log(code)
-	// console.log(authType)
-	console.log('useLoginWithProvider data', data)
+
 	useEffect(() => {
-		console.log('resultCode!!')
 		if (!data) return;
 
 		if (isError) {
@@ -34,7 +33,6 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 
 		const userType = data.userType;
 		setLoginUserInfo(data);
-		console.log('userType', userType)
 
 		switch (userType) {
 			case 'NON_MEMBER': {
@@ -47,27 +45,36 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 				router.push(`/account/connect-sns?providerId=${data.providerId}`);
 				break;
 			}
+			//
 			case 'MEMBER_WITH_SMS_KAKAO': {
 				// 회원 (카카오 연동)
 				if (provider === 'naver') {
 					alert("카카오 간편로그인이 연동된 계정입니다. 카카오로 로그인해주세요.");
 					router.push('/login');
-				} else router.push('/');
+				} else {
+					// 연동 확인 후 추가 로그인 처리 필요 (토큰값)
+					router.push('/');
+				}
 				break;
 			}
 			case 'MEMBER_WITH_SMS_NAVER': {
 				if (provider === 'kakao') {
 					alert("네이버 간편로그인이 연동된 계정입니다. 네이버로 로그인해주세요.");
 					router.push('/login');
-				} else router.push('/');
+				} else {
+					// 연동 확인 후 추가 로그인 처리 필요 (토큰값)
+					router.push('/');
+				}
 				break;
 			}
-			// default: {
-			// 	router.push('/');
-			// }
+			default: {
+				if(data.token) {
+					setCookie(AUTH_CONFIG.LOGIN_COOKIE, data.token, 10);
+					router.push('/');
+				}
+			}
 		}
 	}, [data, router])
-	// }, [data, router, error?.message, isError, provider, setLoginUserInfo])
 	return (
 		<div className={styles.loginRedirectContainer}>
 			<Loader />

@@ -15,7 +15,6 @@ export const findAccountForm = style({
 export const findAccountResultContainer = style({
 	margin: '60px 0',
 	padding: '0 100px',
-	border: '1px solid red',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '40px',

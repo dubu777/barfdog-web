@@ -4,16 +4,19 @@ import * as yup from "yup";
 
 export function useFormHandler<T extends FieldValues>(
   schema: yup.ObjectSchema<any>,
-  defaultValues: DefaultValues<T>
+  defaultValues: DefaultValues<T>,
 ) {
   const {
     register,
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
+    trigger,
     reset,
     watch,
     setValue,
+    setError,
+    clearErrors,
   } = useForm<T>({
     resolver: yupResolver(schema),
     defaultValues,
@@ -26,8 +29,12 @@ export function useFormHandler<T extends FieldValues>(
     handleSubmit,
     errors,
     isValid,
+    isDirty,
+    trigger,
     reset,
     watch,
     setValue,
+    setError,
+    clearErrors,
   };
 }
