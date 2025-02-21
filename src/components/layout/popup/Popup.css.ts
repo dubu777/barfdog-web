@@ -39,7 +39,7 @@ export const popupImage = style({
 export const popupButton = style({
   width: '50%',
   height: '45px',
-  background: themeVars.colors.white,
+  background: themeVars.colors.gray.gray0,
   fontSize: themeVars.fontSize["text-sm"],
   cursor: 'pointer',
   selectors: {

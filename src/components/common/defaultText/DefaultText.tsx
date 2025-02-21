@@ -1,9 +1,10 @@
 import React from 'react';
-import { textStyles, fontColors } from './DefaultText.css';
+import { textStyles, fontColors, alignStyles } from './DefaultText.css';
 
 interface DefaultTextProps {
   type: keyof typeof textStyles;
   color?: keyof typeof fontColors;
+  align?: 'left' | 'center' | 'right';
   children: React.ReactNode;
   className?: string; // 추가 커스텀 스타일
 }
@@ -26,13 +27,14 @@ const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
   caption: 'span',
 };
 
-export default function DefaultText({ type, color = 'grey2B', children, className }: DefaultTextProps) {
+export default function DefaultText({ type, color = 'gray900', align = 'left', children, className }: DefaultTextProps) {
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
+  const alignStyle = alignStyles[align];
   const Tag = tagMap[type] || 'span';
 
   return (
-    <Tag className={`${textStyle} ${colorStyle} ${className || ''}`}>
+    <Tag className={`${textStyle} ${colorStyle} ${alignStyle} ${className || ''}`}>
       {children}
     </Tag>
   );

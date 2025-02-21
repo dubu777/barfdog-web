@@ -6,7 +6,7 @@ export const headerContainer = recipe({
   base: {
     position: 'fixed',
     top: 0,
-    background: themeVars.colors.white,
+    backgroundColor: "inherit",
     zIndex: 200,
   },
   variants: {
@@ -14,7 +14,7 @@ export const headerContainer = recipe({
       default: {
       },
       redBackground: {
-        backgroundColor: themeVars.colors.mainRed,
+        backgroundColor: themeVars.colors.red.red,
       },
       withBackButton: {
       },
@@ -59,7 +59,7 @@ export const cartCount = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  color: themeVars.colors.white,
+  color: themeVars.colors.gray.gray0,
   fontSize: themeVars.fontSize["text-xs"],
   top: -11,
   right: -5,

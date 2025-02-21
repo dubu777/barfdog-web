@@ -19,7 +19,7 @@ export const couponCreateButton = style({
 export const errorMessage = style({
   width: '100%',
   fontSize: themeVars.fontSize["text-xs"],
-  color: themeVars.colors.mainRed,
+  color: themeVars.colors.red.red,
   textAlign: 'left',
   marginTop: '8px',
   marginLeft: '8px',

@@ -40,10 +40,10 @@ export const title = recipe({
     },
     color: {
       white: {
-        color: themeVars.colors.white
+        color: themeVars.colors.gray.gray0
       },
       red: {
-        color: themeVars.colors.mainRed
+        color: themeVars.colors.red.red
       },
       grey: {
         color: `${themeVars.fontColors.grey89} !important`,
@@ -109,13 +109,13 @@ export const description = recipe({
         color: `${themeVars.fontColors.grey89} !important`,
       },
       white: {
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       },
       black: {
-        color: themeVars.colors.black,
+        color: themeVars.colors.gray.gray900,
       },
       red: {
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
       },
     },
     align: {
@@ -142,7 +142,7 @@ export const description = recipe({
     },
     pageName: {
       myPage: {
-        color: themeVars.colors.black,
+        color: themeVars.colors.gray.gray900,
         lineHeight: 1.5,
         textAlign: 'left',
       }

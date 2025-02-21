@@ -5,7 +5,7 @@ import {recipe} from "@vanilla-extract/recipes";
 export const mainRecommendWrapper = style({
   height: 'auto',
   padding: '66px 0 62px',
-  color: themeVars.colors.black,
+  color: themeVars.colors.gray.gray900,
 })
 
 export const recommendTitle = style({

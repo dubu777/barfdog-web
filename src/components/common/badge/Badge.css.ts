@@ -14,21 +14,21 @@ export const badge = recipe({
   variants: {
     color: {
       redBorder: {
-        color: themeVars.colors.mainRed,
-        border: `1px solid ${themeVars.colors.mainRed}`,
+        color: themeVars.colors.red.red,
+        border: `1px solid ${themeVars.colors.red.red}`,
       },
       red: {
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
         background: themeVars.backgroundColors.mainRed,
         border: 0,
       },
       orange: {
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
         background: themeVars.backgroundColors.orange,
         border: 0,
       },
       grey: {
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
         background: themeVars.backgroundColors.grey7E,
         border: 0,
       },

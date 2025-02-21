@@ -26,7 +26,7 @@ export default function SurveyPagination({
   stepLength,
   canNextStep,
 }: SurveyPaginationProps) {
-  const progressPercentage = ((currentStep + 1) / stepLength) * 100;
+  const progressPercentage = ((currentStep) / stepLength) * 100;
   
   // 결과 레시피 추천 페이지 테스트 이동 용
   const router = useRouter();

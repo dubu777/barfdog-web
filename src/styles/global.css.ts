@@ -13,17 +13,17 @@ globalStyle('html, body', {
 });
 
 globalStyle('.swiper-pagination-bullet', {
-  border: `1px solid ${themeVars.colors.mainRed}`,
-  background: `${themeVars.colors.white} !important`,
+  border: `1px solid ${themeVars.colors.red.red}`,
+  background: `${themeVars.colors.gray.gray0} !important`,
   opacity: '1 !important',
 })
 
 globalStyle('.swiper-pagination-bullet-active', {
-  background: `${themeVars.colors.mainRed} !important`,
+  background: `${themeVars.colors.red.red} !important`,
 })
 
 globalStyle('.swiper-button-prev, .swiper-button-next', {
-  color: `${themeVars.colors.white} !important`,
+  color: `${themeVars.colors.gray.gray0} !important`,
 })
 
 globalStyle('.swiper-button-next:after, .swiper-button-prev:after', {

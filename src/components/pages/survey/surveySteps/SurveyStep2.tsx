@@ -1,30 +1,37 @@
-import { SurveyFormData } from "@/types/survey";
+
 import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Control, Controller } from "react-hook-form";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K],
-    isMultiSelect?: boolean
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  control: Control<SurveyStepValues>;
+  petName: string;
 }
 
 export default function SurveyStep2({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
+  control,
+  petName,
+}: SurveyStepProps) {
   
   return (
+    <Controller
+    name="step2.gender"
+    control={control}
+    render={({ field }) => (
       <SurveyButtonList
         options={SURVEY_FORM_INFO.gender.options}
         title={SURVEY_FORM_INFO.gender.title}
-        selectedValue={formData.gender}
-        petName={formData.name}
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.gender.id, value as string)
-        }
+        selectedValue={field.value}
+        petName={petName}
+        onChange={(value) => {
+          field.onChange(value); 
+          handleChange();
+        }}
       />
+    )}
+    />
   );
 }

@@ -48,15 +48,15 @@ export const radioInputCircle = recipe({
   variants: {
     active: {
       true: {
-        background: themeVars.colors.mainRed,
-        border: `1px solid ${themeVars.colors.mainRed}`,
+        background: themeVars.colors.red.red,
+        border: `1px solid ${themeVars.colors.red.red}`,
         position: 'relative',
         ':after': {
           content: '',
           display: 'block',
           width: '8px',
           height: '8px',
-          background: themeVars.colors.white,
+          background: themeVars.colors.gray.gray0,
           position: 'absolute',
           top: '50%',
           left: '50%',
@@ -91,7 +91,7 @@ export const checkboxStyle = recipe({
   base: {
     width: '20px',
     height: '20px',
-    background: themeVars.colors.lightGrey,
+    background: themeVars.colors.gray.gray400,
     padding: 0,
     margin: 0,
     transition: 'all .35s',
@@ -112,7 +112,7 @@ export const checkboxStyle = recipe({
   variants: {
     isChecked: {
       true: {
-        background: themeVars.colors.red,
+        background: themeVars.colors.red.red,
       }
     },
   }

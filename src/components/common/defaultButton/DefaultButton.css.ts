@@ -19,7 +19,7 @@ export const defaultButtonStyle = recipe({
       main: {
         border: 'none',
         backgroundColor: themeVars.backgroundColors.mainRed,
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       },
       white: {
         border: 'none',
@@ -39,7 +39,7 @@ export const defaultButtonStyle = recipe({
       mainBorder: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
         backgroundColor: themeVars.backgroundColors.white,
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
       },
       grayBorder: {
         border: `1px solid ${themeVars.borderColors.greyBB}`,
@@ -49,7 +49,7 @@ export const defaultButtonStyle = recipe({
       blackBorder: {
         border: `1px solid ${themeVars.borderColors.black}`,
         backgroundColor: themeVars.backgroundColors.white,
-        color: themeVars.colors.black,
+        color: themeVars.colors.gray.gray900,
       },
     },
     size: {
@@ -96,7 +96,7 @@ export const defaultButtonStyle = recipe({
     isActive: {
       true: {
         backgroundColor: themeVars.backgroundColors.mainRed,
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       }
     }
   },
@@ -112,7 +112,7 @@ export const defaultButtonStyle = recipe({
       variants: { type: 'grayBorder', isActive: true },
       style: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       }
     }
   ],

@@ -5,7 +5,7 @@ import Icon from "../icon/Icon";
 interface ButtonProps {
   variant?: keyof typeof buttonVariants;
   type?: "primary" | "secondary" | "assistive";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "content";
   disabled?: boolean;
   icon?: string;
   iconPosition?: "left" | "right";
@@ -25,7 +25,7 @@ export default function Button({
   iconPosition = "left",
   onClick,
   children,
-  fullWidth = true,
+  fullWidth = false,
   width,
   className,
 }: ButtonProps) {

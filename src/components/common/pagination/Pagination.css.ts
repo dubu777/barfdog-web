@@ -22,8 +22,8 @@ export const numberButton = recipe({
   variants: {
     active: {
       true: {
-        border: `1px solid ${themeVars.colors.red}`,
-        color: themeVars.colors.red,
+        border: `1px solid ${themeVars.colors.red.red}`,
+        color: themeVars.colors.red.red,
       }
     },
     type: {

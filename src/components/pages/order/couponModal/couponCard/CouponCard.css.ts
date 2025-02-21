@@ -14,7 +14,7 @@ export const couponCardContainer = recipe({
     isSelected: {
       true: {
         backgroundColor: themeVars.backgroundColors.mainRed,
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       },
       false: {},
     },

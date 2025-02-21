@@ -16,19 +16,19 @@ export const buttonStyle = recipe({
     fontSize: themeVars.fontSize["text-sm"],
     transition: 'border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease',
     cursor: 'pointer',
-    backgroundColor: themeVars.colors.white,
+    backgroundColor: themeVars.colors.gray.gray0,
   },
   variants: {
     checked: {
       true: {
-        borderColor: themeVars.colors.mainRed,
-        color: themeVars.colors.mainRed,
+        borderColor: themeVars.colors.red.red,
+        color: themeVars.colors.red.red,
         backgroundColor: themeVars.backgroundColors.pinkFF,
       },
       false: {
         borderColor: themeVars.borderColors.greyDD,
-        color: themeVars.colors.black,
-        backgroundColor: themeVars.colors.white,
+        color: themeVars.colors.gray.gray900,
+        backgroundColor: themeVars.colors.gray.gray0,
       },
     },
     type: {

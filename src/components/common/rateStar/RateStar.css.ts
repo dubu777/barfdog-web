@@ -35,18 +35,18 @@ export const rate = recipe({
   variants: {
     color: {
       red: {
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
       },
       yellow: {
         color: themeVars.fontColors.yellow,
       },
       black: {
-        color: themeVars.colors.black,
+        color: themeVars.colors.gray.gray900,
       }
     },
     empty: {
       true: {
-        color: themeVars.colors.lightGrey,
+        color: themeVars.colors.gray.gray400,
       },
     },
     align: {

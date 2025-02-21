@@ -9,7 +9,7 @@ export const mainVideoWrapper = recipe({
     justifyContent: 'center',
     minHeight: '515px',
     height: '65vh',
-    color: themeVars.colors.white,
+    color: themeVars.colors.gray.gray0,
     alignItems: 'center',
     position: 'relative',
     marginTop: '62px'

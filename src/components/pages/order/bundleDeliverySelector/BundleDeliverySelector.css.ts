@@ -20,11 +20,11 @@ export const bundleDeliverySelectorBox = recipe({
     isSelected: {
       true: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
       },
       false: {
         border: `1px solid ${themeVars.borderColors.black}`,
-        color: themeVars.colors.black,
+        color: themeVars.colors.gray.gray900,
       }
     }
   },

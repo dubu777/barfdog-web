@@ -17,7 +17,7 @@ export const categoryButton = recipe({
   variants: {
     active: {
       true: {
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
         fontWeight: themeVars.fontWeight.bold,
       }
     }
