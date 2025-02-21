@@ -9,11 +9,7 @@ export const couponInputContainer = style({
 });
 
 export const couponInput = style({
-  width: '80%',
-});
-
-export const couponCreateButton = style({
-  width: '20%',
+  width: '100%',
 });
 
 export const errorMessage = style({

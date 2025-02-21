@@ -1,10 +1,10 @@
 import * as styles from './SearchAddress.css';
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import AddressModal from "@/components/common/addressModal/AddressModal";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import { AddressDto } from "@/types/subscription";
 import { Control, Controller } from "react-hook-form";
 import { Address } from 'react-daum-postcode';
+import InputField from "@/components/common/inputField/InputField";
 
 interface SearchAddressProps {
   addressValues: AddressDto;
@@ -41,13 +41,11 @@ const SearchAddress = ({addressValues, openAddressModal, setOpenAddressModal, ha
         name={isInAddressObject ? 'address.zipcode': 'zipcode'}
         control={control}
         render={({ field }) =>
-          <DefaultTextField
+          <InputField
             {...field}
-            type='text'
             id='zipcode'
             name='zipcode'
-            size={size}
-            isDisabled
+            disabled
             value={
               !addressValues.zipcode && !addressValues.street
                 ? '(우편번호) 주소'
@@ -62,16 +60,14 @@ const SearchAddress = ({addressValues, openAddressModal, setOpenAddressModal, ha
         name={isInAddressObject ? 'address.detailAddress': 'detailAddress'}
         control={control}
         render={({ field }) =>
-          <DefaultTextField
+          <InputField
             {...field}
-            type='text'
             id='detailAddress'
             name='detailAddress'
             value={field.value}
-            onChange={(value) => field.onChange(value)}
+            onChange={(e) => field.onChange(e.target.value)}
             placeholder='나머지 주소'
             className={styles.searchAddressInput}
-            size={size}
           />
         }
       />

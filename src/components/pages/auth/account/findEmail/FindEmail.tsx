@@ -3,7 +3,6 @@ import * as styles from '../FindAccount.css';
 import { useRouter } from "next/navigation";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import { Controller } from "react-hook-form";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useFindUserEmail } from "@/api/auth/mutations/useFindAccount";
@@ -11,6 +10,7 @@ import { useToastStore } from "@/store/useToastStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { defaultFindUserEmailValues, findUserEmailSchema } from "@/utils/validation/authValidation";
 import { FindUserEmail } from "@/types";
+import InputField from "@/components/common/inputField/InputField";
 
 const FindEmail = () => {
 	const router = useRouter();
@@ -45,37 +45,38 @@ const FindEmail = () => {
 						control={control}
 						name='name'
 						render={({ field }) => (
-							<DefaultTextField
-								id='name'
-								label='이름'
-								placeholder='이름을 입력해주세요.'
-								{...field}
-							/>
+							<>
+								<label>이름</label>
+								<InputField
+									id='name'
+									label='이름'
+									placeholder='이름을 입력해주세요.'
+									error={errors?.name?.message}
+									{...field}
+								/>
+							</>
 						)}
 					/>
-					{errors.name &&
-						<Text type='description' size='sm' color='red'align='left'>{errors.name.message}</Text>
-					}
 				</div>
 				<div>
 					<Controller
 						control={control}
 						name='phoneNumber'
 						render={({ field }) => (
-							<DefaultTextField
-								type='number'
-								id='phoneNumber'
-								label='휴대폰 번호'
-								placeholder='휴대폰 번호를 입력해주세요.'
-								isPhoneNumber
-								onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
-								{...field}
-							/>
+							<>
+								<label>휴대폰 번호</label>
+								<InputField
+									type='number'
+									id='phoneNumber'
+									label='휴대폰 번호'
+									placeholder='휴대폰 번호를 입력해주세요.'
+									onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
+									error={errors?.phoneNumber?.message}
+									{...field}
+								/>
+							</>
 						)}
 					/>
-					{errors.phoneNumber &&
-						<Text type='description' size='sm' color='red' align='left'>{errors.phoneNumber.message}</Text>
-					}
 				</div>
 			</form>
 			<div>

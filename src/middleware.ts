@@ -20,7 +20,7 @@ const shouldRedirectToSetPassword = async (pathname: string) => {
 	return false;
 }
 
-export async function middleware(req: Request) {
+export async function middleware(req: NextRequest) {
 	console.log('요청된 URL:', req.url);
 
 	// 현재 경로 확인

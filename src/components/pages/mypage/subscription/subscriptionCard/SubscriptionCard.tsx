@@ -2,7 +2,6 @@ import * as styles from './SubscriptionCard.css';
 import { inlineBlockSpan } from "@/styles/common.css";
 import RightArrowIcon from "/public/images/icons/right-arrow-black.svg";
 import Text from "@/components/common/text/Text";
-import Badge from "@/components/common/badge/Badge";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 import { formatDate } from "@/utils/dateUtils";
@@ -11,6 +10,7 @@ import { getNextPaymentPrice } from "@/utils/getNextPaymentPrice";
 import { getPackagePeriod } from "@/utils/getPackagePeriod";
 import { PlanKey, SubscriptionListData } from "@/types/subscription";
 import { DefaultObjectType } from "@/types/common";
+import Chips from "@/components/common/chips/Chips";
 
 const SubscriptionCard = ({ subscriptionDetail }: { subscriptionDetail: SubscriptionListData }) => {
   const { subscribeDto } = subscriptionDetail;
@@ -70,9 +70,9 @@ const SubscriptionCard = ({ subscriptionDetail }: { subscriptionDetail: Subscrip
     <div className={styles.subscriptionCard}>
       <Text type='title' size='md' align='left' className={styles.subscriptionName}>
         {subscribeDto.dogName}(이)의 AI 추천 식단
-        <Badge color={subscribeDto.status === 'SUBSCRIBING' ? 'redBorder' : undefined}>
+        <Chips variant='outlined' size='sm' switchOff={subscribeDto.status !== 'SUBSCRIBING'}>
           {subscriptionStatus[subscribeDto.status]}
-        </Badge>
+        </Chips>
       </Text>
       {subscribeDto.status === 'SUBSCRIBING' &&
         <Text type='description' size='sm' color='black' className={styles.productionDates}>

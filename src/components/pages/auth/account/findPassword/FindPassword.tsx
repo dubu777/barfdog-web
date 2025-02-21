@@ -1,7 +1,6 @@
 'use client';
 import { useRouter } from "next/navigation";
 import * as styles from '../FindAccount.css';
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { Controller } from "react-hook-form";
@@ -11,6 +10,7 @@ import { TemporaryPassword } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { useAuthStore } from "@/store/useAuthStore";
 import { defaultSendTempPwValues, sendTempPwSchema } from "@/utils/validation/authValidation";
+import InputField from "@/components/common/inputField/InputField";
 
 const FindPassword = () => {
 	const router = useRouter();
@@ -52,54 +52,53 @@ const FindPassword = () => {
 						control={control}
 						name='email'
 						render={({ field }) => (
-							<DefaultTextField
-								id='email'
-								label='이메일'
-								placeholder='이메일을 입력해주세요.'
-								{...field}
-							/>
+							<>
+								<label>이메일</label>
+								<InputField
+									id='email'
+									placeholder='이메일을 입력해주세요.'
+									error={errors?.email?.message}
+									{...field}
+								/>
+							</>
 						)}
 					/>
-					{errors.email &&
-					<Text type='description' size='sm' color='red'align='left'>{errors.email.message}</Text>
-					}
 				</div>
 				<div>
 					<Controller
 						control={control}
 						name='name'
 						render={({ field }) => (
-							<DefaultTextField
-								id='name'
-								label='이름'
-								placeholder='이름을 입력해주세요.'
-								{...field}
-							/>
+							<>
+								<label>이름</label>
+								<InputField
+									id='name'
+									placeholder='이름을 입력해주세요.'
+									error={errors?.name?.message}
+									{...field}
+								/>
+							</>
 						)}
 					/>
-					{errors.name &&
-					<Text type='description' size='sm' color='red'align='left'>{errors.name.message}</Text>
-					}
 				</div>
 				<div>
 					<Controller
 						control={control}
 						name='phoneNumber'
 						render={({ field }) => (
-							<DefaultTextField
-								type='number'
-								id='phoneNumber'
-								label='휴대폰 번호'
-								placeholder='휴대폰 번호를 입력해주세요.'
-								isPhoneNumber
-								onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
-								{...field}
-							/>
+							<>
+								<label>휴대폰 번호</label>
+								<InputField
+									type='number'
+									id='phoneNumber'
+									placeholder='휴대폰 번호를 입력해주세요.'
+									error={errors?.phoneNumber?.message}
+									onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
+									{...field}
+								/>
+							</>
 						)}
 					/>
-					{errors.phoneNumber &&
-					<Text type='description' size='sm' color='red' align='left'>{errors.phoneNumber.message}</Text>
-					}
 				</div>
 			</form>
 			<div>

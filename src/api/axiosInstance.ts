@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getCookie } from "@/utils/cookie";
-import { jwtDecode } from "jwt-decode";
 import { AUTH_CONFIG } from "@/constants/auth";
 
 const prod = process.env.NODE_ENV === 'production';
@@ -12,16 +11,6 @@ const axiosInstance = axios.create({
         authorization: process.env.NEXT_PUBLIC_ACCESS_TOKEN,
     }
 });
-
-const isTokenExpired = (token: string): boolean => {
-  try {
-    const decoded: { exp: number } = jwtDecode(token);
-    const now = Date.now() / 1000;
-    return decoded.exp < now;
-  } catch {
-    return true;
-  }
-}
 
 axiosInstance.interceptors.request.use(
   async function (config) {

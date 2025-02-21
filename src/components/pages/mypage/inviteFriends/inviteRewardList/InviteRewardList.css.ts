@@ -13,11 +13,7 @@ export const inviteCode = style({
 })
 
 export const codeInput = style({
-  width: '80%',
-});
-
-export const codeCreateButton = style({
-  width: '20%',
+  width: '100%',
 });
 
 export const inviteRewardInfo = style({

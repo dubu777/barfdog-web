@@ -42,7 +42,6 @@ export const resultButtons = style({
 })
 
 export const connectSnsContainer = style({
-	padding: '0 100px',
 	height: '100vh',
 	display: 'flex',
 	flexDirection: 'column',

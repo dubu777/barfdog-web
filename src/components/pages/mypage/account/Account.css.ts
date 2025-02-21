@@ -21,8 +21,24 @@ export const accountForm = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '16px',
-	margin: '40px auto',
-	width: '80%'
+	margin: '0 auto',
+	width: '90%',
+})
+
+export const accountInputBox = style({
+	width: '100%',
+	display: 'flex',
+	gap: '16px',
+	alignItems: 'center',
+})
+
+export const accountLabel = style({
+	width: '30%',
+	fontSize: '15px'
+})
+
+export const accountInput = style({
+	width: '70%',
 })
 
 export const accountSubmitButton = style({

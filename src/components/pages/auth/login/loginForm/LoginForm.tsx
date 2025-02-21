@@ -1,9 +1,9 @@
 import * as styles from "./LoginForm.css";
 import Link from "next/link";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import { Control, Controller, SubmitHandler, UseFormHandleSubmit } from "react-hook-form";
 import { LoginFormValues } from "@/types";
+import InputField from "@/components/common/inputField/InputField";
 
 interface LoginFormProps {
   control: Control<LoginFormValues>;
@@ -25,8 +25,7 @@ const LoginForm = ({ control, handleSubmit, handleLogin, isValid }: LoginFormPro
           control={control}
           name='email'
           render={({ field }) => (
-            <DefaultTextField
-              type='text'
+            <InputField
               id='email'
               placeholder='이메일을 입력해주세요'
               {...field}
@@ -37,8 +36,8 @@ const LoginForm = ({ control, handleSubmit, handleLogin, isValid }: LoginFormPro
           control={control}
           name='password'
           render={({ field }) => (
-            <DefaultTextField
-              type='password'
+            <InputField
+              masking
               id='password'
               placeholder='비밀번호를 입력해주세요'
               onSubmit={isValid ? handleSubmit(handleLogin) : undefined}
