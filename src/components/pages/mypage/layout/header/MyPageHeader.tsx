@@ -3,13 +3,19 @@ import * as styles from "./MyPageHeader.css";
 import BackButton from "/public/images/icons/left-arrow.svg";
 import { useBackNavigation } from "@/utils";
 import { usePathname } from "next/navigation";
+import { commonLayoutStyle } from "@/styles/common.css";
+import Link from "next/link";
+import Cart from "/public/images/icons/cart.svg";
+import { useCartStore } from "@/store/useCartStore";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
 const MyPageHeader = () => {
   const goBack = useBackNavigation();
   const pathname = usePathname();
-
+  const { count } = useCartStore();
 
   const pathTitles: { [key: string]: string } = {
+    '/mypage': '마이페이지',
     '/mypage/orderHistory': '주문내역',
     '/mypage/coupon': '쿠폰',
     '/mypage/reward': '적립금',
@@ -55,14 +61,21 @@ const MyPageHeader = () => {
   };
 
   return (
-    pathname !== '/mypage' &&
-    <nav className={styles.myPageHeader}>
-      <button className={styles.goBackButton} onClick={goBack}>
-        <BackButton />
-      </button>
-      <h2 className={styles.title}>
-        {getTitle()}
-      </h2>
+    <nav className={`${commonLayoutStyle} ${styles.myPageHeader}`}>
+      <div className={styles.headerLeft}>
+        {pathname !== '/mypage' &&
+          <button className={styles.goBackButton} onClick={goBack}>
+            <BackButton />
+          </button>
+        }
+        <DefaultText type='title4'>
+          {getTitle()}
+        </DefaultText>
+      </div>
+      <Link href="/cart" className={styles.cartButton}>
+        {count !== 0 && <div className={styles.cartCount}>{count}</div>}
+        <Cart />
+      </Link>
     </nav>
   );
 };
