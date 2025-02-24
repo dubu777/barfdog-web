@@ -1,31 +1,27 @@
 import { useRouter } from "next/navigation";
 import * as styles from "./LoginSnsButtons.css";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import KakaoImage from '/public/images/icons/kakao.png';
 import NaverImage from '/public/images/icons/naver.png';
 import { SnSProvider } from "@/types";
+import { SNS_PROVIDER_CONFIG } from "@/config/snsLoginProviderConfig";
+import { useCallback } from "react";
 
 interface LoginSnsButtonProps {
   provider: SnSProvider;
   lastLoginActivity?: boolean;
 }
 
+
 const LoginSnsButton = ({ provider, lastLoginActivity }: LoginSnsButtonProps) => {
   const router = useRouter();
+  const config = SNS_PROVIDER_CONFIG[provider];
 
-  const handleLogin = () => {
-    const redirectUri = provider === 'naver'
-      ? process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI
-      : process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI;
-    const clientId = provider === "naver"
-      ? process.env.NEXT_PUBLIC_NAVER_CLIENT_ID
-      : process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
-    const authUrl = provider === 'naver'
-      ? `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`
-      : `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
-    router.push(authUrl);
-  }
-  
+  const handleLogin = useCallback(() => {
+    const { clientId, redirectUri, authUrl } = config;
+    const url = `${authUrl}?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+    router.push(url);
+  }, [config, router]);
 
   return (
     <>

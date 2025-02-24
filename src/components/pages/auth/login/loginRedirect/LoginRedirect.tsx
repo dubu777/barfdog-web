@@ -72,7 +72,7 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 			}
 			default: {
 				if(data.token) {
-					setCookie(AUTH_CONFIG.LOGIN_COOKIE, data.token, 10);
+					setCookie(AUTH_CONFIG.LOGIN_COOKIE, data.token);
 					router.push('/');
 				}
 			}

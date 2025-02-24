@@ -111,12 +111,15 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 			const { access_token } = await getAccessTokenByNaver(code);
 			body = {
 				accessToken: access_token,
+				tokenValidDays: 10,
 			};
 		} else {
 			// 카카오
+			console.log('카카오 로그인 시작');
 			
 			body = { code };
 		}
+console.log('body', body);
 
 		const { data: loginResponse, headers } = await axiosInstance.post(`/api/login/${provider}`, body);
 

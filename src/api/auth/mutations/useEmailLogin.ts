@@ -13,12 +13,11 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 	const { pushWithQuery } = useDynamicQueryPush();
 
 	return useMutation({
-		mutationFn: async (formData: { email: string, password: string, tokenValidDays: number }) => {
+		mutationFn: async (formData: { email: string, password: string}) => {
 			try {
 				const result = await login({
 					email: formData.email,
 					password: formData.password,
-					tokenValidDays: formData.tokenValidDays,
 				});
 
 				const token = result.headers.authorization.split(" ")[1];
@@ -30,7 +29,7 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 
 				// next/headers 의 cookie httpOnly
 				// token 값과 이에 준하는 tokenValidDays 일자 적용 및 userInfo 저장 (persist 추가 적용 필요)
-				setCookie(AUTH_CONFIG.LOGIN_COOKIE, token, formData.tokenValidDays);
+				setCookie(AUTH_CONFIG.LOGIN_COOKIE, token);
 				useAuthStore.getState().setUserInfo(data);
 
 				// 임시 비밀번호 발급 후 로그인 시도의 경우 비밀번호 생성 팝업을 위한 params query 추가

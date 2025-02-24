@@ -15,13 +15,9 @@ const getCookie = async (name: string) => {
 	}
 }
 
-const setCookie = (name: string, value: string, days: number) => {
-	const expires = new Date();
-	expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+const setCookie = (name: string, value: string) => {
 	cookies().set(name, value, {
 		httpOnly: true,
-		maxAge: (days * 24 * 60 * 60),
-		expires: expires.toUTCString(),
 		sameSite: 'strict',
 		path: '/',
 	});

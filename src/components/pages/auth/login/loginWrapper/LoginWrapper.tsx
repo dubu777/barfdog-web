@@ -24,7 +24,7 @@ const LoginWrapper = () => {
     if (redirect === 'find-password') return tempPwUserInfo?.email || '';
     return '';
   }, [redirect, tempEmailUserInfo, tempPwUserInfo]);
-  
+
   const { handleSubmit, control, isValid } = useFormHandler<LoginFormValues>(loginSchema, defaultLoginValues(initialUserEmail));
   const { mutate } = useEmailLogin();
 
@@ -37,8 +37,10 @@ const LoginWrapper = () => {
       password: data.password,
       tokenValidDays: data.autoLogin ? autoLoginExpiredPeriod : defaultExpiredPeriod,
     }
+    console.log('formData', formData);
     mutate(formData)
   }
+
 
   return (
     <div className={styles.loginContainer}>
