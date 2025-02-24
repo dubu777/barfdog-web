@@ -84,7 +84,7 @@ const updateUserInfo = async (body: UpdateUserInfo) => {
 }
 
 
-const login = async (formData: { email: string; password: string; tokenValidDays: number }) => {
+const login = async (formData: { email: string; password: string;}) => {
 	const response = await axiosInstance.post('/api/login', formData);
 	return response;
 }
@@ -102,6 +102,8 @@ const getAccessTokenByNaver = async (code: string) => {
 }
 
 const loginWithProvider = async (provider: SnSProvider, code: string): Promise<LoginUserInfo> => {
+	console.log('loginWithProvider', provider, code);
+	
 	try {
 		let body;
 		if (provider === 'naver') {
@@ -109,10 +111,10 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 			const { access_token } = await getAccessTokenByNaver(code);
 			body = {
 				accessToken: access_token,
-				tokenValidDays: 10,
 			};
 		} else {
 			// 카카오
+			
 			body = { code };
 		}
 

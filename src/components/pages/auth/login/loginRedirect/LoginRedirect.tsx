@@ -20,6 +20,9 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 	const code = searchParams.code;
 	const provider = searchParams.provider;
 	const { data, error, isError } = useLoginWithProvider(provider, code);
+	console.log('리다이렉트 data', data);
+	console.log('리다이렉트 error', error);
+	console.log('리다이렉트 code', code);
 	const { setLoginUserInfo } = useAuthStore();
 
 	useEffect(() => {

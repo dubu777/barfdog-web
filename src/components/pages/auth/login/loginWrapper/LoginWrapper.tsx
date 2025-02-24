@@ -10,6 +10,7 @@ import { LoginFormValues } from "@/types";
 import { defaultLoginValues, loginSchema } from "@/utils/validation/authValidation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { AUTH_CONFIG } from "@/constants/auth";
+import { useMemo } from "react";
 
 const LoginWrapper = () => {
   const searchParams = useSearchParams();
@@ -17,9 +18,12 @@ const LoginWrapper = () => {
 
   // 아이디 찾기, 비밀번호 찾기 성공시 사용자 정보 데이터 값
   const { tempEmailUserInfo, tempPwUserInfo } = useAuthStore();
-  const initialUserEmail =
-    redirect === 'find-id' ? tempEmailUserInfo && tempEmailUserInfo.email
-      : redirect === 'find-password' ? tempPwUserInfo && tempPwUserInfo.email : '';
+  
+  const initialUserEmail = useMemo(() => {
+    if (redirect === 'find-id') return tempEmailUserInfo?.email || '';
+    if (redirect === 'find-password') return tempPwUserInfo?.email || '';
+    return '';
+  }, [redirect, tempEmailUserInfo, tempPwUserInfo]);
   
   const { handleSubmit, control, isValid } = useFormHandler<LoginFormValues>(loginSchema, defaultLoginValues(initialUserEmail));
   const { mutate } = useEmailLogin();

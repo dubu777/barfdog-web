@@ -22,9 +22,10 @@ const LoginSnsButton = ({ provider, lastLoginActivity }: LoginSnsButtonProps) =>
       : process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
     const authUrl = provider === 'naver'
       ? `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`
-      : `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+      : `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
     router.push(authUrl);
   }
+  
 
   return (
     <>
