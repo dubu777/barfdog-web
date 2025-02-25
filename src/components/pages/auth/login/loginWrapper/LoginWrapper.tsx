@@ -29,13 +29,9 @@ const LoginWrapper = () => {
   const { mutate } = useEmailLogin();
 
   const handleLogin = (data: LoginFormValues) => {
-    const autoLoginExpiredPeriod = AUTH_CONFIG.AUTO_LOGIN_EXPIRED_PERIOD.VALUE;
-    const defaultExpiredPeriod = AUTH_CONFIG.LOGIN_EXPIRED_PERIOD.VALUE;
-
     const formData = {
       email: data.email,
       password: data.password,
-      tokenValidDays: data.autoLogin ? autoLoginExpiredPeriod : defaultExpiredPeriod,
     }
     console.log('formData', formData);
     mutate(formData)

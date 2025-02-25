@@ -158,6 +158,7 @@ export default function SubscriptionOrderContainer({
     }
   };
 
+
   // 결제 요청 함수 
   const handlePaymentSubmit = async () => {
     try {
@@ -181,7 +182,7 @@ export default function SubscriptionOrderContainer({
 
       console.log("saveOrder", saveSubscriptionResponse);
 
-      // 아임포트 결제 요청 데이터 생성
+      // 아임포트 결제 요청 데이터 빌드
       const paymentData = buildSubscriptionPaymentRequest({
         requestBody: requestBody as SaveSubscriptionOrderRequest,
         subscriptionOrderSheetData,
