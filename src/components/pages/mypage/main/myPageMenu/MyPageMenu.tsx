@@ -1,6 +1,10 @@
+'use client';
+import { useRouter } from "next/navigation";
 import * as styles from "./MyPageMenu.css";
 import Link from "next/link";
 import Image from "next/image";
+import { deleteCookie } from "@/utils/cookie";
+import { AUTH_CONFIG } from "@/constants/auth";
 
 interface MyPageMenuType {
   name: string;
@@ -34,7 +38,13 @@ const myPageMenu: MyPageMenuType[] = [
   },
 ];
 
+
 const MyPageMenu = () => {
+  const router = useRouter();
+  const handleLogout = () => {
+    deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+    router.push('/');
+  }
   return (
     <article>
       <ul className={styles.menuContainer}>
@@ -61,7 +71,7 @@ const MyPageMenu = () => {
           <Link href='/all'>전 성분 보기</Link>
           <div className={styles.bottomMenuRight}>
             <Link href='/mypage/account'>계정 정보</Link>
-            <button>로그 아웃</button>
+            <button onClick={handleLogout}>로그아웃</button>
           </div>
         </div>
       </div>

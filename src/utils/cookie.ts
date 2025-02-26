@@ -1,24 +1,32 @@
-'use server';
-import {cookies} from "next/headers";
+import Cookies from 'js-cookie';
 
-export { getCookie, setCookie };
-
-const getCookie = async (name: string) => {
-	if (typeof window === 'undefined') {
-		// 서버 측
-		const cookie = cookies().get(name);
-		return cookie?.value ?? '';
-	} else {
-		// 클라이언트 측
-		const value = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
-		return value ? value[2] : '';
-	}
+export interface CookieOptions {
+  expires?: number | Date; // 숫자: 유효기간(일) 또는 Date 객체
+  path?: string;
+  domain?: string;
+  secure?: boolean;
+  sameSite?: 'strict' | 'lax' | 'none';
 }
 
-const setCookie = (name: string, value: string) => {
-	cookies().set(name, value, {
-		httpOnly: true,
-		sameSite: 'strict',
-		path: '/',
-	});
-}
+const defaultCookieOptions: CookieOptions = {
+	expires: 10,
+  path: '/',
+  sameSite: 'strict',
+  secure: true,
+};
+
+
+export const getCookie = (name: string): string | undefined => {
+  return Cookies.get(name);
+};
+
+
+export const setCookie = (name: string, value: string, options?: CookieOptions): void => {
+  const cookieOptions = { ...defaultCookieOptions, ...options };
+  Cookies.set(name, value, cookieOptions);
+};
+
+
+export const deleteCookie = (name: string): void => {
+  Cookies.remove(name);
+};

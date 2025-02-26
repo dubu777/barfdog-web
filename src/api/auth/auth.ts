@@ -87,20 +87,11 @@ const updateUserInfo = async (body: UpdateUserInfo) => {
 
 const login = async (formData: { email: string; password: string;}) => {
 	const response = await axiosInstance.post('/api/login', formData);
+	console.log('login response', response);
+	
 	return response;
 }
 
-// const getAccessTokenByNaver = async (code: string) => {
-// 	if (!code) return { error: "인가 코드 없음" };
-// 	const NAVER_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
-// 	const NAVER_CLIENT_SECRET = process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET;
-// 	const { data: tokenResponse } = await axios.post(
-// 		`/oauth2.0/token?grant_type=authorization_code&client_id=${NAVER_CLIENT_ID}&client_secret=${NAVER_CLIENT_SECRET}&code=${code}&state=barfdogNaverLogin`,
-// 		{}
-// 	)
-// 	if (!tokenResponse.access_token) throw new Error('네이버 토큰 발급 실패');
-// 	return tokenResponse;
-// }
 
 // 네이버 토큰 발급
 const getAccessTokenByNaver = async (code: string) => {
@@ -121,30 +112,30 @@ const getAccessTokenByNaver = async (code: string) => {
   return tokenResponse;
 };
 
-// // 카카오톡 토큰 발급
-// export const getAccessTokenByKakao = async (code: string) => {
-//   if (!code) throw new Error("인가 코드 없음");
+// 카카오톡 토큰 발급
+export const getAccessTokenByKakao = async (code: string) => {
+  if (!code) throw new Error("인가 코드 없음");
 
-//   const { clientId, clientSecret, redirectUri, auth } = SNS_LOGIN_CONFIG.kakao;
+  const { clientId, clientSecret, redirectUri, auth } = SNS_LOGIN_CONFIG.kakao;
 
-//   const params = new URLSearchParams({
-//     grant_type: auth.grantType,
-//     client_id: clientId,
-//     redirect_uri: redirectUri,
-//     code,
-//   });
+  const params = new URLSearchParams({
+    grant_type: auth.grantType,
+    client_id: clientId,
+    redirect_uri: redirectUri,
+    code,
+  });
 
-//   // clientSecret이 존재하면 추가 (옵션)
-//   if (clientSecret) {
-//     params.append("client_secret", clientSecret);
-//   }
+  // clientSecret이 존재하면 추가 (옵션)
+  if (clientSecret) {
+    params.append("client_secret", clientSecret);
+  }
 
-//   const url = `${auth.tokenUrl}?${params.toString()}`;
-//   const { data: tokenResponse } = await axios.post(url, {});
-//   if (!tokenResponse.access_token) throw new Error("카카오 토큰 발급 실패");
+  const url = `${auth.tokenUrl}?${params.toString()}`;
+  const { data: tokenResponse } = await axios.post(url, {});
+  if (!tokenResponse.access_token) throw new Error("카카오 토큰 발급 실패");
 
-//   return tokenResponse;
-// };
+  return tokenResponse;
+};
 
 const loginWithProvider = async (provider: SnSProvider, code: string): Promise<LoginUserInfo> => {
 	console.log('loginWithProvider', provider, code);

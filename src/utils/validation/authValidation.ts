@@ -123,8 +123,8 @@ const loginSchema = yup.object().shape({
 	email: yup.string().email('유효한 이메일 주소를 입력해주세요.').required('이메일 주소는 필수입니다.'),
 	password: yup
 		.string()
-		.min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
-		.matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
+		// .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+		// .matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
 		.required('비밀번호는 필수입니다.'),
 })
 

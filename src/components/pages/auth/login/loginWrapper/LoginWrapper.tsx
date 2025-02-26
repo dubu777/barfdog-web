@@ -9,7 +9,6 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { LoginFormValues } from "@/types";
 import { defaultLoginValues, loginSchema } from "@/utils/validation/authValidation";
 import { useAuthStore } from "@/store/useAuthStore";
-import { AUTH_CONFIG } from "@/constants/auth";
 import { useMemo } from "react";
 
 const LoginWrapper = () => {

@@ -27,9 +27,7 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 					throw new Error("토큰이 제공되지 않았습니다.");
 				}
 
-				// next/headers 의 cookie httpOnly
-				// token 값과 이에 준하는 tokenValidDays 일자 적용 및 userInfo 저장 (persist 추가 적용 필요)
-				setCookie(AUTH_CONFIG.LOGIN_COOKIE, token);
+				setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, token);
 				useAuthStore.getState().setUserInfo(data);
 
 				// 임시 비밀번호 발급 후 로그인 시도의 경우 비밀번호 생성 팝업을 위한 params query 추가
