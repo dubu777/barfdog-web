@@ -3,6 +3,13 @@ import { themeVars } from '@/styles/theme.css';
 
 export const inputContainerStyle = style({})
 
+export const labelStyle = style({
+  display: 'block',
+  textAlign: 'left',
+  marginBottom: '8px',
+  color: themeVars.colors.gray.gray600,
+})
+
 export const inputBoxStyle = style({
   display: 'flex',
   alignItems: 'center',
@@ -68,6 +75,7 @@ export const inputStyle = style({
   fontWeight: 500,
   lineHeight: '148%',
   letterSpacing: '-0.4px',
+  textAlign: 'left',
   selectors: {
     '&::placeholder': {
       color: themeVars.colors.gray.gray300,
@@ -104,4 +112,5 @@ export const inputErrorTextStyle = style({
   width: '100%',
   display: 'flex',
   paddingLeft: '10px',
+  marginTop: '8px'
 })

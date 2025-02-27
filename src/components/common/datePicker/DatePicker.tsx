@@ -1,7 +1,12 @@
+import { forwardRef } from "react";
 import * as styles from './DatePicker.css';
-import { DatePicker } from "react-date-picker";
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
+import ArrowLeft from '/public/images/icons/chevron-left.svg';
+import ArrowRight from '/public/images/icons/chevron-right-blue.svg';
+import InputField from "@/components/common/inputField/InputField";
+import DatePicker from "react-datepicker";
+import { getMonth, getYear } from "date-fns";
+import { ko } from "date-fns/locale";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface DatePickerProps {
 	name: string;
@@ -12,6 +17,7 @@ interface DatePickerProps {
 	disabled?: boolean;
 	dateFormat?: string;
 	className?: string;
+	label?: string;
 }
 
 const DatePickerComponent = ({
@@ -20,22 +26,101 @@ const DatePickerComponent = ({
 	onChange,
 	minDate,
 	maxDate,
-	dateFormat = 'yyyy.MM.dd',
-	className
+	dateFormat = 'yyy-MM-dd',
+	className,
+	label
 }: DatePickerProps) => {
+	const years = Array.from({ length: getYear(new Date()) + 1 - 1970 }, (_, i) => getYear(new Date()) - i);
+	const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+
+	const CustomInput = forwardRef<HTMLInputElement, { value?: string; onClick?: () => void }>(
+	({ value, onClick }, ref) => (
+		<InputField
+			type='button'
+			onClick={onClick}
+			value={value}
+			variants='fillBox'
+			label={label || '생년월일'}
+			isRequired
+			ref={ref}
+		/>
+	))
+	CustomInput.displayName = 'CustomInput';
+
 	return (
 		<div className={`${styles.datePickerContainer} ${className || ''}`}>
 			<DatePicker
-				value={value}
+				selected={value ? new Date(value) : null}
 				name={name}
-				yearPlaceholder='연도'
-				monthPlaceholder='월'
-				dayPlaceholder='일'
 				minDate={minDate}
-				maxDate={maxDate}
-				format={dateFormat}
-				locale='ko-KR'
-				onChange={onChange}
+				maxDate={maxDate || new Date()}
+				dateFormat={dateFormat}
+				locale={ko}
+				onChange={(date) => onChange(date)}
+				customInput={<CustomInput />}
+				disabledKeyboardNavigation
+				renderCustomHeader={({
+					date,
+					changeYear,
+					changeMonth,
+					decreaseMonth,
+					increaseMonth,
+					prevMonthButtonDisabled,
+					nextMonthButtonDisabled,
+				}) => {
+					return (
+						<div className={styles.datePickerHeader}>
+							<div>
+								<select
+									className={styles.datePickerSelect}
+									value={getYear(date)}
+									onChange={({ target: { value } }) => {
+										return changeYear(Number(value))
+									}}
+								>
+									{years.map((option) => (
+										<option key={option} value={option}>
+											{option}년
+										</option>
+									))}
+								</select>
+								<select
+									className={styles.datePickerSelect}
+									value={months[getMonth(date)]}
+									onChange={({ target: { value } }) => {
+										return changeMonth(months.indexOf(value))
+									}}
+								>
+									{months.map((option) => (
+										<option key={option} value={option}>
+											{option}월
+										</option>
+									))}
+								</select>
+							</div>
+							<div className={styles.datePickerButtons}>
+								<button
+									onClick={(e) => {
+										e.preventDefault();
+										decreaseMonth();
+									}}
+					        		disabled={prevMonthButtonDisabled}
+								>
+									<ArrowLeft />
+								</button>
+								<button
+									onClick={(e) => {
+										e.preventDefault();
+										increaseMonth();
+									}}
+					        		disabled={nextMonthButtonDisabled}
+								>
+									<ArrowRight />
+								</button>
+							</div>
+						</div>
+					)
+				}}
 			/>
 		</div>
 	);

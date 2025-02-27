@@ -89,7 +89,7 @@ const ConnectSns = () => {
 					type='main'
 					borderRadius='sm'
 					onClick={handleSubmit(onSubmit)}
-					isDisabled={!isValid}
+					// isDisabled={!isValid}
 				>
 					연동하기
 				</DefaultButton>

@@ -53,6 +53,18 @@ export const textStyles = {
     lineHeight: themeVars.typography.headline.headline2.lineHeight,
     letterSpacing: themeVars.typography.headline.headline2.letterSpacing,
   }),
+  headline3: style({
+    fontWeight: themeVars.typography.headline.headline3.fontWeight,
+    fontSize: themeVars.typography.headline.headline3.fontSize,
+    lineHeight: themeVars.typography.headline.headline3.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline3.letterSpacing,
+  }),
+  headline4: style({
+    fontWeight: themeVars.typography.headline.headline4.fontWeight,
+    fontSize: themeVars.typography.headline.headline4.fontSize,
+    lineHeight: themeVars.typography.headline.headline4.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline4.letterSpacing,
+  }),
 
   label1: style({
     fontWeight: themeVars.typography.label.label1.fontWeight,
@@ -91,6 +103,12 @@ export const textStyles = {
     lineHeight: themeVars.typography.body.body2.lineHeight,
     letterSpacing: themeVars.typography.body.body2.letterSpacing,
   }),
+  body3: style({
+    fontWeight: themeVars.typography.body.body3.fontWeight,
+    fontSize: themeVars.typography.body.body3.fontSize,
+    lineHeight: themeVars.typography.body.body3.lineHeight,
+    letterSpacing: themeVars.typography.body.body3.letterSpacing,
+  }),
   caption: style({
     fontWeight: themeVars.typography.body.caption.fontWeight,
     fontSize: themeVars.typography.body.caption.fontSize,
@@ -102,8 +120,13 @@ export const textStyles = {
 export const fontColors = {
   white: style({ color: themeVars.colors.gray.gray0 }),
   red: style({ color: themeVars.colors.red.red }),
+  pastelRed: style({ color: themeVars.colors.red.pastelRed }),
   gray900: style({ color: themeVars.colors.gray.gray900 }),
+  gray800: style({ color: themeVars.colors.gray.gray800 }),
   gray600: style({ color: themeVars.colors.gray.gray600 }),
+  gray500: style({ color: themeVars.colors.gray.gray500 }),
+  gray300: style({ color: themeVars.colors.gray.gray300 }),
+  blue: style({ color: themeVars.colors.blue.blue500 })
 };
 
 export const alignStyles = {
@@ -111,3 +134,8 @@ export const alignStyles = {
   center: style({ textAlign: 'center' }),
   right: style({ textAlign: 'right' }),
 };
+
+export const blockStyles = {
+  true: style({ display: 'inline-block' }),
+  false: style({ display: 'block' }),
+}

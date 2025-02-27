@@ -8,13 +8,14 @@ import {
   inputBoxStyle,
   inputError, inputErrorTextStyle, inputStyle,
   inputVariants,
-  inputWrapStyle, rightButtonsStyle, searchButtonStyle
+  inputWrapStyle, rightButtonsStyle, searchButtonStyle, labelStyle
 } from "./InputField.css";
 
 import SearchIcon from '/public/images/icons/search.svg';
 import InputClearIcon from '/public/images/icons/input_clear.svg';
 import VisibilityIcon from '/public/images/icons/visibility.svg';
 import VisibilityOffIcon from '/public/images/icons/visibility_off.svg';
+import { pointColor } from "@/styles/common.css";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -33,6 +34,9 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onReset?: () => void;
   onSubmit?: () => void;
   className?: string;
+  label?: string;
+  labelPosition?: 'top' | 'left';
+  isRequired?: boolean;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -52,8 +56,10 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       searchButton= false,
       onReset,
       onSubmit,
-      icon = null,
+      // icon = null,
       className,
+      label,
+      isRequired,
       ...props
     },
     ref
@@ -80,6 +86,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>,) => {
       if('key' in e) {
         if (isMasked && e.key === "Backspace") {
+          // 비밀번호 type -> input 모두선택 후 backspace 방지
           if(onChange) {
             onChange({
               target: { value: (props?.value as string).slice(0, -1) },
@@ -89,6 +96,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         }
 
         if (e.key === 'Enter' && onSubmit) {
+          // enter onSubmit event 적용
           e.preventDefault();
           onSubmit();
         }
@@ -96,8 +104,13 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     }
     return (
       <div onClick={handlePressInput} className={`${inputContainerStyle} ${className || ''}`} style={{ width: width || '100%' }}>
+        {label &&
+          <DefaultText type='label4' className={labelStyle}>
+            {label} {isRequired && <span className={pointColor}>*</span>}
+          </DefaultText>
+        }
         <div className={inputBoxStyle} style={{ width: width || '100%' }}>
-          <div className={`${inputWrapStyle} ${inputBaseStyle} ${inputVariants[variants]} ${error && inputError[variants] || ''} ${disabled ? 'disabled' : ''}`}>
+          <div className={`${inputWrapStyle} ${inputBaseStyle} ${inputVariants[variants]} ${error ? inputError[variants] : ''} ${disabled ? 'disabled' : ''}`}>
             {searchButton &&
               <button className={searchButtonStyle}>
                 <SearchIcon/>
@@ -136,7 +149,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         </div>
         {touched && error && (
           <div className={inputErrorTextStyle}>
-            <DefaultText type="caption" color='red' align='left'>
+            <DefaultText type="caption" color="red" align="left">
               {error}
             </DefaultText>
           </div>
