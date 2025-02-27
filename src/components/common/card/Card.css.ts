@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {themeVars} from "@/styles/theme.css";
+import { style } from "@vanilla-extract/css";
+import { themeVars } from "@/styles/theme.css";
 
 export const cardBaseStyle = style({
 	borderRadius: '8px',

@@ -104,6 +104,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     }
     return (
       <div onClick={handlePressInput} className={`${inputContainerStyle} ${className || ''}`} style={{ width: width || '100%' }}>
+        {/* label 유무에 따라 상단 노출 */}
         {label &&
           <DefaultText type='label4' className={labelStyle}>
             {label} {isRequired && <span className={pointColor}>*</span>}
@@ -111,6 +112,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         }
         <div className={inputBoxStyle} style={{ width: width || '100%' }}>
           <div className={`${inputWrapStyle} ${inputBaseStyle} ${inputVariants[variants]} ${error ? inputError[variants] : ''} ${disabled ? 'disabled' : ''}`}>
+            {/* 검색 기능 추가 필요 */}
             {searchButton &&
               <button className={searchButtonStyle}>
                 <SearchIcon/>
@@ -129,11 +131,13 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               onKeyDown={handleKeyDown}
             />
             <div className={rightButtonsStyle}>
+              {/* 비밀번호 숨김 토글 기능 */}
               {masking && maskingButton &&
               <button onClick={handleToggleMasking} className={baseButtonStyle}>
                 {isMasked ? <VisibilityOffIcon /> : <VisibilityIcon />}
               </button>
               }
+              {/* value 리셋 기능 */}
               {clearButton &&
               <button onClick={onReset} className={baseButtonStyle}>
                 <InputClearIcon />
@@ -141,6 +145,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               }
             </div>
           </div>
+          {/* 버튼 사이드 confirm 버튼 (인증하기 / 확인 등)*/}
           {confirmButton &&
           <button onClick={onSubmit} disabled={disabled} className={confirmButtonStyle}>
             {confirmButtonText}
