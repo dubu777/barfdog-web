@@ -20,13 +20,21 @@ const baseURL = prod
 const axiosInstance: AxiosInstance = axios.create({
   baseURL,
   timeout: 1000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
+export const authAxios: AxiosInstance = axios.create({
+  baseURL,
+  timeout: 1000,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-// 액세스 토큰을 저장하는 쿠키 이름 (상수로 관리)
 
 /**
  * 요청 인터셉터:
@@ -34,13 +42,12 @@ const axiosInstance: AxiosInstance = axios.create({
  */
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+
     const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
     console.log('ACCESS_TOKEN_COOKIE', token);
     
     if (token) {
       config.headers = config.headers || {};
-      // 이미 "Bearer " 접두사가 붙어있지 않다면 추가합니다.
       config.headers.Authorization = token.startsWith('Bearer ')
         ? token
         : `Bearer ${token}`;
@@ -104,10 +111,11 @@ axiosInstance.interceptors.response.use(
 
       try {
         // 액세스 토큰 재발급 요청 (/api/refresh)
-        const { data } = await axios.get(`${baseURL}/api/refresh`);
+        // const { data } = await authAxios.get('/api/refresh');
+        const { data } = await authAxios.get(`${baseURL}/api/refresh`);
         console.log('새 액세스 토큰 발급:', data);
         
-        const newToken: string = data.token;
+        const newToken: string = data.accessToken;
 
         // 새 액세스 토큰을 쿠키에 저장합니다.
         // 기본 옵션은 js-cookie 유틸에서 설정된 기본값이 적용됩니다.
