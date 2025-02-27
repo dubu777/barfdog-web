@@ -2,7 +2,7 @@ import {style} from "@vanilla-extract/css";
 
 export const myPageBanner = style({
   width: '100%',
-  height: '60px',
+  height: '35px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

@@ -73,9 +73,9 @@ const DogImage = ({ dogId, dogPictureUrl, dogPictureName }: DogImageProps) => {
       <Image
         src={dogPictureUrl ? dogPictureUrl : NoImage}
         alt='반려견 이미지'
-        width={67}
-        height={67}
-        style={{ borderRadius: '50%' }}
+        width={72}
+        height={72}
+        style={{ borderRadius: '8px' }}
         className={styles.dogImage}
         onClick={() => setOpenEditImageModal(true)}
       />

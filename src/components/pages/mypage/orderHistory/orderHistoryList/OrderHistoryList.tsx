@@ -76,7 +76,7 @@ const OrderHistoryList = ({ orderList }: { orderList: MergeOrderData }) => {
                 type='blackBorder'
                 size='sm'
                 borderRadius='sm'
-                linkUrl={`/mypage/orderHistory/${orderId}?type=${type}`}
+                linkUrl={`/mypage/order-history/${orderId}?type=${type}`}
               >
                 주문 상세
               </DefaultButton>

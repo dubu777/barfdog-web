@@ -16,11 +16,11 @@ const MyPageHeader = () => {
 
   const pathTitles: { [key: string]: string } = {
     '/mypage': '마이페이지',
-    '/mypage/orderHistory': '주문내역',
+    '/mypage/order-history': '주문내역',
     '/mypage/coupon': '쿠폰',
     '/mypage/reward': '적립금',
-    '/mypage/manageCard': '카드관리',
-    '/mypage/inviteFriends': '친구초대',
+    '/mypage/manage-card': '카드관리',
+    '/mypage/invite-friends': '친구초대',
     '/mypage/review': '리뷰',
     '/mypage/subscribe': '구독 관리',
     '/mypage/account': '계정 정보',
@@ -30,11 +30,11 @@ const MyPageHeader = () => {
     if (pathTitles[pathname]) {
       return pathTitles[pathname];
     }
-    if (pathname.includes('/mypage/orderHistory/')) {
+    if (pathname.includes('/mypage/order-history/')) {
       return '주문 상세';
     }
-    if (pathname.includes('/mypage/subscribe/skipDelivery/')) {
-      return '배송 미루기';
+    if (pathname.includes('/mypage/subscription/delay-shipping/')) {
+      return '배송일 변경';
     }
     if (pathname.includes('/mypage/subscribe/address/')) {
       return '구독 배송지 관리';
@@ -56,6 +56,9 @@ const MyPageHeader = () => {
     }
     if (pathname.includes('/mypage/account/user-info')) {
       return '회원 정보 변경';
+    }
+    if (pathname.includes('/mypage/account/notification')) {
+      return '알림 설정';
     }
     return '';
   };
