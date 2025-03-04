@@ -18,12 +18,15 @@ const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
   title4: 'h3',
   headline1: 'h4',
   headline2: 'h4',
+  headline3: 'h4',
+  headline4: 'h4',
   label1: 'span',
   label2: 'span',
   label3: 'span',
   label4: 'span',
   body1: 'span',
   body2: 'span',
+  body3: 'span',
   caption: 'span',
 };
 

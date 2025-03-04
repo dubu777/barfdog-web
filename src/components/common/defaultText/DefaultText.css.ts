@@ -53,6 +53,18 @@ export const textStyles = {
     lineHeight: themeVars.typography.headline.headline2.lineHeight,
     letterSpacing: themeVars.typography.headline.headline2.letterSpacing,
   }),
+  headline3: style({
+    fontWeight: themeVars.typography.headline.headline2.fontWeight,
+    fontSize: themeVars.typography.headline.headline2.fontSize,
+    lineHeight: themeVars.typography.headline.headline2.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline2.letterSpacing,
+  }),
+  headline4: style({
+    fontWeight: themeVars.typography.headline.headline2.fontWeight,
+    fontSize: themeVars.typography.headline.headline2.fontSize,
+    lineHeight: themeVars.typography.headline.headline2.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline2.letterSpacing,
+  }),
 
   label1: style({
     fontWeight: themeVars.typography.label.label1.fontWeight,
@@ -86,6 +98,12 @@ export const textStyles = {
     letterSpacing: themeVars.typography.body.body1.letterSpacing,
   }),
   body2: style({
+    fontWeight: themeVars.typography.body.body2.fontWeight,
+    fontSize: themeVars.typography.body.body2.fontSize,
+    lineHeight: themeVars.typography.body.body2.lineHeight,
+    letterSpacing: themeVars.typography.body.body2.letterSpacing,
+  }),
+  body3: style({
     fontWeight: themeVars.typography.body.body2.fontWeight,
     fontSize: themeVars.typography.body.body2.fontSize,
     lineHeight: themeVars.typography.body.body2.lineHeight,

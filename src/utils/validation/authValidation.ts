@@ -139,8 +139,8 @@ const defaultLoginValues = (initialUserEmail: string | null) => {
 const connectSnsSchema = yup.object().shape({
 	password: yup
 		.string()
-		.min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
-		.matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
+		// .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+		// .matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
 		.required('비밀번호는 필수입니다.'),
 })
 
