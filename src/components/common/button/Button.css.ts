@@ -1,18 +1,21 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-// 버튼 사이즈에 따른 스타일 (패딩 및 borderRadius)
+// 버튼 크기
 export const buttonSizes = {
   sm: style({
     padding: "4px 6px",
+    fontSize: "14px",
     borderRadius: "8px",
   }),
   md: style({
     padding: "10px 24px",
+    fontSize: "16px",
     borderRadius: "8px",
   }),
   lg: style({
     padding: "12px 28px",
+    fontSize: "16px",
     borderRadius: "8px",
   }),
 };

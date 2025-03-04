@@ -8,6 +8,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import DeliveryAddressModal from "../deliveryAddressModal/DeliveryAddressModal";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import OrderSection from "../orderSection/OrderSection";
 
 interface DeliveryAddressProps {
   orderType: OrderType;
@@ -18,30 +19,34 @@ export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
   const { deliveryDto, isBundleDelivery, setDeliveryDto } = useDeliveryStore();
   return (
-    <div className={styles.orderSheetWrapper}>
-      {isBundleDelivery ? (
-        <DefaultText type="display1">묶음 배송지로 배송됩니다.</DefaultText>
-      ) : (
-        <>
-          <div className={styles.orderSheetTitleWrapper}>
-            <DefaultText type="title4">배송지</DefaultText>
-            {/* 버튼으로 변경예정 */}
-            <button onClick={onToggle}>
-              <DefaultText type="label4">배송지 변경</DefaultText>
-            </button>
-          </div>
-          <div
-            className={styles.orderSheetContentWrapper({ direction: "col" })}
-          >
-            <DefaultText type="body2">{deliveryDto.name}</DefaultText>
-            <DefaultText type="body2">{deliveryDto.phone}</DefaultText>
-            <DefaultText type="body2">
-              {deliveryDto.street} {deliveryDto.detailAddress}
-            </DefaultText>
-          </div>
-        </>
-      )}
+    // <div className={styles.orderSheetWrapper}>
+    //   {isBundleDelivery ? (
+    //     <DefaultText type="display1">묶음 배송지로 배송됩니다.</DefaultText>
+    //   ) : (
+    //     <>
+    //       <div className={styles.orderSheetTitleWrapper}>
+    //         <DefaultText type="title4">배송지</DefaultText>
+    //         {/* 버튼으로 변경예정 */}
+    //         <button onClick={onToggle}>
+    //           <DefaultText type="label4">배송지 변경</DefaultText>
+    //         </button>
+    //       </div>
+    //       <div
+    //         className={styles.orderSheetContentWrapper({ direction: "col" })}
+    //       >
+    //         <DefaultText type="body2">{deliveryDto.name}</DefaultText>
+    //         <DefaultText type="body2">{deliveryDto.phone}</DefaultText>
+    //         <DefaultText type="body2">
+    //           {deliveryDto.street} {deliveryDto.detailAddress}
+    //         </DefaultText>
+    //       </div>
+    //     </>
+    //   )}
+    // </div>
+    <>
+      <OrderSection title="배송지" subTitleParts={[{ text: "배송지 변경" }]}>
 
+      </OrderSection>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<div>Loading...</div>}>
@@ -54,6 +59,6 @@ export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
           />
         </Suspense>
       </ErrorBoundary>
-    </div>
+      </>
   );
 }

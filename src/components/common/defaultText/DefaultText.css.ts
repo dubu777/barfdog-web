@@ -118,10 +118,11 @@ export const textStyles = {
 };
 
 export const fontColors = {
-  white: style({ color: themeVars.colors.gray.gray0 }),
-  red: style({ color: themeVars.colors.red.red }),
-  gray900: style({ color: themeVars.colors.gray.gray900 }),
+  gray0: style({ color: themeVars.colors.gray.gray0 }),
+  gray500: style({ color: themeVars.colors.gray.gray500 }),
   gray600: style({ color: themeVars.colors.gray.gray600 }),
+  gray900: style({ color: themeVars.colors.gray.gray900 }),
+  red: style({ color: themeVars.colors.red.red }),
 };
 
 export const alignStyles = {

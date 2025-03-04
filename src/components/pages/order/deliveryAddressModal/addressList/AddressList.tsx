@@ -1,6 +1,6 @@
 import * as styles from "../DeliveryAddressModal.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { subscribeText } from "@/components/pages/subscription/subscriptionContainer/recipeSelection/RecipeSelection.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 import { AddressResponse, DeliveryDto, OrderType } from "@/types";
 
 interface AddressListProps {
@@ -43,12 +43,12 @@ export default function AddressList({
         >
           <div className={styles.deliveryAddressWrapper}>
             <div className={styles.deliveryAddressWrapper}>
-              <p className={subscribeText({ type: "recipeTitle" })}>
+              <DefaultText type="body1">
                 {data.recipientName} ({data.deliveryName ?? "-"})
-              </p>
-              <p className={subscribeText({ type: "subtitle" })}>
+              </DefaultText>
+              <DefaultText type="body1">
                 {data.phoneNumber}
-              </p>
+              </DefaultText>
               <button
                 className={styles.selectButton}
                 onClick={() =>
@@ -69,15 +69,15 @@ export default function AddressList({
             </div>
 
             <div className={styles.deliveryAddressWrapper}>
-              <p className={subscribeText({ type: "subtitle" })}>
-                <span className={subscribeText({ type: "subtitle" })}>
+            <DefaultText type="body1">
+            <DefaultText type="body1">
                   ({data.zipcode}){" "}
-                </span>
+                </DefaultText>
                 {data.street},
-              </p>
-              <p className={subscribeText({ type: "subtitle" })}>
+              </DefaultText>
+              <DefaultText type="body1">
                 {data.detailAddress}
-              </p>
+              </DefaultText>
             </div>
             <div className={styles.updateButtonWrapper}>
               <button

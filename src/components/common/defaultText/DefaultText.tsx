@@ -7,7 +7,7 @@ interface DefaultTextProps {
   align?: "left" | "center" | "right";
   children: React.ReactNode;
   style?: React.CSSProperties;
-  className?: string; // 추가 커스텀 스타일
+  className?: string;
 }
 
 const tagMap: Record<string, keyof JSX.IntrinsicElements> = {

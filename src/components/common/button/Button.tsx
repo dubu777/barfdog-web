@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  buttonSizes,
-  buttonVariants,
-  disabledVariants,
-  iconContainer,
-} from "./Button.css";
+import { buttonSizes, buttonVariants, disabledVariants, iconContainer } from "./Button.css";
 import Icon from "../icon/Icon";
-import DefaultText from "../defaultText/DefaultText";
 
 interface ButtonProps {
   variant?: keyof typeof buttonVariants;
@@ -21,7 +15,7 @@ interface ButtonProps {
   width?: string;
   bgColor?: string;
   textColor?: string;
-  className?: string; // 추가 커스텀 스타일
+  className?: string; 
 }
 
 export default function Button({
@@ -50,27 +44,15 @@ export default function Button({
         type as keyof (typeof disabledVariants)[typeof variant]
       ]
     : "";
-
+    const computedWidth = fullWidth ? "100%" : width || "auto";
+    const widthStyle = { width: computedWidth };
+  
   const isIconLeft = iconPosition === "left";
-
-  // 버튼 사이즈에 따른 텍스트 타입을 매핑하는 객체 생성
-  const textTypeMap: Record<
-    NonNullable<ButtonProps["size"]>,
-    "headline3" | "headline4"
-  > = {
-    sm: "headline4",
-    md: "headline3",
-    lg: "headline3",
-  };
-
-  const textType = textTypeMap[size];
-
-  const computedWidth = fullWidth ? "100%" : width || "auto";
-  const widthStyle = { width: computedWidth };
 
   const buttonStyle: React.CSSProperties = {
     ...widthStyle,
     ...(bgColor && { backgroundColor: bgColor }),
+    ...(textColor && { color: textColor }),
   };
   return (
     <button
@@ -84,23 +66,11 @@ export default function Button({
       {icon ? (
         <div className={iconContainer}>
           {isIconLeft && <Icon name={icon} size={18} alt={icon} />}
-          <DefaultText
-            type={textType}
-            align="center"
-            style={textColor ? { color: textColor } : undefined}
-          >
-            {children}
-          </DefaultText>
+          <span>{children}</span>
           {!isIconLeft && <Icon name={icon} size={18} alt={icon} />}
         </div>
       ) : (
-        <DefaultText
-          type={textType}
-          align="center"
-          style={textColor ? { color: textColor } : undefined}
-        >
-          {children}
-        </DefaultText>
+        children
       )}
     </button>
   );
