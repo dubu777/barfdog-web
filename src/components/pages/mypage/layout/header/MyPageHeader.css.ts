@@ -2,10 +2,17 @@ import {style} from "@vanilla-extract/css";
 import {themeVars} from "@/styles/theme.css";
 
 export const myPageHeader = style({
+  position: 'fixed',
+  background: themeVars.colors.gray.gray0,
   display: 'flex',
-  flexDirection: 'column',
-  marginTop: '62px',
-  padding: '14px 24px',
+  justifyContent: 'space-between',
+  padding: '14px 20px',
+  zIndex: 900,
+})
+
+export const headerLeft = style({
+  display: 'flex',
+  gap: '12px'
 })
 
 export const goBackButton = style({
@@ -16,8 +23,6 @@ export const goBackButton = style({
 export const title = style({
   width: '100%',
   textAlign: 'center',
-  marginTop: '28px',
-  marginBottom: '26px',
   fontSize: themeVars.fontSize["text-xl"],
   fontWeight: themeVars.fontWeight.bold,
 })

@@ -4,7 +4,7 @@ import {useEffect, useMemo, useState} from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetReviewList, useGetReviewList } from "@/api/review/queries/useGetReviewList";
 import { usePagination } from "@/hooks/usePagination";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Pagination from "@/components/common/pagination/Pagination";
 import Text from "@/components/common/text/Text";
 import ReviewItem from "@/components/pages/reivew/reviewList/reviewItemList/reviewItem/ReviewItem";

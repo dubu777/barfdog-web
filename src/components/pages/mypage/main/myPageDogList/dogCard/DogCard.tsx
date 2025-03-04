@@ -1,13 +1,13 @@
 import * as styles from "../MyPageDogList.css";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import Badge from "@/components/common/badge/Badge";
 import DogButtonControls from "@/components/pages/mypage/main/myPageDogList/dogButtonContols/DogButtonControls";
 import DogRepresentative from "@/components/pages/mypage/main/myPageDogList/dogRepresentative/DogRepresentative";
 import { DogData } from "@/types/dogs";
 import { subscriptionStatus } from "@/constants";
 import { getProductionDates } from "@/utils/getProductionDates";
 import DogImage from "@/components/pages/mypage/main/myPageDogList/dogImage/DogImage";
+import Chips from "@/components/common/chips/Chips";
 
 interface MyPageDogCardProps {
   noData: boolean;
@@ -29,12 +29,14 @@ const DogCard = ({ dog, noData, resetSwiper }: MyPageDogCardProps) => {
         dogId={dog ? dog.id : 0}
         resetSwiper={dog?.id ? resetSwiper : undefined}
       />
-      <Badge
+      <Chips
         className={styles.subscriptionStatus}
-        color={!noData && dog?.subscribeStatus === 'SUBSCRIBING' ? 'redBorder' : undefined}
+        variant='outlined'
+        size='sm'
+        switchOff={dog?.subscribeStatus !== 'SUBSCRIBING'}
       >
         {!noData ? subscriptionStatusKR : '구독 전'}
-      </Badge>
+      </Chips>
       <div className={styles.dogContent}>
         {dog && 
           <DogImage

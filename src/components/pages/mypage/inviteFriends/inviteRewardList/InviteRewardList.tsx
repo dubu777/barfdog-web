@@ -3,14 +3,13 @@ import * as styles from './InviteRewardList.css';
 import Pagination from "@/components/common/pagination/Pagination";
 import Text from "@/components/common/text/Text";
 import {formatDate} from "@/utils/dateUtils";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/usePagination";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { prefetchGetInviteRewardList, useGetInviteRewardList } from "@/api/mypage/queries/useGetInviteRewardList";
 import { useApplyRecommendCode } from "@/api/mypage/mutations/useApplyRecommendCode";
 import { useToastStore } from "@/store/useToastStore";
+import InputField from "@/components/common/inputField/InputField";
 
 const InviteRewardList = () => {
   const queryClient = useQueryClient();
@@ -58,27 +57,18 @@ const InviteRewardList = () => {
       <Text type='description' size='md' color='black' align='left'>추천 코드</Text>
       <div className={styles.inviteCode}>
         <div className={styles.codeInput}>
-          <DefaultTextField
-            type='text'
+          <InputField
             size='sm'
             placeholder='추천 코드를 입력해주세요.'
             id='recommend'
             name='recommend'
             value={recommendCode}
-            onChange={(value) => setRecommendCode(value as string)}
+            onChange={(e) => setRecommendCode(e.target.value as string)}
+            disabled={data.recommend !== null}
             onSubmit={handleApplyRecommendCode}
-            isDisabled={data.recommend !== null}
+            confirmButton
+            confirmButtonText={`등록${data.recommend !== null && '됨' || ''}`}
           />
-        </div>
-        <div className={styles.codeCreateButton}>
-          <DefaultButton
-            type='main'
-            borderRadius='sm'
-            onClick={handleApplyRecommendCode}
-            isDisabled={data.recommend !== null}
-          >
-            등록{data.recommend !== null && '됨'}
-          </DefaultButton>
         </div>
       </div>
       <div className={styles.inviteRewardInfo}>

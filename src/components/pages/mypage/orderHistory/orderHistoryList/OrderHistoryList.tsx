@@ -1,11 +1,11 @@
 'use client';
 import * as styles from "./OrderHistoryList.css";
-import Badge from "@/components/common/badge/Badge";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { ORDER_STATUS, PAYMENT } from "@/constants";
 import { formatDate } from "@/utils/dateUtils";
 import { GeneralOrderData, SubscriptionOrderData, MergeOrderData } from "@/types/order";
 import { DefaultObjectType } from "@/types/common";
+import Chips from "@/components/common/chips/Chips";
 
 const orderContents: DefaultObjectType[] = [
   {
@@ -45,9 +45,9 @@ const OrderHistoryList = ({ orderList }: { orderList: MergeOrderData }) => {
           <li key={orderId}>
             <div className={styles.itemHeader}>
               <p>{formatDate(item.orderDto?.orderDate, 'fullDateTimeKR')}</p>
-              <Badge color={item.orderDto.orderStatus === 'BEFORE_PAYMENT' ? 'redBorder' : undefined}>
+              <Chips variant='outlined' size='sm' switchOff={item.orderDto.orderStatus !== 'BEFORE_PAYMENT'}>
                 {ORDER_STATUS[item.orderDto.orderStatus as keyof typeof ORDER_STATUS]}
-              </Badge>
+              </Chips>
             </div>
             <div className={styles.itemContents}>
               {orderContents.map(content => {
@@ -76,7 +76,7 @@ const OrderHistoryList = ({ orderList }: { orderList: MergeOrderData }) => {
                 type='blackBorder'
                 size='sm'
                 borderRadius='sm'
-                linkUrl={`/mypage/orderHistory/${orderId}?type=${type}`}
+                linkUrl={`/mypage/order-history/${orderId}?type=${type}`}
               >
                 주문 상세
               </DefaultButton>

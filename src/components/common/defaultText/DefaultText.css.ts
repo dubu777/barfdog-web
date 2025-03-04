@@ -118,11 +118,15 @@ export const textStyles = {
 };
 
 export const fontColors = {
-  gray0: style({ color: themeVars.colors.gray.gray0 }),
-  gray500: style({ color: themeVars.colors.gray.gray500 }),
-  gray600: style({ color: themeVars.colors.gray.gray600 }),
-  gray900: style({ color: themeVars.colors.gray.gray900 }),
+  white: style({ color: themeVars.colors.gray.gray0 }),
   red: style({ color: themeVars.colors.red.red }),
+  pastelRed: style({ color: themeVars.colors.red.pastelRed }),
+  gray900: style({ color: themeVars.colors.gray.gray900 }),
+  gray800: style({ color: themeVars.colors.gray.gray800 }),
+  gray600: style({ color: themeVars.colors.gray.gray600 }),
+  gray500: style({ color: themeVars.colors.gray.gray500 }),
+  gray300: style({ color: themeVars.colors.gray.gray300 }),
+  blue: style({ color: themeVars.colors.blue.blue500 })
 };
 
 export const alignStyles = {
@@ -130,3 +134,8 @@ export const alignStyles = {
   center: style({ textAlign: 'center' }),
   right: style({ textAlign: 'right' }),
 };
+
+export const blockStyles = {
+  true: style({ display: 'inline-block' }),
+  false: style({ display: 'block' }),
+}

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import RightArrowIcon from "/public/images/icons/right-arrow-black.svg";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
 import { useMyPageStore } from "@/store/useMypageStore";
 import { getProductionDates } from "@/utils/getProductionDates";

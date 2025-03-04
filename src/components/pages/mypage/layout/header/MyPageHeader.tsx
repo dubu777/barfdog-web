@@ -3,18 +3,24 @@ import * as styles from "./MyPageHeader.css";
 import BackButton from "/public/images/icons/left-arrow.svg";
 import { useBackNavigation } from "@/utils";
 import { usePathname } from "next/navigation";
+import { commonLayoutStyle } from "@/styles/common.css";
+import Link from "next/link";
+import Cart from "/public/images/icons/cart.svg";
+import { useCartStore } from "@/store/useCartStore";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
 const MyPageHeader = () => {
   const goBack = useBackNavigation();
   const pathname = usePathname();
-
+  const { count } = useCartStore();
 
   const pathTitles: { [key: string]: string } = {
-    '/mypage/orderHistory': '주문내역',
+    '/mypage': '마이페이지',
+    '/mypage/order-history': '주문내역',
     '/mypage/coupon': '쿠폰',
     '/mypage/reward': '적립금',
-    '/mypage/manageCard': '카드관리',
-    '/mypage/inviteFriends': '친구초대',
+    '/mypage/manage-card': '카드관리',
+    '/mypage/invite-friends': '친구초대',
     '/mypage/review': '리뷰',
     '/mypage/subscribe': '구독 관리',
     '/mypage/account': '계정 정보',
@@ -24,11 +30,11 @@ const MyPageHeader = () => {
     if (pathTitles[pathname]) {
       return pathTitles[pathname];
     }
-    if (pathname.includes('/mypage/orderHistory/')) {
+    if (pathname.includes('/mypage/order-history/')) {
       return '주문 상세';
     }
-    if (pathname.includes('/mypage/subscribe/skipDelivery/')) {
-      return '배송 미루기';
+    if (pathname.includes('/mypage/subscription/delay-shipping/')) {
+      return '배송일 변경';
     }
     if (pathname.includes('/mypage/subscribe/address/')) {
       return '구독 배송지 관리';
@@ -51,18 +57,28 @@ const MyPageHeader = () => {
     if (pathname.includes('/mypage/account/user-info')) {
       return '회원 정보 변경';
     }
+    if (pathname.includes('/mypage/account/notification')) {
+      return '알림 설정';
+    }
     return '';
   };
 
   return (
-    pathname !== '/mypage' &&
-    <nav className={styles.myPageHeader}>
-      <button className={styles.goBackButton} onClick={goBack}>
-        <BackButton />
-      </button>
-      <h2 className={styles.title}>
-        {getTitle()}
-      </h2>
+    <nav className={`${commonLayoutStyle} ${styles.myPageHeader}`}>
+      <div className={styles.headerLeft}>
+        {pathname !== '/mypage' &&
+          <button className={styles.goBackButton} onClick={goBack}>
+            <BackButton />
+          </button>
+        }
+        <DefaultText type='title4'>
+          {getTitle()}
+        </DefaultText>
+      </div>
+      <Link href="/cart" className={styles.cartButton}>
+        {count !== 0 && <div className={styles.cartCount}>{count}</div>}
+        <Cart />
+      </Link>
     </nav>
   );
 };

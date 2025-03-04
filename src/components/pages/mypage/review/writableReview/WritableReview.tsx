@@ -7,7 +7,7 @@ import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import {  WritableReviewItem } from "@/types";
 import { reviewType } from "@/constants";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetWritableReviewList, useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";

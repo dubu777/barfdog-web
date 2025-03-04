@@ -1,7 +1,6 @@
 import * as styles from "./UserInfoForm.css";
 import { pointColor } from "@/styles/common.css";
 import { useCallback, useMemo, useState } from "react";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import DefaultRadio from "@/components/common/defaultRadio/DefaultRadio";
@@ -29,6 +28,7 @@ import {
 import { useGetAuthNumber } from "@/api/auth/mutations/useGetAuthNumber";
 import { useToastStore } from "@/store/useToastStore";
 import axios from "axios";
+import InputField from "@/components/common/inputField/InputField";
 
 const userInfoFormFields: UserInfoFormFields[] = [
 	{
@@ -225,19 +225,18 @@ const UserInfoForm = <T extends boolean>({
 											name={input.id as Path<FormValues<T>>}
 											control={control}
 											render={({field}) =>
-												<DefaultTextField
+												<InputField
 													type={input.inputType as 'text' | 'password'}
 													id={input.id}
 													name={input.id}
-													size='sm'
 													value={field.value ? String(field.value) : ''}
-													onChange={(value) => field.onChange(value)}
+													onChange={(e) => field.onChange((e.target as HTMLInputElement).value)}
 													placeholder={
 														(input.inputType === 'password' && !isSignUp)
 															? '현재 비밀번호를 입력해주세요.'
 															: input.placeholder || ''
 													}
-													isDisabled={
+													disabled={
 														!!(
 															(input.id === 'email' && !isSignUp) || 
 															(input.id === 'authNumber' && authNumber && hasCheckedAuthNumber)

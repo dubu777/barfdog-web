@@ -4,7 +4,7 @@ import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useAuthStore } from "@/store/useAuthStore";
 import { DefaultObjectType } from "@/types";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 
 const FindEmailResult = () => {
 	const { tempEmailUserInfo } = useAuthStore();

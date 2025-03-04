@@ -9,7 +9,7 @@ import MainSurvey from "@/components/pages/main/mainSurvey/MainSurvey";
 import MainService from "@/components/pages/main/mainService/MainService";
 import Footer from "@/components/layout/footer/Footer";
 import BottomBanner from "@/components/layout/banner/BottomBanner";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Cookies from "js-cookie";
 import {useAuthStore} from "@/store/useAuthStore";
 

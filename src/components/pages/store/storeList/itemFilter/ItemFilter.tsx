@@ -5,7 +5,7 @@ import Text from "@/components/common/text/Text";
 import SelectBox from "@/components/common/selectBox/SelectBox";
 import { itemFilterCategory, itemSortBy } from "@/constants/store";
 import { ItemType, SortByType } from "@/types/store";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
 

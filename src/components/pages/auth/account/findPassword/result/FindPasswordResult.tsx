@@ -5,7 +5,7 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useSendTemporaryPassword } from "@/api/auth/mutations/useFindAccount";
 import useTimer from "@/hooks/useTimer";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useToastStore } from "@/store/useToastStore";
 
 const FindPasswordResult = () => {

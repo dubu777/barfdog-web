@@ -19,17 +19,14 @@ const UserInfo = () => {
 	const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
 	const [isReceiveAllChecked, setIsReceiveAllChecked] = useState<boolean>(false);
 
-	const { handleSubmit, control, watch, errors, setValue, setError, isValid, clearErrors } = useFormHandler<UpdateUserInfo>(updateUserInfoSchema, defaultUpdateUserInfoValues(userInfo));
+	const { handleSubmit, control, watch, errors, setValue, setError, isValid, clearErrors, dirtyFields } = useFormHandler<UpdateUserInfo>(updateUserInfoSchema, defaultUpdateUserInfoValues(userInfo));
 	const password = watch('password');
-	const phoneNumber = watch('phoneNumber');
-	const defaultPhoneNumber = watch('defaultPhoneNumber');
 	const hasCheckedAuthNumber = watch('hasCheckedAuthNumber');
-	console.log('userInfo', userInfo)
 
 	// 휴대폰 번를 변경할시 이를 감지하여 phoneNumber error
 	// 인증번호 받기를 클릭시 phoneNumber error X, authNumber error
 	// 인증번호 확인을 클릭시 authNumber error X (모든 error X)
-	const isValidation = password !== null && (phoneNumber !== defaultPhoneNumber ? hasCheckedAuthNumber : isValid);
+	const isValidation = password !== null && (dirtyFields.phoneNumber ? hasCheckedAuthNumber : isValid);
 	const { mutate } = useUpdateUserInfo();
 	const { addToast } = useToastStore();
 

@@ -8,7 +8,7 @@ import { formatDate } from "@/utils/dateUtils";
 import { usePagination } from "@/hooks/usePagination";
 import { prefetchGetNoticeList, useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
 import { useQueryClient } from '@tanstack/react-query';
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 
 const NoticeList = () => {
   const queryClient = useQueryClient();

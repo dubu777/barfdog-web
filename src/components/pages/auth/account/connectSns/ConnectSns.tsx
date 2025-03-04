@@ -3,7 +3,6 @@ import * as styles from '../FindAccount.css';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
 import Text from "@/components/common/text/Text";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { Controller } from "react-hook-form";
 import { useFormHandler } from "@/hooks/useFormHandler";
@@ -13,6 +12,7 @@ import { useConnectSns } from "@/api/auth/mutations/useConnectSns";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToastStore } from "@/store/useToastStore";
 import { maskString } from "@/utils/maskString";
+import InputField from "@/components/common/inputField/InputField";
 
 const ConnectSns = () => {
 	const router = useRouter();
@@ -72,8 +72,8 @@ const ConnectSns = () => {
 					control={control}
 					name='password'
 					render={({ field }) => (
-						<DefaultTextField
-							type='password'
+						<InputField
+							masking
 							id='password'
 							placeholder='비밀번호를 입력해주세요.'
 							{...field}
@@ -89,7 +89,7 @@ const ConnectSns = () => {
 					type='main'
 					borderRadius='sm'
 					onClick={handleSubmit(onSubmit)}
-					isDisabled={!isValid}
+					// isDisabled={!isValid}
 				>
 					연동하기
 				</DefaultButton>

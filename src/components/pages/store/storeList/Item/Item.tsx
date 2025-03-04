@@ -1,10 +1,10 @@
 import * as styles from './Item.css';
 import Link from "next/link";
-import Badge from "@/components/common/badge/Badge";
 import Text from "@/components/common/text/Text";
 import RateStar from "@/components/common/rateStar/RateStar";
 import ImageLoadingSpinner from "@/components/common/imageLoadingSpinner/ImageLoadingSpinner";
 import { ItemTagType, StoreItemListData } from "@/types/store";
+import Chips from "@/components/common/chips/Chips";
 
 interface StoreItemProps {
   item: StoreItemListData;
@@ -19,7 +19,9 @@ const Item = ({ item }: StoreItemProps) => {
           {itemTags.length > 0 &&
           <div className={styles.itemTags}>
             {itemTags.map(tag => (
-              <Badge key={tag} color={tag === 'BEST' ? 'red' : 'orange'} borderRadius='none'>{tag}</Badge>
+              <Chips key={tag} variant='outlined' size='sm' switchOff={tag !== 'BEST'}>
+                {tag}
+              </Chips>
             ))}
           </div>
           }
@@ -40,7 +42,7 @@ const Item = ({ item }: StoreItemProps) => {
             }
           </Text>
           {!item.inStock &&
-          <Badge color='grey' borderRadius='none'>품절</Badge>
+          <Chips variant='solid' size='sm' switchOff>품절</Chips>
           }
         </div>
         {item.originalPrice !== item.salePrice &&

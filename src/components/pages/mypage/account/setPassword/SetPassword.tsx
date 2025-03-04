@@ -2,7 +2,6 @@
 import * as styles from '../Account.css';
 import * as yup from "yup";
 import Text from "@/components/common/text/Text";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Controller } from "react-hook-form";
@@ -10,6 +9,7 @@ import { SetPassword } from "@/types";
 import { useSetPassword } from "@/api/auth/mutations/useSetPassword";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useToastStore } from "@/store/useToastStore";
+import InputField from "@/components/common/inputField/InputField";
 
 const setPasswordSchema = yup.object().shape({
 	password: yup
@@ -33,7 +33,7 @@ const SetPasswordComponent = () => {
 	const searchParams = useSearchParams();
 	const redirect = searchParams.get('redirect');
 
-	const { handleSubmit, control, errors, isValid } = useFormHandler<SetPassword>(setPasswordSchema, defaultSetPasswordValues);
+	const { handleSubmit, control, errors, isValid, dirtyFields } = useFormHandler<SetPassword>(setPasswordSchema, defaultSetPasswordValues);
 	const { mutate } = useSetPassword();
 	const { addToast } = useToastStore();
 
@@ -61,45 +61,46 @@ const SetPasswordComponent = () => {
 				간편 로그인으로 회원가입한 경우, 회원정보 수정을 위해 비밀번호를 생성해야 합니다.
 			</Text>
 			<form className={styles.accountForm}>
-				<div>
+				<div className={styles.accountInputBox}>
 					<Controller
 						control={control}
 						name='password'
 						render={({ field }) => (
-							<DefaultTextField
-								type='password'
-								id='password'
-								label='새 비밀번호'
-								labelPosition='left'
-								placeholder='비밀번호를 입력해주세요.'
-								{...field}
-							/>
+							<>
+								<label className={styles.accountLabel}>새 비밀번호</label>
+								<InputField
+									masking
+									id='password'
+									placeholder='비밀번호를 입력해주세요.'
+									className={styles.accountInput}
+									error={errors?.password?.message}
+									touched={dirtyFields?.password}
+									{...field}
+								/>
+							</>
 						)}
 					/>
-					{errors.password &&
-					<Text type='description' size='sm' color='red'align='left'>{errors.password.message}</Text>
-					}
 				</div>
-				<div>
+				<div className={styles.accountInputBox}>
 					<Controller
 						control={control}
 						name='confirmPassword'
 						render={({ field }) => (
-							<DefaultTextField
-								type='password'
-								id='confirmPassword'
-								label='새 비밀번호 확인'
-								labelPosition='left'
-								placeholder='비밀번호 확인을 입력해주세요.'
-								isPhoneNumber
-								onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
-								{...field}
-							/>
+							<>
+								<label className={styles.accountLabel}>새 비밀번호 확인</label>
+								<InputField
+									masking
+									id='confirmPassword'
+									placeholder='비밀번호 확인을 입력해주세요.'
+									className={styles.accountInput}
+									error={errors?.confirmPassword?.message}
+									touched={dirtyFields?.confirmPassword}
+									onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
+									{...field}
+								/>
+							</>
 						)}
 					/>
-					{errors.confirmPassword &&
-					<Text type='description' size='sm' color='red' align='left'>{errors.confirmPassword.message}</Text>
-					}
 				</div>
 			</form>
 			<div className={styles.accountSubmitButton}>

@@ -1,13 +1,19 @@
 import React from "react";
-import { textStyles, fontColors, alignStyles } from "./DefaultText.css";
+import {
+  textStyles,
+  fontColors,
+  alignStyles,
+  blockStyles,
+} from "./DefaultText.css";
 
 interface DefaultTextProps {
   type: keyof typeof textStyles;
   color?: keyof typeof fontColors;
   align?: "left" | "center" | "right";
   children: React.ReactNode;
+  className?: string; // 추가 커스텀 스타일
+  inlineBlock?: boolean;
   style?: React.CSSProperties;
-  className?: string;
 }
 
 const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
@@ -36,8 +42,9 @@ export default function DefaultText({
   color = "gray900",
   align = "left",
   children,
-  style,
   className,
+  inlineBlock = false,
+  style,
 }: DefaultTextProps) {
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
@@ -46,7 +53,9 @@ export default function DefaultText({
 
   return (
     <Tag
-      className={`${textStyle} ${colorStyle} ${alignStyle} ${className || ""}`}
+      className={`${textStyle} ${colorStyle} ${alignStyle} ${
+        inlineBlock ? blockStyles : ""
+      } ${className || ""}`}
       style={style}
     >
       {children}

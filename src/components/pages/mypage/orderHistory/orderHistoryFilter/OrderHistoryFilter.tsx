@@ -3,7 +3,7 @@ import * as styles from "./OrderHistoryFilter.css";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { DefaultObjectType } from "@/types/common";
 
 const durationFilter: DefaultObjectType[] = [

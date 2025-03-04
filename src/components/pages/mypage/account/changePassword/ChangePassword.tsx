@@ -2,14 +2,13 @@
 import * as styles from '../Account.css';
 import * as yup from "yup";
 import axios from "axios";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
-import Text from "@/components/common/text/Text";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { Controller } from "react-hook-form";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useChangePassword } from "@/api/auth/mutations/useChangePassword";
 import { useToastStore } from "@/store/useToastStore";
 import { ChangePassword } from "@/types";
+import InputField from "@/components/common/inputField/InputField";
+import MyPageBottomButton from "@/components/pages/mypage/layout/bottomButton/MyPageBottomButton";
 
 const changePasswordSchema = yup.object().shape({
 	password: yup
@@ -33,7 +32,7 @@ const defaultChangePasswordValues: ChangePassword = {
 };
 
 const ChangePasswordComponent = () => {
-	const { handleSubmit, control, errors, isValid, reset, clearErrors } = useFormHandler<ChangePassword>(changePasswordSchema, defaultChangePasswordValues);
+	const { handleSubmit, control, errors, isValid, reset, clearErrors, dirtyFields, setValue } = useFormHandler<ChangePassword>(changePasswordSchema, defaultChangePasswordValues);
 	const { mutate } = useChangePassword();
 	const { addToast } = useToastStore();
 
@@ -65,80 +64,70 @@ const ChangePasswordComponent = () => {
 		)
 	}
 	return (
-		<section>
+		<section className={styles.accountContainer}>
 			<form className={styles.accountForm}>
-				<div>
-					<Controller
-						control={control}
-						name='password'
-						render={({ field }) => (
-							<DefaultTextField
-								type='password'
-								id='password'
-								label='현재 비밀번호'
-								labelPosition='left'
-								placeholder='현재 비밀번호를 입력해주세요.'
-								{...field}
-							/>
-						)}
-					/>
-					{errors.password &&
-					<Text type='description' size='sm' color='red'align='left'>{errors.password.message}</Text>
+				<Controller
+					name='password'
+					control={control}
+					render={({field}) =>
+						<InputField
+							{...field}
+							type='password'
+							variants='fillBox'
+							placeholder='기존 비밀번호를 입력해주세요.'
+							label='기존 비밀번호'
+							error={errors?.password?.message}
+							touched={dirtyFields?.password}
+							masking
+							isRequired
+							clearButton
+							onReset={() => setValue('password', '')}
+						/>
 					}
-				</div>
-				<div>
-					<Controller
-						control={control}
-						name='newPassword'
-						render={({ field }) => (
-							<DefaultTextField
-								type='password'
-								id='newPassword'
-								label='새 비밀번호 확인'
-								labelPosition='left'
-								placeholder='새로운 비밀번호를 입력해주세요.'
-								isPhoneNumber
-								onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
-								{...field}
-							/>
-						)}
-					/>
-					{errors.newPassword &&
-					<Text type='description' size='sm' color='red' align='left'>{errors.newPassword.message}</Text>
+				/>
+				<Controller
+					name='newPassword'
+					control={control}
+					render={({field}) =>
+						<InputField
+							{...field}
+							type='password'
+							variants='fillBox'
+							placeholder='새 비밀번호를 입력해주세요.'
+							label='새 비밀번호'
+							error={errors?.newPassword?.message}
+							touched={dirtyFields?.newPassword}
+							masking
+							isRequired
+							clearButton
+							onReset={() => setValue('newPassword', '')}
+						/>
 					}
-				</div>
-				<div>
-					<Controller
-						control={control}
-						name='newPasswordConfirm'
-						render={({ field }) => (
-							<DefaultTextField
-								type='password'
-								id='newPasswordConfirm'
-								label='새 비밀번호 확인'
-								labelPosition='left'
-								placeholder='새로운 비밀번호 확인을 입력해주세요.'
-								isPhoneNumber
-								onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
-								{...field}
-							/>
-						)}
-					/>
-					{errors.newPasswordConfirm &&
-					<Text type='description' size='sm' color='red' align='left'>{errors.newPasswordConfirm.message}</Text>
+				/>
+				<Controller
+					name='newPasswordConfirm'
+					control={control}
+					render={({field}) =>
+						<InputField
+							{...field}
+							type='password'
+							variants='fillBox'
+							placeholder='새 비밀번호를 확인을 입력해주세요.'
+							label='새 비밀번호 확인'
+							error={errors?.newPasswordConfirm?.message}
+							touched={dirtyFields?.newPasswordConfirm}
+							masking
+							isRequired
+							clearButton
+							onReset={() => setValue('newPasswordConfirm', '')}
+						/>
 					}
-				</div>
+				/>
 			</form>
-			<div className={styles.accountSubmitButton}>
-				<DefaultButton
-					type='main'
-					borderRadius='sm'
-					onClick={handleSubmit(onSubmit)}
-					isDisabled={!isValid}
-				>
-					저장
-				</DefaultButton>
-			</div>
+			<MyPageBottomButton
+				handleSubmit={() => handleSubmit(onSubmit)}
+				// isDisabled={!isValid}
+			/>
 		</section>
 	);
 };
