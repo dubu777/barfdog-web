@@ -13,6 +13,14 @@ export const OrderSectionContainer = style({
   backgroundColor: themeVars.colors.gray.gray0,
 });
 
+export const OrderSectionTitleWrapper = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  alignSelf: "stretch",
+})
+
+
 export const OrderSectionSubtitle = recipe({
   base: {
     color: themeVars.colors.gray.gray600,

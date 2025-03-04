@@ -1,6 +1,6 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "./OrderSection.css";
-import { themeVars } from "@/styles/theme.css";
+import Button from "@/components/common/button/Button";
 
 interface OrderSectionProps {
   title: string;
@@ -9,30 +9,32 @@ interface OrderSectionProps {
     isPoint?: boolean;
   }>;
   children?: React.ReactNode;
+  onSubtitleClick?: () => void;
 }
 
 export default function OrderSection({
   title,
   subTitleParts,
   children,
+  onSubtitleClick,
 }: OrderSectionProps) {
   return (
     <section className={styles.OrderSectionContainer}>
-      <DefaultText type="title4">{title}</DefaultText>
-
-      {subTitleParts && (
-        <DefaultText type="headline4">
-          {subTitleParts.map(({ text, isPoint }, idx) => (
-            <span
-              key={idx}
-              className={styles.OrderSectionSubtitle({ isPoint })}
-            >
-              {text}
-            </span>
-          ))}
-        </DefaultText>
-      )}
-
+      <div className={styles.OrderSectionTitleWrapper}>
+        <DefaultText type="title4">{title}</DefaultText>
+        {subTitleParts && (
+          <Button type="assistive" variant="text" size="sm" onClick={onSubtitleClick}>
+            {subTitleParts.map(({ text, isPoint }, idx) => (
+              <span
+                key={idx}
+                className={styles.OrderSectionSubtitle({ isPoint })}
+              >
+                {text}
+              </span>
+            ))}
+          </Button>
+        )}
+      </div>
       <div>{children}</div>
     </section>
   );

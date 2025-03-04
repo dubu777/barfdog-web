@@ -5,18 +5,27 @@ import { themeVars } from "@/styles/theme.css";
 export const buttonSizes = {
   sm: style({
     padding: "4px 6px",
-    fontSize: "14px",
     borderRadius: "8px",
+    fontWeight: themeVars.typography.headline.headline4.fontWeight,
+    fontSize: themeVars.typography.headline.headline4.fontSize,
+    lineHeight: themeVars.typography.headline.headline4.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline4.letterSpacing,
   }),
   md: style({
     padding: "10px 24px",
-    fontSize: "16px",
     borderRadius: "8px",
+    fontWeight: themeVars.typography.headline.headline3.fontWeight,
+    fontSize: themeVars.typography.headline.headline3.fontSize,
+    lineHeight: themeVars.typography.headline.headline3.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline3.letterSpacing,
   }),
   lg: style({
     padding: "12px 28px",
-    fontSize: "16px",
     borderRadius: "8px",
+    fontWeight: themeVars.typography.headline.headline3.fontWeight,
+    fontSize: themeVars.typography.headline.headline3.fontSize,
+    lineHeight: themeVars.typography.headline.headline3.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline3.letterSpacing,
   }),
 };
 
