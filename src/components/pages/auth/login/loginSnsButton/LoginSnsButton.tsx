@@ -15,6 +15,7 @@ interface LoginSnsButtonProps {
 
 const LoginSnsButton = ({ provider, lastLoginActivity }: LoginSnsButtonProps) => {
   const router = useRouter();
+
   const config = SNS_LOGIN_CONFIG[provider];
 
   const handleLogin = useCallback(() => {

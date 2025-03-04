@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import * as styles from "./MyPageMenu.css";
 import Link from "next/link";
 import Image from "next/image";
-import { deleteCookie } from "@/utils/cookie";
+import { deleteCookie, getCookie } from "@/utils/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 
 interface MyPageMenuType {
@@ -41,8 +41,14 @@ const myPageMenu: MyPageMenuType[] = [
 
 const MyPageMenu = () => {
   const router = useRouter();
+
+  // 서버에서 set cookie 지워줘야 로그아웃 가능함 api 추가 후 수정 필요
   const handleLogout = () => {
+    console.log('로그아웃');
+    const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+    console.log('로그아웃 전 토큰', token);
     deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+    console.log('로그아웃 후 토큰', token);
     router.push('/');
   }
   return (

@@ -137,6 +137,7 @@ export const getAccessTokenByKakao = async (code: string) => {
   return tokenResponse;
 };
 
+// 카카오 로그인도 token을 클라이언트에서 발급받고 보내는 식으로 수정 중 백엔드 코드 수정 필요
 const loginWithProvider = async (provider: SnSProvider, code: string): Promise<LoginUserInfo> => {
 	console.log('loginWithProvider', provider, code);
 	
@@ -150,13 +151,16 @@ const loginWithProvider = async (provider: SnSProvider, code: string): Promise<L
 				accessToken: access_token,
 				tokenValidDays: 10,
 			};
-		} else {
+		} else if (provider === 'kakao') {
 			// 카카오
 			console.log('카카오 로그인 시작');
+			const {access_token} = await getAccessTokenByKakao(code);
 			
-			body = { code };
+			console.log('카카오 토큰', access_token);
+			body = {
+				accessToken: access_token,
+			};
 		}
-console.log('body', body);
 
 		const { data: loginResponse, headers } = await axiosInstance.post(`/api/login/${provider}`, body);
 
@@ -232,6 +236,86 @@ const CodeMessage: Record<number, string> = {
 	403: '호출 권한이 없습니다.',
 	404: '해당 데이터가 없습니다.',
 } as const;
+
+
+// const loginWithProvider2 = async (provider: SnSProvider, code: string): Promise<LoginUserInfo> => {
+// 	console.log('loginWithProvider', provider, code);
+	
+// 	try {
+// 		let body;
+// 		if (provider === 'naver') {
+// 			// 네이버
+// 			const { access_token } = await getAccessTokenByNaver(code);
+			
+// 			body = {
+// 				accessToken: access_token,
+// 				tokenValidDays: 10,
+// 			};
+// 		} else {
+// 			// 카카오
+// 			console.log('카카오 로그인 시작');
+			
+// 			body = { code };
+// 		}
+
+// 		const { data: loginResponse, headers } = await axiosInstance.post(`/api/login/${provider}`, body);
+
+// 		if (!loginResponse) {
+// 			throw new Error("응답이 없습니다.");
+// 		}
+
+// 		let userType: UserType = 'NON_MEMBER';
+// 		let token: string | null = null;
+// 		const resultCode = Number(loginResponse.resultcode);
+// 		const message = CodeMessage[resultCode as keyof typeof CodeMessage] || loginResponse.message;
+
+// 		switch (resultCode) {
+// 			case 251:
+// 				userType = 'NON_MEMBER';
+// 				break;
+// 			case 252:
+// 				userType = 'MEMBER';
+// 				break;
+// 			case 253:
+// 				userType = 'MEMBER_WITH_SMS_KAKAO';
+// 				token = provider === 'kakao' ? headers.authorization : null;
+// 				break;
+// 			case 254:
+// 				userType = 'MEMBER_WITH_SMS_NAVER';
+// 				token = provider === 'naver' ? headers.authorization : null;
+// 				break;
+// 			case 200:
+// 				token = headers.authorization;
+// 				break;
+// 			default:
+// 				// 하단 에러 코드에 대한 default 처리 필요
+// 				// throw new Error(`알 수 없는 응답 코드: ${resultCode}`);
+// 				break;
+// 		}
+
+// 		return {
+// 			provider,
+// 			providerId: code,
+// 			data: loginResponse.response,
+// 			message,
+// 			resultCode: loginResponse.resultcode,
+// 			userType,
+// 			token,
+// 		};
+		
+// 	} catch (error) {
+// 		console.error("SNS 로그인 오류", error);
+
+// 		// Axios 에러 처리
+// 		if (axios.isAxiosError(error)) {
+// 			throw new Error(error.response?.data?.message || "로그인 요청 중 오류 발생");
+// 		}
+
+// 		// 일반 오류 처리
+// 		throw new Error(error instanceof Error ? error.message : "알 수 없는 오류 발생");
+// 	}
+// }
+
 
 /*
 - response body에 resultcode, message 값 / 설명
