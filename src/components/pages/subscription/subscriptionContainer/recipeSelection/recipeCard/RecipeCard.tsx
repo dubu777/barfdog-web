@@ -42,7 +42,7 @@ export default function RecipeCard({
     >
       <div className={styles.recipeCardTitleWrapper}>
         <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
-        <Button type="assistive" variant="text" size="content">
+        <Button type="assistive" variant="text" size="sm">
           자세히
         </Button>
       </div>

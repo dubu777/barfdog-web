@@ -1,11 +1,12 @@
 import React from "react";
-import { buttonStyles, buttonVariants, disabledVariants } from "./Button.css";
+import { buttonSizes,  buttonVariants, disabledVariants, iconContainer } from "./Button.css";
 import Icon from "../icon/Icon";
+import DefaultText from "../defaultText/DefaultText";
 
 interface ButtonProps {
   variant?: keyof typeof buttonVariants;
   type?: "primary" | "secondary" | "assistive";
-  size?: "sm" | "md" | "lg" | "content";
+  size?: "sm" | "md" | "lg";
   disabled?: boolean;
   icon?: string;
   iconPosition?: "left" | "right";
@@ -34,7 +35,7 @@ export default function Button({
     buttonVariants[variant][
       type as keyof (typeof buttonVariants)[typeof variant]
     ];
-  const sizeStyle = buttonStyles[size];
+  const sizeStyle = buttonSizes[size];
   const disabledStyle = disabled
     ? disabledVariants[variant][
         type as keyof (typeof disabledVariants)[typeof variant]
@@ -47,6 +48,17 @@ export default function Button({
     : { width: "auto" };
   const isIconLeft = iconPosition === "left";
 
+  // 버튼 사이즈에 따른 텍스트 타입을 매핑하는 객체 생성
+  const textTypeMap: Record<
+    NonNullable<ButtonProps["size"]>,
+    "headline3" | "headline4"
+  > = {
+    sm: "headline4",
+    md: "headline3",
+    lg: "headline3",
+  };
+
+  const textType = textTypeMap[size];
   return (
     <button
       className={`${variantStyle} ${sizeStyle} ${disabledStyle} ${
@@ -57,13 +69,13 @@ export default function Button({
       disabled={disabled}
     >
       {icon ? (
-        <div className={buttonStyles.content}>
+        <div className={iconContainer}>
           {isIconLeft && <Icon name={icon} size={18} alt={icon} />}
-          <span>{children}</span>
+          <DefaultText type={textType} align="center">{children}</DefaultText>
           {!isIconLeft && <Icon name={icon} size={18} alt={icon} />}
         </div>
       ) : (
-        children
+        <DefaultText type={textType} align="center">{children}</DefaultText>
       )}
     </button>
   );
