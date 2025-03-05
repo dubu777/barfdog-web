@@ -31,6 +31,7 @@ import { useFailSubscriptionPayment } from "@/api/order/mutations/useFailSubscri
 import { useRouter } from "next/navigation";
 import OrderSummary from "../../common/orderSummary/OrderSummary";
 import RewardUsage from "../../common/reward/RewardUsage";
+import SubscriptionOrderItemList from "../subscriptionOrderItemList/SubscriptionOrderItemList";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -218,6 +219,8 @@ export default function SubscriptionOrderContainer({
   return (
     <div>
       <DeliveryAddress orderType={ORDER_TYPE.SUBSCRIPTION} />
+      <Divider />
+      <SubscriptionOrderItemList subscriptionOrderSheetData={subscriptionOrderSheetData}/>
       <Divider />
       <OrderItem
         orderType={ORDER_TYPE.SUBSCRIPTION}

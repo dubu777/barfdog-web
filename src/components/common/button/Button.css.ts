@@ -1,6 +1,21 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
+
+export const baseStyle = style({
+  display: "inline-flex",
+  justifyContent: "center",
+  alignItems: "center",
+  cursor: "pointer",
+});
+
+export const textStyle = style({
+  display: "inline-flex",
+  justifyContent: "center",
+  alignItems: "center",
+  lineHeight: 1,
+});
+
 // 버튼 크기
 export const buttonSizes = {
   sm: style({

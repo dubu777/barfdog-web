@@ -1,5 +1,5 @@
 import React from "react";
-import { buttonSizes, buttonVariants, disabledVariants, iconContainer } from "./Button.css";
+import { buttonSizes, buttonVariants, disabledVariants, iconContainer, baseStyle, textStyle } from "./Button.css";
 import Icon from "../icon/Icon";
 
 interface ButtonProps {
@@ -56,7 +56,7 @@ export default function Button({
   };
   return (
     <button
-      className={`${variantStyle} ${sizeStyle} ${disabledStyle} ${
+      className={`${baseStyle} ${variantStyle} ${sizeStyle} ${disabledStyle} ${
         className || ""
       }`}
       onClick={onClick}
@@ -66,11 +66,11 @@ export default function Button({
       {icon ? (
         <div className={iconContainer}>
           {isIconLeft && <Icon name={icon} size={18} alt={icon} />}
-          <span>{children}</span>
+          <span className={textStyle}>{children}</span>
           {!isIconLeft && <Icon name={icon} size={18} alt={icon} />}
         </div>
       ) : (
-        children
+        <span className={textStyle}>{children}</span>
       )}
     </button>
   );
