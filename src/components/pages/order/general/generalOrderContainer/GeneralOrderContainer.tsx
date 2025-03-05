@@ -9,20 +9,21 @@ import {
 import { useSaveGeneralOrder } from "@/api/order/mutations/useSaveGeneralOrder";
 import { SaveGeneralOrderRequest, GeneralIamportResponse } from "@/types";
 import BundleDeliverySelector from "../bundleDeliverySelector/BundleDeliverySelector";
-import DeliveryAddress from "../deliveryAddress/DeliveryAddress";
+import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 
 import { ORDER_TYPE } from "@/constants";
 import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
 import { useOrderStore } from "@/store/order/useOrderStore";
-import PaymentMethod from "../paymentMethod/PaymentMethod";
-import RewardUsage from "../reward/RewardUsage";
-import OrderSummary from "../orderSummary/OrderSummary";
-import OrderItem from "../orderItem/OrderItem";
+import PaymentMethod from "../../common/paymentMethod/PaymentMethod";
+
+import OrderItem from "../../orderItem/OrderItem";
 import { buildGeneralPaymentRequest, usePayment } from "@/hooks/usePayment";
 import useDeviceState from "@/hooks/useDeviceState";
 import { useRouter } from "next/navigation";
+import RewardUsage from "../../common/reward/RewardUsage";
+import OrderSummary from "../../common/orderSummary/OrderSummary";
 
 interface GeneralOrderContainerProps {}
 

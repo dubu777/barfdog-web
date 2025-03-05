@@ -1,5 +1,5 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import * as styles from "../OrderSheetCommon.css";
+import * as styles from "../../OrderSheetCommon.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useEffect, useMemo } from "react";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
@@ -68,7 +68,8 @@ export default function RewardUsage({}: RewardUsageProps) {
           type="text"
           error={reward.errors.appliedReward}
           touched={reward.touched.appliedReward}
-          onChange={handleInputChange}
+          // onChange={handleInputChange}
+          onChange={e => handleInputChange}
           onFocus={(e) => {
             if (e.target.value === "0") {
               e.target.value = "";

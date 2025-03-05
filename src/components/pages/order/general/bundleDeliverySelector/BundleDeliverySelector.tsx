@@ -1,5 +1,5 @@
 import * as styles from "./BundleDeliverySelector.css";
-import { orderSheetWrapper } from "../OrderSheetCommon.css";
+import { orderSheetWrapper } from "../../OrderSheetCommon.css";
 import { initialDeliveryDto } from "@/config/orderInitialValues";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { DeliveryDto } from "@/types";

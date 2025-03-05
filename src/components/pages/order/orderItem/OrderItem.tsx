@@ -10,7 +10,7 @@ import {
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { ORDER_TYPE } from "@/constants";
-import CouponModal from "../couponModal/CouponModal";
+import CouponModal from "../common/couponModal/CouponModal";
 import { orderSheetWrapper } from "../OrderSheetCommon.css";
 import { useOrderStore } from "@/store/order/useOrderStore";
 
@@ -77,7 +77,7 @@ export default function OrderItem({
       <div className={styles.orderInfoContainer}>
         {orderType === ORDER_TYPE.GENERAL && generalOrderSheetData && (
           <div className={styles.gridContainer}>
-            <div className={styles.gridHeader}>
+            <div className={styles.gridHeader}>ㅊ
               <div>상품 정보</div>
               <div>수량</div>
               <div>주문 금액</div>

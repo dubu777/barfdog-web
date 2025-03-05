@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import * as styles from './DatePicker.css';
-import ArrowLeft from '/public/images/icons/chevron-left.svg';
+import ArrowLeft from '/public/images/icons/chevron-left-blue.svg';
 import ArrowRight from '/public/images/icons/chevron-right-blue.svg';
 import InputField from "@/components/common/inputField/InputField";
 import DatePicker from "react-datepicker";

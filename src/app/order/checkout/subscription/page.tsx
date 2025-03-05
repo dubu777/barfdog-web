@@ -8,7 +8,7 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import SubscriptionOrderContainer from "@/components/pages/order/subscriptionOrderContainer/SubscriptionOrderContainer";
+import SubscriptionOrderContainer from "@/components/pages/order/subscription/subscriptionOrderContainer/SubscriptionOrderContainer";
 import { prefetchGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
 
 interface SubscriptionPageProps {

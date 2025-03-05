@@ -1,7 +1,7 @@
 "use client";
 
 import { orderCalculation } from "@/utils/order/orderCalculation";
-import * as styles from "../OrderSheetCommon.css";
+import * as styles from "../../OrderSheetCommon.css";
 import { ORDER_TYPE } from "@/constants";
 import { GeneralOrderItem, OrderType } from "@/types";
 import DefaultText from "@/components/common/defaultText/DefaultText";

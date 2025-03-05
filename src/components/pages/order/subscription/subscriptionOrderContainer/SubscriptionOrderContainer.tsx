@@ -1,13 +1,13 @@
 "use client";
 
-import PaymentMethod from "../paymentMethod/PaymentMethod";
+import PaymentMethod from "../../common/paymentMethod/PaymentMethod";
 import { ORDER_TYPE } from "@/constants";
 
-import OrderSummary from "../orderSummary/OrderSummary";
-import DeliveryAddress from "../deliveryAddress/DeliveryAddress";
-import OrderItem from "../orderItem/OrderItem";
+
+import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
+import OrderItem from "../../orderItem/OrderItem";
 import Divider from "@/components/common/divider/Divider";
-import RewardUsage from "../reward/RewardUsage";
+
 import { useOrderStore } from "@/store/order/useOrderStore";
 import {
   SaveSubscriptionOrderRequest,
@@ -29,6 +29,8 @@ import { useInvalidSubscriptionPayment } from "@/api/order/mutations/useInvalidS
 import { useSuccessSubscriptionPayment } from "@/api/order/mutations/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/order/mutations/useFailSubscriptionPayment";
 import { useRouter } from "next/navigation";
+import OrderSummary from "../../common/orderSummary/OrderSummary";
+import RewardUsage from "../../common/reward/RewardUsage";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -49,6 +51,8 @@ export default function SubscriptionOrderContainer({
 
   const { data: subscriptionOrderSheetData } =
     useGetSubscriptionOrder(subscribeId);
+    console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
+    
   const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
   const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment();

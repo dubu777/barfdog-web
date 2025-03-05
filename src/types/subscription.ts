@@ -37,7 +37,7 @@ export type {
 interface SubscriptionOrderSheetResponse {
   brochure: boolean;
   coupons: Coupon[];
-  defaultAddress: DefaultAddress;
+  address: DefaultAddress;
   email: string;
   grade: string;
   gradeDiscountPercent: number;
@@ -62,11 +62,11 @@ interface Coupon {
 }
 
 interface DefaultAddress {
-  deliveryName: string | null;
-  zipcode: string;
   city: string;
-  street: string;
+  deliveryName: string | null;
   detailAddress: string;
+  street: string;
+  zipcode: string;
 }
 
 interface SubscribeDto {

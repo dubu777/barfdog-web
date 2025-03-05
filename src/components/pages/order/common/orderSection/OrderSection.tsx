@@ -23,7 +23,12 @@ export default function OrderSection({
       <div className={styles.OrderSectionTitleWrapper}>
         <DefaultText type="title4">{title}</DefaultText>
         {subTitleParts && (
-          <Button type="assistive" variant="text" size="sm" onClick={onSubtitleClick}>
+          <Button
+            type="assistive"
+            variant="text"
+            size="sm"
+            onClick={onSubtitleClick}
+          >
             {subTitleParts.map(({ text, isPoint }, idx) => (
               <span
                 key={idx}
@@ -35,7 +40,7 @@ export default function OrderSection({
           </Button>
         )}
       </div>
-      <div>{children}</div>
+      {children}
     </section>
   );
 }

@@ -1,12 +1,12 @@
 import * as styles from "../MyPageDogList.css";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import DogButtonControls from "@/components/pages/mypage/main/myPageDogList/dogButtonContols/DogButtonControls";
+// import DogButtonControls from "@/components/pages/mypage/main/myPageDogList/dogButtonContols/DogButtonControls";
 import DogRepresentative from "@/components/pages/mypage/main/myPageDogList/dogRepresentative/DogRepresentative";
 import { DogData } from "@/types/dogs";
 import { subscriptionStatus } from "@/constants";
 import { getProductionDates } from "@/utils/getProductionDates";
-import DogImage from "@/components/pages/mypage/main/myPageDogList/dogImage/DogImage";
+// import DogImage from "@/components/pages/mypage/main/myPageDogList/dogImage/DogImage";
 import Chips from "@/components/common/chips/Chips";
 
 interface MyPageDogCardProps {
@@ -38,13 +38,13 @@ const DogCard = ({ dog, noData, resetSwiper }: MyPageDogCardProps) => {
         {!noData ? subscriptionStatusKR : '구독 전'}
       </Chips>
       <div className={styles.dogContent}>
-        {dog && 
+        {/* {dog && 
           <DogImage
             dogId={dog.id}
             dogPictureUrl={dog.pictureUrl as string}
             dogPictureName={dog.pictureName as string}
           />
-        }
+        } */}
         <div>
           <div style={{ marginBottom: '7px' }}>
             <Text type='description' size='sm' weight='bold' pageName='myPage'>{!noData && dog ? dog.name : '멍댕이'}</Text>
@@ -59,13 +59,13 @@ const DogCard = ({ dog, noData, resetSwiper }: MyPageDogCardProps) => {
         </li>
         <li>수령 예정일: {!noData ? productionDates && productionDates.receivingDate || '미정' : '미정'}</li>
       </ul>
-      {dog && 
+      {/* {dog && 
         <DogButtonControls
           subscribeId={dog.subscribeId}
           status={!noData ? dog.subscribeStatus : 'BEFORE_PAYMENT'}
           dogName={dog.name}
         />
-      }
+      } */}
       {noData &&
         <div className={styles.noDogDataContainer}>
           <Text type='title' size='lg' color='white'>

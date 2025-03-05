@@ -19,7 +19,7 @@ export function useUpdateSubscriptionOrderBody(
 
   useEffect(() => {
     const {
-      defaultAddress,
+      address,
       subscribeDto,
       nextDeliveryDate,
       name,
@@ -36,9 +36,9 @@ export function useUpdateSubscriptionOrderBody(
       deliveryDto: {
         name: name, // 수령자 이름
         phone: phoneNumber,
-        zipcode: defaultAddress.zipcode,
-        street: defaultAddress.street,
-        detailAddress: defaultAddress.detailAddress,
+        zipcode: address.zipcode,
+        street: address.street,
+        detailAddress: address.detailAddress,
         request: "",
       },
       deliveryPrice: 0,
@@ -61,9 +61,9 @@ export function useUpdateSubscriptionOrderBody(
     setDeliveryDto({
       name: name, // 수령자 이름
       phone: phoneNumber,
-      zipcode: defaultAddress.zipcode,
-      street: defaultAddress.street,
-      detailAddress: defaultAddress.detailAddress,
+      zipcode: address.zipcode,
+      street: address.street,
+      detailAddress: address.detailAddress,
       request: "",
     });
     setUserTotalReward(reward);
