@@ -1,27 +1,28 @@
 'use client';
 import * as styles from "./MyPageHeader.css";
-import BackButton from "/public/images/icons/left-arrow.svg";
-import { useBackNavigation } from "@/utils";
-import { usePathname } from "next/navigation";
 import { commonLayoutStyle } from "@/styles/common.css";
+import { useParams, usePathname } from "next/navigation";
+import BackButton from "/public/images/icons/left-arrow.svg";
 import Link from "next/link";
 import Cart from "/public/images/icons/cart.svg";
-import { useCartStore } from "@/store/useCartStore";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import { useBackNavigation } from "@/utils";
+import { useCartStore } from "@/store/useCartStore";
 
 const MyPageHeader = () => {
   const goBack = useBackNavigation();
   const pathname = usePathname();
+  const params = useParams();
   const { count } = useCartStore();
 
   const pathTitles: { [key: string]: string } = {
     '/mypage': '마이페이지',
     '/mypage/order-history': '주문내역',
-    '/mypage/coupon': '쿠폰',
-    '/mypage/reward': '적립금',
+    '/mypage/coupon': '쿠폰 내역',
+    '/mypage/reward': '적립금 내역',
     '/mypage/manage-card': '카드관리',
     '/mypage/invite-friends': '친구초대',
-    '/mypage/review': '리뷰',
+    '/mypage/review': '리뷰작성내역',
     '/mypage/subscribe': '구독 관리',
     '/mypage/account': '계정 정보',
   };
@@ -42,8 +43,11 @@ const MyPageHeader = () => {
     if (pathname.includes('/mypage/subscribe/benefits/')) {
       return '패키지 혜택';
     }
-    if (pathname.includes('/mypage/review/')) {
+    if (pathname.includes('/mypage/review/create')) {
       return '리뷰 작성';
+    }
+    if (pathname.includes(`/mypage/review/${params.reviewId}`)) {
+      return '리뷰 상세';
     }
     if (pathname.includes('/mypage/account/set-password')) {
       return '비밀번호 생성';

@@ -1,24 +1,33 @@
 'use client';
 import * as styles from "./Reward.css";
 import { useEffect } from "react";
-import Text from "@/components/common/text/Text";
+import { useSearchParams } from "next/navigation";
 import RewardFilter from "@/components/pages/mypage/reward/rewardFilter/RewardFilter";
 import RewardList from "@/components/pages/mypage/reward/rewardList/RewardList";
-import RewardQuestionModal from "@/components/pages/mypage/reward/rewardQuestionModal/RewardQuestionModal";
 import { useInView } from "react-intersection-observer";
 import { useGetRewardList } from "@/api/mypage/queries/useGetRewardList";
-import { RewardData, RewardListData, RewardListDataWithTotals } from "@/types/reward";
+import { RewardData, RewardFilterType, RewardListData, RewardListDataWithTotals } from "@/types";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import Card from "@/components/common/card/Card";
+import InfoBox from "@/components/common/infoBox/InfoBox";
+import useModal from "@/hooks/useModal";
+import RewardInfoModal from "@/components/pages/mypage/reward/rewardInfoModal/RewardInfoModal";
 
 const Reward = () => {
   const { data: rewardListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetRewardList();
   const { ref, inView } = useInView();
 
-  // const currentPageAfterScroll = rewardList?.pageParams?.[rewardList.pageParams.length - 1] ?? 0;
-  // const currentPage = rewardList?.pages[0]?.page.number;
-  // const totalPages = rewardList?.pages[0]?.page.totalPages;
+  const { onToggle, onClose, isOpen } = useModal();
+
+  const searchParams = useSearchParams();
+  const statusFilter = searchParams.get('status') as RewardFilterType;
 
   const rewardList = rewardListData?.pages
-    ?.map((page: RewardListData) => page.rewardList)
+    ?.map((page: RewardListData) =>
+      statusFilter === 'ALL' || statusFilter === null
+        ? page.rewardList
+        : page.rewardList.filter(reward => reward.rewardStatus === statusFilter))
+    // ?.map((page: RewardListData) => page.rewardList)
     .reduce((acc, curr) => acc.concat(curr), [] as RewardData[]);
 
   const totalReward = (rewardListData?.pages[0] as RewardListDataWithTotals).totalReward ?? 0;
@@ -30,31 +39,31 @@ const Reward = () => {
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
   return (
-    <section className={styles.rewardListContainer}>
-      <article className={styles.totalRewardListBox}>
-        <div className={styles.questionMarkBox}>
-          <Text type='title' size='md' weight='normal'>사용 가능 적립금</Text>
-          <RewardQuestionModal />
+    <section>
+      <article className={styles.totalRewardContainer}>
+        <DefaultText type='title4'>적립금</DefaultText>
+        <Card shadow='light' className={styles.totalRewardCard}>
+          <DefaultText type='label4'>사용 가능 적립금</DefaultText>
+          <DefaultText type='title2'>{totalReward?.toLocaleString()} P</DefaultText>
+          <ul className={styles.rewardSummary}>
+            <li className={styles.summaryInfo}>
+              <DefaultText type='label4'>다음달 소멸 예정 금액</DefaultText>
+              <DefaultText type='label4'>1,000 P</DefaultText>
+            </li>
+            <li className={styles.summaryInfo}>
+              <DefaultText type='label4'>포인트로 할인받은 총액</DefaultText>
+              <DefaultText type='label4'>1,000,000 원</DefaultText>
+            </li>
+          </ul>
+        </Card>
+        <div>
+          <InfoBox text='적립금 안내사항' onClick={onToggle} />
+          <RewardInfoModal isOpen={isOpen} onClose={onClose} />
         </div>
-        <p className={styles.totalReward}>
-          <b className={styles.total}>{totalReward?.toLocaleString()}</b> 원
-        </p>
-        <ul className={styles.rewardInfoBox}>
-          <li className={styles.rewardInfo}>
-            <p>소멸 예정 금액 (30일 이내)</p>
-            <p>0원</p>
-          </li>
-          <li className={styles.rewardInfo}>
-            <p>총 누적 적립금 (가입일 기준)</p>
-            <p>0원</p>
-          </li>
-        </ul>
       </article>
-      <RewardFilter totalCount={totalCount}  />
+      <RewardFilter totalCount={totalCount} statusFilter={statusFilter}  />
       <RewardList rewardList={rewardList || []} />
-      <div ref={ref} style={{ height: 50, background: isFetchingNextPage ? 'lightgray' : 'transparent' }}>
-        {isFetchingNextPage ? "Loading more..." : hasNextPage ? "Load more on scroll" : "No more data"}
-      </div>
+      <div ref={ref} className={styles.infiniteTrigger} />
     </section>
   );
 };

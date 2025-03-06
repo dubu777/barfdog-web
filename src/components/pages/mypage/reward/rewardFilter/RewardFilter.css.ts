@@ -2,19 +2,13 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const rewardFilterContainer = style({
-  display: 'flex',
-  gap: '11px',
-  marginBottom: '31px',
+  padding: '20px 20px 10px',
+  borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,
 });
 
-export const rewardListHeader = style({
-  borderBottom: `1px solid ${themeVars.borderColors.greyDD}`,
+export const rewardFilter = style({
   display: 'flex',
+  gap: '8px',
   justifyContent: 'space-between',
-  padding: '0 6px 9px'
-});
-
-export const selectedMonth = style({
-  width: 'auto',
-  maxWidth: '100px',
+  marginBottom: '20px',
 });

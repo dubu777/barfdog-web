@@ -1,9 +1,9 @@
-import {KeyboardEvent, MouseEvent, useState} from "react";
+import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from "react";
 import * as styles from "./ApplyCoupon.css";
+import { AxiosError, isAxiosError } from "axios";
 import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
 import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
 import { useToastStore } from "@/store/useToastStore";
-import { AxiosError, isAxiosError } from "axios";
 import InputField from "@/components/common/inputField/InputField";
 
 const ApplyCoupon = () => {
@@ -13,12 +13,12 @@ const ApplyCoupon = () => {
   const { mutate } = useApplyCoupon();
   const { addToast } = useToastStore();
 
-  const handleCouponCodeChange = (value: string | number) => {
-    if (typeof value === 'string') {
-      setCouponCode(value)
-      setApplyErrorMessage('');
-    }
+  const handleCouponCodeChange = (e: ChangeEvent<Element>) => {
+    const value = (e.target as HTMLInputElement).value;
+    setCouponCode(value)
+    setApplyErrorMessage('');
   }
+
   const handleApplyCoupon = (e?: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLButtonElement>) => {
     if (e) e.preventDefault();
     if (!couponCode) {
@@ -47,26 +47,30 @@ const ApplyCoupon = () => {
   };
   return (
     <>
-    <div className={styles.couponInputContainer}>
+    <div className={styles.applyCoupon}>
       <div className={styles.couponInput}>
         <InputField
-          size='sm'
           placeholder='쿠폰 번호를 입력하세요'
           id='couponCode'
           name='couponCode'
           value={couponCode}
-          error={applyErrorMessage !== ''}
-          onChange={(value) => handleCouponCodeChange(value)}
+          error={applyErrorMessage}
+          touched={applyErrorMessage !== ''}
+          onChange={(e: ChangeEvent) => handleCouponCodeChange(e)}
           onSubmit={handleApplyCoupon}
           confirmButton
           confirmButtonText='등록'
+          clearButton
+          onReset={() => setCouponCode('')}
           disabled={isLoading}
         />
       </div>
     </div>
-    <p className={styles.errorMessage}>
-      {applyErrorMessage}
-    </p>
+    {applyErrorMessage &&
+      <p className={styles.errorMessage}>
+        {applyErrorMessage}
+      </p>
+    }
     </>
   );
 };

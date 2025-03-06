@@ -1,4 +1,4 @@
-import {style} from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 export const myPageBanner = style({
   width: '100%',

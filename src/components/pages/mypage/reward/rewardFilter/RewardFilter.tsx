@@ -1,79 +1,44 @@
-'use client';
 import * as styles from "./RewardFilter.css";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { DefaultObjectType } from "@/types/common";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import TabBar from "@/components/common/tabBar/TabBar";
 import { RewardFilterType } from "@/types/reward";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import SelectBox from "@/components/common/selectBox/SelectBox";
 
-const statusFilter: DefaultObjectType[] = [
-  {
-    name: '전체',
-    value: 'ALL' as RewardFilterType,
-    id: 'ALL',
-  },
-  {
-    name: '적립',
-    value: 'SAVED' as RewardFilterType,
-    id: 'SAVED',
-  },
-  {
-    name: '사용',
-    value: 'USED' as RewardFilterType,
-    id: 'USED',
-  },
-  {
-    name: '소멸',
-    value: 'EXPIRED' as RewardFilterType,
-    id: 'EXPIRED',
-  },
-]
+const RewardFilter = ({ totalCount, statusFilter }: { totalCount: number, statusFilter: RewardFilterType | null }) => {
+  const filterStatus = statusFilter === null ? 'ALL' as RewardFilterType : statusFilter;
 
-const RewardFilter = ({ totalCount }: { totalCount: number }) => {
-  const [isActive, setIsActive] = useState<string>('ALL');
-  const [selectedMonth, setSelectedMonth] = useState<string>('3')
-  const { pushWithQuery } = useDynamicQueryPush();
   const pathname = usePathname();
+  const { pushWithQuery } = useDynamicQueryPush();
+
+  const tabs = [
+    { label: '전체', value: 'ALL', onInit: () => handleStatusFilterChange('ALL') },
+    { label: '적립', value: 'SAVED', onInit: () => handleStatusFilterChange('SAVED') },
+    { label: '사용', value: 'USED', onInit: () => handleStatusFilterChange('USED') },
+    { label: '소멸', value: 'EXPIRED', onInit: () => handleStatusFilterChange('EXPIRED') },
+  ]
 
   const handleStatusFilterChange = async (status: string) => {
     pushWithQuery(pathname, { status: status })
-    setIsActive(status)
   }
-  const handleDateFilterChange = async (value: string) => {
-    pushWithQuery(pathname, { month: value })
-    setSelectedMonth(value)
-  }
+
+  const defaultTabIndex = tabs.findIndex(tab => tab.value === filterStatus);
+
   return (
-    <>
     <article className={styles.rewardFilterContainer}>
-      {statusFilter.map(filter => (
-        <DefaultButton
-          key={filter.id}
-          type='grayBorder'
-          borderRadius='sm'
-          size='sm'
-          isActive={isActive === filter.value}
-          onClick={() => handleStatusFilterChange(String(filter.value))}
-        >
-          {filter.name}
-        </DefaultButton>
-      ))}
-    </article>
-    <div className={styles.rewardListHeader}>
-      <p>총 {totalCount}건</p>
-      <div className={styles.selectedMonth}>
-        <SelectBox
-          id="month"
-          options={[{ label: '3개월', value: '3' }, { label: '6개월', value: '6' }, { label: '12개월', value: '12' }]}
-          forFilter
-          onSelect={(value) => handleDateFilterChange(value)}
-          selectedValue={selectedMonth}
+      <div className={styles.rewardFilter}>
+        <TabBar
+          variant='chips'
+          tabs={tabs}
+          defaultIndex={defaultTabIndex}
+          width={68}
+          justifyContent='center'
         />
       </div>
-    </div>
-    </>
+      <div>
+        <DefaultText type='label4'>총 {totalCount}건</DefaultText>
+      </div>
+    </article>
   );
 };
 

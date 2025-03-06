@@ -47,7 +47,7 @@ interface UserInfo {
 
 interface DefaultUserInfo {
 	id: string;
-	gender: string;
+	gender: 'MALE' | 'FEMALE' | 'NONE' | null;
 	email: string;
 	mobile: string;
 	mobile_e164: string;
@@ -118,7 +118,7 @@ interface SignUpFormValues {
 	authNumber: string;
 	address: AddressDto;
 	birthday: string | Date | null;
-	gender: string;
+	gender: 'MALE' | 'FEMALE' | 'NONE' | null;
 	recommendCode?: string;
 	agreement: {
 		servicePolicy: boolean;
@@ -158,7 +158,7 @@ interface GetUserInfo extends UpdateUserInfo{
 interface UpdateUserInfo {
 	address: AddressDto;
 	birthday: string;
-	gender: string;
+	gender: 'MALE' | 'FEMALE' | 'NONE' | null;
 	name: string;
 	password: string | null;
 	phoneNumber: string;

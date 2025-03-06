@@ -2,10 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
-export const rewardListContainer = style({
-  paddingBottom: '80px',
-});
-
 export const rewardListContents = style({
   display: 'flex',
   flexDirection: 'column',
@@ -15,12 +11,12 @@ export const rewardItem = style({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'flex-end',
-  padding: '15px 9px 15px 6px',
-  borderBottom: `1px solid ${themeVars.borderColors.greyDD}`,
+  padding: '12px 20px',
+  borderBottom: `2px solid ${themeVars.colors.gray.gray50}`,
 });
 
 export const rewardName = style({
-  marginTop: '10px',
+  marginTop: '16px',
 });
 
 export const tradeReward = recipe({

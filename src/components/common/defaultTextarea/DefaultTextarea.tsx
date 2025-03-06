@@ -1,58 +1,55 @@
-import * as styles from './DefaultTextarea.css';
 import { ChangeEvent, forwardRef, TextareaHTMLAttributes } from "react";
 import Text from "@/components/common/text/Text";
+import {
+  charCount, errorText,
+  textareaBoxStyle,
+  textareaStyle
+} from "./DefaultTextarea.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
 interface DefaultTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>{
   id: string;
+  value: string;
   label?: string;
   error?: string;
   className?: string;
   maxLength?: number;
-  labelPosition?: 'left' | 'top';
 }
 
 const DefaultTextarea = forwardRef<HTMLTextAreaElement, DefaultTextareaProps>(({
   id,
-  label,
   error,
   className,
   maxLength,
-  labelPosition= 'left',
+  value,
   ...rest
 }, ref) => {
-  const value = rest.value || '';
   const currentLength = typeof value === 'string' || Array.isArray(value) ? value.length : 0;
+
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (rest.onChange) {
       rest.onChange(e);
     }
   }
   return (
-    <>
-    <div className={`${styles.defaultTextareaContainer} ${className || ''}`}>
-      {label && (
-        <label htmlFor={id} className={styles.textareaLabel({ labelPosition })} >
-          {label}
-        </label>
-      )}
-      <div className={styles.textareaBox}>
+    <div className={className || ''}>
+      <div className={textareaBoxStyle}>
         <textarea
           id={id}
           ref={ref}
           maxLength={maxLength}
-          className={styles.textarea}
+          className={textareaStyle({ active: value?.length !== 0 })}
           onChange={handleInputChange}
           {...rest}
         />
         {maxLength && (
-          <p className={styles.charCount}>
+          <DefaultText type='caption' color='gray500' className={charCount}>
             {currentLength} / {maxLength.toLocaleString()}
-          </p>
+          </DefaultText>
         )}
-        {error && <Text type='description' size='sm' color='red' align='left' className={styles.errorText}>{error}</Text>}
       </div>
+      {error && <Text type='description' size='sm' color='red' align='left' className={errorText}>{error}</Text>}
     </div>
-    </>
   );
 });
 

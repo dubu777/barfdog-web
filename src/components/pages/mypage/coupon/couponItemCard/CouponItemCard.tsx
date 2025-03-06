@@ -1,8 +1,9 @@
 import * as styles from "./CouponItemCard.css";
-import Text from "@/components/common/text/Text";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
+import Link from "next/link";
 import { formatDate } from "@/utils/dateUtils";
 import { CouponData } from "@/types/coupon";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import Card from "@/components/common/card/Card";
 
 const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
   const won = coupon.discountType === 'FLAT_RATE';
@@ -10,41 +11,36 @@ const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
 
   const subscribeTarget = coupon.couponTarget === 'SUBSCRIBE';
   const generalTarget = coupon.couponTarget === 'GENERAL';
-  const allTarget = coupon.couponTarget === 'ALL';
 
-  const couponTargetName = generalTarget ? '일반 상품 한정' : subscribeTarget ? '구독 상품 한정' : '전상품 사용 가능';
+  const couponTargetName = generalTarget ? '일반상품 사용가능' : subscribeTarget ? '정기구독 사용가능' : '전체 사용가능';
   return (
     <li className={styles.couponItem}>
-      <Text type='description' size='sm' color='black' className={styles.couponName}>
-        {coupon.name}
-      </Text>
-      <Text type='title' size='titleXl' color='red' className={styles.discount}>
-        { won ? `${coupon.discountDegree.toLocaleString()}원 `
-          : percent && `${coupon.discountDegree}% `
-        }할인
-      </Text>
-
-      <Text type='description' size='xs' color='grey' className={styles.minPrice}>
-        {coupon.availableMinPrice.toLocaleString()}원 이상 주문 시
-      </Text>
-      <Text type='description' size='xs' color='grey' className={styles.couponType}>
-        {couponTargetName}
-      </Text>
-      <Text type='description' size='xs' color='red'>
-        {formatDate(coupon.expiredDate, 'fullDateTimeKR').slice(0, -3)} 까지
-      </Text>
-      <div className={styles.couponControls({ allTarget: allTarget })}>
-        {(allTarget || subscribeTarget) &&
-        <DefaultButton linkUrl='/survey' type='black' size='sm' borderRadius='sm' >
-          구독에 바로 사용
-        </DefaultButton>
+      <Card shadow='light'>
+        <DefaultText type='title1' className={styles.discount}>
+          { won ? `${coupon.discountDegree.toLocaleString()}원 `
+            : percent && `${coupon.discountDegree}% `
+          }
+        </DefaultText>
+        <DefaultText type='label1' className={styles.couponName}>
+          {coupon.name}
+        </DefaultText>
+        {percent &&
+          <DefaultText type='body3'>
+            (최대 {coupon.availableMaxDiscount.toLocaleString()}원 할인)
+          </DefaultText>
         }
-        {(allTarget || generalTarget) &&
-        <DefaultButton linkUrl='/store?itemType=ALL' type='blackBorder' size='sm' borderRadius='sm'>
-          스토어에 바로 사용
-        </DefaultButton>
-        }
-      </div>
+        <DefaultText type='caption' color='gray500' className={styles.minPrice}>
+          {coupon.availableMinPrice.toLocaleString()}원 이상 주문 시
+        </DefaultText>
+        <div className={styles.expiredDateBox}>
+          <DefaultText type='caption' color='gray500'>
+            {formatDate(coupon.expiredDate, 'fullDateTimeKR').slice(0, -3)} 까지&nbsp;&nbsp;l&nbsp;&nbsp;{couponTargetName}
+          </DefaultText>
+          <Link href='/'>
+            <DefaultText type='caption' color='gray800' className={styles.viewItem}>적용상품보기</DefaultText>
+          </Link>
+        </div>
+      </Card>
     </li>
   );
 };

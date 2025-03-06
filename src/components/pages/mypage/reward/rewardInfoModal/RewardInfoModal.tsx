@@ -1,18 +1,15 @@
-import * as styles from "./RewardQuestionModal.css";
-import QuestionMark from "/public/images/icons/question-mark.svg";
+import * as styles from "./RewardInfoModal.css";
 import Text from "@/components/common/text/Text";
-import useModal from "@/hooks/useModal";
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
 
-const RewardQuestionModal = () => {
-  const { onToggle, onClose, isOpen } = useModal();
+interface RewardInfoModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
+const RewardInfoModal = ({ isOpen, onClose }: RewardInfoModalProps) => {
+  console.log('isOpen', isOpen)
   return (
-    <>
-    <QuestionMark
-      className={styles.questionMark}
-      onClick={onToggle}
-    />
     <DefaultModal
       isVisible={isOpen}
       onClose={onClose}
@@ -43,8 +40,7 @@ const RewardQuestionModal = () => {
         </p>
       </div>
     </DefaultModal>
-    </>
   );
 };
 
-export default RewardQuestionModal;
+export default RewardInfoModal;

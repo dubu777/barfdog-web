@@ -1,12 +1,20 @@
-import {style} from "@vanilla-extract/css";
-import {defaultWidth} from "@/styles/common.css";
+import { style } from "@vanilla-extract/css";
+import { themeVars } from "@/styles/theme.css";
 
-export const couponContainer = style([defaultWidth, {
-  // border: '1px solid red',
-}])
+export const applyCouponContainer = style({
+  padding: '20px',
+  background: themeVars.colors.gray.gray0,
+})
 
-export const couponListBox = style({
-  marginTop: '52px',
+export const couponListContainer = style({
+  padding: '20px',
+  background: themeVars.colors.gray.gray50
+})
+
+export const couponSortBy = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 })
 
 export const couponList = style({

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const rateStarBoxAlignStyles = {
   center: style({

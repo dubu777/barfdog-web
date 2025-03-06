@@ -1,10 +1,10 @@
 'use client';
-import * as styles from './MyPageBanner.css';
+import * as styles from './MainBanner.css';
 import Image from "next/image";
 import Link from "next/link";
 import { useGetMyPageBanner } from "@/api/mypage/queries/useGetMypageBanner";
 
-const MyPageBanner = () => {
+const MainBanner = () => {
   const { data: banner } = useGetMyPageBanner();
   return (
     banner &&
@@ -21,4 +21,4 @@ const MyPageBanner = () => {
   );
 };
 
-export default MyPageBanner;
+export default MainBanner;
