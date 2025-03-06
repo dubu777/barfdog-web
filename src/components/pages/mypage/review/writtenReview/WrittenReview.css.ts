@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
-import {recipe} from "@vanilla-extract/recipes";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const writtenReviewContainer = recipe({
   base: {},
@@ -16,11 +16,7 @@ export const writtenReviewContainer = recipe({
 export const writtenList = style({ })
 
 export const writtenReview = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '40px',
-  padding: '1rem 0',
-  borderBottom: `1px solid ${themeVars.borderColors.greyBB}`,
+  borderBottom: `1px solid ${themeVars.colors.gray.gray300}`,
 });
 
 export const reviewInfo = style({

@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { dropdownBoxStyle, dropdownContainerStyle, dropdownOptionStyle } from "./Dropdown.css";
+import { dropdownBoxStyle, dropdownButtonStyle, dropdownContainerStyle, dropdownOptionStyle } from "./Dropdown.css";
 import { cardShadow } from "@/components/common/card/Card.css";
 import { motion, AnimatePresence } from "framer-motion";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -30,7 +30,7 @@ export default function Dropdown({
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
 	return (
-		<div className={dropdownContainerStyle} ref={dropdownRef}>
+		<div className={dropdownContainerStyle} ref={dropdownRef} style={{ textAlign: position }}>
 			<button onClick={() => setIsOpen(!isOpen)}>{trigger}</button>
 			<AnimatePresence>
 				{isOpen && (

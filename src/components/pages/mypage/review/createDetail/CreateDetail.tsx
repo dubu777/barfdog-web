@@ -1,13 +1,13 @@
 'use client';
 import * as styles from "@/components/pages/mypage/review/updateDetail/UpdateDetail.css";
 import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
-import { useReviewStore } from "@/store/useReviewStore";
+import { usePersistReviewStore } from "@/store/usePersistReviewStore";
 import { useCreateReviewDetail } from "@/api/review/mutations/useCreateReviewDetail";
 import { CreateReviewDetail, UpdateReviewDetail } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 
 const CreateDetail = () => {
-  const { reviewFormData } = useReviewStore();
+  const { reviewFormData } = usePersistReviewStore();
   const { mutate } = useCreateReviewDetail();
   const { addToast } = useToastStore();
 

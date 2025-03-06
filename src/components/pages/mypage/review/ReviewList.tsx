@@ -1,8 +1,10 @@
 'use client';
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as styles from './ReviewList.css';
-import Tabs from "@/components/common/tabs/Tabs";
+import TabBar from "@/components/common/tabBar/TabBar";
+import Dropdown from "@/components/common/dropdown/Dropdown";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 import WritableReview from "@/components/pages/mypage/review/writableReview/WritableReview";
 import WrittenReview from "@/components/pages/mypage/review/writtenReview/WrittenReview";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
@@ -11,6 +13,12 @@ import { prefetchGetWrittenReviewList } from "@/api/review/queries/useGetWritten
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
 
+const ItemTypeFilterList = {
+  'ALL': { label: '전체보기' },
+  'SUBSCRIBE': { label: '구독상품' },
+  'ITEM': { label: '일반상품' },
+} as const;
+
 const Review = () => {
   const { pushWithQuery } = useDynamicQueryPush();
   const pathname = usePathname();
@@ -18,26 +26,32 @@ const Review = () => {
   const queryClient = useQueryClient();
 
   const tab = searchParams.get('tab');
-  const checkTabIndex = (!tab || tab === 'writable') ? 0 : 1 || 0;
+  const checkTabIndex = (tab === null || tab === 'writable') ? 0 : 1 || 0;
 
-  const [tabsDefaultIndex, setTabsDefaultIndex] = useState(checkTabIndex);
+  const [defaultTabIndex, setDefaultTabIndex] = useState(checkTabIndex);
 
-  useEffect(() => {
-    if (tab) {
-      setTabsDefaultIndex(tab === 'writable' ? 0 : 1);
-    } else {
-      if (tab === null) {
-        setTabsDefaultIndex(0);
-      }
-    }
-  }, [tab, searchParams]);
+  const ItemTypeFilterComponent = () => (
+    <Dropdown
+      trigger={(
+        <div className={styles.reviewItemTypeFilter}>
+          <DefaultText type="label4">
+            {ItemTypeFilterList[searchParams.get("itemType") as keyof typeof ItemTypeFilterList]?.label || "전체보기"}
+          </DefaultText>
+        </div>
+      )}
+      options={Object.entries(ItemTypeFilterList).map(([value, { label }]) => ({label, value}))}
+      onSelect={(value) => pushWithQuery(pathname, { itemType: value })}
+      position="right"
+    />
+  )
 
   const tabs = [
     {
-      label: '작성 가능한 후기',
+      label: '작성 가능한 리뷰',
       content:
         <ErrorBoundary fallback={<div>작성 가능한 리뷰가 없습니다.</div>}>
           <Suspense fallback={<div>Loading...</div>}>
+            <ItemTypeFilterComponent />
             <WritableReview onInit={() => console.log('WritableReview initialized')} />
           </Suspense>
         </ErrorBoundary>
@@ -45,13 +59,14 @@ const Review = () => {
       onInit: () => handleTabInit('writable'),
     },
     {
-      label: '작성한 후기',
+      label: '내가 작성한 리뷰',
       content:
+        <ErrorBoundary fallback={<div>작성 가능한 리뷰가 없습니다.</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ItemTypeFilterComponent />
             <WrittenReview onInit={() => console.log('WrittenReview initialized')} />
-       // <ErrorBoundary fallback={<div>작성한 리뷰가 없습니다.</div>}>
-       //    <Suspense fallback={<div>Loading...</div>}>
-       //    </Suspense>
-       //  </ErrorBoundary>
+          </Suspense>
+        </ErrorBoundary>
       ,
       onInit: () => handleTabInit('written'),
     },
@@ -61,14 +76,22 @@ const Review = () => {
     pushWithQuery(pathname, { tab: type, page: 1 });
     if (type === 'written') {
       await prefetchGetWrittenReviewList(queryClient, 0);
+      setDefaultTabIndex(0)
     } else {
       await prefetchGetWritableReviewList(queryClient, 0);
+      setDefaultTabIndex(1)
     }
   }
 
   return (
     <section className={styles.reviewContainer}>
-      <Tabs tabs={tabs} defaultIndex={tabsDefaultIndex} />
+      <TabBar
+        hasTabContent
+        variant='segmentedButton'
+        tabs={tabs}
+        defaultIndex={defaultTabIndex}
+        className={styles.reviewTab}
+      />
     </section>
   );
 };

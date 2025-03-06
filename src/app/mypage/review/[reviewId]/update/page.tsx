@@ -2,7 +2,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import { prefetchGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
-import ReviewDetail from "@/components/pages/mypage/review/reviewDetail/ReviewDetail";
+import UpdateDetail from "@/components/pages/mypage/review/updateDetail/UpdateDetail";
 
 interface ReviewDetailPageProps {
   params: { reviewId: string };
@@ -21,7 +21,7 @@ export default async function ReviewDetailPage({ params, searchParams }: ReviewD
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>상세 리뷰가 없습니다.</div>}>
         <Suspense fallback={<div>Loading...</div>}>
-          <ReviewDetail reviewId={reviewId} reviewType={reviewType} />
+          <UpdateDetail reviewId={reviewId} reviewType={reviewType} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

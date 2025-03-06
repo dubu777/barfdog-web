@@ -80,6 +80,9 @@ interface WritableReviewItem {
   imageUrl: string;
   title: string;
   orderedDate: string;
+  orderPaymentPrice?: number;
+  orderId?: number;
+  merchantUid?: string;
 }
 
 interface WritableReviewList {

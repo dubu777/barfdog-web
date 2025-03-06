@@ -4,7 +4,6 @@ import { themeVars } from "@/styles/theme.css";
 export const userInfoFormContainer = style({
 	paddingBottom: '40px',
 	borderBottom: `1px solid ${themeVars.borderColors.greyDD}`,
-	margin: '40px 0 0',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '1rem',
