@@ -1,4 +1,4 @@
-import { reviewStatus, reviewType } from "@/constants";
+import { REVIEW_STATUS, REVIEW_TYPE } from "@/constants";
 import { Page } from "@/types";
 
 export type {
@@ -135,5 +135,5 @@ interface CreateReviewDetail extends UpdateReviewDetail{
   reviewImageIdList: number[];
 }
 
-type ReviewType = keyof typeof reviewType;
-type ReviewStatus = keyof typeof reviewStatus;
+type ReviewType = keyof typeof REVIEW_TYPE;
+type ReviewStatus = keyof typeof REVIEW_STATUS;

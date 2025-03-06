@@ -26,6 +26,7 @@ export const cardPadding = {
 		padding: '20px',
 	}),
 }
+
 export const cardAlign = {
 	left: style({
 		textAlign: 'left',

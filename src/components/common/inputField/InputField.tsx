@@ -106,7 +106,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       <div onClick={handlePressInput} className={`${inputContainerStyle} ${className || ''}`} style={{ width: width || '100%' }}>
         {/* label 유무에 따라 상단 노출 */}
         {label &&
-          <DefaultText type='label4' className={labelStyle}>
+          <DefaultText type='label4' color='gray600' className={labelStyle}>
             {label} {isRequired && <span className={pointColor}>*</span>}
           </DefaultText>
         }

@@ -7,19 +7,10 @@ export const radioContainer = recipe({
     width: '100%',
     display: 'flex',
     alignItems: 'center',
-    gap: '16px',
+    gap: '20px',
     cursor: 'pointer',
   },
   variants: {
-    labelPosition: {
-      right: {
-        // flexDirection: 'row-reverse'
-      },
-      bottom: {
-        flexDirection: 'column-reverse',
-        alignItems: 'center',
-      }
-    },
     justifyContent: {
       center: {
         justifyContent: 'center',
@@ -27,36 +18,51 @@ export const radioContainer = recipe({
       spaceBetween: {
         justifyContent: 'space-between',
       },
-    }
+    },
+    optionLabelPosition: {
+      right: {},
+      bottom: {
+        flexDirection: 'column-reverse',
+        alignItems: 'center',
+      }
+    },
   }
 })
 
-export const radioOption = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '5px'
+export const radioInput = style({
+  display: 'none',
 })
 
-export const radioInputCircle = recipe({
+export const radioLabel = style({
+  display: 'block',
+  marginBottom: '8px',
+})
+
+export const radioOptions = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px'
+})
+
+export const optionLabelCircle = recipe({
   base: {
-    width: '16px',
-    height: '16px',
+    width: '20px',
+    height: '20px',
     borderRadius: '50%',
-    border: `1px solid ${themeVars.borderColors.greyDD}`,
+    border: `2px solid ${themeVars.colors.red.red}`,
     cursor: 'pointer',
   },
   variants: {
     active: {
       true: {
-        background: themeVars.colors.red.red,
-        border: `1px solid ${themeVars.colors.red.red}`,
+        background: themeVars.colors.gray.gray0,
         position: 'relative',
         ':after': {
           content: '',
           display: 'block',
-          width: '8px',
-          height: '8px',
-          background: themeVars.colors.gray.gray0,
+          width: '9px',
+          height: '9px',
+          background: themeVars.colors.red.red,
           position: 'absolute',
           top: '50%',
           left: '50%',
@@ -68,52 +74,8 @@ export const radioInputCircle = recipe({
   }
 })
 
-export const radioInput = style({
-  display: 'none',
-})
-
-export const checkboxLabel = recipe({
-  base: {
-    lineHeight: 'normal',
-    fontSize: themeVars.fontSize["text-sm"],
-    cursor: 'pointer',
-  },
-  variants: {
-    isHidden: {
-      true: {
-        display: 'none',
-      }
-    }
-  }
-})
-
-export const checkboxStyle = recipe({
-  base: {
-    width: '20px',
-    height: '20px',
-    background: themeVars.colors.gray.gray400,
-    padding: 0,
-    margin: 0,
-    transition: 'all .35s',
-    appearance: 'none',
-    borderRadius: '3px',
-    position: 'relative',
-    cursor: 'pointer',
-    ':after': {
-      content: '',
-      display: 'block',
-      width: '20px',
-      height: '20px',
-      background: `url('/images/icons/check-white.png') no-repeat center center / 10px 10px`,
-      position: 'absolute',
-      top: 0
-    }
-  },
-  variants: {
-    isChecked: {
-      true: {
-        background: themeVars.colors.red.red,
-      }
-    },
-  }
+export const optionLabel = style({
+  lineHeight: 'normal',
+  fontSize: themeVars.fontSize["text-sm"],
+  cursor: 'pointer',
 })

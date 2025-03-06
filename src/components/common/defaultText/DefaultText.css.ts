@@ -138,4 +138,4 @@ export const alignStyles = {
 export const blockStyles = {
   true: style({ display: 'inline-block' }),
   false: style({ display: 'block' }),
-}
+};

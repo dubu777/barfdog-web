@@ -7,7 +7,6 @@ export const labelStyle = style({
   display: 'block',
   textAlign: 'left',
   marginBottom: '8px',
-  color: themeVars.colors.gray.gray600,
 })
 
 export const inputBoxStyle = style({
@@ -55,7 +54,6 @@ export const inputVariants = {
     borderBottom: `1px solid ${themeVars.colors.gray.gray500}`
   })
 }
-
 
 export const inputError = {
   box: style({

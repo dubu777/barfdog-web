@@ -77,9 +77,9 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 				{label} {isRequired && <span className={pointColor}>*</span>}
 			</DefaultText>
 			}
-			<div className={styles.mobileDatePicker}>
+			<div className={styles.mobileDatePicker({ isOpen })}>
 				<button onClick={handleOpenPicker} className={styles.mobileDatePickerHeader({ isOpen })}>
-					<DefaultText type='body2' align='left' color='blue'>
+					<DefaultText type='body2' align='left' color={isOpen ? 'blue' : 'gray800'}>
 						{`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`}
 					</DefaultText>
 					<ArrowUp style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all .35s' }} />

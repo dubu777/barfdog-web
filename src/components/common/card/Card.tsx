@@ -7,6 +7,7 @@ interface CardProps {
 	align?: 'left' | 'center';
 	children: ReactNode;
 	className?: string;
+	width?: number;
 }
 
 const Card = ({
@@ -14,16 +15,20 @@ const Card = ({
 	padding = 20,
 	align = 'left',
 	className,
-	children
+	children,
+	width,
 }: CardProps) => {
 	return (
-		<div className={`
-			${cardBaseStyle} 
-			${cardShadow[shadow]} 
-			${cardPadding[padding]} 
-			${cardAlign[align]}
-			${className || ''}
-		`}>
+		<div
+			className={`
+				${cardBaseStyle} 
+				${cardShadow[shadow]} 
+				${cardPadding[padding]} 
+				${cardAlign[align]}
+				${className || ''}
+			`}
+			style={{ width: width || '100%' }}
+		>
 			{children}
 		</div>
 	);

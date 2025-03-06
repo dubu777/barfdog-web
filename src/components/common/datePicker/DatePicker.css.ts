@@ -95,10 +95,20 @@ globalStyle(`${datePickerContainer} .react-datepicker-popper`, {
 	top: '30px !important',
 })
 
-export const mobileDatePicker = style({
-	borderRadius: '8px',
-	background: themeVars.colors.gray.gray0,
-	padding: '14px 20px'
+export const mobileDatePicker = recipe({
+	base: {
+		borderRadius: '8px',
+		background: themeVars.colors.gray.gray0,
+		padding: '14px 20px',
+	},
+	variants: {
+		isOpen: {
+			true: {
+				marginBottom: '84px',
+				transition: 'all .35s'
+			}
+		}
+	}
 })
 
 export const mobileDatePickerHeader = recipe({

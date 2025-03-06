@@ -1,40 +1,51 @@
-import * as styles from './RateStar.css';
+import StarIcon from '/public/images/icons/star.svg';
+import { themeVars } from "@/styles/theme.css";
+import {
+  rateStarBoxAlignStyles,
+  rateStarBoxInlineBlockStyles,
+  rateStarStyles
+} from "./RateStar.css";
 
 interface RateStarProps {
   rateLength: number;
+  color?: 'yellow' | 'red' | 'gray';
+  align?: 'center' | 'left' | 'right';
   value?: number;
-  color?: 'yellow' | 'red' | 'black';
-  align?: 'center' | 'left';
   onChange?: (newRating: number) => void;
-  isEdit?: boolean;
   inlineBlock?: boolean;
-  size?: 'xxl';
 }
 
 const RateStar = ({
-  rateLength,
+  rateLength = 5,
   color = 'red',
-  align = 'center',
+  align = 'left',
   value,
   onChange,
-  isEdit = false,
   inlineBlock = false,
-  size,
 }: RateStarProps) => {
+  const grayColor = themeVars.colors.gray.gray300;
+  const starColor = color === 'yellow'
+    ? themeVars.colors.yellow.yellow500
+    : color === 'red'
+      ? themeVars.colors.red.red
+      : grayColor;
+
+  const emptyColor = (i: number) => value === 0 || value ? i >= value : false;
+
   const handleClick = (index: number) => {
     if(onChange) {
       onChange(index + 1);
     }
   }
   return (
-    <div className={styles.rateBox({ align, inlineBlock })}>
+    <div className={`${rateStarBoxAlignStyles[align]} ${inlineBlock ? rateStarBoxInlineBlockStyles : ''}`}>
       {Array.from({ length: rateLength }, (v, i) => i + 1).map((_, i) => (
         <span
           key={i}
-          className={styles.rate({ color, align, empty: value === 0 || value ? i >= value : false, isEdit, size })}
-          onClick={() => value ? handleClick(i) : undefined}
+          className={rateStarStyles({ isEditable: !!onChange })}
+          onClick={onChange ? () => handleClick(i) : undefined}
         >
-          ★
+          <StarIcon style={{ color: emptyColor(i) ? grayColor : starColor }} />
         </span>
       ))}
     </div>

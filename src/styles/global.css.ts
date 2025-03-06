@@ -13,13 +13,14 @@ globalStyle('html, body', {
 });
 
 globalStyle('.swiper-pagination-bullet', {
-  border: `1px solid ${themeVars.colors.red.red}`,
-  background: `${themeVars.colors.gray.gray0} !important`,
+  width: '6px !important',
+  height: '6px !important',
+  background: `${themeVars.colors.gray.gray300} !important`,
   opacity: '1 !important',
 })
 
 globalStyle('.swiper-pagination-bullet-active', {
-  background: `${themeVars.colors.red.red} !important`,
+  background: `${themeVars.colors.gray.gray700} !important`,
 })
 
 globalStyle('.swiper-button-prev, .swiper-button-next', {

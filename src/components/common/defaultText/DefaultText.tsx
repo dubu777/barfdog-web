@@ -35,10 +35,11 @@ export default function DefaultText({ type, color = 'gray900', align = 'left', c
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
   const alignStyle = alignStyles[align];
+  const blockStyle = blockStyles[inlineBlock ? 'true' : 'false'];
   const Tag = tagMap[type] || 'span';
 
   return (
-    <Tag className={`${textStyle} ${colorStyle} ${alignStyle} ${inlineBlock ? blockStyles : ''} ${className || ''}`}>
+    <Tag className={`${textStyle} ${colorStyle} ${alignStyle} ${blockStyle} ${className || ''}`}>
       {children}
     </Tag>
   );
