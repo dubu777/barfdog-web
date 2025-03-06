@@ -314,6 +314,12 @@ export interface RecipeTempData {
   type: "single" | "double";
 }
 
+export interface TempRecipeDto {
+  id: number;
+  name: string;
+  imageURL: string;
+}
+
 const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   5: {
     id: 5,

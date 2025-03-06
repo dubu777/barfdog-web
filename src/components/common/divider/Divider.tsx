@@ -2,7 +2,7 @@ import React from 'react';
 import * as styles from './Divider.css';
 
 interface DividerProps {
-  thickness?: 1 | 8 | 12;
+  thickness?: 1 | 2 | 8 | 12;
   marginTopBottom?: 0 | 16 | 20;
   marginLeftRight?: 0 | 16 | 20;
 }

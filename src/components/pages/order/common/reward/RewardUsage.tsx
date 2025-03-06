@@ -1,85 +1,90 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "../../OrderSheetCommon.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { useEffect, useMemo } from "react";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import InputField from "@/components/common/inputField/InputField";
-import useForm from "@/hooks/useForm";
-import { validateReward } from "@/utils/validate";
-import { useRewardStore } from "@/store/order/useRewardStore";
+import OrderSection from "../orderSection/OrderSection";
+
+import {
+
+  OrderFormValues,
+} from "@/utils/validation/rewardValidation";
+import { Control, Controller, UseFormSetValue } from "react-hook-form";
 
 interface RewardUsageProps {
-
+  control: Control<OrderFormValues>;
+  userTotalReward: number;
+  maxAvailableReward: number;
+  setValue: UseFormSetValue<OrderFormValues>;
+  setAppliedReward: (value: number) => void;
 }
 
-export default function RewardUsage({}: RewardUsageProps) {
-  const { userTotalReward, maxAvailableReward, setAppliedReward } =
-    useRewardStore();
-  // userTotalReward 무한 렌더링 방지
-  const validate = useMemo(() => {
-    return (values: { appliedReward: number }) =>
-      validateReward({ ...values, userTotalReward });
-  }, [userTotalReward]);
-
-  // reward - useForm
-  const reward = useForm({
-    initialValue: {
-      appliedReward: 0,
-    },
-    validate,
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = parseInt(e.target.value, 10) || 0;
-
-    // 보유 적립금을 초과하면 이전 유효한 값으로 되돌림
-    if (inputValue > userTotalReward) {
-      e.target.value = reward.values.appliedReward.toString();
-      return;
-    }
-
-    reward.handleChange("appliedReward", inputValue);
-  };
-
-  // 최대 적립금 적용
+export default function RewardUsage({
+  control,
+  userTotalReward,
+  maxAvailableReward,
+  setValue,
+  setAppliedReward,
+}: RewardUsageProps) {
   const handleMaxReward = () => {
-    reward.handleChange("appliedReward", maxAvailableReward);
+    setValue("appliedReward", maxAvailableReward);
     setAppliedReward(maxAvailableReward);
   };
 
-  useEffect(() => {
-    if (!!reward.errors.appliedReward) return;
-    setAppliedReward(reward.values.appliedReward);
-  }, [reward.values.appliedReward, setAppliedReward]);
-
-
   return (
-    <div className={styles.orderSheetWrapper}>
-      <div className={styles.orderSheetTitleWrapper}>
-        <DefaultText type="title4">적립금</DefaultText>
-        <DefaultText type="label4">
-          {formatNumberWithCommas(userTotalReward)}원 보유
-        </DefaultText>
-      </div>
+    <OrderSection
+      title="적립금"
+      subTitleParts={[
+        {
+          text: `${formatNumberWithCommas(userTotalReward)}P\u00A0`,
+          isPoint: true,
+        },
+        { text: "보유" },
+      ]}
+    >
       <div className={styles.orderSheetContentWrapper({ direction: "row" })}>
-        <InputField
-          {...reward.getInputProps("appliedReward")}
-          placeholder="0"
-          type="text"
-          error={reward.errors.appliedReward}
-          touched={reward.touched.appliedReward}
-          // onChange={handleInputChange}
-          onChange={e => handleInputChange}
-          onFocus={(e) => {
-            if (e.target.value === "0") {
-              e.target.value = "";
-            }
-          }}
+        <Controller
+          name="appliedReward"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              placeholder="0"
+              type="text"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                const inputValue = parseInt(target.value, 10) || 0;
+        
+                if (inputValue > maxAvailableReward) {
+                  const newValue = maxAvailableReward;
+                  field.onChange({
+                    ...e,
+                    target: {
+                      ...e.target,
+                      value: newValue.toString(),
+                    },
+                  });
+                  setValue("appliedReward", newValue);
+                  setAppliedReward(newValue);
+                  // input에도 바로 적용되도록 value를 업데이트
+                  target.value = newValue.toString();
+                  return;
+                }
+        
+                field.onChange(e);
+                setAppliedReward(inputValue);
+              }}
+              onFocus={(e) => {
+                if (e.target.value === "0") {
+                  e.target.value = "";
+                }
+              }}
+            />
+          )}
         />
         <DefaultButton type="gray" size="sm" onClick={handleMaxReward}>
           전액사용
         </DefaultButton>
       </div>
-    </div>
+    </OrderSection>
   );
 }

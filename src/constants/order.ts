@@ -1,9 +1,5 @@
-import {
-  OrderType,
-  OrderTypeKey,
-  PaymentMethod,
-} from "@/types";
-
+import { OrderType, OrderTypeKey, PaymentMethod } from "@/types";
+import { TempRecipeDto } from "./survey";
 
 // 결제 전, 결제완료, 생산 중, 배송준비 중, 배송 시작, 배송 중, 배송완료, 취소됨, 환불됨
 const ORDER_STATUS = {
@@ -39,9 +35,47 @@ const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {
   SUBSCRIPTION: "subscription",
 } as const;
 
-
-export {
-  ORDER_STATUS,
-  PAYMENT,
-  ORDER_TYPE,
+const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {
+  "STARTER PREMIUM +": {
+    id: 5,
+    name: "스타터 프리미엄",
+    imageURL: "/images/recipe/starter_premium.png",
+  },
+  "TURKEY&BEEF +": {
+    id: 6,
+    name: "터키앤비프",
+    imageURL: "/images/recipe/turkey_and_beef.png",
+  },
+  "DUCK&LAMB +": {
+    id: 7,
+    name: "덕앤램",
+    imageURL: "/images/recipe/duck_and_lamb.png",
+  },
+  "LAMB&BEEF +": {
+    id: 8,
+    name: "램앤비프",
+    imageURL: "/images/recipe/lamb_and_beef.png",
+  },
+  "Premium CHICKEN": {
+    id: 9,
+    name: "프리미엄 치킨",
+    imageURL: "/images/recipe/premium_chicken.png",
+  },
+  "Premium TURKEY": {
+    id: 10,
+    name: "프리미엄 터키",
+    imageURL: "/images/recipe/premium_turkey.png",
+  },
+  "Premium LAMB": {
+    id: 11,
+    name: "프리미엄 램",
+    imageURL: "/images/recipe/premium_lamb.png",
+  },
+  "Premium BEEF": {
+    id: 12,
+    name: "프리미엄 비프",
+    imageURL: "/images/recipe/premium_beef.png",
+  },
 };
+
+export { ORDER_STATUS, PAYMENT, ORDER_TYPE, TEMP_RECIPE_DTO_DATA };

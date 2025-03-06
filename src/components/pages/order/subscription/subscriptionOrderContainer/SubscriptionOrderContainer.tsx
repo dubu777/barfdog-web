@@ -32,6 +32,9 @@ import { useRouter } from "next/navigation";
 import OrderSummary from "../../common/orderSummary/OrderSummary";
 import RewardUsage from "../../common/reward/RewardUsage";
 import SubscriptionOrderItemList from "../subscriptionOrderItemList/SubscriptionOrderItemList";
+import { useOrderForm } from "@/hooks/useOrderForm";
+import { defaultOrderValues, getOrderSchema, OrderFormValues } from "@/utils/validation/rewardValidation";
+import { useRewardStore } from "@/store/order/useRewardStore";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -49,6 +52,8 @@ export default function SubscriptionOrderContainer({
 }: SubscriptionOrderContainerProps) {
   const router = useRouter();
   const { getRequestBody } = useOrderStore();
+  const { userTotalReward, maxAvailableReward, setAppliedReward } =
+    useRewardStore();
 
   const { data: subscriptionOrderSheetData } =
     useGetSubscriptionOrder(subscribeId);
@@ -67,7 +72,11 @@ export default function SubscriptionOrderContainer({
     subscriptionOrderSheetData.subscribeDto.nextPaymentPrice,
     subscriptionOrderSheetData.subscribeDto.plan
   );
-
+  const { control, watch, errors, setValue } =
+    useOrderForm<OrderFormValues>(
+      getOrderSchema(maxAvailableReward),
+      defaultOrderValues,
+    );
   // 구독 구매 페이지 정보 초기값 없데이트
   useUpdateSubscriptionOrderBody(subscriptionOrderSheetData);
 
@@ -222,10 +231,10 @@ export default function SubscriptionOrderContainer({
       <Divider />
       <SubscriptionOrderItemList subscriptionOrderSheetData={subscriptionOrderSheetData}/>
       <Divider />
-      <OrderItem
-        orderType={ORDER_TYPE.SUBSCRIPTION}
-        subscriptionOrderSheetData={subscriptionOrderSheetData}
-      />
+      <Divider />
+      <RewardUsage control={control} setValue={setValue} userTotalReward={userTotalReward} maxAvailableReward={maxAvailableReward} setAppliedReward={setAppliedReward} />
+      <Divider />
+      <PaymentMethod />
       <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
@@ -234,10 +243,6 @@ export default function SubscriptionOrderContainer({
         deliveryPrice={undefined}
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />
-      <Divider />
-      <RewardUsage />
-      <Divider />
-      <PaymentMethod />
       <button
         style={{ width: "100%", height: "50px", backgroundColor: "gray" }}
         onClick={handlePaymentSubmit}

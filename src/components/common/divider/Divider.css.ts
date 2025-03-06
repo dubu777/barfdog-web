@@ -7,6 +7,7 @@ export const dividerBase = style({
 
 export const thicknessVariants = styleVariants({
   1: { borderBottom: `1px solid ${themeVars.borderColors.grey50}` },
+  2: { borderBottom: `2px solid ${themeVars.borderColors.grey50}` },
   8: { borderBottom: `8px solid ${themeVars.borderColors.grey50}` },
   12: { borderBottom: `12px solid ${themeVars.borderColors.grey50}` },
 });

@@ -84,7 +84,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     }
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>,) => {
-      if('key' in e) {
         if (isMasked && e.key === "Backspace") {
           // 비밀번호 type -> input 모두선택 후 backspace 방지
           if(onChange) {
@@ -100,7 +99,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           e.preventDefault();
           onSubmit();
         }
-      }
     }
     return (
       <div onClick={handlePressInput} className={`${inputContainerStyle} ${className || ''}`} style={{ width: width || '100%' }}>
