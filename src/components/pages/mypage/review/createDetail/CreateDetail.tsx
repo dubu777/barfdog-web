@@ -1,10 +1,10 @@
 'use client';
-import * as styles from "@/components/pages/mypage/review/updateDetail/UpdateDetail.css";
-import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
+import { reviewDetailContainer } from "@/components/pages/mypage/review/reviewDetail/ReviewDetail.css";
 import { usePersistReviewStore } from "@/store/usePersistReviewStore";
 import { useCreateReviewDetail } from "@/api/review/mutations/useCreateReviewDetail";
 import { CreateReviewDetail, UpdateReviewDetail } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
+import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
 
 const CreateDetail = () => {
   const { reviewFormData } = usePersistReviewStore();
@@ -24,7 +24,7 @@ const CreateDetail = () => {
   }
 
   return (
-    <section className={styles.reviewDetailContainer}>
+    <section className={reviewDetailContainer}>
       <ReviewForm
         type='create'
         reviewDetail={reviewFormData}

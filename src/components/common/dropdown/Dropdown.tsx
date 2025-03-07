@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { dropdownBoxStyle, dropdownButtonStyle, dropdownContainerStyle, dropdownOptionStyle } from "./Dropdown.css";
+import { dropdownBoxStyle, dropdownContainerStyle, dropdownOptionStyle } from "./Dropdown.css";
 import { cardShadow } from "@/components/common/card/Card.css";
 import { motion, AnimatePresence } from "framer-motion";
 import DefaultText from "@/components/common/defaultText/DefaultText";

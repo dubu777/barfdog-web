@@ -1,5 +1,4 @@
 import { ChangeEvent, forwardRef, TextareaHTMLAttributes } from "react";
-import Text from "@/components/common/text/Text";
 import {
   charCount, errorText,
   textareaBoxStyle,
@@ -40,6 +39,7 @@ const DefaultTextarea = forwardRef<HTMLTextAreaElement, DefaultTextareaProps>(({
           maxLength={maxLength}
           className={textareaStyle({ active: value?.length !== 0 })}
           onChange={handleInputChange}
+          value={value}
           {...rest}
         />
         {maxLength && (
@@ -48,7 +48,7 @@ const DefaultTextarea = forwardRef<HTMLTextAreaElement, DefaultTextareaProps>(({
           </DefaultText>
         )}
       </div>
-      {error && <Text type='description' size='sm' color='red' align='left' className={errorText}>{error}</Text>}
+      {error && <DefaultText type='caption' color='red' align='left' className={errorText}>{error}</DefaultText>}
     </div>
   );
 });

@@ -5,8 +5,8 @@ import { pointColor } from "@/styles/common.css";
 import { getProductionDates } from "@/utils";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InfoIcon from '/public/images/myPage/info-red.svg';
-import MyPageBottomButton from "@/components/pages/mypage/layout/bottomButton/MyPageBottomButton";
 import WeeklyDatePicker from "@/components/common/weeklyDatePicker/WeeklyDatePicker";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 const DelayShipping = ({ subscribeId }: { subscribeId: number }) => {
 	const { data: detail } = useGetSubscriptionDetail(subscribeId);
@@ -51,9 +51,10 @@ const DelayShipping = ({ subscribeId }: { subscribeId: number }) => {
 					</DefaultText>
 				</div>
 			</article>
-			<MyPageBottomButton
-				handleSubmit={handleSubmit}
-				// isDisabled={!isValid}
+			<ButtonDocked
+				type='full-button'
+				primaryButtonLabel='저장하기'
+				onPrimaryClick={handleSubmit}
 			/>
 		</section>
 	);

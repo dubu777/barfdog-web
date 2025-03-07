@@ -31,6 +31,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   clearButton?: boolean;
   searchButton?: boolean;
   onChange?: (e: ChangeEvent) => void;
+  onBlur?: (e: ChangeEvent) => void;
   onReset?: () => void;
   onSubmit?: () => void;
   className?: string;
@@ -46,6 +47,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       error,
       touched,
       onChange,
+      onBlur,
       variants = 'box',
       width,
       masking= false,
@@ -127,6 +129,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               value={props.value}
               onChange={(e) => {
                 onChange?.(e);
+              }}
+              onBlur={(e) => {
+                if (onBlur) {
+                  onBlur?.(e);
+                }
               }}
               onKeyDown={handleKeyDown}
             />

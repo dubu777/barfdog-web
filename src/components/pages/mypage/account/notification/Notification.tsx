@@ -3,8 +3,8 @@ import { useState } from "react";
 import * as styles from '../Account.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Switch from "@/components/common/switch/Switch";
-import MyPageBottomButton from "@/components/pages/mypage/layout/bottomButton/MyPageBottomButton";
 import { useGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 const Notification = () => {
 	const { data: userInfo } = useGetUserInfo();
@@ -47,7 +47,11 @@ const Notification = () => {
 					<Switch isOn={receiveEvent.sms} onChange={() => handleChange('sms')} />
 				</li>
 			</ul>
-			<MyPageBottomButton handleSubmit={handleSubmit} />
+			<ButtonDocked
+				type='full-button'
+				primaryButtonLabel='저장하기'
+				onPrimaryClick={handleSubmit}
+			/>
 		</section>
 	);
 };

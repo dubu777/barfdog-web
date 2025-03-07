@@ -1,5 +1,3 @@
-import {style} from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
-export const notificationContainer = style({
-
-})
+export const notificationContainer = style({})

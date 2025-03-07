@@ -8,7 +8,7 @@ import { useChangePassword } from "@/api/auth/mutations/useChangePassword";
 import { useToastStore } from "@/store/useToastStore";
 import { ChangePassword } from "@/types";
 import InputField from "@/components/common/inputField/InputField";
-import MyPageBottomButton from "@/components/pages/mypage/layout/bottomButton/MyPageBottomButton";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 const changePasswordSchema = yup.object().shape({
 	password: yup
@@ -124,9 +124,10 @@ const ChangePasswordComponent = () => {
 					}
 				/>
 			</form>
-			<MyPageBottomButton
-				handleSubmit={() => handleSubmit(onSubmit)}
-				// isDisabled={!isValid}
+			<ButtonDocked
+				type='full-button'
+				primaryButtonLabel='저장하기'
+				onPrimaryClick={handleSubmit(onSubmit)}
 			/>
 		</section>
 	);

@@ -52,7 +52,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const handleEditOrDelete = (type: 'edit' | 'delete') => {
     if (type === 'edit') {
       // 수정 페이지 이동
-      pushWithQuery(`${pathname}/update`, { reviewType: reviewDetail.reviewType as ReviewType });
+      pushWithQuery(`${pathname}/update`, { reviewType: reviewDetail.reviewType as ReviewType }, ['page']);
     } else {
       // 삭제 기능
       mutate(
@@ -86,7 +86,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
       <article className={`${styles.reviewDetailBox} ${styles.reviewDetailContents}`}>
         <div dangerouslySetInnerHTML={{ __html: sanitizedHTMLContents }} className={`${textStyles.body3} ${sanitizedHTML}`} style={{ textAlign: 'left' }} />
       </article>
-      {data.reviewImageDtoList.length > 0 &&
+      {data?.reviewImageDtoList?.length > 0 &&
         <article className={styles.reviewDetailBox}>
           <ImageCarousel imageList={data.reviewImageDtoList} handleImageModalClick={handleOpenReviewImageModal} />
           <div className={styles.likeCommentCount}>

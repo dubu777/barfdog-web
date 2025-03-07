@@ -2,11 +2,11 @@ import * as styles from './WritableReview.css';
 import { useEffect, useMemo } from "react";
 import Pagination from "@/components/common/pagination/Pagination";
 import Text from "@/components/common/text/Text";
+import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetWritableReviewList, useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
-import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard";
 
 const WritableReview = ({ onInit }: { onInit: () => void }) => {
   const queryClient = useQueryClient();
