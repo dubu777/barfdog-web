@@ -107,7 +107,7 @@ export const mobileDatePicker = recipe({
 				marginBottom: '84px',
 				transition: 'all .35s'
 			}
-		}
+		},
 	}
 })
 

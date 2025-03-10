@@ -9,10 +9,14 @@ export const infoBoxBase = style({
 	alignItems: 'center',
 })
 
-export const infoTextStyle = style({
+export const infoBoxStyle = style({
 	display: 'flex',
-	alignItems: 'center',
 	gap: '8px'
+})
+
+export const infoTextStyle = style({
+	width: 'calc(100% - 32px)',
+	whiteSpace: 'pre-line',
 })
 
 export const infoBoxColor = {

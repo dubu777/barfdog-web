@@ -30,8 +30,12 @@ export const dateBox = style({
 })
 
 export const selectShippingBox = style({
-	padding: '20px',
 	background: themeVars.colors.gray.gray0,
+	paddingBottom: '40px'
+})
+
+export const selectShippingText = style({
+	padding: '20px'
 })
 
 export const shippingInfoBox = style({

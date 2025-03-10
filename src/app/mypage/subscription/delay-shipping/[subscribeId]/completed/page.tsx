@@ -2,15 +2,14 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import { prefetchGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
-import DelayShipping from "@/components/pages/mypage/subscription/delayShipping/DelayShipping";
 
-interface DelayShippingPageParams {
+interface DelayShippingCompletedPageParams {
   params: {
     subscribeId: number;
   }
 }
 
-export default async function DelayShippingPage({ params }: DelayShippingPageParams) {
+export default async function DelayShippingCompletedPage({ params }: DelayShippingCompletedPageParams) {
   const subscribeId = Number(params.subscribeId);
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionDetail(queryClient, subscribeId);
@@ -20,7 +19,9 @@ export default async function DelayShippingPage({ params }: DelayShippingPagePar
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>페이지 접근이 불가합니다.</div>}>
         <Suspense fallback={<div>Loading...</div>}>
-          <DelayShipping subscribeId={subscribeId} />
+          <div>
+
+          </div>
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

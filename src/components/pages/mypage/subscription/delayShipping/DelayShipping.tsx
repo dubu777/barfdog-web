@@ -4,16 +4,16 @@ import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubsc
 import { pointColor } from "@/styles/common.css";
 import { getProductionDates } from "@/utils";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import InfoIcon from '/public/images/myPage/info-red.svg';
-import WeeklyDatePicker from "@/components/common/weeklyDatePicker/WeeklyDatePicker";
+import DelayWeekPicker from "@/components/pages/mypage/subscription/delayShipping/delayWeekPicker/DelayWeekPicker";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 
 const DelayShipping = ({ subscribeId }: { subscribeId: number }) => {
 	const { data: detail } = useGetSubscriptionDetail(subscribeId);
 	const defaultProductionDates = getProductionDates(detail.nextDeliveryDate);
 
 	const handleSubmit = () => {
-
+		// 성공시 미루기 완료 페이지 redirection 필요 및 userShippingBox 컴포넌트 분리 후 적용 필요
 	}
 	return (
 		<section className={styles.delayShippingContainer}>
@@ -37,23 +37,22 @@ const DelayShipping = ({ subscribeId }: { subscribeId: number }) => {
 				</div>
 			</article>
 			<article className={styles.selectShippingBox}>
-				<DefaultText type='headline2'>발송 희망 주차를 선택해주세요</DefaultText>
-				<WeeklyDatePicker />
-
+				<DefaultText type='headline2' className={styles.selectShippingText}>발송 희망 주차를 선택해주세요</DefaultText>
+				<DelayWeekPicker onChange={(value) => console.log(value)} isFixedOpen />
 			</article>
 			<article className={styles.shippingInfoBox}>
-				<div className={styles.shippingInfo}>
-					<InfoIcon />
-					<DefaultText type='label4' color='pastelRed' className={styles.infoText}>
-						&lsquo;배송 희망일&apos; 변경 시, 선택한 주차를 기준으로 전체 남은 회차의 배송 일정이 변경됩니다.<br/>
-						&lsquo;배송 주기&apos;의 변경을 희망하는 경우 ‘식단 변경’ 페이지를 이용해주세요.<br/>
-						&lsquo;배송 희망일&apos;이 공휴일과 겹쳤을 시 다음 영업일에 발송이 진행됩니다.
-					</DefaultText>
-				</div>
+				<InfoBox
+					color='red'
+					text={
+					`	'배송 희망일' 변경 시, 선택한 주차를 기준으로 전체 남은 회차의 배송 일정이 변경됩니다.
+						'배송 주기'의 변경을 희망하는 경우 ‘식단 변경’ 페이지를 이용해주세요.
+						'배송 희망일'이 공휴일과 겹쳤을 시 다음 영업일에 발송이 진행됩니다.`
+					}
+				/>
 			</article>
 			<ButtonDocked
 				type='full-button'
-				primaryButtonLabel='저장하기'
+				primaryButtonLabel='변경완료'
 				onPrimaryClick={handleSubmit}
 			/>
 		</section>

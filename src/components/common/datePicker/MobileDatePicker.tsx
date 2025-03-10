@@ -12,17 +12,14 @@ const getYears = () => {
   	return Array.from({ length: 100 }, (_, i) => String(currentYear - i)); // 최근 100년
 };
 
-
 const getMonths = () => {
   return Array.from({ length: 12 }, (_, i) => format(new Date(2000, i), "MM")); // "01" ~ "12"
 };
-
 
 const getDays = (year: string, month: string) => {
 	const daysInMonth = getDaysInMonth(new Date(parseInt(year), parseInt(month) - 1));
 	return Array.from({ length: daysInMonth }, (_, i) => String(i + 1).padStart(2, "0"));
 };
-
 
 const parseDate = (dateStr?: string) => {
 	if (!dateStr) {
@@ -60,7 +57,6 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 		e.preventDefault();
 		setIsOpen(prev => !prev)
 	}
-	console.log('selectedDate', selectedDate)
 
 	const handleChange = (newValue: { year: string; month: string; day: string }) => {
 		setSelectedDate(newValue);
@@ -98,8 +94,8 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 								<Picker.Item key={year} value={year}>
 									{({ selected }) => (
 										<span className={styles.mobilePickerSelected({ selected })}>
-													{year}년
-												</span>
+											{year}년
+										</span>
 									)}
 								</Picker.Item>
 							))}
@@ -109,8 +105,8 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 								<Picker.Item key={month} value={month}>
 									{({ selected }) => (
 										<span className={styles.mobilePickerSelected({ selected })}>
-													{month}월
-												</span>
+											{month}월
+										</span>
 									)}
 								</Picker.Item>
 							))}
@@ -120,8 +116,8 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 								<Picker.Item key={day} value={day}>
 									{({ selected }) => (
 										<span className={styles.mobilePickerSelected({ selected })}>
-													{day}일
-												</span>
+											{day}일
+										</span>
 									)}
 								</Picker.Item>
 							))}
