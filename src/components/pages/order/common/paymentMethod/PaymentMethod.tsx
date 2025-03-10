@@ -5,7 +5,6 @@ import * as styles from "./PaymentMethod.css";
 import OrderSection from "../orderSection/OrderSection";
 import Image from "next/image";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import LabeledOption from "@/components/common/labeledOption/LabeledOption";
 import { PAYMENT_METHOD_INFO } from "@/constants";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";

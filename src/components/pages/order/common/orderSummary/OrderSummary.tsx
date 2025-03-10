@@ -11,6 +11,9 @@ import { useRewardStore } from "@/store/order/useRewardStore";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import OrderSection from "../orderSection/OrderSection";
+import OrderSummaryRow from "./orderSummaryRow/OrderSummaryRow";
+import Divider from "@/components/common/divider/Divider";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
@@ -93,114 +96,29 @@ export default function OrderSummary({
     setPaymentPrice(finalPaymentAmount);
   }, [maxAvailableDiscount, maxAvailableReward, finalPaymentAmount]);
   return (
-    <div className={styles.orderSheetWrapper}>
+    <OrderSection title="결제 금액">
       {orderType === ORDER_TYPE.SUBSCRIPTION ? (
-        <>
-          <div className={styles.orderSheetTitleWrapper}>
-            <DefaultText type="title4">결제 금액</DefaultText>
-          </div>
-          <div
-            className={styles.orderCommonWrapper({ direction: "col" })}
-          >
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">상품 금액</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(orderPrice)}원
-              </DefaultText>
-            </div>
-
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">배송비</DefaultText>
-              <DefaultText type="label2">
-                {deliveryFee === 0
-                  ? "무료"
-                  : `${formatNumberWithCommas(deliveryFee)}원`}
-              </DefaultText>
-            </div>
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">플랜 할인</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(planDiscount)}원
-              </DefaultText>
-            </div>
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">등급 할인</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(gradeDiscount)}원
-              </DefaultText>
-            </div>
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">쿠폰 사용</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(totalCouponDiscount)}원
-              </DefaultText>
-            </div>
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">적립금 사용</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(appliedReward)}원
-              </DefaultText>
-            </div>
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">총 할인 금액</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(totalDiscount)}원
-              </DefaultText>
-            </div>
-            <div className={styles.orderSheetContentBox}>
-              <DefaultText type="label2">결제 금액</DefaultText>
-              <DefaultText type="label2">
-                {formatNumberWithCommas(finalPaymentAmount)}원
-              </DefaultText>
-            </div>
-          </div>
-        </>
+        <div className={styles.orderCommonWrapper({ direction: "col" })}>
+          <OrderSummaryRow label="총 금액" value={orderPrice} valueType="headline2" plainColor plus/>
+          <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
+          <OrderSummaryRow label="플랜 할인" value={planDiscount} />
+          <OrderSummaryRow label="등급 할인" value={gradeDiscount} />
+          <OrderSummaryRow label="쿠폰 사용" value={totalCouponDiscount} />
+          <OrderSummaryRow label="적립금 사용" value={appliedReward} />
+          <OrderSummaryRow label="총 할인 금액" value={totalDiscount} />
+          <Divider thickness={1} color="gray300" /> 
+          <OrderSummaryRow label="1회차 결제 금액" value={finalPaymentAmount} valueType="title4" plus />
+        </div>
       ) : (
-        <>
-          <div className={styles.orderSheetTitleWrapper}>
-            <DefaultText type="title4">결제 금액</DefaultText>
-          </div>
-          <div className={styles.orderSheetContentBox}>
-            <DefaultText type="label2">상품 금액</DefaultText>
-            <DefaultText type="label2">
-              {formatNumberWithCommas(orderPrice)}원
-            </DefaultText>
-          </div>
-          <div className={styles.orderSheetContentBox}>
-            <DefaultText type="label2">배송비</DefaultText>
-            <DefaultText type="label2">
-              {deliveryFee === 0
-                ? "무료"
-                : `${formatNumberWithCommas(deliveryFee)}원`}
-            </DefaultText>
-          </div>
-
-          <div className={styles.orderSheetContentBox}>
-            <DefaultText type="label2">쿠폰 사용</DefaultText>
-            <DefaultText type="label2">
-              {formatNumberWithCommas(totalCouponDiscount)}원
-            </DefaultText>
-          </div>
-          <div className={styles.orderSheetContentBox}>
-            <DefaultText type="label2">적립금 사용</DefaultText>
-            <DefaultText type="label2">
-              {formatNumberWithCommas(appliedReward)}원
-            </DefaultText>
-          </div>
-          <div className={styles.orderSheetContentBox}>
-            <DefaultText type="label2">총 할인 금액</DefaultText>
-            <DefaultText type="label2">
-              {formatNumberWithCommas(totalDiscount)}원
-            </DefaultText>
-          </div>
-          <div className={styles.orderSheetContentBox}>
-            <DefaultText type="label2">결제 금액</DefaultText>
-            <DefaultText type="label2">
-              {formatNumberWithCommas(finalPaymentAmount)}원
-            </DefaultText>
-          </div>
-        </>
+        <div className={styles.orderCommonWrapper({ direction: "col" })}>
+          <OrderSummaryRow label="총 금액" value={orderPrice} plainColor/>
+          <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
+          <OrderSummaryRow label="쿠폰 사용" value={totalCouponDiscount} />
+          <OrderSummaryRow label="적립금 사용" value={appliedReward} />
+          <OrderSummaryRow label="총 할인 금액" value={totalDiscount} />
+          <OrderSummaryRow label="결제 금액" value={finalPaymentAmount} plus />
+        </div>
       )}
-    </div>
+    </OrderSection>
   );
 }

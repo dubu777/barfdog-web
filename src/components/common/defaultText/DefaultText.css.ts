@@ -123,6 +123,7 @@ export const fontColors = {
   pastelRed: style({ color: themeVars.colors.red.pastelRed }),
   gray900: style({ color: themeVars.colors.gray.gray900 }),
   gray800: style({ color: themeVars.colors.gray.gray800 }),
+  gray700: style({ color: themeVars.colors.gray.gray700 }),
   gray600: style({ color: themeVars.colors.gray.gray600 }),
   gray500: style({ color: themeVars.colors.gray.gray500 }),
   gray300: style({ color: themeVars.colors.gray.gray300 }),
