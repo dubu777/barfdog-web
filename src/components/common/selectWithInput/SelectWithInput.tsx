@@ -36,7 +36,7 @@ export default function SelectWithInput<T extends { label: string; value: string
 		console.log('value!!', value)
 		if (value !== 'custom') {
 			onChange(value);
-			setIsOpen(false); // Close the dropdown when an option is selected
+			setIsOpen(false);
 		}
 	};
 

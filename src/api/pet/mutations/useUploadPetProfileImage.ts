@@ -1,16 +1,16 @@
 import { queryKeys } from "@/constants";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateDogProfileImage, uploadDogProfileImage } from "@/api/dog/dog";
+import { updateDogProfileImage, uploadDogProfileImage } from "@/api/pet/pet";
 import { UseMutationCustomOptions } from "@/types";
 
-export { useUploadDogProfileImage };
+export { useUploadPetProfileImage };
 
-const getDogListQueryKey = [queryKeys.DOG.BASE, queryKeys.DOG.GET_DOG_LIST];
+const getDogListQueryKey = [queryKeys.PET.BASE, queryKeys.PET.GET_PET_LIST];
 
-function useUploadDogProfileImage(mutationOptions?: UseMutationCustomOptions) {
+function useUploadPetProfileImage(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ formData, dogId, deleteImage }: { formData: FormData, dogId: number, deleteImage: boolean }) => {
+    mutationFn: async ({ formData, petId, deleteImage }: { formData: FormData, petId: number, deleteImage: boolean }) => {
       // 이미지 업로드
       let uploadResponse = null;
       if (formData && !deleteImage) {
@@ -19,7 +19,7 @@ function useUploadDogProfileImage(mutationOptions?: UseMutationCustomOptions) {
 
       // 업로드한 이미지 프로필 업데이트
       const updateImageId = uploadResponse?.id;
-      const updateResponse = await updateDogProfileImage(dogId, deleteImage ? null : updateImageId);
+      const updateResponse = await updateDogProfileImage(petId, deleteImage ? null : updateImageId);
       return updateResponse;
     },
     onSuccess: async () => {
