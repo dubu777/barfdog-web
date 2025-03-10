@@ -52,9 +52,8 @@ export default function SubscriptionOrderContainer({
 }: SubscriptionOrderContainerProps) {
   const router = useRouter();
   const { getRequestBody } = useOrderStore();
-  const { userTotalReward, maxAvailableReward, setAppliedReward } =
+  const { maxAvailableReward} =
     useRewardStore();
-
   const { data: subscriptionOrderSheetData } =
     useGetSubscriptionOrder(subscribeId);
     console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
@@ -232,7 +231,7 @@ export default function SubscriptionOrderContainer({
       <SubscriptionOrderItemList subscriptionOrderSheetData={subscriptionOrderSheetData}/>
       <Divider />
       <Divider />
-      <RewardUsage control={control} setValue={setValue} userTotalReward={userTotalReward} maxAvailableReward={maxAvailableReward} setAppliedReward={setAppliedReward} />
+      <RewardUsage control={control} setValue={setValue} maxAvailableReward={maxAvailableReward} />
       <Divider />
       <PaymentMethod />
       <Divider />

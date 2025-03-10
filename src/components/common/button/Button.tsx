@@ -1,5 +1,11 @@
-import React from "react";
-import { buttonSizes, buttonVariants, disabledVariants, iconContainer, baseStyle, textStyle } from "./Button.css";
+import {
+  buttonSizes,
+  buttonVariants,
+  disabledVariants,
+  iconContainer,
+  baseStyle,
+  textStyle,
+} from "./Button.css";
 import Icon from "../icon/Icon";
 
 interface ButtonProps {
@@ -13,9 +19,8 @@ interface ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   width?: string;
-  bgColor?: string;
-  textColor?: string;
-  className?: string; 
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 export default function Button({
@@ -29,8 +34,7 @@ export default function Button({
   children,
   fullWidth = false,
   width,
-  bgColor,
-  textColor,
+  style,
   className,
 }: ButtonProps) {
   // type as keyof typeof buttonVariants[typeof variant] => type 이 buttonVariants[variant] 객체의 키임을 명시
@@ -44,15 +48,16 @@ export default function Button({
         type as keyof (typeof disabledVariants)[typeof variant]
       ]
     : "";
-    const computedWidth = fullWidth ? "100%" : width || "auto";
-    const widthStyle = { width: computedWidth };
-  
+  const computedWidth = fullWidth ? "100%" : width || "auto";
+  const widthStyle = { width: computedWidth };
+
   const isIconLeft = iconPosition === "left";
+
+  const iconSize = size === "sm" ? 20 : 24;
 
   const buttonStyle: React.CSSProperties = {
     ...widthStyle,
-    ...(bgColor && { backgroundColor: bgColor }),
-    ...(textColor && { color: textColor }),
+    ...style,
   };
   return (
     <button
@@ -65,9 +70,9 @@ export default function Button({
     >
       {icon ? (
         <div className={iconContainer}>
-          {isIconLeft && <Icon name={icon} size={18} alt={icon} />}
+          {isIconLeft && <Icon name={icon} size={iconSize} alt={icon} />}
           <span className={textStyle}>{children}</span>
-          {!isIconLeft && <Icon name={icon} size={18} alt={icon} />}
+          {!isIconLeft && <Icon name={icon} size={iconSize} alt={icon} />}
         </div>
       ) : (
         <span className={textStyle}>{children}</span>

@@ -26,6 +26,8 @@ export type {
   OrderTypeKey,
   SuccessGeneralPaymentRequest,
   SuccessGeneralOrderResponse,
+  OrderMessage,
+  PaymentMethodInfo,
 };
 
 interface SuccessGeneralPaymentRequest {
@@ -327,6 +329,12 @@ interface AddressResponse {
   request: string | null;
 }
 
+interface PaymentMethodInfo {
+  value: PaymentMethod;
+  label: string;
+  imageUrl?: string;
+}
+
 type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
 
 type OrderDetailType = 'general' | 'subscribe';
@@ -334,3 +342,5 @@ type OrderDetailType = 'general' | 'subscribe';
 type OrderType = "subscription" | "general";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
+
+type OrderMessage = "REWARD_AUTO_APPLY"

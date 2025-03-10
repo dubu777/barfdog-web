@@ -22,72 +22,48 @@ export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
   const deliveryName = "집";
   const isDefaultAddress = true;
   return (
-    // <div className={styles.orderSheetWrapper}>
-    //   {isBundleDelivery ? (
-    //     <DefaultText type="display1">묶음 배송지로 배송됩니다.</DefaultText>
-    //   ) : (
-    //     <>
-    //       <div className={styles.orderSheetTitleWrapper}>
-    //         <DefaultText type="title4">배송지</DefaultText>
-    //         {/* 버튼으로 변경예정 */}
-    //         <button onClick={onToggle}>
-    //           <DefaultText type="label4">배송지 변경</DefaultText>
-    //         </button>
-    //       </div>
-    //       <div
-    //         className={styles.orderSheetContentWrapper({ direction: "col" })}
-    //       >
-    //         <DefaultText type="body2">{deliveryDto.name}</DefaultText>
-    //         <DefaultText type="body2">{deliveryDto.phone}</DefaultText>
-    //         <DefaultText type="body2">
-    //           {deliveryDto.street} {deliveryDto.detailAddress}
-    //         </DefaultText>
-    //       </div>
-    //     </>
-    //   )}
-    // </div>
-    <>
-      <OrderSection
-        title="배송지"
-        subTitleParts={[{ text: "배송지 변경" }]}
-        onSubtitleClick={onToggle}
-      >
-        {isBundleDelivery ? (
-          <DefaultText type="headline2">묶음 배송지로 배송됩니다.</DefaultText>
-        ) : (
-          <div className={styles.DeliveryAddressContentWrapper} style={{ gap: "16px" }}>
+    <OrderSection
+      title="배송지"
+      subTitleParts={[{ text: "배송지 변경" }]}
+      showArrowIcon
+      onSubtitleClick={onToggle}
+    >
+      {isBundleDelivery ? (
+        <DefaultText type="headline2">묶음 배송지로 배송됩니다.</DefaultText>
+      ) : (
+        <div
+          className={styles.DeliveryAddressContentWrapper}
+          style={{ gap: "16px" }}
+        >
+          <div
+            className={styles.DeliveryAddressTextWrapper}
+            style={{ gap: "8px" }}
+          >
+            <DefaultText type="headline2">{deliveryName}</DefaultText>
+            {isDefaultAddress && (
+              <Chips variant="outlined" size="sm" borderRadius="full" switchOff>
+                기본배송지
+              </Chips>
+            )}
+          </div>
+          <div
+            className={styles.DeliveryAddressContentWrapper}
+            style={{ gap: "2px" }}
+          >
             <div
               className={styles.DeliveryAddressTextWrapper}
-              style={{ gap: "8px" }}
+              style={{ gap: "4px" }}
             >
-              <DefaultText type="headline2">{deliveryName}</DefaultText>
-              {isDefaultAddress && (
-                <Chips
-                  variant="outlined"
-                  size="sm"
-                  borderRadius="full"
-                  switchOff
-                >
-                  기본배송지
-                </Chips>
-              )}
+              <DefaultText type="body3">{deliveryDto.name}</DefaultText>
+              <DefaultText type="body3">•</DefaultText>
+              <DefaultText type="body3">{deliveryDto.phone}</DefaultText>
             </div>
-            <div className={styles.DeliveryAddressContentWrapper} style={{ gap: "2px" }}>
-              <div
-                className={styles.DeliveryAddressTextWrapper}
-                style={{ gap: "4px" }}
-              >
-                <DefaultText type="body3">{deliveryDto.name}</DefaultText>
-                <DefaultText type="body3">•</DefaultText>
-                <DefaultText type="body3">{deliveryDto.phone}</DefaultText>
-              </div>
-              <DefaultText type="body3">
-                {deliveryDto.street} {deliveryDto.detailAddress}
-              </DefaultText>
-            </div>
+            <DefaultText type="body3">
+              {deliveryDto.street} {deliveryDto.detailAddress}
+            </DefaultText>
           </div>
-        )}
-      </OrderSection>
+        </div>
+      )}
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<div>Loading...</div>}>
@@ -100,6 +76,6 @@ export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
           />
         </Suspense>
       </ErrorBoundary>
-    </>
+    </OrderSection>
   );
 }

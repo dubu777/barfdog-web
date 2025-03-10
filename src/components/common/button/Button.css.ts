@@ -14,12 +14,14 @@ export const textStyle = style({
   justifyContent: "center",
   alignItems: "center",
   lineHeight: 1,
+  whiteSpace: "nowrap",
 });
 
 // 버튼 크기
 export const buttonSizes = {
   sm: style({
     padding: "4px 6px",
+    minHeight: "36px",
     borderRadius: "8px",
     fontWeight: themeVars.typography.headline.headline4.fontWeight,
     fontSize: themeVars.typography.headline.headline4.fontSize,
@@ -28,6 +30,7 @@ export const buttonSizes = {
   }),
   md: style({
     padding: "10px 24px",
+    minHeight: "44px",
     borderRadius: "8px",
     fontWeight: themeVars.typography.headline.headline3.fontWeight,
     fontSize: themeVars.typography.headline.headline3.fontSize,
@@ -36,6 +39,7 @@ export const buttonSizes = {
   }),
   lg: style({
     padding: "12px 28px",
+    minHeight: "48px",
     borderRadius: "8px",
     fontWeight: themeVars.typography.headline.headline3.fontWeight,
     fontSize: themeVars.typography.headline.headline3.fontSize,
@@ -133,3 +137,9 @@ export const disabledVariants = {
     }),
   },
 };
+
+export const buttonColor = {
+  gray800: style({
+    color: themeVars.colors.gray.gray800
+  })
+}

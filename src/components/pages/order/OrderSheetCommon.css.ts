@@ -23,7 +23,7 @@ export const orderSheetTitleWrapper = style({
 })
 
 
-export const orderSheetContentWrapper = recipe({
+export const orderCommonWrapper = recipe({
   base: {
     display: 'flex',
     gap: '8px',

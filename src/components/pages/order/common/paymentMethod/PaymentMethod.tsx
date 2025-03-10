@@ -2,40 +2,47 @@
 
 import { usePaymentStore } from "@/store/order/usePaymentStore";
 import * as styles from "./PaymentMethod.css";
+import OrderSection from "../orderSection/OrderSection";
+import Image from "next/image";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import LabeledOption from "@/components/common/labeledOption/LabeledOption";
+import { PAYMENT_METHOD_INFO } from "@/constants";
+import { useToggleOption } from "@/hooks/useToggleOption";
+import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
 
 interface PaymentMethodProps {}
+
+
 
 export default function PaymentMethod({}: PaymentMethodProps) {
   const { paymentMethod, setPaymentMethod } = usePaymentStore();
 
+    // radio 모드로 toggle 로직 적용
+    const { onToggle, isSelected } = useToggleOption(
+      paymentMethod,
+      "radio",
+      setPaymentMethod
+    );
+  
   return (
-    <div className={styles.paymentMethodContainer}>
-      <h1>결제수단 선택 컴포넌트</h1>
-
-      <button
-        className={styles.paymentMethodBox({
-          selected: paymentMethod === "NAVER_PAY",
-        })}
-        onClick={() => setPaymentMethod("NAVER_PAY")}
-      >
-        네이버페이
-      </button>
-      <button
-        className={styles.paymentMethodBox({
-          selected: paymentMethod === "KAKAO_PAY",
-        })}
-        onClick={() => setPaymentMethod("KAKAO_PAY")}
-      >
-        카카오페이
-      </button>
-      <button
-        className={styles.paymentMethodBox({
-          selected: paymentMethod === "CREDIT_CARD",
-        })}
-        onClick={() => setPaymentMethod("CREDIT_CARD")}
-      >
-        신용카드
-      </button>
-    </div>
+    <OrderSection title="결제 수단">
+      {Object.entries(PAYMENT_METHOD_INFO).map(
+        ([key, { value, label, imageUrl }]) => (
+        <LabeledRadioButton
+            key={key}
+            value={value}
+            isChecked={isSelected(value)}
+            onToggle={onToggle}
+          >
+            <div className={styles.paymentMethodWrapper}>
+              {imageUrl && (
+                <Image src={imageUrl} alt={label} width={48} height={20} />
+              )}
+              <DefaultText type="label1">{label}</DefaultText>
+            </div>
+          </LabeledRadioButton>
+        )
+      )}
+    </OrderSection>
   );
 }

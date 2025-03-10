@@ -4,31 +4,48 @@ import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import InputField from "@/components/common/inputField/InputField";
 import OrderSection from "../orderSection/OrderSection";
 
-import {
-
-  OrderFormValues,
-} from "@/utils/validation/rewardValidation";
+import { OrderFormValues } from "@/utils/validation/rewardValidation";
 import { Control, Controller, UseFormSetValue } from "react-hook-form";
+import Button from "@/components/common/button/Button";
+import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
+import { ORDER_MESSAGE } from "@/constants";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import { useToggleOption } from "@/hooks/useToggleOption";
+import { useRewardStore } from "@/store/order/useRewardStore";
 
 interface RewardUsageProps {
   control: Control<OrderFormValues>;
-  userTotalReward: number;
   maxAvailableReward: number;
   setValue: UseFormSetValue<OrderFormValues>;
-  setAppliedReward: (value: number) => void;
 }
 
 export default function RewardUsage({
   control,
-  userTotalReward,
   maxAvailableReward,
   setValue,
-  setAppliedReward,
 }: RewardUsageProps) {
+  const {
+    appliedReward,
+    userTotalReward,
+    rewardAutoApply,
+    setAppliedReward,
+    setRewardAutoApply,
+  } = useRewardStore();
   const handleMaxReward = () => {
     setValue("appliedReward", maxAvailableReward);
     setAppliedReward(maxAvailableReward);
   };
+
+  // 자동적용 API 개발시 코드 추가 예정
+  const handleSetRewardAutoApply = (value: boolean | null) => {
+    setRewardAutoApply(value === null ? false : value);
+  };
+
+  const { onToggle, isSelected } = useToggleOption<boolean>(
+    rewardAutoApply,
+    "checkbox",
+    setRewardAutoApply
+  );
 
   return (
     <OrderSection
@@ -41,7 +58,7 @@ export default function RewardUsage({
         { text: "보유" },
       ]}
     >
-      <div className={styles.orderSheetContentWrapper({ direction: "row" })}>
+      <div className={styles.orderCommonWrapper({ direction: "row" })}>
         <Controller
           name="appliedReward"
           control={control}
@@ -53,7 +70,7 @@ export default function RewardUsage({
               onChange={(e) => {
                 const target = e.target as HTMLInputElement;
                 const inputValue = parseInt(target.value, 10) || 0;
-        
+
                 if (inputValue > maxAvailableReward) {
                   const newValue = maxAvailableReward;
                   field.onChange({
@@ -69,7 +86,7 @@ export default function RewardUsage({
                   target.value = newValue.toString();
                   return;
                 }
-        
+
                 field.onChange(e);
                 setAppliedReward(inputValue);
               }}
@@ -81,10 +98,25 @@ export default function RewardUsage({
             />
           )}
         />
-        <DefaultButton type="gray" size="sm" onClick={handleMaxReward}>
+        <Button
+          type="primary"
+          variant="solid"
+          size="lg"
+          onClick={handleMaxReward}
+        >
           전액사용
-        </DefaultButton>
+        </Button>
       </div>
+      <LabeledCheckbox
+        value={true}
+        isChecked={isSelected(true)}
+        onToggle={() => onToggle(true)}
+        iconType="circle"
+      >
+        <DefaultText type="label2">
+          {ORDER_MESSAGE.REWARD_AUTO_APPLY}
+        </DefaultText>
+      </LabeledCheckbox>
     </OrderSection>
   );
 }

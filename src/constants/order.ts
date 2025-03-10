@@ -1,4 +1,4 @@
-import { OrderType, OrderTypeKey, PaymentMethod } from "@/types";
+import { OrderMessage, OrderType, OrderTypeKey, PaymentMethod, PaymentMethodInfo } from "@/types";
 import { TempRecipeDto } from "./survey";
 
 // 결제 전, 결제완료, 생산 중, 배송준비 중, 배송 시작, 배송 중, 배송완료, 취소됨, 환불됨
@@ -33,6 +33,10 @@ const PAYMENT: Record<PaymentMethod, string> = {
 const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {
   GENERAL: "general",
   SUBSCRIPTION: "subscription",
+} as const;
+
+const ORDER_MESSAGE: Record<OrderMessage, string> = {
+  REWARD_AUTO_APPLY: "정기 결제일에 적립금 자동 사용",
 } as const;
 
 const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {
@@ -78,4 +82,23 @@ const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {
   },
 };
 
-export { ORDER_STATUS, PAYMENT, ORDER_TYPE, TEMP_RECIPE_DTO_DATA };
+
+
+const PAYMENT_METHOD_INFO: Record<PaymentMethod, PaymentMethodInfo> = {
+  NAVER_PAY: {
+    value: "NAVER_PAY",
+    label: "네이버페이",
+    imageUrl: "/images/social/naver_pay.svg",
+  },
+  KAKAO_PAY: {
+    value: "KAKAO_PAY",
+    label: "카카오페이",
+    imageUrl: "/images/social/kakao_pay.svg",
+  },
+  CREDIT_CARD: {
+    value: "CREDIT_CARD",
+    label: "신용카드",
+  },
+}
+
+export { ORDER_STATUS, PAYMENT, ORDER_TYPE, TEMP_RECIPE_DTO_DATA, ORDER_MESSAGE, PAYMENT_METHOD_INFO };

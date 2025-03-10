@@ -100,7 +100,7 @@ export default function OrderSummary({
             <DefaultText type="title4">결제 금액</DefaultText>
           </div>
           <div
-            className={styles.orderSheetContentWrapper({ direction: "col" })}
+            className={styles.orderCommonWrapper({ direction: "col" })}
           >
             <div className={styles.orderSheetContentBox}>
               <DefaultText type="label2">상품 금액</DefaultText>
