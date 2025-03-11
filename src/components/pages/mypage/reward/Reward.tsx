@@ -22,6 +22,7 @@ const Reward = () => {
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') as RewardFilterType;
 
+
   const rewardList =
     rewardListData?.pages
     ?.map((page: RewardListData) =>
@@ -33,7 +34,8 @@ const Reward = () => {
 
   const totalReward = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalReward ?? 0;
   const totalCount = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalCount ?? 0;
-
+  console.log(rewardListData?.pages.map(page => page.rewardList))
+  console.log(rewardList)
   useEffect(() => {
     if (inView && !isFetchingNextPage) {
       fetchNextPage();

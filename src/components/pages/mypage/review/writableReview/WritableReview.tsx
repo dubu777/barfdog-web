@@ -1,60 +1,46 @@
-import * as styles from './WritableReview.css';
-import { useEffect, useMemo } from "react";
-import Pagination from "@/components/common/pagination/Pagination";
-import Text from "@/components/common/text/Text";
+import * as styles from '../ReviewList.css';
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { usePagination } from "@/hooks/usePagination";
-import { useQueryClient } from "@tanstack/react-query";
-import { prefetchGetWritableReviewList, useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
+import EmptyStateReview from "@/components/pages/mypage/review/emptyStateReview/EmptyStateReview";
+import { useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
 
 const WritableReview = ({ onInit }: { onInit: () => void }) => {
-  const queryClient = useQueryClient();
-  const { pushWithQuery } = useDynamicQueryPush();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetWritableReviewList();
+  const { ref, inView } = useInView();
+  const writableReviewList = data?.pages
+    ?.map((page) => page.writableReviewList)
+    .flat() || [];
 
-  const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
-    prefetchFn: (page: number) => prefetchGetWritableReviewList(queryClient, page),
-    pushWithQuery,
-  })
-  const paginationProps = useMemo(() => ({
-    currentPage,
-    totalPages,
-    onPageChange,
-  }), [currentPage, totalPages, onPageChange]);
-
-  const { data } = useGetWritableReviewList(currentPage);
-  const writableReviewList = data?.writableReviewList || [];
 
   useEffect(() => {
-    if (data.page) {
-      setPaginationData(data.page);
+    if (inView && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  }, [data.page, setPaginationData, writableReviewList.length, currentPage])
+  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   useEffect(() => {
     onInit();
-  }, [onInit])
+  }, [onInit]);
+
+  const hasOrderHistory = true;
 
   return (
-    <article className={styles.writableReviewContainer({ isEmpty: writableReviewList.length === 0 })}>
-      {writableReviewList.length === 0
-        ? <Text type='description' size='sm' color='grey'>
-          작성 가능한 리뷰가 없습니다.
-        </Text>
-        :
+    <article className={styles.reviewListContainer({ isEmpty: writableReviewList.length === 0 })}>
+      {writableReviewList.length > 0
+        ?
         <>
-          <ul className={styles.writableList}>
-            {writableReviewList.map(review => (
-              <li key={review.id} className={styles.writableReview}>
+          <ul className={styles.reviewList}>
+            {writableReviewList.map((review, index) => (
+              <li key={`${review.id}-${index}`} className={styles.reviewItem}>
                 <ReviewCard isWritableReview reviewDetail={review} />
               </li>
             ))
           }
           </ul>
-          <Pagination
-            {...paginationProps}
-          />
+          <div ref={ref} className={styles.infiniteTrigger} />
         </>
+        : <EmptyStateReview hasOrderHistory={hasOrderHistory} />
       }
     </article>
   );

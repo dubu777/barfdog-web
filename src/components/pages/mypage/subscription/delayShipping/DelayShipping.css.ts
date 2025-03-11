@@ -3,7 +3,7 @@ import { themeVars } from "@/styles/theme.css";
 
 export const delayShippingContainer = style({
 	background: themeVars.colors.gray.gray50,
-	marginBottom: '150px',
+	paddingBottom: '150px',
 })
 
 export const userShippingBox = style({

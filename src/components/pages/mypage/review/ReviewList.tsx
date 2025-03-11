@@ -1,10 +1,9 @@
 'use client';
-import { Suspense, useState } from "react";
+import {Suspense, useEffect, useState} from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import * as styles from './ReviewList.css';
 import TabBar from "@/components/common/tabBar/TabBar";
 import Dropdown from "@/components/common/dropdown/Dropdown";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import WritableReview from "@/components/pages/mypage/review/writableReview/WritableReview";
 import WrittenReview from "@/components/pages/mypage/review/writtenReview/WrittenReview";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
@@ -30,12 +29,17 @@ const Review = () => {
 
   const [defaultTabIndex, setDefaultTabIndex] = useState(checkTabIndex);
 
+  useEffect(() => {
+    setDefaultTabIndex(checkTabIndex);
+  }, [tab]);
+
   const ItemTypeFilterComponent = () => (
     <Dropdown
       label={ItemTypeFilterList[searchParams.get("itemType") as keyof typeof ItemTypeFilterList]?.label || "전체보기"}
       options={Object.entries(ItemTypeFilterList).map(([value, { label }]) => ({label, value}))}
       onSelect={(value) => pushWithQuery(pathname, { itemType: value })}
       position="right"
+      className={styles.reviewItemTypeFilter}
     />
   )
 
@@ -67,12 +71,12 @@ const Review = () => {
   ]
 
   const handleTabInit = async (type: 'written' | 'writable') => {
-    pushWithQuery(pathname, { tab: type, page: 1 });
+    pushWithQuery(pathname, { tab: type });
     if (type === 'written') {
-      await prefetchGetWrittenReviewList(queryClient, 0);
+      await prefetchGetWrittenReviewList(queryClient);
       setDefaultTabIndex(0)
     } else {
-      await prefetchGetWritableReviewList(queryClient, 0);
+      await prefetchGetWritableReviewList(queryClient);
       setDefaultTabIndex(1)
     }
   }

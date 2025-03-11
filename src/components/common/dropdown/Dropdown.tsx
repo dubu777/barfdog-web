@@ -11,6 +11,7 @@ interface DropdownProps {
 	options: { label: string; value: string }[];
 	onSelect?: (value: string) => void;
 	position?: "left" | "right";
+	className?: string;
 }
 
 export default function Dropdown({
@@ -19,6 +20,7 @@ export default function Dropdown({
 	options,
 	onSelect,
 	position = 'right',
+	className,
 }: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
@@ -33,7 +35,7 @@ export default function Dropdown({
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
 	return (
-		<div className={dropdownContainerStyle} ref={dropdownRef} style={{ textAlign: position }}>
+		<div className={`${dropdownContainerStyle} ${className || ''}`} ref={dropdownRef} style={{ textAlign: position }}>
 			<button onClick={() => setIsOpen(!isOpen)}>
 				{trigger ? trigger :
 					<div className={dropdownLabelStyle}>

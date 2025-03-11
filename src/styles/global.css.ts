@@ -12,6 +12,10 @@ globalStyle('html, body', {
   height: '100%',
 });
 
+globalStyle('body', {
+  background: themeVars.colors.gray.gray100,
+});
+
 globalStyle('.swiper-pagination-bullet', {
   width: '6px !important',
   height: '6px !important',

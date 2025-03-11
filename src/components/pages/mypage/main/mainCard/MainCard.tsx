@@ -14,12 +14,11 @@ const MainCard = () => {
   const subscribingPets = petList?.filter(dog => dog.subscribeStatus === 'SUBSCRIBING');
   const newPetList = [...subscribingPets];
   const emptyState = newPetList.length < 1;
-  // const emptyState = true;
 
   return (
     <article className={styles.dogInfoContainer({ emptyState })}>
       {emptyState ?
-        <EmptyStateCard />
+        <EmptyStateCard type='default' />
         :
         <Swiper
           slidesPerView='auto'

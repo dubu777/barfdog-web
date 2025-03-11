@@ -2,7 +2,7 @@ import * as yup from "yup";
 import * as styles from './ReviewForm.css';
 import { useState } from "react";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { SubmitHandler, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
   CreateReviewDetail,
   ImageFile,
@@ -19,6 +19,8 @@ import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/Review
 import ReviewSurvey from "@/components/pages/mypage/review/reviewForm/reviewSurvey/ReviewSurvey";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import useModal from "@/hooks/useModal";
+import {bottomSheetBox, bottomSheetTitle} from "./ReviewForm.css";
 
 const defaultReviewForm = (reviewDetail: ReviewFormData | ReviewDetailItem) => {
   return {
@@ -70,7 +72,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
   const formData = watch();
   const temporaryReward = (addImageIdList.length > 0 ? 500 : 0) + (formData.contents.length >= 20 ? 500 : 0);
 
-  const [isReviewNoticeModalOpen, setIsReviewNoticeModalOpen] = useState(false);
+  const { onToggle, onClose, isOpen } = useModal();
 
   const handleFileUpload = async (files: ImageFile[]) => {
     const uploadedImageList: number[] = [];
@@ -129,7 +131,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
     <>
     <form className={styles.reviewFormContainer}>
       <div className={styles.reviewNotice}>
-        <InfoBox onClick={() => setIsReviewNoticeModalOpen(true)} text='리뷰 작성시 유의사항' />
+        <InfoBox onClick={onToggle} text='리뷰 작성시 유의사항' />
       </div>
       {type === 'create' &&
         <DefaultText type='title4' className={styles.reviewFormTitle}>이 상품 어떠셨나요?</DefaultText>
@@ -195,9 +197,9 @@ const ReviewForm = <T extends 'create' | 'update'>({
         onPrimaryClick={handleSubmit(onSubmit)}
       />
     </form>
-    <BottomSheet isOpen={isReviewNoticeModalOpen} onClose={() => setIsReviewNoticeModalOpen(false)} closeButton>
-      <div className={styles.reviewNoticeBottomSheet}>
-        <DefaultText type='headline2'>작성시 유의사항</DefaultText>
+    <BottomSheet isOpen={isOpen} onClose={onClose} closeButton className={styles.reviewNoticeBottomSheet}>
+      <div className={styles.bottomSheetBox}>
+        <DefaultText type='headline2' className={styles.bottomSheetTitle}>작성시 유의사항</DefaultText>
         <DefaultText type='label4' className={styles.bottomSheetSubTitle}>유의사항</DefaultText>
         <div className={styles.bottomSheetInfoDetail}>
           <DefaultText type='caption'>• 작성하신 후기는 바프독 이용자에게 공개됩니다.</DefaultText>
@@ -205,7 +207,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
           <DefaultText type='caption'>• 정기 구독 구매 후기 작성은 구매 확정후 회차 당 30일까지 가능하며,  리뷰 회차 당 최대 1000원의 적립금이 영업일 기준 2일 전후로 지급됩니다.(텍스트 500원, 사진 500원)</DefaultText>
           <DefaultText type='caption'>• 승인되지 않은 기준 미충족 후기에 대한 수정은 180일 이내만 가능합니다.</DefaultText>
           <DefaultText type='caption'>• 아래에 해당할 경우 적립금 지급이 보류되거나, 검수를 통해 작성 리뷰가 비노출 처리됩니다.</DefaultText>
-          <div className={styles.bottomSheetInfoDetail}>
+          <div className={styles.bottomSheetSubDetail}>
             <DefaultText type='caption'>
               • 바프독 서비스와 관련성 없는 사진을 업로드 한 경우<br/>
               • 바프독 서비스와 관련성 없는 내용의 후기<br/>
@@ -219,7 +221,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
       <ButtonDocked
         type='full-button'
         primaryButtonLabel='확인'
-        onPrimaryClick={() => setIsReviewNoticeModalOpen(false)}
+        onPrimaryClick={onClose}
       />
     </BottomSheet>
     </>

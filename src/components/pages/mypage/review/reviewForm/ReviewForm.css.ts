@@ -42,16 +42,29 @@ export const reviewTemporaryReward = style({
 })
 
 export const reviewNoticeBottomSheet = style({
-  padding: '0 20px 20px',
+  paddingBottom: '80px',
+})
+
+export const bottomSheetBox = style({
+  padding: '0 20px',
+  marginBottom: '12px'
+})
+
+export const bottomSheetTitle = style({
+  padding: '15px 0',
 })
 
 export const bottomSheetSubTitle = style({
-  margin: '16px 0 8px',
+  marginBottom: '8px',
 })
 
 export const bottomSheetInfoDetail = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
+  marginLeft: '4px',
+})
+
+export const bottomSheetSubDetail = style({
   marginLeft: '8px',
 })

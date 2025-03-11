@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {
 	tabBarActiveVariants, tabBarContainerAlign,
 	tabBarContainerBase,
@@ -38,6 +38,10 @@ export default function TabBar ({
 	const activeTextColor = variant === 'text' ? 'gray900' : 'white';
 
 	const [activeIndex, setActiveIndex] = useState(defaultIndex);
+
+	useEffect(() => {
+		setActiveIndex(defaultIndex);
+	}, [defaultIndex]);
 
 	const handleTabChange = (index: number) => {
 		setActiveIndex(index);
