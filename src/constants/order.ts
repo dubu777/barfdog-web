@@ -37,6 +37,9 @@ const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {
 
 const ORDER_MESSAGE: Record<OrderMessage, string> = {
   REWARD_AUTO_APPLY: "정기 결제일에 적립금 자동 사용",
+  AGREE_PRIVACY: "개인 정보 수집 이용 동의",
+  BROCHURE: "바프독 설명이 포함된 브로슈어 받기",
+  CONFIRM: "위 주문 내용을 확인했으며, 결제에 동의합니다."
 } as const;
 
 const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {

@@ -53,8 +53,8 @@ export function useUpdateSubscriptionOrderBody(
       paymentMethod: "NAVER_PAY",
       paymentPrice: subscribeDto.nextPaymentPrice - discountGrade,
       subscriptionMonth: null,
-      agreePrivacy: true,
-      brochure: true,
+      agreePrivacy: false,
+      brochure: false,
     };
 
     updateOrderBody(updatedBody, ORDER_TYPE.SUBSCRIPTION);

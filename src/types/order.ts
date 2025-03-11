@@ -343,4 +343,4 @@ type OrderType = "subscription" | "general";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
 
-type OrderMessage = "REWARD_AUTO_APPLY"
+type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM"

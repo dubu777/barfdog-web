@@ -8,8 +8,8 @@ import { RECIPE_TEMP_DATA } from "@/constants";
 import { RecipeData } from "@/types";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";
-import FooterButton from "../../footerButton/FooterButton";
 import Link from "next/link";
+import OrderFooterButton from "../../orderFooterButton/OrderFooterButton";
 
 interface SelectRecipeProps {
   reportId: number;
@@ -105,11 +105,11 @@ export default function SelectRecipe({
       <Link href={{pathname: '/order/subscription',
         query: {type: "select-option", reportId: String(reportId)}
       }}>
-        <FooterButton
+        <OrderFooterButton
           isDisabled={!isCompleted}
         >
           주문하기
-        </FooterButton>
+        </OrderFooterButton>
       </Link>
     </section>
   );

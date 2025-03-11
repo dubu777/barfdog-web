@@ -3,11 +3,10 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const OrderSectionContainer = style({
-  padding: "32px 20px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "flex-start",
   alignSelf: "stretch",
   gap: "16px",
   backgroundColor: themeVars.colors.gray.gray0,

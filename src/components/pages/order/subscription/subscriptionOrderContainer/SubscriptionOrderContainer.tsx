@@ -1,8 +1,7 @@
 "use client";
 
 import PaymentMethod from "../../common/paymentMethod/PaymentMethod";
-import { ORDER_TYPE } from "@/constants";
-
+import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 
 import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
 import OrderItem from "../../orderItem/OrderItem";
@@ -33,8 +32,19 @@ import OrderSummary from "../../common/orderSummary/OrderSummary";
 import RewardUsage from "../../common/reward/RewardUsage";
 import SubscriptionOrderItemList from "../subscriptionOrderItemList/SubscriptionOrderItemList";
 import { useOrderForm } from "@/hooks/useOrderForm";
-import { defaultOrderValues, getOrderSchema, OrderFormValues } from "@/utils/validation/rewardValidation";
+import {
+  defaultOrderValues,
+  getOrderSchema,
+  OrderFormValues,
+} from "@/utils/validation/rewardValidation";
 import { useRewardStore } from "@/store/order/useRewardStore";
+import OrderTerm from "../../orderTerm/OrderTerm";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import OrderSection from "../../common/orderSection/OrderSection";
+import Button from "@/components/common/button/Button";
+import OrderFooterButton from "@/components/pages/subscription/orderFooterButton/OrderFooterButton";
+import { useDiscountStore } from "@/store/order/useDiscountStore";
+import { formatNumberWithCommas } from "@/utils";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -52,12 +62,12 @@ export default function SubscriptionOrderContainer({
 }: SubscriptionOrderContainerProps) {
   const router = useRouter();
   const { getRequestBody } = useOrderStore();
-  const { maxAvailableReward} =
-    useRewardStore();
+  const { maxAvailableReward } = useRewardStore();
+  const { paymentPrice } = useDiscountStore();
   const { data: subscriptionOrderSheetData } =
     useGetSubscriptionOrder(subscribeId);
-    console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
-    
+  console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
+
   const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
   const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment();
@@ -71,14 +81,12 @@ export default function SubscriptionOrderContainer({
     subscriptionOrderSheetData.subscribeDto.nextPaymentPrice,
     subscriptionOrderSheetData.subscribeDto.plan
   );
-  const { control, watch, errors, setValue } =
-    useOrderForm<OrderFormValues>(
-      getOrderSchema(maxAvailableReward),
-      defaultOrderValues,
-    );
+  const { control, watch, errors, setValue } = useOrderForm<OrderFormValues>(
+    getOrderSchema(maxAvailableReward),
+    defaultOrderValues
+  );
   // 구독 구매 페이지 정보 초기값 없데이트
   useUpdateSubscriptionOrderBody(subscriptionOrderSheetData);
-
 
   // 아임포트 결제 응답 처리
   const handleIamportPaymentResponse = async ({
@@ -91,7 +99,7 @@ export default function SubscriptionOrderContainer({
     const { success, customer_uid, error_msg } = res;
     if (!success) {
       console.error("아임포트 결제 실패", error_msg);
-      router.push('/order/order-failed')
+      router.push("/order/order-failed");
       return;
     }
     const orderData = {
@@ -171,8 +179,7 @@ export default function SubscriptionOrderContainer({
     }
   };
 
-
-  // 결제 요청 함수 
+  // 결제 요청 함수
   const handlePaymentSubmit = async () => {
     try {
       const requestBody = getRequestBody(
@@ -225,13 +232,18 @@ export default function SubscriptionOrderContainer({
   };
 
   return (
-    <div>
+    <>
       <DeliveryAddress orderType={ORDER_TYPE.SUBSCRIPTION} />
       <Divider />
-      <SubscriptionOrderItemList subscriptionOrderSheetData={subscriptionOrderSheetData}/>
+      <SubscriptionOrderItemList
+        subscriptionOrderSheetData={subscriptionOrderSheetData}
+      />
       <Divider />
-      <Divider />
-      <RewardUsage control={control} setValue={setValue} maxAvailableReward={maxAvailableReward} />
+      <RewardUsage
+        control={control}
+        setValue={setValue}
+        maxAvailableReward={maxAvailableReward}
+      />
       <Divider />
       <PaymentMethod />
       <Divider />
@@ -242,12 +254,15 @@ export default function SubscriptionOrderContainer({
         deliveryPrice={undefined}
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />
-      <button
-        style={{ width: "100%", height: "50px", backgroundColor: "gray" }}
-        onClick={handlePaymentSubmit}
-      >
-        결제하기
-      </button>
-    </div>
+      <Divider />
+      <OrderTerm />
+      <Divider />
+      <OrderSection padding="20px">
+        <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
+      </OrderSection>
+      <OrderFooterButton isDisabled={false} divider>
+        {formatNumberWithCommas(paymentPrice)}원 결제하기
+      </OrderFooterButton>
+    </>
   );
 }

@@ -18,10 +18,10 @@ import { useRewardStore } from "./useRewardStore";
 interface OrderState {
   generalOrderBody: SaveGeneralOrderRequest;
   subscriptionOrderBody: SaveSubscriptionOrderRequest;
+  agreePrivacy: boolean;
+  brochure: boolean;
   updateOrderBody: (
-    updates: Partial<
-      SaveGeneralOrderRequest | SaveSubscriptionOrderRequest
-    >,
+    updates: Partial<SaveGeneralOrderRequest | SaveSubscriptionOrderRequest>,
     orderType: OrderType
   ) => void;
   getRequestBody: (
@@ -38,13 +38,15 @@ interface OrderState {
   getAppliedCouponDiscount: (itemId: number) => number | undefined;
   cancelAppliedCoupon: (type: OrderType, itemId: number | null) => void;
   isAppliedCoupon: (couponId: number) => boolean;
-
+  setAgreePrivacy: (agreePrivacy: boolean) => void;
+  setBrochure: (brochure: boolean) => void;
 }
 
 export const useOrderStore = create<OrderState>((set, get) => ({
   generalOrderBody: initialGeneralOrderBody,
   subscriptionOrderBody: initialSubscriptionOrderBody,
-
+  agreePrivacy: false,
+  brochure: false,
   updateOrderBody: (updates, orderType) =>
     set((state) => {
       if (orderType === ORDER_TYPE.GENERAL) {
@@ -58,16 +60,20 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     }),
 
   getRequestBody: (orderType) => {
-    const { generalOrderBody, subscriptionOrderBody } = get();
+    const { generalOrderBody, subscriptionOrderBody, agreePrivacy, brochure } =
+      get();
 
     // 필요한 데이터들을 각각의 store에서 가져옴
     const { deliveryDto, deliveryId } = useDeliveryStore.getState();
     const { paymentMethod } = usePaymentStore.getState();
-    const { discountCoupon, discountTotal, deliveryPrice, paymentPrice } = useDiscountStore.getState();
+    const { discountCoupon, discountTotal, deliveryPrice, paymentPrice } =
+      useDiscountStore.getState();
     const { appliedReward } = useRewardStore.getState();
 
     const commonBody = {
       // deliveryDto,
+      agreePrivacy,
+      brochure,
       paymentMethod,
       discountCoupon,
       discountReward: appliedReward,
@@ -77,58 +83,66 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     };
 
     if (orderType === ORDER_TYPE.GENERAL) {
-      return { ...generalOrderBody, ...commonBody, deliveryId } as SaveGeneralOrderRequest;
+      return {
+        ...generalOrderBody,
+        ...commonBody,
+        deliveryId,
+      } as SaveGeneralOrderRequest;
     }
 
-    return { ...subscriptionOrderBody, ...commonBody,  deliveryDto: {
+    return {
+      ...subscriptionOrderBody,
+      ...commonBody,
+      deliveryDto: {
         detailAddress: deliveryDto.detailAddress,
         name: deliveryDto.name,
         phone: deliveryDto.phone,
         request: deliveryDto.request,
         street: deliveryDto.street,
         zipcode: deliveryDto.zipcode,
-        deliveryName: "테스트 이름"
-      }  } as SaveSubscriptionOrderRequest;
+        deliveryName: "테스트 이름",
+      },
+    } as SaveSubscriptionOrderRequest;
   },
-    // 쿠폰 적용
-    updateAppliedCoupon: (type, itemId, itemPrice, couponId, discountAmount) =>
-      set((state) => {
-        if (type === ORDER_TYPE.GENERAL) {
-          const updatedItems = state.generalOrderBody.orderItemDtoList.map(
-            (item) =>
-              item.itemId === itemId
-                ? {
-                    ...item,
-                    memberCouponId: couponId,
-                    discountAmount,
-                    finalPrice: itemPrice - discountAmount,
-                  }
-                : item
-          );
-          return {
-            generalOrderBody: {
-              ...state.generalOrderBody,
-              orderItemDtoList: updatedItems,
-            },
-          };
-        } else if (type === ORDER_TYPE.SUBSCRIPTION) {
-          return {
-            subscriptionOrderBody: {
-              ...state.subscriptionOrderBody,
-              memberCouponId: couponId,
-              discountCoupon: discountAmount,
-            },
-          };
-        }
-        return state;
-      }),
-    getAppliedCouponDiscount: (itemId) => {
-      const orderItem = get().generalOrderBody.orderItemDtoList.find(
-        (item) => item.itemId === itemId
-      );
-      return orderItem?.discountAmount;
-    },
-      // 쿠폰 취소
+  // 쿠폰 적용
+  updateAppliedCoupon: (type, itemId, itemPrice, couponId, discountAmount) =>
+    set((state) => {
+      if (type === ORDER_TYPE.GENERAL) {
+        const updatedItems = state.generalOrderBody.orderItemDtoList.map(
+          (item) =>
+            item.itemId === itemId
+              ? {
+                  ...item,
+                  memberCouponId: couponId,
+                  discountAmount,
+                  finalPrice: itemPrice - discountAmount,
+                }
+              : item
+        );
+        return {
+          generalOrderBody: {
+            ...state.generalOrderBody,
+            orderItemDtoList: updatedItems,
+          },
+        };
+      } else if (type === ORDER_TYPE.SUBSCRIPTION) {
+        return {
+          subscriptionOrderBody: {
+            ...state.subscriptionOrderBody,
+            memberCouponId: couponId,
+            discountCoupon: discountAmount,
+          },
+        };
+      }
+      return state;
+    }),
+  getAppliedCouponDiscount: (itemId) => {
+    const orderItem = get().generalOrderBody.orderItemDtoList.find(
+      (item) => item.itemId === itemId
+    );
+    return orderItem?.discountAmount;
+  },
+  // 쿠폰 취소
   cancelAppliedCoupon: (type, itemId) =>
     set((state) => {
       if (type === ORDER_TYPE.GENERAL) {
@@ -159,11 +173,12 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       }
       return state;
     }),
-    isAppliedCoupon: (couponId) => {
-      const appliedItem = get().generalOrderBody.orderItemDtoList.find(
-        (item) => item.memberCouponId === couponId
-      );
-      return !!appliedItem;
-    },
-  
+  isAppliedCoupon: (couponId) => {
+    const appliedItem = get().generalOrderBody.orderItemDtoList.find(
+      (item) => item.memberCouponId === couponId
+    );
+    return !!appliedItem;
+  },
+  setAgreePrivacy: (agreePrivacy) => set({ agreePrivacy }),
+  setBrochure: (brochure) => set({ brochure }),
 }));

@@ -4,6 +4,7 @@ import {
   fontColors,
   alignStyles,
   blockStyles,
+  underline,
 } from "./DefaultText.css";
 
 interface DefaultTextProps {
@@ -11,8 +12,8 @@ interface DefaultTextProps {
   color?: keyof typeof fontColors;
   align?: "left" | "center" | "right";
   children: React.ReactNode;
-  className?: string; // 추가 커스텀 스타일
   inlineBlock?: boolean;
+  underLine?: boolean;
   style?: React.CSSProperties;
 }
 
@@ -42,20 +43,21 @@ export default function DefaultText({
   color = "gray900",
   align = "left",
   children,
-  className,
   inlineBlock = false,
+  underLine = false,
   style,
 }: DefaultTextProps) {
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
   const alignStyle = alignStyles[align];
+  const underlineStyle = underLine ? underline : "";
   const Tag = tagMap[type] || "span";
 
   return (
     <Tag
       className={`${textStyle} ${colorStyle} ${alignStyle} ${
         inlineBlock ? blockStyles : ""
-      } ${className || ""}`}
+      } ${underlineStyle}`}
       style={style}
     >
       {children}

@@ -8,7 +8,10 @@ import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 
 interface OrderSummaryRowProps {
   label: string;
+  labelType?: keyof typeof textStyles;
+  labelColor?: keyof typeof fontColors;
   value: number;
+  valueColor?: keyof typeof fontColors;
   valueType?: keyof typeof textStyles;
   freeText?: string;
   /** plainColor가 true면, computed color를 무시하고 항상 "gray900"을 적용 */
@@ -19,7 +22,10 @@ interface OrderSummaryRowProps {
 
 export default function OrderSummaryRow({
   label,
+  labelType = "label2",
+  labelColor = "gray700",
   value,
+  valueColor,
   valueType = "body2",
   freeText,
   plainColor = false,
@@ -49,10 +55,10 @@ export default function OrderSummaryRow({
   })()
   return (
     <div className={styles.orderSummaryRowContainer}>
-      <DefaultText type="label2" color="gray700">
+      <DefaultText type={labelType} color={labelColor}>
         {label}
       </DefaultText>
-      <DefaultText type={valueType} color={computedValueColor}>
+      <DefaultText type={valueType} color={valueColor ?? computedValueColor}>
         {formattedValue}
       </DefaultText>
     </div>

@@ -105,9 +105,12 @@ export default function OrderSummary({
           <OrderSummaryRow label="등급 할인" value={gradeDiscount} />
           <OrderSummaryRow label="쿠폰 사용" value={totalCouponDiscount} />
           <OrderSummaryRow label="적립금 사용" value={appliedReward} />
-          <OrderSummaryRow label="총 할인 금액" value={totalDiscount} />
           <Divider thickness={1} color="gray300" /> 
           <OrderSummaryRow label="1회차 결제 금액" value={finalPaymentAmount} valueType="title4" plus />
+          <div>
+            {`총 ${formatNumberWithCommas(totalDiscount)}원 할인 받았어요!`}
+          </div>
+          <OrderSummaryRow label="2회차 예상 결제 금액" labelType="label4" value={finalPaymentAmount} valueType="headline2" valueColor="gray700" plus />
         </div>
       ) : (
         <div className={styles.orderCommonWrapper({ direction: "col" })}>

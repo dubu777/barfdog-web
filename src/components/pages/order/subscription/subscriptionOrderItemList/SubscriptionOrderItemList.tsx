@@ -28,7 +28,7 @@ export default function SubscriptionOrderItemList({
                 originPrice={40203}
               />
               {index < array.length - 1 && (
-                <Divider thickness={1} marginTopBottom={16} />
+                <Divider thickness={1} style={{margin: "16px 0"}}/>
               )}
             </React.Fragment>
           )

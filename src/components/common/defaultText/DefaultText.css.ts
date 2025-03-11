@@ -140,3 +140,7 @@ export const blockStyles = {
   true: style({ display: 'inline-block' }),
   false: style({ display: 'block' }),
 }
+
+export const underline = style({
+  textDecoration: "underline",
+});

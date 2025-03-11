@@ -111,7 +111,6 @@ export default function RewardUsage({
         value={true}
         isChecked={isSelected(true)}
         onToggle={() => onToggle(true)}
-        iconType="circle"
       >
         <DefaultText type="label2">
           {ORDER_MESSAGE.REWARD_AUTO_APPLY}
