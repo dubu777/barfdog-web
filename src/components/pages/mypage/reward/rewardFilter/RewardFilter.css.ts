@@ -4,6 +4,7 @@ import { themeVars } from "@/styles/theme.css";
 export const rewardFilterContainer = style({
   padding: '20px 20px 10px',
   borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,
+  background: themeVars.colors.gray.gray0,
 });
 
 export const rewardFilter = style({

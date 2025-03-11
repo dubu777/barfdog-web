@@ -13,12 +13,11 @@ export const myPageHeader = style({
 })
 
 export const headerLeft = style({
-  display: 'flex',
-  gap: '12px'
+  // display: 'flex',
+  // gap: '12px'
 })
 
 export const goBackButton = style({
-  marginRight: 'auto',
   cursor: 'pointer',
 })
 

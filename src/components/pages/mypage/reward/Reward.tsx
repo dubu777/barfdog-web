@@ -11,7 +11,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import useModal from "@/hooks/useModal";
-import RewardInfoModal from "@/components/pages/mypage/reward/rewardInfoModal/RewardInfoModal";
+import RewardInfoBottomSheet from "@/components/pages/mypage/reward/rewardInfoBottomSheet/RewardInfoBottomSheet";
 
 const Reward = () => {
   const { data: rewardListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetRewardList();
@@ -22,7 +22,8 @@ const Reward = () => {
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') as RewardFilterType;
 
-  const rewardList = rewardListData?.pages
+  const rewardList =
+    rewardListData?.pages
     ?.map((page: RewardListData) =>
       statusFilter === 'ALL' || statusFilter === null
         ? page.rewardList
@@ -30,8 +31,8 @@ const Reward = () => {
     // ?.map((page: RewardListData) => page.rewardList)
     .reduce((acc, curr) => acc.concat(curr), [] as RewardData[]);
 
-  const totalReward = (rewardListData?.pages[0] as RewardListDataWithTotals).totalReward ?? 0;
-  const totalCount = (rewardListData?.pages[0] as RewardListDataWithTotals).totalCount ?? 0;
+  const totalReward = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalReward ?? 0;
+  const totalCount = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalCount ?? 0;
 
   useEffect(() => {
     if (inView && !isFetchingNextPage) {
@@ -39,7 +40,7 @@ const Reward = () => {
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
   return (
-    <section>
+    <section className={styles.rewardContainer}>
       <article className={styles.totalRewardContainer}>
         <DefaultText type='title4'>적립금</DefaultText>
         <Card shadow='light' className={styles.totalRewardCard}>
@@ -58,12 +59,14 @@ const Reward = () => {
         </Card>
         <div>
           <InfoBox text='적립금 안내사항' onClick={onToggle} />
-          <RewardInfoModal isOpen={isOpen} onClose={onClose} />
+          <RewardInfoBottomSheet isOpen={isOpen} onClose={onClose} />
         </div>
       </article>
       <RewardFilter totalCount={totalCount} statusFilter={statusFilter}  />
       <RewardList rewardList={rewardList || []} />
-      <div ref={ref} className={styles.infiniteTrigger} />
+      {rewardList?.length > 0 &&
+        <div ref={ref} className={styles.infiniteTrigger} />
+      }
     </section>
   );
 };

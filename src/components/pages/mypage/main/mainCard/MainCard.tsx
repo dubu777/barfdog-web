@@ -6,7 +6,7 @@ import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import EmptyStateCard from "@/components/pages/mypage/layout/cards/emptyStateCard/EmptyStateCard";
-import MyPageCards from "@/components/pages/mypage/layout/cards/myPageCards/MyPageCards";
+import MyPageCard from "@/components/pages/mypage/layout/cards/myPageCard/MyPageCard";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 
 const MainCard = () => {
@@ -14,6 +14,7 @@ const MainCard = () => {
   const subscribingPets = petList?.filter(dog => dog.subscribeStatus === 'SUBSCRIBING');
   const newPetList = [...subscribingPets];
   const emptyState = newPetList.length < 1;
+  // const emptyState = true;
 
   return (
     <article className={styles.dogInfoContainer({ emptyState })}>
@@ -35,7 +36,7 @@ const MainCard = () => {
                 key={`${pet.id}-${index}`}
                 className={styles.itemSlider}
               >
-                <MyPageCards data={pet} />
+                <MyPageCard data={pet} type='mypage' />
               </SwiperSlide>
             )
           })}

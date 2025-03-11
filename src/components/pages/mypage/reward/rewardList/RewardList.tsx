@@ -2,6 +2,7 @@ import * as styles from "./RewardList.css";
 import { formatDate } from "@/utils/dateUtils";
 import { RewardData } from "@/types/reward";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import EmptyState from "@/components/pages/mypage/layout/emptyState/EmptyState";
 
 interface RewardListProps {
   rewardList: RewardData[];
@@ -9,7 +10,7 @@ interface RewardListProps {
 
 const RewardList = ({ rewardList }: RewardListProps) => {
   return (
-    <article>
+    <article className={styles.rewardListContainer}>
       {rewardList.length > 0 ?
         <ul className={styles.rewardListContents}>
           {rewardList?.map((reward, index) => (
@@ -28,7 +29,7 @@ const RewardList = ({ rewardList }: RewardListProps) => {
             </li>
           ))}
         </ul>
-        : <div style={{ padding: '20px' }}><DefaultText type='label2' align='center'>내역이 없습니다.</DefaultText></div>
+        : <EmptyState title='적립금 내역이 없어요' subTitle='상품 구매하고 적립금 혜택 받아보세요!' />
       }
     </article>
   );

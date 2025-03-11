@@ -1,11 +1,13 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { dropdownBoxStyle, dropdownContainerStyle, dropdownOptionStyle } from "./Dropdown.css";
+import { dropdownBoxStyle, dropdownContainerStyle, dropdownLabelStyle, dropdownOptionStyle } from "./Dropdown.css";
 import { cardShadow } from "@/components/common/card/Card.css";
 import { motion, AnimatePresence } from "framer-motion";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import ArrowUp from '/public/images/icons/chevron-sort-up.svg';
 
 interface DropdownProps {
-	trigger: ReactNode;
+	trigger?: ReactNode;
+	label?: string;
 	options: { label: string; value: string }[];
 	onSelect?: (value: string) => void;
 	position?: "left" | "right";
@@ -13,6 +15,7 @@ interface DropdownProps {
 
 export default function Dropdown({
 	trigger,
+	label,
 	options,
 	onSelect,
 	position = 'right',
@@ -31,7 +34,16 @@ export default function Dropdown({
 	}, []);
 	return (
 		<div className={dropdownContainerStyle} ref={dropdownRef} style={{ textAlign: position }}>
-			<button onClick={() => setIsOpen(!isOpen)}>{trigger}</button>
+			<button onClick={() => setIsOpen(!isOpen)}>
+				{trigger ? trigger :
+					<div className={dropdownLabelStyle}>
+						<DefaultText type="label4">
+							{label || ''}
+						</DefaultText>
+						<ArrowUp style={{ transform: 'rotate(180deg)' }} />
+					</div>
+				}
+			</button>
 			<AnimatePresence>
 				{isOpen && (
 					<motion.ul

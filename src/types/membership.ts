@@ -13,4 +13,5 @@ interface MembershipTier {
 	subBenefits?: string[];
 	minSubscription?: number;
 	minPurchase?: number;
+	subscriptionDiscount?: number;
 }

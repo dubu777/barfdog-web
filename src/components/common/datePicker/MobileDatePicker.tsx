@@ -25,13 +25,12 @@ const parseDate = (dateStr?: string) => {
 	if (!dateStr) {
 		const today = new Date();
 		return {
-		year: String(getYear(today)),
-		month: format(today, "MM"),
-		day: format(today, "dd"),
+			year: String(getYear(today)),
+			month: format(today, "MM"),
+			day: format(today, "dd"),
 		};
 	}
-
-	const [year, month, day] = dateStr.split("-");
+	const [year, month, day] = dateStr.split(".");
 	return { year, month, day };
 };
 
@@ -88,6 +87,7 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 						itemHeight={32}
 						height={150}
 						wheelMode='natural'
+						className={styles.mobileDatePickerStyle}
 					>
 						<Picker.Column name="year">
 							{getYears().map((year) => (

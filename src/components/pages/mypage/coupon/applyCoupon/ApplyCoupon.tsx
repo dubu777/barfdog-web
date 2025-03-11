@@ -60,8 +60,6 @@ const ApplyCoupon = () => {
           onSubmit={handleApplyCoupon}
           confirmButton
           confirmButtonText='등록'
-          clearButton
-          onReset={() => setCouponCode('')}
           disabled={isLoading}
         />
       </div>

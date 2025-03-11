@@ -32,13 +32,7 @@ const Review = () => {
 
   const ItemTypeFilterComponent = () => (
     <Dropdown
-      trigger={(
-        <div className={styles.reviewItemTypeFilter}>
-          <DefaultText type="label4">
-            {ItemTypeFilterList[searchParams.get("itemType") as keyof typeof ItemTypeFilterList]?.label || "전체보기"}
-          </DefaultText>
-        </div>
-      )}
+      label={ItemTypeFilterList[searchParams.get("itemType") as keyof typeof ItemTypeFilterList]?.label || "전체보기"}
       options={Object.entries(ItemTypeFilterList).map(([value, { label }]) => ({label, value}))}
       onSelect={(value) => pushWithQuery(pathname, { itemType: value })}
       position="right"

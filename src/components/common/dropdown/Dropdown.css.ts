@@ -5,6 +5,12 @@ export const dropdownContainerStyle = style({
 	position: 'relative',
 })
 
+export const dropdownLabelStyle = style({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '4px',
+})
+
 export const dropdownBoxStyle = style({
 	minWidth: '71px',
 	position: 'absolute',

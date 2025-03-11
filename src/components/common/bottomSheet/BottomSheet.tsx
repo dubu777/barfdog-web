@@ -14,6 +14,7 @@ interface BottomSheetProps {
 	mode?: 'modal' | 'modeless';
 	children: ReactNode;
 	closeButton?: boolean;
+	className?: string;
 }
 
 export default function BottomSheet({
@@ -21,9 +22,9 @@ export default function BottomSheet({
 	onClose,
 	mode = 'modal',
 	children,
-	closeButton = true
+	closeButton = true,
+	className,
 }: BottomSheetProps) {
-
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') onClose();
@@ -49,7 +50,7 @@ export default function BottomSheet({
 					transition={{ duration: 0.15 }}
 				>
 					<motion.div
-						className={sheetStyle}
+						className={`${sheetStyle} ${className || ''}`}
 						initial={{ y: '100%' }}
 						animate={{ y: '0%' }}
 						exit={{ y: '100%' }}

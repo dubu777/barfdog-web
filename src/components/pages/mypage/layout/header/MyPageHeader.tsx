@@ -18,8 +18,8 @@ const MyPageHeader = () => {
   const pathTitles: { [key: string]: string } = {
     '/mypage': '마이페이지',
     '/mypage/order-history': '주문내역',
-    '/mypage/coupon': '쿠폰 내역',
-    '/mypage/reward': '적립금 내역',
+    '/mypage/coupon': '쿠폰내역',
+    '/mypage/reward': '적립금내역',
     '/mypage/manage-card': '카드관리',
     '/mypage/invite-friends': '친구초대',
     '/mypage/review': '리뷰작성내역',
@@ -35,7 +35,7 @@ const MyPageHeader = () => {
       return '주문 상세';
     }
     if (pathname.includes('/mypage/subscription/delay-shipping/')) {
-      return '배송일 변경';
+      return '배송 미루기';
     }
     if (pathname.includes('/mypage/subscribe/address/')) {
       return '구독 배송지 관리';
@@ -69,16 +69,14 @@ const MyPageHeader = () => {
 
   return (
     <nav className={`${commonLayoutStyle} ${styles.myPageHeader}`}>
-      <div className={styles.headerLeft}>
-        {pathname !== '/mypage' &&
-          <button className={styles.goBackButton} onClick={goBack}>
-            <BackButton />
-          </button>
-        }
-        <DefaultText type='title4'>
-          {getTitle()}
-        </DefaultText>
-      </div>
+      {pathname !== '/mypage' &&
+        <button className={styles.goBackButton} onClick={goBack}>
+          <BackButton />
+        </button>
+      }
+      <DefaultText type='title4'>
+        {getTitle()}
+      </DefaultText>
       <Link href="/cart" className={styles.cartButton}>
         {count !== 0 && <div className={styles.cartCount}>{count}</div>}
         <Cart />

@@ -1,9 +1,13 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
+export const rewardContainer = style({
+  background: themeVars.colors.gray.gray50,
+  minHeight: 'calc(100vh - 60px)',
+});
+
 export const totalRewardContainer = style({
   padding: '20px',
-  background: themeVars.colors.gray.gray50,
 });
 
 export const totalRewardCard = style({

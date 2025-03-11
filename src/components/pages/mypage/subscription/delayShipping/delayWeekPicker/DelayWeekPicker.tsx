@@ -61,7 +61,6 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 		setSelectedDate(updatedDate);
 		onChange(`${updatedDate.month}-${updatedDate.day}`);
 	};
-
 	return (
 		<div>
 			{label &&
@@ -78,10 +77,17 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 				</button>
 				{isOpen &&
 				<div className={styles.mobileDatePickerBox}>
-					<Picker value={selectedDate} onChange={handleChange} itemHeight={32} height={150} wheelMode="natural">
-						<Picker.Column name="month">
+					<Picker
+						value={selectedDate}
+						onChange={handleChange}
+						itemHeight={32}
+						height={150}
+						wheelMode="natural"
+						className={styles.mobileDatePickerStyle}
+					>
+						<Picker.Column name="month" >
 							{months.map(month => (
-								<Picker.Item key={month} value={month}>
+								<Picker.Item key={month} value={month} style={{ justifyContent: 'flex-end' }}>
 									{({ selected }) => <span className={styles.mobilePickerSelected({ selected })}>{month}월</span>}
 								</Picker.Item>
 							))}
@@ -90,7 +96,7 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 							{options
 								.filter(option => option.month === selectedDate.month)
 								.map(option => (
-									<Picker.Item key={option.day} value={option.day}>
+									<Picker.Item key={option.day} value={option.day} style={{ justifyContent: 'flex-start' }}>
 										{({ selected }) => <span className={styles.mobilePickerSelected({ selected })}>{option.day}일</span>}
 									</Picker.Item>
 								))}

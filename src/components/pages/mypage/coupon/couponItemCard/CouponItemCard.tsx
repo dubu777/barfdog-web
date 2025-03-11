@@ -1,9 +1,8 @@
 import * as styles from "./CouponItemCard.css";
-import Link from "next/link";
-import { formatDate } from "@/utils/dateUtils";
-import { CouponData } from "@/types/coupon";
+import { format } from "date-fns";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
+import { CouponData } from "@/types/coupon";
 
 const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
   const won = coupon.discountType === 'FLAT_RATE';
@@ -16,7 +15,7 @@ const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
   return (
     <li className={styles.couponItem}>
       <Card shadow='light'>
-        <DefaultText type='title1' className={styles.discount}>
+        <DefaultText type='title1' color='red' className={styles.discount}>
           { won ? `${coupon.discountDegree.toLocaleString()}원 `
             : percent && `${coupon.discountDegree}% `
           }
@@ -34,11 +33,8 @@ const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
         </DefaultText>
         <div className={styles.expiredDateBox}>
           <DefaultText type='caption' color='gray500'>
-            {formatDate(coupon.expiredDate, 'fullDateTimeKR').slice(0, -3)} 까지&nbsp;&nbsp;l&nbsp;&nbsp;{couponTargetName}
+            {format(new Date(coupon.expiredDate), 'yyyy.MM.dd')} 까지&nbsp;&nbsp;l&nbsp;&nbsp;{couponTargetName}
           </DefaultText>
-          <Link href='/'>
-            <DefaultText type='caption' color='gray800' className={styles.viewItem}>적용상품보기</DefaultText>
-          </Link>
         </div>
       </Card>
     </li>

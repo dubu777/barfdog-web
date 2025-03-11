@@ -2,9 +2,14 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
+export const rewardListContainer = style({
+  background: themeVars.colors.gray.gray50,
+});
+
 export const rewardListContents = style({
   display: 'flex',
   flexDirection: 'column',
+  background: themeVars.colors.gray.gray0,
 });
 
 export const rewardItem = style({

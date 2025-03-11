@@ -35,9 +35,11 @@ const RewardFilter = ({ totalCount, statusFilter }: { totalCount: number, status
           justifyContent='center'
         />
       </div>
-      <div>
-        <DefaultText type='label4'>총 {totalCount}건</DefaultText>
-      </div>
+      {totalCount > 0 &&
+        <div>
+          <DefaultText type='label4'>총 {totalCount}건</DefaultText>
+        </div>
+      }
     </article>
   );
 };

@@ -1,12 +1,6 @@
-import {style} from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
-import {themeVars} from "@/styles/theme.css";
-
-export const containerStyle = style({
-	display: 'flex',
-	alignItems: 'flex-end',
-	justifyContent: 'center',
-})
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
+import { themeVars } from "@/styles/theme.css";
 
 export const backgroundStyle = style({
 	backgroundColor: "rgba(0, 0, 0, 0.3)",
@@ -36,12 +30,11 @@ export const sheetStyle = style({
 	position: "fixed",
 	bottom: 0,
 	left: 0,
-	minHeight: '50vh',
+	height: 'auto',
 	maxHeight: '95vh',
 	width: "100%",
 	backgroundColor: "#fff",
 	borderRadius: "16px 16px 0 0",
-	// padding: "16px",
 })
 
 export const handleStyle = style({
@@ -49,11 +42,11 @@ export const handleStyle = style({
 	height: "4px",
 	backgroundColor: themeVars.colors.gray.gray900,
 	borderRadius: "100px",
-	margin: "12px auto",
+	margin: "12px auto 4px",
 })
 
 export const closeButtonStyle = style({
 	position: 'absolute',
-	top: '20px',
+	top: '34px',
 	right: '20px',
 })
