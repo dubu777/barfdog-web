@@ -9,12 +9,20 @@ import Button from "@/components/common/button/Button";
 import { orderSheetContentBox } from "../OrderSheetCommon.css";
 
 export default function OrderTerm() {
-  const { agreePrivacy, brochure, setAgreePrivacy, setBrochure } =
-    useOrderStore();
+  const {
+    agreePrivacy,
+    agreeSubscription,
+    brochure,
+    setAgreePrivacy,
+    setAgreeSubscription,
+    setBrochure,
+  } = useOrderStore();
   const { onToggle: onPrivacyToggle, isSelected: isPrivacySelected } =
     useToggleOption(agreePrivacy, "checkbox", setAgreePrivacy);
   const { onToggle: onBrochure, isSelected: isBrochureSelected } =
     useToggleOption(brochure, "checkbox", setBrochure);
+  const { onToggle: onSubscriptionToggle, isSelected: isSubscriptionSelected } =
+    useToggleOption(agreeSubscription, "checkbox", setAgreeSubscription);
   return (
     <OrderSection padding="20px">
       <div className={orderSheetContentBox}>
@@ -28,12 +36,22 @@ export default function OrderTerm() {
             {ORDER_MESSAGE.AGREE_PRIVACY}
           </DefaultText>
         </LabeledCheckbox>
-        <Button type="assistive" variant="text">
+        <Button type="assistive" variant="text" size="sm">
           <DefaultText type="label2" color="red" underLine>
             내용보기
           </DefaultText>
         </Button>
       </div>
+      <LabeledCheckbox
+        value={true}
+        isChecked={isSubscriptionSelected(true)}
+        onToggle={() => onSubscriptionToggle(true)}
+      >
+        <DefaultText type="label2">
+          <span style={{ color: COLORS.red }}>(필수) </span>
+          {ORDER_MESSAGE.AGREE_SUBSCRIPTION}
+        </DefaultText>
+      </LabeledCheckbox>
       <LabeledCheckbox
         value={true}
         isChecked={isBrochureSelected(true)}

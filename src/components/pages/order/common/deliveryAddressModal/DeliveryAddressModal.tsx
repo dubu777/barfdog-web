@@ -14,6 +14,7 @@ interface DeliveryAddressModalProps {
   isVisible: boolean;
   onClose: () => void;
   setDeliveryDto: (delivery: DeliveryDto) => void;
+  setBackupDeliveryDto: (delivery: DeliveryDto) => void;
   isBundleDelivery: boolean;
 }
 
@@ -25,6 +26,7 @@ export default function DeliveryAddressModal({
   isBundleDelivery,
   onClose,
   setDeliveryDto,
+  setBackupDeliveryDto,
 }: DeliveryAddressModalProps) {
   // address API 호출
   const { data: addressData } = useGetOrderAddress();
@@ -59,18 +61,8 @@ export default function DeliveryAddressModal({
 
   // 배송지 선택 - 묶음 배송시 배송지 정보 null로 초기화
   const handleSelectAddress = (deliveryDto: DeliveryDto) => {
-    if (isBundleDelivery) {
-      setDeliveryDto({
-        name: null,
-        phone: null,
-        zipcode: null,
-        street: null,
-        detailAddress: null,
-        request: null,
-      });
-    } else {
-      setDeliveryDto(deliveryDto);
-    }
+    setDeliveryDto(deliveryDto);
+    setBackupDeliveryDto(deliveryDto);
     onClose();
   };
 

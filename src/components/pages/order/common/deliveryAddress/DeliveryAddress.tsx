@@ -17,7 +17,7 @@ interface DeliveryAddressProps {
 
 export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
-  const { deliveryDto, isBundleDelivery, setDeliveryDto } = useDeliveryStore();
+  const { deliveryDto, isBundleDelivery, setDeliveryDto, setBackupDeliveryDto } = useDeliveryStore();
   // 임시 주소지 이름
   const deliveryName = "집";
   const isDefaultAddress = true;
@@ -73,6 +73,7 @@ export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
             onClose={onClose}
             isBundleDelivery={isBundleDelivery}
             setDeliveryDto={setDeliveryDto}
+            setBackupDeliveryDto={setBackupDeliveryDto}
           />
         </Suspense>
       </ErrorBoundary>

@@ -157,7 +157,7 @@ export default function SubscriptionOrderContainer({
           "successSubscriptionPayment-결제 최종 성공",
           successResponse
         );
-        router.push("/order/order-completed");
+        // router.push("/order/order-completed");
       } else {
         // 검증 실패 시 invalidPayment (재검증 및 주문 취소) 처리 후, 실패 처리 API 호출
         const invalidResponse = await invalidPayment({
@@ -171,11 +171,11 @@ export default function SubscriptionOrderContainer({
         // 실패 처리 API 호출
         const failResponse = await failPayment(orderId);
         console.log("failSubscriptionPayment-결제 실패 처리", failResponse);
-        router.push("/order/order-failed");
+        // router.push("/order/order-failed");
       }
     } catch (error) {
       console.error("createIamportPayment-실패", error);
-      router.push("/order/order-failed");
+      // router.push("/order/order-failed");
     }
   };
 
@@ -227,7 +227,7 @@ export default function SubscriptionOrderContainer({
       });
     } catch (error) {
       console.error("saveOrder-error", error);
-      router.push("/order/order-failed");
+      // router.push("/order/order-failed");
     }
   };
 
@@ -260,7 +260,7 @@ export default function SubscriptionOrderContainer({
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <OrderFooterButton isDisabled={false} divider>
+      <OrderFooterButton isDisabled={false} divider onClick={handlePaymentSubmit}>
         {formatNumberWithCommas(paymentPrice)}원 결제하기
       </OrderFooterButton>
     </>

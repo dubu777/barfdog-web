@@ -27,7 +27,7 @@ export default function GeneralShopTest() {
   const generalPaymentTest = () => {
     console.log("일반상점테스트");
     setOrderItemDtoList(orderItemListData);
-    router.push("/order/order-sheet/general");
+    router.push("/order/checkout/general");
   };
 
   const handleGetCookie = () => {

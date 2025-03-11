@@ -8,7 +8,7 @@ import {
 } from "@/api/order/queries/useGetGeneralOrder";
 import { useSaveGeneralOrder } from "@/api/order/mutations/useSaveGeneralOrder";
 import { SaveGeneralOrderRequest, GeneralIamportResponse } from "@/types";
-import BundleDeliverySelector from "../bundleDeliverySelector/BundleDeliverySelector";
+import BundleDeliverySelector from "../bundleDelivery/BundleDelivery";
 import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 
@@ -24,6 +24,13 @@ import useDeviceState from "@/hooks/useDeviceState";
 import { useRouter } from "next/navigation";
 import RewardUsage from "../../common/reward/RewardUsage";
 import OrderSummary from "../../common/orderSummary/OrderSummary";
+import {
+  defaultOrderValues,
+  getOrderSchema,
+  OrderFormValues,
+} from "@/utils/validation/rewardValidation";
+import { useRewardStore } from "@/store/order/useRewardStore";
+import { useOrderForm } from "@/hooks/useOrderForm";
 
 interface GeneralOrderContainerProps {}
 
@@ -34,7 +41,7 @@ interface handleIamportResponseParams {
 }
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const router = useRouter();
-  // 상태관리
+  const { maxAvailableReward } = useRewardStore();
   const { generalOrderBody, getRequestBody } = useOrderStore();
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
   const { mutateAsync: getGeneralOrder } = useGetGeneralOrder();
@@ -47,12 +54,16 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const { isMobileDevice } = useDeviceState();
   const { requestIamportPayment } = usePayment();
 
+  const { control, watch, errors, setValue } = useOrderForm<OrderFormValues>(
+    getOrderSchema(maxAvailableReward),
+    defaultOrderValues
+  );
+
   useEffect(() => {
     if (orderItemDtoList && orderItemDtoList.length > 0) {
       getGeneralOrder({ orderItemDtoList });
     }
   }, [orderItemDtoList]);
-
 
   // 아임포트 결제 응답 처리
   const handleIamportResponse = async ({
@@ -72,14 +83,14 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         },
       });
       // 결제 성공 후 추가 작업(예: 페이지 이동, 상태 초기화)
-      router.push('/order/order-completed')
+      router.push("/order/order-completed");
       clearOrderItemDtoList();
     } else {
       // 결제 실패 처리
       await failGeneralPayment(orderId);
       console.error("결제 실패:", res);
       // 결제 실패 후 추가 작업(예: 페이지 이동)
-      router.push('/order/order-failed')
+      router.push("/order/order-failed");
     }
   };
 
@@ -95,10 +106,10 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       const createOrderResponse = await createGeneralOrder(requestBody);
 
       if (createOrderResponse.status !== 200) {
-        throw new Error("결제 요청 실패: 서버 검증 실패")
+        throw new Error("결제 요청 실패: 서버 검증 실패");
       }
 
-      // 결제 요청 데이터 생성
+      // 결제 요청 데이터 빌드
       const paymentData = buildGeneralPaymentRequest({
         requestBody: requestBody,
         id: createOrderResponse.data.id,
@@ -148,7 +159,11 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
       />
       <Divider />
-      <RewardUsage />
+      <RewardUsage
+        control={control}
+        setValue={setValue}
+        maxAvailableReward={maxAvailableReward}
+      />
       <Divider />
       <PaymentMethod />
       <button

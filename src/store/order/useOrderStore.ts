@@ -19,6 +19,7 @@ interface OrderState {
   generalOrderBody: SaveGeneralOrderRequest;
   subscriptionOrderBody: SaveSubscriptionOrderRequest;
   agreePrivacy: boolean;
+  agreeSubscription: boolean;
   brochure: boolean;
   updateOrderBody: (
     updates: Partial<SaveGeneralOrderRequest | SaveSubscriptionOrderRequest>,
@@ -39,6 +40,7 @@ interface OrderState {
   cancelAppliedCoupon: (type: OrderType, itemId: number | null) => void;
   isAppliedCoupon: (couponId: number) => boolean;
   setAgreePrivacy: (agreePrivacy: boolean) => void;
+  setAgreeSubscription: (agreeSubscription: boolean) => void;
   setBrochure: (brochure: boolean) => void;
 }
 
@@ -46,6 +48,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   generalOrderBody: initialGeneralOrderBody,
   subscriptionOrderBody: initialSubscriptionOrderBody,
   agreePrivacy: false,
+  agreeSubscription: false,
   brochure: false,
   updateOrderBody: (updates, orderType) =>
     set((state) => {
@@ -180,5 +183,6 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     return !!appliedItem;
   },
   setAgreePrivacy: (agreePrivacy) => set({ agreePrivacy }),
+  setAgreeSubscription: (agreeSubscription) => set({ agreeSubscription }),
   setBrochure: (brochure) => set({ brochure }),
 }));

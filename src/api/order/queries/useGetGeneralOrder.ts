@@ -21,7 +21,7 @@ export function useGetGeneralOrder(
     variables,
   ];
   const { updateOrderBody } = useOrderStore();
-  const { setDeliveryDto, setDeliveryId } = useDeliveryStore();
+  const { setDeliveryDto, setDeliveryId, setBackupDeliveryDto } = useDeliveryStore();
   const { setUserTotalReward } = useRewardStore();
   const queryClient = useQueryClient();
   return useMutation({
@@ -66,6 +66,14 @@ export function useGetGeneralOrder(
       );
       setDeliveryId(null);
       setDeliveryDto({
+        name: data.name,
+        phone: data.phoneNumber,
+        zipcode: data.defaultAddress.zipcode,
+        street: data.defaultAddress.street,
+        detailAddress: data.defaultAddress.detailAddress,
+        request: "",
+      });
+      setBackupDeliveryDto({
         name: data.name,
         phone: data.phoneNumber,
         zipcode: data.defaultAddress.zipcode,

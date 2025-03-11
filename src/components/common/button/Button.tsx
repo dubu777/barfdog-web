@@ -42,7 +42,7 @@ export default function Button({
     buttonVariants[variant][
       type as keyof (typeof buttonVariants)[typeof variant]
     ];
-  const sizeStyle = buttonSizes[size];
+  const sizeStyle = variant !== "text" ? buttonSizes[size] : "";
   const disabledStyle = disabled
     ? disabledVariants[variant][
         type as keyof (typeof disabledVariants)[typeof variant]

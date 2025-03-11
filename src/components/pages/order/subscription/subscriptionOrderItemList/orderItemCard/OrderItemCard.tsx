@@ -28,7 +28,6 @@ export default function OrderItemCard({
     const mealPerDay = isFullPlan ? "하루 두 끼" : "하루 한 끼";
     const deliveryDuration = isFullPlan ? "2주" : "4주";
     const packCount = 28 / recipeCount;
-    console.log("recipeCount", recipeCount);
     
 
     return `${oneMealGramPerPack}g | ${mealPerDay} | ${deliveryDuration} | ${packCount}팩`;
