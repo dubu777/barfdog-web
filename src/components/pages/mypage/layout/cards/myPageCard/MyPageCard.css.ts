@@ -37,6 +37,12 @@ export const statusInfo = style({
 	marginTop: '6px',
 })
 
+export const subscribeControlsContainer = style({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '10px'
+});
+
 export const subscribeControlsBox = style({
 	display: 'flex',
 	gap: '13px'
@@ -44,8 +50,6 @@ export const subscribeControlsBox = style({
 
 
 export const petAvatar = style({
-	width: '67px',
-	height: '67px',
 	objectFit: 'cover',
 	cursor: 'pointer',
 });

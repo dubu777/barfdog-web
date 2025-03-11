@@ -1,4 +1,4 @@
-import * as styles from '../MyPageCards.css';
+import * as styles from '../MyPageCard.css';
 import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
 import {useState} from "react";
@@ -9,6 +9,7 @@ import { useToastStore } from "@/store/useToastStore";
 import { useUploadPetProfileImage } from "@/api/pet/mutations/useUploadPetProfileImage";
 
 interface PetAvatarProps {
+  type: 'mypage' | 'subscription';
   petId: number;
   petPictureUrl: string;
   petPictureName: string;
@@ -16,7 +17,7 @@ interface PetAvatarProps {
 
 type UploadMode = 'update' | 'create';
 
-const PetAvatar = ({ petId, petPictureUrl, petPictureName }: PetAvatarProps) => {
+const PetAvatar = ({ type, petId, petPictureUrl, petPictureName }: PetAvatarProps) => {
   const [openEditImageModal, setOpenEditImageModal] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -73,8 +74,8 @@ const PetAvatar = ({ petId, petPictureUrl, petPictureName }: PetAvatarProps) => 
       <Image
         src={petPictureUrl ? petPictureUrl : NoImage}
         alt='반려견 이미지'
-        width={72}
-        height={72}
+        width={type === 'mypage' ? 72 : 76}
+        height={type === 'mypage' ? 72 : 76}
         style={{ borderRadius: '8px' }}
         className={styles.petAvatar}
         onClick={() => setOpenEditImageModal(true)}
