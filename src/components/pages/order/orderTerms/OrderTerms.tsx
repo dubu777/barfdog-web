@@ -8,7 +8,7 @@ import { useOrderStore } from "@/store/order/useOrderStore";
 import Button from "@/components/common/button/Button";
 import { orderSheetContentBox } from "../OrderSheetCommon.css";
 
-export default function OrderTerm() {
+export default function OrderTerms() {
   const {
     agreePrivacy,
     agreeSubscription,

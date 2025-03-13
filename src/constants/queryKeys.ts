@@ -52,7 +52,6 @@ const queryKeys = {
     GET_ORDER_DETAIL: 'getOrderDetail',
     GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
     GET_SUBSCRIPTION_ORDER_LIST: 'getSubscriptionOrderList',
-    GET_ORDER_ADDRESS: 'getOrderAddress',
     GET_GENERAL_ORDER: 'getGeneralOrder',
   },
   MAIN: {
@@ -95,5 +94,9 @@ const queryKeys = {
     GET_STORE_ITEM_LIST: 'getStoreItemList',
     GET_STORE_ITEM_DETAIL: 'getStoreItemDetail',
     GET_STORE_ITEM_REVIEW_LIST: 'getStoreItemReviewList',
+  },
+  DELIVERY: {
+    BASE: 'delivery',
+    GET_ADDRESS_LIST: "getAddressList"
   }
 } as const;

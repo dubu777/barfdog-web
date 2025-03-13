@@ -10,14 +10,13 @@ export type {
   OrderDetailData,
   MergeOrderAndRecipe,
   PaymentMethod,
-  AddressResponse,
   OrderDetailType,
   GeneralOrderSheetResponse,
   GeneralOrderSheetRequest,
   GeneralOrderItem,
   OrderItemDto,
   OrderItem,
-  GeneralOrderItemDto,
+  GeneralOrderItemRequest,
   SaveOrderResponse,
   SaveGeneralOrderRequest,
   OrderType,
@@ -121,7 +120,7 @@ interface DeliveryDto {
   request: string | null; // 배송 요청사항
 }
 
-interface GeneralOrderItemDto {
+interface GeneralOrderItemRequest {
   itemDto: {
     itemId: number;
     amount: number;
@@ -134,7 +133,7 @@ interface GeneralOrderItemDto {
 
 // 일반 주문 시트 조회 요청
 interface GeneralOrderSheetRequest {
-  orderItemDtoList: GeneralOrderItemDto[];
+  orderItemDtoList: GeneralOrderItemRequest[];
 }
 
 interface OptionDto {
@@ -316,18 +315,7 @@ interface MergeOrderAndRecipe extends OrderDetailData {
   recipeDto?: OrderRecipeDto;
 }
 
-interface AddressResponse {
-  id: number;
-  city: string;
-  street: string;
-  zipcode: string;
-  detailAddress: string;
-  phoneNumber: string;
-  recipientName: string;
-  deliveryName: string | null;
-  default: boolean;
-  request: string | null;
-}
+
 
 interface PaymentMethodInfo {
   value: PaymentMethod;
@@ -343,4 +331,4 @@ type OrderType = "subscription" | "general";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
 
-type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM" | "AGREE_SUBSCRIPTION" | "SUBSCRIPTION_TITLE" | "SUBSCRIPTION_SUBTITLE"
+type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM" | "AGREE_SUBSCRIPTION" | "SUBSCRIPTION_TITLE" | "SUBSCRIPTION_SUBTITLE" | "NO_AVAILABLE_COUPONS"

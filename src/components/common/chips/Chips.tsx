@@ -8,6 +8,7 @@ interface ChipsProps {
   borderRadius?: keyof typeof chipsBorderRadius;
   switchOff?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 export default function Chips({
@@ -16,6 +17,7 @@ export default function Chips({
   size,
   borderRadius = 'small',
   switchOff = false,
+  style,
 }: ChipsProps) {
   return (
     <span
@@ -25,6 +27,7 @@ export default function Chips({
       ${chipsSize[size]}
       ${switchOff && chipsSwitchOff[variant] || ''}
     `}
+    style={style}
     >
       {children}
     </span>

@@ -18,6 +18,11 @@ export const OrderSectionTitleWrapper = style({
   alignItems: "center",
   alignSelf: "stretch",
 })
+export const subTitleWrapper = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+})
 
 
 export const OrderSectionSubtitle = recipe({
@@ -25,7 +30,7 @@ export const OrderSectionSubtitle = recipe({
     color: themeVars.colors.gray.gray600,
   },
   variants: {
-    isPoint: {
+    color: {
       true: {
         color: themeVars.colors.red.red,
       },
@@ -35,6 +40,6 @@ export const OrderSectionSubtitle = recipe({
     },
   },
   defaultVariants: {
-    isPoint: false,
+    color: false,
   },
 });

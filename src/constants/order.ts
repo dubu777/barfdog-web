@@ -43,7 +43,7 @@ const ORDER_MESSAGE: Record<OrderMessage, string> = {
   CONFIRM: "위 주문 내용을 확인했으며, 결제에 동의합니다.",
   SUBSCRIPTION_TITLE: "정기구독 배송 시 묶음 배송 신청",
   SUBSCRIPTION_SUBTITLE: "구독 상품과 같이 배송되어 배송비가 무료에요",
-
+  NO_AVAILABLE_COUPONS: "사용가능한 쿠폰이 없어요",
 } as const;
 
 const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {

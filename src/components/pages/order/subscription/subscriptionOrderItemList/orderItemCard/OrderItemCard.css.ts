@@ -11,7 +11,6 @@ export const OrderItemCardImageWrapper = style({
   width: "88px",
   height: "88px",
   borderRadius: "8px",
-  overflow: "hidden",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

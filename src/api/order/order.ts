@@ -1,6 +1,5 @@
 import axiosInstance from "../axiosInstance";
 import {
-  AddressResponse,
   SaveGeneralOrderRequest,
   SaveOrderResponse,
   SaveSubscriptionOrderRequest,
@@ -25,7 +24,6 @@ export {
   getSubscriptionOrderList,
   getGeneralOrderList,
   getSubscriptionOrder,
-  getAddress,
   getGeneralOrder,
   saveGeneralOrder,
   successGeneralPayment,
@@ -145,13 +143,6 @@ const failGeneralPayment = async (id: number): Promise<any> => {
 };
 
 
-
-// 배송지 정보 조회
-const getAddress = async (): Promise<AddressResponse[]> => {
-  const { data } = await axiosInstance.get(`/api/address`);
-
-  return data._embedded.addressResponseDtoList;
-};
 
 // SubscribeOrderDto 타입이 정의되어 있지 않음
 const getSubscriptionOrderList = async (

@@ -35,7 +35,7 @@ export default function LabeledCheckbox<T = string>({
       className={styles.labelCheckedBoxContainer}
       onClick={() => onToggle(value)}
     >
-      <SvgIcon icon={icon} size={iconSize} {...(color && { color })} />
+      <SvgIcon src={icon} size={iconSize} {...(color && { color })} />
       {children}
     </div>
   );

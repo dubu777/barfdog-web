@@ -8,17 +8,14 @@ import {
 } from "@/api/order/queries/useGetGeneralOrder";
 import { useSaveGeneralOrder } from "@/api/order/mutations/useSaveGeneralOrder";
 import { SaveGeneralOrderRequest, GeneralIamportResponse } from "@/types";
-import BundleDeliverySelector from "../bundleDelivery/BundleDelivery";
 import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 
-import { ORDER_TYPE } from "@/constants";
+import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import PaymentMethod from "../../common/paymentMethod/PaymentMethod";
-
-import OrderItem from "../../orderItem/OrderItem";
 import { buildGeneralPaymentRequest, usePayment } from "@/hooks/usePayment";
 import useDeviceState from "@/hooks/useDeviceState";
 import { useRouter } from "next/navigation";
@@ -31,6 +28,15 @@ import {
 } from "@/utils/validation/rewardValidation";
 import { useRewardStore } from "@/store/order/useRewardStore";
 import { useOrderForm } from "@/hooks/useOrderForm";
+import GeneralOrderItemList from "../generalOrderItemList/GenaralOrderItemList";
+import BundleDeliverySelector from "../bundleDeliverySelector/BundleDeliverySelector";
+import CouponSelector from "../../common/couponSelector/CouponSelector";
+import OrderTerms from "../../orderTerms/OrderTerms";
+import OrderSection from "../../common/orderSection/OrderSection";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import { formatNumberWithCommas } from "@/utils";
+import { useDiscountStore } from "@/store/order/useDiscountStore";
+import FooterButton from "@/components/common/footerButton/FooterButton";
 
 interface GeneralOrderContainerProps {}
 
@@ -42,6 +48,7 @@ interface handleIamportResponseParams {
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const router = useRouter();
   const { maxAvailableReward } = useRewardStore();
+  const { paymentPrice } = useDiscountStore();
   const { generalOrderBody, getRequestBody } = useOrderStore();
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
   const { mutateAsync: getGeneralOrder } = useGetGeneralOrder();
@@ -51,6 +58,8 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const { data: generalOrderSheetData } = useCachedGeneralOrder({
     orderItemDtoList,
   });
+  console.log('generalOrderSheetData', generalOrderSheetData);
+  
   const { isMobileDevice } = useDeviceState();
   const { requestIamportPayment } = usePayment();
 
@@ -146,18 +155,25 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         deliveryDto={generalOrderBody.deliveryDto}
       />
       <Divider />
-      <OrderItem
+      <GeneralOrderItemList  orderItemDtoList={generalOrderSheetData.orderItemDtoList}/>
+      <Divider />
+      <CouponSelector coupons={generalOrderSheetData.coupons} orderPrice={generalOrderSheetData.orderPrice}/>
+      {/* 쿠폰 관련 함수 여기 있음 */}
+      {/* <OrderItem
         orderType={ORDER_TYPE.GENERAL}
         generalOrderSheetData={generalOrderSheetData}
-      />
+      /> */}
       <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.GENERAL}
-        orderPrice={generalOrderSheetData.orderPrice}
+        originPrice={generalOrderSheetData.orderPrice}
+        appliedDefaultDiscountPrice={generalOrderSheetData.orderPrice}
         freeCondition={generalOrderSheetData.freeCondition}
         deliveryPrice={generalOrderSheetData.deliveryPrice}
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
       />
+      <Divider />
+      <PaymentMethod />
       <Divider />
       <RewardUsage
         control={control}
@@ -165,13 +181,16 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         maxAvailableReward={maxAvailableReward}
       />
       <Divider />
-      <PaymentMethod />
-      <button
-        style={{ width: "100%", height: "50px", backgroundColor: "gray" }}
+      <OrderTerms />
+      <OrderSection padding="20px">
+        <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
+      </OrderSection>
+      <FooterButton
+        isDisabled={false}
         onClick={handlePaymentSubmit}
       >
-        결제하기
-      </button>
+        {formatNumberWithCommas(paymentPrice)}원 결제하기
+      </FooterButton>
     </div>
   );
 }

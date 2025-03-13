@@ -1,11 +1,11 @@
-import { GeneralOrderItemDto } from '@/types';
+import { GeneralOrderItemRequest } from '@/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 
 interface PersistOrderStore {
-  orderItemDtoList: GeneralOrderItemDto[];
-  setOrderItemDtoList: (items: GeneralOrderItemDto[]) => void;
+  orderItemDtoList: GeneralOrderItemRequest[];
+  setOrderItemDtoList: (items: GeneralOrderItemRequest[]) => void;
   clearOrderItemDtoList: () => void;
 }
 

@@ -2,11 +2,8 @@
 
 import PaymentMethod from "../../common/paymentMethod/PaymentMethod";
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
-
 import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
-import OrderItem from "../../orderItem/OrderItem";
 import Divider from "@/components/common/divider/Divider";
-
 import { useOrderStore } from "@/store/order/useOrderStore";
 import {
   SaveSubscriptionOrderRequest,
@@ -38,13 +35,14 @@ import {
   OrderFormValues,
 } from "@/utils/validation/rewardValidation";
 import { useRewardStore } from "@/store/order/useRewardStore";
-import OrderTerm from "../../orderTerm/OrderTerm";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import OrderSection from "../../common/orderSection/OrderSection";
-import Button from "@/components/common/button/Button";
-import OrderFooterButton from "@/components/pages/subscription/orderFooterButton/OrderFooterButton";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import { formatNumberWithCommas } from "@/utils";
+import DeliverySchedule from "../deliverySchedule/DeliverySchedule";
+import CouponSelector from "../../common/couponSelector/CouponSelector";
+import OrderTerms from "../../orderTerms/OrderTerms";
+import FooterButton from "@/components/common/footerButton/FooterButton";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -239,6 +237,13 @@ export default function SubscriptionOrderContainer({
         subscriptionOrderSheetData={subscriptionOrderSheetData}
       />
       <Divider />
+      <DeliverySchedule />
+      <Divider />
+      <CouponSelector
+        coupons={subscriptionOrderSheetData.coupons}
+        orderPrice={subscriptionOrderSheetData.subscribeDto.nextPaymentPrice}
+      />
+      <Divider />
       <RewardUsage
         control={control}
         setValue={setValue}
@@ -249,20 +254,24 @@ export default function SubscriptionOrderContainer({
       <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
-        orderPrice={originPrice}
+        originPrice={originPrice}
+        appliedDefaultDiscountPrice={originPrice}
         freeCondition={undefined}
         deliveryPrice={undefined}
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />
       <Divider />
-      <OrderTerm />
+      <OrderTerms />
       <Divider />
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <OrderFooterButton isDisabled={false} divider onClick={handlePaymentSubmit}>
+      <FooterButton
+        isDisabled={false}
+        onClick={handlePaymentSubmit}
+      >
         {formatNumberWithCommas(paymentPrice)}원 결제하기
-      </OrderFooterButton>
+      </FooterButton>
     </>
   );
 }

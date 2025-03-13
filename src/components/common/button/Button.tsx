@@ -6,14 +6,14 @@ import {
   baseStyle,
   textStyle,
 } from "./Button.css";
-import Icon from "../icon/Icon";
+import SvgIcon from "../svgIcon/SvgIcon";
 
 interface ButtonProps {
   variant?: keyof typeof buttonVariants;
   type?: "primary" | "secondary" | "assistive";
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
-  icon?: string;
+  iconSrc?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   iconPosition?: "left" | "right";
   onClick?: () => void;
   children: React.ReactNode;
@@ -28,7 +28,7 @@ export default function Button({
   type = "primary",
   size = "md",
   disabled = false,
-  icon,
+  iconSrc,
   iconPosition = "left",
   onClick,
   children,
@@ -68,11 +68,11 @@ export default function Button({
       style={buttonStyle}
       disabled={disabled}
     >
-      {icon ? (
+      {iconSrc ? (
         <div className={iconContainer}>
-          {isIconLeft && <Icon name={icon} size={iconSize} alt={icon} />}
+          {isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} />}
           <span className={textStyle}>{children}</span>
-          {!isIconLeft && <Icon name={icon} size={iconSize} alt={icon} />}
+          {!isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} />}
         </div>
       ) : (
         <span className={textStyle}>{children}</span>

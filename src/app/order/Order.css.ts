@@ -3,6 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 export const orderPageContainer = style({
   width: '100%',
-  padding: '80px 24px 80px 24px',
+  padding: '52px 0 88px 0',
   minHeight: '100vh',
 })

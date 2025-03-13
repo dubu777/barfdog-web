@@ -3,7 +3,7 @@ import { COLORS } from "@/constants/style";
 
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  src: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   size?: number;
   color?: keyof typeof COLORS;
   width?: number;
@@ -11,7 +11,7 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 const SvgIcon: React.FC<IconProps> = ({
-  icon: IconComponent,
+  src: IconComponent,
   size = 20,
   color = "gray900",
   width,

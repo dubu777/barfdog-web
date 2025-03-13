@@ -24,7 +24,7 @@ export default function LabeledRadioButton<T = string>({
       className={styles.labeledRadioButtonContainer}
       onClick={() => onToggle(value)}
     >
-      <SvgIcon icon={icon} size={iconSize} />
+      <SvgIcon src={icon} size={iconSize} />
       {children}
     </div>
   );

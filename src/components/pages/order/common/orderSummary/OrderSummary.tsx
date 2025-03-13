@@ -17,7 +17,8 @@ import Divider from "@/components/common/divider/Divider";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
-  orderPrice: number;
+  originPrice: number;
+  appliedDefaultDiscountPrice: number; // 일반 주문이라면 상품할인, 구독 주문이라면 플랜할인이 적용된 가격 - 이 가격에 쿠폰 및 등급할인을 적용한다.
   freeCondition?: number;
   deliveryPrice?: number;
   orderItemDtoList?: GeneralOrderItem[];
@@ -26,7 +27,8 @@ interface OrderSummaryPropsProps {
 
 export default function OrderSummary({
   orderType,
-  orderPrice,
+  originPrice,
+  appliedDefaultDiscountPrice,
   freeCondition,
   deliveryPrice,
   orderItemDtoList,
@@ -53,7 +55,7 @@ export default function OrderSummary({
       isBundleDelivery,
       userTotalReward,
       appliedReward,
-      orderPrice,
+      orderPrice: appliedDefaultDiscountPrice,
       freeCondition,
       deliveryPrice,
       orderItemDtoList,
@@ -66,7 +68,7 @@ export default function OrderSummary({
     isBundleDelivery,
     userTotalReward,
     appliedReward,
-    orderPrice,
+    appliedDefaultDiscountPrice,
     freeCondition,
     deliveryPrice,
     orderItemDtoList,
@@ -95,11 +97,13 @@ export default function OrderSummary({
     setDiscountPlan(planDiscount);
     setPaymentPrice(finalPaymentAmount);
   }, [maxAvailableDiscount, maxAvailableReward, finalPaymentAmount]);
+
+  const itemDiscountAmount = originPrice - appliedDefaultDiscountPrice;
   return (
     <OrderSection title="결제 금액">
       {orderType === ORDER_TYPE.SUBSCRIPTION ? (
         <div className={styles.orderCommonWrapper({ direction: "col" })}>
-          <OrderSummaryRow label="총 금액" value={orderPrice} valueType="headline2" plainColor plus/>
+          <OrderSummaryRow label="총 금액" value={originPrice} valueType="headline2" plainColor plus/>
           <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
           <OrderSummaryRow label="플랜 할인" value={planDiscount} />
           <OrderSummaryRow label="등급 할인" value={gradeDiscount} />
@@ -114,12 +118,17 @@ export default function OrderSummary({
         </div>
       ) : (
         <div className={styles.orderCommonWrapper({ direction: "col" })}>
-          <OrderSummaryRow label="총 금액" value={orderPrice} plainColor/>
+          <OrderSummaryRow label="총 금액" value={originPrice} valueType="headline2" plainColor plus/>
+          <OrderSummaryRow label="상품 할인" value={itemDiscountAmount} />
           <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
           <OrderSummaryRow label="쿠폰 사용" value={totalCouponDiscount} />
           <OrderSummaryRow label="적립금 사용" value={appliedReward} />
-          <OrderSummaryRow label="총 할인 금액" value={totalDiscount} />
           <OrderSummaryRow label="결제 금액" value={finalPaymentAmount} plus />
+          <Divider thickness={1} color="gray300" /> 
+          <OrderSummaryRow label="결제 금액" value={finalPaymentAmount} valueType="title4" plus />
+          <div>
+            {`총 ${formatNumberWithCommas(totalDiscount)}원 할인 받았어요!`}
+          </div>
         </div>
       )}
     </OrderSection>

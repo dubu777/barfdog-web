@@ -14,6 +14,7 @@ interface DefaultTextProps {
   children: React.ReactNode;
   inlineBlock?: boolean;
   underLine?: boolean;
+  className?: string;
   style?: React.CSSProperties;
 }
 
@@ -24,10 +25,10 @@ const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
   title2: "h3",
   title3: "h3",
   title4: "h3",
-  headline1: "h4",
-  headline2: "h4",
-  headline3: "h4",
-  headline4: "h4",
+  headline1: "span",
+  headline2: "span",
+  headline3: "span",
+  headline4: "span",
   label1: "span",
   label2: "span",
   label3: "span",
@@ -45,6 +46,7 @@ export default function DefaultText({
   children,
   inlineBlock = false,
   underLine = false,
+  className,
   style,
 }: DefaultTextProps) {
   const textStyle = textStyles[type];
@@ -57,7 +59,7 @@ export default function DefaultText({
     <Tag
       className={`${textStyle} ${colorStyle} ${alignStyle} ${
         inlineBlock ? blockStyles : ""
-      } ${underlineStyle}`}
+      } ${underlineStyle} ${className || ""}`}
       style={style}
     >
       {children}

@@ -25,7 +25,6 @@ export default function RewardUsage({
   setValue,
 }: RewardUsageProps) {
   const {
-    appliedReward,
     userTotalReward,
     rewardAutoApply,
     setAppliedReward,
@@ -53,9 +52,9 @@ export default function RewardUsage({
       subTitleParts={[
         {
           text: `${formatNumberWithCommas(userTotalReward)}P\u00A0`,
-          isPoint: true,
+          color: "red",
         },
-        { text: "보유" },
+        { text: "보유", color: "gray700" },
       ]}
     >
       <div className={styles.orderCommonWrapper({ direction: "row" })}>
@@ -70,7 +69,6 @@ export default function RewardUsage({
               onChange={(e) => {
                 const target = e.target as HTMLInputElement;
                 const inputValue = parseInt(target.value, 10) || 0;
-
                 if (inputValue > maxAvailableReward) {
                   const newValue = maxAvailableReward;
                   field.onChange({

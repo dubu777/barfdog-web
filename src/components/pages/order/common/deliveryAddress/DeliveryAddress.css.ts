@@ -13,3 +13,9 @@ export const DeliveryAddressTextWrapper = style({
   justifyContent: 'flex-start',
   alignItems: 'center',
 })
+export const tempWrapper = style({
+  display: "flex",
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  height: '81px'
+})

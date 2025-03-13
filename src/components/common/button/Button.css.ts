@@ -20,7 +20,7 @@ export const textStyle = style({
 // 버튼 크기
 export const buttonSizes = {
   sm: style({
-    padding: "4px 6px",
+    padding: "6px 16px",
     minHeight: "36px",
     borderRadius: "8px",
     fontWeight: themeVars.typography.headline.headline4.fontWeight,
@@ -51,7 +51,7 @@ export const buttonSizes = {
 export const iconContainer = style({
   display: "inline-flex",
   alignItems: "center",
-  columnGap: "8px",
+  columnGap: "6px",
 });
 
 // 버튼 상태
