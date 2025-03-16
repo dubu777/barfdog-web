@@ -7,6 +7,7 @@ import {
   textStyle,
 } from "./Button.css";
 import SvgIcon from "../svgIcon/SvgIcon";
+import { COLORS } from "@/constants/style";
 
 interface ButtonProps {
   variant?: keyof typeof buttonVariants;
@@ -19,6 +20,9 @@ interface ButtonProps {
   children: React.ReactNode;
   fullWidth?: boolean;
   width?: string;
+  buttonColor?: keyof typeof COLORS;
+  textColor?: keyof typeof COLORS;
+  buttonType?: "submit" | "button" | "reset";
   style?: React.CSSProperties;
   className?: string;
 }
@@ -34,6 +38,9 @@ export default function Button({
   children,
   fullWidth = false,
   width,
+  buttonColor,
+  textColor,
+  buttonType = "button",
   style,
   className,
 }: ButtonProps) {
@@ -49,23 +56,36 @@ export default function Button({
       ]
     : "";
   const computedWidth = fullWidth ? "100%" : width || "auto";
-  const widthStyle = { width: computedWidth };
 
   const isIconLeft = iconPosition === "left";
 
   const iconSize = size === "sm" ? 20 : 24;
 
-  const buttonStyle: React.CSSProperties = {
-    ...widthStyle,
-    ...style,
+  // buttonColor와 textColor가 있을 경우 오버라이드 스타일 적용
+  const overrideStyles: React.CSSProperties = {
+    ...(buttonColor && {
+      backgroundColor: COLORS[buttonColor],
+      ...(variant === "outline" && {
+        border: `1px solid ${COLORS[buttonColor]}`,
+      }),
+    }),
+    ...(textColor && { color: COLORS[textColor] }),
   };
+
+  const computedStyle: React.CSSProperties = {
+    width: computedWidth,
+    ...style,
+    ...overrideStyles,
+  };
+
   return (
     <button
+      type={buttonType}
       className={`${baseStyle} ${variantStyle} ${sizeStyle} ${disabledStyle} ${
         className || ""
       }`}
       onClick={onClick}
-      style={buttonStyle}
+      style={computedStyle}
       disabled={disabled}
     >
       {iconSrc ? (
@@ -75,7 +95,12 @@ export default function Button({
           {!isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} />}
         </div>
       ) : (
-        <span className={textStyle}>{children}</span>
+        <span
+          className={textStyle}
+          style={textColor ? { color: COLORS[textColor] } : undefined}
+        >
+          {children}
+        </span>
       )}
     </button>
   );

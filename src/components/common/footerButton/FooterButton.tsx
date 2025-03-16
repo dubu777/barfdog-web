@@ -15,7 +15,7 @@ export default function FooterButton({children, isDisabled, onClick}: FooterButt
   return (
     <>
     <footer className={styles.footerButtonContainer}>
-      <Button type="primary" variant="solid" size="lg" disabled={isDisabled} onClick={onClick} fullWidth>
+      <Button type="primary" variant="solid" size="lg" disabled={isDisabled} onClick={onClick} fullWidth buttonType="submit">
         {children}
       </Button>
     </footer>

@@ -44,6 +44,7 @@ export default function AddressList({
       <div className={styles.addressCardWrapper}>
         {sortedAddresses.map((address) => (
           <AddressCard
+            key={address.id}
             address={address}
             onSelectAddress={onSelectAddress}
             goToEditAddress={goToEditAddress}

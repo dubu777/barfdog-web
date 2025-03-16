@@ -306,7 +306,6 @@ const UserInfoForm = <T extends boolean>({
 												control={control}
 												render={({field}) => (
 													<SearchAddress
-														size='sm'
 														isInAddressObject
 														control={control}
 														addressValues={field.value as AddressDto|| {}}

@@ -8,9 +8,9 @@ interface AddressResponse {
   detailAddress: string;
   phoneNumber: string;
   recipientName: string;
-  deliveryName: string | null;
+  deliveryName: string;
   default: boolean;
-  request: string | null;
+  request: string;
 }
 
 interface AddressRequest {

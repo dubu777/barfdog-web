@@ -43,6 +43,7 @@ import DeliverySchedule from "../deliverySchedule/DeliverySchedule";
 import CouponSelector from "../../common/couponSelector/CouponSelector";
 import OrderTerms from "../../orderTerms/OrderTerms";
 import FooterButton from "@/components/common/footerButton/FooterButton";
+import { useFormHandler } from "@/hooks/useFormHandler";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -59,30 +60,40 @@ export default function SubscriptionOrderContainer({
   subscribeId,
 }: SubscriptionOrderContainerProps) {
   const router = useRouter();
+  // 상태관리 ------>
   const { getRequestBody } = useOrderStore();
   const { maxAvailableReward } = useRewardStore();
   const { paymentPrice } = useDiscountStore();
+  // <------- 상태관리
+
+    // 서버 호출 react query ------->
   const { data: subscriptionOrderSheetData } =
     useGetSubscriptionOrder(subscribeId);
-  console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
-
-  const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
-  const { mutateAsync: createIamportPayment } =
+    const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
+    const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment();
-  const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
-  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
-  const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
-  const { mutateAsync: failPayment } = useFailSubscriptionPayment();
+    const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
+    const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
+    const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
+    const { mutateAsync: failPayment } = useFailSubscriptionPayment();
+    console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
+  // <------- 서버 호출 
+
+  // 커스텀 훅 & 유틸 함수 ------>
   const { requestIamportPayment } = usePayment();
   const { isMobileDevice } = useDeviceState();
   const originPrice = calculateOriginPrice(
     subscriptionOrderSheetData.subscribeDto.nextPaymentPrice,
     subscriptionOrderSheetData.subscribeDto.plan
   );
-  const { control, watch, errors, setValue } = useOrderForm<OrderFormValues>(
+  const { control, watch, errors, setValue } = useFormHandler<OrderFormValues>(
     getOrderSchema(maxAvailableReward),
     defaultOrderValues
   );
+   // <------- 커스텀 훅 & 유틸 함수 
+
+
+  // 결제 함수 ========>  
   // 구독 구매 페이지 정보 초기값 없데이트
   useUpdateSubscriptionOrderBody(subscriptionOrderSheetData);
 
@@ -228,10 +239,10 @@ export default function SubscriptionOrderContainer({
       // router.push("/order/order-failed");
     }
   };
-
+  // <========== 결제 함수
   return (
     <>
-      <DeliveryAddress orderType={ORDER_TYPE.SUBSCRIPTION} />
+      <DeliveryAddress/>
       <Divider />
       <SubscriptionOrderItemList
         subscriptionOrderSheetData={subscriptionOrderSheetData}

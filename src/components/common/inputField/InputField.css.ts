@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { themeVars } from '@/styles/theme.css';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const inputContainerStyle = style({})
 
@@ -11,9 +12,9 @@ export const labelStyle = style({
 })
 
 export const inputBoxStyle = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
 })
 
 export const inputWrapStyle = style({

@@ -148,7 +148,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
 
   return (
     <div>
-      <DeliveryAddress orderType={ORDER_TYPE.GENERAL} />
+      <DeliveryAddress />
       <Divider />
       <BundleDeliverySelector
         deliveryId={generalOrderBody.deliveryId}

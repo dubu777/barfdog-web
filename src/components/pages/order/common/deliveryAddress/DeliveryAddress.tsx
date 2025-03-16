@@ -13,10 +13,9 @@ import DeliveryModal from "../deliveryModal/DeliveryModal";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 
 interface DeliveryAddressProps {
-  orderType: OrderType;
 }
 
-export default function DeliveryAddress({ orderType }: DeliveryAddressProps) {
+export default function DeliveryAddress({ }: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
   const { deliveryDto, isBundleDelivery, defaultAddressId, setDeliveryDto, setBackupDeliveryDto, setDefaultAddressId } = useDeliveryStore();
   const { data: addressData } = useGetAddressList();
