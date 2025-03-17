@@ -16,6 +16,7 @@ import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useCartStore } from "@/store/useCartStore";
+import { isLoggedIn } from "@/utils/auth/isLoggedIn";
 
 interface HeaderProps {
   type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
@@ -25,13 +26,12 @@ export default function Header({ type = "default" }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { setIsOpenSideNavBar } = useCommonStore();
-  const { isLoggedIn } = useAuthStore();
   const { count } = useCartStore();
   const hamburgerColor = type === "redBackground" ? "#ffffff" : "#4A4A4A";
   const goBack = useBackNavigation();
 
   const handleClick = () => {
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       router.push("/mypage");
     } else {
       router.push("/login");

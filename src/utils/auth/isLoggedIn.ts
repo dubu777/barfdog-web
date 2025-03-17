@@ -7,8 +7,8 @@ interface JwtPayload {
 }
 
 /**
- * 쿠키에 저장된 엑세스 토큰의 존재 및 만료 여부를 검사합니다.
- * 토큰이 존재하고, 디코딩에 성공하며, 만료되지 않았다면 true를 반환합니다.
+ * 쿠키에 저장된 엑세스 토큰의 존재 및 만료 여부를 검사
+ * 토큰이 존재하고, 디코딩에 성공하며, 만료되지 않았다면 true를 반환
  */
 export function isLoggedIn(): boolean {
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);

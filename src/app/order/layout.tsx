@@ -8,8 +8,7 @@ export default function OrderLayout({children}: OrderLayoutProps) {
   return (
     <>
       <NewHeader
-        showCartButton
-        showMypageButton
+        showBackButton
         centerTitle="결제"
       />
       {children}

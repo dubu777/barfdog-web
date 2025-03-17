@@ -5,7 +5,6 @@ import BackIcon from "/public/images/header/chevron-left.svg";
 import CloseIcon from "/public/images/header/close.svg";
 import MypageIcon from "/public/images/header/mypage.svg";
 import CartIcon from "/public/images/header/cart.svg";
-
 import { useRouter } from "next/navigation";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -45,12 +44,11 @@ export default function NewHeader({
     router.back();
   };
 
-console.log('isloggedIn', isLoggedIn());
-
   const mypageHref = isLoggedIn() ? "/mypage" : "/login";
 
   return (
     <header className={styles.headerContainer} style={style}>
+      <div className={styles.headerContent}>
       <div className={styles.leftSlot}>
         {showBackButton && (
           <SvgIcon
@@ -87,6 +85,7 @@ console.log('isloggedIn', isLoggedIn());
             onClick={onClose}
           />
         )}
+      </div>
       </div>
     </header>
   );
