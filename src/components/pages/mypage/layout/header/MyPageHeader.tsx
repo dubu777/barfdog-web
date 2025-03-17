@@ -1,7 +1,7 @@
 'use client';
 import * as styles from "./MyPageHeader.css";
 import { commonLayoutStyle } from "@/styles/common.css";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import BackButton from "/public/images/icons/left-arrow.svg";
 import Link from "next/link";
 import Cart from "/public/images/icons/cart.svg";
@@ -11,9 +11,13 @@ import { useCartStore } from "@/store/useCartStore";
 
 const MyPageHeader = () => {
   const goBack = useBackNavigation();
+  const goBackToMain = useBackNavigation('/');
   const pathname = usePathname();
   const params = useParams();
+  const searchParams = useSearchParams();
   const { count } = useCartStore();
+
+  const withdrawalAccountPath = pathname.includes('/mypage/account/withdrawal-account');
 
   const pathTitles: { [key: string]: string } = {
     '/mypage': '마이페이지',
@@ -55,8 +59,12 @@ const MyPageHeader = () => {
     if (pathname.includes('/mypage/account/change-password')) {
       return '비밀번호 변경';
     }
-    if (pathname.includes('/mypage/account/connected-sns')) {
-      return '연동 SNS';
+    if (pathname.includes('/mypage/account/connect-sns')) {
+      if (params.authentication === 'authentication') {
+        return '회원인증';
+      } else {
+        return 'SNS 연동정보';
+      }
     }
     if (pathname.includes('/mypage/account/user-info')) {
       return '회원 정보 변경';
@@ -64,13 +72,24 @@ const MyPageHeader = () => {
     if (pathname.includes('/mypage/account/notification')) {
       return '알림 설정';
     }
+    if (pathname === '/mypage/account/withdrawal-account') {
+      const step = searchParams.get('step');
+      switch (step) {
+        case 'reason':
+          return '회원탈퇴 사유입력';
+        case 'confirmation':
+          return '회원인증';
+        default:
+          return '회원탈퇴안내'
+      }
+    }
     return '';
   };
 
   return (
     <nav className={`${commonLayoutStyle} ${styles.myPageHeader}`}>
       {pathname !== '/mypage' &&
-        <button className={styles.goBackButton} onClick={goBack}>
+        <button className={styles.goBackButton} onClick={withdrawalAccountPath ? goBackToMain : goBack}>
           <BackButton />
         </button>
       }

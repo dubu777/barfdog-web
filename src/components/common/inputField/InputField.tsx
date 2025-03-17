@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, ReactNode, ChangeEvent, useState, KeyboardEvent } from "react";
+import React, { forwardRef, useRef, ReactNode, ChangeEvent, useState, KeyboardEvent, MouseEvent } from "react";
 import { mergeRefs } from "@/utils";
 import DefaultText from "../defaultText/DefaultText";
 import {
@@ -16,6 +16,8 @@ import InputClearIcon from '/public/images/icons/input_clear.svg';
 import VisibilityIcon from '/public/images/icons/visibility.svg';
 import VisibilityOffIcon from '/public/images/icons/visibility_off.svg';
 import { pointColor } from "@/styles/common.css";
+import Button from "@/components/common/button/Button";
+import ErrorIcon from '/public/images/icons/close_small.svg';
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -27,10 +29,10 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   masking?: boolean;
   maskingButton?: boolean;
   confirmButton?: boolean;
-  confirmButtonText?: string;
+  confirmButtonText?: string
   clearButton?: boolean;
   searchButton?: boolean;
-  onChange?: (e: ChangeEvent) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: ChangeEvent) => void;
   onReset?: () => void;
   onSubmit?: () => void;
@@ -87,21 +89,25 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>,) => {
       if('key' in e) {
-        if (isMasked && e.key === "Backspace") {
-          // 비밀번호 type -> input 모두선택 후 backspace 방지
-          if(onChange) {
-            onChange({
-              target: { value: (props?.value as string).slice(0, -1) },
-            } as React.ChangeEvent<HTMLInputElement>);
-          }
-          e.preventDefault();
-        }
-
         if (e.key === 'Enter' && onSubmit) {
           // enter onSubmit event 적용
           e.preventDefault();
           onSubmit();
         }
+      }
+    }
+
+    const handleReset = (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if(onReset) {
+        onReset();
+      }
+    }
+
+      const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if(onSubmit) {
+        onSubmit();
       }
     }
     return (
@@ -113,7 +119,10 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           </DefaultText>
         }
         <div className={inputBoxStyle} style={{ width: width || '100%' }}>
-          <div className={`${inputWrapStyle} ${inputBaseStyle} ${inputVariants[variants]} ${error ? inputError[variants] : ''} ${disabled ? 'disabled' : ''}`}>
+          <div
+            className={`${inputWrapStyle} ${inputBaseStyle} ${inputVariants[variants]} ${error ? inputError[variants] : ''} ${disabled ? 'disabled' : ''}`}
+            style={{ flex: confirmButton ? '1 0 0' : 'unset' }}
+          >
             {/* 검색 기능 추가 필요 */}
             {searchButton &&
               <button className={searchButtonStyle}>
@@ -146,7 +155,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               }
               {/* value 리셋 기능 */}
               {clearButton &&
-              <button onClick={onReset} className={baseButtonStyle}>
+              <button onClick={handleReset} className={baseButtonStyle}>
                 <InputClearIcon />
               </button>
               }
@@ -154,13 +163,19 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           </div>
           {/* 버튼 사이드 confirm 버튼 (인증하기 / 확인 등)*/}
           {confirmButton &&
-          <button onClick={onSubmit} disabled={disabled} className={confirmButtonStyle}>
+          <Button
+            variant='outline'
+            onClick={handleSubmit}
+            size='lg'
+            className={confirmButtonStyle}
+          >
             {confirmButtonText}
-          </button>
+          </Button>
           }
         </div>
         {touched && error && (
           <div className={inputErrorTextStyle}>
+            <ErrorIcon />
             <DefaultText type="caption" color="red" align="left">
               {error}
             </DefaultText>

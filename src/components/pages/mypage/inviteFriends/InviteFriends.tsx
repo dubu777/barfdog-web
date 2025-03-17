@@ -3,18 +3,17 @@ import * as styles from "./InviteFriends.css";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { copyToClipboard } from "@/utils/copyToClipboard";
-import { useAuthStore } from "@/store/useAuthStore";
 import {useToastStore} from "@/store/useToastStore";
 import InviteRewardList from "@/components/pages/mypage/inviteFriends/inviteRewardList/InviteRewardList";
-import {useMyPageStore} from "@/store/useMypageStore";
+import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 
 const InviteFriends = () => {
-  const { mypageUserInfo } = useMyPageStore();
+  const { mypageUserInfo } = usePersistMypageStore();
   const { addToast } = useToastStore();
-  console.log('mypageUserInfo', mypageUserInfo)
+  
   const handleCopyCode = async () => {
     await copyToClipboard(mypageUserInfo.myRecommendationCode);
-    addToast('복사가 완료되었습니다!', 'success')
+    addToast('복사가 완료되었습니다!')
   };
 
   return (

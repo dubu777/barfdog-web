@@ -11,8 +11,8 @@ import { DefaultObjectType } from "@/types/common";
 import { AddressDto } from "@/types/subscription";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { addressSchema, defaultAddressValues } from "@/utils/validation/addressValidation";
-import {useUpdateSubscriptionAddress} from "@/api/subscription/mutations/useUpdateSubscriptionAddress";
-import {useToastStore} from "@/store/useToastStore";
+import { useUpdateSubscriptionAddress } from "@/api/subscription/mutations/useUpdateSubscriptionAddress";
+import { useToastStore } from "@/store/useToastStore";
 
 interface AddressFormProps {
   subscribeId: number;
@@ -36,7 +36,7 @@ const SubscriptionAddressForm = ({ subscribeId, changeTypeList, nextDeliveryDate
       {
         onSuccess: () => {
           setOpenConfirmModal(false);
-          addToast(`${shippingChangeType?.name}이 완료되었습니다!`, 'success');
+          addToast(`${shippingChangeType?.name}이 완료되었습니다!`);
           router.replace(window.location.pathname);
         }
       }

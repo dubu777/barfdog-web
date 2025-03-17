@@ -1,5 +1,13 @@
 import { ReactNode } from "react";
-import { chipsVariants, chipsSize, chipsBorderRadius, chipsSwitchOff } from "./Chips.css";
+import {
+  chipsVariants,
+  chipsSize,
+  chipsBorderRadius,
+  chipsSwitchOff,
+  chipsColors,
+  chipsTailStyle,
+  chipsTailPosition
+} from "./Chips.css";
 
 interface ChipsProps {
   variant: keyof typeof chipsVariants;
@@ -8,6 +16,9 @@ interface ChipsProps {
   borderRadius?: keyof typeof chipsBorderRadius;
   switchOff?: boolean;
   className?: string;
+  color?: 'black';
+  tailVisible?: boolean;
+  tailPosition?: 'top' | 'bottom';
 }
 
 export default function Chips({
@@ -16,6 +27,9 @@ export default function Chips({
   size,
   borderRadius = 'small',
   switchOff = false,
+  color,
+  tailVisible = false,
+  tailPosition = 'top',
 }: ChipsProps) {
   return (
     <span
@@ -24,8 +38,12 @@ export default function Chips({
       ${chipsBorderRadius[borderRadius]} 
       ${chipsSize[size]}
       ${switchOff && chipsSwitchOff[variant] || ''}
+      ${color && chipsColors[color] || ''}
     `}
     >
+      {tailVisible &&
+        <span className={`${chipsTailStyle} ${chipsTailPosition[tailPosition]}`} />
+      }
       {children}
     </span>
   );

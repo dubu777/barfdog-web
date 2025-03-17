@@ -42,10 +42,10 @@ const ConnectSns = () => {
 				onSuccess: (data) => {
 					if (data.email && data.provider) {
 						// 로그인 작업 필요
-						addToast('SNS 연동이 완료되었습니다!', 'success');
+						addToast('SNS 연동이 완료되었습니다!', 'above-button');
 						router.push('/');
 					} else {
-						addToast('SNS 연동에 실패했습니다.', 'error');
+						addToast('SNS 연동에 실패했습니다.', 'above-button');
 					}
 				},
 				onError: (error) => {
@@ -53,7 +53,7 @@ const ConnectSns = () => {
 					if(axios.isAxiosError(error)) {
 						const errorData = error.response?.data.errors[0];
 						if (errorData) {
-							addToast(errorData.defaultMessage || 'SNS 연동에 실패했습니다.', 'error');
+							addToast(errorData.defaultMessage || 'SNS 연동에 실패했습니다.', 'above-button');
 						}
 					}
 				}

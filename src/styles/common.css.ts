@@ -21,12 +21,20 @@ export const commonLayoutContainer = style([commonLayoutStyle, {
   position: 'relative',
 }]);
 
+
+export const commonLayoutWidth = {
+  isMobileDevice: {
+    true: style({ width: 'calc(100% - 40px)' }),
+    false: style({ width: 'calc(600px - 40px)' }),
+  }
+}
+
 export const ellipsis = recipe({
   base: {
     width: '100%',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-    display: '-webkit-box',
+    display: '-webkit-box !important',
     '-webkit-box-orient': 'vertical',
   },
   variants: {

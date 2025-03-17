@@ -1,9 +1,9 @@
 import * as styles from "../MyPageCard.css";
 import { useRouter } from "next/navigation";
-import {ORDER_ACTIONS, SUBSCRIPTION_ORDER_ACTIONS} from "@/constants/mypage";
+import { ORDER_ACTIONS, SUBSCRIPTION_ORDER_ACTIONS } from "@/constants/mypage";
 import Button from "@/components/common/button/Button";
-import {useMyPageStore} from "@/store/useMypageStore";
-import {MEMBERSHIP_TIERS_LIST} from "@/constants/membership";
+import { usePersistMypageStore } from "@/store/usePersistMypageStore";
+import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 
 interface DogButtonControlsProps {
   type: 'mypage' | 'subscription';
@@ -13,7 +13,7 @@ interface DogButtonControlsProps {
 
 const SubscriptionControls = ({ type, status, subscribeId }: DogButtonControlsProps) => {
   const actions = type === 'mypage' ? ORDER_ACTIONS[status] : SUBSCRIPTION_ORDER_ACTIONS[status];
-  const { mypageUserInfo } = useMyPageStore();
+  const { mypageUserInfo } = usePersistMypageStore();
   const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === mypageUserInfo.grade);
 
   const router = useRouter();
@@ -30,7 +30,7 @@ const SubscriptionControls = ({ type, status, subscribeId }: DogButtonControlsPr
             type='assistive'
             size='sm'
             width='50%'
-            onClick={() => handleActions(action.url as string)}
+            onClick={() => handleActions('')} // 전체 구독일정 및 신청 정보 확인/변경 url 적용 필요
           >
             전체 구독일정
           </Button>
@@ -39,7 +39,7 @@ const SubscriptionControls = ({ type, status, subscribeId }: DogButtonControlsPr
             type='assistive'
             size='sm'
             width='50%'
-            onClick={() => handleActions(action.url as string)}
+            onClick={() => handleActions('')} // 전체 구독일정 및 신청 정보 확인/변경 url 적용 필요
           >
             신청 정보 확인/변경
           </Button>

@@ -23,13 +23,15 @@ export type {
 	UpdateUserInfo,
 	GetUserInfo,
 	IsValidUpdateUserInfo,
-	GetAuthNumber
+	GetAuthNumber,
+	GenderType,
 };
 
 // 로그인
 type Role = 'USER' | 'ADMIN' | 'SUBSCRIBER';
 type UserType = 'NON_MEMBER' | 'MEMBER' | 'MEMBER_WITH_SMS_KAKAO' | 'MEMBER_WITH_SMS_NAVER';
 type SnSProvider = 'kakao' | 'naver';
+type GenderType = 'MALE' | 'FEMALE' | 'NONE' | 'M' | 'F' | null;
 
 interface LoginFormValues {
 	email: string;
@@ -47,7 +49,7 @@ interface UserInfo {
 
 interface DefaultUserInfo {
 	id: string;
-	gender: 'MALE' | 'FEMALE' | 'NONE' | null;
+	gender: GenderType;
 	email: string;
 	mobile: string;
 	mobile_e164: string;
@@ -118,7 +120,7 @@ interface SignUpFormValues {
 	authNumber: string;
 	address: AddressDto;
 	birthday: string | Date | null;
-	gender: 'MALE' | 'FEMALE' | 'NONE' | null;
+	gender: GenderType;
 	recommendCode?: string;
 	agreement: {
 		servicePolicy: boolean;
@@ -155,10 +157,11 @@ interface GetUserInfo extends UpdateUserInfo{
 	providerId?: number | null;
 }
 
+
 interface UpdateUserInfo {
 	address: AddressDto;
 	birthday: string;
-	gender: 'MALE' | 'FEMALE' | 'NONE' | null;
+	gender: GenderType;
 	name: string;
 	password: string | null;
 	phoneNumber: string;

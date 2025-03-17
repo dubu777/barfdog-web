@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { commonLayoutStyle } from "@/styles/common.css";
 import {
 	backgroundStyle, closeButtonStyle,
 	handleStyle,
@@ -42,7 +43,7 @@ export default function BottomSheet({
 		<AnimatePresence>
 			{isOpen && (
 				<motion.div
-					className={`${overlayStyle({ isOpen })} ${mode === "modal" ? backgroundStyle : ""}`}
+					className={`${overlayStyle({ isOpen })} ${mode === "modal" ? backgroundStyle : ''} ${commonLayoutStyle}`}
 					onClick={onClose}
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}

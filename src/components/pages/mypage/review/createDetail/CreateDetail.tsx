@@ -15,10 +15,10 @@ const CreateDetail = () => {
     mutate(
       { body: body as CreateReviewDetail }, {
       onSuccess: () => {
-        addToast('리뷰 작성이 완료되었습니다!', 'success')
+        addToast('리뷰 작성이 완료되었습니다!', 'above-button')
       },
       onError: () => {
-        addToast('리뷰 등록이 실패했습니다.', 'error')
+        addToast('리뷰 등록이 실패했습니다.', 'above-button')
       }
     })
   }

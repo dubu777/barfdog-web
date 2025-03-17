@@ -16,7 +16,6 @@ export const inputBoxStyle = style({
 })
 
 export const inputWrapStyle = style({
-  width: '100%',
   height: '48px',
   textAlign: 'left',
   display: 'flex',
@@ -26,7 +25,6 @@ export const inputBaseStyle = style({
   width: '100%',
   padding: '12px 20px',
   color: themeVars.colors.gray.gray900,
-
 })
 
 export const inputVariants = {
@@ -77,17 +75,15 @@ export const inputStyle = style({
   selectors: {
     '&::placeholder': {
       color: themeVars.colors.gray.gray300,
+    },
+    '&[type = "button"]': {
+      cursor: 'pointer'
     }
   }
 })
 
 export const confirmButtonStyle = style({
-  height: '48px',
-  padding: '12px 28px',
-  backgroundColor: themeVars.colors.red.red,
-  color: themeVars.colors.gray.gray0,
-  borderRadius: '8px',
-  wordBreak: 'keep-all',
+  padding: '12px 14.5px !important'
 })
 
 export const searchButtonStyle = style({
@@ -109,6 +105,5 @@ export const baseButtonStyle = style({
 export const inputErrorTextStyle = style({
   width: '100%',
   display: 'flex',
-  paddingLeft: '10px',
   marginTop: '8px'
 })

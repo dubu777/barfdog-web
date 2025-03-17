@@ -1,12 +1,13 @@
-import { forwardRef } from "react";
+import { useState } from "react";
 import * as styles from './DatePicker.css';
 import ArrowLeft from '/public/images/icons/chevron-left.svg';
 import ArrowRight from '/public/images/icons/chevron-right-blue.svg';
-import InputField from "@/components/common/inputField/InputField";
 import DatePicker from "react-datepicker";
-import { getMonth, getYear } from "date-fns";
+import { getMonth, getYear, isValid, parse } from "date-fns";
 import { ko } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
+import {datePickerButtons} from "./DatePicker.css";
 
 interface DatePickerProps {
 	name: string;
@@ -20,108 +21,113 @@ interface DatePickerProps {
 	label?: string;
 }
 
+const parseDate = (value: Date | string | null) => {
+	if (!value) return undefined; // null, undefined 처리
+	if (value instanceof Date && isValid(value)) return value; // 유효한 Date 객체 확인
+	if (typeof value === "string") {
+		const parsedDate = parse(value, "yyyy.MM.dd", new Date());
+		return isValid(parsedDate) ? parsedDate : undefined;
+	}
+	return undefined;
+};
+
 const DatePickerComponent = ({
 	name,
 	value,
 	onChange,
 	minDate,
 	maxDate,
-	dateFormat = 'yyy-MM-dd',
+	dateFormat = 'yyyy.MM.dd',
 	className,
-	label
 }: DatePickerProps) => {
 	const years = Array.from({ length: getYear(new Date()) + 1 - 1970 }, (_, i) => getYear(new Date()) - i);
 	const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
-	const CustomInput = forwardRef<HTMLInputElement, { value?: string; onClick?: () => void }>(
-	({ value, onClick }, ref) => (
-		<InputField
-			type='button'
-			onClick={onClick}
-			value={value}
-			variants='fillBox'
-			label={label || '생년월일'}
-			isRequired
-			ref={ref}
-		/>
-	))
-	CustomInput.displayName = 'CustomInput';
+	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<div className={`${styles.datePickerContainer} ${className || ''}`}>
-			<DatePicker
-				selected={value ? new Date(value) : null}
-				name={name}
-				minDate={minDate}
-				maxDate={maxDate || new Date()}
-				dateFormat={dateFormat}
-				locale={ko}
-				onChange={(date) => onChange(date)}
-				customInput={<CustomInput />}
-				disabledKeyboardNavigation
-				renderCustomHeader={({
-					date,
-					changeYear,
-					changeMonth,
-					decreaseMonth,
-					increaseMonth,
-					prevMonthButtonDisabled,
-					nextMonthButtonDisabled,
-				}) => {
-					return (
-						<div className={styles.datePickerHeader}>
-							<div>
-								<select
-									className={styles.datePickerSelect}
-									value={getYear(date)}
-									onChange={({ target: { value } }) => {
-										return changeYear(Number(value))
-									}}
-								>
-									{years.map((option) => (
-										<option key={option} value={option}>
-											{option}년
-										</option>
-									))}
-								</select>
-								<select
-									className={styles.datePickerSelect}
-									value={months[getMonth(date)]}
-									onChange={({ target: { value } }) => {
-										return changeMonth(months.indexOf(value))
-									}}
-								>
-									{months.map((option) => (
-										<option key={option} value={option}>
-											{option}월
-										</option>
-									))}
-								</select>
+			<DatePickerButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} value={value as string} />
+			{isOpen &&
+				<DatePicker
+					inline
+					selected={parseDate(value)}
+					name={name}
+					minDate={minDate}
+					maxDate={maxDate || new Date()}
+					dateFormat={dateFormat}
+					locale={ko}
+					onChange={(date) => {
+						onChange(date);
+						setIsOpen(!isOpen);
+					}}
+					disabledKeyboardNavigation
+					renderCustomHeader={({
+						date,
+						changeYear,
+						changeMonth,
+						decreaseMonth,
+						increaseMonth,
+						prevMonthButtonDisabled,
+						nextMonthButtonDisabled,
+					}) => {
+						return (
+							<div className={styles.datePickerHeader}>
+								<div>
+									<select
+										className={styles.datePickerSelect}
+										value={getYear(date)}
+										onChange={({ target: { value } }) => {
+											return changeYear(Number(value))
+										}}
+									>
+										{years.map((option) => (
+											<option key={option} value={option}>
+												{option}년
+											</option>
+										))}
+									</select>
+									<select
+										className={styles.datePickerSelect}
+										value={months[getMonth(date)]}
+										onChange={({ target: { value } }) => {
+											return changeMonth(months.indexOf(value))
+										}}
+									>
+										{months.map((option) => (
+											<option key={option} value={option}>
+												{option}월
+											</option>
+										))}
+									</select>
+								</div>
+								<div className={styles.datePickerButtons}>
+									<button
+										className={styles.datePickerPrevNextButton}
+										onClick={(e) => {
+											e.preventDefault();
+											decreaseMonth();
+										}}
+										disabled={prevMonthButtonDisabled}
+									>
+										<ArrowLeft />
+									</button>
+									<button
+										className={styles.datePickerPrevNextButton}
+										onClick={(e) => {
+											e.preventDefault();
+											increaseMonth();
+										}}
+										disabled={nextMonthButtonDisabled}
+									>
+										<ArrowRight />
+									</button>
+								</div>
 							</div>
-							<div className={styles.datePickerButtons}>
-								<button
-									onClick={(e) => {
-										e.preventDefault();
-										decreaseMonth();
-									}}
-					        		disabled={prevMonthButtonDisabled}
-								>
-									<ArrowLeft />
-								</button>
-								<button
-									onClick={(e) => {
-										e.preventDefault();
-										increaseMonth();
-									}}
-					        		disabled={nextMonthButtonDisabled}
-								>
-									<ArrowRight />
-								</button>
-							</div>
-						</div>
-					)
-				}}
-			/>
+						)
+					}}
+				/>
+			}
 		</div>
 	);
 };

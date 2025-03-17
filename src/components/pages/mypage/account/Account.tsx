@@ -1,24 +1,31 @@
+'use client';
 import * as styles from './Account.css';
 import Link from "next/link";
 import AccountCircle from '/public/images/myPage/account_circle.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import { usePersistMypageStore } from "@/store/usePersistMypageStore";
+import RecommendationCode from "@/components/pages/mypage/layout/recommendationCode/RecommendationCode";
 
 const AccountLinkList = {
-	'user-info': { label: '회원 정보 변경' },
+	'user-info': { label: '회원정보 변경' },
 	'change-password': { label: '비밀번호 변경' },
-	'connected-sns': { label: '간편 로그인 설정' },
+	'connect-sns': { label: 'SNS 연동정보' },
 	'notification': { label: '알림 설정' },
 } as const;
 
 // userInfo image 적용 필요
 const Account = () => {
+	const { mypageUserInfo } = usePersistMypageStore();
+	const recommendationCode: string | null = mypageUserInfo?.myRecommendationCode || null;
+
 	return (
 		<section className={styles.accountContainer}>
 			<article className={styles.accountInfo}>
 				<div className={styles.accountImage}>
 					<AccountCircle />
 				</div>
-				<DefaultText type='title1'>홍길동 님</DefaultText>
+				<DefaultText type='title1'>{mypageUserInfo?.memberName} 님</DefaultText>
+				<RecommendationCode code={recommendationCode as string} />
 			</article>
 			<ul className={styles.accountLinkBox}>
 				{Object.keys(AccountLinkList).map(key => {
@@ -32,11 +39,11 @@ const Account = () => {
 				)
 				})}
 			</ul>
-			<button className={styles.deleteAccountButton}>
-				<DefaultText type='body2'>
+			<Link href='/mypage/account/withdrawal-account' className={styles.deleteAccountButton}>
+				<DefaultText type='label4' color='gray700'>
 					회원탈퇴
 				</DefaultText>
-			</button>
+			</Link>
 		</section>
 	);
 };

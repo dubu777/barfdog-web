@@ -1,9 +1,9 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
-import { recipe } from "@vanilla-extract/recipes";
 
 export const datePickerContainer = style({
 	width: '100%',
+	marginBottom: '80px',
 })
 
 export const datePickerHeader = style({
@@ -18,12 +18,21 @@ export const datePickerSelect = style({
 	letterSpacing: '-0.4px',
 	lineHeight: '150%',
 	outline: 'none',
+	cursor: 'pointer',
 })
 
 export const datePickerButtons = style({
 	display: 'flex',
 	gap: '16px',
-	cursor: 'pointer'
+})
+
+export const datePickerPrevNextButton = style({
+	cursor: 'pointer',
+})
+
+globalStyle(`${datePickerContainer} .react-datepicker-popper`, {
+	position: 'static',
+	transform: 'unset !important',
 })
 
 globalStyle(`${datePickerContainer} .react-datepicker-wrapper`, {
@@ -32,7 +41,11 @@ globalStyle(`${datePickerContainer} .react-datepicker-wrapper`, {
 
 globalStyle(`${datePickerContainer} .react-datepicker`, {
 	width: '348px',
-	border: 0,
+	border: `1px solid ${themeVars.colors.gray.gray300}`,
+	borderRadius: '8px',
+	boxShadow: themeVars.shadow.light,
+	overflow: 'hidden',
+	marginTop: '20px',
 })
 
 globalStyle(`${datePickerContainer} .react-datepicker__month-container`, {
@@ -42,7 +55,7 @@ globalStyle(`${datePickerContainer} .react-datepicker__month-container`, {
 
 globalStyle(`${datePickerContainer} .react-datepicker__day-names`, {
 	marginBottom: '4px',
-	marginTop: '14px',
+	marginTop: '12px',
 })
 
 globalStyle(`${datePickerContainer} .react-datepicker__day-names .react-datepicker__day-name`, {
@@ -77,6 +90,7 @@ globalStyle(`${datePickerContainer} .react-datepicker__day, .react-datepicker__t
 	height: '44px',
 	lineHeight: '44px',
 	margin: '0 !important',
+	color: themeVars.colors.gray.gray700,
 })
 
 globalStyle(`${datePickerContainer} .react-datepicker__day:not([aria-disabled=true]):hover`, {
@@ -89,81 +103,5 @@ globalStyle(`${datePickerContainer} .react-datepicker__day--selected, .react-dat
 	background: `${themeVars.colors.blue.blue500} !important`,
 	color: `${themeVars.colors.gray.gray0} !important`,
 	borderRadius: '50%',
-})
-
-globalStyle(`${datePickerContainer} .react-datepicker-popper`, {
-	top: '30px !important',
-})
-
-export const mobileDatePicker = recipe({
-	base: {
-		borderRadius: '8px',
-		background: themeVars.colors.gray.gray0,
-		padding: '14px 20px',
-	},
-	variants: {
-		isOpen: {
-			true: {
-				marginBottom: '84px',
-				transition: 'all .35s'
-			}
-		},
-	}
-})
-
-export const mobileDatePickerHeader = recipe({
-	base: {
-		width: '100%',
-		textAlign: 'left',
-		display: 'flex',
-		justifyContent: 'space-between',
-	},
-	variants: {
-		isOpen: {
-			true: {
-				marginBottom: '6px',
-			}
-		}
-	}
-})
-
-export const mobileDatePickerStyle = style({
-	gap: '28px',
-	justifyContent: 'center',
-})
-
-globalStyle(`${mobileDatePickerStyle} > div`, {
-	width: 'auto !important',
-	flex: 'unset !important',
-});
-
-globalStyle(`${mobileDatePickerStyle} > div:last-child`, {
-	zIndex: -1,
-	width: 'calc(100% - 36px) !important',
-	left: '50% !important',
-	transform: 'translateX(-50%)',
-	borderRadius: '4px',
-	backgroundColor: themeVars.colors.gray.gray100,
-	mixBlendMode: 'multiply',
-	boxShadow: '-1px -1px 1px 0px rgba(255, 255, 255, 0.08) inset, 0px 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.08)',
-	color: themeVars.colors.gray.gray900,
-});
-
-export const mobileDatePickerBox = style({
-	borderRadius: '8px',
-	border: `1px solid ${themeVars.colors.gray.gray300}`
-})
-
-export const mobilePickerSelected = recipe({
-	base: {
-		color: themeVars.colors.gray.gray300
-	},
-	variants: {
-		selected: {
-			true: {
-				color: themeVars.colors.gray.gray900,
-				fontWeight: 500,
-			}
-		}
-	}
+	fontWeight: themeVars.fontWeight.bold,
 })

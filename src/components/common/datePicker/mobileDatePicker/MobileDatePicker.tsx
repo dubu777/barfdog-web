@@ -1,11 +1,11 @@
-import * as styles from './DatePicker.css';
+import * as styles from './MobileDatePicker.css';
 import Picker from "react-mobile-picker";
-import React, { MouseEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import ArrowUp from '/public/images/icons/chevron-sort-up.svg';
 import { labelStyle } from "@/components/common/inputField/InputField.css";
 import { pointColor } from "@/styles/common.css";
 import { format, getDaysInMonth, getYear } from 'date-fns';
+import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
 
 const getYears = () => {
 	const currentYear = getYear(new Date());
@@ -52,8 +52,7 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 		}
 	}, []);
 
-	const handleOpenPicker = (e: MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+	const handleOpenPicker = () => {
 		setIsOpen(prev => !prev)
 	}
 
@@ -72,13 +71,12 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 				{label} {isRequired && <span className={pointColor}>*</span>}
 			</DefaultText>
 			}
-			<div className={styles.mobileDatePicker({ isOpen })}>
-				<button onClick={handleOpenPicker} className={styles.mobileDatePickerHeader({ isOpen })}>
-					<DefaultText type='body2' align='left' color={isOpen ? 'blue' : 'gray800'}>
-						{`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`}
-					</DefaultText>
-					<ArrowUp style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all .35s' }} />
-				</button>
+			<DatePickerButton
+				isOpen={isOpen}
+				onToggle={handleOpenPicker}
+				value={`${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`}
+				isMobile
+			>
 				{isOpen &&
 				<div className={styles.mobileDatePickerBox}>
 					<Picker
@@ -125,7 +123,7 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
 					</Picker>
 				</div>
 				}
-			</div>
+			</DatePickerButton>
 		</div>
 	);
 };

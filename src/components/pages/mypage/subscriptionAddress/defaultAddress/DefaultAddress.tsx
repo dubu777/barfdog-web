@@ -7,7 +7,7 @@ import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
-import { useMyPageStore } from "@/store/useMypageStore";
+import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { getProductionDates } from "@/utils/getProductionDates";
 import { SubscriptionAddressData } from "@/types/subscription";
 import { DefaultObjectType } from "@/types/common";
@@ -19,7 +19,7 @@ interface DefaultAddressProps {
 
 const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) => {
   const { currentAddress: currentData, nextAddress: nextData, nextDeliveryDate } = addressData;
-  const { subscriptionDogName } = useMyPageStore();
+  const { subscriptionDogName } = usePersistMypageStore();
   const { pushWithQuery } = useDynamicQueryPush();
   const defaultProductionDates = getProductionDates(nextDeliveryDate);
   const pathname = usePathname();
@@ -48,7 +48,7 @@ const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) =>
             {currentData.detailAddress}
           </Text>
           <Text type='description' size='sm' align='left' color='black'>
-            {currentData.recipientName}&nbsp;<span>{formatPhoneNumber(currentData.phoneNumber)}</span>
+            {currentData.recipientName}&nbsp;<span>{formatPhoneNumber(currentData?.phoneNumber as string)}</span>
           </Text>
         </div>
         {nextData &&
@@ -59,7 +59,7 @@ const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) =>
               {emptyValue(nextData?.detailAddress, '나머지 주소')}
             </Text>
             <Text type='description' size='sm' align='left' color='grey'>
-              {emptyValue(nextData?.recipientName)}<span>{formatPhoneNumber(nextData?.phoneNumber)}</span>
+              {emptyValue(nextData?.recipientName as string)}<span>{formatPhoneNumber(nextData?.phoneNumber as string)}</span>
             </Text>
           </div>
         }

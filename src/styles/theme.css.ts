@@ -278,4 +278,12 @@ export const [themeClass, themeVars] = createTheme({
       },
     },
   },
+  shadow: {
+    light:
+      "-1px -1px 1px 0px rgba(255, 255, 255, 0.08) inset, 0px 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.08)",
+    normal:
+      "-1px -1px 2px 0px rgba(255, 255, 255, 0.08) inset, 0px 1px 4px 0px rgba(0, 0, 0, 0.08), 0px 2px 10px 0px rgba(0, 0, 0, 0.10)",
+    strong:
+      "-1px -1px 2px 0px rgba(255, 255, 255, 0.08) inset, 0px 1px 8px 0px rgba(0, 0, 0, 0.08), 0px 10px 20px 0px rgba(0, 0, 0, 0.10)",
+  },
 });

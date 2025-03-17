@@ -1,11 +1,11 @@
 import React, { MouseEvent, useMemo, useState } from "react";
-import * as styles from '@/components/common/datePicker/DatePicker.css';
+import * as styles from '@/components/common/datePicker/mobileDatePicker/MobileDatePicker.css';
 import { pointColor } from "@/styles/common.css";
 import { labelStyle } from "@/components/common/inputField/InputField.css";
 import { addDays, addWeeks, format, getDay } from 'date-fns';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import ArrowUp from '/public/images/icons/chevron-sort-up.svg';
 import Picker from "react-mobile-picker";
+import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
 
 // 오늘 날짜 기준으로 가장 가까운 '화요일' 찾기
 const getNextAvailableTuesday = (today: Date) => {
@@ -39,8 +39,7 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 	const [selectedDate, setSelectedDate] = useState({ month: months[0], day: options[0].day });
 	const [isOpen, setIsOpen] = useState(isFixedOpen);
 
-	const handleOpenPicker = (e: MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
+	const handleOpenPicker = () => {
 		setIsOpen(prev => !prev)
 	}
 
@@ -68,13 +67,11 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 				{label} {isRequired && <span className={pointColor}>*</span>}
 			</DefaultText>
 			}
-			<div className={styles.mobileDatePicker({ isOpen })} style={{ marginBottom: 0 }}>
-				<button onClick={!isFixedOpen ? handleOpenPicker : undefined} className={styles.mobileDatePickerHeader({ isOpen })}>
-					<DefaultText type='body2' align='left' color={isOpen ? 'blue' : 'gray800'}>
-						{`${selectedDate.month}-${selectedDate.day}`}
-					</DefaultText>
-					<ArrowUp style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all .35s' }} />
-				</button>
+			<DatePickerButton 
+				isOpen={isOpen} 
+				onToggle={!isFixedOpen ? handleOpenPicker : undefined} 
+				value={`${selectedDate.month}-${selectedDate.day}`}
+			>
 				{isOpen &&
 				<div className={styles.mobileDatePickerBox}>
 					<Picker
@@ -104,7 +101,7 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 					</Picker>
 				</div>
 				}
-			</div>
+			</DatePickerButton>
 		</div>
 	);
 };

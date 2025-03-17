@@ -1,11 +1,10 @@
 'use client';
 import * as styles from './Membership.css';
-import Image from "next/image";
 import CloseButton from '/public/images/icons/close.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import Card from "@/components/common/card/Card";
 import { useBackNavigation } from "@/utils";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
+import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
 
 const Membership = () => {
 	const goBack = useBackNavigation();
@@ -20,31 +19,7 @@ const Membership = () => {
 			</div>
 			<article className={styles.membershipList}>
 				{MEMBERSHIP_TIERS_LIST.map(tier => (
-					<Card shadow='light' key={tier.tier}>
-						<div className={styles.membershipInfo}>
-							<div className={styles.membershipName}>
-								<Image src={tier.image} alt={tier.tierKR} width={44} height={44} />
-								<DefaultText type='headline1'>{tier.tier}</DefaultText>
-							</div>
-							<DefaultText type='caption' color='gray500' className={styles.membershipCondition}>
-								{tier.condition}
-							</DefaultText>
-						</div>
-						<div className={styles.membershipBenefit}>
-							<div className={styles.benefitList({ isSub: false })}>
-								{tier.benefits.map(benefit => (
-									<DefaultText key={benefit} type='label2' color='gray800'>{benefit}</DefaultText>
-								))}
-							</div>
-							{tier.subBenefits &&
-								<div className={styles.benefitList({ isSub: true })}>
-									{tier.subBenefits.map(benefit => (
-										<DefaultText key={benefit} type='caption' color='gray500'>• {benefit}</DefaultText>
-									))}
-								</div>
-							}
-						</div>
-					</Card>
+					<MembershipCard key={tier.tier} tier={tier} />
 				))}
 			</article>
 			<article className={styles.membershipDescription}>

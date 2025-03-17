@@ -58,7 +58,7 @@ interface OrderProgressInfo {
 }
 
 interface MenuLink {
-  key?: string;
+  key: string;
   label: string;
   url?: string;
 }

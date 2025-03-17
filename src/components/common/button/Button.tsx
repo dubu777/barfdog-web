@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { buttonStyles, buttonVariants, disabledVariants } from "./Button.css";
 import Icon from "../icon/Icon";
 
@@ -9,7 +9,7 @@ interface ButtonProps {
   disabled?: boolean;
   icon?: string;
   iconPosition?: "left" | "right";
-  onClick?: () => void;
+  onClick?: (() => void) | ((e: MouseEvent<HTMLButtonElement>) => void);
   children: React.ReactNode;
   fullWidth?: boolean;
   width?: string;

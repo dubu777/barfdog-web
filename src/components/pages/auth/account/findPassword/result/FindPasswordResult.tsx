@@ -31,7 +31,7 @@ const FindPasswordResult = () => {
 				},
 				onError: () => {
 					stop();
-					addToast('일치하는 정보를 찾을 수 없습니다.', 'error');
+					addToast('일치하는 정보를 찾을 수 없습니다.');
 				}
 			}
 		)

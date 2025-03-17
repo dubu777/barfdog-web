@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getNeedToSetPassword } from "@/api/auth/auth";
 import { AUTH_CONFIG } from "@/constants/auth";
-import axios from "axios";
 
 const isAuthenticated = (req: NextRequest) => {
 	return req.cookies.get(AUTH_CONFIG.LOGIN_COOKIE)?.value;
@@ -10,7 +9,7 @@ const isAuthenticated = (req: NextRequest) => {
 const pathsRequiringPasswordSetup = [
 	'/mypage/account/user-info',
 	'/mypage/account/change-password',
-	'/mypage/account/connected-sns',
+	'/mypage/account/connect-sns',
 	'/mypage/account/set-password',
 	'/mypage/account/notification',
 ];

@@ -59,7 +59,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
         reviewDetail.id,
         {
           onSuccess: () => {
-            addToast('리뷰 삭제가 완료되었습니다!', 'success');
+            addToast('리뷰 삭제가 완료되었습니다!');
           },
         }
       )

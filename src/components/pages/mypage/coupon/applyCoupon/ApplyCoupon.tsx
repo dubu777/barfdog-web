@@ -22,7 +22,7 @@ const ApplyCoupon = () => {
   const handleApplyCoupon = (e?: KeyboardEvent<HTMLInputElement> | MouseEvent<HTMLButtonElement>) => {
     if (e) e.preventDefault();
     if (!couponCode) {
-      addToast('쿠폰 코드를 입력해주세요.', 'error')
+      addToast('쿠폰 코드를 입력해주세요.');
       return;
     }
     mutate(
@@ -30,16 +30,16 @@ const ApplyCoupon = () => {
       {
         onSuccess: () => {
           setCouponCode('');
-          addToast('쿠폰이 성공적으로 발행되었습니다!', 'success')
+          addToast('쿠폰이 성공적으로 발행되었습니다!');
         },
         onError: (error: Error | AxiosError| unknown) => {
           if (isAxiosError(error)) {
             const defaultMessage =
               error.response?.data?.errors?.[0]?.defaultMessage || '쿠폰 적용에 실패했습니다.';
-            addToast(defaultMessage, 'error');
+            addToast(defaultMessage);
             setApplyErrorMessage('잘못된 쿠폰 코드입니다.');
           } else {
-            addToast('알 수 없는 에러가 발생했습니다.', 'error');
+            addToast('알 수 없는 에러가 발생했습니다.');
           }
         }
       },

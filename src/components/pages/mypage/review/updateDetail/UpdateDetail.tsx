@@ -26,11 +26,11 @@ const UpdateDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const handleSubmit = (body: UpdateReviewDetail) => {
     mutate(body, {
       onSuccess: () => {
-        addToast('리뷰 수정이 완료되었습니다!', 'success');
+        addToast('리뷰 수정이 완료되었습니다!', 'above-button')
         goBack();
       },
       onError: () => {
-        addToast('리뷰 수정이 실패했습니다.', 'error')
+        addToast('리뷰 수정이 실패했습니다.', 'above-button')
       }
     })
   }

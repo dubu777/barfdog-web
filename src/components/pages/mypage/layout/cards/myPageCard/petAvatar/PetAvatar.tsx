@@ -31,7 +31,7 @@ const PetAvatar = ({ type, petId, petPictureUrl, petPictureName }: PetAvatarProp
   }
   const handleFileUpload = async () => {
     if (file === null && petPictureUrl !== '') {
-      addToast('파일을 선택해주세요.', 'error');
+      addToast('파일을 선택해주세요.');
       return;
     }
 
@@ -52,18 +52,17 @@ const PetAvatar = ({ type, petId, petPictureUrl, petPictureName }: PetAvatarProp
             setOpenEditImageModal(false);
             addToast(
               `프로필 사진이 ${updateMode === 'create' ? '등록' : '수정'}되었습니다.`,
-              'success'
             );
           },
           onError: () => {
             // petPictureId === null 삭제기능 404 Error 확인 필요
-            addToast('파일 업로드에 실패했습니다.', 'error');
+            addToast('파일 업로드에 실패했습니다.');
           }
         },
       )
     } catch (err) {
       console.log(err);
-      addToast('파일 업로드에 실패했습니다.', 'error');
+      addToast('파일 업로드에 실패했습니다.');
     } finally {
       setIsUploading(false);
     }

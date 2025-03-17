@@ -14,6 +14,7 @@ export const usePersistReviewStore = create(
         id: 0,
         title: '',
         reviewType: null,
+        orderId: null,
       },
       setReviewFormData: (reviewFormData) => set({ reviewFormData })
     }),
