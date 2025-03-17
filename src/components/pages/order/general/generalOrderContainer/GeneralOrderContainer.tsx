@@ -47,19 +47,25 @@ interface handleIamportResponseParams {
 }
 export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const router = useRouter();
+  // 상태관리 -------->
   const { maxAvailableReward } = useRewardStore();
   const { paymentPrice } = useDiscountStore();
   const { generalOrderBody, getRequestBody } = useOrderStore();
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
+  // <--------- 상태관리
+
+  // 서버 호출 react query -------->
+  const { data: generalOrderSheetData } = useCachedGeneralOrder({
+    orderItemDtoList,
+  });
   const { mutateAsync: getGeneralOrder } = useGetGeneralOrder();
   const { mutateAsync: createGeneralOrder } = useSaveGeneralOrder();
   const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
-  const { data: generalOrderSheetData } = useCachedGeneralOrder({
-    orderItemDtoList,
-  });
-  console.log('generalOrderSheetData', generalOrderSheetData);
+  console.log("generalOrderSheetData", generalOrderSheetData);
+  // <------- 서버 호출 
   
+  // 커스텀 훅 & 유틸 함수 ------->
   const { isMobileDevice } = useDeviceState();
   const { requestIamportPayment } = usePayment();
 
@@ -73,7 +79,9 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       getGeneralOrder({ orderItemDtoList });
     }
   }, [orderItemDtoList]);
+  // <-------- 커스텀 훅 & 유틸 함수
 
+  // 결제 함수 ============>
   // 아임포트 결제 응답 처리
   const handleIamportResponse = async ({
     res,
@@ -145,6 +153,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       router.push("/order/order-failed");
     }
   };
+  // <========== 결제 함수
 
   return (
     <div>
@@ -155,9 +164,14 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         deliveryDto={generalOrderBody.deliveryDto}
       />
       <Divider />
-      <GeneralOrderItemList  orderItemDtoList={generalOrderSheetData.orderItemDtoList}/>
+      <GeneralOrderItemList
+        orderItemDtoList={generalOrderSheetData.orderItemDtoList}
+      />
       <Divider />
-      <CouponSelector coupons={generalOrderSheetData.coupons} orderPrice={generalOrderSheetData.orderPrice}/>
+      <CouponSelector
+        coupons={generalOrderSheetData.coupons}
+        orderPrice={generalOrderSheetData.orderPrice}
+      />
       {/* 쿠폰 관련 함수 여기 있음 */}
       {/* <OrderItem
         orderType={ORDER_TYPE.GENERAL}
@@ -185,10 +199,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <FooterButton
-        isDisabled={false}
-        onClick={handlePaymentSubmit}
-      >
+      <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
         {formatNumberWithCommas(paymentPrice)}원 결제하기
       </FooterButton>
     </div>

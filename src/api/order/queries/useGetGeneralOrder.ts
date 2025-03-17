@@ -99,3 +99,13 @@ export function useCachedGeneralOrder(
     queryKey: cacheKey,
   });
 }
+
+export async function prefetchGeneralOrder(
+  queryClient: QueryClient,
+  variables: GeneralOrderSheetRequest
+): Promise<void> {
+  await queryClient.prefetchQuery({
+    queryKey: [queryKeys.ORDER.GET_GENERAL_ORDER, variables],
+    queryFn: () => getGeneralOrder(variables),
+  });
+}

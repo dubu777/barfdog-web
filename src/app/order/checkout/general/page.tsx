@@ -8,7 +8,6 @@ interface GeneralPageProps {
 
 export default async function GeneralPage({
 }: GeneralPageProps) {
-
   return (
     <div className={styles.orderPageContainer}>
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>

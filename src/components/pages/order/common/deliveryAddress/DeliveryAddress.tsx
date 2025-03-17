@@ -12,18 +12,25 @@ import Chips from "@/components/common/chips/Chips";
 import DeliveryModal from "../deliveryModal/DeliveryModal";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 
-interface DeliveryAddressProps {
-}
+interface DeliveryAddressProps {}
 
-export default function DeliveryAddress({ }: DeliveryAddressProps) {
+export default function DeliveryAddress({}: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
-  const { deliveryDto, isBundleDelivery, defaultAddressId, setDeliveryDto, setBackupDeliveryDto, setDefaultAddressId } = useDeliveryStore();
+  const {
+    deliveryDto,
+    isBundleDelivery,
+    defaultAddressId,
+    setDeliveryDto,
+    setBackupDeliveryDto,
+    setDefaultAddressId,
+  } = useDeliveryStore();
   const { data: addressData } = useGetAddressList();
 
-  
   useEffect(() => {
     if (addressData && addressData.length > 0) {
-      const defaultAddress = addressData.find((address) => address.default === true);
+      const defaultAddress = addressData.find(
+        (address) => address.default === true
+      );
       if (defaultAddress) {
         setDefaultAddressId(defaultAddress.id);
       } else {
@@ -35,7 +42,7 @@ export default function DeliveryAddress({ }: DeliveryAddressProps) {
   // defaultAddress에 id 추가하면 추가 개발
   // const isDefaultAddress = deliveryDto.id === defaultAddressId;
   const isDefaultAddress = true;
-    // 임시 주소지 이름
+  // 임시 주소지 이름
   const deliveryName = "집";
 
   return (
@@ -85,20 +92,15 @@ export default function DeliveryAddress({ }: DeliveryAddressProps) {
           </div>
         </div>
       )}
-      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
-        {/* 로딩 컴포넌트 개발 예정 */}
-        <Suspense fallback={<div>Loading...</div>}>
-          <DeliveryModal
-            addressData={addressData}
-            defaultAddressId={defaultAddressId}
-            isVisible={isOpen}
-            onClose={onClose}
-            setDeliveryDto={setDeliveryDto}
-            setBackupDeliveryDto={setBackupDeliveryDto}
-            setDefaultAddressId={setDefaultAddressId}
-          />
-        </Suspense>
-      </ErrorBoundary>
+      <DeliveryModal
+        addressData={addressData}
+        defaultAddressId={defaultAddressId}
+        isVisible={isOpen}
+        onClose={onClose}
+        setDeliveryDto={setDeliveryDto}
+        setBackupDeliveryDto={setBackupDeliveryDto}
+        setDefaultAddressId={setDefaultAddressId}
+      />
     </OrderSection>
   );
 }

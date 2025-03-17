@@ -67,6 +67,7 @@ export default function AddressForm({
     setValue("zipcode", data.zonecode);
     setValue("city", data.sido);
     setValue("street", data.roadAddress);
+    trigger(["zipcode", "city", "street"]);
   };
 
   // city와 street을 결합한 주소 문자열
