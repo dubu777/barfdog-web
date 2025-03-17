@@ -6,6 +6,10 @@ export type {
   MyPageInfoData,
   DogData,
   MyPageBannerData,
+  OrderProgressInfo,
+  MenuLink,
+  MenuList,
+  OrderAction,
 };
 
 interface MyPageMemberDto {
@@ -45,4 +49,25 @@ interface MyPageBannerData {
   pcLinkUrl: string;
   mobileLinkUrl: string;
   imageUrl: MyPageBannerImageUrl;
+}
+
+interface OrderProgressInfo {
+  label?: string;
+  progress: number;
+  statusText: Record<'payment' | 'delivery', string>;
+}
+
+interface MenuLink {
+  key: string;
+  label: string;
+  url?: string;
+}
+
+interface MenuList {
+  category: string;
+  menus: MenuLink[];
+}
+
+interface OrderAction extends MenuLink {
+  variants?: 'solid';
 }

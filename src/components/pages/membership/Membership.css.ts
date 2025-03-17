@@ -67,9 +67,8 @@ export const benefitList = recipe({
 
 export const membershipDescription = style({
 	background: themeVars.colors.gray.gray50,
-	padding: '40px 20px 57px',
+	padding: '20px 20px 57px',
 	textAlign: 'left',
-	lineHeight: '2',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '8px',

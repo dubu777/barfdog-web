@@ -37,7 +37,7 @@ const InviteRewardList = () => {
 
   const handleApplyRecommendCode = () => {
     if (!recommendCode) {
-      addToast('추천 코드를 입력해주세요.', 'error')
+      addToast('추천 코드를 입력해주세요.');
       return;
     }
     mutate(
@@ -58,7 +58,6 @@ const InviteRewardList = () => {
       <div className={styles.inviteCode}>
         <div className={styles.codeInput}>
           <InputField
-            size='sm'
             placeholder='추천 코드를 입력해주세요.'
             id='recommend'
             name='recommend'

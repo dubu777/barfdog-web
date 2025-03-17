@@ -6,11 +6,13 @@ export const chipsVariants = {
     backgroundColor: themeVars.colors.red.red,
     color: themeVars.colors.gray.gray0,
     border: 'none',
+    position: 'relative',
   }),
   outlined: style({
     border: `1px solid ${themeVars.colors.red.red}`,
     backgroundColor: 'transparent',
     color: themeVars.colors.red.red,
+    position: 'relative',
   })
 }
 
@@ -26,6 +28,14 @@ export const chipsSwitchOff = {
     border: `1px solid ${themeVars.colors.gray.gray300}`,
   })
 }
+
+export const chipsColors = {
+  black: style({
+    backgroundColor: themeVars.colors.gray.gray800,
+    color: themeVars.colors.gray.gray0,
+  }),
+}
+
 
 export const chipsBorderRadius = {
   small: style({
@@ -61,4 +71,25 @@ export const chipsSize = {
     fontWeight: 700,
     padding: '4px 12px',
   })
+}
+
+export const chipsTailStyle = style({
+  position: 'absolute',
+  transform: 'translateX(-50%)',
+  left: '50%',
+  width: '12px',
+  height: '12px',
+  background: themeVars.colors.gray.gray800,
+  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+})
+
+export const chipsTailPosition = {
+  top: style({
+    top: '-6px',
+  }),
+  bottom: style({
+    transform: 'translateX(-50%) rotate(180deg)',
+    top: 'unset',
+    bottom: '-6px',
+  }),
 }

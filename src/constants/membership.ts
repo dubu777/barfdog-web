@@ -12,12 +12,12 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 	SILVER: {
 		tier: "SILVER",
 		tierKR: "실버",
-		condition: "정기배송 1회차 이상 진행 중 혹은 9만원 이상 결제 고객",
+		condition: "정기배송 1회차 이상 진행중 혹은 9만원 이상 결제고객",
 		description: '적립 0.5% 멤버십 할인 쿠폰',
 		image: '/images/membership/silver.png',
 		benefits: [
 			"적립율 0.5%",
-			"플래티넘 멤버십 할인쿠폰 매월 2건 증정",
+			"실버 멤버십 할인쿠폰 매월 1건 증정",
 		],
 		subBenefits: [
 			"1000원 일반결제 할인 쿠폰 증정 (2만원 이상 결제 시)"
@@ -28,12 +28,13 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 	GOLD: {
 		tier: "GOLD",
 		tierKR: "골드",
-		condition: "정기배송 5회차 이상 진행 중 혹은 45만원 이상 결제 고객",
+		condition: "정기배송 5회차 이상 진행중 혹은 45만원 이상 결제고객",
 		description: '정기결제 할인 및 적립 1% 멤버십 할인 쿠폰',
 		image: '/images/membership/gold.png',
 		benefits: [
 			"적립율 1%",
-			"플래티넘 멤버십 할인쿠폰 매월 2건 증정",
+			"정기결제 할인 1%",
+			"골드 멤버십 할인쿠폰 매월 2건 증정",
 		],
 		subBenefits: [
 			"1000원 일반결제 할인 쿠폰 증정 (2만원 이상 결제 시)",
@@ -41,15 +42,17 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		],
 		minSubscription: 5,
 		minPurchase: 450000,
+		subscriptionDiscount: 1,
 	},
 	PLATINUM: {
 		tier: "PLATINUM",
 		tierKR: "플래티넘",
-		condition: "정기배송 10회차 이상 진행 중 혹은 90만원 이상 결제 고객",
+		condition: "정기배송 10회차 이상 진행중 혹은 90만원 이상 결제고객",
 		description: '정기결제 할인 및 적립 1.5% 멤버십 할인 쿠폰',
 		image: '/images/membership/platinum.png',
 		benefits: [
 			"적립율 1.5%",
+			"정기결제 할인 3%",
 			"플래티넘 멤버십 할인쿠폰 매월 3건 증정",
 		],
 		subBenefits: [
@@ -59,15 +62,18 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		],
 		minSubscription: 10,
 		minPurchase: 900000,
+		subscriptionDiscount: 3,
 	},
 	DIA: {
 		tier: "DIA",
 		tierKR: "다이아",
-		condition: "정기배송 15회차 이상 진행 중 혹은 135만원 이상 결제 고객",
+		condition: "정기배송 15회차 이상 진행 중 혹은 135만원 이상 결제고객",
 		description: '정기결제 할인 및 적립 2% 멤버십 할인 쿠폰',
 		image: '/images/membership/dia.png',
 		benefits: [
 			"적립율 2%",
+			"정기결제 할인 5%",
+			"후기 적립금 2배",
 			"다이아 멤버십 할인쿠폰 매월 4건 증정",
 		],
 		subBenefits: [
@@ -78,6 +84,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		],
 		minSubscription: 15,
 		minPurchase: 1350000,
+		subscriptionDiscount: 5,
 	},
 	THE_BARF: {
 		tier: "THE_BARF",
@@ -86,8 +93,10 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		description: '정기결제 할인 및 적립 3% 멤버십 할인 쿠폰',
 		image: '/images/membership/thebarf.png',
 		benefits: [
-			"적립율 3%",
-			"다이아 멤버십 할인쿠폰 매월 5건 증정",
+			"적립율 4%",
+			"정기결제 할인 7%",
+			"후기 적립금 2배",
+			"더바프 멤버십 할인쿠폰 매월 5건 증정",
 		],
 		subBenefits: [
 			"1000원 일반결제 할인 쿠폰 증정 (2만원 이상 결제 시)",
@@ -98,6 +107,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		],
 		minSubscription: 25,
 		minPurchase: 2250000,
+		subscriptionDiscount: 7,
 	}
 } as const;
 

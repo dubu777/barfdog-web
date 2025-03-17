@@ -47,7 +47,7 @@ const SetPasswordComponent = () => {
 						console.log(data)
 						router.refresh();
 						router.push(`/mypage/account/${redirect}`);
-						addToast('비밀번호 설정이 완료되었습니다!', 'success')
+						addToast('비밀번호 설정이 완료되었습니다!', 'above-button');
 					} else {
 						return;
 					}

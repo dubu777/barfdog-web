@@ -44,12 +44,15 @@ export const progressActive = recipe({
 				transform: 'translateY(-50%)',
 				transition: 'all .35s',
 			}
-		}
+		},
 	},
 	variants: {
 		progress: {
 			0: {
 				selectors: {
+					'&::before': {
+						display: 'none',
+					},
 					'&::after': {
 						display: 'none',
 					}
@@ -57,11 +60,24 @@ export const progressActive = recipe({
 			},
 			100: {
 				selectors: {
+					'&::before': {
+						display: 'none',
+					},
 					'&::after': {
 						display: 'none',
 					}
 				}
 			},
+		},
+		label: {
+			false: {
+				'&::before': {
+					display: 'none',
+				},
+				'&::after': {
+					display: 'none',
+				}
+			}
 		}
 	}
 })

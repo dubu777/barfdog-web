@@ -39,20 +39,36 @@ const getBestReviewDetail = async (reviewId: number): Promise<BestReviewDetail> 
   return data;
 }
 
-const getWritableReviewList = async (page = 0, size = 10): Promise<WritableReviewList> => {
-  const { data } = await axiosInstance.get(`/api/reviews/writeable?page=${page}&size=${size}`);
+const getWritableReviewList = async ({
+  pageParam = 0,
+  size = 5,
+}: { pageParam: number; size: number }): Promise<WritableReviewList> => {
+  const { data } = await axiosInstance.get(`/api/reviews/writeable`, {
+    params: { page: pageParam, size }
+  });
+  const writableReviewList = data?._embedded?.queryWriteableReviewsDtoList || [];
+  const page = data?.page || { number: 0, totalPages: 1 };
+
   return {
-    page: data.page,
-    writableReviewList: data?._embedded?.queryWriteableReviewsDtoList || [],
-  };
+    writableReviewList,
+    page
+  }
 };
 
-const getWrittenReviewList = async (page = 0, size = 10): Promise<WrittenReviewList> => {
-  const { data } = await axiosInstance.get(`/api/reviews?page=${page}&size=${size}`);
+const getWrittenReviewList = async ({
+  pageParam = 0,
+  size = 5,
+}: { pageParam: number; size: number }): Promise<WrittenReviewList> => {
+  const { data } = await axiosInstance.get(`/api/reviews`, {
+    params: { page: pageParam, size }
+  });
+  const writtenReviewList = data?._embedded?.queryReviewsDtoList || [];
+  const page = data?.page || { number: 0, totalPages: 1 };
+
   return {
-    page: data.page,
-    writtenReviewList: data?._embedded?.queryReviewsDtoList || [],
-  };
+    writtenReviewList,
+    page
+  }
 };
 
 const getReviewDetail = async (reviewId: number): Promise<ReviewDetail> => {

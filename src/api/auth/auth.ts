@@ -31,6 +31,7 @@ export {
 	disconnectSns,
 	getAuthNumber,
 	updateUserInfo,
+	withdrawalUser,
 };
 
 const findUserEmail = async (name: string, phoneNumber: string): Promise<TemporaryUserEmail> => {
@@ -84,6 +85,11 @@ const updateUserInfo = async (body: UpdateUserInfo) => {
 	return await axiosInstance.put('/api/members', body);
 }
 
+const withdrawalUser = async (body: { password: string }) => {
+	return await axiosInstance.delete('/api/members', {
+		data: body,
+	});
+}
 
 const login = async (formData: { email: string; password: string;}) => {
 	const response = await axiosInstance.post('/api/login', formData);

@@ -26,7 +26,7 @@ const getMyPageInfo = async (): Promise<MyPageInfoData> => {
 
 const getCouponList = async (): Promise<CouponData[]> => {
   const { data } = await axiosInstance.get('/api/coupons');
-  return data.couponsPageDto._embedded.queryCouponsDtoList;
+  return data.couponsPageDto?._embedded?.queryCouponsDtoList || [];
 }
 
 const applyCoupon = async (body: { code: string }) => {

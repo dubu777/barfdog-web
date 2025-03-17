@@ -1,9 +1,20 @@
-import * as styles from './DefaultRadio.css';
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import { pointColor } from "@/styles/common.css";
+import {
+  optionLabel,
+  optionLabelCircle,
+  radioContainer,
+  radioInput,
+  radioLabel,
+  radioOptions
+} from "./DefaultRadio.css";
 
 interface DefaultRadioProps {
   id: string;
   value: string | boolean;
-  labelPosition?: 'right' | 'bottom';
+  label?: string;
+  isRequired?: boolean;
+  optionLabelPosition?: 'right' | 'bottom';
   onChange: (value: string) => void;
   options: {
     name: string;
@@ -16,32 +27,41 @@ interface DefaultRadioProps {
 export default function DefaultRadio({
   id,
   value,
-  labelPosition = 'right',
+  label,
+  isRequired = false,
+  optionLabelPosition = 'right',
   onChange,
   options = [],
   className,
   justifyContent
   }: DefaultRadioProps) {
   return (
-    <div className={`${styles.radioContainer({ labelPosition, justifyContent })} ${className || ''}`}>
-      {options.map((option, index) => (
-        <div key={option.value} className={styles.radioOption}>
-          <label htmlFor={`${id}${index}`} className={styles.radioInputCircle({ active: value === option.value })} />
-          <input
-            type='radio'
-            id={`${id}${index}`}
-            name={id}
-            value={option.value}
-            onChange={() => onChange(option.value)}
-            onBlur={() => onChange(option.value)}
-            checked={value === option.value}
-            className={styles.radioInput}
-          />
-          <label htmlFor={`${id}${index}`} className={styles.checkboxLabel({  })}>
-            {option.name}
-          </label>
-        </div>
-      ))}
+    <div>
+      {label &&
+      <DefaultText type='label4' color='gray600' className={radioLabel}>
+        {label} {isRequired && <span className={pointColor}>*</span>}
+      </DefaultText>
+      }
+      <div className={`${radioContainer({ optionLabelPosition, justifyContent })} ${className || ''}`}>
+        {options.map((option, index) => (
+          <div key={option.value} className={radioOptions}>
+            <label htmlFor={`${id}${index}`} className={optionLabelCircle({ active: value === option.value })} />
+            <input
+              type='radio'
+              id={`${id}${index}`}
+              name={id}
+              value={option.value}
+              onChange={() => onChange(option.value)}
+              onBlur={() => onChange(option.value)}
+              checked={value === option.value}
+              className={radioInput}
+            />
+            <label htmlFor={`${id}${index}`} className={optionLabel}>
+              <DefaultText type='label2'>{option.name}</DefaultText>
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

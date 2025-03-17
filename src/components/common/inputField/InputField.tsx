@@ -5,6 +5,7 @@ import React, {
   ChangeEvent,
   useState,
   KeyboardEvent,
+  MouseEvent,
 } from "react";
 import { mergeRefs } from "@/utils";
 import DefaultText from "../defaultText/DefaultText";
@@ -29,6 +30,8 @@ import InputClearIcon from "/public/images/icons/input_clear.svg";
 import VisibilityIcon from "/public/images/icons/visibility.svg";
 import VisibilityOffIcon from "/public/images/icons/visibility_off.svg";
 import { pointColor } from "@/styles/common.css";
+import Button from "@/components/common/button/Button";
+import ErrorIcon from '/public/images/icons/close_small.svg';
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -40,10 +43,11 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   masking?: boolean;
   maskingButton?: boolean;
   confirmButton?: boolean;
-  confirmButtonText?: string;
+  confirmButtonText?: string
   clearButton?: boolean;
   searchButton?: boolean;
-  onChange?: (e: ChangeEvent) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: ChangeEvent) => void;
   onReset?: () => void;
   onSubmit?: () => void;
   className?: string;
@@ -60,7 +64,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       error,
       touched,
       onChange,
-      variants = "box",
+      onBlur,
+      variants = 'box',
       width,
       masking = false,
       maskingButton = false,
@@ -98,13 +103,27 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       }
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && onSubmit) {
-        // enter onSubmit event 적용
-        e.preventDefault();
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>,) => {
+        if (e.key === 'Enter' && onSubmit) {
+          // enter onSubmit event 적용
+          e.preventDefault();
+          onSubmit();
+        }
+    }
+
+    const handleReset = (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if(onReset) {
+        onReset();
+      }
+    }
+
+      const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if(onSubmit) {
         onSubmit();
       }
-    };
+    }
     return (
       <div
         onClick={handlePressInput}
@@ -112,18 +131,15 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         style={{ width: width || "100%" }}
       >
         {/* label 유무에 따라 상단 노출 */}
-        {label && (
-          <DefaultText type="label4" className={labelStyle}>
+        {label &&
+          <DefaultText type='label4' color='gray600' className={labelStyle}>
             {label} {isRequired && <span className={pointColor}>*</span>}
           </DefaultText>
-        )}
-        <div className={inputBoxStyle} style={{ width: width || "100%" }}>
+        }
+        <div className={inputBoxStyle} style={{ width: width || '100%' }}>
           <div
-            className={`${inputWrapStyle} ${inputBaseStyle} ${
-              inputVariants[variants]
-            } ${error ? inputError[variants] : ""} ${
-              disabled ? "disabled" : ""
-            }`}
+            className={`${inputWrapStyle} ${inputBaseStyle} ${inputVariants[variants]} ${error ? inputError[variants] : ''} ${disabled ? 'disabled' : ''}`}
+            style={{ flex: confirmButton ? '1 0 0' : 'unset' }}
           >
             {/* 검색 기능 추가 필요 */}
             {searchButton && (
@@ -141,6 +157,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               onChange={(e) => {
                 onChange?.(e);
               }}
+              onBlur={(e) => {
+                if (onBlur) {
+                  onBlur?.(e);
+                }
+              }}
               onKeyDown={handleKeyDown}
             />
             <div className={rightButtonsStyle}>
@@ -154,26 +175,28 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                 </button>
               )}
               {/* value 리셋 기능 */}
-              {clearButton && (
-                <button onClick={onReset} className={baseButtonStyle}>
-                  <InputClearIcon />
-                </button>
-              )}
+              {clearButton &&
+              <button onClick={handleReset} className={baseButtonStyle}>
+                <InputClearIcon />
+              </button>
+              }
             </div>
           </div>
           {/* 버튼 사이드 confirm 버튼 (인증하기 / 확인 등)*/}
-          {confirmButton && (
-            <button
-              onClick={onSubmit}
-              disabled={disabled}
-              className={confirmButtonStyle}
-            >
-              {confirmButtonText}
-            </button>
-          )}
+          {confirmButton &&
+          <Button
+            variant='outline'
+            onClick={handleSubmit}
+            size='lg'
+            className={confirmButtonStyle}
+          >
+            {confirmButtonText}
+          </Button>
+          }
         </div>
         {error && (
           <div className={inputErrorTextStyle}>
+            <ErrorIcon />
             <DefaultText type="caption" color="red" align="left">
               {error}
             </DefaultText>

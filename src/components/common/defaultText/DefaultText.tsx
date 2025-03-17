@@ -54,12 +54,13 @@ export default function DefaultText({
   const alignStyle = alignStyles[align];
   const underlineStyle = underLine ? underline : "";
   const Tag = tagMap[type] || "span";
+  const blockStyle = blockStyles[inlineBlock ? "true" : "false"];
 
   return (
     <Tag
-      className={`${textStyle} ${colorStyle} ${alignStyle} ${
-        inlineBlock ? blockStyles : ""
-      } ${underlineStyle} ${className || ""}`}
+      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${blockStyle} ${
+        className || ""
+      }`}
       style={style}
     >
       {children}

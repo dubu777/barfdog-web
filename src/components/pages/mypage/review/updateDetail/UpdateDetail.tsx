@@ -1,8 +1,9 @@
 'use client';
-import * as styles from './UpdateDetail.css';
+import { reviewDetailContainer } from "@/components/pages/mypage/review/reviewDetail/ReviewDetail.css";
+import { useBackNavigation } from "@/utils";
 import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
 import { useUpdateReviewDetail } from "@/api/review/mutations/useUpdateReviewDetail";
-import { ReviewType, UpdateReviewDetail } from "@/types";
+import { ReviewDetailItem, ReviewType, UpdateReviewDetail } from "@/types";
 import { useToastStore } from '@/store/useToastStore';
 import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
 
@@ -15,25 +16,26 @@ const UpdateDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const { data } = useGetReviewDetail(reviewId);
   const { mutate } = useUpdateReviewDetail(reviewId);
   const { addToast } = useToastStore();
-  
-  const reviewDetail = {
+  const goBack = useBackNavigation();
+
+  const reviewDetail: ReviewDetailItem = {
     ...data.reviewDto,
     reviewType
   }
 
   const handleSubmit = (body: UpdateReviewDetail) => {
-    // 업데이트 후 뒤로가기 클릭시 리스트 invalidQueries 적용 필요
     mutate(body, {
       onSuccess: () => {
-        addToast('리뷰 수정이 완료되었습니다!', 'success')
+        addToast('리뷰 수정이 완료되었습니다!', 'above-button')
+        goBack();
       },
       onError: () => {
-        addToast('리뷰 수정이 실패했습니다.', 'error')
+        addToast('리뷰 수정이 실패했습니다.', 'above-button')
       }
     })
   }
   return (
-    <section className={styles.reviewDetailContainer}>
+    <section className={reviewDetailContainer}>
       <ReviewForm
         type='update'
         reviewDetail={reviewDetail}

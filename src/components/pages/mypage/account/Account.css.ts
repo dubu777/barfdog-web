@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const accountContainer = style({
-	height: 'calc(100vh - 60px)',
+	minHeight: 'calc(100vh - 60px)',
 	display: 'flex',
 	flexDirection: 'column',
 	background: themeVars.colors.gray.gray50,
@@ -38,7 +38,7 @@ export const accountLinkBox = style({
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'flex-start',
-	padding: '0 20px',
+	padding: '0 20px 20px',
 	background: themeVars.colors.gray.gray0,
 })
 
@@ -91,25 +91,50 @@ export const accountSubmitButton = style({
 	gap: '16px',
 })
 
-export const connectedSnsContainer = style({
+export const accountErrors = style({
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '20px',
-	background: themeVars.backgroundColors.greyF7,
-	padding: '20px',
-	borderRadius: '8px',
+	alignItems: 'flex-start',
+	gap: '5px',
+	marginTop: '8.5px'
+})
+
+export const accountError = style({
+	display: 'flex',
+	alignItems: 'center',
+})
+
+export const connectedSnsContainer = style({
+	background: themeVars.colors.gray.gray50,
+	minHeight: 'calc(100vh - 60px)'
+})
+
+export const emptySnSProvider = style({
+	paddingTop: '86px',
 })
 
 export const connectedSns = style({
 	display: 'flex',
 	alignItems: 'center',
-	justifyContent: 'center',
-	gap: '10px'
+	justifyContent: 'space-between',
+	background: themeVars.colors.gray.gray0,
+	padding: '16px 20px',
 })
 
 export const disconnectSnsSubmit = style({
 	width: '30%',
 	margin: '20px auto 0',
+})
+
+export const connectSnsBottomSheet = style({
+	padding: '11px 20px'
+})
+
+export const connectSnsBox = style({
+	padding: '20px 20px 40px',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '13px'
 })
 
 export const uploadProfile = style({
@@ -150,4 +175,22 @@ export const notificationItem = style({
 	alignItems: 'center',
 	padding: '16px 0',
 	borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,
+})
+
+export const connectSnSAuthContainer = style({
+	padding: '60px 20px 20px',
+	minHeight: 'calc(100vh - 60px)',
+	background: themeVars.colors.gray.gray50,
+})
+
+export const connectSnSAuthTitle = style({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '4px',
+	paddingBottom: '20px',
+	borderBottom: `2px solid ${themeVars.colors.gray.gray900}`,
+})
+
+export const connectSnSAuthForm = style({
+	paddingTop: '20px',
 })

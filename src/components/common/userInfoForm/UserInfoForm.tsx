@@ -155,46 +155,86 @@ const UserInfoForm = <T extends boolean>({
 	},[]);
 
 	// 인증번호 받기
-	const handleGetAuthNumber = useCallback(() => {
-		if (!phoneNumber) return;
+	// const handleGetAuthNumber = useCallback(() => {
+	// 	console.log('phoneNumber', phoneNumber)
+	// 	if (!phoneNumber) return;
+	//
+	// 	mutateAuthNumber(
+	// 		{ phoneNumber: phoneNumber as string },
+	// 		{
+	// 			onSuccess: (data) => {
+	// 				console.log('data', data)
+	// 				// 다이렉트센드 에서 받아오는 데이터 형태로 msg null 값이어야 성공
+	// 				if(data.authNumber && data.responseCode === 200 && data.msg === null) {
+	// 					setAuthNumber(data.authNumber);
+	// 					addToast('인증번호가 발송되었습니다!', 'success');
+	// 					setError('authNumber' as Path<FormValues<T>>, { message: '인증번호를 입력해주세요.' });
+	// 					clearErrors?.('phoneNumber' as Path<FormValues<T>>);
+	// 				}
+	// 			},
+	// 			onError: (errorResponse) => {
+	// 				if (axios.isAxiosError(errorResponse)) {
+	// 					const error = errorResponse.response?.data
+	// 					const errorMessage = error?.errors[0].defaultMessage || '인증번호 발송에 실패했습니다.';
+	// 					setError('phoneNumber' as Path<FormValues<T>>, { message: errorMessage });
+	// 				}
+	// 			}
+	// 		}
+	// 	)
+	// },[watch, mutateAuthNumber, setValue, setError, addToast]);
+const handleGetAuthNumber = () => {
+	console.log('phoneNumber', phoneNumber)
+	if (!phoneNumber) return;
 
-		mutateAuthNumber(
-			{ phoneNumber: phoneNumber as string },
-			{
-				onSuccess: (data) => {
-					console.log('data', data)
-					// 다이렉트센드 에서 받아오는 데이터 형태로 msg null 값이어야 성공
-					if(data.authNumber && data.responseCode === 200 && data.msg === null) {
-						setAuthNumber(data.authNumber);
-						addToast('인증번호가 발송되었습니다!', 'success');
-						setError('authNumber' as Path<FormValues<T>>, { message: '인증번호를 입력해주세요.' });
-						clearErrors?.('phoneNumber' as Path<FormValues<T>>);
-					}
-				},
-				onError: (errorResponse) => {
-					if (axios.isAxiosError(errorResponse)) {
-						const error = errorResponse.response?.data
-						const errorMessage = error?.errors[0].defaultMessage || '인증번호 발송에 실패했습니다.';
-						setError('phoneNumber' as Path<FormValues<T>>, { message: errorMessage });
-					}
+	mutateAuthNumber(
+		{ phoneNumber: phoneNumber as string },
+		{
+			onSuccess: (data) => {
+				console.log('data', data)
+				// 다이렉트센드 에서 받아오는 데이터 형태로 msg null 값이어야 성공
+				if(data.authNumber && data.responseCode === 200 && data.msg === null) {
+					setAuthNumber(data.authNumber);
+					addToast('인증번호가 발송되었습니다!');
+					setError('authNumber' as Path<FormValues<T>>, { message: '인증번호를 입력해주세요.' });
+					clearErrors?.('phoneNumber' as Path<FormValues<T>>);
+				}
+			},
+			onError: (errorResponse) => {
+				if (axios.isAxiosError(errorResponse)) {
+					const error = errorResponse.response?.data
+					const errorMessage = error?.errors[0].defaultMessage || '인증번호 발송에 실패했습니다.';
+					setError('phoneNumber' as Path<FormValues<T>>, { message: errorMessage });
 				}
 			}
-		)
-	},[watch, mutateAuthNumber, setValue, setError, addToast]);
+		}
+	)
+}
 
 	// 인증번호 확인
-	const handleCheckAuthNumber = useCallback(() => {
-		if (!authNumber || !watcherAuthNumber) return;
+	// const handleCheckAuthNumber = useCallback(() => {
+	// 	if (!authNumber || !watcherAuthNumber) return;
+	//
+	// 	// 인증번호 확인 검증은 발급받은 인증번호를 상태값에 저장 후 비교
+	// 	if (watcherAuthNumber === authNumber) {
+	// 		addToast('인증 되었습니다!', 'success');
+	// 		clearErrors?.('authNumber' as Path<FormValues<T>>);
+	// 		setValue('hasCheckedAuthNumber' as Path<FormValues<T>>, true as PathValue<FormValues<T>, Path<FormValues<T>>>);
+	// 	} else {
+	// 		setError('authNumber' as Path<FormValues<T>>, { message: '인증번호를 확인해주세요.' });
+	// 	}
+	// },[watch, authNumber, setError, addToast]);
+const handleCheckAuthNumber = () => {
+	if (!authNumber || !watcherAuthNumber) return;
 
-		// 인증번호 확인 검증은 발급받은 인증번호를 상태값에 저장 후 비교
-		if (watcherAuthNumber === authNumber) {
-			addToast('인증 되었습니다!', 'success');
-			clearErrors?.('authNumber' as Path<FormValues<T>>);
-			setValue('hasCheckedAuthNumber' as Path<FormValues<T>>, true as PathValue<FormValues<T>, Path<FormValues<T>>>);
-		} else {
-			setError('authNumber' as Path<FormValues<T>>, { message: '인증번호를 확인해주세요.' });
-		}
-	},[watch, authNumber, setError, addToast]);
+	// 인증번호 확인 검증은 발급받은 인증번호를 상태값에 저장 후 비교
+	if (watcherAuthNumber === authNumber) {
+		addToast('인증 되었습니다!');
+		clearErrors?.('authNumber' as Path<FormValues<T>>);
+		setValue('hasCheckedAuthNumber' as Path<FormValues<T>>, true as PathValue<FormValues<T>, Path<FormValues<T>>>);
+	} else {
+		setError('authNumber' as Path<FormValues<T>>, { message: '인증번호를 확인해주세요.' });
+	}
+};
 
 	const ErrorMessage = ({ name } : { name: keyof FieldErrors<FormValues<T>> }) =>(
 		errors[name] &&

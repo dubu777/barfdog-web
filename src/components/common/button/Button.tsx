@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import {
   buttonSizes,
   buttonVariants,
@@ -16,7 +17,7 @@ interface ButtonProps {
   disabled?: boolean;
   iconSrc?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   iconPosition?: "left" | "right";
-  onClick?: () => void;
+  onClick?: (() => void) | ((e: MouseEvent<HTMLButtonElement>) => void);
   children: React.ReactNode;
   fullWidth?: boolean;
   width?: string;

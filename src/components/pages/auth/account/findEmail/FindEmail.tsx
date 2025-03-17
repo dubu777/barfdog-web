@@ -24,14 +24,14 @@ const FindEmail = () => {
 			{ name: data.name, phoneNumber: data.phoneNumber },
 			{
 				onSuccess: (data) => {
-					addToast('아이디가 성공적으로 확인되었습니다!', 'success');
+					addToast('아이디가 성공적으로 확인되었습니다!');
 					setTempEmailUserInfo(data);
 					setTimeout(() => {
 						router.push('/account/find-id/result');
 					}, 1000);
 				},
 				onError: () => {
-					addToast('일치하는 정보를 찾을 수 없습니다.', 'error');
+					addToast('일치하는 정보를 찾을 수 없습니다.');
 				},
 			},
 		)

@@ -3,7 +3,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 
 interface ProgressBarProps {
 	progress: number;
-	label: string;
+	label?: string;
 }
 
 const ProgressBar = ({ progress, label }: ProgressBarProps) => {
@@ -11,7 +11,7 @@ const ProgressBar = ({ progress, label }: ProgressBarProps) => {
 		<div className={styles.progressBarContainer}>
 			<div
 				style={{ width: `${progress}%` }}
-				className={styles.progressActive({ progress: progress as 0 || 100 })}
+				className={styles.progressActive({ progress: progress as 0 || 100, label: !!label })}
 			/>
 			{label &&
 				<div

@@ -66,7 +66,7 @@ export const buttonVariants = {
   },
   outline: {
     primary: style({
-      backgroundColor: "transparent",
+      backgroundColor: themeVars.colors.gray.gray0,
       border: `1px solid ${themeVars.colors.red.red}`,
       color: themeVars.colors.red.red,
       cursor: "pointer",

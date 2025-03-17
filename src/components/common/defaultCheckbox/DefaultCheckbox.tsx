@@ -1,5 +1,6 @@
 'use client';
 import { ChangeEvent, forwardRef, ReactNode } from 'react';
+import { textStyles } from "@/components/common/defaultText/DefaultText.css";
 import * as styles from './DefaultCheckbox.css';
 
 interface DefaultCheckboxProps {
@@ -38,7 +39,7 @@ const DefaultCheckbox = forwardRef<HTMLInputElement, DefaultCheckboxProps>(
         className={styles.checkboxStyle({isChecked: value})}
         {...rest}
       />
-      <label htmlFor={id} className={styles.checkboxLabel({isHidden: label === ''})}>
+      <label htmlFor={id} className={`${styles.checkboxLabel({isHidden: label === ''})} ${textStyles.body3}`}>
         {label}
       </label>
     </div>

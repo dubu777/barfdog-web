@@ -1,8 +1,9 @@
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import Notification from "@/components/pages/mypage/account/notification/Notification";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { prefetchGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
-import Notification from "@/components/pages/mypage/account/notification/Notification";
+import { ErrorBoundary } from "react-error-boundary";
+import { Suspense } from "react";
+
 
 export default async function NotificationPage() {
 	const queryClient = new QueryClient();

@@ -30,7 +30,7 @@ const FindPassword = () => {
 			{
 				onSuccess:() => {
 					console.log('onSuccess data', data)
-					addToast('임시비밀번호가 성공적으로 발급되었습니다!', 'success');
+					addToast('임시비밀번호가 성공적으로 발급되었습니다!');
 					setTempPwUserInfo(body);
 
 					setTimeout(() => {
@@ -38,7 +38,7 @@ const FindPassword = () => {
 					}, 1000);
 				},
 				onError: () => {
-					addToast('일치하는 정보를 찾을 수 없습니다.', 'error')
+					addToast('일치하는 정보를 찾을 수 없습니다.');
 				}
 			}
 		)

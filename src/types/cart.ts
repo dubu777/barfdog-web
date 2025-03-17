@@ -25,6 +25,7 @@ interface CartItemOptionDto {
   name: string;
   optionPrice: number;
   amount: number;
+  itemOptionId?: number;
 }
 
 interface BasketDto {

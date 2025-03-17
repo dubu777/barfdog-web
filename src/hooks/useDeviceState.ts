@@ -26,9 +26,9 @@ export default function useDeviceState(): DeviceState {
   // 모바일 디바이스 여부 확인 함수
   const checkIsMobileDevice = (): boolean => {
     if ("userAgentData" in navigator) {
-      return (navigator as any).userAgentData.mobile || false;
+      return (navigator as any).userAgentData.mobile || navigator.maxTouchPoints > 0;
     }
-    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || navigator.maxTouchPoints > 0;
   };
 
   // 디바이스 상태 업데이트 함수
