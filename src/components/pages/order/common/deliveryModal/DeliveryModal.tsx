@@ -3,19 +3,18 @@ import { useMemo, useState } from "react";
 import CloseIcon from "/public/images/icons/close.svg";
 import BackIcon from "/public/images/icons/chevron-left.svg";
 
-import DefaultModalBackground from "../../../../common/defaultModalBackground/DefaultModalBackground";
 import { DeliveryDto } from "@/types";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
 import AddressList from "./addressList/AddressList";
-import AddAddressForm from "./addAddressForm/AddAddressForm";
-import EditAddressForm from "./editAddressForm/EditAddressForm";
 import { AddressResponse } from "@/types/delivery";
+import AddressForm from "./addressForm/AddressForm";
+import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 
 interface DeliveryModalProps {
-  addressData: AddressResponse[]
+  addressData: AddressResponse[];
   defaultAddressId: number | null;
   isVisible: boolean;
   onClose: () => void;
@@ -35,9 +34,8 @@ export default function DeliveryModal({
   setBackupDeliveryDto,
   setDefaultAddressId,
 }: DeliveryModalProps) {
+  console.log("addressData", addressData);
 
-  console.log('addressData',addressData);
-  
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
@@ -62,8 +60,10 @@ export default function DeliveryModal({
     onClose();
   };
 
-  // 배송지 삭제
-  const handleDeleteAddress = () => {};
+  const handleClose = () => {
+    setViewMode("list");
+    onClose();
+  };
 
   // 배송지 모달 헤더 생성
   const getHeaderProps = (mode: ViewMode) => {
@@ -124,31 +124,29 @@ export default function DeliveryModal({
   const headerProps = useMemo(() => getHeaderProps(viewMode), [viewMode]);
 
   return (
-    <DefaultModalBackground isVisible={isVisible} onClose={onClose}>
+    <ModalBackground isVisible={isVisible} onClose={handleClose}>
       <div
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}
       >
         <NewHeader {...headerProps} />
-        {viewMode === "list" && (
+        {viewMode === "list" ? (
           <AddressList
             addressData={addressData}
             goToAddAddress={goToAddAddress}
             goToEditAddress={goToEditAddress}
             onSelectAddress={handleSelectAddress}
-            onDeleteAddress={handleDeleteAddress}
           />
-        )}
-        {viewMode === "add" && <AddAddressForm onBack={goToList} setDefaultAddressId={setDefaultAddressId}/>}
-        {viewMode === "edit" && selectedAddress && (
-          <EditAddressForm
-            address={selectedAddress}
+        ) : (
+          <AddressForm
+            mode={viewMode}
+            address={viewMode === "edit" ? selectedAddress! : undefined}
             defaultAddressId={defaultAddressId}
             onBack={goToList}
             setDefaultAddressId={setDefaultAddressId}
           />
         )}
       </div>
-    </DefaultModalBackground>
+    </ModalBackground>
   );
 }

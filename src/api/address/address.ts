@@ -1,7 +1,13 @@
 import { AddressRequest, AddressResponse } from "@/types/delivery";
 import axiosInstance from "../axiosInstance";
 
-export { getAddressList, applyAddress, updateAddress, deleteAddress };
+export {
+  getAddressList,
+  createAddress,
+  updateAddress,
+  deleteAddress,
+  applyDefaultAddress,
+};
 
 // 주소 리스트 조회
 const getAddressList = async (): Promise<AddressResponse[]> => {
@@ -11,7 +17,7 @@ const getAddressList = async (): Promise<AddressResponse[]> => {
 };
 
 // 주소 등록
-const applyAddress = async (body: AddressRequest): Promise<any> => {
+const createAddress = async (body: AddressRequest): Promise<any> => {
   const { data } = await axiosInstance.post("/api/address", body);
 
   return data;
@@ -33,6 +39,15 @@ const updateAddress = async ({
 // 주소 삭제
 const deleteAddress = async (deliveryId: number): Promise<any> => {
   const { data } = await axiosInstance.delete(`/api/address/${deliveryId}`);
+
+  return data;
+};
+
+// 기본 배송지 등록
+const applyDefaultAddress = async (deliveryId: number): Promise<any> => {
+  const { data } = await axiosInstance.post(
+    `/api/address/default/${deliveryId}`
+  );
 
   return data;
 };

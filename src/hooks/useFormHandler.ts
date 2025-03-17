@@ -5,6 +5,7 @@ import * as yup from "yup";
 export function useFormHandler<T extends FieldValues>(
   schema: yup.ObjectSchema<any>,
   defaultValues: DefaultValues<T>,
+  mode: "onChange" | "onBlur"  = "onChange",
 ) {
   const {
     register,
@@ -20,7 +21,7 @@ export function useFormHandler<T extends FieldValues>(
   } = useForm<T>({
     resolver: yupResolver(schema),
     defaultValues,
-    mode: "onChange",
+    mode,
   });
 
   return {

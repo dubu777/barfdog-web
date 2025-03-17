@@ -1,15 +1,13 @@
-import {ForwardedRef} from 'react';
+import { Ref, MutableRefObject } from "react";
 
-function mergeRefs<T>(...refs: ForwardedRef<T>[]) {
-  return (node: T) => {
+export function mergeRefs<T>(...refs: (Ref<T> | undefined)[]): (instance: T | null) => void {
+  return (instance: T | null) => {
     refs.forEach(ref => {
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
+      if (typeof ref === "function") {
+        ref(instance);
+      } else if (ref && "current" in ref) {
+        (ref as MutableRefObject<T | null>).current = instance;
       }
     });
   };
 }
-
-export {mergeRefs};

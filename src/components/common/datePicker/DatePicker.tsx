@@ -39,7 +39,7 @@ const DatePickerComponent = ({
 			type='button'
 			onClick={onClick}
 			value={value}
-			variants='fillBox'
+			variants='box'
 			label={label || '생년월일'}
 			isRequired
 			ref={ref}

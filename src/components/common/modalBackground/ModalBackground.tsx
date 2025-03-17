@@ -1,15 +1,15 @@
 import modalScroll from "@/utils/modal";
-import * as styles from "./DefaultModalBackground.css";
+import * as styles from "./ModalBackground.css";
 import ModalPortal from "./ModalPortal";
 import { useEffect } from "react";
 
-interface DefaultModalBackgroundProps {
+interface ModalBackgroundProps {
   children: React.ReactNode;
   isVisible: boolean;
   onClose: () => void;
 }
 
-export default function DefaultModalBackground({ children, isVisible, onClose }: DefaultModalBackgroundProps) {
+export default function ModalBackground({ children, isVisible, onClose }: ModalBackgroundProps) {
   const { preventScroll, allowScroll } = modalScroll();
 
   useEffect(() => {

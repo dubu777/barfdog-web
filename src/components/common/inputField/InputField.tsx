@@ -99,16 +99,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (isMasked && e.key === "Backspace") {
-        // 비밀번호 type -> input 모두선택 후 backspace 방지
-        if (onChange) {
-          onChange({
-            target: { value: (props?.value as string).slice(0, -1) },
-          } as React.ChangeEvent<HTMLInputElement>);
-        }
-        e.preventDefault();
-      }
-
       if (e.key === "Enter" && onSubmit) {
         // enter onSubmit event 적용
         e.preventDefault();
@@ -182,7 +172,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             </button>
           )}
         </div>
-        {touched && error && (
+        {error && (
           <div className={inputErrorTextStyle}>
             <DefaultText type="caption" color="red" align="left">
               {error}

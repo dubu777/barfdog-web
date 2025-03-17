@@ -35,11 +35,6 @@ export const inputVariants = {
   box: style({
     borderRadius: '8px',
     border: `1px solid ${themeVars.colors.gray.gray200}`,
-    backgroundColor: 'transparent',
-  }),
-  fillBox: style({
-    borderRadius: '8px',
-    border: `1px solid ${themeVars.colors.gray.gray200}`,
     backgroundColor: themeVars.colors.gray.gray0,
     selectors: {
       '&.disabled': {
@@ -60,9 +55,6 @@ export const inputVariants = {
 
 export const inputError = {
   box: style({
-    border: `1px solid ${themeVars.colors.red.red}`,
-  }),
-  fillBox: style({
     border: `1px solid ${themeVars.colors.red.red}`,
   }),
   line: style({

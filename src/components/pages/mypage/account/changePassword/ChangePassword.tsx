@@ -73,7 +73,7 @@ const ChangePasswordComponent = () => {
 						<InputField
 							{...field}
 							type='password'
-							variants='fillBox'
+							variants='box'
 							placeholder='기존 비밀번호를 입력해주세요.'
 							label='기존 비밀번호'
 							error={errors?.password?.message}
@@ -92,7 +92,7 @@ const ChangePasswordComponent = () => {
 						<InputField
 							{...field}
 							type='password'
-							variants='fillBox'
+							variants='box'
 							placeholder='새 비밀번호를 입력해주세요.'
 							label='새 비밀번호'
 							error={errors?.newPassword?.message}
@@ -111,7 +111,7 @@ const ChangePasswordComponent = () => {
 						<InputField
 							{...field}
 							type='password'
-							variants='fillBox'
+							variants='box'
 							placeholder='새 비밀번호를 확인을 입력해주세요.'
 							label='새 비밀번호 확인'
 							error={errors?.newPasswordConfirm?.message}

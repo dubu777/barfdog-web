@@ -4,19 +4,22 @@ import { DeliveryDto } from "@/types";
 import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
 import { AddressResponse } from "@/types/delivery";
+import { useDeleteAddress } from "@/api/address/mutations/useDeleteAddress";
+import { useState } from "react";
+import Modal from "@/components/common/modal/Modal";
+import useModal from "@/hooks/useModal";
 
 interface AddressCardProps {
   address: AddressResponse;
   onSelectAddress: (deliveryDto: DeliveryDto) => void;
   goToEditAddress: (address: AddressResponse) => void;
-  onDeleteAddress: (addressId: number) => void;
 }
 export default function AddressCard({
   address,
   onSelectAddress,
   goToEditAddress,
-  onDeleteAddress,
 }: AddressCardProps) {
+  const { isOpen, onClose, onToggle } = useModal();
   const isDefaultAddress = address.default;
   const handleSelect = () => {
     onSelectAddress({
@@ -28,9 +31,17 @@ export default function AddressCard({
       request: address.request,
     });
   };
-  const handleDelete = () => {
-    // 삭제 코드
+  const { mutate: deleteAddress } = useDeleteAddress();
+
+  const handleDeleteModal = () => {
+    onToggle();
   };
+
+  const confirmDelete = () => {
+    deleteAddress(address.id);
+    onClose();
+  };
+
   return (
     <div
       className={styles.addressCardContainer({
@@ -57,7 +68,7 @@ export default function AddressCard({
       <div className={styles.buttonWrapper}>
         <div className={styles.leftButtonContainer}>
           {!isDefaultAddress && (
-            <Button type="assistive" variant="text" onClick={handleDelete}>
+            <Button type="assistive" variant="text" onClick={handleDeleteModal}>
               <DefaultText type="label4" color="gray600" underLine>
                 삭제
               </DefaultText>
@@ -73,18 +84,26 @@ export default function AddressCard({
           >
             수정
           </Button>
-          {!isDefaultAddress && (
-            <Button
-              type="primary"
-              variant="solid"
-              size="sm"
-              onClick={handleSelect}
-            >
-              선택
-            </Button>
-          )}
+          <Button
+            type="primary"
+            variant="solid"
+            size="sm"
+            onClick={handleSelect}
+          >
+            선택
+          </Button>
         </div>
       </div>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        title="배송지 삭제"
+        content="배송지를 삭제하시겠습니까?"
+        confirmText="삭제"
+        cancelText="취소"
+        onConfirm={confirmDelete}
+        onCancel={() => onClose()}
+      />
     </div>
   );
 }

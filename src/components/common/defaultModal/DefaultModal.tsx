@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import CloseButton from "/public/images/icons/close-black.png";
 import Image from "next/image";
-import DefaultModalBackground from "../defaultModalBackground/DefaultModalBackground";
+import ModalBackground from "../modalBackground/ModalBackground";
 
 interface DefaultModalProps {
   children: ReactNode;
@@ -35,7 +35,7 @@ export default function DefaultModal({
   onClickExtraButton,
 }: DefaultModalProps) {
   return (
-    <DefaultModalBackground isVisible={isVisible} onClose={onClose}>
+    <ModalBackground isVisible={isVisible} onClose={onClose}>
       <div
         className={styles.modalContainer({ size, scroll })}
         onClick={(e) => e.stopPropagation()}
@@ -68,6 +68,6 @@ export default function DefaultModal({
           </DefaultButton>
         )}
       </div>
-    </DefaultModalBackground>
+    </ModalBackground>
   );
 }
