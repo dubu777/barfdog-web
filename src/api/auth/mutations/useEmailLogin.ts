@@ -1,7 +1,7 @@
 import { UseMutationCustomOptions } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@/api/auth/auth";
-import { setCookie } from "@/utils/cookie";
+import { setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";

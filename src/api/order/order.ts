@@ -17,7 +17,7 @@ import {
   MergeOrderAndRecipe,
   SubscriptionOrderData,
 } from "@/types";
-import {getCookie} from "@/utils/cookie";
+import {getCookie} from "@/utils/auth/cookie";
 
 export {
   getOrderDetail,
@@ -105,7 +105,7 @@ const failSubscriptionPayment = async (orderId: number): Promise<any> => {
 const getGeneralOrder = async (
   body: GeneralOrderSheetRequest
 ): Promise<GeneralOrderSheetResponse> => {
-  const alliance = await getCookie('alliance');
+  const alliance = getCookie('alliance');
   const { data } = await axiosInstance.post(`/api/orders/sheet/general?alliance=${alliance || ''}`, body);
 
   return data;

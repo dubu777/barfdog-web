@@ -4,9 +4,10 @@ import Button from "@/components/common/button/Button";
 import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
 import { useRouter } from "next/navigation";
 import * as styles from "./Test.css";
-import { deleteCookie, getCookie, setCookie } from "@/utils/cookie";
+import { deleteCookie, getCookie, setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import axiosInstance, { authAxios } from "@/api/axiosInstance";
+import { isLoggedIn } from "@/utils/auth/isLoggedIn";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -64,6 +65,11 @@ export default function GeneralShopTest() {
       console.error("API 호출 중 에러 발생:", error);
     }
   };
+
+  const handleIsLoggedIn = () => {
+    console.log('로그인 여부 함수 호출', isLoggedIn());
+    
+  }
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
@@ -71,6 +77,7 @@ export default function GeneralShopTest() {
       <Button onClick={handleDeleteCookie}>토큰 지우기</Button>
       <Button onClick={handleTest}>토큰 만료 후 재발급 테스트</Button>
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
+      <Button onClick={handleIsLoggedIn}>로그인 여부 테스트</Button>
     </div>
   );
 }

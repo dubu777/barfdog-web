@@ -1,7 +1,7 @@
 import * as styles from "./DeliveryModal.css";
 import { useMemo, useState } from "react";
-import CloseIcon from "/public/images/icons/close.svg";
-import BackIcon from "/public/images/icons/chevron-left.svg";
+import CloseIcon from "/public/images/header/close.svg";
+import BackIcon from "/public/images/header/chevron-left.svg";
 
 import { DeliveryDto } from "@/types";
 import DefaultText from "@/components/common/defaultText/DefaultText";

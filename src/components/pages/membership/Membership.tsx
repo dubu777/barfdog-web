@@ -1,7 +1,7 @@
 'use client';
 import * as styles from './Membership.css';
 import Image from "next/image";
-import CloseButton from '/public/images/icons/close.svg';
+import CloseButton from '/public/images/header/close.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useBackNavigation } from "@/utils";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";

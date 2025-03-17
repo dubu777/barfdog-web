@@ -1,7 +1,7 @@
 // src/api/axiosClient.ts
 
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { getCookie, setCookie } from '@/utils/cookie';
+import { getCookie, setCookie } from '@/utils/auth/cookie';
 import { AUTH_CONFIG } from "@/constants/auth";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {

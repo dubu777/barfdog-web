@@ -1,7 +1,7 @@
 import DaumPostcodeEmbed, { Address } from 'react-daum-postcode';
 import * as styles from "./AddressSearchModal.css";
 import SvgIcon from "../svgIcon/SvgIcon";
-import CloseIcon from "/public/images/icons/close.svg";
+import CloseIcon from "/public/images/header/close.svg";
 import ModalBackground from '../modalBackground/ModalBackground';
 
 

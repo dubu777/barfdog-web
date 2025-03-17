@@ -5,7 +5,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { ORDER_MESSAGE } from "@/constants";
 import * as styles from "./CouponSelector.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import ArrowIcon from "/public/images/icons/chevron-right.svg";
+import ArrowIcon from "/public/images/header/chevron-right.svg";
 
 interface CouponSelectorProps {
   coupons: Coupon[];

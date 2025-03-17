@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { SnSProvider } from '@/types';
-import { setCookie } from "@/utils/cookie";
+import { setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 
 interface LoginRedirectProps {

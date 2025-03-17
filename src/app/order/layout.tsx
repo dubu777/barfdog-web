@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import Header from "@/components/layout/header/Header";
+import NewHeader from "@/components/layout/newHeader/NewHeader";
 
 interface OrderLayoutProps { 
   children: ReactNode
@@ -7,7 +7,11 @@ interface OrderLayoutProps {
 export default function OrderLayout({children}: OrderLayoutProps) {
   return (
     <>
-      <Header type="backButtonOnly" />
+      <NewHeader
+        showCartButton
+        showMypageButton
+        centerTitle="결제"
+      />
       {children}
     </>
   );

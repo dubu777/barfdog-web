@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import * as styles from "./MyPageMenu.css";
 import Link from "next/link";
 import Image from "next/image";
-import { deleteCookie, getCookie } from "@/utils/cookie";
+import { deleteCookie, getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 
 interface MyPageMenuType {
