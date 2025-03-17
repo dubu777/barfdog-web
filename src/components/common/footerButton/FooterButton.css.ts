@@ -13,6 +13,6 @@ export const footerButtonContainer = style({
   gap: "10px",
   zIndex: 20,
   backgroundColor: themeVars.colors.gray.gray0,
-  padding: "20px 40px",
+  padding: "20px 20px",
   borderTop: `1px solid ${themeVars.colors.gray.gray200}`,
 });

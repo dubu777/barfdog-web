@@ -1,7 +1,6 @@
 import { themeVars } from '@/styles/theme.css';
 import { style } from '@vanilla-extract/css';
 
-// Typography styles
 export const textStyles = {
   display1: style({
     fontWeight: themeVars.typography.display.display1.fontWeight,
