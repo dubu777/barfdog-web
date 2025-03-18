@@ -12,6 +12,8 @@ interface AuthStore {
   setTempEmailUserInfo: (tempEmailUserInfo: TemporaryUserEmail) => void;
   tempPwUserInfo: TemporaryPassword | null;
   setTempPwUserInfo: (tempPwUserInfo: TemporaryPassword) => void;
+  clientLoggedIn: boolean | null;
+  setClientLoggedIn: (loggedIn: boolean | null) => void;
 }
 
 
@@ -39,4 +41,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
     phoneNumber: "",
   },
   setTempPwUserInfo: (tempPwUserInfo) => set({ tempPwUserInfo }),
+  clientLoggedIn: null,
+  setClientLoggedIn: (loggedIn) => set({ clientLoggedIn: loggedIn }),
 }));

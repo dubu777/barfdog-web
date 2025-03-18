@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import * as styles from "./NewHeader.css";
 import BackIcon from "/public/images/header/chevron-left.svg";
 import CloseIcon from "/public/images/header/close.svg";
@@ -7,8 +8,9 @@ import MypageIcon from "/public/images/header/mypage.svg";
 import CartIcon from "/public/images/header/cart.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import Link from "next/link";
 import { isLoggedIn } from "@/utils/auth/isLoggedIn";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useEffect } from "react";
 
 interface NewHeaderProps {
   leftElement?: React.ReactNode;
@@ -39,8 +41,14 @@ export default function NewHeader({
   showMypageButton,
   showCartButton,
 }: NewHeaderProps) {
+  const clientLoggedIn = useAuthStore((state) => state.clientLoggedIn);
+  const setClientLoggedIn = useAuthStore((state) => state.setClientLoggedIn);
 
-  const mypageHref = isLoggedIn() ? "/mypage" : "/login";
+  useEffect(() => {
+    setClientLoggedIn(isLoggedIn());
+  }, [setClientLoggedIn]);
+
+  const mypageHref = clientLoggedIn ? "/mypage" : "/login";
 
   return (
     <header className={styles.headerContainer} style={style}>
