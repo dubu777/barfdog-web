@@ -12,7 +12,6 @@ interface DefaultTextProps {
   color?: keyof typeof fontColors;
   align?: "left" | "center" | "right";
   children: React.ReactNode;
-  inlineBlock?: boolean;
   block?: boolean;
   underLine?: boolean;
   className?: string;
@@ -45,7 +44,6 @@ export default function DefaultText({
   color = "gray900",
   align = "left",
   children,
-  inlineBlock = false,
   block = false,
   underLine = false,
   className,
@@ -56,9 +54,7 @@ export default function DefaultText({
   const alignStyle = alignStyles[align];
   const underlineStyle = underLine ? underline : "";
   const Tag = tagMap[type] || "span";
-  const blockStyle = blockStyles[inlineBlock ? "true" : "false"];
-  // block prop이 true일 경우에만 display: block 스타일을 생성
-  // const blockStyle = block ? blockStyles.true : "";
+  const blockStyle = block ? blockStyles.true : "";
 
   return (
     <Tag

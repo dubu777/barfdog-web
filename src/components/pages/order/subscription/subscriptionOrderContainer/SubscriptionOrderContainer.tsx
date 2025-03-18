@@ -28,7 +28,6 @@ import { useRouter } from "next/navigation";
 import OrderSummary from "../../common/orderSummary/OrderSummary";
 import RewardUsage from "../../common/reward/RewardUsage";
 import SubscriptionOrderItemList from "../subscriptionOrderItemList/SubscriptionOrderItemList";
-import { useOrderForm } from "@/hooks/useOrderForm";
 import {
   defaultOrderValues,
   getOrderSchema,
@@ -61,9 +60,9 @@ export default function SubscriptionOrderContainer({
 }: SubscriptionOrderContainerProps) {
   const router = useRouter();
   // 상태관리 ------>
-  const { getRequestBody } = useOrderStore();
-  const { maxAvailableReward } = useRewardStore();
-  const { paymentPrice } = useDiscountStore();
+  const getRequestBody = useOrderStore((state) => state.getRequestBody);
+  const maxAvailableReward = useRewardStore((state) => state.maxAvailableReward);
+  const paymentPrice = useDiscountStore((state) => state.paymentPrice);
   // <------- 상태관리
 
     // 서버 호출 react query ------->

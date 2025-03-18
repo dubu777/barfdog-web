@@ -32,6 +32,7 @@ export {
 	getAuthNumber,
 	updateUserInfo,
 	withdrawalUser,
+	logout,
 };
 
 const findUserEmail = async (name: string, phoneNumber: string): Promise<TemporaryUserEmail> => {
@@ -98,6 +99,11 @@ const login = async (formData: { email: string; password: string;}) => {
 	return response;
 }
 
+const logout = async () => {
+	const response = await axiosInstance.get('/api/logout');
+	
+	return response;
+}
 
 // 네이버 토큰 발급
 const getAccessTokenByNaver = async (code: string) => {

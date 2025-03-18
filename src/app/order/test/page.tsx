@@ -8,11 +8,12 @@ import { deleteCookie, getCookie, setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import axiosInstance, { authAxios } from "@/api/axiosInstance";
 import { isLoggedIn } from "@/utils/auth/isLoggedIn";
+import { useLogout } from "@/api/auth/mutations/useLogout";
 
 export default function GeneralShopTest() {
   const router = useRouter();
   const { setOrderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
-
+  const { mutate: logout } = useLogout();
   const baseURL = process.env.NEXT_PUBLIC_API_URL_DEV;
 
   const orderItemListData = [
@@ -70,6 +71,18 @@ export default function GeneralShopTest() {
     console.log('로그인 여부 함수 호출', isLoggedIn());
     
   }
+  const handleLogout = () => {
+    logout(undefined, {
+      onSuccess: () => {
+        deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+        deleteCookie(AUTH_CONFIG.REFRESH_TOKEN_COOKIE);
+        window.location.reload();
+      },
+      onError: (error) => {
+        console.error("Logout error", error);
+      },
+    });
+  };
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
@@ -78,6 +91,7 @@ export default function GeneralShopTest() {
       <Button onClick={handleTest}>토큰 만료 후 재발급 테스트</Button>
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleIsLoggedIn}>로그인 여부 테스트</Button>
+      <Button onClick={handleLogout}>로그아웃 테스트</Button>
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { orderCalculation } from "@/utils/order/orderCalculation";
 import * as styles from "../../OrderSheetCommon.css";
 import { ORDER_TYPE } from "@/constants";
 import { GeneralOrderItem, OrderType } from "@/types";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
 import { useEffect, useMemo } from "react";
 import { useRewardStore } from "@/store/order/useRewardStore";
@@ -36,7 +35,8 @@ export default function OrderSummary({
 }: OrderSummaryPropsProps) {
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
     useRewardStore();
-  const { generalOrderBody, subscriptionOrderBody } = useOrderStore();
+  const generalOrderBody = useOrderStore(state => state.generalOrderBody);
+  const subscriptionOrderBody = useOrderStore(state => state.subscriptionOrderBody);
   const {
     setPaymentPrice,
     setDeliveryPrice,
@@ -45,7 +45,7 @@ export default function OrderSummary({
     setMaxAvailableDiscount,
     setDiscountPlan,
   } = useDiscountStore();
-  const { isBundleDelivery } = useDeliveryStore();
+  const isBundleDelivery = useDeliveryStore(state => state.isBundleDelivery);
 
   const calculation = useMemo(() => {
     return orderCalculation({

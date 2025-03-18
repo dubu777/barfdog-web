@@ -12,9 +12,9 @@ import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 export function useUpdateSubscriptionOrderBody(
   subscriptionOrderSheetData: SubscriptionOrderSheetResponse,
 ) {
-  const { updateOrderBody } = useOrderStore();
-  const { setDeliveryDto } = useDeliveryStore();
-  const { setUserTotalReward } = useRewardStore();
+  const updateOrderBody = useOrderStore(state => state.updateOrderBody);
+  const setDeliveryDto = useDeliveryStore(state => state.setDeliveryDto);
+  const setUserTotalReward = useRewardStore(state => state.setUserTotalReward);
   const customerUid = generateCustomerUid();
 
   useEffect(() => {

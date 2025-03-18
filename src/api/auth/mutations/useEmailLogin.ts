@@ -20,6 +20,7 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 					password: formData.password,
 				});
 
+				// const token = result.headers.authorization.split(" ")[1];
 				const token = result.headers.authorization.split(" ")[1];
 				const data = result.data;
 

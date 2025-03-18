@@ -112,7 +112,7 @@ axiosInstance.interceptors.response.use(
       try {
         // 액세스 토큰 재발급 요청 (/api/refresh)
         // const { data } = await authAxios.get('/api/refresh');
-        const { data } = await authAxios.get(`${baseURL}/api/refresh`);
+        const { data } = await authAxios.get(`/api/refresh`);
         console.log('새 액세스 토큰 발급:', data);
         
         const newToken: string = data.accessToken;

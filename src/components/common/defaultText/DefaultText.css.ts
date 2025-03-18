@@ -136,13 +136,8 @@ export const alignStyles = {
 };
 
 export const blockStyles = {
-  true: style({ display: 'inline-block' }),
-  false: style({ display: 'block' }),
+  true: style({ display: 'block' }),
 }
-
-// export const blockStyles = {
-//   true: style({ display: 'block' }),
-// }
 
 export const underline = style({
   textDecoration: "underline",

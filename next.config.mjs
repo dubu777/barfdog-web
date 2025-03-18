@@ -20,7 +20,7 @@ const nextConfig = {
     };
   },
   images: {
-    domains: ['localhost', 'www.barfdogserver.com', 'dev.barfdogserver.com'],
+    domains: ['localhost', 'www.barfdogserver.com', 'dev.barfdogserver.com', "3.35.56.144" ],
     remotePatterns: [
       {
         protocol: 'https',
