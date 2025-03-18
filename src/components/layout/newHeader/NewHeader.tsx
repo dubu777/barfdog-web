@@ -5,7 +5,6 @@ import BackIcon from "/public/images/header/chevron-left.svg";
 import CloseIcon from "/public/images/header/close.svg";
 import MypageIcon from "/public/images/header/mypage.svg";
 import CartIcon from "/public/images/header/cart.svg";
-import { useRouter } from "next/navigation";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Link from "next/link";
@@ -19,6 +18,7 @@ interface NewHeaderProps {
   centerTitle?: string;
   style?: React.CSSProperties;
   onClose?: () => void;
+  onBack?: () => void;
   showBackButton?: boolean;
   showCloseButton?: boolean;
   showMypageButton?: boolean;
@@ -33,16 +33,12 @@ export default function NewHeader({
   centerTitle,
   style,
   onClose,
+  onBack,
   showBackButton,
   showCloseButton,
   showMypageButton,
   showCartButton,
 }: NewHeaderProps) {
-  const router = useRouter();
-
-  const handleBack = () => {
-    router.back();
-  };
 
   const mypageHref = isLoggedIn() ? "/mypage" : "/login";
 
@@ -55,7 +51,7 @@ export default function NewHeader({
             src={BackIcon}
             size={24}
             color="gray900"
-            onClick={handleBack}
+            onClick={onBack}
           />
         )}
         <DefaultText type="title4">{leftTitle}</DefaultText>

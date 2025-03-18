@@ -70,51 +70,21 @@ export default function DeliveryModal({
     switch (mode) {
       case "list":
         return {
-          centerElement: (
-            <DefaultText type="title4" style={{ lineHeight: 0 }}>
-              배송지 변경
-            </DefaultText>
-          ),
-          rightElement: (
-            <SvgIcon
-              src={CloseIcon}
-              size={24}
-              color="gray900"
-              onClick={onClose}
-            />
-          ),
+          centerTitle: "배송지 변경",
+          showCloseButton: true,
+          onClose: handleClose,
         };
       case "add":
         return {
-          leftElement: (
-            <SvgIcon
-              src={BackIcon}
-              size={24}
-              color="gray900"
-              onClick={goToList}
-            />
-          ),
-          centerElement: (
-            <DefaultText type="title4" style={{ lineHeight: 0 }}>
-              배송지 추가
-            </DefaultText>
-          ),
+          centerTitle: "배송지 추가",
+          showBackButton: true,
+          onBack: goToList,
         };
       case "edit":
         return {
-          leftElement: (
-            <SvgIcon
-              src={BackIcon}
-              size={24}
-              color="gray900"
-              onClick={goToList}
-            />
-          ),
-          centerElement: (
-            <DefaultText type="title4" style={{ lineHeight: 0 }}>
-              배송지 수정
-            </DefaultText>
-          ),
+          centerTitle: "배송지 수정",
+          showBackButton: true,
+          onBack: goToList,
         };
       default:
         return {};

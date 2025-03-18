@@ -2,15 +2,13 @@
 
 import * as styles from "./DeliveryAddress.css";
 import useModal from "@/hooks/useModal";
-import { OrderType } from "@/types";
-import { Suspense, useEffect } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { useEffect } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import Chips from "@/components/common/chips/Chips";
-import DeliveryModal from "../deliveryModal/DeliveryModal";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
+import DeliveryModal from "./deliveryModal/DeliveryModal";
 
 interface DeliveryAddressProps {}
 

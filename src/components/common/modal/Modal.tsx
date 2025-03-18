@@ -57,7 +57,6 @@ export default function Modal({
       };
     }, [buttonType]);
 
-  // 모달이 닫혀 있으면 아무것도 렌더링하지 않음
   if (!isOpen) return null;
 
   return (
