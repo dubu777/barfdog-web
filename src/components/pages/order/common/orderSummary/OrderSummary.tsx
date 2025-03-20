@@ -13,6 +13,7 @@ import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import OrderSummaryRow from "./orderSummaryRow/OrderSummaryRow";
 import Divider from "@/components/common/divider/Divider";
+import { useCouponStore } from "@/store/order/useCouponStore";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
@@ -35,12 +36,13 @@ export default function OrderSummary({
 }: OrderSummaryPropsProps) {
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
     useRewardStore();
-  const generalOrderBody = useOrderStore(state => state.generalOrderBody);
+    const appliedCoupon = useCouponStore(state => state.appliedCoupon)
   const subscriptionOrderBody = useOrderStore(state => state.subscriptionOrderBody);
+  console.log('subscriptionOrderBody', subscriptionOrderBody);
+  
   const {
     setPaymentPrice,
     setDeliveryPrice,
-    setDiscountCoupon,
     setDiscountTotal,
     setMaxAvailableDiscount,
     setDiscountPlan,
@@ -50,7 +52,6 @@ export default function OrderSummary({
   const calculation = useMemo(() => {
     return orderCalculation({
       orderType,
-      generalOrderBody,
       subscriptionOrderBody,
       isBundleDelivery,
       userTotalReward,
@@ -59,11 +60,11 @@ export default function OrderSummary({
       freeCondition,
       deliveryPrice,
       orderItemDtoList,
+      discountCouponAmount: appliedCoupon?.discountAmount,
       plan,
     });
   }, [
     orderType,
-    generalOrderBody,
     subscriptionOrderBody,
     isBundleDelivery,
     userTotalReward,
@@ -72,6 +73,7 @@ export default function OrderSummary({
     freeCondition,
     deliveryPrice,
     orderItemDtoList,
+    appliedCoupon,
     plan,
   ]);
 
@@ -80,7 +82,6 @@ export default function OrderSummary({
     deliveryFee,
     gradeDiscount,
     planDiscount,
-    totalCouponDiscount,
     totalDiscount,
     totalDiscountWithoutPlan,
     maxAvailableDiscount,
@@ -91,7 +92,6 @@ export default function OrderSummary({
     setMaxAvailableDiscount(maxAvailableDiscount);
     setMaxAvailableReward(maxAvailableReward);
     setDeliveryPrice(deliveryFee);
-    setDiscountCoupon(totalCouponDiscount);
     // 현재 서버에는 플랜 할인이 포함되지 않은 할인 금액을 보내야 함
     setDiscountTotal(totalDiscountWithoutPlan);
     setDiscountPlan(planDiscount);
@@ -107,7 +107,7 @@ export default function OrderSummary({
           <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
           <OrderSummaryRow label="플랜 할인" value={planDiscount} />
           <OrderSummaryRow label="등급 할인" value={gradeDiscount} />
-          <OrderSummaryRow label="쿠폰 사용" value={totalCouponDiscount} />
+          <OrderSummaryRow label="쿠폰 사용" value={appliedCoupon?.discountAmount ?? 0} />
           <OrderSummaryRow label="적립금 사용" value={appliedReward} />
           <Divider thickness={1} color="gray300" /> 
           <OrderSummaryRow label="1회차 결제 금액" value={finalPaymentAmount} valueType="title4" plus />
@@ -121,7 +121,7 @@ export default function OrderSummary({
           <OrderSummaryRow label="총 금액" value={originPrice} valueType="headline2" plainColor plus/>
           <OrderSummaryRow label="상품 할인" value={itemDiscountAmount} />
           <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
-          <OrderSummaryRow label="쿠폰 사용" value={totalCouponDiscount} />
+          <OrderSummaryRow label="쿠폰 사용" value={appliedCoupon?.discountAmount ?? 0} />
           <OrderSummaryRow label="적립금 사용" value={appliedReward} />
           <OrderSummaryRow label="결제 금액" value={finalPaymentAmount} plus />
           <Divider thickness={1} color="gray300" /> 

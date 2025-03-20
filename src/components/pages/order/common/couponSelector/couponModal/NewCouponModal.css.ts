@@ -2,16 +2,37 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const couponModalContainer = style({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-  alignItems: "center",
   maxWidth: "600px",
   width: "100%",
   height: "100vh",
   backgroundColor: themeVars.colors.gray.gray0,
+  padding: "52px 0 88px 0",
+});
+
+export const couponModalWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  width: "100%",
+  height: "100%",
   overflowY: "auto",
-  padding: "52px 0 128px 0",
+  selectors: {
+    "&::-webkit-scrollbar": {
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: themeVars.colors.gray.gray100,
+      borderRadius: "4px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: themeVars.colors.gray.gray300,
+      borderRadius: "4px",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: themeVars.colors.gray.gray400, 
+    },
+  }
 });
 
 export const couponModalContentWrapper = style({
@@ -33,6 +54,6 @@ export const couponCardWrapper = style({
   flexDirection: "column",
   width: "100%",
   gap: "10px",
-  padding: "20px 20px 108px 20px",
+  padding: "20px 20px 20px 20px",
   backgroundColor: themeVars.colors.gray.gray50,
 });

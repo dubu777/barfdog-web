@@ -8,10 +8,12 @@ import { ORDER_MESSAGE } from "@/constants";
 import { Coupon } from "@/types";
 import NewCouponCard from "./couponCard/NewCouponCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
+import { useEffect, useState } from "react";
+import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useCouponStore } from "@/store/order/useCouponStore";
+import { calculateCouponDiscount } from "@/utils/coupon/couponUtil";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
-import { useOrderStore } from "@/store/order/useOrderStore";
-import { useState } from "react";
+import { formatNumberWithCommas } from "@/utils";
 
 interface NewCouponModalProps {
   coupons: Coupon[];
@@ -19,67 +21,109 @@ interface NewCouponModalProps {
   onClose: () => void;
 }
 
+interface SelectedCoupon {
+  couponId: number;
+  discountAmount: number;
+}
+
 export default function NewCouponModal({
   coupons,
   isOpen,
   onClose,
 }: NewCouponModalProps) {
-  const { appliedCoupon, setAppliedCoupon } =
+  const [selectedCoupon, setSelectedCoupon] = useState<SelectedCoupon | null>(
+    null
+  );
+  const { appliedCoupon, setAppliedCoupon, cancelAppliedCoupon } =
     useCouponStore();
-  const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
-  const { maxAvailableDiscount } = useDiscountStore();
-  const { updateAppliedCoupon, isAppliedCoupon } = useOrderStore();
-  const [couponDiscount, setCouponDiscount] = useState<number>(0);
-
-
-  // 쿠폰 적용 함수
-  const handleApplyCoupon = () => {
-    if (appliedCoupon) {
-      // calculateCouponDiscount 호출
-      if (couponDiscount > maxAvailableDiscount) {
-        alert(
-          `적용 가능한 최대 할인 금액(${maxAvailableDiscount}원)을 초과합니다.`
+  const maxAvailableDiscount = useDiscountStore(
+    (state) => state.maxAvailableDiscount
+  );
+  // useToggleOption은 couponId(숫자)를 기준으로 토글 관리
+  const { onToggle, isSelected } = useToggleOption<number>(
+    selectedCoupon ? selectedCoupon.couponId : null,
+    "selectionBox",
+    (newCouponId: number | null) => {
+      if (newCouponId === null) {
+        setSelectedCoupon(null);
+      } else {
+        const coupon = coupons.find(
+          (coupon) => coupon.memberCouponId === newCouponId
         );
-        return;
+        if (coupon) {
+          const { discountAmount } = calculateCouponDiscount(
+            50000,
+            coupon,
+            maxAvailableDiscount
+          );
+          setSelectedCoupon({ couponId: newCouponId, discountAmount });
+        }
       }
-
-      updateAppliedCoupon(
-        appliedCoupon.couponId,
-        appliedCoupon.discountAmount
-      );
-      onClose();
     }
-  };
+  );
 
-    const { onToggle, isSelected } = useToggleOption(
-      selectedCoupon,
-      "radio",
-      setSelectedCoupon
-    );
+
+  useEffect(() => {
+    if (appliedCoupon) {
+      setSelectedCoupon({
+        couponId: appliedCoupon.couponId,
+        discountAmount: appliedCoupon.discountAmount,
+      });
+    } else {
+      setSelectedCoupon(null);
+    }
+  }, [appliedCoupon, isOpen]);
+
+  const handleSubmit = () => {
+    if (!selectedCoupon) {
+      if (appliedCoupon) {
+        cancelAppliedCoupon();
+      }
+      onClose();
+      return;
+    }
+    // 선택된 쿠폰이 있을 경우 적용
+    setAppliedCoupon(selectedCoupon.couponId, selectedCoupon.discountAmount);
+    onClose();
+  };
 
   return (
     <ModalBackground isVisible={isOpen} onClose={onClose}>
+      <NewHeader centerTitle="쿠폰" showCloseButton onClose={onClose} />
       <div
         className={styles.couponModalContainer}
         onClick={(e) => e.stopPropagation()}
       >
-        <NewHeader centerTitle="쿠폰" showCloseButton />
-        <div className={styles.couponModalContentWrapper}>
-          <DefaultText type="label4">쿠폰 등록</DefaultText>
-          <div className={styles.couponApplyWrapper}>
-            <InputField placeholder={ORDER_MESSAGE.COUPON_PLACEHOLDER} />
-            <Button type="primary" variant="solid" buttonColor="gray800">
-              등록
-            </Button>
+        <div className={styles.couponModalWrapper}>
+          <div className={styles.couponModalContentWrapper}>
+            <DefaultText type="label4">쿠폰 등록</DefaultText>
+            <div className={styles.couponApplyWrapper}>
+              <InputField placeholder={ORDER_MESSAGE.COUPON_PLACEHOLDER} />
+              <Button type="primary" variant="solid" buttonColor="gray800">
+                등록
+              </Button>
+            </div>
+          </div>
+          <div className={styles.couponCardWrapper}>
+            {coupons.map((coupon) => (
+              <NewCouponCard
+                key={coupon.memberCouponId}
+                coupon={coupon}
+                orderPrice={50000} // 임시
+                onToggle={onToggle}
+                isSelected={isSelected(coupon.memberCouponId)}
+              />
+            ))}
           </div>
         </div>
-        <div className={styles.couponCardWrapper}>
-          {coupons.map((coupon) => (
-            <NewCouponCard key={coupon.memberCouponId} coupon={coupon} />
-
-          ))}
-        </div>
       </div>
+      <FooterButton isDisabled={false} onClick={handleSubmit}>
+        {selectedCoupon
+          ? `${formatNumberWithCommas(
+              selectedCoupon?.discountAmount ?? 0
+            )}원 사용하기`
+          : "사용 취소하기"}
+      </FooterButton>
     </ModalBackground>
   );
 }

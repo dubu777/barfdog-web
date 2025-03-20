@@ -31,7 +31,7 @@ import { useOrderForm } from "@/hooks/useOrderForm";
 import GeneralOrderItemList from "../generalOrderItemList/GenaralOrderItemList";
 import BundleDeliverySelector from "../bundleDeliverySelector/BundleDeliverySelector";
 import CouponSelector from "../../common/couponSelector/CouponSelector";
-import OrderTerms from "../../orderTerms/OrderTerms";
+import OrderTerms from "../../common/orderTerms/OrderTerms";
 import OrderSection from "../../common/orderSection/OrderSection";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";

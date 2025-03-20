@@ -10,7 +10,7 @@ export const modalBackground = style({
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   zIndex: 300,
 });
 

@@ -1,15 +1,24 @@
 // src/api/axiosClient.ts
 
-import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { getCookie, setCookie } from '@/utils/auth/cookie';
+import axios, {
+  AxiosInstance,
+  AxiosError,
+  InternalAxiosRequestConfig,
+} from "axios";
+import { getCookie, setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
+interface ErrorResponseData {
+  code?: number;
+  message?: string;
+}
+
 // 환경에 따른 baseURL 설정
-const prod = process.env.NODE_ENV === 'production';
+const prod = process.env.NODE_ENV === "production";
 const baseURL = prod
   ? process.env.NEXT_PUBLIC_API_URL_PRODUCT
   : process.env.NEXT_PUBLIC_API_URL_DEV;
@@ -22,7 +31,7 @@ const axiosInstance: AxiosInstance = axios.create({
   timeout: 1000,
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -31,10 +40,9 @@ export const authAxios: AxiosInstance = axios.create({
   timeout: 1000,
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
-
 
 /**
  * 요청 인터셉터:
@@ -42,13 +50,12 @@ export const authAxios: AxiosInstance = axios.create({
  */
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-
     const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-    console.log('ACCESS_TOKEN_COOKIE', token);
-    
+    console.log("ACCESS_TOKEN_COOKIE", token);
+
     if (token) {
       config.headers = config.headers || {};
-      config.headers.Authorization = token.startsWith('Bearer ')
+      config.headers.Authorization = token.startsWith("Bearer ")
         ? token
         : `Bearer ${token}`;
     }
@@ -89,10 +96,18 @@ const processQueue = (error: any, token: string | null = null) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
+    console.log("인터셉터 에러", error);
+
     const originalRequest = error.config as CustomAxiosRequestConfig;
 
+    // const errorData = error.response?.data as ErrorResponseData;
+
     // 401 에러이며, 아직 재시도하지 않은 요청인 경우에만 처리
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      // errorData.code === 1005 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       if (isRefreshing) {
@@ -113,8 +128,8 @@ axiosInstance.interceptors.response.use(
         // 액세스 토큰 재발급 요청 (/api/refresh)
         // const { data } = await authAxios.get('/api/refresh');
         const { data } = await authAxios.get(`/api/refresh`);
-        console.log('새 액세스 토큰 발급:', data);
-        
+        console.log("새 액세스 토큰 발급:", data);
+
         const newToken: string = data.accessToken;
 
         // 새 액세스 토큰을 쿠키에 저장합니다.
@@ -122,7 +137,9 @@ axiosInstance.interceptors.response.use(
         setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, newToken);
 
         // axiosInstance의 기본 헤더도 업데이트합니다.
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+        axiosInstance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${newToken}`;
 
         processQueue(null, newToken);
         originalRequest.headers.Authorization = `Bearer ${newToken}`;

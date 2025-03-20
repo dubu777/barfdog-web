@@ -1,13 +1,9 @@
-import { total } from "@/components/pages/mypage/reward/Reward.css";
 import { ORDER_TYPE } from "@/constants";
 import { IAMPORT_MIN_PAYMENT_PRICE } from "@/constants/payment";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
-import { useOrderStore } from "@/store/order/useOrderStore";
-import { SaveGeneralOrderRequest, SaveSubscriptionOrderRequest, GeneralOrderItem, OrderType } from "@/types";
+import { SaveSubscriptionOrderRequest, GeneralOrderItem, OrderType } from "@/types";
 
 interface OrderCalculationProps {
   orderType: OrderType;
-  generalOrderBody: SaveGeneralOrderRequest;
   subscriptionOrderBody: SaveSubscriptionOrderRequest;
   userTotalReward: number;
   appliedReward: number;
@@ -15,13 +11,13 @@ interface OrderCalculationProps {
   freeCondition?: number;
   deliveryPrice?: number;
   orderItemDtoList?: GeneralOrderItem[];
+  discountCouponAmount?: number;
   plan?: string;
   isBundleDelivery: boolean;
 }
 
 export const orderCalculation = ({
   orderType,
-  generalOrderBody,
   subscriptionOrderBody,
   orderPrice, // 원금
   userTotalReward, // 보유 적립금
@@ -29,6 +25,7 @@ export const orderCalculation = ({
   freeCondition, // 배송비 무료 금액
   deliveryPrice,
   orderItemDtoList,
+  discountCouponAmount = 0,
   plan,
   isBundleDelivery,
 }: OrderCalculationProps) => {
@@ -48,19 +45,6 @@ export const orderCalculation = ({
     return (deliveryPrice ?? 0) - calculateDeliveryDiscount();
   };
 
-  // 총 쿠폰 할인 금액
-  const calculateTotalCouponDiscount = (): number => {
-    if (orderType === ORDER_TYPE.GENERAL) {
-      return (
-        generalOrderBody?.orderItemDtoList?.reduce(
-          (acc, item) => acc + (item.discountAmount || 0),
-          0
-        ) ?? 0
-      );
-    } else {
-      return subscriptionOrderBody.discountCoupon;
-    }
-  };
 
   // 등급 할인 금액
   const calculateGradeDiscount = (): number => {
@@ -80,20 +64,18 @@ export const orderCalculation = ({
 
   // 총 할인 금액 - 화면에 보여지는 총 할인 금액
   const calculateTotalDiscount = () => {
-    const totalCouponDiscount = calculateTotalCouponDiscount();
     const discountGrade = calculateGradeDiscount();
     const planDiscount = calculatePlanDiscount();
     return (
-      appliedReward + totalCouponDiscount + discountGrade + planDiscount
+      appliedReward + discountCouponAmount + discountGrade + planDiscount
     );
   };
 
 // 플랜 할인 제외한 총 할인 금액 - 서버에 보내는 총 할인 금액
 const calculateTotalDiscountWithoutPlan = (): number => {
-  const totalCouponDiscount = calculateTotalCouponDiscount();
   const discountGrade = calculateGradeDiscount();
 
-  return appliedReward + totalCouponDiscount + discountGrade;
+  return appliedReward + discountCouponAmount + discountGrade;
 };
 
   // 최종 결제 금액
@@ -120,7 +102,6 @@ const calculateMaxAvailableDiscount = () => {
 
 // 적용 가능한 최대 적립금 - 모두사용
 const calculateMaxAvailableReward = () => {
-  const totalCouponDiscount = calculateTotalCouponDiscount();
   const discountGrade = calculateGradeDiscount();
   const planDiscount = calculatePlanDiscount();
   const deliveryFee = calculateDeliveryFee();
@@ -128,7 +109,7 @@ const calculateMaxAvailableReward = () => {
   // 배송비가 있으면 최소 결제 금액 제한 없음, 없으면 제한 적용
   const minPaymentThreshold = deliveryFee > 0 ? 0 : IAMPORT_MIN_PAYMENT_PRICE;
   const availableMaxReward =
-    orderPrice - totalCouponDiscount - discountGrade - planDiscount - minPaymentThreshold;
+    orderPrice - discountCouponAmount - discountGrade - planDiscount - minPaymentThreshold;
 
   return Math.min(availableMaxReward, userTotalReward);
 };
@@ -142,7 +123,6 @@ const calculateMaxAvailableReward = () => {
     gradeDiscount: calculateGradeDiscount(),
     planDiscount: calculatePlanDiscount(),
     maxAvailableDiscount: calculateMaxAvailableDiscount(),
-    totalCouponDiscount: calculateTotalCouponDiscount(),
     totalDiscount: calculateTotalDiscount(),
     totalDiscountWithoutPlan: calculateTotalDiscountWithoutPlan(),
     maxAvailableReward: calculateMaxAvailableReward(),

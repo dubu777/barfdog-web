@@ -25,19 +25,19 @@ export default function GeneralShopTest() {
     },
   ];
 
-  const generalPaymentTest = () => {
-    console.log("일반상점테스트");
-    setOrderItemDtoList(orderItemListData);
-    router.push("/order/checkout/general");
-  };
+  // const generalPaymentTest = () => {
+  //   console.log("일반상점테스트");
+  //   setOrderItemDtoList(orderItemListData);
+  //   router.push("/order/checkout/general");
+  // };
 
-  const handleGetCookie = () => {
-    console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
-  };
-  const handleDeleteCookie = () => {
-    deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-    console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
-  };
+  // const handleGetCookie = () => {
+  //   console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
+  // };
+  // const handleDeleteCookie = () => {
+  //   deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+  //   console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
+  // };
 
   const handleRequest = async () => {
     try {
@@ -49,14 +49,29 @@ export default function GeneralShopTest() {
     }
   };
 
-  const handleTest = async () => {
+  const handleWrongTokenRefreshTest = async () => {
     // 테스트용: 임의의 잘못된 토큰 설정
     const accessToken2 = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
     setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, 'wrongToken');
     console.log("현재 토큰:", accessToken2);
 
     try {
+      const response = await axiosInstance.get('/api/planDiscount');
+      const accessToken2 = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+      console.log("변경 토큰:", accessToken2);
+      console.log("API 응답:", response);
+    } catch (error) {
+      console.error("API 호출 중 에러 발생:", error);
+    }
+  };
 
+  const handleOldTokenRefreshTest = async () => {
+    // 테스트용: 임의의 잘못된 토큰 설정
+    const accessToken2 = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+    setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsImlzcyI6ImJhcmZkb2ciLCJleHAiOjE3NDI0MzY4NzcsImVtYWlsIjoiZnJlc2hvdXJAbmF2ZXIuY29tIn0.7LS_2mJAm-8zAewwRWd71kxqrJ-vIXwvSyHoDAeZRRCCaOgc1IvofyUvPTCVW0ilG4nHbmQ5x38_vDDaUeNwrQ');
+    console.log("현재 토큰:", accessToken2);
+
+    try {
       const response = await axiosInstance.get('/api/planDiscount');
       const accessToken2 = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
       console.log("변경 토큰:", accessToken2);
@@ -90,12 +105,12 @@ export default function GeneralShopTest() {
   }
   return (
     <div className={styles.testContainer}>
-      <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-      <Button onClick={handleGetCookie}>토큰 값 가져오기</Button>
-      <Button onClick={handleDeleteCookie}>토큰 지우기</Button>
-      <Button onClick={handleTest}>토큰 만료 후 재발급 테스트</Button>
+      {/* <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button> */}
+      {/* <Button onClick={handleGetCookie}>토큰 값 가져오기</Button> */}
+      {/* <Button onClick={handleDeleteCookie}>토큰 지우기</Button> */}
+      <Button onClick={handleWrongTokenRefreshTest}>잘못된 토큰으로 재발급 테스트</Button>
+      <Button onClick={handleOldTokenRefreshTest}>만료된 토큰으로 재발급 테스트</Button>
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
-      <Button onClick={handleIsLoggedIn}>로그인 여부 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
       <Button onClick={handleRefresh}>재발급 테스트</Button>
     </div>

@@ -3,10 +3,10 @@ import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox
 import { ORDER_MESSAGE } from "@/constants";
 import { COLORS } from "@/constants/style";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import OrderSection from "../common/orderSection/OrderSection";
+import OrderSection from "../orderSection/OrderSection";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import Button from "@/components/common/button/Button";
-import { orderSheetContentBox } from "../OrderSheetCommon.css";
+import { orderSheetContentBox } from "../../OrderSheetCommon.css";
 
 export default function OrderTerms() {
   const {

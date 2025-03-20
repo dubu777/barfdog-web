@@ -40,7 +40,7 @@ import { useDiscountStore } from "@/store/order/useDiscountStore";
 import { formatNumberWithCommas } from "@/utils";
 import DeliverySchedule from "../deliverySchedule/DeliverySchedule";
 import CouponSelector from "../../common/couponSelector/CouponSelector";
-import OrderTerms from "../../orderTerms/OrderTerms";
+import OrderTerms from "../../common/orderTerms/OrderTerms";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useFormHandler } from "@/hooks/useFormHandler";
 

@@ -1,4 +1,3 @@
-import { deliveryModalWrapper } from "../addressList/AddressList.css";
 import InputField from "@/components/common/inputField/InputField";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
@@ -18,12 +17,11 @@ import AddressSearchModal from "@/components/common/addressSearchModal/AddressSe
 import useModal from "@/hooks/useModal";
 import { useUpdateAddress } from "@/api/address/mutations/useUpdateAddress";
 import { useApplyDefaultAddress } from "@/api/address/mutations/useApplyDefaultAddress";
-import { DeliveryDto } from "@/types";
 import { useCreateAddress } from "@/api/address/mutations/useCreateAddress";
 
 interface AddressFormProps {
   mode: "edit" | "add";
-  address?: AddressResponse; // edit 모드일 때만 전달
+  address?: AddressResponse;
   defaultAddressId: number | null;
   setDefaultAddressId: (id: number | null) => void;
   onBack: () => void;

@@ -1,7 +1,8 @@
 import SvgIcon from "../svgIcon/SvgIcon";
-import CheckCircle from "/public/images/option/check_circle.svg";
-import CheckSquare from "/public/images/option/check_square.svg";
-import NoneCheckSquare from "/public/images/option/none_check_square.svg";
+import CheckedCircle from "/public/images/option/checked_selection.svg";
+import UnCheckedCircle from "/public/images/option/unchecked_radio.svg";
+import CheckedSquare from "/public/images/option/checked_square.svg";
+import UnCheckedSquare from "/public/images/option/unchecked_square.svg";
 import * as styles from "./LabeledCheckBox.css";
 
 export interface LabeledCheckboxProps<T = string> {
@@ -21,21 +22,23 @@ export default function LabeledCheckbox<T = string>({
   iconType = "square",
   onToggle,
 }: LabeledCheckboxProps<T>) {
-  const icon =
-    iconType === "circle"
-      ? CheckCircle
-      : isChecked
-      ? CheckSquare
-      : NoneCheckSquare;
-  const color =
-    iconType === "circle" ? (isChecked ? "red" : "gray200") : undefined;
-
+  const iconMapping = {
+    circle: {
+      true: CheckedCircle,
+      false: UnCheckedCircle,
+    },
+    square: {
+      true: CheckedSquare,
+      false: UnCheckedSquare,
+    },
+  };
+  const icon = iconMapping[iconType][isChecked ? "true" : "false"];
   return (
     <div
       className={styles.labelCheckedBoxContainer}
       onClick={() => onToggle(value)}
     >
-      <SvgIcon src={icon} size={iconSize} {...(color && { color })} />
+      <SvgIcon src={icon} size={iconSize} />
       {children}
     </div>
   );
