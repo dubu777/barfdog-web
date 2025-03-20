@@ -65,14 +65,6 @@ export function useGetGeneralOrder(
         ORDER_TYPE.GENERAL
       );
       setDeliveryId(null);
-      setDeliveryDto({
-        name: data.name,
-        phone: data.phoneNumber,
-        zipcode: data.defaultAddress.zipcode,
-        street: data.defaultAddress.street,
-        detailAddress: data.defaultAddress.detailAddress,
-        request: "",
-      });
       setBackupDeliveryDto({
         name: data.name,
         phone: data.phoneNumber,

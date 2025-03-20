@@ -5,9 +5,9 @@ import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
 import { AddressResponse } from "@/types/delivery";
 import { useDeleteAddress } from "@/api/address/mutations/useDeleteAddress";
-import { useState } from "react";
 import Modal from "@/components/common/modal/Modal";
 import useModal from "@/hooks/useModal";
+import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 
 interface AddressCardProps {
   address: AddressResponse;
@@ -20,6 +20,7 @@ export default function AddressCard({
   goToEditAddress,
 }: AddressCardProps) {
   const { isOpen, onClose, onToggle } = useModal();
+  const setSelectedAddressId = useDeliveryStore(state => state.setSelectedAddressId)
   const isDefaultAddress = address.default;
   const handleSelect = () => {
     onSelectAddress({
@@ -30,6 +31,7 @@ export default function AddressCard({
       detailAddress: address.detailAddress,
       request: address.request,
     });
+    setSelectedAddressId(address.id)
   };
   const { mutate: deleteAddress } = useDeleteAddress();
 

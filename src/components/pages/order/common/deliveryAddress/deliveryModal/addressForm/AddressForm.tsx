@@ -35,7 +35,7 @@ export default function AddressForm({
   onBack,
 }: AddressFormProps) {
   const { isOpen, onClose, onToggle: toggleAddressModal } = useModal();
-
+  const [pendingDefault, setPendingDefault] = useState<boolean>(false);
   // mode에 따라 기존 데이터를 채우거나 빈 기본값 사용
   const initialValues =
     mode === "edit" && address
@@ -49,11 +49,8 @@ export default function AddressForm({
   const [isDefaultAddress, setIsDefaultAddress] = useState<boolean>(
     mode === "edit" && address ? defaultAddressId === address.id : false
   );
-  const { onToggle, isSelected } = useToggleOption<boolean>(
-    isDefaultAddress,
-    "checkbox",
-    setIsDefaultAddress
-  );
+  const { onToggle: onToggleDefault, isSelected: isDefaultSelected } =
+    useToggleOption<boolean>(pendingDefault, "checkbox", setPendingDefault);
 
   // Mutation hooks
   const { mutate: updateAddress } = useUpdateAddress();
@@ -74,36 +71,23 @@ export default function AddressForm({
   const combinedAddress = `${cityValue} ${streetValue}`.trim();
   const combinedError = errors.city?.message || errors.street?.message;
   
-  // 폼 제출 처리: mode에 따라 수정 또는 추가를 분기 처리
+  // 폼 제출 처리: onFormSubmit 호출 시 서버 업데이트 후 기본배송지 적용 여부 처리
   const onFormSubmit = handleSubmit((data: AddressRequest) => {
     if (mode === "edit" && address) {
       updateAddress({
         deliveryId: address.id,
         body: data,
       });
-      if (isDefaultAddress) {
+      // 임시 선택(pendingDefault)이 true이면 서버에 기본배송지 적용 요청
+      if (pendingDefault) {
         applyDefaultAddress(address.id);
+        setDefaultAddressId(address.id);
       }
       onBack();
     } else if (mode === "add") {
       createAddress(data, {
-        onSuccess: (responseData) => {
-          // api 수정 후 주석 해제
-          // responseData의 타입은 unknown이므로 AddressResponse로 캐스팅
-          // const newAddress = responseData as AddressResponse;
-
-          // const deliveryDto: DeliveryDto = {
-          //   name: newAddress.recipientName,
-          //   phone: newAddress.phoneNumber,
-          //   zipcode: newAddress.zipcode,
-          //   street: newAddress.street,
-          //   detailAddress: newAddress.detailAddress,
-          //   request: newAddress.request,
-          // };
-          // setDeliveryDto(deliveryDto);
-          // if (isDefaultAddress) {
-          //   setDefaultAddressId(newAddress.id);
-          // }
+        onSuccess: (response) => {
+          // 추가 후에 기본배송지 적용 여부 처리 (추가 모드의 경우 필요 시 처리)
           onBack();
         },
       });
@@ -266,10 +250,10 @@ export default function AddressForm({
         />
         {!isDefaultAddress && (
           <LabeledCheckbox
-            value={true}
-            onToggle={() => onToggle(true)}
-            isChecked={isSelected(true)}
-          >
+          value={true}
+          onToggle={() => onToggleDefault(true)}
+          isChecked={isDefaultSelected(true)}
+        >
             <DefaultText type="label2" color="gray700">
               기본 배송지로 설정
             </DefaultText>

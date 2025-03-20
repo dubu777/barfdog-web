@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { UseSuspenseQueryCustomOptions } from "@/types";
 import { getAddressList } from "../address";
@@ -11,4 +11,12 @@ export function useGetAddressList(queryOptions?: UseSuspenseQueryCustomOptions<A
     queryKey: [queryKeys.DELIVERY.BASE, queryKeys.DELIVERY.GET_ADDRESS_LIST],
     ...queryOptions,
   })
+}
+
+
+export async function prefetchGetSAddressList(queryClient: QueryClient) {
+  await queryClient.prefetchQuery({
+    queryFn: () => getAddressList(),
+    queryKey: [queryKeys.DELIVERY.BASE, queryKeys.DELIVERY.GET_ADDRESS_LIST],
+  });
 }

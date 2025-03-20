@@ -18,6 +18,7 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
     deliveryDto,
     isBundleDelivery,
     defaultAddressId,
+    selectedAddressId,
     setDeliveryDto,
     setBackupDeliveryDto,
     setDefaultAddressId,
@@ -31,6 +32,14 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
       );
       if (defaultAddress) {
         setDefaultAddressId(defaultAddress.id);
+        setDeliveryDto({
+          name: defaultAddress.recipientName,
+          phone: defaultAddress.phoneNumber,
+          zipcode: defaultAddress.zipcode,
+          street: defaultAddress.street,
+          detailAddress: defaultAddress.detailAddress,
+          request: defaultAddress.request,
+        });
       } else {
         setDefaultAddressId(null);
       }
@@ -39,10 +48,8 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
 
   // defaultAddress에 id 추가하면 추가 개발
   // const isDefaultAddress = deliveryDto.id === defaultAddressId;
-  const isDefaultAddress = true;
   // 임시 주소지 이름
   const deliveryName = "집";
-
   return (
     <OrderSection
       title="배송지"
@@ -66,7 +73,7 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
             style={{ gap: "8px" }}
           >
             <DefaultText type="headline2">{deliveryName}</DefaultText>
-            {isDefaultAddress && (
+            {selectedAddressId === defaultAddressId && (
               <Chips variant="outlined" size="sm" borderRadius="full" switchOff>
                 기본배송지
               </Chips>

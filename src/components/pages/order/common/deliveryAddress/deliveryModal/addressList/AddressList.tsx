@@ -1,10 +1,8 @@
 import Button from "@/components/common/button/Button";
 import * as styles from "./AddressList.css";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import { DeliveryDto } from "@/types";
 import AddIcon from "/public/images/icons/add.svg";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import AddressCard from "./addressCard/AddressCard";
 import { AddressResponse } from "@/types/delivery";
 
