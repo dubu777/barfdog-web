@@ -47,18 +47,6 @@ const LoginForm = ({ control, handleSubmit, handleLogin, isValid }: LoginFormPro
         />
       </div>
       <div className={styles.loginControls}>
-        <Controller
-          control={control}
-          name='autoLogin'
-          render={({ field }) => (
-            <DefaultCheckbox
-              id='autoLogin'
-              label='자동 로그인'
-              labelPosition='right'
-              {...field}
-            />
-          )}
-        />
         <div className={styles.findAccount}>
           <Link className={styles.findById} href='/account/find-id'>아이디 찾기</Link>
           <Link href='/account/find-password'>비밀번호 찾기</Link>

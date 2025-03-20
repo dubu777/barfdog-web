@@ -6,19 +6,16 @@ export type {
 	UserInfo,
 	LoginUserInfo,
 	SnSProvider,
-
 	FindUserEmail,
 	TemporaryUserEmail,
 	TemporaryPassword,
 	ConnectSnsPassword,
 	ConnectSns,
-	ConnectSnsSuccess,
 	SetPassword,
 	ChangePassword,
-
 	SignUpFormValues,
 	SignUpTermsModal,
-
+	ConnectSnsResponse,
 	UserInfoFormFields,
 	UpdateUserInfo,
 	GetUserInfo,
@@ -29,7 +26,7 @@ export type {
 
 // 로그인
 type Role = 'USER' | 'ADMIN' | 'SUBSCRIBER';
-type UserType = 'NON_MEMBER' | 'MEMBER' | 'MEMBER_WITH_SMS_KAKAO' | 'MEMBER_WITH_SMS_NAVER';
+type UserType = 'NON_MEMBER' | 'MEMBER' | 'MEMBER_WITH_SMS_KAKAO' | 'MEMBER_WITH_SMS_NAVER' | "SUCCESS";
 type SnSProvider = 'kakao' | 'naver';
 type GenderType = 'MALE' | 'FEMALE' | 'NONE' | 'M' | 'F' | null;
 
@@ -47,21 +44,10 @@ interface UserInfo {
 	temporaryPassword: boolean;
 }
 
-interface DefaultUserInfo {
-	id: string;
-	gender: GenderType;
-	email: string;
-	mobile: string;
-	mobile_e164: string;
-	name: string;
-	birthday: string;
-	birthyear: string;
-}
-
 interface LoginUserInfo {
 	provider: SnSProvider;
 	providerId: string;
-	data: DefaultUserInfo;
+	phoneNumber: string;
 	message: string;
 	resultCode: string;
 	userType: UserType;
@@ -88,14 +74,16 @@ interface ConnectSnsPassword {
 }
 
 interface ConnectSns {
-	password: string;
 	phoneNumber: string;
-	provider: string;
+	provider: SnSProvider;
 	providerId: string;
-	tokenValidDays: null | number;
 }
 
-type ConnectSnsSuccess = TemporaryUserEmail;
+interface ConnectSnsResponse {
+	email: string;
+	provider: SnSProvider
+	token: string;
+}
 
 interface SetPassword {
 	password: string;

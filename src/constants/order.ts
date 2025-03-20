@@ -44,6 +44,7 @@ const ORDER_MESSAGE: Record<OrderMessage, string> = {
   SUBSCRIPTION_TITLE: "정기구독 배송 시 묶음 배송 신청",
   SUBSCRIPTION_SUBTITLE: "구독 상품과 같이 배송되어 배송비가 무료에요",
   NO_AVAILABLE_COUPONS: "사용가능한 쿠폰이 없어요",
+  COUPON_PLACEHOLDER: "쿠폰 번호를 입력하세요",
 } as const;
 
 const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {

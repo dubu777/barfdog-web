@@ -29,9 +29,6 @@ interface OrderState {
     orderType: OrderType
   ) => SaveGeneralOrderRequest | SaveSubscriptionOrderRequest;
   updateAppliedCoupon: (
-    type: OrderType,
-    itemId: number | null,
-    itemPrice: number,
     couponId: number,
     discountAmount: number
   ) => void;
@@ -108,27 +105,8 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     } as SaveSubscriptionOrderRequest;
   },
   // 쿠폰 적용
-  updateAppliedCoupon: (type, itemId, itemPrice, couponId, discountAmount) =>
+  updateAppliedCoupon: (couponId, discountAmount) =>
     set((state) => {
-      if (type === ORDER_TYPE.GENERAL) {
-        const updatedItems = state.generalOrderBody.orderItemDtoList.map(
-          (item) =>
-            item.itemId === itemId
-              ? {
-                  ...item,
-                  memberCouponId: couponId,
-                  discountAmount,
-                  finalPrice: itemPrice - discountAmount,
-                }
-              : item
-        );
-        return {
-          generalOrderBody: {
-            ...state.generalOrderBody,
-            orderItemDtoList: updatedItems,
-          },
-        };
-      } else if (type === ORDER_TYPE.SUBSCRIPTION) {
         return {
           subscriptionOrderBody: {
             ...state.subscriptionOrderBody,
@@ -136,8 +114,6 @@ export const useOrderStore = create<OrderState>((set, get) => ({
             discountCoupon: discountAmount,
           },
         };
-      }
-      return state;
     }),
   getAppliedCouponDiscount: (itemId) => {
     const orderItem = get().generalOrderBody.orderItemDtoList.find(

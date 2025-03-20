@@ -8,7 +8,7 @@ export const modalContainer = style({
     alignItems: 'center',
     maxWidth: "600px",
     width: '100%',
-    height: "100%",
+    height: "100vh",
     backgroundColor: themeVars.colors.gray.gray0,
     overflowY: 'auto'
 })

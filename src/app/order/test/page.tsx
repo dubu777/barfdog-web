@@ -14,7 +14,6 @@ export default function GeneralShopTest() {
   const router = useRouter();
   const { setOrderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
   const { mutate: logout } = useLogout();
-  const baseURL = process.env.NEXT_PUBLIC_API_URL_DEV;
 
   const orderItemListData = [
     {
@@ -41,8 +40,13 @@ export default function GeneralShopTest() {
   };
 
   const handleRequest = async () => {
-    // const response = await axiosInstance.get("/api/planDiscount");
-    // console.log("API 응답:", response);
+    try {
+      const response = await axiosInstance.get("/api/planDiscount");
+      console.log("API 응답:", response);
+    } catch (err) {
+      console.error(err);
+      
+    }
   };
 
   const handleTest = async () => {
@@ -52,11 +56,6 @@ export default function GeneralShopTest() {
     console.log("현재 토큰:", accessToken2);
 
     try {
-      // const accessToken1 = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-      // console.log("현재 토큰:", accessToken1);
-      // const { data } = await authAxios.get(`${baseURL}/api/refresh`);
-      // setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, data.accessToken);
-      // console.log("토큰 재발급 결과:", data);
 
       const response = await axiosInstance.get('/api/planDiscount');
       const accessToken2 = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
@@ -83,6 +82,12 @@ export default function GeneralShopTest() {
       },
     });
   };
+
+  const handleRefresh = async () => {
+    const { data } = await authAxios.get(`/api/refresh`);
+    console.log('재발급 요청', data);
+    
+  }
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
@@ -92,6 +97,7 @@ export default function GeneralShopTest() {
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleIsLoggedIn}>로그인 여부 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
+      <Button onClick={handleRefresh}>재발급 테스트</Button>
     </div>
   );
 }

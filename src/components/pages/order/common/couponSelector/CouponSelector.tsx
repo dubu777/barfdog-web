@@ -6,6 +6,8 @@ import { ORDER_MESSAGE } from "@/constants";
 import * as styles from "./CouponSelector.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
+import NewCouponModal from "./couponModal/NewCouponModal";
+import useModal from "@/hooks/useModal";
 
 interface CouponSelectorProps {
   coupons: Coupon[];
@@ -16,6 +18,7 @@ export default function CouponSelector({
   coupons,
   orderPrice,
 }: CouponSelectorProps) {
+  const { isOpen, onClose, onToggle } = useModal();
   const usableCouponCount = getAvailableCoupons(coupons, orderPrice).length;
   return (
     <OrderSection
@@ -25,7 +28,7 @@ export default function CouponSelector({
         { text: "장 보유", color: "gray700" },
       ]}
     >
-      <div className={styles.couponSelectorBox}>
+      <div className={styles.couponSelectorBox} onClick={onToggle}>
         {usableCouponCount === 0 ? (
           <DefaultText type="label1" color="gray500">
             {ORDER_MESSAGE.NO_AVAILABLE_COUPONS}
@@ -41,6 +44,7 @@ export default function CouponSelector({
         <SvgIcon src={ArrowIcon} size={20} color="gray600" />
       </div>
       {/* 쿠폰 모달 api 바뀌면 개발 예정 */}
+      <NewCouponModal coupons={coupons} isOpen={isOpen} onClose={onClose} />
     </OrderSection>
   );
 }

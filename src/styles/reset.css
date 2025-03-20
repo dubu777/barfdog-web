@@ -16,7 +16,7 @@ time, mark, audio, video, button {
     border: 0;
     font-size: 100%;
     vertical-align: baseline;
-    text-align: center;
+    text-align: left;
 }
 
 /* HTML5 display-role reset for older browsers */

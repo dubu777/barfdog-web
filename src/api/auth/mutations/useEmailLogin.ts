@@ -20,8 +20,7 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 					password: formData.password,
 				});
 
-				// const token = result.headers.authorization.split(" ")[1];
-				const token = result.headers.authorization.split(" ")[1];
+				const token = result.headers.authorization;
 				const data = result.data;
 
 				if (!token) {
@@ -33,7 +32,6 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 
 				// 임시 비밀번호 발급 후 로그인 시도의 경우 비밀번호 생성 팝업을 위한 params query 추가
 				pushWithQuery('/', data.temporaryPassword ? { tempPw: true } : {});
-
 				return data;
 			} catch(error) {
 				const errorMessage =

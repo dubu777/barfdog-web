@@ -1,8 +1,6 @@
 import { useRouter } from "next/navigation";
 import * as styles from "./LoginSnsButtons.css";
-import Image, { StaticImageData } from "next/image";
-import KakaoImage from '/public/images/icons/kakao.png';
-import NaverImage from '/public/images/icons/naver.png';
+import Image from "next/image";
 import { SnSProvider } from "@/types";
 import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
 import { useCallback } from "react";

@@ -1,100 +1,75 @@
 'use client';
-import * as styles from '../FindAccount.css';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
-import Text from "@/components/common/text/Text";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import { Controller } from "react-hook-form";
-import { useFormHandler } from "@/hooks/useFormHandler";
-import { defaultConnectSnsValue, connectSnsSchema } from "@/utils/validation/authValidation";
-import { ConnectSnsPassword } from "@/types";
 import { useConnectSns } from "@/api/auth/mutations/useConnectSns";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToastStore } from "@/store/useToastStore";
-import { maskString } from "@/utils/maskString";
-import InputField from "@/components/common/inputField/InputField";
+import { useEffect } from 'react';
+import { setCookie } from '@/utils/auth/cookie';
+import { AUTH_CONFIG } from '@/constants/auth';
 
-const ConnectSns = () => {
-	const router = useRouter();
+interface ConnectSnsProps {
+}
 
-	const { loginUserInfo } = useAuthStore();
-	const userEmail = loginUserInfo?.data?.email;
+const ConnectSns = ({}: ConnectSnsProps) => {
+  const router = useRouter();
+  const { loginUserInfo } = useAuthStore.getState();
+  const { mutate: connectSns } = useConnectSns();
+  const { addToast } = useToastStore();
 
-	const { handleSubmit, control, errors, isValid } = useFormHandler<ConnectSnsPassword>(connectSnsSchema, defaultConnectSnsValue);
-	const { mutate } = useConnectSns();
-	const { addToast } = useToastStore();
+  const sanitizePhoneNumber = (phone: string): string => {
+    let sanitized = phone;
+    // 카카오의 경우 "+82"로 시작하면 해당 부분을 제거하고, 앞에 '0'을 붙임
+    if (sanitized.startsWith('+82')) {
+      sanitized = sanitized.replace(/^\+82\s?/, '');
+      if (!sanitized.startsWith('0')) {
+        sanitized = '0' + sanitized;
+      }
+    }
+    // 하이픈, 공백 등 숫자가 아닌 모든 문자를 제거
+    sanitized = sanitized.replace(/\D/g, '');
+    return sanitized;
+  };
 
-	const onSubmit = (data: ConnectSnsPassword) => {
-		if(!loginUserInfo) return;
 
-		// provider: SNS 명칭, providerId: API 로 전달받은 SNS 고유값
-		const body = {
-			password: data.password,
-			phoneNumber: loginUserInfo.data.mobile.replace(/-/g, ''),
-			provider: loginUserInfo.provider,
-			providerId: loginUserInfo.providerId,
-			tokenValidDays: null,
-		}
-		// 현재 관리자 비밀번호로 테스트 불가한 상태 확인 필요
-		mutate(
-			body,
-			{
-				onSuccess: (data) => {
-					if (data.email && data.provider) {
-						// 로그인 작업 필요
-						addToast('SNS 연동이 완료되었습니다!', 'above-button');
-						router.push('/');
-					} else {
-						addToast('SNS 연동에 실패했습니다.', 'above-button');
-					}
-				},
-				onError: (error) => {
-					console.log('error', error)
-					if(axios.isAxiosError(error)) {
-						const errorData = error.response?.data.errors[0];
-						if (errorData) {
-							addToast(errorData.defaultMessage || 'SNS 연동에 실패했습니다.', 'above-button');
-						}
-					}
-				}
-			}
-		)
-	}
+	useEffect(() => {
+    // userInfo와 loginUserInfo가 준비되어 있어야 함
+    if (!loginUserInfo) return;
+
+    // 전화번호 변환 처리
+    const sanitizedPhone = sanitizePhoneNumber(loginUserInfo.phoneNumber);
+
+
+    // 서버에 보낼 body 구성
+    const body = {
+      phoneNumber: sanitizedPhone,
+      provider: loginUserInfo.provider,
+      providerId: loginUserInfo.providerId,
+    };
+		console.log('connect sns request body', body);
+    // SNS 연동 API 실행
+    connectSns(body, {
+      onSuccess: (response) => {
+				console.log('SNS 연동 성공 응답:', response); 
+        setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, response.token);
+        addToast('SNS 연동이 완료되었습니다!', 'above-button');
+        router.push('/');
+      },
+      onError: (error) => {
+        console.error('SNS 연동 실패:', error);
+        if (axios.isAxiosError(error)) {
+          const errorData = error.response?.data?.errors?.[0];
+          if (errorData) {
+            addToast(errorData.defaultMessage || 'SNS 연동에 실패했습니다.', 'above-button');
+          } else {
+            addToast('SNS 연동에 실패했습니다.', 'above-button');
+          }
+        }
+      },
+    });
+  }, [loginUserInfo, connectSns]);
 	return (
-		<section className={styles.connectSnsContainer}>
-			<Text type='description' size='md' color='black'>
-				고객님은 기존에 가입된 회원입니다.<br/>
-				{maskString(userEmail || '')}<br/>
-				기존 계정의 비밀번호 입력 후 연동이 완료됩니다.
-			</Text>
-			<div className={styles.connectSnsPassword}>
-				<Controller
-					control={control}
-					name='password'
-					render={({ field }) => (
-						<InputField
-							masking
-							id='password'
-							placeholder='비밀번호를 입력해주세요.'
-							{...field}
-						/>
-					)}
-				/>
-				{errors.password &&
-				<Text type='description' size='sm' color='red' align='left'>{errors.password.message}</Text>
-				}
-			</div>
-			<div className={styles.connectSnsSubmitButton}>
-				<DefaultButton
-					type='main'
-					borderRadius='sm'
-					onClick={handleSubmit(onSubmit)}
-					// isDisabled={!isValid}
-				>
-					연동하기
-				</DefaultButton>
-			</div>
-		</section>
+		<div></div>
 	);
 };
 
