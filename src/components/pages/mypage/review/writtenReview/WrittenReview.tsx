@@ -1,7 +1,7 @@
 import * as styles from '../ReviewList.css';
 import { useEffect } from "react";
-import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard";
-import EmptyStateReview from "@/components/pages/mypage/review/emptyStateReview/EmptyStateReview";
+import ReviewCard from "@/components/pages/mypage/layout/cards/section/ReviewCard";
+import EmptyStateReview from "@/components/pages/mypage/layout/emptyState/emptyState/EmptyState";
 import { useInView } from "react-intersection-observer";
 import { useGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
 

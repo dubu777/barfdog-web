@@ -1,7 +1,7 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "./OrderSection.css";
 import Button from "@/components/common/button/Button";
-import ArrowIcon from "/public/images/header/chevron-right.svg";
+import ArrowIcon from "/public/images/header/chevron-right-blue.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { fontColors, textStyles } from "@/components/common/defaultText/DefaultText.css";
 

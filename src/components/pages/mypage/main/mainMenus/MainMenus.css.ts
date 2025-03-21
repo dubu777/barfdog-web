@@ -13,6 +13,11 @@ export const category = style({
   borderBottom: `2px solid ${themeVars.colors.gray.gray900}`,
 })
 
+export const menuBox = style({
+  display: 'flex',
+  flexDirection: 'column'
+})
+
 export const menuItem = style({
   padding: '16px 0',
   borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,
@@ -32,4 +37,5 @@ export const menuLink = style({
 export const logout = style({
   padding: '16px 20px 60px',
   background: themeVars.colors.gray.gray50,
+  textAlign: 'left',
 })

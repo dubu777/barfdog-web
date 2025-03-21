@@ -22,6 +22,7 @@ const ORDER_STATUS = {
   // EXCHANGE_DONE: '',
   CONFIRM: "배송완료",
   FAILED: "취소됨",
+  REVIEW_SUBMIT: "리뷰완료",
 };
 
 const PAYMENT: Record<PaymentMethod, string> = {

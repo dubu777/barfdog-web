@@ -30,7 +30,7 @@ const MainMenus = () => {
     <article>
       <div className={styles.myPageMenuContainer}>
         {MENU_LIST.map(({ category, menus }) => (
-          <div key={category}>
+          <div key={category} className={styles.menuBox}>
             <DefaultText type='headline1' className={styles.category}>{category}</DefaultText>
             <ul>
               {menus.map(({ label, url }) => (

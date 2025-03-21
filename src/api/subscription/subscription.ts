@@ -31,9 +31,9 @@ const getSubscriptionDetail = async (subscribeId: string): Promise<SubscriptionD
   return data.subscribeDto;
 }
 
-const getSubscriptionList = async (page = 0, size = 999): Promise<SubscriptionListData[]> => {
+const getSubscriptionList = async (page = 0, size = 50): Promise<SubscriptionListData[]> => {
   const { data } = await axiosInstance.get(`/api/subscribes?page=${page}&size=${size}`);
-  return data._embedded.querySubscribesDtoList;
+  return data?._embedded?.querySubscribesDtoList || [];
 };
 
 const getSubscriptionBenefits = async (subscribeId: string): Promise<BenefitDto[]> => {

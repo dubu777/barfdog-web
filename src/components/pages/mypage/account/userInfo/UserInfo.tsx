@@ -169,7 +169,7 @@ const UserInfo = () => {
 					render={({field}) =>
 						<InputField
 							{...field}
-							variants='fillBox'
+							variants='box'
 							placeholder='이름을 입력해주세요.'
 							label='이름'
 							error={errors?.name?.message}
@@ -192,7 +192,6 @@ const UserInfo = () => {
 							}}
 							confirmButton
 							confirmButtonText={!keepCurrentPhoneNumber ? '입력' : '번호변경'}
-							variants='fillBox'
 							placeholder='번호만 입력해주세요'
 							label='연락처'
 							isRequired
@@ -214,7 +213,6 @@ const UserInfo = () => {
 								error={errors?.authNumber?.message}
 								confirmButton
 								confirmButtonText='확인'
-								variants='fillBox'
 								placeholder='인증번호를 입력해주세요'
 							/>
 						}
@@ -226,7 +224,6 @@ const UserInfo = () => {
 					render={({field}) =>
 						<InputField
 							{...field}
-							variants='fillBox'
 							disabled
 							label='이메일'
 							isRequired

@@ -2,7 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const cardBaseStyle = style({
-	borderRadius: '8px',
 	background: themeVars.colors.gray.gray0,
 })
 
@@ -15,6 +14,9 @@ export const cardShadow = {
 	}),
 	strong: style({
 		boxShadow: themeVars.shadow.strong,
+	}),
+	none: style({
+		boxShadow: 'none',
 	}),
 }
 
@@ -33,5 +35,14 @@ export const cardAlign = {
 	}),
 	center: style({
 		textAlign: 'center',
+	}),
+}
+
+export const cardBorderRadius = {
+	default: style({
+		borderRadius: '8px',
+	}),
+	none: style({
+		borderRadius: 0,
 	}),
 }

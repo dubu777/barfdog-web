@@ -85,6 +85,7 @@ const WithdrawalGuide = () => {
 			</div>
 			{guideSteps.map(guide => (
 				<div key={guide.id} className={styles.guideTitle}>
+					<DefaultText type='title4'>0{guide.id}</DefaultText>
 					<DefaultText type='title4'>{guide.title}</DefaultText>
 					<DefaultText type='body2' color='gray600'>{guide.description}</DefaultText>
 					{guide.component}

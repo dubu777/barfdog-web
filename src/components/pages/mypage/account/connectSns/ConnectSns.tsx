@@ -56,7 +56,7 @@ const ConnectSns = () => {
 			<div className={styles.disconnectSnsSubmit}>
 				<ButtonDocked
 					type='full-button'
-					isPrimaryDisabled={!snsProvider}
+					// isPrimaryDisabled={!snsProvider}
 					onPrimaryClick={snsProvider ? handleDisconnectSns : onToggle}
 					primaryButtonLabel={!snsProvider ? '연동 하러가기' : '연동 해제하기'}
 				/>

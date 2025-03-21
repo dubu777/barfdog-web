@@ -14,6 +14,7 @@ interface ButtonDockedProps {
 	onPrimaryClick: () => void;
 	onSecondaryClick?: () => void;
 	primaryButtonSize?: 'sm' | 'md' | 'lg';
+	secondaryButtonType?: 'primary' | 'assistive';
 	isPrimaryDisabled?: boolean;
 }
 
@@ -26,6 +27,7 @@ export default function ButtonDocked({
 	onSecondaryClick,
 	primaryButtonSize = 'md',
 	isPrimaryDisabled = false,
+	secondaryButtonType = 'primary',
 }: ButtonDockedProps) {
 	const primaryButtonStyle =
 		type !== 'full-button' && buttonStyle[primaryButtonSize];
@@ -42,7 +44,7 @@ export default function ButtonDocked({
 				</div>
 			}
 			{type === 'dual-button' && secondaryButtonLabel &&
-				<Button onClick={onSecondaryClick} type='primary' variant='outline' className={secondaryButtonStyle}>
+				<Button onClick={onSecondaryClick} type={secondaryButtonType} variant='outline' className={secondaryButtonStyle}>
 					{secondaryButtonLabel}
 				</Button>
 			}

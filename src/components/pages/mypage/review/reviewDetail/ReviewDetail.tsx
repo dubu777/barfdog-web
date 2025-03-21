@@ -6,7 +6,7 @@ import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
 import MoreHorizIcon from "/public/images/icons/more_horiz.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
-import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard";
+import ReviewCard from "@/components/pages/mypage/layout/cards/section/ReviewCard";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 import ReviewImagesModal from "@/components/pages/mypage/review/reviewImagesModal/ReviewImagesModal";
@@ -77,7 +77,6 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
             { label: "삭제하기", value: "delete" },
           ]}
           onSelect={(value) => handleEditOrDelete(value as 'edit' | 'delete')}
-          position="right"
         />
       </div>
       <article>

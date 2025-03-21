@@ -1,6 +1,5 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
 
 export const modalContainer = style({
   display: "flex",
@@ -9,10 +8,12 @@ export const modalContainer = style({
   alignItems: 'flex-start',
   minWidth: '321px',
   minHeight: '126px',
+  maxWidth: 'calc(100vw - 72px)',
   padding: '20px',
   gap: '28px',
   borderRadius: '8px',
   backgroundColor: themeVars.colors.gray.gray0,
+  whiteSpace: 'pre-line',
 })
 
 export const modalContentWrapper = style({

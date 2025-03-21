@@ -2,10 +2,7 @@ import * as styles from '../WithdrawalAccount.css';
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
-import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ReasonSelectionForm from "@/components/pages/mypage/layout/reasonSelectionForm/ReasonSelectionForm";
 
 const withdrawalReasons = [
 	{ id: 'not_using', label: '더 이상 서비스를 이용하지 않아서' },
@@ -24,54 +21,19 @@ const WithdrawalReasonForm = () => {
 	const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
 	const [otherReason, setOtherReason] = useState<string>('');
 
-	const handleToggle = (id: string, checked: boolean) => {
-		if (id === 'other') {
-			setOtherReason('');
-		}
-		const updatedValues = checked
-			? [...selectedReasons, id]
-			: selectedReasons.filter(value => value !== id);
-
-		setSelectedReasons(updatedValues);
-	};
-
 	return (
 		<article className={styles.withdrawalContainerBox({ type: 'reason' })}>
-			<div className={styles.withdrawalContainerTitle({ type: 'reason' })}>
-				<DefaultText type='title3'>회원 탈퇴 사유를 입력해주세요</DefaultText>
-				<DefaultText type='body1' color='gray600'>서비스에 만족을 드리지 못해 죄송합니다<br/>바프독 서비스에 아쉬운 점을 남겨주세요</DefaultText>
-			</div>
-			<ul className={styles.reasonCheckboxList}>
-				{withdrawalReasons.map(reason => (
-					<li key={reason.id}>
-						<DefaultCheckbox
-							id={reason.id}
-							name={reason.id}
-							value={selectedReasons.includes(reason.id)}
-							label={reason.label}
-							onChange={(checked) => handleToggle(reason.id, checked as boolean)}
-						/>
-						{selectedReasons.includes('other') && reason.id === 'other' &&
-							<DefaultTextarea
-								id='otherReason'
-								value={otherReason}
-								placeholder='기타 이유를 남겨주세요'
-								minLength={0}
-								maxLength={1000}
-								onChange={(e) => setOtherReason(e.target.value)}
-								className={styles.otherReasonTextarea}
-							/>
-						}
-					</li>
-				))}
-			</ul>
-			<ButtonDocked
-				type='dual-button'
-				secondaryButtonLabel='돌아가기'
-				onSecondaryClick={() => pushWithQuery('/', {}, ['step'])}
-				primaryButtonLabel='탈퇴하기'
-				onPrimaryClick={() => pushWithQuery(pathname, { step: 'confirmation' })}
-				isPrimaryDisabled={selectedReasons.length === 0}
+			<ReasonSelectionForm
+				title='회원 탈퇴 사유를 입력해주세요'
+				subTitle={`서비스에 만족을 드리지 못해 죄송합니다\n바프독 서비스에 아쉬운 점을 남겨주세요`}
+				reasons={withdrawalReasons}
+				selectedReasons={selectedReasons}
+				setSelectedReasons={setSelectedReasons}
+				otherReason={otherReason}
+				setOtherReason={setOtherReason}
+				confirmButtonText='탈퇴하기'
+				onConfirm={() => pushWithQuery(pathname, { step: 'confirmation' })}
+				onCancel={() => pushWithQuery('/', {}, ['step'])}
 			/>
 		</article>
 	);

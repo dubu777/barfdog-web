@@ -77,3 +77,11 @@ export const tabBarActiveVariants = {
 		background: themeVars.colors.red.red,
 	})
 }
+
+export const tabBarSlider = style({
+	padding: '20px !important',
+})
+
+export const tabBarSlideItem = style({
+	width: 'auto !important'
+})

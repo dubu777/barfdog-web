@@ -40,7 +40,6 @@ const WithdrawalConfirmation = () => {
 			</div>
 			<InputField
 				type='password'
-				variants='fillBox'
 				placeholder='기존 비밀번호를 입력하세요'
 				label='비밀번호 확인'
 				isRequired

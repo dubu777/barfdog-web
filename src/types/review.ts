@@ -110,7 +110,7 @@ interface ReviewDetail {
 }
 
 interface ReviewFormData {
-  id: number;
+  id?: number;
   title: string;
   reviewType: ReviewType | null;
 

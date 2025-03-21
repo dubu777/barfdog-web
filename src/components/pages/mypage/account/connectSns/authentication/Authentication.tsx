@@ -76,7 +76,6 @@ const Authentication = ({ provider }: AuthenticationProps) => {
 					name='password'
 					render={({ field }) => (
 						<InputField
-							variants='fillBox'
 							masking
 							id='password'
 							label='비밀번호 확인'

@@ -8,6 +8,7 @@ import {
 	sheetStyle
 } from "@/components/common/bottomSheet/BottomSheet.css";
 import CloseButton from '/public/images/icons/close.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface BottomSheetProps {
 	isOpen: boolean;
@@ -33,12 +34,12 @@ export default function BottomSheet({
 		if (isOpen) {
 			document.body.style.overflow = 'hidden';
 			window.addEventListener('keydown', handleKeyDown);
-		} else {
-			document.body.style.overflow = 'auto';
 		}
-		return () => window.removeEventListener('keydown', handleKeyDown);
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+			document.body.style.overflow = 'auto';
+		};
 	}, [isOpen, onClose])
-
 	return (
 		<AnimatePresence>
 			{isOpen && (
@@ -61,7 +62,7 @@ export default function BottomSheet({
 						<div className={handleStyle} />
 						{closeButton && (
 							<button onClick={onClose} className={closeButtonStyle}>
-								<CloseButton />
+								<SvgIcon src={CloseButton} />
 							</button>
 						)}
 						{children}

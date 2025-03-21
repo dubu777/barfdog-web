@@ -15,7 +15,7 @@ import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea
 import MultiFileUpload from "@/components/common/multiFileUpload/MultiFileUpload";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard";
+import ReviewCard from "@/components/pages/mypage/layout/cards/section/ReviewCard";
 import ReviewSurvey from "@/components/pages/mypage/review/reviewForm/reviewSurvey/ReviewSurvey";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
