@@ -42,7 +42,6 @@ export const getProductionDates = (dateString: string | null, planWeeklyPaymentC
     receivingDate = new Date(dateString);
     receivingDate.setDate(receivingDate.getDate() + 1); // 수령일은 배송일의 다음날
   } else {
-    console.log('// 배송일이 없을 경우 (구독 안함)')
     // 배송일이 없을 경우 (구독 안함)
     
     const today = new Date();

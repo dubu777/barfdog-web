@@ -6,18 +6,18 @@ import { UseSuspenseQueryCustomOptions } from "@/types";
 
 export { useGetSubscriptionDetail, prefetchGetSubscriptionDetail };
 
-function useGetSubscriptionDetail(subscribeId: number, queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionDetailDto>) {
+function useGetSubscriptionDetail(subscriptionId: number, queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionDetailDto>) {
   return useSuspenseQuery<SubscriptionDetailDto>({
-    queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, subscribeId],
-    queryFn: () => getSubscriptionDetail(subscribeId),
+    queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, subscriptionId],
+    queryFn: () => getSubscriptionDetail(subscriptionId),
     ...queryOptions,
   });
 }
 
-async function prefetchGetSubscriptionDetail(queryClient: QueryClient, subscribeId: number) {
+async function prefetchGetSubscriptionDetail(queryClient: QueryClient, subscriptionId: number) {
   await queryClient.prefetchQuery({
-    queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, subscribeId],
-    queryFn: () => getSubscriptionDetail(subscribeId),
+    queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, subscriptionId],
+    queryFn: () => getSubscriptionDetail(subscriptionId),
   });
 }
 

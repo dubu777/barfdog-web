@@ -34,5 +34,6 @@ export const petCareTypeTitle = style({
 export const petCareTypeSelectBox = style({
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '8px'
+	gap: '8px',
+	padding: '0 20px',
 })

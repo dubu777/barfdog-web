@@ -15,7 +15,7 @@ export const couponName = style({
 })
 
 export const minPrice = style({
-  marginTop: '16px',
+  marginTop: '14px',
   marginBottom: '4px',
 })
 

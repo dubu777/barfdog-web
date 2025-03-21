@@ -8,7 +8,7 @@ import InfoTitleButton from "@/components/pages/mypage/layout/infomation/layout/
 
 interface InfoListsItem {
 	label: string;
-	value: string | num;
+	value: string | number;
 }
 
 interface InfoListsButtons {

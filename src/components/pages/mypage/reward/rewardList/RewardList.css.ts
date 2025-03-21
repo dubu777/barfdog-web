@@ -14,10 +14,15 @@ export const rewardListContents = style({
 
 export const rewardItem = style({
   display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
+  flexDirection: 'column',
   padding: '12px 20px',
   borderBottom: `2px solid ${themeVars.colors.gray.gray50}`,
+});
+
+export const rewardItemBottom = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'flex-end',
 });
 
 export const rewardName = style({

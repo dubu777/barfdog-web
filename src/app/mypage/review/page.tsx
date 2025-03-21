@@ -5,7 +5,7 @@ import { prefetchGetWritableReviewList } from "@/api/review/queries/useGetWritab
 import { prefetchGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
 import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
 import ReviewList from "@/components/pages/mypage/review/ReviewList";
-import EmptyStateReview from "@/components/pages/mypage/review/emptyStateReview/EmptyStateReview";
+import EmptyStateReview from "@/components/pages/mypage/layout/emptyState/emptyState/EmptyState";
 
 export default async function ReviewPage() {
   const queryClient = new QueryClient();

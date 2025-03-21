@@ -181,7 +181,7 @@ const getOrderDetail = async (
   orderId: string,
   type: string
 ): Promise<MergeOrderAndRecipe> => {
-  const { data } = await axiosInstance.get(`/api/orders/${orderId}/${type}`);
+  const { data } = await axiosInstance.get(`/api/orders/${orderId}/${type === 'subscription' ? 'subscribe' : type}`);
   const mergeOrderAndRecipe: MergeOrderAndRecipe = {
     ...data,
     orderItemDtoList: data.orderItemDtoList ? [...data.orderItemDtoList] : [],

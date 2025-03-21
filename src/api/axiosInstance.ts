@@ -19,7 +19,7 @@ const baseURL = prod
  */
 const axiosInstance: AxiosInstance = axios.create({
   baseURL,
-  timeout: 1000,
+  timeout: 5000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 export const authAxios: AxiosInstance = axios.create({
   baseURL,
-  timeout: 1000,
+  timeout: 5000,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

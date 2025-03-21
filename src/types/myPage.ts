@@ -69,5 +69,8 @@ interface MenuList {
 }
 
 interface OrderAction extends MenuLink {
-  variants?: 'solid';
+  variants?: 'solid' | 'outline';
+  params?: string;
+  fullWidth?: boolean;
+  key?: 'cancel' | 'refundExchange' | 'confirm';
 }

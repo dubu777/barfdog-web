@@ -6,7 +6,7 @@ import Dropdown from "@/components/common/dropdown/Dropdown";
 import CouponItemCard from "@/components/pages/mypage/coupon/couponItemCard/CouponItemCard";
 import ApplyCoupon from "@/components/pages/mypage/coupon/applyCoupon/ApplyCoupon";
 import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
-import EmptyState from "@/components/pages/mypage/layout/emptyState/EmptyState";
+import DefaultEmptyState from "@/components/pages/mypage/layout/emptyState/defaultEmptyState/DefaultEmptyState";
 
 const ItemSortByFilterList = {
   'recent': { label: '최신순' },
@@ -42,12 +42,11 @@ const Coupon = () => {
             label={ItemSortByFilterList[sortBy as keyof typeof ItemSortByFilterList]?.label || "최신순"}
             options={Object.entries(ItemSortByFilterList).map(([value, { label }]) => ({label, value}))}
             onSelect={(value) => setSortBy(value)}
-            position="right"
           />
         </div>
         <ul className={styles.couponList}>
           {newCouponList?.length === 0
-            ? <EmptyState title='등록된 사용 가능 쿠폰 내역이 없어요' subTitle='쿠폰 번호를 등록해주세요' />
+            ? <DefaultEmptyState title='등록된 사용 가능 쿠폰 내역이 없어요' subTitle='쿠폰 번호를 등록해주세요' />
             : newCouponList.map(coupon => <CouponItemCard key={coupon.id} coupon={coupon} />)}
         </ul>
       </article>
