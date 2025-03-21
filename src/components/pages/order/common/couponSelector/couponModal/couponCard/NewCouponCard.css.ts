@@ -12,6 +12,7 @@ export const couponCardContainer = recipe({
     borderRadius: "8px",
     gap: "8px",
     border: "1px solid transparent",
+    boxShadow: themeVars.shadow.light,
   },
   variants: {
     isSelected: {

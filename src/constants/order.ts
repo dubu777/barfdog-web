@@ -31,8 +31,8 @@ const PAYMENT: Record<PaymentMethod, string> = {
 };
 
 const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {
-  GENERAL: "general",
-  SUBSCRIPTION: "subscription",
+  GENERAL: "GENERAL",
+  SUBSCRIPTION: "SUBSCRIBE",
 } as const;
 
 const ORDER_MESSAGE: Record<OrderMessage, string> = {

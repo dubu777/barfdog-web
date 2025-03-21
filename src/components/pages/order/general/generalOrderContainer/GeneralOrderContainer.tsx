@@ -37,15 +37,16 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import FooterButton from "@/components/common/footerButton/FooterButton";
+import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
 
-interface GeneralOrderContainerProps {}
+
 
 interface handleIamportResponseParams {
   res: GeneralIamportResponse;
   orderId: number;
   requestBody: SaveGeneralOrderRequest;
 }
-export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
+export default function GeneralOrderContainer() {
   const router = useRouter();
   // 상태관리 -------->
   const { maxAvailableReward } = useRewardStore();
@@ -67,6 +68,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
 
   // 커스텀 훅 & 유틸 함수 ------->
   const { isMobileDevice } = useDeviceState();
+  // 포트원 구독, 일반 결제 커스텀 훅
   const { requestIamportPayment } = usePayment();
 
   const { control, watch, errors, setValue } = useOrderForm<OrderFormValues>(
@@ -169,7 +171,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       />
       <Divider />
       <CouponSelector
-        coupons={generalOrderSheetData.coupons}
+        orderType={ORDER_TYPE.GENERAL}
         orderPrice={generalOrderSheetData.orderPrice}
       />
       {/* 쿠폰 관련 함수 여기 있음 */}
@@ -184,7 +186,6 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         maxAvailableReward={maxAvailableReward}
       />
       <Divider />
-
       <PaymentMethod />
       <Divider />
       <OrderSummary

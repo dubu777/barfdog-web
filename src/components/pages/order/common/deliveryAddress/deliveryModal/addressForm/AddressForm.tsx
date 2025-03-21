@@ -54,7 +54,7 @@ export default function AddressForm({
 
   // Mutation hooks
   const { mutate: updateAddress } = useUpdateAddress();
-  const { mutate: applyDefaultAddress } = useApplyDefaultAddress();
+  // const { mutate: applyDefaultAddress } = useApplyDefaultAddress();
   const { mutate: createAddress } = useCreateAddress();
 
   // AddressSearchModal 선택 시 값 업데이트
@@ -80,14 +80,13 @@ export default function AddressForm({
       });
       // 임시 선택(pendingDefault)이 true이면 서버에 기본배송지 적용 요청
       if (pendingDefault) {
-        applyDefaultAddress(address.id);
+        // applyDefaultAddress(address.id);
         setDefaultAddressId(address.id);
       }
       onBack();
     } else if (mode === "add") {
       createAddress(data, {
-        onSuccess: (response) => {
-          // 추가 후에 기본배송지 적용 여부 처리 (추가 모드의 경우 필요 시 처리)
+        onSuccess: () => {
           onBack();
         },
       });

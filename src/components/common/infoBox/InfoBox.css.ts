@@ -42,3 +42,7 @@ export const infoBoxClickEvent = {
 		cursor: 'default',
 	}),
 }
+
+export const infoBoxFullWidth = style({
+  width: "100%",
+});

@@ -250,7 +250,7 @@ export default function SubscriptionOrderContainer({
       <DeliverySchedule />
       <Divider />
       <CouponSelector
-        coupons={subscriptionOrderSheetData.coupons}
+        orderType={ORDER_TYPE.SUBSCRIPTION}
         orderPrice={subscriptionOrderSheetData.subscribeDto.nextPaymentPrice}
       />
       <Divider />

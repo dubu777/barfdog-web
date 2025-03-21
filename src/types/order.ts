@@ -327,7 +327,7 @@ type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
 
 type OrderDetailType = 'general' | 'subscribe';
 
-type OrderType = "subscription" | "general";
+type OrderType = "SUBSCRIBE" | "GENERAL";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
 

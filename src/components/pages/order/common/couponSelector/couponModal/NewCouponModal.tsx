@@ -5,19 +5,40 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
 import { ORDER_MESSAGE } from "@/constants";
-import { Coupon } from "@/types";
+import { Coupon, OrderType } from "@/types";
 import NewCouponCard from "./couponCard/NewCouponCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useEffect, useState } from "react";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useCouponStore } from "@/store/order/useCouponStore";
-import { calculateCouponDiscount } from "@/utils/coupon/couponUtil";
+import {
+  calculateCouponDiscount,
+  sortCoupons,
+} from "@/utils/coupon/couponUtils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import { formatNumberWithCommas } from "@/utils";
+import { useFormHandler } from "@/hooks/useFormHandler";
+import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
+import * as yup from "yup";
+import { Controller } from "react-hook-form";
+
+const couponSchema = yup.object().shape({
+  code: yup
+    .string()
+    .max(20, "20자 이하 입력 가능합니다.")
+    .matches(/^[A-Za-z0-9]+$/, "특수문자는 입력할 수 없습니다.")
+    .required("쿠폰 코드를 입력해주세요."),
+});
+
+const couponDefaultValues = {
+  code: "",
+};
 
 interface NewCouponModalProps {
+  orderType: OrderType;
   coupons: Coupon[];
   isOpen: boolean;
+  orderPrice: number;
   onClose: () => void;
 }
 
@@ -27,10 +48,13 @@ interface SelectedCoupon {
 }
 
 export default function NewCouponModal({
+  orderType,
   coupons,
   isOpen,
+  orderPrice,
   onClose,
 }: NewCouponModalProps) {
+  // 상태 관리 -------->
   const [selectedCoupon, setSelectedCoupon] = useState<SelectedCoupon | null>(
     null
   );
@@ -39,6 +63,29 @@ export default function NewCouponModal({
   const maxAvailableDiscount = useDiscountStore(
     (state) => state.maxAvailableDiscount
   );
+  // <--------- 상태관리
+  // 서버 호출 react query -------->
+  const { mutate: createCouponMutate } = useApplyCoupon();
+
+  // 커스텀 훅 ------->
+  const { control, handleSubmit, setValue } = useFormHandler(
+    couponSchema,
+    couponDefaultValues,
+    "onBlur"
+  );
+
+  const sortedCoupons = sortCoupons(
+    coupons,
+    orderPrice,
+    orderType,
+    maxAvailableDiscount
+  );
+
+  const onCouponFormSubmit = handleSubmit((data) => {
+    createCouponMutate(data.code);
+    setValue("code", "");
+  });
+
   // useToggleOption은 couponId(숫자)를 기준으로 토글 관리
   const { onToggle, isSelected } = useToggleOption<number>(
     selectedCoupon ? selectedCoupon.couponId : null,
@@ -52,7 +99,7 @@ export default function NewCouponModal({
         );
         if (coupon) {
           const { discountAmount } = calculateCouponDiscount(
-            50000,
+            orderPrice,
             coupon,
             maxAvailableDiscount
           );
@@ -61,7 +108,6 @@ export default function NewCouponModal({
       }
     }
   );
-
 
   useEffect(() => {
     if (appliedCoupon) {
@@ -74,7 +120,7 @@ export default function NewCouponModal({
     }
   }, [appliedCoupon, isOpen]);
 
-  const handleSubmit = () => {
+  const handleApplyCoupon = () => {
     if (!selectedCoupon) {
       if (appliedCoupon) {
         cancelAppliedCoupon();
@@ -98,18 +144,34 @@ export default function NewCouponModal({
           <div className={styles.couponModalContentWrapper}>
             <DefaultText type="label4">쿠폰 등록</DefaultText>
             <div className={styles.couponApplyWrapper}>
-              <InputField placeholder={ORDER_MESSAGE.COUPON_PLACEHOLDER} />
-              <Button type="primary" variant="solid" buttonColor="gray800">
+              <Controller
+                name="code"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <InputField
+                    {...field}
+                    placeholder={ORDER_MESSAGE.COUPON_PLACEHOLDER}
+                    error={error?.message}
+                  />
+                )}
+              />
+              <Button
+                type="primary"
+                variant="solid"
+                buttonColor="gray800"
+                onClick={onCouponFormSubmit}
+              >
                 등록
               </Button>
             </div>
           </div>
           <div className={styles.couponCardWrapper}>
-            {coupons.map((coupon) => (
+            {sortedCoupons.map((coupon) => (
               <NewCouponCard
                 key={coupon.memberCouponId}
+                orderType={orderType}
                 coupon={coupon}
-                orderPrice={50000} // 임시
+                orderPrice={orderPrice}
                 onToggle={onToggle}
                 isSelected={isSelected(coupon.memberCouponId)}
               />
@@ -117,7 +179,7 @@ export default function NewCouponModal({
           </div>
         </div>
       </div>
-      <FooterButton isDisabled={false} onClick={handleSubmit}>
+      <FooterButton isDisabled={false} onClick={handleApplyCoupon}>
         {selectedCoupon
           ? `${formatNumberWithCommas(
               selectedCoupon?.discountAmount ?? 0

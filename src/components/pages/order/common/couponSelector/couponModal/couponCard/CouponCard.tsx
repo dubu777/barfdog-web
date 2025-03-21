@@ -8,7 +8,6 @@ import {
 } from "@/utils/coupon/couponUtils";
 import { formatDate } from "@/utils/dateUtils";
 import { ORDER_TYPE } from "@/constants";
-import { useEffect } from "react";
 
 interface CouponCardProps {
   coupon: Coupon;
