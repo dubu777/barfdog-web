@@ -1,6 +1,6 @@
 import HelpIcon from '/public/images/icons/help.svg';
 import InfoIcon from '/public/images/icons/info.svg';
-import ChevronRightIcon from '/public/images/icons/chevron-right.svg';
+import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { themeVars } from "@/styles/theme.css";
 import {
@@ -34,15 +34,17 @@ const InfoBox = ({
 			: color === 'red' ? themeVars.colors.red.pastelRed
 			: color === 'blue' && themeVars.colors.blue.blue500;
 
+	const infoBoxClickEventStyle = onClick !== undefined ? infoBoxClickEvent.true : infoBoxClickEvent.false;
+
 	return (
-		<div className={`${infoBoxBase} ${infoBoxColor[color]} ${infoBoxClickEvent[!!onClick]} ${className || ''}`} onClick={onClick || undefined}>
+		<div className={`${infoBoxBase} ${infoBoxColor[color]} ${infoBoxClickEventStyle} ${className || ''}`} onClick={onClick || undefined}>
 			<div className={infoBoxStyle}>
 				{type === 'help' ? <HelpIcon style={{ color: iconColor }} /> : <InfoIcon style={{ color: iconColor }} />}
 				<DefaultText type='label4' color={color === 'gray' ? 'gray800' : color} className={infoTextStyle}>{text}</DefaultText>
 			</div>
 			{hasChevron &&
 				<button>
-					<ChevronRightIcon />
+					<ArrowRightIcon />
 				</button>
 			}
 		</div>

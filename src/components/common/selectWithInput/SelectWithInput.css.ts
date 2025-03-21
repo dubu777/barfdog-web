@@ -3,8 +3,7 @@ import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
 export const selectContainerStyle = style({
-	border: '1xp solid red',
-	padding: '0 20px'
+	position: 'relative',
 })
 
 export const selectLabelStyle = recipe({
@@ -45,16 +44,23 @@ export const selectDropdownStyle = style({
 	borderBottomLeftRadius: '8px',
 	borderBottomRightRadius: '8px',
 	border: `1px solid ${themeVars.colors.gray.gray200}`,
-	// borderTop: 0,
 })
 
 export const selectDropdownOptionStyle = style({
 	padding: '12px 20px',
 	borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,
+	cursor: 'pointer',
 })
-
 
 export const customInputStyle = style({
 	width: '100%',
-	color: themeVars.colors.gray.gray600
+	color: themeVars.colors.gray.gray600,
+})
+
+export const selectDropdownFloatingStyle = style({
+	position: 'absolute',
+	background: themeVars.colors.gray.gray0,
+	width: '100%',
+	maxHeight: '255px',
+	overflow: 'scroll',
 })

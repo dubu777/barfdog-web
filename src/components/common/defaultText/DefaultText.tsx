@@ -4,7 +4,7 @@ import {
   fontColors,
   alignStyles,
   blockStyles,
-  underline,
+  underline, preLineStyles,
 } from "./DefaultText.css";
 
 interface DefaultTextProps {
@@ -17,6 +17,7 @@ interface DefaultTextProps {
   underLine?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  preLine?: boolean;
 }
 
 const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
@@ -45,24 +46,23 @@ export default function DefaultText({
   color = "gray900",
   align = "left",
   children,
-  inlineBlock = false,
   block = false,
   underLine = false,
   className,
   style,
+  preLine,
 }: DefaultTextProps) {
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
   const alignStyle = alignStyles[align];
   const underlineStyle = underLine ? underline : "";
   const Tag = tagMap[type] || "span";
-  const blockStyle = blockStyles[inlineBlock ? "true" : "false"];
-  // block prop이 true일 경우에만 display: block 스타일을 생성
-  // const blockStyle = block ? blockStyles.true : "";
+  const blockStyle = block ? blockStyles.true : "";
+  const preLineStyle = preLine ? preLineStyles.true : "";
 
   return (
     <Tag
-      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${blockStyle} ${
+      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${blockStyle} ${preLineStyle} ${
         className || ""
       }`}
       style={style}
