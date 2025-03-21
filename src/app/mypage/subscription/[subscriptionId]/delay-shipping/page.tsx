@@ -6,21 +6,21 @@ import DelayShipping from "@/components/pages/mypage/subscription/delayShipping/
 
 interface DelayShippingPageParams {
   params: {
-    subscribeId: number;
+    subscriptionId: number;
   }
 }
 
 export default async function DelayShippingPage({ params }: DelayShippingPageParams) {
-  const subscribeId = Number(params.subscribeId);
+  const subscriptionId = Number(params.subscriptionId);
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionDetail(queryClient, subscribeId);
+  await prefetchGetSubscriptionDetail(queryClient, subscriptionId);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>페이지 접근이 불가합니다.</div>}>
         <Suspense fallback={<div>Loading...</div>}>
-          <DelayShipping subscribeId={subscribeId} />
+          <DelayShipping subscriptionId={subscriptionId} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

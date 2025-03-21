@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import InfoSection from "@/components/pages/mypage/layout/infomation/layout/InfoSection";
+import InfoSection from "@/components/pages/mypage/layout/information/layout/InfoSection";
 
 interface SubscriptionInfoProps {
 	subscriptionId: number;
