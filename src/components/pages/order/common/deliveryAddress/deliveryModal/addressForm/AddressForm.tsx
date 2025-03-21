@@ -1,7 +1,7 @@
 import InputField from "@/components/common/inputField/InputField";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { AddressRequest, AddressResponse } from "@/types/delivery";
 import FooterButton from "@/components/common/footerButton/FooterButton";
@@ -93,6 +93,11 @@ export default function AddressForm({
       });
     }
   });
+
+  const formValues = watch();
+  useEffect(() => {
+  console.log("Form values changed:", formValues);
+}, [formValues]);
 
   return (
     <>
@@ -251,7 +256,10 @@ export default function AddressForm({
         {!isDefaultAddress && (
           <LabeledCheckbox
           value={true}
-          onToggle={() => onToggleDefault(true)}
+          onToggle={() => {
+            onToggleDefault(true);
+            setValue("isDefault", !pendingDefault);
+          }}
           isChecked={isDefaultSelected(true)}
         >
             <DefaultText type="label2" color="gray700">

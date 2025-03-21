@@ -63,8 +63,8 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
   console.log("generalOrderSheetData", generalOrderSheetData);
-  // <------- 서버 호출 
-  
+  // <------- 서버 호출
+
   // 커스텀 훅 & 유틸 함수 ------->
   const { isMobileDevice } = useDeviceState();
   const { requestIamportPayment } = usePayment();
@@ -178,6 +178,15 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         generalOrderSheetData={generalOrderSheetData}
       /> */}
       <Divider />
+      <RewardUsage
+        control={control}
+        setValue={setValue}
+        maxAvailableReward={maxAvailableReward}
+      />
+      <Divider />
+
+      <PaymentMethod />
+      <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.GENERAL}
         originPrice={generalOrderSheetData.orderPrice}
@@ -185,14 +194,6 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         freeCondition={generalOrderSheetData.freeCondition}
         deliveryPrice={generalOrderSheetData.deliveryPrice}
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
-      />
-      <Divider />
-      <PaymentMethod />
-      <Divider />
-      <RewardUsage
-        control={control}
-        setValue={setValue}
-        maxAvailableReward={maxAvailableReward}
       />
       <Divider />
       <OrderTerms />
