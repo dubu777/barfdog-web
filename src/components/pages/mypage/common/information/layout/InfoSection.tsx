@@ -1,10 +1,10 @@
 import * as styles from '../Information.css';
 import { useState } from 'react';
 import Button from "@/components/common/button/Button";
-import InfoList from "@/components/pages/mypage/layout/information/layout/InfoList";
+import InfoList from "@/components/pages/mypage/common/information/layout/InfoList";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
-import InfoTitleButton from "@/components/pages/mypage/layout/information/layout/InfoTitleButton";
+import InfoTitleButton from "@/components/pages/mypage/common/information/layout/InfoTitleButton";
 
 interface InfoListsItem {
 	label: string;

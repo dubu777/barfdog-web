@@ -2,7 +2,7 @@ import * as styles from '../WithdrawalAccount.css';
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import ReasonSelectionForm from "@/components/pages/mypage/layout/reasonSelectionForm/ReasonSelectionForm";
+import ReasonSelectionForm from "@/components/pages/mypage/common/reasonSelectionForm/ReasonSelectionForm";
 
 const withdrawalReasons = [
 	{ id: 'not_using', label: '더 이상 서비스를 이용하지 않아서' },

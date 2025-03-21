@@ -2,7 +2,7 @@ import * as styles from './OrderIssueList.css';
 import { usePathname, useSearchParams } from "next/navigation";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Dropdown from "@/components/common/dropdown/Dropdown";
-import OrderIssueCard from "@/components/pages/mypage/layout/cards/section/OrderIssueCard";
+import OrderIssueCard from "@/components/pages/mypage/common/cards/section/OrderIssueCard";
 import { ORDER_ISSUE_TYPE } from '@/constants/mypage';
 import { OrderType } from '@/types';
 

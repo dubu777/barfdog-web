@@ -1,6 +1,6 @@
 import { OrderType } from "@/types";
 import Modal from "@/components/common/modal/Modal";
-import OrderBottomSheet from "@/components/pages/mypage/layout/bottomSheet/orderBottomSheet/OrderBottomSheet";
+import OrderBottomSheet from "@/components/pages/mypage/common/bottomSheet/orderBottomSheet/OrderBottomSheet";
 
 interface CardModalProps {
 	data: any;

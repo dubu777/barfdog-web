@@ -1,4 +1,4 @@
-import { productAvatar, productInfoBox, productName } from "@/components/pages/mypage/layout/cards/Card.css";
+import { productAvatar, productInfoBox, productName } from "@/components/pages/mypage/common/cards/Card.css";
 import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
 import DefaultText from "@/components/common/defaultText/DefaultText";

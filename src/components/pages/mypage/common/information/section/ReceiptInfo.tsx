@@ -1,5 +1,5 @@
 import * as styles from '../Information.css';
-import InfoSection from "@/components/pages/mypage/layout/information/layout/InfoSection";
+import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
 
 interface ReceiptInfoProps {
 	data: any;

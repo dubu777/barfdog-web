@@ -2,7 +2,7 @@ import * as styles from "./RewardList.css";
 import { formatDate } from "@/utils/dateUtils";
 import { RewardData } from "@/types/reward";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import DefaultEmptyState from "@/components/pages/mypage/layout/emptyState/defaultEmptyState/DefaultEmptyState";
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 
 interface RewardListProps {
   rewardList: RewardData[];

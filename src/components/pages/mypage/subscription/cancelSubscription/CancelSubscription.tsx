@@ -2,7 +2,7 @@
 import * as styles from './CancelSubscription.css';
 import { useState } from "react";
 import { useBackNavigation } from "@/utils";
-import ReasonSelectionForm from "@/components/pages/mypage/layout/reasonSelectionForm/ReasonSelectionForm";
+import ReasonSelectionForm from "@/components/pages/mypage/common/reasonSelectionForm/ReasonSelectionForm";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 
 interface CancelSubscriptionProps {

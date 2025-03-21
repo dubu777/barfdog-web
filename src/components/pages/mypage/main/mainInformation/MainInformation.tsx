@@ -11,7 +11,7 @@ import Link from "next/link";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { getNextTierMessage } from "@/utils/mypage/getNextTierMessage";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
-import RecommendationCode from "@/components/pages/mypage/layout/recommendationCode/RecommendationCode";
+import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 
 const MainInformation = () => {

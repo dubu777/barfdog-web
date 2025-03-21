@@ -7,10 +7,10 @@ import { useMergeOrderList } from "@/api/order/queries/useGetMergeOrderList";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import TabBar from "@/components/common/tabBar/TabBar";
-import FilterBottomSheet from "@/components/pages/mypage/layout/bottomSheet/filterBottomSheet/FilterBottomSheet";
-import EmptyState from "@/components/pages/mypage/layout/emptyState/emptyState/EmptyState";
-import OrderCard from "@/components/pages/mypage/layout/cards/section/OrderCard";
-import StatusTracker from "@/components/pages/mypage/layout/statusTracker/StatusTracker";
+import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filterBottomSheet/FilterBottomSheet";
+import EmptyState from "@/components/pages/mypage/common/emptyState/emptyState/EmptyState";
+import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
+import StatusTracker from "@/components/pages/mypage/common/statusTracker/StatusTracker";
 import { MYPAGE_ITEM_TYPE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage";
 
 

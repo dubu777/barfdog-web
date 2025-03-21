@@ -1,8 +1,8 @@
 import * as styles from '../Card.css';
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import CardSection from "@/components/pages/mypage/layout/cards/layout/CardSection";
-import CardProductInfo from "@/components/pages/mypage/layout/cards/layout/CardProductInfo";
+import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
+import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardProductInfo";
 import { OrderType } from "@/types";
 import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";

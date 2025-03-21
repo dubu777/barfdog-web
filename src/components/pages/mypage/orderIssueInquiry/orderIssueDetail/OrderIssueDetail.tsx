@@ -1,16 +1,16 @@
 'use client';
 import * as styles from './OrderIssueDetail.css';
-import { infoCard, infoContainer, infoDetailContainer, infoItem } from "@/components/pages/mypage/layout/information/Information.css";
+import { infoCard, infoContainer, infoDetailContainer, infoItem } from "@/components/pages/mypage/common/information/Information.css";
 import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
-import SubscriptionInfo from "@/components/pages/mypage/layout/information/section/SubscriptionInfo";
-import OrderInfo from "@/components/pages/mypage/layout/information/section/OrderInfo";
-import PaymentInfo from "@/components/pages/mypage/layout/information/section/PaymentInfo";
-import RefundInfo from "@/components/pages/mypage/layout/information/section/RefundInfo";
-import AddressInfo from "@/components/pages/mypage/layout/information/section/AddressInfo";
-import OrderItemInfo from "@/components/pages/mypage/layout/information/section/OrderItemInfo";
+import SubscriptionInfo from "@/components/pages/mypage/common/information/section/SubscriptionInfo";
+import OrderInfo from "@/components/pages/mypage/common/information/section/OrderInfo";
+import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";
+import RefundInfo from "@/components/pages/mypage/common/information/section/RefundInfo";
+import AddressInfo from "@/components/pages/mypage/common/information/section/AddressInfo";
+import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
-import StatusTracker from "@/components/pages/mypage/layout/statusTracker/StatusTracker";
+import StatusTracker from "@/components/pages/mypage/common/statusTracker/StatusTracker";
 import { OrderType } from '@/types';
 
 interface OrderIssueDetailProps {

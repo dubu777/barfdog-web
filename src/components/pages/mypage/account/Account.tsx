@@ -4,7 +4,7 @@ import Link from "next/link";
 import AccountCircle from '/public/images/myPage/account_circle.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
-import RecommendationCode from "@/components/pages/mypage/layout/recommendationCode/RecommendationCode";
+import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const AccountLinkList = {

@@ -1,9 +1,9 @@
 'use client';
 import * as styles from './EmptyState.css';
-import EmptyStateCard from "@/components/pages/mypage/layout/cards/section/EmptyStateCard";
+import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import 'swiper/css';
-import RecommendItems from "@/components/pages/mypage/layout/recommendItems/RecommendItems";
+import RecommendItems from "@/components/pages/mypage/common/recommendItems/RecommendItems";
 
 interface EmptyStateReviewProps {
 	type?: 'review' | 'orderDeliveryInquiry';

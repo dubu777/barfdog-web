@@ -1,8 +1,8 @@
 import * as styles from '../ReviewList.css';
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import ReviewCard from "@/components/pages/mypage/layout/cards/section/ReviewCard";
-import EmptyStateReview from "@/components/pages/mypage/layout/emptyState/emptyState/EmptyState";
+import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
+import EmptyStateReview from "@/components/pages/mypage/common/emptyState/emptyState/EmptyState";
 import { useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
 
 const WritableReview = ({ onInit }: { onInit: () => void }) => {

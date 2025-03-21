@@ -3,7 +3,7 @@ import { pointColor } from "@/styles/common.css";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import OrderCard from "@/components/pages/mypage/layout/cards/section/OrderCard";
+import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePersistReviewStore } from "@/store/usePersistReviewStore";
 import { ReviewType } from '@/types';

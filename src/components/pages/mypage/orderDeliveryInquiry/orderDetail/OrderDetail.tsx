@@ -1,12 +1,12 @@
 'use client';
 import * as styles from './OrderDetail.css';
 import { useSearchParams } from "next/navigation";
-import AddressInfo from "@/components/pages/mypage/layout/information/section/AddressInfo";
-import OrderInfo from "@/components/pages/mypage/layout/information/section/OrderInfo";
-import SubscriptionInfo from "@/components/pages/mypage/layout/information/section/SubscriptionInfo";
-import PaymentInfo from "@/components/pages/mypage/layout/information/section/PaymentInfo";
-import OrderItemInfo from "@/components/pages/mypage/layout/information/section/OrderItemInfo";
-import ReceiptInfo from "@/components/pages/mypage/layout/information/section/ReceiptInfo";
+import AddressInfo from "@/components/pages/mypage/common/information/section/AddressInfo";
+import OrderInfo from "@/components/pages/mypage/common/information/section/OrderInfo";
+import SubscriptionInfo from "@/components/pages/mypage/common/information/section/SubscriptionInfo";
+import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";
+import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
+import ReceiptInfo from "@/components/pages/mypage/common/information/section/ReceiptInfo";
 import { OrderType } from "@/types";
 import { useGetOrderDetail } from "@/api/order/queries/useGetOrderDetail";
 

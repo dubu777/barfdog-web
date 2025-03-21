@@ -7,7 +7,7 @@ import { ellipsis } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import RateStar from "@/components/common/rateStar/RateStar";
 import Button from "@/components/common/button/Button";
-import CardSection from "@/components/pages/mypage/layout/cards/layout/CardSection";
+import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
 import { REVIEW_STATUS } from "@/constants";
 import { CreateReviewDetail, ReviewDetailItem, ReviewFormData, UpdateReviewDetail, WritableReviewItem } from "@/types";
 import { usePersistReviewStore } from "@/store/usePersistReviewStore";

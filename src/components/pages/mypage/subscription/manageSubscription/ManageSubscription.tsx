@@ -3,10 +3,10 @@ import * as styles from './ManageSubscription.css';
 import { useGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import TabBar from "@/components/common/tabBar/TabBar";
-import EmptyStateCard from "@/components/pages/mypage/layout/cards/section/EmptyStateCard";
+import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
 import useFilterTabs from "@/hooks/useFilterTabs";
-import FilterBottomSheet from "@/components/pages/mypage/layout/bottomSheet/filterBottomSheet/FilterBottomSheet";
-import SubscriptionCard from "@/components/pages/mypage/layout/cards/section/SubscriptionCard";
+import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filterBottomSheet/FilterBottomSheet";
+import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
 import { MYPAGE_DATE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage";
 
 const ManageSubscription = () => {

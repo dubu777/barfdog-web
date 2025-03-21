@@ -5,9 +5,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import EmptyStateCard from "@/components/pages/mypage/layout/cards/section/EmptyStateCard";
+import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
-import SubscriptionCard from "@/components/pages/mypage/layout/cards/section/SubscriptionCard";
+import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
 
 const MainCard = () => {
   const { data: petList } = useGetPetList();

@@ -1,7 +1,7 @@
 import * as styles from "../Information.css";
 import { ellipsis } from "@/styles/common.css";
 import { useState } from "react";
-import InfoTitleButton from "@/components/pages/mypage/layout/information/layout/InfoTitleButton";
+import InfoTitleButton from "@/components/pages/mypage/common/information/layout/InfoTitleButton";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";

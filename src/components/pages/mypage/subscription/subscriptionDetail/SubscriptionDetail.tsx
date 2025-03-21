@@ -2,11 +2,11 @@
 import * as styles from './SubscriptionDetail.css';
 import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SubscriptionInfo from "@/components/pages/mypage/layout/information/section/SubscriptionInfo";
-import PaymentInfo from "@/components/pages/mypage/layout/information/section/PaymentInfo";
-import PetInfo from "@/components/pages/mypage/layout/information/section/PetInfo";
-import AddressInfo from "@/components/pages/mypage/layout/information/section/AddressInfo";
-import OrderItemInfo from "@/components/pages/mypage/layout/information/section/OrderItemInfo";
+import SubscriptionInfo from "@/components/pages/mypage/common/information/section/SubscriptionInfo";
+import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";
+import PetInfo from "@/components/pages/mypage/common/information/section/PetInfo";
+import AddressInfo from "@/components/pages/mypage/common/information/section/AddressInfo";
+import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
 
 interface SubscriptionDetailProps {
 	subscriptionId: number;

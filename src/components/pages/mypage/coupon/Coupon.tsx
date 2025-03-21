@@ -6,7 +6,7 @@ import Dropdown from "@/components/common/dropdown/Dropdown";
 import CouponItemCard from "@/components/pages/mypage/coupon/couponItemCard/CouponItemCard";
 import ApplyCoupon from "@/components/pages/mypage/coupon/applyCoupon/ApplyCoupon";
 import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
-import DefaultEmptyState from "@/components/pages/mypage/layout/emptyState/defaultEmptyState/DefaultEmptyState";
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 
 const ItemSortByFilterList = {
   'recent': { label: '최신순' },

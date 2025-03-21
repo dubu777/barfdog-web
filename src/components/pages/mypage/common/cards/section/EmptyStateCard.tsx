@@ -2,7 +2,7 @@ import * as styles from '../Card.css';
 import { useRouter } from "next/navigation";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";
-import CardSection from "@/components/pages/mypage/layout/cards/layout/CardSection";
+import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
 
 interface EmptyStateCardProps {
 	type: 'default' | 'orderDeliveryInquiry' | 'review';

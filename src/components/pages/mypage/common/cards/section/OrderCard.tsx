@@ -5,10 +5,10 @@ import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import ArrowIcon from '/public/images/icons/chevron-sort-up.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import CardSection from "@/components/pages/mypage/layout/cards/layout/CardSection";
-import CardProductInfo from "@/components/pages/mypage/layout/cards/layout/CardProductInfo";
-import CardActions from "@/components/pages/mypage/layout/cards/layout/CardActions";
-import CardModal from "@/components/pages/mypage/layout/cards/layout/CardModal";
+import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
+import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardProductInfo";
+import CardActions from "@/components/pages/mypage/common/cards/layout/CardActions";
+import CardModal from "@/components/pages/mypage/common/cards/layout/CardModal";
 import { ORDER_DELIVERY_INQUIRY_STATUS } from "@/constants/mypage";
 
 type OrderCardModalKeyType = 'cancel' | 'refundExchange' | 'confirm';

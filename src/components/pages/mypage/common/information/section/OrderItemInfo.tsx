@@ -3,9 +3,9 @@ import * as styles from "../Information.css";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePathname } from "next/navigation";
 import { OrderType } from "@/types";
-import SubscriptionCard from "@/components/pages/mypage/layout/cards/section/SubscriptionCard";
-import OrderCard from "@/components/pages/mypage/layout/cards/section/OrderCard";
-import OrderIssueCard from "@/components/pages/mypage/layout/cards/section/OrderIssueCard";
+import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
+import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
+import OrderIssueCard from "@/components/pages/mypage/common/cards/section/OrderIssueCard";
 
 interface OrderItemInfoProps {
 	data: any;
