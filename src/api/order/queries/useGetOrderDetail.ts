@@ -5,7 +5,7 @@ import { MergeOrderAndRecipe, OrderType, UseSuspenseQueryCustomOptions } from "@
 
 export { useGetOrderDetail, prefetchGetOrderDetail };
 
-function useGetOrderDetail(orderId: string, type: OrderType, queryOptions?: UseSuspenseQueryCustomOptions<MergeOrderAndRecipe>) {
+function useGetOrderDetail(orderId: number, type: OrderType, queryOptions?: UseSuspenseQueryCustomOptions<MergeOrderAndRecipe>) {
   return useSuspenseQuery<MergeOrderAndRecipe>({
     queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_ORDER_DETAIL, orderId],
     queryFn: () => getOrderDetail(orderId, type),
@@ -13,7 +13,7 @@ function useGetOrderDetail(orderId: string, type: OrderType, queryOptions?: UseS
   })
 }
 
-async function prefetchGetOrderDetail(queryClient: QueryClient, orderId: string, type: OrderType) {
+async function prefetchGetOrderDetail(queryClient: QueryClient, orderId: number, type: OrderType) {
   await queryClient.prefetchQuery<MergeOrderAndRecipe>({
     queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_ORDER_DETAIL, orderId],
     queryFn: () => getOrderDetail(orderId, type),
