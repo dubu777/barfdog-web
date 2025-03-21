@@ -14,7 +14,7 @@ interface DropdownProps {
 	className?: string;
 	children?: ReactNode;
 	isOpen?: boolean;
-	setIsOpen?: () => void;
+	setIsOpen?: (() => void) | ((isOpen: boolean) => void);
 }
 
 export default function Dropdown({

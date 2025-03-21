@@ -1,28 +1,28 @@
-import * as styles from './EmptyStateCard.css';
-import Card from "@/components/common/card/Card";
+import * as styles from '../Card.css';
+import { useRouter } from "next/navigation";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";
-import { useRouter } from "next/navigation";
+import CardSection from "@/components/pages/mypage/layout/cards/layout/CardSection";
 
 interface EmptyStateCardProps {
-	type: 'default' | 'orderTracking' | 'review';
+	type: 'default' | 'orderDeliveryInquiry' | 'review';
 }
 
 const EmptyStateCard = ({ type = 'default' }: EmptyStateCardProps) => {
 	const router = useRouter();
 	const handleClick = () => {
 		if (type === 'review') {
-			router.push('/mypage/orderTracking');
+			router.push('/mypage/order-delivery-inquiry');
 		} else {
 			router.push('/survey');
 		}
 	}
 	return (
-		<Card shadow='strong' className={styles.emptyStateCard}>
+		<CardSection padding={20} className={styles.emptyStateCard}>
 			<DefaultText type='title4'>
 				{type === 'review'
 					? '아직 작성 가능한 리뷰가 없어요!'
-					: `아직 ${type === 'orderTracking' ? '주문' : '구독'} 전이시네요!`
+					: `아직 ${type === 'orderDeliveryInquiry' ? '주문' : '구독'} 전이시네요!`
 				}
 			</DefaultText>
 			<DefaultText type='body2'>
@@ -37,7 +37,7 @@ const EmptyStateCard = ({ type = 'default' }: EmptyStateCardProps) => {
 					: '설문하고 구독 시작하기'
 				}
 			</Button>
-		</Card>
+		</CardSection>
 	);
 };
 

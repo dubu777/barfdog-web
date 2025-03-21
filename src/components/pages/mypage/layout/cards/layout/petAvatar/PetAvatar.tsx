@@ -1,4 +1,4 @@
-import * as styles from '../MyPageCard.css';
+import * as styles from '../../myPageSubscriptionCard/MyPageSubscriptionCard.css';
 import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
 import {useState} from "react";

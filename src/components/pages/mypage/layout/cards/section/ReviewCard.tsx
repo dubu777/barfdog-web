@@ -2,18 +2,12 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { format } from "date-fns";
 import Image from "next/image";
-import {
-	reviewActionsStyle, reviewContainerStyle,
-	reviewImageStyle,
-	reviewInfoStyle,
-	reviewInfoTextStyle,
-	reviewStatusStyle,
-} from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard.css";
+import * as styles from '../Card.css';
 import { ellipsis } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import RateStar from "@/components/common/rateStar/RateStar";
-import Card from "@/components/common/card/Card";
 import Button from "@/components/common/button/Button";
+import CardSection from "@/components/pages/mypage/layout/cards/layout/CardSection";
 import { REVIEW_STATUS } from "@/constants";
 import { CreateReviewDetail, ReviewDetailItem, ReviewFormData, UpdateReviewDetail, WritableReviewItem } from "@/types";
 import { usePersistReviewStore } from "@/store/usePersistReviewStore";
@@ -23,7 +17,6 @@ import { UseFormSetValue } from "react-hook-form";
 interface ReviewCardsProps {
 	reviewDetail?: ReviewDetailItem | WritableReviewItem | CreateReviewDetail | UpdateReviewDetail | ReviewFormData;
 	setValue?: UseFormSetValue<UpdateReviewDetail | CreateReviewDetail>;
-	type?: 'card' | 'default';
 	isWritableReview?: boolean;
 	isEditable?: boolean;
 	isReviewDetail?: boolean;
@@ -34,7 +27,6 @@ const ReviewCard = ({
 	reviewDetail,
 	formData,
 	setValue,
-	type = 'default',
 	isWritableReview = false,
 	isEditable = false,
 	isReviewDetail = false,
@@ -87,18 +79,18 @@ const ReviewCard = ({
 		}
 	}
 
-	const CardElement = () => (
-		<>
-			<div className={reviewStatusStyle}>
+	return (
+		<CardSection shadow='none' borderRadius='none'>
+			<div className={styles.productInfoBox}>
 				<DefaultText type='label4'>{orderType} {orderStatus}</DefaultText>
 				<DefaultText type='caption' color='gray600'>{reviewStatus}</DefaultText>
 			</div>
-			<div className={reviewInfoStyle}>
+			<div className={styles.productInfoBox}>
 				{imageUrl
-					? <Image src={imageUrl} alt={itemName} width={76} height={76} className={reviewImageStyle} />
-					: <div className={reviewImageStyle} />
+					? <Image src={imageUrl} alt={itemName} width={76} height={76} className={styles.productAvatar} />
+					: <div className={styles.productAvatar} />
 				}
-				<div className={reviewInfoTextStyle}>
+				<div className={styles.productName}>
 					<DefaultText type='label3'>{itemName}</DefaultText>
 					<DefaultText type='caption' color='gray600'>
 						<span className={ellipsis({ lineSize: 'line2' })}>{subInfoItemDetail}<br/></span>
@@ -116,19 +108,12 @@ const ReviewCard = ({
 				/>
 			</div>
 			{!isReviewDetail &&
-				<div className={reviewActionsStyle}>
-					<Button variant='outline' type='assistive' fullWidth>주문 상세</Button>
-					<Button onClick={handleCreateOrDetail} fullWidth>{isWritableReview ? '리뷰작성' : '리뷰상세'}</Button>
-				</div>
+			<div className={styles.reviewCardActions}>
+				<Button onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${cardData.orderId}`, { orderType: generalItemType ? 'general' : 'subscription' })} variant='outline' type='assistive' fullWidth>주문 상세</Button>
+				<Button onClick={handleCreateOrDetail} fullWidth>{isWritableReview ? '리뷰작성' : '리뷰상세'}</Button>
+			</div>
 			}
-		</>
-	)
-	return (
-		type === 'card' ?
-			<Card shadow='light'>
-				<CardElement />
-			</Card>
-		: <div className={reviewContainerStyle}><CardElement /></div>
+		</CardSection>
 	);
 };
 
