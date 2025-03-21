@@ -19,6 +19,7 @@ import { textStyles } from "@/components/common/defaultText/DefaultText.css";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useDeleteReview } from "@/api/review/mutations/useDeleteReview";
 import { prefetchGetReviewDetailImageList } from "@/api/review/queries/useGetReviewDetailImageList";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface ReviewDetailProps {
   reviewId: number;
@@ -71,7 +72,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
       <div className={styles.reviewDetailHeader}>
         <DefaultText type='title4'>{formatDate(reviewDetail.writtenDate, 'onlyDate')} 리뷰 완료</DefaultText>
         <Dropdown
-          trigger={<MoreHorizIcon />}
+          trigger={<SvgIcon src={MoreHorizIcon} size={24} />}
           options={[
             { label: "수정하기", value: "edit" },
             { label: "삭제하기", value: "delete" },

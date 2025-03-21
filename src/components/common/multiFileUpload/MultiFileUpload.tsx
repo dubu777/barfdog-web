@@ -1,6 +1,7 @@
 import * as styles from './MultiFileUpload.css';
 import { ChangeEvent, useState } from "react";
 import UploadLabel from '/public/images/icons/upload-label.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import { useUploadImage } from "@/api/common/mutations/useUploadImage";
@@ -115,7 +116,7 @@ const MultiFileUpload = ({
       <div>
         <div className={styles.uploadBox}>
           <label htmlFor='file-input' className={styles.uploadLabel}>
-            <UploadLabel />
+            <SvgIcon src={UploadLabel} size={24} />
           </label>
           <input
             type="file"

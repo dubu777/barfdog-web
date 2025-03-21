@@ -10,6 +10,7 @@ import {
 	infoBoxStyle,
 	infoTextStyle
 } from "@/components/common/infoBox/InfoBox.css";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface InfoBoxProps {
 	type?: 'help' | 'info';
@@ -39,12 +40,12 @@ const InfoBox = ({
 	return (
 		<div className={`${infoBoxBase} ${infoBoxColor[color]} ${infoBoxClickEventStyle} ${className || ''}`} onClick={onClick || undefined}>
 			<div className={infoBoxStyle}>
-				{type === 'help' ? <HelpIcon style={{ color: iconColor }} /> : <InfoIcon style={{ color: iconColor }} />}
+				<SvgIcon src={type === 'help' ? HelpIcon : InfoIcon} style={{ color: iconColor }} />
 				<DefaultText type='label4' color={color === 'gray' ? 'gray800' : color} className={infoTextStyle}>{text}</DefaultText>
 			</div>
 			{hasChevron &&
 				<button>
-					<ArrowRightIcon />
+					<SvgIcon src={ArrowRightIcon} color={color} />
 				</button>
 			}
 		</div>

@@ -62,6 +62,7 @@ const ManageSubscription = () => {
               key={subscriptionDetail.subscribeDto.subscribeId}
               data={subscriptionDetail}
               type='subscription'
+              subscriptionId={subscriptionDetail.subscribeDto.subscribeId}
             />
           ))
         }

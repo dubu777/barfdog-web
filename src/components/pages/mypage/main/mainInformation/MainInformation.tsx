@@ -13,6 +13,7 @@ import { getNextTierMessage } from "@/utils/mypage/getNextTierMessage";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const MainInformation = () => {
   const { data: myPageData } = useGetMyPageInfo();
@@ -45,7 +46,7 @@ const MainInformation = () => {
             className={styles.accountImage}
           />
           <DefaultText className={styles.userName} type='title1'>{userData.memberName}</DefaultText>
-          <ArrowRightIcon />
+          <SvgIcon src={ArrowRightIcon} size={24} />
         </Link>
       </div>
       <div className={styles.membership}>

@@ -5,6 +5,7 @@ import {
   rateStarBoxInlineBlockStyles,
   rateStarStyles
 } from "./RateStar.css";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface RateStarProps {
   rateLength: number;
@@ -45,7 +46,7 @@ const RateStar = ({
           className={rateStarStyles({ isEditable: !!onChange })}
           onClick={onChange ? () => handleClick(i) : undefined}
         >
-          <StarIcon style={{ color: emptyColor(i) ? grayColor : starColor }} />
+          <SvgIcon src={StarIcon} style={{ color: emptyColor(i) ? grayColor : starColor }} />
         </span>
       ))}
     </div>

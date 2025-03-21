@@ -1,6 +1,7 @@
 import * as styles from '../Information.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ArrowIcon from '/public/images/icons/chevron-down.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface InfoTitleButtonProps {
 	title?: string;
@@ -16,7 +17,7 @@ const InfoTitleButton = ({ title, subTitleRight, isOpen, setIsOpen }: InfoTitleB
 			<DefaultText type="title4">{title}</DefaultText>
 			<div className={styles.infoAccordion}>
 				<DefaultText type="headline2" color="red">{subTitleRight}</DefaultText>
-				<ArrowIcon className={styles.infoAccordionIcon({ isOpen })} />
+				<SvgIcon src={ArrowIcon} className={styles.infoAccordionIcon({ isOpen })} />
 			</div>
 		</button>
 	);

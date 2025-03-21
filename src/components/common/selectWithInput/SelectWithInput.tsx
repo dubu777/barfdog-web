@@ -11,6 +11,7 @@ import { ChangeEvent, useState } from "react";
 import { motion } from 'framer-motion';
 import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface SelectWithInputProps<T extends { label: string; value: string | number }>{
 	label?: string;
@@ -56,7 +57,7 @@ export default function SelectWithInput<T extends { label: string; value: string
 			{label &&
 			<div onClick={handleSelectClick} className={selectLabelStyle({ isOpen })}>
 				<DefaultText type='label2'>{value ? selectedOptionLabel : label}</DefaultText>
-				<ArrowRightIcon className={labelArrowIconStyle({ isOpen })} />
+				<SvgIcon src={ArrowRightIcon} className={labelArrowIconStyle({ isOpen })} />
 			</div>
 			}
 			{isOpen && (

@@ -32,6 +32,7 @@ import VisibilityOffIcon from "/public/images/icons/visibility_off.svg";
 import { pointColor } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
 import ErrorIcon from '/public/images/icons/close_small.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -144,7 +145,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             {/* 검색 기능 추가 필요 */}
             {searchButton && (
               <button className={searchButtonStyle}>
-                <SearchIcon />
+                <SvgIcon src={SearchIcon} size={24} />
               </button>
             )}
             <input
@@ -171,13 +172,13 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                   onClick={handleToggleMasking}
                   className={baseButtonStyle}
                 >
-                  {isMasked ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                  <SvgIcon src={isMasked ? VisibilityOffIcon : VisibilityIcon} size={24} />
                 </button>
               )}
               {/* value 리셋 기능 */}
               {clearButton &&
               <button onClick={handleReset} className={baseButtonStyle}>
-                <InputClearIcon />
+                <SvgIcon src={InputClearIcon} size={24} />
               </button>
               }
             </div>
@@ -196,7 +197,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         </div>
         {error && (
           <div className={inputErrorTextStyle}>
-            <ErrorIcon />
+            <SvgIcon src={ErrorIcon} color='red' />
             <DefaultText type="caption" color="red" align="left">
               {error}
             </DefaultText>

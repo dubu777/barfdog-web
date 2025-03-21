@@ -19,6 +19,7 @@ import { useToastStore } from "@/store/useToastStore";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { defaultUpdateUserInfoValues, updateUserInfoSchema } from "@/utils/validation/authValidation";
 import { formatDate, formatPhoneNumber } from "@/utils";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const UserInfo = () => {
 	const { data: userInfo } = useGetUserInfo();
@@ -159,7 +160,7 @@ const UserInfo = () => {
 				회원 정보
 			</DefaultText>
 			<div className={styles.uploadProfile}>
-				<ProfileCircle />
+				<SvgIcon src={ProfileCircle} size={89} />
 				<DefaultText type='label4' color='gray600'>프로필 사진</DefaultText>
 			</div>
 			<form className={styles.userInfoForm}>

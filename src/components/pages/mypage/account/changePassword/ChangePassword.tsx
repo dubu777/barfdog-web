@@ -12,6 +12,7 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { useChangePassword } from "@/api/auth/mutations/useChangePassword";
 import { useToastStore } from "@/store/useToastStore";
 import { ChangePassword } from "@/types";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const passwordValidation = [
 	{
@@ -183,7 +184,7 @@ const ChangePasswordComponent = () => {
 								/>
 								{dirtyFields.newPassword &&
 									<div className={styles.accountError} style={{ marginTop: '8.5px' }}>
-										{!newPasswordConfirmError ? <SuccessIcon /> : <ErrorIcon />}
+										<SvgIcon src={!newPasswordConfirmError ? SuccessIcon : ErrorIcon} size={18} color={!newPasswordConfirmError ? 'blue500' : 'red'} />
 										<DefaultText type='caption' color={!newPasswordConfirmError ? 'blue' : 'red'} inlineBlock>
 											비밀번호가 {newPasswordConfirmError ? '일치하지 않습니다' : '일치합니다'}
 										</DefaultText>

@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useToastStore } from "@/store/useToastStore";
 import { toastPosition } from "./Toast.css";
 import useDeviceState from "@/hooks/useDeviceState";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface ToastProps {
   id: string;
@@ -48,7 +49,7 @@ const ToastItem = ({
         </DefaultText>
         {closeButton &&
           <button onClick={onClose}>
-            <CloseButton />
+            <SvgIcon src={CloseButton} />
           </button>
         }
       </motion.div>

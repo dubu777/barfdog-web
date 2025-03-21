@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as styles from './DatePicker.css';
-import ArrowLeft from '/public/images/header/chevron-left.svg';
-import ArrowRight from '/public/images/icons/chevron-right-blue.svg';
+import ArrowLeftIcon from '/public/images/header/chevron-left.svg';
+import ArrowRightIcon from '/public/images/header/chevron-right.svg';
 import DatePicker from "react-datepicker";
 import { getMonth, getYear, isValid, parse } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -110,7 +110,7 @@ const DatePickerComponent = ({
 										}}
 										disabled={prevMonthButtonDisabled}
 									>
-										<SvgIcon src={ArrowLeft} color='blue500' />
+										<SvgIcon src={ArrowLeftIcon} color='blue500' />
 									</button>
 									<button
 										className={styles.datePickerPrevNextButton}
@@ -120,7 +120,7 @@ const DatePickerComponent = ({
 										}}
 										disabled={nextMonthButtonDisabled}
 									>
-										<SvgIcon src={ArrowRight} color='blue500' />
+										<SvgIcon src={ArrowRightIcon} color='blue500' />
 									</button>
 								</div>
 							</div>

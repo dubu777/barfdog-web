@@ -1,6 +1,7 @@
 import * as styles from './Pagination.css';
 import Arrow from '/public/images/icons/pagination-arrow.svg';
 import DoubleArrow from '/public/images/icons/pagination-double-arrow.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface PaginationProps {
   currentPage: number;
@@ -52,14 +53,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
           disabled={isFirstPage}
           className={styles.numberButton({})}
         >
-          <DoubleArrow />
+          <SvgIcon src={DoubleArrow} />
         </button>
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={isFirstPage}
           className={styles.numberButton({ type: 'prev' })}
         >
-          <Arrow />
+          <SvgIcon src={Arrow} />
         </button>
         {generatePageNumbers().map((page, index) => (
           <button
@@ -76,14 +77,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
           disabled={isLastPage}
           className={styles.numberButton({ type: 'next' })}
         >
-          <Arrow />
+          <SvgIcon src={Arrow} />
         </button>
         <button
           onClick={() => handlePageChange(totalPages - 1)}
           disabled={isLastPage}
           className={styles.numberButton({ type: 'last' })}
         >
-          <DoubleArrow />
+          <SvgIcon src={DoubleArrow} />
         </button>
       </div>
   );

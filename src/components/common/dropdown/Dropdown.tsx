@@ -3,7 +3,8 @@ import { dropdownBoxStyle, dropdownContainerStyle, dropdownLabelStyle, dropdownO
 import { cardShadow } from "@/components/common/card/Card.css";
 import { motion, AnimatePresence } from "framer-motion";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import ArrowUp from '/public/images/icons/chevron-sort-up.svg';
+import ArrowUpIcon from '/public/images/icons/chevron-sort-up.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface DropdownProps {
 	trigger?: ReactNode;
@@ -53,7 +54,7 @@ export default function Dropdown({
 						<DefaultText type="label4">
 							{label || ''}
 						</DefaultText>
-						<ArrowUp style={{ transform: 'rotate(180deg)' }} />
+						<SvgIcon src={ArrowUpIcon} style={{ transform: 'rotate(180deg)' }} />
 					</div>
 				}
 				<AnimatePresence>

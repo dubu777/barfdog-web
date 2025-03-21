@@ -1,10 +1,10 @@
 'use client';
 import * as styles from './Membership.css';
-import CloseButton from '/public/images/icons/close.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useBackNavigation } from "@/utils";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
+import NewHeader from "@/components/layout/newHeader/NewHeader";
 
 const Membership = () => {
 	const goBack = useBackNavigation();
@@ -12,10 +12,11 @@ const Membership = () => {
 	return (
 		<section className={styles.membershipContainer}>
 			<div className={styles.membershipHeader}>
-				<DefaultText type='title4'>멤버십 등급 안내</DefaultText>
-				<button onClick={goBack} className={styles.closeButton}>
-					<CloseButton />
-				</button>
+				<NewHeader
+					showBackButton
+					onBack={goBack}
+					centerTitle="멤버십 등급 안내"
+				/>
 			</div>
 			<article className={styles.membershipList}>
 				{MEMBERSHIP_TIERS_LIST.map(tier => (
