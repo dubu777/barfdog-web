@@ -1,6 +1,6 @@
 import * as styles from './AddressModal.css';
 import Image from "next/image";
-import CloseButton from '/public/images/header/close-black.png';
+import CloseButton from '/public/images/icons/close-black.png';
 import Portal from "@/components/common/portal/Portal";
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { AnimatePresence, motion } from "framer-motion";
