@@ -26,7 +26,7 @@ const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps)
 
 	const cardDetail = type === 'subscription' ? data?.subscribeDto : data;
 	const isMyPage = type === 'mypage';
-	const status: keyof typeof ORDER_ACTIONS | keyof typeof SUBSCRIPTION_ORDER_ACTIONS = 'DELIVERY_DONE';
+	const status: keyof typeof ORDER_ACTIONS | keyof typeof SUBSCRIPTION_ORDER_ACTIONS = 'BEFORE_PAYMENT' || cardDetail.status;
 	const modifiedSubscriptionId = subscriptionId || data.id || data?.subscribeId;
 	const productionDates =
 		cardDetail && typeof cardDetail.nextDeliveryDate === 'string'

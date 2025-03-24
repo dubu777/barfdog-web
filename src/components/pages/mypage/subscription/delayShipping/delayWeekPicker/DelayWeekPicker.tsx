@@ -1,4 +1,4 @@
-import React, { MouseEvent, useMemo, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import * as styles from '@/components/common/datePicker/mobileDatePicker/MobileDatePicker.css';
 import { pointColor } from "@/styles/common.css";
 import { labelStyle } from "@/components/common/inputField/InputField.css";
@@ -39,6 +39,16 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 	const [selectedDate, setSelectedDate] = useState({ month: months[0], day: options[0].day });
 	const [isOpen, setIsOpen] = useState(isFixedOpen);
 
+	useEffect(() => {
+		if (months.length > 0 && options.length > 0) {
+			const initialFormattedDate = format(
+				new Date(`${new Date().getFullYear()}-${months[0]}-${options[0].day}`),
+				'yyyy.MM.dd'
+			);
+			onChange(initialFormattedDate);
+		}
+	}, []);
+
 	const handleOpenPicker = () => {
 		setIsOpen(prev => !prev)
 	}
@@ -58,7 +68,9 @@ const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: W
 		}
 
 		setSelectedDate(updatedDate);
-		onChange(`${updatedDate.month}-${updatedDate.day}`);
+
+		const formattedDate = format(new Date(`${new Date().getFullYear()}-${updatedDate.month}-${updatedDate.day}`), 'yyyy.MM.dd');
+		onChange(formattedDate);
 	};
 	return (
 		<div>
