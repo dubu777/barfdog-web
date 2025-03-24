@@ -98,6 +98,7 @@ axiosInstance.interceptors.response.use(
   async (error: AxiosError) => {
     console.log("인터셉터 에러", error);
 
+    
     const originalRequest = error.config as CustomAxiosRequestConfig;
 
     // const errorData = error.response?.data as ErrorResponseData;
