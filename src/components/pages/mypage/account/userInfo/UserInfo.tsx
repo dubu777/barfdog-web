@@ -197,7 +197,6 @@ const UserInfo = () => {
 							label='연락처'
 							isRequired
 							disabled={keepCurrentPhoneNumber}
-							touched={true}
 							error={errors?.phoneNumber?.message}
 						/>
 					}

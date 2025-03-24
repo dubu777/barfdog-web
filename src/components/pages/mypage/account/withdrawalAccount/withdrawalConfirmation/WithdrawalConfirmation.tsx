@@ -19,6 +19,7 @@ const WithdrawalConfirmation = () => {
 			{
 				onSuccess: (data) => {
 				// 성공시 로그아웃 처리 필요
+					console.log(data)
 				},
 				onError: (error) => {
 					if (axios.isAxiosError(error)) {
@@ -49,7 +50,6 @@ const WithdrawalConfirmation = () => {
 					setError('');
 				}}
 				onSubmit={password.length > 0 ? handleSubmit : undefined}
-				touched={error.length > 0}
 				error={error}
 			/>
 			<ButtonDocked

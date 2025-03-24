@@ -41,13 +41,6 @@ const ItemList = () => {
   const queryClient = useQueryClient();
   const { data } = useGetBlogList(category, currentPage);
   const blogList = data?.blogList || [];
-  const processedBlogList = blogList.map(blog => {
-    const snippet = useSanitizedHTML(blog.contents, 5, 119);
-    return {
-      ...blog,
-      snippet,
-    };
-  });
 
   useEffect(() => {
     if (data.page) {
@@ -81,6 +74,8 @@ const ItemList = () => {
           : <ul>
             {processedBlogList.map(blog => {
               const categoryKR = blogCategory[blog.category.toLowerCase() as BlogCategory].name;
+              // eslint-disable-next-line react-hooks/rules-of-hooks
+              const snippet = useSanitizedHTML(blog.contents, 5, 119);
               return (
                 <li key={blog.id}>
                   <Link href={`/community/blog/${blog.id}`} className={styles.blogItem}>
@@ -92,7 +87,7 @@ const ItemList = () => {
                         {blog.title}
                       </Text>
                       <Text type='description' size='md' color='grey' weight='normal' align='left' className={ellipsis({ lineSize: 'line5', wordBreak: 'keep', whiteSpace: 'pre' })}>
-                        {blog.snippet}
+                        {snippet}
                       </Text>
                       <Text type='description' size='sm' color='grey'>
                         {formatDate(blog.createdDate, 'onlyDate')}

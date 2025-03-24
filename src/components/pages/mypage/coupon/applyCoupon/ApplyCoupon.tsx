@@ -55,7 +55,6 @@ const ApplyCoupon = () => {
           name='couponCode'
           value={couponCode}
           error={applyErrorMessage}
-          touched={applyErrorMessage !== ''}
           onChange={(e: ChangeEvent) => handleCouponCodeChange(e)}
           onSubmit={handleApplyCoupon}
           confirmButton

@@ -138,7 +138,6 @@ const ChangePasswordComponent = () => {
 								placeholder="새 비밀번호를 입력해주세요."
 								label="새 비밀번호"
 								error={errors?.newPassword?.message}
-								touched={dirtyFields?.newPassword}
 								onReset={() => setValue("newPassword", "")}
 								onChange={(e) => {
 									field.onChange(e);
