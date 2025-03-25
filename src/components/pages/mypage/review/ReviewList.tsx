@@ -81,7 +81,7 @@ const Review = () => {
   }
 
   return (
-    <section className={styles.reviewContainer}>
+    <section>
       <TabBar
         hasTabContent
         variant='segmentedButton'

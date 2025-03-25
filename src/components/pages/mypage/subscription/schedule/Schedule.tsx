@@ -131,7 +131,7 @@ const Schedule = ({ subscriptionId }: ScheduleProps) => {
 		canceled_after_payment: [{ label: "취소상세", type: "cancel" }],
 	};
 	return (
-		<section className={styles.scheduleContainer}>
+		<section>
 			<article className={styles.scheduleList}>
 				{dummyData.map((data, index) => {
 					const active = data.status === 'in_progress' || data.status === 'canceled';

@@ -34,7 +34,7 @@ const OrderIssueInquiry = () => {
 	}
 
 	return (
-		<section className={styles.orderIssueInquiryContainer}>
+		<section>
 			<TabBar
 				hasTabContent
 				variant='segmentedButton'

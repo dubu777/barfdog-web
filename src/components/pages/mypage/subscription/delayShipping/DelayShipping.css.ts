@@ -1,11 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const delayShippingContainer = style({
-	minHeight: 'calc(100vh - 60px)',
-	background: themeVars.colors.gray.gray50,
-})
-
 export const userShippingBox = style({
 	paddingBottom: '4px',
 })

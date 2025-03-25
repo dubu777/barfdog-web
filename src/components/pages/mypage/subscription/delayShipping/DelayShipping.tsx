@@ -36,7 +36,7 @@ const DelayShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 		}
 	}
 	return (
-		<section className={styles.delayShippingContainer}>
+		<section>
 			<article className={styles.userShippingBox}>
 				<div className={styles.userShippingText}>
 					<DefaultText type='title4'>

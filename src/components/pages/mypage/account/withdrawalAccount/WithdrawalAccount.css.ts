@@ -2,11 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
-export const withdrawalContainer = style({
-	background: themeVars.colors.gray.gray50,
-	minHeight: 'calc(100vh - 60px)',
-})
-
 export const withdrawalContainerBox = recipe({
 	base: {
 		padding: '60px 20px 40px',

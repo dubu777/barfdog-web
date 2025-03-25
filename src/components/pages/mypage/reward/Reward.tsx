@@ -42,7 +42,7 @@ const Reward = () => {
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
   return (
-    <section className={styles.rewardContainer}>
+    <section>
       <article className={styles.totalRewardContainer}>
         <DefaultText type='title4'>적립금</DefaultText>
         <Card shadow='light' className={styles.totalRewardCard}>

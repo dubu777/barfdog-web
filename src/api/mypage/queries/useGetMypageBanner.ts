@@ -1,6 +1,6 @@
 import { queryKeys } from "@/constants";
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { getMyPageBanner } from "@/api/mypage/myPage";
+import { getMyPageBanner } from "@/api/mypage/mypage";
 import { MyPageBannerData, UseSuspenseQueryCustomOptions } from "@/types";
 
 export { useGetMyPageBanner, prefetchGetMyPageBanner }

@@ -1,6 +1,6 @@
 import { QueryClient, useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { getRewardList } from "../myPage";
+import { getRewardList } from "../mypage";
 import { RewardListData, RewardListDataWithTotals } from "@/types/reward";
 
 export { useGetRewardList, prefetchGetRewardList };

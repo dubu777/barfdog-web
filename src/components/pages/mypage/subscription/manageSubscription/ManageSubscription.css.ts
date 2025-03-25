@@ -1,11 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const manageSubscriptionContainer = style({
-  background: themeVars.colors.gray.gray50,
-  minHeight: 'calc(100vh - 60px)',
-});
-
 export const manageSubscriptionTitle = style({
   padding: '20px',
   borderBottom: `2px solid ${themeVars.colors.gray.gray50}`,

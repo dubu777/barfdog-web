@@ -2,7 +2,7 @@
 import { queryKeys } from "@/constants";
 import { InviteRewardList, UseSuspenseQueryCustomOptions } from "@/types";
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { getInviteRewardList } from "@/api/mypage/myPage";
+import { getInviteRewardList } from "@/api/mypage/mypage";
 
 export { useGetInviteRewardList, prefetchGetInviteRewardList };
 

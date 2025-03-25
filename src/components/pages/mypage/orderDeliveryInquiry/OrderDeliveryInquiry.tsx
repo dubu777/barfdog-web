@@ -59,7 +59,7 @@ const OrderDeliveryInquiry = () => {
   ];
 
   return (
-    <section className={styles.orderDeliveryContainer}>
+    <section>
       <StatusTracker statusTitle='진행주문내역' steps={steps} />
       <article>
         <TabBar
