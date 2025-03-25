@@ -2,11 +2,11 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const toastContainer = style({
-  width: 'calc(100% - 40px)',
   position: "fixed",
   left: "50%",
   transform: "translateX(-50%)",
   zIndex: 1000,
+  maxWidth: "560px",
 })
 
 export const toastPosition = {

@@ -6,9 +6,9 @@ export const snackBarContainer = style({
   left: '50%',
   transform: 'translateX(-50%)',
   zIndex: 1000,
-  width: 'calc(100% - 40px)',
+  width: '100%',
   minHeight: "48px",
-  maxWidth: 560,
+  maxWidth: "560px",
 });
 
 export const snackBarPosition = {

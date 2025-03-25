@@ -1,67 +1,99 @@
-"use client";
-
+import { Coupon, CouponData, OrderType } from "@/types";
 import * as styles from "./CouponCard.css";
-import { Coupon, OrderType } from "@/types";
+import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import { formatDateToKorean, formatNumberWithCommas } from "@/utils";
 import {
   calculateCouponDiscount,
-  isValidCoupon,
+  getCouponTargetText,
+  isCouponUsable,
 } from "@/utils/coupon/couponUtils";
-import { formatDate } from "@/utils/dateUtils";
-import { ORDER_TYPE } from "@/constants";
+import { useDiscountStore } from "@/store/order/useDiscountStore";
 
 interface CouponCardProps {
   coupon: Coupon;
   orderType: OrderType;
-  selectedItemPrice: number;
-  selectedCouponId?: number;
-  setCouponDiscount: (amount: number) => void;
-  isAppliedCoupon: (couponId: number) => boolean;
-  updateSelectedCoupon: (couponId: number, discountAmount: number) => void;
+  isSelected: boolean;
+  orderPrice: number;
+  onToggle: (value: number) => void;
 }
 
 export default function CouponCard({
   coupon,
   orderType,
-  selectedItemPrice,
-  selectedCouponId,
-  setCouponDiscount,
-  isAppliedCoupon,
-  updateSelectedCoupon,
+  isSelected,
+  orderPrice,
+  onToggle,
 }: CouponCardProps) {
-  // 쿠폰 할인 계산 유틸 함수
-  const { couponDiscountAmount, couponDiscountInfo } = calculateCouponDiscount(
-    coupon,
-    selectedItemPrice
+  const {
+    memberCouponId,
+    discountDegree,
+    discountType,
+    availableMinPrice,
+    expiredDate,
+    name,
+  } = coupon;
+  const maxAvailableDiscount = useDiscountStore(
+    (state) => state.maxAvailableDiscount
   );
-  // 쿠폰이 유효한지 여부 확인 유틸 함수
-  const isValid = isValidCoupon(
-    coupon,
-    selectedItemPrice,
-    couponDiscountAmount
-  );
+  const { discountAmount, exceededAvailableMexDiscount } =
+    calculateCouponDiscount(orderPrice, coupon, maxAvailableDiscount);
+  const { usable, reasons } = isCouponUsable(coupon, orderPrice, orderType);
 
-  const handleSelectCoupon = () => {
-    updateSelectedCoupon(coupon.memberCouponId, couponDiscountAmount);
-    setCouponDiscount(couponDiscountAmount); // 상태 업데이트를 직접 호출
-  };
-
-  // 쿠폰이 유효하지 않거나 이미 적용된 쿠폰인 경우 null 반환
-  const isValidCoupons =
-    orderType === ORDER_TYPE.GENERAL
-      ? !isValid || isAppliedCoupon(coupon.memberCouponId)
-      : !isValid;
-  if (isValidCoupons) return null;
+  const discountText =
+    discountType === "FIXED_RATE"
+      ? `${formatNumberWithCommas(discountAmount)}원 (${discountDegree}%)`
+      : `${formatNumberWithCommas(discountAmount)}원`;
+  const couponTargetText = getCouponTargetText(coupon.couponTarget);
   return (
-    <div
-      className={styles.couponCardContainer({
-        isSelected: selectedCouponId === coupon.memberCouponId,
-      })}
-      onClick={handleSelectCoupon}
-    >
-      <div>{coupon.name}</div>
-      <div>{formatDate(coupon.expiredDate, "onlyDate")}</div>
-      <div>{couponDiscountInfo}</div>
-      <div>- {couponDiscountAmount}원</div>
+    <div className={styles.couponCardContainer({ isSelected })}>
+      <LabeledRadioButton
+        value={memberCouponId}
+        isChecked={isSelected}
+        onToggle={!usable ? () => {} : onToggle}
+        optionType="selection"
+        iconSize={32}
+      >
+        <div className={styles.couponCardWrapper} style={{ gap: "4px" }}>
+          <DefaultText
+            type="title1"
+            color={!usable ? "gray400" : isSelected ? "red" : "gray900"}
+          >
+            {discountText}
+          </DefaultText>
+          <div
+            className={styles.couponCardWrapper}
+            style={{ marginBottom: "12px" }}
+          >
+            <DefaultText type="label1" color={!usable ? "gray400" : "gray700"}>
+              {name}
+            </DefaultText>
+            {discountType === "FIXED_RATE" && (
+              <DefaultText type="body3" color={!usable ? "gray400" : "gray600"}>
+                (최대 {formatNumberWithCommas(coupon.availableMaxDiscount)}원
+                할인)
+              </DefaultText>
+            )}
+          </div>
+          <div className={styles.couponCardWrapper}>
+            <DefaultText
+              type="caption"
+              color={reasons.includes("minPrice") ? "red" : "gray600"}
+            >
+              {formatNumberWithCommas(availableMinPrice)}원 이상 구매시
+            </DefaultText>
+            <DefaultText type="caption" color="gray500">
+              {formatDateToKorean(expiredDate)}까지 |{" "}
+              <DefaultText
+                type="caption"
+                color={reasons.includes("orderType") ? "red" : "gray500"}
+              >
+                {couponTargetText}
+              </DefaultText>
+            </DefaultText>
+          </div>
+        </div>
+      </LabeledRadioButton>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { sectionVariants } from "@/constants/motion";
+import { MOTION } from "@/constants/motion";
 import * as styles from "./SurveyForm.css";
 import { ReactNode } from "react";
 
@@ -24,7 +24,7 @@ export default function SurveyForm({
         <motion.div
           className={styles.surveyFormWrapper}
           key={currentStep}
-          variants={sectionVariants}
+          variants={MOTION.SURVEY_STEP}
           initial={direction === 1 ? "hiddenRight" : "hiddenLeft"}
           animate="visible"
           custom={direction}

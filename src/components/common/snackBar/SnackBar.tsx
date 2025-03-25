@@ -6,6 +6,7 @@ import { useSnackBarStore } from "@/store/useSnackBar";
 import * as styles from "./SnackBar.css";
 import Button from "../button/Button";
 import DefaultText from "../defaultText/DefaultText";
+import { MOTION } from "@/constants";
 
 interface SnackBarItemProps {
   id: string;
@@ -28,10 +29,10 @@ function SnackBarItem({
   return (
     <motion.div
       key={id}
-      initial={{ opacity: 0, y: 0 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 0 }}
-      transition={{ duration: 0.2 }}
+      variants={MOTION.SNACKBAR}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
       className={styles.snackBarItem}
     >
       <div className={styles.snackBarContent}>

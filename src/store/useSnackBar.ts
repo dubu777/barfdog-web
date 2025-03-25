@@ -27,17 +27,11 @@ interface SnackBarStore {
   processNextSnackBar: () => void;
 }
 
-/**
- * SnackBar 전역 스토어
- */
+
 export const useSnackBarStore = create<SnackBarStore>()((set, get) => ({
   queue: [],
   currentSnackBar: null,
 
-  /**
-   * 스낵바 추가
-   * - title, caption, actionLabel, onActionClick, onAutoHide 등을 넣을 수 있음
-   */
   addSnackBar: (item) => {
     const id = Date.now().toString();
     const newItem = { id, ...item };

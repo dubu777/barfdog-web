@@ -31,7 +31,7 @@ const getCouponList = async (): Promise<Coupon[]> => {
 }
 
 const applyCoupon = async (code: string) => {
-  const { data } = await axiosInstance.put('/api/coupons/code', code);
+  const { data } = await axiosInstance.put('/api/coupons/code', { code });
   return data;
 }
 
