@@ -2,10 +2,8 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const accountContainer = style({
-	minHeight: 'calc(100vh - 60px)',
 	display: 'flex',
 	flexDirection: 'column',
-	background: themeVars.colors.gray.gray50,
 })
 
 export const accountInfo = style({
@@ -104,11 +102,6 @@ export const accountError = style({
 	alignItems: 'center',
 })
 
-export const connectedSnsContainer = style({
-	background: themeVars.colors.gray.gray50,
-	minHeight: 'calc(100vh - 60px)'
-})
-
 export const emptySnSProvider = style({
 	paddingTop: '86px',
 })
@@ -179,8 +172,6 @@ export const notificationItem = style({
 
 export const connectSnSAuthContainer = style({
 	padding: '60px 20px 20px',
-	minHeight: 'calc(100vh - 60px)',
-	background: themeVars.colors.gray.gray50,
 })
 
 export const connectSnSAuthTitle = style({

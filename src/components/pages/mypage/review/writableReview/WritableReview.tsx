@@ -8,9 +8,8 @@ import { useGetWritableReviewList } from "@/api/review/queries/useGetWritableRev
 const WritableReview = ({ onInit }: { onInit: () => void }) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetWritableReviewList();
   const { ref, inView } = useInView();
-  const writableReviewList = data?.pages
-    ?.map((page) => page.writableReviewList)
-    .flat() || [];
+  const writableReviewList = data?.pages?.map((page) => page.writableReviewList).flat() || [];
+  // const writableReviewList = [];
 
 
   useEffect(() => {

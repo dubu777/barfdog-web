@@ -44,7 +44,7 @@ const PetInfo = ({
 							</DefaultText>
 						</div>
 					</div>
-					<Button variant='outline' fullWidth>반려견 상세 정보 수정</Button>
+					<Button variant='outline' fullWidth size='sm'>반려견 상세 정보 수정</Button>
 				</Card>
 			}
 		</article>

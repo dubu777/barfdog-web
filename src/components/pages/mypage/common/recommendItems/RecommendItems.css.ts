@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const recommendItemsContainer = style({
-	marginTop: '53px',
+	marginTop: '61px',
 })
 
 export const recommendItemsTitle = style({

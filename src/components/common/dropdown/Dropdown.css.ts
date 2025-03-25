@@ -19,12 +19,11 @@ export const dropdownBoxStyle = style({
 	background: themeVars.colors.gray.gray0,
 	display: 'flex',
 	flexDirection: 'column',
-	// gap: '8px',
+	gap: '4px',
 })
 
 export const dropdownOptionStyle = style({
 	textAlign: 'center',
 	padding: '6px 0',
-	margin: '4px 0',
 	borderBottom: `1px solid ${themeVars.colors.gray.gray300}`,
 })

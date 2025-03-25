@@ -71,7 +71,7 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 				? <SubscriptionInfo subscriptionId={data?.subscribeId} data={data} type='orderIssue' />
 				: <OrderInfo data={data} type='orderIssue' />
 			}
-			{issueType === 'EXCHANGE' || data.requestStatus === 'REQUESTED'
+			{issueType === 'EXCHANGE' || data.requestStatus !== 'COMPLETED'
 				? <PaymentInfo data={data} type='orderIssue' />
 				: <RefundInfo data={data} />
 			}

@@ -32,6 +32,13 @@ export const tabBarContainerVariants = {
 	})
 }
 
+export const tabBarBaseVariants = style({
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	cursor: 'pointer',
+})
+
 export const tabBarVariants = {
 	text: style({
 		padding: '20px 16px 10px',
@@ -40,7 +47,7 @@ export const tabBarVariants = {
 		height: '42px',
 		color: themeVars.colors.gray.gray300,
 		borderRight: `1px solid ${themeVars.colors.gray.gray300}`,
-		transition: 'all .2s'
+		transition: 'all .2s',
 	}),
 	chips: style({
 		padding: '4px 12px',

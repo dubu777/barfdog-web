@@ -5,7 +5,8 @@ import { themeVars } from "@/styles/theme.css";
 export const productInfoBox = style({
 	display: 'flex',
 	gap: '12px',
-	margin: '12px 0',
+	marginBottom: '12px',
+	marginTop: '10px',
 })
 
 export const productName = style({

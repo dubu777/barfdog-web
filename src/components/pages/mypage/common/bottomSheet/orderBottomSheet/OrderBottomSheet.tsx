@@ -48,9 +48,6 @@ const OrderBottomSheet = ({
 	const primaryLabel = type === 'cancel' ? (isSubscription ? '구독 유지하기' : '주문취소') : '리뷰 작성하기';
 	const secondaryLabel = type === 'cancel' ? (isSubscription ? '구독 취소' : '이전') : '이전';
 
-	console.log('orderBottomSheet', orderData)
-	console.log('type', type)
-	console.log('isSubscription', isSubscription)
 	const { setReviewFormData } = usePersistReviewStore();
 	const handlePrimaryClick = () => {
 		// confirm: 리뷰 작성하기

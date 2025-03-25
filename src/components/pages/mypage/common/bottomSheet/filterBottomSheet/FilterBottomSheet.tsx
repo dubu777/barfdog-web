@@ -37,7 +37,7 @@ const FilterBottomSheet = ({ filters }: FilterBottomSheetProps) => {
 
 	const filterLabel = filters
 		.map((filter) => filter.options[filterOptions[filter.key]])
-		.join(" · ");
+		.join("·");
 
 	const handleFilterSubmit = () => {
 		setFilterOptions(tempFilterOptions);

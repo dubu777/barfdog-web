@@ -63,7 +63,7 @@ const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps)
 		<CardSection>
 			<DefaultText type='label4'>
 				정기배송 {cardDetail.subscribeCount}회차 진행중
-				{isMyPage &&
+				{!isMyPage &&
 				<DefaultText type='caption' color='gray600'>
 					&nbsp;&nbsp;시작일 {cardDetail?.startDated || ''}
 				</DefaultText>

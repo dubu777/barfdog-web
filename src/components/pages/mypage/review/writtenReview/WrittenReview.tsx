@@ -9,10 +9,8 @@ const WrittenReview = ({ onInit }: { onInit: () => void }) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetWrittenReviewList();
   const { ref, inView } = useInView();
   console.log(data);
-  // const writtenReviewList = data?.pages[0].writtenReviewList || [];
-  const writtenReviewList = data?.pages
-    ?.map((page) => page.writtenReviewList)
-    .flat() || [];
+  const writtenReviewList = data?.pages?.map((page) => page.writtenReviewList).flat() || [];
+  // const writtenReviewList = [];
 
   console.log(writtenReviewList)
   useEffect(() => {
@@ -39,7 +37,7 @@ const WrittenReview = ({ onInit }: { onInit: () => void }) => {
         </ul>
           <div ref={ref} className={styles.infiniteTrigger} />
         </>
-        : <EmptyStateReview isWrittenReview />
+        : <EmptyStateReview />
       }
     </article>
   );

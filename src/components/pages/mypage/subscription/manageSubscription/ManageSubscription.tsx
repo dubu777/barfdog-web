@@ -3,17 +3,19 @@ import * as styles from './ManageSubscription.css';
 import { useGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import TabBar from "@/components/common/tabBar/TabBar";
-import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filterBottomSheet/FilterBottomSheet";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 import { MYPAGE_DATE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage";
 
 const ManageSubscription = () => {
   const { data: subscriptionData } = useGetSubscriptionList(0, 100);
-  const subscriptionList = subscriptionData.filter(data => data.recipeNames);
-  const emptyState = subscriptionList.length < 1;
-  const dogNames = subscriptionList.map(subscription => subscription.subscribeDto.dogName);
+
+  const filters = [
+    { key: "date", label: "조회 기간", options: MYPAGE_DATE_FILTERS },
+    { key: "sort", label: "정렬 방식", options: MYPAGE_SORT_FILTERS },
+  ];
 
   const tabs = [
     { label: '전체', value: 'ALL' },
@@ -27,12 +29,19 @@ const ManageSubscription = () => {
     tabs: tabs,
   })
 
-  const filters = [
-    { key: "date", label: "조회 기간", options: MYPAGE_DATE_FILTERS },
-    { key: "sort", label: "정렬 방식", options: MYPAGE_SORT_FILTERS },
-  ];
+  const subscriptionList = subscriptionData.filter(data =>
+    data.recipeNames &&
+    (tabs[defaultTabIndex].value === 'SUBSCRIBING'
+      ? data.subscribeDto.status === tabs[defaultTabIndex].value
+      : true
+    )
+  );
+  const emptyState = subscriptionList.length < 1;
+  const dogNames = subscriptionList.map(subscription => subscription.subscribeDto.dogName);
+
+
   return (
-    <section className={styles.manageSubscriptionContainer}>
+    <section>
       <article className={styles.manageSubscriptionTitle}>
         <DefaultText type='label4' color='gray700'>나의 진행중 구독</DefaultText>
         <DefaultText type='title1' className={styles.manageSubscriptionCount}>총 {subscriptionList.length || 0}건</DefaultText>
@@ -56,7 +65,7 @@ const ManageSubscription = () => {
       <FilterBottomSheet filters={filters} />
       <article className={styles.manageSubscriptionList}>
         {emptyState ?
-          <EmptyStateCard type='default' />
+          <DefaultEmptyState title={`${defaultTabIndex === 1 ? '구독' : '해지'} 내역이 존재하지 않아요`} subTitle='더 행복한 반려견 라이프를 위한 선택, 바프독' />
           : subscriptionList.map(subscriptionDetail => (
             <SubscriptionCard
               key={subscriptionDetail.subscribeDto.subscribeId}
