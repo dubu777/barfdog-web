@@ -1,13 +1,12 @@
 'use client';
 import React, { useEffect } from 'react';
 import * as styles from './Toast.css';
-import { commonLayoutStyle, commonLayoutWidth, ellipsis } from "@/styles/common.css";
+import { ellipsis } from "@/styles/common.css";
 import CloseButton from '/public/images/icons/close.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToastStore } from "@/store/useToastStore";
 import { toastPosition } from "./Toast.css";
-import useDeviceState from "@/hooks/useDeviceState";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface ToastProps {

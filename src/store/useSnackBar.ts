@@ -40,23 +40,20 @@ export const useSnackBarStore = create<SnackBarStore>()((set, get) => ({
       queue: [...state.queue, newItem],
     }));
 
-    // 현재 스낵바가 없다면 즉시 다음 스낵바 표시
+    // 현재 스낵바가 없다면 다음 스낵바 표시
     if (!get().currentSnackBar) {
       get().processNextSnackBar();
     }
   },
 
-  /**
-   * 스낵바 제거
-   * - 애니메이션 시간 고려하여 300ms 후에 다음 스낵바 처리
-   */
+
   removeSnackBar: () => {
     set(() => ({
       currentSnackBar: null,
     }));
     setTimeout(() => {
       get().processNextSnackBar();
-    }, 300);
+    }, 400);
   },
 
   /**
