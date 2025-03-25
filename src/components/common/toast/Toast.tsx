@@ -1,13 +1,14 @@
 'use client';
 import React, { useEffect } from 'react';
 import * as styles from './Toast.css';
-import {commonLayoutStyle, commonLayoutWidth, ellipsis} from "@/styles/common.css";
+import { commonLayoutStyle, commonLayoutWidth, ellipsis } from "@/styles/common.css";
 import CloseButton from '/public/images/icons/close.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToastStore } from "@/store/useToastStore";
 import { toastPosition } from "./Toast.css";
 import useDeviceState from "@/hooks/useDeviceState";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface ToastProps {
   id: string;
@@ -48,7 +49,7 @@ const ToastItem = ({
         </DefaultText>
         {closeButton &&
           <button onClick={onClose}>
-            <CloseButton />
+            <SvgIcon src={CloseButton} />
           </button>
         }
       </motion.div>
@@ -59,12 +60,15 @@ const ToastItem = ({
 const Toast = () => {
   const { currentToast, removeToast } = useToastStore();
   const { isMobileDevice } = useDeviceState();
+
+  const mobileDeviceStyle = isMobileDevice ? commonLayoutWidth.isMobileDevice.true : commonLayoutWidth.isMobileDevice.false;
+
   return (
     <div className={`
       ${styles.toastContainer} 
       ${toastPosition[currentToast?.position || 'bottom']} 
       ${commonLayoutStyle} 
-      ${commonLayoutWidth.isMobileDevice[isMobileDevice]}`
+      ${mobileDeviceStyle}`
     }>
       {currentToast &&
         <ToastItem
@@ -72,7 +76,6 @@ const Toast = () => {
           id={currentToast.id}
           message={currentToast.message}
           duration={currentToast.duration}
-          type={currentToast.type}
           onClose={removeToast}
           closeButton={currentToast.closeButton}
         />

@@ -39,10 +39,15 @@ export const membership = style({
 
 export const membershipInfo = style({
   display: 'flex',
-  justifyContent: 'space-between',
+  flexDirection: 'column',
   borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,
   paddingBottom: '8px',
   marginBottom: '8px',
+})
+
+export const membershipInfoTop = style({
+  display: 'flex',
+  justifyContent: 'space-between',
 })
 
 export const userReward = style({

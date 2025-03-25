@@ -74,7 +74,6 @@ const SetPasswordComponent = () => {
 									placeholder='비밀번호를 입력해주세요.'
 									className={styles.accountInput}
 									error={errors?.password?.message}
-									touched={dirtyFields?.password}
 									{...field}
 								/>
 							</>
@@ -94,7 +93,6 @@ const SetPasswordComponent = () => {
 									placeholder='비밀번호 확인을 입력해주세요.'
 									className={styles.accountInput}
 									error={errors?.confirmPassword?.message}
-									touched={dirtyFields?.confirmPassword}
 									onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
 									{...field}
 								/>

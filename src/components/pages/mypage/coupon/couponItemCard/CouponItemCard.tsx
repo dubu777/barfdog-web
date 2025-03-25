@@ -13,8 +13,8 @@ const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
 
   const couponTargetName = generalTarget ? '일반상품 사용가능' : subscribeTarget ? '정기구독 사용가능' : '전체 사용가능';
   return (
-    <li className={styles.couponItem}>
-      <Card shadow='light'>
+    <li>
+      <Card shadow='light' className={styles.couponItem}>
         <DefaultText type='title1' color='red' className={styles.discount}>
           { won ? `${coupon.discountDegree.toLocaleString()}원 `
             : percent && `${coupon.discountDegree}% `

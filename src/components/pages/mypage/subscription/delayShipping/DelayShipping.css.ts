@@ -2,8 +2,8 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const delayShippingContainer = style({
+	minHeight: 'calc(100vh - 60px)',
 	background: themeVars.colors.gray.gray50,
-	paddingBottom: '150px',
 })
 
 export const userShippingBox = style({
@@ -12,6 +12,8 @@ export const userShippingBox = style({
 
 export const userShippingText = style({
 	padding: '20px',
+	display: 'flex',
+	flexDirection: 'column'
 })
 
 export const dogName = style({
@@ -27,11 +29,15 @@ export const dateBox = style({
 	width: '50%',
 	padding: '8px 20px',
 	background: themeVars.colors.gray.gray0,
+	display: 'flex',
+	flexDirection: 'column'
 })
 
 export const selectShippingBox = style({
 	background: themeVars.colors.gray.gray0,
-	paddingBottom: '40px'
+	paddingBottom: '40px',
+	display: 'flex',
+	flexDirection: 'column'
 })
 
 export const selectShippingText = style({
@@ -42,15 +48,6 @@ export const shippingInfoBox = style({
 	padding: '20px',
 })
 
-export const shippingInfo = style({
-	padding: '12px',
-	border: `1px solid ${themeVars.colors.red.pastelRed}`,
-	background: themeVars.colors.red.pastelPink,
-	display: 'flex',
-	gap: '8px',
-	borderRadius: '8px',
-})
-
-export const infoText = style({
-	width: 'calc(100% - 32px)',
+export const completedBox = style({
+	padding: '20px',
 })

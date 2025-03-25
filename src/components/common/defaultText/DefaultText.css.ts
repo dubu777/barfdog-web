@@ -137,9 +137,18 @@ export const alignStyles = {
   center: style({ textAlign: 'center' }),
   right: style({ textAlign: 'right' }),
 };
+//
+// export const blockStyles = {
+//   true: style({ display: 'inline-block' }),
+//   false: style({ display: 'block' }),
+// }
 
 export const blockStyles = {
   true: style({ display: 'block' }),
+}
+
+export const preLineStyles = {
+  true: style({ whiteSpace: 'pre-line' }),
 }
 
 export const underline = style({

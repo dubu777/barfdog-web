@@ -11,14 +11,11 @@ import Footer from "@/components/layout/footer/Footer";
 import BottomBanner from "@/components/layout/banner/BottomBanner";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Cookies from "js-cookie";
-import {useAuthStore} from "@/store/useAuthStore";
 
 const MainWrapper = () => {
   const { pushWithQuery } = useDynamicQueryPush();
-  const { userInfo } = useAuthStore();
 
   useEffect(() => {
-    Cookies.set('alliance', 'cb');
     if (Cookies.get('alliance')) {
       pushWithQuery('/', {}, ['alliance']);
     }

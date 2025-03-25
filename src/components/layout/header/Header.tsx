@@ -14,7 +14,6 @@ import { useBackNavigation } from "@/utils";
 import { usePathname, useRouter } from "next/navigation";
 import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useCartStore } from "@/store/useCartStore";
 import { isLoggedIn } from "@/utils/auth/isLoggedIn";
 

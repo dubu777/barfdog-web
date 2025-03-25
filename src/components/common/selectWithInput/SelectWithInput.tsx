@@ -1,22 +1,24 @@
 import {
 	customInputStyle,
 	labelArrowIconStyle,
-	selectContainerStyle,
+	selectContainerStyle, selectDropdownFloatingStyle,
 	selectDropdownOptionStyle,
 	selectDropdownStyle,
 	selectLabelStyle
 } from "./SelectWithInput.css";
+import { textStyles } from "@/components/common/defaultText/DefaultText.css";
 import { ChangeEvent, useState } from "react";
 import { motion } from 'framer-motion';
-import ArrowIcon from '/public/images/icons/chevron-right.svg';
+import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { textStyles } from "@/components/common/defaultText/DefaultText.css";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface SelectWithInputProps<T extends { label: string; value: string | number }>{
 	label?: string;
 	value?: string;
 	options: T[];
 	onChange: (value: string) => void;
+	isFloating?: boolean;
 }
 
 export default function SelectWithInput<T extends { label: string; value: string | number }>({
@@ -24,10 +26,11 @@ export default function SelectWithInput<T extends { label: string; value: string
 	value,
 	options = [],
 	onChange,
+	isFloating = false,
 }: SelectWithInputProps<T>) {
 	const [inputValue, setInputValue] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
-
+	const selectedOptionLabel = options?.find(option => option.value === value)?.label;
 	const handleSelectClick = () => {
 		setIsOpen(!isOpen);
 	};
@@ -53,13 +56,13 @@ export default function SelectWithInput<T extends { label: string; value: string
 		<div className={selectContainerStyle}>
 			{label &&
 			<div onClick={handleSelectClick} className={selectLabelStyle({ isOpen })}>
-				<DefaultText type='label2'>{label}</DefaultText>
-				<ArrowIcon className={labelArrowIconStyle({ isOpen })} />
+				<DefaultText type='label2'>{value ? selectedOptionLabel : label}</DefaultText>
+				<SvgIcon src={ArrowRightIcon} className={labelArrowIconStyle({ isOpen })} />
 			</div>
 			}
 			{isOpen && (
 				<motion.div
-					className={selectDropdownStyle}
+					className={`${selectDropdownStyle} ${isFloating ? selectDropdownFloatingStyle : ''}`}
 					initial={{ opacity: 0, y: -20 }}
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -20 }}
@@ -69,6 +72,7 @@ export default function SelectWithInput<T extends { label: string; value: string
 						option.value !== 'custom' ?
 							<div key={option.value} onClick={() => handleSelectChange(option.value as string)}>
 								<DefaultText
+									block
 									type='body2'
 									color={option.value === value ? 'red' : 'gray600'}
 									className={selectDropdownOptionStyle}

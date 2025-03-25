@@ -4,7 +4,8 @@ import Link from "next/link";
 import AccountCircle from '/public/images/myPage/account_circle.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
-import RecommendationCode from "@/components/pages/mypage/layout/recommendationCode/RecommendationCode";
+import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const AccountLinkList = {
 	'user-info': { label: '회원정보 변경' },
@@ -22,7 +23,7 @@ const Account = () => {
 		<section className={styles.accountContainer}>
 			<article className={styles.accountInfo}>
 				<div className={styles.accountImage}>
-					<AccountCircle />
+					<SvgIcon src={AccountCircle} size={80} />
 				</div>
 				<DefaultText type='title1'>{mypageUserInfo?.memberName} 님</DefaultText>
 				<RecommendationCode code={recommendationCode as string} />

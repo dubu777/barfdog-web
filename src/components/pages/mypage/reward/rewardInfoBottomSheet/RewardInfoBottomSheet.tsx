@@ -11,7 +11,7 @@ interface RewardInfoModalProps {
 const RewardInfoBottomSheet = ({ isOpen, onClose }: RewardInfoModalProps) => {
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose} closeButton className={styles.rewardInfoContainer}>
-      <DefaultText type='headline2' className={styles.rewardInfoTitle}>적립금 안내사항</DefaultText>
+      <DefaultText type='headline2' block className={styles.rewardInfoTitle}>적립금 안내사항</DefaultText>
       <div className={styles.rewardInfoContents}>
         <DefaultText type='caption'>• 구매 적립금은 구매 확정 시 지급됩니다.</DefaultText>
         <DefaultText type='caption'>• 리뷰 및 이벤트 참여를 통해 적립금을 받을 수 있으며, 적립 기준은 지급 종류에 따라 상이할 수 있습니다.</DefaultText>
@@ -19,8 +19,8 @@ const RewardInfoBottomSheet = ({ isOpen, onClose }: RewardInfoModalProps) => {
         <DefaultText type='caption'>
           • 아래의 기준에 해당하는 경우 적립금(적립 예정 포함)이 회수처리 될 수 있습니다.
           <div className={styles.rewardSubInfo}>
-            <DefaultText type='caption'>• 후기 작성 기준 미충족</DefaultText>
-            <DefaultText type='caption'>• 상품의 취소/환불/교환</DefaultText>
+            <DefaultText type='caption' block>• 후기 작성 기준 미충족</DefaultText>
+            <DefaultText type='caption' block>• 상품의 취소/환불/교환</DefaultText>
           </div>
         </DefaultText>
         <DefaultText type='caption'>• 아이디가 휴면계정 처리되거나 탈퇴한 경우, 적립금은 소멸됩니다.</DefaultText>

@@ -7,6 +7,7 @@ interface ToastItem {
   message: string;
   duration?: number;
   position?: ToastPosition;
+  closeButton?: boolean;
 }
 
 interface ToastStore {

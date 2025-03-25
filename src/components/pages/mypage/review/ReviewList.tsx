@@ -1,15 +1,15 @@
 'use client';
-import {Suspense, useEffect, useState} from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import * as styles from './ReviewList.css';
+import { Suspense, useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import WritableReview from "@/components/pages/mypage/review/writableReview/WritableReview";
 import WrittenReview from "@/components/pages/mypage/review/writtenReview/WrittenReview";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { usePathname, useSearchParams } from "next/navigation";
 import { prefetchGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
-import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
 
 const ItemTypeFilterList = {
@@ -38,7 +38,6 @@ const Review = () => {
       label={ItemTypeFilterList[searchParams.get("itemType") as keyof typeof ItemTypeFilterList]?.label || "전체보기"}
       options={Object.entries(ItemTypeFilterList).map(([value, { label }]) => ({label, value}))}
       onSelect={(value) => pushWithQuery(pathname, { itemType: value })}
-      position="right"
       className={styles.reviewItemTypeFilter}
     />
   )

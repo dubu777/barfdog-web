@@ -4,7 +4,7 @@ import {
   fontColors,
   alignStyles,
   blockStyles,
-  underline,
+  underline, preLineStyles,
 } from "./DefaultText.css";
 
 interface DefaultTextProps {
@@ -16,6 +16,7 @@ interface DefaultTextProps {
   underLine?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  preLine?: boolean;
 }
 
 const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
@@ -48,6 +49,7 @@ export default function DefaultText({
   underLine = false,
   className,
   style,
+  preLine,
 }: DefaultTextProps) {
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
@@ -55,10 +57,11 @@ export default function DefaultText({
   const underlineStyle = underLine ? underline : "";
   const Tag = tagMap[type] || "span";
   const blockStyle = block ? blockStyles.true : "";
+  const preLineStyle = preLine ? preLineStyles.true : "";
 
   return (
     <Tag
-      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${blockStyle} ${
+      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${blockStyle} ${preLineStyle} ${
         className || ""
       }`}
       style={style}

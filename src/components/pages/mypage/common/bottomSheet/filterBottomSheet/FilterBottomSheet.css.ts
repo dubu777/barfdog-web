@@ -1,0 +1,28 @@
+import { style } from "@vanilla-extract/css";
+
+export const filterBottomSheetContainer = style({
+	padding: '20px 12px 12px 20px'
+})
+
+export const filterBottomSheet = style({
+	padding: '15px 20px 20px',
+	marginBottom: '80px',
+})
+
+export const filterBottomSheetOptions = style({
+	display: 'flex',
+	flexDirection :'column',
+	gap: '20px',
+	marginTop: '31px',
+})
+
+export const filterOptionBox = style({
+	display: 'flex',
+	flexDirection: 'column'
+})
+
+export const filterOption = style({
+	display: 'grid',
+	gap: '10px 8px',
+	marginTop: '10px',
+})

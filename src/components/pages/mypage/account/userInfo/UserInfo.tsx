@@ -19,6 +19,7 @@ import { useToastStore } from "@/store/useToastStore";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { defaultUpdateUserInfoValues, updateUserInfoSchema } from "@/utils/validation/authValidation";
 import { formatDate, formatPhoneNumber } from "@/utils";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const UserInfo = () => {
 	const { data: userInfo } = useGetUserInfo();
@@ -159,7 +160,7 @@ const UserInfo = () => {
 				회원 정보
 			</DefaultText>
 			<div className={styles.uploadProfile}>
-				<ProfileCircle />
+				<SvgIcon src={ProfileCircle} size={89} />
 				<DefaultText type='label4' color='gray600'>프로필 사진</DefaultText>
 			</div>
 			<form className={styles.userInfoForm}>
@@ -169,7 +170,7 @@ const UserInfo = () => {
 					render={({field}) =>
 						<InputField
 							{...field}
-							variants='fillBox'
+							variants='box'
 							placeholder='이름을 입력해주세요.'
 							label='이름'
 							error={errors?.name?.message}
@@ -192,12 +193,10 @@ const UserInfo = () => {
 							}}
 							confirmButton
 							confirmButtonText={!keepCurrentPhoneNumber ? '입력' : '번호변경'}
-							variants='fillBox'
 							placeholder='번호만 입력해주세요'
 							label='연락처'
 							isRequired
 							disabled={keepCurrentPhoneNumber}
-							touched={true}
 							error={errors?.phoneNumber?.message}
 						/>
 					}
@@ -214,7 +213,6 @@ const UserInfo = () => {
 								error={errors?.authNumber?.message}
 								confirmButton
 								confirmButtonText='확인'
-								variants='fillBox'
 								placeholder='인증번호를 입력해주세요'
 							/>
 						}
@@ -226,7 +224,6 @@ const UserInfo = () => {
 					render={({field}) =>
 						<InputField
 							{...field}
-							variants='fillBox'
 							disabled
 							label='이메일'
 							isRequired

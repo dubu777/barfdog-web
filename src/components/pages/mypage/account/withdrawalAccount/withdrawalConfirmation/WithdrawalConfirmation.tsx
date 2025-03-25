@@ -19,6 +19,7 @@ const WithdrawalConfirmation = () => {
 			{
 				onSuccess: (data) => {
 				// 성공시 로그아웃 처리 필요
+					console.log(data)
 				},
 				onError: (error) => {
 					if (axios.isAxiosError(error)) {
@@ -40,7 +41,6 @@ const WithdrawalConfirmation = () => {
 			</div>
 			<InputField
 				type='password'
-				variants='fillBox'
 				placeholder='기존 비밀번호를 입력하세요'
 				label='비밀번호 확인'
 				isRequired
@@ -50,7 +50,6 @@ const WithdrawalConfirmation = () => {
 					setError('');
 				}}
 				onSubmit={password.length > 0 ? handleSubmit : undefined}
-				touched={error.length > 0}
 				error={error}
 			/>
 			<ButtonDocked

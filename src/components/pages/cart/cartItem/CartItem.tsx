@@ -87,7 +87,7 @@ const CartItem = ({ item, options, totalPrice, isSelected, onSelect }: CartItemP
         <button onClick={handleDeleteItem} className={styles.closeBtn}>
           <Image src={CloseButton} alt='close button' width={10} height={10} />
         </button>
-        <Text className={styles.totalPrice} type='title' size='titleMd' weight='bold'>{totalPrice.toLocaleString()}원</Text>
+        <Text type='title' size='titleMd' weight='bold'>{totalPrice.toLocaleString()}원</Text>
       </div>
     </li>
   );

@@ -6,7 +6,7 @@ import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
 import MoreHorizIcon from "/public/images/icons/more_horiz.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
-import ReviewCard from "@/components/pages/mypage/layout/cards/reviewCard/ReviewCard";
+import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 import ReviewImagesModal from "@/components/pages/mypage/review/reviewImagesModal/ReviewImagesModal";
@@ -19,6 +19,7 @@ import { textStyles } from "@/components/common/defaultText/DefaultText.css";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useDeleteReview } from "@/api/review/mutations/useDeleteReview";
 import { prefetchGetReviewDetailImageList } from "@/api/review/queries/useGetReviewDetailImageList";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface ReviewDetailProps {
   reviewId: number;
@@ -71,13 +72,12 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
       <div className={styles.reviewDetailHeader}>
         <DefaultText type='title4'>{formatDate(reviewDetail.writtenDate, 'onlyDate')} 리뷰 완료</DefaultText>
         <Dropdown
-          trigger={<MoreHorizIcon />}
+          trigger={<SvgIcon src={MoreHorizIcon} size={24} />}
           options={[
             { label: "수정하기", value: "edit" },
             { label: "삭제하기", value: "delete" },
           ]}
           onSelect={(value) => handleEditOrDelete(value as 'edit' | 'delete')}
-          position="right"
         />
       </div>
       <article>

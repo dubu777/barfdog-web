@@ -76,14 +76,12 @@ const Authentication = ({ provider }: AuthenticationProps) => {
 					name='password'
 					render={({ field }) => (
 						<InputField
-							variants='fillBox'
 							masking
 							id='password'
 							label='비밀번호 확인'
 							isRequired
 							placeholder='기존 비밀번호를 입력하세요'
 							error={errors?.password?.message}
-							touched={dirtyFields?.password}
 							onSubmit={isValid ? handleSubmit(handleConnectSns) : undefined}
 							{...field}
 						/>

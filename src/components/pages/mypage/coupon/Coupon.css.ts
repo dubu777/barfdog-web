@@ -7,6 +7,8 @@ export const couponContainer = style({
 })
 
 export const applyCouponContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
   padding: '20px',
   background: themeVars.colors.gray.gray0,
 })

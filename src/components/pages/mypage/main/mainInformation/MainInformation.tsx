@@ -3,7 +3,7 @@ import * as styles from "./MainInformation.css";
 import { useEffect } from "react";
 import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
-import ArrowRight from "/public/images/icons/chevron-right.svg";
+import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 import { MyPageMemberDto, MyPageRepresentativeDogDto } from "@/types";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
@@ -11,8 +11,9 @@ import Link from "next/link";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { getNextTierMessage } from "@/utils/mypage/getNextTierMessage";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
-import RecommendationCode from "@/components/pages/mypage/layout/recommendationCode/RecommendationCode";
+import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const MainInformation = () => {
   const { data: myPageData } = useGetMyPageInfo();
@@ -45,18 +46,18 @@ const MainInformation = () => {
             className={styles.accountImage}
           />
           <DefaultText className={styles.userName} type='title1'>{userData.memberName}</DefaultText>
-          <ArrowRight />
+          <SvgIcon src={ArrowRightIcon} size={24} />
         </Link>
       </div>
       <div className={styles.membership}>
         <div className={styles.membershipInfo}>
-          <div>
+          <div className={styles.membershipInfoTop}>
             <DefaultText type='headline1'>{userMembershipTier?.tier} 등급</DefaultText>
-            <DefaultText type='caption' color='red'>{userMembershipTier?.description}</DefaultText>
+            <Link href='/membership'>
+              <DefaultText type='body3' color='gray300'>자세히 보기</DefaultText>
+            </Link>
           </div>
-          <Link href='/membership'>
-            <DefaultText type='body3' color='gray300'>자세히 보기</DefaultText>
-          </Link>
+          <DefaultText type='caption' color='red'>{userMembershipTier?.description}</DefaultText>
         </div>
         <DefaultText type='caption' color='gray500'>
           {getNextTierMessage('SILVER', 2, 90000)}

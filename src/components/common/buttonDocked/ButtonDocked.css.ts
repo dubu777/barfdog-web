@@ -30,12 +30,12 @@ export const containerStyle = {
 
 export const buttonStyle = {
 	sm: style({
-		width: 'calc(100% / 2 - 50px) !important',
+		width: '25% !important',
 	}),
 	md: style({
 		width: 'calc(100% / 2) !important',
 	}),
 	lg: style({
-		width: 'calc(100% / 2 + 50px) !important',
+		width: '75% !important',
 	}),
 }

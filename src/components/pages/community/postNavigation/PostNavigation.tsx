@@ -5,6 +5,7 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Text from "@/components/common/text/Text";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { CommunityCategory, CommunityListItem } from "@/types";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface PostNavigationProps {
   prefetchFn: (queryClient: QueryClient, id: number) => Promise<void>;
@@ -37,7 +38,7 @@ const PostNavigation = ({ prefetchFn, category, prevPost, nextPost }: PostNaviga
           {prevPost &&
           <li className={styles.navigationItem}>
             <Text type='description' size='sm' color='grey' className={styles.navTitle}>
-              다음 글<DownArrow className={styles.prevArrow} />
+              다음 글<SvgIcon src={DownArrow} className={styles.prevArrow} />
             </Text>
             <button onClick={() => handleNavigate(prevPost.id)} className={styles.navLink}>
               <Text type='description' size='sm' color='black'>{prevPost.title}</Text>
@@ -47,7 +48,7 @@ const PostNavigation = ({ prefetchFn, category, prevPost, nextPost }: PostNaviga
           {nextPost &&
           <li className={styles.navigationItem}>
             <Text type='description' size='sm' color='grey' className={styles.navTitle}>
-              이전 글<DownArrow  />
+              이전 글<SvgIcon src={DownArrow} />
             </Text>
             <button onClick={() => handleNavigate(nextPost.id)} className={styles.navLink}>
               <Text type='description' size='sm' color='black'>{nextPost.title}</Text>

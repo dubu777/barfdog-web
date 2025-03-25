@@ -1,6 +1,6 @@
-import HelpIcon from "/public/images/icons/help.svg";
-import InfoIcon from "/public/images/icons/info.svg";
-import ChevronRightIcon from "/public/images/icons/chevron-right.svg";
+import HelpIcon from '/public/images/icons/help.svg';
+import InfoIcon from '/public/images/icons/info.svg';
+import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { themeVars } from "@/styles/theme.css";
 import {
@@ -11,6 +11,8 @@ import {
   infoTextStyle,
 	infoBoxFullWidth,
 } from "@/components/common/infoBox/InfoBox.css";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { COLORS } from '@/constants/style';
 
 interface InfoBoxProps {
   type?: "help" | "info";
@@ -33,12 +35,14 @@ const InfoBox = ({
 	style,
   className,
 }: InfoBoxProps) => {
-  const iconColor =
-    color === "gray"
-      ? themeVars.colors.gray.gray700
-      : color === "red"
-      ? themeVars.colors.red.pastelRed
-      : color === "blue" && themeVars.colors.blue.blue500;
+	const iconColor: keyof typeof COLORS =
+  color === "gray"
+    ? "gray800"
+    : color === "red"
+    ? "pastelRed"
+    : color === "blue"
+    ? "blue500"
+    : "gray800";
 
   return (
     <div
@@ -49,11 +53,7 @@ const InfoBox = ({
 			style={style}
     >
       <div className={infoBoxStyle}>
-        {type === "help" ? (
-          <HelpIcon style={{ color: iconColor }} />
-        ) : (
-          <InfoIcon style={{ color: iconColor }} />
-        )}
+			<SvgIcon src={type === 'help' ? HelpIcon : InfoIcon} color={iconColor} />
         <DefaultText
           type="label4"
           color={color === "gray" ? "gray800" : color}
@@ -64,7 +64,7 @@ const InfoBox = ({
       </div>
       {hasChevron && (
         <button>
-          <ChevronRightIcon />
+          <SvgIcon src={ArrowRightIcon} color={iconColor} />
         </button>
       )}
     </div>
