@@ -168,7 +168,7 @@ interface DefaultAddress {
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
   brochure: boolean;
-  coupons: Coupon[];
+  // coupons: Coupon[];
   defaultAddress: DefaultAddress;
   deliveryId: number;
   deliveryPrice: number;

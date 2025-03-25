@@ -150,7 +150,7 @@ export default function OrderSummary({
             plus
           />
           <OrderSummaryRow label="상품 할인" value={itemDiscountAmount} />
-          <OrderSummaryRow label="배송비" value={deliveryFee} plainColor plus />
+          <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" plainColor plus />
           <OrderSummaryRow
             label="쿠폰 사용"
             value={appliedCoupon?.discountAmount ?? 0}

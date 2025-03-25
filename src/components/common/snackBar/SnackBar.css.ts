@@ -7,7 +7,6 @@ export const snackBarContainer = style({
   transform: 'translateX(-50%)',
   zIndex: 1000,
   width: 'calc(100% - 40px)',
-  minHeight: "48px",
   maxWidth: "560px",
 });
 

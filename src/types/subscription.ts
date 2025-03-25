@@ -36,7 +36,7 @@ export type {
 
 interface SubscriptionOrderSheetResponse {
   brochure: boolean;
-  coupons: Coupon[];
+  // coupons: Coupon[];
   address: DefaultAddress;
   email: string;
   grade: string;

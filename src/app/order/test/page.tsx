@@ -19,7 +19,7 @@ export default function GeneralShopTest() {
     {
       itemDto: {
         itemId: 10,
-        amount: 1,
+        amount: 2,
       },
       itemOptionDtoList: [],
     },

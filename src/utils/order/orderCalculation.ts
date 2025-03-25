@@ -22,8 +22,8 @@ export const orderCalculation = ({
   orderPrice, // 원금
   userTotalReward, // 보유 적립금
   appliedReward, // 적용한 적립금
-  freeCondition, // 배송비 무료 금액
-  deliveryPrice,
+  freeCondition, // 배송비 무료 적용되는 최소 금액
+  deliveryPrice, // 배송비
   orderItemDtoList,
   discountCouponAmount = 0,
   plan,

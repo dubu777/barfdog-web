@@ -37,7 +37,6 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import FooterButton from "@/components/common/footerButton/FooterButton";
-import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
 
 
 

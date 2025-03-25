@@ -21,7 +21,7 @@ interface ToastStore {
 export const useToastStore = create<ToastStore>()((set, get) => ({
   queue: [],
   currentToast: null,
-  addToast: (message, position = 'bottom', duration = 300000, closeButton = false) => {
+  addToast: (message, position = 'bottom', duration = 3000, closeButton = false) => {
     const id = Date.now().toString();
     const newToast = { id, message, position, duration, closeButton };
 

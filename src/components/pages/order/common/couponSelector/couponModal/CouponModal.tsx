@@ -25,6 +25,7 @@ import {
 } from "@/utils/validation/couponValidation";
 import CouponCard from "./couponCard/CouponCard";
 import { useToastStore } from "@/store/useToastStore";
+import { useSnackBarStore } from "@/store/useSnackBar";
 
 interface CouponModalProps {
   orderType: OrderType;
@@ -98,16 +99,25 @@ export default function CouponModal({
     orderType,
     maxAvailableDiscount
   );
+  const { addSnackBar } = useSnackBarStore()
 
   // 쿠폰 코드 제출 함수
   const onCouponFormSubmit = handleSubmit((data) => {
+    addSnackBar({
+      title: "테스트",
+      actionLabel: '실행취소',
+      position: "above-button",
+      onActionClick: () => {
+        console.log("등록 취소");
+      },
+    })
     createCouponMutate(data.code, {
       onSuccess: (res) => {
-        addToast("쿠폰이 등록되었습니다");
+        addToast("쿠폰이 등록되었습니다", 'above-button');
         console.log("등록 성공", res);
       },
       onError: (err) => {
-        addToast("등록되지 않은 코드입니다");
+        addToast("등록되지 않은 코드입니다", 'above-button');
         console.log("등록 실패", err);
       },
     });
