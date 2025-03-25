@@ -19,8 +19,6 @@ import { formatNumberWithCommas } from "@/utils";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
 import { Controller } from "react-hook-form";
-import { useSnackBarStore } from "@/store/useSnackBar";
-import { useRouter } from "next/navigation";
 import {
   couponDefaultValues,
   couponSchema,
@@ -48,9 +46,7 @@ export default function CouponModal({
   orderPrice,
   onClose,
 }: CouponModalProps) {
-  const router = useRouter();
   // 상태 관리 -------->
-  const { addSnackBar } = useSnackBarStore();
   const { addToast } = useToastStore();
   const [selectedCoupon, setSelectedCoupon] = useState<SelectedCoupon | null>(
     null
