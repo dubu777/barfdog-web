@@ -2,7 +2,6 @@ import HelpIcon from '/public/images/icons/help.svg';
 import InfoIcon from '/public/images/icons/info.svg';
 import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { themeVars } from "@/styles/theme.css";
 import {
   infoBoxBase,
   infoBoxClickEvent,
@@ -17,7 +16,7 @@ import { COLORS } from '@/constants/style';
 interface InfoBoxProps {
   type?: "help" | "info";
   color?: "red" | "blue" | "gray";
-  hasChevron?: boolean;
+  showRightArrowButton?: boolean;
   text: string;
 	fullWidth?: boolean;
   onClick?: () => void;
@@ -28,7 +27,7 @@ interface InfoBoxProps {
 const InfoBox = ({
   type = "info",
   color = "gray",
-  hasChevron = false,
+  showRightArrowButton = false,
   text,
 	fullWidth = false,
   onClick,
@@ -62,7 +61,7 @@ const InfoBox = ({
           {text}
         </DefaultText>
       </div>
-      {hasChevron && (
+      {showRightArrowButton && (
         <button>
           <SvgIcon src={ArrowRightIcon} color={iconColor} />
         </button>
