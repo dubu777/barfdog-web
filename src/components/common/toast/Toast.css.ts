@@ -6,7 +6,8 @@ export const toastContainer = style({
   left: "50%",
   transform: "translateX(-50%)",
   zIndex: 1000,
-  maxWidth: "560px",
+  width: 'calc(100% - 40px)',
+  maxWidth: "560px"
 })
 
 export const toastPosition = {
