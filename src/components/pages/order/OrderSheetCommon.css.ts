@@ -40,3 +40,8 @@ export const orderSheetContentBox = style({
   alignItems: "center",
   alignSelf: "stretch",
 });
+
+export const inputButtonWrapper = style({
+  height: "48px",
+  width: "84px",
+});

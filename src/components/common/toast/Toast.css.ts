@@ -23,7 +23,7 @@ export const toast = style({
   background: themeVars.colors.dimmed.gray80,
   color: themeVars.colors.gray.gray0,
   borderRadius: '8px',
-  boxShadow: '-1px -1px 2px 0px rgba(255, 255, 255, 0.08) inset, 0px 1px 4px 0px rgba(0, 0, 0, 0.08), 0px 2px 10px 0px rgba(0, 0, 0, 0.10)',
+  boxShadow: themeVars.shadow.normal,
   fontSize: '14px',
   textAlign: 'left',
   width: '100%',

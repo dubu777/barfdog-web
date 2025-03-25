@@ -21,18 +21,10 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
 import * as yup from "yup";
 import { Controller } from "react-hook-form";
+import { useSnackBarStore } from "@/store/useSnackBar";
+import { useRouter } from "next/navigation";
+import { couponDefaultValues, couponSchema } from "@/utils/validation/couponValidation";
 
-const couponSchema = yup.object().shape({
-  code: yup
-    .string()
-    .max(20, "20자 이하 입력 가능합니다.")
-    .matches(/^[A-Za-z0-9]+$/, "특수문자는 입력할 수 없습니다.")
-    .required("쿠폰 코드를 입력해주세요."),
-});
-
-const couponDefaultValues = {
-  code: "",
-};
 
 interface NewCouponModalProps {
   orderType: OrderType;
@@ -54,7 +46,9 @@ export default function NewCouponModal({
   orderPrice,
   onClose,
 }: NewCouponModalProps) {
+  const router = useRouter();
   // 상태 관리 -------->
+  const {addSnackBar} = useSnackBarStore();
   const [selectedCoupon, setSelectedCoupon] = useState<SelectedCoupon | null>(
     null
   );
@@ -63,30 +57,20 @@ export default function NewCouponModal({
   const maxAvailableDiscount = useDiscountStore(
     (state) => state.maxAvailableDiscount
   );
-  // <--------- 상태관리
-  // 서버 호출 react query -------->
+
+  // 서버 호출 -------->
   const { mutate: createCouponMutate } = useApplyCoupon();
 
-  // 커스텀 훅 ------->
+  // 커스텀 훅 & 유틸------->
+  // 쿠폰 등록 input field 관리
+
   const { control, handleSubmit, setValue } = useFormHandler(
     couponSchema,
     couponDefaultValues,
     "onBlur"
   );
 
-  const sortedCoupons = sortCoupons(
-    coupons,
-    orderPrice,
-    orderType,
-    maxAvailableDiscount
-  );
-
-  const onCouponFormSubmit = handleSubmit((data) => {
-    createCouponMutate(data.code);
-    setValue("code", "");
-  });
-
-  // useToggleOption은 couponId(숫자)를 기준으로 토글 관리
+  // 토글 관리 훅 (couponId를 기준으로)
   const { onToggle, isSelected } = useToggleOption<number>(
     selectedCoupon ? selectedCoupon.couponId : null,
     "selectionBox",
@@ -108,6 +92,74 @@ export default function NewCouponModal({
       }
     }
   );
+
+  // 쿠폰 정렬 유틸 함수
+  const sortedCoupons = sortCoupons(
+    coupons,
+    orderPrice,
+    orderType,
+    maxAvailableDiscount
+  );
+
+  // 쿠폰 코드 제출 함수
+  const onCouponFormSubmit = handleSubmit((data) => {
+    addSnackBar({
+      title: '쿠폰을 등록하시겠습니까?',
+      caption: '실행취소를 누르면 되돌릴 수 있습니다.',
+      actionLabel: '실행취소',
+      onActionClick: () => {
+        // 사용자가 4초 내에 "실행취소"를 누르면 -> 삭제 취소
+        console.log("등록 취소");
+      },
+      onAutoHide: () => {
+        // 4초 동안 실행취소를 누르지 않으면 -> 진짜 서버호출(삭제) 실행
+        console.log('등록 요청');
+        createCouponMutate(data.code, {
+          onSuccess: (res) => {
+            console.log('등록 성공',res);
+          },
+          onError: (res) => {
+        addSnackBar({
+          title: '등록실패',
+          actionLabel: '이동',
+          onActionClick: () => {
+            router.push('/');
+          },
+          // 이동의 경우 onAutoHide가 꼭 필요하지 않을 수 있음
+          duration: 4000,
+        });
+          }
+        })
+        console.log('서버에 요청');
+      },
+      duration: 4000, // 기본 4초
+    });
+    // createCouponMutate(data.code, {
+    //   onSuccess: (res) => {
+    //     console.log("등록 성공", res);
+    //   },
+    //   onError: () => {
+    //     console.log(">>>>>>>>>>>>>>");
+        
+    //     addSnackBar({
+    //       title: '새로운 플랜이 적용되었습니다.',
+    //       caption: '지금 확인해보세요.',
+    //       actionLabel: '이동',
+    //       onActionClick: () => {
+    //         router.push('/');
+    //       },
+    //       // 이동의 경우 onAutoHide가 꼭 필요하지 않을 수 있음
+    //       duration: 4000,
+    //     });
+    //   },
+    // });
+    setValue("code", "");
+  });
+
+  const handleModalClose = () => {
+    setValue("code", "");
+    onClose();
+  };
 
   useEffect(() => {
     if (appliedCoupon) {
@@ -134,8 +186,12 @@ export default function NewCouponModal({
   };
 
   return (
-    <ModalBackground isVisible={isOpen} onClose={onClose}>
-      <NewHeader centerTitle="쿠폰" showCloseButton onClose={onClose} />
+    <ModalBackground isVisible={isOpen} onClose={handleModalClose}>
+      <NewHeader
+        centerTitle="쿠폰"
+        showCloseButton
+        onClose={handleModalClose}
+      />
       <div
         className={styles.couponModalContainer}
         onClick={(e) => e.stopPropagation()}
@@ -158,6 +214,7 @@ export default function NewCouponModal({
               <Button
                 type="primary"
                 variant="solid"
+                size="inputButton"
                 buttonColor="gray800"
                 onClick={onCouponFormSubmit}
               >

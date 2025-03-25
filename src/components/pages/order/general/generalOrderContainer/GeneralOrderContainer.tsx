@@ -181,6 +181,7 @@ export default function GeneralOrderContainer() {
       /> */}
       <Divider />
       <RewardUsage
+        orderType={ORDER_TYPE.GENERAL}
         control={control}
         setValue={setValue}
         maxAvailableReward={maxAvailableReward}

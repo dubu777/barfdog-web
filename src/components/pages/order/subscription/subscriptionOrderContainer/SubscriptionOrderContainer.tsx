@@ -61,22 +61,24 @@ export default function SubscriptionOrderContainer({
   const router = useRouter();
   // 상태관리 ------>
   const getRequestBody = useOrderStore((state) => state.getRequestBody);
-  const maxAvailableReward = useRewardStore((state) => state.maxAvailableReward);
+  const maxAvailableReward = useRewardStore(
+    (state) => state.maxAvailableReward
+  );
   const paymentPrice = useDiscountStore((state) => state.paymentPrice);
   // <------- 상태관리
 
-    // 서버 호출 react query ------->
+  // 서버 호출 react query ------->
   const { data: subscriptionOrderSheetData } =
     useGetSubscriptionOrder(subscribeId);
-    const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
-    const { mutateAsync: createIamportPayment } =
+  const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
+  const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment();
-    const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
-    const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
-    const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
-    const { mutateAsync: failPayment } = useFailSubscriptionPayment();
-    console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
-  // <------- 서버 호출 
+  const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
+  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
+  const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
+  const { mutateAsync: failPayment } = useFailSubscriptionPayment();
+  console.log("subscriptionOrderSheetData", subscriptionOrderSheetData);
+  // <------- 서버 호출
 
   // 커스텀 훅 & 유틸 함수 ------>
   const { requestIamportPayment } = usePayment();
@@ -89,10 +91,9 @@ export default function SubscriptionOrderContainer({
     getOrderSchema(maxAvailableReward),
     defaultOrderValues
   );
-   // <------- 커스텀 훅 & 유틸 함수 
+  // <------- 커스텀 훅 & 유틸 함수
 
-
-  // 결제 함수 ========>  
+  // 결제 함수 ========>
   // 구독 구매 페이지 정보 초기값 없데이트
   useUpdateSubscriptionOrderBody(subscriptionOrderSheetData);
 
@@ -241,7 +242,7 @@ export default function SubscriptionOrderContainer({
   // <========== 결제 함수
   return (
     <>
-      <DeliveryAddress/>
+      <DeliveryAddress />
       <Divider />
       <SubscriptionOrderItemList
         subscriptionOrderSheetData={subscriptionOrderSheetData}
@@ -255,6 +256,7 @@ export default function SubscriptionOrderContainer({
       />
       <Divider />
       <RewardUsage
+        orderType={ORDER_TYPE.SUBSCRIPTION}
         control={control}
         setValue={setValue}
         maxAvailableReward={maxAvailableReward}
@@ -276,10 +278,7 @@ export default function SubscriptionOrderContainer({
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <FooterButton
-        isDisabled={false}
-        onClick={handlePaymentSubmit}
-      >
+      <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
         {formatNumberWithCommas(paymentPrice)}원 결제하기
       </FooterButton>
     </>

@@ -7,6 +7,7 @@ import { Inter } from "next/font/google";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import Toast from "@/components/common/toast/Toast";
 import Script from "next/script";
+import SnackBar from "@/components/common/snackBar/SnackBar";
 
 export const metadata: Metadata = {
   title: "바프독",
@@ -60,6 +61,7 @@ export default function RootLayout({
           <div className={`${commonLayoutContainer} ${inter.className}`}>
             {children}
           </div>
+          <SnackBar />
           <Toast />
           <div id="modal-root" />
         </ReactQueryProvider>

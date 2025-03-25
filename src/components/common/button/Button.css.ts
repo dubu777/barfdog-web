@@ -21,7 +21,7 @@ export const textStyle = style({
 export const buttonSizes = {
   sm: style({
     padding: "6px 16px",
-    minHeight: "36px",
+    height: "36px",
     borderRadius: "8px",
     fontWeight: themeVars.typography.headline.headline4.fontWeight,
     fontSize: themeVars.typography.headline.headline4.fontSize,
@@ -30,7 +30,7 @@ export const buttonSizes = {
   }),
   md: style({
     padding: "10px 24px",
-    minHeight: "44px",
+    height: "44px",
     borderRadius: "8px",
     fontWeight: themeVars.typography.headline.headline3.fontWeight,
     fontSize: themeVars.typography.headline.headline3.fontSize,
@@ -39,7 +39,17 @@ export const buttonSizes = {
   }),
   lg: style({
     padding: "12px 28px",
-    minHeight: "48px",
+    height: "48px",
+    borderRadius: "8px",
+    fontWeight: themeVars.typography.headline.headline3.fontWeight,
+    fontSize: themeVars.typography.headline.headline3.fontSize,
+    lineHeight: themeVars.typography.headline.headline3.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline3.letterSpacing,
+  }),
+  inputButton: style({
+    padding: "12px 30px",
+    width: "84px",
+    height: "48px",
     borderRadius: "8px",
     fontWeight: themeVars.typography.headline.headline3.fontWeight,
     fontSize: themeVars.typography.headline.headline3.fontSize,
