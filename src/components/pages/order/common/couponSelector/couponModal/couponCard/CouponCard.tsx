@@ -36,14 +36,14 @@ export default function CouponCard({
   const maxAvailableDiscount = useDiscountStore(
     (state) => state.maxAvailableDiscount
   );
-  const { discountAmount, exceededAvailableMexDiscount } =
+  const { discountBasedOnCoupon } =
     calculateCouponDiscount(orderPrice, coupon, maxAvailableDiscount);
   const { usable, reasons } = isCouponUsable(coupon, orderPrice, orderType);
 
   const discountText =
     discountType === "FIXED_RATE"
-      ? `${formatNumberWithCommas(discountAmount)}원 (${discountDegree}%)`
-      : `${formatNumberWithCommas(discountAmount)}원`;
+      ? `${formatNumberWithCommas(discountBasedOnCoupon)}원 (${discountDegree}%)`
+      : `${formatNumberWithCommas(discountBasedOnCoupon)}원`;
   const couponTargetText = getCouponTargetText(coupon.couponTarget);
   return (
     <div className={styles.couponCardContainer({ isSelected })}>

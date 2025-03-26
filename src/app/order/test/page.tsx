@@ -31,14 +31,6 @@ export default function GeneralShopTest() {
     router.push("/order/checkout/general");
   };
 
-  // const handleGetCookie = () => {
-  //   console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
-  // };
-  // const handleDeleteCookie = () => {
-  //   deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-  //   console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
-  // };
-
   const handleRequest = async () => {
     try {
       const response = await axiosInstance.get("/api/planDiscount");
@@ -106,8 +98,6 @@ export default function GeneralShopTest() {
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-      {/* <Button onClick={handleGetCookie}>토큰 값 가져오기</Button> */}
-      {/* <Button onClick={handleDeleteCookie}>토큰 지우기</Button> */}
       <Button onClick={handleWrongTokenRefreshTest}>잘못된 토큰으로 재발급 테스트</Button>
       <Button onClick={handleOldTokenRefreshTest}>만료된 토큰으로 재발급 테스트</Button>
       <Button onClick={handleRequest}>서버 요청 테스트</Button>

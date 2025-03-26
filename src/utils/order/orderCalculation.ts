@@ -1,15 +1,15 @@
 import { ORDER_TYPE } from "@/constants";
 import { IAMPORT_MIN_PAYMENT_PRICE } from "@/constants/payment";
-import { SaveSubscriptionOrderRequest, GeneralOrderItem, OrderType } from "@/types";
+import { GeneralOrderItem, OrderType } from "@/types";
 
 interface OrderCalculationProps {
   orderType: OrderType;
-  subscriptionOrderBody: SaveSubscriptionOrderRequest;
   userTotalReward: number;
   appliedReward: number;
   orderPrice: number;
   freeCondition?: number;
   deliveryPrice?: number;
+  discountGrade?: number;
   orderItemDtoList?: GeneralOrderItem[];
   discountCouponAmount?: number;
   plan?: string;
@@ -18,12 +18,12 @@ interface OrderCalculationProps {
 
 export const orderCalculation = ({
   orderType,
-  subscriptionOrderBody,
   orderPrice, // 원금
   userTotalReward, // 보유 적립금
   appliedReward, // 적용한 적립금
   freeCondition, // 배송비 무료 적용되는 최소 금액
   deliveryPrice, // 배송비
+  discountGrade, // 등급 할인 금액
   orderItemDtoList,
   discountCouponAmount = 0,
   plan,
@@ -49,7 +49,7 @@ export const orderCalculation = ({
   // 등급 할인 금액
   const calculateGradeDiscount = (): number => {
     return orderType === ORDER_TYPE.SUBSCRIPTION
-      ? subscriptionOrderBody?.discountGrade ?? 0
+      ? discountGrade ?? 0
       : 0;
   };
 
@@ -92,10 +92,13 @@ const calculateTotalDiscountWithoutPlan = (): number => {
 const calculateMaxAvailableDiscount = () => {
   const finalPaymentAmount = calculateFinalPaymentAmount();
   const deliveryFee = calculateDeliveryFee();
-
+  
   // 배송비가 있으면 최소 결제 금액 제한 없음, 없으면 제한 적용
   const minPaymentThreshold = deliveryFee > 0 ? 0 : IAMPORT_MIN_PAYMENT_PRICE;
-  const availableMaxDiscount = finalPaymentAmount - minPaymentThreshold;
+
+  // 최종 결제 금액에서 배송비를 제외한 값
+  const baseAmount = finalPaymentAmount - deliveryFee;
+  const availableMaxDiscount = baseAmount - minPaymentThreshold;
 
   return Math.max(availableMaxDiscount, 0);
 };

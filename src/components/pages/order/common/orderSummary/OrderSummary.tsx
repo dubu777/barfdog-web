@@ -8,7 +8,6 @@ import { formatNumberWithCommas } from "@/utils";
 import { useEffect, useMemo } from "react";
 import { useRewardStore } from "@/store/order/useRewardStore";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
-import { useOrderStore } from "@/store/order/useOrderStore";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import OrderSummaryRow from "./orderSummaryRow/OrderSummaryRow";
@@ -18,10 +17,11 @@ import InfoBox from "@/components/common/infoBox/InfoBox";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
-  originPrice: number;
+  originPrice: number; // 원금
   appliedDefaultDiscountPrice: number; // 일반 주문이라면 상품할인, 구독 주문이라면 플랜할인이 적용된 가격 - 이 가격에 쿠폰 및 등급할인을 적용한다.
-  freeCondition?: number;
+  freeCondition?: number; // 배송비 무료를 위한 최소 금액
   deliveryPrice?: number;
+  discountGrade?: number; // 등급 할인 금액
   orderItemDtoList?: GeneralOrderItem[];
   plan?: string;
 }
@@ -32,16 +32,13 @@ export default function OrderSummary({
   appliedDefaultDiscountPrice,
   freeCondition,
   deliveryPrice,
+  discountGrade,
   orderItemDtoList,
   plan,
 }: OrderSummaryPropsProps) {
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
     useRewardStore();
   const appliedCoupon = useCouponStore((state) => state.appliedCoupon);
-  const subscriptionOrderBody = useOrderStore(
-    (state) => state.subscriptionOrderBody
-  );
-  console.log("subscriptionOrderBody", subscriptionOrderBody);
 
   const {
     setPaymentPrice,
@@ -55,7 +52,7 @@ export default function OrderSummary({
   const calculation = useMemo(() => {
     return orderCalculation({
       orderType,
-      subscriptionOrderBody,
+      discountGrade,
       isBundleDelivery,
       userTotalReward,
       appliedReward,
@@ -68,7 +65,7 @@ export default function OrderSummary({
     });
   }, [
     orderType,
-    subscriptionOrderBody,
+    discountGrade,
     isBundleDelivery,
     userTotalReward,
     appliedReward,

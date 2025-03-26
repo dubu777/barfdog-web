@@ -270,6 +270,7 @@ export default function SubscriptionOrderContainer({
         appliedDefaultDiscountPrice={originPrice}
         freeCondition={undefined}
         deliveryPrice={undefined}
+        discountGrade={subscriptionOrderSheetData.subscribeDto.discountGrade}
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />
       <Divider />

@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { MouseEvent, ReactNode } from "react";
 import * as styles from "./FooterButton.css";
 import Button from "@/components/common/button/Button";
 
@@ -8,7 +8,7 @@ import Button from "@/components/common/button/Button";
 interface FooterButtonProps {
   children: ReactNode;
   isDisabled: boolean;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function FooterButton({children, isDisabled, onClick}: FooterButtonProps) {
