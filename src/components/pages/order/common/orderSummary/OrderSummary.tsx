@@ -38,13 +38,16 @@ export default function OrderSummary({
 }: OrderSummaryPropsProps) {
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
     useRewardStore();
-  const appliedCoupon = useCouponStore((state) => state.appliedCoupon);
-
+  const { appliedCoupon, setMaxAvailableCouponDiscount } = useCouponStore(
+    (state) => ({
+      appliedCoupon: state.appliedCoupon,
+      setMaxAvailableCouponDiscount: state.setMaxAvailableCouponDiscount,
+    })
+  );
   const {
     setPaymentPrice,
     setDeliveryPrice,
     setDiscountTotal,
-    setMaxAvailableDiscount,
     setDiscountPlan,
   } = useDiscountStore();
   const isBundleDelivery = useDeliveryStore((state) => state.isBundleDelivery);
@@ -84,19 +87,19 @@ export default function OrderSummary({
     planDiscount,
     totalDiscount,
     totalDiscountWithoutPlan,
-    maxAvailableDiscount,
     maxAvailableReward,
+    maxAvailableCoupon,
   } = calculation;
 
   useEffect(() => {
-    setMaxAvailableDiscount(maxAvailableDiscount);
+    setMaxAvailableCouponDiscount(maxAvailableCoupon);
     setMaxAvailableReward(maxAvailableReward);
     setDeliveryPrice(deliveryFee);
     // 현재 서버에는 플랜 할인이 포함되지 않은 할인 금액을 보내야 함
     setDiscountTotal(totalDiscountWithoutPlan);
     setDiscountPlan(planDiscount);
     setPaymentPrice(finalPaymentAmount);
-  }, [maxAvailableDiscount, maxAvailableReward, finalPaymentAmount]);
+  }, [maxAvailableCoupon, maxAvailableReward, finalPaymentAmount]);
 
   const itemDiscountAmount = originPrice - appliedDefaultDiscountPrice;
   return (
@@ -147,7 +150,13 @@ export default function OrderSummary({
             plus
           />
           <OrderSummaryRow label="상품 할인" value={itemDiscountAmount} />
-          <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" plainColor plus />
+          <OrderSummaryRow
+            label="배송비"
+            value={deliveryFee}
+            freeText="무료"
+            plainColor
+            plus
+          />
           <OrderSummaryRow
             label="쿠폰 사용"
             value={appliedCoupon?.discountAmount ?? 0}
@@ -156,7 +165,7 @@ export default function OrderSummary({
           <OrderSummaryRow label="결제 금액" value={finalPaymentAmount} plus />
           <Divider thickness={1} color="gray300" />
           <OrderSummaryRow
-            label="결제 금액"
+            label="1회차 결제 금액"
             value={finalPaymentAmount}
             valueType="title4"
             plus
@@ -169,6 +178,7 @@ export default function OrderSummary({
             fullWidth
             style={{ marginTop: "8px" }}
           />
+          {/* 2회차 예상 결제금액 만들기 */}
         </div>
       )}
     </OrderSection>

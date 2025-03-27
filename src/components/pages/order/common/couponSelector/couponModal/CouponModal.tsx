@@ -4,7 +4,7 @@ import NewHeader from "@/components/layout/newHeader/NewHeader";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
-import { ORDER_MESSAGE } from "@/constants";
+import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import { Coupon, OrderType } from "@/types";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ import {
   sortCoupons,
 } from "@/utils/coupon/couponUtils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
-import { formatNumberWithCommas } from "@/utils";
+import { formatNumberWithCommas, orderCalculation } from "@/utils";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
 import { Controller } from "react-hook-form";
@@ -27,7 +27,6 @@ import CouponCard from "./couponCard/CouponCard";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/modal/Modal";
-import { number } from "yup";
 
 interface CouponModalProps {
   orderType: OrderType;
@@ -46,7 +45,9 @@ export default function CouponModal({
 }: CouponModalProps) {
   // 상태 관리 -------->
   // discountBasedOnCoupon 상태값 저장
-  const [discountCouponAmount, setDiscountCouponAmount] = useState<number>(0);
+  const [discountOnCoupon, setDiscountOnCoupon] = useState<number>(0);
+  const [discountOnCouponAndGlobal, setDiscountOnCouponAndGlobal] =
+    useState<number>(0);
   const { addToast } = useToastStore();
   const {
     selectedCoupon,
@@ -54,14 +55,11 @@ export default function CouponModal({
     appliedCoupon,
     setAppliedCoupon,
     cancelAppliedCoupon,
+    maxAvailableCouponDiscount,
   } = useCouponStore();
+  console.log("discountOnCoupon", discountOnCoupon);
   console.log("appliedCoupon", appliedCoupon);
-  console.log("selectedCoupon", selectedCoupon);
 
-  const maxAvailableDiscount = useDiscountStore(
-    (state) => state.maxAvailableDiscount
-  );
-  console.log("maxAvailableDiscount", maxAvailableDiscount);
 
   // 서버 호출 -------->
   const { mutate: createCouponMutate } = useApplyCoupon();
@@ -92,8 +90,9 @@ export default function CouponModal({
         );
         if (coupon) {
           const { discountBasedOnCoupon, discountBasedOnCouponAndGlobal } =
-            calculateCouponDiscount(orderPrice, coupon, maxAvailableDiscount);
-          setDiscountCouponAmount(discountBasedOnCoupon);
+            calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount);
+          setDiscountOnCoupon(discountBasedOnCoupon);
+          setDiscountOnCouponAndGlobal(discountBasedOnCouponAndGlobal);
           setSelectedCoupon({
             couponId: newCouponId,
             discountAmount: discountBasedOnCouponAndGlobal,
@@ -108,22 +107,19 @@ export default function CouponModal({
     coupons,
     orderPrice,
     orderType,
-    maxAvailableDiscount
+    maxAvailableCouponDiscount
   );
 
-  // 쿠폰 코드 제출 함수
+  // 쿠폰 등록 함수
   const onCouponFormSubmit = handleSubmit((data) => {
     createCouponMutate(data.code, {
-      onSuccess: (res) => {
+      onSuccess: () => {
         addToast("쿠폰이 등록되었습니다", "above-button");
-        console.log("등록 성공", res);
       },
-      onError: (err) => {
+      onError: () => {
         addToast("등록되지 않은 코드입니다", "above-button");
-        console.log("등록 실패", err);
       },
     });
-    console.log("서버에 요청");
     setValue("code", "");
   });
 
@@ -133,7 +129,14 @@ export default function CouponModal({
     onClose();
   };
 
-  // console.log('>>>>>>>>>', selectedCoupon);
+  const handleConfirmCoupon = () => {
+    onErrorModalClose();
+  };
+
+  const handleCancelCoupon = () => {
+    setAppliedCoupon(null);
+    onErrorModalClose();
+  };
 
   const handleApplyCoupon = () => {
     if (!selectedCoupon) {
@@ -143,13 +146,11 @@ export default function CouponModal({
       onClose();
       return;
     }
-    // 적용가능 금액이 0원이면 에러 모달 노출
-    if (selectedCoupon.discountAmount === 0) {
+    setAppliedCoupon(selectedCoupon);
+    if (discountOnCoupon > discountOnCouponAndGlobal) {
       onErrorModalToggle();
       return;
     }
-    // 선택된 쿠폰이 있을 경우 적용
-    setAppliedCoupon(selectedCoupon);
     onClose();
   };
 
@@ -208,17 +209,23 @@ export default function CouponModal({
                 orderPrice={orderPrice}
                 onToggle={onToggle}
                 isSelected={isSelected(coupon.memberCouponId)}
+                maxAvailableCouponDiscount={maxAvailableCouponDiscount}
               />
             ))}
           </div>
         </div>
       </div>
       <Modal
-        title="쿠폰 사용이 불가능해요"
-        content="최소결제금액에 도달하여, 할인 쿠폰을 적용할 수 없습니다."
-        confirmText="확인"
+        title={`쿠폰 사용 시 ${formatNumberWithCommas(
+          discountOnCouponAndGlobal
+        )}원이 할인돼요`}
+        content="쿠폰의 일부 금액만 할인이 적용됩니다. 사용하시겠어요?"
+        confirmText="사용"
+        cancelText="취소"
         isOpen={isErrorModalOpen}
         onClose={onErrorModalClose}
+        onConfirm={handleConfirmCoupon}
+        onCancel={handleCancelCoupon}
       />
       <FooterButton
         isDisabled={false}
@@ -228,7 +235,7 @@ export default function CouponModal({
         }}
       >
         {selectedCoupon
-          ? `${formatNumberWithCommas(discountCouponAmount)}원 사용하기`
+          ? `${formatNumberWithCommas(discountOnCoupon)}원 사용하기`
           : "사용 취소하기"}
       </FooterButton>
     </ModalBackground>

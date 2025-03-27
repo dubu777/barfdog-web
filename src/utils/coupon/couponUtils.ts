@@ -53,7 +53,7 @@ export function getAvailableCoupons(coupons: Coupon[], orderPrice: number, order
  * 쿠폰 할인 금액 계산 함수
  * @param orderPrice - 주문 금액
  * @param coupon - 쿠폰 정보 객체
- * @param maxAvailableDiscount - 전역 최대 할인 금액 (예: useDiscountStore()에서 가져온 값)
+ * @param maxAvailableCouponDiscount - 전역 최대 쿠폰 할인 금액
  * @returns 쿠폰 할인 계산 결과 객체
  *          - discountBasedOnCoupon: 쿠폰의 최대 할인 금액만 고려
  *          - discountBasedOnCouponAndGlobal: 쿠폰의 최대 할인 금액과 전역 최대 할인 금액을 고려
@@ -61,7 +61,7 @@ export function getAvailableCoupons(coupons: Coupon[], orderPrice: number, order
 export function calculateCouponDiscount(
   orderPrice: number,
   coupon: Coupon,
-  maxAvailableDiscount: number
+  maxAvailableCouponDiscount: number
 ): { discountBasedOnCoupon: number; discountBasedOnCouponAndGlobal: number } {
   let calculatedDiscount = 0;
 
@@ -82,7 +82,7 @@ export function calculateCouponDiscount(
   const discountBasedOnCoupon = Math.min(calculatedDiscount, coupon.availableMaxDiscount);
   
   // 쿠폰 제한과 전역 최대 할인 금액 제한을 모두 적용한 할인 금액 계산
-  const discountBasedOnCouponAndGlobal = Math.min(discountBasedOnCoupon, maxAvailableDiscount);
+  const discountBasedOnCouponAndGlobal = Math.min(discountBasedOnCoupon, maxAvailableCouponDiscount);
 
   return { discountBasedOnCoupon, discountBasedOnCouponAndGlobal };
 }
@@ -97,20 +97,20 @@ export function calculateCouponDiscount(
  * @param coupons - 정렬할 쿠폰 배열
  * @param orderPrice - 주문 금액
  * @param orderType - 주문 타입 (쿠폰 대상과 비교)
- * @param maxAvailableDiscount - 전역 최대 할인 금액
+ * @param maxAvailableCouponDiscount - 전역 최대 할인 금액
  * @returns 정렬된 쿠폰 배열
  */
 export function sortCoupons(
   coupons: Coupon[],
   orderPrice: number,
   orderType: OrderType,
-  maxAvailableDiscount: number
+  maxAvailableCouponDiscount: number
 ): Coupon[] {
   // 미리 계산된 값을 이용하여 정렬 효율 개선
   const computedCoupons = coupons.map((coupon) => ({
     coupon,
     usable: isCouponUsable(coupon, orderPrice, orderType).usable,
-    discount: calculateCouponDiscount(orderPrice, coupon, maxAvailableDiscount).discountBasedOnCoupon,
+    discount: calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount).discountBasedOnCoupon,
     expiry: new Date(coupon.expiredDate).getTime(),
   }));
 

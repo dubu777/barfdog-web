@@ -61,8 +61,7 @@ const ConnectSns = () => {
 					primaryButtonLabel={!snsProvider ? '연동 하러가기' : '연동 해제하기'}
 				/>
 			</div>
-			<BottomSheet isOpen={isOpen} onClose={onClose} closeButton>
-				<DefaultText type='title4' className={styles.connectSnsBottomSheet}>SNS 연동하러가기</DefaultText>
+			<BottomSheet isOpen={isOpen} onClose={onClose} title='SNS 연동하러가기'>
 				<div className={styles.connectSnsBox}>
 					<button onClick={() => handleMoveToAuthentication('naver')}><NaverLogin /></button>
 					<button onClick={() => handleMoveToAuthentication('kakao')}><KakaoLogin /></button>

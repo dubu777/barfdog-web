@@ -61,7 +61,7 @@ export default function Modal({
 
   return (
     <ModalBackground isVisible={isOpen} onClose={onClose}>
-      <div className={styles.modalContainer}>
+      <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalContentWrapper}>
           <DefaultText type="title4">{title}</DefaultText>
           <DefaultText type="body2">{content}</DefaultText>

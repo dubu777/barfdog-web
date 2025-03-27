@@ -6,10 +6,15 @@ import { useEffect } from "react";
 interface ModalBackgroundProps {
   children: React.ReactNode;
   isVisible: boolean;
+  closeOnBackgroundClick?: boolean;
   onClose: () => void;
 }
-
-export default function ModalBackground({ children, isVisible, onClose }: ModalBackgroundProps) {
+export default function ModalBackground({
+  children,
+  isVisible,
+  closeOnBackgroundClick = true,
+  onClose,
+}: ModalBackgroundProps) {
   const { preventScroll, allowScroll } = modalScroll();
 
   useEffect(() => {
@@ -26,7 +31,10 @@ export default function ModalBackground({ children, isVisible, onClose }: ModalB
     <>
       {isVisible && (
         <ModalPortal>
-          <div className={styles.modalBackground} onClick={onClose}>
+          <div
+            className={styles.modalBackground}
+            onClick={closeOnBackgroundClick ? onClose : undefined}
+          >
             {children}
           </div>
         </ModalPortal>

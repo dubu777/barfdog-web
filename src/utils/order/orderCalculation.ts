@@ -88,21 +88,6 @@ const calculateTotalDiscountWithoutPlan = (): number => {
     );
   };
 
-// 적용 가능한 최대 할인
-const calculateMaxAvailableDiscount = () => {
-  const finalPaymentAmount = calculateFinalPaymentAmount();
-  const deliveryFee = calculateDeliveryFee();
-  
-  // 배송비가 있으면 최소 결제 금액 제한 없음, 없으면 제한 적용
-  const minPaymentThreshold = deliveryFee > 0 ? 0 : IAMPORT_MIN_PAYMENT_PRICE;
-
-  // 최종 결제 금액에서 배송비를 제외한 값
-  const baseAmount = finalPaymentAmount - deliveryFee;
-  const availableMaxDiscount = baseAmount - minPaymentThreshold;
-
-  return Math.max(availableMaxDiscount, 0);
-};
-
 // 적용 가능한 최대 적립금 - 모두사용
 const calculateMaxAvailableReward = () => {
   const discountGrade = calculateGradeDiscount();
@@ -117,6 +102,19 @@ const calculateMaxAvailableReward = () => {
   return Math.min(availableMaxReward, userTotalReward);
 };
 
+// 적용가 능한 쿠폰 할인금
+const calculateMaxAvailableCoupon = () => {
+  const discountGrade = calculateGradeDiscount();
+  const planDiscount = calculatePlanDiscount();
+  const deliveryFee = calculateDeliveryFee();
+
+  // 배송비가 있으면 최소 결제 금액 제한 없음, 없으면 제한 적용
+  const minPaymentThreshold = deliveryFee > 0 ? 0 : IAMPORT_MIN_PAYMENT_PRICE;
+  const availableMaxCouponDiscount =
+  orderPrice - appliedReward - discountGrade - planDiscount - minPaymentThreshold;
+
+  return Math.max(availableMaxCouponDiscount, 0);
+}
 
 
   return {
@@ -125,9 +123,9 @@ const calculateMaxAvailableReward = () => {
     finalPaymentAmount: calculateFinalPaymentAmount(),
     gradeDiscount: calculateGradeDiscount(),
     planDiscount: calculatePlanDiscount(),
-    maxAvailableDiscount: calculateMaxAvailableDiscount(),
     totalDiscount: calculateTotalDiscount(),
     totalDiscountWithoutPlan: calculateTotalDiscountWithoutPlan(),
     maxAvailableReward: calculateMaxAvailableReward(),
+    maxAvailableCoupon: calculateMaxAvailableCoupon(),
   };
 };

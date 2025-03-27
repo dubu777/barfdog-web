@@ -1,4 +1,10 @@
-import { OrderMessage, OrderType, OrderTypeKey, PaymentMethod, PaymentMethodInfo } from "@/types";
+import {
+  OrderMessage,
+  OrderType,
+  OrderTypeKey,
+  PaymentMethod,
+  PaymentMethodInfo,
+} from "@/types";
 import { TempRecipeDto } from "./survey";
 
 // 결제 전, 결제완료, 생산 중, 배송준비 중, 배송 시작, 배송 중, 배송완료, 취소됨, 환불됨
@@ -48,6 +54,17 @@ const ORDER_MESSAGE: Record<OrderMessage, string> = {
   COUPON_PLACEHOLDER: "쿠폰 번호를 입력하세요",
 } as const;
 
+const SUBSCRIPTION_NOTICE = {
+  TITLE: "2주마다 자동으로 결제가 진행돼요",
+  CONTENT: [
+    "• 구독을 해지하기 전까지 배송 주기마다 자동으로 결제가 진행됩니다.",
+    "• 마이페이지 > 구독 상품 관리에서 상품 배송정보, 결제수단 변경이 가능합니다.",
+    "• 결제 후, 레시피 혹은 급여량을 변경하실 경우 회차별 결제 금액이 변동될 수 있습니다.",
+    "• 결제 시점에서 보유 적립금 및 할인 정책에 따라 결제 금액이 달라질 수 있습니다.",
+    "• 결제 실패 등으로 인해 결제가 진행되지 않을 경우 정기구독이 해지될 수 있습니다.",
+  ],
+};
+
 const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {
   "STARTER PREMIUM +": {
     id: 5,
@@ -91,8 +108,6 @@ const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {
   },
 };
 
-
-
 const PAYMENT_METHOD_INFO: Record<PaymentMethod, PaymentMethodInfo> = {
   NAVER_PAY: {
     value: "NAVER_PAY",
@@ -108,6 +123,14 @@ const PAYMENT_METHOD_INFO: Record<PaymentMethod, PaymentMethodInfo> = {
     value: "CREDIT_CARD",
     label: "신용카드",
   },
-}
+};
 
-export { ORDER_STATUS, PAYMENT, ORDER_TYPE, TEMP_RECIPE_DTO_DATA, ORDER_MESSAGE, PAYMENT_METHOD_INFO };
+export {
+  ORDER_STATUS,
+  PAYMENT,
+  ORDER_TYPE,
+  TEMP_RECIPE_DTO_DATA,
+  ORDER_MESSAGE,
+  PAYMENT_METHOD_INFO,
+  SUBSCRIPTION_NOTICE,
+};

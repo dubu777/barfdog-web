@@ -84,7 +84,7 @@ const OrderBottomSheet = ({
 	}
 
 	return (
-		<BottomSheet isOpen={isOpen} onClose={onClose} className={styles.bottomSheetContainer} closeButton={false}>
+		<BottomSheet isOpen={isOpen} onClose={onClose} className={styles.bottomSheetContainer}>
 			<div className={styles.bottomSheetTitle}>
 				<div>
 					{type === 'confirm' && (

@@ -15,6 +15,7 @@ interface CouponCardProps {
   orderType: OrderType;
   isSelected: boolean;
   orderPrice: number;
+  maxAvailableCouponDiscount: number;
   onToggle: (value: number) => void;
 }
 
@@ -23,6 +24,7 @@ export default function CouponCard({
   orderType,
   isSelected,
   orderPrice,
+  maxAvailableCouponDiscount,
   onToggle,
 }: CouponCardProps) {
   const {
@@ -33,11 +35,9 @@ export default function CouponCard({
     expiredDate,
     name,
   } = coupon;
-  const maxAvailableDiscount = useDiscountStore(
-    (state) => state.maxAvailableDiscount
-  );
+
   const { discountBasedOnCoupon } =
-    calculateCouponDiscount(orderPrice, coupon, maxAvailableDiscount);
+    calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount);
   const { usable, reasons } = isCouponUsable(coupon, orderPrice, orderType);
 
   const discountText =
@@ -45,6 +45,7 @@ export default function CouponCard({
       ? `${formatNumberWithCommas(discountBasedOnCoupon)}원 (${discountDegree}%)`
       : `${formatNumberWithCommas(discountBasedOnCoupon)}원`;
   const couponTargetText = getCouponTargetText(coupon.couponTarget);
+  
   return (
     <div className={styles.couponCardContainer({ isSelected })}>
       <LabeledRadioButton

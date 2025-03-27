@@ -10,8 +10,7 @@ interface RewardInfoModalProps {
 
 const RewardInfoBottomSheet = ({ isOpen, onClose }: RewardInfoModalProps) => {
   return (
-    <BottomSheet isOpen={isOpen} onClose={onClose} closeButton className={styles.rewardInfoContainer}>
-      <DefaultText type='headline2' block className={styles.rewardInfoTitle}>적립금 안내사항</DefaultText>
+    <BottomSheet isOpen={isOpen} onClose={onClose} title="적립금 안내사항" className={styles.rewardInfoContainer}>
       <div className={styles.rewardInfoContents}>
         <DefaultText type='caption'>• 구매 적립금은 구매 확정 시 지급됩니다.</DefaultText>
         <DefaultText type='caption'>• 리뷰 및 이벤트 참여를 통해 적립금을 받을 수 있으며, 적립 기준은 지급 종류에 따라 상이할 수 있습니다.</DefaultText>
