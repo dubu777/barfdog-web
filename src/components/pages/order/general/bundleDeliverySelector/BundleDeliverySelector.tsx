@@ -1,7 +1,7 @@
 import * as styles from "./BundleDeliverySelector.css";
 import { initialDeliveryDto } from "@/config/orderInitialValues";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
-import { DeliveryDto } from "@/types";
+import { BundleDeliveryAddress, DeliveryDto } from "@/types";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { orderSummaryRowContainer } from "../../common/orderSummary/orderSummaryRow/OrderSummaryRow.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -10,13 +10,11 @@ import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox
 import { useToggleOption } from "@/hooks/useToggleOption";
 
 interface BundleDeliverySelectorProps {
-  deliveryId: number | null;
-  deliveryDto: DeliveryDto;
+  bundleDeliveryAddress: BundleDeliveryAddress;
 }
 
 export default function BundleDeliverySelector({
-  deliveryId,
-  deliveryDto,
+  bundleDeliveryAddress
 }: BundleDeliverySelectorProps) {
   const {
     isBundleDelivery,
@@ -25,13 +23,15 @@ export default function BundleDeliverySelector({
     setDeliveryDto,
     setDeliveryId,
   } = useDeliveryStore();
-
-  const handleBundleClick = () => {
+  
+  // 묶음 배송
+  const handleBundleDelivery = () => {
     setIsBundleDelivery(true);
     setDeliveryDto(initialDeliveryDto);
-    setDeliveryId(deliveryId);
+    setDeliveryId(bundleDeliveryAddress.id);
   };
-  const handleSingleClick = () => {
+  // 일반 배송 
+  const handleDefaultDelivery = () => {
     setIsBundleDelivery(false);
     setDeliveryDto(backupDeliveryDto);
     setDeliveryId(null);
@@ -43,9 +43,9 @@ export default function BundleDeliverySelector({
     "checkbox",
     (newVal) => {
       if (newVal) {
-        handleBundleClick();
+        handleBundleDelivery();
       } else {
-        handleSingleClick();
+        handleDefaultDelivery();
       }
     }
   );

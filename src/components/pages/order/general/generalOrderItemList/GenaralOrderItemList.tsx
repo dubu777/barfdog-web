@@ -1,11 +1,11 @@
-
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import Divider from "@/components/common/divider/Divider";
 import OrderSection from "../../common/orderSection/OrderSection";
 
 import { GeneralOrderItem } from "@/types";
 import * as styles from "../../subscription/subscriptionOrderItemList/SubscriptionOrderItemList.css";
 import GeneralOrderItemCard from "./generalOrderItemCard/GeneralOrderItemCard";
+import { useOrderStore } from "@/store/order/useOrderStore";
 
 interface GeneralOrderItemListProps {
   orderItemDtoList: GeneralOrderItem[];
@@ -14,21 +14,27 @@ interface GeneralOrderItemListProps {
 export default function GeneralOrderItemList({
   orderItemDtoList,
 }: GeneralOrderItemListProps) {
+  const setFinalPrice = useOrderStore((state) => state.setFinalPrice);
+
+  const finalPrice = useMemo(() => {
+    return orderItemDtoList.reduce((sum, item) => sum + item.orderLinePrice, 0);
+  }, [orderItemDtoList]);
+
+  useEffect(() => {
+    setFinalPrice(finalPrice);
+  }, [finalPrice, setFinalPrice]);
+  
   return (
     <OrderSection title="주문 상품" style={{ gap: "20px" }}>
       <div className={styles.orderItemListContainer}>
-        {orderItemDtoList.map(
-          (item, index, array) => (
-            <React.Fragment key={item.itemId}>
-              <GeneralOrderItemCard
-                orderItemData={item}
-              />
-              {index < array.length - 1 && (
-                <Divider thickness={1} style={{margin: "16px 0"}}/>
-              )}
-            </React.Fragment>
-          )
-        )}
+        {orderItemDtoList.map((item, index, array) => (
+          <React.Fragment key={item.itemId}>
+            <GeneralOrderItemCard orderItemData={item} />
+            {index < array.length - 1 && (
+              <Divider thickness={1} style={{ margin: "16px 0" }} />
+            )}
+          </React.Fragment>
+        ))}
       </div>
     </OrderSection>
   );

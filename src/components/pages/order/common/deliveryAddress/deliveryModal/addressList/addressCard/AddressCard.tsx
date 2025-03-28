@@ -1,17 +1,16 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "./AddressCard.css";
-import { DeliveryDto } from "@/types";
+import { ClientDeliveryDto } from "@/types";
 import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
 import { AddressResponse } from "@/types/delivery";
 import { useDeleteAddress } from "@/api/address/mutations/useDeleteAddress";
 import Modal from "@/components/common/modal/Modal";
 import useModal from "@/hooks/useModal";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 
 interface AddressCardProps {
   address: AddressResponse;
-  onSelectAddress: (deliveryDto: DeliveryDto) => void;
+  onSelectAddress: (deliveryDto: ClientDeliveryDto) => void;
   goToEditAddress: (address: AddressResponse) => void;
 }
 export default function AddressCard({
@@ -20,10 +19,12 @@ export default function AddressCard({
   goToEditAddress,
 }: AddressCardProps) {
   const { isOpen, onClose, onToggle } = useModal();
-  const setSelectedAddressId = useDeliveryStore(state => state.setSelectedAddressId)
   const isDefaultAddress = address.default;
   const handleSelect = () => {
     onSelectAddress({
+      default: address.default,
+      deliveryId: address.id,
+      deliveryName: address.deliveryName,
       name: address.recipientName,
       phone: address.phoneNumber,
       zipcode: address.zipcode,
@@ -31,7 +32,6 @@ export default function AddressCard({
       detailAddress: address.detailAddress,
       request: address.request,
     });
-    setSelectedAddressId(address.id)
   };
   const { mutate: deleteAddress } = useDeleteAddress();
 

@@ -1,38 +1,29 @@
 import * as styles from "./DeliveryModal.css";
 import { useMemo, useState } from "react";
-import CloseIcon from "/public/images/header/close.svg";
-import BackIcon from "/public/images/header/chevron-left.svg";
-
-import { DeliveryDto } from "@/types";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { ClientDeliveryDto, DeliveryDto } from "@/types";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
 import AddressList from "./addressList/AddressList";
 import { AddressResponse } from "@/types/delivery";
 import AddressForm from "./addressForm/AddressForm";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface DeliveryModalProps {
   addressData: AddressResponse[];
-  defaultAddressId: number | null;
   isVisible: boolean;
   onClose: () => void;
-  setDeliveryDto: (delivery: DeliveryDto) => void;
-  setBackupDeliveryDto: (delivery: DeliveryDto) => void;
-  setDefaultAddressId: (id: number | null) => void;
+  setDeliveryDto: (delivery: ClientDeliveryDto) => void;
+  setBackupDeliveryDto: (delivery: ClientDeliveryDto) => void;
 }
 
 type ViewMode = "list" | "add" | "edit";
 
 export default function DeliveryModal({
   addressData,
-  defaultAddressId,
   isVisible,
   onClose,
   setDeliveryDto,
   setBackupDeliveryDto,
-  setDefaultAddressId,
 }: DeliveryModalProps) {
   console.log("addressData", addressData);
 
@@ -54,7 +45,7 @@ export default function DeliveryModal({
   };
 
   // 배송지 선택 - 묶음 배송시 배송지 정보 null로 초기화
-  const handleSelectAddress = (deliveryDto: DeliveryDto) => {
+  const handleSelectAddress = (deliveryDto: ClientDeliveryDto) => {
     setDeliveryDto(deliveryDto);
     setBackupDeliveryDto(deliveryDto);
     onClose();
@@ -94,29 +85,35 @@ export default function DeliveryModal({
   const headerProps = useMemo(() => getHeaderProps(viewMode), [viewMode]);
 
   return (
-    <ModalBackground isVisible={isVisible} onClose={handleClose} closeOnBackgroundClick={false}>
-      <div
-        className={styles.modalContainer}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <NewHeader {...headerProps} />
-        {viewMode === "list" ? (
-          <AddressList
-            addressData={addressData}
-            goToAddAddress={goToAddAddress}
-            goToEditAddress={goToEditAddress}
-            onSelectAddress={handleSelectAddress}
-          />
-        ) : (
-          <AddressForm
-            mode={viewMode}
-            address={viewMode === "edit" ? selectedAddress! : undefined}
-            defaultAddressId={defaultAddressId}
-            onBack={goToList}
-            setDefaultAddressId={setDefaultAddressId}
-          />
-        )}
-      </div>
-    </ModalBackground>
+    <AnimatePresence>
+      {isVisible && (
+        <ModalBackground isVisible={isVisible} onClose={handleClose} closeOnBackgroundClick={false} isDimmed={false}>
+          <motion.div
+            className={styles.modalContainer}
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: "100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "100%" }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            <NewHeader {...headerProps} />
+            {viewMode === "list" ? (
+              <AddressList
+                addressData={addressData}
+                goToAddAddress={goToAddAddress}
+                goToEditAddress={goToEditAddress}
+                onSelectAddress={handleSelectAddress}
+              />
+            ) : (
+              <AddressForm
+                mode={viewMode}
+                address={viewMode === "edit" ? selectedAddress! : undefined}
+                onBack={goToList}
+              />
+            )}
+          </motion.div>
+        </ModalBackground>
+      )}
+    </AnimatePresence>
   );
 }

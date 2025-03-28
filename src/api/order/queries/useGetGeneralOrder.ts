@@ -21,7 +21,7 @@ export function useGetGeneralOrder(
     variables,
   ];
   const { updateOrderBody } = useOrderStore();
-  const { setDeliveryDto, setDeliveryId, setBackupDeliveryDto } = useDeliveryStore();
+  const { setDeliveryDto, setBackupDeliveryDto } = useDeliveryStore();
   const { setUserTotalReward } = useRewardStore();
   const queryClient = useQueryClient();
   return useMutation({
@@ -40,43 +40,39 @@ export function useGetGeneralOrder(
               itemOptionId: option.optionId,
               amount: option.amount,
             })),
-            memberCouponId: null,
-            discountAmount: 0,
-            finalPrice: item.orderLinePrice,
           })),
-          deliveryDto: {
-            name: data.name,
-            phone: data.phoneNumber,
-            zipcode: data.defaultAddress.zipcode,
-            street: data.defaultAddress.street,
-            detailAddress: data.defaultAddress.detailAddress,
-            request: "",
-          },
-          deliveryId: data.deliveryId,
+          deliveryId: data.deliveryAddress.id,
           orderPrice: data.orderPrice,
           deliveryPrice: data.deliveryPrice,
-          discountTotal: 0,
-          discountReward: 0,
-          discountCoupon: 0,
-          overDiscount: 0,
-          paymentPrice: data.orderPrice,
-          brochure: data.brochure,
         },
         ORDER_TYPE.GENERAL
       );
-      setDeliveryId(null);
-      setBackupDeliveryDto({
-        name: data.name,
-        phone: data.phoneNumber,
+      setDeliveryDto({
+        default: data.defaultAddress.default,
+        deliveryId: data.defaultAddress.id,
+        deliveryName: data.defaultAddress.deliveryName,
+        name: data.defaultAddress.recipientName,
+        phone: data.defaultAddress.phoneNumber,
         zipcode: data.defaultAddress.zipcode,
         street: data.defaultAddress.street,
         detailAddress: data.defaultAddress.detailAddress,
-        request: "",
+        request: data.defaultAddress.request,
+      });
+      setBackupDeliveryDto({
+        default: data.defaultAddress.default,
+        deliveryId: data.defaultAddress.id,
+        deliveryName: data.defaultAddress.deliveryName,
+        name: data.defaultAddress.recipientName,
+        phone: data.defaultAddress.phoneNumber,
+        zipcode: data.defaultAddress.zipcode,
+        street: data.defaultAddress.street,
+        detailAddress: data.defaultAddress.detailAddress,
+        request: data.defaultAddress.request,
       });
       setUserTotalReward(data.reward);
     },
     onError: (err) => {
-      console.log("err", err);
+      console.error("err", err);
     },
     ...mutationOptions,
   });

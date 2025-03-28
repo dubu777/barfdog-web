@@ -21,10 +21,11 @@ const initialGeneralOrderBody: SaveGeneralOrderRequest = {
   discountReward: 0,
   discountCoupon: 0,
   overDiscount: 0,
+  memberCouponId: null,
+  finalPrice: 0,
   paymentPrice: 0,
   paymentMethod: "NAVER_PAY",
-  agreePrivacy: true,
-  brochure: false,
+  agreePrivacy: false,
 };
 
 const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
@@ -55,7 +56,10 @@ const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
 };
 
 
-const initialDeliveryDto: DeliveryDto = {
+const initialDeliveryDto = {
+  deliveryId: null,
+  deliveryName: null,
+  default: null,
   name: null,
   phone: null,
   zipcode: null,

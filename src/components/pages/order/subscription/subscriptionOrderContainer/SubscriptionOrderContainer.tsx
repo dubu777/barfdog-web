@@ -43,7 +43,7 @@ import CouponSelector from "../../common/couponSelector/CouponSelector";
 import OrderTerms from "../../common/orderTerms/OrderTerms";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import SubscriptionNotice from "../subscriptionNotice/subscriptionNotice";
+import SubscriptionNotice from "../subscriptionNotice/SubscriptionNotice";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -280,7 +280,7 @@ export default function SubscriptionOrderContainer({
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <SubscriptionNotice/>
+      <SubscriptionNotice />
       <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
         {formatNumberWithCommas(paymentPrice)}원 결제하기
       </FooterButton>

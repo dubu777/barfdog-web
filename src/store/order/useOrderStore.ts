@@ -3,6 +3,8 @@ import {
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
   OrderType,
+  ClientDeliveryDto,
+  DeliveryDto,
 } from "@/types";
 import {
   initialGeneralOrderBody,
@@ -14,13 +16,15 @@ import { usePaymentStore } from "./usePaymentStore";
 import { ORDER_TYPE } from "@/constants";
 import { useDiscountStore } from "./useDiscountStore";
 import { useRewardStore } from "./useRewardStore";
+import { useCouponStore } from "./useCouponStore";
 
 interface OrderState {
   generalOrderBody: SaveGeneralOrderRequest;
   subscriptionOrderBody: SaveSubscriptionOrderRequest;
+  finalPrice: number;
   agreePrivacy: boolean;
   agreeSubscription: boolean;
-  brochure: boolean;
+  setFinalPrice: (amount: number) => void;
   updateOrderBody: (
     updates: Partial<SaveGeneralOrderRequest | SaveSubscriptionOrderRequest>,
     orderType: OrderType
@@ -28,17 +32,9 @@ interface OrderState {
   getRequestBody: (
     orderType: OrderType
   ) => SaveGeneralOrderRequest | SaveSubscriptionOrderRequest;
-  updateAppliedCoupon: (
-    couponId: number,
-    discountAmount: number
-  ) => void;
   // API가 일반 결제도 쿠폰 전체 적용으로 변경된다면 수정예정 => 삭제할듯
-  getAppliedCouponDiscount: (itemId: number) => number | undefined;
-  cancelAppliedCoupon: (type: OrderType, itemId: number | null) => void;
-  isAppliedCoupon: (couponId: number) => boolean;
   setAgreePrivacy: (agreePrivacy: boolean) => void;
   setAgreeSubscription: (agreeSubscription: boolean) => void;
-  setBrochure: (brochure: boolean) => void;
 }
 
 export const useOrderStore = create<OrderState>((set, get) => ({
@@ -46,7 +42,8 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   subscriptionOrderBody: initialSubscriptionOrderBody,
   agreePrivacy: false,
   agreeSubscription: false,
-  brochure: false,
+  finalPrice: 0,
+
   updateOrderBody: (updates, orderType) =>
     set((state) => {
       if (orderType === ORDER_TYPE.GENERAL) {
@@ -60,7 +57,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     }),
 
   getRequestBody: (orderType) => {
-    const { generalOrderBody, subscriptionOrderBody, agreePrivacy, brochure } =
+    const { generalOrderBody, subscriptionOrderBody, agreePrivacy, finalPrice } =
       get();
 
     // 필요한 데이터들을 각각의 store에서 가져옴
@@ -69,24 +66,32 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     const { discountCoupon, discountTotal, deliveryPrice, paymentPrice } =
       useDiscountStore.getState();
     const { appliedReward } = useRewardStore.getState();
+    const { appliedCoupon } = useCouponStore.getState();
+
+    const extractServerDeliveryDto = (dto: ClientDeliveryDto): DeliveryDto => {
+      const { deliveryId, deliveryName, default: isDefault, ...serverDto } = dto;
+      return serverDto;
+    };
 
     const commonBody = {
-      // deliveryDto,
+      deliveryDto: extractServerDeliveryDto(deliveryDto),
       agreePrivacy,
-      brochure,
       paymentMethod,
       discountCoupon,
       discountReward: appliedReward,
       discountTotal,
       deliveryPrice,
       paymentPrice,
+      memberCouponId: appliedCoupon?.couponId ?? null,
+      
     };
 
     if (orderType === ORDER_TYPE.GENERAL) {
       return {
         ...generalOrderBody,
         ...commonBody,
-        deliveryId,
+        finalPrice,
+        deliveryId: deliveryId ?? null,
       } as SaveGeneralOrderRequest;
     }
 
@@ -104,61 +109,8 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       },
     } as SaveSubscriptionOrderRequest;
   },
-  // 쿠폰 적용
-  updateAppliedCoupon: (couponId, discountAmount) =>
-    set((state) => {
-        return {
-          subscriptionOrderBody: {
-            ...state.subscriptionOrderBody,
-            memberCouponId: couponId,
-            discountCoupon: discountAmount,
-          },
-        };
-    }),
-  getAppliedCouponDiscount: (itemId) => {
-    const orderItem = get().generalOrderBody.orderItemDtoList.find(
-      (item) => item.itemId === itemId
-    );
-    return orderItem?.discountAmount;
-  },
-  // 쿠폰 취소
-  cancelAppliedCoupon: (type, itemId) =>
-    set((state) => {
-      if (type === ORDER_TYPE.GENERAL) {
-        const updatedItems = state.generalOrderBody.orderItemDtoList.map(
-          (item) =>
-            item.itemId === itemId
-              ? {
-                  ...item,
-                  memberCouponId: null,
-                  discountAmount: 0,
-                }
-              : item
-        );
-        return {
-          generalOrderBody: {
-            ...state.generalOrderBody,
-            orderItemDtoList: updatedItems,
-          },
-        };
-      } else if (type === ORDER_TYPE.SUBSCRIPTION) {
-        return {
-          subscriptionOrderBody: {
-            ...state.subscriptionOrderBody,
-            memberCouponId: null,
-            discountCoupon: 0,
-          },
-        };
-      }
-      return state;
-    }),
-  isAppliedCoupon: (couponId) => {
-    const appliedItem = get().generalOrderBody.orderItemDtoList.find(
-      (item) => item.memberCouponId === couponId
-    );
-    return !!appliedItem;
-  },
+
   setAgreePrivacy: (agreePrivacy) => set({ agreePrivacy }),
   setAgreeSubscription: (agreeSubscription) => set({ agreeSubscription }),
-  setBrochure: (brochure) => set({ brochure }),
+  setFinalPrice: (finalPrice) => set({finalPrice}),
 }));

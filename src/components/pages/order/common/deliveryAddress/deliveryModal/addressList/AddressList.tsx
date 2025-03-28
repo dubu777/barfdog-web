@@ -1,6 +1,6 @@
 import Button from "@/components/common/button/Button";
 import * as styles from "./AddressList.css";
-import { DeliveryDto } from "@/types";
+import { ClientDeliveryDto, DeliveryDto } from "@/types";
 import AddIcon from "/public/images/icons/add.svg";
 import { useMemo } from "react";
 import AddressCard from "./addressCard/AddressCard";
@@ -10,7 +10,7 @@ interface AddressListProps {
   addressData: AddressResponse[];
   goToAddAddress: () => void;
   goToEditAddress: (address: AddressResponse) => void;
-  onSelectAddress: (deliveryDto: DeliveryDto) => void;
+  onSelectAddress: (deliveryDto: ClientDeliveryDto) => void;
 }
 
 export default function AddressList({

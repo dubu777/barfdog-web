@@ -15,7 +15,7 @@ export const bundleDeliveryBox = recipe({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
-    alignSelf: "stretch",
+    width: "100%",
     padding: "12px",
     borderRadius: "8px",
     cursor: "pointer",

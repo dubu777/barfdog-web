@@ -50,7 +50,7 @@ export default function GeneralOrderContainer() {
   // 상태관리 -------->
   const { maxAvailableReward } = useRewardStore();
   const { paymentPrice } = useDiscountStore();
-  const { generalOrderBody, getRequestBody } = useOrderStore();
+  const { getRequestBody } = useOrderStore();
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
   // <--------- 상태관리
 
@@ -58,10 +58,10 @@ export default function GeneralOrderContainer() {
   const { data: generalOrderSheetData } = useCachedGeneralOrder({
     orderItemDtoList,
   });
-  const { mutateAsync: getGeneralOrder } = useGetGeneralOrder();
-  const { mutateAsync: createGeneralOrder } = useSaveGeneralOrder();
-  const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
-  const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
+  const { mutateAsync: getGeneralOrderMutate } = useGetGeneralOrder();
+  const { mutateAsync: createGeneralOrderMutate } = useSaveGeneralOrder();
+  const { mutateAsync: successGeneralPaymentMutate } = useSuccessGeneralPayment();
+  const { mutateAsync: failGeneralPaymentMutate } = useFailGeneralPayment();
   console.log("generalOrderSheetData", generalOrderSheetData);
   // <------- 서버 호출
 
@@ -77,7 +77,7 @@ export default function GeneralOrderContainer() {
 
   useEffect(() => {
     if (orderItemDtoList && orderItemDtoList.length > 0) {
-      getGeneralOrder({ orderItemDtoList });
+      getGeneralOrderMutate({ orderItemDtoList });
     }
   }, [orderItemDtoList]);
   // <-------- 커스텀 훅 & 유틸 함수
@@ -92,7 +92,7 @@ export default function GeneralOrderContainer() {
     if (res.success) {
       console.log("결제 성공:", res);
       // 최종 결제 성공 처리
-      await successGeneralPayment({
+      await successGeneralPaymentMutate({
         id: orderId,
         body: {
           impUid: res.imp_uid,
@@ -105,7 +105,7 @@ export default function GeneralOrderContainer() {
       clearOrderItemDtoList();
     } else {
       // 결제 실패 처리
-      await failGeneralPayment(orderId);
+      await failGeneralPaymentMutate(orderId);
       console.error("결제 실패:", res);
       // 결제 실패 후 추가 작업(예: 페이지 이동)
       router.push("/order/order-failed");
@@ -121,7 +121,7 @@ export default function GeneralOrderContainer() {
 
     try {
       // 일반 주문 생성(저장) 요청
-      const createOrderResponse = await createGeneralOrder(requestBody);
+      const createOrderResponse = await createGeneralOrderMutate(requestBody);
 
       if (createOrderResponse.status !== 200) {
         throw new Error("결제 요청 실패: 서버 검증 실패");
@@ -150,19 +150,27 @@ export default function GeneralOrderContainer() {
         },
       });
     } catch (error) {
-      console.error("createGeneralOrder 에러:", error);
+      console.error("createGeneralOrderMutate 에러:", error);
       router.push("/order/order-failed");
     }
   };
   // <========== 결제 함수
 
+
+  const handleTest = () => {
+    const requestBody = getRequestBody(
+      ORDER_TYPE.GENERAL
+    ) as SaveGeneralOrderRequest;
+    console.log("requestBody", requestBody);
+
+  }
+
   return (
     <div>
-      <DeliveryAddress />
+      <DeliveryAddress bundleDeliveryAddress={generalOrderSheetData.deliveryAddress} />
       <Divider />
       <BundleDeliverySelector
-        deliveryId={generalOrderBody.deliveryId}
-        deliveryDto={generalOrderBody.deliveryDto}
+        bundleDeliveryAddress={generalOrderSheetData.deliveryAddress}
       />
       <Divider />
       <GeneralOrderItemList
@@ -173,11 +181,6 @@ export default function GeneralOrderContainer() {
         orderType={ORDER_TYPE.GENERAL}
         orderPrice={generalOrderSheetData.orderPrice}
       />
-      {/* 쿠폰 관련 함수 여기 있음 */}
-      {/* <OrderItem
-        orderType={ORDER_TYPE.GENERAL}
-        generalOrderSheetData={generalOrderSheetData}
-      /> */}
       <Divider />
       <RewardUsage
         orderType={ORDER_TYPE.GENERAL}
@@ -197,12 +200,15 @@ export default function GeneralOrderContainer() {
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
       />
       <Divider />
-      <OrderTerms />
+      <OrderTerms orderType={ORDER_TYPE.GENERAL} />
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
+      {/* <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
         {formatNumberWithCommas(paymentPrice)}원 결제하기
+      </FooterButton> */}
+      <FooterButton isDisabled={false} onClick={handleTest}>
+        {formatNumberWithCommas(paymentPrice)}원 결제테스트
       </FooterButton>
     </div>
   );

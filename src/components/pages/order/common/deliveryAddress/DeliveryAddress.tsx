@@ -9,47 +9,24 @@ import OrderSection from "../orderSection/OrderSection";
 import Chips from "@/components/common/chips/Chips";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import DeliveryModal from "./deliveryModal/DeliveryModal";
+import { BundleDeliveryAddress } from "@/types";
 
-interface DeliveryAddressProps {}
+interface DeliveryAddressProps {
+  bundleDeliveryAddress: BundleDeliveryAddress;
+}
 
-export default function DeliveryAddress({}: DeliveryAddressProps) {
+export default function DeliveryAddress({ bundleDeliveryAddress }: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
   const {
     deliveryDto,
     isBundleDelivery,
-    defaultAddressId,
-    selectedAddressId,
     setDeliveryDto,
     setBackupDeliveryDto,
-    setDefaultAddressId,
   } = useDeliveryStore();
   const { data: addressData } = useGetAddressList();
+console.log('deliveryDto', deliveryDto);
 
-  useEffect(() => {
-    if (addressData && addressData.length > 0) {
-      const defaultAddress = addressData.find(
-        (address) => address.default === true
-      );
-      if (defaultAddress) {
-        setDefaultAddressId(defaultAddress.id);
-        setDeliveryDto({
-          name: defaultAddress.recipientName,
-          phone: defaultAddress.phoneNumber,
-          zipcode: defaultAddress.zipcode,
-          street: defaultAddress.street,
-          detailAddress: defaultAddress.detailAddress,
-          request: defaultAddress.request,
-        });
-      } else {
-        setDefaultAddressId(null);
-      }
-    }
-  }, [addressData, setDefaultAddressId]);
 
-  // defaultAddress에 id 추가하면 추가 개발
-  // const isDefaultAddress = deliveryDto.id === defaultAddressId;
-  // 임시 주소지 이름
-  const deliveryName = "집";
   return (
     <OrderSection
       title="배송지"
@@ -72,8 +49,8 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
             className={styles.DeliveryAddressTextWrapper}
             style={{ gap: "8px" }}
           >
-            <DefaultText type="headline2">{deliveryName}</DefaultText>
-            {selectedAddressId === defaultAddressId && (
+            <DefaultText type="headline2">{deliveryDto.deliveryName}</DefaultText>
+            {deliveryDto.default && (
               <Chips variant="outlined" size="sm" borderRadius="full" switchOff>
                 기본배송지
               </Chips>
@@ -99,12 +76,10 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
       )}
       <DeliveryModal
         addressData={addressData}
-        defaultAddressId={defaultAddressId}
         isVisible={isOpen}
         onClose={onClose}
         setDeliveryDto={setDeliveryDto}
         setBackupDeliveryDto={setBackupDeliveryDto}
-        setDefaultAddressId={setDefaultAddressId}
       />
     </OrderSection>
   );

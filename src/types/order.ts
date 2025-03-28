@@ -27,6 +27,9 @@ export type {
   SuccessGeneralOrderResponse,
   OrderMessage,
   PaymentMethodInfo,
+  BundleDeliveryAddress,
+  DefaultAddress,
+  ClientDeliveryDto,
 };
 
 interface SuccessGeneralPaymentRequest {
@@ -88,20 +91,18 @@ interface SaveGeneralOrderRequest {
   discountTotal: number;
   discountReward: number;
   discountCoupon: number;
-  overDiscount: number;
   paymentPrice: number;
+  overDiscount: number;
+  memberCouponId: number | null;
+  finalPrice: number;
   paymentMethod: PaymentMethod;
   agreePrivacy: boolean;
-  brochure: boolean;
 }
 // 각 상품 정보 타입
 interface OrderItemDto {
   itemId: number; // 상품 ID
   amount: number; // 상품 수량
   selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
-  memberCouponId?: number | null; // 쿠폰 ID (옵션)
-  discountAmount: number; // 할인 금액
-  finalPrice: number; // 최종 상품 가격
 }
 
 // 상품 옵션 정보 타입
@@ -120,6 +121,13 @@ interface DeliveryDto {
   request: string | null; // 배송 요청사항
 }
 
+interface ClientDeliveryDto extends DeliveryDto {
+  deliveryId: number | null;
+  deliveryName: string | null;
+  default: boolean | null;
+}
+
+
 interface GeneralOrderItemRequest {
   itemDto: {
     itemId: number;
@@ -137,52 +145,62 @@ interface GeneralOrderSheetRequest {
 }
 
 interface OptionDto {
-  optionId: number;
-  name: string;
-  price: number;
   amount: number;
+  name: string;
+  optionId: number;
+  price: number;
 }
 
 interface GeneralOrderItem {
-  itemId: number;
   amount: number;
-  name: string;
+  deliveryFree: boolean;
+  itemId: number;
+  itemImageFilename: string;
   itemType: string;
+  name: string;
   optionDtoList?: OptionDto[];
   orderLinePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
-  originalOrderLinePrice: number; // 자체 할인 전 상품 + 옵션 가격 총 가격
-  discountAmount: number;
-  memberCouponId: number | null;
-  deliveryFree: boolean;
+  originalOrderLinePrice: number; // 상품 원금 + 옵션 가격 총 가격
 }
 
 
 interface DefaultAddress {
-  deliveryName: string | null;
-  zipcode: string;
   city: string;
-  street: string;
+  default: boolean;
+  deliveryName: string | null;
   detailAddress: string;
+  id: number;
+  phoneNumber: string;
+  recipientName: string;
+  request: string;
+  street: string;
+  zipcode: string;
+}
+
+interface BundleDeliveryAddress {
+  deliveryName: string | null;
+  detailAddress: string | null; // 상세 주소
+  id: number | null;
+  name: string | null; // 수령자 이름
+  phone: string | null; // 수령자 전화번호
+  zipcode: string | null; // 우편번호
+  street: string | null; // 도로명 주소
 }
 
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
-  brochure: boolean;
-  // coupons: Coupon[];
   defaultAddress: DefaultAddress;
-  deliveryId: number;
+  deliveryAddress: BundleDeliveryAddress;
   deliveryPrice: number;
   email: string;
   freeCondition: number;
   name: string;
+  nextSubscribeDeliveryDate: string;
   orderItemDtoList: GeneralOrderItem[];
   orderPrice: number;
+  orderStatus: "UNSUBSCRIBE_ORDER" | "TODAY_IS_NEXT_DELIVERY" | "SUBSCRIBE_ORDER";
   phoneNumber: string;
   reward: number;
-  _links: {
-    self: { href: string };
-    order_general: { href: string };
-  };
 }
 
 interface OrderItem {

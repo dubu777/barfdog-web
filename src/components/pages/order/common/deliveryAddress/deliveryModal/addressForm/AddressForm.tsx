@@ -16,22 +16,17 @@ import Button from "@/components/common/button/Button";
 import AddressSearchModal from "@/components/common/addressSearchModal/AddressSearchModal";
 import useModal from "@/hooks/useModal";
 import { useUpdateAddress } from "@/api/address/mutations/useUpdateAddress";
-import { useApplyDefaultAddress } from "@/api/address/mutations/useApplyDefaultAddress";
 import { useCreateAddress } from "@/api/address/mutations/useCreateAddress";
 
 interface AddressFormProps {
   mode: "edit" | "add";
   address?: AddressResponse;
-  defaultAddressId: number | null;
-  setDefaultAddressId: (id: number | null) => void;
   onBack: () => void;
 }
 
 export default function AddressForm({
   mode,
   address,
-  defaultAddressId,
-  setDefaultAddressId,
   onBack,
 }: AddressFormProps) {
   const { isOpen, onClose, onToggle: toggleAddressModal } = useModal();
@@ -46,15 +41,14 @@ export default function AddressForm({
     useFormHandler<AddressRequest>(addressSchema, initialValues, "onBlur");
 
   // 수정 모드일 경우 기존 배송지 id와 기본 배송지 id 비교, 추가 모드면 기본 배송지 선택 false
-  const [isDefaultAddress, setIsDefaultAddress] = useState<boolean>(
-    mode === "edit" && address ? defaultAddressId === address.id : false
-  );
+  const isDefaultAddress =
+    mode === "edit" && address ? address.default : false;
+
   const { onToggle: onToggleDefault, isSelected: isDefaultSelected } =
     useToggleOption<boolean>(pendingDefault, "checkbox", setPendingDefault);
 
   // Mutation hooks
   const { mutate: updateAddress } = useUpdateAddress();
-  // const { mutate: applyDefaultAddress } = useApplyDefaultAddress();
   const { mutate: createAddress } = useCreateAddress();
 
   // AddressSearchModal 선택 시 값 업데이트
@@ -70,7 +64,7 @@ export default function AddressForm({
   const streetValue = watch("street");
   const combinedAddress = `${cityValue} ${streetValue}`.trim();
   const combinedError = errors.city?.message || errors.street?.message;
-  
+
   // 폼 제출 처리: onFormSubmit 호출 시 서버 업데이트 후 기본배송지 적용 여부 처리
   const onFormSubmit = handleSubmit((data: AddressRequest) => {
     if (mode === "edit" && address) {
@@ -78,11 +72,6 @@ export default function AddressForm({
         deliveryId: address.id,
         body: data,
       });
-      // 임시 선택(pendingDefault)이 true이면 서버에 기본배송지 적용 요청
-      if (pendingDefault) {
-        // applyDefaultAddress(address.id);
-        setDefaultAddressId(address.id);
-      }
       onBack();
     } else if (mode === "add") {
       createAddress(data, {
@@ -95,8 +84,8 @@ export default function AddressForm({
 
   const formValues = watch();
   useEffect(() => {
-  console.log("Form values changed:", formValues);
-}, [formValues]);
+    console.log("Form values changed:", formValues);
+  }, [formValues]);
 
   return (
     <>
@@ -167,7 +156,7 @@ export default function AddressForm({
               error={error?.message}
               onChange={(e) => {
                 const input = e.target as HTMLInputElement;
-                const onlyDigits = input.value.replace(/\D/g, '');
+                const onlyDigits = input.value.replace(/\D/g, "");
                 field.onChange(onlyDigits);
                 if (error) {
                   trigger("phoneNumber");
@@ -254,13 +243,13 @@ export default function AddressForm({
         />
         {!isDefaultAddress && (
           <LabeledCheckbox
-          value={true}
-          onToggle={() => {
-            onToggleDefault(true);
-            setValue("isDefault", !pendingDefault);
-          }}
-          isChecked={isDefaultSelected(true)}
-        >
+            value={true}
+            onToggle={() => {
+              onToggleDefault(true);
+              setValue("isDefault", !pendingDefault);
+            }}
+            isChecked={isDefaultSelected(true)}
+          >
             <DefaultText type="label2" color="gray700">
               기본 배송지로 설정
             </DefaultText>

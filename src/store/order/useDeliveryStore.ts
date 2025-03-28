@@ -1,20 +1,16 @@
 import { create } from "zustand";
-import { DeliveryDto } from "@/types";
+import { ClientDeliveryDto } from "@/types";
 import { initialDeliveryDto } from "@/config/orderInitialValues";
 
 interface DeliveryState {
-  deliveryDto: DeliveryDto;
-  backupDeliveryDto: DeliveryDto;
+  deliveryDto: ClientDeliveryDto;
+  backupDeliveryDto: ClientDeliveryDto;
   deliveryId: number | null;
   isBundleDelivery: boolean;
-  defaultAddressId: number | null;
-  selectedAddressId: number | null;
-  setDeliveryDto: (delivery: DeliveryDto) => void;
-  setBackupDeliveryDto: (delivery: DeliveryDto) => void;
+  setDeliveryDto: (delivery: ClientDeliveryDto) => void;
+  setBackupDeliveryDto: (delivery: ClientDeliveryDto) => void;
   setDeliveryId: (id: number | null) => void;
   setIsBundleDelivery: (isBundleDelivery: boolean) => void;
-  setDefaultAddressId: (id: number | null) => void;
-  setSelectedAddressId: (id: number | null) => void;
 }
 
 export const useDeliveryStore = create<DeliveryState>((set) => ({
@@ -22,13 +18,9 @@ export const useDeliveryStore = create<DeliveryState>((set) => ({
   backupDeliveryDto: initialDeliveryDto,
   deliveryId: null,
   isBundleDelivery: false,
-  defaultAddressId: null,
-  selectedAddressId: null,
   setDeliveryDto: (delivery) => set({ deliveryDto: delivery }),
   setBackupDeliveryDto: (delivery) => set({ backupDeliveryDto: delivery }),
   setDeliveryId: (id) => set({ deliveryId: id }),
   setIsBundleDelivery: (isBundleDelivery) =>
     set({ isBundleDelivery }),
-  setDefaultAddressId: (id) => set({ defaultAddressId: id }),
-  setSelectedAddressId: (id) => set({ selectedAddressId: id }),
 }));
