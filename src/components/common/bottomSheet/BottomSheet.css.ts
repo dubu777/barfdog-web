@@ -22,6 +22,7 @@ export const bottomSheetContentWrapper = style({
   flexDirection: "column",
   alignItems: "flex-start",
   width: "100%",
+	overflowY: "auto",
 });
 
 export const bottomSheetHeader = style({

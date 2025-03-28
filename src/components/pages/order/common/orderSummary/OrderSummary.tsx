@@ -38,12 +38,7 @@ export default function OrderSummary({
 }: OrderSummaryPropsProps) {
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
     useRewardStore();
-  const { appliedCoupon, setMaxAvailableCouponDiscount } = useCouponStore(
-    (state) => ({
-      appliedCoupon: state.appliedCoupon,
-      setMaxAvailableCouponDiscount: state.setMaxAvailableCouponDiscount,
-    })
-  );
+  const { appliedCoupon, setMaxAvailableCouponDiscount } = useCouponStore();
   const {
     setPaymentPrice,
     setDeliveryPrice,

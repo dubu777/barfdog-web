@@ -124,15 +124,6 @@ export default function GeneralShopTest() {
       <BottomSheet isOpen={isSheetOpen} onClose={onSheetClose} title="다음 회차 예상 결제 금액" fullHeight>
         <div>
         <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
-        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
         </div>
       </BottomSheet>
     </div>

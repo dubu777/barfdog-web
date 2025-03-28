@@ -60,7 +60,6 @@ export default function CouponModal({
   console.log("discountOnCoupon", discountOnCoupon);
   console.log("appliedCoupon", appliedCoupon);
 
-
   // 서버 호출 -------->
   const { mutate: createCouponMutate } = useApplyCoupon();
 
@@ -90,7 +89,11 @@ export default function CouponModal({
         );
         if (coupon) {
           const { discountBasedOnCoupon, discountBasedOnCouponAndGlobal } =
-            calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount);
+            calculateCouponDiscount(
+              orderPrice,
+              coupon,
+              maxAvailableCouponDiscount
+            );
           setDiscountOnCoupon(discountBasedOnCoupon);
           setDiscountOnCouponAndGlobal(discountBasedOnCouponAndGlobal);
           setSelectedCoupon({

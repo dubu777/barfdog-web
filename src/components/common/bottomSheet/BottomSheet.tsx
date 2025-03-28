@@ -28,7 +28,7 @@ export default function BottomSheet({
   const initialHeight = fullHeight ? "95vh" : "auto";
   const [sheetHeight, setSheetHeight] = useState(initialHeight);
   // 모바일 더블 탭 감지
-	const lastTapRef = useRef<number | null>(null);
+  const lastTapRef = useRef<number | null>(null);
   const doubleTapThreshold = 300; // 300ms 이내에 두 번 터치하면 double tap으로 인식
 
   const handleDoubleClick = () => {
@@ -41,7 +41,7 @@ export default function BottomSheet({
     if (!fullHeight) return;
     const now = Date.now();
     if (lastTapRef.current && now - lastTapRef.current < doubleTapThreshold) {
-      setSheetHeight(prev => (prev === "95vh" ? "60vh" : "95vh"));
+      setSheetHeight((prev) => (prev === "95vh" ? "60vh" : "95vh"));
       lastTapRef.current = null;
     } else {
       lastTapRef.current = now;
@@ -68,21 +68,19 @@ export default function BottomSheet({
             <div
               className={styles.handleWrapper}
               onDoubleClick={handleDoubleClick}
-							onTouchEnd={handleTouchEnd}
+              onTouchEnd={handleTouchEnd}
             >
               <button className={styles.handleButton} />
             </div>
-            <div className={styles.bottomSheetContentWrapper}>
-              {title && (
-                <div className={styles.bottomSheetHeader}>
-                  <DefaultText type="title4">{title}</DefaultText>
-                  <button onClick={onClose}>
-                    <SvgIcon src={CloseButton} />
-                  </button>
-                </div>
-              )}
-              {children}
-            </div>
+            {title && (
+              <div className={styles.bottomSheetHeader}>
+                <DefaultText type="title4">{title}</DefaultText>
+                <button onClick={onClose}>
+                  <SvgIcon src={CloseButton} />
+                </button>
+              </div>
+            )}
+            <div className={styles.bottomSheetContentWrapper}>{children}</div>
           </motion.div>
         </ModalBackground>
       )}
