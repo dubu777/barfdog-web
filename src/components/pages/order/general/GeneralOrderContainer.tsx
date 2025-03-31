@@ -8,19 +8,19 @@ import {
 } from "@/api/order/queries/useGetGeneralOrder";
 import { useSaveGeneralOrder } from "@/api/order/mutations/useSaveGeneralOrder";
 import { SaveGeneralOrderRequest, GeneralIamportResponse } from "@/types";
-import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
+import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
 import { useOrderStore } from "@/store/order/useOrderStore";
-import PaymentMethod from "../../common/paymentMethod/PaymentMethod";
+import PaymentMethod from "../common/paymentMethod/PaymentMethod";
 import { buildGeneralPaymentRequest, usePayment } from "@/hooks/usePayment";
 import useDeviceState from "@/hooks/useDeviceState";
 import { useRouter } from "next/navigation";
-import RewardUsage from "../../common/reward/RewardUsage";
-import OrderSummary from "../../common/orderSummary/OrderSummary";
+import RewardUsage from "../common/reward/RewardUsage";
+import OrderSummary from "../common/orderSummary/OrderSummary";
 import {
   defaultOrderValues,
   getOrderSchema,
@@ -28,17 +28,15 @@ import {
 } from "@/utils/validation/rewardValidation";
 import { useRewardStore } from "@/store/order/useRewardStore";
 import { useOrderForm } from "@/hooks/useOrderForm";
-import GeneralOrderItemList from "../generalOrderItemList/GenaralOrderItemList";
-import BundleDeliverySelector from "../bundleDeliverySelector/BundleDeliverySelector";
-import CouponSelector from "../../common/couponSelector/CouponSelector";
-import OrderTerms from "../../common/orderTerms/OrderTerms";
-import OrderSection from "../../common/orderSection/OrderSection";
+import GeneralOrderItemList from "./generalOrderItemList/GenaralOrderItemList";
+import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelector";
+import CouponSelector from "../common/couponSelector/CouponSelector";
+import OrderTerms from "../common/orderTerms/OrderTerms";
+import OrderSection from "../common/orderSection/OrderSection";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import FooterButton from "@/components/common/footerButton/FooterButton";
-
-
 
 interface handleIamportResponseParams {
   res: GeneralIamportResponse;
@@ -60,7 +58,8 @@ export default function GeneralOrderContainer() {
   });
   const { mutateAsync: getGeneralOrderMutate } = useGetGeneralOrder();
   const { mutateAsync: createGeneralOrderMutate } = useSaveGeneralOrder();
-  const { mutateAsync: successGeneralPaymentMutate } = useSuccessGeneralPayment();
+  const { mutateAsync: successGeneralPaymentMutate } =
+    useSuccessGeneralPayment();
   const { mutateAsync: failGeneralPaymentMutate } = useFailGeneralPayment();
   console.log("generalOrderSheetData", generalOrderSheetData);
   // <------- 서버 호출
@@ -101,14 +100,14 @@ export default function GeneralOrderContainer() {
         },
       });
       // 결제 성공 후 추가 작업(예: 페이지 이동, 상태 초기화)
-      router.push("/order/order-completed");
+      // router.push("/order/order-completed");
       clearOrderItemDtoList();
     } else {
       // 결제 실패 처리
       await failGeneralPaymentMutate(orderId);
       console.error("결제 실패:", res);
       // 결제 실패 후 추가 작업(예: 페이지 이동)
-      router.push("/order/order-failed");
+      // router.push("/order/order-failed");
     }
   };
 
@@ -151,27 +150,28 @@ export default function GeneralOrderContainer() {
       });
     } catch (error) {
       console.error("createGeneralOrderMutate 에러:", error);
-      router.push("/order/order-failed");
+      // router.push("/order/order-failed");
     }
   };
   // <========== 결제 함수
-
 
   const handleTest = () => {
     const requestBody = getRequestBody(
       ORDER_TYPE.GENERAL
     ) as SaveGeneralOrderRequest;
     console.log("requestBody", requestBody);
-
-  }
+  };
 
   return (
     <div>
-      <DeliveryAddress bundleDeliveryAddress={generalOrderSheetData.deliveryAddress} />
+      <DeliveryAddress />
       <Divider />
-      <BundleDeliverySelector
-        bundleDeliveryAddress={generalOrderSheetData.deliveryAddress}
-      />
+      {generalOrderSheetData.orderStatus !== "UNSUBSCRIBE_ORDER" && (
+        <BundleDeliverySelector
+          bundleDeliveryAddress={generalOrderSheetData.deliveryAddress}
+          orderStatus={generalOrderSheetData.orderStatus}
+        />
+      )}
       <Divider />
       <GeneralOrderItemList
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
@@ -204,12 +204,12 @@ export default function GeneralOrderContainer() {
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      {/* <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
+      <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
         {formatNumberWithCommas(paymentPrice)}원 결제하기
-      </FooterButton> */}
-      <FooterButton isDisabled={false} onClick={handleTest}>
-        {formatNumberWithCommas(paymentPrice)}원 결제테스트
       </FooterButton>
+      {/* <FooterButton isDisabled={false} onClick={handleTest}>
+        {formatNumberWithCommas(paymentPrice)}원 결제테스트
+      </FooterButton> */}
     </div>
   );
 }

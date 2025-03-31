@@ -1,14 +1,13 @@
 import {
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
-  DeliveryDto,
 } from "@/types";
 
 const initialGeneralOrderBody: SaveGeneralOrderRequest = {
   orderItemDtoList: [],
   deliveryDto: {
-    name: "",
-    phone: "",
+    recipientName: "",
+    phoneNumber: "",
     zipcode: "",
     street: "",
     detailAddress: "",
@@ -32,8 +31,8 @@ const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
   customerUid: "",
   memberCouponId: null,
   deliveryDto: {
-    name: "",
-    phone: "",
+    recipientName: "",
+    phoneNumber: "",
     zipcode: "",
     street: "",
     detailAddress: "",
@@ -57,15 +56,15 @@ const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
 
 
 const initialDeliveryDto = {
-  deliveryId: null,
-  deliveryName: null,
-  default: null,
-  name: null,
-  phone: null,
-  zipcode: null,
-  street: null,
-  detailAddress: null,
-  request: null,
+  deliveryId: 0,
+  deliveryName: "",
+  default: false,
+  recipientName: "",
+  phoneNumber: "",
+  zipcode: "",
+  street: "",
+  detailAddress: "",
+  request: "",
 };
 
 

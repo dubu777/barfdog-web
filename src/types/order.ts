@@ -30,6 +30,7 @@ export type {
   BundleDeliveryAddress,
   DefaultAddress,
   ClientDeliveryDto,
+  OrderStatus,
 };
 
 interface SuccessGeneralPaymentRequest {
@@ -113,18 +114,18 @@ interface SelectOptionDto {
 
 // 배송 정보 타입
 interface DeliveryDto {
-  name: string | null; // 수령자 이름
-  phone: string | null; // 수령자 전화번호
-  zipcode: string | null; // 우편번호
-  street: string | null; // 도로명 주소
-  detailAddress: string | null; // 상세 주소
-  request: string | null; // 배송 요청사항
+  recipientName: string; // 수령자 이름
+  phoneNumber: string; // 수령자 전화번호
+  zipcode: string; // 우편번호
+  street: string; // 도로명 주소
+  detailAddress: string; // 상세 주소
+  request: string; // 배송 요청사항
 }
 
 interface ClientDeliveryDto extends DeliveryDto {
-  deliveryId: number | null;
-  deliveryName: string | null;
-  default: boolean | null;
+  deliveryId: number;
+  deliveryName: string;
+  default: boolean;
 }
 
 
@@ -154,13 +155,14 @@ interface OptionDto {
 interface GeneralOrderItem {
   amount: number;
   deliveryFree: boolean;
+  discountedItemAndOptionPrice: number;
   itemId: number;
   itemImageFilename: string;
+  itemOriginalPrice: number; // 상품 원금 + 옵션 가격 총 가격
+  itemSalePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
   itemType: string;
   name: string;
   optionDtoList?: OptionDto[];
-  orderLinePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
-  originalOrderLinePrice: number; // 상품 원금 + 옵션 가격 총 가격
 }
 
 
@@ -178,19 +180,21 @@ interface DefaultAddress {
 }
 
 interface BundleDeliveryAddress {
-  deliveryName: string | null;
-  detailAddress: string | null; // 상세 주소
-  id: number | null;
-  name: string | null; // 수령자 이름
-  phone: string | null; // 수령자 전화번호
-  zipcode: string | null; // 우편번호
-  street: string | null; // 도로명 주소
+  deliveryName: string;
+  detailAddress: string; // 상세 주소
+  id: number;
+  recipientName: string; // 수령자 이름
+  phoneNumber: string; // 수령자 전화번호
+  zipcode: string; // 우편번호
+  street: string; // 도로명 주소
 }
+
+type OrderStatus = "UNSUBSCRIBE_ORDER" | "TODAY_IS_NEXT_DELIVERY" | "SUBSCRIBE_ORDER"
 
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
   defaultAddress: DefaultAddress;
-  deliveryAddress: BundleDeliveryAddress;
+  deliveryAddress: BundleDeliveryAddress[];
   deliveryPrice: number;
   email: string;
   freeCondition: number;
@@ -198,7 +202,7 @@ interface GeneralOrderSheetResponse {
   nextSubscribeDeliveryDate: string;
   orderItemDtoList: GeneralOrderItem[];
   orderPrice: number;
-  orderStatus: "UNSUBSCRIBE_ORDER" | "TODAY_IS_NEXT_DELIVERY" | "SUBSCRIBE_ORDER";
+  orderStatus: OrderStatus;
   phoneNumber: string;
   reward: number;
 }
@@ -349,4 +353,4 @@ type OrderType = "SUBSCRIBE" | "GENERAL";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
 
-type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM" | "AGREE_SUBSCRIPTION" | "SUBSCRIPTION_TITLE" | "SUBSCRIPTION_SUBTITLE" | "NO_AVAILABLE_COUPONS" | "COUPON_PLACEHOLDER"
+type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM" | "AGREE_SUBSCRIPTION" | "BUNDLE_DELIVERY_TITLE" | "BUNDLE_DELIVERY_SUBTITLE" | "BUNDLE_DELIVERY_UNAVAILABLE_TITLE" | "BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE" | "NO_AVAILABLE_COUPONS" | "COUPON_PLACEHOLDER"

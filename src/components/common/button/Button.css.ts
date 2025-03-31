@@ -147,9 +147,3 @@ export const disabledVariants = {
     }),
   },
 };
-
-export const buttonColor = {
-  gray800: style({
-    color: themeVars.colors.gray.gray800
-  })
-}

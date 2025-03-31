@@ -57,8 +57,6 @@ export default function CouponModal({
     cancelAppliedCoupon,
     maxAvailableCouponDiscount,
   } = useCouponStore();
-  console.log("discountOnCoupon", discountOnCoupon);
-  console.log("appliedCoupon", appliedCoupon);
 
   // 서버 호출 -------->
   const { mutate: createCouponMutate } = useApplyCoupon();

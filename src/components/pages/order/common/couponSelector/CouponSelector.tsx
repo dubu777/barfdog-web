@@ -20,7 +20,6 @@ export default function CouponSelector({
   orderType,
 }: CouponSelectorProps) {
   const {data: coupons } = useGetCouponList();
-  console.log('쿠폰 데이터', coupons);
   
   const { isOpen, onClose, onToggle } = useModal();
   const usableCouponCount = getAvailableCoupons(coupons, orderPrice, orderType).length;

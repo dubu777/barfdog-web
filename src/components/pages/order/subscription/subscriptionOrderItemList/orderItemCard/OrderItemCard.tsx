@@ -33,8 +33,8 @@ export default function OrderItemCard({
   };
 
   return (
-    <div className={styles.OrderItemCardContainer}>
-      <div className={styles.OrderItemCardImageWrapper}>
+    <div className={styles.orderItemCardContainer}>
+      <div className={styles.orderItemCardImageWrapper}>
         <Image
           src={TEMP_RECIPE_DTO_DATA[recipeName].imageURL}
           alt={recipeName}
@@ -43,8 +43,8 @@ export default function OrderItemCard({
           priority
         />
       </div>
-      <div className={styles.OrderItemContentWrapper}>
-        <div className={styles.OrderItemInfoWrapper}>
+      <div className={styles.orderItemContentWrapper}>
+        <div className={styles.orderItemInfoWrapper}>
           <DefaultText type="label2">
             {TEMP_RECIPE_DTO_DATA[recipeName].name}
           </DefaultText>

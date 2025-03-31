@@ -29,13 +29,13 @@ export default function GeneralShopTest() {
         { itemOptionId: 19, amount: 1 },
       ],
     },
-    {
-      itemDto: {
-        itemId: 9,
-        amount: 1,
-      },
-      itemOptionDtoList: [{ itemOptionId: 19, amount: 1 }],
-    },
+    // {
+    //   itemDto: {
+    //     itemId: 9,
+    //     amount: 1,
+    //   },
+    //   itemOptionDtoList: [{ itemOptionId: 19, amount: 1 }],
+    // },
   ];
 
   const generalPaymentTest = () => {

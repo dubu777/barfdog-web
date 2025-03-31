@@ -48,8 +48,10 @@ const ORDER_MESSAGE: Record<OrderMessage, string> = {
   AGREE_SUBSCRIPTION: "구독 상품 정기결제 동의",
   BROCHURE: "바프독 설명이 포함된 브로슈어 받기",
   CONFIRM: "위 주문 내용을 확인했으며, 결제에 동의합니다.",
-  SUBSCRIPTION_TITLE: "정기구독 배송 시 묶음 배송 신청",
-  SUBSCRIPTION_SUBTITLE: "구독 상품과 같이 배송되어 배송비가 무료에요",
+  BUNDLE_DELIVERY_TITLE: "정기구독 배송 시 묶음 배송 신청",
+  BUNDLE_DELIVERY_SUBTITLE: "구독 상품과 같이 배송되어 배송비가 무료에요",
+  BUNDLE_DELIVERY_UNAVAILABLE_TITLE: "묶음 배송 신청 불가능",
+  BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE: "배송 예정일 당일에는 묶음 배송 신청이 불가능해요.",
   NO_AVAILABLE_COUPONS: "사용가능한 쿠폰이 없어요",
   COUPON_PLACEHOLDER: "쿠폰 번호를 입력하세요",
 } as const;

@@ -116,7 +116,7 @@ export default function OrderSummary({
             value={appliedCoupon?.discountAmount ?? 0}
           />
           <OrderSummaryRow label="적립금 사용" value={appliedReward} />
-          <Divider thickness={1} color="gray300" />
+          <Divider thickness={2} color="gray300" />
           <OrderSummaryRow
             label="1회차 결제 금액"
             value={finalPaymentAmount}
@@ -160,8 +160,9 @@ export default function OrderSummary({
           <OrderSummaryRow label="결제 금액" value={finalPaymentAmount} plus />
           <Divider thickness={1} color="gray300" />
           <OrderSummaryRow
-            label="1회차 결제 금액"
+            label="결제 금액"
             value={finalPaymentAmount}
+            labelType="label2"
             valueType="title4"
             plus
           />

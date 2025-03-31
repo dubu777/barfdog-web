@@ -8,7 +8,6 @@ import {
   getCouponTargetText,
   isCouponUsable,
 } from "@/utils/coupon/couponUtils";
-import { useDiscountStore } from "@/store/order/useDiscountStore";
 
 interface CouponCardProps {
   coupon: Coupon;

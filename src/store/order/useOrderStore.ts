@@ -61,7 +61,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       get();
 
     // 필요한 데이터들을 각각의 store에서 가져옴
-    const { deliveryDto, deliveryId } = useDeliveryStore.getState();
+    const { deliveryDto, deliveryId, isBundleDelivery } = useDeliveryStore.getState();
     const { paymentMethod } = usePaymentStore.getState();
     const { discountCoupon, discountTotal, deliveryPrice, paymentPrice } =
       useDiscountStore.getState();
@@ -91,7 +91,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
         ...generalOrderBody,
         ...commonBody,
         finalPrice,
-        deliveryId: deliveryId ?? null,
+        deliveryId: isBundleDelivery ? deliveryId : null,
       } as SaveGeneralOrderRequest;
     }
 
@@ -100,8 +100,8 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       ...commonBody,
       deliveryDto: {
         detailAddress: deliveryDto.detailAddress,
-        name: deliveryDto.name,
-        phone: deliveryDto.phone,
+        recipientName: deliveryDto.recipientName,
+        phoneNumber: deliveryDto.phoneNumber,
         request: deliveryDto.request,
         street: deliveryDto.street,
         zipcode: deliveryDto.zipcode,

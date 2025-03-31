@@ -1,7 +1,7 @@
 import * as styles from "../../Order.css";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import GeneralOrderContainer from "@/components/pages/order/general/generalOrderContainer/GeneralOrderContainer";
+import GeneralOrderContainer from "@/components/pages/order/general/GeneralOrderContainer";
 import { prefetchGetSAddressList } from "@/api/address/queries/useGetAddressList";
 import { prefetchGetCouponList } from "@/api/mypage/queries/useGetCouponList";
 import {

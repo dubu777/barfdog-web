@@ -115,7 +115,7 @@ const getGeneralOrder = async (
 const saveGeneralOrder = async (
   body: SaveGeneralOrderRequest
 ): Promise<SaveOrderResponse> => {
-  const data = await axiosInstance.post("/api/orders/general", body);
+  const data = await axiosInstance.post("/api/orders/general?alliance=cb", body);
 
   return data;
 };

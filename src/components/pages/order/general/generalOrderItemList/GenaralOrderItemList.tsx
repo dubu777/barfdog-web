@@ -17,7 +17,7 @@ export default function GeneralOrderItemList({
   const setFinalPrice = useOrderStore((state) => state.setFinalPrice);
 
   const finalPrice = useMemo(() => {
-    return orderItemDtoList.reduce((sum, item) => sum + item.orderLinePrice, 0);
+    return orderItemDtoList.reduce((sum, item) => sum + item.discountedItemAndOptionPrice, 0);
   }, [orderItemDtoList]);
 
   useEffect(() => {

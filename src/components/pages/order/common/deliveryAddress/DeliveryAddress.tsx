@@ -9,23 +9,15 @@ import OrderSection from "../orderSection/OrderSection";
 import Chips from "@/components/common/chips/Chips";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import DeliveryModal from "./deliveryModal/DeliveryModal";
-import { BundleDeliveryAddress } from "@/types";
 
-interface DeliveryAddressProps {
-  bundleDeliveryAddress: BundleDeliveryAddress;
-}
+interface DeliveryAddressProps {}
 
-export default function DeliveryAddress({ bundleDeliveryAddress }: DeliveryAddressProps) {
+export default function DeliveryAddress({}: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
-  const {
-    deliveryDto,
-    isBundleDelivery,
-    setDeliveryDto,
-    setBackupDeliveryDto,
-  } = useDeliveryStore();
-  const { data: addressData } = useGetAddressList();
-console.log('deliveryDto', deliveryDto);
+  const { deliveryDto, setDeliveryDto, setBackupDeliveryDto } =
+    useDeliveryStore();
 
+  const { data: addressData } = useGetAddressList();
 
   return (
     <OrderSection
@@ -36,44 +28,36 @@ console.log('deliveryDto', deliveryDto);
       onSubtitleClick={onToggle}
       subTitleIsButton
     >
-      {isBundleDelivery ? (
-        <div className={styles.tempWrapper}>
-          <DefaultText type="headline2">묶음 배송지로 배송됩니다.</DefaultText>
-        </div>
-      ) : (
-        <div
-          className={styles.DeliveryAddressContentWrapper}
-          style={{ gap: "16px" }}
-        >
-          <div
-            className={styles.DeliveryAddressTextWrapper}
-            style={{ gap: "8px" }}
-          >
-            <DefaultText type="headline2">{deliveryDto.deliveryName}</DefaultText>
-            {deliveryDto.default && (
-              <Chips variant="outlined" size="sm" borderRadius="full" switchOff>
-                기본배송지
-              </Chips>
-            )}
-          </div>
-          <div
-            className={styles.DeliveryAddressContentWrapper}
-            style={{ gap: "2px" }}
-          >
-            <div
-              className={styles.DeliveryAddressTextWrapper}
-              style={{ gap: "4px" }}
+      <div className={styles.colStartWrapper({ gap: 16 })}>
+        <div className={styles.rowStartWrapper({ gap: 8 })}>
+          <DefaultText type="headline2">
+            {deliveryDto.deliveryName ?? deliveryDto.recipientName}
+          </DefaultText>
+          {deliveryDto.default && (
+            <Chips
+              variant="outlined"
+              color="gray700"
+              size="sm"
+              borderRadius="full"
             >
-              <DefaultText type="body3">{deliveryDto.name}</DefaultText>
-              <DefaultText type="body3">•</DefaultText>
-              <DefaultText type="body3">{deliveryDto.phone}</DefaultText>
-            </div>
-            <DefaultText type="body3">
-              {deliveryDto.street} {deliveryDto.detailAddress}
-            </DefaultText>
-          </div>
+              기본 배송지
+            </Chips>
+          )}
         </div>
-      )}
+        <div
+          className={styles.colStartWrapper({ gap: 2 })}
+          style={{ gap: "2px" }}
+        >
+          <div className={styles.rowStartWrapper({ gap: 4 })}>
+            <DefaultText type="body3">{deliveryDto.recipientName}</DefaultText>
+            <DefaultText type="body3">•</DefaultText>
+            <DefaultText type="body3">{deliveryDto.phoneNumber}</DefaultText>
+          </div>
+          <DefaultText type="body3">
+            {deliveryDto.street} {deliveryDto.detailAddress}
+          </DefaultText>
+        </div>
+      </div>
       <DeliveryModal
         addressData={addressData}
         isVisible={isOpen}

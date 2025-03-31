@@ -20,7 +20,6 @@ interface ButtonProps {
   onClick?: (() => void) | ((e: MouseEvent<HTMLButtonElement>) => void);
   children: React.ReactNode;
   fullWidth?: boolean;
-  width?: string;
   buttonColor?: keyof typeof COLORS;
   textColor?: keyof typeof COLORS;
   buttonType?: "submit" | "button" | "reset";
@@ -38,7 +37,6 @@ export default function Button({
   onClick,
   children,
   fullWidth = false,
-  width,
   buttonColor,
   textColor,
   buttonType = "button",

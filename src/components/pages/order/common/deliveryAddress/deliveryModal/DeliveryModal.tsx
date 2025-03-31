@@ -25,7 +25,6 @@ export default function DeliveryModal({
   setDeliveryDto,
   setBackupDeliveryDto,
 }: DeliveryModalProps) {
-  console.log("addressData", addressData);
 
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =

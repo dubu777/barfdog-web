@@ -21,7 +21,7 @@ export function useGetGeneralOrder(
     variables,
   ];
   const { updateOrderBody } = useOrderStore();
-  const { setDeliveryDto, setBackupDeliveryDto } = useDeliveryStore();
+  const { setDeliveryDto, setBackupDeliveryDto, setDeliveryId } = useDeliveryStore();
   const { setUserTotalReward } = useRewardStore();
   const queryClient = useQueryClient();
   return useMutation({
@@ -41,7 +41,7 @@ export function useGetGeneralOrder(
               amount: option.amount,
             })),
           })),
-          deliveryId: data.deliveryAddress.id,
+          deliveryId: null,
           orderPrice: data.orderPrice,
           deliveryPrice: data.deliveryPrice,
         },
@@ -50,9 +50,9 @@ export function useGetGeneralOrder(
       setDeliveryDto({
         default: data.defaultAddress.default,
         deliveryId: data.defaultAddress.id,
-        deliveryName: data.defaultAddress.deliveryName,
-        name: data.defaultAddress.recipientName,
-        phone: data.defaultAddress.phoneNumber,
+        deliveryName: data.defaultAddress.deliveryName ?? data.defaultAddress.recipientName,
+        recipientName: data.defaultAddress.recipientName,
+        phoneNumber: data.defaultAddress.phoneNumber,
         zipcode: data.defaultAddress.zipcode,
         street: data.defaultAddress.street,
         detailAddress: data.defaultAddress.detailAddress,
@@ -61,15 +61,18 @@ export function useGetGeneralOrder(
       setBackupDeliveryDto({
         default: data.defaultAddress.default,
         deliveryId: data.defaultAddress.id,
-        deliveryName: data.defaultAddress.deliveryName,
-        name: data.defaultAddress.recipientName,
-        phone: data.defaultAddress.phoneNumber,
+        deliveryName: data.defaultAddress.deliveryName ?? data.defaultAddress.recipientName,
+        recipientName: data.defaultAddress.recipientName,
+        phoneNumber: data.defaultAddress.phoneNumber,
         zipcode: data.defaultAddress.zipcode,
         street: data.defaultAddress.street,
         detailAddress: data.defaultAddress.detailAddress,
         request: data.defaultAddress.request,
       });
       setUserTotalReward(data.reward);
+      if (data.deliveryAddress && data.deliveryAddress.length > 0) {
+        setDeliveryId(data.deliveryAddress[0].id);
+      }
     },
     onError: (err) => {
       console.error("err", err);

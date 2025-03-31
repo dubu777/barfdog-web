@@ -29,8 +29,17 @@ export const bundleDeliveryBox = recipe({
         border: `1px solid ${themeVars.colors.gray.gray200}`,
       },
     },
+    isAvailableBundle: {
+      true: {
+
+      },
+      false: {
+        backgroundColor: themeVars.colors.gray.gray50,
+      },
+    },
   },
   defaultVariants: {
     isSelected: false,
+    isAvailableBundle: true,
   },
 });
