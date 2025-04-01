@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { addDays, format } from "date-fns";
-import * as styles from './DelayShipping.css';
+import * as styles from './PostponeShipping.css';
 import { pointColor } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import DelayWeekPicker from "@/components/pages/mypage/subscription/delayShipping/delayWeekPicker/DelayWeekPicker";
+import DelayWeekPicker from "@/components/pages/mypage/subscription/postponeShipping/delayWeekPicker/DelayWeekPicker";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
@@ -13,7 +13,7 @@ import { getProductionDates, useBackNavigation } from "@/utils";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
 
-const DelayShipping = ({ subscriptionId }: { subscriptionId: number }) => {
+const PostponeShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 	const { data: detail } = useGetSubscriptionDetail(subscriptionId);
 
 	const pathname = usePathname();
@@ -22,9 +22,11 @@ const DelayShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 	const goBack = useBackNavigation();
 	const completedMode = searchParams.get('status') === 'completed';
 
-	const [selectedDate, setSelectedDate] = useState('');
+	const nextDeliveryDate = detail?.nextDeliveryDate;
 
-	const defaultProductionDates = getProductionDates(detail.nextDeliveryDate);
+	const [selectedDate, setSelectedDate] = useState(nextDeliveryDate);
+
+	const defaultProductionDates = getProductionDates(detail.nextDeliveryDate,false, 'yyyy.MM.dd');
 	const nextCycle = detail.subscribeCount + 1;
 
 	const handleSubmit = () => {
@@ -54,12 +56,12 @@ const DelayShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 							{!completedMode ? '기존 발송 예정일' : `${nextCycle}회차 발송 예정일`}
 						</DefaultText>
 						<DefaultText type='label1'>
-							{!completedMode ? defaultProductionDates.receivingDate : selectedDate} (화)
+							{!completedMode && detail.nextDeliveryDate ? format(new Date(detail.nextDeliveryDate), 'yyyy.MM.dd') : selectedDate} (화)
 						</DefaultText>
 					</div>
 					<div className={styles.dateBox}>
 						<DefaultText type='caption' color='gray500'>
-							{!completedMode ? '' : `${nextCycle + 1}회차 발송 예정일`}
+							{!completedMode ? '신규 도착 예정일' : `${nextCycle + 1}회차 발송 예정일`}
 						</DefaultText>
 						<DefaultText type='label1' color='red'>
 							{!completedMode ? selectedDate : selectedDate ? format(addDays(new Date(selectedDate), 7), 'yyyy.MM.dd'): ''} (화)
@@ -67,11 +69,11 @@ const DelayShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 					</div>
 				</div>
 			</article>
-			{!completedMode ?
+			{!completedMode && detail.nextDeliveryDate ?
 				<>
 					<article className={styles.selectShippingBox}>
 						<DefaultText type='headline2' className={styles.selectShippingText}>발송 희망 주차를 선택해주세요</DefaultText>
-						<DelayWeekPicker onChange={(value) => setSelectedDate(value)} isFixedOpen />
+						<DelayWeekPicker defaultDate={new Date(detail.nextDeliveryDate)} onChange={(value) => setSelectedDate(value)} isFixedOpen />
 					</article>
 					<article className={styles.shippingInfoBox}>
 						<InfoBox
@@ -97,4 +99,4 @@ const DelayShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 	);
 };
 
-export default DelayShipping;
+export default PostponeShipping;

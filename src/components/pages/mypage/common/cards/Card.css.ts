@@ -84,3 +84,11 @@ export const reviewCardActions = style({
 	gap: '8px',
 	marginTop: '12px',
 })
+
+export const divider = style({
+	display: 'inline-block',
+	width: '1px',
+	height: '12px',
+	background: themeVars.colors.gray.gray400,
+	margin: '0 4px',
+})

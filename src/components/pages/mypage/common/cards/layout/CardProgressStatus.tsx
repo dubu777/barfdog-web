@@ -1,42 +1,46 @@
 import * as styles from '../Card.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ProgressBar from "@/components/common/progressBar/ProgressBar";
-import { ORDER_PROGRESS, ORDER_STATUS_MESSAGES } from "@/constants/mypage";
+import {
+	SUBSCRIPTION_ORDER_PROGRESS,
+	SUBSCRIPTION_ORDER_STATUS_MESSAGES,
+} from "@/constants/mypage";
+import { format } from "date-fns";
 
 interface CardProgressStatusProps {
 	status: string;
-	productionDates?: { productionDate: string | null; receivingDate: string | null; };
+	productionDates?: { paymentDate: string | null; deliveryDate: string | null; };
 	subscribeCount?: number;
-	isMyPage?: boolean;
+	showProgressLabel?: boolean;
 }
 
-const CardProgressStatus = ({ status, productionDates, subscribeCount, isMyPage }: CardProgressStatusProps) => {
-	const getOrderStatusMessage = (status: string, n: number = 0): string | undefined => {
-		return ORDER_STATUS_MESSAGES[status]?.(n) || undefined;
+const CardProgressStatus = ({ status, productionDates, subscribeCount, showProgressLabel }: CardProgressStatusProps) => {
+	const getOrderStatusMessage = (status: string, count: number = 0): string | undefined => {
+		return SUBSCRIPTION_ORDER_STATUS_MESSAGES[status]?.(productionDates?.paymentDate || format(new Date(), 'yyyy-MM-dd'), count) || undefined;
 	};
 
-	const progressInfo = ORDER_PROGRESS[status] || { progress: 0 };
-	const orderStatusMessage = isMyPage ? getOrderStatusMessage(status, subscribeCount || 0 + 1) : undefined;
-	const showProgress = isMyPage || status !== 'SUBSCRIBE_PENDING' && status !== 'SUBSCRIBE_CANCEL';
+	const progressInfo = SUBSCRIPTION_ORDER_PROGRESS[status] || { progress: 0 };
+	const orderStatusMessage = showProgressLabel ? getOrderStatusMessage(status, subscribeCount || 1) : undefined;
+	const showProgress = showProgressLabel || status !== 'SUBSCRIBE_PENDING' && status !== 'SUBSCRIBE_WILL_CANCEL' && status !== 'SUBSCRIBE_CANCEL';
 
 	return (
-		<div className={styles.statusContainer({ hasStatusLabel: isMyPage && !!progressInfo.label })}>
-			{isMyPage && orderStatusMessage &&
+		<div className={styles.statusContainer({ hasStatusLabel: showProgressLabel && !!progressInfo.label })}>
+			{showProgressLabel && orderStatusMessage &&
 				<DefaultText type='caption' color='red'>{orderStatusMessage}</DefaultText>
 			}
 			{showProgress &&
 				<ProgressBar
 					progress={progressInfo.progress}
-					label={isMyPage ? progressInfo.label: undefined}
+					label={showProgressLabel ? progressInfo.label: undefined}
 				/>
 			}
 			{showProgress &&
 				<div className={styles.dateInfo}>
 					<DefaultText type='caption'>
-						{productionDates?.productionDate} {progressInfo.statusText?.payment}
+						{productionDates?.paymentDate ? format(new Date(productionDates?.paymentDate), 'MM.dd') : ''} {progressInfo.statusText?.payment}
 					</DefaultText>
 					<DefaultText type='caption' color='gray600'>
-						{productionDates?.receivingDate} {progressInfo.statusText?.delivery}
+						{productionDates?.deliveryDate ? format(new Date(productionDates?.deliveryDate), 'MM.dd') : ''} {progressInfo.statusText?.delivery}
 					</DefaultText>
 				</div>
 			}

@@ -3,11 +3,12 @@ import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
 import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardProductInfo";
-import { OrderType } from "@/types";
 import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
+import { ORDER_TYPE } from "@/constants";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { OrderType } from "@/types";
 
 interface OrderIssueCardProps {
 	// 마이페이지 취소/교환/반품 내역 데이터 타입 정의 및 적용 필요
@@ -21,9 +22,10 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 	const { mypageUserInfo } = usePersistMypageStore();
 	const { pushWithQuery } = useDynamicQueryPush();
 	const cardDetail = data;
-	const status = 'REQUESTED';
+	// const status = 'REQUESTED';
+	const status = cardDetail?.orderStatus;
 
-	const issueLabel = ORDER_ISSUE_TYPE[issueType];
+	const issueLabel = ORDER_ISSUE_TYPE[issueType] || '';
 	const statusLabel = ORDER_ISSUE_STATUS[status];
 
 	const issueStatusLabel = `${issueLabel}${statusLabel}`
@@ -37,16 +39,16 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 	return (
 		<CardSection>
 			<DefaultText type='label4'>
-				{orderType === 'subscription' ? `정기배송 ${cardDetail.subscribeCount || 0}회차` : '일반배송'} {issueStatusLabel}
+				{orderType === ORDER_TYPE.SUBSCRIPTION ? `정기배송 ${cardDetail?.subscribeCount || 0}회차` : '일반배송'} {issueStatusLabel}
 				<DefaultText type='caption' color='gray600'>
 					&nbsp;&nbsp;신청일 {cardDetail?.requestDate || ''}
 				</DefaultText>
 			</DefaultText>
 			<CardProductInfo
-				name={cardDetail.name || cardDetail.dogName || cardDetail.itemName}
-				imageUrl={cardDetail.imageUrl}
-				itemName={cardDetail.recipeNames || cardDetail.itemName}
-				price={cardDetail.orderPrice || 1000}
+				name={cardDetail?.name || cardDetail?.dogName || cardDetail?.itemName}
+				imageUrl={cardDetail?.imageUrl}
+				itemName={cardDetail?.recipeNames || cardDetail?.itemName}
+				price={cardDetail?.paymentPrice || 1000}
 			/>
 			<div className={styles.buttonContainer}>
 				<div className={styles.actionsControls({ isWrap: false })}>
@@ -55,7 +57,7 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 							{issueLabel} 상세보기
 						</Button>
 						: <Button variant='solid' size='sm' fullWidth onClick={handleActions}>
-							{orderType === 'subscription' ? `재구독하고 최대 ${totalDiscount}% 할인받기` : '재구매'}
+							{orderType === ORDER_TYPE.SUBSCRIPTION ? `재구독하고 최대 ${totalDiscount}% 할인받기` : '재구매'}
 						</Button>
 					}
 				</div>

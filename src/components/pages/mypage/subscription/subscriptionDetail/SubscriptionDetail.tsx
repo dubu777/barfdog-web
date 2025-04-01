@@ -8,31 +8,35 @@ import AddressInfo from "@/components/pages/mypage/common/information/section/Ad
 import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
 import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { useGetDogDetail } from "@/api/dog/queries/useGetDogDetail";
 
 interface SubscriptionDetailProps {
 	subscriptionId: number;
 }
 
 const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
-	const { data: subscriptionDetail } = useGetSubscriptionDetail(subscriptionId);
 	const { pushWithQuery } = useDynamicQueryPush();
+	const { data: subscriptionDetail } = useGetSubscriptionDetail(subscriptionId);
+	const { data: dogDetail } = useGetDogDetail(subscriptionDetail?.dogId, {
+		enabled: !!subscriptionDetail?.dogId, // dogId가 있을 때만 실행
+	});
 
-	const transformedSubscriptionDetail = subscriptionDetail
-		? {
-			...subscriptionDetail,
-			status: subscriptionDetail.subscribeStatus,
-		}
-		: null;
+const transformedSubscriptionDetail = subscriptionDetail
+	? (({ subscribeStatus, ...rest }) => ({ ...rest, status: subscribeStatus }))(subscriptionDetail)
+	: null;
+
 	return (
 		<section>
-			<OrderItemInfo data={transformedSubscriptionDetail} orderType='subscription' subscriptionId={subscriptionId} />
+			<OrderItemInfo data={transformedSubscriptionDetail} orderType='subscription' subscriptionId={subscriptionId} type='subscriptionDetail' />
 			<AddressInfo data={transformedSubscriptionDetail} />
 			<SubscriptionInfo
 				data={transformedSubscriptionDetail}
 				type='subscription'
 				subscriptionId={subscriptionId}
 			/>
-			<PetInfo data={transformedSubscriptionDetail} />
+			{dogDetail?.dogDto &&
+				<PetInfo data={dogDetail?.dogDto} />
+			}
 			<PaymentInfo subscriptionId={subscriptionId} data={transformedSubscriptionDetail} type='subscription' />
 			<div className={styles.cancelSubscriptionContainer}>
 				<button onClick={() => pushWithQuery(`/mypage/subscription/${subscriptionId}/cancel-subscription`, {})}>

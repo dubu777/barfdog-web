@@ -1,5 +1,7 @@
 import { useRouter } from "next/navigation";
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
+import { PAYMENT } from "@/constants";
+import { InfoListsItem } from "@/types";
 
 interface PaymentInfoProps {
 	subscriptionId?: number;
@@ -14,18 +16,24 @@ const PaymentInfo = ({
 	type = 'subscription',
 	isDefaultOpen = true,
 }: PaymentInfoProps) => {
-	const paymentType = type === 'subscription' || data.orderType === 'subscription';
+	const subscriptionType = type === 'subscription' || data.orderType === 'subscribe';
 	const router = useRouter();
-	const deliveryFee = 'free';
+
+	const deliveryFee = data?.deliveryPrice;
+	const paymentPrice = `${data?.paymentPrice?.toLocaleString()}원`;
+	const orderPrice = `${data?.orderPrice?.toLocaleString()}원`;
+	const discountCoupon = `${data?.discountCoupon !== 0 ? '-' : ''}${data?.discountCoupon?.toLocaleString()}원`;
+	const discountReward = `${data?.discountReward !== 0 ? '-' : ''}${data?.discountReward?.toLocaleString()}원`;
+	const discountGrade = Math.round((data?.discountGrade / data?.orderPrice) * 100);
 
 	const paymentInfo = [
-		{ label: "결제수단", value: "신용카드 (삼성)" },
-		{ label: "총 금액", value: "270,000원" },
-		{ label: "배송비", value: deliveryFee ? `${paymentType ? '정기구독' : ''}무료` : '5,000원' },
-		{ label: "쿠폰사용", value: "-1,000원" },
-		{ label: "적립금 사용", value: "-2,000원" },
-		{ label: "할인 혜택", value: "등급할인혜택 5%할인" },
-	];
+		{ label: "결제수단", value: PAYMENT[data?.paymentMethod] },
+		{ label: "총 금액", value: paymentPrice },
+		{ label: "배송비", value: deliveryFee === 0 ? `${subscriptionType ? '정기구독' : ''} 무료` : '5,000원' },
+		data?.discountCoupon !== 0 ? { label: "쿠폰사용", value: discountCoupon } : undefined,
+		data?.discountReward !== 0 ? { label: "적립금 사용", value: discountReward } : undefined,
+		subscriptionType && discountGrade !== 0 ? { label: "할인 혜택", value: `등급할인혜택 ${discountGrade}%할인` } : undefined,
+	].filter(Boolean) as InfoListsItem[]; 
 
 	const buttons =
 		type === "subscription"
@@ -40,7 +48,7 @@ const PaymentInfo = ({
 		<InfoSection
 			title="결제정보"
 			subTitle="주문금액"
-			subTitleRight={paymentType ? `N회차 진행중` : '48,450원'}
+			subTitleRight={subscriptionType ? `월 ${orderPrice}` : paymentPrice}
 			infoLists={infoLists}
 			isDefaultOpen={isDefaultOpen}
 			buttons={buttons}

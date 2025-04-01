@@ -7,8 +7,14 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import Picker from "react-mobile-picker";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
 
-// 오늘 날짜 기준으로 가장 가까운 '화요일' 찾기
+// 오늘 날짜 기준으로 가장 가까운 '화요일' 찾기 (오늘 제외)
 const getNextAvailableTuesday = (today: Date) => {
+	// 오늘이 화요일이면, 다음 주 화요일을 반환
+	if (today.getDay() === 2) {
+		return addWeeks(today, 1); // 다음 주 화요일
+	}
+
+	// 그 외의 경우는 정상적으로 가장 가까운 화요일 찾기
 	const daysUntilTuesday = (9 - getDay(today)) % 7; // 오늘부터 다음 화요일까지 남은 일수 계산
 	return addDays(today, daysUntilTuesday);
 };
@@ -22,16 +28,20 @@ const getWeeklyOptions = (tuesdays: Date[]) =>
 
 
 interface WeeklyDatePickerProps {
-	onChange: (date: Date | string) => void;
+	defaultDate?: Date;
+	onChange: (date: string) => void;
 	label?: string;
 	isRequired?: boolean;
 	isFixedOpen?: boolean;
 }
 
-const DelayWeekPicker = ({ onChange, label, isRequired, isFixedOpen = false }: WeeklyDatePickerProps) => {
+const DelayWeekPicker = ({ defaultDate, onChange, label, isRequired, isFixedOpen = false }: WeeklyDatePickerProps) => {
 	const today = new Date();
-	const firstAvailableTuesday = getNextAvailableTuesday(today);
+	const firstAvailableTuesday = getNextAvailableTuesday(defaultDate || today);
 	const tuesdaysInRange = useMemo(() => getTuesdaysInRange(firstAvailableTuesday, 8), [firstAvailableTuesday]);
+
+	console.log('firstAvailableTuesday', firstAvailableTuesday)
+	console.log('tuesdaysInRange', tuesdaysInRange)
 
 	const options = useMemo(() => getWeeklyOptions(tuesdaysInRange), [tuesdaysInRange]);
 	const months = useMemo(() => [...new Set(options.map(option => option.month))], [options]);

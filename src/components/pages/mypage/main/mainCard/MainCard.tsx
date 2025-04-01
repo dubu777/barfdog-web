@@ -8,40 +8,48 @@ import 'swiper/css/pagination';
 import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
 import { useGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
-import { useGetPetList } from "@/api/pet/queries/useGetPetList";
+import { useGetDogList } from "@/api/dog/queries/useGetDogList";
+import {dogList} from "./MainCard.css";
 
 const MainCard = () => {
-  const { data: subscriptionData } = useGetSubscriptionList(0, 100);
-  const { data: petList } = useGetPetList();
+  const { data: subscriptionData } = useGetSubscriptionList(0, 999);
+  const { data: dogList } = useGetDogList();
 
-  const subscribingList = subscriptionData?.filter(dog => dog.subscribeDto.status === 'SUBSCRIBING');
-  const subscribingPets = petList?.filter(dog => dog.subscribeStatus === 'SUBSCRIBING');
+  const subscribingList =
+    subscriptionData?.filter(
+      subscription => subscription.subscribeDto.status === 'SUBSCRIBING')
+      .map(subscription => ({
+        ...subscription.subscribeDto, recipeNames: subscription.recipeNames
+      })
+    );
+  const subscribingPets = dogList?.filter(dog => dog.subscribeStatus === 'SUBSCRIBING');
   // const newSubscribingList = [...subscribingList];
-  const newSubscribingList = [...subscribingPets];
+  const newSubscribingList = [...subscribingList];
 
   const emptyState = newSubscribingList.length < 1;
+
+  console.log('subscribingList', subscribingList)
 
   return (
     <article className={styles.dogInfoContainer({ emptyState })}>
       {emptyState ?
         <EmptyStateCard type='default' />
-        :
-        <Swiper
+        : <Swiper
           slidesPerView='auto'
           centeredSlides={true}
           spaceBetween={8}
           pagination
           modules={[Pagination]}
-          className={styles.petList}
+          className={styles.dogList}
         >
-          {newSubscribingList.map((pet, index) => {
+          {newSubscribingList.map((subscription, index) => {
             return (
-              pet &&
+              subscription &&
               <SwiperSlide
-                key={`${pet.id}-${index}`}
+                key={`${subscription.subscribeId}-${index}`}
                 className={styles.itemSlider}
               >
-                <SubscriptionCard data={pet} type='mypage' />
+                <SubscriptionCard data={subscription} type='mypage' subscriptionId={subscription.subscribeId} />
               </SwiperSlide>
             )
           })}

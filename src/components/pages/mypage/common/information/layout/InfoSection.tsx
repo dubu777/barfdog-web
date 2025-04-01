@@ -5,22 +5,7 @@ import InfoList from "@/components/pages/mypage/common/information/layout/InfoLi
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import InfoTitleButton from "@/components/pages/mypage/common/information/layout/InfoTitleButton";
-
-interface InfoListsItem {
-	label: string;
-	value: string | number;
-}
-
-interface InfoListsButtons {
-	label: string;
-	onClick: () => void;
-}
-
-interface InfoLists {
-	title?: string;
-	items: InfoListsItem[];
-	noBorder?: boolean
-}
+import { InfoLists, InfoListsButtons } from '@/types';
 
 interface InfoSectionProps {
 	title?: string;
