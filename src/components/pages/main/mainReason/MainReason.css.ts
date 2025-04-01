@@ -38,5 +38,5 @@ export const mainReasonLink = style([flexRow, {
   textAlign: 'left',
   fontSize: themeVars.fontSize["text-xs"],
   fontWeight: themeVars.fontWeight.bold,
-  color: themeVars.colors.mainRed,
+  color: themeVars.colors.red.red,
 }])

@@ -20,7 +20,7 @@ const nextConfig = {
     };
   },
   images: {
-    domains: ['localhost', 'www.barfdogserver.com', 'dev.barfdogserver.com'],
+    domains: ['localhost', 'www.barfdogserver.com', 'dev.barfdogserver.com', "renewal-dev.barfdogserver.com" ],
     remotePatterns: [
       {
         protocol: 'https',
@@ -56,7 +56,11 @@ const nextConfig = {
       {
         source: process.env.SOURCE_PATH,
         destination: dev ? process.env.NEXT_PUBLIC_API_URL_DEV : process.env.NEXT_PUBLIC_API_URL_PRODUCT,
-      }
+      },
+      {
+        source: "/oauth2.0/:path*",
+        destination: "https://nid.naver.com/oauth2.0/:path*",
+      },
     ]
   },
   async redirects() {
@@ -67,7 +71,10 @@ const nextConfig = {
         permanent: true,
       }
     ]
-  }
+  },
+  experimental: {
+    middlewarePrefetch: 'flexible',
+  },
 };
 
 export default withVanillaExtract(nextConfig);

@@ -1,9 +1,15 @@
+import { DogData } from "./dogs";
+
 export type {
   MyPageMemberDto,
   MyPageRepresentativeDogDto,
   MyPageInfoData,
   DogData,
   MyPageBannerData,
+  OrderProgressInfo,
+  MenuLink,
+  MenuList,
+  OrderAction,
 };
 
 interface MyPageMemberDto {
@@ -26,26 +32,7 @@ interface MyPageInfoData {
   deliveryCount: number;
   mypageDogDtoList?: null | DogData[];
   mypageMemberDto: MyPageMemberDto;
-  mypageRepresentiveDogDto: MyPageRepresentiveDogDto;
-}
-
-interface DogData {
-  id: number;
-  name: string;
-  representative: boolean;
-  birth: string;
-  plan: string;
-  gender: string;
-  itemNames: string;
-  nextDeliveryDate?: null | string | Date;
-  dogPictureId?: null | string | number;
-  pictureName?: null | string;
-  pictureUrl?: null | string;
-  recipeNames: string;
-  startDate?: null | string | Date;
-  subscribeId: number;
-  subscribeCount: number;
-  subscribeStatus: string;
+  mypageRepresentiveDogDto: MyPageRepresentativeDogDto;
 }
 
 interface MyPageBannerImageUrl {
@@ -62,4 +49,28 @@ interface MyPageBannerData {
   pcLinkUrl: string;
   mobileLinkUrl: string;
   imageUrl: MyPageBannerImageUrl;
+}
+
+interface OrderProgressInfo {
+  label?: string;
+  progress: number;
+  statusText: Record<'payment' | 'delivery', string>;
+}
+
+interface MenuLink {
+  key: string;
+  label: string;
+  url?: string;
+}
+
+interface MenuList {
+  category: string;
+  menus: MenuLink[];
+}
+
+interface OrderAction extends MenuLink {
+  variants?: 'solid' | 'outline';
+  params?: string;
+  fullWidth?: boolean;
+  key?: 'cancel' | 'refundExchange' | 'confirm';
 }

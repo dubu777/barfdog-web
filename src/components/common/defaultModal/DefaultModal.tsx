@@ -3,18 +3,21 @@ import { ReactNode } from "react";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import CloseButton from "/public/images/icons/close-black.png";
 import Image from "next/image";
-import DefaultModalBackground from "../defaultModalBackground/DefaultModalBackground";
+import ModalBackground from "../modalBackground/ModalBackground";
 
 interface DefaultModalProps {
   children: ReactNode;
   isVisible: boolean;
   onClose: () => void;
-  size: "sm" | "md" | "lg";
+  size: "sm" | "md" | "lg" | "xl";
   type: "alert" | "info";
   cancelText?: string;
   confirmText?: string;
   scroll?: boolean;
   onClickConfirm?: () => void;
+  extraButton?: boolean;
+  extraButtonText?: string;
+  onClickExtraButton?: () => void;
 }
 
 export default function DefaultModal({
@@ -27,9 +30,12 @@ export default function DefaultModal({
   confirmText,
   scroll,
   onClickConfirm,
+  extraButton,
+  extraButtonText,
+  onClickExtraButton,
 }: DefaultModalProps) {
   return (
-    <DefaultModalBackground isVisible={isVisible} onClose={onClose}>
+    <ModalBackground isVisible={isVisible} onClose={onClose}>
       <div
         className={styles.modalContainer({ size, scroll })}
         onClick={(e) => e.stopPropagation()}
@@ -45,7 +51,7 @@ export default function DefaultModal({
             />
           </div>
         )}
-        <div className={styles.modalContentWrapper({scroll})}>{children}</div>
+        <div className={styles.modalContentWrapper({ scroll })}>{children}</div>
         {type === "alert" && (
           <div className={styles.modalButtonWrapper}>
             <DefaultButton type="mainBorder" size="sm" onClick={onClose}>
@@ -56,7 +62,12 @@ export default function DefaultModal({
             </DefaultButton>
           </div>
         )}
+        {extraButton && (
+          <DefaultButton size="md" onClick={onClickExtraButton} borderRadius="sm">
+            {extraButtonText}
+          </DefaultButton>
+        )}
       </div>
-    </DefaultModalBackground>
+    </ModalBackground>
   );
 }

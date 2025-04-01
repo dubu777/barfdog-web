@@ -3,7 +3,7 @@ import {themeVars} from "@/styles/theme.css";
 
 export const modalStyle = style({
   width: '90%',
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
   borderRadius: '8px',
   padding: '40px 22px 24px',
   textAlign: 'center',

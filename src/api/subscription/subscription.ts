@@ -3,7 +3,7 @@ import {
   BenefitDto,
   PaymentBody,
   PlanDiscountResponse, SubscriptionAddressData, SubscriptionListData,
-  SubscriptionDetailDto, SubscriptionSkipType,
+  SubscriptionDetailDto, SubscriptionSkipType, AddressDto,
 } from "@/types/subscription";
 
 
@@ -31,9 +31,9 @@ const getSubscriptionDetail = async (subscribeId: string): Promise<SubscriptionD
   return data.subscribeDto;
 }
 
-const getSubscriptionList = async (page = 0, size = 999): Promise<SubscriptionListData[]> => {
+const getSubscriptionList = async (page = 0, size = 50): Promise<SubscriptionListData[]> => {
   const { data } = await axiosInstance.get(`/api/subscribes?page=${page}&size=${size}`);
-  return data._embedded.querySubscribesDtoList;
+  return data?._embedded?.querySubscribesDtoList || [];
 };
 
 const getSubscriptionBenefits = async (subscribeId: string): Promise<BenefitDto[]> => {
@@ -41,7 +41,7 @@ const getSubscriptionBenefits = async (subscribeId: string): Promise<BenefitDto[
   return data._embedded.subscribeBenefitDtoList;
 }
 
-const getSubscriptionAddress = async (subscribeId: string): Promise<SubscriptionAddressData> => {
+const getSubscriptionAddress = async (subscribeId: number): Promise<SubscriptionAddressData> => {
   const { data } = await axiosInstance.get(`/api/address/subscribe/${subscribeId}`);
   return data;
 }
@@ -55,6 +55,10 @@ const skipSubscription = async (subscribeId: number, skipType: SubscriptionSkipT
   return data;
 }
 
+const updateSubscriptionAddress = async (subscribeId: number, changeType: string, body: AddressDto) => {
+  const { data } = await axiosInstance.post(`/api/address/subscribe/${subscribeId}/${changeType}`, body);
+  return data;
+}
 
 export {
   getPlanDiscount,
@@ -64,4 +68,5 @@ export {
   getSubscriptionAddress,
   updateSubscription,
   skipSubscription,
+  updateSubscriptionAddress,
 }

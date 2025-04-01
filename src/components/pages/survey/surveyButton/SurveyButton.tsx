@@ -2,7 +2,6 @@
 import * as styles from "./SurveyButton.css";
 
 interface SurveyButtonProps {
-  id: string;
   value: string | boolean | number;
   isChecked: boolean;
   label: string;
@@ -11,7 +10,6 @@ interface SurveyButtonProps {
 }
 
 export default function SurveyButton({
-  id,
   value,
   isChecked,
   label,
@@ -21,7 +19,6 @@ export default function SurveyButton({
   return (
       <button
         type="button"
-        id={id}
         className={styles.buttonStyle({ checked: isChecked, type: layoutType })}
         onClick={() => onChange(value)}
       >

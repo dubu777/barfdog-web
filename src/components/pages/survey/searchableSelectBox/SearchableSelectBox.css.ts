@@ -32,7 +32,7 @@ export const optionsContainer = style({
   margin: 'auto',
   overflow: 'hidden',
   padding: '0.3125rem',
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
   border: `0.0625rem solid ${themeVars.borderColors.greyBB}`,
   fontSize: themeVars.fontSize['text-sm'],
   borderRadius: '0.25rem',
@@ -47,7 +47,7 @@ export const optionsWrapper = style({
     width: '8px',
   },
   '::-webkit-scrollbar-thumb': {
-    backgroundColor: themeVars.colors.white,
+    backgroundColor: themeVars.colors.gray.gray0,
     border: `0.0625rem solid ${themeVars.borderColors.greyBB}`,
     borderRadius: '10px',
   },
@@ -65,8 +65,8 @@ export const option = style({
       backgroundColor: themeVars.backgroundColors.greyF7,
     },
     '&[data-selected="true"]': {
-      backgroundColor: themeVars.colors.mainRed,
-      color: themeVars.colors.white,
+      backgroundColor: themeVars.colors.red.red,
+      color: themeVars.colors.gray.gray0,
     },
   },
 });

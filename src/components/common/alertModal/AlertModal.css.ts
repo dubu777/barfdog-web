@@ -4,7 +4,7 @@ import { themeVars } from "@/styles/theme.css";
 
 export const modalStyle = style({
   minWidth: '50%',
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
   borderRadius: '8px',
   padding: '32px 22px 24px',
   textAlign: 'center',
@@ -43,7 +43,7 @@ export const buttonStyle = style({
 export const cancelButtonStyle = style([
   buttonStyle,
   {
-    backgroundColor: themeVars.colors.white,
+    backgroundColor: themeVars.colors.gray.gray0,
     border: `1px solid ${themeVars.borderColors.greyBB}`,
   },
 ]);
@@ -52,7 +52,7 @@ export const confirmButtonStyle = style([
   buttonStyle,
   {
     backgroundColor: '#d32f2f',
-    color: themeVars.colors.white,
+    color: themeVars.colors.gray.gray0,
   },
 ]);
 

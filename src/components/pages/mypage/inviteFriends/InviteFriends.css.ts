@@ -25,8 +25,8 @@ export const pointInfoText = style({
   display: 'inline-block',
   lineHeight: '24px',
   padding: '0 10px',
-  background: themeVars.colors.mainRed,
-  color: themeVars.colors.white,
+  background: themeVars.colors.red.red,
+  color: themeVars.colors.gray.gray0,
   marginTop: '10px',
   marginBottom: '14px',
 })

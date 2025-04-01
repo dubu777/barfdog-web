@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import RightArrowIcon from "/public/images/icons/right-arrow-black.svg";
 import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
-import { useMyPageStore } from "@/store/useMypageStore";
+import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { getProductionDates } from "@/utils/getProductionDates";
 import { SubscriptionAddressData } from "@/types/subscription";
 import { DefaultObjectType } from "@/types/common";
@@ -19,7 +19,7 @@ interface DefaultAddressProps {
 
 const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) => {
   const { currentAddress: currentData, nextAddress: nextData, nextDeliveryDate } = addressData;
-  const { subscriptionDogName } = useMyPageStore();
+  const { subscriptionDogName } = usePersistMypageStore();
   const { pushWithQuery } = useDynamicQueryPush();
   const defaultProductionDates = getProductionDates(nextDeliveryDate);
   const pathname = usePathname();
@@ -48,19 +48,21 @@ const DefaultAddress = ({ addressData, changeTypeList }: DefaultAddressProps) =>
             {currentData.detailAddress}
           </Text>
           <Text type='description' size='sm' align='left' color='black'>
-            {currentData.recipientName}<span>{formatPhoneNumber(currentData.phoneNumber)}</span>
+            {currentData.recipientName}&nbsp;<span>{formatPhoneNumber(currentData?.phoneNumber as string)}</span>
           </Text>
         </div>
-        <div className={styles.addressContents}>
-          <Text type='description' size='sm' align='left' color='grey'>다음 배송지</Text>
-          <Text type='description' size='sm' align='left' color='grey' weight='normal'>
-            ({emptyValue(nextData?.zipcode, '우편번호')}) {emptyValue(nextData?.street, '주소')}, <br/>
-            {emptyValue(nextData?.detailAddress, '나머지 주소')}
-          </Text>
-          <Text type='description' size='sm' align='left' color='grey'>
-            {emptyValue(nextData?.recipientName)}&nbsp;<span>{formatPhoneNumber(nextData?.phoneNumber)}</span>
-          </Text>
-        </div>
+        {nextData &&
+          <div className={styles.addressContents}>
+            <Text type='description' size='sm' align='left' color='grey'>다음 배송지</Text>
+            <Text type='description' size='sm' align='left' color='grey' weight='normal'>
+              ({emptyValue(nextData?.zipcode, '우편번호')}) {emptyValue(nextData?.street, '주소')}, <br/>
+              {emptyValue(nextData?.detailAddress, '나머지 주소')}
+            </Text>
+            <Text type='description' size='sm' align='left' color='grey'>
+              {emptyValue(nextData?.recipientName as string)}<span>{formatPhoneNumber(nextData?.phoneNumber as string)}</span>
+            </Text>
+          </div>
+        }
         <div className={styles.productionDates}>
           <Text type='description' size='md' weight='light' align='left' color='grey'>정기구독</Text>
           <Text type='description' size='md' weight='light' align='left' color='grey'>

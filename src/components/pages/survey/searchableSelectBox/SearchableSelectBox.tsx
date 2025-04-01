@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as styles from "./SearchableSelectBox.css";
 import useModal from "@/hooks/useModal";
 import { AnimatePresence, motion } from "framer-motion";
-import { expandFromTopVariants } from "@/constants";
+import { MOTION } from "@/constants";
 import DownIcon from "/public/images/icons/angle-down.svg";
 import UpIcon from "/public/images/icons/angle-up.svg";
 
@@ -54,7 +54,7 @@ export default function SearchableSelectBox({
           <motion.div
             className={styles.optionsContainer}
             key="inedibleFood"
-            variants={expandFromTopVariants}
+            variants={MOTION.EXPAND_FROM_TOP}
             initial="hidden"
             animate="visible"
             exit="exit"

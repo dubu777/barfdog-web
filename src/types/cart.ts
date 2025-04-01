@@ -5,6 +5,8 @@ export type {
   DeliveryConstant,
   CartSummary,
   CartInfo,
+  CartOption,
+  UpdateCartInfo,
 };
 
 interface CartItemDto {
@@ -23,6 +25,7 @@ interface CartItemOptionDto {
   name: string;
   optionPrice: number;
   amount: number;
+  itemOptionId?: number;
 }
 
 interface BasketDto {
@@ -47,4 +50,15 @@ interface CartSummary {
 interface CartInfo {
   basketDtoList: BasketDto[];
   deliveryConstant: DeliveryConstant;
+}
+
+interface CartOption {
+  optionId: number;
+  optionAmount: number;
+}
+
+interface UpdateCartInfo {
+  itemId: number;
+  itemAmount: number;
+  optionDtoList: CartOption[];
 }

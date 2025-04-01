@@ -1,6 +1,15 @@
 export {queryKeys}
 
 const queryKeys = {
+  COMMON: {
+    BASE: 'common',
+    UPLOAD_IMAGE: 'uploadImage'
+  },
+  AUTH: {
+    BASE: 'auth',
+    GET_USER_INFO: 'getUserInfo',
+    LOGIN: 'login',
+  },
   SURVEY: {
     BASE: 'survey',
     GET_SURVEY_RECIPE: 'getSurveyRecipe',
@@ -14,10 +23,12 @@ const queryKeys = {
     BASE: 'mypage',
     GET_MYPAGE_INFO: 'getMyPageInfo',
     GET_MYPAGE_BANNER: 'getMyPageBanner',
+    GET_CONNECTED_SNS: 'getConnectedSns',
   },
   REWARD: {
     BASE: 'reward',
     GET_REWARD_LIST: 'getRewardList',
+    GET_INVITE_REWARD_LIST: 'getInviteRewardList',
   },
   SUBSCRIPTION: {
     BASE: 'subscription',
@@ -31,17 +42,17 @@ const queryKeys = {
     BASE: 'cart',
     GET_CART_INFO: 'getCartInfo',
   },
-  DOG: {
-    BASE: 'dog',
-    GET_DOG_LIST: 'getDogList',
+  PET: {
+    BASE: 'pet',
+    GET_PET_LIST: 'getPetList',
   },
   ORDER: {
     BASE: 'order',
-    GET_ORDER_SHEET: 'getOrderSheet',
+    GET_SUBSCRIPTION_ORDER: 'getSubscriptionOrder',
     GET_ORDER_DETAIL: 'getOrderDetail',
     GET_GENERAL_ORDER_LIST: 'getGeneralOrderList',
     GET_SUBSCRIPTION_ORDER_LIST: 'getSubscriptionOrderList',
-    GET_ORDER_ADDRESS: 'getOrderAddress',
+    GET_GENERAL_ORDER: 'getGeneralOrder',
   },
   MAIN: {
     BASE: 'main',
@@ -51,5 +62,41 @@ const queryKeys = {
   RECIPE: {
     BASE: 'recipe',
     GET_RECIPE_LIST: 'getRecipeList',
+  },
+  IAMPORT: {
+    BASE: 'iamport',
+  },
+  COMMUNITY: {
+    NOTICE: {
+      BASE: 'notice',
+      GET_NOTICE_LIST: 'getNoticeList',
+      GET_NOTICE_DETAIL: 'getNoticeDetail',
+    },
+    BLOG: {
+      BASE: 'blog',
+      GET_BLOG_ARTICLE_LIST: 'getBlogArticleList',
+      GET_BLOG_LIST: 'getBlogList',
+      GET_BLOG_DETAIL: 'getBlogDetail',
+    }
+  },
+  REVIEW: {
+    BASE: 'review',
+    GET_BEST_REVIEW_LIST: 'getBestReviewList',
+    GET_REVIEW_LIST: 'getReviewList',
+    GET_BEST_REVIEW_DETAIL: 'getBestReviewDetail',
+    GET_WRITABLE_REVIEW_LIST: 'getWritableReviewList',
+    GET_WRITTEN_REVIEW_LIST: 'getWrittenReviewList',
+    GET_REVIEW_DETAIL: 'getReviewDetail',
+    GET_REVIEW_DETAIL_IMAGE_LIST: 'getReviewDetailImageList',
+  },
+  STORE: {
+    BASE: 'store',
+    GET_STORE_ITEM_LIST: 'getStoreItemList',
+    GET_STORE_ITEM_DETAIL: 'getStoreItemDetail',
+    GET_STORE_ITEM_REVIEW_LIST: 'getStoreItemReviewList',
+  },
+  DELIVERY: {
+    BASE: 'delivery',
+    GET_ADDRESS_LIST: "getAddressList"
   }
 } as const;

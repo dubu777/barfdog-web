@@ -11,11 +11,11 @@ import BackButton from "/public/images/icons/left-arrow.svg";
 import Hamburger from "../../icons/Hamburger";
 import TopBanner from "@/components/layout/banner/TopBanner";
 import { useBackNavigation } from "@/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
-import { useAuthStore } from "@/store/useAuthStore";
 import { useCartStore } from "@/store/useCartStore";
+import { isLoggedIn } from "@/utils/auth/isLoggedIn";
 
 interface HeaderProps {
   type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
@@ -23,11 +23,19 @@ interface HeaderProps {
 
 export default function Header({ type = "default" }: HeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const { setIsOpenSideNavBar } = useCommonStore();
-  const { isLoggedIn } = useAuthStore();
   const { count } = useCartStore();
   const hamburgerColor = type === "redBackground" ? "#ffffff" : "#4A4A4A";
   const goBack = useBackNavigation();
+
+  const handleClick = () => {
+    if (isLoggedIn()) {
+      router.push("/mypage");
+    } else {
+      router.push("/login");
+    }
+  };
 
   return (
     <header
@@ -37,12 +45,24 @@ export default function Header({ type = "default" }: HeaderProps) {
       <section className={styles.headerWrapper}>
         {type === "default" && (
           <Link href="/">
-            <Image src={Logo} alt="사이트 로고" width={148} height={26} />
+            <Image
+              src={Logo}
+              alt="사이트 로고"
+              width={148}
+              height={26}
+              priority
+            />
           </Link>
         )}
         {type === "redBackground" && (
           <Link href="/">
-            <Image src={LogoWhite} alt="화이트 로고" width={148} height={26} />
+            <Image
+              src={LogoWhite}
+              alt="화이트 로고"
+              width={148}
+              height={26}
+              priority
+            />
           </Link>
         )}
 
@@ -52,16 +72,21 @@ export default function Header({ type = "default" }: HeaderProps) {
         {type !== "backButtonOnly" && (
           <div className={styles.headerMenuWrapper}>
             {type === "redBackground" ? (
-              <button onClick={() => setIsOpenSideNavBar()} className={styles.headerButton}>
+              <button
+                onClick={() => setIsOpenSideNavBar()}
+                className={styles.headerButton}
+              >
                 <Hamburger stroke={hamburgerColor} />
               </button>
             ) : (
               <>
-                <Link href={!isLoggedIn ? "/login" : "/mypage"}>
+                <button onClick={handleClick}>
                   <MyPage />
-                </Link>
+                </button>
                 <Link href="/cart" className={styles.cartButton}>
-                  {count !== 0 && <div className={styles.cartCount}>{count}</div>}
+                  {count !== 0 && (
+                    <div className={styles.cartCount}>{count}</div>
+                  )}
                   <Cart />
                 </Link>
                 <button

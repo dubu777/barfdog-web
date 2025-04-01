@@ -20,7 +20,7 @@ export const textInputWrapper = style({
   borderRadius: "9px",
   padding: "16px 19px",
   border: `0.2px solid ${themeVars.borderColors.greyDD}`,
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
   transition: "border-color 0.3s ease, box-shadow 0.3s ease",
   selectors: {
     "&:hover": {
@@ -42,11 +42,11 @@ export const textInput = style({
   border: "0",
   textAlign: "start",
   "::selection": {
-    backgroundColor: themeVars.colors.mainRed,
-    color: themeVars.colors.white,
+    backgroundColor: themeVars.colors.red.red,
+    color: themeVars.colors.gray.gray0,
   },
 });
 
 export const unitStyle = style({
-  color: themeVars.colors.mainRed,
+  color: themeVars.colors.red.red,
 });

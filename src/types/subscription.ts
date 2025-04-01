@@ -1,5 +1,6 @@
 import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 import { RecipeDto } from "./recipe";
+import { DiscountType } from "./coupon";
 
 export type {
   PlanDiscountResponseDto,
@@ -22,24 +23,26 @@ export type {
   PaymentBody,
   SubscriptionResponse,
   SubscriptionData,
-  OrderSheetResponse,
+  SubscriptionOrderSheetResponse,
   BenefitStatus,
   SubscriptionSkipType,
   SubscriptionStatusKey,
   PlanKey,
   PlanName,
+  Coupon,
+  SubscribeDto,
 };
 
 
-interface OrderSheetResponse {
+interface SubscriptionOrderSheetResponse {
   brochure: boolean;
-  coupons: Coupon[];
-  defaultAddress: DefaultAddress;
+  // coupons: Coupon[];
+  address: DefaultAddress;
   email: string;
   grade: string;
   gradeDiscountPercent: number;
   name: string;
-  nextDeliveryDate: string; // ISO 8601 형식
+  nextDeliveryDate: string;
   phoneNumber: string;
   recipeNameList: string[];
   reward: number;
@@ -49,9 +52,11 @@ interface OrderSheetResponse {
 
 interface Coupon {
   availableMaxDiscount: number;
-  availableMinPrice: number;
+  availableMinPrice: number; // 최소 사용 금액
+  couponTarget: "ALL" | "GENERAL" | "SUBSCRIBE";
+  description: string;
   discountDegree: number; // 할인율 또는 금액
-  discountType: "FIXED_RATE" | "FIXED_AMOUNT"; // 할인 유형
+  discountType: DiscountType; // 할인 유형
   expiredDate: string;
   memberCouponId: number;
   name: string; // 쿠폰 이름
@@ -59,16 +64,16 @@ interface Coupon {
 }
 
 interface DefaultAddress {
-  deliveryName: string | null;
-  zipcode: string;
   city: string;
-  street: string;
+  deliveryName: string | null;
   detailAddress: string;
+  street: string;
+  zipcode: string;
 }
 
 interface SubscribeDto {
   id: number;
-  plan: string; 
+  plan: PlanName; 
   nextPaymentPrice: number;
   discountGrade: number;
   oneMealGramsPerRecipe: string;
@@ -230,13 +235,14 @@ interface SubscriptionAddressData {
 }
 
 interface AddressDto {
-  deliveryName?: null | string;
-  recipientName: string;
-  phoneNumber: string;
+  deliveryName?: string;
+  recipientName?: string;
+  phoneNumber?: string;
   zipcode: string;
   street: string;
+  city: string;
   detailAddress: string;
-  request?: null | string;
+  request?: string;
 }
 
 interface SubscriptionListData {

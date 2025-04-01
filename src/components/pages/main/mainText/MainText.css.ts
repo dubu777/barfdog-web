@@ -36,7 +36,7 @@ export const mainTitle = recipe({
     },
     color: {
       white: {
-        color: themeVars.colors.white
+        color: themeVars.colors.gray.gray0
       },
     },
     weight: {
@@ -80,10 +80,10 @@ export const mainDescription = recipe({
         color: themeVars.fontColors.grey89,
       },
       white: {
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       },
       black: {
-        color: themeVars.colors.black,
+        color: themeVars.colors.gray.gray900,
       },
     },
     align: {

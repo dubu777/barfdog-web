@@ -4,10 +4,10 @@ import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import Link from "next/link";
 
 interface SurveyResultProps {
-  id: number;
+  reportId: number;
 }
-export default function SurveyResult({ id }: SurveyResultProps) {
-  const { data: resultData } = useGetSurveyResult(id);
+export default function SurveyResult({ reportId }: SurveyResultProps) {
+  const { data: resultData } = useGetSurveyResult(reportId);
 console.log('resultData', resultData);
 
   return (
@@ -15,10 +15,11 @@ console.log('resultData', resultData);
       <Link
         style={{ color: "white" }}
         href={{
-          pathname: `/survey/subscription-shop?id=${id}`,
+          pathname: "/order/subscription",
+          query: { type: "select-recipe", reportId: reportId },
         }}
       >
-        구독 샵 이동
+        레시피 선택하기
       </Link>
     </div>
   );

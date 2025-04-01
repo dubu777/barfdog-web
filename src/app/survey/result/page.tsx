@@ -17,11 +17,11 @@ export default async function ResultPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  const id = Number(searchParams.id);
+  const reportId = Number(searchParams.reportId);
   const queryClient = new QueryClient();
 
   // 서버에서 데이터 prefetching
-  await prefetchGetSurveyResult(queryClient, id);
+  await prefetchGetSurveyResult(queryClient, reportId);
   // 데이터 직렬화해서 클라이언트에 전달
   const dehydrateState = dehydrate(queryClient);
 
@@ -33,7 +33,7 @@ export default async function ResultPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<div>Loading...</div>}>
-            <SurveyResult id={id}/>
+            <SurveyResult reportId={reportId}/>
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>

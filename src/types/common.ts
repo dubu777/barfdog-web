@@ -12,8 +12,17 @@ export type {
   UseMutationCustomOptions,
   UseQueryCustomOptions,
   UseSuspenseQueryCustomOptions,
-  UseInfiniteQueryCustomOptions
+  UseInfiniteQueryCustomOptions,
+  QueryParams,
+  Page,
+  ImageFile,
 };
+
+declare global {
+  interface Window {
+    IMP?: any;
+  }
+}
 
 type SearchParamProps = {
   param: { [key: string]: string | number };
@@ -36,14 +45,33 @@ type UseMutationCustomOptions<TData = unknown, TVariables = unknown, TError = un
 type UseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
   UseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
   "queryKey"
->;
+> & {
+  keepPreviousData?: boolean;
+};
 
 type UseSuspenseQueryCustomOptions<TQueryFnData = unknown, TData = TQueryFnData> = Omit<
   UseSuspenseQueryOptions<TQueryFnData, TypeError, TData, QueryKey>,
   "queryKey"
->;
+> & {
+  keepPreviousData?: boolean;
+};
 
 type UseInfiniteQueryCustomOptions<TQueryFnData = unknown, TError = unknown, TData = TQueryFnData> = Omit<
   UseInfiniteQueryOptions<TQueryFnData, TError, TData, QueryKey>,
   "queryKey" | "queryFn"
 >;
+
+type QueryParams = Record<string, string | number | boolean>;
+
+interface Page {
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  number: number;
+}
+
+interface ImageFile {
+  id?: number;
+  filename: string;
+  url: string;
+}

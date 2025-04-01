@@ -1,37 +1,64 @@
 import {create} from "zustand";
 
-type ToastType = 'success' | 'error' | 'warning' | 'info';
+type ToastPosition = 'bottom' | 'above-button';
 
 interface ToastItem {
   id: string;
   message: string;
   duration?: number;
-  type: ToastType;
+  position?: ToastPosition;
+  closeButton?: boolean;
 }
 
 interface ToastStore {
-  toasts: ToastItem[];
-  addToast: (message: string, type: ToastType, duration?: number) => void;
-  removeToast: (id: string) => void;
+  queue: ToastItem[];
+  currentToast: ToastItem | null;
+  addToast: (message: string, position?: ToastPosition, duration?: number) => void;
+  removeToast: () => void;
+  processNextToast: () => void;
 }
 
-export const useToastStore = create<ToastStore>()((set) => ({
-  toasts: [],
-  addToast: (message, type = 'success', duration = 3000) => {
+export const useToastStore = create<ToastStore>()((set, get) => ({
+  queue: [],
+  currentToast: null,
+  addToast: (message, position = 'bottom', duration = 3000, closeButton = false) => {
     const id = Date.now().toString();
+    const newToast = { id, message, position, duration, closeButton };
+
     set((state) => ({
-      toasts: [...state.toasts, { id, message, type, duration }],
+      queue: [...state.queue, newToast],
+    }));
+
+    // 새로운 Toast가 추가되었을 때, 현재 Toast가 없으면 실행
+    if (!get().currentToast) {
+      get().processNextToast();
+    }
+  },
+
+  removeToast: () => {
+    set(() => ({
+      currentToast: null,
+    }));
+
+    // 현재 Toast 제거 후 다음 Toast 처리
+    setTimeout(() => {
+      get().processNextToast();
+    }, 300);
+  },
+
+  processNextToast: () => {
+    const state = get();
+    if (state.queue.length === 0 || state.currentToast) return;
+
+    const nextToast = state.queue[0];
+
+    set(() => ({
+      currentToast: nextToast,
+      queue: state.queue.slice(1),
     }));
 
     setTimeout(() => {
-      set((state) => ({
-        toasts: state.toasts.filter((toast) => toast.id !== id),
-      }));
-    }, duration);
-  },
-  removeToast: (id) => {
-    set((state) => ({
-      toasts: state.toasts.filter((toast) => toast.id !== id),
-    }));
+      get().removeToast();
+    }, nextToast.duration);
   },
 }))

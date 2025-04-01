@@ -20,7 +20,7 @@ export const mainSliderWrapper = style({
 })
 
 export const reviewSlideItem = style({
-  background: themeVars.colors.white,
+  background: themeVars.colors.gray.gray0,
   width: '345px !important',
   height: '411px !important',
   borderRadius: '7px',
@@ -66,7 +66,7 @@ export const reviewSlideTitle = style([textLeft, {
     height: '1px',
     position: 'absolute',
     bottom: '12px',
-    background: themeVars.colors.black,
+    background: themeVars.colors.gray.gray900,
   }
 }])
 
@@ -87,7 +87,7 @@ export const reviewSlideSubscriptionType = style({
 
 export const reviewRate = style({
   fontSize: themeVars.fontSize["text-lg"],
-  color: themeVars.colors.mainRed,
+  color: themeVars.colors.red.red,
   textAlign: 'right',
   marginBottom: '5px',
 })

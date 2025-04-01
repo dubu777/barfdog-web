@@ -8,6 +8,7 @@ import { useMainStore } from "@/store/useMainStore";
 import { HealthCheckList } from "@/constants";
 import Text from "@/components/common/text/Text";
 import { SelectedHealthType } from "@/types";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const MainHealthCheckSlider = () => {
   const { selectedHealth, setSelectedHealth } = useMainStore();
@@ -47,7 +48,7 @@ const MainHealthCheckSlider = () => {
           </div>
           {selectedHealth.key === health.key && selectedHealth.isChecked &&
           <div className={styles.healthCheckFakeBg}>
-            <CheckWhite />
+            <SvgIcon src={CheckWhite} color='white' size={46} />
           </div>
           }
         </SwiperSlide>

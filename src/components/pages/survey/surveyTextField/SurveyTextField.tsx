@@ -2,14 +2,14 @@
 
 import { surveyTitle } from '@/app/survey/Survey.css';
 import * as styles from './SurveyTextField.css';
-import { getNameWithPossessiveSuffix } from '@/utils';
+import { getNameWithPossessiveSuffix2 } from '@/utils';
 
 interface DefaultTextFieldProps {
   id: string;
   value: string;
-  onChange: (value: string) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur: React.FocusEventHandler<HTMLInputElement>;
+  onKeyDown: React.KeyboardEventHandler<HTMLInputElement>;
   title?: string;
   unit?: string;
   placeholder?: string;
@@ -27,12 +27,9 @@ export default function SurveyTextField({
   placeholder="",
   petName,
 }: DefaultTextFieldProps) {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value);
-  };
 
   const fullTitle = petName && title
-    ? getNameWithPossessiveSuffix(petName, title) 
+    ? getNameWithPossessiveSuffix2(petName, title) 
     : title;
   
   return (
@@ -45,7 +42,7 @@ export default function SurveyTextField({
             id={id}
             placeholder={placeholder}
             value={value}
-            onChange={handleInputChange}
+            onChange={onChange}
             onBlur={onBlur}
             onKeyDown={onKeyDown} 
           />

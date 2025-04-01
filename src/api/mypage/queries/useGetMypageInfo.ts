@@ -1,7 +1,7 @@
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { getMyPageInfo } from "@/api/mypage/myPage";
 import { queryKeys } from "@/constants";
-import { MyPageInfoData } from "@/types/myPage";
+import { MyPageInfoData } from "@/types/mypage";
 import { UseSuspenseQueryCustomOptions } from "@/types";
 
 export { useGetMyPageInfo, prefetchGetMyPageInfo }

@@ -2,6 +2,7 @@ import {RecipeDto} from "@/types/recipe";
 
 export type { SubscribePlan, SurveyFormData, FoodAnalysis, ResultData, RecipeData };
 
+
 interface SurveyFormData {
   name: string;
   gender: string;

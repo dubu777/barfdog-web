@@ -6,9 +6,23 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";
+import { useDeleteCartItemById } from "@/api/cart/mutations/useDeleteCartItem";
 
 const Cart = () => {
   const { cartInfo, setCartInfo, selectedItems, setSelectedItems } = useCartStore();
+  const { mutate: deleteMutate } = useDeleteCartItemById();
+
+  // 선택 삭제하는 deleteCartItemByIds 400error 이슈로 개별 삭제 순차적으로 적용
+  const deleteItemById = async (itemId: number) => {
+    await deleteMutate(
+      { itemId: itemId },
+      {
+      onSuccess: () => {
+          console.log('itemId delete');
+        }
+      }
+    )
+  }
 
   if (!cartInfo || cartInfo.basketDtoList.length === 0) return <p>Loading...</p>;
   const isSelectedAllChecked = selectedItems.length === cartInfo.basketDtoList.length;
@@ -30,7 +44,10 @@ const Cart = () => {
     }
   }
 
-  const handleDeleteSelected = () => {
+  const handleDeleteSelected = async () => {
+    for (const itemId of selectedItems) {
+      await deleteItemById(itemId);
+    }
     const updatedBasketDtoList = cartInfo.basketDtoList.filter((item) => !selectedItems.includes(item.itemDto.basketId));
     const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
     setCartInfo(updatedCartInfo);

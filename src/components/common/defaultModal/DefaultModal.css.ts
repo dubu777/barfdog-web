@@ -12,7 +12,7 @@ export const modalContainer = recipe({
     borderRadius: '10px',
     width: '100%',
     overflowY: 'hidden',
-    margin: '0 16px'
+    margin: '0 16px',
   },
   variants: {
     size: {
@@ -25,15 +25,27 @@ export const modalContainer = recipe({
       lg: {
         maxWidth: '420px',
       },
+      xl: {
+        maxWidth: '600px',
+      }
     },
     scroll: {
       true: {
-        height: '400px',
+        height: '500px',
       },
       false: {
       },
     },
   },
+  compoundVariants: [
+    {
+      variants: { size: 'xl', scroll: true },
+      style: {
+        height: 'auto',
+        maxHeight: '600px',
+      },
+    }
+  ],
 })
 
 export const modalContentWrapper = recipe({
@@ -52,7 +64,7 @@ export const modalContentWrapper = recipe({
           width: '8px',
         },
         '::-webkit-scrollbar-thumb': {
-          backgroundColor: themeVars.colors.white,
+          backgroundColor: themeVars.colors.gray.gray0,
           border: `1px solid ${themeVars.borderColors.greyBB}`,
           borderRadius: '10px',
         },
