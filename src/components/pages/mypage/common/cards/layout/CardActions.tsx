@@ -1,5 +1,5 @@
-import { CardActionsId, OrderAction, OrderDeliveryInquiryStatus } from "@/types";
-import { actionsControls } from "../Card.css";
+import { CardActionsId, OrderAction } from "@/types";
+import { actionsButton, actionsControls } from "../Card.css";
 import Button from "@/components/common/button/Button";
 
 interface CardActionsProps {
@@ -29,7 +29,8 @@ const CardActions = ({
 					key={`${label}-${index}`}
 					variant={variants === 'solid' ? 'solid' : 'outline'}
 					type={variants === 'solid' ? 'primary' : 'assistive'}
-					width={fullWidth ? '100%' : 'calc(50% - 4px)'}
+					className={actionsButton}
+					fullWidth={fullWidth}
 					onClick={() => onActionClick(url, params, id)}
 				>
 					{label}

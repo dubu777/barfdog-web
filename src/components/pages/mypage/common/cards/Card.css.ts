@@ -59,6 +59,10 @@ export const actionsControls = recipe({
 	}
 });
 
+export const actionsButton = style({
+	minWidth: 'calc(50% - 4px)',
+});
+
 export const orderCardInfoTop = style({
 	display: 'flex',
 	alignItems: 'center',
