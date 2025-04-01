@@ -38,14 +38,14 @@ import { formatNumberWithCommas } from "@/utils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 
-interface GeneralOrderContainerProps {}
+
 
 interface handleIamportResponseParams {
   res: GeneralIamportResponse;
   orderId: number;
   requestBody: SaveGeneralOrderRequest;
 }
-export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
+export default function GeneralOrderContainer() {
   const router = useRouter();
   // 상태관리 -------->
   const { maxAvailableReward } = useRewardStore();
@@ -63,10 +63,11 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
   const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
   console.log("generalOrderSheetData", generalOrderSheetData);
-  // <------- 서버 호출 
-  
+  // <------- 서버 호출
+
   // 커스텀 훅 & 유틸 함수 ------->
   const { isMobileDevice } = useDeviceState();
+  // 포트원 구독, 일반 결제 커스텀 훅
   const { requestIamportPayment } = usePayment();
 
   const { control, watch, errors, setValue } = useOrderForm<OrderFormValues>(
@@ -169,7 +170,7 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
       />
       <Divider />
       <CouponSelector
-        coupons={generalOrderSheetData.coupons}
+        orderType={ORDER_TYPE.GENERAL}
         orderPrice={generalOrderSheetData.orderPrice}
       />
       {/* 쿠폰 관련 함수 여기 있음 */}
@@ -178,6 +179,15 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         generalOrderSheetData={generalOrderSheetData}
       /> */}
       <Divider />
+      <RewardUsage
+        orderType={ORDER_TYPE.GENERAL}
+        control={control}
+        setValue={setValue}
+        maxAvailableReward={maxAvailableReward}
+      />
+      <Divider />
+      <PaymentMethod />
+      <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.GENERAL}
         originPrice={generalOrderSheetData.orderPrice}
@@ -185,14 +195,6 @@ export default function GeneralOrderContainer({}: GeneralOrderContainerProps) {
         freeCondition={generalOrderSheetData.freeCondition}
         deliveryPrice={generalOrderSheetData.deliveryPrice}
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
-      />
-      <Divider />
-      <PaymentMethod />
-      <Divider />
-      <RewardUsage
-        control={control}
-        setValue={setValue}
-        maxAvailableReward={maxAvailableReward}
       />
       <Divider />
       <OrderTerms />

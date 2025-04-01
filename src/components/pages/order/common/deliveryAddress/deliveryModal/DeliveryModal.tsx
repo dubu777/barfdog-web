@@ -94,7 +94,7 @@ export default function DeliveryModal({
   const headerProps = useMemo(() => getHeaderProps(viewMode), [viewMode]);
 
   return (
-    <ModalBackground isVisible={isVisible} onClose={handleClose}>
+    <ModalBackground isVisible={isVisible} onClose={handleClose} closeOnBackgroundClick={false}>
       <div
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}

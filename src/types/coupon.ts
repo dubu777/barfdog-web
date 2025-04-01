@@ -1,10 +1,8 @@
 export type { CouponData, DiscountType, DiscountUnitType };
 
 interface CouponData {
-  id: number;
+  memberCouponId: number;
   name: string;
-  status: string;
-  amount: number;
   remaining: number;
   availableMaxDiscount: number;
   availableMinPrice: number;

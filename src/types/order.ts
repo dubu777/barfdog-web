@@ -168,7 +168,7 @@ interface DefaultAddress {
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
   brochure: boolean;
-  coupons: Coupon[];
+  // coupons: Coupon[];
   defaultAddress: DefaultAddress;
   deliveryId: number;
   deliveryPrice: number;
@@ -327,7 +327,7 @@ type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
 
 type OrderDetailType = 'general' | 'subscribe';
 
-type OrderType = "subscription" | "general";
+type OrderType = "SUBSCRIBE" | "GENERAL";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
 

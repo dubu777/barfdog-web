@@ -37,7 +37,7 @@ export type {
 
 interface SubscriptionOrderSheetResponse {
   brochure: boolean;
-  coupons: Coupon[];
+  // coupons: Coupon[];
   address: DefaultAddress;
   email: string;
   grade: string;
@@ -54,6 +54,8 @@ interface SubscriptionOrderSheetResponse {
 interface Coupon {
   availableMaxDiscount: number;
   availableMinPrice: number; // 최소 사용 금액
+  couponTarget: "ALL" | "GENERAL" | "SUBSCRIBE";
+  description: string;
   discountDegree: number; // 할인율 또는 금액
   discountType: DiscountType; // 할인 유형
   expiredDate: string;

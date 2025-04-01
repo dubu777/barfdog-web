@@ -13,7 +13,7 @@ import { COLORS } from "@/constants/style";
 interface ButtonProps {
   variant?: keyof typeof buttonVariants;
   type?: "primary" | "secondary" | "assistive";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "inputButton";
   disabled?: boolean;
   iconSrc?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   iconPosition?: "left" | "right";
@@ -56,7 +56,6 @@ export default function Button({
         type as keyof (typeof disabledVariants)[typeof variant]
       ]
     : "";
-  const computedWidth = fullWidth ? "100%" : width || "auto";
 
   const isIconLeft = iconPosition === "left";
 
@@ -74,7 +73,7 @@ export default function Button({
   };
 
   const computedStyle: React.CSSProperties = {
-    width: computedWidth,
+    ...(fullWidth ? { width: "100%" } : {}),
     ...style,
     ...overrideStyles,
   };

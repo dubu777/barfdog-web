@@ -95,24 +95,12 @@ const processQueue = (error: any, token: string | null = null) => {
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
+  (error: AxiosError) => {
     console.log("인터셉터 에러", error);
-
-    
     const originalRequest = error.config as CustomAxiosRequestConfig;
-
-    // const errorData = error.response?.data as ErrorResponseData;
-
-    // 401 에러이며, 아직 재시도하지 않은 요청인 경우에만 처리
-    if (
-      error.response?.status === 401 &&
-      // errorData.code === 1005 &&
-      !originalRequest._retry
-    ) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-
       if (isRefreshing) {
-        // 재발급 요청 중이면 현재 요청은 큐에 추가 후, 새 토큰이 발급되면 재시도합니다.
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -122,39 +110,27 @@ axiosInstance.interceptors.response.use(
           })
           .catch((err) => Promise.reject(err));
       }
-
       isRefreshing = true;
-
-      try {
-        // 액세스 토큰 재발급 요청 (/api/refresh)
-        // const { data } = await authAxios.get('/api/refresh');
-        const { data } = await authAxios.get(`/api/refresh`);
-        console.log("새 액세스 토큰 발급:", data);
-
-        const newToken: string = data.accessToken;
-
-        // 새 액세스 토큰을 쿠키에 저장합니다.
-        // 기본 옵션은 js-cookie 유틸에서 설정된 기본값이 적용됩니다.
-        setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, newToken);
-
-        // axiosInstance의 기본 헤더도 업데이트합니다.
-        axiosInstance.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${newToken}`;
-
-        processQueue(null, newToken);
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return axiosInstance(originalRequest);
-      } catch (refreshError) {
-        processQueue(refreshError, null);
-        return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false;
-      }
+      return authAxios.get(`/api/refresh`)
+        .then(({ data }) => {
+          const newToken: string = data.accessToken;
+          setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, newToken);
+          axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+          processQueue(null, newToken);
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return axiosInstance(originalRequest);
+        })
+        .catch((refreshError) => {
+          processQueue(refreshError, null);
+          return Promise.reject(refreshError);
+        })
+        .finally(() => {
+          isRefreshing = false;
+        });
     }
-
     return Promise.reject(error);
   }
 );
+
 
 export default axiosInstance;

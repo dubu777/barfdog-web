@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { AddressRequest } from "@/types/delivery";
+import { AddressRequest, AddressResponse } from "@/types/delivery";
 
 export const addressSchema = yup.object().shape({
   deliveryName: yup
@@ -23,10 +23,12 @@ export const addressSchema = yup.object().shape({
   request: yup
     .string()
     .max(50, '요청사항은 최대 50자까지 입력 가능합니다.'),
+  isDefault: yup
+  .boolean()
 });
 
 
-export const defaultAddressValues = (addressData?: AddressRequest): AddressRequest => ({
+export const defaultAddressValues = (addressData?: AddressResponse): AddressRequest => ({
   deliveryName: addressData?.deliveryName ?? '',
   recipientName: addressData?.recipientName ?? '',
   phoneNumber: addressData?.phoneNumber ?? '',
@@ -35,4 +37,5 @@ export const defaultAddressValues = (addressData?: AddressRequest): AddressReque
   city: addressData?.city ?? '',
   detailAddress: addressData?.detailAddress ?? '',
   request: addressData?.request ?? '',
+  isDefault: addressData?.default ?? false,
 });

@@ -1,27 +1,34 @@
 import * as styles from "../../OrderSheetCommon.css";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 import InputField from "@/components/common/inputField/InputField";
 import OrderSection from "../orderSection/OrderSection";
 
 import { OrderFormValues } from "@/utils/validation/rewardValidation";
-import { Control, Controller, UseFormSetValue } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  UseFormSetValue,
+  useWatch,
+} from "react-hook-form";
 import Button from "@/components/common/button/Button";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import { ORDER_MESSAGE } from "@/constants";
+import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useRewardStore } from "@/store/order/useRewardStore";
+import { OrderType } from "@/types";
 
 interface RewardUsageProps {
   control: Control<OrderFormValues>;
   maxAvailableReward: number;
   setValue: UseFormSetValue<OrderFormValues>;
+  orderType: OrderType;
 }
 
 export default function RewardUsage({
   control,
   maxAvailableReward,
+  orderType,
   setValue,
 }: RewardUsageProps) {
   const {
@@ -30,9 +37,18 @@ export default function RewardUsage({
     setAppliedReward,
     setRewardAutoApply,
   } = useRewardStore();
+
+  const appliedReward = useWatch({ control, name: "appliedReward" });
+
+  // 전액 사용 함수
   const handleMaxReward = () => {
-    setValue("appliedReward", maxAvailableReward);
-    setAppliedReward(maxAvailableReward);
+    if (appliedReward === maxAvailableReward) {
+      setValue("appliedReward", 0);
+      setAppliedReward(0);
+    } else {
+      setValue("appliedReward", maxAvailableReward);
+      setAppliedReward(maxAvailableReward);
+    }
   };
 
   // 자동적용 API 개발시 코드 추가 예정
@@ -99,21 +115,23 @@ export default function RewardUsage({
         <Button
           type="primary"
           variant="solid"
-          size="lg"
+          size="inputButton"
           onClick={handleMaxReward}
         >
           전액사용
         </Button>
       </div>
-      <LabeledCheckbox
-        value={true}
-        isChecked={isSelected(true)}
-        onToggle={() => onToggle(true)}
-      >
-        <DefaultText type="label2">
-          {ORDER_MESSAGE.REWARD_AUTO_APPLY}
-        </DefaultText>
-      </LabeledCheckbox>
+      {orderType === ORDER_TYPE.SUBSCRIPTION && (
+        <LabeledCheckbox
+          value={true}
+          isChecked={isSelected(true)}
+          onToggle={() => onToggle(true)}
+        >
+          <DefaultText type="label2">
+            {ORDER_MESSAGE.REWARD_AUTO_APPLY}
+          </DefaultText>
+        </LabeledCheckbox>
+      )}
     </OrderSection>
   );
 }

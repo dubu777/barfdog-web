@@ -18,7 +18,7 @@ const getAddressList = async (): Promise<AddressResponse[]> => {
 
 // 주소 등록
 const createAddress = async (body: AddressRequest): Promise<any> => {
-  const { data } = await axiosInstance.post("/api/address", body);
+  const { data } = await axiosInstance.post("/api/address/save", body);
 
   return data;
 };
@@ -31,14 +31,14 @@ const updateAddress = async ({
   deliveryId: number;
   body: AddressRequest;
 }): Promise<any> => {
-  const { data } = await axiosInstance.put(`/api/address/${deliveryId}`, body);
+  const { data } = await axiosInstance.put(`/api/address/update/${deliveryId}`, body);
 
   return data;
 };
 
 // 주소 삭제
 const deleteAddress = async (deliveryId: number): Promise<any> => {
-  const { data } = await axiosInstance.delete(`/api/address/${deliveryId}`);
+  const { data } = await axiosInstance.delete(`/api/address/delete/${deliveryId}`);
 
   return data;
 };

@@ -22,4 +22,5 @@ interface AddressRequest {
   street: string;
   detailAddress: string;
   request: string;
+  isDefault: boolean;
 }

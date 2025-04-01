@@ -12,7 +12,7 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
 
 const SvgIcon: React.FC<IconProps> = ({
   src: IconComponent,
-  size = 20,
+  size = 24,
   color = "gray900",
   width,
   height,

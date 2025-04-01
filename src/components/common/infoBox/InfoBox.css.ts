@@ -11,6 +11,7 @@ export const infoBoxBase = style({
 
 export const infoBoxStyle = style({
 	display: 'flex',
+	alignItems: "center",
 	gap: '8px'
 })
 
@@ -41,3 +42,7 @@ export const infoBoxClickEvent = {
 		cursor: 'default',
 	}),
 }
+
+export const infoBoxFullWidth = style({
+  width: "100%",
+});

@@ -1,5 +1,6 @@
 import axiosInstance from "@/api/axiosInstance";
 import {
+  Coupon,
   CouponData,
   InviteRewardList,
   MyPageBannerData,
@@ -24,13 +25,13 @@ const getMyPageInfo = async (): Promise<MyPageInfoData> => {
   return data;
 }
 
-const getCouponList = async (): Promise<CouponData[]> => {
+const getCouponList = async (): Promise<Coupon[]> => {
   const { data } = await axiosInstance.get('/api/coupons');
   return data.couponsPageDto?._embedded?.queryCouponsDtoList || [];
 }
 
-const applyCoupon = async (body: { code: string }) => {
-  const { data } = await axiosInstance.put('/api/coupons/code', body);
+const applyCoupon = async (code: string) => {
+  const { data } = await axiosInstance.put('/api/coupons/code', { code });
   return data;
 }
 

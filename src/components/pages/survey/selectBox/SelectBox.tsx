@@ -1,10 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import * as styles from "./SelectBox.css";
 import useModal from "@/hooks/useModal";
-import { expandFromTopVariants } from "@/constants";
 import DownIcon from "/public/images/icons/angle-down.svg";
 import UpIcon from "/public/images/icons/angle-up.svg";
 import { viewerWrapper } from "../searchableSelectBox/SearchableSelectBox.css";
+import { MOTION } from "@/constants";
 
 interface SelectBoxProps {
   options: { label: string; value: string }[];
@@ -54,7 +54,7 @@ export default function SelectBox({
               <motion.div
                 className={styles.optionsWrapper}
                 key="selectBox"
-                variants={expandFromTopVariants}
+                variants={MOTION.EXPAND_FROM_TOP}
                 initial="hidden"
                 animate="visible"
                 exit="exit"

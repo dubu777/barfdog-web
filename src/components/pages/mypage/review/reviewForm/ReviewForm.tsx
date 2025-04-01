@@ -182,10 +182,10 @@ const ReviewForm = <T extends 'create' | 'update'>({
           <div>
             <DefaultText type='caption'>예상 적립금</DefaultText>
             <div className={styles.reviewTemporaryReward}>
-              <DefaultText type='headline1' color='red' inlineBlock>
+              <DefaultText type='headline1' color='red'>
                 {temporaryReward}
               </DefaultText>/
-              <DefaultText type='headline1' inlineBlock>
+              <DefaultText type='headline1'>
                 최대 1000P
               </DefaultText>
             </div>
@@ -196,9 +196,8 @@ const ReviewForm = <T extends 'create' | 'update'>({
         onPrimaryClick={handleSubmit(onSubmit)}
       />
     </form>
-    <BottomSheet isOpen={isOpen} onClose={onClose} closeButton className={styles.reviewNoticeBottomSheet}>
+    <BottomSheet isOpen={isOpen} onClose={onClose} title="작성시 유의사항" className={styles.reviewNoticeBottomSheet}>
       <div className={styles.bottomSheetBox}>
-        <DefaultText type='headline2' className={styles.bottomSheetTitle}>작성시 유의사항</DefaultText>
         <DefaultText type='label4' className={styles.bottomSheetSubTitle}>유의사항</DefaultText>
         <div className={styles.bottomSheetInfoDetail}>
           <DefaultText type='caption'>• 작성하신 후기는 바프독 이용자에게 공개됩니다.</DefaultText>

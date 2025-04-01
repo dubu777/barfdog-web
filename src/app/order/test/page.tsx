@@ -9,6 +9,11 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import axiosInstance, { authAxios } from "@/api/axiosInstance";
 import { isLoggedIn } from "@/utils/auth/isLoggedIn";
 import { useLogout } from "@/api/auth/mutations/useLogout";
+import useModal from "@/hooks/useModal";
+import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import Modal from "@/components/common/modal/Modal";
+import OrderBottomSheet from "@/components/pages/mypage/common/bottomSheet/orderBottomSheet/OrderBottomSheet";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -30,14 +35,6 @@ export default function GeneralShopTest() {
     setOrderItemDtoList(orderItemListData);
     router.push("/order/checkout/general");
   };
-
-  // const handleGetCookie = () => {
-  //   console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
-  // };
-  // const handleDeleteCookie = () => {
-  //   deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-  //   console.log(getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE));
-  // };
 
   const handleRequest = async () => {
     try {
@@ -81,10 +78,6 @@ export default function GeneralShopTest() {
     }
   };
 
-  const handleIsLoggedIn = () => {
-    console.log('로그인 여부 함수 호출', isLoggedIn());
-    
-  }
   const handleLogout = () => {
     logout(undefined, {
       onSuccess: () => {
@@ -103,16 +96,36 @@ export default function GeneralShopTest() {
     console.log('재발급 요청', data);
     
   }
+  const { isOpen: isSheetOpen, onClose: onSheetClose, onToggle: onSheetToggle } = useModal();
+  const { isOpen: isModalOpen, onClose: onModalClose, onToggle: onModalToggle } = useModal();
+  const handleBottomSheet = async () => {
+    onSheetToggle()
+  }
+  const handleModal = async () => {
+    onModalToggle()
+  }
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-      {/* <Button onClick={handleGetCookie}>토큰 값 가져오기</Button> */}
-      {/* <Button onClick={handleDeleteCookie}>토큰 지우기</Button> */}
       <Button onClick={handleWrongTokenRefreshTest}>잘못된 토큰으로 재발급 테스트</Button>
       <Button onClick={handleOldTokenRefreshTest}>만료된 토큰으로 재발급 테스트</Button>
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
       <Button onClick={handleRefresh}>재발급 테스트</Button>
+      <Button onClick={handleBottomSheet}>Bottom Sheet 테스트</Button>
+      <Button onClick={handleModal}>Modal 테스트</Button>
+      <Modal
+        title="모달 테스트"
+        content="모달 테스트 중입니다"
+        isOpen={isModalOpen}
+        onClose={onModalClose}
+        confirmText="확인"
+      />
+      <BottomSheet isOpen={isSheetOpen} onClose={onSheetClose} title="다음 회차 예상 결제 금액" fullHeight>
+        <div>
+        <DefaultText type="body2">다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급 할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.</DefaultText>
+        </div>
+      </BottomSheet>
     </div>
   );
 }
