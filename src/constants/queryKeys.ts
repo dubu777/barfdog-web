@@ -42,9 +42,10 @@ const queryKeys = {
     BASE: 'cart',
     GET_CART_INFO: 'getCartInfo',
   },
-  PET: {
-    BASE: 'pet',
-    GET_PET_LIST: 'getPetList',
+  DOG: {
+    BASE: 'dog',
+    GET_DOG_LIST: 'getDogList',
+    GET_DOG_DETAIL: 'getDogDetail',
   },
   ORDER: {
     BASE: 'order',

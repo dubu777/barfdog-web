@@ -54,14 +54,14 @@ export const guideCard = style({
 	marginTop: '10px !important'
 })
 
-export const petCount = style({
+export const dogCount = style({
 	display: 'flex',
 	alignItems :'center',
 	justifyContent: 'space-between',
 	marginBottom: '10px',
 })
 
-export const petCardItem = style({
+export const dogCardItem = style({
 	display: 'flex',
 	gap: '12px',
 	borderTop: `1px solid ${themeVars.colors.gray.gray400}`,
@@ -77,13 +77,13 @@ export const petCardItem = style({
 	}
 })
 
-export const petCardInfo = style({
+export const dogCardInfo = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '4px',
 })
 
-export const petCardImage = style({
+export const dogCardImage = style({
 	objectFit: 'cover',
 	borderRadius: '8px',
 })

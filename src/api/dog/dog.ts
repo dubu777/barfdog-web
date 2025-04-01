@@ -1,4 +1,4 @@
-import { DogData } from "@/types";
+import { DogData, DogDetail } from "@/types";
 import axiosInstance from "../axiosInstance";
 
 const getDogList = async (): Promise<DogData[]> => {
@@ -29,4 +29,10 @@ const updateDogProfileImage = async (dogId: number, dogPictureId: number) => {
   return data;
 }
 
-export { getDogList, updateRepresentativeDog, uploadDogProfileImage, updateDogProfileImage }
+
+const getDogDetail = async (dogId: number): Promise<DogDetail> => {
+  const { data } = await axiosInstance.get(`/api/dogs/${dogId}`);
+  return data;
+}
+
+export { getDogList, updateRepresentativeDog, uploadDogProfileImage, updateDogProfileImage, getDogDetail }

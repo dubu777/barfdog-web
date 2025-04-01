@@ -1,10 +1,10 @@
-import {queryKeys} from "@/constants";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {updateRepresentativeDog} from "@/api/pet/pet";
+import { queryKeys } from "@/constants";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateRepresentativeDog } from "@/api/dog/dog";
 
 export { useUpdateRepresentativeDog };
 
-const getDogListQueryKey = [queryKeys.PET.BASE, queryKeys.PET.GET_PET_LIST];
+const getDogListQueryKey = [queryKeys.DOG.BASE, queryKeys.DOG.GET_DOG_LIST];
 const getMyPageInfoQueryKey = [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_MYPAGE_INFO];
 
 function useUpdateRepresentativeDog(dogId: number) {

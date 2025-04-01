@@ -6,6 +6,7 @@ export const myPageMenuContainer = style({
   display: 'flex',
   flexDirection: 'column',
   gap: '16px',
+  background: themeVars.colors.gray.gray0,
 })
 
 export const category = style({

@@ -13,3 +13,4 @@ export * from './payment';
 export * from './community';
 export * from './review';
 export * from './store';
+export * from './dogs';

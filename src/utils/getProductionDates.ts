@@ -1,70 +1,86 @@
-// 생산 및 수령 예정일 계산
-export const getProductionDates = (dateString: string | null, planWeeklyPaymentCycle = 0) => {
-  const formatDate = (date: Date) =>
-    `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}.`;
+import { format, addWeeks, addDays, isAfter, subDays } from "date-fns";
 
-  const addWeeks = (date: Date, weeks: number) => {
-    const newDate = new Date(date);
-    newDate.setDate(date.getDate() + weeks * 7);  // weeks를 일수로 변환하여 더함
-    return newDate;
-  };
+// 결제일 기준 생산일 계산
+const calculateProductionDateFromPayment = (paymentDate: Date): Date => {
+  const dayOfWeek = paymentDate.getDay();
+  const newDate = new Date(paymentDate);
 
-  const calculateProductionDate = (date: Date) => {
-    const dayOfWeek = date.getDay();
-    const newDate = new Date(date);
+  // 주문 마감 목요일 기준 전 후 비교
+  const thisFriday = addDays(newDate, (5 - dayOfWeek + 7) % 7);
 
-    // 월 ~ 목 : 그 주의 토요일
-    if (dayOfWeek >= 1 && dayOfWeek <= 4) {
-      newDate.setDate(date.getDate() + (6 - dayOfWeek));
-    } else { // 금 ~ 일 : 다음 주의 토요일
-      newDate.setDate(date.getDate() + (13 - dayOfWeek));
-    }
-
-    return newDate;
-  };
-
-  const calculateReceivingDate = (prodDate: Date) => {
-    const newDate = new Date(prodDate);
-    newDate.setDate(prodDate.getDate() + 5);  // 생산 예정일의 다음 수요일
-    return newDate;
-  };
-
-  let productionDate, shipmentDate, receivingDate;
-
-  if (dateString) {
-    // 배송일이 제공된 경우
-    productionDate = new Date(dateString);
-    // 화요일인 경우, 전 주 토요일로 설정
-    if (productionDate.getDay() === 2) {
-      productionDate.setDate(productionDate.getDate() - 4); // 화요일에서 4일 빼면 전 주 토요일
-    }
-
-    receivingDate = new Date(dateString);
-    receivingDate.setDate(receivingDate.getDate() + 1); // 수령일은 배송일의 다음날
-  } else {
-    // 배송일이 없을 경우 (구독 안함)
-    
-    const today = new Date();
-    // 생산 예정일 계산
-    productionDate = calculateProductionDate(today);
-
-    // 출고 예정일은 생산 예정일의 다음 화요일
-    shipmentDate = new Date(productionDate);
-    shipmentDate.setDate(shipmentDate.getDate() + 4); // 화요일
-
-    // 수령 예정일은 생산 예정일의 다음 수요일
-    receivingDate = calculateReceivingDate(productionDate);
+  if (dayOfWeek === 5 || isAfter(paymentDate, thisFriday)) {
+    return addDays(thisFriday, 7); // 다음 주 금요일
   }
 
-  // planWeeklyPaymentCycle이 있는 경우, 해당 주기만큼 미룬 날짜 계산
+  return thisFriday;
+};
+
+// 배송일 기준 생산일 계산 (배송일 전 주 금요일)
+const calculateProductionDateFromDelivery = (deliveryDate: Date): Date => {
+  const newDate = new Date(deliveryDate);
+
+  newDate.setDate(deliveryDate.getDate() - (deliveryDate.getDay() + 2) % 6);
+  return newDate;
+};
+
+// 배송일 계산 생산일로부터 3일 후 화요일
+const calculateDeliveryDate = (productionDate: Date): Date => {
+  const newDate = new Date(productionDate);
+  return addDays(newDate, 4); // 화요일
+};
+
+export const getProductionDates = (
+  dateString: string | null,
+  isPaymentDate = false, // 결제일 기준 여부, 기본값은 false (배송일 기준)
+  dateFormatType: 'MM.dd' | 'yyyy.MM.dd' = 'MM.dd',
+  planWeeklyPaymentCycle = 0, // 주 단위 이동 주기
+) => {
+  const formatDate = (date: Date) => format(date, dateFormatType);
+
+  let productionDate: Date;
+  let deliveryDate: Date;
+  let receivingDate: Date;
+  let paymentDate: string | null = null;
+
+  if (dateString) {
+    const baseDate = new Date(dateString);
+
+    if (isPaymentDate) {
+      // 결제일 기준 생산일 계산
+      paymentDate = formatDate(baseDate);
+      productionDate = calculateProductionDateFromPayment(baseDate);
+    } else {
+      // 배송일 기준 생산일 계산
+      productionDate = calculateProductionDateFromDelivery(baseDate);
+    }
+
+    // 배송일, 수령일 계산 (수령일은 배송일로부터 1일 후)
+    deliveryDate = calculateDeliveryDate(productionDate); // 화요일
+    receivingDate = addDays(deliveryDate, 1); // 수요일
+  } else {
+
+    // 현재 날짜 기준
+    const today = new Date();
+    productionDate = calculateProductionDateFromDelivery(today);
+    deliveryDate = calculateDeliveryDate(productionDate); // 화요일
+    receivingDate = addDays(deliveryDate, 1); // 수요일
+  }
+
+  // 주 단위 이동 적용
   if (planWeeklyPaymentCycle > 0) {
     productionDate = addWeeks(productionDate, planWeeklyPaymentCycle);
+    deliveryDate = addWeeks(deliveryDate, planWeeklyPaymentCycle);
     receivingDate = addWeeks(receivingDate, planWeeklyPaymentCycle);
+    if (paymentDate) {
+      const basePaymentDate = new Date(dateString!);
+      paymentDate = formatDate(addWeeks(basePaymentDate, planWeeklyPaymentCycle));
+    }
   }
 
   return {
-    productionDate: dateString ? formatDate(productionDate) : null,
-    shipmentDate: dateString ? shipmentDate ? formatDate(shipmentDate) : undefined : null,
-    receivingDate: dateString ? formatDate(receivingDate) : null,
+    paymentDate,
+    productionDate: formatDate(productionDate),  // 생산일 (금요일)
+    deliveryDate: formatDate(deliveryDate),  // 배송일 (화요일)
+    receivingDate: formatDate(receivingDate),  // 수령일 (수요일)
   };
 };

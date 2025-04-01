@@ -1,7 +1,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-export const useBackNavigation = (fallbackUrl?: string | undefined) => {
+export const useBackNavigation = (fallbackUrl?: string | undefined, keepPreviousSearchParams: boolean = false) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -21,6 +21,9 @@ export const useBackNavigation = (fallbackUrl?: string | undefined) => {
     if (fallbackUrl) {
       router.push(fallbackUrl);
       return;
+    }
+    if (keepPreviousSearchParams) {
+      router.back();
     }
 
     // searchParams 가 있을 경우 뒤로가기시 searchParams 가 포함되지 않은 이전 stack url 로 이동

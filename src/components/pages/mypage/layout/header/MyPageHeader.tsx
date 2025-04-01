@@ -19,6 +19,7 @@ const MyPageHeader = () => {
   const { pushWithQuery } = useDynamicQueryPush();
   const goBack = useBackNavigation();
   const goBackToMain = useBackNavigation('/');
+  const goBackToPreviousPage = useBackNavigation(undefined, true);
 
   const headerConfigs: Record<
     string,
@@ -69,7 +70,7 @@ const MyPageHeader = () => {
       return {
         centerTitle: !showReceipt ? '주문 상세' : '카드영수증',
         showBackButton: !showReceipt,
-        onBack: goBack,
+        onBack: goBackToPreviousPage,
         showCloseButton: !!showReceipt,
         onClose: () => pushWithQuery(pathname, {}, ['showReceipt']),
       }
@@ -100,17 +101,17 @@ const MyPageHeader = () => {
     },
     '/mypage/subscription/': (_, searchParams) => {
       const lastSection = pathname.split('/').pop();
-      const completedLastSection = lastSection === 'delay-shipping' && searchParams.get('status') === 'completed';
+      const completedLastSection = lastSection === 'postpone-shipping' && searchParams.get('status') === 'completed';
       return {
         centerTitle: {
-          'delay-shipping': !completedLastSection ? '배송미루기' : ' ',
+          'postpone-shipping': !completedLastSection ? '배송미루기' : ' ',
           'schedule': '전체구독일정',
           'cancel-subscription': '구독 해지 사유입력',
         }[lastSection as string] || '구독상세',
         showBackButton: (!completedLastSection && lastSection !== 'schedule'),
         showCloseButton: completedLastSection || lastSection === 'schedule',
-        onBack: goBack,
-        onClose: goBack,
+        onBack: goBackToPreviousPage,
+        onClose: goBackToPreviousPage,
       };
     },
   };

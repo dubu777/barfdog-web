@@ -50,22 +50,22 @@ const WithdrawalGuide = () => {
 			description: '탈퇴하면 데이터를 다시 불러올 수 없어요.',
 			component: (
 				<div className={styles.guideCard}>
-					<Card shadow='light' className={styles.petCount}>
+					<Card shadow='light' className={styles.dogCount}>
 						<DefaultText type='headline3'>등록된 반려견 수</DefaultText>
 						<DefaultText type='label2'>2마리</DefaultText>
 					</Card>
 					<Card shadow='light'>
 						<ul>
-							<li className={styles.petCardItem}>
-								<Image src={SampleDog1} alt='sampleDog1' width={72} height={72} className={styles.petCardImage} />
-								<div className={styles.petCardInfo}>
+							<li className={styles.dogCardItem}>
+								<Image src={SampleDog1} alt='sampleDog1' width={72} height={72} className={styles.dogCardImage} />
+								<div className={styles.dogCardInfo}>
 									<DefaultText type='headline1'>코코</DefaultText>
 									<DefaultText type='caption' color='gray600'>1년 1개월 | 12kg | 암컷 | 중형견</DefaultText>
 								</div>
 							</li>
-							<li className={styles.petCardItem}>
-								<Image src={SampleDog2} alt='sampleDog2' width={72} height={72} className={styles.petCardImage} />
-								<div className={styles.petCardInfo}>
+							<li className={styles.dogCardItem}>
+								<Image src={SampleDog2} alt='sampleDog2' width={72} height={72} className={styles.dogCardImage} />
+								<div className={styles.dogCardInfo}>
 									<DefaultText type='headline1'>율무</DefaultText>
 									<DefaultText type='caption' color='gray600'>2년 1개월 | 12kg | 수컷 | 중형견</DefaultText>
 								</div>
