@@ -34,15 +34,14 @@ export default function OrderItemCard({
 
   return (
     <div className={styles.orderItemCardContainer}>
-      <div className={styles.orderItemCardImageWrapper}>
         <Image
           src={TEMP_RECIPE_DTO_DATA[recipeName].imageURL}
           alt={recipeName}
           width={88}
           height={88}
           priority
+          className={styles.orderItemCardImage}
         />
-      </div>
       <div className={styles.orderItemContentWrapper}>
         <div className={styles.orderItemInfoWrapper}>
           <DefaultText type="label2">

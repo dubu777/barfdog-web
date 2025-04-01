@@ -44,6 +44,7 @@ import OrderTerms from "../../common/orderTerms/OrderTerms";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import SubscriptionNotice from "../subscriptionNotice/SubscriptionNotice";
+import { useEffect } from "react";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -96,7 +97,11 @@ export default function SubscriptionOrderContainer({
 
   // 결제 함수 ========>
   // 구독 구매 페이지 정보 초기값 없데이트
-  useUpdateSubscriptionOrderBody(subscriptionOrderSheetData);
+  useEffect(() => {
+    if (subscriptionOrderSheetData) {
+      useUpdateSubscriptionOrderBody(subscriptionOrderSheetData);
+    }
+  }, [subscriptionOrderSheetData])
 
   // 아임포트 결제 응답 처리
   const handleIamportPaymentResponse = async ({
@@ -275,7 +280,7 @@ export default function SubscriptionOrderContainer({
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />
       <Divider />
-      <OrderTerms />
+      <OrderTerms orderType={ORDER_TYPE.SUBSCRIPTION} />
       <Divider />
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>

@@ -67,6 +67,7 @@ export default function CouponModal({
     onToggle: onErrorModalToggle,
     isOpen: isErrorModalOpen,
   } = useModal();
+
   // 쿠폰 등록 input field 관리
   const { control, handleSubmit, setValue } = useFormHandler(
     couponSchema,
@@ -140,6 +141,7 @@ export default function CouponModal({
     onErrorModalClose();
   };
 
+  // 쿠폰 적용 함수
   const handleApplyCoupon = () => {
     if (!selectedCoupon) {
       if (appliedCoupon) {

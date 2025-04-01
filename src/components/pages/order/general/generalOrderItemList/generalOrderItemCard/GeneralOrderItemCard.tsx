@@ -43,7 +43,7 @@ export default function GeneralOrderItemCard({
       </div>
       <div className={colStartWrapper({ gap: 4 })}>
         {orderItemData.optionDtoList?.map((option) => (
-          <div className={styles.orderOptionWrapper}>
+          <div key={option.optionId} className={styles.orderOptionWrapper}>
             <Chips variant="outlined">추가상품</Chips>
             <div className={colStartWrapper({ gap: 4 })}>
               <div className={rowStartWrapper({ gap: 8 })}>

@@ -21,7 +21,7 @@ export function useGetGeneralOrder(
     variables,
   ];
   const { updateOrderBody } = useOrderStore();
-  const { setDeliveryDto, setBackupDeliveryDto, setDeliveryId } = useDeliveryStore();
+  const { setDeliveryDto, setBackupDeliveryDto, setDeliveryId, setBundleDeliveryDto } = useDeliveryStore();
   const { setUserTotalReward } = useRewardStore();
   const queryClient = useQueryClient();
   return useMutation({
@@ -71,6 +71,17 @@ export function useGetGeneralOrder(
       });
       setUserTotalReward(data.reward);
       if (data.deliveryAddress && data.deliveryAddress.length > 0) {
+        setBundleDeliveryDto({
+          deliveryId: data.deliveryAddress[0].id,
+          deliveryName: data.deliveryAddress[0].deliveryName ?? data.deliveryAddress[0].recipientName,
+          default: false,
+          recipientName: data.deliveryAddress[0].recipientName,
+          phoneNumber: data.deliveryAddress[0].phoneNumber,
+          zipcode: data.deliveryAddress[0].zipcode,
+          street: data.deliveryAddress[0].street,
+          detailAddress: data.deliveryAddress[0].detailAddress,
+          request: "",
+        });
         setDeliveryId(data.deliveryAddress[0].id);
       }
     },

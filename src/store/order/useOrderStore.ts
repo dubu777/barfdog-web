@@ -63,7 +63,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     // 필요한 데이터들을 각각의 store에서 가져옴
     const { deliveryDto, deliveryId, isBundleDelivery } = useDeliveryStore.getState();
     const { paymentMethod } = usePaymentStore.getState();
-    const { discountCoupon, discountTotal, deliveryPrice, paymentPrice } =
+    const { discountTotal, deliveryPrice, paymentPrice } =
       useDiscountStore.getState();
     const { appliedReward } = useRewardStore.getState();
     const { appliedCoupon } = useCouponStore.getState();
@@ -77,7 +77,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       deliveryDto: extractServerDeliveryDto(deliveryDto),
       agreePrivacy,
       paymentMethod,
-      discountCoupon,
+      discountCoupon: appliedCoupon?.discountAmount,
       discountReward: appliedReward,
       discountTotal,
       deliveryPrice,

@@ -3,11 +3,11 @@ import { ClientDeliveryDto } from "@/types";
 import { initialDeliveryDto } from "@/config/orderInitialValues";
 
 interface DeliveryState {
-  deliveryDto: ClientDeliveryDto;
-  backupDeliveryDto: ClientDeliveryDto;
-  bundleDeliveryDto: ClientDeliveryDto;
-  deliveryId: number | null;
-  isBundleDelivery: boolean;
+  deliveryDto: ClientDeliveryDto; // 서버에 전송할 delivery 값
+  backupDeliveryDto: ClientDeliveryDto; // 묶음 배송 선택에 영향 받지 않는 값
+  bundleDeliveryDto: ClientDeliveryDto; // 묶음 배송으로 선택한 delivery 값
+  deliveryId: number | null; // 묶음 배송지 delivery Id
+  isBundleDelivery: boolean; // 묶음 배송 여부
   setDeliveryDto: (delivery: ClientDeliveryDto) => void;
   setBackupDeliveryDto: (delivery: ClientDeliveryDto) => void;
   setBundleDeliveryDto: (delivery: ClientDeliveryDto) => void;

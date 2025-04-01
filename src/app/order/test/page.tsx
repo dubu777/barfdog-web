@@ -25,8 +25,8 @@ export default function GeneralShopTest() {
         amount: 1,
       },
       itemOptionDtoList: [
-        { itemOptionId: 18, amount: 1 },
-        { itemOptionId: 19, amount: 1 },
+        // { itemOptionId: 18, amount: 1 },
+        // { itemOptionId: 19, amount: 1 },
       ],
     },
     // {

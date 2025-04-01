@@ -15,7 +15,7 @@ export const addressCardContainer = recipe({
     boxShadow: themeVars.shadow.light,
   },
   variants: {
-    isDefaultAddress: {
+    isSelectedAddress: {
       true: {
         border: `1px solid ${themeVars.colors.red.red}`,
       },
@@ -25,7 +25,7 @@ export const addressCardContainer = recipe({
     },
   },
   defaultVariants: {
-    isDefaultAddress: false,
+    isSelectedAddress: false,
   },
 });
 
