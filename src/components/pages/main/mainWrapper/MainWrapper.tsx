@@ -8,12 +8,14 @@ import MainSurvey from "@/components/pages/main/mainSurvey/MainSurvey";
 import MainService from "@/components/pages/main/mainService/MainService";
 import Footer from "@/components/layout/footer/Footer";
 import BottomBanner from "@/components/layout/banner/BottomBanner";
+import MainLogoMarquee from "@/components/pages/main/mainLogoMarquee/MainLogoMarquee";
 
 const MainWrapper = () => {
   return (
     <section className={styles.mainContainer}>
       <MainVideo />
       <MainRecommend />
+      <MainLogoMarquee />
       <MainReview />
       <MainReason />
       <MainSurvey />
