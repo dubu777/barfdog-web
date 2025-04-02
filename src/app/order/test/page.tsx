@@ -14,6 +14,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import Modal from "@/components/common/modal/Modal";
 import NextPaymentBottomSheet from "@/components/pages/order/common/bottomSheet/nextPaymentBottomSheet/NextPaymentBottomSheet";
 import DeliveryScheduleBottomSheet from "@/components/pages/order/common/bottomSheet/deliveryScheduleBottomSheet/DeliveryScheduleBottomSheet";
+import { ALLIANCE_COOKIE } from "@/constants/cookie";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -130,20 +131,24 @@ export default function GeneralShopTest() {
   const handleModal = async () => {
     onModalToggle();
   };
+  const handleCokBankCookieTest = async () => {
+    setCookie(ALLIANCE_COOKIE, "cb")
+  };
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-      <Button onClick={handleWrongTokenRefreshTest}>
+      <Button onClick={handleCokBankCookieTest}>콕뱅크 쿠키 테스트</Button>
+      {/* <Button onClick={handleWrongTokenRefreshTest}>
         잘못된 토큰으로 재발급 테스트
       </Button>
       <Button onClick={handleOldTokenRefreshTest}>
         만료된 토큰으로 재발급 테스트
-      </Button>
+      </Button> */}
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
-      <Button onClick={handleRefresh}>재발급 테스트</Button>
+      {/* <Button onClick={handleRefresh}>재발급 테스트</Button>
       <Button onClick={handleBottomSheet}>Bottom Sheet 테스트</Button>
-      <Button onClick={handleModal}>Modal 테스트</Button>
+      <Button onClick={handleModal}>Modal 테스트</Button> */}
       <Modal
         title="모달 테스트"
         content="모달 테스트 중입니다"

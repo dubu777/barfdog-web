@@ -7,11 +7,10 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-
 import SubscriptionOrderContainer from "@/components/pages/order/subscription/subscriptionOrderContainer/SubscriptionOrderContainer";
 import { prefetchGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
-import { prefetchGetSAddressList } from "@/api/address/queries/useGetAddressList";
-import { prefetchGetCouponList } from "@/api/mypage/queries/useGetCouponList";
+import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
+import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
 
 interface SubscriptionPageProps {
   searchParams: Record<string, string | string[] | undefined>;
@@ -24,7 +23,7 @@ export default async function SubscriptionPage({
   
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionOrder(queryClient, subscribeId);
-  await prefetchGetSAddressList(queryClient);
+  await prefetchGetAddressList(queryClient);
   await prefetchGetCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 

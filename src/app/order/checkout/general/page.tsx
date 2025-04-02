@@ -8,14 +8,14 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
-import { prefetchGetSAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
+import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 
 interface GeneralPageProps {}
 
 export default async function GeneralPage({}: GeneralPageProps) {
   const queryClient = new QueryClient();
 
-  await prefetchGetSAddressList(queryClient);
+  await prefetchGetAddressList(queryClient);
   await prefetchGetCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 

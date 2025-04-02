@@ -4,7 +4,7 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { QueryClient } from "@tanstack/react-query";
 import { cookies } from "next/headers";
 
-export async function prefetchGetSAddressList(queryClient: QueryClient) {
+export async function prefetchGetAddressList(queryClient: QueryClient) {
   const cookieStore = cookies();
   const token = cookieStore.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
   
