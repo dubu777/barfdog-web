@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
-import {
-  useCachedGeneralOrder,
-  useGetGeneralOrder,
-} from "@/api/order/queries/useGetGeneralOrder";
+import { useGetGeneralOrder } from "@/api/order/queries/useGetGeneralOrder";
 import { useSaveGeneralOrder } from "@/api/order/mutations/useSaveGeneralOrder";
-import { SaveGeneralOrderRequest, GeneralIamportResponse } from "@/types";
+import {
+  SaveGeneralOrderRequest,
+  GeneralIamportResponse,
+  GeneralOrderSheetResponse,
+} from "@/types";
 import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 
@@ -37,6 +38,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import FooterButton from "@/components/common/footerButton/FooterButton";
+import { initialGeneralOrderSheetResponse } from "@/config/orderInitialValues";
 
 interface handleIamportResponseParams {
   res: GeneralIamportResponse;
@@ -46,22 +48,23 @@ interface handleIamportResponseParams {
 export default function GeneralOrderContainer() {
   const router = useRouter();
   // 상태관리 -------->
-  const { maxAvailableReward } = useRewardStore();
-  const { paymentPrice } = useDiscountStore();
-  const { getRequestBody } = useOrderStore();
+  const maxAvailableReward = useRewardStore(state => state.maxAvailableReward);
+  const paymentPrice = useDiscountStore(state => state.paymentPrice);
+  const getRequestBody = useOrderStore(state => state.getRequestBody);
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
+  const [generalOrderSheetData, setGeneralOrderSheetData] = useState<GeneralOrderSheetResponse>(initialGeneralOrderSheetResponse);
+
+
+  console.log('generalOrderSheetData', generalOrderSheetData);
+  
   // <--------- 상태관리
 
   // 서버 호출 react query -------->
-  const { data: generalOrderSheetData } = useCachedGeneralOrder({
-    orderItemDtoList,
-  });
   const { mutateAsync: getGeneralOrderMutate } = useGetGeneralOrder();
   const { mutateAsync: createGeneralOrderMutate } = useSaveGeneralOrder();
   const { mutateAsync: successGeneralPaymentMutate } =
     useSuccessGeneralPayment();
   const { mutateAsync: failGeneralPaymentMutate } = useFailGeneralPayment();
-  console.log("generalOrderSheetData", generalOrderSheetData);
   // <------- 서버 호출
 
   // 커스텀 훅 & 유틸 함수 ------->
@@ -74,11 +77,15 @@ export default function GeneralOrderContainer() {
     defaultOrderValues
   );
 
+  // 일반 결제 주문 정보 조회
   useEffect(() => {
-    if (orderItemDtoList && orderItemDtoList.length > 0) {
-      getGeneralOrderMutate({ orderItemDtoList });
+    if (orderItemDtoList.length > 0) {
+      getGeneralOrderMutate({ orderItemDtoList }).then((data) => {
+        setGeneralOrderSheetData(data);
+      });
     }
   }, [orderItemDtoList]);
+
   // <-------- 커스텀 훅 & 유틸 함수
 
   // 결제 함수 ============>

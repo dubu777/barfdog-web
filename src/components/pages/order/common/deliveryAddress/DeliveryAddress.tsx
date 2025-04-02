@@ -2,13 +2,12 @@
 
 import * as styles from "./DeliveryAddress.css";
 import useModal from "@/hooks/useModal";
-import { useEffect } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import Chips from "@/components/common/chips/Chips";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
-import DeliveryModal from "./deliveryModal/DeliveryModal";
+import DeliveryModal from "../modal/deliveryModal/DeliveryModal";
 
 interface DeliveryAddressProps {}
 

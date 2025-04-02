@@ -7,7 +7,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { ORDER_MESSAGE } from "@/constants";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import BundleDeliveryBottomSheet from "./bundleDeliveryBottomSheet/BundleDeliveryBottomSheet";
+import BundleDeliveryBottomSheet from "../../common/bottomSheet/bundleDeliveryBottomSheet/BundleDeliveryBottomSheet";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/modal/Modal";
 

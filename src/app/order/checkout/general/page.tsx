@@ -2,18 +2,19 @@ import * as styles from "../../Order.css";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import GeneralOrderContainer from "@/components/pages/order/general/GeneralOrderContainer";
-import { prefetchGetSAddressList } from "@/api/address/queries/useGetAddressList";
-import { prefetchGetCouponList } from "@/api/mypage/queries/useGetCouponList";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
+import { prefetchGetSAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 
 interface GeneralPageProps {}
 
 export default async function GeneralPage({}: GeneralPageProps) {
   const queryClient = new QueryClient();
+
   await prefetchGetSAddressList(queryClient);
   await prefetchGetCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);

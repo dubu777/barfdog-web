@@ -91,23 +91,3 @@ export function useGetGeneralOrder(
     ...mutationOptions,
   });
 }
-// post 요청 캐싱
-export function useCachedGeneralOrder(
-  variables: GeneralOrderSheetRequest
-) {
-  const cacheKey = [queryKeys.ORDER.GET_GENERAL_ORDER, variables];
-  return useSuspenseQuery({
-    queryFn: () => getGeneralOrder(variables),
-    queryKey: cacheKey,
-  });
-}
-
-export async function prefetchGeneralOrder(
-  queryClient: QueryClient,
-  variables: GeneralOrderSheetRequest
-): Promise<void> {
-  await queryClient.prefetchQuery({
-    queryKey: [queryKeys.ORDER.GET_GENERAL_ORDER, variables],
-    queryFn: () => getGeneralOrder(variables),
-  });
-}

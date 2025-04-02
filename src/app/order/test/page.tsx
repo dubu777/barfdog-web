@@ -12,6 +12,8 @@ import useModal from "@/hooks/useModal";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Modal from "@/components/common/modal/Modal";
+import NextPaymentBottomSheet from "@/components/pages/order/common/bottomSheet/nextPaymentBottomSheet/NextPaymentBottomSheet";
+import DeliveryScheduleBottomSheet from "@/components/pages/order/common/bottomSheet/deliveryScheduleBottomSheet/DeliveryScheduleBottomSheet";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -41,6 +43,7 @@ export default function GeneralShopTest() {
   const generalPaymentTest = () => {
     console.log("일반상점테스트");
     setOrderItemDtoList(orderItemListData);
+    // setOrderItemsCookie(orderItemListData);
     router.push("/order/checkout/general");
   };
 
@@ -115,8 +118,14 @@ export default function GeneralShopTest() {
     onClose: onModalClose,
     onToggle: onModalToggle,
   } = useModal();
+  const {
+    isOpen: isNextPaymentBottomSheetOpen,
+    onClose: onNextPaymentBottomSheetClose,
+    onToggle: onNextPaymentBottomSheetToggle,
+  } = useModal();
   const handleBottomSheet = async () => {
-    onSheetToggle();
+    // onSheetToggle();
+    onNextPaymentBottomSheetToggle();
   };
   const handleModal = async () => {
     onModalToggle();
@@ -142,19 +151,15 @@ export default function GeneralShopTest() {
         onClose={onModalClose}
         confirmText="확인"
       />
-      <BottomSheet
-        isOpen={isSheetOpen}
-        onClose={onSheetClose}
-        title="다음 회차 예상 결제 금액"
-        fullHeight
-      >
-        <div>
-          <DefaultText type="body2">
-            다음 회차 예상 금액은 총 금액에서 할인 혜택을 뺀 금액으로, 등급
-            할인과 쿠폰 사용, 적립금 사용 여부에 따라 달라질 수 있습니다.
-          </DefaultText>
-        </div>
-      </BottomSheet>
+      <DeliveryScheduleBottomSheet
+        isOpen={isNextPaymentBottomSheetOpen}
+        onClose={onNextPaymentBottomSheetClose}
+        deliveryDate="2025-04-12"
+      />
+      {/* <NextPaymentBottomSheet
+        isOpen={isNextPaymentBottomSheetOpen}
+        onClose={onNextPaymentBottomSheetClose}
+      /> */}
     </div>
   );
 }

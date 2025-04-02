@@ -1,4 +1,5 @@
 import {
+  GeneralOrderSheetResponse,
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
 } from "@/types";
@@ -54,6 +55,31 @@ const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
   brochure: false,
 };
 
+const initialGeneralOrderSheetResponse: GeneralOrderSheetResponse = {
+  defaultAddress: {
+    city: '',
+    default: false,
+    deliveryName: null,
+    detailAddress: '',
+    id: 0,
+    phoneNumber: '',
+    recipientName: '',
+    request: '',
+    street: '',
+    zipcode: '',
+  },
+  deliveryAddress: [],
+  deliveryPrice: 0,
+  email: '',
+  freeCondition: 0,
+  name: '',
+  nextSubscribeDeliveryDate: '',
+  orderItemDtoList: [],
+  orderPrice: 0,
+  orderStatus: 'UNSUBSCRIBE_ORDER', // 초기값으로 적당한 기본 상태를 설정
+  phoneNumber: '',
+  reward: 0,
+};
 
 const initialDeliveryDto = {
   deliveryId: 0,
@@ -68,4 +94,4 @@ const initialDeliveryDto = {
 };
 
 
-export { initialDeliveryDto, initialGeneralOrderBody, initialSubscriptionOrderBody }
+export { initialDeliveryDto, initialGeneralOrderBody, initialSubscriptionOrderBody, initialGeneralOrderSheetResponse }

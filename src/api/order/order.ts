@@ -41,7 +41,7 @@ const getSubscriptionOrder = async (
 ): Promise<SubscriptionOrderSheetResponse> => {
   
   const { data } = await axiosInstance.get(
-    `/api/orders/sheet/subscribe/${subscribeId}`
+    `/api/orders/sheet/subscribe/${subscribeId}?alliance=cb`
   );
 
   return data;
@@ -56,7 +56,7 @@ const saveSubscriptionOrder = async ({
   body: SaveSubscriptionOrderRequest;
 }): Promise<SaveOrderResponse> => {
   const data = await axiosInstance.post(
-    `/api/orders/subscribe/${subscribeId}`,
+    `/api/orders/subscribe/${subscribeId}=`,
     body
   );
 

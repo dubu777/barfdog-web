@@ -12,11 +12,3 @@ export function useGetAddressList(queryOptions?: UseSuspenseQueryCustomOptions<A
     ...queryOptions,
   })
 }
-
-
-export async function prefetchGetSAddressList(queryClient: QueryClient) {
-  await queryClient.prefetchQuery({
-    queryFn: getAddressList,
-    queryKey: [queryKeys.DELIVERY.BASE, queryKeys.DELIVERY.GET_ADDRESS_LIST],
-  });
-}
