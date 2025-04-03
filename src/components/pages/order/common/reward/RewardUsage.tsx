@@ -81,7 +81,7 @@ export default function RewardUsage({
             <InputField
               {...field}
               placeholder="0"
-              type="text"
+              type="number"
               onChange={(e) => {
                 const target = e.target as HTMLInputElement;
                 const inputValue = parseInt(target.value, 10) || 0;

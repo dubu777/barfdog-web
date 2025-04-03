@@ -4,6 +4,7 @@ import Button from "@/components/common/button/Button";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { fontColors, textStyles } from "@/components/common/defaultText/DefaultText.css";
+import { forwardRef } from 'react';
 
 interface OrderSectionProps {
   title?: string;
@@ -20,7 +21,7 @@ interface OrderSectionProps {
   onSubtitleClick?: () => void;
 }
 
-export default function OrderSection({
+const OrderSection = forwardRef<HTMLElement, OrderSectionProps>(({
   title,
   subTitleParts,
   subTitleType = "label4",
@@ -30,10 +31,10 @@ export default function OrderSection({
   padding = "32px 20px",
   style,
   onSubtitleClick,
-}: OrderSectionProps) {
+}, ref) => {
   const combinedStyle = { padding, ...style };
   return (
-    <section className={styles.OrderSectionContainer} style={combinedStyle}>
+    <section ref={ref} className={styles.OrderSectionContainer} style={combinedStyle}>
       {(title || subTitleParts) && (
         <div className={styles.OrderSectionTitleWrapper}>
           <DefaultText type="title4">{title}</DefaultText>
@@ -74,4 +75,8 @@ export default function OrderSection({
       {children}
     </section>
   );
-}
+});
+
+OrderSection.displayName = 'OrderSection';
+
+export default OrderSection;

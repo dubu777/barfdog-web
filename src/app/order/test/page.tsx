@@ -15,12 +15,15 @@ import Modal from "@/components/common/modal/Modal";
 import NextPaymentBottomSheet from "@/components/pages/order/common/bottomSheet/nextPaymentBottomSheet/NextPaymentBottomSheet";
 import DeliveryScheduleBottomSheet from "@/components/pages/order/common/bottomSheet/deliveryScheduleBottomSheet/DeliveryScheduleBottomSheet";
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
+import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 
 export default function GeneralShopTest() {
   const router = useRouter();
   const { setOrderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
   const { mutate: logout } = useLogout();
-
+  const {data: planData} = useGetPlanDiscount()
+  console.log(planData);
+  
   const orderItemListData = [
     {
       itemDto: {

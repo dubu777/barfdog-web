@@ -24,6 +24,7 @@ interface OrderState {
   finalPrice: number;
   agreePrivacy: boolean;
   agreeSubscription: boolean;
+  customerUid: string;
   setFinalPrice: (amount: number) => void;
   updateOrderBody: (
     updates: Partial<SaveGeneralOrderRequest | SaveSubscriptionOrderRequest>,
@@ -35,6 +36,7 @@ interface OrderState {
   // API가 일반 결제도 쿠폰 전체 적용으로 변경된다면 수정예정 => 삭제할듯
   setAgreePrivacy: (agreePrivacy: boolean) => void;
   setAgreeSubscription: (agreeSubscription: boolean) => void;
+  setCustomerUid: (customerUid: string) => void;
 }
 
 export const useOrderStore = create<OrderState>((set, get) => ({
@@ -43,7 +45,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   agreePrivacy: false,
   agreeSubscription: false,
   finalPrice: 0,
-
+  customerUid: "",
   updateOrderBody: (updates, orderType) =>
     set((state) => {
       if (orderType === ORDER_TYPE.GENERAL) {
@@ -57,7 +59,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     }),
 
   getRequestBody: (orderType) => {
-    const { generalOrderBody, subscriptionOrderBody, agreePrivacy, finalPrice } =
+    const { generalOrderBody, subscriptionOrderBody, agreePrivacy, finalPrice, customerUid } =
       get();
 
     // 필요한 데이터들을 각각의 store에서 가져옴
@@ -77,7 +79,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       deliveryDto: extractServerDeliveryDto(deliveryDto),
       agreePrivacy,
       paymentMethod,
-      discountCoupon: appliedCoupon?.discountAmount,
+      discountCoupon: appliedCoupon?.discountAmount ?? 0,
       discountReward: appliedReward,
       discountTotal,
       deliveryPrice,
@@ -98,19 +100,13 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     return {
       ...subscriptionOrderBody,
       ...commonBody,
-      deliveryDto: {
-        detailAddress: deliveryDto.detailAddress,
-        recipientName: deliveryDto.recipientName,
-        phoneNumber: deliveryDto.phoneNumber,
-        request: deliveryDto.request,
-        street: deliveryDto.street,
-        zipcode: deliveryDto.zipcode,
-        deliveryName: "테스트 이름",
-      },
+      customerUid,
+      brochure: false,
     } as SaveSubscriptionOrderRequest;
   },
 
   setAgreePrivacy: (agreePrivacy) => set({ agreePrivacy }),
   setAgreeSubscription: (agreeSubscription) => set({ agreeSubscription }),
   setFinalPrice: (finalPrice) => set({finalPrice}),
+  setCustomerUid: (customerUid) => set({customerUid})
 }));

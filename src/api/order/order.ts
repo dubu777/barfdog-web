@@ -17,7 +17,6 @@ import {
   MergeOrderAndRecipe,
   SubscriptionOrderData,
 } from "@/types";
-import {getCookie} from "@/utils/auth/cookie";
 
 export {
   getOrderDetail,
@@ -41,7 +40,7 @@ const getSubscriptionOrder = async (
 ): Promise<SubscriptionOrderSheetResponse> => {
   
   const { data } = await axiosInstance.get(
-    `/api/orders/sheet/subscribe/${subscribeId}?alliance=cb`
+    `/api/orders/sheet/subscribe/${subscribeId}`
   );
 
   return data;
@@ -56,7 +55,7 @@ const saveSubscriptionOrder = async ({
   body: SaveSubscriptionOrderRequest;
 }): Promise<SaveOrderResponse> => {
   const data = await axiosInstance.post(
-    `/api/orders/subscribe/${subscribeId}=`,
+    `/api/orders/subscribe/${subscribeId}`,
     body
   );
 
@@ -105,8 +104,7 @@ const failSubscriptionPayment = async (orderId: number): Promise<any> => {
 const getGeneralOrder = async (
   body: GeneralOrderSheetRequest
 ): Promise<GeneralOrderSheetResponse> => {
-  const alliance = getCookie('alliance');
-  const { data } = await axiosInstance.post(`/api/orders/sheet/general?alliance=${alliance || ''}`, body);
+  const { data } = await axiosInstance.post("/api/orders/sheet/general", body);
 
   return data;
 };
@@ -115,7 +113,7 @@ const getGeneralOrder = async (
 const saveGeneralOrder = async (
   body: SaveGeneralOrderRequest
 ): Promise<SaveOrderResponse> => {
-  const data = await axiosInstance.post("/api/orders/general?alliance=cb", body);
+  const data = await axiosInstance.post("/api/orders/general", body);
 
   return data;
 };

@@ -8,9 +8,9 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import SubscriptionOrderContainer from "@/components/pages/order/subscription/subscriptionOrderContainer/SubscriptionOrderContainer";
-import { prefetchGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
+import { prefetchGetSubscriptionOrder } from "@/api/order/queries/usePrefetchGetSubscriptionOrder";
 
 interface SubscriptionPageProps {
   searchParams: Record<string, string | string[] | undefined>;

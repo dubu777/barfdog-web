@@ -52,7 +52,6 @@ const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
   paymentPrice: 0,
   subscriptionMonth: null,
   agreePrivacy: true,
-  brochure: false,
 };
 
 const initialGeneralOrderSheetResponse: GeneralOrderSheetResponse = {
@@ -72,12 +71,10 @@ const initialGeneralOrderSheetResponse: GeneralOrderSheetResponse = {
   deliveryPrice: 0,
   email: '',
   freeCondition: 0,
-  name: '',
   nextSubscribeDeliveryDate: '',
   orderItemDtoList: [],
   orderPrice: 0,
   orderStatus: 'UNSUBSCRIBE_ORDER', // 초기값으로 적당한 기본 상태를 설정
-  phoneNumber: '',
   reward: 0,
 };
 

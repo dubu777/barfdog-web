@@ -1,4 +1,4 @@
-import { Coupon } from "./subscription";
+import { Coupon, PlanName } from "./subscription";
 
 export type {
   SubscriptionOrderData,
@@ -31,6 +31,10 @@ export type {
   DefaultAddress,
   ClientDeliveryDto,
   OrderStatus,
+  SubscriptionOrderSheetResponse,
+  PaymentResponse,
+  PaymentData,
+  PaymentValidationData,
 };
 
 interface SuccessGeneralPaymentRequest {
@@ -68,7 +72,6 @@ interface SaveSubscriptionOrderRequest {
   paymentPrice: number; // 실제 결제 금액
   subscriptionMonth: number | null; // 구독 기간 (개월)
   agreePrivacy: boolean; // 개인정보 제공 동의 여부
-  brochure: boolean; // 브로슈어 수령 여부
 }
 
 // 구독, 일반 결제 주문 정보 저장 응답
@@ -198,18 +201,37 @@ interface GeneralOrderSheetResponse {
   deliveryPrice: number;
   email: string;
   freeCondition: number;
-  name: string;
   nextSubscribeDeliveryDate: string;
   orderItemDtoList: GeneralOrderItem[];
   orderPrice: number;
   orderStatus: OrderStatus;
-  phoneNumber: string;
   reward: number;
 }
 
 interface OrderItem {
   id: number;
   name: string;
+}
+
+
+
+interface SubscriptionOrderSheetResponse {
+  defaultAddress: DefaultAddress;
+  email: string;
+  grade: string;
+  gradeDiscountPercent: number;
+  nextDeliveryDate: string;
+  recipeNameList: string[];
+  reward: number;
+  subscribeDto: SubscribeDto;
+}
+
+interface SubscribeDto {
+  id: number;
+  plan: PlanName; 
+  nextPaymentPrice: number;
+  discountGrade: number;
+  oneMealGramsPerRecipe: string;
 }
 
 interface OrderRecipeDto {
@@ -344,6 +366,35 @@ interface PaymentMethodInfo {
   label: string;
   imageUrl?: string;
 }
+
+interface PaymentResponse {
+  success: boolean;
+  customer_uid: string;
+  error_msg?: string;
+  imp_uid?: string;
+  merchant_uid?: string;
+}
+
+interface PaymentData {
+  customerUid: string;
+  merchantUid: string;
+  amount: number;
+  name: string;
+  buyerName: string;
+  buyerTel: string;
+  buyerEmail: string;
+  buyerAddr: string;
+  buyerPostcode: string;
+}
+
+interface PaymentValidationData {
+  orderId: number;
+  impUid: string;
+  customerUid: string;
+  discountReward: number;
+  merchantUid: string;
+}
+
 
 type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
 

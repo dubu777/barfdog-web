@@ -10,6 +10,7 @@ import { useToggleOption } from "@/hooks/useToggleOption";
 import BundleDeliveryBottomSheet from "../../common/bottomSheet/bundleDeliveryBottomSheet/BundleDeliveryBottomSheet";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/modal/Modal";
+import { useState } from "react";
 
 interface BundleDeliverySelectorProps {
   bundleDeliveryAddress: BundleDeliveryAddress[];
@@ -28,7 +29,7 @@ export default function BundleDeliverySelector({
     setDeliveryDto,
   } = useDeliveryStore();
 
-  
+  const [isBundle, setIsBundle] = useState<boolean>(false)
   const { isOpen: isBottomSheetOpen, onClose: onBottomSheetClose, onToggle: onBottomSheetToggle } = useModal();
   const { isOpen: isModalOpen, onClose: onModalClose, onToggle: onModalToggle } = useModal();
   const { onToggle: onCheckBoxToggle, isSelected } = useToggleOption<boolean>(

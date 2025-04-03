@@ -13,11 +13,12 @@ interface DeliveryAddressProps {}
 
 export default function DeliveryAddress({}: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
-  const { deliveryDto, setDeliveryDto, setBackupDeliveryDto } =
+  const { deliveryDto, setDeliveryDto, setBackupDeliveryDto, isBundleDelivery } =
     useDeliveryStore();
 
   const { data: addressData } = useGetAddressList();
 
+  
   return (
     <OrderSection
       title="배송지"

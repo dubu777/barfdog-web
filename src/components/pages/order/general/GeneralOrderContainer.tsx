@@ -1,25 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
 import { useGetGeneralOrder } from "@/api/order/queries/useGetGeneralOrder";
-import { useSaveGeneralOrder } from "@/api/order/mutations/useSaveGeneralOrder";
-import {
-  SaveGeneralOrderRequest,
-  GeneralIamportResponse,
-  GeneralOrderSheetResponse,
-} from "@/types";
+import { SaveGeneralOrderRequest, GeneralOrderSheetResponse } from "@/types";
 import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
-import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
-import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import PaymentMethod from "../common/paymentMethod/PaymentMethod";
-import { buildGeneralPaymentRequest, usePayment } from "@/hooks/usePayment";
-import useDeviceState from "@/hooks/useDeviceState";
-import { useRouter } from "next/navigation";
 import RewardUsage from "../common/reward/RewardUsage";
 import OrderSummary from "../common/orderSummary/OrderSummary";
 import {
@@ -28,7 +18,7 @@ import {
   OrderFormValues,
 } from "@/utils/validation/rewardValidation";
 import { useRewardStore } from "@/store/order/useRewardStore";
-import { useOrderForm } from "@/hooks/useOrderForm";
+import { useOrderForm } from "@/hooks/order/useOrderForm";
 import GeneralOrderItemList from "./generalOrderItemList/GenaralOrderItemList";
 import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelector";
 import CouponSelector from "../common/couponSelector/CouponSelector";
@@ -39,43 +29,46 @@ import { formatNumberWithCommas } from "@/utils";
 import { useDiscountStore } from "@/store/order/useDiscountStore";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { initialGeneralOrderSheetResponse } from "@/config/orderInitialValues";
+import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
+import { useToastStore } from "@/store/useToastStore";
 
-interface handleIamportResponseParams {
-  res: GeneralIamportResponse;
-  orderId: number;
-  requestBody: SaveGeneralOrderRequest;
-}
 export default function GeneralOrderContainer() {
-  const router = useRouter();
   // 상태관리 -------->
-  const maxAvailableReward = useRewardStore(state => state.maxAvailableReward);
-  const paymentPrice = useDiscountStore(state => state.paymentPrice);
-  const getRequestBody = useOrderStore(state => state.getRequestBody);
+  const maxAvailableReward = useRewardStore(
+    (state) => state.maxAvailableReward
+  );
+  const paymentPrice = useDiscountStore((state) => state.paymentPrice);
+  const getRequestBody = useOrderStore((state) => state.getRequestBody);
+  const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
-  const [generalOrderSheetData, setGeneralOrderSheetData] = useState<GeneralOrderSheetResponse>(initialGeneralOrderSheetResponse);
+  const [generalOrderSheetData, setGeneralOrderSheetData] =
+    useState<GeneralOrderSheetResponse>(initialGeneralOrderSheetResponse);
+  const addToast = useToastStore((state) => state.addToast);
+  const [showTermsErrors, setShowTermsErrors] = useState(false);
+  const termsRef = useRef<HTMLDivElement>(null);
 
+  const scrollToTerms = () => {
+    termsRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
 
-  console.log('generalOrderSheetData', generalOrderSheetData);
-  
+  console.log("generalOrderSheetData", generalOrderSheetData);
+
   // <--------- 상태관리
 
   // 서버 호출 react query -------->
   const { mutateAsync: getGeneralOrderMutate } = useGetGeneralOrder();
-  const { mutateAsync: createGeneralOrderMutate } = useSaveGeneralOrder();
-  const { mutateAsync: successGeneralPaymentMutate } =
-    useSuccessGeneralPayment();
-  const { mutateAsync: failGeneralPaymentMutate } = useFailGeneralPayment();
-  // <------- 서버 호출
-
-  // 커스텀 훅 & 유틸 함수 ------->
-  const { isMobileDevice } = useDeviceState();
-  // 포트원 구독, 일반 결제 커스텀 훅
-  const { requestIamportPayment } = usePayment();
 
   const { control, watch, errors, setValue } = useOrderForm<OrderFormValues>(
     getOrderSchema(maxAvailableReward),
     defaultOrderValues
   );
+
+  const { processPayment, isProcessing } = useGeneralPayment({
+    generalOrderSheetData,
+  });
 
   // 일반 결제 주문 정보 조회
   useEffect(() => {
@@ -86,87 +79,17 @@ export default function GeneralOrderContainer() {
     }
   }, [orderItemDtoList]);
 
-  // <-------- 커스텀 훅 & 유틸 함수
-
-  // 결제 함수 ============>
-  // 아임포트 결제 응답 처리
-  const handleIamportResponse = async ({
-    res,
-    orderId,
-    requestBody,
-  }: handleIamportResponseParams) => {
-    if (res.success) {
-      console.log("결제 성공:", res);
-      // 최종 결제 성공 처리
-      await successGeneralPaymentMutate({
-        id: orderId,
-        body: {
-          impUid: res.imp_uid,
-          merchantUid: res.merchant_uid,
-          discountReward: requestBody.discountReward,
-        },
-      });
-      // 결제 성공 후 추가 작업(예: 페이지 이동, 상태 초기화)
-      // router.push("/order/order-completed");
-      clearOrderItemDtoList();
-    } else {
-      // 결제 실패 처리
-      await failGeneralPaymentMutate(orderId);
-      console.error("결제 실패:", res);
-      // 결제 실패 후 추가 작업(예: 페이지 이동)
-      // router.push("/order/order-failed");
-    }
-  };
-
-  // 결제 요청
   const handlePaymentSubmit = async () => {
-    const requestBody = getRequestBody(
-      ORDER_TYPE.GENERAL
-    ) as SaveGeneralOrderRequest;
-    console.log("requestBody", requestBody);
-
-    try {
-      // 일반 주문 생성(저장) 요청
-      const createOrderResponse = await createGeneralOrderMutate(requestBody);
-
-      if (createOrderResponse.status !== 200) {
-        throw new Error("결제 요청 실패: 서버 검증 실패");
-      }
-
-      // 결제 요청 데이터 빌드
-      const paymentData = buildGeneralPaymentRequest({
-        requestBody: requestBody,
-        id: createOrderResponse.data.id,
-        merchantUid: createOrderResponse.data.merchantUid,
-        generalOrderSheetData,
-        isMobileDevice,
-      });
-
-      // iamport 결제 요청: 콜백 내 로직은 별도 함수로 분리
-      requestIamportPayment({
-        orderType: ORDER_TYPE.GENERAL,
-        paymentData,
-        callback: async (response) => {
-          const res = response as GeneralIamportResponse;
-          await handleIamportResponse({
-            res,
-            orderId: createOrderResponse.data.id,
-            requestBody,
-          });
-        },
-      });
-    } catch (error) {
-      console.error("createGeneralOrderMutate 에러:", error);
-      // router.push("/order/order-failed");
+    if (!agreePrivacy) {
+      setShowTermsErrors(true);
+      addToast("결제 필수 사항에 동의해 주세요", "above-button");
+      setTimeout(scrollToTerms, 100);
+      return;
     }
-  };
-  // <========== 결제 함수
-
-  const handleTest = () => {
     const requestBody = getRequestBody(
       ORDER_TYPE.GENERAL
     ) as SaveGeneralOrderRequest;
-    console.log("requestBody", requestBody);
+    await processPayment(requestBody);
   };
 
   return (
@@ -207,12 +130,18 @@ export default function GeneralOrderContainer() {
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
       />
       <Divider />
-      <OrderTerms orderType={ORDER_TYPE.GENERAL} />
+      <OrderTerms
+        orderType={ORDER_TYPE.GENERAL}
+        showErrors={showTermsErrors}
+        ref={termsRef}
+      />
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
-        {formatNumberWithCommas(paymentPrice)}원 결제하기
+      <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>
+        {isProcessing
+          ? "결제 처리 중..."
+          : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
       {/* <FooterButton isDisabled={false} onClick={handleTest}>
         {formatNumberWithCommas(paymentPrice)}원 결제테스트

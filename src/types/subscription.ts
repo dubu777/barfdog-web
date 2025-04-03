@@ -3,9 +3,6 @@ import { RecipeDto } from "./recipe";
 import { DiscountType } from "./coupon";
 
 export type {
-  PlanDiscountResponseDto,
-  Links,
-  Embedded,
   PlanDiscountResponse,
   RecipeMeal,
   CalculateSubscribePriceInput,
@@ -23,32 +20,15 @@ export type {
   PaymentBody,
   SubscriptionResponse,
   SubscriptionData,
-  SubscriptionOrderSheetResponse,
   BenefitStatus,
   SubscriptionSkipType,
   SubscriptionStatusKey,
   PlanKey,
   PlanName,
   Coupon,
-  SubscribeDto,
 };
 
 
-interface SubscriptionOrderSheetResponse {
-  brochure: boolean;
-  // coupons: Coupon[];
-  address: DefaultAddress;
-  email: string;
-  grade: string;
-  gradeDiscountPercent: number;
-  name: string;
-  nextDeliveryDate: string;
-  phoneNumber: string;
-  recipeNameList: string[];
-  reward: number;
-  subscribeDto: SubscribeDto;
-  _links: Links;
-}
 
 interface Coupon {
   availableMaxDiscount: number;
@@ -63,30 +43,7 @@ interface Coupon {
   remaining: number; // 남은 쿠폰 수
 }
 
-interface DefaultAddress {
-  city: string;
-  deliveryName: string | null;
-  detailAddress: string;
-  street: string;
-  zipcode: string;
-}
 
-interface SubscribeDto {
-  id: number;
-  plan: PlanName; 
-  nextPaymentPrice: number;
-  discountGrade: number;
-  oneMealGramsPerRecipe: string;
-}
-
-interface Links {
-  self: Link;
-  order_subscribe: Link;
-}
-
-interface Link {
-  href: string; 
-}
 
 interface SubscriptionResponse<T> {
   isDone: boolean;
@@ -108,7 +65,7 @@ interface PaymentBody {
   subscribeItemList: string[] | null;
 }
 
-interface PlanDiscountResponseDto {
+interface PlanDiscountResponse {
   createdDate: string;
   modifiedDate: string;
   full: number;
@@ -116,24 +73,8 @@ interface PlanDiscountResponseDto {
   topping: number;
   toppingFull: number;
   toppingHalf: number;
-}
+}[]
 
-interface Link {
-  href: string;
-}
-
-interface Links {
-  self: Link; // 현재 리소스에 대한 링크
-}
-
-interface Embedded {
-  planDiscountResponseDtoList: PlanDiscountResponseDto[]; // 할인 정보 리스트
-}
-
-interface PlanDiscountResponse {
-  _embedded: Embedded; // 중첩된 데이터
-  _links: Links; // 하이퍼미디어 링크
-}
 
 interface RecipeMeal {
   recipeId: number;

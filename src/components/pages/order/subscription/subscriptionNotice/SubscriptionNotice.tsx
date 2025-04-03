@@ -9,7 +9,7 @@ export default function SubscriptionNotice() {
       <DefaultText type="title4">{SUBSCRIPTION_NOTICE.TITLE}</DefaultText>
       <div className={styles.subscriptionNoticeContentBox}>
       {SUBSCRIPTION_NOTICE.CONTENT.map((content) => (
-        <DefaultText type="label4" color="gray600">{content}</DefaultText>
+        <DefaultText key={content} type="label4" color="gray600">{content}</DefaultText>
       ))}
       </div>
     </OrderSection>
