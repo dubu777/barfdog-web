@@ -32,8 +32,6 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 		"requestReason": '급여 방법을 잘 모르겠어요',
 		"subscribeId": 6666,
 	}
-	console.log(data.orderType);
-	console.log(ORDER_TYPE.SUBSCRIPTION);
 	
 	const steps = () => {
 		switch (issueType) {
@@ -59,7 +57,8 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 	return (
 		<section className={styles.orderIssueDetailContainer}>
 			<StatusTracker statusTitle={`${issueTypeName} 진행중`} steps={steps()} />
-			<OrderItemInfo type='orderIssue' data={data} orderType={data.orderType} />
+			{/* orderType 수정 및 데이터 타입 확인 필요 */}
+			<OrderItemInfo type='orderIssue' data={data} orderType={data.orderType as 'items'} />
 			{issueType === 'CANCEL' && data.orderType === 'subscription' &&
 				<article className={infoContainer({ isOpen: true })}>
 					<div className={infoItem}>

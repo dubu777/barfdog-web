@@ -5,6 +5,7 @@ import {
 	SubscriptionOrderStatus,
 } from "@/types";
 import { formatDate } from "@/utils";
+import { ORDER_TYPE } from "./order";
 
 export {
 	MENU_LIST,
@@ -43,7 +44,7 @@ const MENU_LIST: MenuList[] = [
 	{
 		category: "고객센터",
 		menus: [
-			{ label: "공지사항", url: "/community/notices" },
+			{ label: "공지사항", url: "/community/notice" },
 			{ label: "자주 묻는 질문", url: "/community/faq" },
 			{ label: "문의 내역", url: "/inquiries" },
 		],
@@ -52,6 +53,7 @@ const MENU_LIST: MenuList[] = [
 		category: "바프독",
 		menus: [
 			{ label: "ABOUT US", url: "/community/about" },
+			{ label: "아티클", url: "/community/article" },
 			{ label: "전 성분 보기", url: "/ingredients" },
 		],
 	},
@@ -190,8 +192,8 @@ const MYPAGE_SORT_FILTERS = {
 	highPrice: "높은가격순",
 } as const;
 
-const MYPAGE_ITEM_TYPE_FILTERS = {
+const MYPAGE_ITEM_TYPE_FILTERS: Record<keyof typeof ORDER_TYPE | "ALL", string> = {
 	ALL: "전체유형",
-	general: "일반배송",
-	subscription: "정기배송",
+	GENERAL: "일반배송",
+	SUBSCRIPTION: "정기배송",
 } as const;

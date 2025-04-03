@@ -29,7 +29,7 @@ const OrderDeliveryInquiry = () => {
   const { ref, inView } = useInView();
   const searchParams = useSearchParams();
   const { totalData, loadMore, hasNextPage, isFetchingNextPage } = useMergeOrderList({
-    filterValue: searchParams.get('itemType') as keyof typeof MYPAGE_ITEM_TYPE_FILTERS,
+    filterValue: searchParams.get('itemType') as keyof typeof ORDER_TYPE,
     statusFilter: 'ORDER',
   });
 

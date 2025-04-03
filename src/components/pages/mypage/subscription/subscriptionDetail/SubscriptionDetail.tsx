@@ -9,6 +9,7 @@ import OrderItemInfo from "@/components/pages/mypage/common/information/section/
 import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useGetDogDetail } from "@/api/dog/queries/useGetDogDetail";
+import { ORDER_TYPE } from '@/constants';
 
 interface SubscriptionDetailProps {
 	subscriptionId: number;
@@ -27,7 +28,8 @@ const transformedSubscriptionDetail = subscriptionDetail
 
 	return (
 		<section>
-			<OrderItemInfo data={transformedSubscriptionDetail} orderType='subscription' subscriptionId={subscriptionId} type='subscriptionDetail' />
+			{/* orderType 수정 및 데이터 타입 확인 필요 */}
+			<OrderItemInfo data={transformedSubscriptionDetail} orderType={ORDER_TYPE.SUBSCRIPTION} subscriptionId={subscriptionId} type='subscriptionDetail' />
 			<AddressInfo data={transformedSubscriptionDetail} />
 			<SubscriptionInfo
 				data={transformedSubscriptionDetail}
@@ -40,7 +42,6 @@ const transformedSubscriptionDetail = subscriptionDetail
 			<PaymentInfo subscriptionId={subscriptionId} data={transformedSubscriptionDetail} type='subscription' />
 			<div className={styles.cancelSubscriptionContainer}>
 				<button onClick={() => pushWithQuery(`/mypage/subscription/${subscriptionId}/cancel-subscription`, {})}>
-				{/*<button>*/}
 					<DefaultText type='label4' color='gray700'>해지하기</DefaultText>
 				</button>
 			</div>
