@@ -58,7 +58,7 @@ const categories: Category[] = [
     items: [
       { name: "공지사항", link: "/community/notice" },
       { name: "어바웃", link: "/community/about" },
-      { name: "블로그", link: "/community/blog" },
+      { name: "블로그", link: "/community/article" },
       { name: "자주 묻는 질문", link: "/community/faq" },
     ],
   },

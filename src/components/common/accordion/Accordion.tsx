@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as styles from './Accordion.css';
-import AccordionIcon from '/public/images/icons/accordion.svg';
+import AccordionIcon from '/public/images/icons/chevron-right-blue.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface AccordionProps {
@@ -18,12 +18,12 @@ const Accordion = ({ title, children, open = false, showArrow = true, buttonClas
   const toggleAccordion = () => setIsOpen(!isOpen);
 
   return (
-    <div className={styles.accordionContainer}>
-      <button onClick={toggleAccordion} className={`${styles.accordionButton({ noChildren: !children })} ${buttonClassName || ''}`}>
+    <div>
+      <button onClick={toggleAccordion} className={`${styles.accordionButton({ noChildren: !children, isOpen })} ${buttonClassName || ''}`}>
         {title}
         {showArrow &&
           <span className={styles.accordionIcon({ isOpen: isOpen })}>
-            <SvgIcon src={AccordionIcon} size={12} />
+            <SvgIcon src={AccordionIcon} size={24} style={{ transform: 'rotate(90deg)' }} />
           </span>
         }
       </button>

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import MyPageHeader from "@/components/pages/mypage/layout/MyPageHeader";
-import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
+import CommunityHeader from "@/components/pages/community/layout/CommunityHeader";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
+import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface DefaultLayoutProps {
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <>
-      <MyPageHeader />
+      <CommunityHeader />
       <Wrapper>
         {children}
       </Wrapper>

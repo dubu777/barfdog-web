@@ -1,6 +1,6 @@
-import {usePathname, useSearchParams} from "next/navigation";
-import {useDynamicQueryPush} from "@/hooks/useDynamicQueryPush";
-import {ReactNode} from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { ReactNode } from "react";
 
 interface UseFilterTabsProps {
 	filterKey: string;
@@ -19,8 +19,8 @@ export default function useFilterTabs({
 
 	const filterValue = searchParams.get(filterKey) ?? defaultValue;
 
-	const handleFilterChange = (value: string) => {
-		pushWithQuery(pathname, { [filterKey]: value });
+	const handleFilterChange = (value: string, removeQueries?: string[]) => {
+		pushWithQuery(pathname, { [filterKey]: value }, removeQueries);
 	};
 
 	const defaultTabIndex = tabs.findIndex(tab => tab.value === filterValue);

@@ -2,7 +2,7 @@
 import * as styles from './NoticeDetail.css';
 import { ellipsis, sanitizedHTML } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
-import PostNavigation from "@/components/pages/community/postNavigation/PostNavigation";
+import PostNavigation from "@/components/pages/community/layout/postNavigation/PostNavigation";
 import { DefaultObjectType } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";

@@ -1,75 +1,72 @@
 'use client';
 import * as styles from './NoticeList.css';
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
+import { format } from "date-fns";
+import { useSearchParams } from "next/navigation";
+import { useInView } from "react-intersection-observer";
 import Link from "next/link";
-import Pagination from "@/components/common/pagination/Pagination";
-import Text from "@/components/common/text/Text";
-import { formatDate } from "@/utils/dateUtils";
-import { usePagination } from "@/hooks/usePagination";
-import { prefetchGetNoticeList, useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
-import { useQueryClient } from '@tanstack/react-query';
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import useFilterTabs from "@/hooks/useFilterTabs";
+import TabBar from "@/components/common/tabBar/TabBar";
+import { useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
+import { NOTICE_CATEGORY } from "@/constants/community";
+import { NoticeCategory, NoticeList } from "@/types";
 
 const NoticeList = () => {
-  const queryClient = useQueryClient();
-  const { pushWithQuery } = useDynamicQueryPush();
-  const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
-    prefetchFn: (page: number) => prefetchGetNoticeList(queryClient, page),
-    pushWithQuery,
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetNoticeList();
+  const { ref, inView } = useInView();
+
+  const searchParams = useSearchParams();
+  const noticeTypeFilter = searchParams.get('noticeType') as NoticeCategory || 'ALL';
+  const noticeCategoryFilter = Object.entries(NOTICE_CATEGORY).map(([value, { label }]) => ({label, value}));
+
+  const filteredNoticeList = data?.pages
+    ?.flatMap((page: NoticeList) =>
+      noticeTypeFilter === "ALL" || !noticeTypeFilter
+        ? page.noticeList
+        : page.noticeList.filter(notice => notice.title.includes(NOTICE_CATEGORY[noticeTypeFilter].label))
+    );
+
+
+  const { defaultTabIndex, handleFilterChange } = useFilterTabs({
+    filterKey: 'noticeType',
+    defaultValue: 'ALL',
+    tabs: noticeCategoryFilter,
   })
 
-  const paginationProps = useMemo(() => ({ // 불필요한 props 객체 재생성 방지
-    currentPage,
-    totalPages,
-    onPageChange,
-  }), [currentPage, totalPages, onPageChange]);
-
-  const { data } = useGetNoticeList(currentPage);
-  const noticeList = data?.noticeList || [];
-
   useEffect(() => {
-    if (data.page) {
-      setPaginationData(data.page);
+    if (inView && !isFetchingNextPage) {
+      fetchNextPage();
     }
-  }, [data.page, setPaginationData])
+  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
 
   return (
     <section className={styles.noticeContainer}>
-      <Text type='title' size='titleMd' align='left'>공지사항</Text>
+      <article className={styles.noticeFilter}>
+        <TabBar
+          variant='chips'
+          tabs={noticeCategoryFilter.map(tab => ({
+            ...tab,
+            onInit: async () => {
+              handleFilterChange(tab.value);
+            }
+          }))}
+          defaultIndex={defaultTabIndex}
+          width={68}
+          justifyContent='flexStart'
+        />
+      </article>
       <ul className={styles.noticeList}>
-        <li className={styles.noticeItem({ isHeader: true })}>
-          <Text type='description' size='md' weight='bold' color='black' className={styles.noticeId}>
-            No.
-          </Text>
-          <Text type='description' size='md' weight='bold' color='black' className={styles.noticeTitle}>
-            제목
-          </Text>
-          <Text type='description' size='md' weight='bold' color='black' className={styles.noticeCreatedDate}>
-            등록일
-          </Text>
-        </li>
-        {noticeList.map(notice => (
-          <li key={notice.id}>
-            <Link
-              href={`/community/notice/${notice.id}`}
-              className={styles.noticeItem({})}
-            >
-              <Text type='description' size='sm' color='grey' className={styles.noticeId}>
-                {notice.id}
-              </Text>
-              <Text type='description' size='sm' color='black' className={styles.noticeTitle}>
-                {notice.title}
-              </Text>
-              <Text type='description' size='sm' color='grey' className={styles.noticeCreatedDate}>
-                {formatDate(notice.createdDate, 'onlyDate')}
-              </Text>
-            </Link>
-          </li>
+        {filteredNoticeList?.map(notice => (
+          <Link key={notice.id} href={`/community/notice/${notice.id}`} className={styles.noticeItem}>
+            <DefaultText type='label3'>{notice.title}</DefaultText>
+            <DefaultText type='label4'>{format(new Date(notice.createdDate), 'yyyy-MM-dd')}</DefaultText>
+          </Link>
         ))}
       </ul>
-      <Pagination
-        {...paginationProps}
-      />
+      {filteredNoticeList?.length > 0 &&
+        <div ref={ref} className={styles.infiniteTrigger} />
+      }
     </section>
   );
 };
