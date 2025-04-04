@@ -10,6 +10,7 @@ import {
   defaultStepValues,
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
+import NewHeader from "@/components/layout/newHeader/NewHeader";
 
 export default function SurveyPage() {
   const {
@@ -55,6 +56,7 @@ export default function SurveyPage() {
 
   return (
     <div className={styles.surveyLayoutContainer}>
+      <NewHeader leftTitle="이전" showBackButton showCloseButton />
       <SurveyForm
         currentStep={currentStep}
         direction={direction}

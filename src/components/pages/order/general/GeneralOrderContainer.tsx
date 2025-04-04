@@ -93,7 +93,7 @@ export default function GeneralOrderContainer() {
         ORDER_TYPE.GENERAL
       ) as SaveGeneralOrderRequest;
       console.log('requestBody', requestBody);
-      await processPayment(requestBody);
+      // await processPayment(requestBody);
     } catch (error) {
       console.error('결제 처리 중 오류 발생:', error);
     }

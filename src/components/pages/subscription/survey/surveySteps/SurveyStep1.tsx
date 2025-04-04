@@ -1,10 +1,11 @@
 import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyTextField from "../surveyTextField/SurveyTextField";
-import {
-  SurveyStepValues,
-} from "@/utils/validation/surveyValidation";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import InputField from "@/components/common/inputField/InputField";
+import Button from "@/components/common/button/Button";
+import { searchAddressButtonWrapper } from "@/components/pages/order/common/modal/deliveryModal/addressForm/AddressForm.css";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -24,29 +25,40 @@ export default function SurveyStep1({
   control,
   errors,
 }: SurveyStepProps) {
+  const handleCheckDuplicated = () => {};
   return (
     <>
-      <Controller
-        name="step1.name"
-        control={control}
-        render={({ field }) => (
-          <SurveyTextField
-            id={SURVEY_FORM_INFO.name.id}
-            title={SURVEY_FORM_INFO.name.title}
-            value={field.value}
-            placeholder={SURVEY_FORM_INFO.name.placeholder}
-            onChange={(value) => {
-              field.onChange(value);
-              handleChange();
-            }}
-            onBlur={() => {
-              field.onBlur();
-              handleBlur(field.name);
-            }}
-            onKeyDown={(e) => handleKeyDown(e, field.name)}
-          />
-        )}
-      />
+      <div className={searchAddressButtonWrapper}>
+        <Controller
+          name="step1.name"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              id={SURVEY_FORM_INFO.name.id}
+              value={field.value}
+              placeholder={SURVEY_FORM_INFO.name.placeholder}
+              onChange={(value) => {
+                field.onChange(value);
+                handleChange();
+              }}
+              onBlur={() => {
+                field.onBlur();
+                handleBlur(field.name);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, field.name)}
+            />
+          )}
+        />
+        <Button
+          type="primary"
+          variant="solid"
+          buttonColor="gray800"
+          size="lg"
+          onClick={handleCheckDuplicated}
+        >
+          확인
+        </Button>
+      </div>
       {errors && (
         <DefaultText type="caption">
           {errors.step6?.weight?.message}

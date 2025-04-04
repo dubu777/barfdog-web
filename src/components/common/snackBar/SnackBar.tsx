@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnackBarStore } from "@/store/useSnackBar";
 import * as styles from "./SnackBar.css";
@@ -60,7 +60,13 @@ function SnackBarItem({
 
 export default function SnackBar() {
   const { currentSnackBar, removeSnackBar } = useSnackBarStore();
-  const position = currentSnackBar?.position || "bottom";
+  const [position, setPosition] = useState("bottom");
+
+  useEffect(() => {
+    if (currentSnackBar && currentSnackBar.position) {
+      setPosition(currentSnackBar.position);
+    }
+  }, [currentSnackBar]);
   return (
     <div className={`${styles.snackBarContainer} ${styles.snackBarPosition[position]}`}>
       <AnimatePresence>

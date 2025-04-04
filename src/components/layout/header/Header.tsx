@@ -15,7 +15,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCommonStore } from "@/store/useCommonStore";
 import { commonLayoutStyle } from "@/styles/common.css";
 import { useCartStore } from "@/store/useCartStore";
-import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 
 interface HeaderProps {
   type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
@@ -30,12 +29,9 @@ export default function Header({ type = "default" }: HeaderProps) {
   const goBack = useBackNavigation();
 
   const handleClick = () => {
-    if (isAuthenticated()) {
       router.push("/mypage");
-    } else {
-      router.push("/login");
-    }
   };
+
 
   return (
     <header

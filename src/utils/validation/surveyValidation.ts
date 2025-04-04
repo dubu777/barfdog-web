@@ -4,7 +4,7 @@ export const surveyStepsSchema = yup.object({
   step1: yup.object({
     name: yup
       .string()
-      .trim() // 앞뒤 공백 제거
+      .trim()
       .min(1, "이름은 최소 1자 이상이어야 합니다.")
       .required("이름을 입력해주세요"),
   }),
