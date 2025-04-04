@@ -13,7 +13,7 @@ import {
 } from "@/utils/validation/authValidation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect, useMemo, useState } from "react";
-import { isLoggedIn } from "@/utils/auth/isLoggedIn";
+import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 
 const LoginWrapper = () => {
   // -------> 라우팅 함수
@@ -54,7 +54,7 @@ const LoginWrapper = () => {
   
   // 로그인 중이면 로그인 페이지 접근 제한
   useEffect(() => {
-    if (mounted && isLoggedIn()) {
+    if (mounted && isAuthenticated()) {
       router.replace("/");
     }
   }, [mounted, router]);
@@ -63,7 +63,7 @@ const LoginWrapper = () => {
   if (!mounted) return null;
 
   // 로그인 상태이면 컴포넌트 내용 대신 null 반환
-  if (isLoggedIn()) return null;
+  if (isAuthenticated()) return null;
 
 
   return (

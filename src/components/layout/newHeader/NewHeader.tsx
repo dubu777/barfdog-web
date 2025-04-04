@@ -8,9 +8,11 @@ import MypageIcon from "/public/images/header/mypage.svg";
 import CartIcon from "/public/images/header/cart.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { isLoggedIn } from "@/utils/auth/isLoggedIn";
+import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect } from "react";
+import { getCookie } from "@/utils/auth/cookie";
+import { AUTH_CONFIG } from "@/constants/auth";
 
 interface NewHeaderProps {
   leftElement?: React.ReactNode;
@@ -43,9 +45,9 @@ export default function NewHeader({
 }: NewHeaderProps) {
   const clientLoggedIn = useAuthStore((state) => state.clientLoggedIn);
   const setClientLoggedIn = useAuthStore((state) => state.setClientLoggedIn);
-
+  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)
   useEffect(() => {
-    setClientLoggedIn(isLoggedIn());
+    setClientLoggedIn(isAuthenticated(token));
   }, [setClientLoggedIn]);
 
   const mypageHref = clientLoggedIn ? "/mypage" : "/login";

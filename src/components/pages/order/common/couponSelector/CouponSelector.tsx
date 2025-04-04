@@ -19,10 +19,15 @@ export default function CouponSelector({
   orderPrice,
   orderType,
 }: CouponSelectorProps) {
-  const {data: coupons } = useGetCouponList();
-  
+  const { data: coupons } = useGetCouponList();
+
   const { isOpen, onClose, onToggle } = useModal();
-  const usableCouponCount = getAvailableCoupons(coupons, orderPrice, orderType).length;
+  
+  const usableCouponCount = getAvailableCoupons(
+    coupons,
+    orderPrice,
+    orderType
+  ).length;
   return (
     <OrderSection
       title="할인쿠폰"
@@ -47,7 +52,13 @@ export default function CouponSelector({
         <SvgIcon src={ArrowIcon} size={20} color="gray600" />
       </div>
       {/* 쿠폰 모달 api 바뀌면 개발 예정 */}
-      <CouponModal orderType={orderType} coupons={coupons} isOpen={isOpen} onClose={onClose} orderPrice={orderPrice}/>
+      <CouponModal
+        orderType={orderType}
+        coupons={coupons}
+        isOpen={isOpen}
+        onClose={onClose}
+        orderPrice={orderPrice}
+      />
     </OrderSection>
   );
 }

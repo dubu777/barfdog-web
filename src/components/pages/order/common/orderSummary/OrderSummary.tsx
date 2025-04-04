@@ -7,13 +7,20 @@ import { GeneralOrderItem, OrderType } from "@/types";
 import { formatNumberWithCommas } from "@/utils";
 import { useEffect, useMemo } from "react";
 import { useRewardStore } from "@/store/order/useRewardStore";
-import { useDiscountStore } from "@/store/order/useDiscountStore";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import OrderSummaryRow from "./orderSummaryRow/OrderSummaryRow";
 import Divider from "@/components/common/divider/Divider";
 import { useCouponStore } from "@/store/order/useCouponStore";
 import InfoBox from "@/components/common/infoBox/InfoBox";
+import { usePaymentStore } from "@/store/order/usePaymentStore";
+import { orderSummaryRowContainer } from "./orderSummaryRow/OrderSummaryRow.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import HelpIcon from "public/images/icons/help.svg";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { nextPaymentTextWrapper } from "./OrderSummary.css";
+import NextPaymentBottomSheet from "../bottomSheet/nextPaymentBottomSheet/NextPaymentBottomSheet";
+import useModal from "@/hooks/useModal";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
@@ -44,7 +51,7 @@ export default function OrderSummary({
     setDeliveryPrice,
     setDiscountTotal,
     setDiscountPlan,
-  } = useDiscountStore();
+  } = usePaymentStore();
   const isBundleDelivery = useDeliveryStore((state) => state.isBundleDelivery);
 
   const calculation = useMemo(() => {
@@ -95,8 +102,9 @@ export default function OrderSummary({
     setDiscountPlan(planDiscount);
     setPaymentPrice(finalPaymentAmount);
   }, [maxAvailableCoupon, maxAvailableReward, finalPaymentAmount]);
-
   const itemDiscountAmount = originPrice - appliedDefaultDiscountPrice;
+  const { isOpen, onClose, onToggle } = useModal();
+
   return (
     <OrderSection title="결제 금액">
       {orderType === ORDER_TYPE.SUBSCRIPTION ? (
@@ -108,8 +116,8 @@ export default function OrderSummary({
             plainColor
             plus
           />
+          <OrderSummaryRow label="할인 혜택" value={planDiscount} />
           <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
-          <OrderSummaryRow label="플랜 할인" value={planDiscount} />
           <OrderSummaryRow label="등급 할인" value={gradeDiscount} />
           <OrderSummaryRow
             label="쿠폰 사용"
@@ -119,21 +127,31 @@ export default function OrderSummary({
           <Divider thickness={2} color="gray300" />
           <OrderSummaryRow
             label="1회차 결제 금액"
+            labelColor="gray900"
             value={finalPaymentAmount}
             valueType="title4"
             plus
           />
-          <div>
-            {`총 ${formatNumberWithCommas(totalDiscount)}원 할인 받았어요!`}
+          {totalDiscount > 0 && (
+            <InfoBox
+              text={`총 ${formatNumberWithCommas(
+                totalDiscount
+              )}원 할인 받았어요!`}
+              color="blue"
+              fullWidth
+            />
+          )}
+          <div className={orderSummaryRowContainer}>
+            <div className={nextPaymentTextWrapper}>
+              <DefaultText type="label4" color="gray700">
+                2회차 예상 결제 금액
+              </DefaultText>
+              <SvgIcon src={HelpIcon} color="gray700" onClick={() => onToggle()} />
+            </div>
+            <DefaultText type="headline2" color="gray700">
+              {formatNumberWithCommas(7777)}원
+            </DefaultText>
           </div>
-          <OrderSummaryRow
-            label="2회차 예상 결제 금액"
-            labelType="label4"
-            value={finalPaymentAmount}
-            valueType="headline2"
-            valueColor="gray700"
-            plus
-          />
         </div>
       ) : (
         <div className={styles.orderCommonWrapper({ direction: "col" })}>
@@ -157,7 +175,6 @@ export default function OrderSummary({
             value={appliedCoupon?.discountAmount ?? 0}
           />
           <OrderSummaryRow label="적립금 사용" value={appliedReward} />
-          <OrderSummaryRow label="결제 금액" value={finalPaymentAmount} plus />
           <Divider thickness={1} color="gray300" />
           <OrderSummaryRow
             label="결제 금액"
@@ -166,17 +183,18 @@ export default function OrderSummary({
             valueType="title4"
             plus
           />
-          <InfoBox
-            text={`총 ${formatNumberWithCommas(
-              totalDiscount
-            )}원 할인 받았어요!`}
-            color="blue"
-            fullWidth
-            style={{ marginTop: "8px" }}
-          />
-          {/* 2회차 예상 결제금액 만들기 */}
+          {totalDiscount > 0 && (
+            <InfoBox
+              text={`총 ${formatNumberWithCommas(
+                totalDiscount
+              )}원 할인 받았어요!`}
+              color="blue"
+              fullWidth
+            />
+          )}
         </div>
       )}
+      <NextPaymentBottomSheet isOpen={isOpen} onClose={onClose} />
     </OrderSection>
   );
 }

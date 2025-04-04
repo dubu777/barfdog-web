@@ -1,5 +1,5 @@
-import SurveyStep1 from "../surveySteps/SurveyStep1";
-import SurveyStep2 from "../surveySteps/SurveyStep2";
+import SurveyStep1 from "./SurveyStep1";
+import SurveyStep2 from "./SurveyStep2";
 import SurveyStep3 from "./SurveyStep3";
 import SurveyStep4 from "./SurveyStep4";
 import SurveyStep5 from "./SurveyStep5";

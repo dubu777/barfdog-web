@@ -33,7 +33,7 @@ const ArticleList = () => {
               {article.title}
             </Text>
             <Text type='description' size='sm' color='grey'>
-              {formatDate(article.createdDate, 'onlyDate')}
+              {formatDate(article.createdDate, 'onlyDateDot')}
             </Text>
           </Link>
         ))}

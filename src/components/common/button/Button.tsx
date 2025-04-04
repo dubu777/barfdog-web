@@ -63,11 +63,13 @@ export default function Button({
   const overrideStyles: React.CSSProperties = {
     ...(buttonColor && {
       backgroundColor: COLORS[buttonColor],
+    }),
+    ...(textColor && {
+      color: COLORS[textColor],
       ...(variant === "outline" && {
-        border: `1px solid ${COLORS[buttonColor]}`,
+        border: `1px solid ${COLORS[textColor]}`,
       }),
     }),
-    ...(textColor && { color: COLORS[textColor] }),
   };
 
   const computedStyle: React.CSSProperties = {

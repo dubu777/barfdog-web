@@ -89,7 +89,7 @@ const InviteRewardList = () => {
           <Text type='description' size='sm' color='grey'>적립 내역이 없습니다.</Text>
           : inviteRewardList.map(reward => (
             <li key={reward.createdTime} className={styles.inviteReward}>
-              <Text type='description' size='sm' color='grey'>{formatDate(reward.createdTime, 'onlyDate')}</Text>
+              <Text type='description' size='sm' color='grey'>{formatDate(reward.createdTime, 'onlyDateDot')}</Text>
               <Text type='description' size='md' color='black'>{reward.name}</Text>
               <p className={styles.rewardPrice({ color: reward.rewardStatus === 'SAVED' ? 'green' : 'red' })}>
                 {reward.rewardStatus === 'SAVED' ? '+' : '-'}{reward.tradeReward.toLocaleString()}원

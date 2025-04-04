@@ -90,7 +90,7 @@ const ItemList = () => {
                         {snippet}
                       </Text>
                       <Text type='description' size='sm' color='grey'>
-                        {formatDate(blog.createdDate, 'onlyDate')}
+                        {formatDate(blog.createdDate, 'onlyDateDot')}
                       </Text>
                     </div>
                     <Image src={blog.url} alt={blog.title} width={240} height={240} className={styles.blogImage} />

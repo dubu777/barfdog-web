@@ -17,7 +17,7 @@ const BlogDetail = ({ blogId }: { blogId: number }) => {
       <div className={styles.blogDetailHeader}>
         <Text type='title' size='titleLg'>{blogDetail.title}</Text>
         <Text type='description' size='sm' color='grey' align='right'>
-          {formatDate(blogDetail.createdDate, 'onlyDate')}
+          {formatDate(blogDetail.createdDate, 'onlyDateDot')}
         </Text>
       </div>
       <div className={styles.blogDetailContents}>

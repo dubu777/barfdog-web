@@ -70,7 +70,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   return (
     <section className={styles.reviewDetailContainer}>
       <div className={styles.reviewDetailHeader}>
-        <DefaultText type='title4'>{formatDate(reviewDetail.writtenDate, 'onlyDate')} 리뷰 완료</DefaultText>
+        <DefaultText type='title4'>{formatDate(reviewDetail.writtenDate, 'onlyDateDot')} 리뷰 완료</DefaultText>
         <Dropdown
           trigger={<SvgIcon src={MoreHorizIcon} size={24} />}
           options={[

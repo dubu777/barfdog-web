@@ -56,22 +56,21 @@ interface SuccessGeneralOrderResponse {
 
 
 interface SaveSubscriptionOrderRequest {
+  agreePrivacy: boolean; // 개인정보 제공 동의 여부
   customerUid: string; // 고유 사용자 ID
-  memberCouponId?: number | null; // 적용된 쿠폰 ID
   deliveryDto: DeliveryDto; // 배송지 정보
   deliveryPrice: number; // 배송비
   discountCoupon: number; // 쿠폰 할인 금액
   discountGrade: number; // 등급 할인 금액
   discountReward: number; // 적립금 할인 금액
-  discountSubscriptionMonth: number; // 구독 기간 할인 금액
+  discountSubscribeAlliance: number; // 제휴사 할인 금액
   discountTotal: number; // 총 할인 금액
+  memberCouponId?: number | null; // 적용된 쿠폰 ID
   nextDeliveryDate: string; // 다음 배송 날짜
-  orderPrice: number; // 주문 금액
+  orderPrice: number; // 플랜 할인만 적용된 금액
   overDiscount: number; // 초과 할인 금액
   paymentMethod: PaymentMethod; // 결제 방식
   paymentPrice: number; // 실제 결제 금액
-  subscriptionMonth: number | null; // 구독 기간 (개월)
-  agreePrivacy: boolean; // 개인정보 제공 동의 여부
 }
 
 // 구독, 일반 결제 주문 정보 저장 응답
@@ -90,7 +89,7 @@ interface SaveGeneralOrderRequest {
   orderItemDtoList: OrderItemDto[];
   deliveryDto: DeliveryDto;
   deliveryId: number | null;
-  orderPrice: number;
+  orderPrice: number; // 어드민 상품 할인만 적용된 금액
   deliveryPrice: number;
   discountTotal: number;
   discountReward: number;
@@ -106,7 +105,7 @@ interface SaveGeneralOrderRequest {
 interface OrderItemDto {
   itemId: number; // 상품 ID
   amount: number; // 상품 수량
-  selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
+  optionDtoList: SelectOptionDto[]; // 상품 옵션 목록
 }
 
 // 상품 옵션 정보 타입
@@ -145,7 +144,7 @@ interface GeneralOrderItemRequest {
 
 // 일반 주문 시트 조회 요청
 interface GeneralOrderSheetRequest {
-  orderItemDtoList: GeneralOrderItemRequest[];
+  orderItemDtoList: OrderItemDto[];
 }
 
 interface OptionDto {

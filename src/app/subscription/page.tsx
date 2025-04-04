@@ -1,6 +1,6 @@
 import { prefetchGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
-import SubscriptionContainer from "@/components/pages/subscription/subscriptionContainer/SubscriptionContainer";
+import SubscriptionContainer from "@/components/pages/subscription/SubscriptionContainer";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";

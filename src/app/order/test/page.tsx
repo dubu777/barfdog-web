@@ -16,21 +16,24 @@ import NextPaymentBottomSheet from "@/components/pages/order/common/bottomSheet/
 import DeliveryScheduleBottomSheet from "@/components/pages/order/common/bottomSheet/deliveryScheduleBottomSheet/DeliveryScheduleBottomSheet";
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
+import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 
 export default function GeneralShopTest() {
   const router = useRouter();
   const { setOrderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
   const { mutate: logout } = useLogout();
   const {data: planData} = useGetPlanDiscount()
+  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)
+  const isLogin = isAuthenticated(token)
+  console.log('isLogin', isLogin);
+  
   console.log(planData);
   
   const orderItemListData = [
     {
-      itemDto: {
-        itemId: 10,
-        amount: 1,
-      },
-      itemOptionDtoList: [
+      itemId: 10,
+      amount: 1,
+      optionDtoList: [
         // { itemOptionId: 18, amount: 1 },
         // { itemOptionId: 19, amount: 1 },
       ],
@@ -100,6 +103,7 @@ export default function GeneralShopTest() {
       onSuccess: () => {
         deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
         deleteCookie(AUTH_CONFIG.REFRESH_TOKEN_COOKIE);
+        deleteCookie(ALLIANCE_COOKIE);
         window.location.reload();
       },
       onError: (error) => {
@@ -137,10 +141,15 @@ export default function GeneralShopTest() {
   const handleCokBankCookieTest = async () => {
     setCookie(ALLIANCE_COOKIE, "cb")
   };
+  const handleLogin = async () => {
+    router.push('/login')
+  };
+
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
       <Button onClick={handleCokBankCookieTest}>콕뱅크 쿠키 테스트</Button>
+
       {/* <Button onClick={handleWrongTokenRefreshTest}>
         잘못된 토큰으로 재발급 테스트
       </Button>
@@ -149,6 +158,7 @@ export default function GeneralShopTest() {
       </Button> */}
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
+      <Button onClick={handleLogin}>로그인</Button>
       {/* <Button onClick={handleRefresh}>재발급 테스트</Button>
       <Button onClick={handleBottomSheet}>Bottom Sheet 테스트</Button>
       <Button onClick={handleModal}>Modal 테스트</Button> */}

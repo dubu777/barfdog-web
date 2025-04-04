@@ -1,50 +1,24 @@
 import {
   useMutation,
-  useQueryClient,
 } from "@tanstack/react-query";
 import { getGeneralOrder } from "../order";
-import { GeneralOrderSheetRequest, UseMutationCustomOptions } from "@/types";
-import { ORDER_TYPE } from "@/constants/order";
-import { queryKeys } from "@/constants";
-import { useOrderStore } from "@/store/order/useOrderStore";
+import { UseMutationCustomOptions } from "@/types";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { useRewardStore } from "@/store/order/useRewardStore";
+import { usePaymentStore } from "@/store/order/usePaymentStore";
 
 // 캐싱 및 상태 업데이트
 export function useGetGeneralOrder(
   mutationOptions?: UseMutationCustomOptions
 ) {
-  const getCacheKey = (variables: GeneralOrderSheetRequest) => [
-    queryKeys.ORDER.GET_GENERAL_ORDER,
-    variables,
-  ];
-  const { updateOrderBody } = useOrderStore();
   const { setDeliveryDto, setBackupDeliveryDto, setDeliveryId, setBundleDeliveryDto } = useDeliveryStore();
-  const { setUserTotalReward } = useRewardStore();
-  const queryClient = useQueryClient();
+  const setUserTotalReward = useRewardStore(state => state.setUserTotalReward);
+  const setOrderPrice = usePaymentStore(state => state.setOrderPrice)
   return useMutation({
     mutationFn: getGeneralOrder,
-    onSuccess: (data, variables) => {
-      // 캐싱
-      const cacheKey = getCacheKey(variables);
-      queryClient.setQueryData(cacheKey, data);
-      // 초기 상태 업데이트
-      updateOrderBody(
-        {
-          orderItemDtoList: data.orderItemDtoList.map((item) => ({
-            itemId: item.itemId,
-            amount: item.amount,
-            selectOptionDtoList: (item.optionDtoList ?? []).map((option) => ({
-              itemOptionId: option.optionId,
-              amount: option.amount,
-            })),
-          })),
-          deliveryId: null,
-          orderPrice: data.orderPrice,
-          deliveryPrice: data.deliveryPrice,
-        },
-        ORDER_TYPE.GENERAL
-      );
+    onSuccess: (data) => {
+      // 초기 값 상태 업데이트
+      setOrderPrice(data.orderPrice)
       setDeliveryDto({
         default: data.defaultAddress.default,
         deliveryId: data.defaultAddress.id,
@@ -84,7 +58,7 @@ export function useGetGeneralOrder(
       }
     },
     onError: (err) => {
-      console.error("err", err);
+      console.error("일반 결제 주문 정보 조회 에러", err);
     },
     ...mutationOptions,
   });

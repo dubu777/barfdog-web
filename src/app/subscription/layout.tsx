@@ -1,15 +1,14 @@
 import {ReactNode} from "react";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
 
-interface OrderLayoutProps { 
+interface SubscriptionLayoutProps { 
   children: ReactNode
 }
-export default function OrderLayout({children}: OrderLayoutProps) {
+export default function SubscriptionLayout({children}: SubscriptionLayoutProps) {
   return (
     <>
       <NewHeader
         showBackButton
-        centerTitle="결제"
       />
       {children}
     </>

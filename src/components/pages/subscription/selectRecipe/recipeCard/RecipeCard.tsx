@@ -65,6 +65,7 @@ export default function RecipeCard({
         alt="레시피 이미지"
         width={88}
         height={88}
+        priority
       />
       </div>
       <RecipeBadge

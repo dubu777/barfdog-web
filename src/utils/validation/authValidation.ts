@@ -162,7 +162,7 @@ const updateUserInfoSchema = yup.object().shape({
 const defaultUpdateUserInfoValues = (userInfo: UpdateUserInfo | undefined) => ({
 	name: userInfo?.name || '',
 	phoneNumber: userInfo?.phoneNumber || '',
-	birthday: formatDate(userInfo?.birthday as string, 'onlyDate') || '',
+	birthday: formatDate(userInfo?.birthday as string, 'onlyDateDot') || '',
 	gender: (userInfo?.gender as GenderType) || 'MALE',
 	// --------------예외 처리를 위한 상태값--------------
 	email: userInfo?.email || '',

@@ -61,7 +61,7 @@ const NoticeList = () => {
                 {notice.title}
               </Text>
               <Text type='description' size='sm' color='grey' className={styles.noticeCreatedDate}>
-                {formatDate(notice.createdDate, 'onlyDate')}
+                {formatDate(notice.createdDate, 'onlyDateDot')}
               </Text>
             </Link>
           </li>

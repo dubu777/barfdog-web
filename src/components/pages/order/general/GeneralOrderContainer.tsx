@@ -26,18 +26,18 @@ import OrderTerms from "../common/orderTerms/OrderTerms";
 import OrderSection from "../common/orderSection/OrderSection";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
-import { useDiscountStore } from "@/store/order/useDiscountStore";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { initialGeneralOrderSheetResponse } from "@/config/orderInitialValues";
 import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
 import { useToastStore } from "@/store/useToastStore";
+import { usePaymentStore } from "@/store/order/usePaymentStore";
 
 export default function GeneralOrderContainer() {
   // 상태관리 -------->
   const maxAvailableReward = useRewardStore(
     (state) => state.maxAvailableReward
   );
-  const paymentPrice = useDiscountStore((state) => state.paymentPrice);
+  const paymentPrice = usePaymentStore((state) => state.paymentPrice);
   const getRequestBody = useOrderStore((state) => state.getRequestBody);
   const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
@@ -79,6 +79,7 @@ export default function GeneralOrderContainer() {
     }
   }, [orderItemDtoList]);
 
+
   const handlePaymentSubmit = async () => {
     if (!agreePrivacy) {
       setShowTermsErrors(true);
@@ -86,12 +87,17 @@ export default function GeneralOrderContainer() {
       setTimeout(scrollToTerms, 100);
       return;
     }
-    const requestBody = getRequestBody(
-      ORDER_TYPE.GENERAL
-    ) as SaveGeneralOrderRequest;
-    await processPayment(requestBody);
-  };
 
+    try {
+      const requestBody = getRequestBody(
+        ORDER_TYPE.GENERAL
+      ) as SaveGeneralOrderRequest;
+      console.log('requestBody', requestBody);
+      await processPayment(requestBody);
+    } catch (error) {
+      console.error('결제 처리 중 오류 발생:', error);
+    }
+  };
   return (
     <div>
       <DeliveryAddress />

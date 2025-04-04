@@ -34,8 +34,6 @@ export default function SelectRecipe({
     (recipe) => recipe.type === "single"
   );
   
-
-
   const isCompleted = selectedRecipes.length
 
 
@@ -51,10 +49,10 @@ export default function SelectRecipe({
         </DefaultText>
       </div>
       <div className={styles.meatTypeButtonWrapper}>
-        <Button type="assistive" variant="outline" size="sm" fullWidth={false}>
+        <Button type="assistive" variant="outline" size="sm" buttonColor="gray50" fullWidth={false}>
           더블 미트
         </Button>
-        <Button type="assistive" variant="outline" size="sm" fullWidth={false}>
+        <Button type="assistive" variant="outline" size="sm"buttonColor="gray50"  fullWidth={false}>
           싱글 미트
         </Button>
       </div>

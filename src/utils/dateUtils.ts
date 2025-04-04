@@ -13,7 +13,7 @@ interface DateComponents {
   min: string;
 }
 
-type getDateType = 'fullDateTime' | 'fullDateTimeKR' | 'onlyDate' | 'onlyDateKR' | 'onlyTime' | 'onlyTimeKR';
+type getDateType = 'fullDateTime' | 'fullDateTimeKR' | 'onlyDateDot' |  'onlyDateDash' |'onlyDateDotKR' | 'onlyTime' | 'onlyTimeKR';
 
 export const formatDate = (dateStr: string, type: getDateType): string => {
   if (!dateStr) return '-';
@@ -36,8 +36,9 @@ export const formatDate = (dateStr: string, type: getDateType): string => {
   const dateFormats: Record<getDateType, () => string> = {
     fullDateTime: () => `${dateComponents.year}.${dateComponents.month}.${dateComponents.day} ${dateComponents.hours}:${dateComponents.min}`,
     fullDateTimeKR: () => `${dateComponents.year}년 ${dateComponents.month}월 ${dateComponents.day}일 ${dateComponents.hours}시 ${dateComponents.min}분`,
-    onlyDate: () => `${dateComponents.year}.${dateComponents.month}.${dateComponents.day}`,
-    onlyDateKR: () => `${dateComponents.year}년 ${dateComponents.month}월 ${dateComponents.day}일`,
+    onlyDateDot: () => `${dateComponents.year}.${dateComponents.month}.${dateComponents.day}`,
+    onlyDateDash: () => `${dateComponents.year}-${dateComponents.month}-${dateComponents.day}`,
+    onlyDateDotKR: () => `${dateComponents.year}년 ${dateComponents.month}월 ${dateComponents.day}일`,
     onlyTime: () => `${dateComponents.hours}:${dateComponents.min}`,
     onlyTimeKR: () => `${dateComponents.hours}시 ${dateComponents.min}분`,
   };
