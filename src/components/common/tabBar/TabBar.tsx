@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import {
-	tabBarActiveVariants, tabBarContainerAlign,
+	tabBarActiveVariants, tabBarBaseVariants, tabBarContainerAlign,
 	tabBarContainerBase,
 	tabBarContainerVariants, tabBarSlideItem, tabBarSlider,
 	tabBarVariants
@@ -57,14 +57,13 @@ export default function TabBar ({
 			key={index}
 			style={{
 				width: variant !== 'chips'
-					? `calc(100% / ${tabs.length})` : width ? width : 'auto'
+					? `calc(100% / ${tabs.length})` : width ? width : 'auto',
 			}}
-			className={`${tabBarVariants[variant]} ${activeIndex === index ? tabBarActiveVariants[variant] : ''}`}
+			className={`${tabBarBaseVariants} ${tabBarVariants[variant]} ${activeIndex === index ? tabBarActiveVariants[variant] : ''}`}
 			onClick={() => handleTabChange(index)}
 		>
 			<DefaultText
 				type={textType}
-				align='center'
 				color={activeIndex === index ? activeTextColor : textColor}
 			>
 				{tab.label}

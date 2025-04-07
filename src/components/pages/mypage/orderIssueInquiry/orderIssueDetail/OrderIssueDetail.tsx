@@ -11,7 +11,7 @@ import OrderItemInfo from "@/components/pages/mypage/common/information/section/
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import StatusTracker from "@/components/pages/mypage/common/statusTracker/StatusTracker";
-import { OrderType } from '@/types';
+import { ORDER_TYPE } from '@/constants';
 
 interface OrderIssueDetailProps {
 	issueId: string;
@@ -27,10 +27,14 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 		"name": "ProductName",
 		"imageUrl": "https://dev.barfdogserver.com/product2-image.jpg",
 		"orderPrice": 272400,
-		"orderType": 'subscription',
+		"orderType": 'items',
 		"requestStatus": 'COMPLETED',
 		"requestReason": '급여 방법을 잘 모르겠어요',
+		"subscribeId": 6666,
 	}
+	console.log(data.orderType);
+	console.log(ORDER_TYPE.SUBSCRIPTION);
+	
 	const steps = () => {
 		switch (issueType) {
 			case 'CANCEL':
@@ -55,7 +59,7 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 	return (
 		<section className={styles.orderIssueDetailContainer}>
 			<StatusTracker statusTitle={`${issueTypeName} 진행중`} steps={steps()} />
-			<OrderItemInfo type='orderIssue' data={data} orderType={data.orderType as OrderType} />
+			<OrderItemInfo type='orderIssue' data={data} orderType={data.orderType} />
 			{issueType === 'CANCEL' && data.orderType === 'subscription' &&
 				<article className={infoContainer({ isOpen: true })}>
 					<div className={infoItem}>
@@ -67,11 +71,11 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 				</article>
 			}
 			<AddressInfo data={data} type='orderIssue' />
-			{data.orderType === 'subscription'
+			{data.orderType === ORDER_TYPE.SUBSCRIPTION
 				? <SubscriptionInfo subscriptionId={data?.subscribeId} data={data} type='orderIssue' />
-				: <OrderInfo data={data} type='orderIssue' />
+				: <OrderInfo data={data} type='orderIssue' items={[]} />
 			}
-			{issueType === 'EXCHANGE' || data.requestStatus === 'REQUESTED'
+			{issueType === 'EXCHANGE' || data.requestStatus !== 'COMPLETED'
 				? <PaymentInfo data={data} type='orderIssue' />
 				: <RefundInfo data={data} />
 			}

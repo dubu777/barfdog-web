@@ -16,7 +16,7 @@ export const dogInfoContainer = recipe({
   }
 })
 
-export const petList = style({
+export const dogList = style({
   height: '100%',
   paddingBottom: '30px !important',
 })

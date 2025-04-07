@@ -1,15 +1,28 @@
 import { DogData } from "./dogs";
+import { SUBSCRIPTION_ORDER_PROGRESS_BASE, SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage";
+import { PlanInfo } from "@/types/subscription";
+import { OrderType } from "@/types/order";
 
 export type {
   MyPageMemberDto,
   MyPageRepresentativeDogDto,
   MyPageInfoData,
-  DogData,
   MyPageBannerData,
   OrderProgressInfo,
   MenuLink,
   MenuList,
+  VariantsType,
   OrderAction,
+  IsOpenCardModal,
+  NormalizedCardData,
+  NormalizedOrderCardData,
+  NormalizedSubscriptionCardData,
+  CardActionsId,
+  SubscriptionOrderStatus,
+  OrderDeliveryInquiryStatus,
+  InfoLists,
+  InfoListsButtons,
+  InfoListsItem,
 };
 
 interface MyPageMemberDto {
@@ -58,7 +71,7 @@ interface OrderProgressInfo {
 }
 
 interface MenuLink {
-  key: string;
+  key?: string;
   label: string;
   url?: string;
 }
@@ -67,10 +80,83 @@ interface MenuList {
   category: string;
   menus: MenuLink[];
 }
+type VariantsType = 'solid' | 'outline'
 
 interface OrderAction extends MenuLink {
-  variants?: 'solid' | 'outline';
+  id?: CardActionsId;
+  variants?: VariantsType;
   params?: string;
   fullWidth?: boolean;
-  key?: 'cancel' | 'refundExchange' | 'confirm';
+}
+
+interface IsOpenCardModal {
+  id: CardActionsId | null;
+  isOpen: boolean;
+}
+
+type CardActionsId =
+  'orderDetail' |
+  'orderCancel' |
+  'deliveryTracking' |
+  'refundExchange' |
+  'confirm' |
+  'review' |
+  'subscriptionDetail' |
+  'subscriptionSchedule' |
+  'itemDetail' |
+  'repurchase' |
+  'changePaymentMethod' |
+  'changeRecipe' |
+  'postponeShipping' |
+  'recipeDetail' |
+  'usingCoupon' |
+  'resubscribe';
+
+interface NormalizedCardData {
+  id: number;
+  name: string;
+  imageUrl: string;
+  itemName: string;
+  price?: number;
+  plan: PlanInfo;
+  orderType: OrderType;
+  status: string;
+  orderStatus?: string;
+  subscribeCount?: number;
+  amount?: number | null;
+  optionNames?: string;
+  nextPaymentDate?: string;
+
+  orderDate?: string;
+  cancelDate?: string;
+  subscribeId?: string | number;
+}
+
+interface NormalizedOrderCardData extends NormalizedCardData{
+  subscribeId?: number;
+}
+
+interface NormalizedSubscriptionCardData extends NormalizedCardData{
+  startDate?: string;
+  hasPostpone?: boolean;
+}
+
+type SubscriptionOrderStatus = (typeof SUBSCRIPTION_ORDER_STATUSES)[number];
+type OrderDeliveryInquiryStatus = 'REVIEW_SUBMIT' | SubscriptionOrderStatus;
+
+
+interface InfoListsItem {
+	label: string;
+	value: string | number;
+}
+
+interface InfoListsButtons {
+	label: string;
+	onClick: () => void;
+}
+
+interface InfoLists {
+	title?: string;
+	items: InfoListsItem[] | undefined;
+	noBorder?: boolean
 }

@@ -5,7 +5,8 @@ import { themeVars } from "@/styles/theme.css";
 export const productInfoBox = style({
 	display: 'flex',
 	gap: '12px',
-	margin: '12px 0',
+	marginBottom: '12px',
+	marginTop: '10px',
 })
 
 export const productName = style({
@@ -58,6 +59,10 @@ export const actionsControls = recipe({
 	}
 });
 
+export const actionsButton = style({
+	minWidth: 'calc(50% - 4px)',
+});
+
 export const orderCardInfoTop = style({
 	display: 'flex',
 	alignItems: 'center',
@@ -82,4 +87,12 @@ export const reviewCardActions = style({
 	display: 'flex',
 	gap: '8px',
 	marginTop: '12px',
+})
+
+export const divider = style({
+	display: 'inline-block',
+	width: '1px',
+	height: '12px',
+	background: themeVars.colors.gray.gray400,
+	margin: '0 4px',
 })

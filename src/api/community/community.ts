@@ -1,10 +1,18 @@
 import axiosInstance from "@/api/axiosInstance";
-import { BlogArticle, BlogCategory, BlogDetail, BlogList, CommunityItem, NoticeDetail, NoticeList } from "@/types";
+import {
+  ArticleCategory,
+  RecommendArticle,
+  ArticleDetail,
+  ArticleList,
+  CommunityItem,
+  NoticeDetail,
+  NoticeList
+} from "@/types";
 
-export { getNoticeList, getNoticeDetail, getBlogArticleList, getBlogList, getBlogDetail };
+export { getNoticeList, getNoticeDetail, getRecommendArticleList, getArticleList, getArticleDetail };
 
-const getNoticeList = async (page = 0, size = 10): Promise<NoticeList> => {
-  const { data } = await axiosInstance.get(`/api/notices?page=${page}&size=${size}`);
+const getNoticeList = async ({ pageParam = 0, size = 10 }: { pageParam: number; size: number }): Promise<NoticeList> => {
+  const { data } = await axiosInstance.get(`/api/notices?page=${pageParam}&size=${size}`);
   return {
     page: data.page,
     noticeList: data._embedded.queryNoticesDtoList,
@@ -16,36 +24,36 @@ const getNoticeDetail = async (noticeId: number): Promise<NoticeDetail> => {
   return data;
 }
 
-const getBlogArticleList = async (): Promise<BlogArticle[]> => {
+const getRecommendArticleList = async (): Promise<RecommendArticle[]> => {
   const { data } = await axiosInstance.get(`/api/blogs/articles`);
-  return data._embedded.articlesDtoList.sort((a: BlogArticle, b: BlogArticle) => a.number - b.number);
+  return data._embedded.articlesDtoList.sort((a: RecommendArticle, b: RecommendArticle) => a.number - b.number);
 }
 
-const getBlogList = async (category: BlogCategory, page = 0, size = 5): Promise<BlogList> => {
+const getArticleList = async (category: ArticleCategory, page = 0, size = 12): Promise<ArticleList> => {
   let data;
-  if (category === 'all') {
+  if (category === 'ALL') {
     data = await axiosInstance.get(`/api/blogs?page=${page}&size=${size}`);
   } else {
     data = await axiosInstance.get(`/api/blogs/category/${category}?page=${page}&size=${size}`);
   }
   return {
     page: data.data.page,
-    blogList: data?.data?._embedded?.queryBlogsDtoList || [],
+    articleList: data?.data?._embedded?.queryBlogsDtoList || [],
   }
 }
 
-const getBlogDetail = async (blogId: number): Promise<BlogDetail> => {
-  const { data } = await axiosInstance.get(`/api/blogs/${blogId}`);
+const getArticleDetail = async (articleId: number): Promise<ArticleDetail> => {
+  const { data } = await axiosInstance.get(`/api/blogs/${articleId}`);
 
-  const { data: blogListData } = await axiosInstance.get(`/api/blogs`);
-  const blogList = blogListData._embedded.queryBlogsDtoList;
-  const currentIndex = blogList.findIndex((blog: CommunityItem) => blog.id === blogId);
+  const { data: articleListData } = await axiosInstance.get(`/api/blogs`);
+  const articleList = articleListData._embedded.queryBlogsDtoList;
+  const currentIndex = articleList.findIndex((article: CommunityItem) => article.id === articleId);
 
-  const previous = currentIndex > 0 ? blogList[currentIndex - 1] : null;
-  const next = currentIndex < blogList.length - 1 ? blogList[currentIndex + 1] : null;
+  const previous = currentIndex > 0 ? articleList[currentIndex - 1] : null;
+  const next = currentIndex < articleList.length - 1 ? articleList[currentIndex + 1] : null;
 
   return {
-    blogDetail: data,
+    articleDetail: data,
     previous,
     next
   };

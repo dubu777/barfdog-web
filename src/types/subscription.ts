@@ -26,6 +26,7 @@ export type {
   PlanKey,
   PlanName,
   Coupon,
+  PlanInfo,
 };
 
 
@@ -201,6 +202,15 @@ interface BenefitDto {
   benefitUsedDate?: null | string | Date;
   benefitValue: number;
   subscribeId: number;
+}
+
+interface PlanInfo {
+  id: string;
+  label: string;
+  numberOfPacksPerDay: number;
+  weeklyPaymentCycle: number;
+  totalNumberOfPacks: number;
+  maxRecipeCount?: number;
 }
 
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';

@@ -80,7 +80,7 @@ const ReviewCard = ({
 	}
 
 	return (
-		<CardSection shadow='none' borderRadius='none'>
+		<CardSection shadow='none' borderRadius='none' padding={20}>
 			<div className={styles.productInfoBox}>
 				<DefaultText type='label4'>{orderType} {orderStatus}</DefaultText>
 				<DefaultText type='caption' color='gray600'>{reviewStatus}</DefaultText>
@@ -109,8 +109,19 @@ const ReviewCard = ({
 			</div>
 			{!isReviewDetail &&
 			<div className={styles.reviewCardActions}>
-				<Button onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${cardData.orderId}`, { orderType: generalItemType ? 'general' : 'subscription' })} variant='outline' type='assistive' fullWidth>주문 상세</Button>
-				<Button onClick={handleCreateOrDetail} fullWidth>{isWritableReview ? '리뷰작성' : '리뷰상세'}</Button>
+				<Button
+					onClick={() => pushWithQuery(
+						`/mypage/order-delivery-inquiry/${cardData.orderId}`,
+						{ orderType: generalItemType ? 'general' : 'subscription' }
+					)}
+					variant='outline'
+					type='assistive'
+					fullWidth
+					size='sm'
+				>
+					주문상세
+				</Button>
+				<Button onClick={handleCreateOrDetail} fullWidth size='sm'>{isWritableReview ? '리뷰작성' : '리뷰상세'}</Button>
 			</div>
 			}
 		</CardSection>

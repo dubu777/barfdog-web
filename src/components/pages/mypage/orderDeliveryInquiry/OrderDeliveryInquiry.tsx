@@ -1,6 +1,7 @@
 'use client';
 import * as styles from "./OrderDeliveryInquiry.css";
 import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import { useInView } from "react-intersection-observer";
 import { useMergeOrderList } from "@/api/order/queries/useGetMergeOrderList";
@@ -12,7 +13,7 @@ import EmptyState from "@/components/pages/mypage/common/emptyState/emptyState/E
 import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import StatusTracker from "@/components/pages/mypage/common/statusTracker/StatusTracker";
 import { MYPAGE_ITEM_TYPE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage";
-
+import { ORDER_TYPE } from "@/constants";
 
 const tabs = [
   { label: '전체', value: 'ALL' },
@@ -26,13 +27,38 @@ const tabs = [
 
 const OrderDeliveryInquiry = () => {
   const { ref, inView } = useInView();
-  const { totalData, loadMore, hasNextPage, isFetchingNextPage } = useMergeOrderList();
-  const orderData = totalData?.map(data => ({ ...data.orderDto, itemNameList: data?.itemNameList?.map(item => item), ...data.recipeDto, thumbnailUrl: data.thumbnailUrl ? data.thumbnailUrl : data?.recipeDto.thumbnailUrl }));
+  const searchParams = useSearchParams();
+  const { totalData, loadMore, hasNextPage, isFetchingNextPage } = useMergeOrderList({
+    filterValue: searchParams.get('itemType') as keyof typeof MYPAGE_ITEM_TYPE_FILTERS,
+    statusFilter: 'ORDER',
+  });
 
-  const getStepsCount = (key: string) => {
-    return orderData?.filter(order => order.orderStatus === key).length || 0;
+  const orderData = totalData?.map(data => {
+  if ('itemNameList' in data) {
+    // GeneralOrderData일 경우
+    return {
+      ...data.orderDto,
+      itemNameList: data.itemNameList.map(item => item),
+      thumbnailUrl: data.thumbnailUrl,
+      orderType: ORDER_TYPE.GENERAL,
+    };
+  } else if ('recipeDto' in data) {
+    // SubscriptionOrderData일 경우
+    return {
+      ...data.orderDto,
+      ...data.recipeDto,
+      thumbnailUrl: data.recipeDto.thumbnailUrl,
+      orderType: ORDER_TYPE.SUBSCRIPTION,
+    };
   }
 
+  return null;
+}).filter(Boolean) as NonNullable<typeof orderData>;
+
+  const getStepsCount = (key: string) => {
+    return orderData?.filter(order => order?.orderStatus === key).length || 0;
+  }
+  
   const steps = [
     { key: "BEFORE_PAYMENT", label: "주문 접수", count: getStepsCount("BEFORE_PAYMENT") },
     { key: "PAYMENT_DONE", label: "결제완료", count: getStepsCount("PAYMENT_DONE") },
@@ -58,8 +84,10 @@ const OrderDeliveryInquiry = () => {
     { key: "sort", label: "정렬 방식", options: MYPAGE_SORT_FILTERS },
   ];
 
+  console.log('orderData', orderData);
+  
   return (
-    <section className={styles.orderDeliveryContainer}>
+    <section>
       <StatusTracker statusTitle='진행주문내역' steps={steps} />
       <article>
         <TabBar
@@ -80,8 +108,8 @@ const OrderDeliveryInquiry = () => {
           : <div className={styles.orderList}>
             {orderData.map(orderData => {
               return (
-                <div key={orderData.orderId} className={styles.orderListItem}>
-                  <DefaultText type='caption' color='gray600'>주문일 {format(orderData.orderDate, 'yy.MM.dd')}</DefaultText>
+                <div key={orderData?.orderId || orderData?.id} className={styles.orderListItem}>
+                  <DefaultText type='caption' color='gray600'>주문일 {format(new Date(orderData.orderDate), 'yy.MM.dd')}</DefaultText>
                   {orderData?.itemNameList?.length > 0 ?
                     <div className={styles.orderItemsBox}>
                       {orderData?.itemNameList?.map(item => {

@@ -13,8 +13,8 @@ const Membership = () => {
 		<section className={styles.membershipContainer}>
 			<div className={styles.membershipHeader}>
 				<NewHeader
-					showBackButton
-					onBack={goBack}
+					showCloseButton
+					onClose={goBack}
 					centerTitle="멤버십 등급 안내"
 				/>
 			</div>

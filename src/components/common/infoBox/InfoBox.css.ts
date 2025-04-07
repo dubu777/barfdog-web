@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {themeVars} from "@/styles/theme.css";
+import { style } from "@vanilla-extract/css";
+import { themeVars } from "@/styles/theme.css";
 
 export const infoBoxBase = style({
 	padding: '12px',
@@ -16,7 +16,6 @@ export const infoBoxStyle = style({
 })
 
 export const infoTextStyle = style({
-	width: 'calc(100% - 32px)',
 	whiteSpace: 'pre-line',
 })
 

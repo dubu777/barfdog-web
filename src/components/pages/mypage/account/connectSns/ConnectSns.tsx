@@ -41,7 +41,7 @@ const ConnectSns = () => {
 		)
 	}
 	return (
-		<section className={styles.connectedSnsContainer}>
+		<section>
 			{!snsProvider ?
 				<div className={styles.emptySnSProvider}>
 					현재 연동된 SNS가 없습니다.

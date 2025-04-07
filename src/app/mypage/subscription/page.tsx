@@ -6,7 +6,7 @@ import ManageSubscription from "@/components/pages/mypage/subscription/manageSub
 
 export default async function ManageSubscriptionPage() {
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionList(queryClient, 0, 50);
+  await prefetchGetSubscriptionList(queryClient, 0, 999);
   const dehydrateState = dehydrate(queryClient);
 
   return (

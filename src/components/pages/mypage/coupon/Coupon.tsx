@@ -30,7 +30,7 @@ const Coupon = () => {
     : couponList;
 
   return (
-    <section className={styles.couponContainer}>
+    <section>
       <article className={styles.applyCouponContainer}>
         <DefaultText type='label4'>쿠폰 등록</DefaultText>
         <ApplyCoupon />

@@ -6,7 +6,6 @@ import {
   SubscriptionDetailDto, SubscriptionSkipType, AddressDto,
 } from "@/types/subscription";
 
-
 const getPlanDiscount = async (): Promise<PlanDiscountResponse> => {
   const {data} = await axiosInstance.get('/api/planDiscount');
 
@@ -26,9 +25,20 @@ const updateSubscription = async ({
   return response;
 };
 
-const getSubscriptionDetail = async (subscribeId: string): Promise<SubscriptionDetailDto> => {
+const getSubscriptionDetail = async (subscribeId: number): Promise<SubscriptionDetailDto> => {
   const { data } = await axiosInstance.get(`/api/subscribes/${subscribeId}`);
-  return data.subscribeDto;
+  const matchedRecipes = data?.subscribeRecipeDtoList.map(recipe => {
+    const matchedRecipe = data?.recipeDtoList.find(r => r.id === recipe.recipeId);
+    return {
+      recipeId: recipe.recipeId,
+      recipeNames: recipe.recipeName,
+      imageUrl: matchedRecipe?.imgUrl ?? null,
+    };
+  });
+  return {
+    ...data.subscribeDto,
+    recipeList: matchedRecipes,
+  };
 }
 
 const getSubscriptionList = async (page = 0, size = 50): Promise<SubscriptionListData[]> => {

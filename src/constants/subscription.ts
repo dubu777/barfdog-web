@@ -1,15 +1,8 @@
-import { PlanKey } from "@/types";
+import {PlanInfo, PlanKey} from "@/types";
 
 export { subscriptionStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscriptionPlanInfo }
 
-const subscriptionPlanInfo: Record<PlanKey, {
-  id: string;
-  label: string;
-  numberOfPacksPerDay: number;
-  weeklyPaymentCycle: number;
-  totalNumberOfPacks: number;
-  maxRecipeCount?: number;
-}> = {
+const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
   FULL: {
     id: "FULL",
     label: "풀 플랜",

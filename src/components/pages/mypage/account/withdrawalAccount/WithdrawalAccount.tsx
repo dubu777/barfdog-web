@@ -14,7 +14,7 @@ const WithdrawalAccount = () => {
 	const step= searchParams.get('step') as WithdrawalStep || 'guide';
 
 	return (
-		<section className={styles.withdrawalContainer}>
+		<section>
 			{step === 'guide' && <WithdrawalGuide />}
 			{step === 'reason' && <WithdrawalReasonForm />}
 			{step === 'confirmation' && <WithdrawalConfirmation />}

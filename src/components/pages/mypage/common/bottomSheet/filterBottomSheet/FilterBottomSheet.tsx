@@ -1,6 +1,6 @@
 import * as styles from './FilterBottomSheet.css';
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
@@ -20,6 +20,7 @@ interface FilterBottomSheetProps {
 
 const FilterBottomSheet = ({ filters }: FilterBottomSheetProps) => {
 	const pathname = usePathname();
+	const searchParams = useSearchParams();
 	const { pushWithQuery } = useDynamicQueryPush();
 	const [isOpenFilterOptions, setIsOpenFilterOptions] = useState<boolean>(false);
 
@@ -28,7 +29,7 @@ const FilterBottomSheet = ({ filters }: FilterBottomSheetProps) => {
 		const optionsKeys = Object.keys(filter.options);
 		return {
 			...acc,
-			[filter.key]: optionsKeys.includes("ALL") ? "ALL" : optionsKeys[0],
+			[filter.key]: searchParams.get(filter.key) ? searchParams.get(filter.key) : optionsKeys.includes("ALL") ? "ALL" : optionsKeys[0],
 		};
 	}, {});
 
@@ -37,7 +38,7 @@ const FilterBottomSheet = ({ filters }: FilterBottomSheetProps) => {
 
 	const filterLabel = filters
 		.map((filter) => filter.options[filterOptions[filter.key]])
-		.join(" · ");
+		.join("·");
 
 	const handleFilterSubmit = () => {
 		setFilterOptions(tempFilterOptions);

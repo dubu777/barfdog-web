@@ -17,7 +17,7 @@ const RecommendationCode = ({ code, tailPosition = 'top', className }: Recommend
 	};
 	return (
 		<div onClick={handleCopyCode} className={`${styles.recommendationCode} ${className || ''}`}>
-			<Chips variant='solid' switchOff size='sm' borderRadius='full' color='black' tailVisible tailPosition={tailPosition}>
+			<Chips variant='solid' switchOff size='sm' borderRadius='full' color='gray800' tailVisible tailPosition={tailPosition}>
 				추천코드 {code}
 			</Chips>
 		</div>

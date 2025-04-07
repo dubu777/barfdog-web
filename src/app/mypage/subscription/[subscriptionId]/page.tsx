@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
+import { prefetchSubscriptionAndDogDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
 import SubscriptionDetail from "@/components/pages/mypage/subscription/subscriptionDetail/SubscriptionDetail";
 
 interface SubscriptionDetailPageProps {
@@ -13,7 +13,7 @@ interface SubscriptionDetailPageProps {
 export default async function SubscriptionDetailPage({ params }: SubscriptionDetailPageProps) {
   const subscriptionId = Number(params.subscriptionId);
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionDetail(queryClient, subscriptionId);
+  await prefetchSubscriptionAndDogDetail(queryClient, subscriptionId);
   const dehydrateState = dehydrate(queryClient);
 
   return (

@@ -8,7 +8,7 @@ interface InfoItem {
 
 interface InfoSectionProps {
 	title?: string;
-	items: InfoItem[];
+	items: InfoItem[] | undefined;
 	noBorder?: boolean;
 }
 
@@ -19,11 +19,13 @@ const InfoList = ({ title, items, noBorder = false }: InfoSectionProps) => {
 				<DefaultText type="label3" className={styles.infoListTitle}>{title}</DefaultText>
 			}
 			<ul className={styles.infoList}>
-				{items.map((item, index) => (
-					<li key={`${title}-${index}`} className={styles.infoItem}>
-						<DefaultText type="label4">{item.label}</DefaultText>
-						<DefaultText type="body3">{item.value}</DefaultText>
-					</li>
+				{items?.map((item, index) => (
+					item && (
+						<li key={`${title}-${index}`} className={styles.infoItem}>
+							<DefaultText type="label4">{item?.label}</DefaultText>
+							<DefaultText type="body3">{item?.value}</DefaultText>
+						</li>
+					)
 				))}
 			</ul>
 		</div>

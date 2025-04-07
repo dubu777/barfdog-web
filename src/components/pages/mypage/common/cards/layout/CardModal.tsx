@@ -1,13 +1,14 @@
-import { OrderType } from "@/types";
 import Modal from "@/components/common/modal/Modal";
 import OrderBottomSheet from "@/components/pages/mypage/common/bottomSheet/orderBottomSheet/OrderBottomSheet";
+import { CardActionsId, IsOpenCardModal, NormalizedCardData, OrderType } from "@/types";
 
 interface CardModalProps {
-	data: any;
+	data: NormalizedCardData;
 	orderId: number;
 	orderType: OrderType;
-	modalState: { key: 'cancel' | 'refundExchange' | 'confirm' | null; isOpen: boolean };
+	modalState: IsOpenCardModal;
 	onClose: () => void;
+	isOrderDetail?: boolean;
 }
 
 const CardModal = ({
@@ -16,10 +17,11 @@ const CardModal = ({
 	orderType,
 	modalState,
 	onClose,
+	isOrderDetail = false,
 }: CardModalProps) => {
 	if (!modalState.isOpen) return null;
 
-	return modalState.key === 'refundExchange' ? (
+	return modalState.id === 'refundExchange' ? (
 		<Modal
 			isOpen={modalState.isOpen}
 			onClose={onClose}
@@ -36,8 +38,9 @@ const CardModal = ({
 			orderId={orderId}
 			orderType={orderType}
 			isOpen={modalState.isOpen}
-			type={modalState.key === 'cancel' ? 'cancel' : 'confirm'}
+			type={modalState.id as CardActionsId}
 			onClose={onClose}
+			isOrderDetail={isOrderDetail}
 		/>
 	);
 };

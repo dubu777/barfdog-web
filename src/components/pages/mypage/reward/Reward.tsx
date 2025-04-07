@@ -6,7 +6,7 @@ import RewardFilter from "@/components/pages/mypage/reward/rewardFilter/RewardFi
 import RewardList from "@/components/pages/mypage/reward/rewardList/RewardList";
 import { useInView } from "react-intersection-observer";
 import { useGetRewardList } from "@/api/mypage/queries/useGetRewardList";
-import { RewardData, RewardFilterType, RewardListData, RewardListDataWithTotals } from "@/types";
+import { RewardFilterType, RewardListData, RewardListDataWithTotals } from "@/types";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import InfoBox from "@/components/common/infoBox/InfoBox";
@@ -22,27 +22,22 @@ const Reward = () => {
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') as RewardFilterType;
 
-
-  const rewardList =
-    rewardListData?.pages
-    ?.map((page: RewardListData) =>
-      statusFilter === 'ALL' || statusFilter === null
-        ? page.rewardList
-        : page.rewardList.filter(reward => reward.rewardStatus === statusFilter))
-    // ?.map((page: RewardListData) => page.rewardList)
-    .reduce((acc, curr) => acc.concat(curr), [] as RewardData[]);
+  const rewardList = rewardListData?.pages?.flatMap((page: RewardListData) =>
+    statusFilter === 'ALL' || !statusFilter
+      ? page.rewardList
+      : page.rewardList.filter(reward => reward.rewardStatus === statusFilter)
+  );
 
   const totalReward = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalReward ?? 0;
   const totalCount = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalCount ?? 0;
-  console.log(rewardListData?.pages.map(page => page.rewardList))
-  console.log(rewardList)
+
   useEffect(() => {
     if (inView && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
   return (
-    <section className={styles.rewardContainer}>
+    <section>
       <article className={styles.totalRewardContainer}>
         <DefaultText type='title4'>적립금</DefaultText>
         <Card shadow='light' className={styles.totalRewardCard}>
@@ -64,9 +59,9 @@ const Reward = () => {
           <RewardInfoBottomSheet isOpen={isOpen} onClose={onClose} />
         </div>
       </article>
-      <RewardFilter totalCount={totalCount} statusFilter={statusFilter}  />
+      <RewardFilter />
       <RewardList rewardList={rewardList || []} />
-      {rewardList?.length > 0 &&
+      {rewardList && rewardList?.length > 0 &&
         <div ref={ref} className={styles.infiniteTrigger} />
       }
     </section>

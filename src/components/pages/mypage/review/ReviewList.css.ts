@@ -2,11 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const reviewContainer = style({
-  minHeight: 'calc(100vh - 60px)',
-  background: themeVars.colors.gray.gray50,
-})
-
 export const reviewItemTypeFilter = style({
   width: '100%',
   display: 'flex',
@@ -14,7 +9,6 @@ export const reviewItemTypeFilter = style({
   alignItems: 'center',
   gap: '4px',
   padding: '20px 12px 4px 20px',
-  borderBottom: `8px solid ${themeVars.colors.gray.gray50}`,
   background: themeVars.colors.gray.gray0,
 })
 
@@ -24,11 +18,13 @@ export const reviewTab = style({
 })
 
 export const reviewListContainer = recipe({
-  base: {},
+  base: {
+    marginTop: '8px',
+  },
   variants: {
     isEmpty: {
       true: {
-        padding: '50px 20px',
+        padding: '33px 20px 0',
       }
     }
   }
@@ -41,7 +37,7 @@ export const reviewList = style({
 })
 
 export const reviewItem = style({
-  borderBottom: `1px solid ${themeVars.colors.gray.gray300}`,
+  // borderBottom: `1px solid ${themeVars.colors.gray.gray300}`,
 })
 
 export const infiniteTrigger = style({

@@ -7,8 +7,9 @@ import SubscriptionInfo from "@/components/pages/mypage/common/information/secti
 import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";
 import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
 import ReceiptInfo from "@/components/pages/mypage/common/information/section/ReceiptInfo";
-import { OrderType } from "@/types";
 import { useGetOrderDetail } from "@/api/order/queries/useGetOrderDetail";
+import { ORDER_TYPE } from "@/constants";
+import { OrderType } from "@/types";
 
 interface OrderDeliveryDetailProps {
 	orderId: number;
@@ -17,7 +18,7 @@ interface OrderDeliveryDetailProps {
 
 const OrderDetail = ({ orderId, orderType }: OrderDeliveryDetailProps) => {
 	const { data: orderDetailData } = useGetOrderDetail(orderId, orderType);
-	const { orderDto } = orderDetailData;
+	const { orderDto, orderItemDtoList } = orderDetailData;
 	const searchParams = useSearchParams();
 	const showReceipt = searchParams.get('showReceipt');
 
@@ -25,10 +26,10 @@ const OrderDetail = ({ orderId, orderType }: OrderDeliveryDetailProps) => {
 		<section className={styles.orderDeliveryDetailContainer({ showReceipt: !!showReceipt })}>
 			{!showReceipt ?
 				<>
-					<OrderItemInfo data={orderDetailData} orderType='general' />
+					<OrderItemInfo data={orderDetailData} orderType={orderType} />
 					<AddressInfo data={orderDto} />
-					{orderType === 'general'
-						? <OrderInfo data={orderDto} type='orderDetail' />
+					{orderType === ORDER_TYPE.GENERAL
+						? <OrderInfo data={orderDto} items={orderItemDtoList} type='orderDetail' />
 						: <SubscriptionInfo subscriptionId={orderId} data={orderDto} type='orderDetail' />
 					}
 					<PaymentInfo data={orderDto} type='orderDetail' />

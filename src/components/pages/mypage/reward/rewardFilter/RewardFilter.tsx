@@ -3,7 +3,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import TabBar from "@/components/common/tabBar/TabBar";
 import useFilterTabs from "@/hooks/useFilterTabs";
 
-const RewardFilter = ({ totalCount }: { totalCount: number}) => {
+const RewardFilter = () => {
   const tabs = [
     { label: '전체', value: 'ALL' },
     { label: '적립', value: 'SAVED' },

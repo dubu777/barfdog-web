@@ -42,9 +42,10 @@ const queryKeys = {
     BASE: 'cart',
     GET_CART_INFO: 'getCartInfo',
   },
-  PET: {
-    BASE: 'pet',
-    GET_PET_LIST: 'getPetList',
+  DOG: {
+    BASE: 'dog',
+    GET_DOG_LIST: 'getDogList',
+    GET_DOG_DETAIL: 'getDogDetail',
   },
   ORDER: {
     BASE: 'order',
@@ -72,11 +73,11 @@ const queryKeys = {
       GET_NOTICE_LIST: 'getNoticeList',
       GET_NOTICE_DETAIL: 'getNoticeDetail',
     },
-    BLOG: {
-      BASE: 'blog',
-      GET_BLOG_ARTICLE_LIST: 'getBlogArticleList',
-      GET_BLOG_LIST: 'getBlogList',
-      GET_BLOG_DETAIL: 'getBlogDetail',
+    ARTICLE: {
+      BASE: 'article',
+      GET_ARTICLE_LIST: 'getArticleList',
+      GET_RECOMMEND_ARTICLE_LIST: 'getRecommendArticleList',
+      GET_ARTICLE_DETAIL: 'getArticleDetail',
     }
   },
   REVIEW: {

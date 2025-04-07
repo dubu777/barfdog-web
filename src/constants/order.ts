@@ -10,6 +10,7 @@ import { TempRecipeDto } from "./survey";
 // 결제 전, 결제완료, 생산 중, 배송준비 중, 배송 시작, 배송 중, 배송완료, 취소됨, 환불됨
 const ORDER_STATUS = {
   ALL: "",
+  RESERVED_PAYMENT: "결제 전",
   BEFORE_PAYMENT: "결제 전",
   PAYMENT_DONE: "결제완료",
   PRODUCING: "생산 중",

@@ -1,11 +1,10 @@
-import { OrderAction } from "@/types";
-import { actionsControls } from "../Card.css";
+import { CardActionsId, OrderAction } from "@/types";
+import { actionsButton, actionsControls } from "../Card.css";
 import Button from "@/components/common/button/Button";
 
 interface CardActionsProps {
 	actions?: OrderAction[];
-	onActionClick: (url?: string, params?: string, key?: string) => void;
-	status: string;
+	onActionClick: (url?: string, params?: string, id?: CardActionsId) => void;
 	isButtonWrap?: boolean;
 }
 
@@ -15,7 +14,6 @@ const CardActions = ({
 	isButtonWrap = false,
 }: CardActionsProps) => {
 	if (!actions || actions.length === 0) return null;
-
 	return (
 		<div className={actionsControls({ isWrap: isButtonWrap })}>
 			{actions?.map(({
@@ -24,15 +22,16 @@ const CardActions = ({
 				fullWidth,
 				url,
 				params,
-				key,
+				id,
 			}, index) => (
 				<Button
 					size='sm'
 					key={`${label}-${index}`}
 					variant={variants === 'solid' ? 'solid' : 'outline'}
 					type={variants === 'solid' ? 'primary' : 'assistive'}
-					width={fullWidth ? '100%' : 'calc(50% - 4px)'}
-					onClick={() => onActionClick(url, params, key)}
+					className={actionsButton}
+					fullWidth={fullWidth}
+					onClick={() => onActionClick(url, params, id)}
 				>
 					{label}
 				</Button>

@@ -5,105 +5,129 @@ import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import ArrowIcon from '/public/images/icons/chevron-sort-up.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
-import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardProductInfo";
-import CardActions from "@/components/pages/mypage/common/cards/layout/CardActions";
-import CardModal from "@/components/pages/mypage/common/cards/layout/CardModal";
-import { ORDER_DELIVERY_INQUIRY_STATUS } from "@/constants/mypage";
+import BaseCard from "@/components/pages/mypage/common/cards/section/BaseCard";
+import { ORDER_TYPE, subscriptionPlanInfo } from "@/constants";
+import { IsOpenCardModal, NormalizedOrderCardData, CardActionsId } from "@/types";
+import { getOrderStatusActions } from "@/utils/mypage/getOrderStatusActions";
 
-type OrderCardModalKeyType = 'cancel' | 'refundExchange' | 'confirm';
+type OrderCardType = 'orderDeliveryInquiry' | 'orderIssue' | 'orderDetail';
 
 interface OrderCardProps {
 	// 마이페이지 주문/배송, 취소/교환/반품 데이터 타입 정의 및 적용 필요
 	data: any;
-	type: 'orderDeliveryInquiry' | 'orderIssue' | 'orderDetail';
+	type: OrderCardType;
 	hasBottomSheet?: boolean;
 }
+
+const normalizeOrderData = (orderData: any): NormalizedOrderCardData => {
+	const data = orderData?.orderDto ? orderData.orderDto : orderData;
+	console.log('normalizeOrderData', orderData)
+	return {
+		id: data.orderId || data.id || data.itemId,
+		name: data.name || data.dogName || data.itemName || '',
+		imageUrl: data.thumbnailUrl || '',
+		itemName: data.recipeName || '',
+		price: data.paymentPrice || data.finalPrice || '',
+		plan: subscriptionPlanInfo?.[data.plan] || null,
+		orderType: data.orderType === 'subscribe' ? ORDER_TYPE.SUBSCRIPTION : data.orderType,
+		status: data.orderStatus || data.status,
+		// status: 'REVIEW_SUBMIT',
+		subscribeId: data?.subscribeId || null,
+		subscribeCount: data.subscribeCount || null,
+		amount: data.amount || null,
+		optionNames: data?.selectOptionDtoList?.map(option => option.optionName).join(' ,') || null,
+	};
+};
 
 const OrderCard = ({ data, type, hasBottomSheet = false }: OrderCardProps) => {
 	const { pushWithQuery } = useDynamicQueryPush();
 
-	const cardDetail = data?.orderDto ? data.orderDto : data;
-	const status: keyof typeof ORDER_DELIVERY_INQUIRY_STATUS = 'PAYMENT_DONE';
-	const orderType = (data?.recipeName && data?.subscribeId) ? 'subscription' : data.orderType ||  'general';
-	const orderId = data?.orderId || data?.id;
+	const normalizedData = hasBottomSheet ? data : normalizeOrderData(data);
+	const status = normalizedData.status;
+	const orderType = normalizedData.orderType;
 
-	const orderStatusLabel = ORDER_DELIVERY_INQUIRY_STATUS[status]?.label || ''
-	const actions = ORDER_DELIVERY_INQUIRY_STATUS[status]?.actions;
-	const modifiedActions = actions?.map((action) => ({
-		...action,
-		label: action.label === '주문취소' && (status === 'BEFORE_PAYMENT' || status === 'PAYMENT_DONE')
-			? orderType === 'subscription' ? '구독취소' : action.label
-			: status === 'REVIEW_SUBMIT' && action.label === '전체구독일정'
-				? orderType === 'general' ? '재구매' : action.label
-				:action.label
-	}))
+	const orderStatusLabelActions = getOrderStatusActions(status, orderType, type);
+	const orderActions = orderStatusLabelActions.actions;
+	const orderStatusLabel = orderStatusLabelActions.label;
 
-	const [isOpenModal, setIsOpenModal] = useState<{
-		key: OrderCardModalKeyType | null;
-		isOpen: boolean
-	}>({
-		key: null,
-		isOpen: false,
-	});
+	const [isOpenModal, setIsOpenModal] = useState<IsOpenCardModal>({ id: null, isOpen: false });
 
-	const handleActions = (url: string | undefined, params: string | undefined, key: string | undefined) => {
-		if (status === 'REVIEW_SUBMIT') {
-			console.log(url, params, key);
-			if (orderType === 'subscription') {
-				pushWithQuery(`/mypage${url}/${cardDetail.subscribeId}/${params}`, {})
-			} else {
-				// 재구매 루트 적용 필요
-				pushWithQuery(`/store/${cardDetail.itemId}`, {})
+	const handleActions = (url?: string, params?: string, id?: CardActionsId) => {
+		switch (id) {
+			case 'subscriptionSchedule': {
+				if (orderType === ORDER_TYPE.SUBSCRIPTION) {
+					console.log('전체구독일정')
+					pushWithQuery(`/mypage${url}/${normalizedData.subscribeId}/${params}`, {})
+				} else {
+					console.log('재구매')
+				}
+				break;
 			}
-		} else {
-			if (!url && key) {
-				// 구매확정 버튼 클릭시 OrderBottomSheet -> 현재 주문 관련 데이터 적용으로 확인, 적용 필요
-				setIsOpenModal({ key: key as OrderCardModalKeyType, isOpen: true });
-			} else {
-				pushWithQuery(`/mypage${url}`, {})
+			case 'subscriptionDetail': {
+				console.log('구독조회');
+				// pushWithQuery(`/mypage/subscription/${normalizedData?.subscribeId}`, {}, ['orderType']);
+				break;
 			}
+			case 'itemDetail': {
+				pushWithQuery(`/store/${normalizedData.id}`, {});
+				break;
+			}
+			case 'orderCancel':
+			case 'refundExchange':
+			case 'confirm': {
+				console.log(id)
+				setIsOpenModal({ id: id as CardActionsId, isOpen: true });
+				break;
+			}
+			case 'orderDetail': {
+				pushWithQuery(`/mypage/order-delivery-inquiry/${normalizedData.id}`, { orderType: orderType });
+				break;
+			}
+			case 'deliveryTracking': {
+				console.log('배송조회')
+				break;
+			}
+			case 'review': {
+				console.log('리뷰작성')
+				break;
+			}
+			case 'repurchase': {
+				console.log('재구매')
+				break;
+			}
+			default: return;
 		}
 	}
 	return (
-		<CardSection>
-			<div className={styles.orderCardInfoTop}>
-				<DefaultText type='label4'>
-					{orderType === 'subscription' ? `정기배송 ${cardDetail.subscribeCount}회차 ` : '일반배송 '}
-					{orderStatusLabel}
-				</DefaultText>
-				{type === 'orderDeliveryInquiry' && !hasBottomSheet &&
+		<BaseCard
+			type='order'
+			data={normalizedData}
+			cardHeaderTitle={
+				<div className={styles.orderCardInfoTop}>
+					<DefaultText type='label4'>
+						{orderType === 'subscription' ? `정기배송 ${normalizedData.subscribeCount}회차 ` : '일반배송 '}
+						<span>
+							{orderStatusLabel}
+						</span>
+					</DefaultText>
+					{type === 'orderDeliveryInquiry' && !hasBottomSheet &&
 					<button
 						className={styles.orderCardDetailButton}
-						onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${orderId}`, { orderType: orderType })}
+						onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${normalizedData.id}`, { orderType: orderType })}
 					>
 						<DefaultText type='headline4' color='red'>주문 상세</DefaultText>
 						<SvgIcon src={ArrowIcon} size={20} style={{ transform: 'rotate(90deg)', color: themeVars.colors.red.red }} />
 					</button>
-				}
-			</div>
-			<CardProductInfo
-				name={cardDetail.name || cardDetail.dogName || cardDetail.itemName}
-				imageUrl={cardDetail.thumbnailUrl}
-				itemName={cardDetail.recipeName || ''}
-				price={cardDetail.paymentPrice}
-			/>
-			{!hasBottomSheet &&
-				<CardActions
-					actions={modifiedActions}
-					onActionClick={(url, params , key) => handleActions(url, params, key)}
-					isButtonWrap
-					status={status}
-				/>
+					}
+				</div>
 			}
-			<CardModal
-				data={cardDetail}
-				orderId={orderId}
-				orderType={orderType}
-				modalState={isOpenModal}
-				onClose={() => setIsOpenModal({ key: null, isOpen: false })}
-			/>
-		</CardSection>
+			cardActions={orderActions}
+			handleActions={handleActions}
+			showCardActions={!hasBottomSheet}
+			isOpenModal={isOpenModal}
+			setIsOpenModal={setIsOpenModal}
+			isOrderDetail={type === 'orderDetail'}
+		/>
 	);
 };
 

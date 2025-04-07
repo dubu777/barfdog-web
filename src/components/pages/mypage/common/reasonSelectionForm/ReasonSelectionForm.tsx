@@ -66,7 +66,7 @@ const ReasonSelectionForm = ({
 							<DefaultTextarea
 								id='otherReason'
 								value={otherReason}
-								placeholder={textareaPlaceholder || '기타 이유를 남겨주세요'}
+								placeholder={textareaPlaceholder || '기타 사항을 입력해주세요 (선택)'}
 								minLength={0}
 								maxLength={1000}
 								onChange={(e) => setOtherReason ? setOtherReason(e.target.value) : undefined}

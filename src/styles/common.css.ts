@@ -34,10 +34,9 @@ export const ellipsis = recipe({
     lineSize: {
       line1: {
         whiteSpace: 'nowrap',
-        display: 'block',
         webkitLineClamp: 'none',
         webkitBoxOrient: 'none',
-        lineHeight: 'normal'
+        lineHeight: 'normal',
       },
       line2: {
         '-webkit-line-clamp': '2',

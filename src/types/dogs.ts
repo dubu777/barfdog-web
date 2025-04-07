@@ -1,6 +1,6 @@
-import { subscriptionStatus } from "@/constants";
+import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 
-export type { DogData };
+export type { DogData, DogDetail };
 
 interface DogData {
   id: number;
@@ -19,4 +19,16 @@ interface DogData {
   subscribeId: number;
   subscribeCount: number;
   subscribeStatus: string;
+}
+
+interface DogDetail {
+  dogDto: DogData;
+  ingredients: string[];
+  plan: keyof typeof subscriptionPlanInfo;
+  recipeDtoList: {
+    descriptionForSurvey: string;
+    id: number;
+    ingredients: string[];
+  }[];
+  recipes: string[];
 }

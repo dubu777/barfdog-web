@@ -39,8 +39,8 @@ const UserRewardCard = ({ myPageData, isDisabled = false, className }: UserRewar
 					onClick={() => !isDisabled ? router.push(url ?? '/mypage') : undefined}
 					className={styles.rewardItem({ isDisabled })}
 				>
-					<DefaultText type='caption' color='gray500'>{label}</DefaultText>
-					<DefaultText type='label1'>{valueMap[key]}</DefaultText>
+					<DefaultText type='caption' color='gray600'>{label}</DefaultText>
+					<DefaultText type='label2'>{valueMap[key]}</DefaultText>
 				</button>
 			))}
 		</div>

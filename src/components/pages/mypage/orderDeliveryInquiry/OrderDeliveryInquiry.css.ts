@@ -1,11 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const orderDeliveryContainer = style({
-  minHeight: 'calc(100vh - 60px)',
-  background: themeVars.colors.gray.gray50,
-});
-
 export const orderStatusFilterTabBar = style({
   background: themeVars.colors.gray.gray0,
   marginTop: '2px',
