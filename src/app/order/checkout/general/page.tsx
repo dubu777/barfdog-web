@@ -7,8 +7,8 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
+import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
 
 interface GeneralPageProps {}
 
