@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { applyCoupon } from "@/api/mypage/myPage";
+import { applyCoupon } from "@/api/mypage/mypage";
 import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
 
