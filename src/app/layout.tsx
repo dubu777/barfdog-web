@@ -3,7 +3,7 @@ import "@/styles/global.css";
 import { themeClass } from "@/styles/theme.css";
 import { Metadata } from "next";
 import { commonLayoutContainer } from "@/styles/common.css";
-import { Inter } from "next/font/google";
+import localFont from 'next/font/local';
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import Toast from "@/components/common/toast/Toast";
 import Script from "next/script";
@@ -15,8 +15,11 @@ export const metadata: Metadata = {
     "내 반려동물에게 꼭 맞는 1:1 맞춤 플랜, 나이, 품종, 체중, 활동량, 알러지 등을 고려한 완벽한 식단을 간편하게 정기배송 받을 수 있습니다. 바프독 시작하기.",
   icons: "/images/icons/favicon-develop.png",
 };
-const inter = Inter({ subsets: ["latin"] });
-
+const pretendard = localFont({
+  src: "../../public/fonts/PretendardVariable.woff2",
+  display: "swap",
+  variable: "--font-pretendard"
+});
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,7 +51,7 @@ export default function RootLayout({
         `}
       </Script>
       </head>
-      <body>
+      <body className={pretendard.className}>
         <noscript>
           <iframe
             src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
@@ -58,7 +61,7 @@ export default function RootLayout({
           ></iframe>
         </noscript>
         <ReactQueryProvider>
-          <div className={`${commonLayoutContainer} ${inter.className}`}>
+          <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
             {children}
           </div>
           <SnackBar />

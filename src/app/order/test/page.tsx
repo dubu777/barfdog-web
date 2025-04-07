@@ -174,6 +174,8 @@ export default function GeneralShopTest() {
         onClose={onNextPaymentBottomSheetClose}
         deliveryDate="2025-04-12"
       />
+      {/* <DefaultText type="title4">안녕</DefaultText>
+      <DefaultText type="caption">안녕</DefaultText> */}
       {/* <NextPaymentBottomSheet
         isOpen={isNextPaymentBottomSheetOpen}
         onClose={onNextPaymentBottomSheetClose}

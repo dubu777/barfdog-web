@@ -307,7 +307,7 @@ export default function SubscriptionOrderContainer({
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
         originPrice={originPrice}
-        appliedDefaultDiscountPrice={originPrice}
+        appliedDefaultDiscountPrice={subscriptionOrderSheetData.subscribeDto.nextPaymentPrice}
         discountGrade={subscriptionOrderSheetData.subscribeDto.discountGrade}
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />

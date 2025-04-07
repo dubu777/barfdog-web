@@ -25,7 +25,7 @@ import useModal from "@/hooks/useModal";
 interface OrderSummaryPropsProps {
   orderType: OrderType;
   originPrice: number; // 원금
-  appliedDefaultDiscountPrice: number; // 일반 주문이라면 상품할인, 구독 주문이라면 플랜할인이 적용된 가격 - 이 가격에 쿠폰 및 등급할인을 적용한다.
+  appliedDefaultDiscountPrice: number; // 일반 주문: (원금 - 상품 할인금액) , 구독 주문: (원금 - 플랜 할인금액)  => 이 가격에 쿠폰 및 등급할인을 적용한다.
   freeCondition?: number; // 배송비 무료를 위한 최소 금액
   deliveryPrice?: number;
   discountGrade?: number; // 등급 할인 금액
