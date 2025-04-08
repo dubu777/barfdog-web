@@ -33,18 +33,11 @@ export default function GeneralShopTest() {
     {
       itemId: 10,
       amount: 1,
-      optionDtoList: [
+      selectOptionDtoList: [
         // { itemOptionId: 18, amount: 1 },
         // { itemOptionId: 19, amount: 1 },
       ],
     },
-    // {
-    //   itemDto: {
-    //     itemId: 9,
-    //     amount: 1,
-    //   },
-    //   itemOptionDtoList: [{ itemOptionId: 19, amount: 1 }],
-    // },
   ];
 
   const generalPaymentTest = () => {

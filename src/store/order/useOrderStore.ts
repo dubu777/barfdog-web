@@ -55,7 +55,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       discountSubscribeAlliance,
       discountGrade,
     } = usePaymentStore.getState();
-    const { appliedReward } = useRewardStore.getState();
+    const { appliedReward, autoUseReward } = useRewardStore.getState();
     const { appliedCoupon } = useCouponStore.getState();
     const { orderItemDtoList } = usePersistOrderStore.getState();
     // defaultAddress, address 형태를 deliveryDto와 맞추기 위해
@@ -98,6 +98,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       discountGrade,
       discountSubscribeAlliance,
       overDiscount: 0,
+      autoUseReward,
     } as SaveSubscriptionOrderRequest;
   },
 
