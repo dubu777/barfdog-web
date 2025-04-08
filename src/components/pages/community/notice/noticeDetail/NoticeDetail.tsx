@@ -22,7 +22,7 @@ const NoticeDetail = ({ noticeId }: { noticeId: number }) => {
     {
       id: 'createdDate',
       name: '등록일',
-      value: formatDate(noticeDetail?.createdDate, 'onlyDate'),
+      value: formatDate(noticeDetail?.createdDate, 'onlyDateDot'),
     },
   ]
 

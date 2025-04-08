@@ -1,4 +1,4 @@
-import { GeneralOrderItem, OrderType } from "./order";
+import { GeneralOrderItem, GeneralOrderSheetResponse, OrderType, SaveGeneralOrderRequest, SaveSubscriptionOrderRequest, SubscriptionOrderSheetResponse } from "./order";
 
 export type {
   PaymentMethodType,
@@ -20,6 +20,8 @@ export type {
   SuccessSubscriptionPaymentResponse,
   InvalidSubscriptionPaymentResponse,
   ValidateSubscriptionPaymentResponse,
+  GeneralPaymentDataParams,
+  SubscriptionPaymentDataParams
 };
 
 
@@ -141,17 +143,19 @@ interface SubscriptionIamportResponse extends CommonIamportResponse {
 
 // 결제 응답 타입 매핑
 type IamportResponseMap = {
-  general: GeneralIamportResponse;
-  subscription: SubscriptionIamportResponse;
+  [K in OrderType]: K extends "GENERAL" 
+    ? GeneralIamportResponse 
+    : SubscriptionIamportResponse;
 };
 
 // 결제 요청 타입 매핑
 type IamportRequestMap = {
-  general: GeneralIamportRequest;
-  subscription: SubscriptionIamportRequest;
+  [K in OrderType]: K extends "GENERAL" 
+    ? GeneralIamportRequest 
+    : SubscriptionIamportRequest;
 };
 
-// PaymentRequestParams 타입 정의
+// PaymentRequestParams 타입 정의 수정
 interface PaymentRequestParams<T extends OrderType> {
   orderType: T;
   paymentData: IamportRequestMap[T];
@@ -169,6 +173,22 @@ interface CreateIamportSubscriptionPaymentRequest {
   buyer_addr: string;
   buyer_postcode: string;
 }
+
+interface GeneralPaymentDataParams {
+  requestBody: SaveGeneralOrderRequest;
+  id: number;
+  merchantUid: string;
+  generalOrderSheetData: GeneralOrderSheetResponse;
+  isMobileDevice: boolean;
+}
+
+interface SubscriptionPaymentDataParams {
+  requestBody: SaveSubscriptionOrderRequest;
+  subscriptionOrderSheetData: SubscriptionOrderSheetResponse;
+  isMobileDevice: boolean;
+}
+
+
 
 // 네이버페이 카테고리 타입 및 ID 정의
 type NaverPayCategoryType = "PRODUCT" | "FOOD" | "ETC";

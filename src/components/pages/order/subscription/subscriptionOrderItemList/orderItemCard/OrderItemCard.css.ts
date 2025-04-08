@@ -1,22 +1,22 @@
+import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const OrderItemCardContainer = style({
+export const orderItemCardContainer = style({
   display: "flex",
   gap: "8px",
+  flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  width: "100%",
 });
 
-export const OrderItemCardImageWrapper = style({
+export const orderItemCardImage = style({
   width: "88px",
   height: "88px",
   borderRadius: "8px",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
 });
 
-export const OrderItemContentWrapper = style({
+export const orderItemContentWrapper = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
@@ -25,7 +25,16 @@ export const OrderItemContentWrapper = style({
   width: "100%",
 });
 
-export const OrderItemInfoWrapper = style({
+export const orderItemInfoWrapper = style({
   display: "flex",
   flexDirection: "column",
 });
+
+export const orderOptionWrapper = style({
+  display: "flex",
+  gap: "8px",
+  padding: "12px",
+  width: "100%",
+  borderRadius: "8px",
+  backgroundColor: themeVars.colors.gray.gray100,
+})

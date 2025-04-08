@@ -44,12 +44,15 @@ export const authAxios: AxiosInstance = axios.create({
   },
 });
 
+const isClient = typeof window !== 'undefined';
+
 /**
  * 요청 인터셉터:
  * 모든 요청 시 쿠키에 저장된 액세스 토큰을 Authorization 헤더에 추가합니다.
  */
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    if (isClient) {
     const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
     console.log("ACCESS_TOKEN_COOKIE", token);
 
@@ -59,6 +62,7 @@ axiosInstance.interceptors.request.use(
         ? token
         : `Bearer ${token}`;
     }
+  }
     return config;
   },
   (error) => Promise.reject(error)
@@ -134,3 +138,5 @@ axiosInstance.interceptors.response.use(
 
 
 export default axiosInstance;
+
+

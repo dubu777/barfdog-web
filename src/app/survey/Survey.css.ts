@@ -4,9 +4,9 @@ import { style } from "@vanilla-extract/css";
 export const surveyLayoutContainer = style({
   minHeight: 'calc(100vh - 153px)',
   width: '100%',
-  marginTop: '62px',
+  marginTop: '52px',
   marginBottom: '50px',
-  backgroundColor: themeVars.backgroundColors.pinkFa,
+  backgroundColor: themeVars.colors.gray.gray50,
 });
 
 export const surveyTitle = style({

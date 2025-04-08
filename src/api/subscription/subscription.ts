@@ -9,7 +9,7 @@ import {
 const getPlanDiscount = async (): Promise<PlanDiscountResponse> => {
   const {data} = await axiosInstance.get('/api/planDiscount');
 
-  return data
+  return data._embedded.planDiscountResponseDtoList
 }
 
 export interface RequestCreateSubscription {

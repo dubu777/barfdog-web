@@ -16,6 +16,7 @@ const getAddressList = async (): Promise<AddressResponse[]> => {
   return data._embedded.addressResponseDtoList;
 };
 
+
 // 주소 등록
 const createAddress = async (body: AddressRequest): Promise<any> => {
   const { data } = await axiosInstance.post("/api/address/save", body);

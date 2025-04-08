@@ -63,7 +63,7 @@ export const MOTION = {
       opacity: 0,
       y: 0,
       transition: {
-        duration: 0.2,
+        duration: 1,
       },
     },
   },

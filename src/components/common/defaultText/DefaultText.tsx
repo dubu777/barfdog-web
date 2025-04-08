@@ -17,6 +17,7 @@ interface DefaultTextProps {
   className?: string;
   style?: React.CSSProperties;
   preLine?: boolean;
+  applyLineHeight?: boolean;
 }
 
 const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
@@ -50,6 +51,7 @@ export default function DefaultText({
   className,
   style,
   preLine,
+  applyLineHeight = true,
 }: DefaultTextProps) {
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
@@ -59,12 +61,16 @@ export default function DefaultText({
   const blockStyle = block ? blockStyles.true : "";
   const preLineStyle = preLine ? preLineStyles.true : "";
 
+  const overrideLineHeight = applyLineHeight === false ? { lineHeight: "normal" } : {};
+
+  // 기존 style과 merge (inline style의 우선순위가 더 높음)
+  const finalStyle = { ...style, ...overrideLineHeight };
   return (
     <Tag
       className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${blockStyle} ${preLineStyle} ${
         className || ""
       }`}
-      style={style}
+      style={finalStyle}
     >
       {children}
     </Tag>

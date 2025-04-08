@@ -20,7 +20,7 @@ const nextConfig = {
     };
   },
   images: {
-    domains: ['localhost', 'www.barfdogserver.com', 'dev.barfdogserver.com', "renewal-dev.barfdogserver.com" ],
+    domains: ['localhost', 'www.barfdogserver.com', 'dev.barfdogserver.com', "renewal-dev.barfdogserver.com", "dev-barfdog.s3.ap-northeast-2.amazonaws.com" ],
     remotePatterns: [
       {
         protocol: 'https',

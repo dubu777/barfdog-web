@@ -49,8 +49,10 @@ const ORDER_MESSAGE: Record<OrderMessage, string> = {
   AGREE_SUBSCRIPTION: "구독 상품 정기결제 동의",
   BROCHURE: "바프독 설명이 포함된 브로슈어 받기",
   CONFIRM: "위 주문 내용을 확인했으며, 결제에 동의합니다.",
-  SUBSCRIPTION_TITLE: "정기구독 배송 시 묶음 배송 신청",
-  SUBSCRIPTION_SUBTITLE: "구독 상품과 같이 배송되어 배송비가 무료에요",
+  BUNDLE_DELIVERY_TITLE: "정기구독 배송 시 묶음 배송 신청",
+  BUNDLE_DELIVERY_SUBTITLE: "구독 상품과 같이 배송되어 배송비가 무료에요",
+  BUNDLE_DELIVERY_UNAVAILABLE_TITLE: "묶음 배송 신청 불가능",
+  BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE: "배송 예정일 당일에는 묶음 배송 신청이 불가능해요.",
   NO_AVAILABLE_COUPONS: "사용가능한 쿠폰이 없어요",
   COUPON_PLACEHOLDER: "쿠폰 번호를 입력하세요",
 } as const;
@@ -58,11 +60,11 @@ const ORDER_MESSAGE: Record<OrderMessage, string> = {
 const SUBSCRIPTION_NOTICE = {
   TITLE: "2주마다 자동으로 결제가 진행돼요",
   CONTENT: [
-    "• 구독을 해지하기 전까지 배송 주기마다 자동으로 결제가 진행됩니다.",
-    "• 마이페이지 > 구독 상품 관리에서 상품 배송정보, 결제수단 변경이 가능합니다.",
-    "• 결제 후, 레시피 혹은 급여량을 변경하실 경우 회차별 결제 금액이 변동될 수 있습니다.",
-    "• 결제 시점에서 보유 적립금 및 할인 정책에 따라 결제 금액이 달라질 수 있습니다.",
-    "• 결제 실패 등으로 인해 결제가 진행되지 않을 경우 정기구독이 해지될 수 있습니다.",
+    "・ 구독을 해지하기 전까지 배송 주기마다 자동으로 결제가 진행됩니다.",
+    "・ 마이페이지 > 구독 상품 관리에서 상품 배송정보, 결제수단 변경이 가능합니다.",
+    "・ 결제 후, 레시피 혹은 급여량을 변경하실 경우 회차별 결제 금액이 변동될 수 있습니다.",
+    "・ 결제 시점에서 보유 적립금 및 할인 정책에 따라 결제 금액이 달라질 수 있습니다.",
+    "・ 결제 실패 등으로 인해 결제가 진행되지 않을 경우 정기구독이 해지될 수 있습니다.",
   ],
 };
 

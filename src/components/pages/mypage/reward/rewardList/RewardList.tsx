@@ -16,7 +16,7 @@ const RewardList = ({ rewardList }: RewardListProps) => {
           {rewardList?.map((reward, index) => (
             <li className={styles.rewardItem} key={`${reward.name}${index}`}>
               <DefaultText type='label3'>
-                {formatDate(reward.createdTime, 'onlyDate')}
+                {formatDate(reward.createdTime, 'onlyDateDot')}
               </DefaultText>
               <div className={styles.rewardItemBottom}>
                 <DefaultText type='label4' className={styles.rewardName}>

@@ -131,7 +131,7 @@ const UserInfo = () => {
 			phoneNumber: data.phoneNumber,
 			receiveEmail: data.receiveEmail,
 			receiveSms: data.receiveSms,
-			birthday: formatDate(data.birthday, 'onlyDate').replace(/-/g, ''), // "-" 제거
+			birthday: formatDate(data.birthday, 'onlyDateDot').replace(/-/g, ''), // "-" 제거
 		};
 		mutate(
 			body,
@@ -255,14 +255,14 @@ const UserInfo = () => {
 					<>
 						{isMobileDevice
 							? <MobileDatePicker
-								value={formatDate(field.value, 'onlyDate')}
+								value={formatDate(field.value, 'onlyDateDot')}
 								onChange={(date) => field.onChange(date)}
 								label='생년월일'
 								isRequired
 							/>
 							: <DatePicker
 								name='birthday'
-								value={formatDate(field.value, 'onlyDate')}
+								value={formatDate(field.value, 'onlyDateDot')}
 								onChange={(date) => {
 									console.log(date)
 									field.onChange(date)

@@ -7,16 +7,8 @@ import { AddressResponse } from "@/types/delivery";
 
 export function useGetAddressList(queryOptions?: UseSuspenseQueryCustomOptions<AddressResponse[]>) {
   return useSuspenseQuery({
-    queryFn: () => getAddressList(),
+    queryFn: getAddressList,
     queryKey: [queryKeys.DELIVERY.BASE, queryKeys.DELIVERY.GET_ADDRESS_LIST],
     ...queryOptions,
   })
-}
-
-
-export async function prefetchGetSAddressList(queryClient: QueryClient) {
-  await queryClient.prefetchQuery({
-    queryFn: () => getAddressList(),
-    queryKey: [queryKeys.DELIVERY.BASE, queryKeys.DELIVERY.GET_ADDRESS_LIST],
-  });
 }

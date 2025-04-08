@@ -10,11 +10,8 @@ import {
   SubscriptionIamportRequest,
   SubscriptionIamportResponse,
 } from "@/types";
-import { useUpdateSubscriptionOrderBody } from "@/hooks/useUpdateSubscriptionOrderBody";
-import {
-  buildSubscriptionPaymentRequest,
-  usePayment,
-} from "@/hooks/usePayment";
+import { useInitializeSubscriptionOrder } from "@/hooks/order/useInitializeSubscriptionOrder";
+import { usePayment } from "@/hooks/usePayment";
 import useDeviceState from "@/hooks/useDeviceState";
 import { useSaveSubscriptionOrder } from "@/api/order/mutations/useSaveSubscriptionOrder";
 import { calculateOriginPrice } from "@/utils/order/calculateOriginPrice";
@@ -27,7 +24,6 @@ import { useFailSubscriptionPayment } from "@/api/order/mutations/useFailSubscri
 import { useRouter } from "next/navigation";
 import OrderSummary from "../../common/orderSummary/OrderSummary";
 import RewardUsage from "../../common/reward/RewardUsage";
-import SubscriptionOrderItemList from "../subscriptionOrderItemList/SubscriptionOrderItemList";
 import {
   defaultOrderValues,
   getOrderSchema,
@@ -36,14 +32,17 @@ import {
 import { useRewardStore } from "@/store/order/useRewardStore";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import OrderSection from "../../common/orderSection/OrderSection";
-import { useDiscountStore } from "@/store/order/useDiscountStore";
 import { formatNumberWithCommas } from "@/utils";
-import DeliverySchedule from "../deliverySchedule/DeliverySchedule";
 import CouponSelector from "../../common/couponSelector/CouponSelector";
 import OrderTerms from "../../common/orderTerms/OrderTerms";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import SubscriptionNotice from "../subscriptionNotice/subscriptionNotice";
+import SubscriptionNotice from "../subscriptionNotice/SubscriptionNotice";
+import { useEffect, useRef, useState } from "react";
+import { buildSubscriptionPaymentRequest } from "@/store/order/paymentUtils";
+import { useSubscriptionPayment } from "@/hooks/order/useSubscriptionPayment";
+import { useToastStore } from "@/store/useToastStore";
+import { usePaymentStore } from "@/store/order/usePaymentStore";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -62,10 +61,23 @@ export default function SubscriptionOrderContainer({
   const router = useRouter();
   // 상태관리 ------>
   const getRequestBody = useOrderStore((state) => state.getRequestBody);
+  const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
+  const agreeSubscription = useOrderStore((state) => state.agreeSubscription);
   const maxAvailableReward = useRewardStore(
     (state) => state.maxAvailableReward
   );
-  const paymentPrice = useDiscountStore((state) => state.paymentPrice);
+  const paymentPrice = usePaymentStore((state) => state.paymentPrice);
+
+  const addToast = useToastStore((state) => state.addToast);
+  const [showTermsErrors, setShowTermsErrors] = useState(false);
+  const termsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTerms = () => {
+    termsRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
   // <------- 상태관리
 
   // 서버 호출 react query ------->
@@ -82,6 +94,9 @@ export default function SubscriptionOrderContainer({
   // <------- 서버 호출
 
   // 커스텀 훅 & 유틸 함수 ------>
+
+  // 구독 구매 페이지 정보 초기값 없데이트
+  useInitializeSubscriptionOrder(subscriptionOrderSheetData);
   const { requestIamportPayment } = usePayment();
   const { isMobileDevice } = useDeviceState();
   const originPrice = calculateOriginPrice(
@@ -95,8 +110,18 @@ export default function SubscriptionOrderContainer({
   // <------- 커스텀 훅 & 유틸 함수
 
   // 결제 함수 ========>
-  // 구독 구매 페이지 정보 초기값 없데이트
-  useUpdateSubscriptionOrderBody(subscriptionOrderSheetData);
+
+  // 개선된 결제 코드
+  // const { processPayment, isProcessing } = useSubscriptionPayment({
+  //   subscribeId,
+  //   subscriptionOrderSheetData,
+  //   isMobileDevice,
+  // });
+
+  // const handlePaymentSubmit = async () => {
+  //   const requestBody = getRequestBody(ORDER_TYPE.SUBSCRIPTION) as SaveSubscriptionOrderRequest;
+  //   await processPayment(requestBody);
+  // };
 
   // 아임포트 결제 응답 처리
   const handleIamportPaymentResponse = async ({
@@ -191,6 +216,12 @@ export default function SubscriptionOrderContainer({
 
   // 결제 요청 함수
   const handlePaymentSubmit = async () => {
+    if (!agreePrivacy || !agreeSubscription) {
+      setShowTermsErrors(true);
+      addToast("결제 필수 사항에 동의해 주세요", "above-button", 3000);
+      setTimeout(scrollToTerms, 100);
+      return;
+    }
     try {
       const requestBody = getRequestBody(
         ORDER_TYPE.SUBSCRIPTION
@@ -241,15 +272,23 @@ export default function SubscriptionOrderContainer({
     }
   };
   // <========== 결제 함수
+
+  const handleTest = () => {
+    const requestBody = getRequestBody(
+      ORDER_TYPE.SUBSCRIPTION
+    ) as SaveSubscriptionOrderRequest;
+
+    console.log("requestBody", requestBody);
+  };
   return (
     <>
       <DeliveryAddress />
       <Divider />
-      <SubscriptionOrderItemList
+      {/* <SubscriptionOrderItemList
         subscriptionOrderSheetData={subscriptionOrderSheetData}
-      />
+      /> */}
       <Divider />
-      <DeliverySchedule />
+      {/* <DeliverySchedule /> */}
       <Divider />
       <CouponSelector
         orderType={ORDER_TYPE.SUBSCRIPTION}
@@ -268,19 +307,25 @@ export default function SubscriptionOrderContainer({
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
         originPrice={originPrice}
-        appliedDefaultDiscountPrice={originPrice}
-        freeCondition={undefined}
-        deliveryPrice={undefined}
+        appliedDefaultDiscountPrice={subscriptionOrderSheetData.subscribeDto.nextPaymentPrice}
         discountGrade={subscriptionOrderSheetData.subscribeDto.discountGrade}
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />
       <Divider />
-      <OrderTerms />
+      <OrderTerms
+        orderType={ORDER_TYPE.SUBSCRIPTION}
+        showErrors={showTermsErrors}
+        ref={termsRef}
+      />
       <Divider />
       <OrderSection padding="20px">
         <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
       </OrderSection>
-      <SubscriptionNotice/>
+      <Divider />
+      <SubscriptionNotice />
+      {/* <FooterButton isDisabled={false} onClick={handleTest}>
+        {formatNumberWithCommas(paymentPrice)}원 결제하기
+      </FooterButton> */}
       <FooterButton isDisabled={false} onClick={handlePaymentSubmit}>
         {formatNumberWithCommas(paymentPrice)}원 결제하기
       </FooterButton>

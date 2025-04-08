@@ -1,14 +1,14 @@
 import {
+  GeneralOrderSheetResponse,
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
-  DeliveryDto,
 } from "@/types";
 
 const initialGeneralOrderBody: SaveGeneralOrderRequest = {
   orderItemDtoList: [],
   deliveryDto: {
-    name: "",
-    phone: "",
+    recipientName: "",
+    phoneNumber: "",
     zipcode: "",
     street: "",
     detailAddress: "",
@@ -21,18 +21,19 @@ const initialGeneralOrderBody: SaveGeneralOrderRequest = {
   discountReward: 0,
   discountCoupon: 0,
   overDiscount: 0,
+  memberCouponId: null,
+  finalPrice: 0,
   paymentPrice: 0,
   paymentMethod: "NAVER_PAY",
-  agreePrivacy: true,
-  brochure: false,
+  agreePrivacy: false,
 };
 
 const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
   customerUid: "",
   memberCouponId: null,
   deliveryDto: {
-    name: "",
-    phone: "",
+    recipientName: "",
+    phoneNumber: "",
     zipcode: "",
     street: "",
     detailAddress: "",
@@ -51,18 +52,43 @@ const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
   paymentPrice: 0,
   subscriptionMonth: null,
   agreePrivacy: true,
-  brochure: false,
+};
+
+const initialGeneralOrderSheetResponse: GeneralOrderSheetResponse = {
+  defaultAddress: {
+    city: '',
+    default: false,
+    deliveryName: null,
+    detailAddress: '',
+    id: 0,
+    phoneNumber: '',
+    recipientName: '',
+    request: '',
+    street: '',
+    zipcode: '',
+  },
+  deliveryAddress: [],
+  deliveryPrice: 0,
+  email: '',
+  freeCondition: 0,
+  nextSubscribeDeliveryDate: '',
+  orderItemDtoList: [],
+  orderPrice: 0,
+  orderStatus: 'UNSUBSCRIBE_ORDER', // 초기값으로 적당한 기본 상태를 설정
+  reward: 0,
+};
+
+const initialDeliveryDto = {
+  deliveryId: 0,
+  deliveryName: "",
+  default: false,
+  recipientName: "",
+  phoneNumber: "",
+  zipcode: "",
+  street: "",
+  detailAddress: "",
+  request: "",
 };
 
 
-const initialDeliveryDto: DeliveryDto = {
-  name: null,
-  phone: null,
-  zipcode: null,
-  street: null,
-  detailAddress: null,
-  request: null,
-};
-
-
-export { initialDeliveryDto, initialGeneralOrderBody, initialSubscriptionOrderBody }
+export { initialDeliveryDto, initialGeneralOrderBody, initialSubscriptionOrderBody, initialGeneralOrderSheetResponse }

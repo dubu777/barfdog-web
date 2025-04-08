@@ -15,7 +15,7 @@ export const bundleDeliveryBox = recipe({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
-    alignSelf: "stretch",
+    width: "100%",
     padding: "12px",
     borderRadius: "8px",
     cursor: "pointer",
@@ -29,8 +29,17 @@ export const bundleDeliveryBox = recipe({
         border: `1px solid ${themeVars.colors.gray.gray200}`,
       },
     },
+    isAvailableBundle: {
+      true: {
+
+      },
+      false: {
+        backgroundColor: themeVars.colors.gray.gray50,
+      },
+    },
   },
   defaultVariants: {
     isSelected: false,
+    isAvailableBundle: true,
   },
 });

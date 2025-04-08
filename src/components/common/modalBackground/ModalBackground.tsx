@@ -7,12 +7,14 @@ interface ModalBackgroundProps {
   children: React.ReactNode;
   isVisible: boolean;
   closeOnBackgroundClick?: boolean;
+  isDimmed?: boolean;
   onClose: () => void;
 }
 export default function ModalBackground({
   children,
   isVisible,
   closeOnBackgroundClick = true,
+  isDimmed = true,
   onClose,
 }: ModalBackgroundProps) {
   const { preventScroll, allowScroll } = modalScroll();
@@ -32,7 +34,7 @@ export default function ModalBackground({
       {isVisible && (
         <ModalPortal>
           <div
-            className={styles.modalBackground}
+            className={styles.modalBackground({isDimmed})}
             onClick={closeOnBackgroundClick ? onClose : undefined}
           >
             {children}

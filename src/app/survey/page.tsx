@@ -1,15 +1,16 @@
 "use client";
 
 import useSurveyStep from "@/hooks/useSurveyStep";
-import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
-import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
-import SurveyPagination from "@/components/pages/survey/surveyPagination/SurveyPagination";
+import { getSurveySteps } from "@/components/pages/subscription/survey/surveySteps/SurveySteps";
+import SurveyForm from "@/components/pages/subscription/survey/surveyForm/SurveyForm";
+import SurveyPagination from "@/components/pages/subscription/survey/surveyPagination/SurveyPagination";
 import * as styles from "./Survey.css";
 import { useSurveyForm } from "@/hooks/useSurveyForm";
 import {
   defaultStepValues,
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
+import NewHeader from "@/components/layout/newHeader/NewHeader";
 
 export default function SurveyPage() {
   const {
@@ -55,6 +56,7 @@ export default function SurveyPage() {
 
   return (
     <div className={styles.surveyLayoutContainer}>
+      <NewHeader leftTitle="이전" showBackButton showCloseButton />
       <SurveyForm
         currentStep={currentStep}
         direction={direction}

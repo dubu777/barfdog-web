@@ -11,7 +11,7 @@ export interface CookieOptions {
 const defaultCookieOptions: CookieOptions = {
 	expires: 10,
   path: '/',
-  sameSite: 'strict',
+  sameSite: 'none',
   secure: true,
 };
 

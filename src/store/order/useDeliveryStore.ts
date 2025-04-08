@@ -1,34 +1,30 @@
 import { create } from "zustand";
-import { DeliveryDto } from "@/types";
+import { ClientDeliveryDto } from "@/types";
 import { initialDeliveryDto } from "@/config/orderInitialValues";
 
 interface DeliveryState {
-  deliveryDto: DeliveryDto;
-  backupDeliveryDto: DeliveryDto;
-  deliveryId: number | null;
-  isBundleDelivery: boolean;
-  defaultAddressId: number | null;
-  selectedAddressId: number | null;
-  setDeliveryDto: (delivery: DeliveryDto) => void;
-  setBackupDeliveryDto: (delivery: DeliveryDto) => void;
+  deliveryDto: ClientDeliveryDto; // 서버에 전송할 delivery 값
+  backupDeliveryDto: ClientDeliveryDto; // 묶음 배송 선택에 영향 받지 않는 값
+  bundleDeliveryDto: ClientDeliveryDto; // 묶음 배송으로 선택한 delivery 값
+  deliveryId: number | null; // 묶음 배송지 delivery Id
+  isBundleDelivery: boolean; // 묶음 배송 여부
+  setDeliveryDto: (delivery: ClientDeliveryDto) => void;
+  setBackupDeliveryDto: (delivery: ClientDeliveryDto) => void;
+  setBundleDeliveryDto: (delivery: ClientDeliveryDto) => void;
   setDeliveryId: (id: number | null) => void;
   setIsBundleDelivery: (isBundleDelivery: boolean) => void;
-  setDefaultAddressId: (id: number | null) => void;
-  setSelectedAddressId: (id: number | null) => void;
 }
 
 export const useDeliveryStore = create<DeliveryState>((set) => ({
   deliveryDto: initialDeliveryDto,
   backupDeliveryDto: initialDeliveryDto,
+  bundleDeliveryDto: initialDeliveryDto,
   deliveryId: null,
   isBundleDelivery: false,
-  defaultAddressId: null,
-  selectedAddressId: null,
   setDeliveryDto: (delivery) => set({ deliveryDto: delivery }),
   setBackupDeliveryDto: (delivery) => set({ backupDeliveryDto: delivery }),
+  setBundleDeliveryDto: (delivery) => set({ bundleDeliveryDto: delivery }),
   setDeliveryId: (id) => set({ deliveryId: id }),
   setIsBundleDelivery: (isBundleDelivery) =>
     set({ isBundleDelivery }),
-  setDefaultAddressId: (id) => set({ defaultAddressId: id }),
-  setSelectedAddressId: (id) => set({ selectedAddressId: id }),
 }));

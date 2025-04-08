@@ -1,4 +1,4 @@
-import { Coupon } from "./subscription";
+import { Coupon, PlanName } from "./subscription";
 
 export type {
   SubscriptionOrderData,
@@ -27,6 +27,14 @@ export type {
   SuccessGeneralOrderResponse,
   OrderMessage,
   PaymentMethodInfo,
+  BundleDeliveryAddress,
+  DefaultAddress,
+  ClientDeliveryDto,
+  OrderStatus,
+  SubscriptionOrderSheetResponse,
+  PaymentResponse,
+  PaymentData,
+  PaymentValidationData,
 };
 
 interface SuccessGeneralPaymentRequest {
@@ -48,23 +56,21 @@ interface SuccessGeneralOrderResponse {
 
 
 interface SaveSubscriptionOrderRequest {
+  agreePrivacy: boolean; // 개인정보 제공 동의 여부
   customerUid: string; // 고유 사용자 ID
-  memberCouponId?: number | null; // 적용된 쿠폰 ID
   deliveryDto: DeliveryDto; // 배송지 정보
   deliveryPrice: number; // 배송비
   discountCoupon: number; // 쿠폰 할인 금액
   discountGrade: number; // 등급 할인 금액
   discountReward: number; // 적립금 할인 금액
-  discountSubscriptionMonth: number; // 구독 기간 할인 금액
+  discountSubscribeAlliance: number; // 제휴사 할인 금액
   discountTotal: number; // 총 할인 금액
+  memberCouponId?: number | null; // 적용된 쿠폰 ID
   nextDeliveryDate: string; // 다음 배송 날짜
-  orderPrice: number; // 주문 금액
+  orderPrice: number; // 플랜 할인만 적용된 금액
   overDiscount: number; // 초과 할인 금액
   paymentMethod: PaymentMethod; // 결제 방식
   paymentPrice: number; // 실제 결제 금액
-  subscriptionMonth: number | null; // 구독 기간 (개월)
-  agreePrivacy: boolean; // 개인정보 제공 동의 여부
-  brochure: boolean; // 브로슈어 수령 여부
 }
 
 // 구독, 일반 결제 주문 정보 저장 응답
@@ -83,25 +89,23 @@ interface SaveGeneralOrderRequest {
   orderItemDtoList: OrderItemDto[];
   deliveryDto: DeliveryDto;
   deliveryId: number | null;
-  orderPrice: number;
+  orderPrice: number; // 어드민 상품 할인만 적용된 금액
   deliveryPrice: number;
   discountTotal: number;
   discountReward: number;
   discountCoupon: number;
-  overDiscount: number;
   paymentPrice: number;
+  overDiscount: number;
+  memberCouponId: number | null;
+  finalPrice: number;
   paymentMethod: PaymentMethod;
   agreePrivacy: boolean;
-  brochure: boolean;
 }
 // 각 상품 정보 타입
 interface OrderItemDto {
   itemId: number; // 상품 ID
   amount: number; // 상품 수량
-  selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
-  memberCouponId?: number | null; // 쿠폰 ID (옵션)
-  discountAmount: number; // 할인 금액
-  finalPrice: number; // 최종 상품 가격
+  optionDtoList: SelectOptionDto[]; // 상품 옵션 목록
 }
 
 // 상품 옵션 정보 타입
@@ -112,13 +116,20 @@ interface SelectOptionDto {
 
 // 배송 정보 타입
 interface DeliveryDto {
-  name: string | null; // 수령자 이름
-  phone: string | null; // 수령자 전화번호
-  zipcode: string | null; // 우편번호
-  street: string | null; // 도로명 주소
-  detailAddress: string | null; // 상세 주소
-  request: string | null; // 배송 요청사항
+  recipientName: string; // 수령자 이름
+  phoneNumber: string; // 수령자 전화번호
+  zipcode: string; // 우편번호
+  street: string; // 도로명 주소
+  detailAddress: string; // 상세 주소
+  request: string; // 배송 요청사항
 }
+
+interface ClientDeliveryDto extends DeliveryDto {
+  deliveryId: number;
+  deliveryName: string;
+  default: boolean;
+}
+
 
 interface GeneralOrderItemRequest {
   itemDto: {
@@ -133,61 +144,93 @@ interface GeneralOrderItemRequest {
 
 // 일반 주문 시트 조회 요청
 interface GeneralOrderSheetRequest {
-  orderItemDtoList: GeneralOrderItemRequest[];
+  orderItemDtoList: OrderItemDto[];
 }
 
 interface OptionDto {
-  optionId: number;
-  name: string;
-  price: number;
   amount: number;
+  name: string;
+  optionId: number;
+  price: number;
 }
 
 interface GeneralOrderItem {
-  itemId: number;
   amount: number;
-  name: string;
-  itemType: string;
-  optionDtoList?: OptionDto[];
-  orderLinePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
-  originalOrderLinePrice: number; // 자체 할인 전 상품 + 옵션 가격 총 가격
-  discountAmount: number;
-  memberCouponId: number | null;
   deliveryFree: boolean;
+  discountedItemAndOptionPrice: number;
+  itemId: number;
+  itemImageFilename: string;
+  itemOriginalPrice: number; // 상품 원금 + 옵션 가격 총 가격
+  itemSalePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
+  itemType: string;
+  name: string;
+  optionDtoList?: OptionDto[];
 }
 
 
 interface DefaultAddress {
-  deliveryName: string | null;
-  zipcode: string;
   city: string;
-  street: string;
+  default: boolean;
+  deliveryName: string | null;
   detailAddress: string;
+  id: number;
+  phoneNumber: string;
+  recipientName: string;
+  request: string;
+  street: string;
+  zipcode: string;
 }
+
+interface BundleDeliveryAddress {
+  deliveryName: string;
+  detailAddress: string; // 상세 주소
+  id: number;
+  recipientName: string; // 수령자 이름
+  phoneNumber: string; // 수령자 전화번호
+  zipcode: string; // 우편번호
+  street: string; // 도로명 주소
+}
+
+type OrderStatus = "UNSUBSCRIBE_ORDER" | "TODAY_IS_NEXT_DELIVERY" | "SUBSCRIBE_ORDER"
 
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
-  brochure: boolean;
-  // coupons: Coupon[];
   defaultAddress: DefaultAddress;
-  deliveryId: number;
+  deliveryAddress: BundleDeliveryAddress[];
   deliveryPrice: number;
   email: string;
   freeCondition: number;
-  name: string;
+  nextSubscribeDeliveryDate: string;
   orderItemDtoList: GeneralOrderItem[];
   orderPrice: number;
-  phoneNumber: string;
+  orderStatus: OrderStatus;
   reward: number;
-  _links: {
-    self: { href: string };
-    order_general: { href: string };
-  };
 }
 
 interface OrderItem {
   id: number;
   name: string;
+}
+
+
+
+interface SubscriptionOrderSheetResponse {
+  defaultAddress: DefaultAddress;
+  email: string;
+  grade: string;
+  gradeDiscountPercent: number;
+  nextDeliveryDate: string;
+  recipeNameList: string[];
+  reward: number;
+  subscribeDto: SubscribeDto;
+}
+
+interface SubscribeDto {
+  id: number;
+  plan: PlanName; 
+  nextPaymentPrice: number;
+  discountGrade: number;
+  oneMealGramsPerRecipe: string;
 }
 
 interface OrderRecipeDto {
@@ -323,6 +366,35 @@ interface PaymentMethodInfo {
   imageUrl?: string;
 }
 
+interface PaymentResponse {
+  success: boolean;
+  customer_uid: string;
+  error_msg?: string;
+  imp_uid?: string;
+  merchant_uid?: string;
+}
+
+interface PaymentData {
+  customerUid: string;
+  merchantUid: string;
+  amount: number;
+  name: string;
+  buyerName: string;
+  buyerTel: string;
+  buyerEmail: string;
+  buyerAddr: string;
+  buyerPostcode: string;
+}
+
+interface PaymentValidationData {
+  orderId: number;
+  impUid: string;
+  customerUid: string;
+  discountReward: number;
+  merchantUid: string;
+}
+
+
 type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
 
 type OrderDetailType = 'general' | 'subscribe';
@@ -331,4 +403,4 @@ type OrderType = "SUBSCRIBE" | "GENERAL";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
 
-type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM" | "AGREE_SUBSCRIPTION" | "SUBSCRIPTION_TITLE" | "SUBSCRIPTION_SUBTITLE" | "NO_AVAILABLE_COUPONS" | "COUPON_PLACEHOLDER"
+type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM" | "AGREE_SUBSCRIPTION" | "BUNDLE_DELIVERY_TITLE" | "BUNDLE_DELIVERY_SUBTITLE" | "BUNDLE_DELIVERY_UNAVAILABLE_TITLE" | "BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE" | "NO_AVAILABLE_COUPONS" | "COUPON_PLACEHOLDER"

@@ -13,10 +13,3 @@ export function useGetSubscriptionOrder(subscribeId: number, queryOptions?: UseS
   })
 }
 
-
-export async function prefetchGetSubscriptionOrder(queryClient: QueryClient, subscribeId: number) {
-    await queryClient.prefetchQuery({
-      queryFn: () => getSubscriptionOrder(subscribeId),
-      queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_SUBSCRIPTION_ORDER, subscribeId],
-    });
-}
