@@ -33,6 +33,9 @@ const shouldRedirectToSetPassword = async (pathname: string) => {
 export async function middleware(req: NextRequest) {
 	console.log('요청된 URL:', req.url);
 
+const token = req.cookies.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
+const isAuth = isAuthenticated(token);
+
 	// 현재 경로 확인
 	const pathname = new URL(req.url).pathname;
 	let needToSetPassword = false;
@@ -47,12 +50,13 @@ export async function middleware(req: NextRequest) {
 
 	console.log('needToSetPassword', needToSetPassword)
   // 보호된 경로에 대한 접근 체크
-  if (isProtectedPath(pathname)) {
-    const token = req.cookies.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
-    if (!isAuthenticated(token)) {
+  if (isProtectedPath(pathname) && !isAuth) {
       return NextResponse.redirect(new URL('/login', req.nextUrl.origin));
-    }
   }
+
+	if (pathname === '/login' && isAuth) {	
+      return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+    }
 
 	if (needToSetPassword && pathname !== '/mypage/account/set-password') {
 		const currentPathSegment = pathname.split('/').pop();
@@ -70,6 +74,7 @@ export const config = {
   matcher: [
     '/mypage/:path*',
     '/order/:path*',
-    '/subscription/:path*'
+    '/subscription/:path*',
+		'/login',
   ]
 }
