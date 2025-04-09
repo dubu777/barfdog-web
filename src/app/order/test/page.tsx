@@ -152,9 +152,6 @@ export default function GeneralShopTest() {
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
       <Button onClick={handleLogin}>로그인</Button>
-      {/* <Button onClick={handleRefresh}>재발급 테스트</Button>
-      <Button onClick={handleBottomSheet}>Bottom Sheet 테스트</Button>
-      <Button onClick={handleModal}>Modal 테스트</Button> */}
       <Modal
         title="모달 테스트"
         content="모달 테스트 중입니다"
@@ -162,17 +159,6 @@ export default function GeneralShopTest() {
         onClose={onModalClose}
         confirmText="확인"
       />
-      <DeliveryScheduleBottomSheet
-        isOpen={isNextPaymentBottomSheetOpen}
-        onClose={onNextPaymentBottomSheetClose}
-        deliveryDate="2025-04-12"
-      />
-      {/* <DefaultText type="title4">안녕</DefaultText>
-      <DefaultText type="caption">안녕</DefaultText> */}
-      {/* <NextPaymentBottomSheet
-        isOpen={isNextPaymentBottomSheetOpen}
-        onClose={onNextPaymentBottomSheetClose}
-      /> */}
     </div>
   );
 }

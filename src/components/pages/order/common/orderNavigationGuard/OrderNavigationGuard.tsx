@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode, useCallback } from "react";
+import { useState, ReactNode, useCallback, useEffect } from "react";
 import Modal from "@/components/common/modal/Modal";
 import { useRouter } from "next/navigation";
 import { useNavigationGuard } from "@/hooks/useNavigationGuard";
@@ -42,12 +42,19 @@ export default function OrderNavigationGuard({
       }
     }
   };
-  const { confirmLeaving } = useNavigationGuard({
+
+  const { confirmLeaving, disableGuard } = useNavigationGuard({
     onConfirm,
     isLeaving,
     setIsLeaving,
     setShowModal,
   });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      (window as any).__disableNavigationGuard = disableGuard;
+    }
+  }, [disableGuard]);
 
   const handleContinueOrder = () => {
     setShowModal(false);

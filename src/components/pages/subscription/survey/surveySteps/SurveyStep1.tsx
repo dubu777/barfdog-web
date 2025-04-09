@@ -59,11 +59,7 @@ export default function SurveyStep1({
           확인
         </Button>
       </div>
-      {errors && (
-        <DefaultText type="caption">
-          {errors.step6?.weight?.message}
-        </DefaultText>
-      )}
+      <DefaultText type="caption">중복 체크</DefaultText>
     </>
   );
 }

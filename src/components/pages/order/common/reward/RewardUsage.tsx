@@ -24,12 +24,14 @@ interface RewardUsageProps {
   maxAvailableReward: number;
   setValue: UseFormSetValue<OrderFormValues>;
   orderType: OrderType;
+  isAutoUseReward?: boolean;
 }
 
 export default function RewardUsage({
   control,
   maxAvailableReward,
   orderType,
+  isAutoUseReward = false,
   setValue,
 }: RewardUsageProps) {
   const { userTotalReward, autoUseReward, setAppliedReward, setAutoUseReward } =
@@ -53,7 +55,6 @@ export default function RewardUsage({
     setAutoUseReward
   );
 
-  const tempAutoUseRewardBoolean = false;
   return (
     <OrderSection
       title="적립금"
@@ -114,11 +115,13 @@ export default function RewardUsage({
         </Button>
       </div>
       {orderType === ORDER_TYPE.SUBSCRIPTION &&
-        (tempAutoUseRewardBoolean ? (
+        (isAutoUseReward ? (
           <div className={colStartWrapper({gap: 8})}>
             <InfoBox text="적립금 자동 사용 적용중" color="blue" fullWidth />
+            <div className={colStartWrapper({gap: 0})}>
             <DefaultText type="caption" color="gray700">{ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_1}</DefaultText>
             <DefaultText type="caption" color="gray700">{ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_2}</DefaultText>
+            </div>
           </div>
         ) : (
           <LabeledCheckbox

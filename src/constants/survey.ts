@@ -390,11 +390,12 @@ ingredients: ["양"],
 
 // 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
 const SURVEY_NO_AUTO_NEXT_STEP = new Set<SurveyStepKeys>([
-  "step1",
-  "step6",
+  "step3",
+  "step10",
+  "step11",
   "step12",
   "step13",
-  "step15",
+  "step14",
 ]);
 
 // 빈 값이어도 검증 통과 시킬 필드들을 관리합니다.

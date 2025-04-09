@@ -10,12 +10,14 @@ import { formatDateToKorean } from "@/utils";
 interface DeliveryScheduleBottomSheetProps {
   isOpen: boolean;
   deliveryDate: string;
+  nextDeliveryDate: string;
   onClose: () => void;
 }
 
 export default function DeliveryScheduleBottomSheet({
   isOpen,
   deliveryDate,
+  nextDeliveryDate,
   onClose,
 }: DeliveryScheduleBottomSheetProps) {
   return (

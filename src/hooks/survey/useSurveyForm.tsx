@@ -39,8 +39,8 @@ export function useSurveyForm<S extends yup.ObjectSchema<any>>(
 
     // optionalFields에 포함된 필드는 allFilled 검증에서 제외
     const allFilled = Object.entries(stepValues).every(([key, value]) => {
-      if (SURVEY_OPTIONAL_FIELDS.has(key)) return true;
-      // 문자열인 경우: 공백 제거 후 빈 문자열 아닌지 확인
+      // if (SURVEY_OPTIONAL_FIELDS.has(key)) return true;
+      // // 문자열인 경우: 공백 제거 후 빈 문자열 아닌지 확인
       if (typeof value === "string") {
         return value.trim() !== "";
       }

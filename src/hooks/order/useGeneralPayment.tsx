@@ -13,7 +13,7 @@ import { useSuccessGeneralPayment } from '@/api/order/mutations/useSuccessGenera
 import { useFailGeneralPayment } from '@/api/order/mutations/useFailGeneralPayment';
 import useDeviceState from '@/hooks/useDeviceState';
 import { buildGeneralPaymentRequest } from '@/store/order/paymentUtils';
-import { usePayment } from '../usePayment';
+import { usePayment } from './usePayment';
 
 interface UseGeneralPaymentProps {
   generalOrderSheetData: GeneralOrderSheetResponse;
@@ -28,12 +28,12 @@ export function useGeneralPayment({
   const [isProcessing, setIsProcessing] = useState(false);
 
   // React Query mutations
-  const { mutateAsync: saveOrder } = useSaveGeneralOrder();
+  const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
   const { mutateAsync: successPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failPayment } = useFailGeneralPayment();
 
   const handlePaymentResponse = useCallback(async (
-    response: GeneralIamportResponse,
+    response: GeneralIamportResponse, // 포트원 결제 요청 Response
     orderId: number,
     requestBody: SaveGeneralOrderRequest
   ) => {
@@ -69,16 +69,16 @@ export function useGeneralPayment({
     setIsProcessing(true);
 
     try {
-      const saveResponse = await saveOrder(requestBody);
+      const saveOrderResponse = await saveGeneralOrder(requestBody);
 
-      if (saveResponse.status !== 200) {
+      if (saveOrderResponse.status !== 200) {
         throw new Error("결제 요청 실패: 서버 검증 실패");
       }
 
       const paymentData = buildGeneralPaymentRequest({
         requestBody,
-        id: saveResponse.data.id,
-        merchantUid: saveResponse.data.merchantUid,
+        orderId: saveOrderResponse.data.id,
+        merchantUid: saveOrderResponse.data.merchantUid,
         generalOrderSheetData,
         isMobileDevice,
       });
@@ -87,7 +87,7 @@ export function useGeneralPayment({
         orderType: ORDER_TYPE.GENERAL,
         paymentData,
         callback: (response) => {
-          handlePaymentResponse(response, saveResponse.data.id, requestBody);
+          handlePaymentResponse(response, saveOrderResponse.data.id, requestBody);
         },
       };
 
@@ -98,7 +98,7 @@ export function useGeneralPayment({
     } finally {
       setIsProcessing(false);
     }
-  }, [generalOrderSheetData, isMobileDevice, isProcessing, handlePaymentResponse, saveOrder, requestIamportPayment]);
+  }, [generalOrderSheetData, isMobileDevice, isProcessing, handlePaymentResponse, saveGeneralOrder, requestIamportPayment]);
 
   return {
     processPayment,

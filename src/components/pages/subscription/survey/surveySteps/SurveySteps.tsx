@@ -20,7 +20,6 @@ import {
   FieldErrors,
 } from "react-hook-form";
 import {
-  SurveyStepKeys,
   SurveyStepValues,
 } from "@/utils/validation/surveyValidation";
 

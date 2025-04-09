@@ -1,6 +1,6 @@
 // src/hooks/useSubscriptionPayment.ts
 import { useState, useCallback } from 'react';
-import { usePayment } from '../usePayment';
+import { usePayment } from './usePayment';
 import { 
   SaveSubscriptionOrderRequest, 
   SubscriptionOrderSheetResponse,
@@ -31,33 +31,33 @@ export function useSubscriptionPayment({
   isMobileDevice,
 }: UseSubscriptionPaymentProps) {
   const router = useRouter();
-  const { requestIamportPayment } = usePayment();
+  const { requestIamportPayment } = usePayment(); // 포트원 호출
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // React Query mutations
-  const { mutateAsync: saveOrder } = useSaveSubscriptionOrder();
-  const { mutateAsync: createIamportPayment } = useCreateIamportSubscriptionPayment();
+  const { mutateAsync: saveSubscriptionOrder } = useSaveSubscriptionOrder(); // 서버에 구독 주문 정보 저장
+  const { mutateAsync: createIamportPayment } = useCreateIamportSubscriptionPayment(); // 포트원 결제 요청 /subscribe/payments/again 호출
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
   const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
 
+  // 데스크탑에서만 사용될 최종 결제 처리 로직
   const handlePaymentResponse = useCallback(async (
-    response: SubscriptionIamportResponse,
-    saveResponse: { data: { merchantUid: string; id: number } },
+    response: SubscriptionIamportResponse, // 포트원 결제 요청의 Response
+    saveOrderResponse: { data: { merchantUid: string; id: number } }, // 구독 결제 정보 저장 요청의 Response
     paymentData: CreateIamportSubscriptionPaymentRequest,
-    requestBody: SaveSubscriptionOrderRequest
+    requestBody: SaveSubscriptionOrderRequest // 구독 결제 정보 저장 요청의 Request
   ) => {
     if (!response.success) {
       console.error("아임포트 결제 실패", response.error_msg);
-      router.push("/order/order-failed");
+      // router.push("/order/failed");
       return;
     }
 
     try {
       const orderData = {
         customer_uid: response.customer_uid,
-        merchant_uid: saveResponse.data.merchantUid,
+        merchant_uid: saveOrderResponse.data.merchantUid,
         amount: requestBody.paymentPrice,
         name: paymentData.name,
         buyer_name: paymentData.buyer_name,
@@ -80,7 +80,7 @@ export function useSubscriptionPayment({
       }
 
       const isValidPayment = await validatePayment({
-        orderId: saveResponse.data.id,
+        orderId: saveOrderResponse.data.id,
         impUid: finalResponse.imp_uid,
       });
 
@@ -88,26 +88,26 @@ export function useSubscriptionPayment({
         customerUid: response.customer_uid,
         discountReward: requestBody.discountReward,
         impUid: finalResponse.imp_uid,
-        merchantUid: saveResponse.data.merchantUid,
+        merchantUid: saveOrderResponse.data.merchantUid,
       };
 
       if (isValidPayment) {
         await successPayment({
-          orderId: saveResponse.data.id,
+          orderId: saveOrderResponse.data.id,
           body: finalBody,
         });
-        router.push("/order/order-completed");
+        router.push("/order/completed");
       } else {
         await invalidPayment({
-          orderId: saveResponse.data.id,
+          orderId: saveOrderResponse.data.id,
           body: finalBody,
         });
-        await failPayment(saveResponse.data.id);
-        router.push("/order/order-failed");
+        await failPayment(saveOrderResponse.data.id);
+        // router.push("/order/failed");
       }
     } catch (error) {
       console.error("결제 처리 실패", error);
-      router.push("/order/order-failed");
+      // router.push("/order/failed");
     }
   }, [router, createIamportPayment, validatePayment, successPayment, invalidPayment, failPayment]);
 
@@ -116,38 +116,44 @@ export function useSubscriptionPayment({
     setIsProcessing(true);
 
     try {
-      const saveResponse = await saveOrder({
+      const saveOrderResponse = await saveSubscriptionOrder({
         subscribeId,
         body: requestBody,
       });
 
-      if (saveResponse.status !== 200) {
-        throw new Error(`구독 주문 저장 실패 (status: ${saveResponse.status})`);
+      if (saveOrderResponse.status !== 200) {
+        throw new Error(`구독 주문 저장 실패 (status: ${saveOrderResponse.status})`);
       }
 
+      // 포트원 결제 요청 데이터 빌드
       const paymentData = buildSubscriptionPaymentRequest({
         requestBody,
         subscriptionOrderSheetData,
         isMobileDevice,
+        orderId: saveOrderResponse.data.id,
+        merchantUid: saveOrderResponse.data.merchantUid,
       });
 
       const paymentParams: PaymentRequestParams<OrderType> = {
         orderType: ORDER_TYPE.SUBSCRIPTION,
         paymentData,
         callback: (response) => {
-          const subscriptionResponse = response as SubscriptionIamportResponse;
-          handlePaymentResponse(subscriptionResponse, saveResponse, paymentData, requestBody);
+          if (!isMobileDevice) {
+            // 데스크탑인 경우에만: 콜백에서 바로 최종 처리 진행, 모바일은 리다리엑트 경로에서 처리
+            const subscriptionResponse = response as SubscriptionIamportResponse;
+            handlePaymentResponse(subscriptionResponse, saveOrderResponse, paymentData, requestBody);
+          }
         },
       };
 
       requestIamportPayment(paymentParams);
     } catch (error) {
       console.error("결제 요청 실패", error);
-      router.push("/order/order-failed");
+      // router.push("/order/failed");
     } finally {
       setIsProcessing(false);
     }
-  }, [subscribeId, subscriptionOrderSheetData, isMobileDevice, isProcessing, handlePaymentResponse, saveOrder, requestIamportPayment]);
+  }, [subscribeId, subscriptionOrderSheetData, isMobileDevice, isProcessing, handlePaymentResponse, saveSubscriptionOrder, requestIamportPayment]);
 
   return {
     processPayment,

@@ -62,7 +62,7 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
         )}
         </div>
         {orderType === ORDER_TYPE.SUBSCRIPTION && (
-          <>
+        <div className={styles.orderTermWrapper}>
             <LabeledCheckbox
               value={true}
               isChecked={isSubscriptionSelected(true)}
@@ -81,7 +81,7 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
                 </DefaultText>
               </div>
             )}
-          </>
+          </div>
         )}
       </OrderSection>
     );

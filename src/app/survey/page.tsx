@@ -1,11 +1,11 @@
 "use client";
 
-import useSurveyStep from "@/hooks/useSurveyStep";
+import useSurveyStep from "@/hooks/survey/useSurveyStep";
 import { getSurveySteps } from "@/components/pages/subscription/survey/surveySteps/SurveySteps";
 import SurveyForm from "@/components/pages/subscription/survey/surveyForm/SurveyForm";
 import SurveyPagination from "@/components/pages/subscription/survey/surveyPagination/SurveyPagination";
 import * as styles from "./Survey.css";
-import { useSurveyForm } from "@/hooks/useSurveyForm";
+import { useSurveyForm } from "@/hooks/survey/useSurveyForm";
 import {
   defaultStepValues,
   surveyStepsSchema,

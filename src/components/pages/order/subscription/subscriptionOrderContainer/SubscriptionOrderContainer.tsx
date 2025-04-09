@@ -7,14 +7,11 @@ import Divider from "@/components/common/divider/Divider";
 import { useOrderStore } from "@/store/order/useOrderStore";
 import {
   SaveSubscriptionOrderRequest,
-  SubscriptionIamportRequest,
-  SubscriptionIamportResponse,
 } from "@/types";
 import { useInitializeSubscriptionOrder } from "@/hooks/order/useInitializeSubscriptionOrder";
 import useDeviceState from "@/hooks/useDeviceState";
 import { calculateOriginPrice } from "@/utils/order/calculateOriginPrice";
 import { useGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
-import { useRouter } from "next/navigation";
 import OrderSummary from "../../common/orderSummary/OrderSummary";
 import RewardUsage from "../../common/reward/RewardUsage";
 import {
@@ -35,11 +32,11 @@ import { useRef, useState } from "react";
 import { useSubscriptionPayment } from "@/hooks/order/useSubscriptionPayment";
 import { useToastStore } from "@/store/useToastStore";
 import { usePaymentStore } from "@/store/order/usePaymentStore";
+import DeliverySchedule from "../deliverySchedule/DeliverySchedule";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
 }
-
 
 export default function SubscriptionOrderContainer({
   subscribeId,
@@ -52,7 +49,6 @@ export default function SubscriptionOrderContainer({
     (state) => state.maxAvailableReward
   );
   const paymentPrice = usePaymentStore((state) => state.paymentPrice);
-
 
   const addToast = useToastStore((state) => state.addToast);
   const [showTermsErrors, setShowTermsErrors] = useState(false);
@@ -101,10 +97,15 @@ export default function SubscriptionOrderContainer({
       setTimeout(scrollToTerms, 100);
       return;
     }
-
-    const requestBody = getRequestBody(ORDER_TYPE.SUBSCRIPTION) as SaveSubscriptionOrderRequest;
+    // 결제 요청 시 네비게이션 가드를 비활성화
+    if ((window as any).__disableNavigationGuard) {
+      (window as any).__disableNavigationGuard();
+    }
+    const requestBody = getRequestBody(
+      ORDER_TYPE.SUBSCRIPTION
+    ) as SaveSubscriptionOrderRequest;
     console.log("requestBody", requestBody);
-    // await processPayment(requestBody);
+    await processPayment(requestBody);
   };
   // <-------- 결제 함수
 
@@ -116,7 +117,10 @@ export default function SubscriptionOrderContainer({
         subscriptionOrderSheetData={subscriptionOrderSheetData}
       /> */}
       <Divider />
-      {/* <DeliverySchedule /> */}
+      <DeliverySchedule
+        deliveryDate={subscriptionOrderSheetData.deliveryDate}
+        nextDeliveryDate={subscriptionOrderSheetData.nextDeliveryDate}
+      />
       <Divider />
       <CouponSelector
         orderType={ORDER_TYPE.SUBSCRIPTION}
@@ -128,6 +132,7 @@ export default function SubscriptionOrderContainer({
         control={control}
         setValue={setValue}
         maxAvailableReward={maxAvailableReward}
+        isAutoUseReward={subscriptionOrderSheetData.autoUseReward}
       />
       <Divider />
       <PaymentMethod />
@@ -135,7 +140,9 @@ export default function SubscriptionOrderContainer({
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
         originPrice={originPrice}
-        appliedDefaultDiscountPrice={subscriptionOrderSheetData.subscribeDto.nextPaymentPrice}
+        appliedDefaultDiscountPrice={
+          subscriptionOrderSheetData.subscribeDto.nextPaymentPrice
+        }
         discountGrade={subscriptionOrderSheetData.subscribeDto.discountGrade}
         plan={subscriptionOrderSheetData.subscribeDto.plan}
       />
@@ -151,11 +158,8 @@ export default function SubscriptionOrderContainer({
       </OrderSection>
       <Divider />
       <SubscriptionNotice />
-      {/* <FooterButton isDisabled={false} onClick={handleTest}>
-        {formatNumberWithCommas(paymentPrice)}원 결제하기
-      </FooterButton> */}
       <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>
-      {isProcessing
+        {isProcessing
           ? "결제 처리 중..."
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
