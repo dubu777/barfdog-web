@@ -18,7 +18,7 @@ export default function SurveyStep4({
   petName,
 }: SurveyStepProps) {
   return (
-    <div className={styles.surveyStep4Container}>
+    <div className={styles.surveyContainer}>
       <Controller
         name="step4.dogSize"
         control={control}

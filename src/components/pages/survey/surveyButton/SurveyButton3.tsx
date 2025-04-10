@@ -1,7 +1,7 @@
 "use client";
-import * as styles from "./SurveyButton.css";
+import * as styles from "./SurveyButton3.css";
 
-interface SurveyButtonProps {
+interface SurveyButton3Props {
   value: string | boolean | number;
   isChecked: boolean;
   label: string;
@@ -9,13 +9,13 @@ interface SurveyButtonProps {
   layoutType?: "row" | "col" | "grid";
 }
 
-export default function SurveyButton({
+export default function SurveyButton3({
   value,
   isChecked,
   label,
   onChange,
   layoutType = 'col',
-}: SurveyButtonProps) {
+}: SurveyButton3Props) {
   return (
       <button
         type="button"

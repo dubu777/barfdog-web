@@ -1,13 +1,30 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const surveyStep4Container = style({
+export const surveyStepContainer = style({
   width: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   gap: "20px",
+});
+
+export const rowSurveyButtonWrapper = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "8px",
+  width: "100%",
+});
+
+export const colSurveyButtonWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "12px",
+  width: "100%",
 });
 
 export const birthContainer = style({

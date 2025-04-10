@@ -18,7 +18,7 @@ export const surveyStepsSchema = yup.object({
       ),
   }),
   step2: yup.object({
-    birth: yup
+    birthDate: yup
       .string()
       .matches(/^\d{6}$/, "생년월일을 모두 입력해주세요.")
       .required("출생일은 필수입니다."),
@@ -103,7 +103,7 @@ export type SurveyStepKeys = keyof SurveyStepValues;
 
 export const defaultStepValues: SurveyStepValues = {
   step1: { gender: "", name: "", isNeutered: null },
-  step2: { birth: "", isSenior: null },
+  step2: { birthDate: "", isSenior: null },
   step3: { dogSize: "", weight: "" },
   step4: { dogType: "" },
   step5: { pregnancy: "" },

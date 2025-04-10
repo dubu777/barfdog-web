@@ -2,7 +2,7 @@ import { DefaultValues, Path, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SurveyStepKeys } from "@/utils/validation/surveyValidation";
-import { SURVEY_NO_AUTO_NEXT_STEP, SURVEY_OPTIONAL_FIELDS } from "@/constants";
+import { SURVEY_NO_AUTO_NEXT_STEP } from "@/constants";
 
 
 /**

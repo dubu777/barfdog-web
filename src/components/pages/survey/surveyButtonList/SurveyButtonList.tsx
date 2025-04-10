@@ -1,7 +1,7 @@
 import * as styles from "./SurveyButtonList.css";
 import { surveyTitle } from "@/app/survey/Survey.css";
 import { getNameWithPossessiveSuffix2 } from "@/utils";
-import SurveyButton from "../surveyButton/SurveyButton";
+import SurveyButton from "../surveyButton/SurveyButton3";
 import { NONE_VALUE } from "@/constants";
 
 interface SurveyButtonListProps {

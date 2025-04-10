@@ -1,9 +1,9 @@
 "use client";
 
 import useSurveyStep from "@/hooks/survey/useSurveyStep";
-import { getSurveySteps } from "@/components/pages/subscription/survey/surveySteps/SurveySteps";
-import SurveyForm from "@/components/pages/subscription/survey/surveyForm/SurveyForm";
-import SurveyPagination from "@/components/pages/subscription/survey/surveyPagination/SurveyPagination";
+import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
+import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
+import SurveyPagination from "@/components/pages/survey/surveyPagination/SurveyPagination";
 import * as styles from "./Survey.css";
 import { useSurveyForm } from "@/hooks/survey/useSurveyForm";
 import {
@@ -39,6 +39,9 @@ export default function SurveyPage() {
     currentStepKey,
     handleNextStep
   );
+  
+  console.log('watch', watch());
+  
 
   const petName = watch("step1.name") ?? "";
   const steps = getSurveySteps({

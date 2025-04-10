@@ -7,11 +7,204 @@ export {
   SURVEY_NO_AUTO_NEXT_STEP,
   SURVEY_OPTIONAL_FIELDS,
   NONE_VALUE,
+  SURVEY_SECTIONS,
+};
+
+const SURVEY_SECTIONS = [
+  { key: "dogBasicInfo", label: "기본 정보" },
+  { key: "dogLifestyle", label: "생활 정보" },
+  { key: "dogDietHealth", label: "식단/건강" },
+];
+
+const SURVEY_FORM_INFO = {
+  dogBasicInfo: {
+    gender: {
+      id: "gender",
+      title: "성별",
+      inputType: "radio",
+      options: [
+        { id: "gender-female", value: "female", label: "암컷", imageUrl: "/images/survey/female.png" },
+        { id: "gender-male", value: "male", label: "수컷", imageUrl: "/images/survey/male.png" }
+      ],
+    },
+    name: {
+      id: "name",
+      title: "이름",
+      inputType: "textField",
+      placeholder: "이름을 입력해주세요"
+    },
+    isNeutered: {
+      id: "isNeutered",
+      title: "중성화 여부",
+      inputType: "radio",
+      options: [
+        { id: "isNeutered-true", value: true, label: "중성화 했어요" },
+        { id: "isNeutered-false", value: false, label: "중성화 안했어요" }
+      ],
+    },
+    birthDate: {
+      id: "birthDate",
+      inputType: "textField",
+      placeholder: "생년월 (YYYY-MM) 입력",
+    },
+    isSenior: {
+      id: "isSenior",
+      title: "노령견",
+      inputType: "radio",
+      options: [
+        { id: "isSenior-true", value: true, label: "노령견이에요" },
+        { id: "isSenior-false", value: false, label: "노령견이 아니에요" },
+      ],
+    },
+    size: {
+      id: "size",
+      title: "견사이즈",
+      inputType: "radio",
+      options: [
+        { id: "size-small", value: "small", label: "소형" },
+        { id: "size-medium", value: "medium", label: "중형" },
+        { id: "size-large", value: "large", label: "대형" },
+      ],
+    },
+    weight: {
+      id: "weight",
+      title: "몸무게",
+      inputType: "textField",
+      placeholder: "몸무게 입력",
+      unit: "kg",
+    },
+    breed: {
+      id: "breed",
+      inputType: "radio",
+      placeholder: "견종을 검색해 보세요",
+      options: [
+        { id: "breed-mix", value: "mix", label: "믹스" },
+        { id: "breed-doberman", value: "doberman", label: "도베르만" },
+        { id: "breed-golden", value: "golden_retriever", label: "골든 리트리버" },
+      ],
+    },
+    pregnancy: {
+      id: "pregnancy",
+      inputType: "radio",
+      title: "",
+      options: [
+        { id: "pregnancy-none", value: "none", label: "아니요" },
+        { id: "pregnancy-early", value: "early", label: "임신 초기" },
+        { id: "pregnancy-late", value: "late", label: "임신 후기" },
+      ],
+    },
+    lactation: {
+      id: "lactation",
+      inputType: "radio",
+      title: "",
+      options: [
+        { id: "lactation-none", value: "none", label: "아니요" },
+        { id: "lactation-1", value: 1, label: "1~2마리" },
+        { id: "lactation-3", value: 3, label: "3~4마리" },
+        { id: "lactation-5", value: 5, label: "5~6마리" },
+        { id: "lactation-7", value: 7, label: "7마리 이상" },
+      ],
+    },
+  },
+  dogLifestyle: {
+    bodyCondition: {
+      id: "bodyCondition",
+      inputType: "radio",
+      title: "",
+      options: [
+        { id: "bodyCondition-veryThin", value: "very_thin", label: "매우 마름", subLabel: "근육이 거의 느껴지지 않음" },
+        { id: "bodyCondition-thin", value: "thin", label: "마름", subLabel: "갈비뼈가 쉽게 만져짐" },
+        { id: "bodyCondition-normal", value: "normal", label: "적정 체중", subLabel: "복부가 위로 올라가 있음" },
+        { id: "bodyCondition-overweight", value: "overweight", label: "과체중", subLabel: "복부가 평평" },
+        { id: "bodyCondition-obese", value: "obese", label: "심각한 비만", subLabel: "복부가 심하게 쳐짐" },
+      ],
+    },
+    activityLevel: {
+      id: "activityLevel",
+      inputType: "radio",
+      title: "",
+      options: [
+        { id: "activityLevel-veryHigh", value: "very_high", label: "매우 많아요" },
+        { id: "activityLevel-high", value: "high", label: "많아요" },
+        { id: "activityLevel-normal", value: "normal", label: "보통이에요" },
+        { id: "activityLevel-low", value: "low", label: "적어요" },
+        { id: "activityLevel-veryLow", value: "very_low", label: "매우 적어요" },
+      ],
+    },
+    snackFrequency: {
+      id: "snackFrequency",
+      inputType: "radio",
+      options: [
+        { id: "snackFrequency-low", value: "low", label: "적어요", subLabel: "식사에 영향을 주지 않는 양" },
+        { id: "snackFrequency-moderate", value: "moderate", label: "적당해요", subLabel: "어느정도 영향을 주는 양" },
+        { id: "snackFrequency-high", value: "high", label: "많아요", subLabel: "식사에 상당한 영향을 주는 양" },
+      ],
+    },
+    allergyIngredients: {
+      id: "allergyIngredients",
+      inputType: "checkbox",
+      options: [
+        { id: "allergyIngredients-none", value: "none", label: "없어요" },
+        { id: "allergyIngredients-chicken", value: "chicken", label: "닭" },
+        { id: "allergyIngredients-turkey", value: "turkey", label: "칠면조" },
+        { id: "allergyIngredients-duck", value: "duck", label: "오리" },
+        { id: "allergyIngredients-lamb", value: "lamb", label: "양" },
+      ],
+    },
+    healthConcerns: {
+      id: "healthConcerns",
+      inputType: "checkbox",
+      options: [
+        { id: "healthConcerns-vomiting", value: "vomiting_diarrhea", label: "구토/설사" },
+        { id: "healthConcerns-weight", value: "weight_control", label: "체중조절" },
+        { id: "healthConcerns-energy", value: "energy_boost", label: "기력보충" },
+        { id: "healthConcerns-tears", value: "tears", label: "눈물/눈곱" },
+        { id: "healthConcerns-skin", value: "skin_hair", label: "피부/모질" },
+      ],
+    },
+  },
+  dogDietHealth: {
+    currentFood: {
+      id: "currentFood",
+      inputType: "checkbox",
+      options: [
+        { id: "currentFood-dry", value: "dry", label: "건사료" },
+        { id: "currentFood-wet", value: "wet", label: "습식사료" },
+        { id: "currentFood-homemade", value: "homemade", label: "홈메이드식" },
+        { id: "currentFood-freezeDried", value: "freeze_dried", label: "동결건조" },
+        { id: "currentFood-cooked", value: "cooked", label: "화식" },
+        { id: "currentFood-raw", value: "raw", label: "생식" },
+      ],
+    },
+    currentSupplements: {
+      id: "currentSupplements",
+      inputType: "checkbox",
+      options: [
+        { id: "currentSupplements-none", value: "none", label: "없어요" },
+        { id: "currentSupplements-probioticsOmega3", value: "probiotics_omega3", label: "유산균 오메가3" },
+        { id: "currentSupplements-joint", value: "joint", label: "관절" },
+        { id: "currentSupplements-eye", value: "eye", label: "눈" },
+      ],
+    },
+    healthIssues: {
+      id: "healthIssues",
+      inputType: "checkbox",
+      options: [
+        { id: "healthIssues-none", value: "none", label: "없어요" },
+        { id: "healthIssues-hyperlipidemia", value: "hyperlipidemia", label: "고지혈증" },
+        { id: "healthIssues-pancreatic", value: "pancreatic", label: "췌장질환" },
+        { id: "healthIssues-heart", value: "heart", label: "심장병" },
+        { id: "healthIssues-kidney", value: "kidney", label: "신장병" },
+        { id: "healthIssues-dermatitis", value: "dermatitis", label: "피부염" },
+      ],
+    },
+  },
 };
 
 
 
-const SURVEY_FORM_INFO = {
+
+const SURVEY_FORM_INFO_2 = {
   name: {
     id: "name",
     inputType: "textField",
@@ -412,4 +605,4 @@ const SURVEY_OPTIONAL_FIELDS = new Set([
   "cautionEtc",
 ]);
 
-const NONE_VALUE = "NONE";
+const NONE_VALUE = "none";
