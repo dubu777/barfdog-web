@@ -15,13 +15,6 @@ import SurveyStep14 from "./SurveyStep14";
 import SurveyStep15 from "./SurveyStep15";
 import SurveyStep16 from "./SurveyStep16";
 import SurveyStep17 from "./SurveyStep17";
-import {
-  Control,
-  FieldErrors,
-} from "react-hook-form";
-import {
-  SurveyStepValues,
-} from "@/utils/validation/surveyValidation";
 
 interface Props {
   handleChange: () => void;
@@ -31,8 +24,6 @@ interface Props {
     fieldName: string
   ) => Promise<void>;
   handleNextStep: () => void;
-  control: Control<SurveyStepValues>;
-  errors: FieldErrors<SurveyStepValues>;
   petName: string;
 }
 
@@ -41,8 +32,6 @@ export const getSurveySteps = ({
   handleBlur,
   handleKeyDown,
   handleNextStep,
-  control,
-  errors,
   petName,
 }: Props) => {
   return [
@@ -50,64 +39,50 @@ export const getSurveySteps = ({
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
-      control={control}
-      errors={errors}
     />,
     <SurveyStep2
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep3
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep4
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep5
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep6
-      control={control}
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
       petName={petName}
-      errors={errors}
     />,
     <SurveyStep7
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep8
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep9
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep10
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep11
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep12
-      control={control}
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
@@ -115,7 +90,6 @@ export const getSurveySteps = ({
       petName={petName}
     />,
     <SurveyStep13
-      control={control}
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
@@ -123,12 +97,10 @@ export const getSurveySteps = ({
       petName={petName}
     />,
     <SurveyStep14
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep15
-      control={control}
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
@@ -136,12 +108,10 @@ export const getSurveySteps = ({
       petName={petName}
     />,
     <SurveyStep16
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,
     <SurveyStep17
-      control={control}
       handleChange={handleChange}
       petName={petName}
     />,

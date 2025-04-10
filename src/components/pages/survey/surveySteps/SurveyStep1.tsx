@@ -1,6 +1,6 @@
 import { SURVEY_FORM_INFO } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Control, Controller, FieldErrors, useFormContext } from "react-hook-form";
 import * as styles from "./SurveySteps.css";
 
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -15,17 +15,19 @@ interface SurveyStepProps {
     e: React.KeyboardEvent<HTMLInputElement>,
     fieldName: string
   ) => Promise<void>;
-  control: Control<SurveyStepValues>;
-  errors: FieldErrors<SurveyStepValues>;
+  // control: Control<SurveyStepValues>;
+  // errors: FieldErrors<SurveyStepValues>;
 }
 
 export default function SurveyStep1({
   handleChange,
   handleBlur,
   handleKeyDown,
-  control,
-  errors,
+  // control,
+  // errors,
 }: SurveyStepProps) {
+  const { control, setValue, formState: { errors } } = useFormContext<SurveyStepValues>();
+
   const handleDuplicateCheck = () => {
     // 중복 체크 로직을 여기에 작성하세요.
     console.log("중복 체크");
@@ -42,7 +44,7 @@ export default function SurveyStep1({
             "radio",
             (value) => {
               field.onChange(value);
-              handleChange();
+              // handleChange();
             }
           );
 
@@ -76,11 +78,7 @@ export default function SurveyStep1({
             error={errors.step1?.name?.message}
             onChange={(e) => {
               field.onChange(e);
-              handleChange();
-            }}
-            onBlur={() => {
-              field.onBlur();
-              handleBlur(field.name);
+              // handleChange();
             }}
             onKeyDown={(e) => handleKeyDown(e, field.name)}
           />
@@ -93,7 +91,7 @@ export default function SurveyStep1({
         buttonColor="gray800"
         onClick={handleDuplicateCheck}
       >
-        확인
+        중복체크
       </Button>
       </div>
     </div>

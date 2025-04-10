@@ -11,6 +11,7 @@ import {
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
+import { FormProvider } from "react-hook-form";
 
 export default function SurveyPage() {
   const {
@@ -23,48 +24,36 @@ export default function SurveyPage() {
     isFirstStep,
   } = useSurveyStep(17);
 
-  const {
-    handleSubmit,
-    control,
-    watch,
-    errors,
-    isValid,
-    isCanNextStep,
-    handleChange,
-    handleBlur,
-    handleKeyDown,
-  } = useSurveyForm<typeof surveyStepsSchema>(
+  const surveyFormMethods = useSurveyForm<typeof surveyStepsSchema>(
     surveyStepsSchema,
     defaultStepValues,
     currentStepKey,
     handleNextStep
   );
-  
-  console.log('watch', watch());
-  
 
-  const petName = watch("step1.name") ?? "";
+  const petName = surveyFormMethods.watch("step1.name") ?? "";
+
   const steps = getSurveySteps({
-    handleChange,
-    handleBlur,
-    handleKeyDown,
-    handleNextStep,
-    control,
-    errors,
+    handleChange: surveyFormMethods.handleChange,
+    handleBlur: surveyFormMethods.handleBlur,
+    handleKeyDown: surveyFormMethods.handleKeyDown,
+    handleNextStep: handleNextStep,
     petName,
   });
 
-  console.log("watch", watch());
-  console.log("errors", errors);
+  console.log("watch", surveyFormMethods.watch());
+  console.log("errors", surveyFormMethods.errors);
 
   return (
     <div className={styles.surveyLayoutContainer}>
       <NewHeader leftTitle="이전" showBackButton showCloseButton />
+      <FormProvider {...surveyFormMethods}>
       <SurveyForm
         currentStep={currentStep}
         direction={direction}
         steps={steps}
       />
+      </FormProvider>
       <SurveyPagination
         handleNextStep={handleNextStep}
         handlePrevStep={handlePrevStep}
@@ -72,7 +61,7 @@ export default function SurveyPage() {
         isFirstStep={isFirstStep}
         currentStep={currentStep}
         stepLength={steps.length}
-        canNextStep={isCanNextStep}
+        canNextStep={surveyFormMethods.isCanNextStep}
       />
     </div>
   );

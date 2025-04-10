@@ -8,6 +8,7 @@ export const surveyStepsSchema = yup.object({
       .trim()
       .min(1, "이름은 최소 1자 이상이어야 합니다.")
       .required("이름을 입력해주세요"),
+    nameVerified: yup.boolean().oneOf([true], "이름 중복체크를 해주세요."),
     isNeutered: yup
       .boolean()
       .nullable()
@@ -76,10 +77,10 @@ export const surveyStepsSchema = yup.object({
   }),
   step12: yup.object({
     currentMeal: yup
-    .array()
-    .of(yup.string().defined())
-    .min(1, "사료를 선택해주세요.")
-    .required(),
+      .array()
+      .of(yup.string().defined())
+      .min(1, "사료를 선택해주세요.")
+      .required(),
   }),
   step13: yup.object({
     supplement: yup
@@ -102,7 +103,7 @@ export type SurveyStepValues = yup.InferType<typeof surveyStepsSchema>;
 export type SurveyStepKeys = keyof SurveyStepValues;
 
 export const defaultStepValues: SurveyStepValues = {
-  step1: { gender: "", name: "", isNeutered: null },
+  step1: { gender: "", name: "", nameVerified: false, isNeutered: null },
   step2: { birthDate: "", isSenior: null },
   step3: { dogSize: "", weight: "" },
   step4: { dogType: "" },

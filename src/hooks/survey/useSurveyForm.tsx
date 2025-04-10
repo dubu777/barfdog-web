@@ -18,20 +18,17 @@ export function useSurveyForm<S extends yup.ObjectSchema<any>>(
   currentStepKey: SurveyStepKeys,
   handleNextStep: () => void
 ) {
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-    watch,
-    setValue,
-    trigger,
-  } = useForm<yup.InferType<S>>({
+  const methods = useForm<yup.InferType<S>>({
     resolver: yupResolver(schema),
     defaultValues,
     mode: "all",
   });
+
+  const {
+    watch,
+    trigger,
+    formState: { errors },
+  } = methods;
 
   const isCanNextStep = () => {
     const stepValues = watch(currentStepKey as Path<yup.InferType<S>>);
@@ -101,15 +98,8 @@ export function useSurveyForm<S extends yup.ObjectSchema<any>>(
 
 
   return {
-    register,
-    control,
-    handleSubmit,
+    ...methods,
     errors,
-    reset,
-    watch,
-    setValue,
-    trigger,
-    isValid,
     isCanNextStep: isCanNextStep(),
     handleChange,
     handleBlur,

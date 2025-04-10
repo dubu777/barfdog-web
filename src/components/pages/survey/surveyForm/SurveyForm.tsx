@@ -9,7 +9,6 @@ interface SurveyFormProps {
   currentStep: number;
   direction: number;
   steps: ReactNode[];
-
 }
 
 export default function SurveyForm({

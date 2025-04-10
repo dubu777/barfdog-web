@@ -13,7 +13,7 @@ export const surveyStepContainer = style({
 export const rowSurveyButtonWrapper = style({
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "flex-start",
   gap: "8px",
   width: "100%",
 });
