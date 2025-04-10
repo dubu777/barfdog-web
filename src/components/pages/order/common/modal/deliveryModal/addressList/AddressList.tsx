@@ -11,6 +11,7 @@ interface AddressListProps {
   goToAddAddress: () => void;
   goToEditAddress: (address: AddressResponse) => void;
   onSelectAddress: (deliveryDto: ClientDeliveryDto) => void;
+  showSelectButton?: boolean;
 }
 
 export default function AddressList({
@@ -18,6 +19,7 @@ export default function AddressList({
   goToAddAddress,
   goToEditAddress,
   onSelectAddress,
+  showSelectButton = true,
 }: AddressListProps) {
   const sortedAddresses = useMemo(() => {
     return [...addressData].sort((a, b) =>
@@ -44,6 +46,7 @@ export default function AddressList({
             address={address}
             onSelectAddress={onSelectAddress}
             goToEditAddress={goToEditAddress}
+            showSelectButton={showSelectButton}
           />
         ))}
       </div>

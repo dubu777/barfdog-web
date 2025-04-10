@@ -20,4 +20,5 @@ interface NextTierRequirements {
 	additionalSubscription: number;
 	additionalPurchase: number;
 	nextTier?: Tier;
+	message?: string;
 }

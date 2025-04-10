@@ -6,10 +6,10 @@ import {
   SubscriptionDetailDto, SubscriptionSkipType, AddressDto,
 } from "@/types/subscription";
 
-const getPlanDiscount = async (): Promise<PlanDiscountResponse> => {
+const getPlanDiscount = async (): Promise<PlanDiscountResponse[]> => {
   const {data} = await axiosInstance.get('/api/planDiscount');
 
-  return data._embedded.planDiscountResponseDtoList
+  return data._embedded.planDiscountResponseDtoList || []
 }
 
 export interface RequestCreateSubscription {

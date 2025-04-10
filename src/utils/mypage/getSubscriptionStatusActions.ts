@@ -1,4 +1,4 @@
-import { OrderAction, SubscriptionOrderStatus, VariantsType } from "@/types";
+import { OrderAction, SubscriptionOrderStatus } from "@/types";
 import { COMMON_ACTIONS } from "@/constants";
 
 // SubscriptionCard status 상태별 actions 정의
@@ -10,7 +10,7 @@ export const getSubscriptionStatusActions = (
 
 	const commonActions = {
 		MYPAGE_POSTPONE_ACTIONS: [
-			{ label: "전체구독일정", ...COMMON_ACTIONS.subscriptionSchedule },
+			{ label: "미루기 적용중", ...COMMON_ACTIONS.postponeShipping },
 			{ label: "식단변경", ...COMMON_ACTIONS.changeRecipe },
 		],
 		MYPAGE_PRODUCING_ACTIONS: [
@@ -19,12 +19,8 @@ export const getSubscriptionStatusActions = (
 		],
 		SUBSCRIPTION_BASE_ACTIONS: [
 			{ label: "전체구독일정", ...COMMON_ACTIONS.subscriptionSchedule },
-			{ label: "신청 정보 확인/변경", ...COMMON_ACTIONS.subscriptionDetail },
+			{ label: "상세 정보 확인/변경", ...COMMON_ACTIONS.subscriptionDetail },
 		],
-		SUBSCRIPTION_DETAIL_BASE_ACTIONS: [
-			{ label: "전체구독일정", ...COMMON_ACTIONS.subscriptionSchedule },
-		],
-
 		COUPON_ACTION: { label: "쿠폰사용", ...COMMON_ACTIONS.usingCoupon },
 		CHANGE_RECIPE_ACTION: { label: "식단변경", ...COMMON_ACTIONS.changeRecipe },
 		POSTPONE_SHIPPING_ACTION: { label: "배송 미루기", ...COMMON_ACTIONS.postponeShipping },
@@ -32,73 +28,52 @@ export const getSubscriptionStatusActions = (
 		REVIEW_ACTION: { label: "리뷰작성", ...COMMON_ACTIONS.review },
 		CONFIRM_ACTION: { label: "구매확정", ...COMMON_ACTIONS.confirm },
 		RESUBSCRIBE_ACTION: { label: "재구독하고 최대 - 할인 혜택 받기", ...COMMON_ACTIONS.resubscribe },
-		CHANGE_PAYMENT_METHOD_ACTION: { label: "결제 정보 수정", ...COMMON_ACTIONS.changePaymentMethod },
+		CHANGE_PAYMENT_METHOD_ACTION: { label: "결제 수단 변경/재시도", ...COMMON_ACTIONS.changePaymentMethod },
+		SUBSCRIPTION_SCHEDULE_ACTION: { label: "전체구독일정", ...COMMON_ACTIONS.subscriptionSchedule, fullWidth: true },
 	};
 
 	const prePaymentActions = {
 		mypage: hasPostpone
 			? [...commonActions.MYPAGE_POSTPONE_ACTIONS]
-			: [commonActions.COUPON_ACTION, commonActions.CHANGE_RECIPE_ACTION],
-		subscription: [
-			...commonActions.SUBSCRIPTION_BASE_ACTIONS,
-			{ label: "이번 결제 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon, fullWidth: true, variants: 'solid' as VariantsType }
-		],
-		subscriptionDetail: [
-			...commonActions.SUBSCRIPTION_DETAIL_BASE_ACTIONS,
-			{ label: "결제 시 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon }
-		],
+			: [commonActions.POSTPONE_SHIPPING_ACTION, commonActions.CHANGE_RECIPE_ACTION],
+		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS],
+		subscriptionDetail: [commonActions.SUBSCRIPTION_SCHEDULE_ACTION],
 	}
 
 	const postPaymentActions = {
-		mypage: hasPostpone
-			? [...commonActions.MYPAGE_POSTPONE_ACTIONS]
-			: [commonActions.POSTPONE_SHIPPING_ACTION, commonActions.CHANGE_RECIPE_ACTION],
-		subscription: [
-			...commonActions.SUBSCRIPTION_BASE_ACTIONS,
-			{ label: "다음 결제 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon, fullWidth: true, variants: 'solid' as VariantsType }
-		],
-		subscriptionDetail: [
-			...commonActions.SUBSCRIPTION_DETAIL_BASE_ACTIONS,
-			{ label: "다음 결제 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon }
-		],
+		mypage: [commonActions.SUBSCRIPTION_SCHEDULE_ACTION],
+		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS],
+		subscriptionDetail: [commonActions.SUBSCRIPTION_SCHEDULE_ACTION],
 	}
 
 	const inProductionActions = {
-		mypage: [...commonActions.MYPAGE_PRODUCING_ACTIONS],
-		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, { label: "다음 결제 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon, fullWidth: true, variants: 'solid' as VariantsType }],
-		subscriptionDetail: [...commonActions.SUBSCRIPTION_DETAIL_BASE_ACTIONS, { label: "다음 결제 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon }],
+		mypage: [{ ...commonActions.DELIVERY_TRACKING_ACTION, fullWidth: true }],
+		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS],
+		subscriptionDetail: [commonActions.SUBSCRIPTION_SCHEDULE_ACTION],
 	}
 
 	const deliveryCompleteActions = {
 		mypage: [commonActions.DELIVERY_TRACKING_ACTION, commonActions.CONFIRM_ACTION],
-		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, { label: "구매 확정하러가기", ...COMMON_ACTIONS.confirm, fullWidth: true, variants: 'solid' as VariantsType }],
-		subscriptionDetail: [
-			...commonActions.SUBSCRIPTION_DETAIL_BASE_ACTIONS,
-			{ label: "다음 결제 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon },
-			{ label: "구매 확정하러가기", ...COMMON_ACTIONS.confirm, fullWidth: true, variants: 'solid' as VariantsType }
-		],
+		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, {...commonActions.CONFIRM_ACTION, fullWidth: true}],
+		subscriptionDetail: [{...commonActions.SUBSCRIPTION_SCHEDULE_ACTION, fullWidth: false}, commonActions.CONFIRM_ACTION],
 	}
 
 	const confirmationAction = {
 		mypage: [commonActions.DELIVERY_TRACKING_ACTION, commonActions.REVIEW_ACTION],
-		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, { label: "리뷰 쓰러가기", ...COMMON_ACTIONS.review, fullWidth: true }],
-		subscriptionDetail: [
-			...commonActions.SUBSCRIPTION_DETAIL_BASE_ACTIONS,
-			{ label: "다음 결제 쿠폰 사용", ...COMMON_ACTIONS.usingCoupon },
-			{ label: "리뷰 쓰러가기", ...COMMON_ACTIONS.review, fullWidth: true }
-		],
+		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, {...commonActions.REVIEW_ACTION, fullWidth: true}],
+		subscriptionDetail: [{...commonActions.SUBSCRIPTION_SCHEDULE_ACTION, fullWidth: false}, commonActions.REVIEW_ACTION],
 	}
 
 	const subscriptionHoldActions = {
 		mypage: [commonActions.CHANGE_PAYMENT_METHOD_ACTION],
-		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, { label: "결제 정보 수정", ...COMMON_ACTIONS.changePaymentMethod, fullWidth: true, variants: 'solid' as VariantsType }],
-		subscriptionDetail: [...commonActions.SUBSCRIPTION_DETAIL_BASE_ACTIONS, { label: "결제 정보 수정", ...COMMON_ACTIONS.changePaymentMethod, variants: 'solid' as VariantsType, fullWidth: false }],
+		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, commonActions.CHANGE_PAYMENT_METHOD_ACTION],
+		subscriptionDetail: [{...commonActions.SUBSCRIPTION_SCHEDULE_ACTION, fullWidth: false}, { label: "결제 재시도", ...COMMON_ACTIONS.changePaymentMethod, fullWidth: false }],
 	}
 
 	const subscriptionCancelActions = {
 		mypage: [commonActions.RESUBSCRIBE_ACTION],
-		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, { label: "재구독하고 최대 - 할인 혜택 받기", ...COMMON_ACTIONS.resubscribe, fullWidth: true, variants: 'solid' as VariantsType }],
-		subscriptionDetail: [...commonActions.SUBSCRIPTION_DETAIL_BASE_ACTIONS, { label: "재구독 하기", ...COMMON_ACTIONS.resubscribe, variants: 'solid' as VariantsType, fullWidth: false }],
+		subscription: [...commonActions.SUBSCRIPTION_BASE_ACTIONS, commonActions.RESUBSCRIBE_ACTION],
+		subscriptionDetail: [{...commonActions.SUBSCRIPTION_SCHEDULE_ACTION, fullWidth: false}, {...commonActions.RESUBSCRIBE_ACTION, label: '재구독 하기', fullWidth: false}],
 	}
 
 	const baseActionsForStatus = {

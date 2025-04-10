@@ -10,7 +10,7 @@ export const textareaBoxStyle = style({
 export const textareaStyle = recipe({
   base: {
     width: '100%',
-    minHeight: '142px',
+    minHeight: '160px',
     height: '100%',
     padding: '12px',
     border: `1px solid ${themeVars.colors.gray.gray500}`,

@@ -3,20 +3,20 @@ import { reviewDetailContainer } from "@/components/pages/mypage/review/reviewDe
 import { useBackNavigation } from "@/utils";
 import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
 import { useUpdateReviewDetail } from "@/api/review/mutations/useUpdateReviewDetail";
-import { ReviewDetailItem, ReviewType, UpdateReviewDetail } from "@/types";
+import { ReviewDetailItem, ReviewItemType, UpdateReviewDetail } from "@/types";
 import { useToastStore } from '@/store/useToastStore';
 import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
 
 interface ReviewDetailProps {
   reviewId: number;
-  reviewType: ReviewType;
+  reviewType: ReviewItemType;
 }
 
 const UpdateDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const { data } = useGetReviewDetail(reviewId);
   const { mutate } = useUpdateReviewDetail(reviewId);
   const { addToast } = useToastStore();
-  const goBack = useBackNavigation();
+  const goBackPreviousPage = useBackNavigation(undefined, true);
 
   const reviewDetail: ReviewDetailItem = {
     ...data.reviewDto,
@@ -26,8 +26,8 @@ const UpdateDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const handleSubmit = (body: UpdateReviewDetail) => {
     mutate(body, {
       onSuccess: () => {
-        addToast('리뷰 수정이 완료되었습니다!', 'above-button')
-        goBack();
+        addToast('리뷰 수정이 완료되었습니다!')
+        goBackPreviousPage();
       },
       onError: () => {
         addToast('리뷰 수정이 실패했습니다.', 'above-button')

@@ -6,10 +6,12 @@ import Indicator from '/public/images/mypage/progress-indicator.svg';
 interface ProgressBarProps {
 	progress: number;
 	label?: string;
+	className?: string;
 }
-const ProgressBar = ({ progress, label }: ProgressBarProps) => {
+const ProgressBar = ({ progress, label, className }: ProgressBarProps) => {
+	console.log('label', label)
 	return (
-		<div className={styles.progressBarContainer}>
+		<div className={`${styles.progressBarContainer} ${className || ''}`}>
 			<div
 				style={{ width: `${progress}%` }}
 				className={styles.progressActive}

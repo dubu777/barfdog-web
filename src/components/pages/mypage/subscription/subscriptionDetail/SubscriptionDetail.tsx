@@ -1,15 +1,21 @@
 'use client';
+import { useEffect } from "react";
 import * as styles from './SubscriptionDetail.css';
+import { pointColor } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SubscriptionInfo from "@/components/pages/mypage/common/information/section/SubscriptionInfo";
-import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";
-import PetInfo from "@/components/pages/mypage/common/information/section/PetInfo";
+import DogInfo from "@/components/pages/mypage/common/information/section/DogInfo";
 import AddressInfo from "@/components/pages/mypage/common/information/section/AddressInfo";
-import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
-import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
+import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
+import SubscriptionCardInfo from "@/components/pages/mypage/common/information/section/SubscriptionCardInfo";
+import SubscriptionPaymentInfo from "@/components/pages/mypage/common/information/section/SubscriptionPaymentInfo";
+import SubscriptionPaymentMethodInfo
+	from "@/components/pages/mypage/common/information/section/SubscriptionPaymentMethodInfo";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { subscriptionPlanInfo } from '@/constants';
+import { usePaymentMethodDetail } from "@/hooks/usePaymentMethodDetail";
+import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
 import { useGetDogDetail } from "@/api/dog/queries/useGetDogDetail";
-import { ORDER_TYPE } from '@/constants';
+import { PlanKey } from "@/types";
 
 interface SubscriptionDetailProps {
 	subscriptionId: number;
@@ -22,24 +28,52 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
 		enabled: !!subscriptionDetail?.dogId, // dogId가 있을 때만 실행
 	});
 
-const transformedSubscriptionDetail = subscriptionDetail
-	? (({ subscribeStatus, ...rest }) => ({ ...rest, status: subscribeStatus }))(subscriptionDetail)
-	: null;
+	const setPaymentMethodDetail = usePaymentMethodDetail();
+
+	const transformedSubscriptionDetail = subscriptionDetail
+		? (({ subscribeStatus, ...rest }) => ({ ...rest, status: subscribeStatus }))(subscriptionDetail)
+		: null;
+	const weeklyPaymentCycle = subscriptionPlanInfo[transformedSubscriptionDetail?.plan as PlanKey].weeklyPaymentCycle;
+
+	console.log('transformedSubscriptionDetail', transformedSubscriptionDetail)
+
+
+	useEffect(() => {
+		setPaymentMethodDetail(subscriptionId);
+	}, [])
+
+
+	const handleChangePaymentMethod = () => {
+		console.log('handleChangePaymentMethod!!!!!!', subscriptionId)
+		// onToggle();
+	}
 
 	return (
 		<section>
-			{/* orderType 수정 및 데이터 타입 확인 필요 */}
-			<OrderItemInfo data={transformedSubscriptionDetail} orderType={ORDER_TYPE.SUBSCRIPTION} subscriptionId={subscriptionId} type='subscriptionDetail' />
-			<AddressInfo data={transformedSubscriptionDetail} />
-			<SubscriptionInfo
+			<article className={styles.subscriptionDetailBox}>
+				<DefaultText type='title4'>
+					<span className={pointColor}>{weeklyPaymentCycle}주</span>마다<br/>
+					정기 구독 상품을 받고 있어요
+				</DefaultText>
+				<SubscriptionCard data={transformedSubscriptionDetail} type='subscriptionDetail' className={styles.subscriptionDetailCard} />
+			</article>
+			<SubscriptionPaymentInfo data={transformedSubscriptionDetail} />
+			<SubscriptionCardInfo
 				data={transformedSubscriptionDetail}
-				type='subscription'
 				subscriptionId={subscriptionId}
 			/>
+			<AddressInfo
+				data={transformedSubscriptionDetail}
+				showEditAddressInfo
+				editAddressInfoButtonType='full-button'
+			/>
+			<SubscriptionPaymentMethodInfo
+				data={transformedSubscriptionDetail}
+				handleChangePaymentMethod={handleChangePaymentMethod}
+			/>
 			{dogDetail?.dogDto &&
-				<PetInfo data={dogDetail?.dogDto} />
+				<DogInfo data={dogDetail?.dogDto} showEditDogInfo />
 			}
-			<PaymentInfo subscriptionId={subscriptionId} data={transformedSubscriptionDetail} type='subscription' />
 			<div className={styles.cancelSubscriptionContainer}>
 				<button onClick={() => pushWithQuery(`/mypage/subscription/${subscriptionId}/cancel-subscription`, {})}>
 					<DefaultText type='label4' color='gray700'>해지하기</DefaultText>

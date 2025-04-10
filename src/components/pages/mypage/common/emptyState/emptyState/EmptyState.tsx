@@ -1,28 +1,32 @@
 'use client';
-import * as styles from './EmptyState.css';
 import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import 'swiper/css';
 import RecommendItems from "@/components/pages/mypage/common/recommendItems/RecommendItems";
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 
 interface EmptyStateReviewProps {
-	type?: 'review' | 'orderDeliveryInquiry';
+	type?: 'review' | 'orderDeliveryInquiry' | 'writtenReviewList';
 	hasOrderHistory?: boolean;
 }
 
-const EmptyState = ({ type = 'review', hasOrderHistory = false }: EmptyStateReviewProps) => {
+const EmptyState = ({
+	type = 'review',
+	hasOrderHistory = false,
+}: EmptyStateReviewProps) => {
 	return (
 		<>
-			<EmptyStateCard
-				type={
-					type === 'orderDeliveryInquiry'
-						? 'orderDeliveryInquiry'
-						: hasOrderHistory
-							? 'review'
-							: 'orderDeliveryInquiry'
-				}
-			/>
-			{(type !== 'orderDeliveryInquiry' ? !hasOrderHistory : true) &&
+			{type !== 'writtenReviewList'
+				? <EmptyStateCard
+					type={
+						type === 'orderDeliveryInquiry'
+							? 'orderDeliveryInquiry'
+							: hasOrderHistory
+								? 'review'
+								: 'orderDeliveryInquiry'
+					}
+				/>
+				: <DefaultEmptyState title='아직 작성하신 리뷰가 없어요!' subTitle='작성 가능한 리뷰를 확인해보세요' />
+			}
+			{(type === 'review' ? !hasOrderHistory : true) &&
 				<RecommendItems />
 			}
 		</>

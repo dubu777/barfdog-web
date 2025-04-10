@@ -16,12 +16,14 @@ export const thicknessVariants = {
   horizontal: styleVariants({
     1: { borderBottom: `1px solid ${themeVars.borderColors.grey50}` },
     2: { borderBottom: `2px solid ${themeVars.borderColors.grey50}` },
+    4: { borderBottom: `4px solid ${themeVars.borderColors.grey50}` },
     8: { borderBottom: `8px solid ${themeVars.borderColors.grey50}` },
     12: { borderBottom: `12px solid ${themeVars.borderColors.grey50}` },
   }),
   vertical: styleVariants({
     1: { borderLeft: `1px solid ${themeVars.borderColors.grey50}` },
     2: { borderLeft: `2px solid ${themeVars.borderColors.grey50}` },
+    4: { borderLeft: `4px solid ${themeVars.borderColors.grey50}` },
     8: { borderLeft: `8px solid ${themeVars.borderColors.grey50}` },
     12: { borderLeft: `12px solid ${themeVars.borderColors.grey50}` },
   }),

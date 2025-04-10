@@ -1,19 +1,20 @@
 'use client';
 import * as styles from "./MainInformation.css";
 import { useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import UserImage from "/public/images/mypage/user-profile.svg";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
+import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
+import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 import { MyPageMemberDto, MyPageRepresentativeDogDto } from "@/types";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
-import Link from "next/link";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import { getNextTierRequirements } from "@/utils/mypage/getNextTierRequirements";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
-import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
-import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { MembershipTier } from "@/types/membership";
 
 const MainInformation = () => {
   const { data: myPageData } = useGetMyPageInfo();
@@ -22,7 +23,7 @@ const MainInformation = () => {
   const representativeDogData: MyPageRepresentativeDogDto = myPageData?.mypageRepresentiveDogDto;
   const { setMypageUserInfo, setUserMembershipTier } = usePersistMypageStore();
 
-  const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData.grade);
+  const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData.grade) as MembershipTier;
   const userImage = userData?.imageUrl;
 
   useEffect(() => {
@@ -66,9 +67,14 @@ const MainInformation = () => {
           <DefaultText type='caption' color='red'>{userMembershipTier?.description}</DefaultText>
         </div>
         <DefaultText type='caption' color='gray500'>
-          {additionalSubscription > 0 && `구독 ${additionalSubscription}회 추가 `}
-          누적 혹은 {additionalPurchase > 0 && `${additionalPurchase.toLocaleString()}원 추가 구매시 `}
-          <strong>{nextTier}</strong> 등급 달성!
+          {userMembershipTier && userMembershipTier.tier !== 'THE_BARF'
+            ? <>
+              {additionalSubscription > 0 && `구독 ${additionalSubscription}회 추가 `}
+              누적 혹은 {additionalPurchase > 0 && `${additionalPurchase.toLocaleString()}원 추가 구매시 `}
+              <strong>{nextTier}</strong> 등급 달성!
+            </>
+            : <>{getNextTierRequirements('THE_BARF').message}</>
+          }
         </DefaultText>
       </div>
       <UserRewardCard myPageData={myPageData} />

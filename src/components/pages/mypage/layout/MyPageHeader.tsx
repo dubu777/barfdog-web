@@ -20,6 +20,7 @@ const MyPageHeader = () => {
   const goBack = useBackNavigation();
   const goBackToMain = useBackNavigation('/');
   const goBackToPreviousPage = useBackNavigation(undefined, true);
+  const lastSection = pathname.split('/').pop();
 
   const headerConfigs: Record<
     string,
@@ -43,13 +44,12 @@ const MyPageHeader = () => {
     '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/account/user-info': { centerTitle: '회원 정보 변경', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/account/notification': { centerTitle: '알림 설정', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/review': { centerTitle: '리뷰작성내역', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/review/create': { leftTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
+    '/mypage/review': { centerTitle: '리뷰작성내역', showCartButton: true, showBackButton: true, onBack: useBackNavigation('/mypage') },
+    '/mypage/review/create': { centerTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
     '/mypage/order-delivery-inquiry': { centerTitle: '주문 및 배송조회', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/order-issue-inquiry': { centerTitle: '취소/교환/반품 내역', showCartButton: true, showBackButton: true, onBack: goBack },
-    // ------------------------------------------------------------------------
-    '/mypage/subscribe/address/list': { centerTitle: '구독 배송지 관리', showBackButton: true, onBack: goBack },
-    '/mypage/subscribe/benefits': { centerTitle: '패키지 혜택', showBackButton: true, onBack: goBack },
+    '/mypage/billing-preferences': { centerTitle: '결제 수단/자동 적립금', showCartButton: true, showBackButton: true, onBack: goBack },
+    '/mypage/auto-reward': { centerTitle: '자동 적립금 사용 관리', showCartButton: true, showBackButton: true, onBack: goBack },
   };
 
   const dynamicHeaderConfigs: Record<
@@ -64,7 +64,7 @@ const MyPageHeader = () => {
       onBack?: () => void
     }
     > = {
-    '/mypage/review/': () => ({ leftTitle: '리뷰 상세', showBackButton: true, onBack: goBack }),
+    '/mypage/review/': () => ({ centerTitle: '리뷰 상세', showBackButton: true, onBack: goBackToPreviousPage }),
     '/mypage/order-delivery-inquiry/': (_, searchParams) => {
       const showReceipt = searchParams.get('showReceipt');
       return {
@@ -99,17 +99,12 @@ const MyPageHeader = () => {
         onBack: goBackToMain,
       };
     },
-    '/mypage/subscription/': (_, searchParams) => {
-      const lastSection = pathname.split('/').pop();
-      const completedLastSection = lastSection === 'postpone-shipping' && searchParams.get('status') === 'completed';
+    '/mypage/subscription/': () => {
       return {
         centerTitle: {
-          'postpone-shipping': !completedLastSection ? '배송미루기' : ' ',
-          'schedule': '전체구독일정',
           'cancel-subscription': '구독 해지 사유입력',
         }[lastSection as string] || '구독상세',
-        showBackButton: (!completedLastSection && lastSection !== 'schedule'),
-        showCloseButton: completedLastSection || lastSection === 'schedule',
+        showBackButton: true,
         onBack: goBackToPreviousPage,
         onClose: goBackToPreviousPage,
       };

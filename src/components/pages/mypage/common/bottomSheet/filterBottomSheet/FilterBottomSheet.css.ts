@@ -1,7 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
 export const filterBottomSheetContainer = style({
-	padding: '20px 12px 12px 20px'
+	padding: '20px 12px 12px 20px',
+	display: 'flex',
+	flexDirection: 'row-reverse',
 })
 
 export const filterBottomSheet = style({

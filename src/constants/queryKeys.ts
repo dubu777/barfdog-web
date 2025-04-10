@@ -24,6 +24,7 @@ const queryKeys = {
     GET_MYPAGE_INFO: 'getMyPageInfo',
     GET_MYPAGE_BANNER: 'getMyPageBanner',
     GET_CONNECTED_SNS: 'getConnectedSns',
+    GET_PAYMENT_LIST: 'getPaymentList',
   },
   REWARD: {
     BASE: 'reward',

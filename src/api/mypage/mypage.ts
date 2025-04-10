@@ -7,6 +7,7 @@ import {
   RewardListData,
   RewardListDataWithTotals,
   RewardResponse,
+  PaymentItem,
 } from "@/types";
 
 export {
@@ -17,6 +18,8 @@ export {
   getRewardList,
   getInviteRewardList,
   applyRecommendCode,
+  getPaymentList,
+  deletePaymentMethod,
 }
 
 const getMyPageInfo = async (): Promise<MyPageInfoData> => {
@@ -96,5 +99,15 @@ const getInviteRewardList = async (page = 0, size = 10): Promise<InviteRewardLis
 
 const applyRecommendCode = async (body: { recommendCode: string }) => {
   const { data } = await axiosInstance.put('/api/rewards/recommend', body);
+  return data;
+}
+
+const getPaymentList = async (): Promise<PaymentItem[]> => {
+  const { data } = await axiosInstance.get('/api/cards');
+  return data._embedded?.querySubscribeCardsDtoList || [];
+}
+
+const deletePaymentMethod = async (cardId: number) => {
+  const { data } = await axiosInstance.delete(`/api/cards/${cardId}`);
   return data;
 }

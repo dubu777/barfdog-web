@@ -6,7 +6,7 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePersistReviewStore } from "@/store/usePersistReviewStore";
-import { CardActionsId, NormalizedCardData, OrderType, ReviewType } from '@/types';
+import { CardActionsId, NormalizedCardData, OrderType, ReviewItemType } from '@/types';
 import { ORDER_TYPE } from "@/constants";
 
 interface OrderBottomSheetProps {
@@ -56,7 +56,7 @@ const OrderBottomSheet = ({
 			const reviewData = {
 				orderId: data.id,
 				title: data.itemName,
-				reviewType: (orderType === ORDER_TYPE.SUBSCRIPTION ? 'SUBSCRIBE' : 'ITEM') as ReviewType,
+				reviewType: (orderType === ORDER_TYPE.SUBSCRIPTION ? 'SUBSCRIBE' : 'ITEM') as ReviewItemType,
 				orderedDate: data.orderDate || data.nextPaymentDate,
 				thumbnailUrl: data.imageUrl
 			};

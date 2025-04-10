@@ -9,7 +9,6 @@ import EmptyStateCard from "@/components/pages/mypage/common/cards/section/Empty
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
 import { useGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
 import { useGetDogList } from "@/api/dog/queries/useGetDogList";
-import {dogList} from "./MainCard.css";
 
 const MainCard = () => {
   const { data: subscriptionData } = useGetSubscriptionList(0, 999);
@@ -23,7 +22,7 @@ const MainCard = () => {
       })
     );
   const subscribingPets = dogList?.filter(dog => dog.subscribeStatus === 'SUBSCRIBING');
-  // const newSubscribingList = [...subscribingList];
+  // const newSubscribingList = [];
   const newSubscribingList = [...subscribingList];
 
   const emptyState = newSubscribingList.length < 1;

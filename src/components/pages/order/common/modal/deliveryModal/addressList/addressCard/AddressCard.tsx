@@ -13,11 +13,13 @@ interface AddressCardProps {
   address: AddressResponse;
   onSelectAddress: (deliveryDto: ClientDeliveryDto) => void;
   goToEditAddress: (address: AddressResponse) => void;
+  showSelectButton?: boolean;
 }
 export default function AddressCard({
   address,
   onSelectAddress,
   goToEditAddress,
+  showSelectButton = true,
 }: AddressCardProps) {
   const { isOpen, onClose, onToggle } = useModal();
   const deliveryDto = useDeliveryStore(state => state.deliveryDto)
@@ -89,14 +91,16 @@ export default function AddressCard({
           >
             수정
           </Button>
-          <Button
-            type="primary"
-            variant="solid"
-            size="sm"
-            onClick={handleSelect}
-          >
-            선택
-          </Button>
+          {showSelectButton &&
+            <Button
+              type="primary"
+              variant="solid"
+              size="sm"
+              onClick={handleSelect}
+            >
+              선택
+            </Button>
+          }
         </div>
       </div>
       <Modal

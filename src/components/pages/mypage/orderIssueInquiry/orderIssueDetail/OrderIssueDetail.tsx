@@ -69,7 +69,7 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 					</Card>
 				</article>
 			}
-			<AddressInfo data={data} type='orderIssue' />
+			<AddressInfo data={data} />
 			{data.orderType === ORDER_TYPE.SUBSCRIPTION
 				? <SubscriptionInfo subscriptionId={data?.subscribeId} data={data} type='orderIssue' />
 				: <OrderInfo data={data} type='orderIssue' items={[]} />

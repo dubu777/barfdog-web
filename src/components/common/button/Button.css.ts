@@ -17,6 +17,10 @@ export const textStyle = style({
   whiteSpace: "nowrap",
 });
 
+export const boxShadowStyle = style({
+  boxShadow: themeVars.shadow.light,
+})
+
 // 버튼 크기
 export const buttonSizes = {
   sm: style({
@@ -82,13 +86,13 @@ export const buttonVariants = {
       cursor: "pointer",
     }),
     secondary: style({
-      backgroundColor: "transparent",
+      backgroundColor: themeVars.colors.gray.gray0,
       border: `1px solid ${themeVars.colors.gray.gray300}`,
       color: themeVars.colors.red.red,
       cursor: "pointer",
     }),
     assistive: style({
-      backgroundColor: "transparent",
+      backgroundColor: themeVars.colors.gray.gray0,
       border: `1px solid ${themeVars.colors.gray.gray300}`,
       color: themeVars.colors.gray.gray900,
       cursor: "pointer",

@@ -1,4 +1,5 @@
-import { Coupon, PlanName } from "./subscription";
+import { PAYMENT_METHOD } from "@/constants";
+import { PlanName } from "./subscription";
 
 export type {
   SubscriptionOrderData,
@@ -395,7 +396,7 @@ interface PaymentValidationData {
 }
 
 
-type PaymentMethod = "KAKAO_PAY" | "NAVER_PAY" | "CREDIT_CARD";
+type PaymentMethod = keyof typeof PAYMENT_METHOD;
 
 type OrderDetailType = 'general' | 'subscribe';
 

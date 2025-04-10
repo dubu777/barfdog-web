@@ -5,7 +5,7 @@ import {
   disabledVariants,
   iconContainer,
   baseStyle,
-  textStyle,
+  textStyle, boxShadowStyle,
 } from "./Button.css";
 import SvgIcon from "../svgIcon/SvgIcon";
 import { COLORS } from "@/constants/style";
@@ -25,6 +25,7 @@ interface ButtonProps {
   buttonType?: "submit" | "button" | "reset";
   style?: React.CSSProperties;
   className?: string;
+  showBoxShadow?: boolean;
 }
 
 export default function Button({
@@ -42,6 +43,7 @@ export default function Button({
   buttonType = "button",
   style,
   className,
+  showBoxShadow = false,
 }: ButtonProps) {
   // type as keyof typeof buttonVariants[typeof variant] => type 이 buttonVariants[variant] 객체의 키임을 명시
   const variantStyle =
@@ -54,6 +56,8 @@ export default function Button({
         type as keyof (typeof disabledVariants)[typeof variant]
       ]
     : "";
+
+  const shadowStyle = showBoxShadow ? boxShadowStyle : "";
 
   const isIconLeft = iconPosition === "left";
 
@@ -81,7 +85,7 @@ export default function Button({
   return (
     <button
       type={buttonType}
-      className={`${baseStyle} ${variantStyle} ${sizeStyle} ${disabledStyle} ${
+      className={`${baseStyle} ${variantStyle} ${sizeStyle} ${disabledStyle} ${shadowStyle} ${
         className || ""
       }`}
       onClick={onClick}

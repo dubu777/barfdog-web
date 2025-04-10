@@ -27,7 +27,7 @@ const OrderDetail = ({ orderId, orderType }: OrderDeliveryDetailProps) => {
 			{!showReceipt ?
 				<>
 					<OrderItemInfo data={orderDetailData} orderType={orderType} />
-					<AddressInfo data={orderDto} />
+					<AddressInfo data={orderDto} showEditAddressInfo />
 					{orderType === ORDER_TYPE.GENERAL
 						? <OrderInfo data={orderDto} items={orderItemDtoList} type='orderDetail' />
 						: <SubscriptionInfo subscriptionId={orderId} data={orderDto} type='orderDetail' />
