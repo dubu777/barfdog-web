@@ -3,6 +3,12 @@ import { SURVEY_FORM_INFO } from "@/constants";
 import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller } from "react-hook-form";
+import useDeviceState from "@/hooks/useDeviceState";
+import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
+import { formatDate } from "@/utils";
+import { surveyStepContainer } from "./SurveySteps.css";
+import { isValid, parseISO } from "date-fns";
+import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -15,23 +21,34 @@ export default function SurveyStep2({
   control,
   petName,
 }: SurveyStepProps) {
+    const { isMobileDevice } = useDeviceState();
   
   return (
-    <Controller
-    name="step2.gender"
-    control={control}
-    render={({ field }) => (
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.gender.options}
-        title={SURVEY_FORM_INFO.gender.title}
-        selectedValue={field.value}
-        petName={petName}
-        onChange={(value) => {
-          field.onChange(value); 
-          handleChange();
-        }}
-      />
-    )}
-    />
+    <div className={surveyStepContainer}>
+				<Controller
+					name='step2.birthDate'
+					control={control}
+					render={({field}) =>
+					<>
+						{isMobileDevice
+							? <MobileDatePicker
+								value={formatDate(field.value, 'onlyDateDot')}
+								onChange={(date) => field.onChange(date)}
+								label='생년월일'
+								isRequired
+							/>
+							: <CustomDatePicker
+								name='birthday'
+								value={formatDate(field.value, 'onlyDateDot')}
+								onChange={(date) => {
+									console.log(date)
+									field.onChange(date)
+								}}
+							/>
+						}
+					</>
+					}
+				/>
+    </div>
   );
 }

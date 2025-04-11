@@ -8,7 +8,7 @@ export const surveyButtonContainer = recipe({
     gap: "12px",
     padding: "20px 24px",
     alignItems: "center",
-    justifyContent: "flex-start",
+
     borderRadius: "8px",
     width: "100%",
   },
@@ -24,6 +24,14 @@ export const surveyButtonContainer = recipe({
         boxShadow: themeVars.shadow.light,
       },
     },
+    isNormal: {
+      true: {
+        justifyContent: "center",
+      },
+      false: {
+        justifyContent: "flex-start",
+      },
+    }
   },
   defaultVariants: {
     isChecked: false,

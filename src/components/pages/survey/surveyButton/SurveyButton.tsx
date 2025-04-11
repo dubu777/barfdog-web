@@ -33,7 +33,7 @@ export default function SurveyButton<T>({
 
   return (
     <button
-      className={styles.surveyButtonContainer({ isChecked })}
+      className={styles.surveyButtonContainer({ isChecked, isNormal: inputType === "normal" })}
       onClick={() => onToggle(value)}
     >
       {iconSrc && <SvgIcon src={iconSrc} />}

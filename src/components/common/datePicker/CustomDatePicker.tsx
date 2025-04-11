@@ -1,5 +1,5 @@
 import { useState } from "react";
-import * as styles from './DatePicker.css';
+import * as styles from './CustomDatePicker.css';
 import ArrowLeftIcon from '/public/images/header/chevron-left.svg';
 import ArrowRightIcon from '/public/images/header/chevron-right.svg';
 import DatePicker from "react-datepicker";
@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
-interface DatePickerProps {
+interface CustomDatePickerProps {
 	name: string;
 	value: Date | string | null;
 	onChange: (date: Date | null | [Date | null, Date | null]) => void;
@@ -31,7 +31,7 @@ const parseDate = (value: Date | string | null) => {
 	return undefined;
 };
 
-const DatePickerComponent = ({
+const CustomDatePicker = ({
 	name,
 	value,
 	onChange,
@@ -39,24 +39,29 @@ const DatePickerComponent = ({
 	maxDate,
 	dateFormat = 'yyyy.MM.dd',
 	className,
-}: DatePickerProps) => {
+}: CustomDatePickerProps) => {
 	const years = Array.from({ length: getYear(new Date()) + 1 - 1970 }, (_, i) => getYear(new Date()) - i);
 	const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 	const [isOpen, setIsOpen] = useState(false);
 
+	  // value가 없거나 빈 문자열이면 placeholder 값 적용
+	const displayValue =
+	typeof value === "string" && value.trim() !== "" ? value : "YYYY-MM-DD";
+
 	return (
 		<div className={`${styles.datePickerContainer} ${className || ''}`}>
-			<DatePickerButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} value={value as string} />
+			<DatePickerButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} value={displayValue as string} />
 			{isOpen &&
 				<DatePicker
 					inline
 					selected={parseDate(value)}
 					name={name}
 					minDate={minDate}
-					maxDate={maxDate || new Date()}
+					maxDate={maxDate || new Date()}   
 					dateFormat={dateFormat}
 					locale={ko}
+					placeholderText="YYYY-MM-DD"
 					onChange={(date) => {
 						onChange(date);
 						setIsOpen(!isOpen);
@@ -132,4 +137,4 @@ const DatePickerComponent = ({
 	);
 };
 
-export default DatePickerComponent;
+export default CustomDatePicker;

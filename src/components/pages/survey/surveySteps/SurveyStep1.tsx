@@ -1,6 +1,9 @@
 import { SURVEY_FORM_INFO } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Control, Controller, FieldErrors, useFormContext } from "react-hook-form";
+import {
+  Controller,
+  useFormContext,
+} from "react-hook-form";
 import * as styles from "./SurveySteps.css";
 
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -23,13 +26,18 @@ export default function SurveyStep1({
   handleChange,
   handleBlur,
   handleKeyDown,
-  // control,
-  // errors,
-}: SurveyStepProps) {
-  const { control, setValue, formState: { errors } } = useFormContext<SurveyStepValues>();
+}: // control,
+// errors,
+SurveyStepProps) {
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext<SurveyStepValues>();
 
   const handleDuplicateCheck = () => {
-    // 중복 체크 로직을 여기에 작성하세요.
+    // 중복 체크 로직 작성
+    setValue("step1.nameVerified", true, { shouldValidate: true });
     console.log("중복 체크");
   };
   return (
@@ -44,10 +52,8 @@ export default function SurveyStep1({
             "radio",
             (value) => {
               field.onChange(value);
-              // handleChange();
             }
           );
-
           return (
             <div className={styles.rowSurveyButtonWrapper}>
               {SURVEY_FORM_INFO.dogBasicInfo.gender.options.map((option) => (
@@ -67,32 +73,61 @@ export default function SurveyStep1({
           );
         }}
       />
-      <div className={styles.rowSurveyButtonWrapper}>
       <Controller
-        name="step1.name"
+        name="step1.isNeutered"
         control={control}
-        render={({ field }) => (
-          <InputField
-            {...field}
-            placeholder="이름을 입력해주세요"
-            error={errors.step1?.name?.message}
-            onChange={(e) => {
-              field.onChange(e);
-              // handleChange();
-            }}
-            onKeyDown={(e) => handleKeyDown(e, field.name)}
-          />
-        )}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "radio",
+            (value) => {
+              field.onChange(value);
+            }
+          );
+          return (
+            <div className={styles.rowSurveyButtonWrapper}>
+              {SURVEY_FORM_INFO.dogBasicInfo.isNeutered.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.id}
+                    label={option.label}
+                    value={option.value}
+                    inputType="normal"
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
       />
-      <Button
-        type="primary"
-        variant="solid"
-        size="inputButton"
-        buttonColor="gray800"
-        onClick={handleDuplicateCheck}
-      >
-        중복체크
-      </Button>
+      <div className={styles.rowSurveyButtonWrapper}>
+        <Controller
+          name="step1.name"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              placeholder="이름을 입력해주세요"
+              error={errors.step1?.name?.message}
+              onChange={(e) => {
+                field.onChange(e);
+                setValue("step1.nameVerified", false, { shouldValidate: true });
+              }}
+              onKeyDown={(e) => handleKeyDown(e, field.name)}
+            />
+          )}
+        />
+        <Button
+          type="primary"
+          variant="solid"
+          size="inputButton"
+          buttonColor="gray800"
+          onClick={handleDuplicateCheck}
+        >
+          중복체크
+        </Button>
       </div>
     </div>
   );

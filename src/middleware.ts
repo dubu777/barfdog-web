@@ -40,13 +40,13 @@ const isAuth = isAuthenticated(token);
 	const pathname = new URL(req.url).pathname;
 	let needToSetPassword = false;
 
-	try {
-		needToSetPassword = await shouldRedirectToSetPassword(pathname);
-	} catch (error) {
-		console.error('비밀번호 설정 여부 확인 중 오류 발생:', error);
-		// 에러 발생 시 로그인 페이지로 리디렉션
-		return NextResponse.redirect(new URL('/login', req.nextUrl.origin));
-	}
+	// try {
+	// 	needToSetPassword = await shouldRedirectToSetPassword(pathname);
+	// } catch (error) {
+	// 	console.error('비밀번호 설정 여부 확인 중 오류 발생:', error);
+	// 	// 에러 발생 시 로그인 페이지로 리디렉션
+	// 	return NextResponse.redirect(new URL('/login', req.nextUrl.origin));
+	// }
 
 	console.log('needToSetPassword', needToSetPassword)
   // 보호된 경로에 대한 접근 체크
@@ -58,14 +58,14 @@ const isAuth = isAuthenticated(token);
       return NextResponse.redirect(new URL('/', req.nextUrl.origin));
     }
 
-	if (needToSetPassword && pathname !== '/mypage/account/set-password') {
-		const currentPathSegment = pathname.split('/').pop();
-		return NextResponse.redirect(
-			new URL(`/mypage/account/set-password?redirect=${currentPathSegment}`, req.url)
-		)
-	} else {
+	// if (needToSetPassword && pathname !== '/mypage/account/set-password') {
+	// 	const currentPathSegment = pathname.split('/').pop();
+	// 	return NextResponse.redirect(
+	// 		new URL(`/mypage/account/set-password?redirect=${currentPathSegment}`, req.url)
+	// 	)
+	// } else {
 
-	}
+	// }
 
 	return NextResponse.next();
 }

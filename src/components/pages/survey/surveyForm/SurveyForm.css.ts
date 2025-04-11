@@ -16,5 +16,5 @@ export const surveyFormWrapper = style({
   alignItems: 'center',
   width: '100%',
   height: '100%',
-  maxWidth: '600cpx',
+  maxWidth: '600px',
 });
