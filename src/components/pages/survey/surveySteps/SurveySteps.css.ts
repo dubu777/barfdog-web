@@ -5,10 +5,11 @@ export const surveyStepContainer = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "flex-start",
   width: "100%",
   gap: "20px",
 });
+
 
 export const rowSurveyButtonWrapper = style({
   display: "flex",

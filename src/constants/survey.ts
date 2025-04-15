@@ -8,6 +8,7 @@ export {
   SURVEY_OPTIONAL_FIELDS,
   NONE_VALUE,
   SURVEY_SECTIONS,
+  SURVEY_TITLES,
 };
 
 const SURVEY_SECTIONS = [
@@ -16,6 +17,27 @@ const SURVEY_SECTIONS = [
   { key: "dogDietHealth", label: "식단/건강" },
 ];
 
+export type SurveyTitleTemplates = {
+  [stepKey in SurveyStepKeys]: string[];
+}
+
+const SURVEY_TITLES: SurveyTitleTemplates = {
+  step1: ["반려견에 대해 알려주세요"],
+  step2: ["{petName}의", "생년월일은 언제인가요?"],
+  step3: ["{petName}의", "몸무게는 얼마인가요?"],
+  step4: ["{petName}의", "견종은 무엇인가요?"],
+  step5: ["현재", "임신 중인가요?"],
+  step6: ["현재", "수유 중인가요?"],
+  step7: ["{petName}의", "체형은 어느 쪽에 가까운가요?"],
+  step8: ["{petName}의", "활동량은 어떤가요?"],
+  step9: ["{petName}의", "간식량은 어떤가요?"],
+  step10: ["못 먹는 재료는", "무엇인가요?"],
+  step11: ["{petName}의", "건강고민은 무엇인가요?"],
+  step12: ["현재 먹고 있는", "사료는 무엇인가요?"],
+  step13: ["현재 먹고 있는", "영양제가 있나요?"],
+  step14: ["아래의 질병 중", "앓고 있는 질병이 있나요?"],
+};
+
 const SURVEY_FORM_INFO = {
   dogBasicInfo: {
     gender: {
@@ -23,15 +45,25 @@ const SURVEY_FORM_INFO = {
       title: "성별",
       inputType: "radio",
       options: [
-        { id: "gender-female", value: "female", label: "암컷", imageUrl: "/images/survey/female.png" },
-        { id: "gender-male", value: "male", label: "수컷", imageUrl: "/images/survey/male.png" }
+        {
+          id: "gender-female",
+          value: "female",
+          label: "암컷",
+          imageUrl: "/images/survey/female.png",
+        },
+        {
+          id: "gender-male",
+          value: "male",
+          label: "수컷",
+          imageUrl: "/images/survey/male.png",
+        },
       ],
     },
     name: {
       id: "name",
       title: "이름",
       inputType: "textField",
-      placeholder: "이름을 입력해주세요"
+      placeholder: "이름을 입력해주세요",
     },
     isNeutered: {
       id: "isNeutered",
@@ -39,7 +71,7 @@ const SURVEY_FORM_INFO = {
       inputType: "radio",
       options: [
         { id: "isNeutered-true", value: true, label: "중성화 했어요" },
-        { id: "isNeutered-false", value: false, label: "중성화 안했어요" }
+        { id: "isNeutered-false", value: false, label: "중성화 안했어요" },
       ],
     },
     birthDate: {
@@ -56,14 +88,29 @@ const SURVEY_FORM_INFO = {
         { id: "isSenior-false", value: false, label: "노령견이 아니에요" },
       ],
     },
-    size: {
-      id: "size",
+    dogSize: {
+      id: "dogSize",
       title: "견사이즈",
       inputType: "radio",
       options: [
-        { id: "size-small", value: "small", label: "소형" },
-        { id: "size-medium", value: "medium", label: "중형" },
-        { id: "size-large", value: "large", label: "대형" },
+        {
+          id: "dogSize-small",
+          value: "small",
+          label: "소형",
+          imageUrl: "/images/survey/small-dog.png",
+        },
+        {
+          id: "dogSize-medium",
+          value: "medium",
+          label: "중형",
+          imageUrl: "/images/survey/medium-dog.png",
+        },
+        {
+          id: "dogSize-large",
+          value: "large",
+          label: "대형",
+          imageUrl: "/images/survey/large-dog.png",
+        },
       ],
     },
     weight: {
@@ -80,7 +127,11 @@ const SURVEY_FORM_INFO = {
       options: [
         { id: "breed-mix", value: "mix", label: "믹스" },
         { id: "breed-doberman", value: "doberman", label: "도베르만" },
-        { id: "breed-golden", value: "golden_retriever", label: "골든 리트리버" },
+        {
+          id: "breed-golden",
+          value: "golden_retriever",
+          label: "골든 리트리버",
+        },
       ],
     },
     pregnancy: {
@@ -112,11 +163,36 @@ const SURVEY_FORM_INFO = {
       inputType: "radio",
       title: "",
       options: [
-        { id: "bodyCondition-veryThin", value: "very_thin", label: "매우 마름", subLabel: "근육이 거의 느껴지지 않음" },
-        { id: "bodyCondition-thin", value: "thin", label: "마름", subLabel: "갈비뼈가 쉽게 만져짐" },
-        { id: "bodyCondition-normal", value: "normal", label: "적정 체중", subLabel: "복부가 위로 올라가 있음" },
-        { id: "bodyCondition-overweight", value: "overweight", label: "과체중", subLabel: "복부가 평평" },
-        { id: "bodyCondition-obese", value: "obese", label: "심각한 비만", subLabel: "복부가 심하게 쳐짐" },
+        {
+          id: "bodyCondition-veryThin",
+          value: "very_thin",
+          label: "매우 마름",
+          subLabel: "근육이 거의 느껴지지 않음",
+        },
+        {
+          id: "bodyCondition-thin",
+          value: "thin",
+          label: "마름",
+          subLabel: "갈비뼈가 쉽게 만져짐",
+        },
+        {
+          id: "bodyCondition-normal",
+          value: "normal",
+          label: "적정 체중",
+          subLabel: "복부가 위로 올라가 있음",
+        },
+        {
+          id: "bodyCondition-overweight",
+          value: "overweight",
+          label: "과체중",
+          subLabel: "복부가 평평",
+        },
+        {
+          id: "bodyCondition-obese",
+          value: "obese",
+          label: "심각한 비만",
+          subLabel: "복부가 심하게 쳐짐",
+        },
       ],
     },
     activityLevel: {
@@ -124,20 +200,43 @@ const SURVEY_FORM_INFO = {
       inputType: "radio",
       title: "",
       options: [
-        { id: "activityLevel-veryHigh", value: "very_high", label: "매우 많아요" },
+        {
+          id: "activityLevel-veryHigh",
+          value: "very_high",
+          label: "매우 많아요",
+        },
         { id: "activityLevel-high", value: "high", label: "많아요" },
         { id: "activityLevel-normal", value: "normal", label: "보통이에요" },
         { id: "activityLevel-low", value: "low", label: "적어요" },
-        { id: "activityLevel-veryLow", value: "very_low", label: "매우 적어요" },
+        {
+          id: "activityLevel-veryLow",
+          value: "very_low",
+          label: "매우 적어요",
+        },
       ],
     },
     snackFrequency: {
       id: "snackFrequency",
       inputType: "radio",
       options: [
-        { id: "snackFrequency-low", value: "low", label: "적어요", subLabel: "식사에 영향을 주지 않는 양" },
-        { id: "snackFrequency-moderate", value: "moderate", label: "적당해요", subLabel: "어느정도 영향을 주는 양" },
-        { id: "snackFrequency-high", value: "high", label: "많아요", subLabel: "식사에 상당한 영향을 주는 양" },
+        {
+          id: "snackFrequency-low",
+          value: "low",
+          label: "적어요",
+          subLabel: "식사에 영향을 주지 않는 양",
+        },
+        {
+          id: "snackFrequency-moderate",
+          value: "moderate",
+          label: "적당해요",
+          subLabel: "어느정도 영향을 주는 양",
+        },
+        {
+          id: "snackFrequency-high",
+          value: "high",
+          label: "많아요",
+          subLabel: "식사에 상당한 영향을 주는 양",
+        },
       ],
     },
     allergyIngredients: {
@@ -155,9 +254,21 @@ const SURVEY_FORM_INFO = {
       id: "healthConcerns",
       inputType: "checkbox",
       options: [
-        { id: "healthConcerns-vomiting", value: "vomiting_diarrhea", label: "구토/설사" },
-        { id: "healthConcerns-weight", value: "weight_control", label: "체중조절" },
-        { id: "healthConcerns-energy", value: "energy_boost", label: "기력보충" },
+        {
+          id: "healthConcerns-vomiting",
+          value: "vomiting_diarrhea",
+          label: "구토/설사",
+        },
+        {
+          id: "healthConcerns-weight",
+          value: "weight_control",
+          label: "체중조절",
+        },
+        {
+          id: "healthConcerns-energy",
+          value: "energy_boost",
+          label: "기력보충",
+        },
         { id: "healthConcerns-tears", value: "tears", label: "눈물/눈곱" },
         { id: "healthConcerns-skin", value: "skin_hair", label: "피부/모질" },
       ],
@@ -171,7 +282,11 @@ const SURVEY_FORM_INFO = {
         { id: "currentFood-dry", value: "dry", label: "건사료" },
         { id: "currentFood-wet", value: "wet", label: "습식사료" },
         { id: "currentFood-homemade", value: "homemade", label: "홈메이드식" },
-        { id: "currentFood-freezeDried", value: "freeze_dried", label: "동결건조" },
+        {
+          id: "currentFood-freezeDried",
+          value: "freeze_dried",
+          label: "동결건조",
+        },
         { id: "currentFood-cooked", value: "cooked", label: "화식" },
         { id: "currentFood-raw", value: "raw", label: "생식" },
       ],
@@ -181,7 +296,11 @@ const SURVEY_FORM_INFO = {
       inputType: "checkbox",
       options: [
         { id: "currentSupplements-none", value: "none", label: "없어요" },
-        { id: "currentSupplements-probioticsOmega3", value: "probiotics_omega3", label: "유산균 오메가3" },
+        {
+          id: "currentSupplements-probioticsOmega3",
+          value: "probiotics_omega3",
+          label: "유산균 오메가3",
+        },
         { id: "currentSupplements-joint", value: "joint", label: "관절" },
         { id: "currentSupplements-eye", value: "eye", label: "눈" },
       ],
@@ -191,8 +310,16 @@ const SURVEY_FORM_INFO = {
       inputType: "checkbox",
       options: [
         { id: "healthIssues-none", value: "none", label: "없어요" },
-        { id: "healthIssues-hyperlipidemia", value: "hyperlipidemia", label: "고지혈증" },
-        { id: "healthIssues-pancreatic", value: "pancreatic", label: "췌장질환" },
+        {
+          id: "healthIssues-hyperlipidemia",
+          value: "hyperlipidemia",
+          label: "고지혈증",
+        },
+        {
+          id: "healthIssues-pancreatic",
+          value: "pancreatic",
+          label: "췌장질환",
+        },
         { id: "healthIssues-heart", value: "heart", label: "심장병" },
         { id: "healthIssues-kidney", value: "kidney", label: "신장병" },
         { id: "healthIssues-dermatitis", value: "dermatitis", label: "피부염" },
@@ -200,9 +327,6 @@ const SURVEY_FORM_INFO = {
     },
   },
 };
-
-
-
 
 const SURVEY_FORM_INFO_2 = {
   name: {
@@ -526,7 +650,7 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
     id: 6,
     name: "터키앤비프",
     imageURL: "/images/recipe/turkey_and_beef.png",
-ingredients: ["칠면조", "소"],
+    ingredients: ["칠면조", "소"],
     efficacy: ["구토•설사", "관절 건강"],
     type: "double",
   },
@@ -534,7 +658,7 @@ ingredients: ["칠면조", "소"],
     id: 7,
     name: "덕앤램",
     imageURL: "/images/recipe/duck_and_lamb.png",
-ingredients: ["오리", "양"],
+    ingredients: ["오리", "양"],
     efficacy: ["구토•설사", "관절 건강"],
     type: "double",
   },
@@ -542,7 +666,7 @@ ingredients: ["오리", "양"],
     id: 8,
     name: "램앤비프",
     imageURL: "/images/recipe/lamb_and_beef.png",
-ingredients: ["양", "소"],
+    ingredients: ["양", "소"],
     efficacy: ["구토•설사", "관절 건강"],
     type: "double",
   },
@@ -551,14 +675,14 @@ ingredients: ["양", "소"],
     name: "프리미엄 치킨",
     imageURL: "/images/recipe/premium_chicken.png",
     ingredients: ["닭"],
-        efficacy: ["구토•설사", "관절 건강"],
+    efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
   10: {
     id: 10,
     name: "프리미엄 터키",
     imageURL: "/images/recipe/premium_turkey.png",
-ingredients: ["칠면조"],
+    ingredients: ["칠면조"],
     efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
@@ -566,7 +690,7 @@ ingredients: ["칠면조"],
     id: 11,
     name: "프리미엄 램",
     imageURL: "/images/recipe/premium_lamb.png",
-ingredients: [""],
+    ingredients: [""],
     efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
@@ -574,12 +698,11 @@ ingredients: [""],
     id: 12,
     name: "프리미엄 비프",
     imageURL: "/images/recipe/premium_beef.png",
-ingredients: ["양"],
+    ingredients: ["양"],
     efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
 };
-
 
 // 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
 const SURVEY_NO_AUTO_NEXT_STEP = new Set<SurveyStepKeys>([

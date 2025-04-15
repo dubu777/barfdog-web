@@ -7,7 +7,7 @@ export const surveyFormContainer = style({
   alignItems: 'center',
   width: '100%',
   height: '100%',
-  padding: '28px 20px 88px 20px',
+  padding: '40px 20px 88px 20px',
 });
 
 export const surveyFormWrapper = style({

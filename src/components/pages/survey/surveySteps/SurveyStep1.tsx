@@ -11,6 +11,7 @@ import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
 import SurveyButton from "../surveyButton/SurveyButton";
 import ImageButton from "../imageButton/ImageButton";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 interface SurveyStepProps {
   handleChange: () => void;
   handleBlur: (fieldName: string) => Promise<void>;
@@ -43,6 +44,7 @@ SurveyStepProps) {
   return (
     <div className={styles.surveyStepContainer}>
       {/* 성별 선택 버튼 */}
+      <DefaultText type="title2">반려견에 대해 알려주세요</DefaultText>
       <Controller
         name="step1.gender"
         control={control}

@@ -37,7 +37,7 @@ const CustomDatePicker = ({
 	onChange,
 	minDate,
 	maxDate,
-	dateFormat = 'yyyy.MM.dd',
+	dateFormat = 'yyyy-MM-dd',
 	className,
 }: CustomDatePickerProps) => {
 	const years = Array.from({ length: getYear(new Date()) + 1 - 1970 }, (_, i) => getYear(new Date()) - i);
@@ -47,7 +47,7 @@ const CustomDatePicker = ({
 
 	  // value가 없거나 빈 문자열이면 placeholder 값 적용
 	const displayValue =
-	typeof value === "string" && value.trim() !== "" ? value : "YYYY-MM-DD";
+	typeof value === "string" && value.trim() !== "-" ? value : "YYYY-MM-DD";
 
 	return (
 		<div className={`${styles.datePickerContainer} ${className || ''}`}>

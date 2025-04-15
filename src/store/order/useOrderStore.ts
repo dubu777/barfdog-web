@@ -6,10 +6,6 @@ import {
   ClientDeliveryDto,
   DeliveryDto,
 } from "@/types";
-import {
-  initialGeneralOrderBody,
-  initialSubscriptionOrderBody,
-} from "@/config/orderInitialValues";
 
 import { useDeliveryStore } from "./useDeliveryStore";
 import { usePaymentStore } from "./usePaymentStore";

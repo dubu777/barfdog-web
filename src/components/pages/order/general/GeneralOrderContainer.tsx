@@ -96,7 +96,7 @@ export default function GeneralOrderContainer() {
       ORDER_TYPE.GENERAL
     ) as SaveGeneralOrderRequest;
     console.log("requestBody", requestBody);
-    await processPayment(requestBody);
+    // await processPayment(requestBody);
   };
   return (
     <div>
