@@ -1,0 +1,61 @@
+// src/components/pages/survey/searchableSelector/SearchableSelector.tsx
+
+import React, { useState, useMemo } from "react";
+import InputField from "@/components/common/inputField/InputField";
+import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
+import * as styles from "../surveySteps/SurveySteps.css";
+interface DogTypeOption {
+  value: string;
+  label: string;
+}
+
+interface SearchableSelectorProps {
+  label?: string; // 상단 InputField 라벨 (선택사항)
+  placeholder?: string; // InputField placeholder
+  options: DogTypeOption[]; // 전체 견종 옵션
+  selectedValue: string; // 현재 선택된 값 (radio)
+  onChange: (value: string) => void; // 선택 변경 시 호출
+}
+
+export default function SearchableSelector({
+  label,
+  placeholder,
+  options,
+  selectedValue,
+  onChange,
+}: SearchableSelectorProps) {
+  const [query, setQuery] = useState("");
+
+  // query가 변경될 때마다 부분 일치하는 견종만 필터링
+  const filteredOptions = useMemo(() => {
+    if (!query) return options; // 검색어가 없으면 전체 리스트
+    const lowerQuery = query.toLowerCase();
+    return options.filter((opt) =>
+      opt.label.toLowerCase().includes(lowerQuery)
+    );
+  }, [options, query]);
+
+  return (
+    <>
+      <InputField
+        placeholder={placeholder}
+        type="text"
+        searchButton
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <div className={styles.colSurveyButtonWrapper}>
+        {filteredOptions.map((opt) => (
+          <SurveyButton
+            key={opt.label}
+            label={opt.label}
+            value={opt.value}
+            inputType="radio"
+            isChecked={selectedValue === opt.value}
+            onToggle={(val) => onChange(val)}
+          />
+        ))}
+      </div>
+    </>
+  );
+}

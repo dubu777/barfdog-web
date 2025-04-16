@@ -34,6 +34,7 @@ SurveyStepProps) {
   const handleDuplicateCheck = () => {
     // 중복 체크 로직 작성
     setValue("step1.nameVerified", true, { shouldValidate: true });
+    handleChange();
     console.log("중복 체크");
   };
   return (
@@ -49,6 +50,7 @@ SurveyStepProps) {
             "radio",
             (value) => {
               field.onChange(value);
+              handleChange();
             }
           );
           return (
@@ -79,6 +81,7 @@ SurveyStepProps) {
             "radio",
             (value) => {
               field.onChange(value);
+              handleChange();
             }
           );
           return (

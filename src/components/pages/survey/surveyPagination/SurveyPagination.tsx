@@ -2,8 +2,6 @@
 
 import * as styles from "./SurveyPagination.css";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import RightArrowIcon from "/public/images/icons/right-arrow-white.svg"
-import LeftArrowIcon from "/public/images/icons/left-arrow-red.svg"
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -12,8 +10,6 @@ interface SurveyPaginationProps {
   handlePrevStep: () => void;
   isLastStep: boolean;
   isFirstStep: boolean;
-  currentStep: number;
-  stepLength: number;
   canNextStep: boolean;
 }
 
@@ -22,12 +18,9 @@ export default function SurveyPagination({
   handlePrevStep,
   isLastStep,
   isFirstStep,
-  currentStep,
-  stepLength,
   canNextStep,
 }: SurveyPaginationProps) {
-  const progressPercentage = ((currentStep) / stepLength) * 100;
-  
+
   // 결과 레시피 추천 페이지 테스트 이동 용
   const router = useRouter();
   const handleResultPageTest = () => {
@@ -36,12 +29,6 @@ export default function SurveyPagination({
   }
   return (
     <footer className={styles.surveyPaginationContainer}>
-      <div className={styles.progressBarContainer}>
-        <div
-          className={styles.progressBar}
-          style={{ width: `${progressPercentage}%` }}
-        />
-      </div>
       <div className={styles.surveyPaginationButtonWrapper}>
         <DefaultButton
           onClick={handlePrevStep}

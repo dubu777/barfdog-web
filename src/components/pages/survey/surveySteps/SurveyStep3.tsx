@@ -68,6 +68,8 @@ export default function SurveyStep3({
               placeholder="몸무게 입력"
               onChange={(e) => {
                 field.onChange(e);
+                console.log('field.name', field.name);
+                
               }}
               onKeyDown={(e) => handleKeyDown(e, field.name)}
             />

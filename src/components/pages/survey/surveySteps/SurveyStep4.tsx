@@ -3,6 +3,7 @@ import * as styles from "./SurveySteps.css";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import SearchableSelector from "../searchableSelector/SearchableSelector";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -14,10 +15,30 @@ export default function SurveyStep4({
   petName,
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
+  const dogTypeOptions = SURVEY_FORM_INFO.dogBasicInfo.dogType.options;
 
   return (
     <div className={styles.surveyStepContainer}>
       <SurveyTitle petName={petName} titleTemplates={SURVEY_TITLES.step4} />
+      
+      <Controller
+        name="step4.dogType" // surveyStepsSchema에 있는 필드 이름
+        control={control}
+        render={({ field }) => {
+          return (
+            <SearchableSelector
+              label="견종 검색"
+              placeholder="견종을 검색해 보세요"
+              options={dogTypeOptions}
+              selectedValue={field.value || ""}
+              onChange={(value) => {
+                field.onChange(value);
+                handleChange();
+              }}
+            />
+          );
+        }}
+      />
     </div>
   );
 }

@@ -19,6 +19,12 @@ export default function SurveyForm({
 }: SurveyFormProps) {
   return (
     <section className={styles.surveyFormContainer}>
+        {/* <div
+          className={styles.surveyFormWrapper}
+          key={currentStep}
+        >
+          {steps[currentStep - 1]}
+        </div> */}
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           className={styles.surveyFormWrapper}

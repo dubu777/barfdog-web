@@ -23,6 +23,8 @@ interface NewHeaderProps {
   showCloseButton?: boolean;
   showMypageButton?: boolean;
   showCartButton?: boolean;
+  leftSlotGap?: "lg" | "sm";
+  backgroundColor?: keyof typeof styles.backgroundColors;
 }
 
 export default function NewHeader({
@@ -38,6 +40,8 @@ export default function NewHeader({
   showCloseButton,
   showMypageButton,
   showCartButton,
+  backgroundColor = "white",
+  leftSlotGap = "lg",
 }: NewHeaderProps) {
   const router = useRouter();
 
@@ -48,11 +52,13 @@ export default function NewHeader({
       router.back();
     }
   };
+  const colorStyle = styles.backgroundColors[backgroundColor];
+  const leftSlotStyle = styles.leftSlotVariants[leftSlotGap];
 
   return (
     <header className={styles.headerContainer} style={style}>
-      <div className={styles.headerContent}>
-      <div className={styles.leftSlot}>
+      <div className={`${styles.headerContent} ${colorStyle}`}>
+      <div className={`${styles.leftSlot} ${leftSlotStyle}`}>
         {showBackButton && (
           <SvgIcon
             src={BackIcon}

@@ -12,6 +12,10 @@ import {
 } from "@/utils/validation/surveyValidation";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
 import { FormProvider } from "react-hook-form";
+import SurveyProgressBar from "@/components/pages/survey/surveyProgressBar/SurveyProgressBar";
+import { SURVEY_SECTIONS } from "@/constants";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 export default function SurveyPage() {
   const {
@@ -22,7 +26,7 @@ export default function SurveyPage() {
     direction,
     isLastStep,
     isFirstStep,
-  } = useSurveyStep(17);
+  } = useSurveyStep(14);
 
   const surveyFormMethods = useSurveyForm<typeof surveyStepsSchema>(
     surveyStepsSchema,
@@ -46,23 +50,41 @@ export default function SurveyPage() {
 
   return (
     <div className={styles.surveyLayoutContainer}>
-      <NewHeader leftTitle="이전" showBackButton showCloseButton />
-      <FormProvider {...surveyFormMethods}>
-      <SurveyForm
-        currentStep={currentStep}
-        direction={direction}
-        steps={steps}
+      <NewHeader
+        leftElement={
+          currentStep > 1 && (
+            <DefaultText type="headline3" color="gray700">
+              이전
+            </DefaultText>
+          )
+        }
+        showBackButton={currentStep > 1}
+        showCloseButton
+        onBack={handlePrevStep}
+        backgroundColor="gray50"
+        leftSlotGap="sm"
       />
+      <SurveyProgressBar currentStep={currentStep} sections={SURVEY_SECTIONS} />
+      <FormProvider {...surveyFormMethods}>
+        <SurveyForm
+          currentStep={currentStep}
+          direction={direction}
+          steps={steps}
+        />
       </FormProvider>
-      <SurveyPagination
+      <ButtonDocked
+        type="full-button"
+        primaryButtonLabel="다음"
+        onPrimaryClick={handleNextStep}
+        isPrimaryDisabled={!surveyFormMethods.isCanNextStep}
+      />
+      {/* <SurveyPagination
         handleNextStep={handleNextStep}
         handlePrevStep={handlePrevStep}
         isLastStep={isLastStep}
         isFirstStep={isFirstStep}
-        currentStep={currentStep}
-        stepLength={steps.length}
         canNextStep={surveyFormMethods.isCanNextStep}
-      />
+      /> */}
     </div>
   );
 }

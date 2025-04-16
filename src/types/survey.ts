@@ -1,6 +1,6 @@
 import {RecipeDto} from "@/types/recipe";
 
-export type { SubscribePlan, SurveyFormData, FoodAnalysis, ResultData, RecipeData };
+export type { SubscribePlan, SurveyFormData, FoodAnalysis, ResultData, RecipeData, SurveySection };
 
 
 interface SurveyFormData {
@@ -180,4 +180,8 @@ interface SubscribePlan {
   maxRecipeCount: number;
 };
 
-
+interface SurveySection {
+  key: string;
+  label: string;
+  steps: number;
+}

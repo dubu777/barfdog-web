@@ -1,5 +1,5 @@
 import { themeVars } from "@/styles/theme.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
 
 export const headerContainer = style({
@@ -21,7 +21,6 @@ export const headerContent = style({
   alignItems: "center",
   height: "100%",
   padding: "0 20px",
-  backgroundColor: themeVars.colors.gray.gray0,
 });
 
 export const centerSlot = style({
@@ -37,11 +36,21 @@ export const centerSlot = style({
 export const leftSlot = style({
   display: "flex",
   alignItems: "center",
-  gap: "28px",
 });
+
+export const leftSlotVariants = {
+  lg: style({ gap: "28px" }),
+  sm: style({ gap: "6px" }),
+};
 
 export const rightSlot = style({
   display: "flex",
   alignItems: "center",
   gap: "28px",
 });
+
+
+export const backgroundColors = {
+  white: style({ backgroundColor: themeVars.colors.gray.gray0 }),
+  gray50: style({ backgroundColor: themeVars.colors.gray.gray50 }),
+};
