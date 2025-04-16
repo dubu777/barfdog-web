@@ -1,23 +1,29 @@
 import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import * as styles from "./SurveySteps.css";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Control, Controller } from "react-hook-form";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import { Controller, useFormContext } from "react-hook-form";
 import ImageButton from "../imageButton/ImageButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
+import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";
+import InputField from "@/components/common/inputField/InputField";
 
 interface SurveyStepProps {
   handleChange: () => void;
-  control: Control<SurveyStepValues>;
   petName: string;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    fieldName: string
+  ) => Promise<void>;
 }
 
 export default function SurveyStep3({
   handleChange,
-  control,
   petName,
+  handleKeyDown,
 }: SurveyStepProps) {
+  const { control, formState: {errors}, setValue } = useFormContext<SurveyStepValues>();
+
   return (
     <div className={styles.surveyStepContainer}>
       <SurveyTitle petName={petName} titleTemplates={SURVEY_TITLES.step3} />
@@ -33,7 +39,7 @@ export default function SurveyStep3({
             }
           );
           return (
-            <div className={styles.rowSurveyButtonWrapper}>
+            <SurveyButtonGroup title="견사이즈">
               {SURVEY_FORM_INFO.dogBasicInfo.dogSize.options.map((option) => (
                 <ImageButton
                   key={option.id}
@@ -41,16 +47,33 @@ export default function SurveyStep3({
                   value={option.value}
                   inputType="radio"
                   imageSrc={option.imageUrl}
-                  imageWidth={80}
-                  imageHeight={80}
+                  imageWidth={70}
+                  imageHeight={70}
                   isChecked={isSelected(option.value)}
                   onToggle={onToggle}
                 />
               ))}
-            </div>
+            </SurveyButtonGroup>
           );
         }}
       />
+      <SurveyButtonGroup title="몸무게" error={errors.step3?.weight?.message}>
+        <Controller
+          name="step3.weight"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              unit="kg"
+              placeholder="몸무게 입력"
+              onChange={(e) => {
+                field.onChange(e);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, field.name)}
+            />
+          )}
+        />
+      </SurveyButtonGroup>
     </div>
   );
 }

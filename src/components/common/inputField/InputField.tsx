@@ -23,6 +23,7 @@ import {
   rightButtonsStyle,
   searchButtonStyle,
   labelStyle,
+  unitStyle,
 } from "./InputField.css";
 
 import SearchIcon from "/public/images/icons/search.svg";
@@ -33,6 +34,7 @@ import { pointColor } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
 import ErrorIcon from '/public/images/icons/close_small.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { COLORS } from "@/constants/style";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -53,9 +55,11 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onSubmit?: () => void;
   className?: string;
   label?: string;
+  labelColor?: "gray700" | "gray800";
   labelPosition?: "top" | "left";
   isRequired?: boolean;
   isReadOnly?: boolean;
+  unit?: string;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -81,6 +85,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       label,
       isRequired,
       isReadOnly,
+      labelColor = "gray700",
+      unit,
       ...props
     },
     ref
@@ -133,7 +139,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       >
         {/* label 유무에 따라 상단 노출 */}
         {label &&
-          <DefaultText type='label4' color='gray600' className={labelStyle}>
+          <DefaultText type='label4' color={labelColor} className={labelStyle}>
             {label} {isRequired && <span className={pointColor}>*</span>}
           </DefaultText>
         }
@@ -165,6 +171,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               }}
               onKeyDown={handleKeyDown}
             />
+              {unit && (
+              <DefaultText type="headline3" color="gray900" className={unitStyle}>
+                {unit}
+              </DefaultText>
+            )}
             <div className={rightButtonsStyle}>
               {/* 비밀번호 숨김 토글 기능 */}
               {masking && maskingButton && (

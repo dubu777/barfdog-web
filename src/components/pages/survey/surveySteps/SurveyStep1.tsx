@@ -1,9 +1,6 @@
 import { SURVEY_FORM_INFO } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import {
-  Controller,
-  useFormContext,
-} from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import * as styles from "./SurveySteps.css";
 
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -12,6 +9,7 @@ import Button from "@/components/common/button/Button";
 import SurveyButton from "../surveyButton/SurveyButton";
 import ImageButton from "../imageButton/ImageButton";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";
 interface SurveyStepProps {
   handleChange: () => void;
   handleBlur: (fieldName: string) => Promise<void>;
@@ -19,16 +17,13 @@ interface SurveyStepProps {
     e: React.KeyboardEvent<HTMLInputElement>,
     fieldName: string
   ) => Promise<void>;
-  // control: Control<SurveyStepValues>;
-  // errors: FieldErrors<SurveyStepValues>;
 }
 
 export default function SurveyStep1({
   handleChange,
   handleBlur,
   handleKeyDown,
-}: // control,
-// errors,
+}: 
 SurveyStepProps) {
   const {
     control,
@@ -57,7 +52,7 @@ SurveyStepProps) {
             }
           );
           return (
-            <div className={styles.rowSurveyButtonWrapper}>
+            <SurveyButtonGroup title="성별">
               {SURVEY_FORM_INFO.dogBasicInfo.gender.options.map((option) => (
                 <ImageButton
                   key={option.id}
@@ -71,7 +66,7 @@ SurveyStepProps) {
                   onToggle={onToggle}
                 />
               ))}
-            </div>
+            </SurveyButtonGroup>
           );
         }}
       />
@@ -87,7 +82,7 @@ SurveyStepProps) {
             }
           );
           return (
-            <div className={styles.rowSurveyButtonWrapper}>
+            <SurveyButtonGroup title="중성화 여부">
               {SURVEY_FORM_INFO.dogBasicInfo.isNeutered.options.map(
                 (option) => (
                   <SurveyButton
@@ -100,11 +95,14 @@ SurveyStepProps) {
                   />
                 )
               )}
-            </div>
+            </SurveyButtonGroup>
           );
         }}
       />
-      <div className={styles.rowSurveyButtonWrapper}>
+      <SurveyButtonGroup
+        title="반려견 이름"
+        error={errors.step1?.name?.message}
+      >
         <Controller
           name="step1.name"
           control={control}
@@ -112,7 +110,6 @@ SurveyStepProps) {
             <InputField
               {...field}
               placeholder="이름을 입력해주세요"
-              error={errors.step1?.name?.message}
               onChange={(e) => {
                 field.onChange(e);
                 setValue("step1.nameVerified", false, { shouldValidate: true });
@@ -130,7 +127,7 @@ SurveyStepProps) {
         >
           중복체크
         </Button>
-      </div>
+      </SurveyButtonGroup>
     </div>
   );
 }

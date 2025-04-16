@@ -1,7 +1,7 @@
 
 import { SURVEY_FORM_INFO } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import * as styles from "./SurveySteps.css";
 import SurveyButton from "../surveyButton/SurveyButton";
@@ -11,7 +11,6 @@ interface SurveyStepProps {
   handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, fieldName: string) => Promise<void>;
   handleNextStep: () => void;
-  control: Control<SurveyStepValues>;
   petName: string;
 }
 
@@ -20,9 +19,9 @@ export default function SurveyStep13({
   handleBlur,
   handleKeyDown,
   handleNextStep,
-  control,
   petName,
 }: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
 
   return (
     <Controller

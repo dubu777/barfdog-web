@@ -21,7 +21,7 @@ export const surveyStepsSchema = yup.object({
   step2: yup.object({
     birthDate: yup
       .string()
-      .matches(/^\d{6}$/, "생년월일을 모두 입력해주세요.")
+      .matches(/^\d{4}-\d{2}-\d{2}$/, "생년월일을 모두 입력해주세요.")
       .required("출생일은 필수입니다."),
     isSenior: yup
       .boolean()
@@ -40,6 +40,15 @@ export const surveyStepsSchema = yup.object({
       .matches(
         /^\d+(?:\.\d{0,1})?$/,
         "몸무게는 소숫점 첫째 자리까지 입력할 수 있습니다."
+      )
+      .test(
+        "min-weight",
+        "바프독 맞춤 식단은 0.8kg 이상의 반려견에게 급여가 가능해요",
+        (value) => {
+          if (!value) return false;
+          const parsed = parseFloat(value);
+          return parsed >= 0.8;
+        }
       )
       .required("몸무게를 입력해주세요."),
   }),

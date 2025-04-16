@@ -10,6 +10,21 @@ export const surveyStepContainer = style({
   gap: "20px",
 });
 
+export const surveyButtonWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  gap: "8px",
+  width: "100%",
+});
+
+export const surveyErrorWrapper = style({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "100%",
+});
 
 export const rowSurveyButtonWrapper = style({
   display: "flex",
@@ -23,7 +38,7 @@ export const colSurveyButtonWrapper = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "flex-start",
   gap: "12px",
   width: "100%",
 });

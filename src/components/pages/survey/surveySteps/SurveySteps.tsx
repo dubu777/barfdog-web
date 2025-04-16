@@ -12,9 +12,6 @@ import SurveyStep11 from "./SurveyStep11";
 import SurveyStep12 from "./surveyStep12";
 import SurveyStep13 from "./SurveyStep13";
 import SurveyStep14 from "./SurveyStep14";
-import SurveyStep15 from "./SurveyStep15";
-import SurveyStep16 from "./SurveyStep16";
-import SurveyStep17 from "./SurveyStep17";
 
 interface Props {
   handleChange: () => void;
@@ -46,6 +43,7 @@ export const getSurveySteps = ({
     />,
     <SurveyStep3
       handleChange={handleChange}
+      handleKeyDown={handleKeyDown}
       petName={petName}
     />,
     <SurveyStep4
@@ -99,21 +97,6 @@ export const getSurveySteps = ({
     <SurveyStep14
       handleChange={handleChange}
       petName={petName}
-    />,
-    <SurveyStep15
-      handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleKeyDown={handleKeyDown}
-      handleNextStep={handleNextStep}
-      petName={petName}
-    />,
-    <SurveyStep16
-      handleChange={handleChange}
-      petName={petName}
-    />,
-    <SurveyStep17
-      handleChange={handleChange}
-      petName={petName}
-    />,
+    />
   ];
 };

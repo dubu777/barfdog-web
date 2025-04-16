@@ -2,7 +2,8 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const imageButtonContainer = recipe({
+
+export const imageButtonBox = recipe({
   base: {
     position: "relative",
     display: "flex",

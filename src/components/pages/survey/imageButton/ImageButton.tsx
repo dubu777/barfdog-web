@@ -28,7 +28,7 @@ export default function ImageButton<T>({
   onToggle,
 }: ImageButtonProps<T>) {
   return (
-    <button className={styles.imageButtonContainer({ isChecked })} onClick={() => onToggle(value)} >
+    <button className={styles.imageButtonBox({ isChecked })} onClick={() => onToggle(value)} >
       {inputType === "rank" && (
         <div className={styles.rankChip}>
           <DefaultText type="caption" color="gray0">
@@ -41,7 +41,6 @@ export default function ImageButton<T>({
           <SvgIcon src={isChecked ? CheckedBox : UnCheckedBox} />
         </div>
       )}
-      {/* <SvgIcon src={imageSrc} height={imageHeight} width={imageWidth} /> */}
       <Image src={imageSrc} alt={label} height={imageHeight} width={imageWidth} />
       <DefaultText type="headline3" color={isChecked ? "red" : "gray900"}>
         {label}
