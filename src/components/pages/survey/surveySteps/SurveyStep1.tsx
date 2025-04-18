@@ -28,7 +28,7 @@ SurveyStepProps) {
   const {
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, touchedFields },
   } = useFormContext<SurveyStepValues>();
 
   const handleDuplicateCheck = () => {
@@ -38,7 +38,7 @@ SurveyStepProps) {
     console.log("중복 체크");
   };
   return (
-    <div className={styles.surveyStepContainer}>
+    <>
       {/* 성별 선택 버튼 */}
       <DefaultText type="title2">반려견에 대해 알려주세요</DefaultText>
       <Controller
@@ -57,7 +57,7 @@ SurveyStepProps) {
             <SurveyButtonGroup title="성별">
               {SURVEY_FORM_INFO.dogBasicInfo.gender.options.map((option) => (
                 <ImageButton
-                  key={option.id}
+                  key={option.value}
                   label={option.label}
                   value={option.value}
                   inputType="radio"
@@ -89,7 +89,7 @@ SurveyStepProps) {
               {SURVEY_FORM_INFO.dogBasicInfo.isNeutered.options.map(
                 (option) => (
                   <SurveyButton
-                    key={option.id}
+                    key={option.label}
                     label={option.label}
                     value={option.value}
                     inputType="normal"
@@ -104,7 +104,7 @@ SurveyStepProps) {
       />
       <SurveyButtonGroup
         title="반려견 이름"
-        error={errors.step1?.name?.message}
+        error={touchedFields.step1?.name ? errors.step1?.name?.message : undefined}
       >
         <Controller
           name="step1.name"
@@ -131,6 +131,6 @@ SurveyStepProps) {
           중복체크
         </Button>
       </SurveyButtonGroup>
-    </div>
+    </>
   );
 }

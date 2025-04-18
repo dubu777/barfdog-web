@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import * as styles from "../Survey.css";
+import * as styles from "../../../components/pages/survey/surveyPageContainer/Survey.css";
 import SurveyResult from "@/components/pages/result/surveyResult/SurveyResult";
 import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 

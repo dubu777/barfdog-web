@@ -2,9 +2,8 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const surveyLayoutContainer = style({
-  minHeight: 'calc(100vh - 137px)',
+  minHeight: 'calc(100vh - 85px)',
   width: '100%',
-  marginTop: '52px',
   marginBottom: '85px',
   backgroundColor: themeVars.colors.gray.gray50,
 });

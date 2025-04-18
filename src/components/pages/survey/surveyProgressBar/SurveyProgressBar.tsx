@@ -28,6 +28,7 @@ const SurveyProgressBar: React.FC<SurveyProgressBarProps> = ({ currentStep, sect
   let cumulativeSteps = 0; // 지금까지 누적된 단계 수
 
   return (
+    <div className={styles.progressBarBackground}>
     <div className={styles.progressBarContainer}>
       {sections.map((section) => {
         const localStep = getLocalStep(currentStep, cumulativeSteps, section.steps);
@@ -47,6 +48,7 @@ const SurveyProgressBar: React.FC<SurveyProgressBarProps> = ({ currentStep, sect
           </div>
         );
       })}
+    </div>
     </div>
   );
 };

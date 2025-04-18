@@ -1,5 +1,6 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const surveyStepContainer = style({
   display: "flex",
@@ -16,13 +17,6 @@ export const surveyButtonWrapper = style({
   justifyContent: "center",
   alignItems: "flex-start",
   gap: "8px",
-  width: "100%",
-});
-
-export const surveyErrorWrapper = style({
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
   width: "100%",
 });
 
@@ -67,3 +61,10 @@ export const errorMessage = style({
   color: themeVars.fontColors.mainRed,
   marginTop: '10px',
 });
+
+export const surveyButtonLayoutContainer = style({
+  display: "flex",
+  justifyContent: "center",
+  width: "100%",
+});
+

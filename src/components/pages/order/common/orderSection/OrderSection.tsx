@@ -36,7 +36,6 @@ const OrderSection = forwardRef<HTMLElement, OrderSectionProps>(({
         <div className={styles.OrderSectionTitleWrapper}>
           <DefaultText type="title4">{title}</DefaultText>
           {subTitleParts && (
-            <>
                 <div className={styles.subTitleWrapper} onClick={onSubtitleClick}>
                   {subTitleParts.map(({ text, color }, idx) => (
                     <DefaultText key={idx} type={subTitleType} color={color}>
@@ -47,7 +46,6 @@ const OrderSection = forwardRef<HTMLElement, OrderSectionProps>(({
                     <SvgIcon src={ArrowIcon} size={20} color="gray600" />
                   )}
                 </div>
-            </>
           )}
         </div>
       )}

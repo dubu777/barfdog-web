@@ -18,8 +18,8 @@ export default function SurveyStep4({
   const dogTypeOptions = SURVEY_FORM_INFO.dogBasicInfo.dogType.options;
 
   return (
-    <div className={styles.surveyStepContainer}>
-      <SurveyTitle petName={petName} titleTemplates={SURVEY_TITLES.step4} />
+    <>
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step4} />
       
       <Controller
         name="step4.dogType" // surveyStepsSchema에 있는 필드 이름
@@ -39,6 +39,6 @@ export default function SurveyStep4({
           );
         }}
       />
-    </div>
+    </>
   );
 }

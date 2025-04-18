@@ -1,5 +1,4 @@
 import { themeVars } from "@/styles/theme.css";
-import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const surveyButtonContainer = recipe({
@@ -8,7 +7,6 @@ export const surveyButtonContainer = recipe({
     gap: "12px",
     padding: "20px 24px",
     alignItems: "center",
-
     borderRadius: "8px",
     width: "100%",
   },
@@ -35,5 +33,28 @@ export const surveyButtonContainer = recipe({
   },
   defaultVariants: {
     isChecked: false,
+    isNormal: false,
+  },
+});
+
+export const surveyButtonContentWrapper = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    gap: "4px",
+  },
+  variants: {
+    isNormal: {
+      true: {
+        justifyContent: "center",
+      },
+      false: {
+        justifyContent: "flex-start",
+      },
+    }
+  },
+  defaultVariants: {
+    isNormal: false,
   },
 });

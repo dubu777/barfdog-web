@@ -17,6 +17,7 @@ import DeliveryScheduleBottomSheet from "@/components/pages/order/common/bottomS
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import SurveyResultLoading from "@/components/pages/survey/surveyResultLoading/SurveyResultLoading";
 
 export default function GeneralShopTest() {
   const router = useRouter();

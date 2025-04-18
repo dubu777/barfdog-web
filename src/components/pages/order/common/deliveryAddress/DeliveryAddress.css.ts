@@ -23,6 +23,9 @@ export const colStartWrapper = recipe({
       8: {
         gap: "8px"
       },
+      12: {
+        gap: "12px"
+      },
       16: {
         gap: "16px"
       },

@@ -1,9 +1,9 @@
 import { themeVars } from "@/styles/theme.css";
-import { style, styleVariants } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 
 export const headerContainer = style({
-  position: 'fixed',
+  position: 'sticky',
   top: 0,
   left: 0,
   right: 0,

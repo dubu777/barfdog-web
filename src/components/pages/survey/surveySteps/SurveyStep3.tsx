@@ -9,8 +9,9 @@ import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";
 import InputField from "@/components/common/inputField/InputField";
 
 interface SurveyStepProps {
-  handleChange: () => void;
   petName: string;
+  handleChange: () => void;
+  handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
     fieldName: string
@@ -18,15 +19,16 @@ interface SurveyStepProps {
 }
 
 export default function SurveyStep3({
-  handleChange,
   petName,
+  handleChange,
+  handleBlur,
   handleKeyDown,
 }: SurveyStepProps) {
   const { control, formState: {errors}, setValue } = useFormContext<SurveyStepValues>();
 
   return (
-    <div className={styles.surveyStepContainer}>
-      <SurveyTitle petName={petName} titleTemplates={SURVEY_TITLES.step3} />
+    <>
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step3} />
       <Controller
         name="step3.dogSize"
         control={control}
@@ -42,7 +44,7 @@ export default function SurveyStep3({
             <SurveyButtonGroup title="견사이즈">
               {SURVEY_FORM_INFO.dogBasicInfo.dogSize.options.map((option) => (
                 <ImageButton
-                  key={option.id}
+                  key={option.label}
                   label={option.label}
                   value={option.value}
                   inputType="radio"
@@ -72,10 +74,11 @@ export default function SurveyStep3({
                 
               }}
               onKeyDown={(e) => handleKeyDown(e, field.name)}
+              onBlur={() => handleBlur(field.name)}
             />
           )}
         />
       </SurveyButtonGroup>
-    </div>
+    </>
   );
 }

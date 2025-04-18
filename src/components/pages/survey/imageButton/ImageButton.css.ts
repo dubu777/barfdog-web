@@ -13,7 +13,6 @@ export const imageButtonBox = recipe({
     gap: "8px",
     padding: "20px",
     borderRadius: "8px",
-    width: "100%",
     cursor: "pointer",
   },
   variants: {
@@ -28,9 +27,33 @@ export const imageButtonBox = recipe({
         boxShadow: themeVars.shadow.light,
       },
     },
+    display: {
+      grid: {
+        '@media': {
+          'screen and (min-width: 600px)': {
+            flexBasis: 'calc((100% - 24px) / 4)',
+          },
+          'screen and (max-width: 599px)': {
+            flexBasis: 'calc((100% - 16px) / 3)',
+          },
+        },
+      },
+      flex: {
+        width: "100%",
+      }
+    },
+    disabled: {
+      true: {
+        opacity: 0.5,
+        pointerEvents: "none",
+      },
+      false: {},
+    },
   },
   defaultVariants: {
     isChecked: false,
+    display: "flex",
+    disabled: false,
   },
 })
 
@@ -41,7 +64,7 @@ export const rankChip = style({
   padding: "2px 8px",
   backgroundColor: themeVars.colors.red.red,
   borderBottomRightRadius: "4px",
-  borderTopLeftRadius: "8px",
+  borderTopLeftRadius: "4px",
 });
 
 export const checkBoxWrapper = style({

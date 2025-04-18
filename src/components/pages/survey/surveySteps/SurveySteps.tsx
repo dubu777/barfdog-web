@@ -44,6 +44,7 @@ export const getSurveySteps = ({
     <SurveyStep3
       handleChange={handleChange}
       handleKeyDown={handleKeyDown}
+      handleBlur={handleBlur}
       petName={petName}
     />,
     <SurveyStep4
@@ -74,6 +75,7 @@ export const getSurveySteps = ({
     />,
     <SurveyStep10
       handleChange={handleChange}
+      handleNextStep={handleNextStep}
       petName={petName}
     />,
     <SurveyStep11
@@ -96,6 +98,7 @@ export const getSurveySteps = ({
     />,
     <SurveyStep14
       handleChange={handleChange}
+      handleNextStep={handleNextStep}
       petName={petName}
     />
   ];

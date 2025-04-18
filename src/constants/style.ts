@@ -21,6 +21,7 @@ const COLORS: Record<colors, string> = {
 
 export const CHIPS_COLORS = {
   red: themeVars.colors.red.red,
+  lightPink: themeVars.colors.red.lightPink,
   gray800: themeVars.colors.gray.gray800,
   gray700: themeVars.colors.gray.gray700,
 } as const;

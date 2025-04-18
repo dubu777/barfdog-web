@@ -1,11 +1,9 @@
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Control, Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import useDeviceState from "@/hooks/useDeviceState";
 import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
 import { formatDate } from "@/utils";
-import { surveyStepContainer } from "./SurveySteps.css";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import SurveyButton from "../surveyButton/SurveyButton";
@@ -24,8 +22,8 @@ export default function SurveyStep2({
   const { control } = useFormContext<SurveyStepValues>();
 
   return (
-    <div className={surveyStepContainer}>
-      <SurveyTitle petName={petName} titleTemplates={SURVEY_TITLES.step2} />
+    <>
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step2}/>
       <Controller
         name="step2.birthDate"
         control={control}
@@ -34,7 +32,10 @@ export default function SurveyStep2({
             {isMobileDevice ? (
               <MobileDatePicker
                 value={formatDate(field.value, "onlyDateDash")}
-                onChange={(date) => field.onChange(date)}
+                onChange={(date) => {
+                  field.onChange(date)
+                  handleChange();
+                }}
                 label="생년월일"
                 isRequired
               />
@@ -45,6 +46,7 @@ export default function SurveyStep2({
                 onChange={(date) => {
                   console.log(date);
                   field.onChange(date);
+                  handleChange();
                 }}
               />
             )}
@@ -60,6 +62,7 @@ export default function SurveyStep2({
             "radio",
             (value) => {
               field.onChange(value);
+              handleChange();
             }
           );
           return (
@@ -67,7 +70,7 @@ export default function SurveyStep2({
               {SURVEY_FORM_INFO.dogBasicInfo.isSenior.options.map(
                 (option) => (
                   <SurveyButton
-                    key={option.id}
+                    key={option.label}
                     label={option.label}
                     value={option.value}
                     inputType="normal"
@@ -80,6 +83,6 @@ export default function SurveyStep2({
           );
         }}
       />
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
+import { fontColors } from "@/components/common/defaultText/DefaultText.css";
 import {RecipeDto} from "@/types/recipe";
 
-export type { SubscribePlan, SurveyFormData, FoodAnalysis, ResultData, RecipeData, SurveySection };
+export type { SubscribePlan, SurveyFormData, FoodAnalysis, ResultData, RecipeData, SurveySection, SurveyTitleConfig, SubtitlePart };
 
 
 interface SurveyFormData {
@@ -184,4 +185,14 @@ interface SurveySection {
   key: string;
   label: string;
   steps: number;
+}
+
+interface SubtitlePart {
+  text: string;
+  color?: keyof typeof fontColors;
+}
+
+interface SurveyTitleConfig {
+  titleTemplates: string[];
+  subtitleTemplates?: SubtitlePart[][];
 }

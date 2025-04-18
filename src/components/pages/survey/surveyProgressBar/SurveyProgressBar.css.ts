@@ -1,12 +1,21 @@
-// src/components/survey/SurveyProgressBar.css.ts
 import { themeVars } from '@/styles/theme.css';
 import { style } from '@vanilla-extract/css';
+
+export const progressBarBackground = style({
+  position: "sticky",
+  left: 0,
+  right: 0,
+  top: '52px',
+  width: '100%',
+  height: '20px',
+  backgroundColor: themeVars.colors.gray.gray50,
+  padding: '8px 20px',
+})
 
 export const progressBarContainer = style({
   display: 'flex',
   gap: '4px',
   height: '4px',
-  margin: '8px 20px',
 });
 
 export const progressSection = style({

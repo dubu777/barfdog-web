@@ -1,6 +1,11 @@
-import { SURVEY_FORM_INFO } from "@/constants";
+import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Control, Controller, useFormContext, useWatch } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import * as styles from "./SurveySteps.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import SurveyButton from "../surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -20,11 +25,48 @@ export default function SurveyStep12({
   handleNextStep,
   petName,
 }: SurveyStepProps) {
-    const { control } = useFormContext<SurveyStepValues>();
-  
+  const { control } = useFormContext<SurveyStepValues>();
+
   return (
     <>
-    
+      <SurveyTitle
+        petName={petName}
+        config={SURVEY_TITLES.step12}
+        chipContent="더 정밀한 추천을 위해 3가지만 더 여쭤볼게요 🐶"
+      />
+      <Controller
+        name="step12.currentMeal"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "checkbox",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              <DefaultText type="label2" color="gray500">
+                *복수응답가능
+              </DefaultText>
+              {SURVEY_FORM_INFO.dogDietHealth.currentMeal.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.label}
+                    label={option.label}
+                    value={option.value}
+                    inputType="checkbox"
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
+      />
     </>
   );
 }

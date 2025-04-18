@@ -1,6 +1,6 @@
 'use client';
 
-import { surveyTitle } from '@/app/survey/Survey.css';
+import { surveyTitle } from '@/components/pages/survey/surveyPageContainer/Survey.css';
 import * as styles from './SurveyTextField.css';
 import { getNameWithPossessiveSuffix2 } from '@/utils';
 
