@@ -1,3 +1,4 @@
+import { ORDER_TYPE } from "@/constants";
 import axiosInstance from "../axiosInstance";
 import {
   SaveGeneralOrderRequest,
@@ -11,6 +12,7 @@ import {
   SuccessGeneralPaymentRequest,
   SuccessSubscriptionPaymentRequest,
   ValidateSubscriptionPaymentResponse,
+  OrderType,
 } from "@/types";
 import {
   GeneralOrderData,
@@ -177,9 +179,10 @@ const getGeneralOrderList = async (
 
 const getOrderDetail = async (
   orderId: number,
-  type: string
+  type: OrderType
 ): Promise<MergeOrderAndRecipe> => {
-  const { data } = await axiosInstance.get(`/api/orders/${orderId}/${type === 'subscription' ? 'subscribe' : type}`);
+  const { data } = await axiosInstance.get(`/api/orders/${orderId}/${type.toLowerCase()}`);
+  
   const mergeOrderAndRecipe: MergeOrderAndRecipe = {
     ...data,
     orderItemDtoList: data.orderItemDtoList ? [...data.orderItemDtoList] : [],

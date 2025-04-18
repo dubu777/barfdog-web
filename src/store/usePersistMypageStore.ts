@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { MyPageMemberDto } from "@/types";
-import { MembershipTier, Tier } from "@/types/membership";
+import { MyPageMemberDto, PaymentItem } from "@/types";
+import { MembershipTier } from "@/types/membership";
 
 const initialUserInfo = {
   grade: '',
@@ -15,6 +15,7 @@ const initialState = {
   mypageUserInfo: initialUserInfo,
   subscriptionDogName: '',
   userMembershipTier: null,
+  paymentMethodDetail: null,
 };
 
 
@@ -25,6 +26,8 @@ interface MypageStore {
   setSubscriptionDogName: (subscriptionDogName: string) => void;
   userMembershipTier: MembershipTier | null;
   setUserMembershipTier: (userMembershipTier: MembershipTier) => void;
+  paymentMethodDetail: PaymentItem | null;
+  setPaymentMethodDetail: (paymentMethodDetail: PaymentItem) => void;
 }
 
 export const usePersistMypageStore = create(
@@ -34,6 +37,7 @@ export const usePersistMypageStore = create(
       setMypageUserInfo: (mypageUserInfo) => set((state) => ({ ...state, mypageUserInfo })),
       setSubscriptionDogName: (subscriptionDogName) => set((state) => ({ ...state, subscriptionDogName })),
       setUserMembershipTier: (userMembershipTier) => set((state) => ({ ...state, userMembershipTier })),
+      setPaymentMethodDetail: (paymentMethodDetail) => set((state) => ({ ...state, paymentMethodDetail })),
     }),
     {
       name: 'mypage',

@@ -1,7 +1,8 @@
 import { DogData } from "./dogs";
-import { SUBSCRIPTION_ORDER_PROGRESS_BASE, SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage";
+import { SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage";
 import { PlanInfo } from "@/types/subscription";
 import { OrderType } from "@/types/order";
+import { PAYMENT_METHOD } from "@/constants";
 
 export type {
   MyPageMemberDto,
@@ -23,6 +24,8 @@ export type {
   InfoLists,
   InfoListsButtons,
   InfoListsItem,
+  PaymentItem,
+  PaymentSubscriptionCard,
 };
 
 interface MyPageMemberDto {
@@ -92,6 +95,7 @@ interface OrderAction extends MenuLink {
 interface IsOpenCardModal {
   id: CardActionsId | null;
   isOpen: boolean;
+  subscriptionId?: number;
 }
 
 type CardActionsId =
@@ -159,4 +163,32 @@ interface InfoLists {
 	title?: string;
 	items: InfoListsItem[] | undefined;
 	noBorder?: boolean
+}
+
+interface PaymentSubscriptionCard {
+  cardId: number;
+  cardName: string | null,
+  cardNumber: string | null,
+  detailAddress: string;
+  discountCoupon: number;
+  discountGrade: number;
+  dogName: string;
+  email: string;
+  name: string;
+  street: string;
+  plan: string;
+  nextPaymentDate: string | null,
+  nextPaymentPrice: number;
+  phoneNumber: string;
+  overDiscount: number;
+  subscribeId: number;
+  status: string | keyof typeof SUBSCRIPTION_ORDER_STATUSES;
+  recipientName?: number;
+  discountReward?: number;
+}
+
+interface PaymentItem {
+  subscribeCardDto: PaymentSubscriptionCard;
+  paymentMethod: keyof typeof PAYMENT_METHOD;
+  recipeNameList: string[];
 }

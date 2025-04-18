@@ -4,7 +4,7 @@ import { COLORS } from '@/constants/style';
 
 
 interface DividerProps {
-  thickness?: 1 | 2 | 8 | 12;
+  thickness?: 1 | 2 | 4 | 8 | 12;
   color?: keyof typeof COLORS;
   direction?: 'horizontal' | 'vertical';
   style?: React.CSSProperties;

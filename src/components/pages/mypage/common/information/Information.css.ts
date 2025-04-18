@@ -50,8 +50,8 @@ export const infoDetailContainer = style({
 })
 
 export const infoSubTitle = style({
-	padding: '12px 0',
-	marginBottom: '12px',
+	padding: '16px 0',
+	marginBottom: '16px',
 	borderBottom: `2px solid ${themeVars.colors.gray.gray900}`,
 })
 
@@ -82,7 +82,7 @@ export const infoList = style({
 
 export const infoCard = style({
 	display: 'flex',
-	flexDirection: 'column'
+	flexDirection: 'column',
 })
 
 export const infoItem = style({
@@ -93,6 +93,7 @@ export const infoItem = style({
 })
 
 export const infoButtonControls = style({
+	width: '100%',
 	display: 'flex',
 	alignItems: 'center',
 	gap: '8px',
@@ -120,8 +121,43 @@ export const petImage = style({
 	objectFit: 'cover',
 })
 
-export const petInfoText = style({
+export const infoBox = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '4px',
+})
+
+export const infoBoxItem = style({
+	display: 'flex',
+	gap: '8px',
+})
+
+export const infoBoxItemColumn = style({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '16px',
+})
+
+export const subscriptionCardInfo = style({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '8px',
+})
+
+export const subscriptionPaymentItem = style({
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+})
+
+export const couponButton = style({
+	marginTop: '16px',
+})
+
+export const addressHeader = style({
+	marginBottom: '12px',
+})
+
+export const addressEditButton = style({
+	marginTop: '10px',
 })

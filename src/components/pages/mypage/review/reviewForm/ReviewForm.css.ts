@@ -3,6 +3,7 @@ import { themeVars } from "@/styles/theme.css";
 
 export const reviewFormContainer = style({
   background: themeVars.colors.gray.gray50,
+  marginBottom: '86px',
 })
 
 export const reviewNotice = style({
@@ -22,7 +23,6 @@ export const reviewControls = style({
 })
 
 export const reviewContentsBox = style({
-  margin: '4px 0',
   background: themeVars.colors.gray.gray0,
 })
 

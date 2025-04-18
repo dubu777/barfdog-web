@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
+import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import { dropdownBoxStyle, dropdownContainerStyle, dropdownLabelStyle, dropdownOptionStyle } from "./Dropdown.css";
 import { cardShadow } from "@/components/common/card/Card.css";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,6 +16,7 @@ interface DropdownProps {
 	children?: ReactNode;
 	isOpen?: boolean;
 	setIsOpen?: (() => void) | ((isOpen: boolean) => void);
+	style?: CSSProperties;
 }
 
 export default function Dropdown({
@@ -26,6 +27,7 @@ export default function Dropdown({
 	position = 'right',
 	className,
 	children,
+	style,
 	isOpen: controlledIsOpen,
 	setIsOpen: controlledSetIsOpen,
 }: DropdownProps) {
@@ -47,7 +49,7 @@ export default function Dropdown({
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
 	return (
-		<div className={className || ''} ref={dropdownRef} style={{ textAlign: position === 'right' ? position : 'left' }}>
+		<div className={className || ''} ref={dropdownRef}>
 			<button onClick={() => setIsOpen(!isOpen)} className={dropdownContainerStyle}>
 				{trigger ? trigger :
 					<div className={dropdownLabelStyle}>
@@ -65,8 +67,7 @@ export default function Dropdown({
 							exit={{ opacity: 0, y: -10 }}
 							transition={{ duration: 0.2, ease: "easeOut" }}
 							style={{
-								left: 0,
-								right: 0,
+								...style
 							}}
 							className={`${dropdownBoxStyle} ${cardShadow.light}`}
 						>

@@ -1,5 +1,4 @@
 import { Page } from "@/types";
-import { FAQ_CATEGORIES } from "@/constants/community";
 
 export type {
   CommunityListItem, CommunityItem, CommunityCategory,

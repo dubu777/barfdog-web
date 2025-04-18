@@ -3,7 +3,6 @@ import { themeVars } from "@/styles/theme.css";
 
 export const reviewSurveyContainer = style({
 	background: themeVars.colors.gray.gray0,
-	marginBottom: '4px',
 	paddingBottom: '20px',
 })
 
@@ -16,7 +15,11 @@ export const surveyIconBox = style({
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
-	gap: '34px',
+	gap: '22px',
+})
+
+export const surveyIcon = style({
+	cursor: 'pointer'
 })
 
 export const petCareTypeBox = style({

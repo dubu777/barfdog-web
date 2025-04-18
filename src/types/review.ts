@@ -13,7 +13,7 @@ export type {
   WrittenReviewList,
   WritableReviewItem,
   WritableReviewList,
-  ReviewType,
+  ReviewItemType,
   ReviewStatus,
   ReviewDetailItem,
   ReviewDetailImage,
@@ -63,7 +63,7 @@ interface ReviewList {
 
 interface WrittenReviewItem extends BaseReviewItem {
   title: string;
-  reviewType: ReviewType;
+  reviewType: ReviewItemType;
   createdDate: string;
   imageUrl: string;
   imageCount: number;
@@ -79,7 +79,7 @@ interface WrittenReviewList {
 interface WritableReviewItem {
   id: number;
   targetId: number;
-  reviewType: ReviewType;
+  reviewType: ReviewItemType;
   imageUrl: string;
   title: string;
   orderedDate: string;
@@ -97,7 +97,7 @@ interface ReviewDetailItem extends BaseReviewItem{
   title: string;
   writtenDate: string;
   name?: string;
-  reviewType: ReviewType;
+  reviewType: ReviewItemType;
 }
 
 interface ReviewDetailImage extends ReviewImage {
@@ -112,7 +112,7 @@ interface ReviewDetail {
 interface ReviewFormData {
   id?: number;
   title: string;
-  reviewType: ReviewType | null;
+  reviewType: ReviewItemType | null;
 
   name?: string;
   thumbnailUrl?: string;
@@ -138,15 +138,15 @@ interface CreateReviewDetail extends UpdateReviewDetail{
   id: number;
   orderId: number | null;
   targetId?: number;
-  reviewType: ReviewType | null;
+  reviewType: ReviewItemType | null;
   reviewImageIdList: number[];
 }
 
-type ReviewType = keyof typeof REVIEW_TYPE;
+type ReviewItemType = keyof typeof REVIEW_TYPE;
 type ReviewStatus = keyof typeof REVIEW_STATUS;
 
 
-type SurveyKey = "preference" | "freshness" | "deliveryStatus" | "petCount" | "petLifeInterests" | "requiredSurvey";
+type SurveyKey = "preference" | "freshness" | "deliveryStatus";
 type SurveyValue = "dislike" | "normal" | "like" | null;
 
 interface SurveyQuestionType {

@@ -10,7 +10,7 @@ import { OrderType } from "@/types";
 
 interface OrderItemInfoProps {
 	data: any;
-	orderType: OrderType;
+	orderType: OrderType | 'items';
 	subscriptionId?: number;
 	type?: 'default' | 'orderIssue' | 'subscriptionDetail';
 }
@@ -44,7 +44,7 @@ const OrderItemInfo = ({ data, orderType, type = 'default' }: OrderItemInfoProps
 							: <OrderCard data={data} type='orderDetail' />
 					)
 					: type === 'orderIssue'
-						? <OrderIssueCard data={data} issueType={data.issueType} orderType={orderType} isDetail />
+						? <OrderIssueCard data={data} issueType={data.issueType} orderType={orderType as OrderType} isDetail />
 						: <SubscriptionCard data={data} type='subscriptionDetail' />
 				}
 			</div>

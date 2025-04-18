@@ -8,7 +8,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import RateStar from "@/components/common/rateStar/RateStar";
 import Button from "@/components/common/button/Button";
 import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
-import { REVIEW_STATUS } from "@/constants";
+import {ORDER_TYPE, REVIEW_STATUS} from "@/constants";
 import { CreateReviewDetail, ReviewDetailItem, ReviewFormData, UpdateReviewDetail, WritableReviewItem } from "@/types";
 import { usePersistReviewStore } from "@/store/usePersistReviewStore";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
@@ -64,26 +64,27 @@ const ReviewCard = ({
 	const reviewStatus = isWritableReview ? `구매 확정일 ${cardData?.orderedDate ? format(cardData?.orderedDate, 'yyyy. MM. dd'): ''}` : REVIEW_STATUS[cardData.status];
 	const reviewStarColor = cardData.orderStatus === 'CONFIRM' ? 'gray' : undefined;
 	const subInfoItemDetail = generalItemType
-		? cardData.tip || 'TEST 뛰어 노는 것을 좋아하는 우리 아이의 관절 건강, 미리 챙겨주세요! 관절에 좋은 커큐민이 듬뿍 담긴 유기농 강황을 사용하여 만들어진 큐브입니다. 실온에서도 금방 녹으니 꼭 냉동보관 해주시고 생식 위에 토핑으로 간편하게 급여해보세요 :)'
+		? cardData.tip || cardData.contents
 		: cardData.plan || 'TEST 식사용 24팩 4주간격 연간플랜적용';
 	const subInfoItemCount = generalItemType
 		? cardData.option || 'TEST 1개 옵션 2건'
 		: cardData.recipeName || 'TEST 스타터프리미엄+, 프리미엄 비프+';
 
 	const handleCreateOrDetail = () => {
-		setReviewFormData(reviewDetail);
 		if (isWritableReview) {
 			pushWithQuery(`${pathname}/create`, {}, ['tab', 'page']);
+			setReviewFormData(reviewDetail);
 		} else {
-			pushWithQuery(`${pathname}/${reviewDetail.id}`, { reviewType: reviewDetail.reviewType }, ['tab']);
+			pushWithQuery(`${pathname}/${reviewDetail.id}`, { reviewType: reviewDetail.reviewType });
 		}
 	}
 
+	// console.log('cardData', cardData);
 	return (
 		<CardSection shadow='none' borderRadius='none' padding={20}>
 			<div className={styles.productInfoBox}>
-				<DefaultText type='label4'>{orderType} {orderStatus}</DefaultText>
-				<DefaultText type='caption' color='gray600'>{reviewStatus}</DefaultText>
+				{/*<DefaultText type='label4'>{orderType} {orderStatus} {reviewStatus}</DefaultText>*/}
+				<DefaultText type='label4'>{orderType} {reviewStatus}</DefaultText>
 			</div>
 			<div className={styles.productInfoBox}>
 				{imageUrl
@@ -109,18 +110,21 @@ const ReviewCard = ({
 			</div>
 			{!isReviewDetail &&
 			<div className={styles.reviewCardActions}>
-				<Button
-					onClick={() => pushWithQuery(
-						`/mypage/order-delivery-inquiry/${cardData.orderId}`,
-						{ orderType: generalItemType ? 'general' : 'subscription' }
-					)}
-					variant='outline'
-					type='assistive'
-					fullWidth
-					size='sm'
-				>
-					주문상세
-				</Button>
+				{cardData.status !== 'ADMIN' &&
+					<Button
+						onClick={() => pushWithQuery(
+							`/mypage/order-delivery-inquiry/${cardData.orderId}`,
+							{ orderType: generalItemType ? ORDER_TYPE.GENERAL : ORDER_TYPE.SUBSCRIPTION },
+							['tab', 'itemType']
+						)}
+						variant='outline'
+						type='assistive'
+						fullWidth
+						size='sm'
+					>
+						주문상세
+					</Button>
+				}
 				<Button onClick={handleCreateOrDetail} fullWidth size='sm'>{isWritableReview ? '리뷰작성' : '리뷰상세'}</Button>
 			</div>
 			}

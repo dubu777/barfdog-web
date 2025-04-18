@@ -6,15 +6,9 @@ import { getProductionDates } from "@/utils";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import { SUBSCRIPTION_ORDER_STATUS_LABEL } from "@/constants/mypage";
-import { subscriptionPlanInfo } from "@/constants";
+import { ORDER_TYPE, subscriptionPlanInfo } from "@/constants";
 import { CardActionsId, IsOpenCardModal, NormalizedSubscriptionCardData, OrderAction, SubscriptionOrderStatus } from "@/types";
 import { getSubscriptionStatusActions } from "@/utils/mypage/getSubscriptionStatusActions";
-
-interface SubscriptionCardProps {
-	data: any;
-	type: 'mypage' | 'subscription' | 'subscriptionDetail';
-	subscriptionId?: number;
-}
 
 const normalizeSubscriptionData = (data: any, isMyPage: boolean, subscriptionId?: number): NormalizedSubscriptionCardData => {
 	return {
@@ -26,14 +20,15 @@ const normalizeSubscriptionData = (data: any, isMyPage: boolean, subscriptionId?
 		status: data.status,
 		// status: 'CONFIRM',
 		// orderStatus: data.orderStatus,
-		orderStatus: 'DELIVERY_DONE',
+		orderStatus: 'PRODUCING',
 		// subscribeCount: data.subscribeCount || 0,
 		startDate: data.startDated || '',
 		nextPaymentDate: data.nextPaymentDate,
 		plan: subscriptionPlanInfo[data.plan],
-		orderType: 'subscription',
+		orderType: ORDER_TYPE.SUBSCRIPTION,
 		// hasPostpone: true,
 		hasPostpone: false,
+		subscribeCount: data.subscribeCount || 0,
 	};
 };
 
@@ -51,7 +46,24 @@ const normalizeActions = (actions: OrderAction[], status: string, totalDiscount:
 	})) || [];
 }
 
-const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps) => {
+interface SubscriptionCardProps {
+	data: any;
+	type: 'mypage' | 'subscription' | 'subscriptionDetail';
+	subscriptionId?: number;
+	showBoxShadow?: boolean;
+	showActions?: boolean;
+	padding?: 12 | 20;
+	className?: string;
+}
+
+const SubscriptionCard = ({
+	data,
+	type,
+	subscriptionId,
+	showBoxShadow = true,
+	showActions = true,
+	className,
+}: SubscriptionCardProps) => {
 	const { pushWithQuery } = useDynamicQueryPush();
 	const { mypageUserInfo } = usePersistMypageStore();
 	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === mypageUserInfo.grade);
@@ -61,11 +73,13 @@ const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps)
 	const normalizedData = normalizeSubscriptionData(data, isMyPage, subscriptionId);
 	const isSubscriptionCancel = normalizedData.orderStatus === 'SUBSCRIBE_CANCEL';
 
+	console.log(data)
+
 	const productionDates =
 		normalizedData.nextPaymentDate
 			? getProductionDates(normalizedData.nextPaymentDate, true, 'yyyy.MM.dd')
 			: undefined;
-	const orderStatusLabel = `${SUBSCRIPTION_ORDER_STATUS_LABEL[normalizedData.orderStatus as string]}${isMyPage && normalizedData.hasPostpone ? '(미루기 적용)' : ''}`;
+	const orderStatusLabel = SUBSCRIPTION_ORDER_STATUS_LABEL[normalizedData.orderStatus as string];
 
 	const actions = getSubscriptionStatusActions(normalizedData.orderStatus as SubscriptionOrderStatus, !!(isMyPage ? normalizedData.hasPostpone : false), type);
 	const subscriptionActions = normalizeActions(actions, normalizedData.orderStatus as string, totalDiscount);
@@ -79,6 +93,7 @@ const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps)
 				break;
 			}
 			case 'postponeShipping': {
+				setIsOpenModal({ id, isOpen: true, subscriptionId });
 				pushWithQuery(`/mypage${url}/${normalizedData.id}${`/${params || ''}`}`, {});
 				// console.log('배송미루기')
 				break;
@@ -111,6 +126,11 @@ const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps)
 				console.log('재구독')
 				break;
 			}
+			case 'subscriptionSchedule': {
+				console.log('subscriptionSchedule')
+				setIsOpenModal({ id, isOpen: true });
+				break;
+			}
 			default: {
 				// 구매확정 bottomSheet 확인 필요
 				console.log(id)
@@ -126,14 +146,10 @@ const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps)
 			cardHeaderTitle={
 				<DefaultText type='label4'>
 					정기배송 {normalizedData.subscribeCount}회차 {orderStatusLabel}
-					{!isMyPage && (
-						<DefaultText type='caption' color='gray600'>
-							&nbsp;&nbsp;{!isSubscriptionCancel ? '시작일' : '해지일'} {!isSubscriptionCancel ? normalizedData.startDate : normalizedData?.cancelDate}
-						</DefaultText>
-					)}
 				</DefaultText>
 			}
 			cardActions={subscriptionActions}
+			showCardActions={showActions}
 			handleActions={handleActions}
 			showProgressLabel={isMyPage}
 			showCardProgressStatus={normalizedData.status === 'SUBSCRIBING'}
@@ -141,6 +157,8 @@ const SubscriptionCard = ({ data, type, subscriptionId }: SubscriptionCardProps)
 			setIsOpenModal={setIsOpenModal}
 			productionDates={productionDates}
 			isButtonWrap={!isMyPage}
+			showBoxShadow={showBoxShadow}
+			className={className}
 		/>
 	);
 };

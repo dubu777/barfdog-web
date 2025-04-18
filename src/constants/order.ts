@@ -32,9 +32,9 @@ const ORDER_STATUS = {
 };
 
 const PAYMENT: Record<PaymentMethod, string> = {
-  KAKAO_PAY: "카카오페이",
+  CREDIT_CARD: "체크/신용카드",
   NAVER_PAY: "네이버페이",
-  CREDIT_CARD: "신용카드",
+  KAKAO_PAY: "카카오페이",
 };
 
 const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {

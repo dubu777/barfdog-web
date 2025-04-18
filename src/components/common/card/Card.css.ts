@@ -24,6 +24,9 @@ export const cardPadding = {
 	12: style({
 		padding: '12px',
 	}),
+	16: style({
+		padding: '16px',
+	}),
 	20: style({
 		padding: '20px',
 	}),

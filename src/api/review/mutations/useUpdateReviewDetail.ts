@@ -5,13 +5,16 @@ import { UpdateReviewDetail, UseMutationCustomOptions } from "@/types";
 
 export { useUpdateReviewDetail };
 
-function useUpdateReviewDetail(reviewId: number, page = 0, mutationOptions?: UseMutationCustomOptions) {
+function useUpdateReviewDetail(reviewId: number, mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (body: UpdateReviewDetail) => updateReviewDetail(reviewId, body),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_REVIEW_DETAIL, reviewId],
+      })
+      await queryClient.invalidateQueries({
+        queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_WRITTEN_REVIEW_LIST],
       })
     },
     ...mutationOptions,

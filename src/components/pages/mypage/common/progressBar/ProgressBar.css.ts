@@ -15,11 +15,12 @@ export const progressActive = style({
 	background: themeVars.colors.red.red,
 	transition: 'all .35s',
 	height: '4px',
+	borderRadius: '60px',
 })
 
 export const progressLabel = style({
 	position: 'absolute',
-	top: '-31px',
+	top: '-29px',
 	left: '50%',
 	transform: 'translateX(-50%)',
 	padding: '2px 16px',

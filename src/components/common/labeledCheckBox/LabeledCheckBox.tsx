@@ -12,6 +12,7 @@ export interface LabeledCheckboxProps<T = string> {
   isChecked: boolean;
   iconType?: "circle" | "square";
   onToggle: (value: T) => void;
+  className?: string;
 }
 
 export default function LabeledCheckbox<T = string>({
@@ -21,6 +22,7 @@ export default function LabeledCheckbox<T = string>({
   isChecked,
   iconType = "square",
   onToggle,
+  className,
 }: LabeledCheckboxProps<T>) {
   const iconMapping = {
     circle: {
@@ -35,7 +37,7 @@ export default function LabeledCheckbox<T = string>({
   const icon = iconMapping[iconType][isChecked ? "true" : "false"];
   return (
     <div
-      className={styles.labelCheckedBoxContainer}
+      className={`${styles.labelCheckedBoxContainer} ${className || ''}`}
       onClick={() => onToggle(value)}
     >
       <SvgIcon src={icon} size={iconSize} />

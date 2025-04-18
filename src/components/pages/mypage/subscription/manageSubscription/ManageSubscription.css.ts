@@ -19,7 +19,7 @@ export const manageSubscriptionTabBar = style({
 })
 
 export const manageSubscriptionList = style({
-  padding: '0 20px 20px',
+  padding: '20px',
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',

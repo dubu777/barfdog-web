@@ -1,6 +1,6 @@
 import * as styles from "./DeliveryModal.css";
 import { useMemo, useState } from "react";
-import { ClientDeliveryDto, DeliveryDto } from "@/types";
+import { ClientDeliveryDto } from "@/types";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
 import AddressList from "./addressList/AddressList";
 import { AddressResponse } from "@/types/delivery";
@@ -14,6 +14,7 @@ interface DeliveryModalProps {
   onClose: () => void;
   setDeliveryDto: (delivery: ClientDeliveryDto) => void;
   setBackupDeliveryDto: (delivery: ClientDeliveryDto) => void;
+  showSelectButton?: boolean;
 }
 
 type ViewMode = "list" | "add" | "edit";
@@ -24,6 +25,7 @@ export default function DeliveryModal({
   onClose,
   setDeliveryDto,
   setBackupDeliveryDto,
+  showSelectButton = true,
 }: DeliveryModalProps) {
 
   const [viewMode, setViewMode] = useState<ViewMode>("list");
@@ -60,7 +62,7 @@ export default function DeliveryModal({
     switch (mode) {
       case "list":
         return {
-          centerTitle: "배송지 변경",
+          centerTitle: `배송지 ${showSelectButton ? "변경" : "관리"}`,
           showCloseButton: true,
           onClose: handleClose,
         };
@@ -102,6 +104,7 @@ export default function DeliveryModal({
                 goToAddAddress={goToAddAddress}
                 goToEditAddress={goToEditAddress}
                 onSelectAddress={handleSelectAddress}
+                showSelectButton={showSelectButton}
               />
             ) : (
               <AddressForm

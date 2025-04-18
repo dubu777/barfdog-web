@@ -1,45 +1,61 @@
 'use client';
 import { useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { addDays, format } from "date-fns";
-import * as styles from './PostponeShipping.css';
+import * as styles from './PostponeShippingModal.css';
 import { pointColor } from "@/styles/common.css";
+import { addDays, format } from "date-fns";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import DelayWeekPicker from "@/components/pages/mypage/subscription/postponeShipping/delayWeekPicker/DelayWeekPicker";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
-import { getProductionDates, useBackNavigation } from "@/utils";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
+import DelayWeekPicker
+	from "@/components/pages/mypage/common/modal/postponeShippingModal/delayWeekPicker/DelayWeekPicker";
+import { getProductionDates } from "@/utils";
 import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
 
-const PostponeShipping = ({ subscriptionId }: { subscriptionId: number }) => {
+interface PostponeShippingModalProps {
+	subscriptionId: number;
+	isOpen: boolean;
+	onClose?: () => void;
+}
+
+const PostponeShippingModal = ({
+	subscriptionId,
+	isOpen,
+	onClose,
+}: PostponeShippingModalProps) => {
 	const { data: detail } = useGetSubscriptionDetail(subscriptionId);
-
-	const pathname = usePathname();
-	const searchParams = useSearchParams();
-	const { pushWithQuery } = useDynamicQueryPush();
-	const goBack = useBackNavigation();
-	const completedMode = searchParams.get('status') === 'completed';
-
 	const nextDeliveryDate = detail?.nextDeliveryDate;
-
+	
+	const [completedMode, setCompletedMode] = useState<boolean>(false);
 	const [selectedDate, setSelectedDate] = useState(nextDeliveryDate);
+
 
 	const defaultProductionDates = getProductionDates(detail.nextDeliveryDate,false, 'yyyy.MM.dd');
 	const nextCycle = detail.subscribeCount + 1;
 
+	const handleClose = () => {
+		setCompletedMode(false);
+		if(onClose) {
+			onClose();
+		}
+	}
+
 	const handleSubmit = () => {
 		// 성공시 미루기 완료 페이지 redirection 필요 및 userShippingBox 컴포넌트 분리 후 적용 필요
 		if (!completedMode) {
-			pushWithQuery(pathname, { status: 'completed' });
+			setCompletedMode(true);
 		} else {
-			goBack();
+			handleClose();
 		}
 	}
 	return (
-		<section>
-			<article className={styles.userShippingBox}>
+		<FullModalWrapper
+			headerTitle={`배송 미루기${completedMode ? '완료' : ''}`}
+			isVisible={isOpen}
+			handleClose={handleClose}
+		>
+			<div className={styles.userShippingBox}>
 				<div className={styles.userShippingText}>
 					<DefaultText type='title4'>
 						{!completedMode ? '최대 8주까지 미룰 수 있어요' : `${nextCycle}회차 미루기가 완료되었습니다`}
@@ -68,14 +84,14 @@ const PostponeShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 						</DefaultText>
 					</div>
 				</div>
-			</article>
+			</div>
 			{!completedMode && detail.nextDeliveryDate ?
 				<>
-					<article className={styles.selectShippingBox}>
+					<div className={styles.selectShippingBox}>
 						<DefaultText type='headline2' className={styles.selectShippingText}>발송 희망 주차를 선택해주세요</DefaultText>
 						<DelayWeekPicker defaultDate={new Date(detail.nextDeliveryDate)} onChange={(value) => setSelectedDate(value)} isFixedOpen />
-					</article>
-					<article className={styles.shippingInfoBox}>
+					</div>
+					<div className={styles.shippingInfoBox}>
 						<InfoBox
 							color='red'
 							text={
@@ -84,19 +100,19 @@ const PostponeShipping = ({ subscriptionId }: { subscriptionId: number }) => {
 								'배송 희망일'이 공휴일과 겹쳤을 시 다음 영업일에 발송이 진행됩니다.`
 							}
 						/>
-					</article>
+					</div>
 				</>
-				: <article className={styles.completedBox}>
+				: <div className={styles.completedBox}>
 					<SubscriptionCard data={detail} type='mypage' />
-				</article>
+				</div>
 			}
 			<ButtonDocked
 				type='full-button'
 				primaryButtonLabel={!completedMode ? '변경완료' : '확인'}
 				onPrimaryClick={handleSubmit}
 			/>
-		</section>
+		</FullModalWrapper>
 	);
 };
 
-export default PostponeShipping;
+export default PostponeShippingModal;

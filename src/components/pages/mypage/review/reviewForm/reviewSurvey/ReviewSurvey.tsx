@@ -2,7 +2,6 @@ import * as styles from './ReviewSurvey.css';
 import { themeVars } from "@/styles/theme.css";
 import { Dispatch, MouseEvent, SetStateAction } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SelectWithInput from "@/components/common/selectWithInput/SelectWithInput";
 import { REVIEW_PET_LIFE_INTERESTS } from "@/constants";
 import { SurveyKey, SurveyQuestionType, SurveyValue } from "@/types";
 
@@ -54,7 +53,8 @@ const SurveyQuestion = ({ questionKey, label, value, onChange }: SurveyQuestionP
 		<div className={styles.surveyIconBox}>
 			{surveyOptions.map(({ value: optionValue, type }) => (
 				<button 
-					key={type} 
+					key={type}
+					className={styles.surveyIcon}
 					onClick={(e: MouseEvent) => {
 						e.preventDefault();
 						onChange(questionKey, optionValue)
@@ -90,32 +90,32 @@ const ReviewSurvey = ({ surveyFormData, setSurveyFormData }: ReviewSurveyProps) 
 				/>
 			))}
 		</div>
-		<div className={`${styles.reviewSurveyContainer} ${styles.petCareTypeBox}`}>
-			<div className={styles.reviewSurveyBox}>
-				<div className={styles.petCareTypeTitle}>
-					<DefaultText type='title4' inlineBlock>반려 형태를 알려주세요.</DefaultText>
-					<DefaultText type='caption' color='gray500' inlineBlock>(선택)</DefaultText>
-				</div>
-				<div className={styles.petCareTypeSelectBox}>
-					<SelectWithInput
-						label='키우는 반려견 수'
-						options={[{label: '직접입력', value: 'custom'}]}
-						onChange={(value) => setSurveyFormData({...surveyFormData, petCount: value as SurveyValue})}
-					/>
-					<SelectWithInput
-						label='펫 라이프 주요 관심사'
-						value={surveyFormData?.petLifeInterests as string}
-						options={petLifeInterestList}
-						onChange={(value) => setSurveyFormData({...surveyFormData, petLifeInterests: value as SurveyValue})}
-					/>
-					<SelectWithInput
-						label='설문을 넣는다면 어떤 질문이 필요할지?'
-						options={[{label: '직접입력', value: 'custom'}]}
-						onChange={(value) => setSurveyFormData({...surveyFormData, requiredSurvey: value as SurveyValue})}
-					/>
-				</div>
-			</div>
-		</div>
+		{/*<div className={`${styles.reviewSurveyContainer} ${styles.petCareTypeBox}`}>*/}
+		{/*	<div className={styles.reviewSurveyBox}>*/}
+		{/*		<div className={styles.petCareTypeTitle}>*/}
+		{/*			<DefaultText type='title4' inlineBlock>반려 형태를 알려주세요.</DefaultText>*/}
+		{/*			<DefaultText type='caption' color='gray500' inlineBlock>(선택)</DefaultText>*/}
+		{/*		</div>*/}
+		{/*		<div className={styles.petCareTypeSelectBox}>*/}
+		{/*			<SelectWithInput*/}
+		{/*				label='키우는 반려견 수'*/}
+		{/*				options={[{label: '직접입력', value: 'custom'}]}*/}
+		{/*				onChange={(value) => setSurveyFormData({...surveyFormData, petCount: value as SurveyValue})}*/}
+		{/*			/>*/}
+		{/*			<SelectWithInput*/}
+		{/*				label='펫 라이프 주요 관심사'*/}
+		{/*				value={surveyFormData?.petLifeInterests as string}*/}
+		{/*				options={petLifeInterestList}*/}
+		{/*				onChange={(value) => setSurveyFormData({...surveyFormData, petLifeInterests: value as SurveyValue})}*/}
+		{/*			/>*/}
+		{/*			<SelectWithInput*/}
+		{/*				label='설문을 넣는다면 어떤 질문이 필요할지?'*/}
+		{/*				options={[{label: '직접입력', value: 'custom'}]}*/}
+		{/*				onChange={(value) => setSurveyFormData({...surveyFormData, requiredSurvey: value as SurveyValue})}*/}
+		{/*			/>*/}
+		{/*		</div>*/}
+		{/*	</div>*/}
+		{/*</div>*/}
 		</>
 	);
 };

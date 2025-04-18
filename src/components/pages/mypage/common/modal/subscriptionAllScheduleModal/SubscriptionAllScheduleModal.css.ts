@@ -3,10 +3,10 @@ import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
 export const scheduleList = style({
+	width: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '2px',
-	paddingTop: '2px',
 })
 
 export const scheduleItem = recipe({

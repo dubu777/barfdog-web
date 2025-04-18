@@ -20,6 +20,7 @@ import ReviewSurvey from "@/components/pages/mypage/review/reviewForm/reviewSurv
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import useModal from "@/hooks/useModal";
+import Divider from "@/components/common/divider/Divider";
 
 const defaultReviewForm = (reviewDetail: ReviewFormData | ReviewDetailItem) => {
   return {
@@ -54,8 +55,8 @@ const ReviewForm = <T extends 'create' | 'update'>({
   reviewImageDtoList,
   handleSubmitForm,
 }: ReviewFormProps<T>) => {
-  const { control, handleSubmit, errors, setValue, watch } = useFormHandler<
-    T extends 'update' ? UpdateReviewDetail : CreateReviewDetail
+  const { control, handleSubmit, errors, setValue, watch, isValid } = useFormHandler<
+    CreateReviewDetail | UpdateReviewDetail
   >(reviewFormSchema, defaultReviewForm(reviewDetail) as any);
 
   const [addImageIdList, setAddImageIdList] = useState<number[]>([]);
@@ -64,9 +65,6 @@ const ReviewForm = <T extends 'create' | 'update'>({
     preference: null,
     freshness: null,
     deliveryStatus: null,
-    petCount: null,
-    petLifeInterests: null,
-    requiredSurvey: null,
   })
   const formData = watch();
   const temporaryReward = (addImageIdList.length > 0 ? 500 : 0) + (formData.contents.length >= 20 ? 500 : 0);
@@ -111,7 +109,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
       handleSubmitForm(body);
     } else {
       const body: CreateReviewDetail = {
-        id: reviewDetail.id,
+        id: reviewDetail.id as number,
         orderId: "orderId" in reviewDetail ? reviewDetail.orderId : null,
         reviewType: reviewDetail.reviewType,
         contents: data.contents,
@@ -132,9 +130,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
       <div className={styles.reviewNotice}>
         <InfoBox onClick={onToggle} text='리뷰 작성시 유의사항' />
       </div>
-      {type === 'create' &&
-        <DefaultText type='title4' className={styles.reviewFormTitle}>이 상품 어떠셨나요?</DefaultText>
-      }
+      <DefaultText type='title4' className={styles.reviewFormTitle}>이 상품 어떠셨나요?</DefaultText>
       <ReviewCard
         reviewDetail={reviewDetail}
         formData={formData}
@@ -142,12 +138,15 @@ const ReviewForm = <T extends 'create' | 'update'>({
         isEditable
         isReviewDetail
       />
+      <Divider thickness={4} />
+      <ReviewSurvey surveyFormData={surveyFormData} setSurveyFormData={setSurveyFormData} />
+      <Divider thickness={4} />
       <div className={styles.reviewContentsBox}>
         <div className={styles.reviewContents}>
           <DefaultText type='title4'>어떤 점이 좋았나요?</DefaultText>
           <div className={styles.reviewContentsTitle}>
             <DefaultText type='label4'>상세 후기</DefaultText>
-            <DefaultText type='caption' color={formData?.contents?.length > 0 ? 'pastelRed' : 'gray500'}>20자 이상 작성시 500원 추가 적립!</DefaultText>
+            <DefaultText type='caption' color={formData?.contents?.length > 0 ? 'pastelRed' : 'gray500'}>20자 이상 작성시 300원 추가 적립!</DefaultText>
           </div>
           <Controller
             name='contents'
@@ -175,26 +174,32 @@ const ReviewForm = <T extends 'create' | 'update'>({
           handleRemove={(id) => handleFileRemove(id)}
         />
       </div>
-      <ReviewSurvey surveyFormData={surveyFormData} setSurveyFormData={setSurveyFormData} />
       <ButtonDocked
-        type='text-button'
-        text={(
-          <div>
-            <DefaultText type='caption'>예상 적립금</DefaultText>
-            <div className={styles.reviewTemporaryReward}>
-              <DefaultText type='headline1' color='red'>
-                {temporaryReward}
-              </DefaultText>/
-              <DefaultText type='headline1'>
-                최대 1000P
-              </DefaultText>
-            </div>
-          </div>
-        )}
+        type='full-button'
         primaryButtonSize='md'
-        primaryButtonLabel='등록하기'
+        primaryButtonLabel={`${type === 'create' ? '등록' : '수정' }하기`}
         onPrimaryClick={handleSubmit(onSubmit)}
+        isPrimaryDisabled={!isValid}
       />
+      {/*<ButtonDocked*/}
+      {/*  type='text-button'*/}
+      {/*  text={(*/}
+      {/*    <div>*/}
+      {/*      <DefaultText type='caption'>예상 적립금</DefaultText>*/}
+      {/*      <div className={styles.reviewTemporaryReward}>*/}
+      {/*        <DefaultText type='headline1' color='red'>*/}
+      {/*          {temporaryReward}*/}
+      {/*        </DefaultText>/*/}
+      {/*        <DefaultText type='headline1'>*/}
+      {/*          최대 1000P*/}
+      {/*        </DefaultText>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  )}*/}
+      {/*  primaryButtonSize='md'*/}
+      {/*  primaryButtonLabel='등록하기'*/}
+      {/*  onPrimaryClick={handleSubmit(onSubmit)}*/}
+      {/*/>*/}
     </form>
     <BottomSheet isOpen={isOpen} onClose={onClose} title="작성시 유의사항" className={styles.reviewNoticeBottomSheet}>
       <div className={styles.bottomSheetBox}>

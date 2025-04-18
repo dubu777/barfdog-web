@@ -74,7 +74,7 @@ interface PlanDiscountResponse {
   topping: number;
   toppingFull: number;
   toppingHalf: number;
-}[]
+}
 
 
 interface RecipeMeal {

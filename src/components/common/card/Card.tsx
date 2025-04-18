@@ -3,7 +3,7 @@ import { cardAlign, cardBaseStyle, cardBorderRadius, cardPadding, cardShadow } f
 
 interface CardProps {
 	shadow: 'light' | 'normal' | 'strong' | 'none';
-	padding?: 12 | 20;
+	padding?: 12 | 16 | 20;
 	align?: 'left' | 'center';
 	children: ReactNode;
 	className?: string;

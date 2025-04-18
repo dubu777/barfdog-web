@@ -26,6 +26,8 @@ interface BaseCardProps {
 	}
 	isOrderDetail?: boolean;
 	isButtonWrap?: boolean;
+	showBoxShadow?: boolean;
+	className?: string;
 }
 
 const BaseCard = ({
@@ -42,14 +44,16 @@ const BaseCard = ({
 	productionDates,
 	isOrderDetail = false,
 	isButtonWrap = type === 'order',
+	showBoxShadow = true,
+	className,
 }: BaseCardProps) => {
 	return (
-		<CardSection>
+		<CardSection shadow={showBoxShadow ? 'strong' : 'none'} className={className}>
 			{cardHeaderTitle}
 			<CardProductInfo
 				name={data.name}
 				imageUrl={data.imageUrl}
-				imageSize={showCardProgressStatus ? 72 : 76}
+				imageSize={showProgressLabel ? 72 : 76}
 				itemName={data.itemName}
 				price={data.price}
 				planInfo={data.plan}

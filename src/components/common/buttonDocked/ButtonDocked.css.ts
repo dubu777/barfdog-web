@@ -4,6 +4,7 @@ import { themeVars } from "@/styles/theme.css";
 export const containerBaseStyle = style({
 	position: 'fixed',
 	width: '100%',
+	maxWidth: '600px',
 	display: 'flex',
 	alignItems: 'center',
 	padding: '20px',

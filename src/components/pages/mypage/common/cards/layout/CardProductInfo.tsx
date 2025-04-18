@@ -4,6 +4,7 @@ import Image from "next/image";
 import NoImage from "/public/images/icons/noImage.png";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { PlanInfo } from "@/types";
+import { numberOfPacksPerDay } from "@/constants";
 
 interface CardProductInfoProps {
 	name: string;
@@ -37,14 +38,16 @@ const CardProductInfo = ({
 				className={productAvatar}
 			/>
 			<div className={productName}>
-				<DefaultText type='headline1'>{name}</DefaultText>
+				<DefaultText type='headline2'>{name}</DefaultText>
 				<div>
 					{planInfo &&
 						<DefaultText type='caption' style={{ display: 'flex', alignItems: 'center' }}>
-							하루 {planInfo.numberOfPacksPerDay}끼<span className={divider}/>
+							{numberOfPacksPerDay[planInfo.numberOfPacksPerDay]}<span className={divider}/>
 							{planInfo.weeklyPaymentCycle}주<span className={divider}/>
-							{planInfo.totalNumberOfPacks}팩<span className={divider}/>
-							추가-건<br/>
+							{planInfo.totalNumberOfPacks}팩
+							{/* {planInfo.options &&
+								<><span className={divider}/>추가-건<br/></>
+							} */}
 						</DefaultText>
 					}
 					{itemName &&

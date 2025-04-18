@@ -12,6 +12,7 @@ export const productInfoBox = style({
 export const productName = style({
 	display: 'flex',
 	flexDirection: 'column',
+	justifyContent: 'center',
 	gap: '4px',
 })
 
@@ -23,22 +24,25 @@ export const productAvatar = style({
 
 export const statusContainer = recipe({
 	base: {
-		marginBottom: '12px',
+		marginBottom: '10px',
 	},
 	variants: {
 		hasStatusLabel: {
 			true: {
-				paddingTop: '35px',
+				paddingTop: '24px',
 			}
 		}
 	}
+})
+
+export const statusProgressBar = style({
+	margin: '6px 0',
 })
 
 export const dateInfo = style({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	marginTop: '6px',
 })
 
 export const buttonContainer = style({

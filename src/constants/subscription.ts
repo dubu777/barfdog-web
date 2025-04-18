@@ -1,6 +1,6 @@
-import {PlanInfo, PlanKey} from "@/types";
+import { PlanInfo, PlanKey } from "@/types";
 
-export { subscriptionStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscriptionPlanInfo }
+export { subscriptionStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscriptionPlanInfo, numberOfPacksPerDay }
 
 const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
   FULL: {
@@ -42,6 +42,11 @@ const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
     maxRecipeCount: 1,
   },
 } as const;
+
+const numberOfPacksPerDay = {
+  1: '하루 한 끼',
+  2: '하루 두 끼',
+}
 
 const toppingOption = {
   options: [

@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { ORDER_TYPE, queryKeys, MYPAGE_ITEM_TYPE_FILTERS } from "@/constants";
+import { ORDER_TYPE, queryKeys } from "@/constants";
 import { getGeneralOrderList, getSubscriptionOrderList } from "@/api/order/order";
 import { GeneralOrderData, MergeOrderData, SubscriptionOrderData } from "@/types";
 
 export { useMergeOrderList };
 
-function useMergeOrderList({ filterValue, statusFilter }: { filterValue?: keyof typeof MYPAGE_ITEM_TYPE_FILTERS, statusFilter?: 'ORDER' | 'CANCEL' }) {
+function useMergeOrderList({ filterValue, statusFilter }: { filterValue?: keyof typeof ORDER_TYPE, statusFilter?: 'ORDER' | 'CANCEL' }) {
   const page = 0;
   const {
     data: SubscriptionOrderData,
@@ -65,7 +65,7 @@ function useMergeOrderList({ filterValue, statusFilter }: { filterValue?: keyof 
     const status = data.orderDto.orderStatus;
 
     // 1. filterValue 적용 (구독 vs 일반)
-    if (filterValue) {
+    if (filterValue ) {
       if (filterValue === ORDER_TYPE.SUBSCRIPTION && !('recipeDto' in data)) return false;
       if (filterValue === ORDER_TYPE.GENERAL && ('recipeDto' in data)) return false;
     }

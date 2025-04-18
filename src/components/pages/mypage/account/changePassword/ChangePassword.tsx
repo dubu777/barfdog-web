@@ -117,7 +117,7 @@ const ChangePasswordComponent = () => {
 								{passwordError &&
 								<div className={styles.accountError} style={{ marginTop: '8.5px' }}>
 									<ErrorIcon />
-									<DefaultText type='caption' color={!passwordError ? 'blue' : 'red'} inlineBlock>
+									<DefaultText type='caption' color={!passwordError ? 'blue' : 'red'}>
 										기존 비밀번호가 {passwordError ? '일치하지 않습니다' : '일치합니다'}
 									</DefaultText>
 								</div>
@@ -153,7 +153,7 @@ const ChangePasswordComponent = () => {
 									return (
 										<div key={message} className={styles.accountError}>
 											{isValid ? <SuccessIcon /> : <ErrorIcon />}
-											<DefaultText type='caption' color={isValid ? 'blue' : 'red'} inlineBlock>
+											<DefaultText type='caption' color={isValid ? 'blue' : 'red'}>
 												{message}
 											</DefaultText>
 										</div>
@@ -184,7 +184,7 @@ const ChangePasswordComponent = () => {
 								{dirtyFields.newPassword &&
 									<div className={styles.accountError} style={{ marginTop: '8.5px' }}>
 										<SvgIcon src={!newPasswordConfirmError ? SuccessIcon : ErrorIcon} size={18} color={!newPasswordConfirmError ? 'blue500' : 'red'} />
-										<DefaultText type='caption' color={!newPasswordConfirmError ? 'blue' : 'red'} inlineBlock>
+										<DefaultText type='caption' color={!newPasswordConfirmError ? 'blue' : 'red'}>
 											비밀번호가 {newPasswordConfirmError ? '일치하지 않습니다' : '일치합니다'}
 										</DefaultText>
 									</div>

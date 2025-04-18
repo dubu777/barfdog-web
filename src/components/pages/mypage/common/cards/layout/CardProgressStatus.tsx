@@ -1,6 +1,6 @@
 import * as styles from '../Card.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import ProgressBar from "@/components/common/progressBar/ProgressBar";
+import ProgressBar from "@/components/pages/mypage/common/progressBar/ProgressBar";
 import {
 	SUBSCRIPTION_ORDER_PROGRESS,
 	SUBSCRIPTION_ORDER_STATUS_MESSAGES,
@@ -32,15 +32,16 @@ const CardProgressStatus = ({ status, productionDates, subscribeCount, showProgr
 				<ProgressBar
 					progress={progressInfo.progress}
 					label={showProgressLabel ? progressInfo.label: undefined}
+					className={styles.statusProgressBar}
 				/>
 			}
 			{showProgress &&
 				<div className={styles.dateInfo}>
-					<DefaultText type='caption'>
-						{productionDates?.paymentDate ? format(new Date(productionDates?.paymentDate), 'MM.dd') : ''} {progressInfo.statusText?.payment}
+					<DefaultText type='caption' color='gray500'>
+						{productionDates?.paymentDate ? format(new Date(productionDates?.paymentDate), 'MM. dd.') : ''} {progressInfo.statusText?.payment}
 					</DefaultText>
-					<DefaultText type='caption' color='gray600'>
-						{productionDates?.deliveryDate ? format(new Date(productionDates?.deliveryDate), 'MM.dd') : ''} {progressInfo.statusText?.delivery}
+					<DefaultText type='caption' color='gray500'>
+						{productionDates?.deliveryDate ? format(new Date(productionDates?.deliveryDate), 'MM. dd.') : ''} {progressInfo.statusText?.delivery}
 					</DefaultText>
 				</div>
 			}
