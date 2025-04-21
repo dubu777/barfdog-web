@@ -144,10 +144,22 @@ export const subscriptionCardInfo = style({
 	gap: '8px',
 })
 
+export const subscriptionCardNotice = style({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '12px',
+	marginTop: '16px',
+})
+
 export const subscriptionPaymentItem = style({
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',
+})
+
+export const subscriptionPaymentDiscount = style({
+	alignItems: 'flex-end',
+	textAlign: 'right'
 })
 
 export const couponButton = style({

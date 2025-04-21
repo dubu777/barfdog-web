@@ -3,7 +3,7 @@ import {
   BenefitDto,
   PaymentBody,
   PlanDiscountResponse, SubscriptionAddressData, SubscriptionListData,
-  SubscriptionDetailDto, SubscriptionSkipType, AddressDto,
+  SubscriptionDetailDto, SubscriptionSkipType, AddressDto, UsingCoupon,
 } from "@/types/subscription";
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse[]> => {
@@ -70,6 +70,16 @@ const updateSubscriptionAddress = async (subscribeId: number, changeType: string
   return data;
 }
 
+const cancelUsedCoupon = async (subscriptionId: number, usingCouponId: number) => {
+  const { data } = await axiosInstance.put(`/api/subscribes/${subscriptionId}/coupon/cancel`, { memberCouponId: usingCouponId });
+  return { ...data, subscriptionId: subscriptionId };
+}
+
+const updateUsingCoupon = async (subscriptionId: number, body: UsingCoupon) => {
+  const { data } = await axiosInstance.post(`/api/subscribes/${subscriptionId}/coupon`, body);
+  return { ...data, subscriptionId: subscriptionId };
+}
+
 export {
   getPlanDiscount,
   getSubscriptionDetail,
@@ -79,4 +89,6 @@ export {
   updateSubscription,
   skipSubscription,
   updateSubscriptionAddress,
+  cancelUsedCoupon,
+  updateUsingCoupon,
 }

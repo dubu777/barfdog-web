@@ -30,7 +30,10 @@ const OrderDetail = ({ orderId, orderType }: OrderDeliveryDetailProps) => {
 					<AddressInfo data={orderDto} showEditAddressInfo />
 					{orderType === ORDER_TYPE.GENERAL
 						? <OrderInfo data={orderDto} items={orderItemDtoList} type='orderDetail' />
-						: <SubscriptionInfo subscriptionId={orderId} data={orderDto} type='orderDetail' />
+						: <>
+							<SubscriptionInfo subscriptionId={orderId} data={orderDto} type='orderDetail' />
+							{/*<DogInfo data={orderDto} />*/}
+						</>
 					}
 					<PaymentInfo data={orderDto} type='orderDetail' />
 				</>

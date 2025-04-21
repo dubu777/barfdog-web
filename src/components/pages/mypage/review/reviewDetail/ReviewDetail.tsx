@@ -1,7 +1,7 @@
 'use client';
+import { useState } from "react";
 import * as styles from './ReviewDetail.css';
 import { format } from "date-fns";
-import { useQueryClient } from "@tanstack/react-query";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useBackNavigation } from "@/utils";
 import MoreHorizIcon from "/public/images/icons/more_horiz.svg";
@@ -10,10 +10,10 @@ import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
-import ReviewImagesModal from "@/components/pages/mypage/review/reviewImagesModal/ReviewImagesModal";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Modal from "@/components/common/modal/Modal";
 import useModal from "@/hooks/useModal";
+import ReviewImagesModal from "@/components/pages/mypage/review/reviewImagesModal/ReviewImagesModal";
 import { ReviewDetailItem, ReviewItemType } from "@/types";
 import { useToastStore } from '@/store/useToastStore';
 import { sanitizedHTML } from "@/styles/common.css";
@@ -21,7 +21,6 @@ import { textStyles } from "@/components/common/defaultText/DefaultText.css";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
 import { useDeleteReview } from "@/api/review/mutations/useDeleteReview";
-import { prefetchGetReviewDetailImageList } from "@/api/review/queries/useGetReviewDetailImageList";
 
 interface ReviewDetailProps {
   reviewId: number;
@@ -29,7 +28,6 @@ interface ReviewDetailProps {
 }
 
 const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
-  const queryClient = useQueryClient();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const goBackPreviousPage = useBackNavigation(undefined, true);
@@ -41,6 +39,10 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const currentPage = Number(searchParams.get('page'));
   const { mutate } = useDeleteReview(currentPage);
 
+  const [defaultImageId, setDefaultImageId] = useState<number | null>(null);
+  const defaultImageIndex = data?.reviewImageDtoList?.findIndex(item => item.id === defaultImageId);
+  const reviewImageList = data?.reviewImageDtoList || [];
+
   const { isOpen: reviewImageModalOpen, onToggle: onReviewImageModalToggle, onClose: onReviewImageModalClose } = useModal();
   const { isOpen: editModalOpen, onToggle: onEditModalToggle, onClose: onEditModalClose } = useModal();
   const { isOpen: deleteModalOpen, onToggle: onDeleteModalToggle, onClose: onDeleteModalClose } = useModal();
@@ -50,12 +52,11 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
     reviewType
   }
 
+  const sanitizedHTMLContents = useSanitizedHTML(reviewDetail?.contents || '');
   const hasReviewRewardHistory = false;
 
-  const sanitizedHTMLContents = useSanitizedHTML(reviewDetail?.contents || '');
-
-  const handleOpenReviewImageModal = async () => {
-    await prefetchGetReviewDetailImageList(queryClient, reviewDetail.id);
+  const handleOpenReviewImageModal = async (previewId: number) => {
+    setDefaultImageId(previewId);
     onReviewImageModalToggle();
   }
 
@@ -107,7 +108,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
       </article>
       {data?.reviewImageDtoList?.length > 0 &&
         <article className={styles.reviewDetailBox}>
-          <ImageCarousel imageList={data.reviewImageDtoList} handleImageModalClick={handleOpenReviewImageModal} />
+          <ImageCarousel imageList={data.reviewImageDtoList} handleShowImageList={handleOpenReviewImageModal} />
         </article>
       }
       <article className={styles.reviewDetailComment}>
@@ -125,11 +126,12 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
           기존 작성 후기와 동일한 사진 사용 및 단순문구 반복으로 글자수를 충족한 경우 후기 승인이 반려될 수 있음을 안내드립니다.
         </DefaultText>
       </article>
-      {reviewImageModalOpen && reviewDetail.id &&
+      {reviewImageModalOpen &&
         <ReviewImagesModal
-          reviewId={reviewDetail.id}
+          reviewImageList={reviewImageList}
           isOpen={reviewImageModalOpen}
           onClose={onReviewImageModalClose}
+          defaultImageIndex={defaultImageIndex}
         />
       }
       {deleteModalOpen &&

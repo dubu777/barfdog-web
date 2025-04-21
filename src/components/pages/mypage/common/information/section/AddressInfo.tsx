@@ -48,7 +48,7 @@ const AddressInfo = ({
 			<Card shadow='none' className={`${styles.infoDetailContainer} ${styles.infoCard}`}>
 				<div className={`${styles.infoBoxItem} ${styles.addressHeader}`}>
 					<DefaultText type='headline2'>{deliveryName}</DefaultText>
-					{isDefault && <Chips variant='outlined' borderRadius='full'>기본배송지</Chips>}
+					{isDefault && <Chips variant='outlined' borderRadius='lg'>기본배송지</Chips>}
 				</div>
 				<DefaultText type='body3' color='gray800'>{cardDetail?.name || cardDetail?.recipientName} • {cardDetail?.phoneNumber ? formatPhoneNumber(cardDetail?.phoneNumber) : ''}</DefaultText>
 				<DefaultText type='body3' color='gray800'>{cardDetail?.street} {cardDetail?.detailAddress}</DefaultText>

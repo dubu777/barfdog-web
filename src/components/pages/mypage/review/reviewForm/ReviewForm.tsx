@@ -14,12 +14,9 @@ import {
 import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
 import MultiFileUpload from "@/components/common/multiFileUpload/MultiFileUpload";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import InfoBox from "@/components/common/infoBox/InfoBox";
 import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
 import ReviewSurvey from "@/components/pages/mypage/review/reviewForm/reviewSurvey/ReviewSurvey";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import useModal from "@/hooks/useModal";
 import Divider from "@/components/common/divider/Divider";
 
 const defaultReviewForm = (reviewDetail: ReviewFormData | ReviewDetailItem) => {
@@ -67,9 +64,6 @@ const ReviewForm = <T extends 'create' | 'update'>({
     deliveryStatus: null,
   })
   const formData = watch();
-  const temporaryReward = (addImageIdList.length > 0 ? 500 : 0) + (formData.contents.length >= 20 ? 500 : 0);
-
-  const { onToggle, onClose, isOpen } = useModal();
 
   const handleFileUpload = async (files: ImageFile[]) => {
     const uploadedImageList: number[] = [];
@@ -95,8 +89,6 @@ const ReviewForm = <T extends 'create' | 'update'>({
       setAddImageIdList(prev => prev.filter(imageId => imageId !== id));
     }
   }
-
-  console.log('reviewDetail', reviewDetail)
 
   const onSubmit = (data: CreateReviewDetail | UpdateReviewDetail) => {
     if (type === 'update') {
@@ -127,9 +119,6 @@ const ReviewForm = <T extends 'create' | 'update'>({
   return (
     <>
     <form className={styles.reviewFormContainer}>
-      <div className={styles.reviewNotice}>
-        <InfoBox onClick={onToggle} text='리뷰 작성시 유의사항' />
-      </div>
       <DefaultText type='title4' className={styles.reviewFormTitle}>이 상품 어떠셨나요?</DefaultText>
       <ReviewCard
         reviewDetail={reviewDetail}
@@ -181,52 +170,8 @@ const ReviewForm = <T extends 'create' | 'update'>({
         onPrimaryClick={handleSubmit(onSubmit)}
         isPrimaryDisabled={!isValid}
       />
-      {/*<ButtonDocked*/}
-      {/*  type='text-button'*/}
-      {/*  text={(*/}
-      {/*    <div>*/}
-      {/*      <DefaultText type='caption'>예상 적립금</DefaultText>*/}
-      {/*      <div className={styles.reviewTemporaryReward}>*/}
-      {/*        <DefaultText type='headline1' color='red'>*/}
-      {/*          {temporaryReward}*/}
-      {/*        </DefaultText>/*/}
-      {/*        <DefaultText type='headline1'>*/}
-      {/*          최대 1000P*/}
-      {/*        </DefaultText>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  )}*/}
-      {/*  primaryButtonSize='md'*/}
-      {/*  primaryButtonLabel='등록하기'*/}
-      {/*  onPrimaryClick={handleSubmit(onSubmit)}*/}
-      {/*/>*/}
     </form>
-    <BottomSheet isOpen={isOpen} onClose={onClose} title="작성시 유의사항" className={styles.reviewNoticeBottomSheet}>
-      <div className={styles.bottomSheetBox}>
-        <DefaultText type='label4' className={styles.bottomSheetSubTitle}>유의사항</DefaultText>
-        <div className={styles.bottomSheetInfoDetail}>
-          <DefaultText type='caption'>• 작성하신 후기는 바프독 이용자에게 공개됩니다.</DefaultText>
-          <DefaultText type='caption'>• 일반 구매 후기 작성은 구매확정 후 30일까지 가능하며, 최대 1000원의 적립금이 영업일 기준 2일 전후로 지급됩니다.(텍스트 500원, 사진 500원)</DefaultText>
-          <DefaultText type='caption'>• 정기 구독 구매 후기 작성은 구매 확정후 회차 당 30일까지 가능하며,  리뷰 회차 당 최대 1000원의 적립금이 영업일 기준 2일 전후로 지급됩니다.(텍스트 500원, 사진 500원)</DefaultText>
-          <DefaultText type='caption'>• 승인되지 않은 기준 미충족 후기에 대한 수정은 180일 이내만 가능합니다.</DefaultText>
-          <DefaultText type='caption'>• 아래에 해당할 경우 적립금 지급이 보류되거나, 검수를 통해 작성 리뷰가 비노출 처리됩니다.</DefaultText>
-          <div className={styles.bottomSheetSubDetail}>
-            <DefaultText type='caption'>
-              • 바프독 서비스와 관련성 없는 사진을 업로드 한 경우<br/>
-              • 바프독 서비스와 관련성 없는 내용의 후기<br/>
-              • 기호 및 문자의 단순 나열이 반복된 내용의 후기<br/>
-              • 개인정보 및 광고, 비속어가 포함된 내용의 후기<br/>
-              • 타인의 사진을 도용하여 업로드 한 경우
-            </DefaultText>
-          </div>
-        </div>
-      </div>
-      <ButtonDocked
-        type='full-button'
-        primaryButtonLabel='확인'
-        onPrimaryClick={onClose}
-      />
-    </BottomSheet>
+
     </>
   );
 };

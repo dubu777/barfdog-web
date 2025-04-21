@@ -1,46 +1,69 @@
+import { useState } from "react";
 import * as styles from './ReviewImagesModal.css';
 import Image from "next/image";
-import DefaultModal from "@/components/common/defaultModal/DefaultModal";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { useGetReviewDetailImageList } from "@/api/review/queries/useGetReviewDetailImageList";
+import ModalBackground from "@/components/common/modalBackground/ModalBackground";
+import NewHeader from "@/components/layout/newHeader/NewHeader";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import CloseIcon from "/public/images/header/close.svg";
+import { ReviewImage } from "@/types";
 
 interface ReviewImagesModalProps {
-	reviewId: number;
 	isOpen: boolean;
 	onClose: () => void;
+	defaultImageIndex: number;
+	reviewImageList: ReviewImage[]
 }
 
-const ReviewImagesModal = ({ reviewId, isOpen, onClose }: ReviewImagesModalProps) => {
-	const { data: reviewImageList } = useGetReviewDetailImageList(reviewId);
+const ReviewImagesModal = ({
+	reviewImageList,
+	isOpen,
+	onClose,
+	defaultImageIndex = 0
+}: ReviewImagesModalProps) => {
+	const [activeIndex, setActiveIndex] = useState<number>(defaultImageIndex);
+
 	if(reviewImageList?.length === 0) return null;
 	return (
-		reviewId &&
-		<DefaultModal
+		<ModalBackground
 			isVisible={isOpen}
 			onClose={onClose}
-			type="info"
-			size="lg"
+			isDimmed={false}
+			closeOnBackgroundClick={false}
 		>
-			<Swiper
-				pagination
-				navigation
-				modules={[Navigation]}
-			>
-				{reviewImageList?.map(reviewImage => (
-					<SwiperSlide
-						key={reviewImage.filename}
-						className={styles.reviewImageSlider}
-					>
-						<Image src={reviewImage.url} alt={reviewImage.filename} sizes="350px" fill style={{ objectFit: 'contain'}} className={styles.reviewImage} />
-					</SwiperSlide>
-				))}
-			</Swiper>
-
-		</DefaultModal>
+			<div className={styles.reviewImagesModalContainer}>
+				<NewHeader
+					leftElement={(
+						<DefaultText type='headline3' color='white'>
+							{activeIndex+1}/{reviewImageList.length}
+						</DefaultText>
+					)}
+					rightElement={(
+						<button onClick={onClose}>
+							<SvgIcon src={CloseIcon} size={24} color='white' />
+						</button>
+					)}
+					backgroundColor='gray900'
+				/>
+				<Swiper
+					initialSlide={defaultImageIndex}
+					onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+				>
+					{reviewImageList?.map(reviewImage => (
+						<SwiperSlide
+							key={reviewImage.filename}
+							className={styles.reviewImageSlider}
+						>
+							<Image src={reviewImage.url} alt={reviewImage.filename} sizes="350px" fill style={{ objectFit: 'contain'}} className={styles.reviewImage} />
+						</SwiperSlide>
+					))}
+				</Swiper>
+			</div>
+		</ModalBackground>
 	);
 };
 

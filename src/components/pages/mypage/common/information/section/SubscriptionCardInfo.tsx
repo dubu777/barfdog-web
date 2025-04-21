@@ -1,15 +1,15 @@
 import * as styles from "@/components/pages/mypage/common/information/Information.css";
-import { divider } from "@/components/pages/mypage/common/cards/Card.css";
+import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import Divider from "@/components/common/divider/Divider";
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
-import useModal from "@/hooks/useModal";
+import InfoBox from "@/components/common/infoBox/InfoBox";
+import RecipeList from "@/components/pages/mypage/common/recipeList/RecipeList";
 import PostponeShippingModal from "@/components/pages/mypage/common/modal/postponeShippingModal/PostponeShippingModal";
+import useModal from "@/hooks/useModal";
+import { subscriptionPlanInfo } from "@/constants";
 import { prefetchGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
-import { numberOfPacksPerDay, subscriptionPlanInfo } from "@/constants";
 
 interface SubscriptionCardInfoProps {
 	subscriptionId: number;
@@ -20,13 +20,15 @@ const SubscriptionCardInfo = ({
 	subscriptionId,
 	data,
 }: SubscriptionCardInfoProps) => {
+	const router = useRouter();
 	const queryClient = useQueryClient();
 	const planInfo = subscriptionPlanInfo[data?.plan];
-	const oneMealGramsPerRecipes = data.oneMealGramsPerRecipe.split(',');
-	const eachNumberOfPacks = planInfo.totalNumberOfPacks / data.recipeList.length;
-	const totalGrams = oneMealGramsPerRecipes.reduce((sum, item) => Number(sum) + Number(item), 0);
 
-	const { isOpen: postponeShippingOpen, onClose: onPostponeShippingClose, onToggle: onPostponeShippingToggle } = useModal();
+	const hasPostponeShipping = false;
+	const hasChangedRecipe = false;
+	const nextCycle = data.subscribeCount + 1;
+
+	const { isOpen: postponeShippingOpen, onClose: onClosePostponeShipping, onToggle: onTogglePostponeShipping } = useModal();
 
 	const subscriptionTopInfo = [
 		{ label: '구독 번호', value: data.id },
@@ -40,24 +42,13 @@ const SubscriptionCardInfo = ({
 	]
 
 	const handleActions = async (type: 'postponeShipping' | 'changeRecipe') => {
+		await prefetchGetSubscriptionDetail(queryClient, subscriptionId);
 		if (type === 'postponeShipping') {
-			await prefetchGetSubscriptionDetail(queryClient, subscriptionId);
-			onPostponeShippingToggle();
+			onTogglePostponeShipping();
 		} else {
-			console.log('changeRecipe!!')
+			router.push(`/mypage/subscription/${subscriptionId}/change-recipe`)
 		}
 	}
-
-	const recipeList = data.recipeList.map((recipe, index) =>
-		({
-			...recipe,
-			oneMealGramsPerRecipe: Number(oneMealGramsPerRecipes[index]),
-			totalNumberOfPacks: eachNumberOfPacks,
-			numberOfPacksPerDay: planInfo.numberOfPacksPerDay,
-			weeklyPaymentCycle: planInfo.weeklyPaymentCycle,
-			perPrice: Math.round((Number(oneMealGramsPerRecipes[index]) / totalGrams) * data.nextPaymentPrice),
-		})
-	)
 
 	return (
 		<>
@@ -72,33 +63,20 @@ const SubscriptionCardInfo = ({
 						<DefaultText type="body3" color='gray700'>{info.value}</DefaultText>
 					</div>
 				))}
+				{(hasPostponeShipping || hasChangedRecipe) &&
+					<div className={styles.subscriptionCardNotice}>
+						{hasPostponeShipping &&
+							<InfoBox text={`${nextCycle}회차부터 배송 미루기가 적용되었어요`} color='blue' />
+						}
+						{hasChangedRecipe &&
+						<InfoBox text={`${nextCycle}회차부터 구독 정보 변경이 적용돼요`} color='blue' />
+						}
+					</div>
+				}
 			</div>
 			<div className={styles.infoBoxItemColumn}>
 				<DefaultText type="label3" block>구독 상품</DefaultText>
-				<ul className={styles.infoBoxItemColumn}>
-					{recipeList.map((recipe, index) => (
-						<>
-						<li key={recipe.id} className={styles.infoBoxItem}>
-							<Image src={recipe.imageUrl} alt={recipe.recipeNames} width={88} height={88} style={{ borderRadius: '8px' }} />
-							<div className={styles.subscriptionCardInfo}>
-								<div>
-									<DefaultText type='headline2'>{recipe.recipeNames}</DefaultText>
-									<DefaultText type='body3' color='gray600' style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-										{recipe.oneMealGramsPerRecipe}g <span className={divider}/>
-										{numberOfPacksPerDay[recipe.numberOfPacksPerDay]}<span className={divider}/>
-										{recipe.weeklyPaymentCycle}주<span className={divider}/>
-										{recipe.totalNumberOfPacks}팩
-									</DefaultText>
-								</div>
-								<DefaultText type='headline2'>{recipe.perPrice.toLocaleString()}원</DefaultText>
-							</div>
-						</li>
-							{index !== recipeList.length - 1 &&
-								<Divider thickness={1} color='gray200' />
-							}
-						</>
-					))}
-				</ul>
+				<RecipeList data={data} />
 				<div className={styles.infoBoxItem}>
 					{buttons.map((btn, index) => (
 						<Button key={index} variant="outline" fullWidth size="sm" onClick={btn.onClick}>
@@ -113,7 +91,7 @@ const SubscriptionCardInfo = ({
 			<PostponeShippingModal
 				subscriptionId={subscriptionId}
 				isOpen={postponeShippingOpen}
-				onClose={onPostponeShippingClose}
+				onClose={onClosePostponeShipping}
 			/>
 		}
 		</>

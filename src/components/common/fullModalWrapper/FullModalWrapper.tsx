@@ -7,22 +7,26 @@ import Header from "@/components/layout/header/Header";
 interface FullModalWrapperProps {
 	isVisible: boolean;
 	handleClose: () => void;
+	handleGoBack?: () => void;
 	children: ReactNode;
 	headerTitle?: string;
+	className?: string;
 }
 
 const FullModalWrapper = ({
 	isVisible,
 	handleClose,
+	handleGoBack,
 	children,
 	headerTitle,
+	className,
 }: FullModalWrapperProps) => {
 	return (
 		<AnimatePresence>
 			{isVisible && (
 				<ModalBackground isVisible={isVisible} onClose={handleClose} closeOnBackgroundClick={false} isDimmed={false}>
 					<motion.div
-						className={styles.modalContainer}
+						className={`${styles.modalContainer} ${className || ''}`}
 						onClick={(e) => e.stopPropagation()}
 						initial={{ y: "100%" }}
 						animate={{ y: "0%" }}
@@ -33,8 +37,10 @@ const FullModalWrapper = ({
 							<>
 								<Header
 									centerTitle={headerTitle}
-									showCloseButton
+									showCloseButton={!!handleClose}
+									showBackButton={!!handleGoBack}
 									onClose={handleClose}
+									onBack={handleGoBack}
 								/>
 								<div className={styles.modalContent}>
 									{children}

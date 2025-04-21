@@ -8,10 +8,12 @@ export const previewSlider = style({
 })
 
 export const previewSlide = style({
+	position: 'relative',
 	borderRadius: '8px',
 	overflow: 'hidden',
 	selectors: {
 		'&:first-child': {
+			borderRadius: '6.667px',
 			border: `1px solid ${themeVars.colors.red.red}`,
 		}
 	}
@@ -21,17 +23,19 @@ export const previewImage = style({
 	objectFit: 'cover',
 })
 
+export const thumbnail = style({
+	background: themeVars.colors.red.red,
+	color: themeVars.colors.gray.gray0,
+	borderRadius: '6.667px 0px',
+	position: 'absolute !important',
+	left: 0,
+	top: 0,
+	padding: '3px 6.67px',
+})
+
 export const removeButton = style({
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
-	width: '20px',
-	height: '20px',
 	position: 'absolute',
-	right: '5px',
-	top: '5px',
-	background: '#fff',
-	padding: '5px',
-	borderRadius: '50%',
+	right: '0',
+	top: '0',
 	cursor: 'pointer'
 })

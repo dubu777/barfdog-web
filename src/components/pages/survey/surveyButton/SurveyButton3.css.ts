@@ -17,6 +17,7 @@ export const buttonStyle = recipe({
     transition: 'border-color 0.3s ease, color 0.3s ease, background-color 0.3s ease',
     cursor: 'pointer',
     backgroundColor: themeVars.colors.gray.gray0,
+    position: 'relative',
   },
   variants: {
     checked: {

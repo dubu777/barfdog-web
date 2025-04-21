@@ -47,6 +47,7 @@ interface ReviewListItem extends BaseReviewItem{
 }
 
 interface ReviewImage {
+  id?: number;
   filename: string;
   url: string;
 }

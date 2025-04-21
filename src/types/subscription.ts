@@ -27,6 +27,7 @@ export type {
   PlanName,
   Coupon,
   PlanInfo,
+  UsingCoupon,
 };
 
 
@@ -211,6 +212,12 @@ interface PlanInfo {
   weeklyPaymentCycle: number;
   totalNumberOfPacks: number;
   maxRecipeCount?: number;
+}
+
+interface UsingCoupon {
+  memberCouponId: number;
+  discount: number;
+  overDiscount: number;
 }
 
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';

@@ -37,6 +37,7 @@ export default function Chips({
   tailVisible = false,
   tailPosition = 'top',
   style,
+  className,
 }: ChipsProps) {
   const colorStyle = color ? chipVariantStyles[variant as 'solid' | 'outlined'][color] : "";
 
@@ -48,6 +49,7 @@ export default function Chips({
       ${chipsSize[size]}
       ${switchOff && chipsSwitchOff[variant] || ''}
       ${colorStyle}
+      ${className || ''}
       ${tailVisible ? chipsTailFixedFont : ''}
     `}
     style={style}

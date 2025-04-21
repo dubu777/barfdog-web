@@ -36,10 +36,10 @@ const ManageSubscription = () => {
     const tabValue = tabs[defaultTabIndex].value;
     return tabValue === 'ALL' ? true : tabValue === 'SUBSCRIBING' ? data.subscribeDto.status === tabs[defaultTabIndex].value : data.subscribeDto.status !== 'SUBSCRIBING'
   }).map(data => ({ ...data.subscribeDto, recipeNames: data.recipeNames }));
-  const emptyState = defaultSubscriptionList.length < 1;
+  const emptyState = subscriptionList.length < 1;
   // const subscriptionList = []
   // const emptyState = subscriptionList.length < 1;
-  const dogNames = subscribingSubscriptionList.map(subscription => subscription.subscribeDto.dogName);
+  const dogNames = subscribingSubscriptionList?.map(subscription => subscription.subscribeDto.dogName);
 
   return (
     <section>
@@ -47,7 +47,7 @@ const ManageSubscription = () => {
         <DefaultText type='label4' color='gray700'>나의 진행중 구독</DefaultText>
         <DefaultText type='title1' className={styles.manageSubscriptionCount}>총 {subscribingSubscriptionList.length || 0}건</DefaultText>
         <DefaultText type='caption' color='gray700'>
-          {emptyState
+          {subscribingSubscriptionList.length < 1
             ? 'Tip. 맞춤 자연식을 통해 우리아이 면역력을 키워보세요! :)'
             : dogNames.map(dog => `#${dog} `)
           }

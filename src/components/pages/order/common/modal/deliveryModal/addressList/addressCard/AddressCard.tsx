@@ -59,7 +59,7 @@ export default function AddressCard({
       <div className={styles.addressTitleWrapper}>
         <DefaultText type="headline2">{address.deliveryName}</DefaultText>
         {isDefaultAddress && (
-          <Chips variant="outlined" size="sm" switchOff borderRadius="full">
+          <Chips variant="outlined" size="sm" switchOff borderRadius="lg">
             기본배송지
           </Chips>
         )}

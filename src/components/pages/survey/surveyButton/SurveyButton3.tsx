@@ -1,4 +1,4 @@
-"use client";
+import Chips from "@/components/common/chips/Chips";
 import * as styles from "./SurveyButton3.css";
 
 interface SurveyButton3Props {
@@ -7,6 +7,7 @@ interface SurveyButton3Props {
   label: string;
   onChange: (value: string | boolean | number) => void;
   layoutType?: "row" | "col" | "grid";
+  chipText?: string;
 }
 
 export default function SurveyButton3({
@@ -15,6 +16,7 @@ export default function SurveyButton3({
   label,
   onChange,
   layoutType = 'col',
+  chipText
 }: SurveyButton3Props) {
   return (
       <button
@@ -22,6 +24,11 @@ export default function SurveyButton3({
         className={styles.buttonStyle({ checked: isChecked, type: layoutType })}
         onClick={() => onChange(value)}
       >
+        {chipText &&
+          <Chips variant='solid' color={isChecked ? 'red' : 'gray800'} style={{ position: 'absolute', top: '4px', left: '4px' }}>
+            {chipText}
+          </Chips>
+        }
         {label}
       </button>
   );
