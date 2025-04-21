@@ -8,7 +8,7 @@ import { useInvalidSubscriptionPayment } from '@/api/order/mutations/useInvalidS
 import { useSuccessSubscriptionPayment } from '@/api/order/mutations/useSuccessSubscriptionPayment';
 import { useFailSubscriptionPayment } from '@/api/order/mutations/useFailSubscriptionPayment';
 import DefaultText from '@/components/common/defaultText/DefaultText';
-import * as styles from '../MobilePaymentRedirect.css';
+import { useToastStore } from '@/store/useToastStore';
 
 export default function MobileSubscriptionPaymentRedirect() {
   const processedRef = useRef(false);
@@ -16,6 +16,7 @@ export default function MobileSubscriptionPaymentRedirect() {
   const searchParams = useSearchParams();
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const addToast = useToastStore((state) => state.addToast);
 
   const { mutateAsync: createIamportPayment } = useCreateIamportSubscriptionPayment();
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
@@ -43,10 +44,21 @@ export default function MobileSubscriptionPaymentRedirect() {
         const buyerEmail = searchParams.get('buyer_email') ?? "";
         const buyerAddr = searchParams.get('buyer_addr') ?? "";
         const buyerPostcode = searchParams.get('buyer_postcode') ?? "";
-console.log(impUid, impSuccess, merchantUid, orderIdStr, customerUid, amountStr, discountRewardStr, name, buyerName, buyerTel, buyerEmail, buyerAddr, buyerPostcode);
+        const errorMsg = searchParams.get('error_msg') ?? "";
+        const subscriptionId = searchParams.get('subscription_Id') ?? "";
+      
+
+console.log(errorMsg, impUid, impSuccess, merchantUid, orderIdStr, customerUid, amountStr, discountRewardStr, name, buyerName, buyerTel, buyerEmail, buyerAddr, buyerPostcode);
 
         if (!impUid || !merchantUid || !orderIdStr || !customerUid || !impSuccess || !amountStr || !discountRewardStr) {
           throw new Error('필수 결제 정보가 누락되었습니다.');
+        }
+
+        // 2) 사용자가 결제창을 닫거나 취소 버튼 클릭한 경우
+        if (errorMsg === "결제를 취소하였습니다.") {
+          addToast("결제를 취소하였습니다.", "above-button");
+          router.push(`/order/checkout/subscription?subscribeId=${subscriptionId}`);
+          return;
         }
 
         const orderId = Number(orderIdStr);
@@ -103,12 +115,12 @@ console.log(impUid, impSuccess, merchantUid, orderIdStr, customerUid, amountStr,
           await failPayment(orderId);
           console.log('failPayment');
           
-          // router.push("/order/failed");
+          router.push("/order/failed");
         }
       } catch (error) {
         console.error("결제 처리 실패", error);
         setError(error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.");
-        // router.push("/order/failed");
+        router.push("/order/failed");
       } finally {
         setIsProcessing(false);
       }
@@ -120,21 +132,8 @@ console.log(impUid, impSuccess, merchantUid, orderIdStr, customerUid, amountStr,
   if (isProcessing) {
     return (
       <div>
-        <DefaultText type="body2" style={{ marginTop: '16px' }}>
+        <DefaultText type="body2">
           결제를 처리 중입니다...
-        </DefaultText>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div>
-        <DefaultText type="title4" color="red">
-          결제 처리 중 오류가 발생했습니다.
-        </DefaultText>
-        <DefaultText type="body2" style={{ marginTop: '8px' }}>
-          {error}
         </DefaultText>
       </div>
     );

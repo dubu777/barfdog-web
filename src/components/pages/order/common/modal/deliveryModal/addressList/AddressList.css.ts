@@ -5,7 +5,7 @@ export const deliveryModalWrapper = style({
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
-  padding: "70px 20px 40px 20px",
+  padding: "20px 20px 40px 20px",
 });
 
 

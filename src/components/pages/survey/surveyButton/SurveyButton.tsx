@@ -4,7 +4,6 @@ import CheckedRadio from "public/images/option/checked_radio.svg";
 import UnCheckedRadio from "public/images/option/unchecked_radio.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { colStartWrapper } from "../../order/common/deliveryAddress/DeliveryAddress.css";
 
 interface SurveyButtonProps<T> {
   label: string;

@@ -1,7 +1,7 @@
 import * as styles from "./DeliveryModal.css";
 import { useMemo, useState } from "react";
 import { ClientDeliveryDto } from "@/types";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import AddressList from "./addressList/AddressList";
 import { AddressResponse } from "@/types/delivery";
 import AddressForm from "./addressForm/AddressForm";
@@ -97,7 +97,7 @@ export default function DeliveryModal({
             exit={{ y: "100%" }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            <NewHeader {...headerProps} />
+            <Header {...headerProps} />
             {viewMode === "list" ? (
               <AddressList
                 addressData={addressData}

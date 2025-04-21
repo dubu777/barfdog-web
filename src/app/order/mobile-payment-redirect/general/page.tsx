@@ -6,6 +6,7 @@ import { useSuccessGeneralPayment } from '@/api/order/mutations/useSuccessGenera
 import { useFailGeneralPayment } from '@/api/order/mutations/useFailGeneralPayment';
 import DefaultText from '@/components/common/defaultText/DefaultText';
 import * as styles from '../MobilePaymentRedirect.css';
+import { useToastStore } from "@/store/useToastStore";
 
 export default function MobileGeneralPaymentRedirect() {
   const processedRef = useRef(false);
@@ -14,6 +15,7 @@ export default function MobileGeneralPaymentRedirect() {
   const searchParams = useSearchParams();
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const addToast = useToastStore((state) => state.addToast);
 
   const { mutateAsync: successPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failPayment } = useFailGeneralPayment();
@@ -28,6 +30,7 @@ export default function MobileGeneralPaymentRedirect() {
         const merchantUid = searchParams.get('merchantUid');
         const orderIdStr = searchParams.get('order_id');
         const discountRewardStr = searchParams.get('discount_reward');
+        const errorMsg = searchParams.get('error_msg') ?? "";
 
         if (!impUid || !impSuccess || !merchantUid || !orderIdStr || !discountRewardStr) {
           throw new Error("필수 결제 정보가 누락되었습니다.");
@@ -42,13 +45,23 @@ export default function MobileGeneralPaymentRedirect() {
             body: { impUid, merchantUid, discountReward },
           });
           router.push("/order/completed");
-        } else {
-          await failPayment(orderId);
-          router.push("/order/failed");
+          return;
+        } 
+        
+        // 2) 사용자가 결제창을 닫거나 취소 버튼 클릭한 경우
+        if (errorMsg === "결제를 취소하였습니다.") {
+          addToast("결제를 취소하였습니다.", "above-button");
+          router.push("/order/checkout/general");
+          return;
         }
-      } catch (error) {
-        console.error("모바일 결제 처리 실패", error);
-        setError(error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.");
+
+        // 3) 그 외 결제 실패
+        await failPayment(orderId);
+        console.error("모바일 결제 실패:", errorMsg);
+        router.push("/order/failed");
+      } catch (e) {
+        console.error("모바일 결제 처리 실패:", e);
+        setError(e instanceof Error ? e.message : "알 수 없는 오류가 발생했습니다.");
         router.push("/order/failed");
       } finally {
         setIsProcessing(false);
@@ -56,30 +69,18 @@ export default function MobileGeneralPaymentRedirect() {
     };
 
     processFinalPayment();
-  }, [searchParams, router, successPayment, failPayment]);
+  }, [searchParams, router, successPayment, failPayment, addToast]);
 
   if (isProcessing) {
     return (
       <div>
-        <DefaultText type="body2" style={{ marginTop: '16px' }}>
+        <DefaultText type="body2">
           결제를 처리 중입니다...
         </DefaultText>
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div>
-        <DefaultText type="title4" color="red">
-          결제 처리 중 오류가 발생했습니다.
-        </DefaultText>
-        <DefaultText type="body2" style={{ marginTop: '8px' }}>
-          {error}
-        </DefaultText>
-      </div>
-    );
-  }
 
   return null;
 }

@@ -7,7 +7,7 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <>
-      <Header type="backButtonOnly" />
+      <Header showBackButton />
       {children}
     </>
   );

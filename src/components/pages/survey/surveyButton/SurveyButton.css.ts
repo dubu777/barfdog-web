@@ -5,7 +5,6 @@ export const surveyButtonContainer = recipe({
   base: {
     display: "flex",
     gap: "12px",
-    padding: "20px 24px",
     alignItems: "center",
     borderRadius: "8px",
     width: "100%",
@@ -25,9 +24,11 @@ export const surveyButtonContainer = recipe({
     isNormal: {
       true: {
         justifyContent: "center",
+        padding: "20px 10px",
       },
       false: {
         justifyContent: "flex-start",
+        padding: "20px 24px",
       },
     }
   },

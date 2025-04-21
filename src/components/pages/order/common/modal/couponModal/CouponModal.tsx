@@ -1,6 +1,6 @@
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import * as styles from "./CouponModal.css";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
@@ -27,6 +27,7 @@ import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/modal/Modal";
 import { AnimatePresence, motion } from "framer-motion";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 interface CouponModalProps {
   orderType: OrderType;
@@ -69,7 +70,7 @@ export default function CouponModal({
   } = useModal();
 
   // 쿠폰 등록 input field 관리
-  const { control, handleSubmit, setValue } = useFormHandler(
+  const { control, handleSubmit, reset } = useFormHandler(
     couponSchema,
     couponDefaultValues,
     "onBlur"
@@ -122,11 +123,11 @@ export default function CouponModal({
         addToast("등록되지 않은 코드입니다", "above-button");
       },
     });
-    setValue("code", "");
+    reset();
   });
 
   const handleModalClose = () => {
-    setValue("code", "");
+    reset();
     setSelectedCoupon(null);
     onClose();
   };
@@ -145,8 +146,10 @@ export default function CouponModal({
   const handleApplyCoupon = () => {
     if (!selectedCoupon) {
       if (appliedCoupon) {
+        reset();
         cancelAppliedCoupon();
       }
+      reset();
       onClose();
       return;
     }
@@ -155,6 +158,7 @@ export default function CouponModal({
       onErrorModalToggle();
       return;
     }
+    reset();
     onClose();
   };
 
@@ -170,7 +174,12 @@ export default function CouponModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <ModalBackground isVisible={isOpen} onClose={handleModalClose} closeOnBackgroundClick={false} isDimmed={false}>
+        <ModalBackground
+          isVisible={isOpen}
+          onClose={handleModalClose}
+          closeOnBackgroundClick={false}
+          isDimmed={false}
+        >
           <motion.div
             className={styles.couponModalContainer}
             onClick={(e) => e.stopPropagation()}
@@ -179,7 +188,7 @@ export default function CouponModal({
             exit={{ y: "100%" }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
           >
-            <NewHeader
+            <Header
               centerTitle="쿠폰"
               showCloseButton
               onClose={handleModalClose}
@@ -191,11 +200,10 @@ export default function CouponModal({
                   <Controller
                     name="code"
                     control={control}
-                    render={({ field, fieldState: { error } }) => (
+                    render={({ field }) => (
                       <InputField
                         {...field}
                         placeholder={ORDER_MESSAGE.COUPON_PLACEHOLDER}
-                        error={error?.message}
                       />
                     )}
                   />
@@ -236,17 +244,16 @@ export default function CouponModal({
               onConfirm={handleConfirmCoupon}
               onCancel={handleCancelCoupon}
             />
-            <FooterButton
-              isDisabled={false}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleApplyCoupon();
-              }}
-            >
-              {selectedCoupon
-                ? `${formatNumberWithCommas(discountOnCoupon)}원 사용하기`
-                : "사용 취소하기"}
-            </FooterButton>
+            <ButtonDocked
+              type="full-button"
+              primaryButtonLabel={
+                selectedCoupon
+                  ? `${formatNumberWithCommas(discountOnCoupon)}원 사용하기`
+                  : "사용 취소하기"
+              }
+              onPrimaryClick={handleApplyCoupon}
+              primaryButtonSize="lg"
+            />
           </motion.div>
         </ModalBackground>
       )}

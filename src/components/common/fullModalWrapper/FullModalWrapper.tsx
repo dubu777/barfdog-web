@@ -2,7 +2,7 @@ import * as styles from './FullModalWrapper.css';
 import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 
 interface FullModalWrapperProps {
 	isVisible: boolean;
@@ -31,7 +31,7 @@ const FullModalWrapper = ({
 					>
 						{headerTitle ? (
 							<>
-								<NewHeader
+								<Header
 									centerTitle={headerTitle}
 									showCloseButton
 									onClose={handleClose}

@@ -1,5 +1,4 @@
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
-import Header from "@/components/layout/header/Header";
 import {
   dehydrate,
   HydrationBoundary,
@@ -10,6 +9,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import * as styles from "../../../components/pages/survey/surveyPageContainer/Survey.css";
 import SurveyResult from "@/components/pages/result/surveyResult/SurveyResult";
 import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
+import Header from "@/components/layout/header/Header";
 
 
 export default async function ResultPage({
@@ -27,7 +27,7 @@ export default async function ResultPage({
 
   return (
     <div className={styles.subscribeShopContainer}>
-      <Header type="withBackButton" />
+      <Header showBackButton /> 
       <HydrationBoundary state={dehydrateState}>
         {/* 재시도 버튼 개발 예정 */}
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>

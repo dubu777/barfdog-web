@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import OrderNavigationGuard from "@/components/pages/order/common/orderNavigationGuard/OrderNavigationGuard";
+import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 
 interface OrderLayoutProps {
   children: ReactNode;
@@ -7,7 +7,14 @@ interface OrderLayoutProps {
 export default function OrderLayout({ children }: OrderLayoutProps) {
   return (
     <>
-      <OrderNavigationGuard>{children}</OrderNavigationGuard>
+      <NavigationGuard
+        modalTitle="주문 취소"
+        modalContent="주문을 취소하고 나가시겠어요?"
+        confirmText="네"
+        cancelText="아니요"
+      >
+        {children}
+      </NavigationGuard>
     </>
   );
 }

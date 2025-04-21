@@ -4,7 +4,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useBackNavigation } from "@/utils";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 
 const Membership = () => {
 	const goBack = useBackNavigation();
@@ -12,7 +12,7 @@ const Membership = () => {
 	return (
 		<section className={styles.membershipContainer}>
 			<div className={styles.membershipHeader}>
-				<NewHeader
+				<Header
 					showCloseButton
 					onClose={goBack}
 					centerTitle="멤버십 등급 안내"

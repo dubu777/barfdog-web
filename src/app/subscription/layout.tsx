@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 
 interface SubscriptionLayoutProps { 
   children: ReactNode
@@ -7,7 +7,7 @@ interface SubscriptionLayoutProps {
 export default function SubscriptionLayout({children}: SubscriptionLayoutProps) {
   return (
     <>
-      <NewHeader
+      <Header
         showBackButton
       />
       {children}

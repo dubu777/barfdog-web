@@ -37,7 +37,7 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
               variant="outlined"
               color="gray700"
               size="sm"
-              borderRadius="full"
+              borderRadius="lg"
             >
               기본 배송지
             </Chips>
