@@ -16,7 +16,7 @@ export async function prefetchGetAddressList(queryClient: QueryClient) {
           Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`
         } : {}
       });
-      return data._embedded.addressResponseDtoList;
+      return data?._embedded?.addressResponseDtoList || [];
     }
   });
 }

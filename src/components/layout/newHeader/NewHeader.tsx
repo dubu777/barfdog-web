@@ -13,6 +13,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect } from "react";
 import { getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
+import { useCartStore } from "@/store/useCartStore";
 
 interface NewHeaderProps {
   leftElement?: React.ReactNode;
@@ -45,12 +46,13 @@ export default function NewHeader({
 }: NewHeaderProps) {
   const clientLoggedIn = useAuthStore((state) => state.clientLoggedIn);
   const setClientLoggedIn = useAuthStore((state) => state.setClientLoggedIn);
-  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)
+  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
   useEffect(() => {
     setClientLoggedIn(isAuthenticated(token));
   }, [setClientLoggedIn]);
 
   const mypageHref = clientLoggedIn ? "/mypage" : "/login";
+  const { count } = useCartStore();
 
   return (
     <header className={styles.headerContainer} style={style}>
@@ -74,7 +76,10 @@ export default function NewHeader({
       <div className={styles.rightSlot}>
         {rightElement}
         {showCartButton && (
-          <Link href="/cart">
+          <Link href="/cart" className={styles.cartButton}>
+            {count !== 0 && (
+              <DefaultText type='caption' color='white' className={styles.cartCount}>{count}</DefaultText>
+            )}
             <SvgIcon src={CartIcon} size={24} color="gray900" />
           </Link>
         )}

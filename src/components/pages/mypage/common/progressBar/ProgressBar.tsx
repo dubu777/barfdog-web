@@ -9,7 +9,6 @@ interface ProgressBarProps {
 	className?: string;
 }
 const ProgressBar = ({ progress, label, className }: ProgressBarProps) => {
-	console.log('label', label)
 	return (
 		<div className={`${styles.progressBarContainer} ${className || ''}`}>
 			<div

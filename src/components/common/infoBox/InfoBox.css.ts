@@ -10,12 +10,14 @@ export const infoBoxBase = style({
 })
 
 export const infoBoxStyle = style({
+	width: '100%',
 	display: 'flex',
 	alignItems: "center",
 	gap: '8px'
 })
 
 export const infoTextStyle = style({
+	width: '100%',
 	whiteSpace: 'pre-line',
 })
 

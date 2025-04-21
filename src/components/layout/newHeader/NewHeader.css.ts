@@ -45,3 +45,19 @@ export const rightSlot = style({
   alignItems: "center",
   gap: "28px",
 });
+
+export const cartButton = style({
+  position: 'relative',
+})
+
+export const cartCount = style({
+  position: 'absolute',
+  width: '16px',
+  height: '16px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  top: -5,
+  right: -6,
+  background: `url('/images/icons/cartCircle.png') no-repeat center center / 16px 16px`,
+})

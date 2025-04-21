@@ -73,3 +73,9 @@ export const membershipDescription = style({
 	flexDirection: 'column',
 	gap: '8px',
 })
+
+export const membershipNotice = style({
+	display: 'flex',
+	alignItems: 'flex-start',
+	gap: '8px',
+})

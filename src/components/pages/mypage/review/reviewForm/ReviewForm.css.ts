@@ -66,5 +66,5 @@ export const bottomSheetInfoDetail = style({
 })
 
 export const bottomSheetSubDetail = style({
-  marginLeft: '8px',
+  marginLeft: '14px',
 })

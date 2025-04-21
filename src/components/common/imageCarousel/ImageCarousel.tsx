@@ -1,8 +1,11 @@
-import { previewImage, previewSlide, previewSlider, removeButton } from "./ImageCarousel.css";
+import {previewImage, previewSlide, previewSlider, removeButton, thumbnail} from "./ImageCarousel.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Image from "next/image";
-import CloseButton from '/public/images/icons/close-black.png';
+import CloseButton from '/public/images/icons/close-circle-fill.svg';
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import {themeVars} from "@/styles/theme.css";
 
 interface InitialImages {
 	id?: number;
@@ -15,7 +18,7 @@ interface ImageCarouselProps {
 	width?: number;
 	height?: number;
 	handleRemoveFile?: (filename: string, id: number | undefined) => void;
-	handleImageModalClick?: () => void;
+	handleShowImageList?: (id: number) => void;
 }
 
 export default function ImageCarousel({
@@ -23,14 +26,13 @@ export default function ImageCarousel({
 	width = 100,
 	height = 100,
 	handleRemoveFile,
-	handleImageModalClick,
+	handleShowImageList,
 }: ImageCarouselProps) {
 	return (
 		<Swiper
 			slidesPerView='auto'
 			spaceBetween={4}
 			className={previewSlider}
-			onClick={handleImageModalClick || undefined}
 		>
 			<ul>
 				{imageList.map((preview, index) => {
@@ -39,7 +41,9 @@ export default function ImageCarousel({
 								key={preview.id ? `image-${preview.id}` : `image-${preview.filename}-${index}`}
 								className={previewSlide}
 								style={{ width: width, height: height, cursor: handleRemoveFile ? 'grabbing' : 'default' }}
-							>
+								onClick={() => handleShowImageList(preview.id) || undefined}
+						>
+								{index === 0 && <DefaultText type='caption' color='white' className={thumbnail}>대표</DefaultText>}
 								<li>
 									<Image
 										src={preview.url}
@@ -50,7 +54,7 @@ export default function ImageCarousel({
 									/>
 									{handleRemoveFile &&
 										<button type='button' onClick={() => handleRemoveFile(preview.filename, preview.id)} className={removeButton}>
-											<Image src={CloseButton} alt='close button' width={8} height={8} />
+											<SvgIcon src={CloseButton} size={20} color='gray500' />
 										</button>
 									}
 							</li>

@@ -13,7 +13,7 @@ export {
 const getAddressList = async (): Promise<AddressResponse[]> => {
   const { data } = await axiosInstance.get("/api/address");
 
-  return data._embedded.addressResponseDtoList;
+  return data?._embedded?.addressResponseDtoList || [];
 };
 
 
