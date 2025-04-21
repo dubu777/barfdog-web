@@ -26,7 +26,6 @@ export type {
   OrderTypeKey,
   SuccessGeneralPaymentRequest,
   SuccessGeneralOrderResponse,
-  OrderMessage,
   PaymentMethodInfo,
   BundleDeliveryAddress,
   DefaultAddress,
@@ -106,7 +105,7 @@ interface SaveGeneralOrderRequest {
 interface OrderItemDto {
   itemId: number; // 상품 ID
   amount: number; // 상품 수량
-  optionDtoList: SelectOptionDto[]; // 상품 옵션 목록
+  selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
 }
 
 // 상품 옵션 정보 타입
@@ -216,11 +215,15 @@ interface OrderItem {
 
 
 interface SubscriptionOrderSheetResponse {
-  defaultAddress: DefaultAddress;
+  autoUseReward: boolean;
+  defaultAddress: DefaultAddress; 
+  deliveryDate: string; // 현재 결제 건 배송 예정일
+  discountSubscribeAlliance: number;
   email: string;
   grade: string;
   gradeDiscountPercent: number;
-  nextDeliveryDate: string;
+  newSubscribe: boolean; // 첫 구독 여부
+  nextDeliveryDate: string; // 다음 배송 예정일
   recipeNameList: string[];
   reward: number;
   subscribeDto: SubscribeDto;
@@ -403,5 +406,3 @@ type OrderDetailType = 'general' | 'subscribe';
 type OrderType = "SUBSCRIBE" | "GENERAL";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
-
-type OrderMessage = "REWARD_AUTO_APPLY" | "AGREE_PRIVACY" | "BROCHURE" | "CONFIRM" | "AGREE_SUBSCRIPTION" | "BUNDLE_DELIVERY_TITLE" | "BUNDLE_DELIVERY_SUBTITLE" | "BUNDLE_DELIVERY_UNAVAILABLE_TITLE" | "BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE" | "NO_AVAILABLE_COUPONS" | "COUPON_PLACEHOLDER"

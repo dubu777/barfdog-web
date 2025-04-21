@@ -89,6 +89,10 @@ export const rightButtonsStyle = style({
   display: 'flex',
   gap: '12px',
 })
+export const unitStyle = style({
+  display: 'flex',
+  gap: '12px',
+})
 
 export const baseButtonStyle = style({
   width: '24px',

@@ -2,37 +2,38 @@ import * as yup from "yup";
 
 export const surveyStepsSchema = yup.object({
   step1: yup.object({
+    gender: yup.string().required("성별을 선택해주세요"),
     name: yup
       .string()
       .trim()
       .min(1, "이름은 최소 1자 이상이어야 합니다.")
       .required("이름을 입력해주세요"),
-  }),
-  step2: yup.object({
-    gender: yup.string().required("성별을 선택해주세요"),
-  }),
-  step3: yup.object({
-    neutralization: yup
+    nameVerified: yup.boolean().oneOf([true], "이름 중복체크를 해주세요."),
+    isNeutered: yup
       .boolean()
       .nullable()
       .test(
         "not-null",
-        "중성화 여부를 선택해주세요",
-        (value) => value !== null
+        "중성화 여부를 선택해주세요.",
+        (value): value is boolean => value !== null
       ),
   }),
-  step4: yup.object({
-    dogSize: yup.string().required("견종 크기를 선택해주세요."),
-    dogType: yup.string().required("견종을 선택해주세요."),
-  }),
-  step5: yup.object({
-    birth: yup
+  step2: yup.object({
+    birthDate: yup
       .string()
-      .matches(/^\d{6}$/, "생년월일을 모두 입력해주세요.")
+      .matches(/^\d{4}-\d{2}-\d{2}$/, "생년월일을 모두 입력해주세요.")
       .required("출생일은 필수입니다."),
-    oldDog: yup.boolean().required("노령견 여부를 선택해주세요."),
+    isSenior: yup
+      .boolean()
+      .nullable()
+      .test(
+        "not-null",
+        "노령견 여부를 선택해주세요.",
+        (value): value is boolean => value !== null
+      ),
   }),
-  step6: yup.object({
+  step3: yup.object({
+    dogSize: yup.string().required("견종 크기를 선택해주세요."),
     weight: yup
       .string()
       .matches(/^\d+(\.\d+)?$/, "숫자만 입력해 주세요.")
@@ -40,76 +41,70 @@ export const surveyStepsSchema = yup.object({
         /^\d+(?:\.\d{0,1})?$/,
         "몸무게는 소숫점 첫째 자리까지 입력할 수 있습니다."
       )
+      .test(
+        "min-weight",
+        "바프독 맞춤 식단은 0.8kg 이상의 반려견에게 급여가 가능해요",
+        (value) => {
+          if (!value) return false;
+          const parsed = parseFloat(value);
+          return parsed >= 0.8;
+        }
+      )
       .required("몸무게를 입력해주세요."),
   }),
+  step4: yup.object({
+    dogType: yup.string().required("견종을 선택해주세요."),
+  }),
+  step5: yup.object({
+    pregnancy: yup.string().required("임신여부를 선택해주세요."),
+  }),
+  step6: yup.object({
+    lactation: yup.string().required("수유여부를 선택해주세요."),
+  }),
   step7: yup.object({
-    dogStatus: yup.string().required("현재 상태를 선택해주세요."),
-    specificDogStatus: yup.string().defined(),
-    specificDogStatusEtc: yup
-      .string().defined(),
-    expectedPregnancyDay: yup.string().defined(),
+    bodyCondition: yup.string().required("체형을 선택해주세요."),
   }),
   step8: yup.object({
     activityLevel: yup.string().required("활동량을 선택해주세요."),
   }),
   step9: yup.object({
-    walkingCountPerWeek: yup
-      .string()
-      .required("주 평균 산책 횟수를 입력해주세요."),
-    walkingTimePerOneTime: yup
-      .string()
-      .required("1회 산책 시간을 입력해주세요."),
+    snackFrequency: yup.string().required("간식량을 선택해주세요."),
   }),
   step10: yup.object({
-    snackCountLevel: yup.string().required("간식량을 선택해주세요."),
-  }),
-  step11: yup.object({
-    waterCountLevel: yup.string().required("음수량을 선택해주세요."),
-  }),
-  step12: yup.object({
-    supplement: yup
-      .array()
-      .of(yup.string().defined())
-      .min(1, "영양제 선택은 필수입니다.")
-      .required(),
-    supplementEtc: yup.string().defined(),
-  }),
-  step13: yup.object({
-    // 다중 선택: 배열로 입력되며 최소 1개 선택해야 함
     inedibleFood: yup
       .array()
       .of(yup.string().defined())
       .min(1, "못 먹는 재료를 선택해주세요.")
       .required(),
-    inedibleFoodEtc: yup.string().defined(),
+  }),
+  step11: yup.object({
+    healthConcerns: yup
+      .array()
+      .of(yup.string().defined())
+      .min(3, "고민 항목을 선택해주세요.")
+      .required(),
+  }),
+  step12: yup.object({
+    currentMeal: yup
+      .array()
+      .of(yup.string().defined())
+      .min(1, "사료를 선택해주세요.")
+      .required(),
+  }),
+  step13: yup.object({
+    supplement: yup
+      .array()
+      .of(yup.string().defined())
+      .min(1, "영양제를 선택해주세요.")
+      .required(),
   }),
   step14: yup.object({
-    currentMeal: yup.string().required("현재 식사를 선택해주세요."),
-  }),
-  step15: yup.object({
     // 다중 선택: 배열로 입력되며 최소 1개 선택해야 함
-    caution: yup
+    healthIssues: yup
       .array()
       .of(yup.string().defined())
-      .min(1, "건강적 특이사항을 선택해주세요.").required(),
-    cautionEtc: yup.string().defined(),
-  }),
-  step16: yup.object({
-    newToRawDiet: yup
-      .boolean()
-      .nullable()
-      .test(
-        "not-null",
-        "생식 급여 여부를 입력해주세요",
-        (value) => value !== null
-      ),
-  }),
-  step17: yup.object({
-    // 다중 선택: 배열로 입력되며 최소 1개 선택해야 함
-    priorityConcerns: yup
-      .array()
-      .of(yup.string().defined())
-      .min(3, "우선 고민 항목을 선택해주세요.").required(),
+      .min(1, "건강적 특이사항을 선택해주세요.")
+      .required(),
   }),
 });
 
@@ -117,26 +112,20 @@ export type SurveyStepValues = yup.InferType<typeof surveyStepsSchema>;
 export type SurveyStepKeys = keyof SurveyStepValues;
 
 export const defaultStepValues: SurveyStepValues = {
-  step1: { name: "" },
-  step2: { gender: "" },
-  step3: { neutralization: null },
-  step4: { dogSize: "", dogType: "" },
-  step5: { birth: "", oldDog: false },
-  step6: { weight: "" },
+  step1: { gender: "", name: "", nameVerified: false, isNeutered: null },
+  step2: { birthDate: "", isSenior: null },
+  step3: { dogSize: "", weight: "" },
+  step4: { dogType: "" },
+  step5: { pregnancy: "" },
+  step6: { lactation: "" },
   step7: {
-    dogStatus: "",
-    specificDogStatus: "",
-    specificDogStatusEtc: "",
-    expectedPregnancyDay: "",
+    bodyCondition: "",
   },
   step8: { activityLevel: "" },
-  step9: { walkingCountPerWeek: "", walkingTimePerOneTime: "" },
-  step10: { snackCountLevel: "" },
-  step11: { waterCountLevel: "" },
-  step12: { supplement: [], supplementEtc: "" },
-  step13: { inedibleFood: [], inedibleFoodEtc: "" },
-  step14: { currentMeal: "" },
-  step15: { caution: [], cautionEtc: "" },
-  step16: { newToRawDiet: null },
-  step17: { priorityConcerns: [] },
+  step9: { snackFrequency: "" },
+  step10: { inedibleFood: [] },
+  step11: { healthConcerns: [] },
+  step12: { currentMeal: [] },
+  step13: { supplement: [] },
+  step14: { healthIssues: [] },
 };

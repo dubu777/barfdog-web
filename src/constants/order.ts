@@ -1,5 +1,4 @@
 import {
-  OrderMessage,
   OrderType,
   OrderTypeKey,
   PaymentMethod,
@@ -43,7 +42,7 @@ const ORDER_TYPE: Record<OrderTypeKey, OrderType> = {
   SUBSCRIPTION: "SUBSCRIBE",
 } as const;
 
-const ORDER_MESSAGE: Record<OrderMessage, string> = {
+const ORDER_MESSAGE: Record<string, string> = {
   REWARD_AUTO_APPLY: "정기 결제일에 적립금 자동 사용",
   AGREE_PRIVACY: "개인 정보 수집 이용 동의",
   AGREE_SUBSCRIPTION: "구독 상품 정기결제 동의",
@@ -55,6 +54,8 @@ const ORDER_MESSAGE: Record<OrderMessage, string> = {
   BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE: "배송 예정일 당일에는 묶음 배송 신청이 불가능해요.",
   NO_AVAILABLE_COUPONS: "사용가능한 쿠폰이 없어요",
   COUPON_PLACEHOLDER: "쿠폰 번호를 입력하세요",
+  REWARD_AUTO_APPLY_NOTICE_1: "・ 다음 회차의 정기 결제일마다 적립금이 자동으로 적용돼요.",
+  REWARD_AUTO_APPLY_NOTICE_2: "・ 해당 설정은 ‘마이 > 자동 적립금 관리’에서 변경하실 수 있어요.",
 } as const;
 
 const SUBSCRIPTION_NOTICE = {

@@ -23,6 +23,7 @@ import {
   rightButtonsStyle,
   searchButtonStyle,
   labelStyle,
+  unitStyle,
 } from "./InputField.css";
 
 import SearchIcon from "/public/images/icons/search.svg";
@@ -51,11 +52,14 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onBlur?: (e: ChangeEvent) => void;
   onReset?: () => void;
   onSubmit?: () => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
   label?: string;
+  labelColor?: "gray700" | "gray800";
   labelPosition?: "top" | "left";
   isRequired?: boolean;
   isReadOnly?: boolean;
+  unit?: string;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -76,11 +80,14 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       searchButton = false,
       onReset,
       onSubmit,
+      onKeyDown,
       // icon = null,
       className,
       label,
       isRequired,
       isReadOnly,
+      labelColor = "gray700",
+      unit,
       ...props
     },
     ref
@@ -104,14 +111,15 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       }
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>,) => {
-        if (e.key === 'Enter' && onSubmit) {
-          // enter onSubmit event 적용
-          e.preventDefault();
-          onSubmit();
-        }
-    }
-
+    const handleInternalKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (onKeyDown) {
+        onKeyDown(e);
+      }
+      if (e.key === 'Enter' && onSubmit) {
+        e.preventDefault();
+        onSubmit();
+      }
+    };
     const handleReset = (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       if(onReset) {
@@ -133,7 +141,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       >
         {/* label 유무에 따라 상단 노출 */}
         {label &&
-          <DefaultText type='label4' color='gray600' className={labelStyle}>
+          <DefaultText type='label4' color={labelColor} className={labelStyle}>
             {label} {isRequired && <span className={pointColor}>*</span>}
           </DefaultText>
         }
@@ -163,8 +171,13 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                   onBlur?.(e);
                 }
               }}
-              onKeyDown={handleKeyDown}
+              onKeyDown={handleInternalKeyDown}
             />
+              {unit && (
+              <DefaultText type="headline3" color="gray900" className={unitStyle}>
+                {unit}
+              </DefaultText>
+            )}
             <div className={rightButtonsStyle}>
               {/* 비밀번호 숨김 토글 기능 */}
               {masking && maskingButton && (

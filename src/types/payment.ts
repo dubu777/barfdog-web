@@ -164,6 +164,7 @@ interface PaymentRequestParams<T extends OrderType> {
 
 interface CreateIamportSubscriptionPaymentRequest {
   customer_uid: string;
+  merchant_uid?: string | null;
   memberCouponId?: number | null;
   amount: number;
   name: string;
@@ -176,7 +177,7 @@ interface CreateIamportSubscriptionPaymentRequest {
 
 interface GeneralPaymentDataParams {
   requestBody: SaveGeneralOrderRequest;
-  id: number;
+  orderId: number;
   merchantUid: string;
   generalOrderSheetData: GeneralOrderSheetResponse;
   isMobileDevice: boolean;
@@ -186,6 +187,8 @@ interface SubscriptionPaymentDataParams {
   requestBody: SaveSubscriptionOrderRequest;
   subscriptionOrderSheetData: SubscriptionOrderSheetResponse;
   isMobileDevice: boolean;
+  orderId: number;
+  merchantUid: string;
 }
 
 

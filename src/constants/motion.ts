@@ -2,18 +2,18 @@
 export const MOTION = {
   SURVEY_STEP: {
     hiddenLeft: {
-      x: -100,
+      x: -15,
       opacity: 0,
     },
     hiddenRight: {
-      x: 100,
+      x: 15,
       opacity: 0,
     },
     visible: {
       x: 0,
       opacity: 1,
       transition: {
-        duration: 0.25,
+        duration: 0.2,
         ease: "easeInOut",
       },
     },

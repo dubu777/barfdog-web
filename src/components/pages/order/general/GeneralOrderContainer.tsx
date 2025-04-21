@@ -61,7 +61,7 @@ export default function GeneralOrderContainer() {
   // 서버 호출 react query -------->
   const { mutateAsync: getGeneralOrderMutate } = useGetGeneralOrder();
 
-  const { control, watch, errors, setValue } = useOrderForm<OrderFormValues>(
+  const { control, setValue } = useOrderForm<OrderFormValues>(
     getOrderSchema(maxAvailableReward),
     defaultOrderValues
   );
@@ -79,7 +79,6 @@ export default function GeneralOrderContainer() {
     }
   }, [orderItemDtoList]);
 
-
   const handlePaymentSubmit = async () => {
     if (!agreePrivacy) {
       setShowTermsErrors(true);
@@ -88,15 +87,16 @@ export default function GeneralOrderContainer() {
       return;
     }
 
-    try {
-      const requestBody = getRequestBody(
-        ORDER_TYPE.GENERAL
-      ) as SaveGeneralOrderRequest;
-      console.log('requestBody', requestBody);
-      // await processPayment(requestBody);
-    } catch (error) {
-      console.error('결제 처리 중 오류 발생:', error);
+    // 결제 요청 시 네비게이션 가드를 비활성화
+    if ((window as any).__disableNavigationGuard) {
+      (window as any).__disableNavigationGuard();
     }
+    
+    const requestBody = getRequestBody(
+      ORDER_TYPE.GENERAL
+    ) as SaveGeneralOrderRequest;
+    console.log("requestBody", requestBody);
+    // await processPayment(requestBody);
   };
   return (
     <div>
@@ -149,9 +149,6 @@ export default function GeneralOrderContainer() {
           ? "결제 처리 중..."
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
-      {/* <FooterButton isDisabled={false} onClick={handleTest}>
-        {formatNumberWithCommas(paymentPrice)}원 결제테스트
-      </FooterButton> */}
     </div>
   );
 }

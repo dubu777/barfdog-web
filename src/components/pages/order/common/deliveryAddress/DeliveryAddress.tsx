@@ -26,7 +26,6 @@ export default function DeliveryAddress({}: DeliveryAddressProps) {
       subTitleType="headline4"
       showArrowIcon
       onSubtitleClick={onToggle}
-      subTitleIsButton
     >
       <div className={styles.colStartWrapper({ gap: 16 })}>
         <div className={styles.rowStartWrapper({ gap: 8 })}>

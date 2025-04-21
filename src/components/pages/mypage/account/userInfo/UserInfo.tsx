@@ -6,7 +6,6 @@ import { Controller } from "react-hook-form";
 import ProfileCircle from '/public/images/myPage/profile_circle.svg';
 import InputField from "@/components/common/inputField/InputField";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import DatePicker from "@/components/common/datePicker/DatePicker";
 import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
 import useDeviceState from "@/hooks/useDeviceState";
 import DefaultRadio from "@/components/common/defaultRadio/DefaultRadio";
@@ -20,6 +19,7 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { defaultUpdateUserInfoValues, updateUserInfoSchema } from "@/utils/validation/authValidation";
 import { formatDate, formatPhoneNumber } from "@/utils";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import CustomDatePicker from '@/components/common/datePicker/CustomDatePicker';
 
 const UserInfo = () => {
 	const { data: userInfo } = useGetUserInfo();
@@ -260,7 +260,7 @@ const UserInfo = () => {
 								label='생년월일'
 								isRequired
 							/>
-							: <DatePicker
+							: <CustomDatePicker
 								name='birthday'
 								value={formatDate(field.value, 'onlyDateDot')}
 								onChange={(date) => {

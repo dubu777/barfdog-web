@@ -112,3 +112,72 @@ globalStyle(`${sanitizedHTML} h2`, {
 globalStyle(`${sanitizedHTML} b, strong`, {
   fontWeight: themeVars.fontWeight.bold,
 });
+
+
+export const commonWrapper = recipe({
+  base: {
+    display: "flex",
+    width: "100%",
+  },
+  variants: {
+    gap: {
+      0: {
+        gap: "0",
+      },
+      2: {
+        gap: "2px"
+      },
+      4: {
+        gap: "4px"
+      },
+      8: {
+        gap: "8px"
+      },
+      12: {
+        gap: "12px"
+      },
+      16: {
+        gap: "16px"
+      },
+      20: {
+        gap: "20px"
+      },
+    },
+    direction: {
+      col: {
+        flexDirection: "column",
+      },
+      row: {
+        flexDirection: "row",
+      },
+    },
+    justify: {
+      center: {
+        justifyContent: "center",
+      },
+      start: {
+        justifyContent: "flex-start",
+      },
+      between: {
+        justifyContent: "space-between",
+      },
+    },
+    align: {
+      center: {
+        alignItems: "center",
+      },
+      start: {
+        alignItems: "flex-start", 
+      },
+      between: {
+        alignItems: "space-between",
+      },
+    },
+  },
+  defaultVariants: {
+    gap: 0,
+    direction: "row",
+    justify: "center",
+    align: "center",
+  },
+});

@@ -61,7 +61,8 @@ export default function OrderSummary({
       isBundleDelivery,
       userTotalReward,
       appliedReward,
-      orderPrice: appliedDefaultDiscountPrice,
+      originPrice,
+      appliedDefaultDiscountPrice,
       freeCondition,
       deliveryPrice,
       orderItemDtoList,
@@ -149,7 +150,7 @@ export default function OrderSummary({
               <SvgIcon src={HelpIcon} color="gray700" onClick={() => onToggle()} />
             </div>
             <DefaultText type="headline2" color="gray700">
-              {formatNumberWithCommas(7777)}원
+              {formatNumberWithCommas(appliedDefaultDiscountPrice)}원
             </DefaultText>
           </div>
         </div>

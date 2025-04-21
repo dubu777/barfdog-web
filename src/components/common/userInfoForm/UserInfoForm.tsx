@@ -5,7 +5,7 @@ import Text from "@/components/common/text/Text";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import DefaultRadio from "@/components/common/defaultRadio/DefaultRadio";
 import SearchAddress from "@/components/common/searchAddress/SearchAddress";
-import DatePicker from "@/components/common/datePicker/DatePicker";
+import DatePicker from "@/components/common/datePicker/CustomDatePicker";
 import {
 	Control,
 	Controller,

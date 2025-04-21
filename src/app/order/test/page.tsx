@@ -17,6 +17,7 @@ import DeliveryScheduleBottomSheet from "@/components/pages/order/common/bottomS
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import SurveyResultLoading from "@/components/pages/survey/surveyResultLoading/SurveyResultLoading";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -33,18 +34,11 @@ export default function GeneralShopTest() {
     {
       itemId: 10,
       amount: 1,
-      optionDtoList: [
+      selectOptionDtoList: [
         // { itemOptionId: 18, amount: 1 },
         // { itemOptionId: 19, amount: 1 },
       ],
     },
-    // {
-    //   itemDto: {
-    //     itemId: 9,
-    //     amount: 1,
-    //   },
-    //   itemOptionDtoList: [{ itemOptionId: 19, amount: 1 }],
-    // },
   ];
 
   const generalPaymentTest = () => {
@@ -159,9 +153,6 @@ export default function GeneralShopTest() {
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
       <Button onClick={handleLogin}>로그인</Button>
-      {/* <Button onClick={handleRefresh}>재발급 테스트</Button>
-      <Button onClick={handleBottomSheet}>Bottom Sheet 테스트</Button>
-      <Button onClick={handleModal}>Modal 테스트</Button> */}
       <Modal
         title="모달 테스트"
         content="모달 테스트 중입니다"
@@ -169,17 +160,6 @@ export default function GeneralShopTest() {
         onClose={onModalClose}
         confirmText="확인"
       />
-      <DeliveryScheduleBottomSheet
-        isOpen={isNextPaymentBottomSheetOpen}
-        onClose={onNextPaymentBottomSheetClose}
-        deliveryDate="2025-04-12"
-      />
-      {/* <DefaultText type="title4">안녕</DefaultText>
-      <DefaultText type="caption">안녕</DefaultText> */}
-      {/* <NextPaymentBottomSheet
-        isOpen={isNextPaymentBottomSheetOpen}
-        onClose={onNextPaymentBottomSheetClose}
-      /> */}
     </div>
   );
 }

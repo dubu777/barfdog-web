@@ -8,12 +8,8 @@ import MypageIcon from "/public/images/header/mypage.svg";
 import CartIcon from "/public/images/header/cart.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { isAuthenticated } from "@/utils/auth/isAuthenticated";
-import { useAuthStore } from "@/store/useAuthStore";
-import { useEffect } from "react";
-import { getCookie } from "@/utils/auth/cookie";
-import { AUTH_CONFIG } from "@/constants/auth";
 import { useCartStore } from "@/store/useCartStore";
+import { useRouter } from "next/navigation";
 
 interface NewHeaderProps {
   leftElement?: React.ReactNode;
@@ -28,6 +24,8 @@ interface NewHeaderProps {
   showCloseButton?: boolean;
   showMypageButton?: boolean;
   showCartButton?: boolean;
+  leftSlotGap?: "lg" | "sm";
+  backgroundColor?: keyof typeof styles.backgroundColors;
 }
 
 export default function NewHeader({
@@ -43,27 +41,32 @@ export default function NewHeader({
   showCloseButton,
   showMypageButton,
   showCartButton,
+  backgroundColor = "white",
+  leftSlotGap = "lg",
 }: NewHeaderProps) {
-  const clientLoggedIn = useAuthStore((state) => state.clientLoggedIn);
-  const setClientLoggedIn = useAuthStore((state) => state.setClientLoggedIn);
-  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-  useEffect(() => {
-    setClientLoggedIn(isAuthenticated(token));
-  }, [setClientLoggedIn]);
-
-  const mypageHref = clientLoggedIn ? "/mypage" : "/login";
   const { count } = useCartStore();
+  const router = useRouter();
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      router.back();
+    }
+  };
+  const colorStyle = styles.backgroundColors[backgroundColor];
+  const leftSlotStyle = styles.leftSlotVariants[leftSlotGap];
 
   return (
     <header className={styles.headerContainer} style={style}>
-      <div className={styles.headerContent}>
-      <div className={styles.leftSlot}>
+      <div className={`${styles.headerContent} ${colorStyle}`}>
+      <div className={`${styles.leftSlot} ${leftSlotStyle}`}>
         {showBackButton && (
           <SvgIcon
             src={BackIcon}
             size={24}
             color="gray900"
-            onClick={onBack}
+            onClick={handleBack}
           />
         )}
         <DefaultText type="title4">{leftTitle}</DefaultText>
@@ -84,7 +87,7 @@ export default function NewHeader({
           </Link>
         )}
         {showMypageButton && (
-          <Link href={mypageHref}>
+          <Link href="/mypage">
             <SvgIcon src={MypageIcon} size={24} color="gray900" />
           </Link>
         )}

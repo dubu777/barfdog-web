@@ -2,6 +2,11 @@ import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
+
+export const mobileDatePickerContainer = style({
+	width: '100%',
+})
+
 export const mobileDatePickerStyle = style({
 	gap: '28px',
 	justifyContent: 'center',

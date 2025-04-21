@@ -1,14 +1,22 @@
 import { PAYMENT_METHOD, PG_CHANNEL_KEY } from "@/constants";
-import { GeneralIamportRequest, GeneralPaymentDataParams, SubscriptionIamportRequest, SubscriptionPaymentDataParams } from "@/types";
+import {
+  GeneralIamportRequest,
+  GeneralPaymentDataParams,
+  SubscriptionIamportRequest,
+  SubscriptionPaymentDataParams,
+} from "@/types";
 import { getPaymentDisplayAmount } from "@/utils/order/getPaymentDisplayAmount";
-import { getNaverPayGeneralPaymentParam, getNaverPaySubscriptionPaymentParam } from "@/utils/order/naverPayParams";
+import {
+  getNaverPayGeneralPaymentParam,
+  getNaverPaySubscriptionPaymentParam,
+} from "@/utils/order/naverPayParams";
 
 /**
  * 일반 결제 데이터 생성
  */
 export function buildGeneralPaymentRequest({
   requestBody,
-  id,
+  orderId,
   merchantUid,
   generalOrderSheetData,
   isMobileDevice,
@@ -30,7 +38,10 @@ export function buildGeneralPaymentRequest({
     buyer_tel: deliveryDto.phoneNumber ?? "",
     buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
     buyer_postcode: deliveryDto.zipcode ?? "",
-    m_redirect_url: `${window.location.origin}/order/loading/${id}`,
+    m_redirect_url: `${window.location.origin}/order/mobile-payment-redirect/general?` +
+    `order_id=${encodeURIComponent(orderId)}&` +
+    `merchantUid=${encodeURIComponent(merchantUid)}&` +
+    `discount_reward=${encodeURIComponent(requestBody.discountReward)}`
   };
 
   if (paymentMethod === "NAVER_PAY") {
@@ -52,13 +63,15 @@ export function buildGeneralPaymentRequest({
  */
 export function buildSubscriptionPaymentRequest({
   requestBody,
+  orderId,
   subscriptionOrderSheetData,
   isMobileDevice,
+  merchantUid,
 }: SubscriptionPaymentDataParams): SubscriptionIamportRequest {
   const { paymentMethod, paymentPrice, deliveryDto, customerUid } = requestBody;
-  const { email, subscribeDto, recipeNameList } =
-    subscriptionOrderSheetData;
+  const { email, subscribeDto, recipeNameList } = subscriptionOrderSheetData;
 
+  const itemName = recipeNameList.join(", ");
   const baseData = {
     channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentMethod],
     pay_method: PAYMENT_METHOD["CREDIT_CARD"],
@@ -68,20 +81,29 @@ export function buildSubscriptionPaymentRequest({
       paymentMethod: paymentMethod,
       originAmount: paymentPrice,
     }),
-    name: recipeNameList.join(", "),
+    name: itemName,
     buyer_email: email,
     buyer_name: deliveryDto.recipientName,
-    buyer_tel: deliveryDto.phoneNumber ?? "",
+    buyer_tel: deliveryDto.phoneNumber,
     buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
-    buyer_postcode: deliveryDto.zipcode ?? "",
-    m_redirect_url: `${window.location.origin}/order/loading/subscribe`,
-  };
-
+    buyer_postcode: deliveryDto.zipcode,
+    m_redirect_url: `${window.location.origin}/order/mobile-payment-redirect/subscription?` +
+    `order_id=${encodeURIComponent(orderId)}&` +
+    `customer_uid=${encodeURIComponent(customerUid)}&` +
+    `merchantUid=${encodeURIComponent(merchantUid)}&` +
+    `amount=${encodeURIComponent(paymentPrice)}&` +
+    `name=${encodeURIComponent(itemName)}&` +
+    `discount_reward=${encodeURIComponent(requestBody.discountReward)}&` +
+    `buyer_name=${encodeURIComponent(deliveryDto.recipientName)}&` +
+    `buyer_tel=${encodeURIComponent(deliveryDto.phoneNumber)}&` +
+    `buyer_email=${encodeURIComponent(email)}&` +
+    `buyer_addr=${encodeURIComponent(`${deliveryDto.street}, ${deliveryDto.detailAddress}`)}&` +
+    `buyer_postcode=${encodeURIComponent(deliveryDto.zipcode)}`
+  }
   if (paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({
       subscribeId: subscribeDto.id,
       isMobile: isMobileDevice,
-      
     });
 
     if (!naverPayData) throw new Error("네이버페이 구독 데이터 생성 실패");

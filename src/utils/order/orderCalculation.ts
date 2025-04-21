@@ -6,7 +6,8 @@ interface OrderCalculationProps {
   orderType: OrderType;
   userTotalReward: number;
   appliedReward: number;
-  orderPrice: number;
+  appliedDefaultDiscountPrice: number;
+  originPrice: number;
   freeCondition?: number;
   deliveryPrice?: number;
   discountGrade?: number;
@@ -18,7 +19,8 @@ interface OrderCalculationProps {
 
 export const orderCalculation = ({
   orderType,
-  orderPrice, // 원금
+  originPrice, // 원금
+  appliedDefaultDiscountPrice, // 일반 주문: (원금 - 상품 할인금액) , 구독 주문: (원금 - 플랜 할인금액)  => 이 가격에 쿠폰 및 등급할인을 적용한다.
   userTotalReward, // 보유 적립금
   appliedReward, // 적용한 적립금
   freeCondition, // 배송비 무료 적용되는 최소 금액
@@ -34,7 +36,7 @@ export const orderCalculation = ({
   const calculateDeliveryDiscount = (): number => {
     const isFreeDelivery =
       isBundleDelivery ||
-      (freeCondition && orderPrice >= freeCondition) ||
+      (freeCondition && (appliedDefaultDiscountPrice >= freeCondition)) ||
       !(orderItemDtoList?.some((item) => !item.deliveryFree) ?? false);
 
     return isFreeDelivery ? deliveryPrice ?? 0 : 0;
@@ -55,14 +57,14 @@ export const orderCalculation = ({
 
   const calculatePlanDiscount = (): number => {
     if (plan === "FULL") {
-      return Math.round(orderPrice * 0.05); // FULL 플랜 5% 할인
+      return Math.round(originPrice * 0.05); // FULL 플랜 5% 할인
     } else if (plan === "HALF") {
-      return Math.round(orderPrice * 0.03); // HALF 플랜 3% 할인
+      return Math.round(originPrice * 0.03); // HALF 플랜 3% 할인
     }
     return 0; // 플랜이 없거나 다른 값일 경우 할인 없음
   };
 
-  // 총 할인 금액 - 화면에 보여지는 총 할인 금액
+  // 총 할인 금액 - 화면에 보여지는 총 할인 금액(UI용)
   const calculateTotalDiscount = () => {
     const discountGrade = calculateGradeDiscount();
     const planDiscount = calculatePlanDiscount();
@@ -80,10 +82,10 @@ const calculateTotalDiscountWithoutPlan = (): number => {
 
   // 최종 결제 금액
   const calculateFinalPaymentAmount = () => {
-    const totalDiscount = calculateTotalDiscount();
+    const totalDiscount = calculateTotalDiscountWithoutPlan();
     const deliveryFee = calculateDeliveryFee();
     return Math.max(
-      orderPrice + deliveryFee - totalDiscount,
+      appliedDefaultDiscountPrice + deliveryFee - totalDiscount,
       IAMPORT_MIN_PAYMENT_PRICE
     );
   };
@@ -91,13 +93,12 @@ const calculateTotalDiscountWithoutPlan = (): number => {
 // 적용 가능한 최대 적립금 - 모두사용
 const calculateMaxAvailableReward = () => {
   const discountGrade = calculateGradeDiscount();
-  const planDiscount = calculatePlanDiscount();
   const deliveryFee = calculateDeliveryFee();
 
   // 배송비가 있으면 최소 결제 금액 제한 없음, 없으면 제한 적용
   const minPaymentThreshold = deliveryFee > 0 ? 0 : IAMPORT_MIN_PAYMENT_PRICE;
   const availableMaxReward =
-    orderPrice - discountCouponAmount - discountGrade - planDiscount - minPaymentThreshold;
+    appliedDefaultDiscountPrice - discountCouponAmount - discountGrade - minPaymentThreshold;
 
   return Math.min(availableMaxReward, userTotalReward);
 };
@@ -111,7 +112,7 @@ const calculateMaxAvailableCoupon = () => {
   // 배송비가 있으면 최소 결제 금액 제한 없음, 없으면 제한 적용
   const minPaymentThreshold = deliveryFee > 0 ? 0 : IAMPORT_MIN_PAYMENT_PRICE;
   const availableMaxCouponDiscount =
-  orderPrice - appliedReward - discountGrade - planDiscount - minPaymentThreshold;
+  appliedDefaultDiscountPrice - appliedReward - discountGrade - planDiscount - minPaymentThreshold;
 
   return Math.max(availableMaxCouponDiscount, 0);
 }

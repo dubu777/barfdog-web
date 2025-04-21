@@ -13,7 +13,7 @@ import {
   isToppingPlan,
 } from "@/utils/subscription/subscriptionUtils";
 import { subscribeText } from "../recipeSelection/RecipeSelection.css";
-import SelectBox from "@/components/pages/subscription/survey/selectBox/SelectBox";
+import SelectBox from "@/components/pages/survey/selectBox/SelectBox";
 
 interface SelectedProductInfoProps {
   subscribePriceData: CalculateSubscribePriceOutput;

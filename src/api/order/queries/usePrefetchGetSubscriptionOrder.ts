@@ -9,8 +9,6 @@ import { cookies } from "next/headers";
 export async function prefetchGetSubscriptionOrder(queryClient: QueryClient, subscribeId: number) {
   const cookieStore = cookies();
   const token = cookieStore.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
-  console.log('서버 사이드 토큰', token);
-
 
   await queryClient.prefetchQuery<SubscriptionOrderSheetResponse>({
     queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_SUBSCRIPTION_ORDER, subscribeId],

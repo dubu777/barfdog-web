@@ -7,6 +7,9 @@ import {
   chipsTailStyle,
   chipsTailPosition,
   chipVariantStyles,
+  chipsTailColor,
+  chipsTailSize,
+  chipsTailFixedFont,
 } from "./Chips.css";
 import { CHIPS_COLORS } from "@/constants/style";
 
@@ -28,7 +31,7 @@ export default function Chips({
   variant,
   children,
   size = "sm",
-  borderRadius = 'small',
+  borderRadius = 'sm',
   switchOff = false,
   color = "gray700",
   tailVisible = false,
@@ -37,7 +40,7 @@ export default function Chips({
   className,
 }: ChipsProps) {
   const colorStyle = color ? chipVariantStyles[variant as 'solid' | 'outlined'][color] : "";
-  
+
   return (
     <span
       className={`
@@ -47,11 +50,12 @@ export default function Chips({
       ${switchOff && chipsSwitchOff[variant] || ''}
       ${colorStyle}
       ${className || ''}
+      ${tailVisible ? chipsTailFixedFont : ''}
     `}
     style={style}
     >
       {tailVisible &&
-        <span className={`${chipsTailStyle} ${chipsTailPosition[tailPosition]}`} />
+        <span className={`${chipsTailStyle} ${chipsTailPosition[tailPosition]} ${chipsTailColor[color]} ${chipsTailSize[tailPosition][size]}`} />
       }
       {children}
     </span>

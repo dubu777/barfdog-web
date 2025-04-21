@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 
 export const headerContainer = style({
-  position: 'fixed',
+  position: 'sticky',
   top: 0,
   left: 0,
   right: 0,
@@ -21,7 +21,6 @@ export const headerContent = style({
   alignItems: "center",
   height: "100%",
   padding: "0 20px",
-  backgroundColor: themeVars.colors.gray.gray0,
 });
 
 export const centerSlot = style({
@@ -37,14 +36,23 @@ export const centerSlot = style({
 export const leftSlot = style({
   display: "flex",
   alignItems: "center",
-  gap: "28px",
 });
+
+export const leftSlotVariants = {
+  lg: style({ gap: "28px" }),
+  sm: style({ gap: "6px" }),
+};
 
 export const rightSlot = style({
   display: "flex",
   alignItems: "center",
   gap: "28px",
 });
+
+export const backgroundColors = {
+  white: style({ backgroundColor: themeVars.colors.gray.gray0 }),
+  gray50: style({ backgroundColor: themeVars.colors.gray.gray50 }),
+};
 
 export const cartButton = style({
   position: 'relative',

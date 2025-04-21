@@ -36,12 +36,12 @@ const InfoBox = ({
 }: InfoBoxProps) => {
 	const iconColor: keyof typeof COLORS =
   color === "gray"
-    ? "gray800"
+    ? "gray700"
     : color === "red"
     ? "pastelRed"
     : color === "blue"
     ? "blue500"
-    : "gray800";
+    : "gray700";
 
   return (
     <div
@@ -55,7 +55,7 @@ const InfoBox = ({
 			<SvgIcon src={type === 'help' ? HelpIcon : InfoIcon} color={iconColor} />
         <DefaultText
           type="label4"
-          color={color === "gray" ? "gray800" : color}
+          color={color === "gray" ? "gray700" : color}
           className={infoTextStyle}
         >
           {text}
