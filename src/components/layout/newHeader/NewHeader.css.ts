@@ -52,6 +52,7 @@ export const rightSlot = style({
 export const backgroundColors = {
   white: style({ backgroundColor: themeVars.colors.gray.gray0 }),
   gray50: style({ backgroundColor: themeVars.colors.gray.gray50 }),
+  gray900: style({ backgroundColor: themeVars.colors.gray.gray900 }),
 };
 
 export const cartButton = style({

@@ -6,6 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
+import NewHeader from "@/components/layout/newHeader/NewHeader";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import CloseIcon from "/public/images/header/close.svg";
@@ -31,16 +32,23 @@ const ReviewImagesModal = ({
 		<ModalBackground
 			isVisible={isOpen}
 			onClose={onClose}
+			isDimmed={false}
+			closeOnBackgroundClick={false}
 		>
 			<div className={styles.reviewImagesModalContainer}>
-				<div className={styles.reviewImageModalHeader}>
-					<DefaultText type='headline3' color='white'>
-						{activeIndex+1}/{reviewImageList.length}
-					</DefaultText>
-					<button onClick={onClose}>
-						<SvgIcon src={CloseIcon} size={24} color='white' />
-					</button>
-				</div>
+				<NewHeader
+					leftElement={(
+						<DefaultText type='headline3' color='white'>
+							{activeIndex+1}/{reviewImageList.length}
+						</DefaultText>
+					)}
+					rightElement={(
+						<button onClick={onClose}>
+							<SvgIcon src={CloseIcon} size={24} color='white' />
+						</button>
+					)}
+					backgroundColor='gray900'
+				/>
 				<Swiper
 					initialSlide={defaultImageIndex}
 					onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}

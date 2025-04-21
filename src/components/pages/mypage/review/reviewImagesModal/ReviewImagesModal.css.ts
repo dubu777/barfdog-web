@@ -2,7 +2,8 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const reviewImagesModalContainer = style({
-	width: '100vw',
+	maxWidth: '600px',
+	width: '100%',
 	height: '100vh',
 	backgroundColor: `${themeVars.colors.gray.gray900} !important`,
 	alignItems: 'center',
@@ -29,5 +30,5 @@ export const reviewImageSlider = style({
 export const reviewImage = style({
 	position: 'static !important',
 	width: '100%',
-	objectFit: 'cover'
+	objectFit: 'contain'
 })
