@@ -5,6 +5,8 @@ import { useBackNavigation } from "@/utils";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Modal from "@/components/common/modal/Modal";
+import useModal from "@/hooks/useModal";
 
 type MypageParams = {
   reviewId?: string;
@@ -20,6 +22,8 @@ const MyPageHeader = () => {
   const goBack = useBackNavigation();
   const goBackToMain = useBackNavigation('/');
   const goBackToPreviousPage = useBackNavigation(undefined, true);
+  const { isOpen: cancelChangeNoticeOpen, onClose: onCloseCancelChangeNoticeOpen, onToggle: onToggleCancelChangeNoticeOpen } = useModal();
+
   const lastSection = pathname.split('/').pop();
 
   const headerConfigs: Record<
@@ -99,14 +103,15 @@ const MyPageHeader = () => {
         onBack: goBackToMain,
       };
     },
-    '/mypage/subscription/': () => {
+    '/mypage/subscription/': (_, searchParams) => {
+      const step = lastSection === 'change-recipe' && searchParams.get('step') !== null;
       return {
         centerTitle: {
           'cancel-subscription': '구독 해지 사유입력',
-        }[lastSection as string] || '구독상세',
+          'change-recipe': step ? ' ' :'식단 변경',
+        }[lastSection as string] || '구독 상세',
         showBackButton: true,
-        onBack: goBackToPreviousPage,
-        onClose: goBackToPreviousPage,
+        onBack: lastSection === 'change-recipe' && !step ? onToggleCancelChangeNoticeOpen : goBackToPreviousPage,
       };
     },
   };
@@ -126,9 +131,23 @@ const MyPageHeader = () => {
   const headerProps = useMemo(getHeaderProps, [pathname, params, searchParams]);
 
   return (
+    <>
     <NewHeader
       {...headerProps}
     />
+    {cancelChangeNoticeOpen &&
+      <Modal
+        title='구독 수정을 중단하시겠어요?'
+        content='나가시면 수정해주신 정보는 저장되지 않아요.'
+        isOpen={cancelChangeNoticeOpen}
+        onClose={onCloseCancelChangeNoticeOpen}
+        onCancel={onCloseCancelChangeNoticeOpen}
+        onConfirm={goBackToPreviousPage}
+        confirmText='나가기'
+        cancelText='취소'
+      />
+    }
+    </>
   );
 };
 

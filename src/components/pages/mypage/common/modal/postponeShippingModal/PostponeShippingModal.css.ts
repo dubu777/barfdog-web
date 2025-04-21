@@ -6,9 +6,10 @@ export const userShippingBox = style({
 })
 
 export const userShippingText = style({
-	padding: '20px',
+	padding: '40px 20px 20px',
 	display: 'flex',
-	flexDirection: 'column'
+	flexDirection: 'column',
+	gap: '12px',
 })
 
 export const dogName = style({
@@ -44,5 +45,32 @@ export const shippingInfoBox = style({
 })
 
 export const completedBox = style({
-	padding: '20px',
+	padding: '60px 20px',
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	alignItems: 'center',
+	gap: '12px',
+})
+
+export const completedBoxInfo = style({
+	width: '100%',
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'center',
+	alignItems: 'center',
+	gap: '4px',
+})
+
+export const completedBoxDateInfo = style({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '14px',
+	padding: '16px 20px',
+	marginTop: '40px',
+})
+
+export const completedDate = style({
+	display: 'flex',
+	justifyContent: 'space-between',
 })

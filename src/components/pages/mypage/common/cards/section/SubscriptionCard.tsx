@@ -73,8 +73,6 @@ const SubscriptionCard = ({
 	const normalizedData = normalizeSubscriptionData(data, isMyPage, subscriptionId);
 	const isSubscriptionCancel = normalizedData.orderStatus === 'SUBSCRIBE_CANCEL';
 
-	console.log(data)
-
 	const productionDates =
 		normalizedData.nextPaymentDate
 			? getProductionDates(normalizedData.nextPaymentDate, true, 'yyyy.MM.dd')
@@ -86,6 +84,7 @@ const SubscriptionCard = ({
 
 
 	const [isOpenModal, setIsOpenModal] = useState<IsOpenCardModal>({ id: null, isOpen: false });
+
 	const handleActions = (url?: string, params?: string, id?: CardActionsId) => {
 		switch (id) {
 			case 'confirm': {
@@ -94,12 +93,6 @@ const SubscriptionCard = ({
 			}
 			case 'postponeShipping': {
 				setIsOpenModal({ id, isOpen: true, subscriptionId });
-				pushWithQuery(`/mypage${url}/${normalizedData.id}${`/${params || ''}`}`, {});
-				// console.log('배송미루기')
-				break;
-			}
-			case 'changeRecipe': {
-				console.log('식단변경')
 				break;
 			}
 			case 'usingCoupon': {
@@ -132,8 +125,7 @@ const SubscriptionCard = ({
 				break;
 			}
 			default: {
-				// 구매확정 bottomSheet 확인 필요
-				console.log(id)
+				// 식단 변경
 				pushWithQuery(`/mypage${url}/${normalizedData.id}${`/${params || ''}`}`, {});
 				break;
 			}

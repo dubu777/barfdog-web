@@ -26,11 +26,11 @@ const PaymentCard = ({
 	cardName,
 	cardSize = 'lg',
 }: PaymentCardProps) => {
-	const paymentCardNumber = paymentMethod !== 'NAVER_PAY' && cardNumber !== null ? `신용 • ${cardNumber?.slice(0, 6)}` : '-';
+	const paymentCardNumber = paymentMethod !== 'NAVER_PAY' && cardNumber ? `신용 • ${cardNumber?.slice(0, 6)}` : '-';
 	const paymentCardName =
 		paymentMethod === 'CREDIT_CARD'
 			? cardName
-				: cardName !== null
+				: cardName
 				? `${PAYMENT[paymentMethod]} ${cardName}`
 				: `${PAYMENT[paymentMethod]} 머니`;
 	const cardColor = getCardColor(paymentCardName as string);

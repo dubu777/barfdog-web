@@ -139,7 +139,7 @@ const COMMON_ACTIONS: Record<string, Omit<OrderAction, 'label'>> = {
 	subscriptionDetail: { id: 'subscriptionDetail', url: "/subscription", variants: 'outline' },
 	subscriptionSchedule: { id: 'subscriptionSchedule', variants: 'outline' },
 	// SubscriptionCard
-	changeRecipe: { id: 'changeRecipe', url: "/edit-meal", variants: 'outline' },
+	changeRecipe: { id: 'changeRecipe', url: "/change-recipe", variants: 'outline' },
 	usingCoupon: { id: 'usingCoupon', variants: 'outline' },
 	postponeShipping: { id: 'postponeShipping', variants: 'outline' },
 	recipeDetail: { id: 'recipeDetail', url: "/subscription", params: '/recipe-detail', variants: 'outline' },
