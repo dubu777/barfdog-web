@@ -23,8 +23,7 @@ export default function SurveyStep1({
   handleChange,
   handleBlur,
   handleKeyDown,
-}: 
-SurveyStepProps) {
+}: SurveyStepProps) {
   const {
     control,
     setValue,
@@ -51,6 +50,18 @@ SurveyStepProps) {
             (value) => {
               field.onChange(value);
               handleChange();
+
+              // ── 성별이 male 이면 step5·6 자동 none 설정
+              if (value === "male") {
+                setValue("step5.pregnancy", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+                setValue("step6.lactation", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+              }
             }
           );
           return (
@@ -82,8 +93,21 @@ SurveyStepProps) {
             (value) => {
               field.onChange(value);
               handleChange();
+
+              // 중성화 여부에 따라 step5와 step6의 값을 초기화
+              if (value === true) {
+                setValue("step5.pregnancy", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+                setValue("step6.lactation", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+              }
             }
           );
+
           return (
             <SurveyButtonGroup title="중성화 여부">
               {SURVEY_FORM_INFO.dogBasicInfo.isNeutered.options.map(
@@ -104,7 +128,9 @@ SurveyStepProps) {
       />
       <SurveyButtonGroup
         title="반려견 이름"
-        error={touchedFields.step1?.name ? errors.step1?.name?.message : undefined}
+        error={
+          touchedFields.step1?.name ? errors.step1?.name?.message : undefined
+        }
       >
         <Controller
           name="step1.name"

@@ -17,7 +17,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import CriticalDiseaseAlertBottomSheet from "@/components/pages/survey/bottomSheet/CriticalDiseaseAlertBottomSheet";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SurveyResultLoading from "../surveyResultLoading/SurveyResultLoading";
 import { useRouter } from "next/navigation";
 import NavigationGuard from "../../../common/navigationGuard/NavigationGuard";
@@ -25,6 +25,7 @@ import NavigationGuard from "../../../common/navigationGuard/NavigationGuard";
 export default function SurveyPageContainer() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const skipPregnancyRef = useRef(false);
 
   const {
     currentStep,
@@ -34,7 +35,8 @@ export default function SurveyPageContainer() {
     direction,
     isLastStep,
     isFirstStep,
-  } = useSurveyStep(14);
+  } = useSurveyStep(14, skipPregnancyRef);
+
 
   const surveyFormMethods = useSurveyForm<typeof surveyStepsSchema>(
     surveyStepsSchema,
@@ -44,6 +46,13 @@ export default function SurveyPageContainer() {
   );
 
   const petName = surveyFormMethods.watch("step1.name") ?? "";
+  const gender = surveyFormMethods.watch("step1.gender");
+  const isNeutered = surveyFormMethods.watch("step1.isNeutered");
+  useEffect(() => {
+    skipPregnancyRef.current = (gender === "male" || isNeutered === true);
+  }, [gender, isNeutered]);
+
+
 
   const steps = getSurveySteps({
     handleChange: surveyFormMethods.handleChange,
