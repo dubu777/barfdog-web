@@ -6,11 +6,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import CloseIcon from "/public/images/header/close.svg";
 import { ReviewImage } from "@/types";
+import Header from "@/components/layout/header/Header";
 
 interface ReviewImagesModalProps {
 	isOpen: boolean;
@@ -36,7 +36,7 @@ const ReviewImagesModal = ({
 			closeOnBackgroundClick={false}
 		>
 			<div className={styles.reviewImagesModalContainer}>
-				<NewHeader
+				<Header
 					leftElement={(
 						<DefaultText type='headline3' color='white'>
 							{activeIndex+1}/{reviewImageList.length}
