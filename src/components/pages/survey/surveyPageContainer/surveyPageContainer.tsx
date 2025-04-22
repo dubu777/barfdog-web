@@ -9,7 +9,6 @@ import {
   defaultStepValues,
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
-import Header from "@/components/layout/header/Header";
 import { FormProvider } from "react-hook-form";
 import SurveyProgressBar from "@/components/pages/survey/surveyProgressBar/SurveyProgressBar";
 import { CRITICAL_DISEASES, SURVEY_SECTIONS } from "@/constants";

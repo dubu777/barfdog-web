@@ -4,9 +4,9 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSuccessGeneralPayment } from '@/api/order/mutations/useSuccessGeneralPayment';
 import { useFailGeneralPayment } from '@/api/order/mutations/useFailGeneralPayment';
-import DefaultText from '@/components/common/defaultText/DefaultText';
-import * as styles from '../MobilePaymentRedirect.css';
 import { useToastStore } from "@/store/useToastStore";
+import { DotSpinner } from "@/components/common/spinner/DotSpinner";
+import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
 
 export default function MobileGeneralPaymentRedirect() {
   const processedRef = useRef(false);
@@ -44,7 +44,7 @@ export default function MobileGeneralPaymentRedirect() {
             id: orderId,
             body: { impUid, merchantUid, discountReward },
           });
-          router.push("/order/completed");
+          router.push("/order/checkout/completed");
           return;
         } 
         
@@ -58,11 +58,11 @@ export default function MobileGeneralPaymentRedirect() {
         // 3) 그 외 결제 실패
         await failPayment(orderId);
         console.error("모바일 결제 실패:", errorMsg);
-        router.push("/order/failed");
+        router.push("/order/checkout/failed");
       } catch (e) {
         console.error("모바일 결제 처리 실패:", e);
         setError(e instanceof Error ? e.message : "알 수 없는 오류가 발생했습니다.");
-        router.push("/order/failed");
+        router.push("/order/checkout/failed");
       } finally {
         setIsProcessing(false);
       }
@@ -71,16 +71,10 @@ export default function MobileGeneralPaymentRedirect() {
     processFinalPayment();
   }, [searchParams, router, successPayment, failPayment, addToast]);
 
-  if (isProcessing) {
+
     return (
-      <div>
-        <DefaultText type="body2">
-          결제를 처리 중입니다...
-        </DefaultText>
+      <div className={mobilePaymentResultContainer}>
+        <DotSpinner />
       </div>
     );
-  }
-
-
-  return null;
 }

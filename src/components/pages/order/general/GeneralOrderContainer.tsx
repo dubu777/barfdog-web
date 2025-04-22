@@ -99,16 +99,18 @@ export default function GeneralOrderContainer() {
     await processPayment(requestBody);
   };
   return (
-    <div>
+    <>
       <DeliveryAddress />
       <Divider />
       {generalOrderSheetData.orderStatus !== "UNSUBSCRIBE_ORDER" && (
-        <BundleDeliverySelector
-          bundleDeliveryAddress={generalOrderSheetData.deliveryAddress}
-          orderStatus={generalOrderSheetData.orderStatus}
-        />
+        <>
+          <BundleDeliverySelector
+            bundleDeliveryAddress={generalOrderSheetData.deliveryAddress}
+            orderStatus={generalOrderSheetData.orderStatus}
+          />
+          <Divider />
+        </>
       )}
-      <Divider />
       <GeneralOrderItemList
         orderItemDtoList={generalOrderSheetData.orderItemDtoList}
       />
@@ -149,6 +151,6 @@ export default function GeneralOrderContainer() {
           ? "결제 처리 중..."
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { themeVars } from './theme.css';
 import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from "@vanilla-extract/recipes";
+import { he } from 'date-fns/locale';
 
 export const commonLayoutStyle = style({
   width: '100%',
@@ -173,11 +174,20 @@ export const commonWrapper = recipe({
         alignItems: "space-between",
       },
     },
+    height: {
+      fit: {
+        height: "fit-content",
+      },
+      full: {
+        height: "100vh",
+      },
+    },
   },
   defaultVariants: {
     gap: 0,
     direction: "row",
     justify: "center",
     align: "center",
+    height: "fit",
   },
 });
