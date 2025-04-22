@@ -1,11 +1,13 @@
+'use client';
 import * as styles from './ReviewList.css';
 import ReviewItemList from "@/components/pages/reivew/reviewList/reviewItemList/ReviewItemList";
-import BestReviewList from "@/components/pages/reivew/reviewList/bestReviewList/BestReviewList";
+import BestReview from "@/components/pages/reivew/reviewList/bestReview/BestReview";
 import ReviewBanner from "@/components/pages/reivew/reviewList/reviewBanner/ReviewBanner";
 const ReviewList = () => {
+
   return (
     <section className={styles.reviewListContainer}>
-      <BestReviewList />
+      <BestReview />
       <ReviewBanner />
       <ReviewItemList />
     </section>

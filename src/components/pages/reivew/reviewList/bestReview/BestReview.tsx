@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
 import { ellipsis } from "@/styles/common.css";
-import * as styles from './BestReviewList.css';
+import * as styles from './BestReview.css';
 import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Scrollbar } from 'swiper/modules';
@@ -12,10 +12,11 @@ import useModal from "@/hooks/useModal";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetBestReviewDetail } from "@/api/review/queries/useGetBestReviewDetail";
 import { useGetBestReviewList } from "@/api/review/queries/useGetBestReviewList";
-import BestReviewModal from "@/components/pages/reivew/reviewList/bestReviewList/bestReviewModal/BestReviewModal";
+import BestReviewModal from "@/components/pages/reivew/reviewList/bestReview/bestReviewModal/BestReviewModal";
 import RateStar from "@/components/common/rateStar/RateStar";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
-const BestReviewList = () => {
+const BestReview = () => {
   const [reviewId, setReviewId] = useState<number | null>(null);
   const { data: bestReviewList } = useGetBestReviewList();
   const { onToggle, onClose, isOpen } = useModal();
@@ -30,7 +31,10 @@ const BestReviewList = () => {
   }
   return (
     <article>
-      <Text type='title' size='titleLg'>BEST REVIEW</Text>
+      <div>
+        <DefaultText type='title4'>바프독 견주님들의<br/>생생한 후기를 확인하세요</DefaultText>
+        <DefaultText type='label4' color='gray600'>명예의 바프독 BEST 리뷰 모음!</DefaultText>
+      </div>
       <Swiper
         slidesPerView='auto'
         spaceBetween={18}
@@ -74,4 +78,4 @@ const BestReviewList = () => {
   );
 };
 
-export default BestReviewList;
+export default BestReview;
