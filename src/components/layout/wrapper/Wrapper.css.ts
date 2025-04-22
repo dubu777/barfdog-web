@@ -2,8 +2,7 @@ import { globalStyle, style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const wrapperContainer = style({
-	marginTop: '60px',
-	minHeight: 'calc(100vh - 60px)',
+	minHeight: '100vh',
 	background: themeVars.colors.gray.gray50,
 })
 

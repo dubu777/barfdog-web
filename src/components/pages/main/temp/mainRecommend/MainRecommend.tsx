@@ -1,6 +1,6 @@
 import * as styles from "./MainRecommend.css";
-import MainRecommendRecipes from "@/components/pages/main/mainRecommend/MainRecommendRecipes";
-import MainHealthCheckSlider from "@/components/pages/main/mainRecommend/MainHealthCheckSlider";
+import MainRecommendRecipes from "@/components/pages/main/temp/mainRecommend/MainRecommendRecipes";
+import MainHealthCheckSlider from "@/components/pages/main/temp/mainRecommend/MainHealthCheckSlider";
 import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
 import { useGetRecipeList } from "@/api/recipes/queries/useGetRecipeList";
 import { MainRecipeDto, RecipeDto } from "@/types";

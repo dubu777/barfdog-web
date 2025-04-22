@@ -1,0 +1,49 @@
+import { Fragment } from "react";
+import Image from "next/image";
+import MainContainer from "@/components/pages/main/layout/MainContainer";
+import MainTitle from "@/components/pages/main/common/MainTitle";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import {
+	mainBox, mainProductionImage, mainProductionImageBox,
+	mainProductionPoint,
+	mainProductionPointDivider,
+	mainProductionPointsBox
+} from "@/components/pages/main/common/MainCommon.css";
+import { MAIN_DATA } from "@/constants/main";
+
+const ProductionSection = () => {
+	const title = MAIN_DATA.PRODUCTION.title;
+	const subTitle = MAIN_DATA.PRODUCTION.subTitle;
+	const topPoints = MAIN_DATA.PRODUCTION.descriptions;
+	const imageList = MAIN_DATA.PRODUCTION.imagesUrl;
+	return (
+		<>
+			<ul className={mainProductionPointsBox}>
+				{topPoints.map((point, index) => (
+					<Fragment key={point.label}>
+						<li className={mainProductionPoint}>
+							<Image src={point.imageUrl} alt={point.label} width={point.width} height={point.height} priority />
+							<DefaultText type='headline4' color='white' preLine align='center'>{point.label}</DefaultText>
+						</li>
+						{index !== topPoints.length-1 &&
+						<li className={mainProductionPointDivider} />
+						}
+					</Fragment>
+				))}
+			</ul>
+			<MainContainer backgroundColor='gray200'>
+				<MainTitle title={title} subTitle={subTitle} />
+				<div className={`${mainBox} ${mainProductionImageBox}`}>
+					{imageList.map((image, index) => (
+						<Image key={image} src={image} alt={`인증서 ${index+1}`} width={100} height={140} className={mainProductionImage} />
+					))}
+				</div>
+			</MainContainer>
+			<div>
+				videoSection
+			</div>
+		</>
+	);
+};
+
+export default ProductionSection;

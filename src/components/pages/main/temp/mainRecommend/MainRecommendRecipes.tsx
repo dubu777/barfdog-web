@@ -1,5 +1,5 @@
 import Text from "@/components/common/text/Text";
-import MainRecipesSlider from "@/components/pages/main/mainRecommend/MainRecipesSlider";
+import MainRecipesSlider from "@/components/pages/main/temp/mainRecommend/MainRecipesSlider";
 import { HealthCheckList } from "@/constants";
 import { useMainStore } from "@/store/useMainStore";
 import { pointColor } from "@/styles/common.css";

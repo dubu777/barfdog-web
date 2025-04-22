@@ -1,5 +1,5 @@
 import * as styles from './MainSurvey.css';
-import MainSurveyImageSlider from "@/components/pages/main/mainSurvey/MainSurveyImageSlider";
+import MainSurveyImageSlider from "@/components/pages/main/temp/mainSurvey/MainSurveyImageSlider";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Text from '@/components/common/text/Text';
 

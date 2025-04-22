@@ -1,5 +1,5 @@
 import * as styles from './MainReview.css';
-import MainReviewSlider from "@/components/pages/main/mainReview/MainReviewSlider";
+import MainReviewSlider from "@/components/pages/main/temp/mainReview/MainReviewSlider";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import Text from '@/components/common/text/Text';
 import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";

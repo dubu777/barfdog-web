@@ -5,6 +5,7 @@ import CartProvider from "@/providers/CartProvider";
 import NewHeader from "@/components/layout/newHeader/NewHeader";
 import Logo from "/public/images/logo/logo-default.png";
 import Image from "next/image";
+import Wrapper from "@/components/layout/wrapper/Wrapper";
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -27,7 +28,9 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
           )}
         />
         <SideNavBar />
-        {children}
+        <Wrapper>
+          {children}
+        </Wrapper>
         <BottomNavBar />
       </CartProvider>
     </>

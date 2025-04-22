@@ -12,12 +12,10 @@ export const mainVideoWrapper = recipe({
     color: themeVars.colors.gray.gray0,
     alignItems: 'center',
     position: 'relative',
-    marginTop: '62px'
   },
   variants: {
     isTopBannerVisible: {
       true: {
-        marginTop: '102px',
       },
     }
   },
