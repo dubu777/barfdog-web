@@ -1,6 +1,6 @@
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import * as styles from "./CouponModal.css";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
@@ -26,6 +26,8 @@ import CouponCard from "./couponCard/CouponCard";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/modal/Modal";
+import { AnimatePresence, motion } from "framer-motion";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 
 interface CouponModalProps {
@@ -34,7 +36,10 @@ interface CouponModalProps {
   isOpen: boolean;
   orderPrice: number;
   onClose: () => void;
-  onUseCoupon?: (selectedCoupon: { couponId: number; discountAmount: number }) => void;
+  onUseCoupon?: (selectedCoupon: {
+    couponId: number;
+    discountAmount: number;
+  }) => void;
 }
 
 export default function CouponModal({
@@ -58,7 +63,7 @@ export default function CouponModal({
     setAppliedCoupon,
     cancelAppliedCoupon,
     maxAvailableCouponDiscount,
-    setMaxAvailableCouponDiscount
+    setMaxAvailableCouponDiscount,
   } = useCouponStore();
 
   // 서버 호출 -------->
@@ -72,7 +77,7 @@ export default function CouponModal({
   } = useModal();
 
   // 쿠폰 등록 input field 관리
-  const { control, handleSubmit, setValue } = useFormHandler(
+  const { control, handleSubmit, reset } = useFormHandler(
     couponSchema,
     couponDefaultValues,
     "onBlur"
@@ -125,21 +130,24 @@ export default function CouponModal({
         addToast("등록되지 않은 코드입니다", "above-button");
       },
     });
-    setValue("code", "");
+    reset();
   });
 
   // 마이페이지 쿠폰 적용 함수 및 초기화 (selectedCoupon, maxAvailableCouponDiscount)
   const handleUseCoupon = (discountAmount: number) => {
+    if (!onUseCoupon || !selectedCoupon) {
+      return;
+    }
     onUseCoupon({
       couponId: selectedCoupon.couponId,
       discountAmount,
     });
     setSelectedCoupon(null);
     setMaxAvailableCouponDiscount(0);
-  }
+  };
 
   const handleModalClose = () => {
-    setValue("code", "");
+    reset();
     setSelectedCoupon(null);
     onClose();
   };
@@ -174,8 +182,10 @@ export default function CouponModal({
 
     if (!selectedCoupon) {
       if (appliedCoupon) {
+        reset();
         cancelAppliedCoupon();
       }
+      reset();
       onClose();
       return;
     }
@@ -184,6 +194,7 @@ export default function CouponModal({
       onErrorModalToggle();
       return;
     }
+    reset();
     onClose();
   };
 
@@ -202,11 +213,7 @@ export default function CouponModal({
       handleClose={handleModalClose}
       className={styles.couponModalContainer}
     >
-      <NewHeader
-        centerTitle="쿠폰"
-        showCloseButton
-        onClose={handleModalClose}
-      />
+      <Header centerTitle="쿠폰" showCloseButton onClose={handleModalClose} />
       <div className={styles.couponModalWrapper}>
         <div className={styles.couponModalContentWrapper}>
           <DefaultText type="label4">쿠폰 등록</DefaultText>
@@ -259,17 +266,16 @@ export default function CouponModal({
         onConfirm={handleConfirmCoupon}
         onCancel={handleCancelCoupon}
       />
-      <FooterButton
-        isDisabled={false}
-        onClick={(e) => {
-          e.stopPropagation();
-          handleApplyCoupon();
-        }}
-      >
-        {selectedCoupon
-          ? `${formatNumberWithCommas(discountOnCoupon)}원 사용하기`
-          : "사용 취소하기"}
-      </FooterButton>
+      <ButtonDocked
+        type="full-button"
+        primaryButtonLabel={
+          selectedCoupon
+            ? `${formatNumberWithCommas(discountOnCoupon)}원 사용하기`
+            : "사용 취소하기"
+        }
+        onPrimaryClick={handleApplyCoupon}
+        primaryButtonSize="lg"
+      />
     </FullModalWrapper>
   );
 }

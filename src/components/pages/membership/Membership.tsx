@@ -3,7 +3,7 @@ import * as styles from './Membership.css';
 import { useBackNavigation } from "@/utils";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import InfoText from "@/components/pages/mypage/common/infoText/InfoText";
 
 const Membership = () => {
@@ -21,7 +21,7 @@ const Membership = () => {
 	return (
 		<section className={styles.membershipContainer}>
 			<div className={styles.membershipHeader}>
-				<NewHeader
+				<Header
 					showCloseButton
 					onClose={goBack}
 					centerTitle="멤버십 등급 안내"

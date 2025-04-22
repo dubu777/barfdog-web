@@ -28,7 +28,7 @@ export default function DogImageButton<T>({
         <DefaultText type="headline3" color={isChecked ? "red" : "gray900"}>{label}</DefaultText>
         <div className={colStartWrapper({ gap: 0 })}>
           {subLabel.map((text, index) => (
-            <DefaultText key={index} type="body2" color="gray700">
+            <DefaultText key={index} type="body3" color="gray700">
               {text}
             </DefaultText>
           ))}

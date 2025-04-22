@@ -1,4 +1,4 @@
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import Spinner from "public/images/survey/dots-spinner.svg";
 import Dog from "public/images/survey/result-dog.svg";
 import * as styles from "./SurveyResultLoading.css";
@@ -16,7 +16,7 @@ export default function SurveyResultLoading({
 }: SurveyResultLoadingProps) {
   return (
     <>
-      <NewHeader showCloseButton onClose={() => {}} />
+      <Header showCloseButton onClose={() => {}} />
       <div className={styles.surveyResultLoadingContainer}>
         <Spinner />
         <SvgIcon src={Dog} width={109} height={92.18} />

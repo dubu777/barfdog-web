@@ -9,7 +9,7 @@ import {
   defaultStepValues,
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import { FormProvider } from "react-hook-form";
 import SurveyProgressBar from "@/components/pages/survey/surveyProgressBar/SurveyProgressBar";
 import { CRITICAL_DISEASES, SURVEY_SECTIONS } from "@/constants";
@@ -20,6 +20,7 @@ import CriticalDiseaseAlertBottomSheet from "@/components/pages/survey/bottomShe
 import { useState } from "react";
 import SurveyResultLoading from "../surveyResultLoading/SurveyResultLoading";
 import { useRouter } from "next/navigation";
+import NavigationGuard from "../../../common/navigationGuard/NavigationGuard";
 
 export default function SurveyPageContainer() {
   const router = useRouter();
@@ -55,25 +56,25 @@ export default function SurveyPageContainer() {
   console.log("watch", surveyFormMethods.watch());
   console.log("errors", surveyFormMethods.errors);
 
-  const {isOpen, onClose, onToggle} = useModal();
-  
+  const { isOpen, onClose, onToggle } = useModal();
+
   const navigateToResult = () => {
     setIsLoading(true);
     setTimeout(() => {
-      router.push('/');
+      router.push("/");
     }, 2000);
-  }
+  };
 
   const handleContinue = () => {
     onClose();
-    navigateToResult()
+    navigateToResult();
   };
 
   // 임시 설문 제출 함수
   const handleSurveySubmit = async () => {
     const isValid = await surveyFormMethods.trigger();
     if (!isValid) return;
-    
+
     const values = surveyFormMethods.getValues();
     const selected = values.step14.healthIssues;
 
@@ -91,8 +92,6 @@ export default function SurveyPageContainer() {
     navigateToResult();
   };
 
-
-
   const handleFooterButtonClick = () => {
     if (isLastStep) {
       handleSurveySubmit();
@@ -104,10 +103,10 @@ export default function SurveyPageContainer() {
   if (isLoading) {
     return <SurveyResultLoading petName={petName} />;
   }
-      
+
   return (
     <div className={styles.surveyLayoutContainer}>
-      <NewHeader
+      <NavigationGuard
         leftElement={
           !isFirstStep && (
             <DefaultText type="headline3" color="gray700">
@@ -120,21 +119,29 @@ export default function SurveyPageContainer() {
         onBack={handlePrevStep}
         backgroundColor="gray50"
         leftSlotGap="sm"
-      />
-      <SurveyProgressBar currentStep={currentStep} sections={SURVEY_SECTIONS} />
-      <FormProvider {...surveyFormMethods}>
-        <SurveyForm
+        modalTitle="아직 우리 아이의 식단 추천이 끝나지 않았어요"
+        modalContent="종료하시면 지금까지 입력한 내용은 저장되지 않아요"
+        confirmText="종료"
+        cancelText="취소"
+      >
+        <SurveyProgressBar
           currentStep={currentStep}
-          direction={direction}
-          steps={steps}
+          sections={SURVEY_SECTIONS}
         />
-      </FormProvider>
-      <ButtonDocked
-        type="full-button"
-        primaryButtonLabel={isLastStep ? "제출" : "다음"}
-        onPrimaryClick={handleFooterButtonClick}
-        isPrimaryDisabled={!surveyFormMethods.isCanNextStep}
-      />
+        <FormProvider {...surveyFormMethods}>
+          <SurveyForm
+            currentStep={currentStep}
+            direction={direction}
+            steps={steps}
+          />
+        </FormProvider>
+        <ButtonDocked
+          type="full-button"
+          primaryButtonLabel={isLastStep ? "제출" : "다음"}
+          onPrimaryClick={handleFooterButtonClick}
+          isPrimaryDisabled={!surveyFormMethods.isCanNextStep}
+        />
+      </NavigationGuard>
       <CriticalDiseaseAlertBottomSheet
         isOpen={isOpen}
         onClose={onClose}

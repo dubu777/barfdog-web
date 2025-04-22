@@ -91,12 +91,12 @@ export default function GeneralOrderContainer() {
     if ((window as any).__disableNavigationGuard) {
       (window as any).__disableNavigationGuard();
     }
-    
+
     const requestBody = getRequestBody(
       ORDER_TYPE.GENERAL
     ) as SaveGeneralOrderRequest;
     console.log("requestBody", requestBody);
-    // await processPayment(requestBody);
+    await processPayment(requestBody);
   };
   return (
     <div>

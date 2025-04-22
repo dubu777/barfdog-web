@@ -2,7 +2,7 @@ import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import { ReactNode } from "react";
 import SideNavBar from "@/components/layout/sideNavBar/SideNavBar";
 import CartProvider from "@/providers/CartProvider";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import Logo from "/public/images/logo/logo-default.png";
 import Image from "next/image";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
@@ -14,7 +14,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <>
       <CartProvider>
-        <NewHeader
+        <Header
           showCartButton
           showMypageButton
           leftElement={(

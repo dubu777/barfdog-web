@@ -4,7 +4,7 @@ import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { useBackNavigation } from "@/utils";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 import Modal from "@/components/common/modal/Modal";
 import useModal from "@/hooks/useModal";
 
@@ -132,7 +132,7 @@ const MyPageHeader = () => {
 
   return (
     <>
-    <NewHeader
+    <Header
       {...headerProps}
     />
     {cancelChangeNoticeOpen &&

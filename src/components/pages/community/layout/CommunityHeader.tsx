@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from "next/navigation";
 import { useBackNavigation } from "@/utils";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
 
 const titleMap: Record<string, string> = {
 	article: '아티클',
@@ -19,7 +19,7 @@ const CommunityHeader = () => {
 			: '';
 	};
 	return (
-		<NewHeader
+		<Header
 			showBackButton
 			showCartButton
 			onBack={goBack}

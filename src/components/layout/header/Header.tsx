@@ -1,101 +1,101 @@
 "use client";
 
-import * as styles from "./Header.css";
 import Link from "next/link";
-import Image from "next/image";
-import Logo from "/public/images/logo/logo-default.png";
-import LogoWhite from "/public/images/logo/logo-white.png";
-import MyPage from "/public/images/icons/mypage.svg";
-import Cart from "/public/images/icons/cart.svg";
-import BackButton from "/public/images/icons/left-arrow.svg";
-import Hamburger from "../../icons/Hamburger";
-import TopBanner from "@/components/layout/banner/TopBanner";
-import { useBackNavigation } from "@/utils";
-import { usePathname, useRouter } from "next/navigation";
-import { useCommonStore } from "@/store/useCommonStore";
-import { commonLayoutStyle } from "@/styles/common.css";
-import { useCartStore } from "@/store/useCartStore";
+import * as styles from "./Header.css";
+import BackIcon from "/public/images/header/chevron-left.svg";
+import CloseIcon from "/public/images/header/close.svg";
+import MypageIcon from "/public/images/header/mypage.svg";
+import CartIcon from "/public/images/header/cart.svg";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
-  type?: "default" | "redBackground" | "withBackButton" | "backButtonOnly";
+  leftElement?: React.ReactNode;
+  centerElement?: React.ReactNode;
+  rightElement?: React.ReactNode;
+  leftTitle?: string;
+  centerTitle?: string;
+  style?: React.CSSProperties;
+  onClose?: () => void;
+  onBack?: () => void;
+  showBackButton?: boolean;
+  showCloseButton?: boolean;
+  showMypageButton?: boolean;
+  showCartButton?: boolean;
+  leftSlotGap?: "lg" | "sm";
+  backgroundColor?: keyof typeof styles.backgroundColors;
 }
 
-export default function Header({ type = "default" }: HeaderProps) {
-  const pathname = usePathname();
+export default function Header({
+  leftElement,
+  centerElement,
+  rightElement,
+  leftTitle,
+  centerTitle,
+  style,
+  onClose,
+  onBack,
+  showBackButton,
+  showCloseButton,
+  showMypageButton,
+  showCartButton,
+  backgroundColor = "gray0",
+  leftSlotGap = "lg",
+}: HeaderProps) {
   const router = useRouter();
-  const { setIsOpenSideNavBar } = useCommonStore();
-  const { count } = useCartStore();
-  const hamburgerColor = type === "redBackground" ? "#ffffff" : "#4A4A4A";
-  const goBack = useBackNavigation();
 
-  const handleClick = () => {
-      router.push("/mypage");
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      router.back();
+    }
   };
-
+  const colorStyle = styles.backgroundColors[backgroundColor];
+  const leftSlotStyle = styles.leftSlotVariants[leftSlotGap];
 
   return (
-    <header
-      className={`${commonLayoutStyle} ${styles.headerContainer({ type })}`}
-    >
-      {pathname === "/" && <TopBanner />}
-      <section className={styles.headerWrapper}>
-        {type === "default" && (
-          <Link href="/">
-            <Image
-              src={Logo}
-              alt="사이트 로고"
-              width={148}
-              height={26}
-              priority
-            />
+    <header className={styles.headerContainer} style={style}>
+      <div className={`${styles.headerContent} ${colorStyle}`}>
+      <div className={`${styles.leftSlot} ${leftSlotStyle}`}>
+        {showBackButton && (
+          <SvgIcon
+            src={BackIcon}
+            size={24}
+            color="gray900"
+            onClick={handleBack}
+          />
+        )}
+        <DefaultText type="title4">{leftTitle}</DefaultText>
+        {leftElement}
+      </div>
+      <div className={styles.centerSlot}>
+        {centerElement}
+        <DefaultText type="title4">{centerTitle}</DefaultText>
+      </div>
+      <div className={styles.rightSlot}>
+        {rightElement}
+        {showCartButton && (
+          <Link href="/cart">
+            <SvgIcon src={CartIcon} size={24} color="gray900" />
           </Link>
         )}
-        {type === "redBackground" && (
-          <Link href="/">
-            <Image
-              src={LogoWhite}
-              alt="화이트 로고"
-              width={148}
-              height={26}
-              priority
-            />
+        {showMypageButton && (
+          <Link href="/mypage">
+            <SvgIcon src={MypageIcon} size={24} color="gray900" />
           </Link>
         )}
-
-        {(type === "withBackButton" || type === "backButtonOnly") && (
-          <BackButton onClick={goBack} className={styles.headerButton} />
+        {showCloseButton && (
+          <SvgIcon
+            src={CloseIcon}
+            size={24}
+            color="gray900"
+            onClick={onClose}
+          />
         )}
-        {type !== "backButtonOnly" && (
-          <div className={styles.headerMenuWrapper}>
-            {type === "redBackground" ? (
-              <button
-                onClick={() => setIsOpenSideNavBar()}
-                className={styles.headerButton}
-              >
-                <Hamburger stroke={hamburgerColor} />
-              </button>
-            ) : (
-              <>
-                <button onClick={handleClick}>
-                  <MyPage />
-                </button>
-                <Link href="/cart" className={styles.cartButton}>
-                  {count !== 0 && (
-                    <div className={styles.cartCount}>{count}</div>
-                  )}
-                  <Cart />
-                </Link>
-                <button
-                  onClick={() => setIsOpenSideNavBar()}
-                  className={styles.headerButton}
-                >
-                  <Hamburger stroke={hamburgerColor} />
-                </button>
-              </>
-            )}
-          </div>
-        )}
-      </section>
+      </div>
+      </div>
     </header>
   );
 }

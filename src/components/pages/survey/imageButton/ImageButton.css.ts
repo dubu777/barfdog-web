@@ -11,7 +11,7 @@ export const imageButtonBox = recipe({
     justifyContent: "center",
     alignItems: "center",
     gap: "8px",
-    padding: "20px",
+    padding: "10px",
     borderRadius: "8px",
     cursor: "pointer",
   },

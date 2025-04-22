@@ -6,7 +6,6 @@ export const couponModalContainer = style({
   width: "100%",
   height: "100vh",
   backgroundColor: themeVars.colors.gray.gray0,
-  padding: "52px 0 88px 0",
 });
 
 export const couponModalWrapper = style({
@@ -17,6 +16,7 @@ export const couponModalWrapper = style({
   width: "100%",
   height: "100%",
   overflowY: "auto",
+
   selectors: {
     "&::-webkit-scrollbar": {
       width: "8px",
@@ -54,6 +54,6 @@ export const couponCardWrapper = style({
   flexDirection: "column",
   width: "100%",
   gap: "10px",
-  padding: "20px 20px 20px 20px",
+  padding: "20px",
   backgroundColor: themeVars.colors.gray.gray50,
 });

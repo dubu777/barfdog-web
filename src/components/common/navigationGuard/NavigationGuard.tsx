@@ -4,25 +4,38 @@ import { useState, ReactNode, useCallback, useEffect } from "react";
 import Modal from "@/components/common/modal/Modal";
 import { useRouter } from "next/navigation";
 import { useNavigationGuard } from "@/hooks/useNavigationGuard";
-import NewHeader from "@/components/layout/newHeader/NewHeader";
+import Header from "@/components/layout/header/Header";
+import { backgroundColors } from "@/components/layout/header/Header.css";
 
-interface OrderNavigationGuardProps {
+interface NavigationGuardProps {
   children: ReactNode;
   modalTitle?: string;
   modalContent?: string;
   confirmText?: string;
   cancelText?: string;
-  fallbackUrl?: string;
+  showBackButton?: boolean;
+  showCloseButton?: boolean;
+  centerTitle?: string;
+  onBack?: () => void;
+  leftElement?: React.ReactNode;
+  backgroundColor?: keyof typeof backgroundColors;
+  leftSlotGap?: "lg" | "sm";
 }
 
-export default function OrderNavigationGuard({
+export default function NavigationGuard({
   children,
   modalTitle = "주문 취소",
   modalContent = "주문을 취소하고 나가시겠어요?",
   confirmText = "네",
   cancelText = "아니요",
-  fallbackUrl,
-}: OrderNavigationGuardProps) {
+  showCloseButton = false,
+  showBackButton = true,
+  centerTitle,
+  leftElement,
+  backgroundColor = "gray0",
+  leftSlotGap = "lg",
+  onBack,
+}: NavigationGuardProps) {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
@@ -32,15 +45,7 @@ export default function OrderNavigationGuard({
   }, []);
 
   const onConfirm = () => {
-    if (fallbackUrl) {
-      router.push(fallbackUrl);
-    } else {
-      if (window.history.length > 1) {
-        router.back();
-      } else {
-        router.push("/");
-      }
-    }
+    router.push("/");
   };
 
   const { confirmLeaving, disableGuard } = useNavigationGuard({
@@ -62,7 +67,16 @@ export default function OrderNavigationGuard({
 
   return (
     <>
-      <NewHeader showBackButton centerTitle="결제" onBack={handleBack} />
+      <Header
+        showBackButton={showBackButton}
+        showCloseButton={showCloseButton}
+        onBack={onBack ?? handleBack}
+        onClose={handleBack}
+        backgroundColor={backgroundColor}
+        leftSlotGap={leftSlotGap}
+        {...(centerTitle ? { centerTitle } : {})}
+        {...(leftElement ? { leftElement } : {})}
+      />
       {children}
       <Modal
         isOpen={showModal}

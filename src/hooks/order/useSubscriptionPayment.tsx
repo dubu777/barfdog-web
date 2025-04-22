@@ -129,6 +129,7 @@ export function useSubscriptionPayment({
       const paymentData = buildSubscriptionPaymentRequest({
         requestBody,
         subscriptionOrderSheetData,
+        subscribeId,
         isMobileDevice,
         orderId: saveOrderResponse.data.id,
         merchantUid: saveOrderResponse.data.merchantUid,

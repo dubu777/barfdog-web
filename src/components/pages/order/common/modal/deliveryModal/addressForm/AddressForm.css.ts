@@ -6,7 +6,7 @@ export const deliveryAddressWithFooterWrapper = style({
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
-  padding: "70px 20px 128px 20px",
+  padding: "20px 20px 128px 20px",
 });
 
 export const searchAddressWrapper = style({
