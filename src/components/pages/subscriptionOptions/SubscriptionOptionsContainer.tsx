@@ -2,19 +2,19 @@
 
 import { useSearchParams } from "next/navigation";
 import SelectRecipe from "./selectRecipe/SelectRecipe";
-import SelectOption from "./selectOption/SelectOption";
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import useSubscription from "@/hooks/useSubscription";
+import SelectDeliveryOption from "./selectDeliveryOption/SelectDeliveryOption";
 
-interface SubscriptionContainerProps {
+interface SubscriptionOptionsContainerProps {
   reportId: number;
 }
 
-export default function SubscriptionContainer({
+export default function SubscriptionOptionsContainer({
   reportId,
-}: SubscriptionContainerProps) {
+}: SubscriptionOptionsContainerProps) {
   const searchParams = useSearchParams();
 
   const { data: recipeData } = useGetSurveyRecipe(reportId);
@@ -46,7 +46,7 @@ export default function SubscriptionContainer({
         />
       );
     case "select-option":
-      return <SelectOption recipeData={recipeData} resultData={resultData} selectedRecipes={selectedRecipes} selectedPlan={selectedPlan} selectedVolume={selectedVolume}/>;
+      return <SelectDeliveryOption recipeData={recipeData} resultData={resultData} selectedRecipes={selectedRecipes} selectedPlan={selectedPlan} selectedVolume={selectedVolume}/>;
     default:
       return (
         <div>

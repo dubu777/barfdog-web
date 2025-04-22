@@ -1,17 +1,17 @@
 import { prefetchGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
-import SubscriptionContainer from "@/components/pages/subscription/SubscriptionContainer";
+import SubscriptionOptionsContainer from "@/components/pages/subscriptionOptions/SubscriptionOptionsContainer";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-interface SubscriptionPageProps {
+interface SubscriptionOptionsPageProps {
   searchParams: Record<string, string | string[] | undefined>;
 }
 
-export default async function SubscriptionPage({
+export default async function SubscriptionOptionsPage({
   searchParams,
-}: SubscriptionPageProps) {
+}: SubscriptionOptionsPageProps) {
   const reportId = Number(searchParams.reportId);
   console.log(reportId);
   
@@ -29,7 +29,7 @@ export default async function SubscriptionPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<div>Loading...</div>}>
-            <SubscriptionContainer reportId={reportId} />
+            <SubscriptionOptionsContainer reportId={reportId} />
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>

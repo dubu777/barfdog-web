@@ -1,5 +1,5 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { selectOptionWrapper } from "../SelectOption.css";
+import { selectOptionWrapper } from "../SelectDeliveryOption.css";
 
 export default function MealFrequency() {
   return (

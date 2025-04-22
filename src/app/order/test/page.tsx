@@ -138,11 +138,15 @@ export default function GeneralShopTest() {
   const handleLogin = async () => {
     router.push('/login')
   };
+  const handleSubscriptionOptions = async () => {
+    router.push('/order/subscriptionOptions?reportId=3761&type=select-recipe')
+  };
 
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-      <Button onClick={handleCokBankCookieTest}>콕뱅크 쿠키 테스트</Button>
+      <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
+      {/* <Button onClick={handleCokBankCookieTest}>콕뱅크 쿠키 테스트</Button> */}
 
       {/* <Button onClick={handleWrongTokenRefreshTest}>
         잘못된 토큰으로 재발급 테스트
@@ -150,16 +154,16 @@ export default function GeneralShopTest() {
       <Button onClick={handleOldTokenRefreshTest}>
         만료된 토큰으로 재발급 테스트
       </Button> */}
-      <Button onClick={handleRequest}>서버 요청 테스트</Button>
+      {/* <Button onClick={handleRequest}>서버 요청 테스트</Button> */}
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
       <Button onClick={handleLogin}>로그인</Button>
-      <Modal
+      {/* <Modal
         title="모달 테스트"
         content="모달 테스트 중입니다"
         isOpen={isModalOpen}
         onClose={onModalClose}
         confirmText="확인"
-      />
+      /> */}
     </div>
   );
 }

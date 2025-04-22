@@ -1,4 +1,4 @@
-import { selectOptionWrapper } from "../SelectOption.css";
+import { selectOptionWrapper } from "../SelectDeliveryOption.css";
 
 export default function DeliveryCycle() {
   return (

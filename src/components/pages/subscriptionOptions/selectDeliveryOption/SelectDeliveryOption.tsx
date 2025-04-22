@@ -1,7 +1,7 @@
 "use client";
 
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import * as styles from "./SelectOption.css";
+import * as styles from "./SelectDeliveryOption.css";
 import Divider from "@/components/common/divider/Divider";
 import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
 import { useRouter } from "next/navigation";
@@ -21,7 +21,7 @@ import MealAmount from "./mealAmount/MealAmount";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
 import PaymentAmount from "./paymentAmount/PaymentAmount";
 
-interface SelectOptionProps {
+interface SelectDeliveryOptionProps {
   recipeData: RecipeData;
   resultData: ResultData;
   selectedRecipes: number[];
@@ -29,13 +29,13 @@ interface SelectOptionProps {
   selectedVolume: string | null;
 }
 
-export default function SelectOption({
+export default function SelectDeliveryOption({
   recipeData,
   resultData,
   selectedRecipes,
   selectedPlan,
   selectedVolume,
-}: SelectOptionProps) {
+}: SelectDeliveryOptionProps) {
   const router = useRouter();
   const { data: discountData } = useGetPlanDiscount();
   const { mutate: updateSubscription } = useUpdateSubscription();
@@ -112,7 +112,7 @@ export default function SelectOption({
   };
 
   return (
-    <section className={styles.selectOptionContainer}>
+    <section className={styles.selectDeliveryOptionContainer}>
       <MealAmount />
       <Divider />
       <MealFrequency />

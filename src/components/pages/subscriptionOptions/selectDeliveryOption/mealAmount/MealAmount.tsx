@@ -1,6 +1,6 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "./MealAmount.css";
-import { selectOptionWrapper } from "../SelectOption.css";
+import { selectOptionWrapper } from "../SelectDeliveryOption.css";
 
 
 export default function MealAmount() {
