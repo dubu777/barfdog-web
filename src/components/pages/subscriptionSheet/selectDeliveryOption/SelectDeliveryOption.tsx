@@ -1,6 +1,5 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "./SelectDeliveryOption.css";
 import Divider from "@/components/common/divider/Divider";
 import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
@@ -17,9 +16,8 @@ import {
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import { PlanName, RecipeData, ResultData } from "@/types";
 import MealFrequency from "./mealFrequency/MealFrequency";
-import MealAmount from "./mealAmount/MealAmount";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
-import PaymentAmount from "./paymentAmount/PaymentAmount";
+import { useFormContext } from "react-hook-form";
 
 interface SelectDeliveryOptionProps {
   recipeData: RecipeData;
@@ -77,10 +75,6 @@ export default function SelectDeliveryOption({
     isOriginSubscriber: isOrigin,
   });
 
-  // const isCompleted =
-  //   !isNaN(subscribePriceData.totalOriginalPriceAllRecipes) &&
-  //   subscribePriceData.totalOriginalPriceAllRecipes !== 0;
-
   const handlePayment = () => {
     const body = {
       plan: selectedPlan,
@@ -91,11 +85,6 @@ export default function SelectDeliveryOption({
     };
     console.log("body", body);
 
-    const validationError = validatePaymentBody(body);
-    if (validationError) {
-      alert(validationError);
-      return;
-    }
     updateSubscription(
       { subscribeId: recipeData.subscribeId, body },
       {
@@ -113,13 +102,9 @@ export default function SelectDeliveryOption({
 
   return (
     <section className={styles.selectDeliveryOptionContainer}>
-      <MealAmount />
-      <Divider />
       <MealFrequency />
       <Divider />
       <DeliveryCycle />
-      <Divider />
-      <PaymentAmount />
     </section>
   );
 }

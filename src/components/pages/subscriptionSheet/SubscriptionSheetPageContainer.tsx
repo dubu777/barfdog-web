@@ -7,14 +7,20 @@ import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import useSubscription from "@/hooks/useSubscription";
 import SelectDeliveryOption from "./selectDeliveryOption/SelectDeliveryOption";
+import { FormProvider } from "react-hook-form";
+import { useSubscriptionForm } from "@/hooks/survey/useSubscriptionForm";
+import {
+  defaultSubscriptionValues,
+  subscriptionSchema,
+} from "@/utils/validation/subscriptionValidation";
 
-interface SubscriptionOptionsContainerProps {
+interface SubscriptionSheetPageContainerProps {
   reportId: number;
 }
 
-export default function SubscriptionOptionsContainer({
+export default function SubscriptionSheetPageContainer({
   reportId,
-}: SubscriptionOptionsContainerProps) {
+}: SubscriptionSheetPageContainerProps) {
   const searchParams = useSearchParams();
 
   const { data: recipeData } = useGetSurveyRecipe(reportId);
@@ -31,12 +37,18 @@ export default function SubscriptionOptionsContainer({
     handleSelectedVolume,
   } = useSubscription();
 
-  // 기본값을 빈 문자열로 지정하여 null을 방지
   const type = searchParams.get("type") ?? "";
 
-  switch (type) {
-    case "select-recipe":
-      return (
+  const formMethods = useSubscriptionForm<typeof subscriptionSchema>(
+    subscriptionSchema,
+    defaultSubscriptionValues
+  );
+
+  console.log('주문서 form', formMethods.watch());
+  
+  return (
+    <FormProvider {...formMethods}>
+      {type === "select-recipe" && recipeData && resultData && (
         <SelectRecipe
           onRecipeSelect={handleSelectedRecipe}
           selectedRecipes={selectedRecipes}
@@ -44,14 +56,22 @@ export default function SubscriptionOptionsContainer({
           inedibleFood={resultData.inedibleFood}
           reportId={reportId}
         />
-      );
-    case "select-option":
-      return <SelectDeliveryOption recipeData={recipeData} resultData={resultData} selectedRecipes={selectedRecipes} selectedPlan={selectedPlan} selectedVolume={selectedVolume}/>;
-    default:
-      return (
-        <div>
-          <p>잘못된 요청입니다.</p>
-        </div>
-      );
-  }
+      )}
+
+      {type === "select-option" && recipeData && resultData && (
+        <SelectDeliveryOption
+          recipeData={recipeData}
+          resultData={resultData}
+          selectedRecipes={selectedRecipes}
+          selectedPlan={selectedPlan}
+          selectedVolume={selectedVolume}
+        />
+      )}
+
+      {/* 최종 다음/제출 버튼 (SelectDeliveryOption 내부에 있던 ButtonDocked 대체) */}
+      {type === "select-option" && (
+        <button type="submit" style={{ display: "none" }} />
+      )}
+    </FormProvider>
+  );
 }

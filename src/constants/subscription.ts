@@ -1,6 +1,15 @@
 import { PlanInfo, PlanKey } from "@/types";
 
-export { subscriptionStatus, originSubscribeIdList, toppingOption, kcalPerGramMap, subscriptionPlanInfo, numberOfPacksPerDay }
+export {
+  subscriptionStatus,
+  originSubscribeIdList,
+  toppingOption,
+  kcalPerGramMap,
+  subscriptionPlanInfo,
+  numberOfPacksPerDay,
+  recipeTab,
+  deliveryOptions,
+};
 
 const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
   FULL: {
@@ -34,8 +43,8 @@ const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
   },
   // 삭제 예정
   TOPPING: {
-    id: 'TOPPING',
-    label: '토핑 플랜',
+    id: "TOPPING",
+    label: "토핑 플랜",
     numberOfPacksPerDay: 1,
     weeklyPaymentCycle: 4,
     totalNumberOfPacks: 20,
@@ -44,9 +53,9 @@ const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
 } as const;
 
 const numberOfPacksPerDay = {
-  1: '하루 한 끼',
-  2: '하루 두 끼',
-}
+  1: "하루 한 끼",
+  2: "하루 두 끼",
+};
 
 const toppingOption = {
   options: [
@@ -93,4 +102,32 @@ const subscriptionStatus: Record<string, string> = {
   ADMIN: "관리자 구독",
 };
 
+const recipeTab = [
+  {
+    label: "더블미트",
+    value: "double",
+  },
+  {
+    label: "싱글미트",
+    value: "single",
+  },
+  {
+    label: "토퍼",
+    value: "topper",
+  },
+  {
+    label: "간식",
+    value: "snack",
+  },
+];
 
+const deliveryOptions = {
+  mealFrequency: [
+    { label: "하루 한 끼", value: "1", discountRate: "3%" },
+    { label: "하루 두 끼", value: "2", discountRate: "5%" },
+  ],
+  deliveryCycle: [
+    { label: "2주", value: "2" },
+    { label: "4주", value: "4" },
+  ]
+};

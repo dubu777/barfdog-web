@@ -2,7 +2,7 @@ import { DefaultValues, Path, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SurveyStepKeys } from "@/utils/validation/surveyValidation";
-import { SURVEY_NO_AUTO_NEXT_STEP } from "@/constants";
+import { SURVEY_NO_AUTO_STEP } from "@/constants";
 
 
 /**
@@ -58,7 +58,7 @@ export function useSurveyForm<S extends yup.ObjectSchema<any>>(
   const handleChange = async () => {
     const valid = await trigger(currentStepKey as Path<yup.InferType<S>>);
     // 자동 넘김이 허용되어 있지 않은 스텝이면 아무 작업도 하지 않음
-    if (SURVEY_NO_AUTO_NEXT_STEP.has(currentStepKey)) return;
+    if (SURVEY_NO_AUTO_STEP.has(currentStepKey)) return;
 
     // 현재 스텝의 모든 필드가 채워지고 에러가 없으면 다음 스텝으로 넘어갑니다.
     if (valid && isCanNextStep()) {

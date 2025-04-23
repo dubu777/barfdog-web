@@ -1,4 +1,4 @@
-import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -31,7 +31,7 @@ export default function SurveyStep12({
     <>
       <SurveyTitle
         petName={petName}
-        config={SURVEY_TITLES.step12}
+        config={surveyTitles.step12}
         chipContent="더 정밀한 추천을 위해 3가지만 더 여쭤볼게요 🐶"
       />
       <Controller
@@ -51,7 +51,7 @@ export default function SurveyStep12({
               <DefaultText type="label2" color="gray500">
                 *복수응답가능
               </DefaultText>
-              {SURVEY_FORM_INFO.dogDietHealth.currentMeal.options.map(
+              {surveyFormInfo.dogDietHealth.currentMeal.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

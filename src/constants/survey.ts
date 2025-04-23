@@ -37,22 +37,22 @@ import FillSkin from "public/images/survey/IconFill-Skin.svg";
 import FillSkincare from "public/images/survey/IconFill-Skincare.svg";
 
 export {
-  SURVEY_FORM_INFO,
-  RECIPE_TEMP_DATA,
-  SURVEY_NO_AUTO_NEXT_STEP,
+  surveyFormInfo,
+  recipeTempData,
+  SURVEY_NO_AUTO_STEP,
   NONE_VALUE,
-  SURVEY_SECTIONS,
-  SURVEY_TITLES,
+  surveySections,
+  surveyTitles,
   CRITICAL_DISEASES,
 };
 
-const SURVEY_SECTIONS = [
+const surveySections = [
   { key: "dogBasicInfo", label: "기본 정보", steps: 6 },
   { key: "dogLifestyle", label: "생활 정보", steps: 5 },
   { key: "dogDietHealth", label: "식단/건강", steps: 3 },
 ];
 
-const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
+const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
   step1: {
     titleTemplates: ["반려견에 대해 알려주세요"],
   },
@@ -104,7 +104,7 @@ const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
   },
 };
 
-const SURVEY_FORM_INFO = {
+const surveyFormInfo = {
   dogBasicInfo: {
     gender: {
       title: "성별",
@@ -674,6 +674,7 @@ const CRITICAL_DISEASES = [
 export interface RecipeTempData {
   id: number;
   name: string;
+  englishName: string;
   imageURL: string;
   ingredients: string[];
   efficacy: string[];
@@ -686,10 +687,11 @@ export interface TempRecipeDto {
   imageURL: string;
 }
 
-const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
+const recipeTempData: Record<number, RecipeTempData> = {
   5: {
     id: 5,
     name: "스타터 프리미엄",
+    englishName: "STARTER PREMIUM",
     imageURL: "/images/recipe/starter_premium.png",
     ingredients: ["닭", "칠면조"],
     efficacy: ["구토•설사", "관절 건강"],
@@ -698,6 +700,7 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   6: {
     id: 6,
     name: "터키앤비프",
+    englishName: "TURKEY & BEEF",
     imageURL: "/images/recipe/turkey_and_beef.png",
     ingredients: ["칠면조", "소"],
     efficacy: ["구토•설사", "관절 건강"],
@@ -706,6 +709,7 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   7: {
     id: 7,
     name: "덕앤램",
+    englishName: "DUCK & LAMB",
     imageURL: "/images/recipe/duck_and_lamb.png",
     ingredients: ["오리", "양"],
     efficacy: ["구토•설사", "관절 건강"],
@@ -714,6 +718,7 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   8: {
     id: 8,
     name: "램앤비프",
+    englishName: "LAMB & BEEF",
     imageURL: "/images/recipe/lamb_and_beef.png",
     ingredients: ["양", "소"],
     efficacy: ["구토•설사", "관절 건강"],
@@ -722,6 +727,7 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   9: {
     id: 9,
     name: "프리미엄 치킨",
+    englishName: "PREMIUM CHICKEN",
     imageURL: "/images/recipe/premium_chicken.png",
     ingredients: ["닭"],
     efficacy: ["구토•설사", "관절 건강"],
@@ -730,6 +736,7 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   10: {
     id: 10,
     name: "프리미엄 터키",
+    englishName: "PREMIUM TURKEY",
     imageURL: "/images/recipe/premium_turkey.png",
     ingredients: ["칠면조"],
     efficacy: ["구토•설사", "관절 건강"],
@@ -738,23 +745,25 @@ const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
   11: {
     id: 11,
     name: "프리미엄 램",
+    englishName: "PREMIUM LAMB",
     imageURL: "/images/recipe/premium_lamb.png",
-    ingredients: [""],
+    ingredients: ["양"],
     efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
   12: {
     id: 12,
     name: "프리미엄 비프",
+    englishName: "PREMIUM BEEF",
     imageURL: "/images/recipe/premium_beef.png",
-    ingredients: ["양"],
+    ingredients: ["소"],
     efficacy: ["구토•설사", "관절 건강"],
     type: "single",
   },
 };
 
 // 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
-const SURVEY_NO_AUTO_NEXT_STEP = new Set<SurveyStepKeys>([
+const SURVEY_NO_AUTO_STEP = new Set<SurveyStepKeys>([
   "step3",
   "step10",
   "step11",

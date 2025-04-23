@@ -7,15 +7,18 @@ export const selectDeliveryOptionContainer = style({
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
-  padding: '79px 0 123px 0',
+  paddingBottom: "85px",
   backgroundColor: themeVars.colors.gray.gray0,
 });
+
 
 
 
 export const selectOptionWrapper = style({
   display: "flex",
   flexDirection: "column",
+  alignItems: "flex-start",
   width: "100%",
-  padding: '0 20px',
+  padding: '28px 20px',
+  gap: "16px",
 });

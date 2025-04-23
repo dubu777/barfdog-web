@@ -1,4 +1,4 @@
-import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
 import * as styles from "./SurveySteps.css";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
@@ -28,7 +28,7 @@ export default function SurveyStep3({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={SURVEY_TITLES.step3} />
+      <SurveyTitle petName={petName} config={surveyTitles.step3} />
       <Controller
         name="step3.dogSize"
         control={control}
@@ -42,7 +42,7 @@ export default function SurveyStep3({
           );
           return (
             <SurveyButtonGroup title="견사이즈">
-              {SURVEY_FORM_INFO.dogBasicInfo.dogSize.options.map((option) => (
+              {surveyFormInfo.dogBasicInfo.dogSize.options.map((option) => (
                 <ImageButton
                   key={option.label}
                   label={option.label}

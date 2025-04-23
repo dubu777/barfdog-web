@@ -1,4 +1,4 @@
-import { NONE_VALUE, SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { NONE_VALUE, surveyFormInfo, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -29,7 +29,7 @@ export default function SurveyStep13({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={SURVEY_TITLES.step13} />
+      <SurveyTitle petName={petName} config={surveyTitles.step13} />
 
       <Controller
         name="step13.supplement"
@@ -55,7 +55,7 @@ export default function SurveyStep13({
               <DefaultText type="label2" color="gray500">
                 *복수응답가능
               </DefaultText>
-              {SURVEY_FORM_INFO.dogDietHealth.supplements.options.map(
+              {surveyFormInfo.dogDietHealth.supplements.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

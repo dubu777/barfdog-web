@@ -1,4 +1,4 @@
-import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
 import * as styles from "./SurveySteps.css";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -15,11 +15,11 @@ export default function SurveyStep4({
   petName,
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
-  const dogTypeOptions = SURVEY_FORM_INFO.dogBasicInfo.dogType.options;
+  const dogTypeOptions = surveyFormInfo.dogBasicInfo.dogType.options;
 
   return (
     <>
-      <SurveyTitle petName={petName} config={SURVEY_TITLES.step4} />
+      <SurveyTitle petName={petName} config={surveyTitles.step4} />
       
       <Controller
         name="step4.dogType" // surveyStepsSchema에 있는 필드 이름

@@ -3,9 +3,9 @@ import * as styles from './ChangeBottomSheet.css';
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import SurveyButton from "@/components/pages/subscription/survey/surveyButton/SurveyButton";
 import { numberOfPacksPerDay, subscriptionPlanInfo } from "@/constants";
 import { PlanKey } from "@/types";
+import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
 
 interface SelectedInfo {
 	plan: PlanKey;
@@ -102,8 +102,7 @@ const ChangeBottomSheet = ({
 										value={item.value}
 										isChecked={item.isChecked}
 										label={item.label}
-										onChange={handleChange}
-										layoutType='grid'
+										onToggle={handleChange}
 										chipText={item.chipText || undefined}
 									/>
 								)

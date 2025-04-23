@@ -1,4 +1,4 @@
-import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -43,11 +43,11 @@ export default function SurveyStep11({
             <>
               <SurveyTitle
                 petName={petName}
-                config={SURVEY_TITLES.step11}
+                config={surveyTitles.step11}
                 onReselect={onReselect}
               />
               <SurveyGridButtonGroup>
-                {SURVEY_FORM_INFO.dogLifestyle.healthConcerns.options.map(
+                {surveyFormInfo.dogLifestyle.healthConcerns.options.map(
                   (option) => (
                     <ImageButton
                       key={option.value}

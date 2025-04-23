@@ -111,7 +111,7 @@ export function useGeneralPayment({
         requestIamportPayment(paymentParams);
       } catch (error) {
         console.error("결제 요청 실패:", error);
-        router.push("/order/order-failed");
+        // router.push("/order/order-failed");
       } finally {
         setIsProcessing(false);
       }

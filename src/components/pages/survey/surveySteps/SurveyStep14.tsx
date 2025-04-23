@@ -1,4 +1,4 @@
-import { NONE_VALUE, SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { NONE_VALUE, surveyFormInfo, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -27,7 +27,7 @@ export default function SurveyStep14({
     <>
       <SurveyTitle
         petName={petName}
-        config={SURVEY_TITLES.step14}
+        config={surveyTitles.step14}
         chipContent="마지막 질문이에요! 🎉"
         chipColor="red"
       />
@@ -52,7 +52,7 @@ export default function SurveyStep14({
           };
           return (
               <SurveyGridButtonGroup>
-                {SURVEY_FORM_INFO.dogDietHealth.healthIssues.options.map(
+                {surveyFormInfo.dogDietHealth.healthIssues.options.map(
                   (option) => (
                     <ImageButton
                       key={option.value}

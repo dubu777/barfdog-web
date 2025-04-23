@@ -11,7 +11,6 @@ export const containerBaseStyle = style({
 	background: themeVars.colors.gray.gray0,
 	borderTop: `1px solid ${themeVars.colors.gray.gray200}`,
 	margin: '0 auto',
-	maxWidth: "600px",
 	bottom: 0,
 	left: '50%',
 	transform: 'translateX(-50%)',

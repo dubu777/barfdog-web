@@ -26,7 +26,6 @@ import CouponCard from "./couponCard/CouponCard";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/modal/Modal";
-import { AnimatePresence, motion } from "framer-motion";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 

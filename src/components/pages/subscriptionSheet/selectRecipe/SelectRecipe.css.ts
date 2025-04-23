@@ -7,8 +7,9 @@ export const recipeSelectContainer = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  justifyContent: "flex-start",
   width: "100%",
-  padding: '79px 20px 123px 20px',
+  paddingBottom: '105px',
   backgroundColor: themeVars.colors.gray.gray50,
 });
 
@@ -17,15 +18,28 @@ export const recipeSelectTitleWrapper = style({
   flexDirection: "column",
   alignItems: "flex-start",
   width: "100%",
-  gap: "12px",
+  gap: "4px",
+  padding: "40px 20px 0px 20px",
+  backgroundColor: themeVars.colors.gray.gray0,
 });
+
+export const recipeTabBarWrapper = style({
+  position: "sticky",
+  top: "52px",
+  zIndex: 1,
+  display: "flex",
+  justifyContent: "flex-start",
+  width: "100%",
+  padding: "10px 20px 20px 20px",
+  backgroundColor: themeVars.colors.gray.gray0,
+});
+
 
 export const recipeSelectWrapper = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
-  gap: "40px",
 });
 
 export const recipeSelectBox = style({
@@ -33,6 +47,7 @@ export const recipeSelectBox = style({
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
+  padding: "32px 20px",
 });
 
 export const recipeTitleWrapper = style({
@@ -43,21 +58,13 @@ export const recipeTitleWrapper = style({
   marginBottom: "20px",
 });
 
-export const meatTypeButtonWrapper = style({
-  display: "flex",
-  justifyContent: "flex-start",
-  width: "100%",
-  marginTop: "40px",
-  marginBottom: "24px",
-  gap: '6px',
-});
 
 export const recipeCardWrapper = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
-  gap: "16px",
+  gap: "8px",
 });
 
 

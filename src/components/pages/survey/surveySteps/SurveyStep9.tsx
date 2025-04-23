@@ -2,7 +2,7 @@
 
 
 import * as styles from "./SurveySteps.css";
-import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyButton from "../surveyButton/SurveyButton";
@@ -22,7 +22,7 @@ export default function SurveyStep9({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={SURVEY_TITLES.step9} />
+      <SurveyTitle petName={petName} config={surveyTitles.step9} />
       <Controller
         name="step9.snackFrequency"
         control={control}
@@ -37,7 +37,7 @@ export default function SurveyStep9({
           );
           return (
             <div className={styles.colSurveyButtonWrapper}>
-              {SURVEY_FORM_INFO.dogLifestyle.snackFrequency.options.map(
+              {surveyFormInfo.dogLifestyle.snackFrequency.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

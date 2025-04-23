@@ -1,4 +1,4 @@
-import { SURVEY_FORM_INFO } from "@/constants";
+import { surveyFormInfo } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import * as styles from "./SurveySteps.css";
@@ -66,7 +66,7 @@ export default function SurveyStep1({
           );
           return (
             <SurveyButtonGroup title="성별">
-              {SURVEY_FORM_INFO.dogBasicInfo.gender.options.map((option) => (
+              {surveyFormInfo.dogBasicInfo.gender.options.map((option) => (
                 <ImageButton
                   key={option.value}
                   label={option.label}
@@ -110,7 +110,7 @@ export default function SurveyStep1({
 
           return (
             <SurveyButtonGroup title="중성화 여부">
-              {SURVEY_FORM_INFO.dogBasicInfo.isNeutered.options.map(
+              {surveyFormInfo.dogBasicInfo.isNeutered.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

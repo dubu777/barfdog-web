@@ -5,7 +5,7 @@ import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/Mo
 import { formatDate } from "@/utils";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
-import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
 import SurveyButton from "../surveyButton/SurveyButton";
 import * as styles from "./SurveySteps.css";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -23,7 +23,7 @@ export default function SurveyStep2({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={SURVEY_TITLES.step2}/>
+      <SurveyTitle petName={petName} config={surveyTitles.step2}/>
       <Controller
         name="step2.birthDate"
         control={control}
@@ -67,7 +67,7 @@ export default function SurveyStep2({
           );
           return (
             <div className={styles.rowSurveyButtonWrapper}>
-              {SURVEY_FORM_INFO.dogBasicInfo.isSenior.options.map(
+              {surveyFormInfo.dogBasicInfo.isSenior.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

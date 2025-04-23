@@ -1,4 +1,3 @@
-
 import * as styles from "../../Order.css";
 import {
   dehydrate,
@@ -11,6 +10,7 @@ import SubscriptionOrderContainer from "@/components/pages/order/subscription/su
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
 import { prefetchGetSubscriptionOrder } from "@/api/order/queries/usePrefetchGetSubscriptionOrder";
+import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 
 interface SubscriptionPageProps {
   searchParams: Record<string, string | string[] | undefined>;
@@ -20,7 +20,7 @@ export default async function SubscriptionPage({
   searchParams,
 }: SubscriptionPageProps) {
   const subscribeId = Number(searchParams.subscribeId);
-  
+
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionOrder(queryClient, subscribeId);
   await prefetchGetAddressList(queryClient);
@@ -34,7 +34,9 @@ export default async function SubscriptionPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<div>Loading...</div>}>
-            <SubscriptionOrderContainer subscribeId={subscribeId}/>
+            <NavigationGuard>
+              <SubscriptionOrderContainer subscribeId={subscribeId} />
+            </NavigationGuard>
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>
