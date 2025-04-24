@@ -6,7 +6,7 @@ import * as styles from "./SurveySteps.css";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyGridButtonGroup from "../surveyGridButtonGroup/SurveyGridButtonGroup";
 import ImageButton from "../imageButton/ImageButton";
-import { colStartWrapper } from "../../order/common/deliveryAddress/DeliveryAddress.css";
+import { colStartWrapper } from "../../checkout/common/deliveryAddress/DeliveryAddress.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 

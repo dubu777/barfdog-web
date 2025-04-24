@@ -1,18 +1,16 @@
 import { themeVars } from './theme.css';
 import { globalStyle, style } from '@vanilla-extract/css';
 import { recipe } from "@vanilla-extract/recipes";
-import { he } from 'date-fns/locale';
 
-export const commonLayoutStyle = style({
+
+export const commonLayoutContainer = style({
+  display: 'flex',
+  flexDirection: 'column',
   width: '100%',
+  minHeight: "100%",
   minWidth: '320px',
   maxWidth: '600px',
   margin: '0 auto',
-})
-
-export const commonLayoutContainer = style([commonLayoutStyle, {
-  display: 'flex',
-  flexDirection: 'column',
   backgroundColor: themeVars.colors.gray.gray0,
   '-ms-user-select': 'none',
   '-moz-user-select': '-moz-none',
@@ -20,7 +18,7 @@ export const commonLayoutContainer = style([commonLayoutStyle, {
   '-khtml-user-select': 'none',
   'user-select': 'none',
   position: 'relative',
-}]);
+});
 
 
 export const ellipsis = recipe({
@@ -162,6 +160,9 @@ export const commonWrapper = recipe({
       between: {
         justifyContent: "space-between",
       },
+      end: {
+        justifyContent: "flex-end",
+      }
     },
     align: {
       center: {
@@ -172,6 +173,9 @@ export const commonWrapper = recipe({
       },
       between: {
         alignItems: "space-between",
+      },
+      end: {
+        alignItems: "flex-end",
       },
     },
     height: {

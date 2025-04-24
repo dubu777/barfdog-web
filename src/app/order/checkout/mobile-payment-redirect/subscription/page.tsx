@@ -82,7 +82,7 @@ export default function MobileSubscriptionPaymentRedirect() {
         // 2) 사용자가 결제창을 닫거나 취소 버튼 클릭한 경우
         if (errorMsg === "결제를 취소하였습니다.") {
           addToast("결제를 취소하였습니다.", "above-button");
-          window.location.replace(
+          router.push(
             `/order/checkout/subscription?subscribeId=${subscriptionId}`
           );
           return;

@@ -4,6 +4,12 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const footerContainer = recipe({
   base: {
+    width: '100%',
+    minHeight: '100px',
+    height: "fit-content",
+    minWidth: '320px',
+    maxWidth: '600px',
+    margin: '0 auto',
     zIndex: 20,
     backgroundColor: themeVars.backgroundColors.grey7E,
     color: themeVars.colors.gray.gray0,

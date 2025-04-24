@@ -10,6 +10,7 @@ export const progressBarBackground = style({
   height: '20px',
   backgroundColor: themeVars.colors.gray.gray50,
   padding: '8px 20px',
+  zIndex: 1,
 })
 
 export const progressBarContainer = style({

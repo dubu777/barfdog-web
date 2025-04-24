@@ -2,9 +2,9 @@ import { PlanInfo, PlanKey } from "@/types";
 
 export {
   subscriptionStatus,
-  originSubscribeIdList,
-  toppingOption,
-  kcalPerGramMap,
+  DEFAULT_MEALS_PER_DAY,
+  ORIGIN_SUBSCRIBE_ID_SET,
+  LEGACY_RECIPE_CONSTANTS,
   subscriptionPlanInfo,
   numberOfPacksPerDay,
   recipeTab,
@@ -57,22 +57,12 @@ const numberOfPacksPerDay = {
   2: "하루 두 끼",
 };
 
-const toppingOption = {
-  options: [
-    { label: "80%", value: "0.8" },
-    { label: "60%", value: "0.6" },
-    { label: "40%", value: "0.4" },
-    { label: "20%", value: "0.2" },
-  ],
-};
 
-const kcalPerGramMap: Record<string, number> = {
-  "STARTER PREMIUM +": 1.49462,
-  "TURKEY&BEEF +": 1.46324,
-  "DUCK&LAMB +": 1.47532,
-  "LAMB&BEEF +": 1.55097,
-};
-const originSubscribeIdList = [
+// 기본 하루 끼니 수
+const DEFAULT_MEALS_PER_DAY = 2;
+
+// 기존 구독 회원들에게 적용할 레거시 상수 (변경 이전 가격/그램)
+const ORIGIN_SUBSCRIBE_ID_SET = new Set<number>([
   27, 50, 98, 110, 115, 116, 125, 130, 134, 137, 139, 140, 190, 206, 213, 215,
   216, 229, 242, 263, 285, 319, 324, 355, 386, 391, 404, 452, 509, 565, 619,
   788, 795, 868, 891, 896, 1055, 1086, 1360, 1462, 1550, 1649, 1666, 1673, 1936,
@@ -83,7 +73,15 @@ const originSubscribeIdList = [
   3338, 3363, 3364, 3373, 3376, 3382, 3389, 3403, 3487, 3499, 3501, 3659, 3671,
   3709, 3743, 3772, 3783, 3788, 3804, 3830, 3864, 3893, 3895, 3903, 3907, 3912,
   3914, 3915, 3925, 3926, 3931, 3941, 3942, 3944, 3949, 3958, 3965,
-];
+]);
+
+// 레거시 계산용 상수 (레시피 ID → { gramPerKcal, pricePerGram })
+const LEGACY_RECIPE_CONSTANTS: Record<number, { gramPerKcal: number; pricePerGram: number }> = {
+  5: { gramPerKcal: 1.49462, pricePerGram: 35.649 },
+  6: { gramPerKcal: 1.46324, pricePerGram: 39.9 },
+  7: { gramPerKcal: 1.47532, pricePerGram: 40.452 },
+  8: { gramPerKcal: 1.55097, pricePerGram: 45.414 },
+};
 
 const subscriptionStatus: Record<string, string> = {
   // BEFORE_PAYMENT: '구독 비활성',

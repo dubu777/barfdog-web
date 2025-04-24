@@ -3,7 +3,7 @@ import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
-import DeliveryModal from "@/components/pages/order/common/modal/deliveryModal/DeliveryModal";
+import DeliveryModal from "@/components/pages/checkout/common/modal/deliveryModal/DeliveryModal";
 import useModal from "@/hooks/useModal";
 import { formatPhoneNumber } from "@/utils";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";

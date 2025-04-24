@@ -2,7 +2,7 @@ import * as styles from "./DogImageButton.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 
 import Image from "next/image";
-import { colStartWrapper } from "../../order/common/deliveryAddress/DeliveryAddress.css";
+import { colStartWrapper } from "../../checkout/common/deliveryAddress/DeliveryAddress.css";
 
 interface DogImageButtonProps<T> {
   label: string;

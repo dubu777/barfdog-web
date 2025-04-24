@@ -51,7 +51,7 @@ export default function MobileGeneralPaymentRedirect() {
         // 2) 사용자가 결제창을 닫거나 취소 버튼 클릭한 경우
         if (errorMsg === "결제를 취소하였습니다.") {
           addToast("결제를 취소하였습니다.", "above-button");
-          window.location.replace('/order/checkout/general');
+          router.push("/order/checkout/general");
           return;
         }
 

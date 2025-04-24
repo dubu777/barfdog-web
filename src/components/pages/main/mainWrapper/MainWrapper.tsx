@@ -31,7 +31,6 @@ const MainWrapper = () => {
       <MainSurvey />
       <MainService />
       <Footer />
-      <BottomBanner />
     </section>
   );
 };

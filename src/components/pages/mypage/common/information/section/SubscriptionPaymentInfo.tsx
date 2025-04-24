@@ -5,7 +5,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import Divider from "@/components/common/divider/Divider";
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
 import Chips from "@/components/common/chips/Chips";
-import CouponModal from "@/components/pages/order/common/modal/couponModal/CouponModal";
+import CouponModal from "@/components/pages/checkout/common/modal/couponModal/CouponModal";
 import useModal from "@/hooks/useModal";
 import Modal from "@/components/common/modal/Modal";
 import {IAMPORT_MIN_PAYMENT_PRICE, ORDER_TYPE} from "@/constants";

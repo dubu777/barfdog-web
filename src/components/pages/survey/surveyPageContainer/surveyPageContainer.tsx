@@ -20,7 +20,6 @@ import { useEffect, useRef, useState } from "react";
 import SurveyResultLoading from "../surveyResultLoading/SurveyResultLoading";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
-import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 
 export default function SurveyPageContainer() {
   const router = useRouter();
@@ -112,7 +111,6 @@ export default function SurveyPageContainer() {
 
   return (
     <div className={styles.surveyLayoutContainer}>
-      <NavigationGuard>
         <Header
           leftElement={
             !isFirstStep && (
@@ -123,6 +121,7 @@ export default function SurveyPageContainer() {
           }
           showBackButton={!isFirstStep}
           showCloseButton
+          onClose={() => router.back()}
           onBack={handlePrevStep}
           backgroundColor="gray50"
           leftSlotGap="sm"
@@ -144,7 +143,6 @@ export default function SurveyPageContainer() {
           onPrimaryClick={handleFooterButtonClick}
           isPrimaryDisabled={!surveyFormMethods.isCanNextStep}
         />
-      </NavigationGuard>
       <CriticalDiseaseAlertBottomSheet
         isOpen={isOpen}
         onClose={onClose}
