@@ -1,17 +1,16 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import SelectRecipe from "./selectRecipe/SelectRecipe";
 import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
-import useSubscription from "@/hooks/useSubscription";
-import SelectDeliveryOption from "./selectDeliveryOption/SelectDeliveryOption";
 import { FormProvider } from "react-hook-form";
 import { useSubscriptionForm } from "@/hooks/survey/useSubscriptionForm";
 import {
   defaultSubscriptionValues,
   subscriptionSchema,
 } from "@/utils/validation/subscriptionValidation";
+import RecipeOptions from "./recipeOptions/RecipeOptions";
+import DeliveryOptions from "./deliveryOptions/DeliveryOptions";
 
 interface SubscribePageContainerProps {
   reportId: number;
@@ -25,14 +24,6 @@ export default function SubscribePageContainer({
   const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
   // 레시피, 플랜 상태 관리 커스텀 훅
-  const {
-    selectedPlan,
-    selectedRecipes,
-    selectedVolume,
-    handleSelectedPlan,
-    handleSelectedRecipe,
-    handleSelectedVolume,
-  } = useSubscription();
 
   const type = searchParams.get("type") ?? "";
 
@@ -46,9 +37,7 @@ export default function SubscribePageContainer({
   return (
     <FormProvider {...formMethods}>
       {type === "select-recipe" && recipeData && resultData && (
-        <SelectRecipe
-          onRecipeSelect={handleSelectedRecipe}
-          selectedRecipes={selectedRecipes}
+        <RecipeOptions
           recipeData={recipeData}
           inedibleFood={resultData.inedibleFood}
           reportId={reportId}
@@ -56,12 +45,8 @@ export default function SubscribePageContainer({
       )}
 
       {type === "select-option" && recipeData && resultData && (
-        <SelectDeliveryOption
-          recipeData={recipeData}
-          resultData={resultData}
-          selectedRecipes={selectedRecipes}
-          selectedPlan={selectedPlan}
-          selectedVolume={selectedVolume}
+        <DeliveryOptions
+
         />
       )}
 

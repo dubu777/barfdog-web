@@ -1,30 +1,42 @@
 import * as yup from "yup";
 
 export const subscriptionSchema = yup.object().shape({
-  mealFrequency: yup.string().required("식사량은 필수입니다."),
-  deliveryCycle: yup.string().required("배송주기는 필수입니다."),
-  nextPaymentPrice: yup.string().required("nextPaymentPrice는 필수입니다."),
-  oneDayRecommendKcal: yup
-    .string()
-    .required("oneDayRecommendKcal는 필수입니다."),
-  mealAmount: yup.string().required("급여량는 필수입니다."),
-  recipeIdList: yup
+  mealFrequency: yup.number().required("식사량은 필수입니다."),
+  deliveryCycle: yup.number().required("배송주기는 필수입니다."),
+  finalPrice: yup.number().required("finalPrice는 필수입니다."),
+  recipeList: yup
     .array()
-    .of(yup.string().defined())
+    .of(
+      yup.object({
+        recipeId: yup.number().required("레시피 ID는 필수입니다."),
+        packGrams: yup
+        .number()
+        .min(20, "최소 20g 이상이어야 합니다.")
+        .max(500, "최대 500g 이하이어야 합니다.")
+        .required("급여량은 필수입니다."),
+        orderPrice: yup.number().required("결제 금액은 필수입니다."),
+      })
+    )
     .min(1, "레시피를 선택해주세요.")
     .required(),
-  optionList: yup.array().of(yup.string().defined()),
+    generalItemList: yup
+    .array()
+    .of(
+      yup.object({
+        itemId: yup.number().required("상품 ID는 필수입니다."),
+        amount: yup.number().required("상품 수량은 필수입니다."),
+        orderPrice: yup.number().required("상품 금액은 필수입니다."),
+      })
+    ),
 });
 
 export type SubscriptionValues = yup.InferType<typeof subscriptionSchema>;
 export type SubscriptionKeys = keyof SubscriptionValues;
 
 export const defaultSubscriptionValues: SubscriptionValues = {
-  mealFrequency: "",
-  deliveryCycle: "",
-  nextPaymentPrice: "",
-  oneDayRecommendKcal: "",
-  mealAmount: "",
-  recipeIdList: [],
-  optionList: [],
+  mealFrequency: 0,
+  deliveryCycle: 0,
+  finalPrice: 0,
+  recipeList: [],
+  generalItemList: [],
 }

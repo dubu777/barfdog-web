@@ -9,6 +9,7 @@ export {
   numberOfPacksPerDay,
   recipeTab,
   deliveryOptions,
+  recipeDetailTab,
 };
 
 const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
@@ -109,15 +110,30 @@ const recipeTab = [
     label: "싱글미트",
     value: "single",
   },
-  {
-    label: "토퍼",
-    value: "topper",
-  },
-  {
-    label: "간식",
-    value: "snack",
-  },
+  // {
+  //   label: "토퍼",
+  //   value: "topper",
+  // },
+  // {
+  //   label: "간식",
+  //   value: "snack",
+  // },
 ];
+
+  const recipeDetailTab = [
+    {
+      label: "급여량",
+      value: "amount",
+    },
+    {
+      label: "효능",
+      value: "benefits",
+    },
+    {
+      label: "성분",
+      value: "ingredients",
+    },
+  ];
 
 const deliveryOptions = {
   mealFrequency: [

@@ -1,107 +1,102 @@
-import { themeVars } from './theme.css';
-import { globalStyle, style } from '@vanilla-extract/css';
+import { themeVars } from "./theme.css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-
 export const commonLayoutContainer = style({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
   minHeight: "100%",
-  minWidth: '320px',
-  maxWidth: '600px',
-  margin: '0 auto',
+  minWidth: "320px",
+  maxWidth: "600px",
+  margin: "0 auto",
   backgroundColor: themeVars.colors.gray.gray0,
-  '-ms-user-select': 'none',
-  '-moz-user-select': '-moz-none',
-  '-webkit-user-select': 'none',
-  '-khtml-user-select': 'none',
-  'user-select': 'none',
-  position: 'relative',
+  "-ms-user-select": "none",
+  "-moz-user-select": "-moz-none",
+  "-webkit-user-select": "none",
+  "-khtml-user-select": "none",
+  "user-select": "none",
+  position: "relative",
 });
-
 
 export const ellipsis = recipe({
   base: {
-    width: '100%',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
-    display: '-webkit-box !important',
-    '-webkit-box-orient': 'vertical',
+    width: "100%",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
+    display: "-webkit-box !important",
+    "-webkit-box-orient": "vertical",
   },
   variants: {
     lineSize: {
       line1: {
-        whiteSpace: 'nowrap',
-        webkitLineClamp: 'none',
-        webkitBoxOrient: 'none',
-        lineHeight: 'normal',
+        whiteSpace: "nowrap",
+        webkitLineClamp: "none",
+        webkitBoxOrient: "none",
+        lineHeight: "normal",
       },
       line2: {
-        '-webkit-line-clamp': '2',
+        "-webkit-line-clamp": "2",
       },
       line3: {
-        '-webkit-line-clamp': '3',
+        "-webkit-line-clamp": "3",
       },
       line4: {
-        '-webkit-line-clamp': '4',
+        "-webkit-line-clamp": "4",
       },
       line5: {
-        '-webkit-line-clamp': '5',
+        "-webkit-line-clamp": "5",
       },
     },
     wordBreak: {
       keep: {
-        wordBreak: 'keep-all'
-      }
+        wordBreak: "keep-all",
+      },
     },
     whiteSpace: {
       pre: {
-        whiteSpace: 'pre-line',
-      }
+        whiteSpace: "pre-line",
+      },
     },
     align: {
       center: {
-        textAlign: 'center'
+        textAlign: "center",
       },
       left: {
-        textAlign: 'left',
-      }
-    }
+        textAlign: "left",
+      },
+    },
   },
-})
+});
 export const pointColor = style({ color: themeVars.colors.red.red });
 
-
 export const defaultWidth = style({
-  minWidth: '335px',
-  width: '80%',
+  minWidth: "335px",
+  width: "80%",
   marginTop: 0,
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  marginBottom: '60px',
-})
-
-export const inlineBlockSpan = style({
-  display: 'inline-block',
-  marginLeft: '8px',
+  marginLeft: "auto",
+  marginRight: "auto",
+  marginBottom: "60px",
 });
 
+export const inlineBlockSpan = style({
+  display: "inline-block",
+  marginLeft: "8px",
+});
 
-export const sanitizedHTML = style({})
-
+export const sanitizedHTML = style({});
 
 globalStyle(`${sanitizedHTML} *`, {
-  textAlign: 'unset',
-  font: 'auto'
+  textAlign: "unset",
+  font: "auto",
 });
 
 globalStyle(`${sanitizedHTML} img`, {
-  width: '100%',
-  maxWidth: '600px',
-  height: 'auto',
-  display: 'block',
-  margin: '0 auto',
+  width: "100%",
+  maxWidth: "600px",
+  height: "auto",
+  display: "block",
+  margin: "0 auto",
 });
 
 globalStyle(`${sanitizedHTML} h2`, {
@@ -112,34 +107,45 @@ globalStyle(`${sanitizedHTML} b, strong`, {
   fontWeight: themeVars.fontWeight.bold,
 });
 
-
 export const commonWrapper = recipe({
   base: {
     display: "flex",
-    width: "100%",
   },
   variants: {
     gap: {
-      0: {
-        gap: "0",
-      },
+      0: {},
       2: {
-        gap: "2px"
+        gap: "2px",
       },
       4: {
-        gap: "4px"
+        gap: "4px",
+      },
+      6: {
+        gap: "6px",
       },
       8: {
-        gap: "8px"
+        gap: "8px",
       },
       12: {
-        gap: "12px"
+        gap: "12px",
       },
       16: {
-        gap: "16px"
+        gap: "16px",
       },
       20: {
-        gap: "20px"
+        gap: "20px",
+      },
+    },
+    padding: {
+      0: {},
+      12: {
+        padding: "12px",
+      },
+      16: {
+        padding: "16px",
+      },
+      20: {
+        padding: "20px",
       },
     },
     direction: {
@@ -162,14 +168,14 @@ export const commonWrapper = recipe({
       },
       end: {
         justifyContent: "flex-end",
-      }
+      },
     },
     align: {
       center: {
         alignItems: "center",
       },
       start: {
-        alignItems: "flex-start", 
+        alignItems: "flex-start",
       },
       between: {
         alignItems: "space-between",
@@ -186,12 +192,42 @@ export const commonWrapper = recipe({
         height: "100vh",
       },
     },
+    backgroundColors: {
+      transparent: {
+        backgroundColor: "transparent",
+      },
+      gray0: {
+        backgroundColor: themeVars.colors.gray.gray0,
+      },
+      gray50: {
+        backgroundColor: themeVars.colors.gray.gray50,
+      },
+    },
+    width: {
+      full: {
+        width: "100%",
+      },
+      auto: {
+        width: "auto",
+      },
+    },
+    borderRadius: {
+      none: {
+      },
+      8: {
+        borderRadius: "8px",
+      },
+    }
   },
   defaultVariants: {
     gap: 0,
+    padding: 0,
     direction: "row",
     justify: "center",
     align: "center",
     height: "fit",
+    backgroundColors: "transparent",
+    width: "full",
+    borderRadius: "none",
   },
 });

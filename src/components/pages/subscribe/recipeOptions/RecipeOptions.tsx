@@ -1,6 +1,6 @@
 "use client";
 
-import * as styles from "./SelectRecipe.css";
+import * as styles from "./RecipeOptions.css";
 import RecipeCard from "./recipeCard/RecipeCard";
 import { recipeTempData, recipeTab } from "@/constants";
 import { RecipeData, RecipeDto } from "@/types";
@@ -10,24 +10,26 @@ import { useRouter } from "next/navigation";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
 import { useMemo, useRef } from "react";
+import useModal from "@/hooks/useModal";
+import { scrollToElement } from "@/utils/scrollToElement";
+import { getNameWithPossessiveSuffix } from "@/utils";
 
-interface SelectRecipeProps {
+interface RecipeOptionsProps {
   reportId: number;
   recipeData: RecipeData;
-  selectedRecipes: number[];
   inedibleFood: string;
-  onRecipeSelect: (recipeId: number) => void;
 }
 
-export default function SelectRecipe({
+export default function RecipeOptions({
   reportId,
   recipeData,
-  selectedRecipes,
   inedibleFood,
-  onRecipeSelect,
-}: SelectRecipeProps) {
-  const TABBAR_HEIGHT = 90;
+}: RecipeOptionsProps) {
   const router = useRouter();
+  const {isOpen, onClose, onToggle} = useModal();
+
+  const selectedRecipes = [1,2];
+
   // double과 single 레시피로 필터링 - 임시로 Api 데이터 변경전까지
   const doubleRecipes = Object.values(recipeTempData).filter(
     (recipe) => recipe.type === "double"
@@ -44,6 +46,7 @@ export default function SelectRecipe({
     ) as Record<number, RecipeDto>;
   }, [recipeData.recipeDtoList]);
 
+
  // 섹션별 ref
 const refs: Record<string, React.RefObject<HTMLDivElement>> = {
   double: useRef(null),
@@ -52,18 +55,11 @@ const refs: Record<string, React.RefObject<HTMLDivElement>> = {
   snack:  useRef(null),
 };
 
-// 스크롤 함수
-const scrollTo = (key: string) => {
-  const el = refs[key]?.current;
-  if (!el) return;
-  const targetY = el.getBoundingClientRect().top + window.scrollY - TABBAR_HEIGHT;
-  window.scrollTo({ top: targetY, behavior: "smooth" });
-};
-
 // 탭 배열에 onInit 붙이기
-const tabs = recipeTab.map(tab => ({
+const tabs = recipeTab.map((tab) => ({
   ...tab,
-  onInit: () => scrollTo(tab.value!),
+  onInit: () =>
+    scrollToElement(refs[tab.value!].current),
 }));
 
 
@@ -76,7 +72,7 @@ const tabs = recipeTab.map(tab => ({
   return (
     <section className={styles.recipeSelectContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
-        <DefaultText type="title2">정기배송 받을<br/>항목을 선택해 주세요</DefaultText>
+        <DefaultText type="title2">{getNameWithPossessiveSuffix(recipeData.dogName)}의 구독 레시피를<br/>선택해 주세요</DefaultText>
         <DefaultText type="body2" color="gray600">
           레시피는 최대 2가지를 선택할 수 있어요.
         </DefaultText>
@@ -104,9 +100,8 @@ const tabs = recipeTab.map(tab => ({
                 subscribeId={recipeData.subscribeId}
                 recipeDto={recipeDtoMap[recipeTempData.id]}
                 recommendId={recipeData.recommendRecipeId}
-                selectedRecipes={selectedRecipes}
-                onRecipeCardSelect={onRecipeSelect}
                 inedibleFood={inedibleFood}
+                dogName={recipeData.dogName}
               />
             ))}
           </div>
@@ -129,9 +124,8 @@ const tabs = recipeTab.map(tab => ({
                 subscribeId={recipeData.subscribeId}
                 recipeDto={recipeDtoMap[recipeTempData.id]}
                 recommendId={recipeData.recommendRecipeId}
-                selectedRecipes={selectedRecipes}
-                onRecipeCardSelect={onRecipeSelect}
                 inedibleFood={inedibleFood}
+                dogName={recipeData.dogName}
               />
             ))}
           </div>

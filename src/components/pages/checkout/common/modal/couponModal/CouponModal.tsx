@@ -8,7 +8,6 @@ import { ORDER_MESSAGE } from "@/constants";
 import { Coupon, OrderType } from "@/types";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useEffect, useState } from "react";
-import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useCouponStore } from "@/store/order/useCouponStore";
 import {
   calculateCouponDiscount,

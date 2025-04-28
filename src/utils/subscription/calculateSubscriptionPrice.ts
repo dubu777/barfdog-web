@@ -3,19 +3,20 @@ import { RecipeDto } from "@/types";
 import { roundTo } from "../numberUtils";
 
 export interface SubscriptionPriceBreakdown {
-  packPrice: number;
-  packGrams: number;
-  totalPrice?: number;
-  discountAmount?: number;
-  finalPrice?: number;
+  packGrams: number;       // 팩당 그램 수
+  packPrice: number;       // 팩당 가격
+  pricePer10g: number;     // 10g당 가격
+  totalPrice?: number;     // 할인 전 총액
+  discountAmount?: number; // 할인 금액
+  finalPrice?: number;     // 할인 후 결제액
 }
 
 export interface CalculateSubscriptionPriceInput {
   dailyRecommendKcal: number;        // 하루 권장 칼로리
   recipeDto: RecipeDto;              // 선택된 레시피
-  subscribeId: number;            // 구독 ID
-  deliveryCycleWeeks?: 2 | 4;        // 배송 주기 (있을 때만 할인 적용)
-  mealsPerDay?: 1 | 2;               // 하루 끼니 수 (있을 때만 할인 적용)
+  subscribeId: number;               // 구독 ID
+  deliveryCycleWeeks?: 2 | 4;        // 배송 주기
+  mealsPerDay?: 1 | 2;               // 하루 끼니 수
   customPackGrams?: number;          // 사용자가 설정한 한 팩당 그램
 }
 
@@ -24,7 +25,7 @@ export interface CalculateSubscriptionPriceOutput {
   custom?: SubscriptionPriceBreakdown;
 }
 
-/** 배송 팩 수 결정 (props 전달 시만 호출) */
+/** 배송 팩 수 결정 */
 function determinePacksPerCycle(
   mealsPerDay: 1 | 2,
   deliveryCycleWeeks: 2 | 4
@@ -35,7 +36,7 @@ function determinePacksPerCycle(
   throw new Error("유효하지 않은 값입니다.");
 }
 
-/** 할인율 결정 (props 전달 시만 호출) */
+/** 할인율 결정 */
 function determineDiscountRate(mealsPerDay: 1 | 2): number {
   return mealsPerDay === 1 ? 0.03 : 0.05;
 }
@@ -47,18 +48,21 @@ function computeBreakdown(
   packsPerCycle: number,
   discountRate: number
 ): SubscriptionPriceBreakdown {
-  const packPrice = packGrams * pricePerGram;
-  const totalPrice = packPrice * packsPerCycle;
-  const discountAmount = totalPrice * discountRate;
-  const rawFinalPrice = totalPrice - discountAmount;
+  // 중간 계산 (반올림 전 원시 값)
+  const rawPackPrice = roundTo(packGrams * pricePerGram, 0);
+  const rawTotalPrice = rawPackPrice * packsPerCycle;
+  const rawDiscountAmount = rawTotalPrice * discountRate;
+  const rawFinalPrice = rawTotalPrice - rawDiscountAmount;
+  const rawPricePer10g = roundTo(pricePerGram * 10, 0);
 
   // 최종 반환 시 소수점 자리수별 반올림
   return {
     packGrams: roundTo(packGrams, 1),           // 2째 자리에서 반올림
-    packPrice: roundTo(packPrice, 0),            // 1째 자리에서 반올림
-    totalPrice: roundTo(totalPrice, 0),          // 1째 자리에서 반올림
-    discountAmount: roundTo(discountAmount, 0),  // 1째 자리에서 반올림
-    finalPrice: roundTo(rawFinalPrice, 0),          // 1째 자리에서 반올림
+    packPrice: roundTo(rawPackPrice, 0),            // 1째 자리에서 반올림
+    totalPrice: roundTo(rawTotalPrice, 0),          // 1째 자리에서 반올림
+    discountAmount: roundTo(rawDiscountAmount, 0),  // 1째 자리에서 반올림
+    finalPrice: roundTo(rawFinalPrice, 0),         // 1째 자리에서 반올림
+    pricePer10g: roundTo(rawPricePer10g, 0), 
   };
 }
 /** 주문 금액 계산: deliveryCycleWeeks, mealsPerDay 없으면 packGrams와 packPrice만 반환 */
@@ -78,7 +82,7 @@ export function calculateSubscriptionPrice({
   : recipeDto;
   
   // 팩당 그램 계산
-  const recommendedGrams = (dailyRecommendKcal * gramPerKcal) / DEFAULT_MEALS_PER_DAY;
+  const recommendedPackGrams = roundTo((dailyRecommendKcal * gramPerKcal) / DEFAULT_MEALS_PER_DAY, 1);
   const hasDiscount = deliveryCycleWeeks != null && mealsPerDay != null;
 
   /** 할인 적용 여부에 따른 recommended 계산 */
@@ -87,7 +91,7 @@ export function calculateSubscriptionPrice({
       const packsPerCycle = determinePacksPerCycle(mealsPerDay!, deliveryCycleWeeks!);
       const discountRate = determineDiscountRate(mealsPerDay!);
       return computeBreakdown(
-        recommendedGrams,
+        roundTo(recommendedPackGrams, 1),
         pricePerGram,
         packsPerCycle,
         discountRate
@@ -95,8 +99,9 @@ export function calculateSubscriptionPrice({
     }
     // 할인 정보 없으면 packGrams, packPrice만 반환
     return {
-      packGrams: roundTo(recommendedGrams, 1),
-      packPrice: roundTo(recommendedGrams * pricePerGram, 0),
+      packGrams: roundTo(recommendedPackGrams, 1),
+      packPrice: roundTo(recommendedPackGrams * pricePerGram, 0),
+      pricePer10g: roundTo(pricePerGram * 10, 0),
     };
   }
 
@@ -114,9 +119,11 @@ export function calculateSubscriptionPrice({
       );
     }
     // 할인 정보 없으면 packGrams, packPrice만 반환
+    
     return {
-      packGrams: roundTo(recommendedGrams, 1),
-      packPrice: roundTo(recommendedGrams * pricePerGram, 0),
+      packGrams: roundTo(recommendedPackGrams, 1),
+      packPrice: roundTo(customPackGrams * pricePerGram, 0),
+      pricePer10g: roundTo(pricePerGram * 10, 0),
     };
   }
 

@@ -48,6 +48,7 @@ export const recipeSelectBox = style({
   alignItems: "center",
   width: "100%",
   padding: "32px 20px",
+  scrollMarginTop: "90px",
 });
 
 export const recipeTitleWrapper = style({

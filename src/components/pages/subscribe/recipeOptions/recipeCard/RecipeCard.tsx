@@ -13,6 +13,10 @@ import {
   SubscriptionPriceBreakdown,
 } from "@/utils/subscription/calculateSubscriptionPrice";
 import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import RecipeDetailModal from "../../modal/recipeDetailModal/RecipeDetailModal";
+import useModal from "@/hooks/useModal";
+import { useSubscriptionStore } from "@/store/useSubscriptionStore";
 
 interface RecipeCardProps {
   recipeTempData: RecipeTempData;
@@ -20,9 +24,8 @@ interface RecipeCardProps {
   recommendId: number;
   dailyRecommendKcal: number;
   subscribeId: number;
-  selectedRecipes: number[];
   inedibleFood: string;
-  onRecipeCardSelect: (recipeId: number) => void;
+  dogName: string;
 }
 
 export default function RecipeCard({
@@ -31,30 +34,45 @@ export default function RecipeCard({
   dailyRecommendKcal,
   subscribeId,
   recommendId,
-  selectedRecipes,
   inedibleFood,
-  onRecipeCardSelect,
+  dogName,
 }: RecipeCardProps) {
+  const setPriceSummary = useSubscriptionStore((state) => state.setPriceSummary);
+  const {isOpen, onClose, onToggle} = useModal();
   const isRecommend = recommendId === recipeTempData.id;
   const ingredientsText = recipeTempData.ingredients
     ?.filter((i) => i.trim() !== "")
     .join(", ");
-  const isSelected = selectedRecipes.includes(recipeTempData.id);
-  const [recommended, setRecommended] = useState<SubscriptionPriceBreakdown>({
-    packGrams: 0,
-    packPrice: 0,
-  });
-console.log("레시피", recipeDto);
+
+  const [priceBreakdown, setPriceBreakdown] =
+    useState<SubscriptionPriceBreakdown>({
+      packGrams: 0,
+      packPrice: 0,
+      pricePer10g: 0,
+    });
+  console.log("레시피", recipeDto);
 
   useEffect(() => {
-    const { recommended } = calculateSubscriptionPrice({
+    const { recommended, custom } = calculateSubscriptionPrice({
       dailyRecommendKcal,
       recipeDto,
       subscribeId,
+      // customPackGrams: 200
     });
-    setRecommended(recommended);
+    const target = custom ?? recommended;
+    // 필요한 두 필드만 뽑아서 저장
+    setPriceSummary(recipeTempData.id, {
+      packGrams: target.packGrams,
+      packPrice: target.packPrice,
+      pricePer10g: target.pricePer10g,
+    });
   }, [dailyRecommendKcal, recipeDto, subscribeId]);
-
+  const isSelected = false;
+  const handleToggleRecipe = () => {
+    if (!isSelected) {
+      onToggle();
+    }
+  };
   return (
     <motion.div
       className={styles.recipeCardContainer({
@@ -67,7 +85,6 @@ console.log("레시피", recipeDto);
       transition={{
         duration: 0.2,
       }}
-      onClick={() => onRecipeCardSelect(recipeTempData.id)}
     >
       <RecipeBadge ingredientsText={ingredientsText} />
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
@@ -111,23 +128,32 @@ console.log("레시피", recipeDto);
               </Chips>
             ))}
           </div>
+          <div className={commonWrapper({ gap: 4, justify: "start" })}>
+            <Chips variant="solid" color="gray700" size="sm" borderRadius="sm">
+              추천 급여량 {priceBreakdown.packGrams}g
+            </Chips>
+            <Chips variant="solid" color="gray700" size="sm" borderRadius="sm">
+              10g당 {priceBreakdown.pricePer10g.toLocaleString()}원
+            </Chips>
+          </div>
         </div>
       </div>
       <div className={commonWrapper({ gap: 4, justify: "end" })}>
-        <div className={styles.recipeGramInputBox}>
+      <div className={styles.recipeGramInputBox}>
           <DefaultText type="headline4" color="gray700">
-            {recommended.packGrams}g
+            {priceBreakdown.packGrams}g
           </DefaultText>
         </div>
         <div className={styles.recipeGramInputBox}>
           <DefaultText type="headline4" color="gray700">
-            {recommended.packPrice.toLocaleString()}원
+            한 팩 가격{priceBreakdown.packPrice.toLocaleString()}원
           </DefaultText>
         </div>
-        <Button type="primary" variant="outline" size="sm">
+        <Button type="primary" variant="outline" size="sm" textColor={isSelected ? "gray900" : "red"} onClick={handleToggleRecipe}>
           {isSelected ? "빼기" : "담기"}
         </Button>
       </div>
+      <RecipeDetailModal isOpen={isOpen} onClose={onClose} recipeTempData={recipeTempData} dogName={dogName}/>
     </motion.div>
   );
 }

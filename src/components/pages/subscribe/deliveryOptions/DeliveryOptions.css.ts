@@ -1,7 +1,7 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const selectDeliveryOptionContainer = style({
+export const deliveryOptionsContainer = style({
   position: 'relative',
   display: "flex",
   flexDirection: "column",

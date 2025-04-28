@@ -1,59 +1,56 @@
-import * as styles from './FullModalWrapper.css';
+import * as styles from "./FullModalWrapper.css";
 import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import Header from "@/components/layout/header/Header";
 
 interface FullModalWrapperProps {
-	isVisible: boolean;
-	handleClose: () => void;
-	handleGoBack?: () => void;
-	children: ReactNode;
-	headerTitle?: string;
-	className?: string;
+  isVisible: boolean;
+  handleClose: () => void;
+  handleGoBack?: () => void;
+  children: ReactNode;
+  headerTitle?: string;
+  className?: string;
 }
 
 const FullModalWrapper = ({
-	isVisible,
-	handleClose,
-	handleGoBack,
-	children,
-	headerTitle,
-	className,
+  isVisible,
+  handleClose,
+  handleGoBack,
+  children,
+  headerTitle,
+  className,
 }: FullModalWrapperProps) => {
-	return (
-		<AnimatePresence>
-			{isVisible && (
-				<ModalBackground isVisible={isVisible} onClose={handleClose} closeOnBackgroundClick={false} isDimmed={false}>
-					<motion.div
-						className={`${styles.modalContainer} ${className || ''}`}
-						onClick={(e) => e.stopPropagation()}
-						initial={{ y: "100%" }}
-						animate={{ y: "0%" }}
-						exit={{ y: "100%" }}
-						transition={{ duration: 0.2, ease: "easeInOut" }}
-					>
-						{headerTitle ? (
-							<>
-								<Header
-									centerTitle={headerTitle}
-									showCloseButton={!!handleClose}
-									showBackButton={!!handleGoBack}
-									onClose={handleClose}
-									onBack={handleGoBack}
-								/>
-								<div className={styles.modalContent}>
-									{children}
-								</div>
-							</>
-						) : (
-							children
-						)}
-					</motion.div>
-				</ModalBackground>
-			)}
-		</AnimatePresence>
-	);
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <ModalBackground
+          isVisible={isVisible}
+          onClose={handleClose}
+          closeOnBackgroundClick={false}
+          isDimmed={false}
+        >
+          <motion.div
+            className={`${styles.modalContainer} ${className || ""}`}
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: "100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "100%" }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            <Header
+              {...(headerTitle ? { centerTitle: headerTitle } : {})}
+              showCloseButton={!!handleClose}
+              showBackButton={!!handleGoBack}
+              onClose={handleClose}
+              onBack={handleGoBack}
+            />
+            <div className={styles.modalContent}>{children}</div>
+          </motion.div>
+        </ModalBackground>
+      )}
+    </AnimatePresence>
+  );
 };
 
 export default FullModalWrapper;

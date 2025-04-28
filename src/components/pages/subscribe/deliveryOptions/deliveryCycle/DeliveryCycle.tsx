@@ -1,30 +1,29 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { selectOptionWrapper } from "../SelectDeliveryOption.css";
-import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
-import { deliveryOptions } from "@/constants";
-import { commonWrapper } from "@/styles/common.css";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
+import { selectOptionWrapper } from "../DeliveryOptions.css";
 import { Controller, useFormContext } from "react-hook-form";
+import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
+import { commonWrapper } from "@/styles/common.css";
+import { deliveryOptions } from "@/constants";
+import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
 
-export default function MealFrequency() {
+export default function DeliveryCycle() {
   const { control } = useFormContext<SubscriptionValues>();
-
+  
   return (
     <div className={selectOptionWrapper}>
-      <DefaultText type="title4">식사량</DefaultText>
+      <DefaultText type="title4">배송주기</DefaultText>
 
       <Controller
-        name="mealFrequency"
+        name="deliveryCycle"
         control={control}
         render={({ field }) => (
           <div className={commonWrapper({ gap: 8 })}>
-            {deliveryOptions.mealFrequency.map((item) => (
+            {deliveryOptions.deliveryCycle.map((item) => (
               <SurveyButton
                 key={item.value}
                 label={item.label}
                 value={item.value}
                 isChecked={field.value === item.value}
-                chipText={item.discountRate}
                 inputType="normal"
                 onToggle={() => field.onChange(item.value)}
               />
@@ -33,5 +32,5 @@ export default function MealFrequency() {
         )}
       />
     </div>
-  );
+  )
 }

@@ -16,6 +16,5 @@ export const modalContainer = style({
 export const modalContent = style({
 	width: '100%',
 	height: "100%",
-	marginTop: '52px',
 	backgroundColor: themeVars.colors.gray.gray50,
 })
