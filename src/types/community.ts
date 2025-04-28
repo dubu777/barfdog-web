@@ -3,7 +3,7 @@ import { Page } from "@/types";
 export type {
   CommunityListItem, CommunityItem, CommunityCategory,
   ArticleCategory, RecommendArticle, ArticleListItem, ArticleList, ArticleDetail,
-  NoticeList, NoticeCategory, NoticeDetail,
+  NoticeListResponse, NoticeCategory, NoticeDetail,
   FAQItem, FAQCategory, FAQCategories, FAQCategoryKey, FAQCategoryKeyWithAll, FAQSubCategoryKey
 };
 
@@ -13,7 +13,7 @@ interface CommunityListItem {
   createdDate: string;
 }
 
-interface NoticeList {
+interface NoticeListResponse {
   noticeList: CommunityListItem[];
   page: Page
 }

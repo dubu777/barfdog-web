@@ -2,7 +2,7 @@
 import { useBackNavigation } from "@/utils";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
-import DeliveryModal from "@/components/pages/order/common/modal/deliveryModal/DeliveryModal";
+import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
 
 const DeliveryAddress = () => {
 	const {

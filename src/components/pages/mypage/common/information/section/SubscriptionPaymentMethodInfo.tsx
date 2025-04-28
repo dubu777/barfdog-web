@@ -2,6 +2,7 @@ import * as styles from "@/components/pages/mypage/common/information/Informatio
 import Button from "@/components/common/button/Button";
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
 import PaymentCard from "@/components/pages/mypage/common/paymentCard/PaymentCard";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 import ChangePaymentMethodModal
 from "@/components/pages/mypage/common/modal/changePaymentMethodModal/ChangePaymentMethodModal";
 import useModal from "@/hooks/useModal";
@@ -9,17 +10,21 @@ import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { PaymentMethod } from "@/types";
 
 interface SubscriptionPaymentCardInfoProps {
-	data: any;
-	handleChangePaymentMethod: () => void;
+	subscribeCount: number;
+	isBeforePaying: boolean;
 }
 
 const SubscriptionPaymentMethodInfo = ({
-	data,
-	handleChangePaymentMethod
+	subscribeCount,
+	isBeforePaying,
 }: SubscriptionPaymentCardInfoProps) => {
 	const { paymentMethodDetail } = usePersistMypageStore();
 	const cardDetail = paymentMethodDetail?.subscribeCardDto;
 	const paymentMethod = paymentMethodDetail?.paymentMethod;
+
+	const isChangedPaymentMethod = false;
+	const subscribeCountByStatus = isBeforePaying ? subscribeCount : subscribeCount + 1;
+
 
 	const { isOpen, onClose, onToggle } = useModal();
 
@@ -29,6 +34,9 @@ const SubscriptionPaymentMethodInfo = ({
 			title="정기결제 수단"
 			isDefaultOpen
 		>
+			{isChangedPaymentMethod &&
+				<InfoBox text={`${subscribeCountByStatus}회차부터 결제수단 변경이 적용돼요`} color='blue' />
+			}
 			<PaymentCard
 				cardSize='sm'
 				paymentMethod={paymentMethod as PaymentMethod}
@@ -43,8 +51,8 @@ const SubscriptionPaymentMethodInfo = ({
 			<ChangePaymentMethodModal
 				isOpen={isOpen}
 				onClose={onClose}
-				data={cardDetail}
-				handleChangePaymentMethod={handleChangePaymentMethod}
+				subscribeCountByStatus={subscribeCountByStatus}
+				isBeforePaying={isBeforePaying}
 			/>
 		}
 		</>

@@ -7,7 +7,7 @@ import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import Chips from "@/components/common/chips/Chips";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
-import DeliveryModal from "../modal/deliveryModal/DeliveryModal";
+import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
 
 interface DeliveryAddressProps {}
 

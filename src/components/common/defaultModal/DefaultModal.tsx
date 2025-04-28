@@ -4,6 +4,7 @@ import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import CloseButton from "/public/images/icons/close-black.png";
 import Image from "next/image";
 import ModalBackground from "../modalBackground/ModalBackground";
+import Button from "@/components/common/button/Button";
 
 interface DefaultModalProps {
   children: ReactNode;
@@ -18,6 +19,7 @@ interface DefaultModalProps {
   extraButton?: boolean;
   extraButtonText?: string;
   onClickExtraButton?: () => void;
+  confirmDisabled?: boolean;
 }
 
 export default function DefaultModal({
@@ -33,6 +35,7 @@ export default function DefaultModal({
   extraButton,
   extraButtonText,
   onClickExtraButton,
+  confirmDisabled = false,
 }: DefaultModalProps) {
   return (
     <ModalBackground isVisible={isVisible} onClose={onClose}>
@@ -54,12 +57,12 @@ export default function DefaultModal({
         <div className={styles.modalContentWrapper({ scroll })}>{children}</div>
         {type === "alert" && (
           <div className={styles.modalButtonWrapper}>
-            <DefaultButton type="mainBorder" size="sm" onClick={onClose}>
+            <Button variant='outline' size="sm" onClick={onClose} fullWidth>
               {cancelText}
-            </DefaultButton>
-            <DefaultButton size="sm" onClick={onClickConfirm}>
+            </Button>
+            <Button size="sm" onClick={onClickConfirm} disabled={confirmDisabled} fullWidth>
               {confirmText}
-            </DefaultButton>
+            </Button>
           </div>
         )}
         {extraButton && (

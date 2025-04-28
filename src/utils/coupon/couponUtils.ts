@@ -1,16 +1,9 @@
-import { Coupon, OrderType } from "@/types";
-
-type Reason = "minPrice" | "orderType"
-
-interface CouponDiscountResult {
-  discountAmount: number;
-  exceededAvailableMexDiscount: boolean;
-}
-
-interface CouponUsabilityResult {
-  usable: boolean;
-  reasons: Reason[];
-}
+import {
+  Coupon,
+  CouponUsabilityResult,
+  OrderType,
+  Reason,
+} from "@/types";
 
 
 /**

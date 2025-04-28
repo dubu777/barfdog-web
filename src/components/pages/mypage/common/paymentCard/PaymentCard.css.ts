@@ -1,5 +1,4 @@
 import { style } from "@vanilla-extract/css";
-import { themeVars } from "@/styles/theme.css";
 
 export const card = style({
 	width: '100%',
@@ -32,9 +31,10 @@ export const cardChip = style({
 })
 
 export const smallCardBox = style({
-	border: `1px solid ${themeVars.colors.gray.gray300}`,
 	display: 'flex',
 	gap: '16px',
+	alignItems: 'center',
+	padding: '16px 0',
 })
 
 export const smallCardInfo = style({

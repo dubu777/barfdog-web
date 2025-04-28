@@ -9,7 +9,7 @@ export const userShippingText = style({
 	padding: '40px 20px 20px',
 	display: 'flex',
 	flexDirection: 'column',
-	gap: '12px',
+	gap: '4px',
 })
 
 export const dogName = style({
@@ -42,24 +42,6 @@ export const selectShippingText = style({
 
 export const shippingInfoBox = style({
 	padding: '20px',
-})
-
-export const completedBox = style({
-	padding: '60px 20px',
-	display: 'flex',
-	flexDirection: 'column',
-	justifyContent: 'center',
-	alignItems: 'center',
-	gap: '12px',
-})
-
-export const completedBoxInfo = style({
-	width: '100%',
-	display: 'flex',
-	flexDirection: 'column',
-	justifyContent: 'center',
-	alignItems: 'center',
-	gap: '4px',
 })
 
 export const completedBoxDateInfo = style({

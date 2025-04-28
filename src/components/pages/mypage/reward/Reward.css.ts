@@ -1,5 +1,4 @@
 import { style } from "@vanilla-extract/css";
-import { themeVars } from "@/styles/theme.css";
 
 export const totalRewardContainer = style({
   padding: '20px',
@@ -23,9 +22,4 @@ export const summaryInfo = style({
       marginBottom: '4px',
     }
   }
-});
-
-export const infiniteTrigger = style({
-  height: '72px',
-  background: themeVars.colors.gray.gray50,
 });

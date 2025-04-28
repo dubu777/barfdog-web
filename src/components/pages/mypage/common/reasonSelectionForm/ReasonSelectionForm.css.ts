@@ -5,7 +5,7 @@ export const reasonSelectionTitle = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '4px',
-	padding: '0 20px 40px'
+	padding: '40px 20px 20px',
 })
 
 export const reasonCheckboxList = style({

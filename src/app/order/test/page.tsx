@@ -11,7 +11,7 @@ import { useLogout } from "@/api/auth/mutations/useLogout";
 import useModal from "@/hooks/useModal";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import NextPaymentBottomSheet from "@/components/pages/order/common/bottomSheet/nextPaymentBottomSheet/NextPaymentBottomSheet";
 import DeliveryScheduleBottomSheet from "@/components/pages/order/common/bottomSheet/deliveryScheduleBottomSheet/DeliveryScheduleBottomSheet";
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
@@ -153,7 +153,7 @@ export default function GeneralShopTest() {
       <Button onClick={handleRequest}>서버 요청 테스트</Button>
       <Button onClick={handleLogout}>로그아웃 테스트</Button>
       <Button onClick={handleLogin}>로그인</Button>
-      <Modal
+      <AlertModal
         title="모달 테스트"
         content="모달 테스트 중입니다"
         isOpen={isModalOpen}

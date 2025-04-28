@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as styles from '@/components/common/datePicker/mobileDatePicker/MobileDatePicker.css';
 import { pointColor } from "@/styles/common.css";
 import { labelStyle } from "@/components/common/inputField/InputField.css";

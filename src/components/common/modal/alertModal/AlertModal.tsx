@@ -1,7 +1,7 @@
-import ModalBackground from "../modalBackground/ModalBackground";
-import * as styles from "./Modal.css";
-import DefaultText from "../defaultText/DefaultText";
-import Button from "../button/Button";
+import ModalBackground from "../../modalBackground/ModalBackground";
+import * as styles from "./AlertModal.css";
+import DefaultText from "../../defaultText/DefaultText";
+import Button from "../../button/Button";
 import { useCallback, useMemo } from "react";
 
 interface ModalProps {
@@ -17,7 +17,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-export default function Modal({
+export default function AlertModal({
   title,
   content,
   buttonType = "default",

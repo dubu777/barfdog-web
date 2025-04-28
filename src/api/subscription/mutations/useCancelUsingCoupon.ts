@@ -3,11 +3,11 @@ import { cancelUsedCoupon } from "@/api/subscription/subscription";
 import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
 
-export { useCancelUsedCoupon };
+export { useCancelUsingCoupon };
 
 type CancelUsedCouponResponse = Awaited<ReturnType<typeof cancelUsedCoupon>>;
 
-function useCancelUsedCoupon(mutationOptions?: UseMutationCustomOptions<CancelUsedCouponResponse>) {
+function useCancelUsingCoupon(mutationOptions?: UseMutationCustomOptions<CancelUsedCouponResponse>) {
   const queryClient = useQueryClient();
 
   return useMutation<

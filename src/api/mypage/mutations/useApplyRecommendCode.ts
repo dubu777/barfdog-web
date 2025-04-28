@@ -11,7 +11,7 @@ function useApplyRecommendCode(mutationOptions?: UseMutationCustomOptions) {
     mutationFn: (body: { recommendCode: string }) => applyRecommendCode(body),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST, 0],
+        queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST],
       });
     },
     ...mutationOptions,

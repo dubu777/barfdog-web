@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import {
 	buttonStyle,
-	containerBaseStyle,
+	containerBaseStyle, containerPositionStyle,
 	containerStyle,
 } from "./ButtonDocked.css";
 import Button from "@/components/common/button/Button";
@@ -17,6 +17,7 @@ interface ButtonDockedProps {
 	secondaryButtonType?: 'primary' | 'assistive';
 	primaryButtonVariant?: 'solid' | 'outline';
 	isPrimaryDisabled?: boolean;
+	position?: 'sticky' | 'fixed';
 }
 
 export default function ButtonDocked({
@@ -30,6 +31,7 @@ export default function ButtonDocked({
 	isPrimaryDisabled = false,
 	secondaryButtonType = 'primary',
 	primaryButtonVariant = 'solid',
+	position = 'sticky',
 }: ButtonDockedProps) {
 	const primaryButtonStyle =
 		type !== 'full-button' && buttonStyle[primaryButtonSize];
@@ -38,8 +40,9 @@ export default function ButtonDocked({
 	const textStyle =
 		type === 'text-button' && primaryButtonSize === 'sm' ? buttonStyle['lg'] : buttonStyle[primaryButtonSize];
 
+	const positionStyle = containerPositionStyle[position];
 	return (
-		<div className={`${containerStyle[type]} ${containerBaseStyle}`}>
+		<div className={`${containerStyle[type]} ${containerBaseStyle} ${positionStyle}`}>
 			{type === 'text-button' &&
 				<div className={textStyle}>
 					{text}

@@ -6,7 +6,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import Divider from "@/components/common/divider/Divider";
 import Button from "@/components/common/button/Button";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import ChangeBottomSheet
 from "@/components/pages/mypage/common/modal/changeRecipeModal/changeBottomSheet/ChangeBottomSheet";
@@ -89,7 +89,7 @@ const ChangeRecipeModal = ({
 				/>
 			}
 			{cancelChangeNoticeOpen &&
-				<Modal
+				<AlertModal
 					title='구독 수정을 중단하시겠어요?'
 					content='나가시면 수정해주신 정보는 저장되지 않아요.'
 					isOpen={cancelChangeNoticeOpen}

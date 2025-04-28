@@ -45,7 +45,9 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   masking?: boolean;
   maskingButton?: boolean;
   confirmButton?: boolean;
-  confirmButtonText?: string
+  confirmButtonText?: string;
+  confirmButtonVariant?: 'solid' | 'outline';
+  confirmButtonDisabled?: boolean;
   clearButton?: boolean;
   searchButton?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -76,6 +78,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       maskingButton = false,
       confirmButton = false,
       confirmButtonText = "입력",
+      confirmButtonVariant= 'outline',
+      confirmButtonDisabled= false,
       clearButton = false,
       searchButton = false,
       onReset,
@@ -199,10 +203,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           {/* 버튼 사이드 confirm 버튼 (인증하기 / 확인 등)*/}
           {confirmButton &&
           <Button
-            variant='outline'
+            variant={confirmButtonVariant}
             onClick={handleSubmit}
             size='lg'
             className={confirmButtonStyle}
+            disabled={confirmButtonDisabled}
           >
             {confirmButtonText}
           </Button>

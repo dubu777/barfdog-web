@@ -1,102 +1,144 @@
 import { useState } from "react";
+import { pointColor } from "@/styles/common.css";
 import * as styles from './ChangePaymentMethodModal.css';
 import PaymentCard from "@/components/pages/mypage/common/paymentCard/PaymentCard";
-import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import ChangeBottomSheet from "@/components/pages/mypage/common/modal/changePaymentMethodModal/changeBottomSheet/ChangeBottomSheet";
-import TermsCheckbox from "@/components/pages/mypage/common/modal/changePaymentMethodModal/termsCheckbox/TermsCheckbox";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
-import { calculateOriginPrice } from "@/utils/order/calculateOriginPrice";
-import { PAYMENT } from "@/constants";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import { PaymentMethod, PlanKey } from "@/types";
+import CompletedBox from "@/components/pages/mypage/common/completedBox/CompletedBox";
+import { useToggleOption } from "@/hooks/useToggleOption";
+import { cubicBezier, motion } from 'framer-motion';
+import { useToastStore } from "@/store/useToastStore";
+import { usePersistMypageStore } from "@/store/usePersistMypageStore";
+import { PAYMENT } from "@/constants";
+import { PaymentMethod } from "@/types";
+import { useCompletedMode } from "@/hooks/useCompletedMode";
+
+const paymentMethods = Object.entries(PAYMENT).map(([key, value]) => ({ label: value, value: key as PaymentMethod }));
 
 interface ChangePaymentMethodModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	data: any;
-	handleChangePaymentMethod: () => void;
+	subscribeCountByStatus: number;
+	isBeforePaying: boolean;
 }
 
 const ChangePaymentMethodModal = ({
 	isOpen,
 	onClose,
-	data,
-	handleChangePaymentMethod,
+	subscribeCountByStatus,
+	isBeforePaying,
 }: ChangePaymentMethodModalProps) => {
 	const { paymentMethodDetail } = usePersistMypageStore();
 	const cardDetail = paymentMethodDetail?.subscribeCardDto;
 	const paymentMethod = paymentMethodDetail?.paymentMethod;
 
-	const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+	const { completedMode, enableCompletedMode } = useCompletedMode();
+
 	const [selectedPayment, setSelectedPayment] = useState<keyof typeof PAYMENT | null>(null);
-	const [terms, setTerms] = useState({
-		agreePrivacy: false,
-		agreeSubscription: false,
-	})
-	const agreeAll = terms.agreePrivacy && terms.agreeSubscription;
+	const [agreeChangePayment, setAgreeChangePayment] = useState(false);
 
-	const originPrice = 
-		(cardDetail?.nextPaymentPrice && cardDetail?.plan) 
-		&& calculateOriginPrice(cardDetail?.nextPaymentPrice, cardDetail?.plan as PlanKey) 
-		|| 0;
-	const totalDiscount =
-		(originPrice - (cardDetail?.nextPaymentPrice || 0))
-		+ (cardDetail?.discountCoupon || 0)
-		+ (cardDetail?.discountReward || 0)
-		+ (cardDetail?.discountGrade || 0);
+	const { onToggle: onAgreeChangePaymentToggle, isSelected: isAgreeChangePaymentSelected } =
+		useToggleOption(agreeChangePayment, "checkbox", setAgreeChangePayment);
+	const { onToggle: onSelectedPaymentToggle, isSelected: isSelectedPayment } =
+		useToggleOption<PaymentMethod | null>(selectedPayment, "radio", setSelectedPayment);
 
-	const subscriptionPaymentData = {
-		paymentMethod,
-		deliveryPrice: 0,
-		orderPrice: originPrice - totalDiscount,
-		paymentPrice: originPrice,
-		discountCoupon: cardDetail?.discountCoupon || 0,
-		discountReward: cardDetail?.discountReward || 0,
-		discountGrade: cardDetail?.discountGrade || 0,
-		salePrice: originPrice - (cardDetail?.nextPaymentPrice || 0),
+	const { addToast } = useToastStore();
+
+	const labelByStatus = isBeforePaying ? '이번' : '다음';
+
+	const handleSubmit = () => {
+		enableCompletedMode();
 	}
 
+	const handleClose = () => {
+		onClose();
+		if (completedMode) {
+			setTimeout(() => {
+				addToast('결제수단 변경이 완료되었어요');
+			}, 300)
+		}
+	}
 
 	return (
 		<FullModalWrapper
-			headerTitle='결제수단변경'
+			headerTitle={!completedMode ? '결제수단변경' : ' '}
 			isVisible={isOpen}
-			handleClose={onClose}
+			handleClose={handleClose}
 		>
-			<div className={styles.paymentMethodModalContainer}>
-				<div className={styles.paymentMethodImage}>
-					<PaymentCard
-						paymentMethod={paymentMethod as PaymentMethod}
-						cardName={cardDetail?.cardName || undefined}
-						cardNumber={cardDetail?.cardNumber || undefined}
-					/>
-				</div>
-				<div className={styles.paymentInfo}>
-					<PaymentInfo data={subscriptionPaymentData} type='changePaymentMethod' isDefaultOpen={false} />
-				</div>
-				<TermsCheckbox
-					terms={terms}
-					setTerms={setTerms}
-					agreeAll={agreeAll}
-				/>
-			</div>
+			{!completedMode ?
+				<>
+					<div className={styles.changeMethodContainer}>
+						<div className={styles.changeMethodTitle}>
+							<DefaultText type='title3'>변경하실 정기<br/>결제 수단을 선택해 주세요</DefaultText>
+							<DefaultText type='body2' color='red'>변경된 결제 수단은 {subscribeCountByStatus}회차부터 적용돼요</DefaultText>
+						</div>
+						<div className={styles.changeMethodCheckBox}>
+							{paymentMethods.map(method => (
+								<LabeledCheckbox
+									key={method.value}
+									value={method.value}
+									isChecked={isSelectedPayment(method.value)}
+									onToggle={onSelectedPaymentToggle}
+									iconType='circle'
+									className={styles.changeMethodLabel}
+								>
+									<DefaultText type="label2">
+										{method.label}
+									</DefaultText>
+								</LabeledCheckbox>
+							))}
+						</div>
+					</div>
+					<div className={styles.agreeChangeMethodCheckBox}>
+						<LabeledCheckbox
+							value={true}
+							isChecked={isAgreeChangePaymentSelected(true)}
+							onToggle={() => onAgreeChangePaymentToggle(true)}
+						>
+							<div className={styles.agreeChangeMethodLabel}>
+								<DefaultText type="label2" color='red'>(필수) </DefaultText>
+								<DefaultText type="body2" style={{ maxWidth: '80%' }}>
+									위 내용을 확인하였으며, 변경된 결제 수단으로의 정기 결제에 동의합니다.
+								</DefaultText>
+							</div>
+						</LabeledCheckbox>
+					</div>
+				</>
+				:
+					<CompletedBox>
+						<DefaultText type='title4' align='center'>
+							<span className={pointColor}>
+								{labelByStatus} 회차({subscribeCountByStatus}회차)부터
+							</span>
+							&nbsp;변경하신<br/>결제 수단으로 정기 결제가 진행돼요
+						</DefaultText>
+						<div className={styles.paymentMethodImage}>
+							<motion.div
+								initial={{ opacity: 0, y: '100%' }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{
+									delay: 0.001, // 1ms = 0.001s
+									duration: 1,  // 1000ms = 1s
+									ease: cubicBezier(0.63, 0.01, 0.24, 1),
+								}}
+							>
+								<PaymentCard
+									paymentMethod={paymentMethod as PaymentMethod}
+									cardName={cardDetail?.cardName || undefined}
+									cardNumber={cardDetail?.cardNumber || undefined}
+								/>
+							</motion.div>
+						</div>
+					</CompletedBox>
+			}
 			<ButtonDocked
 				type='full-button'
-				primaryButtonLabel='결제수단 변경하기'
-				onPrimaryClick={() => setIsOpenBottomSheet(true)}
-				isPrimaryDisabled={!agreeAll}
-			/>
-			<ChangeBottomSheet
-				isOpen={isOpenBottomSheet}
-				onClose={() => {
-					setIsOpenBottomSheet(false);
-					setSelectedPayment(null);
-				}}
-				handleChangePaymentMethod={handleChangePaymentMethod}
-				isDisabled={selectedPayment === null}
-				selectedPayment={selectedPayment}
-				setSelectedPayment={setSelectedPayment}
+				primaryButtonLabel={!completedMode ? '변경하기' : '확인'}
+				onPrimaryClick={!completedMode ? handleSubmit : handleClose}
+				isPrimaryDisabled={!agreeChangePayment}
+				position='fixed'
 			/>
 		</FullModalWrapper>
 	);

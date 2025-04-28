@@ -5,7 +5,7 @@ import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
 import SubscriptionInfo from "@/components/pages/mypage/common/information/section/SubscriptionInfo";
 import OrderInfo from "@/components/pages/mypage/common/information/section/OrderInfo";
 import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";
-import RefundInfo from "@/components/pages/mypage/common/information/section/RefundInfo";
+import SubscriptionRefundInfo from "@/components/pages/mypage/common/information/section/SubscriptionRefundInfo";
 import AddressInfo from "@/components/pages/mypage/common/information/section/AddressInfo";
 import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -76,7 +76,7 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 			}
 			{issueType === 'EXCHANGE' || data.requestStatus !== 'COMPLETED'
 				? <PaymentInfo data={data} type='orderIssue' />
-				: <RefundInfo data={data} />
+				: <SubscriptionRefundInfo data={data} />
 			}
 		</section>
 	);

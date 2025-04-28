@@ -7,6 +7,7 @@ export const filterBottomSheetContainer = style({
 })
 
 export const filterBottomSheet = style({
+	width: '100%',
 	padding: '15px 20px 20px',
 	marginBottom: '80px',
 })

@@ -47,6 +47,9 @@ export const infoAccordionIcon = recipe({
 
 export const infoDetailContainer = style({
 	marginTop: '8px',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '10px',
 })
 
 export const infoSubTitle = style({
@@ -163,7 +166,7 @@ export const subscriptionPaymentDiscount = style({
 })
 
 export const couponButton = style({
-	marginTop: '16px',
+	marginTop: '2px',
 })
 
 export const addressHeader = style({

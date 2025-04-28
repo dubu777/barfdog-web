@@ -25,7 +25,7 @@ import {
 import CouponCard from "./couponCard/CouponCard";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import { AnimatePresence, motion } from "framer-motion";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
@@ -254,7 +254,7 @@ export default function CouponModal({
           ))}
         </div>
       </div>
-      <Modal
+      <AlertModal
         title={`쿠폰 사용 시 ${formatNumberWithCommas(
           discountOnCouponAndGlobal
         )}원이 할인돼요`}

@@ -3,12 +3,16 @@ import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
-import DeliveryModal from "@/components/pages/order/common/modal/deliveryModal/DeliveryModal";
+import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
 import useModal from "@/hooks/useModal";
 import { formatPhoneNumber } from "@/utils";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
+import {useGetSubscriptionAddress} from "@/api/subscription/queries/useGetSubscriptionAddress";
+import isEqual from 'lodash/isEqual';
+import Divider from "@/components/common/divider/Divider";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 
 interface AddressInfoProps {
 	data: any;
@@ -23,19 +27,23 @@ const AddressInfo = ({
 	editAddressInfoButtonType = 'text-button',
 }: AddressInfoProps) => {
 	const isTextButtonType = editAddressInfoButtonType === 'text-button';
-	const { paymentMethodDetail } = usePersistMypageStore();
-	const cardDetail = paymentMethodDetail?.subscribeCardDto;
-	const isDefault = true;
-	const deliveryName = '집';
-
 	const {
 		setDeliveryDto,
 		setBackupDeliveryDto,
 	} = useDeliveryStore();
-	const { data: addressListData } = useGetAddressList();
-	// const { data: addressData } = useGetSubscriptionAddress(subscriptionId);
 
+	const { paymentMethodDetail } = usePersistMypageStore();
+	const cardDetail = paymentMethodDetail?.subscribeCardDto;
+
+	const deliveryName = '집';
+
+	const { data: addressListData } = useGetAddressList();
 	const { isOpen, onToggle, onClose } = useModal();
+
+	const { data: addressData } = useGetSubscriptionAddress(data.id);
+	const { currentAddress, nextAddress } = addressData;
+
+	const isAddressSame = isEqual(currentAddress, nextAddress);
 
 	return (
 		<article className={styles.infoContainer({ isOpen: true })}>
@@ -45,13 +53,28 @@ const AddressInfo = ({
 					<button onClick={onToggle}><DefaultText type='label4' color='gray400'>배송지 변경</DefaultText></button>
 				}
 			</div>
-			<Card shadow='none' className={`${styles.infoDetailContainer} ${styles.infoCard}`}>
-				<div className={`${styles.infoBoxItem} ${styles.addressHeader}`}>
-					<DefaultText type='headline2'>{deliveryName}</DefaultText>
-					{isDefault && <Chips variant='outlined' borderRadius='lg'>기본배송지</Chips>}
-				</div>
-				<DefaultText type='body3' color='gray800'>{cardDetail?.name || cardDetail?.recipientName} • {cardDetail?.phoneNumber ? formatPhoneNumber(cardDetail?.phoneNumber) : ''}</DefaultText>
-				<DefaultText type='body3' color='gray800'>{cardDetail?.street} {cardDetail?.detailAddress}</DefaultText>
+			<Card shadow='none' className={styles.infoDetailContainer} padding={12}>
+				<AddressContent
+					deliveryName={deliveryName}
+					isDefault={!!(!isAddressSame && nextAddress)}
+					recipientName={currentAddress?.recipientName}
+					phoneNumber={currentAddress?.phoneNumber}
+					street={currentAddress?.street}
+					detailAddress={currentAddress?.detailAddress}
+				/>
+				{!isAddressSame && nextAddress &&
+					<>
+						<Divider thickness={1} direction='horizontal' color='gray200' />
+						<AddressContent
+							deliveryName={deliveryName}
+							recipientName={nextAddress?.recipientName}
+							phoneNumber={nextAddress?.phoneNumber}
+							street={nextAddress?.street}
+							detailAddress={nextAddress?.detailAddress}
+						/>
+						<InfoBox text='n회차부터 배송지가 변경돼요' color='gray' />
+					</>
+				}
 				{showEditAddressInfo && !isTextButtonType &&
 					<Button onClick={onToggle} variant='outline' size='sm' fullWidth className={styles.addressEditButton}>
 						정기 배송지 변경
@@ -70,5 +93,27 @@ const AddressInfo = ({
 		</article>
 	);
 };
+
+const AddressContent = ({
+	deliveryName,
+	isDefault = false,
+	recipientName,
+	phoneNumber,
+	street,
+	detailAddress,
+}) => (
+	<div className={styles.infoCard}>
+		<div className={`${styles.infoBoxItem} ${styles.addressHeader}`}>
+			<DefaultText type='headline2'>{deliveryName}</DefaultText>
+			{isDefault && <Chips variant='outlined' borderRadius='lg'>기본배송지</Chips>}
+		</div>
+		<DefaultText type='body3' color='gray800'>
+			{recipientName} • {phoneNumber ? formatPhoneNumber(phoneNumber) : ''}
+		</DefaultText>
+		<DefaultText type='body3' color='gray800'>
+			{street} {detailAddress}
+		</DefaultText>
+	</div>
+)
 
 export default AddressInfo;

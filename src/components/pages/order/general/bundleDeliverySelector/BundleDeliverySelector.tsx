@@ -9,7 +9,7 @@ import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox
 import { useToggleOption } from "@/hooks/useToggleOption";
 import BundleDeliveryBottomSheet from "../../common/bottomSheet/bundleDeliveryBottomSheet/BundleDeliveryBottomSheet";
 import useModal from "@/hooks/useModal";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import { useState } from "react";
 
 interface BundleDeliverySelectorProps {
@@ -107,7 +107,7 @@ export default function BundleDeliverySelector({
         isOpen={isBottomSheetOpen}
         onClose={onBottomSheetClose}
       />
-      <Modal
+      <AlertModal
         title="배송지를 변경하시겠어요?"
         content="배송지 변경하기 버튼을 누르시면 묶음 배송 신청이 취소돼요"
         cancelText="묶음 배송 유지하기"

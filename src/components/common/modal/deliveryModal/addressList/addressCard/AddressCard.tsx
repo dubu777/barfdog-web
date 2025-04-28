@@ -5,7 +5,7 @@ import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
 import { AddressResponse } from "@/types/delivery";
 import { useDeleteAddress } from "@/api/address/mutations/useDeleteAddress";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 
@@ -103,7 +103,7 @@ export default function AddressCard({
           }
         </div>
       </div>
-      <Modal
+      <AlertModal
         isOpen={isOpen}
         onClose={onClose}
         title="배송지 삭제"

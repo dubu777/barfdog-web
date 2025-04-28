@@ -181,3 +181,8 @@ export const commonWrapper = recipe({
     align: "center",
   },
 });
+
+export const infiniteTrigger = style({
+  height: '72px',
+  background: themeVars.colors.gray.gray50,
+});

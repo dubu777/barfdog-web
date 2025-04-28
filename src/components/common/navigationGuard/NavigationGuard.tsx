@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, ReactNode, useCallback, useEffect } from "react";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import { useRouter } from "next/navigation";
 import { useNavigationGuard } from "@/hooks/useNavigationGuard";
 import Header from "@/components/layout/header/Header";
@@ -78,7 +78,7 @@ export default function NavigationGuard({
         {...(leftElement ? { leftElement } : {})}
       />
       {children}
-      <Modal
+      <AlertModal
         isOpen={showModal}
         onClose={handleContinueOrder}
         title={modalTitle}

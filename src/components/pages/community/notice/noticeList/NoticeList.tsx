@@ -10,7 +10,8 @@ import useFilterTabs from "@/hooks/useFilterTabs";
 import TabBar from "@/components/common/tabBar/TabBar";
 import { useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
 import { NOTICE_CATEGORY } from "@/constants/community";
-import { NoticeCategory, NoticeList } from "@/types";
+import { NoticeCategory, NoticeListResponse } from "@/types";
+import { infiniteTrigger } from '@/styles/common.css';
 
 const NoticeList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetNoticeList();
@@ -21,7 +22,7 @@ const NoticeList = () => {
   const noticeCategoryFilter = Object.entries(NOTICE_CATEGORY).map(([value, { label }]) => ({label, value}));
 
   const filteredNoticeList = data?.pages
-    ?.flatMap((page: NoticeList) =>
+    ?.flatMap((page: NoticeListResponse) =>
       noticeTypeFilter === "ALL" || !noticeTypeFilter
         ? page.noticeList
         : page.noticeList.filter(notice => notice.title.includes(NOTICE_CATEGORY[noticeTypeFilter].label))
@@ -64,8 +65,8 @@ const NoticeList = () => {
           </Link>
         ))}
       </ul>
-      {filteredNoticeList?.length > 0 &&
-        <div ref={ref} className={styles.infiniteTrigger} />
+      {filteredNoticeList && filteredNoticeList?.length > 0 &&
+        <div ref={ref} className={infiniteTrigger} />
       }
     </section>
   );

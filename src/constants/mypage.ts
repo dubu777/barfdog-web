@@ -40,6 +40,7 @@ const MENU_LIST: MenuList[] = [
 			{ label: "계정 정보", url: "/mypage/account" },
 			{ label: "반려견 정보", url: "/pet-info" },
 			{ label: "배송지 관리", url: "/mypage/delivery-address" },
+			{ label: "친구 초대", url: "/mypage/invite-friends" },
 		],
 	},
 	{
