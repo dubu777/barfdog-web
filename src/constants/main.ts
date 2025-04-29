@@ -1,41 +1,4 @@
-
-interface MainDataAction {
-	label: string;
-	variant: string;
-	url: string;
-}
-
-interface MainDescription {
-	label: string;
-	imageUrl: string;
-	width: number;
-	height: number;
-}
-
-interface MainData {
-	id?: string;
-	title: string;
-	subTitle?: string;
-	action?: MainDataAction;
-	actions?: MainDataAction[];
-	description?: string | MainDescription;
-	descriptions?: string[] | MainDescription[];
-	imageUrl?: string;
-	imagesUrl?: string[];
-}
-
-type MainDataKey = keyof typeof MAIN_DATA;
-
-export const MAIN_DATA: Record<MainDataKey, MainData | MainData[]> = {
-	FIRST: {
-		title: '올바른 식사로부터\n시작하는 건강한 변화',
-		subTitle: '칼로리 계산부터 급여량, 레시피 추천까지\n우리 아이 맞춤 자연식 구독 서비스',
-		action: {
-			label: '반려견 맞춤 레시피 추천받기',
-			variant: 'solid',
-			url: '/survey',
-		},
-	},
+export const MAIN_DATA = {
 	REVIEW: {
 		title: '이제 우리 아이 차례예요',
 		subTitle: '바프독과 함께한 BEST REVIEW',
@@ -82,7 +45,12 @@ export const MAIN_DATA: Record<MainDataKey, MainData | MainData[]> = {
 				variant: 'solid',
 				url: '/survey',
 				fullWidth: true,
-			}
+			},
+			imagesUrl: [
+				'/images/main/chapter_survey1.png',
+				'/images/main/chapter_survey2.png',
+				'/images/main/chapter_survey3.png',
+			],
 		},
 		{
 			id: 'microorganism',
@@ -93,7 +61,12 @@ export const MAIN_DATA: Record<MainDataKey, MainData | MainData[]> = {
 				variant: 'solid',
 				url: '/',
 				fullWidth: true,
-			}
+			},
+			imagesUrl: [
+				'/images/main/chapter_chart1.png',
+				'/images/main/chapter_chart2.png',
+				'/images/main/chapter_chart3.png',
+			],
 		},
 		{
 			id: 'petDetail',
@@ -102,9 +75,16 @@ export const MAIN_DATA: Record<MainDataKey, MainData | MainData[]> = {
 			action: {
 				label: '우리 아이 건강 챙기러 가기',
 				variant: 'solid',
-				url: '/',
+				url: '/survey',
 				fullWidth: true,
-			}
+			},
+			imagesUrl: [
+				'/images/main/chapter_recipe1.png',
+				'/images/main/chapter_recipe2.png',
+				'/images/main/chapter_recipe3.png',
+				'/images/main/chapter_recipe4.png',
+				'/images/main/chapter_recipe5.png',
+			],
 		},
 	],
 	BARF: {
@@ -136,9 +116,9 @@ export const MAIN_DATA: Record<MainDataKey, MainData | MainData[]> = {
 			},
 		],
 		imagesUrl: [
-			'/images/main/certification1.png',
-			'/images/main/certification2.png',
-			'/images/main/certification3.png',
+			'/images/main/certification1.jpg',
+			'/images/main/certification2.jpg',
+			'/images/main/certification3.jpg',
 		]
 	},
 	DELIVERY: {
@@ -179,8 +159,13 @@ export const MAIN_DATA: Record<MainDataKey, MainData | MainData[]> = {
 		action: {
 			label: '브랜드 스토리 보러가기',
 			variant: 'outline',
-			url: '/about',
+			url: '/community/about',
 			fullWidth: true
 		},
+		imageUrl: '/images/main/brandStory.png',
+		imagesUrl: [
+			'/images/main/companyLogo1.png',
+			'/images/main/companyLogo2.png',
+		],
 	}
-}
+} as const;

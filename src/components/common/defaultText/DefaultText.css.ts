@@ -114,6 +114,12 @@ export const textStyles = {
     lineHeight: themeVars.typography.body.caption.lineHeight,
     letterSpacing: themeVars.typography.body.caption.letterSpacing,
   }),
+  caption2: style({
+    fontWeight: themeVars.typography.body.caption2.fontWeight,
+    fontSize: themeVars.typography.body.caption2.fontSize,
+    lineHeight: themeVars.typography.body.caption2.lineHeight,
+    letterSpacing: themeVars.typography.body.caption2.letterSpacing,
+  }),
 };
 
 export const fontColors = {
@@ -128,6 +134,7 @@ export const fontColors = {
   gray400: style({ color: themeVars.colors.gray.gray400 }),
   gray300: style({ color: themeVars.colors.gray.gray300 }),
   gray200: style({ color: themeVars.colors.gray.gray200 }),
+  gray100: style({ color: themeVars.colors.gray.gray100 }),
   gray0: style({ color: themeVars.colors.gray.gray0 }),
   blue: style({ color: themeVars.colors.blue.blue500 })
 };

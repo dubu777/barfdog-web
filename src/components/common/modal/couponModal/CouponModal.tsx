@@ -26,7 +26,6 @@ import CouponCard from "./couponCard/CouponCard";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
-import { AnimatePresence, motion } from "framer-motion";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 
@@ -210,10 +209,10 @@ export default function CouponModal({
   return (
     <FullModalWrapper
       isVisible={isOpen}
+      headerTitle='쿠폰'
       handleClose={handleModalClose}
       className={styles.couponModalContainer}
     >
-      <Header centerTitle="쿠폰" showCloseButton onClose={handleModalClose} />
       <div className={styles.couponModalWrapper}>
         <div className={styles.couponModalContentWrapper}>
           <DefaultText type="label4">쿠폰 등록</DefaultText>

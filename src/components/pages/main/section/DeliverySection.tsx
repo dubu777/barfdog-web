@@ -10,7 +10,6 @@ import MainTitle from "@/components/pages/main/common/MainTitle";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { MAIN_DATA } from "@/constants/main";
 
-
 const DeliverySection = () => {
 	const title = MAIN_DATA.DELIVERY.title;
 	const subTitle = MAIN_DATA.DELIVERY.subTitle;
@@ -27,7 +26,7 @@ const DeliverySection = () => {
 			<Marquee speed={50} className={mainDeliveryMarqueeContainer}>
 				<div className={mainDeliveryMarqueeBox}>
 					{[...marqueeList, ...marqueeList].map((marquee, index) => (
-						<div key={marquee.label} className={mainDeliveryMarquee}>
+						<div key={`${marquee.label}-${index}`} className={mainDeliveryMarquee}>
 							<Image src={marquee.imageUrl} alt={marquee.label} width={marquee.width} height={marquee.height} />
 							<DefaultText key={index} type='body2' color='white'>{marquee.label}</DefaultText>
 						</div>

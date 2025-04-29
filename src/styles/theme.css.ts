@@ -276,6 +276,12 @@ export const [themeClass, themeVars] = createTheme({
         lineHeight: "140%",
         letterSpacing: "-0.4px",
       },
+      caption2: {
+        fontWeight: "500",
+        fontSize: "12px",
+        lineHeight: "140%",
+        letterSpacing: "-0.4px",
+      },
     },
   },
   shadow: {

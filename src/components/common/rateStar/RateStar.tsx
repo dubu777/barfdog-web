@@ -14,6 +14,7 @@ interface RateStarProps {
   value?: number;
   onChange?: (newRating: number) => void;
   inlineBlock?: boolean;
+  size?: number;
 }
 
 const RateStar = ({
@@ -23,6 +24,7 @@ const RateStar = ({
   value,
   onChange,
   inlineBlock = false,
+  size = 24,
 }: RateStarProps) => {
   const grayColor = themeVars.colors.gray.gray300;
   const starColor = color === 'yellow'
@@ -46,7 +48,7 @@ const RateStar = ({
           className={rateStarStyles({ isEditable: !!onChange })}
           onClick={onChange ? () => handleClick(i) : undefined}
         >
-          <SvgIcon src={StarIcon} style={{ color: emptyColor(i) ? grayColor : starColor }} />
+          <SvgIcon src={StarIcon} size={size} style={{ color: emptyColor(i) ? grayColor : starColor }} />
         </span>
       ))}
     </div>

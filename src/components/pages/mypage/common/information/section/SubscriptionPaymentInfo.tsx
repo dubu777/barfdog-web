@@ -64,7 +64,6 @@ const SubscriptionPaymentInfo = ({
 	const paymentPrice = hasUsingCoupon ? `${calcNextPaymentPrice.toLocaleString()}원` : `${data.nextPaymentPrice.toLocaleString()}원`;
 
 	const isBlockedUsingCoupon = isNowBetweenMidnightAndPayment("2025-04-23T23:27:25");
-	console.log(isBlockedUsingCoupon)
 
 	const usingCoupon = {
 		memberCouponId: data?.usingMemberCouponId,
@@ -100,8 +99,9 @@ const SubscriptionPaymentInfo = ({
 		}
 	]
 
+	const maxAvailableCouponDiscount = data.nextPaymentPrice - IAMPORT_MIN_PAYMENT_PRICE;
 	useEffect(() => {
-		setMaxAvailableCouponDiscount(data.nextPaymentPrice - IAMPORT_MIN_PAYMENT_PRICE);
+		setMaxAvailableCouponDiscount(maxAvailableCouponDiscount);
 	}, [isOpenCouponModal]);
 
 
@@ -129,6 +129,11 @@ const SubscriptionPaymentInfo = ({
 				onSuccess: () => {
 					onCloseCouponModal();
 					addToast('쿠폰 적용이 완료됐어요');
+				},
+				onError: (err) => {
+					console.log(err);
+					addToast('쿠폰 적용에 실패했어요', 'above-button');
+					setMaxAvailableCouponDiscount(maxAvailableCouponDiscount);
 				}
 			}
 		);

@@ -4,14 +4,37 @@ import MainTitle from "@/components/pages/main/common/MainTitle";
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import {
-	mainBox,
 	mainFAQButton,
 	mainFAQButtonAvatar,
 	mainFAQButtonBox,
 	mainFAQDescription, mainFAQDescriptionBox
 } from "@/components/pages/main/common/MainCommon.css";
 import FaqAvatar from '/public/images/main/faqAvatar.svg';
+import { motion } from 'framer-motion';
 import { MAIN_DATA } from "@/constants/main";
+
+const parentVariants = {
+	hidden: {},
+	visible: {
+		transition: {
+			staggerChildren: 0.36,
+		},
+	},
+};
+
+const childVariants = {
+	hidden: { opacity: 0, y: -20 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: {
+			type: 'spring',
+			stiffness: 50,
+			damping: 10,
+			ease: 'easeIn'
+		},
+	},
+};
 
 const FAQSection = () => {
 	const router = useRouter();
@@ -21,15 +44,23 @@ const FAQSection = () => {
 	const descriptions = MAIN_DATA.FAQ.descriptions;
 	return (
 		<MainContainer backgroundColor='yellow'>
-			<MainTitle title={title} subTitle={subTitle} />
-			<div className={mainFAQDescriptionBox}>
+			<MainTitle title={title} subTitle={subTitle} hasInteraction />
+			<motion.div
+				variants={parentVariants}
+				initial="hidden"
+				whileInView="visible"
+				viewport={{ once: true, amount: 'all' }}
+				className={mainFAQDescriptionBox}
+			>
 				{descriptions.map(description => (
-					<DefaultText key={description} type='label4' className={mainFAQDescription}>
-						{description}
-					</DefaultText>
+					<motion.div key={description} variants={childVariants} className={mainFAQDescription}>
+						<DefaultText type='label4'>
+							{description}
+						</DefaultText>
+					</motion.div>
 				))}
-			</div>
-			<div className={`${mainBox} ${mainFAQButtonBox}`}>
+			</motion.div>
+			<div className={mainFAQButtonBox}>
 				<Button onClick={() => router.push(action.url)} variant={action.variant} fullWidth={action.fullWidth} className={mainFAQButton}>
 					<FaqAvatar className={mainFAQButtonAvatar} />
 					{action.label}

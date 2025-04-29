@@ -4,10 +4,10 @@ import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import {
-	mainBox, mainProductionImage, mainProductionImageBox,
+	mainProductionImage, mainProductionImageBox,
 	mainProductionPoint,
 	mainProductionPointDivider,
-	mainProductionPointsBox
+	mainProductionPointsBox, mainProductionVideo
 } from "@/components/pages/main/common/MainCommon.css";
 import { MAIN_DATA } from "@/constants/main";
 
@@ -31,17 +31,17 @@ const ProductionSection = () => {
 					</Fragment>
 				))}
 			</ul>
-			<MainContainer backgroundColor='gray200'>
+			<MainContainer backgroundColor='gray200' noPaddingBottom>
 				<MainTitle title={title} subTitle={subTitle} />
-				<div className={`${mainBox} ${mainProductionImageBox}`}>
+				<div className={mainProductionImageBox}>
 					{imageList.map((image, index) => (
 						<Image key={image} src={image} alt={`인증서 ${index+1}`} width={100} height={140} className={mainProductionImage} />
 					))}
 				</div>
+				<video preload='none' muted autoPlay loop className={mainProductionVideo}>
+					<source src='/videos/main_video.mp4' type='video/mp4'/>
+				</video>
 			</MainContainer>
-			<div>
-				videoSection
-			</div>
 		</>
 	);
 };
