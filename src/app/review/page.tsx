@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import { prefetchGetBestReviewList } from "@/api/review/queries/useGetBestReviewList";
 import { prefetchGetReviewList } from "@/api/review/queries/useGetReviewList";
-import ReviewList from "@/components/pages/reivew/reviewList/ReviewList";
+import ReviewList from "@/components/pages/review/reviewList/ReviewList";
 
 export default async function ReviewPage() {
   const queryClient = new QueryClient();

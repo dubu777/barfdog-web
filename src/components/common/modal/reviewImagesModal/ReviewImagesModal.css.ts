@@ -17,6 +17,13 @@ export const reviewImageModalHeader = style({
 	padding: "14px 20px",
 })
 
+export const reviewImageSliderWrapper = style({
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+	height: 'calc(100% - 52px)',
+})
+
 export const reviewImageSlider = style({
 	width: '100%',
 	height: 'auto !important',
@@ -28,7 +35,7 @@ export const reviewImageSlider = style({
 })
 
 export const reviewImage = style({
-	position: 'static !important',
+	position: 'static',
 	width: '100%',
 	objectFit: 'contain'
 })

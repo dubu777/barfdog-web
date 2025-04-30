@@ -1,16 +1,16 @@
 import { useState } from "react";
-import * as styles from './ReviewImagesModal.css';
 import Image from "next/image";
+import * as styles from './ReviewImagesModal.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import CloseIcon from "/public/images/header/close.svg";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import CloseIcon from "/public/images/header/close.svg";
-import { ReviewImage } from "@/types";
 import Header from "@/components/layout/header/Header";
+import { ReviewImage } from "@/types";
 
 interface ReviewImagesModalProps {
 	isOpen: boolean;
@@ -52,13 +52,14 @@ const ReviewImagesModal = ({
 				<Swiper
 					initialSlide={defaultImageIndex}
 					onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+					className={styles.reviewImageSliderWrapper}
 				>
 					{reviewImageList?.map(reviewImage => (
 						<SwiperSlide
 							key={reviewImage.filename}
 							className={styles.reviewImageSlider}
 						>
-							<Image src={reviewImage.url} alt={reviewImage.filename} sizes="350px" fill style={{ objectFit: 'contain'}} className={styles.reviewImage} />
+							<Image src={reviewImage.url} alt={reviewImage.filename} sizes="350px" fill style={{ objectFit: 'contain' }} className={styles.reviewImage} />
 						</SwiperSlide>
 					))}
 				</Swiper>

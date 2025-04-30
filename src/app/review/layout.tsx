@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
-import ReviewHeader from "@/components/pages/reivew/layout/ReviewHeader";
+import ReviewHeader from "@/components/pages/review/layout/ReviewHeader";
 
 interface DefaultLayoutProps {
   children: ReactNode;

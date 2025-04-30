@@ -13,7 +13,7 @@ import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
-import ReviewImagesModal from "@/components/pages/mypage/review/reviewImagesModal/ReviewImagesModal";
+import ReviewImagesModal from "@/components/common/modal/reviewImagesModal/ReviewImagesModal";
 import { ReviewDetailItem, ReviewItemType } from "@/types";
 import { useToastStore } from '@/store/useToastStore';
 import { sanitizedHTML } from "@/styles/common.css";
@@ -108,7 +108,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
       </article>
       {data?.reviewImageDtoList?.length > 0 &&
         <article className={styles.reviewDetailBox}>
-          <ImageCarousel imageList={data.reviewImageDtoList} handleShowImageList={handleOpenReviewImageModal} />
+          <ImageCarousel imageList={data.reviewImageDtoList} handleThumbnailClick={handleOpenReviewImageModal} />
         </article>
       }
       <article className={styles.reviewDetailComment}>

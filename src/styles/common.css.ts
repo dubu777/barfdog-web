@@ -27,27 +27,34 @@ export const ellipsis = recipe({
     width: '100%',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-    display: '-webkit-box !important',
-    '-webkit-box-orient': 'vertical',
   },
   variants: {
     lineSize: {
       line1: {
+        display: 'block',
         whiteSpace: 'nowrap',
         webkitLineClamp: 'none',
         webkitBoxOrient: 'none',
         lineHeight: 'normal',
       },
       line2: {
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
         '-webkit-line-clamp': '2',
       },
       line3: {
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
         '-webkit-line-clamp': '3',
       },
       line4: {
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
         '-webkit-line-clamp': '4',
       },
       line5: {
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
         '-webkit-line-clamp': '5',
       },
     },
