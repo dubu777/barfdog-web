@@ -3,6 +3,7 @@ import { RecipeDto } from "@/types";
 import { roundTo } from "../numberUtils";
 
 export interface SubscriptionPriceBreakdown {
+  recommendedPackGrams: number; // 추천 급여량
   packGrams: number;       // 팩당 그램 수
   packPrice: number;       // 팩당 가격
   pricePer10g: number;     // 10g당 가격
@@ -47,7 +48,7 @@ function computeBreakdown(
   pricePerGram: number,
   packsPerCycle: number,
   discountRate: number
-): SubscriptionPriceBreakdown {
+): Omit<SubscriptionPriceBreakdown, 'recommendedPackGrams'> {
   // 중간 계산 (반올림 전 원시 값)
   const rawPackPrice = roundTo(packGrams * pricePerGram, 0);
   const rawTotalPrice = rawPackPrice * packsPerCycle;
@@ -90,15 +91,12 @@ export function calculateSubscriptionPrice({
     if (hasDiscount) {
       const packsPerCycle = determinePacksPerCycle(mealsPerDay!, deliveryCycleWeeks!);
       const discountRate = determineDiscountRate(mealsPerDay!);
-      return computeBreakdown(
-        roundTo(recommendedPackGrams, 1),
-        pricePerGram,
-        packsPerCycle,
-        discountRate
-      );
+      const base = computeBreakdown(recommendedPackGrams, pricePerGram, packsPerCycle, discountRate);
+      return { ...base, recommendedPackGrams };
     }
     // 할인 정보 없으면 packGrams, packPrice만 반환
     return {
+      recommendedPackGrams,
       packGrams: roundTo(recommendedPackGrams, 1),
       packPrice: roundTo(recommendedPackGrams * pricePerGram, 0),
       pricePer10g: roundTo(pricePerGram * 10, 0),
@@ -108,20 +106,18 @@ export function calculateSubscriptionPrice({
   /** customPackGrams 존재 시 계산 */
   function getCustom(): SubscriptionPriceBreakdown | undefined {
     if (customPackGrams == null) return;
+    
     if (hasDiscount) {
       const packsPerCycle = determinePacksPerCycle(mealsPerDay!, deliveryCycleWeeks!);
       const discountRate = determineDiscountRate(mealsPerDay!);
-      return computeBreakdown(
-        customPackGrams,
-        pricePerGram,
-        packsPerCycle,
-        discountRate
-      );
+      const base = computeBreakdown(customPackGrams, pricePerGram, packsPerCycle, discountRate);
+      return { ...base, recommendedPackGrams };
     }
     // 할인 정보 없으면 packGrams, packPrice만 반환
     
     return {
-      packGrams: roundTo(recommendedPackGrams, 1),
+      recommendedPackGrams,
+      packGrams: roundTo(customPackGrams, 1),
       packPrice: roundTo(customPackGrams * pricePerGram, 0),
       pricePer10g: roundTo(pricePerGram * 10, 0),
     };

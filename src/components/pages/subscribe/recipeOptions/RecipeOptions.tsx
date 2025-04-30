@@ -13,6 +13,9 @@ import { useMemo, useRef } from "react";
 import useModal from "@/hooks/useModal";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { getNameWithPossessiveSuffix } from "@/utils";
+import { useRecipeSelection } from "@/hooks/subscription/useRecipeSelection";
+import { useFormContext, useWatch } from "react-hook-form";
+import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 
 interface RecipeOptionsProps {
   reportId: number;
@@ -26,8 +29,10 @@ export default function RecipeOptions({
   inedibleFood,
 }: RecipeOptionsProps) {
   const router = useRouter();
-  const {isOpen, onClose, onToggle} = useModal();
-
+    const { control } = useFormContext<SubscriptionValues>();
+    const recipeList = useWatch({ control, name: "recipeList" });
+    const selectedIds = recipeList.map((f) => f.recipeId);
+  
   const selectedRecipes = [1,2];
 
   // double과 single 레시피로 필터링 - 임시로 Api 데이터 변경전까지
@@ -92,7 +97,7 @@ const tabs = recipeTab.map((tab) => ({
             </DefaultText>
           </div>
           <div className={styles.recipeCardWrapper}>
-            {doubleRecipes.map((recipeTempData, _) => (
+            {doubleRecipes.map((recipeTempData) => (
               <RecipeCard
                 key={recipeTempData.name}
                 recipeTempData={recipeTempData}
@@ -102,6 +107,8 @@ const tabs = recipeTab.map((tab) => ({
                 recommendId={recipeData.recommendRecipeId}
                 inedibleFood={inedibleFood}
                 dogName={recipeData.dogName}
+                selectedIds={selectedIds}
+                isSelected={selectedIds.includes(recipeTempData.id)}
               />
             ))}
           </div>
@@ -116,7 +123,7 @@ const tabs = recipeTab.map((tab) => ({
             </DefaultText>
           </div>
           <div className={styles.recipeCardWrapper}>
-            {singleRecipes.map((recipeTempData, _) => (
+            {singleRecipes.map((recipeTempData) => (
               <RecipeCard
                 key={recipeTempData.name}
                 recipeTempData={recipeTempData}
@@ -126,6 +133,8 @@ const tabs = recipeTab.map((tab) => ({
                 recommendId={recipeData.recommendRecipeId}
                 inedibleFood={inedibleFood}
                 dogName={recipeData.dogName}
+                selectedIds={selectedIds}
+                isSelected={selectedIds.includes(recipeTempData.id)}
               />
             ))}
           </div>

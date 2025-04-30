@@ -11,10 +11,17 @@ import RecipeBenefits from "./recipeBenefits/RecipeBenefits";
 import RecipeIngredientsList from "./recipeIngredients/RecipeIngredients";
 import { useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
+import { RecipeDto } from "@/types";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 interface RecipeDetailModalProps {
   recipeTempData: RecipeTempData;
   dogName: string;
+  dailyRecommendKcal: number;
+  recipeDto: RecipeDto;
+  subscribeId: number;
+  onApplyLocal: (packGrams: number, orderPrice: number) => void;
+  onCommit: () => void;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -22,6 +29,11 @@ interface RecipeDetailModalProps {
 export default function RecipeDetailModal({
   recipeTempData,
   dogName,
+  dailyRecommendKcal,
+  recipeDto,
+  subscribeId,
+  onApplyLocal,
+  onCommit,
   isOpen,
   onClose,
 }: RecipeDetailModalProps) {
@@ -36,6 +48,11 @@ export default function RecipeDetailModal({
     onInit: () => scrollToElement(refs[tab.value!].current),
   }));
 
+  const handleCommit = () => {
+    onCommit();
+    onClose();
+  }
+  
   return (
     <FullModalWrapper isVisible={isOpen} handleClose={onClose}>
       <div className={commonWrapper({ direction: "col", gap: 8 })}>
@@ -70,10 +87,26 @@ export default function RecipeDetailModal({
         <div className={styles.recipeDetailTabBarWrapper}>
           <TabBar variant="text" tabs={tabs} />
         </div>
-          <MealAmountSelector ref={refs.amount} recipeId={recipeTempData.id} dogName={dogName}/>
-          <RecipeBenefits ref={refs.benefits}/>
-          <RecipeIngredientsList ref={refs.ingredients}/>
+        <MealAmountSelector
+          ref={refs.amount}
+          recipeId={recipeTempData.id}
+          dogName={dogName}
+          dailyRecommendKcal={dailyRecommendKcal}
+          recipeDto={recipeDto}
+          subscribeId={subscribeId}
+          onApply={onApplyLocal}
+        />
+        <RecipeBenefits ref={refs.benefits} />
+        <RecipeIngredientsList ref={refs.ingredients} />
       </div>
+      <ButtonDocked
+        type="dual-button"
+        primaryButtonLabel="레시피 담기"
+        secondaryButtonLabel="취소"
+        onPrimaryClick={handleCommit}
+        onSecondaryClick={onClose}
+        primaryButtonSize="lg"
+      />
     </FullModalWrapper>
   );
 }

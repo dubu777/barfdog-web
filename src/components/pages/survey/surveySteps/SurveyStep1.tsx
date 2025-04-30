@@ -1,8 +1,6 @@
 import { surveyFormInfo } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
-import * as styles from "./SurveySteps.css";
-
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";

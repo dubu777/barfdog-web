@@ -8,15 +8,14 @@ import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
 import { RecipeDto } from "@/types";
-import {
-  calculateSubscriptionPrice,
-  SubscriptionPriceBreakdown,
-} from "@/utils/subscription/calculateSubscriptionPrice";
-import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { calculateSubscriptionPrice } from "@/utils/subscription/calculateSubscriptionPrice";
+import { useFormContext, useWatch } from "react-hook-form";
 import RecipeDetailModal from "../../modal/recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
-import { useSubscriptionStore } from "@/store/useSubscriptionStore";
+import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
+import { useRecipeEntryManager } from "@/hooks/subscription/useRecipeManager";
+import { useToastStore } from "@/store/useToastStore";
+import Modal from "@/components/common/modal/Modal";
 
 interface RecipeCardProps {
   recipeTempData: RecipeTempData;
@@ -26,6 +25,8 @@ interface RecipeCardProps {
   subscribeId: number;
   inedibleFood: string;
   dogName: string;
+  isSelected: boolean;
+  selectedIds: number[];
 }
 
 export default function RecipeCard({
@@ -36,43 +37,54 @@ export default function RecipeCard({
   recommendId,
   inedibleFood,
   dogName,
+  isSelected,
+  selectedIds,
 }: RecipeCardProps) {
-  const setPriceSummary = useSubscriptionStore((state) => state.setPriceSummary);
-  const {isOpen, onClose, onToggle} = useModal();
-  const isRecommend = recommendId === recipeTempData.id;
+  console.log(isSelected, recipeTempData.id);
+  
+  const toast = useToastStore((s) => s.addToast);
+  const { control } = useFormContext<SubscriptionValues>();
+  const recipeList = useWatch({ control, name: "recipeList" });
+
+  // 1) form에 들어있는 값
+  const entry = recipeList.find((r) => r.recipeId === recipeTempData.id);
+
+  // 2) entry가 없으면 추천값을 계산
+  const { recommended, custom } = calculateSubscriptionPrice({
+    dailyRecommendKcal,
+    recipeDto,
+    subscribeId,
+    customPackGrams: entry?.packGrams,
+  });
+  const breakdown = custom ?? recommended;
+
+  const { applyLocal, commitEntry, removeEntry } = useRecipeEntryManager(
+    recipeTempData.id,
+    recommended
+  );
+        
+
   const ingredientsText = recipeTempData.ingredients
     ?.filter((i) => i.trim() !== "")
     .join(", ");
 
-  const [priceBreakdown, setPriceBreakdown] =
-    useState<SubscriptionPriceBreakdown>({
-      packGrams: 0,
-      packPrice: 0,
-      pricePer10g: 0,
-    });
-  console.log("레시피", recipeDto);
+    const { isOpen: isDetailOpen, onClose: onDetailClose, onToggle: onDetailToggle } = useModal();
+    const { isOpen: isAlertOpen, onClose: onAlertClose, onToggle: onAlertToggle } = useModal();
+  
 
-  useEffect(() => {
-    const { recommended, custom } = calculateSubscriptionPrice({
-      dailyRecommendKcal,
-      recipeDto,
-      subscribeId,
-      // customPackGrams: 200
-    });
-    const target = custom ?? recommended;
-    // 필요한 두 필드만 뽑아서 저장
-    setPriceSummary(recipeTempData.id, {
-      packGrams: target.packGrams,
-      packPrice: target.packPrice,
-      pricePer10g: target.pricePer10g,
-    });
-  }, [dailyRecommendKcal, recipeDto, subscribeId]);
-  const isSelected = false;
-  const handleToggleRecipe = () => {
-    if (!isSelected) {
-      onToggle();
-    }
-  };
+    const handleButtonClick = () => {
+      if (isSelected) {
+        removeEntry();
+        toast("레시피가 삭제되었습니다.", "above-button");
+      } else {
+        if (selectedIds.length > 1) {
+          onAlertToggle();
+          return;
+        }
+        onDetailToggle();
+      }
+    };
+
   return (
     <motion.div
       className={styles.recipeCardContainer({
@@ -130,30 +142,55 @@ export default function RecipeCard({
           </div>
           <div className={commonWrapper({ gap: 4, justify: "start" })}>
             <Chips variant="solid" color="gray700" size="sm" borderRadius="sm">
-              추천 급여량 {priceBreakdown.packGrams}g
+              추천 급여량 {recommended.packGrams}g
             </Chips>
             <Chips variant="solid" color="gray700" size="sm" borderRadius="sm">
-              10g당 {priceBreakdown.pricePer10g.toLocaleString()}원
+              10g당 {recommended.pricePer10g.toLocaleString()}원
             </Chips>
           </div>
         </div>
       </div>
       <div className={commonWrapper({ gap: 4, justify: "end" })}>
-      <div className={styles.recipeGramInputBox}>
+        <div className={styles.recipeGramInputBox}>
+          {/* form의 recipeList의  packGrams과 같은 값*/}
           <DefaultText type="headline4" color="gray700">
-            {priceBreakdown.packGrams}g
+            {breakdown.packGrams}g
           </DefaultText>
         </div>
         <div className={styles.recipeGramInputBox}>
           <DefaultText type="headline4" color="gray700">
-            한 팩 가격{priceBreakdown.packPrice.toLocaleString()}원
+            한 팩 가격{breakdown.packPrice.toLocaleString()}원
           </DefaultText>
         </div>
-        <Button type="primary" variant="outline" size="sm" textColor={isSelected ? "gray900" : "red"} onClick={handleToggleRecipe}>
+        <Button
+          type="primary"
+          variant="outline"
+          size="sm"
+          textColor={isSelected ? "gray900" : "red"}
+          onClick={handleButtonClick}
+        >
           {isSelected ? "빼기" : "담기"}
         </Button>
       </div>
-      <RecipeDetailModal isOpen={isOpen} onClose={onClose} recipeTempData={recipeTempData} dogName={dogName}/>
+      <RecipeDetailModal
+        isOpen={isDetailOpen}
+        onClose={onDetailClose}
+        recipeTempData={recipeTempData}
+        dogName={dogName}
+        dailyRecommendKcal={dailyRecommendKcal}
+        recipeDto={recipeDto}
+        subscribeId={subscribeId}
+        onApplyLocal={applyLocal}
+        onCommit={commitEntry}
+      />
+      <Modal
+        title="레시피 선택은 최대 2개까지 가능해요"
+        content="다른 레시피를 담으시려면 기존에 선택한 레시피를 먼저 빼주세요"
+        confirmText="확인"
+        isOpen={isAlertOpen}
+        onClose={onAlertClose}
+        onConfirm={onAlertClose}
+      />
     </motion.div>
   );
 }
