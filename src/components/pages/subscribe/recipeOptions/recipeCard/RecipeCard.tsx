@@ -16,17 +16,20 @@ import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useRecipeEntryManager } from "@/hooks/subscription/useRecipeManager";
 import { useToastStore } from "@/store/useToastStore";
 import Modal from "@/components/common/modal/Modal";
+import { useMemo } from "react";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import PenIcon from "public/images/subscription/pen.svg";
 
 interface RecipeCardProps {
   recipeTempData: RecipeTempData;
   recipeDto: RecipeDto;
-  recommendId: number;
   dailyRecommendKcal: number;
   subscribeId: number;
-  inedibleFood: string;
+  inedibleFood: string[];
   dogName: string;
   isSelected: boolean;
   selectedIds: number[];
+  rank?: number;
 }
 
 export default function RecipeCard({
@@ -34,15 +37,24 @@ export default function RecipeCard({
   recipeDto,
   dailyRecommendKcal,
   subscribeId,
-  recommendId,
   inedibleFood,
   dogName,
   isSelected,
   selectedIds,
+  rank,
 }: RecipeCardProps) {
-  console.log(isSelected, recipeTempData.id);
-  
   const toast = useToastStore((s) => s.addToast);
+  const {
+    isOpen: isDetailOpen,
+    onClose: onDetailClose,
+    onToggle: onDetailToggle,
+  } = useModal();
+  const {
+    isOpen: isAlertOpen,
+    onClose: onAlertClose,
+    onToggle: onAlertToggle,
+  } = useModal();
+
   const { control } = useFormContext<SubscriptionValues>();
   const recipeList = useWatch({ control, name: "recipeList" });
 
@@ -62,43 +74,62 @@ export default function RecipeCard({
     recipeTempData.id,
     recommended
   );
-        
 
-  const ingredientsText = recipeTempData.ingredients
-    ?.filter((i) => i.trim() !== "")
-    .join(", ");
+  // 못먹는 재료 포함되는지 확인
+  const inedibleSet = useMemo(() => new Set(inedibleFood), [inedibleFood]);
 
-    const { isOpen: isDetailOpen, onClose: onDetailClose, onToggle: onDetailToggle } = useModal();
-    const { isOpen: isAlertOpen, onClose: onAlertClose, onToggle: onAlertToggle } = useModal();
-  
+  const inedibleOverlap = recipeTempData.ingredients.filter((ing) =>
+    inedibleSet.has(ing)
+  );
 
-    const handleButtonClick = () => {
-      if (isSelected) {
-        removeEntry();
-        toast("레시피가 삭제되었습니다.", "above-button");
-      } else {
-        if (selectedIds.length > 1) {
-          onAlertToggle();
-          return;
-        }
-        onDetailToggle();
+  const handleButtonClick = () => {
+    if (isSelected) {
+      removeEntry();
+      toast("레시피 빼기를 완료했어요", "above-button");
+    } else {
+      if (selectedIds.length > 1) {
+        onAlertToggle();
+        return;
       }
-    };
+      onDetailToggle();
+    }
+  };
 
+  const handleDetailModal = () => {
+    onDetailToggle();
+  };
+  
   return (
-    <motion.div
+    <div
       className={styles.recipeCardContainer({
-        isSelected,
+        isSelected
       })}
-      whileHover={{
-        y: -1,
-        boxShadow: "2px 4px 12px rgba(0, 0, 0, 0.1)",
-      }}
-      transition={{
-        duration: 0.2,
-      }}
     >
-      <RecipeBadge ingredientsText={ingredientsText} />
+      {inedibleOverlap.length > 0 && (
+        <RecipeBadge inedibleFoodText={inedibleOverlap.join(", ")} />
+      )}
+      <div
+        className={commonWrapper({
+          justify: "between",
+        })}
+      >
+        <div
+          className={commonWrapper({
+            gap: 6,
+            justify: "start",
+          })}
+        >
+          {rank && (
+            <Chips variant="solid" color="red" size="sm" borderRadius="sm">
+              {rank}위
+            </Chips>
+          )}
+          <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
+        </div>
+        <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
+          추천 급여량 {recommended.packGrams}g
+        </Chips>
+      </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image
           src={recipeTempData.imageURL}
@@ -110,58 +141,40 @@ export default function RecipeCard({
         <div
           className={commonWrapper({
             direction: "col",
-            gap: 8,
             align: "start",
+            gap: 2,
           })}
         >
-          <div
-            className={commonWrapper({
-              direction: "col",
-              gap: 2,
-              align: "start",
-            })}
-          >
-            <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
-            <DefaultText type="caption">
-              {recipeTempData.englishName}
+          <DefaultText type="caption" color="gray500">
+            (10g당 {recommended.pricePer10g.toLocaleString()}원)
+          </DefaultText>
+
+          <div>
+            <DefaultText type="headline1" color="gray900">
+              {breakdown.packPrice.toLocaleString()}원
+            </DefaultText>
+            <DefaultText type="caption" color="gray700">
+              / 1팩 당
             </DefaultText>
           </div>
-
           <div className={commonWrapper({ gap: 4, justify: "start" })}>
             {recipeTempData.efficacy.map((text, idx) => (
-              <Chips
-                key={idx}
-                variant="solid"
-                color="blue50"
-                size="sm"
-                borderRadius="lg"
-              >
-                {text}
-              </Chips>
+              <DefaultText key={idx} type="caption" color="gray500">
+                #{text}
+              </DefaultText>
             ))}
-          </div>
-          <div className={commonWrapper({ gap: 4, justify: "start" })}>
-            <Chips variant="solid" color="gray700" size="sm" borderRadius="sm">
-              추천 급여량 {recommended.packGrams}g
-            </Chips>
-            <Chips variant="solid" color="gray700" size="sm" borderRadius="sm">
-              10g당 {recommended.pricePer10g.toLocaleString()}원
-            </Chips>
           </div>
         </div>
       </div>
-      <div className={commonWrapper({ gap: 4, justify: "end" })}>
-        <div className={styles.recipeGramInputBox}>
-          {/* form의 recipeList의  packGrams과 같은 값*/}
-          <DefaultText type="headline4" color="gray700">
-            {breakdown.packGrams}g
-          </DefaultText>
-        </div>
-        <div className={styles.recipeGramInputBox}>
-          <DefaultText type="headline4" color="gray700">
-            한 팩 가격{breakdown.packPrice.toLocaleString()}원
-          </DefaultText>
-        </div>
+      <div className={commonWrapper({ gap: 8, justify: "end" })}>
+        {isSelected && (
+          <div className={styles.recipeGramInputBox} onClick={handleDetailModal}>
+            <DefaultText type="headline4" color="gray700">
+              {breakdown.packGrams}g
+            </DefaultText>
+            <SvgIcon src={PenIcon} size={20} />
+          </div>
+        )}
         <Button
           type="primary"
           variant="outline"
@@ -191,6 +204,6 @@ export default function RecipeCard({
         onClose={onAlertClose}
         onConfirm={onAlertClose}
       />
-    </motion.div>
+    </div>
   );
 }

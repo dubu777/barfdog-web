@@ -13,6 +13,8 @@ import {
   SubscriptionPriceBreakdown,
 } from "@/utils/subscription/calculateSubscriptionPrice";
 import { useToastStore } from "@/store/useToastStore";
+import { clamp } from "@/utils/numberUtils";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 
 interface MealAmountSelectorProps {
   dogName: string;
@@ -58,21 +60,45 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
       setDisplay(current);
     }, [entry, dailyRecommendKcal, recipeDto, subscribeId]);
 
+    const handleInputChange = useCallback(
+      (val: string) => {
+        const allowed = /^\d*(\.\d{0,1})?$/;
+        const excess = /^\d*\.\d{2,}/;
+        if (allowed.test(val)) {
+          setInputValue(val);
+        } else if (excess.test(val)) {
+          toast("소숫점 첫째자리까지 입력 가능합니다.", "above-button");
+          const truncated = val.slice(0, val.indexOf('.') + 2);
+          setInputValue(truncated);
+        }
+      },
+      [toast]
+    );
+
     const handleApply = useCallback(() => {
       if (!inputValue.trim()) {
-        toast("값을 입력해주세요.", "bottom");
+        toast("급여량을 입력해주세요", "above-button");
         return;
       }
-      const grams = parseInt(inputValue, 10);
+      
+      const parsed = parseFloat(inputValue);
+
+      const clamped = clamp(parsed, 20, 500);
+    
+      if (parsed < 20) toast("한 끼 최소 급여량은 20g입니다.", "above-button");
+      else if (parsed > 500) toast("최대 급여량은 500g입니다.", "above-button");
+
       const { recommended, custom } = calculateSubscriptionPrice({
         dailyRecommendKcal,
         recipeDto,
         subscribeId,
-        customPackGrams: grams,
+        customPackGrams: clamped,
       });
+
       const next = custom ?? recommended;
       setDisplay(next);
-      onApply(grams, next.packPrice);
+      setInputValue(clamped.toString());
+      onApply(clamped, next.packPrice);
     }, [
       inputValue,
       onApply,
@@ -141,17 +167,22 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
             type="number"
             placeholder="0"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => handleInputChange(e.target.value)}
           />
           <Button
             type="primary"
             size="inputButton"
-            buttonColor="red"
+            buttonColor="gray900"
             onClick={handleApply}
           >
             적용
           </Button>
         </div>
+        <InfoBox
+          text="우리 아이의 상태에 맞게 바프독 AI 알고리즘으로 계산된 급여량입니다. 원하시는 급여량이 있으시다면 수정하셔도 괜찮습니다 :)"
+          type="info"
+          color="gray"
+        />
       </section>
     );
   }

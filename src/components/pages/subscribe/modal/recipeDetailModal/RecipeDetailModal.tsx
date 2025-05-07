@@ -13,6 +13,7 @@ import { useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { RecipeDto } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import { useToastStore } from "@/store/useToastStore";
 
 interface RecipeDetailModalProps {
   recipeTempData: RecipeTempData;
@@ -37,6 +38,8 @@ export default function RecipeDetailModal({
   isOpen,
   onClose,
 }: RecipeDetailModalProps) {
+  const toast = useToastStore((s) => s.addToast);
+
   const refs: Record<string, React.RefObject<HTMLDivElement>> = {
     amount: useRef(null),
     benefits: useRef(null),
@@ -49,6 +52,7 @@ export default function RecipeDetailModal({
   }));
 
   const handleCommit = () => {
+    toast("레시피를 담았어요", "above-button");
     onCommit();
     onClose();
   }

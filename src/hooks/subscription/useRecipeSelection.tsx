@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import {
   useFormContext,
-  useFieldArray,
   useWatch,
 } from "react-hook-form";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";

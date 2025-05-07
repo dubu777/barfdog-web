@@ -14,7 +14,7 @@ export default function FirstTimeRegistration() {
     window.location.href = "/diet-analysis/survey";
   }
   const handleGotoSheet = () => {
-    router.push("/diet-analysis/subscribe?reportId=3752&type=select-recipe");
+    router.push("/diet-analysis/subscribe?reportId=3752&type=recipe");
   }
   
 

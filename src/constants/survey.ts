@@ -678,7 +678,6 @@ export interface RecipeTempData {
   imageURL: string;
   ingredients: string[];
   efficacy: string[];
-  type: "single" | "double";
 }
 
 export interface TempRecipeDto {
@@ -695,7 +694,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/starter_premium.png",
     ingredients: ["닭", "칠면조"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
   },
   6: {
     id: 6,
@@ -704,7 +702,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/turkey_and_beef.png",
     ingredients: ["칠면조", "소"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
   },
   7: {
     id: 7,
@@ -713,7 +710,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/duck_and_lamb.png",
     ingredients: ["오리", "양"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
   },
   8: {
     id: 8,
@@ -722,7 +718,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/lamb_and_beef.png",
     ingredients: ["양", "소"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
   },
   9: {
     id: 9,
@@ -731,7 +726,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/premium_chicken.png",
     ingredients: ["닭"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
   },
   10: {
     id: 10,
@@ -740,7 +734,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/premium_turkey.png",
     ingredients: ["칠면조"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
   },
   11: {
     id: 11,
@@ -749,7 +742,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/premium_lamb.png",
     ingredients: ["양"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
   },
   12: {
     id: 12,
@@ -758,7 +750,6 @@ const recipeTempData: Record<number, RecipeTempData> = {
     imageURL: "/images/recipe/premium_beef.png",
     ingredients: ["소"],
     efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
   },
 };
 

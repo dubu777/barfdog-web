@@ -3,6 +3,7 @@ import {
 	buttonStyle,
 	containerBaseStyle,
 	containerStyle,
+	primaryCountBox,
 } from "./ButtonDocked.css";
 import Button from "@/components/common/button/Button";
 
@@ -17,6 +18,7 @@ interface ButtonDockedProps {
 	secondaryButtonType?: 'primary' | 'assistive';
 	primaryButtonVariant?: 'solid' | 'outline';
 	isPrimaryDisabled?: boolean;
+	primaryCount?: number;
 }
 
 export default function ButtonDocked({
@@ -30,6 +32,7 @@ export default function ButtonDocked({
 	isPrimaryDisabled = false,
 	secondaryButtonType = 'primary',
 	primaryButtonVariant = 'solid',
+	primaryCount,
 }: ButtonDockedProps) {
 	const primaryButtonStyle =
 		type !== 'full-button' && buttonStyle[primaryButtonSize];
@@ -52,6 +55,9 @@ export default function ButtonDocked({
 			}
 			<Button onClick={onPrimaryClick} fullWidth={type === 'full-button'} type='primary' variant={primaryButtonVariant} disabled={isPrimaryDisabled} className={primaryButtonStyle || ''}>
 				{primaryButtonLabel}
+				{primaryCount != null && (
+          <span className={primaryCountBox}>{primaryCount}</span>
+        )}
 			</Button>
 		</div>
 	);

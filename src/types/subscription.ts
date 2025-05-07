@@ -28,6 +28,7 @@ export type {
   Coupon,
   PlanInfo,
   UsingCoupon,
+  SubscribeGeneralItem,
 };
 
 
@@ -218,6 +219,14 @@ interface UsingCoupon {
   memberCouponId: number;
   discount: number;
   overDiscount: number;
+}
+
+interface SubscribeGeneralItem {
+  id: number;
+  thumbnailUrl: string;
+  name: string;
+  originalPrice: number;
+  inStock: boolean;
 }
 
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';

@@ -18,8 +18,8 @@ export const recipeSelectTitleWrapper = style({
   flexDirection: "column",
   alignItems: "flex-start",
   width: "100%",
-  gap: "4px",
-  padding: "40px 20px 0px 20px",
+  gap: "20px",
+  padding: "0 20px 10px 20px",
   backgroundColor: themeVars.colors.gray.gray0,
 });
 

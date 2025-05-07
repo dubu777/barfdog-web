@@ -1,4 +1,4 @@
-import { PlanInfo, PlanKey } from "@/types";
+import { PlanInfo, PlanKey, SubscribeGeneralItem } from "@/types";
 
 export {
   subscriptionStatus,
@@ -10,6 +10,8 @@ export {
   recipeTab,
   deliveryOptions,
   recipeDetailTab,
+  subscribeStepMap,
+  generalItemTab,
 };
 
 const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
@@ -110,14 +112,16 @@ const recipeTab = [
     label: "싱글미트",
     value: "single",
   },
-  // {
-  //   label: "토퍼",
-  //   value: "topper",
-  // },
-  // {
-  //   label: "간식",
-  //   value: "snack",
-  // },
+];
+const generalItemTab = [
+  {
+    label: "토퍼",
+    value: "topper",
+  },
+  {
+    label: "간식",
+    value: "snack",
+  },
 ];
 
   const recipeDetailTab = [
@@ -145,3 +149,65 @@ const deliveryOptions = {
     { label: "4주", value: "4" },
   ]
 };
+
+const subscribeStepMap: Record<string, number> = {
+  "recipe": 1,
+  "general-item": 2,
+  "delivery-cycle": 3,
+};
+
+
+export const toppingItems: SubscribeGeneralItem[] = [
+  {
+    id: 28,
+    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=6d945436-725c-4d15-b4e7-446e01cda7e1.jpg",
+    name: "머쉬룸스프 200ml × 2",
+    originalPrice: 16900,
+    inStock: true,
+  },
+  {
+    id: 27,
+    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=2bf9fd47-4272-44ea-a969-503dedba83b1.jpg",
+    name: "치킨스프 200ml × 2",
+    originalPrice: 15900,
+    inStock: true,
+  },
+  {
+    id: 17,
+    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=8ada6262-3167-47c6-8bdc-e191a22ea8de.jpg",
+    name: "바화이트",
+    originalPrice: 15900,
+    inStock: true,
+  },
+  {
+    id: 14,
+    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=b0c11e27-59ad-49af-8c67-ba4e050b1059.jpg",
+    name: "터메릭슈퍼큐브",
+    originalPrice: 15500,
+    inStock: true,
+  },
+  {
+    id: 13,
+    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=56601eaf-db90-415c-a791-f857e553e69a.jpg",
+    name: "바프레드",
+    originalPrice: 16000,
+    inStock: true,
+  },
+];
+
+export const snackItems: SubscribeGeneralItem[] = [
+  {
+    id: 25,
+    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=d1257ef5-ac0a-4fcb-b917-85aecb09516d.jpg",
+    name: "노즈노우즈 닭(치킨)롤",
+    originalPrice: 12900,
+    inStock: true,
+  },
+  {
+    id: 24,
+    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=1612e845-f4da-406f-8a06-b2d4d67ea29d.jpg",
+    name: "노즈노우즈 칠면조(터키)롤",
+    originalPrice: 12900,
+    inStock: true,
+  },
+];
