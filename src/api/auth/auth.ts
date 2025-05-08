@@ -85,9 +85,15 @@ const getAuthNumber = async (body: {
   return data;
 };
 
-const getUserInfo = async (): Promise<GetUserInfo> => {
-  const { data } = await axiosInstance.get(`/api/members`);
-  return data;
+const getUserInfo = async (): Promise<GetUserInfo | null> => {
+  try {
+    const { data } = await axiosInstance.get(`/api/members`);
+    console.log(data)
+    return data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 };
 
 const updateUserInfo = async (body: UpdateUserInfo) => {

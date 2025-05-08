@@ -8,6 +8,7 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import Toast from "@/components/common/toast/Toast";
 import Script from "next/script";
 import SnackBar from "@/components/common/snackBar/SnackBar";
+import ChannelTalkProvider from "@/providers/ChannelTalkProvider";
 
 export const metadata: Metadata = {
   title: "바프독",
@@ -61,12 +62,14 @@ export default function RootLayout({
           ></iframe>
         </noscript>
         <ReactQueryProvider>
-          <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
-            {children}
-          </div>
-          <SnackBar />
-          <Toast />
-          <div id="modal-root" />
+          <ChannelTalkProvider>
+            <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
+              {children}
+            </div>
+            <SnackBar />
+            <Toast />
+            <div id="modal-root" />
+          </ChannelTalkProvider>
         </ReactQueryProvider>
       </body>
     </html>

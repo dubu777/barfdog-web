@@ -11,6 +11,7 @@ export const mainWrapper = style({
 export const mainContainer = style({
 	height: 'auto',
 	padding: '60px 0',
+	overflowX: 'hidden',
 })
 
 export const mainContainerBackgroundColor = {
