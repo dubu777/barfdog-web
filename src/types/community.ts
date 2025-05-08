@@ -11,6 +11,7 @@ interface CommunityListItem {
   id : number;
   title: string;
   createdDate: string;
+  category?: ArticleCategory;
 }
 
 interface NoticeListResponse {

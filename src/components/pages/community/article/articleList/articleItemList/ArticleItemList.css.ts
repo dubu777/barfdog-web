@@ -7,25 +7,9 @@ export const articleListContainer = style({
 })
 
 export const categoryFilter = style({
-  padding: '50px 0',
+  padding: '20px',
   display: 'flex',
-  justifyContent: 'center',
-  gap: '50px',
-})
-
-export const categoryButton = recipe({
-  base: {
-    cursor: 'pointer',
-    color: themeVars.fontColors.grey97,
-  },
-  variants: {
-    active: {
-      true: {
-        color: themeVars.colors.red.red,
-        fontWeight: themeVars.fontWeight.bold,
-      }
-    }
-  }
+  justifyContent: 'space-between',
 })
 
 export const articleList = recipe({
@@ -40,8 +24,10 @@ export const articleList = recipe({
     }
   }
 })
+
 export const articleItem = recipe({
-  base: {},
+  base: {
+  },
   variants :{
     mode: {
       gallery: {
@@ -55,11 +41,22 @@ export const articleItem = recipe({
   }
 });
 
+export const articleItemTitle = style({
+  display: "flex",
+  gap: '4px',
+});
+
+export const articleItemCategory = style({
+  minWidth: '34px',
+});
+
 export const articleContents = style({
+  // width: '100%',
   display: "flex",
   flexDirection: "column",
+  justifyContent: 'space-between',
   gap: '16px',
-  padding: '20px 10px',
+  padding: '10px',
 });
 
 export const articleGallery = style({

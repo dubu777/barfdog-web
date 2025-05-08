@@ -1,20 +1,22 @@
 'use client';
 import * as styles from './ArticleItemList.css';
-import { useEffect, useMemo, useState } from "react";
+import { articleImage, articleOverlay } from "@/components/pages/community/article/articleList/ArticleList.css";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
-import Text from "@/components/common/text/Text";
 import Pagination from "@/components/common/pagination/Pagination";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import TabBar from "@/components/common/tabBar/TabBar";
+import Divider from "@/components/common/divider/Divider";
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetArticleList, useGetArticleList } from "@/api/community/queries/useGetArticleList";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ArticleCategory } from "@/types";
 import { ARTICLE_CATEGORY } from "@/constants/community";
-import { articleImage, articleOverlay } from "@/components/pages/community/article/articleList/ArticleList.css";
 
 const ArticleItemList = () => {
   const pathname = usePathname();
@@ -53,31 +55,32 @@ const ArticleItemList = () => {
 
   return (
     <article className={styles.articleListContainer}>
-      <div className={styles.categoryFilter}>
-        {articleCategoryList.map(item => (
-          <button
-            key={item.value}
-            className={styles.categoryButton({ active: category === item.value })}
-            onClick={() => handleCategoryFilter(item.value as ArticleCategory)}
-          >
-            {item.label}
-          </button>
-        ))}
+      <article className={styles.categoryFilter}>
+        <TabBar
+          variant='chips'
+          tabs={articleCategoryList.map(tab => ({
+            ...tab,
+            onInit: async () => {
+              handleCategoryFilter(tab.value as ArticleCategory);
+            }
+          }))}
+          defaultIndex={0}
+          width={68}
+          justifyContent='flexStart'
+        />
         <button onClick={() => setMode(mode === 'board' ? 'gallery' : 'board')}>{mode}</button>
-      </div>
+      </article>
       <div className={styles.articleList({ isEmpty: articleList.length === 0 })}>
         {articleList.length === 0 ?
-          <Text type='description' size='sm' color='grey'>
-            등록된 블로그가 없습니다.
-          </Text>
+          <DefaultEmptyState title='등록된 블로그가 없습니다.' />
           : <div className={mode === 'gallery' ? styles.articleGallery : ''}>
             {articleList.map((article, index) => {
               const rowHeight = index % 4 === 0 || index % 4 === 3 ? 186 : 233.5;
               const imageSize = mode === 'gallery' ? 300 : 96
               return (
+                <Fragment key={index}>
                 <Link
-                  href={`/community/article/${article.id}`}
-                  key={index}
+                  href={`/community/article/${article.id}?category=${article.category}`}
                   style={{ gridRowEnd: `span ${Math.ceil(rowHeight / 10)}` }}
                   className={styles.articleItem({ mode })}
                 >
@@ -94,11 +97,16 @@ const ArticleItemList = () => {
                         <DefaultText type='caption' color='white'>{ARTICLE_CATEGORY[article.category].label}</DefaultText>
                         <DefaultText type='label3' color='white'>{article.title}</DefaultText>
                       </>
-                      : <DefaultText type='label3' color='gray900'>[{ARTICLE_CATEGORY[article.category].label}] {article.title}</DefaultText>
+                      : <div className={styles.articleItemTitle}>
+                        <DefaultText type='label3' color='gray900' className={styles.articleItemCategory}>[{ARTICLE_CATEGORY[article.category].label}]</DefaultText>
+                        <DefaultText type='label3' color='gray900'>{article.title}</DefaultText>
+                      </div>
                     }
                     {mode === 'board' && <DefaultText type='label4'>{format(new Date(article.createdDate), 'yyyy-MM-dd')}</DefaultText>}
                   </div>
                 </Link>
+                <Divider thickness={2} color='gray50' />
+                </Fragment>
               );
             })}
           </div>

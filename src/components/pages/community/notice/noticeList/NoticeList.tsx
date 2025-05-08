@@ -1,5 +1,6 @@
 'use client';
 import * as styles from './NoticeList.css';
+import { infiniteTrigger } from '@/styles/common.css';
 import { useEffect } from "react";
 import { format } from "date-fns";
 import { useSearchParams } from "next/navigation";
@@ -11,7 +12,6 @@ import TabBar from "@/components/common/tabBar/TabBar";
 import { useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
 import { NOTICE_CATEGORY } from "@/constants/community";
 import { NoticeCategory, NoticeListResponse } from "@/types";
-import { infiniteTrigger } from '@/styles/common.css';
 
 const NoticeList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetNoticeList();
@@ -23,11 +23,10 @@ const NoticeList = () => {
 
   const filteredNoticeList = data?.pages
     ?.flatMap((page: NoticeListResponse) =>
-      noticeTypeFilter === "ALL" || !noticeTypeFilter
+      noticeTypeFilter === "ALL"
         ? page.noticeList
         : page.noticeList.filter(notice => notice.title.includes(NOTICE_CATEGORY[noticeTypeFilter].label))
     );
-
 
   const { defaultTabIndex, handleFilterChange } = useFilterTabs({
     filterKey: 'noticeType',

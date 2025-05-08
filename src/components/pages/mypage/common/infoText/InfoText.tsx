@@ -1,12 +1,18 @@
 import * as styles from './InfoText.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { fontColors } from "@/components/common/defaultText/DefaultText.css";
+import { fontColors, textStyles } from "@/components/common/defaultText/DefaultText.css";
 
-const InfoText = ({ text, color = 'gray500' }: { text: string, color?: keyof typeof fontColors; }) => {
+interface InfoTextProps {
+	text: string;
+	color?: keyof typeof fontColors;
+	type?: keyof typeof textStyles;
+}
+
+const InfoText = ({ text, color = 'gray500', type = 'caption' }: InfoTextProps) => {
 	return (
 		<div className={styles.infoTextBox}>
-			<DefaultText type='caption' color={color}>• </DefaultText>
-			<DefaultText type='caption' color={color}>{text}</DefaultText>
+			<DefaultText type={type} color={color}>• </DefaultText>
+			<DefaultText type={type} color={color}>{text}</DefaultText>
 		</div>
 	);
 };

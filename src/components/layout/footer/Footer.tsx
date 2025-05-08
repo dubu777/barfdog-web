@@ -26,7 +26,7 @@ const menuLink = [
     value: '/community/faq',
   },
   {
-    label: 'Article',
+    label: '아티클',
     value: '/community/article',
   },
 ]

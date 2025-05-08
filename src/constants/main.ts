@@ -31,7 +31,7 @@ export const MAIN_DATA = {
 		action: {
 			label: '자주 묻는 질문 보러가기',
 			variant: 'outline',
-			url: '/community/FAQ',
+			url: '/community/faq',
 			fullWidth: true,
 		}
 	},
