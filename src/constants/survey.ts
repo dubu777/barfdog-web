@@ -675,7 +675,7 @@ export interface RecipeTempData {
   id: number;
   name: string;
   englishName: string;
-  imageURL: string;
+  imageUrl: string;
   ingredients: string[];
   efficacy: string[];
 }
@@ -683,7 +683,7 @@ export interface RecipeTempData {
 export interface TempRecipeDto {
   id: number;
   name: string;
-  imageURL: string;
+  imageUrl: string;
 }
 
 const recipeTempData: Record<number, RecipeTempData> = {
@@ -691,7 +691,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 5,
     name: "스타터 프리미엄",
     englishName: "STARTER PREMIUM",
-    imageURL: "/images/recipe/starter_premium.png",
+    imageUrl: "/images/recipe/starter_premium.png",
     ingredients: ["닭", "칠면조"],
     efficacy: ["구토•설사", "관절 건강"],
   },
@@ -699,7 +699,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 6,
     name: "터키앤비프",
     englishName: "TURKEY & BEEF",
-    imageURL: "/images/recipe/turkey_and_beef.png",
+    imageUrl: "/images/recipe/turkey_and_beef.png",
     ingredients: ["칠면조", "소"],
     efficacy: ["구토•설사", "관절 건강"],
   },
@@ -707,7 +707,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 7,
     name: "덕앤램",
     englishName: "DUCK & LAMB",
-    imageURL: "/images/recipe/duck_and_lamb.png",
+    imageUrl: "/images/recipe/duck_and_lamb.png",
     ingredients: ["오리", "양"],
     efficacy: ["구토•설사", "관절 건강"],
   },
@@ -715,7 +715,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 8,
     name: "램앤비프",
     englishName: "LAMB & BEEF",
-    imageURL: "/images/recipe/lamb_and_beef.png",
+    imageUrl: "/images/recipe/lamb_and_beef.png",
     ingredients: ["양", "소"],
     efficacy: ["구토•설사", "관절 건강"],
   },
@@ -723,7 +723,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 9,
     name: "프리미엄 치킨",
     englishName: "PREMIUM CHICKEN",
-    imageURL: "/images/recipe/premium_chicken.png",
+    imageUrl: "/images/recipe/premium_chicken.png",
     ingredients: ["닭"],
     efficacy: ["구토•설사", "관절 건강"],
   },
@@ -731,7 +731,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 10,
     name: "프리미엄 터키",
     englishName: "PREMIUM TURKEY",
-    imageURL: "/images/recipe/premium_turkey.png",
+    imageUrl: "/images/recipe/premium_turkey.png",
     ingredients: ["칠면조"],
     efficacy: ["구토•설사", "관절 건강"],
   },
@@ -739,7 +739,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 11,
     name: "프리미엄 램",
     englishName: "PREMIUM LAMB",
-    imageURL: "/images/recipe/premium_lamb.png",
+    imageUrl: "/images/recipe/premium_lamb.png",
     ingredients: ["양"],
     efficacy: ["구토•설사", "관절 건강"],
   },
@@ -747,7 +747,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     id: 12,
     name: "프리미엄 비프",
     englishName: "PREMIUM BEEF",
-    imageURL: "/images/recipe/premium_beef.png",
+    imageUrl: "/images/recipe/premium_beef.png",
     ingredients: ["소"],
     efficacy: ["구토•설사", "관절 건강"],
   },

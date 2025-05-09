@@ -1,7 +1,6 @@
 import Image from "next/image";
 import * as styles from "./RecipeCard.css";
 import { RecipeTempData } from "@/constants";
-import { motion } from "framer-motion";
 import RecipeBadge from "./recipeBadge/RecipeBadge";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";
@@ -98,10 +97,10 @@ export default function RecipeCard({
   const handleDetailModal = () => {
     onDetailToggle();
   };
-  
+
   return (
     <div
-      className={styles.recipeCardContainer({
+      className={styles.subscribeItemCardContainer({
         isSelected
       })}
     >
@@ -132,10 +131,10 @@ export default function RecipeCard({
       </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image
-          src={recipeTempData.imageURL}
+          src={recipeTempData.imageUrl}
           alt="레시피 이미지"
-          width={88}
-          height={88}
+          width={80}
+          height={80}
           priority
         />
         <div
@@ -149,7 +148,7 @@ export default function RecipeCard({
             (10g당 {recommended.pricePer10g.toLocaleString()}원)
           </DefaultText>
 
-          <div>
+          <div className={commonWrapper({ direction: "row", gap: 4, justify: "start" })}>
             <DefaultText type="headline1" color="gray900">
               {breakdown.packPrice.toLocaleString()}원
             </DefaultText>
@@ -168,7 +167,7 @@ export default function RecipeCard({
       </div>
       <div className={commonWrapper({ gap: 8, justify: "end" })}>
         {isSelected && (
-          <div className={styles.recipeGramInputBox} onClick={handleDetailModal}>
+          <div className={styles.subscribeUpdateInputBox} onClick={handleDetailModal}>
             <DefaultText type="headline4" color="gray700">
               {breakdown.packGrams}g
             </DefaultText>
@@ -180,6 +179,7 @@ export default function RecipeCard({
           variant="outline"
           size="sm"
           textColor={isSelected ? "gray900" : "red"}
+          borderColor={isSelected ? "gray300" : "red"}
           onClick={handleButtonClick}
         >
           {isSelected ? "빼기" : "담기"}

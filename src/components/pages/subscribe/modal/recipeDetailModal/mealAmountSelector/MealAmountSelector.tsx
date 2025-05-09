@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import { forwardRef, useCallback, useEffect, useState } from "react";
-import { recipeDetailSection } from "../RecipeDetailModal.css";
+import { mealSelectorBox, recipeDetailSection } from "../RecipeDetailModal.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InputField from "@/components/common/inputField/InputField";
@@ -116,13 +116,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
           계산했어요
         </DefaultText>
         <div
-          className={commonWrapper({
-            direction: "row",
-            justify: "between",
-            padding: 16,
-            backgroundColors: "gray50",
-            borderRadius: 8,
-          })}
+          className={mealSelectorBox}
         >
           <div
             className={commonWrapper({

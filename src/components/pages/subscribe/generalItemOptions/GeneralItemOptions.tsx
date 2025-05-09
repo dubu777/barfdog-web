@@ -1,15 +1,18 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import React, { useRef } from "react";
-import * as styles from "../recipeOptions/RecipeOptions.css"
+import * as styles from "../recipeOptions/RecipeOptions.css";
 import TabBar from "@/components/common/tabBar/TabBar";
 import { generalItemTab, snackItems, toppingItems } from "@/constants";
 import { scrollToElement } from "@/utils/scrollToElement";
 import Divider from "@/components/common/divider/Divider";
+import GeneralItemCard from "./generalItemCard/GeneralItemCard";
 interface GeneralItemOptionsProps {
+  selectedIds: number[];
 }
 
-export default function GeneralItemOptions({}: GeneralItemOptionsProps) {
-
+export default function GeneralItemOptions({
+  selectedIds,
+}: GeneralItemOptionsProps) {
   const sections = [
     {
       key: "topper",
@@ -25,13 +28,13 @@ export default function GeneralItemOptions({}: GeneralItemOptionsProps) {
     },
   ];
 
-    // 섹션별 ref
-    const refs = useRef(
-      sections.reduce((acc, { key }) => {
-        acc[key] = React.createRef<HTMLDivElement>();
-        return acc;
-      }, {} as Record<string, React.RefObject<HTMLDivElement>>)
-    ).current;
+  // 섹션별 ref
+  const refs = useRef(
+    sections.reduce((acc, { key }) => {
+      acc[key] = React.createRef<HTMLDivElement>();
+      return acc;
+    }, {} as Record<string, React.RefObject<HTMLDivElement>>)
+  ).current;
 
   // 탭 배열에 onInit 붙이기
   const tabs = generalItemTab.map((tab) => ({
@@ -40,11 +43,11 @@ export default function GeneralItemOptions({}: GeneralItemOptionsProps) {
   }));
 
   return (
-<section className={styles.recipeSelectContainer}>
+    <section className={styles.recipeSelectContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
         <div>
           <DefaultText type="title2">
-            식사와 함께 급여하면 좋을 
+            식사와 함께 급여하면 좋을
             <br />
             토퍼와 간식도 준비했어요
           </DefaultText>
@@ -67,7 +70,14 @@ export default function GeneralItemOptions({}: GeneralItemOptionsProps) {
                 </DefaultText>
               </div>
               <div className={styles.recipeCardWrapper}>
-
+                {items.map((item) => (
+                  <GeneralItemCard
+                    key={item.id}
+                    generalItemTempData={item}
+                    selectedIds={selectedIds}
+                    isSelected={selectedIds.includes(item.id)}
+                  />
+                ))}
               </div>
             </div>
             {idx < sections.length - 1 && <Divider color="gray100" />}

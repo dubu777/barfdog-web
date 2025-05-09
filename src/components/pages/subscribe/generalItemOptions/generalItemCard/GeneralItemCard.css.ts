@@ -4,30 +4,32 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const subscribeItemCardContainer = recipe({
   base: {
-    position: "relative",
-    boxSizing: 'border-box',
+    position: 'relative',
     width: "100%",
     backgroundColor: themeVars.colors.gray.gray0,
     display: "flex",
     flexDirection: "column",
     borderRadius: "12px",
-    padding: "16px",
+    padding: '16px',
     cursor: "pointer",
     boxShadow: themeVars.shadow.light,
-    border: '1px solid transparent',
+    outline: 'none',
   },
   variants: {
     isSelected: {
-      true: {
-        borderColor: themeVars.colors.red.red,
+      true: 
+      {
+        outline: `1px solid ${themeVars.colors.red.red}`,
       },
-      false: {},
-    },
+      false: {
+      }
+    }
   },
   defaultVariants: {
-    isSelected: false,
-  },
+    isSelected: false
+  }
 });
+
 
 export const subscribeUpdateInputBox = style({
   display: "flex",

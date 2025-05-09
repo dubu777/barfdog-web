@@ -58,10 +58,10 @@ export default function RecipeDetailModal({
   }
   
   return (
-    <FullModalWrapper isVisible={isOpen} handleClose={onClose}>
+    <FullModalWrapper isVisible={isOpen} handleClose={onClose} headerBackgroundColor="gray50">
       <div className={commonWrapper({ direction: "col", gap: 8 })}>
         <Image
-          src={recipeTempData.imageURL}
+          src={recipeTempData.imageUrl}
           width={140}
           height={140}
           alt={recipeTempData.name}
@@ -78,7 +78,7 @@ export default function RecipeDetailModal({
             <Chips
               key={idx}
               variant="solid"
-              color="blue50"
+              color="gray200"
               size="sm"
               borderRadius="sm"
             >
@@ -106,7 +106,7 @@ export default function RecipeDetailModal({
       <ButtonDocked
         type="dual-button"
         primaryButtonLabel="레시피 담기"
-        secondaryButtonLabel="취소"
+        secondaryButtonLabel="이전"
         onPrimaryClick={handleCommit}
         onSecondaryClick={onClose}
         primaryButtonSize="lg"

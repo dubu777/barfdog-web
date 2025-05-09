@@ -5,7 +5,7 @@ export const deliveryOptionsContainer = style({
   position: 'relative',
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
+  alignItems: "flex-start",
   width: "100%",
   paddingBottom: "85px",
   backgroundColor: themeVars.colors.gray.gray0,
@@ -22,3 +22,8 @@ export const selectOptionWrapper = style({
   padding: '28px 20px',
   gap: "16px",
 });
+
+
+export const mealFrequencyButtonWrapper = style({
+  width: "276px",
+})

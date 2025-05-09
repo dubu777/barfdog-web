@@ -1,4 +1,5 @@
 import * as styles from "./FullModalWrapper.css";
+import { backgroundColors } from "@/components/layout/header/Header.css";
 import { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
@@ -10,6 +11,7 @@ interface FullModalWrapperProps {
   handleGoBack?: () => void;
   children: ReactNode;
   headerTitle?: string;
+  headerBackgroundColor?: keyof typeof backgroundColors;
   className?: string;
 }
 
@@ -19,6 +21,7 @@ const FullModalWrapper = ({
   handleGoBack,
   children,
   headerTitle,
+  headerBackgroundColor = "gray0",
   className,
 }: FullModalWrapperProps) => {
   return (
@@ -44,6 +47,7 @@ const FullModalWrapper = ({
               showBackButton={!!handleGoBack}
               onClose={handleClose}
               onBack={handleGoBack}
+              backgroundColor={headerBackgroundColor}
             />
             <div className={styles.modalContent}>{children}</div>
           </motion.div>

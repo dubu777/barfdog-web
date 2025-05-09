@@ -223,10 +223,11 @@ interface UsingCoupon {
 
 interface SubscribeGeneralItem {
   id: number;
-  thumbnailUrl: string;
+  imageUrl: string;
   name: string;
   originalPrice: number;
   inStock: boolean;
+  benefit: string[];
 }
 
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';

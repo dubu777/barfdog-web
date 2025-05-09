@@ -1,6 +1,6 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { selectOptionWrapper } from "../DeliveryOptions.css";
-import { Controller, useFormContext } from "react-hook-form";
+import { mealFrequencyButtonWrapper, selectOptionWrapper } from "../DeliveryOptions.css";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { commonWrapper } from "@/styles/common.css";
 import { deliveryOptions } from "@/constants";
@@ -8,7 +8,12 @@ import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
 
 export default function DeliveryCycle() {
   const { control } = useFormContext<SubscriptionValues>();
-  
+  const mealFrequency = useWatch({ control, name: "mealFrequency" });
+
+  const availableCycles =
+    mealFrequency === 1
+      ? deliveryOptions.deliveryCycle.filter((opt) => opt.value === 4)
+      : deliveryOptions.deliveryCycle;
   return (
     <div className={selectOptionWrapper}>
       <DefaultText type="title4">배송주기</DefaultText>
@@ -17,20 +22,21 @@ export default function DeliveryCycle() {
         name="deliveryCycle"
         control={control}
         render={({ field }) => (
-          <div className={commonWrapper({ gap: 8 })}>
-            {deliveryOptions.deliveryCycle.map((item) => (
-              <SurveyButton
-                key={item.value}
-                label={item.label}
-                value={item.value}
-                isChecked={field.value === item.value}
-                inputType="normal"
-                onToggle={() => field.onChange(item.value)}
-              />
+          <div className={commonWrapper({ gap: 8, justify: "start" })}>
+            {availableCycles.map((item) => (
+              <div className={mealFrequencyButtonWrapper} key={item.value}>
+                <SurveyButton
+                  label={item.label}
+                  value={item.value}
+                  isChecked={field.value === item.value}
+                  inputType="normal"
+                  onToggle={() => field.onChange(item.value)}
+                />
+              </div>
             ))}
           </div>
         )}
       />
     </div>
-  )
+  );
 }

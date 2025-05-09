@@ -30,3 +30,14 @@ export const recipeDetailSection = style({
   gap: "20px",
   scrollMarginTop: "109px",
 });
+
+export const mealSelectorBox = style({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  padding: "16px",
+  backgroundColor: themeVars.colors.gray.gray50,
+  borderRadius: "8px",
+  width: "100%",
+  border: `1px solid ${themeVars.colors.gray.gray200}`,
+});

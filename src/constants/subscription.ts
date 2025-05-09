@@ -141,12 +141,12 @@ const generalItemTab = [
 
 const deliveryOptions = {
   mealFrequency: [
-    { label: "하루 한 끼", value: "1", discountRate: "3%" },
-    { label: "하루 두 끼", value: "2", discountRate: "5%" },
+    { label: "하루 한 끼", value: 1, discountRate: "3%" },
+    { label: "하루 두 끼", value: 2, discountRate: "5%" },
   ],
   deliveryCycle: [
-    { label: "2주", value: "2" },
-    { label: "4주", value: "4" },
+    { label: "2주", value: 2 },
+    { label: "4주", value: 4 },
   ]
 };
 
@@ -160,54 +160,61 @@ const subscribeStepMap: Record<string, number> = {
 export const toppingItems: SubscribeGeneralItem[] = [
   {
     id: 28,
-    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=6d945436-725c-4d15-b4e7-446e01cda7e1.jpg",
+    imageUrl: "http://www.barfdogserver.com/display/items?filename=6d945436-725c-4d15-b4e7-446e01cda7e1.jpg",
     name: "머쉬룸스프 200ml × 2",
     originalPrice: 16900,
     inStock: true,
+    benefit: ["노령견건강", "피부∙모질"],
   },
   {
     id: 27,
-    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=2bf9fd47-4272-44ea-a969-503dedba83b1.jpg",
+    imageUrl: "http://www.barfdogserver.com/display/items?filename=2bf9fd47-4272-44ea-a969-503dedba83b1.jpg",
     name: "치킨스프 200ml × 2",
     originalPrice: 15900,
     inStock: true,
+    benefit: ["노령견건강", "피부∙모질"],
   },
   {
     id: 17,
-    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=8ada6262-3167-47c6-8bdc-e191a22ea8de.jpg",
+    imageUrl: "http://www.barfdogserver.com/display/items?filename=8ada6262-3167-47c6-8bdc-e191a22ea8de.jpg",
     name: "바화이트",
     originalPrice: 15900,
     inStock: true,
+    benefit: ["노령견건강", "피부∙모질"],
   },
   {
     id: 14,
-    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=b0c11e27-59ad-49af-8c67-ba4e050b1059.jpg",
+    imageUrl: "http://www.barfdogserver.com/display/items?filename=b0c11e27-59ad-49af-8c67-ba4e050b1059.jpg",
     name: "터메릭슈퍼큐브",
     originalPrice: 15500,
     inStock: true,
+    benefit: ["노령견건강", "피부∙모질"],
   },
   {
     id: 13,
-    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=56601eaf-db90-415c-a791-f857e553e69a.jpg",
+    imageUrl: "http://www.barfdogserver.com/display/items?filename=56601eaf-db90-415c-a791-f857e553e69a.jpg",
     name: "바프레드",
     originalPrice: 16000,
     inStock: true,
+    benefit: ["노령견건강", "피부∙모질"],
   },
 ];
 
 export const snackItems: SubscribeGeneralItem[] = [
   {
     id: 25,
-    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=d1257ef5-ac0a-4fcb-b917-85aecb09516d.jpg",
+    imageUrl: "http://www.barfdogserver.com/display/items?filename=d1257ef5-ac0a-4fcb-b917-85aecb09516d.jpg",
     name: "노즈노우즈 닭(치킨)롤",
     originalPrice: 12900,
     inStock: true,
+    benefit: ["노령견건강", "피부∙모질"],
   },
   {
     id: 24,
-    thumbnailUrl: "http://www.barfdogserver.com/display/items?filename=1612e845-f4da-406f-8a06-b2d4d67ea29d.jpg",
+    imageUrl: "http://www.barfdogserver.com/display/items?filename=1612e845-f4da-406f-8a06-b2d4d67ea29d.jpg",
     name: "노즈노우즈 칠면조(터키)롤",
     originalPrice: 12900,
     inStock: true,
+    benefit: ["노령견건강", "피부∙모질"],
   },
 ];

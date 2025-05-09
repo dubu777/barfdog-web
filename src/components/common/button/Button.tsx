@@ -22,6 +22,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   buttonColor?: keyof typeof COLORS;
   textColor?: keyof typeof COLORS;
+  borderColor?: keyof typeof COLORS;
   buttonType?: "submit" | "button" | "reset";
   style?: React.CSSProperties;
   className?: string;
@@ -40,6 +41,7 @@ export default function Button({
   fullWidth = false,
   buttonColor,
   textColor,
+  borderColor,
   buttonType = "button",
   style,
   className,
@@ -70,8 +72,8 @@ export default function Button({
     }),
     ...(textColor && {
       color: COLORS[textColor],
-      ...(variant === "outline" && {
-        border: `1px solid ${COLORS[textColor]}`,
+      ...(variant === "outline" && borderColor && {
+        border: `1px solid ${COLORS[borderColor]}`,
       }),
     }),
   };
