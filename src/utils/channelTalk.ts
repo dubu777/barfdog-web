@@ -1,15 +1,16 @@
 import { loadScript } from '@channel.io/channel-web-sdk-loader';
 
+export type { BootSettings };
+
 interface Profile {
-	name: string | null;
-	mobileNumber: string | null;
-	email: string | null;
+	name: string;
+	mobileNumber: string;
+	email: string;
 }
 
 interface BootSettings {
 	pluginKey: string;
-	memberId: string | null; 
-	member: boolean;
+	memberId?: string;
 	profile?: Profile;
 }
 
@@ -35,7 +36,7 @@ export const trackChannelEvent = (eventName: string, props?: Record<string, any>
 	}
 };
 
-// 필요시 track 이벤트 props 객체 추가 정의
+// track 이벤트 필요시 props 객체 추가 정의
 // type ChannelEventMap = {
 // 	OpenedHelp: { path: string };
 // 	ClickedCTA: { label: string; page: string };
@@ -48,4 +49,22 @@ export const trackChannelEvent = (eventName: string, props?: Record<string, any>
 // 	if (typeof window !== 'undefined' && window.ChannelIO) {
 // 		window.ChannelIO('track', eventName, props);
 // 	}
+// };
+
+// 대화 초기화 적용 필요시 채널톡 관련 localStorage, cookie 정리 -> 로그아웃시 적용 필요
+// export const clearChannelIOSession = () => {
+// 	// localStorage 정리
+// 	Object.keys(localStorage).forEach((key) => {
+// 		if (key.includes('ch-session')) {
+// 			localStorage.removeItem(key);
+// 		}
+// 	});
+
+// 	// 쿠키 정리
+// 	document.cookie.split(';').forEach((cookie) => {
+// 		const [rawName] = cookie.trim().split('=');
+// 		if (rawName.includes('ch-session')) {
+// 			document.cookie = `${rawName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+// 		}
+// 	});
 // };

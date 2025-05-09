@@ -1,18 +1,18 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UseMutationCustomOptions } from "@/types";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { snsLogin } from "../auth";
-
-
+import { queryKeys } from "@/constants";
 
 export function useSnsLogin(
   mutationOptions?: UseMutationCustomOptions
 ) {
   const router = useRouter();
   const { setLoginUserInfo } = useAuthStore();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: snsLogin,
@@ -26,6 +26,11 @@ export function useSnsLogin(
 
       // 로그인한 유저 정보를 전역 스토어에 저장
       setLoginUserInfo(data);
+
+      // 채널톡에서 사용되는 사용자 정보 캐시 무효화
+      await queryClient.invalidateQueries({
+        queryKey: [queryKeys.AUTH.BASE, queryKeys.AUTH.GET_USER_INFO]
+      });
 
       // userType에 따른 라우팅 처리
       switch (data.userType) {

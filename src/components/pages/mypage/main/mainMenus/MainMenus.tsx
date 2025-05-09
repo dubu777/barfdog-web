@@ -44,8 +44,10 @@ const MainMenus = () => {
           </div>
         ))}
       </div>
-      <div className={styles.logout} onClick={handleLogout}>
-        <DefaultText type='body2'>로그아웃</DefaultText>
+      <div className={styles.logout}>
+        <button className={styles.logoutButton} onClick={handleLogout}>
+          <DefaultText type='body2'>로그아웃</DefaultText>
+        </button>
       </div>
     </article>
   );

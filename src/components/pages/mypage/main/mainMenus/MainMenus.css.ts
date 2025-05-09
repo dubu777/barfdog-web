@@ -40,3 +40,8 @@ export const logout = style({
   background: themeVars.colors.gray.gray50,
   textAlign: 'left',
 })
+
+export const logoutButton = style({
+  cursor: 'pointer',
+  padding: '4px 0'
+})

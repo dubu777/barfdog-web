@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { TemporaryUserEmail, TemporaryPassword, GetUserInfo } from "@/types";
+import { TemporaryUserEmail, TemporaryPassword } from "@/types";
 import { LoginUserInfo, UserInfo } from "@/types";
 
 
@@ -14,8 +14,6 @@ interface AuthStore {
   setTempPwUserInfo: (tempPwUserInfo: TemporaryPassword) => void;
   clientLoggedIn: boolean | null;
   setClientLoggedIn: (loggedIn: boolean | null) => void;
-  detailUserInfo: GetUserInfo | null;
-  setDetailUserInfo: (detailUserInfo: GetUserInfo) => void;
 }
 
 
@@ -45,6 +43,4 @@ export const useAuthStore = create<AuthStore>((set) => ({
   setTempPwUserInfo: (tempPwUserInfo) => set({ tempPwUserInfo }),
   clientLoggedIn: null,
   setClientLoggedIn: (loggedIn) => set({ clientLoggedIn: loggedIn }),
-  detailUserInfo: null,
-  setDetailUserInfo: (detailUserInfo) => set({ detailUserInfo }),
 }));

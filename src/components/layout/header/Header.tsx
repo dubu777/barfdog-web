@@ -9,6 +9,7 @@ import CartIcon from "/public/images/header/cart.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/useCartStore";
 
 interface HeaderProps {
   leftElement?: React.ReactNode;
@@ -44,7 +45,7 @@ export default function Header({
   leftSlotGap = "lg",
 }: HeaderProps) {
   const router = useRouter();
-
+  const { count } = useCartStore();
   const handleBack = () => {
     if (onBack) {
       onBack();
@@ -77,7 +78,10 @@ export default function Header({
       <div className={styles.rightSlot}>
         {rightElement}
         {showCartButton && (
-          <Link href="/cart">
+          <Link href="/cart" className={styles.cartButton}>
+            {count !== 0 && (
+              <div className={styles.cartCount}>{count}</div>
+            )}
             <SvgIcon src={CartIcon} size={24} color="gray900" />
           </Link>
         )}
