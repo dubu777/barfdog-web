@@ -73,6 +73,7 @@ export default function GeneralItemCard({
         isSelected,
       })}
     >
+      <DefaultText type="headline2">{generalItemTempData.name}</DefaultText>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image
           src={generalItemTempData.imageUrl}

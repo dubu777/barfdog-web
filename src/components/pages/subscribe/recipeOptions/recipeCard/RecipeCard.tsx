@@ -18,6 +18,7 @@ import Modal from "@/components/common/modal/Modal";
 import { useMemo } from "react";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
+import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
 
 interface RecipeCardProps {
   recipeTempData: RecipeTempData;
@@ -61,17 +62,18 @@ export default function RecipeCard({
   const entry = recipeList.find((r) => r.recipeId === recipeTempData.id);
 
   // 2) entry가 없으면 추천값을 계산
-  const { recommended, custom } = calculateSubscriptionPrice({
+  const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = calculateRecipePack({
     dailyRecommendKcal,
     recipeDto,
     subscribeId,
-    customPackGrams: entry?.packGrams,
+    customPackGrams: entry?.packGrams
   });
-  const breakdown = custom ?? recommended;
+
+  const breakdown = { recommendedPackGrams, packGrams, packPrice, pricePer10g };
 
   const { applyLocal, commitEntry, removeEntry } = useRecipeEntryManager(
     recipeTempData.id,
-    recommended
+    breakdown
   );
 
   // 못먹는 재료 포함되는지 확인
@@ -126,7 +128,7 @@ export default function RecipeCard({
           <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
         </div>
         <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
-          추천 급여량 {recommended.packGrams}g
+          추천 급여량 {recommendedPackGrams}g
         </Chips>
       </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
@@ -145,7 +147,7 @@ export default function RecipeCard({
           })}
         >
           <DefaultText type="caption" color="gray500">
-            (10g당 {recommended.pricePer10g.toLocaleString()}원)
+            (10g당 {pricePer10g.toLocaleString()}원)
           </DefaultText>
 
           <div className={commonWrapper({ direction: "row", gap: 4, justify: "start" })}>
@@ -169,7 +171,7 @@ export default function RecipeCard({
         {isSelected && (
           <div className={styles.subscribeUpdateInputBox} onClick={handleDetailModal}>
             <DefaultText type="headline4" color="gray700">
-              {breakdown.packGrams}g
+              {packGrams}g
             </DefaultText>
             <SvgIcon src={PenIcon} size={20} />
           </div>

@@ -14,9 +14,9 @@ interface GeneralItemDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   generalItemTempData: SubscribeGeneralItem;
-  existing?: { itemId: number; amount: number; orderPrice: number };
-  pending: { amount: number; orderPrice: number } | null;
-  onApplyLocal: (packGrams: number, orderPrice: number) => void;
+  existing?: { itemId: number; amount: number; originPrice: number };
+  pending: { amount: number; originPrice: number } | null;
+  onApplyLocal: (packGrams: number, originPrice: number) => void;
   onCommit: () => void;
 }
 

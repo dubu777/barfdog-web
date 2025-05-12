@@ -228,6 +228,7 @@ interface SubscribeGeneralItem {
   originalPrice: number;
   inStock: boolean;
   benefit: string[];
+  type: "topping" | "snack";
 }
 
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';

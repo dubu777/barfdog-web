@@ -26,7 +26,7 @@ const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
   title1: "h3",
   title2: "h3",
   title3: "h3",
-  title4: "h3",
+  title4: "span",
   headline1: "span",
   headline2: "span",
   headline3: "span",

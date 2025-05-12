@@ -14,6 +14,7 @@ export const subscribeItemCardContainer = recipe({
     cursor: "pointer",
     boxShadow: themeVars.shadow.light,
     outline: 'none',
+    gap: "4px",
   },
   variants: {
     isSelected: {

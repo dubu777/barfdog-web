@@ -60,8 +60,7 @@ export default function SubscribePageContainer({
   console.log("주문서 form", formMethods.watch());
 
   const handleNavigation = () => {
-    if (recipeList.length < 1 ) {
-
+    if (recipeList.length < 1) {
     }
     if (type === "recipe") {
       router.push(
@@ -74,9 +73,7 @@ export default function SubscribePageContainer({
     }
   };
 
-  const handleSubmit = () => {
-
-  };
+  const handleSubmit = () => {};
 
   const inedibleFood = ["닭", "칠면조"];
   return (
@@ -94,9 +91,7 @@ export default function SubscribePageContainer({
         <GeneralItemOptions selectedIds={selectedGeneralItemIds} />
       )}
       {type === "delivery-cycle" && recipeData && resultData && (
-        <DeliveryOptions 
-        recipeData={recipeData}
-        />
+        <DeliveryOptions recipeData={recipeData} />
       )}
       {type === "delivery-cycle" ? (
         <ButtonDocked

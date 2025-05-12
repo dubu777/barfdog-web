@@ -15,6 +15,7 @@ import {
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
+import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
 
 interface MealAmountSelectorProps {
   dogName: string;
@@ -48,16 +49,16 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
 
     // sync whenever inputs change
     useEffect(() => {
-      const { recommended, custom } = calculateSubscriptionPrice({
-        dailyRecommendKcal,
-        recipeDto,
-        subscribeId,
-        customPackGrams: entry?.packGrams,
-      });
-      const current = custom ?? recommended;
-      const grams = entry?.packGrams ?? recommended.recommendedPackGrams;
-      setInputValue(grams.toString());
-      setDisplay(current);
+      const { recommendedPackGrams, packGrams, packPrice, pricePer10g } =
+        calculateRecipePack({
+          dailyRecommendKcal,
+          recipeDto,
+          subscribeId,
+          customPackGrams: entry?.packGrams,
+        });
+
+      setInputValue(packGrams.toString());
+      setDisplay({ recommendedPackGrams, packGrams, packPrice, pricePer10g });
     }, [entry, dailyRecommendKcal, recipeDto, subscribeId]);
 
     const handleInputChange = useCallback(
@@ -68,7 +69,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
           setInputValue(val);
         } else if (excess.test(val)) {
           toast("소숫점 첫째자리까지 입력 가능합니다.", "above-button");
-          const truncated = val.slice(0, val.indexOf('.') + 2);
+          const truncated = val.slice(0, val.indexOf(".") + 2);
           setInputValue(truncated);
         }
       },
@@ -80,25 +81,24 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
         toast("급여량을 입력해주세요", "above-button");
         return;
       }
-      
-      const parsed = parseFloat(inputValue);
 
+      const parsed = parseFloat(inputValue);
       const clamped = clamp(parsed, 20, 500);
-    
+
       if (parsed < 20) toast("한 끼 최소 급여량은 20g입니다.", "above-button");
       else if (parsed > 500) toast("최대 급여량은 500g입니다.", "above-button");
 
-      const { recommended, custom } = calculateSubscriptionPrice({
-        dailyRecommendKcal,
-        recipeDto,
-        subscribeId,
-        customPackGrams: clamped,
-      });
+      const { recommendedPackGrams, packGrams, packPrice, pricePer10g } =
+        calculateRecipePack({
+          dailyRecommendKcal,
+          recipeDto,
+          subscribeId,
+          customPackGrams: clamped,
+        });
 
-      const next = custom ?? recommended;
-      setDisplay(next);
+      setDisplay({ recommendedPackGrams, packGrams, packPrice, pricePer10g });
       setInputValue(clamped.toString());
-      onApply(clamped, next.packPrice);
+      onApply(clamped, packPrice);
     }, [
       inputValue,
       onApply,
@@ -115,9 +115,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
           {getNameWithPossessiveSuffix(dogName)}의<br />한 끼 추천 급여량을
           계산했어요
         </DefaultText>
-        <div
-          className={mealSelectorBox}
-        >
+        <div className={mealSelectorBox}>
           <div
             className={commonWrapper({
               direction: "col",

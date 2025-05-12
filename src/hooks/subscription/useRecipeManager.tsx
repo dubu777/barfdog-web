@@ -18,16 +18,16 @@ export const useRecipeEntryManager = (
 
   const [pendingEntry, setPendingEntry] = useState<{
     packGrams: number;
-    orderPrice: number;
+    packPrice: number;
   } | null>(null);
 
 
   const commitEntry = useCallback(() => {
     const packGrams =
       pendingEntry?.packGrams ?? existingEntry?.packGrams ?? recommended.packGrams;
-    const orderPrice =
-      pendingEntry?.orderPrice ?? existingEntry?.orderPrice ?? recommended.packPrice;
-    const entry = { recipeId, packGrams, orderPrice };
+    const packPrice =
+      pendingEntry?.packPrice ?? existingEntry?.packPrice ?? recommended.packPrice;
+    const entry = { recipeId, packGrams, packPrice };
     const index = fields.findIndex((f) => f.recipeId === recipeId);
     if (index > -1) update(index, entry);
     else append(entry);
@@ -35,8 +35,8 @@ export const useRecipeEntryManager = (
 
 
   const applyLocal = useCallback(
-    (packGrams: number, orderPrice: number) => {
-      setPendingEntry({ packGrams, orderPrice });
+    (packGrams: number, packPrice: number) => {
+      setPendingEntry({ packGrams, packPrice });
     },
     []
   );

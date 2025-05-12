@@ -2,7 +2,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import React, { useRef } from "react";
 import * as styles from "../recipeOptions/RecipeOptions.css";
 import TabBar from "@/components/common/tabBar/TabBar";
-import { generalItemTab, snackItems, toppingItems } from "@/constants";
+import { generalItemTab, generalTempItems } from "@/constants";
 import { scrollToElement } from "@/utils/scrollToElement";
 import Divider from "@/components/common/divider/Divider";
 import GeneralItemCard from "./generalItemCard/GeneralItemCard";
@@ -15,16 +15,16 @@ export default function GeneralItemOptions({
 }: GeneralItemOptionsProps) {
   const sections = [
     {
-      key: "topper",
-      title: "토퍼",
-      description: "식사에 함께 올려주면 기호성이 올라가는 토퍼 상품",
-      items: toppingItems,
+      key: "topping",
+      title: "토핑",
+      description: "식사에 함께 올려주면 기호성이 올라가는 토핑 상품",
+      items: generalTempItems.filter((item) => item.type === "topping"),
     },
     {
       key: "snack",
       title: "간식",
       description: "건강과 맛을 모두 챙긴, 우리 아이를 위한 영양 간식",
-      items: snackItems,
+      items: generalTempItems.filter((item) => item.type === "snack"),
     },
   ];
 
@@ -49,7 +49,7 @@ export default function GeneralItemOptions({
           <DefaultText type="title2">
             식사와 함께 급여하면 좋을
             <br />
-            토퍼와 간식도 준비했어요
+            토핑과 간식도 준비했어요
           </DefaultText>
           <DefaultText type="body2" color="gray600">
             담은 상품은 레시피와 함께 정기 배송돼요.

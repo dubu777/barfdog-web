@@ -16,28 +16,28 @@ export const useGeneralItemManager = (
   const generalItemList = watchedList ?? [];
   const existing = generalItemList.find((f) => f.itemId === itemId);
 
-  const [pending, setPending] = useState<{ amount: number; orderPrice: number } | null>(null);
+  const [pending, setPending] = useState<{ amount: number; originPrice: number } | null>(null);
 
-  const applyLocal = useCallback((amount: number, orderPrice: number) => {
-    setPending({ amount, orderPrice });
+  const applyLocal = useCallback((amount: number, originPrice: number) => {
+    setPending({ amount, originPrice });
   }, []);
 
   const commitEntry = useCallback(() => {
     const newAmount = pending?.amount ?? existing?.amount ?? defaultAmount;
-    const newOrderPrice = pending?.orderPrice ?? existing?.orderPrice ?? defaultPrice;
+    const newOrderPrice = pending?.originPrice ?? existing?.originPrice ?? defaultPrice;
     const index = fields.findIndex((f) => f.itemId === itemId);
 
     // 수정된 값이 없으면 아무 동작도 하지 않음
     if (
       existing &&
       newAmount === existing.amount &&
-      newOrderPrice === existing.orderPrice
+      newOrderPrice === existing.originPrice
     ) {
       setPending(null);
       return;
     }
 
-    const entry = { itemId, amount: newAmount, orderPrice: newOrderPrice };
+    const entry = { itemId, amount: newAmount, originPrice: newOrderPrice };
 
     if (existing) {
       // 기존 항목 업데이트

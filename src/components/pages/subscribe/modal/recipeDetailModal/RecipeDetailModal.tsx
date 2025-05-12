@@ -21,7 +21,7 @@ interface RecipeDetailModalProps {
   dailyRecommendKcal: number;
   recipeDto: RecipeDto;
   subscribeId: number;
-  onApplyLocal: (packGrams: number, orderPrice: number) => void;
+  onApplyLocal: (packGrams: number, packPrice: number) => void;
   onCommit: () => void;
   isOpen: boolean;
   onClose: () => void;

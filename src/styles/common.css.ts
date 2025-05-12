@@ -147,6 +147,9 @@ export const commonWrapper = recipe({
       20: {
         padding: "20px",
       },
+      32: {
+        padding: "32px 20px",
+      }
     },
     direction: {
       col: {

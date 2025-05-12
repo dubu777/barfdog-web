@@ -12,6 +12,7 @@ export {
   recipeDetailTab,
   subscribeStepMap,
   generalItemTab,
+  generalTempItems,
 };
 
 const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
@@ -115,7 +116,7 @@ const recipeTab = [
 ];
 const generalItemTab = [
   {
-    label: "토퍼",
+    label: "토핑",
     value: "topper",
   },
   {
@@ -157,7 +158,7 @@ const subscribeStepMap: Record<string, number> = {
 };
 
 
-export const toppingItems: SubscribeGeneralItem[] = [
+const generalTempItems: SubscribeGeneralItem[] = [
   {
     id: 28,
     imageUrl: "http://www.barfdogserver.com/display/items?filename=6d945436-725c-4d15-b4e7-446e01cda7e1.jpg",
@@ -165,6 +166,7 @@ export const toppingItems: SubscribeGeneralItem[] = [
     originalPrice: 16900,
     inStock: true,
     benefit: ["노령견건강", "피부∙모질"],
+    type: "topping",
   },
   {
     id: 27,
@@ -173,6 +175,7 @@ export const toppingItems: SubscribeGeneralItem[] = [
     originalPrice: 15900,
     inStock: true,
     benefit: ["노령견건강", "피부∙모질"],
+    type: "topping",
   },
   {
     id: 17,
@@ -181,6 +184,7 @@ export const toppingItems: SubscribeGeneralItem[] = [
     originalPrice: 15900,
     inStock: true,
     benefit: ["노령견건강", "피부∙모질"],
+    type: "topping",
   },
   {
     id: 14,
@@ -189,6 +193,7 @@ export const toppingItems: SubscribeGeneralItem[] = [
     originalPrice: 15500,
     inStock: true,
     benefit: ["노령견건강", "피부∙모질"],
+    type: "topping",
   },
   {
     id: 13,
@@ -197,10 +202,8 @@ export const toppingItems: SubscribeGeneralItem[] = [
     originalPrice: 16000,
     inStock: true,
     benefit: ["노령견건강", "피부∙모질"],
+    type: "topping",
   },
-];
-
-export const snackItems: SubscribeGeneralItem[] = [
   {
     id: 25,
     imageUrl: "http://www.barfdogserver.com/display/items?filename=d1257ef5-ac0a-4fcb-b917-85aecb09516d.jpg",
@@ -208,6 +211,7 @@ export const snackItems: SubscribeGeneralItem[] = [
     originalPrice: 12900,
     inStock: true,
     benefit: ["노령견건강", "피부∙모질"],
+    type: "snack",
   },
   {
     id: 24,
@@ -216,5 +220,7 @@ export const snackItems: SubscribeGeneralItem[] = [
     originalPrice: 12900,
     inStock: true,
     benefit: ["노령견건강", "피부∙모질"],
+    type: "snack",
   },
 ];
+
