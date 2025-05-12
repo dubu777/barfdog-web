@@ -102,10 +102,6 @@ export const accountError = style({
 	alignItems: 'center',
 })
 
-export const emptySnSProvider = style({
-	paddingTop: '86px',
-})
-
 export const connectedSns = style({
 	display: 'flex',
 	alignItems: 'center',
@@ -124,6 +120,7 @@ export const connectSnsBottomSheet = style({
 })
 
 export const connectSnsBox = style({
+	width: '100%',
 	padding: '20px 20px 40px',
 	display: 'flex',
 	flexDirection: 'column',

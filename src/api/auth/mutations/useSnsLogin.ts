@@ -6,6 +6,7 @@ import { setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { snsLogin } from "../auth";
 import { queryKeys } from "@/constants";
+import { useToastStore } from "@/store/useToastStore";
 
 export function useSnsLogin(
   mutationOptions?: UseMutationCustomOptions
@@ -13,6 +14,7 @@ export function useSnsLogin(
   const router = useRouter();
   const { setLoginUserInfo } = useAuthStore();
   const queryClient = useQueryClient();
+  const { addToast } = useToastStore();
 
   return useMutation({
     mutationFn: snsLogin,
@@ -72,6 +74,13 @@ export function useSnsLogin(
       if (mutationOptions?.onSuccess) {
         mutationOptions.onSuccess(data, variables, context);
       }
+    },
+    onError: (err) => {
+      // 리디렉션 페이지 error 시 예외처리 적용 필요
+      addToast(err instanceof Error ? err.message : 'SNS 로그인 요청 중 오류 발생');
+      setTimeout(() => {
+        router.back();
+      }, 800)
     },
     ...mutationOptions,
   });

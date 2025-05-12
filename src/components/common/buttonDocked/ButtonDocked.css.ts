@@ -20,6 +20,8 @@ export const containerPositionStyle = {
 	}),
 	fixed: style({
 		position: 'fixed',
+		left: '50%',
+		transform: 'translateX(-50%)',
 	}),
 }
 

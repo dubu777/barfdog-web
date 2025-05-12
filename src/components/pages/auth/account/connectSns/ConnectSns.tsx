@@ -7,6 +7,8 @@ import { useToastStore } from "@/store/useToastStore";
 import { useEffect } from 'react';
 import { setCookie } from '@/utils/auth/cookie';
 import { AUTH_CONFIG } from '@/constants/auth';
+import { getSnsCallbackUrl, removeSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
+import Loader from "@/components/common/loader/Loader";
 
 interface ConnectSnsProps {
 }
@@ -16,6 +18,7 @@ const ConnectSns = ({}: ConnectSnsProps) => {
   const { loginUserInfo } = useAuthStore.getState();
   const { mutate: connectSns } = useConnectSns();
   const { addToast } = useToastStore();
+  const { snsCallbackUrl } = getSnsCallbackUrl();
 
   const sanitizePhoneNumber = (phone: string): string => {
     let sanitized = phone;
@@ -53,7 +56,12 @@ const ConnectSns = ({}: ConnectSnsProps) => {
 				console.log('SNS 연동 성공 응답:', response); 
         setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, response.token);
         addToast('SNS 연동이 완료되었습니다!', 'above-button');
-        router.push('/');
+
+        // 마이페이지 sns 연동 리다이렉트를 위한 callbackUrl 적용 및 초기화
+        if(snsCallbackUrl) {
+          router.push(snsCallbackUrl || '/');
+          removeSnsCallbackUrl();
+        }
       },
       onError: (error) => {
         console.error('SNS 연동 실패:', error);
@@ -69,7 +77,7 @@ const ConnectSns = ({}: ConnectSnsProps) => {
     });
   }, [loginUserInfo, connectSns]);
 	return (
-		<div></div>
+    <Loader fullscreen />
 	);
 };
 

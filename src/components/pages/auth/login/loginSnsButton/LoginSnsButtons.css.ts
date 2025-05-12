@@ -5,8 +5,6 @@ import { themeVars } from "@/styles/theme.css";
 export const loginButton = recipe({
   base: {
     width: '100%',
-    height: '62px',
-    borderRadius: '33px',
     fontSize: themeVars.fontSize["text-md"],
     fontWeight: themeVars.fontWeight.bold,
     display: 'flex',
@@ -21,7 +19,6 @@ export const loginButton = recipe({
       kakao: {
         background: themeVars.backgroundColors.kakao,
         color: themeVars.colors.gray.gray900,
-        marginBottom: '12px',
       },
       naver: {
         background: themeVars.backgroundColors.naver,
@@ -32,8 +29,32 @@ export const loginButton = recipe({
       true: {
         border: `1px solid ${themeVars.colors.red.red}`,
       }
+    },
+    size: {
+      sm: {
+        height: '54px',
+      },
+      md: {
+        height: '62px',
+      }
+    },
+    borderRadius: {
+      sm: {
+        borderRadius: '4px',
+      },
+      md: {
+        borderRadius: '33px',
+      }
     }
-  }
+  },
+  compoundVariants: [
+    {
+      variants: { provider: 'kakao', size: 'md' },
+      style: {
+        marginBottom: '12px',
+      },
+    },
+  ]
 })
 
 export const lastLoginActivity = style({

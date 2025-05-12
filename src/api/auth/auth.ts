@@ -24,7 +24,6 @@ export {
   connectSns,
   getAccessTokenByNaver,
   snsLogin,
-  getNeedToSetPassword,
   setPassword,
   changePassword,
   getConnectedSns,
@@ -63,11 +62,6 @@ const getConnectedSns = async (): Promise<SnSProvider | null> => {
 
 const disconnectSns = async () => {
   return await axiosInstance.delete("/api/members/sns");
-};
-
-const getNeedToSetPassword = async (): Promise<boolean> => {
-  const { data } = await axiosInstance.get("/api/members/sns/password");
-  return data.needToSetPassword;
 };
 
 const setPassword = async (body: SetPassword) => {
