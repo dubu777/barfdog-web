@@ -1,4 +1,5 @@
 'use client';
+import { useEffect } from "react";
 import * as styles from './Cart.css';
 import Text from "@/components/common/text/Text";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
@@ -7,10 +8,21 @@ import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";
 import { useDeleteCartItemById } from "@/api/cart/mutations/useDeleteCartItem";
+import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
+import { CartInfo } from "@/types";
 
 const Cart = () => {
-  const { cartInfo, setCartInfo, selectedItems, setSelectedItems } = useCartStore();
+  const { data: cartInfo } = useGetCartInfo();
+  const { setCartInfo, selectedItems, setSelectedItems } = useCartStore();
   const { mutate: deleteMutate } = useDeleteCartItemById();
+
+  const isSelectedAll = selectedItems?.length === cartInfo?.basketDtoList?.length;
+
+  useEffect(() => {
+    if(cartInfo) {
+      setCartInfo(cartInfo);
+    }
+  }, [cartInfo])
 
   // 선택 삭제하는 deleteCartItemByIds 400error 이슈로 개별 삭제 순차적으로 적용
   const deleteItemById = async (itemId: number) => {
@@ -24,8 +36,15 @@ const Cart = () => {
     )
   }
 
-  if (!cartInfo || cartInfo.basketDtoList.length === 0) return <p>Loading...</p>;
-  const isSelectedAllChecked = selectedItems.length === cartInfo.basketDtoList.length;
+  const handleDeleteSelected = async () => {
+    for (const itemId of selectedItems) {
+      await deleteItemById(itemId);
+    }
+    const updatedBasketDtoList = cartInfo?.basketDtoList.filter((item) => !selectedItems.includes(item.itemDto.basketId));
+    const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
+    setCartInfo(updatedCartInfo as CartInfo);
+    setSelectedItems([]);
+  }
 
   const handleItemSelect = (basketId: number) => {
     setSelectedItems(
@@ -36,23 +55,15 @@ const Cart = () => {
   }
 
   const handleSelectAll = () => {
-    if (selectedItems.length === cartInfo.basketDtoList.length) {
+    if (selectedItems.length === cartInfo?.basketDtoList.length) {
       setSelectedItems([]);
     } else {
-      const allBasketIds = cartInfo.basketDtoList.map((item) => item.itemDto.basketId);
-      setSelectedItems(allBasketIds);
+      const allBasketIds = cartInfo?.basketDtoList.map((item) => item.itemDto.basketId);
+      setSelectedItems(allBasketIds as number[]);
     }
   }
 
-  const handleDeleteSelected = async () => {
-    for (const itemId of selectedItems) {
-      await deleteItemById(itemId);
-    }
-    const updatedBasketDtoList = cartInfo.basketDtoList.filter((item) => !selectedItems.includes(item.itemDto.basketId));
-    const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
-    setCartInfo(updatedCartInfo);
-    setSelectedItems([]);
-  }
+  // if (!cartInfo || cartInfo.basketDtoList.length === 0) return <Loader fullscreen />;
 
   return (
     <section className={styles.cartContainer}>
@@ -62,7 +73,7 @@ const Cart = () => {
           <DefaultCheckbox
             id='all'
             name='all'
-            value={isSelectedAllChecked}
+            value={isSelectedAll}
             onChange={handleSelectAll}
             labelPosition='right'
             label='전체 선택'
@@ -78,7 +89,7 @@ const Cart = () => {
           </DefaultButton>
         </div>
         <ul className={styles.cartItemList}>
-          {cartInfo.basketDtoList.map(basketItem => (
+          {cartInfo?.basketDtoList?.map(basketItem => (
             <CartItem
               key={basketItem.itemDto.basketId}
               item={basketItem.itemDto}
