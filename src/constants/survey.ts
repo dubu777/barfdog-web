@@ -677,7 +677,7 @@ export interface RecipeTempData {
   englishName: string;
   imageUrl: string;
   ingredients: string[];
-  efficacy: string[];
+  benefits: string[];
 }
 
 export interface TempRecipeDto {
@@ -693,7 +693,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "STARTER PREMIUM",
     imageUrl: "/images/recipe/starter_premium.png",
     ingredients: ["닭", "칠면조"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   6: {
     id: 6,
@@ -701,7 +701,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "TURKEY & BEEF",
     imageUrl: "/images/recipe/turkey_and_beef.png",
     ingredients: ["칠면조", "소"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   7: {
     id: 7,
@@ -709,7 +709,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "DUCK & LAMB",
     imageUrl: "/images/recipe/duck_and_lamb.png",
     ingredients: ["오리", "양"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   8: {
     id: 8,
@@ -717,7 +717,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "LAMB & BEEF",
     imageUrl: "/images/recipe/lamb_and_beef.png",
     ingredients: ["양", "소"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   9: {
     id: 9,
@@ -725,7 +725,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "PREMIUM CHICKEN",
     imageUrl: "/images/recipe/premium_chicken.png",
     ingredients: ["닭"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   10: {
     id: 10,
@@ -733,7 +733,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "PREMIUM TURKEY",
     imageUrl: "/images/recipe/premium_turkey.png",
     ingredients: ["칠면조"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   11: {
     id: 11,
@@ -741,7 +741,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "PREMIUM LAMB",
     imageUrl: "/images/recipe/premium_lamb.png",
     ingredients: ["양"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   12: {
     id: 12,
@@ -749,7 +749,7 @@ const recipeTempData: Record<number, RecipeTempData> = {
     englishName: "PREMIUM BEEF",
     imageUrl: "/images/recipe/premium_beef.png",
     ingredients: ["소"],
-    efficacy: ["구토•설사", "관절 건강"],
+    benefits: ["구토•설사", "관절 건강"],
   },
 };
 

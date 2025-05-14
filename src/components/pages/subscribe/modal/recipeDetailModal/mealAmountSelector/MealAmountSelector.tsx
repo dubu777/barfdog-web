@@ -8,14 +8,10 @@ import Button from "@/components/common/button/Button";
 import { useFormContext, useWatch } from "react-hook-form";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { RecipeDto } from "@/types";
-import {
-  calculateSubscriptionPrice,
-  SubscriptionPriceBreakdown,
-} from "@/utils/subscription/calculateSubscriptionPrice";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
+import { calculateRecipePack, CalculateRecipePackOutput } from "@/utils/subscription/calculateRecipe";
 
 interface MealAmountSelectorProps {
   dogName: string;
@@ -40,7 +36,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
 
     // local input & display state
     const [inputValue, setInputValue] = useState<string>("0");
-    const [display, setDisplay] = useState<SubscriptionPriceBreakdown>({
+    const [display, setDisplay] = useState<CalculateRecipePackOutput>({
       recommendedPackGrams: 0,
       packGrams: 0,
       packPrice: 0,

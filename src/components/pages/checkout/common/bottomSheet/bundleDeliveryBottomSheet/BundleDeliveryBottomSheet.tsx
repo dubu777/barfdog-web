@@ -6,7 +6,6 @@ import BundleDeliveryCard from "./bundleDeliveryCard/BundleDeliveryCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import { useEffect } from "react";
 
 interface BundleDeliveryBottomSheetProps {
   bundleDeliveryAddress: BundleDeliveryAddress[];

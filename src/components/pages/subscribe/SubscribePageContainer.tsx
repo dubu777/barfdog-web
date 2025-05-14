@@ -16,6 +16,13 @@ import SubscribeProgressBar from "./subscribeProgressBar/SubscribeProgressBar";
 import { subscribeStepMap } from "@/constants";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import GeneralItemOptions from "./generalItemOptions/GeneralItemOptions";
+import { useCallback, useState } from "react";
+import { SubscriptionStep } from "@/types";
+import Header from "@/components/layout/header/Header";
+import Chips from "@/components/common/chips/Chips";
+import * as styles from "./SubscribePageContainer.css";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { useGetRecipeList } from "@/api/recipes/queries/useGetRecipeList";
 
 interface SubscribePageContainerProps {
   reportId: number;
@@ -24,15 +31,18 @@ interface SubscribePageContainerProps {
 export default function SubscribePageContainer({
   reportId,
 }: SubscribePageContainerProps) {
-  const searchParams = useSearchParams();
+  const [step, setStep] = useState<SubscriptionStep>("recipe");
+
   const router = useRouter();
   const { data: recipeData } = useGetSurveyRecipe(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
+  const { data: recipeListData } = useGetRecipeList();
 
   console.log("레시피 데이터", recipeData);
+  console.log("레시피 리스트 데이터", recipeListData);
   console.log("설문 결과 데이터", resultData);
 
-  const type = searchParams.get("type") ?? "";
+  useScrollToTop(step);
 
   const formMethods = useSubscriptionForm<typeof subscriptionSchema>(
     subscriptionSchema,
@@ -50,66 +60,84 @@ export default function SubscribePageContainer({
       name: "generalItemList",
     }) ?? [];
 
-  const totalCount = recipeList.length + generalItemList.length;
-
+  const recipeCount = recipeList.length;
+  const totalCount = recipeCount + generalItemList.length;
   const selectedRecipeIds = recipeList.map((f) => f.recipeId);
   const selectedGeneralItemIds = generalItemList.map((f) => f.itemId);
-
-  const currentStep = subscribeStepMap[type] ?? 1;
+  const currentStep = subscribeStepMap[step] ?? 1;
 
   console.log("주문서 form", formMethods.watch());
 
-  const handleNavigation = () => {
-    if (recipeList.length < 1) {
-    }
-    if (type === "recipe") {
-      router.push(
-        `/diet-analysis/subscribe?reportId=${reportId}&type=general-item`
-      );
-    } else if (type === "general-item") {
-      router.push(
-        `/diet-analysis/subscribe?reportId=${reportId}&type=delivery-cycle`
-      );
+  const handleNext = () => {
+    if (step === "recipe") {
+      if (recipeCount < 1) return; // 최소 1개 선택 유효성
+      setStep("general-item");
+    } else if (step === "general-item") {
+      setStep("delivery-cycle");
     }
   };
 
+  const handleBack = useCallback(() => {
+    if (step === "recipe") {
+      router.back();
+    } else if (step === "general-item") {
+      setStep("recipe");
+    } else if (step === "delivery-cycle") {
+      setStep("general-item");
+    }
+  }, [step, router]);
+
   const handleSubmit = () => {};
+
+  const primaryLabel = step === "delivery-cycle" ? "결제하러 가기" : "주문하기";
+  const primaryAction = step === "delivery-cycle" ? handleSubmit : handleNext;
 
   const inedibleFood = ["닭", "칠면조"];
   return (
     <FormProvider {...formMethods}>
-      <SubscribeProgressBar currentStep={currentStep} />
-      {type === "recipe" && recipeData && resultData && (
-        <RecipeOptions
-          recipeData={recipeData}
-          inedibleFood={inedibleFood}
-          selectedIds={selectedRecipeIds}
-        />
-      )}
+      <Header onBack={handleBack} showBackButton />
+      <div className={recipeCount > 0 ? styles.subscribePageContainer : undefined}>
+        <SubscribeProgressBar currentStep={currentStep} />
+        {step === "recipe" && recipeData && resultData && (
+          <RecipeOptions
+            recipeData={recipeData}
+            inedibleFood={inedibleFood}
+            selectedIds={selectedRecipeIds}
+          />
+        )}
 
-      {type === "general-item" && recipeData && resultData && (
-        <GeneralItemOptions selectedIds={selectedGeneralItemIds} />
-      )}
-      {type === "delivery-cycle" && recipeData && resultData && (
-        <DeliveryOptions recipeData={recipeData} />
-      )}
-      {type === "delivery-cycle" ? (
-        <ButtonDocked
-          type="full-button"
-          primaryButtonLabel="결제하러 가기"
-          onPrimaryClick={handleSubmit}
-          primaryButtonSize="lg"
-        />
-      ) : (
-        <ButtonDocked
-          type="full-button"
-          primaryButtonLabel="주문하기"
-          onPrimaryClick={handleNavigation}
-          primaryButtonSize="lg"
-          isPrimaryDisabled={recipeList.length < 1}
-          {...(totalCount > 0 ? { primaryCount: totalCount } : {})}
-        />
-      )}
+        {step === "general-item" && recipeData && resultData && (
+          <GeneralItemOptions selectedIds={selectedGeneralItemIds} />
+        )}
+        {step === "delivery-cycle" && recipeData && resultData && (
+          <DeliveryOptions recipeData={recipeData} />
+        )}
+        {(recipeCount === 2 && step ==="recipe" ) && (
+          <div className={styles.recipeTailChipWrapper}>
+            <Chips
+              variant="solid"
+              color="gray800"
+              size="md"
+              borderRadius="md"
+              tailPosition="bottom"
+              tailVisible
+            >
+              2개 레시피 모두를 선택했어요! 이대로 주문할까요? 🐶
+            </Chips>
+          </div>
+        )}
+        {recipeCount > 0 && (
+          <ButtonDocked
+            type="full-button"
+            primaryButtonLabel={primaryLabel}
+            onPrimaryClick={primaryAction}
+            primaryButtonSize="lg"
+            {...(step !== "delivery-cycle" && totalCount > 0
+              ? { primaryCount: totalCount }
+              : {})}
+          />
+        )}
+      </div>
     </FormProvider>
   );
 }

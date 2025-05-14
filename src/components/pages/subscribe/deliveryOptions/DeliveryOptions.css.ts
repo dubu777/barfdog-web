@@ -7,7 +7,6 @@ export const deliveryOptionsContainer = style({
   flexDirection: "column",
   alignItems: "flex-start",
   width: "100%",
-  paddingBottom: "85px",
   backgroundColor: themeVars.colors.gray.gray0,
 });
 

@@ -1,6 +1,5 @@
 import { prefetchGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
-import Header from "@/components/layout/header/Header";
 import SubscribePageContainer from "@/components/pages/subscribe/SubscribePageContainer";
 import {
   dehydrate,
@@ -33,7 +32,6 @@ export default async function SubscribePage({
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<div>Loading...</div>}>
-        <Header showBackButton />
           <SubscribePageContainer reportId={reportId} />
         </Suspense>
       </ErrorBoundary>

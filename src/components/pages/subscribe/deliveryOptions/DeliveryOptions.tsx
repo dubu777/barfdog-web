@@ -3,7 +3,6 @@
 import * as styles from "./DeliveryOptions.css";
 import Divider from "@/components/common/divider/Divider";
 import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
-import { useRouter } from "next/navigation";
 import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import MealFrequency from "./mealFrequency/MealFrequency";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
@@ -12,27 +11,30 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { RecipeData } from "@/types";
-import { calculateDeliveryCyclePackCount, calculateRecipeTotal } from "@/utils/subscription/calculateRecipe";
+import {
+  calculateDeliveryCyclePackCount,
+  calculateRecipeTotal,
+} from "@/utils/subscription/calculateRecipe";
 import { useEffect } from "react";
-import OrderSummary from "./orderSummary/OrderSummary";
+import SubscriptionItemList from "./subscriptionItemList/SubscriptionItemList";
+import SubscriptionSummary from "./subscriptionSummary/SubscriptionSummary";
 
 interface DeliveryOptionsProps {
   recipeData: RecipeData;
-
 }
 
-export default function DeliveryOptions({recipeData}: DeliveryOptionsProps) {
-  const { control, setValue } =
-  useFormContext<SubscriptionValues>();
+export default function DeliveryOptions({ recipeData }: DeliveryOptionsProps) {
+  const { control, setValue } = useFormContext<SubscriptionValues>();
   const { data: discountData } = useGetPlanDiscount();
   const { mutate: updateSubscription } = useUpdateSubscription();
 
   // 폼 필드 구독
   const recipeList = useWatch({ control, name: "recipeList" });
   const generalItemList = useWatch({ control, name: "generalItemList" });
-  const mealFrequency = useWatch({ control, name: "mealFrequency" }) as 1 | 2;;
+  const mealFrequency = useWatch({ control, name: "mealFrequency" }) as 1 | 2;
   const deliveryCycle = useWatch({ control, name: "deliveryCycle" }) as 2 | 4;
-
+  const finalPrice = useWatch({ control, name: "finalPrice" });
+  const originPrice = useWatch({ control, name: "originPrice" });
   const packCount = calculateDeliveryCyclePackCount(
     mealFrequency,
     deliveryCycle,
@@ -69,7 +71,8 @@ export default function DeliveryOptions({recipeData}: DeliveryOptionsProps) {
       };
     });
 
-    const isSame = JSON.stringify(recipeList) === JSON.stringify(updatedRecipes);
+    const isSame =
+      JSON.stringify(recipeList) === JSON.stringify(updatedRecipes);
     if (!isSame) {
       setValue("recipeList", updatedRecipes, { shouldDirty: true });
     }
@@ -79,10 +82,8 @@ export default function DeliveryOptions({recipeData}: DeliveryOptionsProps) {
       (sum, r) => sum + (r.originPrice ?? 0),
       0
     );
-    const sumGeneral = generalItemList?.reduce(
-      (sum, g) => sum + g.originPrice,
-      0
-    ) ?? 0;
+    const sumGeneral =
+      generalItemList?.reduce((sum, g) => sum + g.originPrice, 0) ?? 0;
     setValue("originPrice", sumRecipeOrigin + sumGeneral, {
       shouldDirty: true,
     });
@@ -95,18 +96,7 @@ export default function DeliveryOptions({recipeData}: DeliveryOptionsProps) {
     setValue("finalPrice", sumRecipeSale + sumGeneral, {
       shouldDirty: true,
     });
-
-
-  }, [
-    recipeList,
-    generalItemList,
-    mealFrequency,
-    deliveryCycle,
-    setValue,
-  ]);
-
-
-  
+  }, [recipeList, generalItemList, mealFrequency, deliveryCycle, setValue]);
 
   return (
     <section className={styles.deliveryOptionsContainer}>
@@ -122,12 +112,19 @@ export default function DeliveryOptions({recipeData}: DeliveryOptionsProps) {
       <Divider />
       <DeliveryCycle />
       <Divider />
-      <OrderSummary
+      <SubscriptionItemList
         recipeList={recipeList}
         generalItemList={generalItemList}
         deliveryCycle={deliveryCycle}
         packCount={packCount}
         mealFrequency={mealFrequency}
+      />
+      <Divider />
+      <SubscriptionSummary
+        finalPrice={finalPrice}
+        originPrice={originPrice}
+        discountAmount={originPrice - finalPrice}
+        deliveryCycle={deliveryCycle}
       />
     </section>
   );

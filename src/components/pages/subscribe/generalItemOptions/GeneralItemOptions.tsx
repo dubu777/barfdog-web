@@ -43,7 +43,7 @@ export default function GeneralItemOptions({
   }));
 
   return (
-    <section className={styles.recipeSelectContainer}>
+    <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
         <div>
           <DefaultText type="title2">

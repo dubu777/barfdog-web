@@ -3,11 +3,12 @@ import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import RecipeItemCard from "./recipeItemCard/RecipeItemCard";
 import GeneralItemCard from "./generalItemCard/GeneralItemCard";
-import { recipeTempData } from "@/constants";
+import { generalTempItems, recipeTempData } from "@/constants";
 import React from "react";
 import Divider from "@/components/common/divider/Divider";
+import { SubscribeGeneralItem } from "@/types";
 
-interface OrderSummaryProps {
+interface SubscriptionItemListProps {
   recipeList: SubscriptionValues["recipeList"];
   generalItemList: SubscriptionValues["generalItemList"];
   mealFrequency: 1 | 2;
@@ -15,13 +16,20 @@ interface OrderSummaryProps {
   packCount: number;
 }
 
-export default function OrderSummary({
+export default function SubscriptionItemList({
   recipeList,
   generalItemList = [],
   mealFrequency,
   deliveryCycle,
   packCount,
-}: OrderSummaryProps) {
+}: SubscriptionItemListProps) {
+
+  const GENERAL_ITEM_MAP: Record<number, SubscribeGeneralItem> =
+  generalTempItems.reduce((acc, item) => {
+    acc[item.id] = item;   // n개 아이템만큼 map 에 한 번씩 저장 → O(n)
+    return acc;
+  }, {});
+
   return (
     <div
       className={commonWrapper({
@@ -55,17 +63,23 @@ export default function OrderSummary({
       ))}
 
       {generalItemList.length > 0 &&
-        generalItemList.map((item, idx) => (
-          <React.Fragment key={item.itemId}>
-            <GeneralItemCard
-              amount={item.amount}
-              originPrice={item.originPrice}
-            />
-            {idx < generalItemList.length - 1 && (
-              <Divider color="gray200" thickness={1} />
-            )}
-          </React.Fragment>
-        ))}
+        generalItemList.map((item, idx) => {
+          const tempData = GENERAL_ITEM_MAP[item.itemId];
+          if (!tempData) return null; // safety
+  
+          return (
+            <React.Fragment key={item.itemId}>
+              <GeneralItemCard
+                amount={item.amount}
+                originPrice={item.originPrice}
+                generalTempData={tempData}
+              />
+              {idx < generalItemList.length - 1 && (
+                <Divider color="gray200" thickness={1} />
+              )}
+            </React.Fragment>
+          );
+        })}
     </div>
   );
 }

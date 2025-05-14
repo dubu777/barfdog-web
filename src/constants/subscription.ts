@@ -117,7 +117,7 @@ const recipeTab = [
 const generalItemTab = [
   {
     label: "토핑",
-    value: "topper",
+    value: "topping",
   },
   {
     label: "간식",

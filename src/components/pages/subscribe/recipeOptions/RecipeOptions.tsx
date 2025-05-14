@@ -11,6 +11,8 @@ import React, { useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
+import useModal from "@/hooks/useModal";
+import RecommendKcalBottomSheet from "../bottomSheet/RecommendKcalBottomSheet";
 
 interface RecipeOptionsProps {
   recipeData: RecipeData;
@@ -23,6 +25,7 @@ export default function RecipeOptions({
   inedibleFood,
   selectedIds,
 }: RecipeOptionsProps) {
+  const { isOpen, onClose, onToggle } = useModal()
   // 임시 - Api 데이터 변경전까지
   const allRecipes = useMemo(() => Object.values(recipeTempData), []);
 
@@ -67,7 +70,7 @@ export default function RecipeOptions({
 
   const recommendedRecipeList = [5,10, 7]
   return (
-    <section className={styles.recipeSelectContainer}>
+    <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
         <div>
           <DefaultText type="title2">
@@ -84,6 +87,7 @@ export default function RecipeOptions({
           type="info"
           color="gray"
           showRightArrowButton
+          onClick={onToggle}
         />
       </div>
       <div className={styles.recipeTabBarWrapper}>
@@ -129,6 +133,12 @@ export default function RecipeOptions({
           </React.Fragment>
         ))}
       </div>
+        <RecommendKcalBottomSheet
+          isOpen={isOpen}
+          onClose={onClose}
+          dogName={recipeData.dogName}
+          oneDayRecommendKcal={recipeData.foodAnalysis.oneDayRecommendKcal}
+        />
     </section>
   );
 }

@@ -5,9 +5,9 @@ import DietAnalysisPageContainer from "@/components/pages/dietAnalysis/DietAnaly
 export default function DietAnalysisPage() {
   return (
     <>
-    <Header leftTitle="AI 추천식단" showCartButton />
-    <DietAnalysisPageContainer />
-    <BottomNavBar />
+      <Header leftTitle="AI 추천식단" showCartButton />
+      <DietAnalysisPageContainer />
+      <BottomNavBar />
     </>
   );
 }

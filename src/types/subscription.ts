@@ -29,6 +29,7 @@ export type {
   PlanInfo,
   UsingCoupon,
   SubscribeGeneralItem,
+  SubscriptionStep,
 };
 
 
@@ -240,3 +241,5 @@ type SubscriptionStatusKey = keyof typeof subscriptionStatus;
 type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
 
 type PlanName = keyof typeof subscriptionPlanInfo;
+
+type SubscriptionStep = "recipe" | "general-item" | "delivery-cycle";

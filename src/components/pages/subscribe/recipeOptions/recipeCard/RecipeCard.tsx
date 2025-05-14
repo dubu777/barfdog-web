@@ -7,7 +7,6 @@ import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
 import { RecipeDto } from "@/types";
-import { calculateSubscriptionPrice } from "@/utils/subscription/calculateSubscriptionPrice";
 import { useFormContext, useWatch } from "react-hook-form";
 import RecipeDetailModal from "../../modal/recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
@@ -159,7 +158,7 @@ export default function RecipeCard({
             </DefaultText>
           </div>
           <div className={commonWrapper({ gap: 4, justify: "start" })}>
-            {recipeTempData.efficacy.map((text, idx) => (
+            {recipeTempData.benefits.map((text, idx) => (
               <DefaultText key={idx} type="caption" color="gray500">
                 #{text}
               </DefaultText>

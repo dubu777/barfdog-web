@@ -83,7 +83,6 @@ export interface CalculateRecipePackInput {
 
 /**
  * 한 팩당 그램 → 팩당 가격 → 10g당 가격 계산
- * (이전 calculateSubscriptionPrice → calculateRecipePack)
  */
 export function calculateRecipePack({
   dailyRecommendKcal,
