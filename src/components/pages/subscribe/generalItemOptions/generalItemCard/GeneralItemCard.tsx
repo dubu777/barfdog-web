@@ -8,11 +8,12 @@ import { useFormContext, useWatch } from "react-hook-form";
 import useModal from "@/hooks/useModal";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useToastStore } from "@/store/useToastStore";
-import Modal from "@/components/common/modal/Modal";
+
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
 import { useGeneralItemManager } from "@/hooks/subscription/useGeneralItemManager";
 import GeneralItemDetailModal from "../../modal/generalItemDetailModal/GeneralItemDetailModal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 interface GeneralItemCardProps {
   generalItemTempData: SubscribeGeneralItem;
@@ -149,7 +150,7 @@ export default function GeneralItemCard({
         pending={pending}
         existing={existing}
       />
-      <Modal
+      <AlertModal
         title="레시피 선택은 최대 2개까지 가능해요"
         content="다른 레시피를 담으시려면 기존에 선택한 레시피를 먼저 빼주세요"
         confirmText="확인"

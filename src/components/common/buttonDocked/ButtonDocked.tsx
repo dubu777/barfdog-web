@@ -34,7 +34,7 @@ export default function ButtonDocked({
 	secondaryButtonType = 'primary',
 	primaryButtonVariant = 'solid',
 	primaryCount,
-	position = 'sticky',
+	position = 'fixed',
 }: ButtonDockedProps) {
 	const primaryButtonStyle =
 		type !== 'full-button' && buttonStyle[primaryButtonSize];

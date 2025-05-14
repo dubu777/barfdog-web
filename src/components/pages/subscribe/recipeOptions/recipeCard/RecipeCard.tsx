@@ -13,11 +13,11 @@ import useModal from "@/hooks/useModal";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useRecipeEntryManager } from "@/hooks/subscription/useRecipeManager";
 import { useToastStore } from "@/store/useToastStore";
-import Modal from "@/components/common/modal/Modal";
 import { useMemo } from "react";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
 import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 interface RecipeCardProps {
   recipeTempData: RecipeTempData;
@@ -197,7 +197,7 @@ export default function RecipeCard({
         onApplyLocal={applyLocal}
         onCommit={commitEntry}
       />
-      <Modal
+      <AlertModal
         title="레시피 선택은 최대 2개까지 가능해요"
         content="다른 레시피를 담으시려면 기존에 선택한 레시피를 먼저 빼주세요"
         confirmText="확인"

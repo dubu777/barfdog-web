@@ -19,7 +19,14 @@ const LoginWrapper = () => {
   // -------> 라우팅 함수
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
+  const nextPath = useMemo(
+    () => searchParams.get("next") ?? "/",
+    [searchParams]
+  );
+  
   const router = useRouter();
+
+
   // ------->상태관리
   const [mounted, setMounted] = useState(false);
   const { tempEmailUserInfo, tempPwUserInfo } = useAuthStore();
@@ -44,7 +51,13 @@ const LoginWrapper = () => {
       password: data.password,
     };
     console.log("formData", formData);
-    emailLogin(formData);
+    // 로그인 호출, 성공 시 nextPath로 풀 리로드
+    emailLogin(formData, {
+      onSuccess: () => {
+        // ❷ 풀 리로드로 쿠키 적용 보장하면서 원래 경로로 이동
+        window.location.href = nextPath;
+      },
+    });
   };
 
   // 서버와 클라이언트의 로그인 상태 차이로 인한 에러 방지
