@@ -11,9 +11,9 @@ import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCar
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
-import ReviewImagesModal from "@/components/pages/mypage/review/reviewImagesModal/ReviewImagesModal";
+import ReviewImagesModal from "@/components/common/modal/reviewImagesModal/ReviewImagesModal";
 import { ReviewDetailItem, ReviewItemType } from "@/types";
 import { useToastStore } from '@/store/useToastStore';
 import { sanitizedHTML } from "@/styles/common.css";
@@ -108,7 +108,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
       </article>
       {data?.reviewImageDtoList?.length > 0 &&
         <article className={styles.reviewDetailBox}>
-          <ImageCarousel imageList={data.reviewImageDtoList} handleShowImageList={handleOpenReviewImageModal} />
+          <ImageCarousel imageList={data.reviewImageDtoList} handleThumbnailClick={handleOpenReviewImageModal} />
         </article>
       }
       <article className={styles.reviewDetailComment}>
@@ -135,7 +135,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
         />
       }
       {deleteModalOpen &&
-        <Modal
+        <AlertModal
           isOpen={deleteModalOpen}
           onClose={onDeleteModalClose}
           title="작성 후기를 삭제하시겠습니까?"
@@ -147,7 +147,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
         />
       }
       {editModalOpen &&
-        <Modal
+        <AlertModal
           isOpen={editModalOpen}
           onClose={onEditModalClose}
           title="리뷰 수정안내"

@@ -1,5 +1,13 @@
 import { keyframes, style } from "@vanilla-extract/css";
 
+export const loaderContainer = style({
+	width: '100%',
+	height: 'calc(100vh - 52px)',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+})
+
 const rotation = keyframes({
 	'0%': { transform: 'rotate(0deg)' },
 	'100%': { transform: 'rotate(360deg)' }

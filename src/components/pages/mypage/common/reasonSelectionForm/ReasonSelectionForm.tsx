@@ -1,6 +1,5 @@
 import * as styles from './ReasonSelectionForm.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
 
@@ -49,7 +48,7 @@ const ReasonSelectionForm = ({
 	return (
 		<>
 			<div className={styles.reasonSelectionTitle}>
-				<DefaultText type='title3'>{title}</DefaultText>
+				<DefaultText type='title3' preLine>{title}</DefaultText>
 				<DefaultText type='body1' color='gray600' preLine>{subTitle}</DefaultText>
 			</div>
 			<ul className={styles.reasonCheckboxList}>
@@ -76,14 +75,6 @@ const ReasonSelectionForm = ({
 					</li>
 				))}
 			</ul>
-			<ButtonDocked
-				type='dual-button'
-				secondaryButtonLabel='돌아가기'
-				onSecondaryClick={onCancel}
-				primaryButtonLabel={confirmButtonText}
-				onPrimaryClick={onConfirm}
-				isPrimaryDisabled={selectedReasons.length === 0}
-			/>
 		</>
 	);
 };

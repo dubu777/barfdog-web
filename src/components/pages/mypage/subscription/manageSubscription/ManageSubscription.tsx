@@ -36,8 +36,8 @@ const ManageSubscription = () => {
     const tabValue = tabs[defaultTabIndex].value;
     return tabValue === 'ALL' ? true : tabValue === 'SUBSCRIBING' ? data.subscribeDto.status === tabs[defaultTabIndex].value : data.subscribeDto.status !== 'SUBSCRIBING'
   }).map(data => ({ ...data.subscribeDto, recipeNames: data.recipeNames }));
-  const emptyState = subscriptionList.length < 1;
   // const subscriptionList = []
+  const emptyState = subscriptionList.length < 1;
   // const emptyState = subscriptionList.length < 1;
   const dogNames = subscribingSubscriptionList?.map(subscription => subscription.subscribeDto.dogName);
 

@@ -3,8 +3,8 @@ import {
   BenefitDto,
   PaymentBody,
   PlanDiscountResponse, SubscriptionAddressData, SubscriptionListData,
-  SubscriptionDetailDto, SubscriptionSkipType, AddressDto, UsingCoupon,
-} from "@/types/subscription";
+  SubscriptionDetailDto, SubscriptionSkipType, AddressDto, UsingCoupon
+} from "@/types";
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse[]> => {
   const {data} = await axiosInstance.get('/api/planDiscount');
@@ -36,7 +36,7 @@ const getSubscriptionDetail = async (subscribeId: number): Promise<SubscriptionD
     };
   });
   return {
-    ...data.subscribeDto,
+    ...(({ subscribeStatus, ...rest }) => ({ ...rest, status: subscribeStatus }))(data.subscribeDto),
     recipeList: matchedRecipes,
   };
 }

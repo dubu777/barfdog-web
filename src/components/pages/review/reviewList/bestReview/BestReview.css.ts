@@ -1,0 +1,76 @@
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
+import { themeVars } from "@/styles/theme.css";
+
+export const bestReviewTitle = style({
+  padding: '40px 20px 20px',
+})
+
+export const bestReviewBox = style({
+  padding: '20px 0 !important',
+  background: themeVars.colors.gray.gray50,
+})
+
+export const bestReviewSlide = style({
+  width: 'calc(100% - 40px) !important',
+})
+
+export const bestReviewCard = style({
+  display: 'flex',
+  gap: '12px',
+})
+
+export const bestReviewImage = style({
+  width: '107px',
+  height: '107px',
+  objectFit: 'cover',
+  borderRadius: '8px',
+})
+
+export const bestReviewContentTop = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '8px',
+})
+
+export const bestReviewUsername = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '4px',
+})
+
+export const bestReviewBanner = style({
+  background: themeVars.colors.red.red,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '10px',
+  padding: '6px 16px',
+  transition: 'all .35s',
+  position: 'relative',
+  selectors: {
+    '&:hover': {
+      background: themeVars.colors.gray.gray0,
+      color: themeVars.colors.red.red,
+    }
+  }
+})
+
+export const bestReviewBannerStar = recipe({
+  base: {
+    position: 'absolute',
+  },
+  variants: {
+    xPosition: {
+      left: {
+        left: '22%',
+        top: '-2px',
+      },
+      right: {
+        right: '42px',
+        bottom: '-5px',
+      }
+    }
+  }
+})

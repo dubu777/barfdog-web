@@ -20,12 +20,14 @@ export type {
   NormalizedSubscriptionCardData,
   CardActionsId,
   SubscriptionOrderStatus,
+  SubscriptionCancelOrderStatus,
   OrderDeliveryInquiryStatus,
   InfoLists,
   InfoListsButtons,
   InfoListsItem,
   PaymentItem,
   PaymentSubscriptionCard,
+  SendMessage,
 };
 
 interface MyPageMemberDto {
@@ -148,6 +150,12 @@ interface NormalizedSubscriptionCardData extends NormalizedCardData{
 type SubscriptionOrderStatus = (typeof SUBSCRIPTION_ORDER_STATUSES)[number];
 type OrderDeliveryInquiryStatus = 'REVIEW_SUBMIT' | SubscriptionOrderStatus;
 
+type ExcludedStatuses =
+  | 'SUBSCRIBE_PENDING'
+  | 'SUBSCRIBE_WILL_CANCEL'
+  | 'SUBSCRIBE_CANCEL';
+
+type SubscriptionCancelOrderStatus = Exclude<SubscriptionOrderStatus, ExcludedStatuses>;
 
 interface InfoListsItem {
 	label: string;
@@ -191,4 +199,10 @@ interface PaymentItem {
   subscribeCardDto: PaymentSubscriptionCard;
   paymentMethod: keyof typeof PAYMENT_METHOD;
   recipeNameList: string[];
+}
+
+interface SendMessage {
+  name: string;
+  phone: string;
+  homePageUrl?: string;
 }

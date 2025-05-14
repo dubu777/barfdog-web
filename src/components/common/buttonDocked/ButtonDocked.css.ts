@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const containerBaseStyle = style({
-	position: 'fixed',
+	position: 'sticky',
 	width: '100%',
 	maxWidth: '600px',
 	display: 'flex',
@@ -12,9 +12,18 @@ export const containerBaseStyle = style({
 	borderTop: `1px solid ${themeVars.colors.gray.gray200}`,
 	margin: '0 auto',
 	bottom: 0,
-	left: '50%',
-	transform: 'translateX(-50%)',
 })
+
+export const containerPositionStyle = {
+	sticky: style({
+		position: 'sticky',
+	}),
+	fixed: style({
+		position: 'fixed',
+		left: '50%',
+		transform: 'translateX(-50%)',
+	}),
+}
 
 export const containerStyle = {
 	'full-button': style({

@@ -52,14 +52,14 @@ const PaymentCard = ({
 				</div>
 			)
 			: (
-				<Card shadow='none' className={styles.smallCardBox}>
+				<div className={styles.smallCardBox}>
 					<CardImage style={{ color: cardColor }} />
 					<div className={styles.smallCardInfo}>
 						<DefaultText type='headline2'>{paymentCardName}</DefaultText>
 						<DefaultText type='body2'>{paymentCardNumber}</DefaultText>
 						<DefaultText type='body2' color='gray500'>일시불</DefaultText>
 					</div>
-				</Card>
+				</div>
 			)
 	);
 };

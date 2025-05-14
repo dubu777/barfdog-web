@@ -11,14 +11,26 @@ interface AccordionProps {
   showArrow?: boolean;
   buttonClassName?: string;
   contentClassName?: string;
+  onToggle?: (isOpen: boolean) => void;
 }
 
-const Accordion = ({ title, children, open = false, showArrow = true, buttonClassName, contentClassName }: AccordionProps) => {
+const Accordion = ({
+  title,
+  children,
+  open = false,
+  showArrow = true,
+  buttonClassName,
+  contentClassName,
+  onToggle,
+}: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(open);
-  const toggleAccordion = () => setIsOpen(!isOpen);
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen);
+    onToggle?.(!isOpen);
+  }
 
   return (
-    <div>
+    <>
       <button onClick={toggleAccordion} className={`${styles.accordionButton({ noChildren: !children, isOpen })} ${buttonClassName || ''}`}>
         {title}
         {showArrow &&
@@ -37,7 +49,7 @@ const Accordion = ({ title, children, open = false, showArrow = true, buttonClas
           <div className={`${styles.accordionContent} ${contentClassName || ''}`}>{children}</div>
         </motion.div>
       }
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 'use client';
 import * as styles from "./Reward.css";
+import { infiniteTrigger } from "@/styles/common.css";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import RewardFilter from "@/components/pages/mypage/reward/rewardFilter/RewardFilter";
@@ -62,7 +63,7 @@ const Reward = () => {
       <RewardFilter />
       <RewardList rewardList={rewardList || []} />
       {rewardList && rewardList?.length > 0 &&
-        <div ref={ref} className={styles.infiniteTrigger} />
+        <div ref={ref} className={infiniteTrigger} />
       }
     </section>
   );

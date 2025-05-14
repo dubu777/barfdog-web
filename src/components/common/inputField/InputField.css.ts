@@ -76,7 +76,8 @@ export const inputStyle = style({
 })
 
 export const confirmButtonStyle = style({
-  padding: '12px 14.5px !important'
+  padding: '12px 14.5px !important',
+  width: '20%',
 })
 
 export const searchButtonStyle = style({

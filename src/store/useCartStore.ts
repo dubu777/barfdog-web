@@ -4,7 +4,6 @@ import { calculateSummary } from "@/utils/cart/calculateSummary";
 import { filterBySelectedItems } from "@/utils/cart/filterBySelectedItems";
 
 interface CartStore {
-  count: number;
   cartInfo: CartInfo | null;
   setCartInfo: (cartInfo: CartInfo) => void;
   updateItemAmount: (basketId: number, amount: number) => void;
@@ -22,7 +21,6 @@ const initialCalculatedPrices = {
 }
 
 export const useCartStore = create<CartStore>((set, get) => ({
-  count: 0,
   cartInfo: null,
   selectedItems: [],
   calculatedPrices: initialCalculatedPrices,
@@ -39,7 +37,6 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
     set({
       cartInfo,
-      count: cartInfo.basketDtoList.length,
       selectedItems: allBasketIds,
       calculatedPrices,
     })

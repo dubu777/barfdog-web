@@ -7,20 +7,25 @@ export const calculateSummary = (cartInfo: CartInfo) => {
 	// 배송비 (deliveryFee)
 	// 최종 주문 금액 (totalOrderPrice)
 	// 무료 배송 조건까지 필요한 금액 (diffDeliveryFee)
-	const discount = cartInfo.basketDtoList.reduce(
+
+	const freeCondition = cartInfo?.deliveryConstant?.freeCondition;
+	const deliveryPrice = cartInfo?.deliveryConstant?.price;
+
+	const discount = cartInfo?.basketDtoList?.reduce(
 		(sum, item) => sum + (item.itemDto.originalPrice - item.itemDto.salePrice) * item.itemDto.amount,
 		0
 	);
-	const productTotalPrice = cartInfo.basketDtoList.reduce((sum, item) => sum + item.totalPrice, 0) + discount;
+	const productTotalPrice = cartInfo?.basketDtoList?.reduce((sum, item) => sum + item.totalPrice, 0) + discount;
 	const deliveryFee =
-		productTotalPrice >= cartInfo.deliveryConstant.freeCondition
+		productTotalPrice >= freeCondition
 			? 0
-			: cartInfo.deliveryConstant.price;
+			: deliveryPrice;
 	const totalOrderPrice = productTotalPrice - discount + deliveryFee;
 	const diffDeliveryFee =
-		productTotalPrice >= cartInfo.deliveryConstant.freeCondition
+		// 총 주문금액 기준인지, 할인 포함되지 않은 상품 금액인지 확인 필요 (임시 총 주문금액 기준)
+		totalOrderPrice >= freeCondition
 			? 0
-			: cartInfo.deliveryConstant.freeCondition - totalOrderPrice;
+			: freeCondition - totalOrderPrice;
 
 	return { productTotalPrice, discount, deliveryFee, totalOrderPrice, diffDeliveryFee };
 }

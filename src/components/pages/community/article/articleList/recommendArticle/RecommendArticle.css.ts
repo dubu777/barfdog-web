@@ -11,7 +11,7 @@ export const recommendArticleList = style({
 })
 
 export const recommendArticleTitle = style({
-  background: themeVars.colors.gray.gray800,
+  background: themeVars.colors.red.red,
   padding: '4px 12px',
 })
 

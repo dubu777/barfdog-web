@@ -1,4 +1,4 @@
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import OrderBottomSheet from "@/components/pages/mypage/common/bottomSheet/orderBottomSheet/OrderBottomSheet";
 import { CardActionsId, IsOpenCardModal, NormalizedCardData, OrderType } from "@/types";
 import SubscriptionAllScheduleModal
@@ -27,7 +27,7 @@ const CardModal = ({
 	switch (modalState.id) {
 		case 'refundExchange':
 			return (
-				<Modal
+				<AlertModal
 					isOpen={modalState.isOpen}
 					onClose={onClose}
 					title="반품/교환 안내"

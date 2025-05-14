@@ -1,76 +1,78 @@
-import { useState } from "react";
 import * as styles from './Footer.css';
 import Image from "next/image";
 import Link from "next/link";
-import FooterArrow from '/public/images/icons/footer-arrow.png';
-import { useMainStore } from "@/store/useMainStore";
-import { motion } from "framer-motion";
+import Logo from '/public/images/logo/logo-white.png';
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
-const footerData = [
+const footerInfo = [
+  'CEO: 임경호 | 사업제안 및 문의: info@freshour.co.kr',
+  '사업자등록번호: 351-87-02455 [사업자정보확인]',
+  '통신판매업신고: 제 2022-충북충주-0578 호',
+  '본사: 충청북도 충주시 번영대로 214, 1층',
+  '연구소: 서울특별시 마포구 백범로31길 21, 305호',
+]
+
+const menuLink = [
   {
-    key: '사업자등록번호.',
-    value: '351-87-02455    사업자정보확인',
+    label: '브랜드 소개',
+    value: '/community/about',
   },
   {
-    key: '통신판매업신고.',
-    value: '제 2022-충북충주-0578호',
+    label: '공지사항',
+    value: '/community/notice',
   },
   {
-    key: '사업제안 및 문의.',
-    value: 'info@freshour.co.kr',
+    label: 'FAQ',
+    value: '/community/faq',
   },
   {
-    key: '본사.',
-    value: '충북 충주시 번영대로 214, 1층',
-  },
-  {
-    key: '연구소.',
-    value: '서울특별시 마포구 백범로31길 21, 607호',
+    label: '아티클',
+    value: '/community/article',
   },
 ]
 
+const policyMenuLink = [
+  {
+    label: 'Privacy policy',
+    value: '/policy/privacy',
+  },
+  {
+    label: 'Terms&Conditions',
+    value: '/policy/terms',
+  },
+]
 export default function Footer() {
-  const { isBottomBannerVisible } = useMainStore();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <footer className={styles.footerContainer({ isBottomBannerVisible: isBottomBannerVisible })}>
-      <motion.div
-        initial={false}
-        animate={isOpen ? 'open' : 'closed'}
-      >
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={styles.footerButton({ open: isOpen })}
-        >
-          (주)프레쉬아워 Freshour INC.
-          <motion.span
-            variants={{
-              open: { rotate: 180 },
-              closed: { rotate: 0 },
-            }}
-            transition={{ duration: 0.2 }}
-            style={{ originY: 0.55 }}
-          >
-            <Image src={FooterArrow} alt='footer detail button' width={10} height={10} style={{ height: 'auto' }} />
-          </motion.span>
-        </button>
-        <div className={styles.footerInfo({ open: isOpen })}>
-          <p className={styles.footerText}>CEO. 임경호</p>
-          {footerData.map(info => (
-            <p className={styles.footerText} key={info.key}>
-              <b>{info.key}</b><span>{info.value}</span>
-            </p>
-          ))}
-          <ul className={styles.footerPolicy}>
-            <li className={styles.footerText}>
-              <Link href='/policy/privacy'>Privacy policy</Link>
-            </li>
-            <li className={`${styles.footerText} ${styles.terms}`}>
-              <Link href='/policy/terms'>Terms&Conditions</Link>
-            </li>
-          </ul>
-        </div>
-      </motion.div>
+    <footer className={styles.footerContainer}>
+      <h1 className={styles.logo}>
+        <Image src={Logo} alt='logo' width={139} height={24} />
+      </h1>
+      <div className={styles.menuLinkBox}>
+        {menuLink.map(menu => (
+          <Link key={menu.value} href={menu.value} className={styles.menuLink}>
+            <DefaultText type='label2' color='gray100'>
+              {menu.label}
+            </DefaultText>
+          </Link>
+        ))}
+      </div>
+      <div className={styles.footerInfo}>
+        {footerInfo.map(text => (
+          <DefaultText key={text} type='caption2' color='gray100' block>{text}</DefaultText>
+        ))}
+      </div>
+      <div className={styles.policyMenuLinkBox}>
+        {policyMenuLink.map((policy) => (
+          <Link key={policy.value} href={policy.value} className={styles.policyMenuLink}>
+            <DefaultText type='caption2' color='gray100'>
+              {policy.label}
+            </DefaultText>
+          </Link>
+        ))}
+      </div>
+      <DefaultText type='caption2' color='gray100' className={styles.footerInfo}>
+        Copyright © 바프독 All Right Reserved.
+      </DefaultText>
     </footer>
   )
 }

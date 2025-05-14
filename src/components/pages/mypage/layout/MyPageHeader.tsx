@@ -5,7 +5,7 @@ import { useBackNavigation } from "@/utils";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
 import Header from "@/components/layout/header/Header";
-import Modal from "@/components/common/modal/Modal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 
 type MypageParams = {
@@ -42,7 +42,7 @@ const MyPageHeader = () => {
     '/mypage/coupon': { centerTitle: '쿠폰내역', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/reward': { centerTitle: '적립금내역', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/manage-card': { centerTitle: '카드관리' },
-    '/mypage/invite-friends': { centerTitle: '친구초대' },
+    '/mypage/invite-friends': { centerTitle: '친구 초대', showBackButton: true },
     '/mypage/subscription': { centerTitle: '구독상품관리', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/account': { centerTitle: '계정 정보', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showCartButton: true, showBackButton: true, onBack: goBack },
@@ -107,7 +107,7 @@ const MyPageHeader = () => {
       const step = lastSection === 'change-recipe' && searchParams.get('step') !== null;
       return {
         centerTitle: {
-          'cancel-subscription': '구독 해지 사유입력',
+          'cancel-subscription': '구독 해지',
           'change-recipe': step ? ' ' :'식단 변경',
         }[lastSection as string] || '구독 상세',
         showBackButton: true,
@@ -136,7 +136,7 @@ const MyPageHeader = () => {
       {...headerProps}
     />
     {cancelChangeNoticeOpen &&
-      <Modal
+      <AlertModal
         title='구독 수정을 중단하시겠어요?'
         content='나가시면 수정해주신 정보는 저장되지 않아요.'
         isOpen={cancelChangeNoticeOpen}

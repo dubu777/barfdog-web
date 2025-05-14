@@ -5,6 +5,7 @@ export type {
   RewardResponse,
   RewardListDataWithTotals,
   InviteRewardList,
+  InviteRewardResponse,
 };
 
 type RewardFilterType = 'ALL' | 'SAVED' | 'USED' | 'EXPIRED';
@@ -52,4 +53,18 @@ interface InviteRewardList {
   totalRewards: number;
   rewardList: RewardData[];
   page: Page;
+}
+
+
+interface InviteRewardResponse {
+  joinedCount: number;
+  orderedCount: number;
+  recommend: string;
+  totalRewards: number;
+  pagedModel: {
+    _embedded: {
+      queryRewardsDtoList: RewardData[]
+    }
+    page: Page;
+  };
 }

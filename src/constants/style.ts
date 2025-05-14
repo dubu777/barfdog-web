@@ -28,3 +28,11 @@ export const CHIPS_COLORS = {
   gray800: themeVars.colors.gray.gray800,
   blue50: themeVars.colors.blue.blue50,
 } as const;
+
+export const MAIN_BACKGROUND_COLORS = {
+  pinkWhite: themeVars.colors.red.pinkWhite,
+  yellow: themeVars.colors.yellow.yellow50,
+  gray50: themeVars.colors.gray.gray50,
+  gray200: themeVars.colors.gray.gray200,
+  white: themeVars.colors.gray.gray0,
+} as const;

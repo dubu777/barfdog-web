@@ -6,12 +6,13 @@ import {
   ArticleList,
   CommunityItem,
   NoticeDetail,
-  NoticeList
+  NoticeListResponse, CommunityListItem
 } from "@/types";
+import {ARTICLE_CATEGORY} from "@/constants/community";
 
 export { getNoticeList, getNoticeDetail, getRecommendArticleList, getArticleList, getArticleDetail };
 
-const getNoticeList = async ({ pageParam = 0, size = 10 }: { pageParam: number; size: number }): Promise<NoticeList> => {
+const getNoticeList = async ({ pageParam = 0, size = 10 }: { pageParam: number; size: number }): Promise<NoticeListResponse> => {
   const { data } = await axiosInstance.get(`/api/notices?page=${pageParam}&size=${size}`);
   return {
     page: data.page,
@@ -52,9 +53,15 @@ const getArticleDetail = async (articleId: number): Promise<ArticleDetail> => {
   const previous = currentIndex > 0 ? articleList[currentIndex - 1] : null;
   const next = currentIndex < articleList.length - 1 ? articleList[currentIndex + 1] : null;
 
+  const formatTitle = (article: CommunityListItem) =>
+    article ? { 
+      ...article, 
+      title: `[${article.category ? ARTICLE_CATEGORY[article.category].label : ''}] ${article.title}` 
+    } : null;
+
   return {
     articleDetail: data,
-    previous,
-    next
+    previous: formatTitle(previous),
+    next: formatTitle(next)
   };
 }

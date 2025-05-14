@@ -86,7 +86,7 @@ export const getSubscriptionStatusActions = (
 		DELIVERY_DONE: deliveryCompleteActions,
 		CONFIRM: confirmationAction,
 		SUBSCRIBE_PENDING: subscriptionHoldActions,
-		SUBSCRIBE_WILL_CANCEL: subscriptionHoldActions,
+		SUBSCRIBE_WILL_CANCEL: subscriptionCancelActions,
 		SUBSCRIBE_CANCEL: subscriptionCancelActions,
 	}
 	return baseActionsForStatus[status]?.[actionType] || [];

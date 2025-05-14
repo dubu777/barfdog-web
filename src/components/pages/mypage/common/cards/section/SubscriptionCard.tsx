@@ -20,7 +20,7 @@ const normalizeSubscriptionData = (data: any, isMyPage: boolean, subscriptionId?
 		status: data.status,
 		// status: 'CONFIRM',
 		// orderStatus: data.orderStatus,
-		orderStatus: 'PRODUCING',
+		orderStatus: 'BEFORE_PAYMENT',
 		// subscribeCount: data.subscribeCount || 0,
 		startDate: data.startDated || '',
 		nextPaymentDate: data.nextPaymentDate,
@@ -83,6 +83,7 @@ const SubscriptionCard = ({
 	const subscriptionActions = normalizeActions(actions, normalizedData.orderStatus as string, totalDiscount);
 
 
+	console.log(productionDates)
 	const [isOpenModal, setIsOpenModal] = useState<IsOpenCardModal>({ id: null, isOpen: false });
 
 	const handleActions = (url?: string, params?: string, id?: CardActionsId) => {
@@ -125,12 +126,13 @@ const SubscriptionCard = ({
 				break;
 			}
 			default: {
-				// 식단 변경
-				pushWithQuery(`/mypage${url}/${normalizedData.id}${`/${params || ''}`}`, {});
+				// 식단 변경, 구독 상세
+				pushWithQuery(`/mypage${url}/${normalizedData.id}${`/${params || ''}`}`, {}, ['status']);
 				break;
 			}
 		}
 	};
+	console.log(normalizedData.status === 'SUBSCRIBING')
 	return (
 		<BaseCard
 			type='subscription'

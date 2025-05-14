@@ -1,8 +1,18 @@
 import * as styles from './Loader.css';
 
-const Loader = () => {
+interface LoaderProps {
+	fullscreen?: boolean;
+}
+
+const Loader = ({ fullscreen = false }: LoaderProps) => {
 	return (
-		<span className={styles.loader} />
+		fullscreen
+			? (
+				<div className={styles.loaderContainer}>
+					<span className={styles.loader} />
+				</div>
+			)
+			: <span className={styles.loader} />
 	);
 };
 

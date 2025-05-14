@@ -6,8 +6,9 @@ export const accordionButton = recipe({
   base: {
     display: 'flex',
     justifyContent: 'space-between',
+    gap: '20px',
     width: '100%',
-    padding: '18px 12px',
+    padding: '20px',
     fontWeight: themeVars.fontSize["text-md"],
     fontSize: themeVars.fontWeight.bold,
     borderTop: `1px solid ${themeVars.colors.gray.gray200}`,
@@ -42,7 +43,7 @@ export const accordionIcon = recipe({
 });
 
 export const accordionContent = style({
-  padding: ' 12px 12px 18px',
+  padding: '0 20px 20px',
 });
 
 export const accordionMotionDiv = style({

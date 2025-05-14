@@ -1,5 +1,4 @@
 'use client';
-import * as styles from './LoginRedirect.css';
 import Loader from "@/components/common/loader/Loader";
 import { useSnsLogin } from "@/api/auth/mutations/useSnsLogin";
 import { useEffect } from "react";
@@ -14,7 +13,7 @@ interface LoginRedirectProps {
 }
 const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
 	const { provider, code } = searchParams;
-  const { mutate: snsLogin, isPending } = useSnsLogin();
+  const { mutate: snsLogin } = useSnsLogin();
 
 	useEffect(() => {
     if (code) {
@@ -22,14 +21,8 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
     }
   }, [code, provider]);
 
-  if (isPending) {
-    return <Loader />;
-  }
-
 	return (
-		<div className={styles.loginRedirectContainer}>
-			<Loader />
-		</div>
+		<Loader fullscreen />
 	);
 }
 

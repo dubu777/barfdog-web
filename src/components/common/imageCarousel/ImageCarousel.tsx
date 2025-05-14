@@ -1,11 +1,10 @@
-import {previewImage, previewSlide, previewSlider, removeButton, thumbnail} from "./ImageCarousel.css";
+import { previewImage, previewSlide, previewSlider, removeButton, thumbnail } from "./ImageCarousel.css";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Image from "next/image";
 import CloseButton from '/public/images/icons/close-circle-fill.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import {themeVars} from "@/styles/theme.css";
 
 interface InitialImages {
 	id?: number;
@@ -18,7 +17,7 @@ interface ImageCarouselProps {
 	width?: number;
 	height?: number;
 	handleRemoveFile?: (filename: string, id: number | undefined) => void;
-	handleShowImageList?: (id: number) => void;
+	handleThumbnailClick?: (index: number, id?: number) => void;
 }
 
 export default function ImageCarousel({
@@ -26,7 +25,7 @@ export default function ImageCarousel({
 	width = 100,
 	height = 100,
 	handleRemoveFile,
-	handleShowImageList,
+	handleThumbnailClick,
 }: ImageCarouselProps) {
 	return (
 		<Swiper
@@ -41,7 +40,7 @@ export default function ImageCarousel({
 								key={preview.id ? `image-${preview.id}` : `image-${preview.filename}-${index}`}
 								className={previewSlide}
 								style={{ width: width, height: height, cursor: handleRemoveFile ? 'grabbing' : 'default' }}
-								onClick={() => handleShowImageList(preview.id) || undefined}
+								onClick={handleThumbnailClick ? () => handleThumbnailClick(index, preview.id) : undefined}
 						>
 								{index === 0 && <DefaultText type='caption' color='white' className={thumbnail}>대표</DefaultText>}
 								<li>

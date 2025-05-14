@@ -11,41 +11,43 @@ export const commonLayoutContainer = style({
   maxWidth: "600px",
   margin: "0 auto",
   backgroundColor: themeVars.colors.gray.gray0,
-  "-ms-user-select": "none",
-  "-moz-user-select": "-moz-none",
-  "-webkit-user-select": "none",
-  "-khtml-user-select": "none",
-  "user-select": "none",
   position: "relative",
 });
 
 export const ellipsis = recipe({
   base: {
-    width: "100%",
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-    display: "-webkit-box !important",
-    "-webkit-box-orient": "vertical",
+    width: '100%',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   variants: {
     lineSize: {
       line1: {
-        whiteSpace: "nowrap",
-        webkitLineClamp: "none",
-        webkitBoxOrient: "none",
-        lineHeight: "normal",
+        display: 'block',
+        whiteSpace: 'nowrap',
+        webkitLineClamp: 'none',
+        webkitBoxOrient: 'none',
+        lineHeight: 'normal',
       },
       line2: {
-        "-webkit-line-clamp": "2",
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
+        '-webkit-line-clamp': '2',
       },
       line3: {
-        "-webkit-line-clamp": "3",
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
+        '-webkit-line-clamp': '3',
       },
       line4: {
-        "-webkit-line-clamp": "4",
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
+        '-webkit-line-clamp': '4',
       },
       line5: {
-        "-webkit-line-clamp": "5",
+        display: '-webkit-box !important',
+        '-webkit-box-orient': 'vertical',
+        '-webkit-line-clamp': '5',
       },
     },
     wordBreak: {
@@ -233,4 +235,9 @@ export const commonWrapper = recipe({
     width: "full",
     borderRadius: "none",
   },
+});
+
+export const infiniteTrigger = style({
+  height: '72px',
+  background: themeVars.colors.gray.gray50,
 });

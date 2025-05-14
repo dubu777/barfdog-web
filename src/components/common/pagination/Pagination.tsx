@@ -1,7 +1,8 @@
 import * as styles from './Pagination.css';
-import Arrow from '/public/images/icons/pagination-arrow.svg';
-import DoubleArrow from '/public/images/icons/pagination-double-arrow.svg';
+import Arrow from '/public/images/icons/chevron-left-blue.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import useDeviceState from "@/hooks/useDeviceState";
 
 interface PaginationProps {
   currentPage: number;
@@ -10,6 +11,8 @@ interface PaginationProps {
 }
 
 const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
+  const { isMobileDevice } = useDeviceState();
+
   const isFirstPage = currentPage === 0;
   const isLastPage = currentPage === totalPages - 1;
 
@@ -21,72 +24,108 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
 
   const generatePageNumbers = () => {
     const range: (number | string)[] = [];
-    const maxVisibleButtons = 5; // 최대 표시할 버튼 수
+    const firstPage = 1;
+    const lastPage = totalPages;
 
-    if (totalPages <= maxVisibleButtons + 2) {
-      // 전체 페이지가 적을 경우 모든 페이지를 표시
-      for (let i = 1; i <= totalPages; i++) {
+    const pushRange = (start: number, end: number) => {
+      for (let i = start; i <= end; i++) {
         range.push(i);
       }
-    } else {
-      // 많은 페이지일 경우
-      if (currentPage <= 3) {
-        // 현재 페이지가 앞부분일 때
-        range.push(1, 2, 3, 4, 5, "...", totalPages);
-      } else if (currentPage >= totalPages - 3) {
-        // 현재 페이지가 뒷부분일 때
-        range.push(1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    };
+
+    if (totalPages <= 5) {
+      // 5페이지 이하인 경우 전부 출력
+      pushRange(1, totalPages);
+      return range;
+    }
+
+    // 5페이지 이상의 경우 기본값 1 추가
+    range.push(firstPage);
+
+    // 6, 7페이지의 경우
+    if (totalPages <= 7) {
+      if (currentPage < 2) {
+        range.push(2, 3, '...', lastPage);
+      } else if (currentPage === 2) {
+        if (totalPages < 7) pushRange(2, totalPages);
+          else range.push(2, 3, 4, '...', lastPage);
+
+      } else if (currentPage > 2 && currentPage < lastPage - 3) {
+        pushRange(2, totalPages);
+      } else if (currentPage === lastPage - 3) {
+        if (totalPages < 7) {
+          pushRange(2, totalPages);
+        } else {
+          range.push('...', lastPage - 3, lastPage - 2, lastPage - 1, lastPage);
+        }
       } else {
-        // 현재 페이지가 중간일 때
-        range.push(1, "...", currentPage, currentPage + 1, currentPage + 2, "...", totalPages);
+        range.push('...', lastPage - 2, lastPage - 1, lastPage);
       }
+      return Array.from(new Set(range));
+    }
+
+    // 7페이지 이상의 경우
+    if (currentPage < 2) {
+      range.push(2, 3, '...', totalPages);
+    } else if (currentPage === 2) {
+      range.push(2, 3, 4, '...', totalPages);
+    } else if (currentPage > 2 && currentPage < totalPages - 3) {
+      range.push('...', currentPage, currentPage + 1, currentPage + 2, '...', totalPages);
+    } else if (currentPage === totalPages - 3) {
+      range.push('...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+    } else {
+      range.push('...', totalPages - 2, totalPages - 1, totalPages);
     }
 
     return range;
   };
 
+  const PrevButtonComponent = () => (
+    <button
+      onClick={() => handlePageChange(currentPage - 1)}
+      disabled={isFirstPage}
+      className={styles.numberButton({})}
+    >
+      <SvgIcon src={Arrow} color={isFirstPage ? 'gray300' : 'gray900'} />
+    </button>
+  )
+  const NextButtonComponent = () => (
+    <button
+      onClick={() => handlePageChange(currentPage + 1)}
+      disabled={isLastPage}
+      className={styles.numberButton({ type: 'next' })}
+    >
+      <SvgIcon src={Arrow} color={isLastPage ? 'gray300' : 'gray900'} />
+    </button>
+  )
   return (
     totalPages !== 0 &&
-      <div className={styles.paginationContainer}>
-        <button
-          onClick={() => handlePageChange(0)}
-          disabled={isFirstPage}
-          className={styles.numberButton({})}
-        >
-          <SvgIcon src={DoubleArrow} />
-        </button>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={isFirstPage}
-          className={styles.numberButton({ type: 'prev' })}
-        >
-          <SvgIcon src={Arrow} />
-        </button>
-        {generatePageNumbers().map((page, index) => (
-          <button
-            key={index}
-            onClick={() => typeof page === "number" && handlePageChange(page-1)}
-            disabled={page === "..."}
-            className={styles.numberButton({ active: page === currentPage + 1 }) || ''}
-          >
-            {page}
-          </button>
-        ))}
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={isLastPage}
-          className={styles.numberButton({ type: 'next' })}
-        >
-          <SvgIcon src={Arrow} />
-        </button>
-        <button
-          onClick={() => handlePageChange(totalPages - 1)}
-          disabled={isLastPage}
-          className={styles.numberButton({ type: 'last' })}
-        >
-          <SvgIcon src={DoubleArrow} />
-        </button>
-      </div>
+    <div className={styles.paginationContainer({ isMobileDevice })}>
+      <PrevButtonComponent />
+      {!isMobileDevice ?
+        generatePageNumbers().map((page, index) => {
+          const isActive = page === currentPage + 1;
+          const isDisabled = page === "...";
+          return (
+            <button
+              key={index}
+              onClick={() => typeof page === "number" && handlePageChange(page-1)}
+              disabled={isDisabled}
+              className={styles.numberButton({ active: isActive }) || ''}
+            >
+              <DefaultText type='label1' color={isActive ? 'white' : isDisabled ? 'gray300' : 'gray800'}>{page}</DefaultText>
+            </button>
+          )
+        })
+        : (
+          <div>
+            <DefaultText type='label3' color='gray800'>{currentPage + 1}</DefaultText>&nbsp;/&nbsp;
+            <DefaultText type='label3' color={currentPage + 1 === totalPages ? 'gray800' : 'gray600'}>{totalPages}</DefaultText>
+          </div>
+        )
+      }
+      <NextButtonComponent />
+    </div>
   );
 };
 

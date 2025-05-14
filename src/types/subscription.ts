@@ -1,6 +1,5 @@
 import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 import { RecipeDto } from "./recipe";
-import { DiscountType } from "./coupon";
 
 export type {
   PlanDiscountResponse,
@@ -25,29 +24,11 @@ export type {
   SubscriptionStatusKey,
   PlanKey,
   PlanName,
-  Coupon,
   PlanInfo,
-  UsingCoupon,
+  // UsingCoupon,
   SubscribeGeneralItem,
   SubscriptionStep,
 };
-
-
-
-interface Coupon {
-  availableMaxDiscount: number;
-  availableMinPrice: number; // 최소 사용 금액
-  couponTarget: "ALL" | "GENERAL" | "SUBSCRIBE";
-  description: string;
-  discountDegree: number; // 할인율 또는 금액
-  discountType: DiscountType; // 할인 유형
-  expiredDate: string;
-  memberCouponId: number;
-  name: string; // 쿠폰 이름
-  remaining: number; // 남은 쿠폰 수
-}
-
-
 
 interface SubscriptionResponse<T> {
   isDone: boolean;
@@ -216,11 +197,11 @@ interface PlanInfo {
   maxRecipeCount?: number;
 }
 
-interface UsingCoupon {
-  memberCouponId: number;
-  discount: number;
-  overDiscount: number;
-}
+// interface UsingCoupon {
+//   memberCouponId: number;
+//   discount: number;
+//   overDiscount: number;
+// }
 
 interface SubscribeGeneralItem {
   id: number;

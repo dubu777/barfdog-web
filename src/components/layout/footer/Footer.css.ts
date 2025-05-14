@@ -1,97 +1,36 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from '@vanilla-extract/css';
-import { recipe } from "@vanilla-extract/recipes";
 
-export const footerContainer = recipe({
-  base: {
-    width: '100%',
-    minHeight: '100px',
-    height: "fit-content",
-    minWidth: '320px',
-    maxWidth: '600px',
-    margin: '0 auto',
-    zIndex: 20,
-    backgroundColor: themeVars.backgroundColors.grey7E,
-    color: themeVars.colors.gray.gray0,
-    padding: '14px 25px',
-  },
-  variants: {
-    isBottomBannerVisible: {
-      true: {
-        marginBottom: '39px !important',
-      },
-      false: {
-        marginBottom: '0',
-      }
-    }
-  }
-});
+export const footerContainer = style({
+  background: themeVars.colors.gray.gray500,
+  paddingBottom: '40px',
+})
 
-export const footerButton = recipe({
-  base: {
-    width: '100%',
-    color: themeVars.colors.gray.gray0,
-    textAlign: 'left',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '25px',
-    padding: 0,
-    cursor: 'pointer',
-  },
-  variants: {
-    open: {
-      true: {
-        marginBottom: '15px'
-      },
-      false: {
-        marginBottom: '0'
-      }
-    }
-  }
-});
+export const logo = style({
+  padding: '12px 20px',
+})
 
-export const footerInfo = recipe({
-  base: {
-    transition: 'all .35s',
-    overflow: 'hidden',
-  },
-  variants: {
-    open: {
-      true: {
-        height: 'auto',
-      },
-      false: {
-        height: '0',
-      }
+export const menuLinkBox = style({
+  padding: '0 8px',
+})
+
+export const menuLink = style({
+  padding: '12px',
+})
+
+export const policyMenuLinkBox = style({
+  padding: '8px',
+})
+
+export const policyMenuLink = style({
+  padding: '4px 12px',
+  selectors: {
+    '&:first-child': {
+      borderRight: `1px solid ${themeVars.colors.gray.gray50}`
     }
   }
 })
 
-export const footerText = style({
-  fontWeight: themeVars.fontWeight.light,
-  fontSize: themeVars.fontSize["text-xs"],
-  lineHeight: '17px',
-  textAlign: 'left',
-})
-
-export const footerPolicy = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '20px',
-  marginTop: '19px',
-})
-
-export const terms = style({
-  position: 'relative',
-  '::after': {
-    content: '',
-    display: 'block',
-    width: '1px',
-    height: '90%',
-    background: themeVars.colors.gray.gray0,
-    position: 'absolute',
-    left: '-10px',
-    top: '50%',
-    transform: 'translateY(-50%)'
-  }
+export const footerInfo = style({
+  padding: '0 20px',
 })

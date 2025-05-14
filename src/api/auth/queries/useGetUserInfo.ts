@@ -7,15 +7,15 @@ export { useGetUserInfo, prefetchGetUserInfo };
 
 const getUserInfoQueryKey = [queryKeys.AUTH.BASE, queryKeys.AUTH.GET_USER_INFO];
 
-function useGetUserInfo(queryOptions?: UseSuspenseQueryCustomOptions<GetUserInfo>) {
-	return useSuspenseQuery<GetUserInfo>({
+function useGetUserInfo(queryOptions?: UseSuspenseQueryCustomOptions<GetUserInfo | null>) {
+	return useSuspenseQuery<GetUserInfo | null>({
 		queryKey: getUserInfoQueryKey,
 		queryFn: getUserInfo,
 		...queryOptions,
 	})
 }
 async function prefetchGetUserInfo(queryClient: QueryClient) {
-	await queryClient.prefetchQuery<GetUserInfo>({
+	await queryClient.prefetchQuery<GetUserInfo | null>({
 		queryKey: getUserInfoQueryKey,
 		queryFn: getUserInfo,
 	})

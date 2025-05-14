@@ -20,8 +20,3 @@ export const reviewList = style({
 	flexDirection: 'column',
 	gap: '8px'
 })
-
-export const infiniteTrigger = style({
-	height: '72px',
-	background: themeVars.colors.gray.gray50,
-});

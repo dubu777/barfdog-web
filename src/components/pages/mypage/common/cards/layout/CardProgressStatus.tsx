@@ -21,8 +21,9 @@ const CardProgressStatus = ({ status, productionDates, subscribeCount, showProgr
 
 	const progressInfo = SUBSCRIPTION_ORDER_PROGRESS[status] || { progress: 0 };
 	const orderStatusMessage = showProgressLabel ? getOrderStatusMessage(status, subscribeCount || 1) : undefined;
-	const showProgress = showProgressLabel || status !== 'SUBSCRIBE_PENDING' && status !== 'SUBSCRIBE_WILL_CANCEL' && status !== 'SUBSCRIBE_CANCEL';
+	const showProgress = !showProgressLabel ? status !== 'SUBSCRIBE_PENDING' && status !== 'SUBSCRIBE_WILL_CANCEL' && status !== 'SUBSCRIBE_CANCEL' : true;
 
+	console.log(status)
 	return (
 		<div className={styles.statusContainer({ hasStatusLabel: showProgressLabel && !!progressInfo.label })}>
 			{showProgressLabel && orderStatusMessage &&

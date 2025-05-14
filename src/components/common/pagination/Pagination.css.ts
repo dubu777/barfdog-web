@@ -1,17 +1,31 @@
-import {style} from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
-import {themeVars} from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
+import { themeVars } from "@/styles/theme.css";
 
-export const paginationContainer = style({
-  display: 'flex',
-  justifyContent: 'center',
-  margin: '40px 0 20px'
+export const paginationContainer = recipe({
+  base: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '40px 0 20px',
+    background: themeVars.colors.gray.gray0,
+  },
+  variants: {
+    isMobileDevice: {
+      true: {
+        gap: '16px'
+      }
+    }
+  }
 })
+
 export const numberButton = recipe({
   base: {
-    width: '30px',
-    height: '30px',
-    color: themeVars.fontColors.grey97,
+    width: '44px',
+    height: '44px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: themeVars.colors.gray.gray800,
     cursor: 'pointer',
     selectors: {
       '&:disabled': {
@@ -22,15 +36,12 @@ export const numberButton = recipe({
   variants: {
     active: {
       true: {
-        border: `1px solid ${themeVars.colors.red.red}`,
-        color: themeVars.colors.red.red,
+        borderRadius: '50%',
+        background: themeVars.colors.gray.gray900,
       }
     },
     type: {
-      prev: { marginRight: '50px' },
-      next: { transform: 'rotate(180deg)', marginLeft: '50px' },
-      last: { transform: 'rotate(180deg)' }
+      next: { transform: 'rotate(180deg)',},
     }
-
   }
 })

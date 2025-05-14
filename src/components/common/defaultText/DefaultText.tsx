@@ -39,6 +39,7 @@ const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
   body2: "span",
   body3: "span",
   caption: "span",
+  caption2: "span",
 };
 
 export default function DefaultText({

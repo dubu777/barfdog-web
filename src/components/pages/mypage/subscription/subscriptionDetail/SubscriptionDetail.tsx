@@ -30,52 +30,60 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
 
 	const setPaymentMethodDetail = usePaymentMethodDetail();
 
-	const transformedSubscriptionDetail = subscriptionDetail
-		? (({ subscribeStatus, ...rest }) => ({ ...rest, status: subscribeStatus }))(subscriptionDetail)
-		: null;
-	const weeklyPaymentCycle = subscriptionPlanInfo[transformedSubscriptionDetail?.plan as PlanKey].weeklyPaymentCycle;
-
-	console.log('transformedSubscriptionDetail', transformedSubscriptionDetail)
+	const weeklyPaymentCycle = subscriptionPlanInfo[subscriptionDetail?.plan as PlanKey].weeklyPaymentCycle;
+	// const subscriptionStatus = subscriptionDetail.subscribeStatus;
+	const subscriptionStatus = 'BEFORE_PAYMENT';
+	const subscriptionOrderStatus = 'PAYMENT_DONE';
+	const isBeforePaying = subscriptionOrderStatus === 'BEFORE_PAYMENT';
 
 
 	useEffect(() => {
 		setPaymentMethodDetail(subscriptionId);
 	}, [])
 
-
-	const handleChangePaymentMethod = () => {
-		console.log('handleChangePaymentMethod!!!!!!', subscriptionId)
-		// onToggle();
-	}
-
 	return (
 		<section>
 			<article className={styles.subscriptionDetailBox}>
 				<DefaultText type='title4'>
-					<span className={pointColor}>{weeklyPaymentCycle}주</span>마다<br/>
-					정기 구독 상품을 받고 있어요
+					{subscriptionStatus !== 'SUBSCRIBE_CANCEL'
+						?
+						<>
+							<span className={pointColor}>{weeklyPaymentCycle}주</span>마다<br/>
+							정기 구독 상품을 받고 있어요
+						</>
+						:
+						<>
+							<span className={pointColor}>25.04.10(적용필요)</span>에<br/>
+							구독이 해지되었어요
+						</>
+					}
 				</DefaultText>
-				<SubscriptionCard data={transformedSubscriptionDetail} type='subscriptionDetail' className={styles.subscriptionDetailCard} />
+				<SubscriptionCard data={subscriptionDetail} type='subscriptionDetail' className={styles.subscriptionDetailCard} />
 			</article>
-			<SubscriptionPaymentInfo data={transformedSubscriptionDetail} />
+			{subscriptionStatus !== 'SUBSCRIBE_CANCEL' &&
+				<SubscriptionPaymentInfo
+					data={subscriptionDetail}
+					isSubscriptionStatusWillCancel={subscriptionStatus === 'SUBSCRIBE_WILL_CANCEL'}
+				/>
+			}
 			<SubscriptionCardInfo
-				data={transformedSubscriptionDetail}
+				data={subscriptionDetail}
 				subscriptionId={subscriptionId}
 			/>
 			<AddressInfo
-				data={transformedSubscriptionDetail}
+				data={subscriptionDetail}
 				showEditAddressInfo
 				editAddressInfoButtonType='full-button'
 			/>
 			<SubscriptionPaymentMethodInfo
-				data={transformedSubscriptionDetail}
-				handleChangePaymentMethod={handleChangePaymentMethod}
+				subscribeCount={subscriptionDetail.subscribeCount}
+				isBeforePaying={isBeforePaying}
 			/>
 			{dogDetail?.dogDto &&
 				<DogInfo data={dogDetail?.dogDto} showEditDogInfo />
 			}
 			<div className={styles.cancelSubscriptionContainer}>
-				<button onClick={() => pushWithQuery(`/mypage/subscription/${subscriptionId}/cancel-subscription`, {})}>
+				<button onClick={() => pushWithQuery(`/mypage/subscription/${subscriptionId}/cancel-subscription`, { orderStatus: subscriptionOrderStatus })}>
 					<DefaultText type='label4' color='gray700'>해지하기</DefaultText>
 				</button>
 			</div>
