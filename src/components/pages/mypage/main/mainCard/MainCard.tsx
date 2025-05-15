@@ -8,11 +8,11 @@ import 'swiper/css/pagination';
 import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
 import { useGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
-import { useGetDogList } from "@/api/dog/queries/useGetDogList";
+// import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 
 const MainCard = () => {
   const { data: subscriptionData } = useGetSubscriptionList(0, 999);
-  const { data: dogList } = useGetDogList();
+  // const { data: dogList } = useGetDogList();
 
   const subscribingList =
     subscriptionData?.filter(
@@ -21,7 +21,7 @@ const MainCard = () => {
         ...subscription.subscribeDto, recipeNames: subscription.recipeNames
       })
     );
-  const subscribingPets = dogList?.filter(dog => dog.subscribeStatus === 'SUBSCRIBING');
+  // const subscribingPets = dogList?.filter(dog => dog.subscribeStatus === 'SUBSCRIBING');
   // const newSubscribingList = [];
   const newSubscribingList = [...subscribingList];
 

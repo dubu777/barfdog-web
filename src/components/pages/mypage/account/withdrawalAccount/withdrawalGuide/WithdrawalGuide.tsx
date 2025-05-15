@@ -78,34 +78,37 @@ const WithdrawalGuide = () => {
 	];
 
 	return (
-		<article className={styles.withdrawalContainerBox({ type: 'guide' })}>
-			<div className={styles.withdrawalContainerTitle({ type: 'guide' })}>
-				<DefaultText type='title3'>잠깐! {username}님,<br/>탈퇴하시기 전에 꼭 확인해주세요</DefaultText>
-				<DefaultText type='body1' color='gray600'>탈퇴 시 바프독 회원 혜택이 사라집니다</DefaultText>
-			</div>
-			{guideSteps.map(guide => (
-				<div key={guide.id} className={styles.guideTitle}>
-					<DefaultText type='title4'>0{guide.id}</DefaultText>
-					<DefaultText type='title4'>{guide.title}</DefaultText>
-					<DefaultText type='body2' color='gray600'>{guide.description}</DefaultText>
-					{guide.component}
+		<>
+			<article className={styles.withdrawalContainerBox({ type: 'guide' })}>
+				<div className={styles.withdrawalContainerTitle({ type: 'guide' })}>
+					<DefaultText type='title3'>잠깐! {username}님,<br/>탈퇴하시기 전에 꼭 확인해주세요</DefaultText>
+					<DefaultText type='body1' color='gray600'>탈퇴 시 바프독 회원 혜택이 사라집니다</DefaultText>
 				</div>
-			))}
-			<DefaultCheckbox
-				id='confirm'
-				name='confirm'
-				value={confirm}
-				onChange={() => setConfirm(!confirm)}
-				label='회원 탈퇴 유의사항을 확인했어요.'
-				labelPosition='right'
-			/>
+				{guideSteps.map(guide => (
+					<div key={guide.id} className={styles.guideTitle}>
+						<DefaultText type='title4'>0{guide.id}</DefaultText>
+						<DefaultText type='title4'>{guide.title}</DefaultText>
+						<DefaultText type='body2' color='gray600'>{guide.description}</DefaultText>
+						{guide.component}
+					</div>
+				))}
+				<DefaultCheckbox
+					id='confirm'
+					name='confirm'
+					value={confirm}
+					onChange={() => setConfirm(!confirm)}
+					label='회원 탈퇴 유의사항을 확인했어요.'
+					labelPosition='right'
+				/>
+			</article>
 			<ButtonDocked
 				type='full-button'
 				primaryButtonLabel='탈퇴 사유 입력하기'
 				onPrimaryClick={() => pushWithQuery(pathname, { step: 'reason' })}
 				isPrimaryDisabled={!confirm}
+				position='sticky'
 			/>
-		</article>
+		</>
 	);
 };
 

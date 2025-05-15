@@ -1,6 +1,6 @@
 'use client';
 import Header from "@/components/layout/header/Header";
-import { useBackNavigation } from "@/utils";
+import {useBackNavigation} from "@/utils";
 
 const ReviewHeader = () => {
 	const goBack = useBackNavigation();

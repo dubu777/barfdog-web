@@ -167,7 +167,6 @@ const PostponeShippingModal = ({
 				type='full-button'
 				primaryButtonLabel={!completedMode ? '변경완료' : '확인'}
 				onPrimaryClick={handleSubmit}
-				position='fixed'
 			/>
 			{isOpenCouponCancelBottomSheet && hasUsingCoupon && usingCoupon &&
 				<CouponCancelBottomSheet

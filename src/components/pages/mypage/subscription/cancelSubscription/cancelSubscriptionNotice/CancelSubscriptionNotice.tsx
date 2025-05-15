@@ -89,7 +89,6 @@ const CancelSubscriptionNotice = ({
 				primaryButtonSize='lg'
 				primaryButtonLabel='구독 유지하기'
 				onPrimaryClick={goBack}
-				position='fixed'
 			/>
 		</>
 	);

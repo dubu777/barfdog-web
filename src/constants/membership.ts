@@ -111,7 +111,16 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 	}
 } as const;
 
+const MEMBERSHIP_TIERS_KR = {
+	'브론즈': 'BRONZE',
+	'다이아': 'DIA',
+	'골드': 'GOLD',
+	'플래티넘': 'PLATINUM',
+	'실버': 'SILVER',
+	'더 바프': 'THE_BARF',
+}
+
 const MEMBERSHIP_TIERS_LIST: MembershipTier[] = Object.values(MEMBERSHIP_TIERS);
 
 
-export { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_LIST };
+export { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR, MEMBERSHIP_TIERS_LIST };

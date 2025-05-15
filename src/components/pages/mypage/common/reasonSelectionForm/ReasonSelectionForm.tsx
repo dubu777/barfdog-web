@@ -2,6 +2,7 @@ import * as styles from './ReasonSelectionForm.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 interface ReasonSelectionFormProps {
 	title: string;
@@ -75,6 +76,14 @@ const ReasonSelectionForm = ({
 					</li>
 				))}
 			</ul>
+			<ButtonDocked
+				type='dual-button'
+				secondaryButtonLabel='돌아가기'
+				onSecondaryClick={onCancel}
+				primaryButtonLabel={confirmButtonText}
+				onPrimaryClick={onConfirm}
+				isPrimaryDisabled={selectedReasons.length === 0}
+			/>
 		</>
 	);
 };

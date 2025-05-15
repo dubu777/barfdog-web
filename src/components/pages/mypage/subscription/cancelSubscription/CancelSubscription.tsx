@@ -3,7 +3,6 @@ import * as styles from './CancelSubscription.css';
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ReasonSelectionForm from "@/components/pages/mypage/common/reasonSelectionForm/ReasonSelectionForm";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InfoText from "@/components/pages/mypage/common/infoText/InfoText";
 import CancelSubscriptionNotice
 	from "@/components/pages/mypage/subscription/cancelSubscription/cancelSubscriptionNotice/CancelSubscriptionNotice";
@@ -50,7 +49,7 @@ const CancelSubscription = ({ subscriptionId }: CancelSubscriptionProps) => {
 	const goBack = useBackNavigation();
 	const orderStatus = getStatusGroup(searchParams.get('orderStatus') as SubscriptionCancelOrderStatus);
 
-	const isPaymentDone = orderStatus === 'payment_done';
+	// const isPaymentDone = orderStatus === 'payment_done';
 	const isBeforePaying = orderStatus === 'before_paying';
 	const isAfterProducing = orderStatus === 'after_producing';
 
@@ -79,22 +78,13 @@ const CancelSubscription = ({ subscriptionId }: CancelSubscriptionProps) => {
 						otherReason={otherReason}
 						setOtherReason={setOtherReason}
 						confirmButtonText='구독해지'
-						onConfirm={() => handleCancelSubscription}
+						onConfirm={handleCancelSubscription}
 						onCancel={goBack}
 					/>
 					<div className={styles.cancellationInfo}>
 						<InfoText text={`‘구독 해지 시’ 진행 예정된 정기구독 서비스가 즉각 중지됩니다.`} color='gray500'/>
 						<InfoText text={`‘현재 진행중 회차’ 의 경우 생산 전에 한하여 취소가 진행되며, 생산중 상태 돌입 시 해당 회차의 상품이 마지막으로 배송됩니다.`} color='gray500'/>
 					</div>
-					<ButtonDocked
-						type='dual-button'
-						secondaryButtonLabel='돌아가기'
-						onSecondaryClick={goBack}
-						primaryButtonLabel='구독해지'
-						onPrimaryClick={handleCancelSubscription}
-						isPrimaryDisabled={selectedReasons.length === 0}
-						position='fixed'
-					/>
 				</>
 			)}
 		</section>

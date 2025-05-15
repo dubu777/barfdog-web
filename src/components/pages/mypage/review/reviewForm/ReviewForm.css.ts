@@ -3,7 +3,8 @@ import { themeVars } from "@/styles/theme.css";
 
 export const reviewFormContainer = style({
   background: themeVars.colors.gray.gray50,
-  marginBottom: '86px',
+  display: 'flex',
+  flexDirection: 'column',
 })
 
 export const reviewNotice = style({
@@ -39,10 +40,6 @@ export const reviewContentsTitle = style({
 
 export const reviewTemporaryReward = style({
   textAlign: 'left',
-})
-
-export const reviewNoticeBottomSheet = style({
-  paddingBottom: '80px',
 })
 
 export const bottomSheetBox = style({

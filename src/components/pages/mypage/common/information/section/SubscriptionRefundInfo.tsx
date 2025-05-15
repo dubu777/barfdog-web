@@ -12,7 +12,7 @@ const SubscriptionRefundInfo = ({
 }: SubscriptionRefundInfoProps) => {
 
 	const paymentPrice = `${data?.paymentPrice?.toLocaleString()}원`;
-	const orderPrice = `${data?.orderPrice?.toLocaleString()}원`;
+	// const orderPrice = `${data?.orderPrice?.toLocaleString()}원`;
 	const discountCoupon = `-${data?.discountCoupon?.toLocaleString()}원`;
 	const discountReward = `-${data?.discountReward?.toLocaleString()}원`;
 	const discountGrade = `-${data?.discountGrade?.toLocaleString()}원`;

@@ -33,7 +33,7 @@ const SetPasswordComponent = () => {
 	const searchParams = useSearchParams();
 	const redirect = searchParams.get('redirect');
 
-	const { handleSubmit, control, errors, isValid, dirtyFields } = useFormHandler<SetPassword>(setPasswordSchema, defaultSetPasswordValues);
+	const { handleSubmit, control, errors, isValid } = useFormHandler<SetPassword>(setPasswordSchema, defaultSetPasswordValues);
 	const { mutate } = useSetPassword();
 	const { addToast } = useToastStore();
 

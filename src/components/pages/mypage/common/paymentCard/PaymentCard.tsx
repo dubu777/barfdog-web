@@ -1,5 +1,4 @@
 import * as styles from './PaymentCard.css';
-import Card from "@/components/common/card/Card";
 import CardImage from "/public/images/mypage/card-small.svg";
 import CardChipImage from "/public/images/mypage/card-chip.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";

@@ -1,10 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const bottomSheetContainer = style({
-	paddingBottom: '85px',
-})
-
 export const bottomSheetTitle = style({
 	display: 'flex',
 	flexDirection: 'column',
@@ -13,6 +9,7 @@ export const bottomSheetTitle = style({
 })
 
 export const bottomSheetItem = style({
+	width: '100%',
 	padding: '20px',
 	background: themeVars.colors.gray.gray50,
 })

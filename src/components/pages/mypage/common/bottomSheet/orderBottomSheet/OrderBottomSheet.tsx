@@ -78,7 +78,7 @@ const OrderBottomSheet = ({
 	}
 
 	return (
-		<BottomSheet isOpen={isOpen} onClose={onClose} className={styles.bottomSheetContainer}>
+		<BottomSheet isOpen={isOpen} onClose={onClose}>
 			<div className={styles.bottomSheetTitle}>
 				<div>
 					{type === 'confirm' && (
@@ -109,6 +109,7 @@ const OrderBottomSheet = ({
 				primaryButtonLabel={primaryLabel}
 				onPrimaryClick={handlePrimaryClick}
 				secondaryButtonType={type === 'orderCancel' && isSubscription ? 'assistive' : 'primary'}
+				position='sticky'
 			/>
 		</BottomSheet>
 	);

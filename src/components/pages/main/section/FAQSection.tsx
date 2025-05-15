@@ -9,9 +9,10 @@ import {
 	mainFAQButtonBox,
 	mainFAQDescription, mainFAQDescriptionBox
 } from "@/components/pages/main/common/MainCommon.css";
-import FaqAvatar from '/public/images/main/faqAvatar.svg';
+import FaqAvatar from '/public/images/main/faqAvatar.png';
 import { motion } from 'framer-motion';
 import { MAIN_DATA } from "@/constants/main";
+import Image from "next/image";
 
 const parentVariants = {
 	hidden: {},
@@ -62,7 +63,7 @@ const FAQSection = () => {
 			</motion.div>
 			<div className={mainFAQButtonBox}>
 				<Button onClick={() => router.push(action.url)} variant={action.variant} fullWidth={action.fullWidth} className={mainFAQButton}>
-					<FaqAvatar className={mainFAQButtonAvatar} />
+					<Image src={FaqAvatar} alt='faq avatar' width={109} height={124} className={mainFAQButtonAvatar} />
 					{action.label}
 				</Button>
 			</div>

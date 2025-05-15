@@ -60,7 +60,7 @@ const CreateDetail = () => {
         reviewDetail={reviewFormData}
         handleSubmitForm={handleSubmit}
       />
-      <BottomSheet isOpen={isOpen} onClose={onClose} title="작성시 유의사항" className={styles.reviewNoticeBottomSheet}>
+      <BottomSheet isOpen={isOpen} onClose={onClose} title="작성시 유의사항">
         <div className={styles.bottomSheetBox}>
           <DefaultText type='label4' block className={styles.bottomSheetSubTitle}>유의사항</DefaultText>
           <div className={styles.bottomSheetInfoDetail}>
@@ -78,6 +78,7 @@ const CreateDetail = () => {
           type='full-button'
           primaryButtonLabel='확인'
           onPrimaryClick={onClose}
+          position='sticky'
         />
       </BottomSheet>
     </section>

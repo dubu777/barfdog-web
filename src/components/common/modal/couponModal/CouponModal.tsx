@@ -1,6 +1,4 @@
-import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import * as styles from "./CouponModal.css";
-import Header from "@/components/layout/header/Header";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";

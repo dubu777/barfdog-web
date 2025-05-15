@@ -19,6 +19,7 @@ interface OrderIssueDetailProps {
 }
 
 const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
+	console.log(issueId)
 	const issueTypeName = ORDER_ISSUE_TYPE[issueType];
 	const data = {
 		"id": 3,

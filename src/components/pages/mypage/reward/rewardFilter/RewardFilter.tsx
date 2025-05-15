@@ -1,5 +1,4 @@
 import * as styles from "./RewardFilter.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import TabBar from "@/components/common/tabBar/TabBar";
 import useFilterTabs from "@/hooks/useFilterTabs";
 

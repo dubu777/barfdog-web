@@ -17,6 +17,7 @@ const Authentication = ({ onLogin, goBack }: AuthenticationProps) => {
 	const { handleSubmit, control, errors, isValid } = useFormHandler<ConnectSnsPassword>(connectSnsSchema, defaultConnectSnsValue);
 
 	const handleConnectSns = (data: ConnectSnsPassword) => {
+		console.log(data)
 		// 비밀번호 확인 검증 필요
 		if(onLogin) {
 			onLogin();
@@ -57,7 +58,6 @@ const Authentication = ({ onLogin, goBack }: AuthenticationProps) => {
 				primaryButtonLabel='연동하기'
 				onPrimaryClick={handleSubmit(handleConnectSns)}
 				isPrimaryDisabled={!isValid}
-				position='fixed'
 			/>
 		</section>
 	);

@@ -71,7 +71,7 @@ const SubscriptionCard = ({
 
 	const isMyPage = type === 'mypage';
 	const normalizedData = normalizeSubscriptionData(data, isMyPage, subscriptionId);
-	const isSubscriptionCancel = normalizedData.orderStatus === 'SUBSCRIBE_CANCEL';
+	// const isSubscriptionCancel = normalizedData.orderStatus === 'SUBSCRIBE_CANCEL';
 
 	const productionDates =
 		normalizedData.nextPaymentDate

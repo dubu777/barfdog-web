@@ -34,8 +34,7 @@ const ReviewCard = ({
 	const pathname = usePathname();
 	const { pushWithQuery } = useDynamicQueryPush();
 	const { reviewFormData, setReviewFormData } = usePersistReviewStore();
-
-	const [dummyData, setDummyData] = useState({
+	const dummyData = {
 		orderStatus: 'CONFIRM',
 		orderedDate: '2025-02-15',
 		// 승인, 승인대기, 승인완료, 반려
@@ -49,7 +48,7 @@ const ReviewCard = ({
 		tip: '뛰어 노는 것을 좋아하는 우리 아이의 관절 건강, 미리 챙겨주세요! 관절에 좋은 커큐민이 듬뿍 담긴 유기농 강황을 사용하여 만들어진 큐브입니다. 실온에서도 금방 녹으니 꼭 냉동보관 해주시고 생식 위에 토핑으로 간편하게 급여해보세요 :)',
 		recipeName: '스타터프리미엄+, 프리미엄 비프+',
 		option: '1개 옵션 2건',
-	})
+	}
 
 	// 타입 형식 맞춰야함 (해당 페이지에 맞는 데이터 status 등)
 	const cardData = reviewDetail ? isReviewDetail ? {...reviewDetail, ...reviewFormData} : reviewDetail : dummyData;
@@ -60,7 +59,7 @@ const ReviewCard = ({
 	const orderPrice = `${cardData?.orderPrice ? cardData?.orderPrice?.toLocaleString() : cardData?.orderPaymentPrice?.toLocaleString() || 0}원`;
 	const imageUrl = isWritableReview ? cardData.imageUrl : cardData.thumbnailUrl ? cardData.thumbnailUrl : cardData.imageUrl;
 	const orderType = generalItemType ? '일반배송' : '정기배송 N회차';
-	const orderStatus = isWritableReview ? '구매확정' : '리뷰완료';
+	// const orderStatus = isWritableReview ? '구매확정' : '리뷰완료';
 	const reviewStatus = isWritableReview ? `구매 확정일 ${cardData?.orderedDate ? format(cardData?.orderedDate, 'yyyy. MM. dd'): ''}` : REVIEW_STATUS[cardData.status];
 	const reviewStarColor = cardData.orderStatus === 'CONFIRM' ? 'gray' : undefined;
 	const subInfoItemDetail = generalItemType

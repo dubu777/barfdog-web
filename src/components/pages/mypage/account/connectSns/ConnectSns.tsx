@@ -73,7 +73,6 @@ const ConnectSns = () => {
 							type='full-button'
 							onPrimaryClick={snsProvider ? handleDisconnectSns : onToggle}
 							primaryButtonLabel={!snsProvider ? 'SNS 연동하기' : '연동 해제하기'}
-							position='fixed'
 						/>
 					</div>
 					<BottomSheet isOpen={isOpen} onClose={handleCloseConnectBottomSheet} title='SNS 연동하러가기'>

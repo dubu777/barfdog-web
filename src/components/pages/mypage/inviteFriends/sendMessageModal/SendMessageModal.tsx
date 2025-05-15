@@ -109,6 +109,7 @@ const SendMessageModal = ({
 				secondaryButtonLabel='취소'
 				onSecondaryClick={onClose}
 				isPrimaryDisabled={!isValid}
+				position='sticky'
 			/>
 		</BottomSheet>
 	);

@@ -169,6 +169,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
         primaryButtonLabel={`${type === 'create' ? '등록' : '수정' }하기`}
         onPrimaryClick={handleSubmit(onSubmit)}
         isPrimaryDisabled={!isValid}
+        position='sticky'
       />
     </form>
 

@@ -138,7 +138,6 @@ const ChangePaymentMethodModal = ({
 				primaryButtonLabel={!completedMode ? '변경하기' : '확인'}
 				onPrimaryClick={!completedMode ? handleSubmit : handleClose}
 				isPrimaryDisabled={!agreeChangePayment}
-				position='fixed'
 			/>
 		</FullModalWrapper>
 	);
