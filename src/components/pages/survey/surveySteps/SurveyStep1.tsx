@@ -1,8 +1,6 @@
-import { SURVEY_FORM_INFO } from "@/constants";
+import { surveyFormInfo } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
-import * as styles from "./SurveySteps.css";
-
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
@@ -23,8 +21,7 @@ export default function SurveyStep1({
   handleChange,
   handleBlur,
   handleKeyDown,
-}: 
-SurveyStepProps) {
+}: SurveyStepProps) {
   const {
     control,
     setValue,
@@ -51,11 +48,23 @@ SurveyStepProps) {
             (value) => {
               field.onChange(value);
               handleChange();
+
+              // ── 성별이 male 이면 step5·6 자동 none 설정
+              if (value === "male") {
+                setValue("step5.pregnancy", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+                setValue("step6.lactation", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+              }
             }
           );
           return (
             <SurveyButtonGroup title="성별">
-              {SURVEY_FORM_INFO.dogBasicInfo.gender.options.map((option) => (
+              {surveyFormInfo.dogBasicInfo.gender.options.map((option) => (
                 <ImageButton
                   key={option.value}
                   label={option.label}
@@ -82,11 +91,24 @@ SurveyStepProps) {
             (value) => {
               field.onChange(value);
               handleChange();
+
+              // 중성화 여부에 따라 step5와 step6의 값을 초기화
+              if (value === true) {
+                setValue("step5.pregnancy", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+                setValue("step6.lactation", "none", {
+                  shouldValidate: false,
+                  shouldDirty: true,
+                });
+              }
             }
           );
+
           return (
             <SurveyButtonGroup title="중성화 여부">
-              {SURVEY_FORM_INFO.dogBasicInfo.isNeutered.options.map(
+              {surveyFormInfo.dogBasicInfo.isNeutered.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}
@@ -104,7 +126,9 @@ SurveyStepProps) {
       />
       <SurveyButtonGroup
         title="반려견 이름"
-        error={touchedFields.step1?.name ? errors.step1?.name?.message : undefined}
+        error={
+          touchedFields.step1?.name ? errors.step1?.name?.message : undefined
+        }
       >
         <Controller
           name="step1.name"

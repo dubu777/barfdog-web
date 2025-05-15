@@ -1,21 +1,12 @@
-interface DiscountData {
-  _embedded?: {
-    planDiscountResponseDtoList?: {
-      full: number;
-      half: number;
-      toppingFull: number;
-      toppingHalf: number;
-    }[];
-  };
-}
+import { PlanDiscountResponse } from "@/types";
+
 
 export const getDiscountPercent = (
-  discountData: DiscountData | undefined,
+  discountData: PlanDiscountResponse[] | undefined,
   planName: string | null
 ): number => {
-  if (!discountData?._embedded?.planDiscountResponseDtoList?.[0]) return 0;
-
-  const planDiscounts = discountData._embedded.planDiscountResponseDtoList[0];
+  if (!discountData?.[0]) return 0;
+  const planDiscounts = discountData[0];
   switch (planName) {
     case "FULL":
       return planDiscounts.full || 0;

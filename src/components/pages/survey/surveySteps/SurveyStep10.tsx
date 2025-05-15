@@ -1,4 +1,4 @@
-import { NONE_VALUE, SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { NONE_VALUE, surveyFormInfo, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -26,7 +26,7 @@ export default function SurveyStep10({
     <>
       <SurveyTitle
         petName={petName}
-        config={SURVEY_TITLES.step10}
+        config={surveyTitles.step10}
         infoBoxContent="알러지 분류 참고사항"
         onInfoBoxClick={onToggle}
       />
@@ -54,7 +54,7 @@ export default function SurveyStep10({
               <DefaultText type="label2" color="gray500">
                 *복수응답가능
               </DefaultText>
-              {SURVEY_FORM_INFO.dogLifestyle.inedibleFood.options.map(
+              {surveyFormInfo.dogLifestyle.inedibleFood.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

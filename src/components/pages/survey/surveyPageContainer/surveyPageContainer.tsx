@@ -9,22 +9,22 @@ import {
   defaultStepValues,
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
-import Header from "@/components/layout/header/Header";
 import { FormProvider } from "react-hook-form";
 import SurveyProgressBar from "@/components/pages/survey/surveyProgressBar/SurveyProgressBar";
-import { CRITICAL_DISEASES, SURVEY_SECTIONS } from "@/constants";
+import { CRITICAL_DISEASES, surveySections } from "@/constants";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import CriticalDiseaseAlertBottomSheet from "@/components/pages/survey/bottomSheet/CriticalDiseaseAlertBottomSheet";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SurveyResultLoading from "../surveyResultLoading/SurveyResultLoading";
 import { useRouter } from "next/navigation";
-import NavigationGuard from "../../../common/navigationGuard/NavigationGuard";
+import Header from "@/components/layout/header/Header";
 
 export default function SurveyPageContainer() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const skipPregnancyRef = useRef(false);
 
   const {
     currentStep,
@@ -34,7 +34,7 @@ export default function SurveyPageContainer() {
     direction,
     isLastStep,
     isFirstStep,
-  } = useSurveyStep(14);
+  } = useSurveyStep(14, skipPregnancyRef);
 
   const surveyFormMethods = useSurveyForm<typeof surveyStepsSchema>(
     surveyStepsSchema,
@@ -44,6 +44,11 @@ export default function SurveyPageContainer() {
   );
 
   const petName = surveyFormMethods.watch("step1.name") ?? "";
+  const gender = surveyFormMethods.watch("step1.gender");
+  const isNeutered = surveyFormMethods.watch("step1.isNeutered");
+  useEffect(() => {
+    skipPregnancyRef.current = gender === "male" || isNeutered === true;
+  }, [gender, isNeutered]);
 
   const steps = getSurveySteps({
     handleChange: surveyFormMethods.handleChange,
@@ -106,27 +111,24 @@ export default function SurveyPageContainer() {
 
   return (
     <div className={styles.surveyLayoutContainer}>
-      <NavigationGuard
-        leftElement={
-          !isFirstStep && (
-            <DefaultText type="headline3" color="gray700">
-              이전
-            </DefaultText>
-          )
-        }
-        showBackButton={!isFirstStep}
-        showCloseButton
-        onBack={handlePrevStep}
-        backgroundColor="gray50"
-        leftSlotGap="sm"
-        modalTitle="아직 우리 아이의 식단 추천이 끝나지 않았어요"
-        modalContent="종료하시면 지금까지 입력한 내용은 저장되지 않아요"
-        confirmText="종료"
-        cancelText="취소"
-      >
+        <Header
+          leftElement={
+            !isFirstStep && (
+              <DefaultText type="headline3" color="gray700">
+                이전
+              </DefaultText>
+            )
+          }
+          showBackButton={!isFirstStep}
+          showCloseButton
+          onClose={() => router.back()}
+          onBack={handlePrevStep}
+          backgroundColor="gray50"
+          leftSlotGap="sm"
+        />
         <SurveyProgressBar
           currentStep={currentStep}
-          sections={SURVEY_SECTIONS}
+          sections={surveySections}
         />
         <FormProvider {...surveyFormMethods}>
           <SurveyForm
@@ -141,7 +143,6 @@ export default function SurveyPageContainer() {
           onPrimaryClick={handleFooterButtonClick}
           isPrimaryDisabled={!surveyFormMethods.isCanNextStep}
         />
-      </NavigationGuard>
       <CriticalDiseaseAlertBottomSheet
         isOpen={isOpen}
         onClose={onClose}

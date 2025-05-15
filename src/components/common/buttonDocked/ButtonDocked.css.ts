@@ -50,3 +50,18 @@ export const buttonStyle = {
 		width: '75% !important',
 	}),
 }
+
+export const primaryCountBox = style({
+	display: "inline-flex",
+	alignItems: "center",
+	justifyContent: "center",
+	width: "24px",
+	height: "24px",
+	borderRadius: "50%",
+	backgroundColor: themeVars.colors.gray.gray0,
+	color: themeVars.colors.red.red,
+	fontSize: themeVars.typography.body.caption.fontSize,
+	fontWeight: themeVars.typography.body.caption.fontWeight,
+	lineHeight: "normal",
+	marginLeft: "6px",
+});

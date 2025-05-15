@@ -40,9 +40,9 @@ export default function BottomNavBar() {
             스토어
           </span>
         </Link>
-        <Link href="/survey" className={styles.navItemWrapper}>
+        <Link href="/diet-analysis" className={styles.navItemWrapper}>
           <Image
-            src={pathname.startsWith("/survey") ? AiActive : Ai}
+            src={pathname.startsWith("/diet-analysis") ? AiActive : Ai}
             alt="AI 추천"
             width={31}
             height={31}

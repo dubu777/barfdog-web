@@ -3,11 +3,13 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const surveyButtonContainer = recipe({
   base: {
+    position: "relative",
     display: "flex",
     gap: "12px",
     alignItems: "center",
     borderRadius: "8px",
     width: "100%",
+    height: "64px",
   },
   variants: {
     isChecked: {

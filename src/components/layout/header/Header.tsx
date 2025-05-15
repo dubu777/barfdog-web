@@ -9,7 +9,7 @@ import CartIcon from "/public/images/header/cart.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useRouter } from "next/navigation";
-import { useCartStore } from "@/store/useCartStore";
+import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
 
 interface HeaderProps {
   leftElement?: React.ReactNode;
@@ -45,7 +45,8 @@ export default function Header({
   leftSlotGap = "lg",
 }: HeaderProps) {
   const router = useRouter();
-  const { count } = useCartStore();
+  const { data: cartInfo } = useGetCartInfo();
+  const count = cartInfo?.basketDtoList?.length || 0;
   const handleBack = () => {
     if (onBack) {
       onBack();

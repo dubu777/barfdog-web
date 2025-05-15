@@ -1,9 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { commonLayoutStyle } from "@/styles/common.css";
 import { themeVars } from "@/styles/theme.css";
 
-export const sideNavBarWrapper = style([commonLayoutStyle, {
+export const sideNavBarWrapper = style({
   position: 'fixed',
   top: 0,
   width: '100%',
@@ -13,7 +12,7 @@ export const sideNavBarWrapper = style([commonLayoutStyle, {
   justifyContent: 'flex-end',
   margin: '0 auto',
   // overflow: 'hidden'
-}])
+})
 
 export const sideNavBarContainer = style({
   width: '70%',

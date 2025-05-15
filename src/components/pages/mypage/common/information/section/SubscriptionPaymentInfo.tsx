@@ -5,7 +5,6 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import Divider from "@/components/common/divider/Divider";
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
 import Chips from "@/components/common/chips/Chips";
-import CouponModal from "@/components/common/modal/couponModal/CouponModal";
 import useModal from "@/hooks/useModal";
 import { IAMPORT_MIN_PAYMENT_PRICE, ORDER_TYPE } from "@/constants";
 import { useToastStore } from "@/store/useToastStore";
@@ -18,6 +17,7 @@ import CouponCancelBottomSheet
 	from "@/components/pages/mypage/common/bottomSheet/couponCancelBottomSheet/CouponCancelBottomSheet";
 import { pointColor } from "@/styles/common.css";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import CouponModal from "@/components/common/modal/couponModal/CouponModal";
 
 // 버튼을 클릭한 현재 시각이 nextPaymentDate 보다 이전이고, 같은 날짜의 자정(midnight) 이후인지 확인
 function isNowBetweenMidnightAndPayment(nextPaymentDateISO: string) {

@@ -1,26 +1,18 @@
-import { themeVars } from './theme.css';
-import { globalStyle, style } from '@vanilla-extract/css';
+import { themeVars } from "./theme.css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const commonLayoutStyle = style({
-  width: '100%',
-  minWidth: '320px',
-  maxWidth: '600px',
-  margin: '0 auto',
-})
-
-export const commonLayoutContainer = style([commonLayoutStyle, {
-  display: 'flex',
-  flexDirection: 'column',
+export const commonLayoutContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  minHeight: "100%",
+  minWidth: "320px",
+  maxWidth: "600px",
+  margin: "0 auto",
   backgroundColor: themeVars.colors.gray.gray0,
-  '-ms-user-select': 'none',
-  '-moz-user-select': '-moz-none',
-  '-webkit-user-select': 'none',
-  '-khtml-user-select': 'none',
-  'user-select': 'none',
-  position: 'relative',
-}]);
-
+  position: "relative",
+});
 
 export const ellipsis = recipe({
   base: {
@@ -60,56 +52,53 @@ export const ellipsis = recipe({
     },
     wordBreak: {
       keep: {
-        wordBreak: 'keep-all'
-      }
+        wordBreak: "keep-all",
+      },
     },
     whiteSpace: {
       pre: {
-        whiteSpace: 'pre-line',
-      }
+        whiteSpace: "pre-line",
+      },
     },
     align: {
       center: {
-        textAlign: 'center'
+        textAlign: "center",
       },
       left: {
-        textAlign: 'left',
-      }
-    }
+        textAlign: "left",
+      },
+    },
   },
-})
+});
 export const pointColor = style({ color: themeVars.colors.red.red });
 
-
 export const defaultWidth = style({
-  minWidth: '335px',
-  width: '80%',
+  minWidth: "335px",
+  width: "80%",
   marginTop: 0,
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  marginBottom: '60px',
-})
-
-export const inlineBlockSpan = style({
-  display: 'inline-block',
-  marginLeft: '8px',
+  marginLeft: "auto",
+  marginRight: "auto",
+  marginBottom: "60px",
 });
 
+export const inlineBlockSpan = style({
+  display: "inline-block",
+  marginLeft: "8px",
+});
 
-export const sanitizedHTML = style({})
-
+export const sanitizedHTML = style({});
 
 globalStyle(`${sanitizedHTML} *`, {
-  textAlign: 'unset',
-  font: 'auto'
+  textAlign: "unset",
+  font: "auto",
 });
 
 globalStyle(`${sanitizedHTML} img`, {
-  width: '100%',
-  maxWidth: '600px',
-  height: 'auto',
-  display: 'block',
-  margin: '0 auto',
+  width: "100%",
+  maxWidth: "600px",
+  height: "auto",
+  display: "block",
+  margin: "0 auto",
 });
 
 globalStyle(`${sanitizedHTML} h2`, {
@@ -120,35 +109,49 @@ globalStyle(`${sanitizedHTML} b, strong`, {
   fontWeight: themeVars.fontWeight.bold,
 });
 
-
 export const commonWrapper = recipe({
   base: {
     display: "flex",
-    width: "100%",
   },
   variants: {
     gap: {
-      0: {
-        gap: "0",
-      },
+      0: {},
       2: {
-        gap: "2px"
+        gap: "2px",
       },
       4: {
-        gap: "4px"
+        gap: "4px",
+      },
+      6: {
+        gap: "6px",
       },
       8: {
-        gap: "8px"
+        gap: "8px",
       },
       12: {
-        gap: "12px"
+        gap: "12px",
       },
       16: {
-        gap: "16px"
+        gap: "16px",
       },
       20: {
-        gap: "20px"
+        gap: "20px",
       },
+    },
+    padding: {
+      0: {},
+      12: {
+        padding: "12px",
+      },
+      16: {
+        padding: "16px",
+      },
+      20: {
+        padding: "20px",
+      },
+      32: {
+        padding: "32px 20px",
+      }
     },
     direction: {
       col: {
@@ -168,24 +171,69 @@ export const commonWrapper = recipe({
       between: {
         justifyContent: "space-between",
       },
+      end: {
+        justifyContent: "flex-end",
+      },
     },
     align: {
       center: {
         alignItems: "center",
       },
       start: {
-        alignItems: "flex-start", 
+        alignItems: "flex-start",
       },
       between: {
         alignItems: "space-between",
       },
+      end: {
+        alignItems: "flex-end",
+      },
     },
+    height: {
+      fit: {
+        height: "fit-content",
+      },
+      full: {
+        height: "100vh",
+      },
+    },
+    backgroundColors: {
+      transparent: {
+        backgroundColor: "transparent",
+      },
+      gray0: {
+        backgroundColor: themeVars.colors.gray.gray0,
+      },
+      gray50: {
+        backgroundColor: themeVars.colors.gray.gray50,
+      },
+    },
+    width: {
+      full: {
+        width: "100%",
+      },
+      auto: {
+        width: "auto",
+      },
+    },
+    borderRadius: {
+      none: {
+      },
+      8: {
+        borderRadius: "8px",
+      },
+    }
   },
   defaultVariants: {
     gap: 0,
+    padding: 0,
     direction: "row",
     justify: "center",
     align: "center",
+    height: "fit",
+    backgroundColors: "transparent",
+    width: "full",
+    borderRadius: "none",
   },
 });
 

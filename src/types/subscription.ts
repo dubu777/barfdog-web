@@ -25,6 +25,9 @@ export type {
   PlanKey,
   PlanName,
   PlanInfo,
+  // UsingCoupon,
+  SubscribeGeneralItem,
+  SubscriptionStep,
 };
 
 interface SubscriptionResponse<T> {
@@ -194,6 +197,22 @@ interface PlanInfo {
   maxRecipeCount?: number;
 }
 
+// interface UsingCoupon {
+//   memberCouponId: number;
+//   discount: number;
+//   overDiscount: number;
+// }
+
+interface SubscribeGeneralItem {
+  id: number;
+  imageUrl: string;
+  name: string;
+  originalPrice: number;
+  inStock: boolean;
+  benefit: string[];
+  type: "topping" | "snack";
+}
+
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
 
 type SubscriptionSkipType = 'ONCE' | 'WEEK';
@@ -203,3 +222,5 @@ type SubscriptionStatusKey = keyof typeof subscriptionStatus;
 type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
 
 type PlanName = keyof typeof subscriptionPlanInfo;
+
+type SubscriptionStep = "recipe" | "general-item" | "delivery-cycle";

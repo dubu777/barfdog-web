@@ -12,22 +12,30 @@ interface useSurveyStepReturnType {
   direction: number;
 }
 
-export default function useSurveyStep(totalSteps: number): useSurveyStepReturnType {
+export default function useSurveyStep(totalSteps: number, skipPregnancyRef: React.RefObject<boolean>): useSurveyStepReturnType {
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(0);
 
   const handleNextStep = () => {
-    if (currentStep < totalSteps) {
       setDirection(1);
-      setCurrentStep((prev) => prev + 1);
-    }
+      if (skipPregnancyRef.current && currentStep === 4) {
+        setCurrentStep(7);
+      }
+      // 일반 +1
+      else if (currentStep < totalSteps) {
+        setCurrentStep((p) => p + 1);
+      }
   };
 
   const handlePrevStep = () => {
-    if (currentStep > 0) {
       setDirection(-1);
-      setCurrentStep((prev) => prev - 1);
-    }
+      if (skipPregnancyRef.current && currentStep === 7) {
+        setCurrentStep(4);
+      }
+      // 일반 -1
+      else if (currentStep > 1) {
+        setCurrentStep((p) => p - 1);
+      }
   };
 
   const currentStepKey = `step${currentStep}` as SurveyStepKeys

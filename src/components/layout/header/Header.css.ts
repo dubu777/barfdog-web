@@ -8,6 +8,7 @@ export const headerContainer = style({
   left: 0,
   right: 0,
   width: "100%",
+  minHeight: "52px",
   height: "52px",
   zIndex: 100,
 });

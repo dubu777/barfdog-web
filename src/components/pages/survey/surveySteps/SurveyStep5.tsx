@@ -1,7 +1,7 @@
 "use client";
 
 import * as styles from "./SurveySteps.css";
-import { SURVEY_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -23,7 +23,7 @@ export default function SurveyStep5({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={SURVEY_TITLES.step5} />
+      <SurveyTitle petName={petName} config={surveyTitles.step5} />
             <Controller
               name="step5.pregnancy"
               control={control}
@@ -38,7 +38,7 @@ export default function SurveyStep5({
                 );
                 return (
                   <div className={styles.colSurveyButtonWrapper}>
-                    {SURVEY_FORM_INFO.dogBasicInfo.pregnancy.options.map(
+                    {surveyFormInfo.dogBasicInfo.pregnancy.options.map(
                       (option) => (
                         <SurveyButton
                           key={option.label}

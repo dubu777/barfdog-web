@@ -4,6 +4,7 @@ import CheckedRadio from "public/images/option/checked_radio.svg";
 import UnCheckedRadio from "public/images/option/unchecked_radio.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import Chips from "@/components/common/chips/Chips";
 
 interface SurveyButtonProps<T> {
   label: string;
@@ -11,6 +12,7 @@ interface SurveyButtonProps<T> {
   value: T;
   isChecked: boolean;
   inputType?: "radio" | "checkbox" | "normal";
+  chipText?: string;
   onToggle: (value: T) => void;
 }
 
@@ -20,6 +22,7 @@ export default function SurveyButton<T>({
   isChecked,
   inputType = "normal",
   value,
+  chipText,
   onToggle,
 }: SurveyButtonProps<T>) {
   const iconSrc =
@@ -47,6 +50,15 @@ export default function SurveyButton<T>({
           isNormal: inputType === "normal",
         })}
       >
+        {chipText && (
+          <Chips
+            variant="solid"
+            color={isChecked ? "red" : "gray800"}
+            style={{ position: "absolute", top: "4px", left: "4px" }}
+          >
+            {chipText}
+          </Chips>
+        )}
         <DefaultText type="headline3" color={isChecked ? "red" : "gray900"}>
           {label}
         </DefaultText>

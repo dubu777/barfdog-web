@@ -1,7 +1,7 @@
 import * as styles from "../../Order.css";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import GeneralOrderContainer from "@/components/pages/order/general/GeneralOrderContainer";
+import GeneralOrderContainer from "@/components/pages/checkout/general/GeneralOrderContainer";
 import {
   dehydrate,
   HydrationBoundary,
@@ -20,7 +20,7 @@ export default async function GeneralPage({}: GeneralPageProps) {
   const dehydrateState = dehydrate(queryClient);
 
   return (
-    <div className={styles.orderPageContainer}>
+    <main className={styles.orderPageContainer}>
       <HydrationBoundary state={dehydrateState}>
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
@@ -29,6 +29,6 @@ export default async function GeneralPage({}: GeneralPageProps) {
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>
-    </div>
+    </main>
   );
 }

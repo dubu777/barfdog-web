@@ -53,7 +53,7 @@ export const tabBarVariants = {
 		padding: '4px 12px',
 		color: themeVars.colors.gray.gray700,
 		background: themeVars.colors.gray.gray100,
-		borderRadius: '8px',
+		borderRadius: '4px',
 	})
 }
 

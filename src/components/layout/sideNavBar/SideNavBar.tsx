@@ -10,7 +10,6 @@ import KakaoIcon from '/public/images/icons/kakao.svg';
 import InstaIcon from '/public/images/icons/insta.svg';
 import BlogIcon from '/public/images/icons/blog.svg';
 import YoutubeIcon from '/public/images/icons/youtube.svg';
-import { commonLayoutStyle } from "@/styles/common.css";
 import { useCommonStore } from "@/store/useCommonStore";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -101,7 +100,7 @@ const SideNavBar = () => {
   return (
     <AnimatePresence mode={'wait'}>
       {isOpenSideNavBar &&
-        <div className={`${commonLayoutStyle} ${styles.sideNavBarWrapper}`}>
+        <div className={styles.sideNavBarWrapper}>
           <motion.div
             variants={backgroundVariants}
             initial='initial'

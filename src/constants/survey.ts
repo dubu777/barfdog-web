@@ -37,22 +37,22 @@ import FillSkin from "public/images/survey/IconFill-Skin.svg";
 import FillSkincare from "public/images/survey/IconFill-Skincare.svg";
 
 export {
-  SURVEY_FORM_INFO,
-  RECIPE_TEMP_DATA,
-  SURVEY_NO_AUTO_NEXT_STEP,
+  surveyFormInfo,
+  recipeTempData,
+  SURVEY_NO_AUTO_STEP,
   NONE_VALUE,
-  SURVEY_SECTIONS,
-  SURVEY_TITLES,
+  surveySections,
+  surveyTitles,
   CRITICAL_DISEASES,
 };
 
-const SURVEY_SECTIONS = [
+const surveySections = [
   { key: "dogBasicInfo", label: "기본 정보", steps: 6 },
   { key: "dogLifestyle", label: "생활 정보", steps: 5 },
   { key: "dogDietHealth", label: "식단/건강", steps: 3 },
 ];
 
-const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
+const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
   step1: {
     titleTemplates: ["반려견에 대해 알려주세요"],
   },
@@ -104,7 +104,7 @@ const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
   },
 };
 
-const SURVEY_FORM_INFO = {
+const surveyFormInfo = {
   dogBasicInfo: {
     gender: {
       title: "성별",
@@ -674,87 +674,87 @@ const CRITICAL_DISEASES = [
 export interface RecipeTempData {
   id: number;
   name: string;
-  imageURL: string;
+  englishName: string;
+  imageUrl: string;
   ingredients: string[];
-  efficacy: string[];
-  type: "single" | "double";
+  benefits: string[];
 }
 
 export interface TempRecipeDto {
   id: number;
   name: string;
-  imageURL: string;
+  imageUrl: string;
 }
 
-const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
+const recipeTempData: Record<number, RecipeTempData> = {
   5: {
     id: 5,
     name: "스타터 프리미엄",
-    imageURL: "/images/recipe/starter_premium.png",
+    englishName: "STARTER PREMIUM",
+    imageUrl: "/images/recipe/starter_premium.png",
     ingredients: ["닭", "칠면조"],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
+    benefits: ["구토•설사", "관절 건강"],
   },
   6: {
     id: 6,
     name: "터키앤비프",
-    imageURL: "/images/recipe/turkey_and_beef.png",
+    englishName: "TURKEY & BEEF",
+    imageUrl: "/images/recipe/turkey_and_beef.png",
     ingredients: ["칠면조", "소"],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
+    benefits: ["구토•설사", "관절 건강"],
   },
   7: {
     id: 7,
     name: "덕앤램",
-    imageURL: "/images/recipe/duck_and_lamb.png",
+    englishName: "DUCK & LAMB",
+    imageUrl: "/images/recipe/duck_and_lamb.png",
     ingredients: ["오리", "양"],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
+    benefits: ["구토•설사", "관절 건강"],
   },
   8: {
     id: 8,
     name: "램앤비프",
-    imageURL: "/images/recipe/lamb_and_beef.png",
+    englishName: "LAMB & BEEF",
+    imageUrl: "/images/recipe/lamb_and_beef.png",
     ingredients: ["양", "소"],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "double",
+    benefits: ["구토•설사", "관절 건강"],
   },
   9: {
     id: 9,
     name: "프리미엄 치킨",
-    imageURL: "/images/recipe/premium_chicken.png",
+    englishName: "PREMIUM CHICKEN",
+    imageUrl: "/images/recipe/premium_chicken.png",
     ingredients: ["닭"],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
+    benefits: ["구토•설사", "관절 건강"],
   },
   10: {
     id: 10,
     name: "프리미엄 터키",
-    imageURL: "/images/recipe/premium_turkey.png",
+    englishName: "PREMIUM TURKEY",
+    imageUrl: "/images/recipe/premium_turkey.png",
     ingredients: ["칠면조"],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
+    benefits: ["구토•설사", "관절 건강"],
   },
   11: {
     id: 11,
     name: "프리미엄 램",
-    imageURL: "/images/recipe/premium_lamb.png",
-    ingredients: [""],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
+    englishName: "PREMIUM LAMB",
+    imageUrl: "/images/recipe/premium_lamb.png",
+    ingredients: ["양"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   12: {
     id: 12,
     name: "프리미엄 비프",
-    imageURL: "/images/recipe/premium_beef.png",
-    ingredients: ["양"],
-    efficacy: ["구토•설사", "관절 건강"],
-    type: "single",
+    englishName: "PREMIUM BEEF",
+    imageUrl: "/images/recipe/premium_beef.png",
+    ingredients: ["소"],
+    benefits: ["구토•설사", "관절 건강"],
   },
 };
 
 // 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
-const SURVEY_NO_AUTO_NEXT_STEP = new Set<SurveyStepKeys>([
+const SURVEY_NO_AUTO_STEP = new Set<SurveyStepKeys>([
   "step3",
   "step10",
   "step11",

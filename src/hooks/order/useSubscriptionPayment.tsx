@@ -50,7 +50,7 @@ export function useSubscriptionPayment({
   ) => {
     if (!response.success) {
       console.error("아임포트 결제 실패", response.error_msg);
-      // router.push("/order/failed");
+      // router.push("/order/checkout/failed");
       return;
     }
 
@@ -96,18 +96,18 @@ export function useSubscriptionPayment({
           orderId: saveOrderResponse.data.id,
           body: finalBody,
         });
-        router.push("/order/completed");
+        router.push("/order/checkout/completed");
       } else {
         await invalidPayment({
           orderId: saveOrderResponse.data.id,
           body: finalBody,
         });
         await failPayment(saveOrderResponse.data.id);
-        // router.push("/order/failed");
+        // router.push("/order/checkout/failed");
       }
     } catch (error) {
       console.error("결제 처리 실패", error);
-      // router.push("/order/failed");
+      // router.push("/order/checkout/failed");
     }
   }, [router, createIamportPayment, validatePayment, successPayment, invalidPayment, failPayment]);
 
@@ -150,7 +150,7 @@ export function useSubscriptionPayment({
       requestIamportPayment(paymentParams);
     } catch (error) {
       console.error("결제 요청 실패", error);
-      // router.push("/order/failed");
+      // router.push("/order/checkout/failed");
     } finally {
       setIsProcessing(false);
     }

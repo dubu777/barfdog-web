@@ -4,7 +4,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import * as styles from "./SurveyBottomSheet.css";
 import Chips from "@/components/common/chips/Chips";
 import { CRITICAL_DISEASES } from "@/constants";
-import { rowStartWrapper } from "../../order/common/deliveryAddress/DeliveryAddress.css";
+import { rowStartWrapper } from "../../checkout/common/deliveryAddress/DeliveryAddress.css";
 
 interface CriticalDiseaseAlertBottomSheetProps {
   isOpen: boolean;
