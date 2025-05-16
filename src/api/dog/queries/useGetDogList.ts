@@ -3,7 +3,7 @@ import { queryKeys } from "@/constants/queryKeys";
 import { DogData, UseSuspenseQueryCustomOptions } from "@/types";
 import { getDogList } from "../dog";
 
-export { useGetDogList, prefetchGetDogList };
+export { useGetDogList };
 
 const getDogListQueryKey = [queryKeys.DOG.BASE, queryKeys.DOG.GET_DOG_LIST];
 
@@ -13,10 +13,4 @@ function useGetDogList(queryOptions?: UseSuspenseQueryCustomOptions<DogData[]>) 
     queryKey: getDogListQueryKey,
     ...queryOptions,
   })
-}
-async function prefetchGetDogList(queryClient: QueryClient) {
-  await queryClient.prefetchQuery<DogData[]>({
-    queryKey: getDogListQueryKey,
-    queryFn: getDogList,
-  });
 }

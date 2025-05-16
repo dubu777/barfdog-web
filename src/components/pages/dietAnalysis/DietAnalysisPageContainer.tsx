@@ -1,9 +1,9 @@
 import FirstTimeRegistration from "./firstTimeRegistration/FirstTimeRegistration";
 import * as styles from "./DietAnalysisPageContainer.css";
+import RegisteredDogManager from "./registeredDogManager/RegisteredDogManager";
 export default function DietAnalysisPageContainer() {
+  const isFirstTime = false;
   return (
-    <main className={styles.dietAnalysisPageContainer}>
-      <FirstTimeRegistration />
-    </main>
+    <>{isFirstTime ? <FirstTimeRegistration /> : <RegisteredDogManager />}</>
   );
 }

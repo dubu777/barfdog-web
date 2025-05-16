@@ -2,11 +2,11 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { prefetchGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import { prefetchGetDogList } from "@/api/dog/queries/useGetDogList";
 import { prefetchGetMyPageBanner } from "@/api/mypage/queries/useGetMypageBanner";
 import { prefetchGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
 import MyPageMain from "@/components/pages/mypage/main/MyPageMain";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
+import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
 
 export default async function MyPagePage() {
   const queryClient = new QueryClient();
