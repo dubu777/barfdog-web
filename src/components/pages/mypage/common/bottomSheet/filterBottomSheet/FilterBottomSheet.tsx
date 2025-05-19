@@ -84,7 +84,7 @@ const FilterBottomSheet = ({ filters }: FilterBottomSheetProps) => {
 						})}
 					</ul>
 				</div>
-				<ButtonDocked type="full-button" primaryButtonLabel="조회" onPrimaryClick={handleFilterSubmit} />
+				<ButtonDocked type="full-button" primaryButtonLabel="조회" onPrimaryClick={handleFilterSubmit} position='sticky' />
 			</BottomSheet>
 		</Dropdown>
 	);

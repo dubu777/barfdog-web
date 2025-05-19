@@ -10,10 +10,11 @@ import { AUTH_CONFIG } from '@/constants/auth';
 import { getSnsCallbackUrl, removeSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
 import Loader from "@/components/common/loader/Loader";
 
-interface ConnectSnsProps {
-}
+// interface ConnectSnsProps {
+// }
 
-const ConnectSns = ({}: ConnectSnsProps) => {
+// const ConnectSns = ({}: ConnectSnsProps) => {
+const ConnectSns = () => {
   const router = useRouter();
   const { loginUserInfo } = useAuthStore.getState();
   const { mutate: connectSns } = useConnectSns();

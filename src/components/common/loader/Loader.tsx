@@ -1,10 +1,17 @@
 import * as styles from './Loader.css';
+import {loaderBox} from "./Loader.css";
 
 interface LoaderProps {
 	fullscreen?: boolean;
+	height?: number;
+	padding?: 0 | 20;
 }
 
-const Loader = ({ fullscreen = false }: LoaderProps) => {
+const Loader = ({
+	fullscreen = false,
+	height,
+	padding = 0
+}: LoaderProps) => {
 	return (
 		fullscreen
 			? (
@@ -12,7 +19,7 @@ const Loader = ({ fullscreen = false }: LoaderProps) => {
 					<span className={styles.loader} />
 				</div>
 			)
-			: <span className={styles.loader} />
+			: <div className={loaderBox} style={{ height: height || 'auto', padding: padding }}><span className={styles.loader} /></div>
 	);
 };
 

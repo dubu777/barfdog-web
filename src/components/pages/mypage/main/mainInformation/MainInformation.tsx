@@ -10,20 +10,20 @@ import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import { MyPageMemberDto, MyPageRepresentativeDogDto } from "@/types";
+import { MyPageMemberDto } from "@/types";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { getNextTierRequirements } from "@/utils/mypage/getNextTierRequirements";
-import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
-import { MembershipTier } from "@/types/membership";
+import { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR } from "@/constants/membership";
 
 const MainInformation = () => {
   const { data: myPageData } = useGetMyPageInfo();
+
+
   const userData: MyPageMemberDto = myPageData?.mypageMemberDto;
 
-  const representativeDogData: MyPageRepresentativeDogDto = myPageData?.mypageRepresentiveDogDto;
   const { setMypageUserInfo, setUserMembershipTier } = usePersistMypageStore();
 
-  const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData.grade) as MembershipTier;
+  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[userData?.grade]];
   const userImage = userData?.imageUrl;
 
   useEffect(() => {

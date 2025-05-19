@@ -1,9 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-export const rewardInfoContainer = style({
-  paddingBottom: '80px',
-})
-
 export const rewardInfoTitle = style({
   padding: '20px',
 })

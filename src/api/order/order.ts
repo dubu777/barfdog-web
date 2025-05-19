@@ -1,4 +1,3 @@
-import { ORDER_TYPE } from "@/constants";
 import axiosInstance from "../axiosInstance";
 import {
   SaveGeneralOrderRequest,

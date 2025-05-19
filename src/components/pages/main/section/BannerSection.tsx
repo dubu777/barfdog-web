@@ -32,7 +32,7 @@ const BannerSection = ({ mainBannerList }: BannerSectionProps) => {
 			>
 			{mainBannerList.map(banner => {
 				const linkUrl = isMobileDevice ? banner.mobileLinkUrl : banner.pcLinkUrl;
-				const imageUrl = isMobileDevice ? banner.mobileImageUrl : banner.pcImageUrl;
+				// const imageUrl = isMobileDevice ? banner.mobileImageUrl : banner.pcImageUrl;
 				return (
 					<SwiperSlide
 						key={banner.id}

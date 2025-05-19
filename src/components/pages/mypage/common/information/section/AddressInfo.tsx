@@ -6,7 +6,6 @@ import Button from "@/components/common/button/Button";
 import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
 import useModal from "@/hooks/useModal";
 import { formatPhoneNumber } from "@/utils";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import {useGetSubscriptionAddress} from "@/api/subscription/queries/useGetSubscriptionAddress";
@@ -32,8 +31,8 @@ const AddressInfo = ({
 		setBackupDeliveryDto,
 	} = useDeliveryStore();
 
-	const { paymentMethodDetail } = usePersistMypageStore();
-	const cardDetail = paymentMethodDetail?.subscribeCardDto;
+	// const { paymentMethodDetail } = usePersistMypageStore();
+	// const cardDetail = paymentMethodDetail?.subscribeCardDto;
 
 	const deliveryName = '집';
 

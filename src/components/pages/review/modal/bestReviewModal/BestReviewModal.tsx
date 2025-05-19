@@ -79,7 +79,6 @@ const BestReviewModal = ({ isOpen, onClose, reviewId }: BestReviewModalProps) =>
         primaryButtonLabel='리뷰 닫기'
         onPrimaryClick={onClose}
         primaryButtonVariant='outline'
-        position='fixed'
       />
       {isOpenImageDetail &&
         <ReviewImagesModal

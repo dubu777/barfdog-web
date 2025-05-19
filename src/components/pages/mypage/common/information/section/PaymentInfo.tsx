@@ -1,5 +1,4 @@
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
-import { useRouter } from "next/navigation";
 import { PAYMENT } from "@/constants";
 import { InfoListsButtons, InfoListsItem, PlanKey } from "@/types";
 import { calculateOriginPrice } from "@/utils/order/calculateOriginPrice";

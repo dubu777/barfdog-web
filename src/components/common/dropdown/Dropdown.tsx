@@ -11,7 +11,6 @@ interface DropdownProps {
 	label?: string;
 	options?: { label: string; value: string }[];
 	onSelect?: (value: string) => void;
-	position?: "bottom" | "right";
 	className?: string;
 	children?: ReactNode;
 	isOpen?: boolean;
@@ -24,7 +23,6 @@ export default function Dropdown({
 	label,
 	options,
 	onSelect,
-	position = 'right',
 	className,
 	children,
 	style,

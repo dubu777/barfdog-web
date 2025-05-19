@@ -1,5 +1,4 @@
 'use client';
-import * as styles from './WithdrawalAccount.css';
 import { useSearchParams } from "next/navigation";
 import WithdrawalGuide from "@/components/pages/mypage/account/withdrawalAccount/withdrawalGuide/WithdrawalGuide";
 import WithdrawalReasonForm

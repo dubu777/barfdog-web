@@ -30,7 +30,6 @@ const Reward = () => {
   );
 
   const totalReward = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalReward ?? 0;
-  const totalCount = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalCount ?? 0;
 
   useEffect(() => {
     if (inView && !isFetchingNextPage) {

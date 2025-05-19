@@ -38,7 +38,6 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   error?: string;
-  touched?: boolean;
   icon?: ReactNode;
   variants?: keyof typeof inputVariants;
   width?: number;
@@ -60,7 +59,6 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelColor?: "gray700" | "gray800";
   labelPosition?: "top" | "left";
   isRequired?: boolean;
-  isReadOnly?: boolean;
   unit?: string;
 }
 
@@ -69,7 +67,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     {
       disabled = false,
       error,
-      touched,
       onChange,
       onBlur,
       variants = 'box',
@@ -89,7 +86,6 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       className,
       label,
       isRequired,
-      isReadOnly,
       labelColor = "gray700",
       unit,
       ...props

@@ -3,11 +3,12 @@ import { themeVars } from "@/styles/theme.css";
 
 export const reviewSurveyContainer = style({
 	background: themeVars.colors.gray.gray0,
-	paddingBottom: '20px',
 })
 
 export const reviewSurveyBox = style({
-	padding: '20px 0'
+	padding: '20px 0',
+	display: 'flex',
+	flexDirection: 'column',
 })
 
 export const surveyIconBox = style({

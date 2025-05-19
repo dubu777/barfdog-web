@@ -8,6 +8,13 @@ export const loaderContainer = style({
 	alignItems: 'center',
 })
 
+export const loaderBox = style({
+	width: '100%',
+	display: 'flex',
+	justifyContent: 'center',
+	alignItems: 'center',
+})
+
 const rotation = keyframes({
 	'0%': { transform: 'rotate(0deg)' },
 	'100%': { transform: 'rotate(360deg)' }

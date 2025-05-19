@@ -8,11 +8,9 @@ export const withdrawalContainerBox = recipe({
 	},
 	variants: {
 		type: {
-			guide: {
-				marginBottom: '80px',
-			},
+			guide: {},
 			reason: {
-				padding: '60px 0 40px'
+				padding: '0 0 40px'
 			},
 			confirmation: {},
 		},

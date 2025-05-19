@@ -15,11 +15,10 @@ const getMainInfo = async (): Promise<MainInfoData> => {
   };
 }
 
-
-const getMainBanner = async (): Promise<MainInfoData> => {
-  const { data } = await axiosInstance.get('/api/banners/main');
-  return data?._embedded?.mainBannerListResponseDtoList || [];
-}
+// const getMainBanner = async (): Promise<MainInfoData> => {
+//   const { data } = await axiosInstance.get('/api/banners/main');
+//   return data?._embedded?.mainBannerListResponseDtoList || [];
+// }
 
 const getMainDeadlineBanner = async (): Promise<string> => {
   const { data } = await axiosInstance.get('/api/banners/deadline');
