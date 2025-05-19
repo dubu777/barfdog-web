@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 
+type DeviceOS = 'iOS' | 'Android' | 'Other';
+
 // 반환 타입 정의
 interface DeviceState {
   isMobileWidth: boolean;
   isMobileDevice: boolean;
   deviceWidth: number;
+  deviceOS: DeviceOS;
 }
 
 // Debounce 함수 추가
@@ -16,11 +19,21 @@ const debounce = (func: () => void, delay: number) => {
   };
 };
 
+const getMobileOS = (): DeviceOS => {
+  const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+  const hasMSStream = typeof (window as any).MSStream !== 'undefined';
+
+  if (/android/i.test(userAgent)) return "Android";
+  if (/iPad|iPhone|iPod/.test(userAgent) && !hasMSStream) return "iOS";
+  return "Other";
+}
+
 export default function useDeviceState(): DeviceState {
   const [deviceState, setDeviceState] = useState<DeviceState>({
     isMobileWidth: false,
     isMobileDevice: false,
     deviceWidth: 0,
+    deviceOS: 'Other',
   });
 
   // 모바일 디바이스 여부 확인 함수
@@ -38,6 +51,7 @@ export default function useDeviceState(): DeviceState {
       isMobileWidth: deviceWidth <= 600,
       isMobileDevice: checkIsMobileDevice(),
       deviceWidth,
+      deviceOS: getMobileOS(),
     });
   };
 
