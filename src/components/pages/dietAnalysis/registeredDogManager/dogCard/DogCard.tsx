@@ -6,6 +6,7 @@ import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import FemaleIcon from "public/images/subscription/female.svg";
 import MaleIcon from "public/images/subscription/male.svg";
+import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/\bgetAgeFromBirth";
 import DefaultImage from "public/images/mypage/user-profile.svg";
 import Button from "@/components/common/button/Button";
@@ -56,11 +57,14 @@ export default function DogCard({
             justify: "center",
           })}
         >
-          <div className={commonWrapper({ justify: "start", gap: 6 })}>
+          <div className={commonWrapper({ justify: "between"})}>
+            <div className={commonWrapper({ justify: "start", gap: 6 })}>
             <DefaultText type="headline1">{name}</DefaultText>
             <Chips variant="solid" color="gray900" borderRadius="lg">
               {subscribeStatus}
             </Chips>
+            </div>
+            <SvgIcon src={EditIcon} size={32} color="gray500" />
           </div>
           <div className={commonWrapper({ justify: "start", gap: 6 })}>
             <SvgIcon
@@ -82,6 +86,7 @@ export default function DogCard({
           variant="outline"
           textColor="gray900"
           borderColor="gray300"
+          size="sm"
           fullWidth
         >
           맞춤 결과 확인
@@ -91,6 +96,7 @@ export default function DogCard({
           variant="outline"
           textColor="red"
           borderColor="red"
+          size="sm"
           fullWidth
         >
           다시 추천 받기
