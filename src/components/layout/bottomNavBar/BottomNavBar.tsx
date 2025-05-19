@@ -47,17 +47,15 @@ export default function BottomNavBar() {
     },
   ]
   return (
-    <nav className={styles.bottomNavBarContainer}>
-      <div className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]}`}>
-        {MENU_LIST.map(menu => (
-          <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
-            {menu.icon}
-            <DefaultText type='caption' color={pathname === menu.url ? 'red' : 'gray600'} block className={styles.navLabel}>
-              {menu.label}
-            </DefaultText>
-          </Link>
-        ))}
-      </div>
+    <nav className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]}`}>
+      {MENU_LIST.map(menu => (
+        <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
+          {menu.icon}
+          <DefaultText type='caption' color={pathname === menu.url ? 'red' : 'gray600'} block className={styles.navLabel}>
+            {menu.label}
+          </DefaultText>
+        </Link>
+      ))}
     </nav>
   );
 }

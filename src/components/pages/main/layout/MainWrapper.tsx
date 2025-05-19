@@ -15,6 +15,7 @@ import ProductionSection from "@/components/pages/main/section/ProductionSection
 import DeliverySection from "@/components/pages/main/section/DeliverySection";
 import BrandStorySection from "@/components/pages/main/section/BrandStorySection";
 import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
+import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 
 const MainWrapper = () => {
   const { pushWithQuery } = useDynamicQueryPush();
@@ -27,23 +28,26 @@ const MainWrapper = () => {
   }, [pushWithQuery]);
 
   return (
-    <section className={mainWrapper}>
-      {mainInfoData && 
-        <>
-        <BannerSection mainBannerList={mainInfoData.mainBannerList} />
-        <ReviewSection bestReviewList={mainInfoData.bestReviewList}  />
-        </>
-      }
-      <StoreSection />
-      <FAQSection />
-      <RecipeSection />
-      <ChapterSection />
-      <BARFSection />
-      <ProductionSection />
-      <DeliverySection />
-      <BrandStorySection />
-      <Footer />
-    </section>
+    <>
+      <section className={mainWrapper}>
+        {mainInfoData &&
+          <>
+          <BannerSection mainBannerList={mainInfoData.mainBannerList} />
+          <ReviewSection bestReviewList={mainInfoData.bestReviewList}  />
+          </>
+        }
+        <StoreSection />
+        <FAQSection />
+        <RecipeSection />
+        <ChapterSection />
+        <BARFSection />
+        <ProductionSection />
+        <DeliverySection />
+        <BrandStorySection />
+        <Footer />
+      </section>
+      <BottomNavBar />
+    </>
   );
 };
 

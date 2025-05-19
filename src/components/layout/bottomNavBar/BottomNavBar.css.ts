@@ -1,27 +1,21 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
-export const bottomNavBarContainer = style({
+export const bottomNavBarBase = style({
   position: "fixed",
   left: 0,
   right: 0,
   bottom: 0,
-  display: "flex",
   width: "100%",
   minWidth: "320px",
   maxWidth: "600px",
   margin: "0 auto",
   zIndex: 200,
   backgroundColor: themeVars.colors.gray.gray0,
-});
-
-export const bottomNavBarBase = style({
-  flex: 1,
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  width: '100%',
-  height: '100%',
+  borderTop: `1px solid ${themeVars.colors.gray.gray200}`
 });
 
 export const bottomNavBarOs = {
