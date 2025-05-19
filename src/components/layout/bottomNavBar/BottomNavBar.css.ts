@@ -20,13 +20,13 @@ export const bottomNavBarBase = style({
 
 export const bottomNavBarOs = {
   iOS: style({
-    padding: '8px 12px 32px',
+    padding: '8px 12px 34px',
   }),
   Android: style({
-    padding: '16px 12px 24px',
+    padding: '14px 12px 24px',
   }),
   Other: style({
-    padding: '16px 12px 24px',
+    padding: '14px 12px 24px',
   }),
 }
 
@@ -45,7 +45,6 @@ export const navLinkItem = style({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: 'center',
-  gap: '4px',
 });
 
 export const navLabel = style({
