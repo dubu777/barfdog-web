@@ -3,7 +3,7 @@ import { queryKeys } from "@/constants/queryKeys";
 import { getSubscriptionDetail } from "../subscription";
 import { SubscriptionDetailDto } from "@/types/subscription";
 import { UseSuspenseQueryCustomOptions } from "@/types";
-import { prefetchGetDogDetail } from "@/api/dog/queries/useGetDogDetail";
+import { prefetchGetDogDetail } from "@/api/dog/queries/usePrefetchGetDogDetail";
 
 export { useGetSubscriptionDetail, prefetchGetSubscriptionDetail, prefetchSubscriptionAndDogDetail };
 

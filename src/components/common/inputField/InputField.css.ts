@@ -3,12 +3,6 @@ import { themeVars } from '@/styles/theme.css';
 
 export const inputContainerStyle = style({})
 
-export const labelStyle = style({
-  display: 'block',
-  textAlign: 'left',
-  marginBottom: '8px',
-})
-
 export const inputBoxStyle = style({
     display: 'flex',
     alignItems: 'center',

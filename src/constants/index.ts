@@ -12,3 +12,4 @@ export * from './subscription';
 export * from './review';
 export * from './mypage';
 export * from './membership';
+export * from './healthNote';

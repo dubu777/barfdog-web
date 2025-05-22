@@ -1,7 +1,7 @@
 'use client';
 import * as styles from './Account.css';
 import Link from "next/link";
-import AccountCircle from '/public/images/myPage/account_circle.svg';
+import AccountCircle from '/public/images/icons/account_circle.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";

@@ -16,6 +16,7 @@ export type {
   QueryParams,
   Page,
   ImageFile,
+  Option,
 };
 
 declare global {
@@ -74,4 +75,9 @@ interface ImageFile {
   id?: number;
   filename: string;
   url: string;
+}
+
+interface Option {
+  label: string;
+  value: string;
 }

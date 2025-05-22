@@ -42,7 +42,10 @@ export default function SurveyButton<T>({
         isChecked,
         isNormal: inputType === "normal",
       })}
-      onClick={() => onToggle(value)}
+      onClick={(e) => {
+        e.preventDefault();
+        onToggle(value)
+      }}
     >
       {iconSrc && <SvgIcon src={iconSrc} />}
       <div

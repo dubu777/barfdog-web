@@ -47,6 +47,7 @@ const queryKeys = {
     BASE: 'dog',
     GET_DOG_LIST: 'getDogList',
     GET_DOG_DETAIL: 'getDogDetail',
+    GET_FULL_DOG_LIST: 'getFullDogList',
   },
   ORDER: {
     BASE: 'order',

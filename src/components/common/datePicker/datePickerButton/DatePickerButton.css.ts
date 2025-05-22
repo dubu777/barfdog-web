@@ -3,6 +3,7 @@ import { themeVars } from "@/styles/theme.css";
 
 export const datePickerButtonBox = recipe({
 	base: {
+		width: '100%',
 		borderRadius: '8px',
 		background: themeVars.colors.gray.gray0,
 		padding: '14px 20px',

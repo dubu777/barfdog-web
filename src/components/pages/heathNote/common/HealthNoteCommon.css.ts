@@ -1,0 +1,30 @@
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
+import { themeVars } from "@/styles/theme.css";
+
+export const createDogButton = style({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '6px',
+})
+
+export const dogImage = recipe({
+	base: {
+		objectFit: 'cover',
+	},
+	variants: {
+		borderRadius: {
+			'md': {
+				borderRadius: '8px',
+			},
+			'lg': {
+				borderRadius: '50%',
+			}
+		},
+		active: {
+			true: {
+				border: `2px solid ${themeVars.colors.red.red}`
+			}
+		}
+	}
+})

@@ -48,4 +48,7 @@ export const cardBorderRadius = {
 	none: style({
 		borderRadius: 0,
 	}),
+	'12': {
+		borderRadius: '12px',
+	}
 }

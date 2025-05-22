@@ -34,6 +34,7 @@ import { pointColor } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
 import ErrorIcon from '/public/images/icons/close_small.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import InputLabel from "@/components/common/inputLabel/InputLabel";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -141,9 +142,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       >
         {/* label 유무에 따라 상단 노출 */}
         {label &&
-          <DefaultText type='label4' color={labelColor} className={labelStyle}>
-            {label} {isRequired && <span className={pointColor}>*</span>}
-          </DefaultText>
+          <InputLabel
+            label={label}
+            labelColor={labelColor}
+            isRequired={isRequired}
+          />
         }
         <div className={inputBoxStyle} style={{ width: width || '100%' }}>
           <div

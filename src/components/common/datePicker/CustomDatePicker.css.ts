@@ -3,6 +3,12 @@ import { themeVars } from "@/styles/theme.css";
 
 export const datePickerContainer = style({
 	width: '100%',
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+})
+
+export const datePickerContainerMargin = style({
 	marginBottom: '80px',
 })
 

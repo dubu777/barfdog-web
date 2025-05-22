@@ -4,15 +4,12 @@ import React, { useState, useMemo } from "react";
 import InputField from "@/components/common/inputField/InputField";
 import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
 import * as styles from "../surveySteps/SurveySteps.css";
-interface DogTypeOption {
-  value: string;
-  label: string;
-}
+import { Option } from "@/types";
 
 interface SearchableSelectorProps {
   label?: string; // 상단 InputField 라벨 (선택사항)
   placeholder?: string; // InputField placeholder
-  options: DogTypeOption[]; // 전체 견종 옵션
+  options: Option[]; // 전체 견종 옵션
   selectedValue: string; // 현재 선택된 값 (radio)
   onChange: (value: string) => void; // 선택 변경 시 호출
 }
