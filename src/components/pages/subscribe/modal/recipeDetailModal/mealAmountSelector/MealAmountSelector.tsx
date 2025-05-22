@@ -1,6 +1,10 @@
 import { commonWrapper } from "@/styles/common.css";
 import { forwardRef, useCallback, useEffect, useState } from "react";
-import { mealSelectorBox, recipeDetailSection } from "../RecipeDetailModal.css";
+import {
+  mealSelectorBox,
+  mealSelectorHelpIcon,
+  recipeDetailSection,
+} from "../RecipeDetailModal.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InputField from "@/components/common/inputField/InputField";
@@ -11,7 +15,14 @@ import { RecipeDto } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import { calculateRecipePack, CalculateRecipePackOutput } from "@/utils/subscription/calculateRecipe";
+import {
+  calculateRecipePack,
+  CalculateRecipePackOutput,
+} from "@/utils/subscription/calculateRecipe";
+import HelpIcon from "public/images/icons/help-fill.svg";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Divider from "@/components/common/divider/Divider";
+import WarningIcon from "public/images/icons/warning.svg";
 
 interface MealAmountSelectorProps {
   dogName: string;
@@ -19,7 +30,7 @@ interface MealAmountSelectorProps {
   dailyRecommendKcal: number;
   recipeDto: RecipeDto;
   subscribeId: number;
-  onApply: (packGrams: number, orderPrice: number) => void;
+  onApply: (packGrams: number, packPrice: number) => void;
 }
 
 const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
@@ -41,20 +52,32 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
       packGrams: 0,
       packPrice: 0,
       pricePer10g: 0,
+      under20g: 0,
     });
 
     // sync whenever inputs change
     useEffect(() => {
-      const { recommendedPackGrams, packGrams, packPrice, pricePer10g } =
-        calculateRecipePack({
-          dailyRecommendKcal,
-          recipeDto,
-          subscribeId,
-          customPackGrams: entry?.packGrams,
-        });
+      const {
+        recommendedPackGrams,
+        packGrams,
+        packPrice,
+        pricePer10g,
+        under20g,
+      } = calculateRecipePack({
+        dailyRecommendKcal,
+        recipeDto,
+        subscribeId,
+        customPackGrams: entry?.packGrams,
+      });
 
       setInputValue(packGrams.toString());
-      setDisplay({ recommendedPackGrams, packGrams, packPrice, pricePer10g });
+      setDisplay({
+        recommendedPackGrams,
+        packGrams,
+        packPrice,
+        pricePer10g,
+        under20g,
+      });
     }, [entry, dailyRecommendKcal, recipeDto, subscribeId]);
 
     const handleInputChange = useCallback(
@@ -107,47 +130,95 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
 
     return (
       <section ref={ref} className={recipeDetailSection}>
-        <DefaultText type="title4">
-          {getNameWithPossessiveSuffix(dogName)}의<br />한 끼 추천 급여량을
-          계산했어요
-        </DefaultText>
+        <div className={commonWrapper({ direction: "col", align: "start" })}>
+          <DefaultText type="title4">
+            {getNameWithPossessiveSuffix(dogName)}의
+          </DefaultText>
+          <div
+            className={commonWrapper({
+              align: "center",
+              justify: "start",
+              gap: 4,
+            })}
+          >
+            <DefaultText type="title4">
+              한 끼 추천 급여량을 계산했어요
+            </DefaultText>
+            <SvgIcon
+              className={mealSelectorHelpIcon}
+              src={HelpIcon}
+              size={28}
+              onClick={() => {}}
+            />
+          </div>
+        </div>
         <div className={mealSelectorBox}>
           <div
             className={commonWrapper({
-              direction: "col",
-              gap: 4,
-              width: "auto",
               align: "start",
+              justify: "between",
             })}
           >
-            <DefaultText type="label2" color="gray900">
-              한 끼 추천 급여량
-            </DefaultText>
-            <DefaultText type="label2" color="red">
-              구독 급여량
-            </DefaultText>
-            <DefaultText type="label2" color="red">
-              한 팩당 가격
-            </DefaultText>
+            <div
+              className={commonWrapper({
+                direction: "col",
+                gap: 4,
+                align: "start",
+                width: "auto",
+              })}
+            >
+              {!display.under20g && (
+                <DefaultText type="label2" color="gray900">
+                  한 끼 추천 급여량
+                </DefaultText>
+              )}
+              <DefaultText type="label2" color="red">
+                구독 급여량
+              </DefaultText>
+              <DefaultText type="label2" color="red">
+                한 팩당 가격
+              </DefaultText>
+            </div>
+            <div
+              className={commonWrapper({
+                direction: "col",
+                gap: 4,
+                width: "auto",
+                align: "end",
+              })}
+            >
+              {!display.under20g && (
+                <DefaultText type="label2" color="gray900">
+                  {display.recommendedPackGrams}g
+                </DefaultText>
+              )}
+              <DefaultText type="label2" color="red">
+                {display.packGrams}g
+              </DefaultText>
+              <DefaultText type="label2" color="red">
+                {display.packPrice.toLocaleString()}원
+              </DefaultText>
+            </div>
           </div>
-          <div
-            className={commonWrapper({
-              direction: "col",
-              gap: 4,
-              width: "auto",
-              align: "end",
-            })}
-          >
-            <DefaultText type="label2" color="gray900">
-              {display.recommendedPackGrams}g
-            </DefaultText>
-            <DefaultText type="label2" color="red">
-              {display.packGrams}g
-            </DefaultText>
-            <DefaultText type="label2" color="red">
-              {display.packPrice.toLocaleString()}원
-            </DefaultText>
-          </div>
+          {display.under20g && (
+            <>
+              <Divider color="gray800" thickness={1} />
+              <div className={commonWrapper({ align: "start", gap: 8 })}>
+                <SvgIcon src={WarningIcon} size={20} />
+                <DefaultText type="body3" color="gray900">
+                <DefaultText type="label3" color="gray900">
+                  추천 급여량 {display.under20g}g
+                  </DefaultText>
+                  구독 급여량은{" "}
+                  <DefaultText type="label3" color="gray900">
+                    최소 20g
+                  </DefaultText>
+                  부터 설정 가능해요. 추천 급여량보다 많더라도 급여는 아이에게
+                  맞게 소분해 주세요.
+                </DefaultText>
+              </div>
+            </>
+          )}
         </div>
         <DefaultText type="label2">급여량 수정</DefaultText>
         <div className={commonWrapper({ gap: 8 })}>

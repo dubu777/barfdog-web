@@ -1,6 +1,6 @@
 import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 
-export type { DogData, DogDetail };
+export type { DogData, DogDetail, CheckDuplicateDogNameResponse };
 
 interface DogData {
   id: number;
@@ -31,4 +31,11 @@ interface DogDetail {
     ingredients: string[];
   }[];
   recipes: string[];
+}
+
+interface CheckDuplicateDogNameResponse {
+  result: "SUCCESS" | "FAIL";
+  data: null | string;
+  message: null | string;
+  errorCode: null | string;
 }

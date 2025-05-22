@@ -60,7 +60,7 @@ export default function SurveyStep11({
                       rank={getRank(option.value)}
                       disabled={isDisabled(option.value)}
                       onToggle={onToggle}
-                      display="grid"
+                      display="grid1"
                     />
                   )
                 )}

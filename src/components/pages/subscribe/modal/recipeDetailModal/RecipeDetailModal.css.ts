@@ -33,11 +33,15 @@ export const recipeDetailSection = style({
 
 export const mealSelectorBox = style({
   display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
+  flexDirection: "column",
   padding: "16px",
   backgroundColor: themeVars.colors.gray.gray50,
   borderRadius: "8px",
   width: "100%",
   border: `1px solid ${themeVars.colors.gray.gray200}`,
+  gap: "12px",
 });
+
+export const mealSelectorHelpIcon = style({
+  cursor: "pointer",
+})

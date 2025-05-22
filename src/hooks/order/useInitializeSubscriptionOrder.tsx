@@ -1,4 +1,3 @@
-// src/hooks/useInitializeSubscriptionOrder.ts
 import { useEffect } from 'react';
 import { SubscriptionOrderSheetResponse } from '@/types';
 import { useDeliveryStore } from '@/store/order/useDeliveryStore';

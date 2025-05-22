@@ -6,6 +6,7 @@ export const surveyLayoutContainer = style({
   width: '100%',
   marginBottom: '85px',
   backgroundColor: themeVars.colors.gray.gray50,
+  overflow: "hidden",
 });
 
 export const surveyTitle = style({

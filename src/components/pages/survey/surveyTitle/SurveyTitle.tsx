@@ -5,7 +5,7 @@ import Button from "@/components/common/button/Button";
 import Chips from "@/components/common/chips/Chips";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import { CHIPS_COLORS } from "@/constants/style";
-import { getNameWithPossessiveSuffix } from "@/utils";
+import { getNameWithSubjectSuffix, getNameWithTopicSuffix } from "@/utils";
 
 interface SurveyTitleProps {
   petName: string;
@@ -26,14 +26,26 @@ export default function SurveyTitle({
   onReselect,
   onInfoBoxClick,
 }: SurveyTitleProps) {
-  const nameWithSuffix = getNameWithPossessiveSuffix(petName);
-
+  const SUFFIXERS: Record<"topic" | "subject", (name: string) => string> = {
+    topic: getNameWithTopicSuffix,
+    subject: getNameWithSubjectSuffix,
+  };
   return (
     <div className={styles.surveyTitleContainer}>
-      {titleTemplates.map((template, index) => {
-        const text = template.replace("{petName}", nameWithSuffix);
+      {titleTemplates.map((template, idx) => {
+        // {petName} 또는 {petName:topic}, {petName:subject} 만 캡처
+        const text = template.replace(
+          /\{petName(?::(topic|subject))?\}/g,
+          (_match, suffixType) => {
+            if (suffixType && SUFFIXERS[suffixType]) {
+              return SUFFIXERS[suffixType](petName);
+            }
+            // suffixType이 없으면 그냥 petName
+            return petName;
+          }
+        );
         return (
-          <DefaultText key={index} type="title2">
+          <DefaultText key={idx} type="title2">
             {text}
           </DefaultText>
         );
@@ -93,7 +105,7 @@ export default function SurveyTitle({
             text={infoBoxContent}
             fullWidth
             onClick={onInfoBoxClick}
-        />
+          />
         </div>
       )}
     </div>

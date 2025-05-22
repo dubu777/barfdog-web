@@ -63,7 +63,7 @@ export default function SurveyStep14({
                       selectedSvg={option.SelectedIcon}
                       isChecked={isSelected(option.value)}
                       onToggle={handleToggleAndNext}
-                      display="grid"
+                      display="grid2"
                     />
                   )
                 )}

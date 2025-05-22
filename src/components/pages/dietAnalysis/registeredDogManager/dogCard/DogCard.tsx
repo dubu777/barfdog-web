@@ -7,7 +7,7 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import FemaleIcon from "public/images/subscription/female.svg";
 import MaleIcon from "public/images/subscription/male.svg";
 import EditIcon from "public/images/subscription/pen.svg";
-import { getAgeFromBirth } from "@/utils/\bgetAgeFromBirth";
+import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
 import DefaultImage from "public/images/mypage/user-profile.svg";
 import Button from "@/components/common/button/Button";
 
@@ -45,6 +45,7 @@ export default function DogCard({
             alt="반려견 프로필"
             width={76}
             height={76}
+            priority
           />
         ) : (
           <SvgIcon src={DefaultImage} size={76} color="red" />

@@ -9,7 +9,7 @@ export const surveyStepsSchema = yup.object({
       .min(1, "이름은 최소 1자 이상이어야 합니다.")
       .required("이름을 입력해주세요"),
     nameVerified: yup.boolean().oneOf([true], "이름 중복체크를 해주세요."),
-    isNeutered: yup
+    neutralization: yup
       .boolean()
       .nullable()
       .test(
@@ -23,7 +23,7 @@ export const surveyStepsSchema = yup.object({
       .string()
       .matches(/^\d{4}-\d{2}-\d{2}$/, "생년월일을 모두 입력해주세요.")
       .required("출생일은 필수입니다."),
-    isSenior: yup
+    oldDog: yup
       .boolean()
       .nullable()
       .test(
@@ -43,11 +43,11 @@ export const surveyStepsSchema = yup.object({
       )
       .test(
         "min-weight",
-        "바프독 맞춤 식단은 0.8kg 이상의 반려견에게 급여가 가능해요",
+        "몸무게가 작은 아이의 경우 급여량이 적게 계산될 수 있어요. 포장은 20g부터 가능하지만, 급여는 계산된 양에 맞춰 나눠주시면 됩니다.",
         (value) => {
           if (!value) return false;
           const parsed = parseFloat(value);
-          return parsed >= 0.8;
+          return parsed >= 1;
         }
       )
       .required("몸무게를 입력해주세요."),
@@ -68,7 +68,7 @@ export const surveyStepsSchema = yup.object({
     activityLevel: yup.string().required("활동량을 선택해주세요."),
   }),
   step9: yup.object({
-    snackFrequency: yup.string().required("간식량을 선택해주세요."),
+    snackCountLevel: yup.string().required("간식량을 선택해주세요."),
   }),
   step10: yup.object({
     inedibleFood: yup
@@ -112,8 +112,8 @@ export type SurveyStepValues = yup.InferType<typeof surveyStepsSchema>;
 export type SurveyStepKeys = keyof SurveyStepValues;
 
 export const defaultStepValues: SurveyStepValues = {
-  step1: { gender: "", name: "", nameVerified: false, isNeutered: null },
-  step2: { birthDate: "", isSenior: null },
+  step1: { gender: "", name: "", nameVerified: false, neutralization: null },
+  step2: { birthDate: "", oldDog: null },
   step3: { dogSize: "", weight: "" },
   step4: { dogType: "" },
   step5: { pregnancy: "" },
@@ -122,7 +122,7 @@ export const defaultStepValues: SurveyStepValues = {
     bodyCondition: "",
   },
   step8: { activityLevel: "" },
-  step9: { snackFrequency: "" },
+  step9: { snackCountLevel: "" },
   step10: { inedibleFood: [] },
   step11: { healthConcerns: [] },
   step12: { currentMeal: [] },

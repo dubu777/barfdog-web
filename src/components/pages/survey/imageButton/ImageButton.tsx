@@ -9,7 +9,6 @@ interface ImageButtonProps<T> {
   label: string;
   value: T;
   isChecked: boolean;
-  // imageSrc: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   imageSrc?: string;
   imageWidth?: number;
   imageHeight?: number;
@@ -17,7 +16,7 @@ interface ImageButtonProps<T> {
   selectedSvg?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   inputType?: "radio" | "checkbox" | "rank";
   onToggle: (value: T) => void;
-  display?: "flex" | "grid";
+  display?: "flex" | "grid1" | "grid2";
   disabled?: boolean; 
   rank?: number;
 }

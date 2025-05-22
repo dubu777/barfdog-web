@@ -1,4 +1,4 @@
-import { DogData, DogDetail } from "@/types";
+import { CheckDuplicateDogNameResponse, DogData, DogDetail } from "@/types";
 import axiosInstance from "../axiosInstance";
 
 const getDogList = async (): Promise<DogData[]> => {
@@ -35,4 +35,9 @@ const getDogDetail = async (dogId: number): Promise<DogDetail> => {
   return data;
 }
 
-export { getDogList, updateRepresentativeDog, uploadDogProfileImage, updateDogProfileImage, getDogDetail }
+const checkDuplicateDogName = async (dogName: string): Promise<CheckDuplicateDogNameResponse> => {
+  const { data } = await axiosInstance.get(`/api/dogs/name/duplication?dogName=${dogName}`);
+  return data._embedded.commonResponseList[0];
+}
+
+export { getDogList, updateRepresentativeDog, uploadDogProfileImage, updateDogProfileImage, getDogDetail, checkDuplicateDogName }

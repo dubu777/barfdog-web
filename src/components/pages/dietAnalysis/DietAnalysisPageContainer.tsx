@@ -1,9 +1,11 @@
+'use client'
+
+import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import FirstTimeRegistration from "./firstTimeRegistration/FirstTimeRegistration";
-import * as styles from "./DietAnalysisPageContainer.css";
 import RegisteredDogManager from "./registeredDogManager/RegisteredDogManager";
 export default function DietAnalysisPageContainer() {
-  const isFirstTime = false;
+  const { data: dogListData = [] } = useGetDogList();
   return (
-    <>{isFirstTime ? <FirstTimeRegistration /> : <RegisteredDogManager />}</>
+    <>{dogListData.length > 0 ? <RegisteredDogManager dogListData={dogListData}/> : <FirstTimeRegistration /> }</>
   );
 }

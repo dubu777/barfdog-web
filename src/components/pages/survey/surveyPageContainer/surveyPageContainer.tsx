@@ -18,11 +18,14 @@ import useModal from "@/hooks/useModal";
 import CriticalDiseaseAlertBottomSheet from "@/components/pages/survey/bottomSheet/CriticalDiseaseAlertBottomSheet";
 import { useEffect, useRef, useState } from "react";
 import SurveyResultLoading from "../surveyResultLoading/SurveyResultLoading";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/layout/header/Header";
 
 export default function SurveyPageContainer() {
   const router = useRouter();
+  const params = useSearchParams();
+  const isResurvey = params.get("mode") === "resurvey"; 
+
   const [isLoading, setIsLoading] = useState(false);
   const skipPregnancyRef = useRef(false);
 
@@ -45,10 +48,10 @@ export default function SurveyPageContainer() {
 
   const petName = surveyFormMethods.watch("step1.name") ?? "";
   const gender = surveyFormMethods.watch("step1.gender");
-  const isNeutered = surveyFormMethods.watch("step1.isNeutered");
+  const neutralization = surveyFormMethods.watch("step1.neutralization");
   useEffect(() => {
-    skipPregnancyRef.current = gender === "male" || isNeutered === true;
-  }, [gender, isNeutered]);
+    skipPregnancyRef.current = gender === "male" || neutralization === true;
+  }, [gender, neutralization]);
 
   const steps = getSurveySteps({
     handleChange: surveyFormMethods.handleChange,
@@ -56,6 +59,7 @@ export default function SurveyPageContainer() {
     handleKeyDown: surveyFormMethods.handleKeyDown,
     handleNextStep: handleNextStep,
     petName,
+    isResurvey,
   });
 
   console.log("watch", surveyFormMethods.watch());

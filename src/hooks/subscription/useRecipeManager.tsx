@@ -1,4 +1,4 @@
-import { SubscriptionPriceBreakdown } from "@/utils/subscription/calculateSubscriptionPrice";
+import { CalculateRecipePackOutput } from "@/utils/subscription/calculateRecipe";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useCallback, useState } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
@@ -6,7 +6,7 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 export const useRecipeEntryManager = (
   recipeId: number,
-  recommended: SubscriptionPriceBreakdown
+  recommended: CalculateRecipePackOutput
 ) => {
   const { control } = useFormContext<SubscriptionValues>();
   const { fields, append, update, remove } = useFieldArray({

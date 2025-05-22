@@ -9,52 +9,63 @@ import { surveyFormInfo, surveyTitles } from "@/constants";
 import SurveyButton from "../surveyButton/SurveyButton";
 import * as styles from "./SurveySteps.css";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import { format } from "date-fns";
 interface SurveyStepProps {
   handleChange: () => void;
   petName: string;
+  isResurvey: boolean;
 }
 
 export default function SurveyStep2({
   handleChange,
   petName,
+  isResurvey,
 }: SurveyStepProps) {
   const { isMobileDevice } = useDeviceState();
   const { control } = useFormContext<SurveyStepValues>();
 
   return (
     <>
-      <SurveyTitle petName={petName} config={surveyTitles.step2}/>
+      <SurveyTitle petName={petName} config={surveyTitles.step2} />
+      {!isResurvey && (
+        <Controller
+          name="step2.birthDate"
+          control={control}
+          render={({ field }) => (
+            <>
+              {isMobileDevice ? (
+                <MobileDatePicker
+                  value={formatDate(field.value, "onlyDateDash")}
+                  onChange={(date) => {
+                    field.onChange(date);
+                    handleChange();
+                  }}
+                  label="생년월일"
+                  isRequired
+                />
+              ) : (
+                <CustomDatePicker
+                  name="birthday"
+                  value={formatDate(field.value, "onlyDateDash")}
+                  onChange={(date) => {
+                    const selected: Date | null = Array.isArray(date)
+                      ? date[0]
+                      : date;
+
+                    const formatted = selected
+                      ? format(selected, "yyyy-MM-dd")
+                      : "";
+                    field.onChange(formatted);
+                    handleChange();
+                  }}
+                />
+              )}
+            </>
+          )}
+        />
+      )}
       <Controller
-        name="step2.birthDate"
-        control={control}
-        render={({ field }) => (
-          <>
-            {isMobileDevice ? (
-              <MobileDatePicker
-                value={formatDate(field.value, "onlyDateDash")}
-                onChange={(date) => {
-                  field.onChange(date)
-                  handleChange();
-                }}
-                label="생년월일"
-                isRequired
-              />
-            ) : (
-              <CustomDatePicker
-                name="birthday"
-                value={formatDate(field.value, "onlyDateDash")}
-                onChange={(date) => {
-                  console.log(date);
-                  field.onChange(date);
-                  handleChange();
-                }}
-              />
-            )}
-          </>
-        )}
-      />
-      <Controller
-        name="step2.isSenior"
+        name="step2.oldDog"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption(
@@ -67,18 +78,16 @@ export default function SurveyStep2({
           );
           return (
             <div className={styles.rowSurveyButtonWrapper}>
-              {surveyFormInfo.dogBasicInfo.isSenior.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    inputType="normal"
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
+              {surveyFormInfo.dogBasicInfo.oldDog.options.map((option) => (
+                <SurveyButton
+                  key={option.label}
+                  label={option.label}
+                  value={option.value}
+                  inputType="normal"
+                  isChecked={isSelected(option.value)}
+                  onToggle={onToggle}
+                />
+              ))}
             </div>
           );
         }}

@@ -1,6 +1,6 @@
 import React from "react";
 import { COLORS } from "@/constants/style";
-
+import { svgIconStyle } from "./SvgIcon.css";
 
 export interface IconProps extends React.SVGProps<SVGSVGElement> {
   src: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -8,6 +8,7 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   color?: keyof typeof COLORS;
   width?: number;
   height?: number;
+  className?: string;
 }
 
 const SvgIcon: React.FC<IconProps> = ({
@@ -16,6 +17,7 @@ const SvgIcon: React.FC<IconProps> = ({
   color = "gray900",
   width,
   height,
+  className,
   ...rest
 }) => {
   return (
@@ -23,6 +25,7 @@ const SvgIcon: React.FC<IconProps> = ({
       width={width ?? size}
       height={height ?? size}
       style={{ color: COLORS[color] }}
+      className={`${svgIconStyle} ${className || ""}`}
       {...rest}
     />
   );

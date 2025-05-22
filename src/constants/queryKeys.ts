@@ -47,6 +47,7 @@ const queryKeys = {
     BASE: 'dog',
     GET_DOG_LIST: 'getDogList',
     GET_DOG_DETAIL: 'getDogDetail',
+    CHECK_DUPLICATE_DOG_NAME: "checkDuplicateDogName",
   },
   ORDER: {
     BASE: 'order',

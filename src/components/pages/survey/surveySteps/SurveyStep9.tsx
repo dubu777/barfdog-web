@@ -24,7 +24,7 @@ export default function SurveyStep9({
     <>
       <SurveyTitle petName={petName} config={surveyTitles.step9} />
       <Controller
-        name="step9.snackFrequency"
+        name="step9.snackCountLevel"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption(
@@ -37,7 +37,7 @@ export default function SurveyStep9({
           );
           return (
             <div className={styles.colSurveyButtonWrapper}>
-              {surveyFormInfo.dogLifestyle.snackFrequency.options.map(
+              {surveyFormInfo.dogLifestyle.snackCountLevel.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}
