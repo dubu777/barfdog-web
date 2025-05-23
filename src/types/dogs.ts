@@ -38,7 +38,7 @@ interface DogListData {
 interface DogDetailData {
   id: number;
   name: string;
-  gender: keyof typeof DOG_GENDER;
+  gender: keyof typeof DOG_GENDER | '';
   birth: string;
   oldDog: boolean;
   dogType: string;

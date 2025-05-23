@@ -18,6 +18,7 @@ const HealthNoteHeader = () => {
 		Object.entries(rawParams).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value])
 	) as Record<string, string>;
 	const goBack = useBackNavigation();
+	const goBackPreviousPage = useBackNavigation(undefined, true);
 
 	const headerConfigs: Record<
 		string,
@@ -46,11 +47,16 @@ const HealthNoteHeader = () => {
 			onBack?: () => void
 		}
 		> = {
-		'/health-note/dogs/': () => ({
-			centerTitle: '반려견 정보 수정',
-			showBackButton: true,
-			onBack: goBack,
-		})
+		'/health-note/dogs/': (param) => {
+			const dogDetail = !!param?.dogId;
+			return {
+				centerTitle: dogDetail ? '반려견 정보 수정' : '반려견 추가',
+				showBackButton: dogDetail,
+				onBack: goBackPreviousPage,
+				showCloseButton: !dogDetail,
+				onClose: goBackPreviousPage,
+			}
+		},
 	};
 	
 	const headerProps = useMemo(

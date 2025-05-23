@@ -20,8 +20,10 @@ import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
 import { AUTH_CONFIG } from "@/constants/auth";
+import { useRouter } from "next/navigation";
 
 const HealthNoteMainHeader = () => {
+	const router = useRouter();
 	const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
 	const isLogin = isAuthenticated(token);
 
@@ -103,7 +105,7 @@ const HealthNoteMainHeader = () => {
 								<SvgIcon src={PlusIcon} />새로운 아이 등록하기
 							</DefaultText>
 						}
-						onPrimaryClick={() => console.log('')}
+						onPrimaryClick={() => router.push('/health-note/dogs/create')}
 						position='sticky'
 					/>
 				</BottomSheet>

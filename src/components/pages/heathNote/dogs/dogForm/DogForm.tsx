@@ -1,6 +1,15 @@
 import * as styles from './DogForm.css';
 import { useCallback, useState } from "react";
-import { Control, Controller, FieldErrors, UseFormSetError, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { format } from "date-fns";
+import {
+	Control,
+	Controller,
+	FieldErrors,
+	FieldNamesMarkedBoolean, UseFormClearErrors,
+	UseFormSetError,
+	UseFormSetValue,
+	UseFormWatch
+} from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import InputLabel from "@/components/common/inputLabel/InputLabel";
 import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
@@ -17,41 +26,60 @@ import { useCheckDuplicateDogName } from "@/api/dog/queries/useCheckDuplicateDog
 
 interface DogFormProps {
 	type: 'update' | 'create';
-	dogInfo: DogDetailData;
+	dogInfo: DogDetailData | null;
 	dogPictureUrl?: string;
+	dogName?: string;
 	control: Control<DogFormValues>;
 	errors: FieldErrors<DogFormValues>;
 	setError: UseFormSetError<DogFormValues>;
+	clearErrors: UseFormClearErrors<DogFormValues>;
 	watch: UseFormWatch<DogFormValues>;
 	setValue: UseFormSetValue<DogFormValues>;
 	isValid: boolean;
 	handleFileChange: (file: File | null) => void;
 	handleSubmit: () => void;
-	isDisabledNameVerified: boolean;
+	dirtyFields: FieldNamesMarkedBoolean<DogFormValues>;
 }
 
 const DogForm = ({
 	type,
 	dogInfo,
 	dogPictureUrl,
+	dogName,
 	control,
 	errors,
 	setError,
+	clearErrors,
 	watch,
 	setValue,
 	isValid,
 	handleFileChange,
 	handleSubmit,
-	isDisabledNameVerified,
+	dirtyFields,
 }: DogFormProps) => {
 	const dogSize = Object.entries(DOG_SIZE).map(([key, value]) => ({ label: value, value: key as keyof typeof DOG_SIZE}))
+	const isDisabledNameVerified = !dirtyFields.name;
+
 	const [successMessage, setSuccessMessage] = useState('');
 
 	const { isOpen: isOpenDogTypeModal, onClose: onCloseDogTypeModal, onToggle: onToggleDogTypeModal } = useModal();
 	const { isFetching, refetch: checkDuplicate } =
 		useCheckDuplicateDogName(watch('name'), { enabled: false });
 
+	const handleBlurNameDuplicate = () => {
+		if (type === 'create' && watch('name') && !watch('nameVerified')) {
+			setError('name', { message: '반려견 이름 중복 확인을 해주세요' });
+		}
+	}
+
+	const handleChangeName = () => {
+		setValue('nameVerified', false, { shouldValidate: true });
+		setSuccessMessage('');
+	}
+
 	const handleDuplicateCheck = useCallback(async () => {
+		clearErrors('name')
+
 		if (!watch('name')) {
 			setError('name', { message: '이름을 입력해주세요.' })
 			return;
@@ -68,6 +96,7 @@ const DogForm = ({
 			setValue('nameVerified', false, { shouldValidate: true });
 		}
 	}, [watch('name'), checkDuplicate, setError, setValue]);
+	
 	return (
 		<>
 		<article className={styles.dogProfileImageBox}>
@@ -76,7 +105,7 @@ const DogForm = ({
 				<FileUpload
 					onFileChange={handleFileChange}
 					defaultImageUrl={dogPictureUrl}
-					defaultImageName={dogInfo.name}
+					defaultImageName={dogInfo?.name || ''}
 					imageName='반려견 이미지'
 					imageWidth={89}
 					imageHeight={89}
@@ -94,8 +123,7 @@ const DogForm = ({
 						{...field}
 						onChange={(e) => {
 							field.onChange(e);
-							setValue('nameVerified', false, { shouldValidate: true });
-							setSuccessMessage('');
+							handleChangeName();
 						}}
 						variants='box'
 						placeholder='반려견 이름을 입력해주세요.'
@@ -108,6 +136,7 @@ const DogForm = ({
 						confirmButtonDisabled={!watch('name') || isDisabledNameVerified}
 						onSubmit={handleDuplicateCheck}
 						success={successMessage}
+						onBlur={handleBlurNameDuplicate}
 					/>
 				}
 			/>
@@ -165,7 +194,9 @@ const DogForm = ({
 							<CustomDatePicker
 								name={field.name}
 								value={field.value}
-								onChange={field.onChange}
+								onChange={(date) => {
+									field.onChange(format(date as Date, 'yyyy-MM-dd'))
+								}}
 								dateFormat='yyyy-MM-dd'
 								marginBottom={false}
 								isDisabled={type === 'update'}
@@ -248,7 +279,7 @@ const DogForm = ({
 			/>
 			{isOpenDogTypeModal &&
 			<DogTypeModal
-				dogName={dogInfo.name}
+				dogName={dogInfo?.name || dogName as string}
 				value={watch('dogType')}
 				onChange={(value) => setValue('dogType', value)}
 				isOpen={isOpenDogTypeModal}

@@ -6,6 +6,7 @@ const protectedPaths = [
   "/mypage",
   "/order",
   "/diet-analysis/",
+  "/health-note/",
 ];
 
 const isProtectedPath = (pathname: string): boolean => {
@@ -51,5 +52,6 @@ export const config = {
     "/order/:path*",
     "/login",
     "/diet-analysis/:path*",
+    "/health-note/:path*",
   ],
 };

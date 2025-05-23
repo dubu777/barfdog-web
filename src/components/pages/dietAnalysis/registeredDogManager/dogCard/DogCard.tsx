@@ -1,5 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
+import Link from "next/link";
 import * as styles from "./DogCard.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
@@ -65,7 +66,9 @@ export default function DogCard({
               {subscribeStatus}
             </Chips>
             </div>
-            <SvgIcon src={EditIcon} size={32} color="gray500" />
+            <Link href={`/health-note/dogs/${dogId}`}>
+              <SvgIcon src={EditIcon} size={32} color="gray500" />
+            </Link>
           </div>
           <div className={commonWrapper({ justify: "start", gap: 6 })}>
             <SvgIcon

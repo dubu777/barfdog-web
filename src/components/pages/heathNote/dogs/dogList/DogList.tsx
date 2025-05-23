@@ -1,18 +1,17 @@
 'use client';
 import * as styles from './DogList.css';
-import { createDogButton, dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
+import { dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import Link from "next/link";
 import Image from "next/image";
 import FemaleIcon from '/public/images/healthNote/female.svg';
 import MaleIcon from '/public/images/healthNote/male.svg';
 import PenIcon from '/public/images/healthNote/pen.svg';
-import PlusIcon from "/public/images/subscription/plus.svg";
 import DogIcon from '/public/images/healthNote/dogIcon.png';
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Chips from "@/components/common/chips/Chips";
-import Button from "@/components/common/button/Button";
+import CreateDogButton from "@/components/pages/heathNote/common/createDogButton/CreateDogButton";
 import { DOG_GENDER } from "@/constants/dog";
 import { useGetFullDogList } from "@/api/dog/queries/useGetFullDogList";
 
@@ -44,14 +43,11 @@ function formatAgeFromBirth(birth: string): string {
 
 const DogList = () => {
 	const { data: dogList } = useGetFullDogList();
+
 	return (
 		<section>
 			<article className={styles.createDogButton}>
-				<Button variant='outline' type='assistive' fullWidth>
-					<DefaultText type='headline3' className={createDogButton}>
-						<SvgIcon src={PlusIcon} />새로운 아이 등록하기
-					</DefaultText>
-				</Button>
+				<CreateDogButton />
 			</article>
 			<article>
 				<div className={styles.dogList}>
@@ -62,7 +58,7 @@ const DogList = () => {
 								<div className={styles.dogInfo}>
 									<div className={styles.dogInfoTop}>
 										<div className={styles.dogName}>
-											<DefaultText type='headline3'>
+											<DefaultText type='headline1'>
 												{dog.name}
 											</DefaultText>
 											{dog.subscribeStatus === 'SUBSCRIBING' &&

@@ -10,48 +10,13 @@ import { useUpdateDogInfo } from "@/api/dog/mutations/useUpdateDogInfo";
 import { useUploadDogProfileImage } from "@/api/dog/mutations/useUploadDogProfileImage";
 import { useGetDogDetail } from "@/api/dog/queries/useGetDogDetail";
 import { useGetFullDogList } from "@/api/dog/queries/useGetFullDogList";
-import { DogDetailData, DogFormValues } from "@/types";
+import { DogFormValues } from "@/types";
 import useModal from "@/hooks/useModal";
 import ChangeGramBottomSheet
 	from "@/components/pages/heathNote/dogs/dogDetail/changeGramBottomSheet/ChangeGramBottomSheet";
 import ChangePriceModal from "@/components/pages/heathNote/dogs/dogDetail/changePriceModal/ChangePriceModal";
+import { defaultDogInfoValues, dogInfoSchema } from "@/utils/validation/dogValidation";
 
-const dogInfoSchema = (dogOriginalName) =>
-	yup.object().shape({
-		name: yup.string().required('이름은 필수입니다.'),
-		nameVerified: yup
-			.boolean()
-			.when('name', {
-				is: (name: string) => name !== dogOriginalName,
-				then: schema => schema.oneOf([true], '이름 중복 확인이 필요합니다.'),
-				otherwise: schema => schema.notRequired(),
-			}),
-		gender: yup.string().required('성별은 필수입니다.'),
-		neutralization: yup.boolean(),
-		dogSize: yup.mixed<'LARGE' | 'MIDDLE' | 'SMALL'>().oneOf(['LARGE', 'MIDDLE', 'SMALL']).nullable(),
-		weight: yup
-			.string()
-			.matches(/^\d+(\.\d+)?$/, "숫자만 입력해 주세요.")
-			.matches(
-				/^\d+(?:\.\d{0,1})?$/,
-				"몸무게는 소숫점 첫째 자리까지 입력할 수 있습니다."
-			).required('몸무게 설정은 필수입니다.'),
-		birth: yup.string().required('생년월일은 필수입니다.'),
-		oldDog: yup.boolean(),
-		dogType: yup.string().required('견종 선택은 필수입니다.'),
-	})
-
-const defaultDogInfoValues = (dogInfo: DogDetailData): DogFormValues => ({
-	name: dogInfo?.name || '',
-	nameVerified: false,
-	gender: dogInfo?.gender || '',
-	neutralization: dogInfo?.neutralization ?? false,
-	dogSize: dogInfo?.dogSize || null,
-	weight: dogInfo?.weight || 0,
-	birth: dogInfo?.birth || '',
-	oldDog: dogInfo?.oldDog ?? false,
-	dogType: dogInfo?.dogType || '',
-});
 
 const DogDetail = ({ dogId }: { dogId: number }) => {
 	const goBack = useBackNavigation(undefined, true);
@@ -74,10 +39,10 @@ const DogDetail = ({ dogId }: { dogId: number }) => {
 	const dogOriginalName = dogInfo.name;
 	const dogOriginalWeight = dogInfo.weight;
 
-	const { handleSubmit, control, errors, watch, setValue, setError, isValid, dirtyFields } = useFormHandler<DogFormValues>(dogInfoSchema(dogOriginalName), defaultDogInfoValues(dogInfo));
+	const { handleSubmit, control, errors, watch, setValue, setError, isValid, dirtyFields, clearErrors } =
+		useFormHandler<DogFormValues>(dogInfoSchema(dogOriginalName), defaultDogInfoValues(dogInfo));
 
 	const isSubscribing = !!dogInfo.subscribeId;
-	const isDisabledNameVerified = !dirtyFields.name;
 	const isDirtyFields = (
 		dirtyFields?.neutralization ||
 		dirtyFields?.oldDog ||
@@ -125,10 +90,13 @@ const DogDetail = ({ dogId }: { dogId: number }) => {
 	}
 
 	const onSubmit = async (data: DogFormValues, isBackNavigation?: boolean) => {
+		const { nameVerified, weight, ...rest } = data;
+
 		await handleFileUpload();
 		const updatedInfo = {
 			...dogInfo,
-			...data,
+			...rest,
+			weight: Number(weight),
 		};
 		dogInfoMutation({
 			body: updatedInfo,
@@ -164,6 +132,7 @@ const DogDetail = ({ dogId }: { dogId: number }) => {
 				control={control}
 				errors={errors}
 				setError={setError}
+				clearErrors={clearErrors}
 				watch={watch}
 				setValue={setValue}
 				isValid={isValid}
@@ -173,7 +142,7 @@ const DogDetail = ({ dogId }: { dogId: number }) => {
 						? onToggleChangeGram
 						: handleSubmitWithBack
 				}
-				isDisabledNameVerified={isDisabledNameVerified}
+				dirtyFields={dirtyFields}
 			/>
 			{isSubscribing && isDirtyFields &&
 				<ChangeGramBottomSheet

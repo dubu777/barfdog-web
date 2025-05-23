@@ -6,7 +6,7 @@ import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import DogList from "@/components/pages/heathNote/dogs/dogList/DogList";
 import { prefetchGetFullDogList } from "@/api/dog/queries/usePrefetchGetFullDogList";
 
-export default async function HeathNotePage() {
+export default async function HeathNoteDogsPage() {
 	const queryClient = new QueryClient();
 	await prefetchGetFullDogList(queryClient);
 	const dehydrateState = dehydrate(queryClient);
