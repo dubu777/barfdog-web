@@ -15,6 +15,7 @@ import { RecipeDto } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
 
+
 interface RecipeDetailModalProps {
   recipeTempData: RecipeTempData;
   dogName: string;
@@ -68,8 +69,8 @@ export default function RecipeDetailModal({
           priority
         />
         <div>
-          <DefaultText type="title4">{recipeTempData.name}</DefaultText>
-          <DefaultText type="headline4" color="gray500">
+          <DefaultText type="title4" block>{recipeTempData.name}</DefaultText>
+          <DefaultText type="headline4" color="gray500" block>
             {recipeTempData.englishName}
           </DefaultText>
         </div>

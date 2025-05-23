@@ -32,11 +32,6 @@ export default function GeneralItemCard({
     onClose: onDetailClose,
     onToggle: onDetailToggle,
   } = useModal();
-  const {
-    isOpen: isAlertOpen,
-    onClose: onAlertClose,
-    onToggle: onAlertToggle,
-  } = useModal();
 
   const { control } = useFormContext<SubscriptionValues>();
   const watchedList = useWatch({ control, name: "generalItemList" }) ?? [];
@@ -56,16 +51,8 @@ export default function GeneralItemCard({
       removeEntry();
       toast("상품 빼기를 완료했어요", "above-button");
     } else {
-      if (selectedIds.length > 1) {
-        onAlertToggle();
-        return;
-      }
       onDetailToggle();
     }
-  };
-
-  const handleDetailModal = () => {
-    onDetailToggle();
   };
 
   return (
@@ -119,7 +106,7 @@ export default function GeneralItemCard({
             {isSelected && (
               <div
                 className={styles.subscribeUpdateInputBox}
-                onClick={handleDetailModal}
+                onClick={() => onDetailToggle()}
               >
                 <DefaultText type="headline4" color="gray700">
                   {currentAmount}개
@@ -149,14 +136,6 @@ export default function GeneralItemCard({
         onCommit={commitEntry}
         pending={pending}
         existing={existing}
-      />
-      <AlertModal
-        title="레시피 선택은 최대 2개까지 가능해요"
-        content="다른 레시피를 담으시려면 기존에 선택한 레시피를 먼저 빼주세요"
-        confirmText="확인"
-        isOpen={isAlertOpen}
-        onClose={onAlertClose}
-        onConfirm={onAlertClose}
       />
     </div>
   );

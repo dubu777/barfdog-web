@@ -1,5 +1,5 @@
-import { subscriptionStatus } from "@/constants";
 import { DOG_GENDER, DOG_SIZE } from "@/constants/dog";
+import { subscriptionStatus } from "@/constants";
 
 interface DogData {
   id: number;
@@ -67,4 +67,11 @@ interface UploadDogProfileImage {
   url: string;
 }
 
-export type { DogData, FullDogDetail, UpdateDogData, DogListData, DogDetailData, UploadDogProfileImage };
+interface CheckDuplicateDogNameResponse {
+  result: "SUCCESS" | "FAIL";
+  data: null | string;
+  message: null | string;
+  errorCode: null | string;
+}
+
+export type { DogData, FullDogDetail, UpdateDogData, DogListData, DogDetailData, UploadDogProfileImage, CheckDuplicateDogNameResponse };

@@ -72,6 +72,7 @@ export interface CalculateRecipePackOutput {
   packGrams: number; // 팩당 그램 수 (추천 or 커스텀)
   packPrice: number; // 팩당 가격
   pricePer10g: number; // 10g당 가격
+  under20g?: number;
 }
 
 export interface CalculateRecipePackInput {
@@ -96,11 +97,18 @@ export function calculateRecipePack({
   const { gramPerKcal, pricePerGram } =
     isLegacy && legacyConst ? legacyConst : recipeDto;
 
+
   // 추천 급여량
-  const recommendedPackGrams = roundTo(
+  const rawRecommendedPackGrams = roundTo(
     (dailyRecommendKcal * gramPerKcal) / DEFAULT_MEALS_PER_DAY,
     1
   );
+
+  // 20g 미만일 때 값 사용자 안내용 값 반환
+  const under20g = rawRecommendedPackGrams < 20 ? rawRecommendedPackGrams : undefined;
+
+  // 추천 급여량 최소 20g 보장
+  const recommendedPackGrams = rawRecommendedPackGrams < 20 ? 20 : rawRecommendedPackGrams;
 
   // 실제 계산에 사용할 그램: custom이 있으면 custom, 없으면 recommended
   const usedPackGrams =
@@ -110,5 +118,5 @@ export function calculateRecipePack({
   const packPrice = roundTo(packGrams * pricePerGram, 0);
   const pricePer10g = roundTo(pricePerGram * 10, 0);
 
-  return { recommendedPackGrams, packGrams, packPrice, pricePer10g };
+  return { recommendedPackGrams, packGrams, packPrice, pricePer10g, under20g };
 }

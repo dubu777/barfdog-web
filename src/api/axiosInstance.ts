@@ -12,11 +12,6 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
-interface ErrorResponseData {
-  code?: number;
-  message?: string;
-}
-
 // 환경에 따른 baseURL 설정
 const prod = process.env.NODE_ENV === "production";
 const baseURL = prod

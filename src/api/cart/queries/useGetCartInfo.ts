@@ -11,6 +11,7 @@ function useGetCartInfo(queryOptions?: UseQueryCustomOptions<CartInfo>) {
 	return useQuery<CartInfo>({
 		queryKey: getCartInfoQueryKey,
 		queryFn: getCartInfo,
+		staleTime: 60 * 5 * 1000,
 		...queryOptions,
 	})
 }

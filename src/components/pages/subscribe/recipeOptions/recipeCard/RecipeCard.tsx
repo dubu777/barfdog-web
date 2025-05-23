@@ -7,16 +7,14 @@ import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
 import { RecipeDto } from "@/types";
-import { useFormContext, useWatch } from "react-hook-form";
 import RecipeDetailModal from "../../modal/recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useRecipeEntryManager } from "@/hooks/subscription/useRecipeManager";
 import { useToastStore } from "@/store/useToastStore";
 import { useMemo } from "react";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
-import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
+import { CalculateRecipePackOutput } from "@/utils/subscription/calculateRecipe";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 interface RecipeCardProps {
@@ -28,7 +26,9 @@ interface RecipeCardProps {
   dogName: string;
   isSelected: boolean;
   selectedIds: number[];
+  packData: CalculateRecipePackOutput;
   rank?: number;
+  isUnder20g: boolean;
 }
 
 export default function RecipeCard({
@@ -40,8 +40,13 @@ export default function RecipeCard({
   dogName,
   isSelected,
   selectedIds,
+  packData,
   rank,
+  isUnder20g,
 }: RecipeCardProps) {
+  const { recommendedPackGrams, packGrams, packPrice, pricePer10g } =
+    packData;
+
   const toast = useToastStore((s) => s.addToast);
   const {
     isOpen: isDetailOpen,
@@ -54,25 +59,9 @@ export default function RecipeCard({
     onToggle: onAlertToggle,
   } = useModal();
 
-  const { control } = useFormContext<SubscriptionValues>();
-  const recipeList = useWatch({ control, name: "recipeList" });
-
-  // 1) form에 들어있는 값
-  const entry = recipeList.find((r) => r.recipeId === recipeTempData.id);
-
-  // 2) entry가 없으면 추천값을 계산
-  const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = calculateRecipePack({
-    dailyRecommendKcal,
-    recipeDto,
-    subscribeId,
-    customPackGrams: entry?.packGrams
-  });
-
-  const breakdown = { recommendedPackGrams, packGrams, packPrice, pricePer10g };
-
   const { applyLocal, commitEntry, removeEntry } = useRecipeEntryManager(
     recipeTempData.id,
-    breakdown
+    packData
   );
 
   // 못먹는 재료 포함되는지 확인
@@ -95,14 +84,10 @@ export default function RecipeCard({
     }
   };
 
-  const handleDetailModal = () => {
-    onDetailToggle();
-  };
-
   return (
     <div
       className={styles.subscribeItemCardContainer({
-        isSelected
+        isSelected,
       })}
     >
       {inedibleOverlap.length > 0 && (
@@ -126,9 +111,11 @@ export default function RecipeCard({
           )}
           <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
         </div>
-        <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
-          추천 급여량 {recommendedPackGrams}g
-        </Chips>
+        {!isUnder20g && (
+          <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
+            추천 급여량 {recommendedPackGrams}g
+          </Chips>
+        )} 
       </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image
@@ -149,9 +136,15 @@ export default function RecipeCard({
             (10g당 {pricePer10g.toLocaleString()}원)
           </DefaultText>
 
-          <div className={commonWrapper({ direction: "row", gap: 4, justify: "start" })}>
+          <div
+            className={commonWrapper({
+              direction: "row",
+              gap: 4,
+              justify: "start",
+            })}
+          >
             <DefaultText type="headline1" color="gray900">
-              {breakdown.packPrice.toLocaleString()}원
+              {packPrice.toLocaleString()}원
             </DefaultText>
             <DefaultText type="caption" color="gray700">
               / 1팩 당
@@ -168,7 +161,10 @@ export default function RecipeCard({
       </div>
       <div className={commonWrapper({ gap: 8, justify: "end" })}>
         {isSelected && (
-          <div className={styles.subscribeUpdateInputBox} onClick={handleDetailModal}>
+          <div
+            className={styles.subscribeUpdateInputBox}
+            onClick={() => onDetailToggle()}
+          >
             <DefaultText type="headline4" color="gray700">
               {packGrams}g
             </DefaultText>

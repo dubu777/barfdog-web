@@ -71,10 +71,10 @@ const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
     titleTemplates: ["{petName}의", "견종은 무엇인가요?"],
   },
   step5: {
-    titleTemplates: ["현재", "임신 중인가요?"],
+    titleTemplates: ["{petName:topic}", "현재 임신 중인가요?"],
   },
   step6: {
-    titleTemplates: ["현재", "수유 중인가요?"],
+    titleTemplates: ["{petName:topic}", "현재 수유 중인가요?"],
   },
   step7: {
     titleTemplates: ["{petName}의", "체형은 어느 쪽에 가까운가요?"],
@@ -86,7 +86,7 @@ const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
     titleTemplates: ["{petName}의", "간식량은 어떤가요?"],
   },
   step10: {
-    titleTemplates: ["못 먹는 재료는", "무엇인가요?"],
+    titleTemplates: ["{petName:subject}", "못 먹는 재료는 무엇인가요?"],
   },
   step11: {
     titleTemplates: ["{petName}의", "건강고민은 무엇인가요?"],
@@ -95,13 +95,13 @@ const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
     ],
   },
   step12: {
-    titleTemplates: ["현재 먹고 있는", "사료는 무엇인가요?"],
+    titleTemplates: ["{petName:subject}", "현재 먹고 있는 사료는 무엇인가요?"],
   },
   step13: {
-    titleTemplates: ["현재 먹고 있는", "영양제가 있나요?"],
+    titleTemplates: ["{petName:subject}", "현재 먹고 있는 영양제가 있나요?"],
   },
   step14: {
-    titleTemplates: ["아래의 질병 중", "앓고 있는 질병이 있나요?"],
+    titleTemplates: ["{petName:topic}", "앓고 있는 질병이 있나요?"],
   },
 };
 
@@ -111,25 +111,25 @@ const surveyFormInfo = {
       title: "성별",
       options: [
         {
-          value: "female",
+          value: "FEMALE",
           label: "암컷",
           imageUrl: "/images/survey/female.png",
         },
         {
-          value: "male",
+          value: "MALE",
           label: "수컷",
           imageUrl: "/images/survey/male.png",
         },
       ],
     },
-    isNeutered: {
+    neutralization: {
       title: "중성화 여부",
       options: [
         { value: true, label: "중성화 했어요" },
         { value: false, label: "중성화 안했어요" },
       ],
     },
-    isSenior: {
+    oldDog: {
       title: "노령견",
       options: [
         { value: true, label: "노령견이에요" },
@@ -140,17 +140,17 @@ const surveyFormInfo = {
       title: "견사이즈",
       options: [
         {
-          value: "small",
+          value: "SMALL",
           label: "소형",
           imageUrl: "/images/survey/small-dog.png",
         },
         {
-          value: "medium",
+          value: "MEDIUM",
           label: "중형",
           imageUrl: "/images/survey/medium-dog.png",
         },
         {
-          value: "large",
+          value: "LARGE",
           label: "대형",
           imageUrl: "/images/survey/large-dog.png",
         },
@@ -162,18 +162,18 @@ const surveyFormInfo = {
     },
     pregnancy: {
       options: [
-        { value: "none", label: "아니요" },
-        { value: "early", label: "임신 초기" },
-        { value: "late", label: "임신 후기" },
+        { value: "NONE", label: "아니요" },
+        { value: "EARLY", label: "임신 초기" },
+        { value: "LATE", label: "임신 후기" },
       ],
     },
     lactation: {
       options: [
-        { value: "none", label: "아니요" },
-        { value: "1", label: "1~2마리" },
-        { value: "3", label: "3~4마리" },
-        { value: "5", label: "5~6마리" },
-        { value: "7", label: "7마리 이상" },
+        { value: "NONE", label: "아니요" },
+        { value: "LACTATION_ONE", label: "1~2마리" },
+        { value: "LACTATION_THREE", label: "3~4마리" },
+        { value: "LACTATION_FIVE", label: "5~6마리" },
+        { value: "LACTATION_SEVEN", label: "7마리 이상" },
       ],
     },
   },
@@ -181,31 +181,31 @@ const surveyFormInfo = {
     bodyCondition: {
       options: [
         {
-          value: "very_thin",
+          value: "VERY_THIN",
           label: "매우 마름",
           subLabel: ["근육이 거의 느껴지지 않음", "허리뼈와 골반뼈가 튀어나옴"],
           imageUrl: "/images/survey/very-thin.png",
         },
         {
-          value: "thin",
+          value: "THIN",
           label: "마름",
           subLabel: ["갈비뼈가 쉽게 만져짐", "허리선이 움푹 들어감"],
           imageUrl: "/images/survey/thin.png",
         },
         {
-          value: "normal",
+          value: "NORMAL",
           label: "적정 체중",
           subLabel: ["복부가 위로 올라가 있음", "허리선이 잘 구별됨"],
           imageUrl: "/images/survey/normal.png",
         },
         {
-          value: "overweight",
+          value: "OVERWEIGHT",
           label: "과체중",
           subLabel: ["복부가 평평", "허리선이 거의 보이지 않음"],
           imageUrl: "/images/survey/overweight.png",
         },
         {
-          value: "obese",
+          value: "OBESE",
           label: "심각한 비만",
           subLabel: ["복부가 심하게 쳐짐", "허리선이 없고 옆으로 볼록함"],
           imageUrl: "/images/survey/obese.png",
@@ -214,27 +214,27 @@ const surveyFormInfo = {
     },
     activityLevel: {
       options: [
-        { value: "very_high", label: "매우 많아요" },
-        { value: "high", label: "많아요" },
-        { value: "normal", label: "보통이에요" },
-        { value: "low", label: "적어요" },
-        { value: "very_low", label: "매우 적어요" },
+        { value: "VERY_MUCH", label: "매우 많아요" },
+        { value: "MUCH", label: "많아요" },
+        { value: "NORMAL", label: "보통이에요" },
+        { value: "LITTLE", label: "적어요" },
+        { value: "VERY_LITTLE", label: "매우 적어요" },
       ],
     },
-    snackFrequency: {
+    snackCountLevel: {
       options: [
         {
-          value: "low",
+          value: "LITTLE",
           label: "적어요",
           subLabel: "식사에 영향을 주지 않는 양",
         },
         {
-          value: "moderate",
+          value: "NORMAL",
           label: "적당해요",
           subLabel: "어느정도 영향을 주는 양",
         },
         {
-          value: "high",
+          value: "MUCH",
           label: "많아요",
           subLabel: "식사에 상당한 영향을 주는 양",
         },
@@ -242,64 +242,64 @@ const surveyFormInfo = {
     },
     inedibleFood: {
       options: [
-        { value: "none", label: "없어요" },
-        { value: "chicken", label: "닭" },
-        { value: "turkey", label: "칠면조" },
-        { value: "duck", label: "오리" },
-        { value: "lamb", label: "양" },
-        { value: "cow", label: "소" },
-        { value: "kangaroo", label: "캥거루" },
-        { value: "goat", label: "염소" },
-        { value: "quail", label: "메추리" },
-        { value: "heart", label: "심장" },
+        { value: "NONE", label: "없어요" },
+        { value: "CHICKEN", label: "닭" },
+        { value: "TURKEY", label: "칠면조" },
+        { value: "DUCK", label: "오리" },
+        { value: "LAMB", label: "양" },
+        { value: "COW", label: "소" },
+        { value: "KANGAROO", label: "캥거루" },
+        { value: "GOAT", label: "염소" },
+        { value: "QUAIL", label: "메추리" },
+        { value: "HEART", label: "심장" },
       ],
     },
     healthConcerns: {
       options: [
         {
-          value: "vomiting_diarrhea",
+          value: "VOMITING_DIARRHEA",
           label: "구토•설사",
           Icon: Bowel,
           SelectedIcon: FillBowel,
         },
         {
-          value: "weight_control",
+          value: "WEIGHT_CONTROL",
           label: "체중조절",
           Icon: Diet,
           SelectedIcon: FillDiet,
         },
         {
-          value: "energy_boost",
+          value: "ENERGY_BOOST",
           label: "기력보충",
           Icon: Energy,
           SelectedIcon: FillEnergy,
         },
         {
-          value: "tears",
+          value: "TEARS",
           label: "눈물•눈곱",
           Icon: Eye,
           SelectedIcon: FillEye,
         },
         {
-          value: "skin_hair",
+          value: "SKIN_HAIR",
           label: "피부•모질",
           Icon: Skincare,
           SelectedIcon: FillSkincare,
         },
         {
-          value: "joint_health",
+          value: "JOINT_HEALTH",
           label: "관절 건강",
           Icon: Born,
           SelectedIcon: FillBorn,
         },
         {
-          value: "puppy_development",
+          value: "PUPPY_DEVELOPMENT",
           label: "자견 발육",
           Icon: Puppy,
           SelectedIcon: FillPuppy,
         },
         {
-          value: "senior_health",
+          value: "SENIOR_HEALTH",
           label: "노령견 건강",
           Icon: Olddog,
           SelectedIcon: FillOlddog,
@@ -310,89 +310,89 @@ const surveyFormInfo = {
   dogDietHealth: {
     currentMeal: {
       options: [
-        { value: "dry", label: "건사료" },
-        { value: "wet", label: "습식사료" },
-        { value: "homemade", label: "홈메이드식" },
-        { value: "freeze_dried", label: "동결건조" },
-        { value: "cooked", label: "화식" },
-        { value: "raw", label: "생식" },
+        { value: "DRY", label: "건사료" },
+        { value: "WET", label: "습식사료" },
+        { value: "HOMEMADE", label: "홈메이드식" },
+        { value: "FREEZE_DRIED", label: "동결건조" },
+        { value: "COOKED", label: "화식" },
+        { value: "RAW", label: "생식" },
       ],
     },
     supplements: {
       options: [
-        { value: "none", label: "없어요" },
-        { value: "probiotics", label: "유산균" },
-        { value: "omega_3", label: "오메가-3" },
-        { value: "antioxidant", label: "항산화" },
-        { value: "joint", label: "관절" },
-        { value: "eye", label: "눈" },
-        { value: "skin", label: "피부" },
-        { value: "immunity", label: "면역력" },
-        { value: "heart", label: "심장" },
-        { value: "teeth", label: "치아" },
-        { value: "bronchus", label: "기관지" },
-        { value: "general", label: "종합" },
+        { value: "NONE", label: "없어요" },
+        { value: "PROBIOTICS", label: "유산균" },
+        { value: "OMEGA_3", label: "오메가-3" },
+        { value: "ANTIOXIDANT", label: "항산화" },
+        { value: "JOINT", label: "관절" },
+        { value: "EYE", label: "눈" },
+        { value: "SKIN", label: "피부" },
+        { value: "IMMUNITY", label: "면역력" },
+        { value: "HEART", label: "심장" },
+        { value: "TEETH", label: "치아" },
+        { value: "BRONCHUS", label: "기관지" },
+        { value: "GENERAL", label: "종합" },
       ],
     },
     healthIssues: {
       options: [
-        { value: "none", label: "없어요", Icon: Non, SelectedIcon: FillNon },
+        { value: "NONE", label: "없어요", Icon: Non, SelectedIcon: FillNon },
         {
-          value: "hyperlipidemia",
+          value: "HYPERLIPIDEMIA",
           label: "고지혈증",
           Icon: Hyperlipidemia,
           SelectedIcon: FillHyperlipidemia,
         },
         {
-          value: "pancreatic",
+          value: "PANCREATIC",
           label: "췌장질환",
           Icon: Pancreas,
           SelectedIcon: FillPancreas,
         },
         {
-          value: "heart",
+          value: "HEART",
           label: "심장병",
           Icon: Heart,
           SelectedIcon: FillHeart,
         },
         {
-          value: "kidney",
+          value: "KIDNEY",
           label: "신장병",
           Icon: Kidney,
           SelectedIcon: FillKidney,
         },
         {
-          value: "dermatitis",
+          value: "DERMATITIS",
           label: "피부염",
           Icon: Skin,
           SelectedIcon: FillSkin,
         },
         {
-          value: "cholelithiasis",
+          value: "CHOLELITHIASIS",
           label: "쓸개골탈구",
           Icon: Born,
           SelectedIcon: FillBorn,
         },
         {
-          value: "liver_disease",
+          value: "LIVER_DISEASE",
           label: "간질환",
           Icon: Liver,
           SelectedIcon: FillLiver,
         },
         {
-          value: "diabetes",
+          value: "DIABETES",
           label: "당뇨병",
           Icon: Diabetes,
           SelectedIcon: FillDiabetes,
         },
         {
-          value: "ear_inflammation",
+          value: "EAR_INFLAMMATION",
           label: "귀염증",
           Icon: Ear,
           SelectedIcon: FillEar,
         },
         {
-          value: "tears",
+          value: "TEARS",
           label: "눈물•안구",
           Icon: Eye,
           SelectedIcon: FillEye,
@@ -403,10 +403,10 @@ const surveyFormInfo = {
 };
 
 const CRITICAL_DISEASES = [
-  {value: "hyperlipidemia", label: "고지혈증"},
-  {value: "pancreatic", label: "췌장질환"},
-  {value: "heart", label: "심장병"},
-  {value: "kidney", label: "신장병"},
+  { value: "HYPERLIPIDEMIA", label: "고지혈증" },
+  { value: "PANCREATIC", label: "췌장질환" },
+  { value: "HEART", label: "심장병" },
+  { value: "KIDNEY", label: "신장병" },
 ];
 
 export interface RecipeTempData {
@@ -501,5 +501,4 @@ const SURVEY_NO_AUTO_STEP = new Set<SurveyStepKeys>([
   "step14",
 ]);
 
-
-const NONE_VALUE = "none";
+const NONE_VALUE = "NONE";

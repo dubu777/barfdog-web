@@ -1,7 +1,6 @@
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import { commonWrapper } from "@/styles/common.css";
 import { SubscribeGeneralItem } from "@/types";
 import Image from "next/image";
 import * as styles from "./GeneralItemDetailModal.css"
@@ -9,6 +8,7 @@ import MinusIcon from "public/images/subscription/minus.svg";
 import PlusIcon from "public/images/subscription/plus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { useEffect } from "react";
+import { useToastStore } from "@/store/useToastStore";
 
 interface GeneralItemDetailModalProps {
   isOpen: boolean;
@@ -29,6 +29,7 @@ export default function GeneralItemDetailModal({
   isOpen,
   onClose,
 }: GeneralItemDetailModalProps) {
+  const toast = useToastStore(s => s.addToast);
 
   useEffect(() => {
     if (isOpen) {
@@ -50,6 +51,7 @@ export default function GeneralItemDetailModal({
   };
 
   const handleCommit = () => {
+    toast("상품을 담았어요", "above-button");
     onCommit();
     onClose();
   };

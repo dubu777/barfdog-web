@@ -1,6 +1,6 @@
 import axiosInstance from "../axiosInstance";
 import { AxiosInstance } from "axios";
-import { DogDetailData, DogListData, FullDogDetail, UploadDogProfileImage } from "@/types";
+import { DogDetailData, DogListData, FullDogDetail, UploadDogProfileImage, CheckDuplicateDogNameResponse } from "@/types";
 
 const getDogList = async (instance: AxiosInstance = axiosInstance): Promise<DogListData[]> => {
   console.log('instance!!!!!!!!', instance)
@@ -72,4 +72,9 @@ const getFullDogList = async (instance: AxiosInstance = axiosInstance): Promise<
 };
 
 
-export { getDogList, updateRepresentativeDog, uploadDogProfileImage, updateDogProfileImage, getDogDetail, getFullDogList, updateDogInfo }
+const checkDuplicateDogName = async (dogName: string): Promise<CheckDuplicateDogNameResponse> => {
+  const { data } = await axiosInstance.get(`/api/dogs/name/duplication?dogName=${dogName}`);
+  return data._embedded.commonResponseList[0];
+}
+
+export { getDogList, updateRepresentativeDog, uploadDogProfileImage, updateDogProfileImage, getDogDetail, getFullDogList, updateDogInfo, checkDuplicateDogName }

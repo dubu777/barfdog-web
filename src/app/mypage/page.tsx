@@ -4,6 +4,7 @@ import { prefetchGetMyPageBanner } from "@/api/mypage/queries/useGetMypageBanner
 import { prefetchGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
 import MyPageMain from "@/components/pages/mypage/main/MyPageMain";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
+import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
 
 export default async function MyPagePage() {
   const queryClient = new QueryClient();

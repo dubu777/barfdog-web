@@ -13,6 +13,9 @@ import { getNameWithPossessiveSuffix } from "@/utils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import useModal from "@/hooks/useModal";
 import RecommendKcalBottomSheet from "../bottomSheet/RecommendKcalBottomSheet";
+import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
+import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
+import { useFormContext, useWatch } from "react-hook-form";
 
 interface RecipeOptionsProps {
   recipeData: RecipeData;
@@ -25,7 +28,10 @@ export default function RecipeOptions({
   inedibleFood,
   selectedIds,
 }: RecipeOptionsProps) {
-  const { isOpen, onClose, onToggle } = useModal()
+  const { isOpen, onClose, onToggle } = useModal();
+  const { control } = useFormContext<SubscriptionValues>();
+  const recipeList = useWatch({ control, name: "recipeList" });
+  
   // 임시 - Api 데이터 변경전까지
   const allRecipes = useMemo(() => Object.values(recipeTempData), []);
 
@@ -35,6 +41,24 @@ export default function RecipeOptions({
       recipeData.recipeDtoList.map((dto) => [dto.id, dto] as const)
     ) as Record<number, RecipeDto>;
   }, [recipeData.recipeDtoList]);
+
+  const kcal = recipeData.foodAnalysis.oneDayRecommendKcal;
+  const subscribeId = recipeData.subscribeId;
+
+  const packMap = useMemo(() => {
+    const map: Record<number, ReturnType<typeof calculateRecipePack>> = {};
+    allRecipes.forEach((r) => {
+      const dto = recipeDtoMap[r.id];
+      const entry = recipeList.find((e) => e.recipeId === r.id);
+      map[r.id] = calculateRecipePack({
+        dailyRecommendKcal: kcal,
+        recipeDto: dto,
+        subscribeId,
+        customPackGrams: entry?.packGrams,
+      });
+    });
+    return map;
+  }, [allRecipes, recipeDtoMap, recipeList, kcal, subscribeId]);
 
   const sections = [
     {
@@ -66,9 +90,8 @@ export default function RecipeOptions({
   }));
 
   const name = getNameWithPossessiveSuffix(recipeData.dogName);
-  const kcal = recipeData.foodAnalysis.oneDayRecommendKcal;
+  const recommendedRecipeList = [5, 10, 7];
 
-  const recommendedRecipeList = [5,10, 7]
   return (
     <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
@@ -104,26 +127,27 @@ export default function RecipeOptions({
                 </DefaultText>
               </div>
               <div className={styles.recipeCardWrapper}>
-              {items.map((recipeTempData) => {
-
+                {items.map((recipeTempData) => {
                   const rankIndex = recommendedRecipeList.indexOf(
                     recipeTempData.id
                   );
                   const displayRank =
                     rankIndex >= 0 ? rankIndex + 1 : undefined;
-
+                  const packData = packMap[recipeTempData.id];
                   return (
                     <RecipeCard
                       key={recipeTempData.id}
                       recipeTempData={recipeTempData}
                       recipeDto={recipeDtoMap[recipeTempData.id]}
                       dailyRecommendKcal={kcal}
+                      packData={packData}
                       subscribeId={recipeData.subscribeId}
                       inedibleFood={inedibleFood}
                       dogName={recipeData.dogName}
                       selectedIds={selectedIds}
                       isSelected={selectedIds.includes(recipeTempData.id)}
                       rank={displayRank}
+                      isUnder20g={packData.under20g !== undefined}
                     />
                   );
                 })}
@@ -133,12 +157,12 @@ export default function RecipeOptions({
           </React.Fragment>
         ))}
       </div>
-        <RecommendKcalBottomSheet
-          isOpen={isOpen}
-          onClose={onClose}
-          dogName={recipeData.dogName}
-          oneDayRecommendKcal={recipeData.foodAnalysis.oneDayRecommendKcal}
-        />
+      <RecommendKcalBottomSheet
+        isOpen={isOpen}
+        onClose={onClose}
+        dogName={recipeData.dogName}
+        oneDayRecommendKcal={recipeData.foodAnalysis.oneDayRecommendKcal}
+      />
     </section>
   );
 }

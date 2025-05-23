@@ -10,10 +10,11 @@ export const baseStyle = style({
 });
 
 export const textStyle = style({
+  fontFamily: 'var(--font-pretendard)',
   display: "inline-flex",
   justifyContent: "center",
   alignItems: "center",
-  lineHeight: 1,
+  lineHeight: "normal",
   whiteSpace: "nowrap",
 });
 

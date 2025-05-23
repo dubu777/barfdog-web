@@ -21,7 +21,7 @@ export default function SurveyButtonGroup({
   children,
 }: SurveyButtonGroupProps) {
   const specialErrorMessage =
-    "바프독 맞춤 식단은 0.8kg 이상의 반려견에게 급여가 가능해요";
+    "몸무게가 작은 아이의 경우 급여량이 적게 계산될 수 있어요. 포장은 20g부터 가능하지만, 급여는 계산된 양에 맞춰 나눠주시면 됩니다.";
 
   return (
     <div className={surveyButtonWrapper}>
@@ -36,7 +36,7 @@ export default function SurveyButtonGroup({
       {(error || info) && (
         <div className={styles.surveyErrorWrapper}>
           {error === specialErrorMessage ? (
-            <InfoBox text={error} color="red" type="help" fullWidth />
+            <InfoBox text={error} color="gray" type="info" fullWidth />
           ) : (
             <>
               <SvgIcon src={error ? CloseIcon : CheckIcon} size={19} />

@@ -50,13 +50,10 @@ export default function GeneralShopTest() {
     });
   };
 
-  const handleCokBankCookieTest = async () => {
-    setCookie(ALLIANCE_COOKIE, "cb");
-  };
 
   const handleSubscriptionOptions = async () => {
-    window.location.href =
-      "/order/subscription-sheet?reportId=3761&type=select-recipe";
+    router.push("/diet-analysis/subscribe?reportId=3769")
+      
   };
 
   return (

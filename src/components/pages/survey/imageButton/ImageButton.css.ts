@@ -28,7 +28,10 @@ export const imageButtonBox = recipe({
       },
     },
     display: {
-      grid: {
+      grid1: {
+        flexBasis: 'calc((100% - 16px) / 3)',
+      },
+      grid2: {
         '@media': {
           'screen and (min-width: 600px)': {
             flexBasis: 'calc((100% - 24px) / 4)',
