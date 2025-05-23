@@ -7,7 +7,7 @@ import Header from "@/components/layout/header/Header";
 
 interface FullModalWrapperProps {
   isVisible: boolean;
-  handleClose: () => void;
+  handleClose?: () => void;
   handleGoBack?: () => void;
   children: ReactNode;
   headerTitle?: string;
@@ -29,7 +29,7 @@ const FullModalWrapper = ({
       {isVisible && (
         <ModalBackground
           isVisible={isVisible}
-          onClose={handleClose}
+          onClose={handleClose || handleGoBack}
           closeOnBackgroundClick={false}
           isDimmed={false}
         >

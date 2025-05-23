@@ -16,7 +16,7 @@ interface SurveyQuestion {
 	key: string;
 	label: string;
 	options: SurveyOption[];
-	imageUrl: string | ComponentType<SVGProps<SVGSVGElement>>;
+	imageUrl: ComponentType<SVGProps<SVGSVGElement>>;
 	title?: string;
 	multiple?: boolean;
 	flexWrap?: boolean;

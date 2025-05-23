@@ -60,7 +60,11 @@ interface DogDetailData {
 }
 type FullDogDetail = (DogListData & DogDetailData);
 
-type UpdateDogData = Pick<DogDetailData, 'name' | 'gender' | 'neutralization' | 'dogSize' | 'weight' | 'birth' | 'oldDog' | 'dogType'>;
+type DogFormValues = Pick<DogDetailData, 
+  'name' | 'gender' | 'neutralization' | 'dogSize' | 'weight' | 'birth' | 'oldDog' | 'dogType'
+> & {
+  nameVerified: boolean;
+};
 
 interface UploadDogProfileImage {
   id: number;
@@ -74,4 +78,4 @@ interface CheckDuplicateDogNameResponse {
   errorCode: null | string;
 }
 
-export type { DogData, FullDogDetail, UpdateDogData, DogListData, DogDetailData, UploadDogProfileImage, CheckDuplicateDogNameResponse };
+export type { DogData, FullDogDetail, DogFormValues, DogListData, DogDetailData, UploadDogProfileImage, CheckDuplicateDogNameResponse };

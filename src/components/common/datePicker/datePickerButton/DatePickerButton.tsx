@@ -10,6 +10,7 @@ interface DatePickerButtonProps {
 	value: string;
 	children?: ReactNode;
 	isMobile?: boolean;
+	isDisabled?: boolean;
 }
 
 export default function DatePickerButton({
@@ -18,10 +19,12 @@ export default function DatePickerButton({
 	value,
 	children,
 	isMobile = false,
+	isDisabled = false,
 }: DatePickerButtonProps) {
 	return (
-		<div className={styles.datePickerButtonBox({ isOpen, isMobile })}>
+		<div className={styles.datePickerButtonBox({ isOpen, isMobile, isDisabled })}>
 			<button
+				disabled={isDisabled}
 				onClick={(e) => {
 					e.preventDefault();
 					if (onToggle) {
@@ -30,10 +33,10 @@ export default function DatePickerButton({
 				}}
 				className={styles.datePickerButton({ isOpen })}
 			>
-				<DefaultText type='body2' align='left' color={isOpen ? 'blue' : 'gray800'}>
+				<DefaultText type='body2' align='left' color={isOpen ? 'blue' : isDisabled ? 'gray500' :'gray800'}>
 					{String(value)}
 				</DefaultText>
-				<SvgIcon src={ArrowUpIcon}  style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all .35s' }} />
+				<SvgIcon src={ArrowUpIcon}  style={{ transform: !isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all .35s' }} />
 			</button>
 			{children}
 		</div>

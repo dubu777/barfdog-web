@@ -93,8 +93,9 @@ export const baseButtonStyle = style({
   height: '24px',
 })
 
-export const inputErrorTextStyle = style({
+export const inputStateTextStyle = style({
   width: '100%',
   display: 'flex',
+  alignItems: 'center',
   marginTop: '8px'
 })

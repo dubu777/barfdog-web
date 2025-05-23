@@ -14,6 +14,7 @@ interface SurveyButtonProps<T> {
   inputType?: "radio" | "checkbox" | "normal";
   chipText?: string;
   onToggle: (value: T) => void;
+  isDisabled?: boolean;
 }
 
 export default function SurveyButton<T>({
@@ -24,6 +25,7 @@ export default function SurveyButton<T>({
   value,
   chipText,
   onToggle,
+  isDisabled = false,
 }: SurveyButtonProps<T>) {
   const iconSrc =
     inputType === "radio"
@@ -35,9 +37,17 @@ export default function SurveyButton<T>({
         ? CheckedBox
         : UnCheckedRadio
       : null;
-
+  const labelColor =
+    isChecked
+      ? isDisabled
+        ? "gray500"
+        : "red"
+      : isDisabled
+        ? "gray300"
+        : "gray900";
   return (
     <button
+      disabled={isDisabled}
       className={styles.surveyButtonContainer({
         isChecked,
         isNormal: inputType === "normal",
@@ -62,7 +72,7 @@ export default function SurveyButton<T>({
             {chipText}
           </Chips>
         )}
-        <DefaultText type="headline3" color={isChecked ? "red" : "gray900"}>
+        <DefaultText type="headline3" color={labelColor}>
           {label}
         </DefaultText>
         {subLabel && (

@@ -15,7 +15,7 @@ interface CustomDatePickerProps {
 	onChange: (date: Date | null | [Date | null, Date | null]) => void;
 	minDate?: Date;
 	maxDate?: Date;
-	disabled?: boolean;
+	isDisabled?: boolean;
 	dateFormat?: string;
 	className?: string;
 	label?: string;
@@ -41,6 +41,7 @@ const CustomDatePicker = ({
 	dateFormat = 'yyyy-MM-dd',
 	className,
 	marginBottom = true,
+	isDisabled = false,
 }: CustomDatePickerProps) => {
 	const years = Array.from({ length: getYear(new Date()) + 1 - 1970 }, (_, i) => getYear(new Date()) - i);
 	const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
@@ -53,7 +54,7 @@ const CustomDatePicker = ({
 
 	return (
 		<div className={`${styles.datePickerContainer} ${className || ''} ${marginBottom ? styles.datePickerContainerMargin : ''}`}>
-			<DatePickerButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} value={displayValue as string} />
+			<DatePickerButton isDisabled={isDisabled} isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} value={displayValue as string} />
 			{isOpen &&
 				<DatePicker
 					inline

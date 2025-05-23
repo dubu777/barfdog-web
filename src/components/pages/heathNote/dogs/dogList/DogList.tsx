@@ -1,20 +1,20 @@
 'use client';
 import * as styles from './DogList.css';
+import { createDogButton, dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import Link from "next/link";
-import Card from "@/components/common/card/Card";
 import Image from "next/image";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import FemaleIcon from '/public/images/healthNote/female.svg';
 import MaleIcon from '/public/images/healthNote/male.svg';
 import PenIcon from '/public/images/healthNote/pen.svg';
-import Chips from "@/components/common/chips/Chips";
-import Button from "@/components/common/button/Button";
 import PlusIcon from "/public/images/subscription/plus.svg";
 import DogIcon from '/public/images/healthNote/dogIcon.png';
+import Card from "@/components/common/card/Card";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Chips from "@/components/common/chips/Chips";
+import Button from "@/components/common/button/Button";
 import { DOG_GENDER } from "@/constants/dog";
 import { useGetFullDogList } from "@/api/dog/queries/useGetFullDogList";
-import { createDogButton, dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 
 function formatAgeFromBirth(birth: string): string {
 	if (!/^\d{6}$/.test(birth)) {
@@ -44,7 +44,6 @@ function formatAgeFromBirth(birth: string): string {
 
 const DogList = () => {
 	const { data: dogList } = useGetFullDogList();
-
 	return (
 		<section>
 			<article className={styles.createDogButton}>
@@ -66,7 +65,7 @@ const DogList = () => {
 											<DefaultText type='headline3'>
 												{dog.name}
 											</DefaultText>
-											{dog.subscribeStatus !== 'SUBSCRIBING' &&
+											{dog.subscribeStatus === 'SUBSCRIBING' &&
 											<Chips variant='solid' color='gray800' borderRadius='lg'>구독중</Chips>
 											}
 										</div>

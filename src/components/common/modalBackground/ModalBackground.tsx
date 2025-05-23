@@ -8,7 +8,7 @@ interface ModalBackgroundProps {
   isVisible: boolean;
   closeOnBackgroundClick?: boolean;
   isDimmed?: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }
 export default function ModalBackground({
   children,
