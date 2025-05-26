@@ -31,6 +31,7 @@ import { initialGeneralOrderSheetResponse } from "@/config/orderInitialValues";
 import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
 import { useToastStore } from "@/store/useToastStore";
 import { usePaymentStore } from "@/store/order/usePaymentStore";
+import { scrollToElement } from "@/utils/scrollToElement";
 
 export default function GeneralOrderContainer() {
   // 상태관리 -------->
@@ -48,10 +49,7 @@ export default function GeneralOrderContainer() {
   const termsRef = useRef<HTMLDivElement>(null);
 
   const scrollToTerms = () => {
-    termsRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
+    scrollToElement(termsRef.current);
   };
 
   console.log("generalOrderSheetData", generalOrderSheetData);
@@ -70,7 +68,8 @@ export default function GeneralOrderContainer() {
     generalOrderSheetData,
   });
 
-  // 일반 결제 주문 정보 조회
+  // 일반 결제 주문 정보 데이터 가져오기
+  // post 요청이기 때문에 useEffect로 로컬스토리지에 있는 orderItemDtoList를 request body로 호출
   useEffect(() => {
     if (orderItemDtoList.length > 0) {
       getGeneralOrderMutate({ orderItemDtoList }).then((data) => {

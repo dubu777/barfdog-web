@@ -8,7 +8,7 @@ import FemaleIcon from "public/images/subscription/female.svg";
 import MaleIcon from "public/images/subscription/male.svg";
 import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
-import DefaultImage from "public/images/mypage/user-profile.svg";
+import DefaultImage from "public/images/subscription/dog-default-profile.png";
 import Button from "@/components/common/button/Button";
 
 interface DogCardProps {
@@ -48,7 +48,14 @@ export default function DogCard({
             priority
           />
         ) : (
-          <SvgIcon src={DefaultImage} size={76} color="red" />
+          <Image
+            className={styles.profileImageStyle}
+            src={DefaultImage}
+            alt="반려견 프로필"
+            width={76}
+            height={76}
+            priority
+          />
         )}
         <div
           className={commonWrapper({
@@ -58,12 +65,12 @@ export default function DogCard({
             justify: "center",
           })}
         >
-          <div className={commonWrapper({ justify: "between"})}>
+          <div className={commonWrapper({ justify: "between" })}>
             <div className={commonWrapper({ justify: "start", gap: 6 })}>
-            <DefaultText type="headline1">{name}</DefaultText>
-            <Chips variant="solid" color="gray900" borderRadius="lg">
-              {subscribeStatus}
-            </Chips>
+              <DefaultText type="headline1">{name}</DefaultText>
+              <Chips variant="solid" color="gray900" borderRadius="lg">
+                {subscribeStatus}
+              </Chips>
             </div>
             <SvgIcon src={EditIcon} size={32} color="gray500" />
           </div>
