@@ -4,11 +4,11 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import HealthNoteMain from "@/components/pages/heathNote/main/HealthNoteMain";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Loader from "@/components/common/loader/Loader";
-import { prefetchGetFullDogList } from "@/api/dog/queries/usePrefetchGetFullDogList";
+import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
 
 export default async function HeathNotePage() {
   const queryClient = new QueryClient();
-  await prefetchGetFullDogList(queryClient);
+  await prefetchGetDogList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (

@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import Loader from "@/components/common/loader/Loader";
 import DogDetail from "@/components/pages/heathNote/dogs/dogDetail/DogDetail";
 import { prefetchGetDogDetail } from "@/api/dog/queries/usePrefetchGetDogDetail";
+import { prefetchGetFullDogList } from "@/api/dog/queries/usePrefetchGetFullDogList";
 
 interface DogDetailPageProps {
 	params: {
@@ -14,6 +15,7 @@ interface DogDetailPageProps {
 export default async function DogDetailPage({ params }: DogDetailPageProps) {
 	const queryClient = new QueryClient();
 	await prefetchGetDogDetail(queryClient, Number(params.dogId));
+	await prefetchGetFullDogList(queryClient);
 	const dehydrateState = dehydrate(queryClient);
 
 	return (

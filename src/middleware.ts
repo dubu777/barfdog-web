@@ -6,7 +6,7 @@ const protectedPaths = [
   "/mypage",
   "/order",
   "/diet-analysis/",
-  "/health-note/",
+  "/health-note",
 ];
 
 const isProtectedPath = (pathname: string): boolean => {

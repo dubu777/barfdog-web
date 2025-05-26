@@ -8,6 +8,7 @@ import { useLogout } from "@/api/auth/mutations/useLogout";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
+import { resetStores } from "@/store/resetStores";
 
 const MainMenus = () => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const MainMenus = () => {
   const handleLogout = () => {
     logout(undefined, {
       onSuccess: () => {
+        resetStores();
         deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
         deleteCookie(AUTH_CONFIG.REFRESH_TOKEN_COOKIE);
         router.push("/");
