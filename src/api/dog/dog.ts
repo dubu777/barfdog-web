@@ -2,11 +2,26 @@ import axiosInstance from "../axiosInstance";
 import { AxiosInstance } from "axios";
 import { DogDetailData, DogListData, FullDogDetail, UploadDogProfileImage, CheckDuplicateDogNameResponse } from "@/types";
 
-const getDogList = async (instance: AxiosInstance = axiosInstance): Promise<DogListData[]> => {
-  console.log('instance!!!!!!!!', instance)
-  const { data } = await instance.get('/api/dogs');
-  return data?._embedded?.queryDogsDtoList || [];
-}
+const getDogList = async (
+  instance: AxiosInstance = axiosInstance
+): Promise<DogListData[]> => {
+  try {
+    const { data } = await instance.get('/api/dogs');
+    return data?._embedded?.queryDogsDtoList || [];
+  } catch (error: any) {
+    const status = error?.response?.status;
+
+    if (status === 401) {
+      // 로그인 안 된 상태 - 화면 유지를 위한 빈 배열 값 반환
+      return [];
+    }
+
+    // 500 등 서버 오류 - 화면 유지를 위한 빈 배열 값 반환
+    console.error("반려견 리스트 요청 중 에러:", error);
+    return []; 
+  }
+};
+
 
 const updateRepresentativeDog = async (dogId: number) => {
   const { data } = await axiosInstance.put(`/api/dogs/${dogId}/representative`);
@@ -45,7 +60,7 @@ const getDogDetail = async (dogId: number, instance: AxiosInstance = axiosInstan
 
 const getFullDogList = async (instance: AxiosInstance = axiosInstance): Promise<FullDogDetail[]> => {
   const list = await getDogList(instance);
-  if (!list.length) return [];
+  if (!list) return [];
 
   const results = await Promise.allSettled(
     list.map((dog) => getDogDetail(dog.id, instance))
@@ -64,6 +79,7 @@ const getFullDogList = async (instance: AxiosInstance = axiosInstance): Promise<
         };
 
         // ingredients, recipeDtoList는 이미 구조 분해에서 제거됨
+        console.log('merged!!!', merged)
         return merged;
       }
       return null;

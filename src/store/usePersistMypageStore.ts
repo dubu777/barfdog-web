@@ -28,6 +28,7 @@ interface MypageStore {
   setUserMembershipTier: (userMembershipTier: MembershipTier) => void;
   paymentMethodDetail: PaymentItem | null;
   setPaymentMethodDetail: (paymentMethodDetail: PaymentItem) => void;
+  reset: () => void;
 }
 
 export const usePersistMypageStore = create(
@@ -38,6 +39,9 @@ export const usePersistMypageStore = create(
       setSubscriptionDogName: (subscriptionDogName) => set((state) => ({ ...state, subscriptionDogName })),
       setUserMembershipTier: (userMembershipTier) => set((state) => ({ ...state, userMembershipTier })),
       setPaymentMethodDetail: (paymentMethodDetail) => set((state) => ({ ...state, paymentMethodDetail })),
+      reset: () => {
+        set(initialState);
+      }
     }),
     {
       name: 'mypage',

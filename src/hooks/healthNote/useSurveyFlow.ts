@@ -62,6 +62,8 @@ export const useSurveyFlow = <TFormValues extends FieldValues>({
 			const hasPositive = prev.includes(positiveValue);
 			const isSelected = prev.includes(option);
 
+			const maxSelectable = currentQuestion.maxSelectable ?? 2;
+
 			if (isPositive) {
 				// 긍정 선택 항목[없어요] 클릭시 토글 처리
 				updated = hasPositive ? [] : [option];
@@ -73,16 +75,20 @@ export const useSurveyFlow = <TFormValues extends FieldValues>({
 			}
 
 			// 긍정 선택 항목[없어요] 이미 선택한 상태에 다른 항목 선택시 긍정 항목 제거 및 일반 다중 선택 토글 처리
-			updated = hasPositive
-				? [option]
-				: isSelected
-					? prev.filter(v => v !== option)
-					: [...prev, option];
-
+			if (hasPositive) {
+				updated = [option];
+			} else if (isSelected) {
+				updated = prev.filter(v => v !== option);
+			} else {
+				if (prev.length >= maxSelectable) {
+					return;
+				}
+				updated = [...prev, option];
+			}
 			setValue(key, updated as PathValue<TFormValues, Path<TFormValues>>, { shouldValidate: true });
 
 			// 긍정 선택 항목[없어요] 을 선택했거나 2개 이상 선택된 경우 다음 스탭으로 이동
-			if (directPass || updated.length >= 2) handleNextStep();
+			if (directPass || updated.length >= maxSelectable) handleNextStep();
 		} else {
 			// 단일 선택인 경우 즉시 다음 스텝
 			setValue(key, option, { shouldValidate: true });

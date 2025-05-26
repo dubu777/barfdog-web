@@ -3,6 +3,8 @@ import { useMemo } from "react";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Header from "@/components/layout/header/Header";
 import HealthNoteMainHeader from "@/components/pages/heathNote/layout/header/HealthNoteMainHeader";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import useModal from "@/hooks/useModal";
 import { useBackNavigation } from "@/utils";
 import { getHeaderProps } from "@/utils/getHeaderProps";
 
@@ -19,6 +21,8 @@ const HealthNoteHeader = () => {
 	) as Record<string, string>;
 	const goBack = useBackNavigation();
 	const goBackPreviousPage = useBackNavigation(undefined, true);
+
+	const { isOpen: isOpenConfirmAlert, onClose: onCloseConfirmAlert, onToggle: onToggleConfirmAlert } = useModal();
 
 	const headerConfigs: Record<
 		string,
@@ -54,23 +58,37 @@ const HealthNoteHeader = () => {
 				showBackButton: dogDetail,
 				onBack: goBackPreviousPage,
 				showCloseButton: !dogDetail,
-				onClose: goBackPreviousPage,
+				onClose: onToggleConfirmAlert,
 			}
 		},
 	};
-	
+
 	const headerProps = useMemo(
 		() => getHeaderProps({ pathname, headerConfigs, dynamicHeaderConfigs, params, searchParams })
 		, [pathname, params]);
 
 	return (
-		pathname !== '/health-note/full-check/survey' && (
-			pathname === '/health-note'
-				? <HealthNoteMainHeader />
-				: <Header
-					{...headerProps}
+		<>
+			{pathname !== '/health-note/full-check/survey' && (
+				pathname === '/health-note'
+					? <HealthNoteMainHeader/>
+					: <Header
+						{...headerProps}
+					/>
+			)}
+			{isOpenConfirmAlert && (
+				<AlertModal
+					title='등록을 종료하시겠어요?'
+					content='입력하신 정보는 저장되지 않아요'
+					isOpen={isOpenConfirmAlert}
+					onClose={onCloseConfirmAlert}
+					cancelText='돌아가기'
+					confirmText='삭제하기'
+					onCancel={() => onCloseConfirmAlert()}
+					onConfirm={() => goBackPreviousPage()}
 				/>
-		)
+			)}
+		</>
 	);
 };
 
