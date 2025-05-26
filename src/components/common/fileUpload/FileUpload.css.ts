@@ -6,6 +6,7 @@ export const fileUploadContainer = style({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
   gap: '10px'
 })
 
@@ -29,6 +30,20 @@ export const imageFile = recipe({
       }
     }
   }
+})
+
+export const background = style({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: themeVars.colors.dimmed.gary60,
+  borderRadius: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  cursor: 'pointer'
 })
 
 export const fileInfoContainer = style({

@@ -10,13 +10,14 @@ import Button from "@/components/common/button/Button";
 interface ButtonDockedProps {
 	type: 'text-button' | 'full-button' | 'dual-button';
 	text?: ReactNode;
-	primaryButtonLabel: string;
+	primaryButtonLabel: string | ReactNode;
 	secondaryButtonLabel?: string;
 	onPrimaryClick: () => void;
 	onSecondaryClick?: () => void;
 	primaryButtonSize?: 'sm' | 'md' | 'lg';
 	secondaryButtonType?: 'primary' | 'assistive';
 	primaryButtonVariant?: 'solid' | 'outline';
+	primaryButtonType?: 'primary' | 'assistive';
 	isPrimaryDisabled?: boolean;
 	primaryCount?: number;
 	position?: 'sticky' | 'fixed';
@@ -33,6 +34,7 @@ export default function ButtonDocked({
 	isPrimaryDisabled = false,
 	secondaryButtonType = 'primary',
 	primaryButtonVariant = 'solid',
+	primaryButtonType = 'primary',
 	primaryCount,
 	position = 'fixed',
 }: ButtonDockedProps) {
@@ -56,7 +58,7 @@ export default function ButtonDocked({
 					{secondaryButtonLabel}
 				</Button>
 			}
-			<Button onClick={onPrimaryClick} fullWidth={type === 'full-button'} type='primary' variant={primaryButtonVariant} disabled={isPrimaryDisabled} className={primaryButtonStyle || ''}>
+			<Button onClick={onPrimaryClick} fullWidth={type === 'full-button'} type={primaryButtonType} variant={primaryButtonVariant} disabled={isPrimaryDisabled} className={primaryButtonStyle || ''}>
 				{primaryButtonLabel}
 				{primaryCount != null && (
           <span className={primaryCountBox}>{primaryCount}</span>

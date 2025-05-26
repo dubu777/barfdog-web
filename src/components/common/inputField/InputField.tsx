@@ -16,24 +16,22 @@ import {
   inputBaseStyle,
   inputBoxStyle,
   inputError,
-  inputErrorTextStyle,
   inputStyle,
   inputVariants,
   inputWrapStyle,
   rightButtonsStyle,
   searchButtonStyle,
-  labelStyle,
-  unitStyle,
+  unitStyle, inputStateTextStyle,
 } from "./InputField.css";
-
+import CheckIcon from "public/images/survey/check_small.svg";
 import SearchIcon from "/public/images/icons/search.svg";
 import InputClearIcon from "/public/images/icons/input_clear.svg";
 import VisibilityIcon from "/public/images/icons/visibility.svg";
 import VisibilityOffIcon from "/public/images/icons/visibility_off.svg";
-import { pointColor } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
 import ErrorIcon from '/public/images/icons/close_small.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import InputLabel from "@/components/common/inputLabel/InputLabel";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
@@ -60,6 +58,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelPosition?: "top" | "left";
   isRequired?: boolean;
   unit?: string;
+  success?: string;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -88,6 +87,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       isRequired,
       labelColor = "gray700",
       unit,
+      success,
       ...props
     },
     ref
@@ -141,9 +141,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       >
         {/* label 유무에 따라 상단 노출 */}
         {label &&
-          <DefaultText type='label4' color={labelColor} className={labelStyle}>
-            {label} {isRequired && <span className={pointColor}>*</span>}
-          </DefaultText>
+          <InputLabel
+            label={label}
+            labelColor={labelColor}
+            isRequired={isRequired}
+          />
         }
         <div className={inputBoxStyle} style={{ width: width || '100%' }}>
           <div
@@ -210,10 +212,18 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           }
         </div>
         {error && (
-          <div className={inputErrorTextStyle}>
-            <SvgIcon src={ErrorIcon} color='red' />
+          <div className={inputStateTextStyle}>
+            <SvgIcon src={ErrorIcon} color="red" size={18} />
             <DefaultText type="caption" color="red" align="left">
               {error}
+            </DefaultText>
+          </div>
+        )}
+        {success && (
+          <div className={inputStateTextStyle}>
+            <SvgIcon src={CheckIcon} color='blue500' size={18} />
+            <DefaultText type="caption" color='blue' align="left">
+              {success}
             </DefaultText>
           </div>
         )}

@@ -69,7 +69,9 @@ export default function Header({
             onClick={handleBack}
           />
         )}
-        <DefaultText type="title4">{leftTitle}</DefaultText>
+        {leftTitle &&
+          <DefaultText type="title4">{leftTitle}</DefaultText>
+        }
         {leftElement}
       </div>
       <div className={styles.centerSlot}>

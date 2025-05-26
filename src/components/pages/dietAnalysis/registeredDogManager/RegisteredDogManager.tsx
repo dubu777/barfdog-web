@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -9,6 +9,7 @@ import AddIcon from "public/images/icons/add-circle.svg";
 import DogCard from "./dogCard/DogCard";
 import { useInfiniteList } from "@/hooks/useInfiniteList";
 import { DogData } from "@/types";
+import CreateDogButton from "@/components/pages/heathNote/common/createDogButton/CreateDogButton";
 
 interface RegisteredDogManagerProps {
   dogListData: DogData[];
@@ -16,15 +17,15 @@ interface RegisteredDogManagerProps {
 
 export default function RegisteredDogManager({dogListData}: RegisteredDogManagerProps) {
   console.log(dogListData, "dog");
-
+  const router = useRouter();
   // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아니고, 데이터는 한번에 받아오고, 10개씩 렌더링 하게 구현
   const [visibleDogs, loadMoreRef] = useInfiniteList(dogListData, {
     pageSize: 10,
     rootMargin: "50px",
   });
 
-  const handleNavigateToSurvey = () => {
-    window.location.href = "/diet-analysis/survey";
+  const handleNavigateToCreateDog = () => {
+    router.push('/health-note/dogs/create');
   }
   return (
     <div
@@ -35,12 +36,7 @@ export default function RegisteredDogManager({dogListData}: RegisteredDogManager
         padding: 20,
       })}
     >
-      <Button type="assistive" variant="outline" size="lg" fullWidth onClick={handleNavigateToSurvey}>
-        <div className={commonWrapper({ gap: 6 })}>
-          <SvgIcon src={AddIcon} />
-          <DefaultText type="headline3">새로운 아이 등록하기</DefaultText>
-        </div>
-      </Button>
+      <CreateDogButton />
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         {visibleDogs.map((item) => (
           <DogCard

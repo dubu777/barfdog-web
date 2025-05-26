@@ -1,0 +1,200 @@
+'use client';
+import * as yup from 'yup';
+import * as styles from './FullCheckSurvey.css';
+import { pointColor } from "@/styles/common.css";
+import { useRouter} from "next/navigation";
+import { Controller } from 'react-hook-form';
+import BackIcon from "/public/images/header/chevron-left.svg";
+import Header from "@/components/layout/header/Header";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { useBackNavigation } from "@/utils";
+import { useFormHandler } from "@/hooks/useFormHandler";
+import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
+import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
+import { DISEASE_CATEGORY_LIST } from "@/constants";
+import { AnySchema } from 'yup';
+
+const fullCheckSurveySchema = yup.object(
+  DISEASE_CATEGORY_LIST.reduce((acc, q) => {
+    acc[q.key] = q.multiple
+      ? yup.array().of(yup.number()).min(1, '최소 1개 선택')
+      : yup.number().required('필수 선택');
+    return acc;
+  }, {} as Record<string, AnySchema>)
+);
+
+// 초기값 정의
+const defaultFullCheckSurveyValues = DISEASE_CATEGORY_LIST.reduce((acc, q) => {
+  acc[q.key] = q.multiple ? ([] as number[]) : null;
+  return acc;
+}, {} as Record<string, number | number[] | null>);
+
+const FullCheckSurvey = () => {
+	const { control, setValue, watch, handleSubmit, formState } = useFormHandler(fullCheckSurveySchema, defaultFullCheckSurveyValues);
+	const { dogInfo } = usePersistHealthNoteStore();
+	const goBack = useBackNavigation(undefined, true);
+	const router = useRouter();
+
+	const onSpecialOptionSelect = (option) => {
+		if (currentQuestion.key === 'walk' && option === 0) {
+			setValue('walkTime', 0);
+			handleNextStep(currentStep + 1);
+			return;
+		}
+	}
+	const {
+		currentStep,
+		currentQuestion,
+		isFirstStep,
+		isLastStep,
+		isButtonDisabled,
+		handlePrevStep,
+		handleNextStep,
+		handleOptionSelect
+	} = useSurveyFlow({
+		questions: DISEASE_CATEGORY_LIST, onSpecialOptionSelect, watch, setValue, formState,
+	})
+
+	const ImageIcon = currentQuestion?.imageUrl;
+	const title = currentQuestion?.title?.split('@') || '';
+
+	const onPrevStep = () => {
+		// 산책 횟수 값(walk)이 0인 경우 산책 시간 값(walkTime) 2단계 전으로 이동
+		if (currentStep === 4 && watch('walk') === 0) {
+			handlePrevStep(currentStep - 2)
+		} else {
+			handlePrevStep();
+		}
+	}
+
+	const onNextStep = () => {
+		// 마지막 질문 버튼 활성화시 제출 처리
+		if (isLastStep && !isButtonDisabled) {
+			handleSubmit(onSubmit)();
+		} else {
+			handleNextStep()
+		}
+	}
+
+	const onSubmit = (data) => {
+		console.log('onSubmit data', data)
+
+		const cleaned = Object.fromEntries(
+			Object.entries(data).flatMap(([key, value]) => {
+				// walkTime 제거
+				if (key === 'walkTime') {
+					return [];
+				}
+				// walk * walkTime 계산
+				if (key === 'walk' && typeof value === 'number') {
+					const walkTime = data.walkTime || 0;
+					const totalMinutes = value * walkTime;
+
+					// 점수 계산 로직
+					let walkScore = 0;
+
+					if (totalMinutes >= 480) { // 8시간 이상 (≥ 480분)
+						walkScore = 4;
+					} else if (totalMinutes >= 300) { // 5–7시간 (300–479분)
+						walkScore = 2;
+					} else if (totalMinutes >= 60) { // 1–4시간 (60–299분)
+						walkScore = 1;
+					} else {
+						walkScore = 0; // 0시간 (0–59분)
+					}
+
+					return [['walk', walkScore]]; // 최종 점수로 대체
+				}
+				// 다중 선택 항목일 경우 가장 적은 값 적용
+				if (Array.isArray(value)) {
+					const min = Math.min(...value);
+					return [[key, min]];
+				}
+				// 그 외 그대로 유지
+				return [[key, value]];
+			})
+		);
+	
+		const totalScore = Object.values(cleaned).reduce((sum: number, val) => {
+			return typeof val === 'number' ? sum + val : sum;
+		}, 0);
+
+		router.push(`/health-note/full-check/result?totalScore=${totalScore}`)
+	}
+	return (
+		<>
+		<Header
+			leftElement={
+				!isFirstStep && <div className={styles.fullCheckSurveyHeader}>
+					<SvgIcon
+						src={BackIcon}
+						size={24}
+						color="gray900"
+						onClick={onPrevStep}
+					/>
+					<DefaultText type='headline3' color='gray500'>이전</DefaultText>
+				</div>
+			}
+			onClose={goBack}
+			showCloseButton
+		/>
+		<section className={styles.fullCheckSurveyContainer}>
+			<article className={styles.fullCheckSurveyTitle}>
+				<SvgIcon src={currentQuestion.imageUrl} size={64} />
+				<DefaultText type='title3'>
+					{currentQuestion?.title
+						? <>
+							{dogInfo ? `${dogInfo.name}${!dogInfo.name.endsWith('이') ? '이' : ''}` : '반려견'}의<br/>
+							<span className={pointColor}>{title[0]}</span>{title[1]}
+						</>
+						: <>
+							<span className={pointColor}>{currentQuestion?.label} 관련 나타나는</span><br/>
+							증상을 모두 체크해 주세요
+						</>
+					}
+
+				</DefaultText>
+			</article>
+			<article className={styles.surveyAnswerList({ flexWrap: currentQuestion?.flexWrap || false })}>
+				<Controller
+					control={control}
+					name={currentQuestion?.key}
+					render={({ field }) => (
+						<>
+						{currentQuestion?.options.map(option => {
+							const watchedValue = watch(field.name);
+							const isSelected = currentQuestion?.multiple
+								? Array.isArray(watchedValue) && watchedValue.includes(option.value as number)
+								: watchedValue === option.value;
+							return (
+								<div key={option.label} style={{ width: currentQuestion?.flexWrap ? 'calc(50% - 6px)' : '100%' }}>
+									<SurveyButton
+										key={option.label}
+										label={option.label}
+										value={option.value}
+										inputType="checkbox"
+										onToggle={() => handleOptionSelect(option.value as number, option.key === 'none')}
+										isChecked={isSelected}
+									/>
+								</div>
+							)
+						})}
+						</>
+					)}
+				/>
+			</article>
+		</section>
+		<ButtonDocked
+			type='full-button'
+			primaryButtonLabel='다음'
+			onPrimaryClick={onNextStep}
+			isPrimaryDisabled={isButtonDisabled}
+		/>
+		</>
+	);
+};
+
+export default FullCheckSurvey;

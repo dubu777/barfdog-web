@@ -19,6 +19,7 @@ export function useFormHandler<T extends FieldValues>(
     setValue,
     setError,
     clearErrors,
+    formState,
   } = useForm<T>({
     resolver: yupResolver(schema),
     defaultValues,
@@ -40,5 +41,6 @@ export function useFormHandler<T extends FieldValues>(
     setValue,
     setError,
     clearErrors,
+    formState,
   };
 }

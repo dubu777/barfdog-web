@@ -7,6 +7,7 @@ import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
 import Header from "@/components/layout/header/Header";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
+import { getHeaderProps } from "@/utils/getHeaderProps";
 
 type MypageParams = {
   reviewId?: string;
@@ -16,7 +17,10 @@ type MypageParams = {
 
 const MyPageHeader = () => {
   const pathname = usePathname();
-  const params = useParams();
+  const rawParams = useParams();
+  const params = Object.fromEntries(
+		Object.entries(rawParams).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value])
+	) as Record<string, string>;
   const searchParams = useSearchParams();
   const { pushWithQuery } = useDynamicQueryPush();
   const goBack = useBackNavigation();
@@ -116,19 +120,9 @@ const MyPageHeader = () => {
     },
   };
 
-  const getHeaderProps = () => {
-    if (headerConfigs[pathname]) return headerConfigs[pathname];
-
-    for (const key in dynamicHeaderConfigs) {
-      if (pathname.includes(key)) {
-        return dynamicHeaderConfigs[key](params, searchParams);
-      }
-    }
-
-    return { centerTitle: '' };
-  };
-
-  const headerProps = useMemo(getHeaderProps, [pathname, params, searchParams]);
+  const headerProps = useMemo(() =>
+    getHeaderProps({ pathname, params, searchParams, headerConfigs, dynamicHeaderConfigs })
+    , [pathname, params, searchParams]);
 
   return (
     <>

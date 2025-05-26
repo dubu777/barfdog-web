@@ -1,13 +1,11 @@
-import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { DogData, UseSuspenseQueryCustomOptions } from "@/types";
+import { DogListData, UseSuspenseQueryCustomOptions } from "@/types";
 import { getDogList } from "../dog";
-
-export { useGetDogList };
 
 const getDogListQueryKey = [queryKeys.DOG.BASE, queryKeys.DOG.GET_DOG_LIST];
 
-function useGetDogList(queryOptions?: UseSuspenseQueryCustomOptions<DogData[]>) {
+export function useGetDogList(queryOptions?: UseSuspenseQueryCustomOptions<DogListData[]>) {
   return useSuspenseQuery({
     queryFn: () => getDogList(),
     queryKey: getDogListQueryKey,

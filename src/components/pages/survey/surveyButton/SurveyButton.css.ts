@@ -16,11 +16,24 @@ export const surveyButtonContainer = recipe({
       true: {
         backgroundColor: themeVars.colors.red.pinkWhite,
         border: `1px solid ${themeVars.colors.red.red}`,
+        selectors: {
+          '&:disabled': {
+            background: themeVars.colors.gray.gray200,
+            border: `1px solid ${themeVars.colors.gray.gray500}`,
+          }
+        }
       },
       false: {
         backgroundColor: themeVars.colors.gray.gray0,
         border: `1px solid ${themeVars.colors.gray.gray200}`,
         boxShadow: themeVars.shadow.light,
+        selectors: {
+          '&:disabled': {
+            boxShadow: 'unset',
+            background: themeVars.colors.gray.gray50,
+            border: `1px solid ${themeVars.colors.gray.gray300}`,
+          }
+        }
       },
     },
     isNormal: {
