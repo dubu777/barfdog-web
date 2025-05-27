@@ -1,21 +1,20 @@
 "use client";
 import { useRouter } from "next/navigation";
-import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { commonWrapper } from "@/styles/common.css";
 // import * as styles from "./RegisteredDogManager.css";
-import AddIcon from "public/images/icons/add-circle.svg";
 import DogCard from "./dogCard/DogCard";
 import { useInfiniteList } from "@/hooks/useInfiniteList";
-import { DogData } from "@/types";
+import { DogListData } from "@/types";
 import CreateDogButton from "@/components/pages/heathNote/common/createDogButton/CreateDogButton";
 
 interface RegisteredDogManagerProps {
-  dogListData: DogData[];
+  dogListData: DogListData[];
 }
 
-export default function RegisteredDogManager({dogListData}: RegisteredDogManagerProps) {
+export default function RegisteredDogManager({
+  dogListData,
+}: RegisteredDogManagerProps) {
   console.log(dogListData, "dog");
   const router = useRouter();
   // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아니고, 데이터는 한번에 받아오고, 10개씩 렌더링 하게 구현
@@ -24,9 +23,6 @@ export default function RegisteredDogManager({dogListData}: RegisteredDogManager
     rootMargin: "50px",
   });
 
-  const handleNavigateToCreateDog = () => {
-    router.push('/health-note/dogs/create');
-  }
   return (
     <div
       className={commonWrapper({
@@ -36,7 +32,7 @@ export default function RegisteredDogManager({dogListData}: RegisteredDogManager
         padding: 20,
       })}
     >
-      <CreateDogButton />
+      <CreateDogButton from="dietAnalysis" />
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         {visibleDogs.map((item) => (
           <DogCard
