@@ -1,12 +1,18 @@
 import axiosInstance from "../axiosInstance";
 import { AxiosInstance } from "axios";
-import { DogDetailData, DogListData, FullDogDetail, UploadDogProfileImage, CheckDuplicateDogNameResponse } from "@/types";
+import {
+  DogDetailData,
+  DogListData,
+  FullDogDetail,
+  UploadDogProfileImage,
+  CheckDuplicateDogNameResponse,
+} from "@/types";
 
 const getDogList = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<DogListData[]> => {
   try {
-    const { data } = await instance.get('/api/dogs');
+    const { data } = await instance.get("/api/dogs");
     return data?._embedded?.queryDogsDtoList || [];
   } catch (error: any) {
     const status = error?.response?.status;
@@ -18,47 +24,65 @@ const getDogList = async (
 
     // 500 등 서버 오류 - 화면 유지를 위한 빈 배열 값 반환
     console.error("반려견 리스트 요청 중 에러:", error);
-    return []; 
+    return [];
   }
 };
-
 
 const updateRepresentativeDog = async (dogId: number) => {
   const { data } = await axiosInstance.put(`/api/dogs/${dogId}/representative`);
   return data;
-}
+};
 
-const uploadDogProfileImage = async (formData: FormData): Promise<UploadDogProfileImage | null> => {
-  const { data, status } = await axiosInstance.post(`/api/dogs/picture/upload`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+const uploadDogProfileImage = async (
+  formData: FormData
+): Promise<UploadDogProfileImage | null> => {
+  const { data, status } = await axiosInstance.post(
+    `/api/dogs/picture/upload`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
-  });
-  console.log('uploadDogProfileImage data', data, status)
+  );
+  console.log("uploadDogProfileImage data", data, status);
 
   if (status === 200 || status === 201) {
     return data;
-  } else{
+  } else {
     return null;
   }
-}
+};
 
-const updateDogProfileImage = async (dogId: number, dogPictureId: number | null) => {
-  const { data } = await axiosInstance.put(`/api/dogs/${dogId}/picture`, { dogPictureId: dogPictureId });
+const updateDogProfileImage = async (
+  dogId: number,
+  dogPictureId: number | null
+) => {
+  const { data } = await axiosInstance.put(`/api/dogs/${dogId}/picture`, {
+    dogPictureId: dogPictureId,
+  });
   return data;
-}
+};
 
-const updateDogInfo = async (dogId: number, body: DogDetailData): Promise<number> => {
+const updateDogInfo = async (
+  dogId: number,
+  body: DogDetailData
+): Promise<number> => {
   const { data } = await axiosInstance.put(`/api/dogs/${dogId}`, body);
   return data.oneMealRecommendGram;
-}
+};
 
-const getDogDetail = async (dogId: number, instance: AxiosInstance = axiosInstance): Promise<DogDetailData> => {
+const getDogDetail = async (
+  dogId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<DogDetailData> => {
   const { data } = await instance.get(`/api/dogs/${dogId}`);
   return data.dogDto;
-}
+};
 
-const getFullDogList = async (instance: AxiosInstance = axiosInstance): Promise<FullDogDetail[]> => {
+const getFullDogList = async (
+  instance: AxiosInstance = axiosInstance
+): Promise<FullDogDetail[]> => {
   const list = await getDogList(instance);
   if (!list) return [];
 
@@ -68,7 +92,7 @@ const getFullDogList = async (instance: AxiosInstance = axiosInstance): Promise<
 
   return results
     .map((result, index) => {
-      if (result.status === 'fulfilled') {
+      if (result.status === "fulfilled") {
         const base = list[index];
         const detail = result.value;
 
@@ -79,7 +103,7 @@ const getFullDogList = async (instance: AxiosInstance = axiosInstance): Promise<
         };
 
         // ingredients, recipeDtoList는 이미 구조 분해에서 제거됨
-        console.log('merged!!!', merged)
+        console.log("merged!!!", merged);
         return merged;
       }
       return null;
@@ -87,10 +111,22 @@ const getFullDogList = async (instance: AxiosInstance = axiosInstance): Promise<
     .filter((item): item is FullDogDetail => item !== null);
 };
 
-
-const checkDuplicateDogName = async (dogName: string): Promise<CheckDuplicateDogNameResponse> => {
-  const { data } = await axiosInstance.get(`/api/dogs/name/duplication?dogName=${dogName}`);
+const checkDuplicateDogName = async (
+  dogName: string
+): Promise<CheckDuplicateDogNameResponse> => {
+  const { data } = await axiosInstance.get(
+    `/api/dogs/name/duplication?dogName=${dogName}`
+  );
   return data._embedded.commonResponseList[0];
-}
+};
 
-export { getDogList, updateRepresentativeDog, uploadDogProfileImage, updateDogProfileImage, getDogDetail, getFullDogList, updateDogInfo, checkDuplicateDogName }
+export {
+  getDogList,
+  updateRepresentativeDog,
+  uploadDogProfileImage,
+  updateDogProfileImage,
+  getDogDetail,
+  getFullDogList,
+  updateDogInfo,
+  checkDuplicateDogName,
+};
