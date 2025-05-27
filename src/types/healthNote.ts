@@ -1,9 +1,9 @@
-import { ComponentType, ReactNode, SVGProps } from "react";
+import { ComponentType, SVGProps } from "react";
 
 interface DogInfo {
 	dogId: number;
 	name: string;
-	imageUrl: string;
+	imageUrl: string | null;
 }
 
 interface SurveyOption {
@@ -19,6 +19,7 @@ interface SurveyQuestion {
 	imageUrl: ComponentType<SVGProps<SVGSVGElement>>;
 	title?: string;
 	multiple?: boolean;
+	maxSelectable?: number; // 최대 선택 가능 개수
 	flexWrap?: boolean;
 }
 

@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import * as styles from './FullCheckSurvey.css';
 import { pointColor } from "@/styles/common.css";
 import { useRouter} from "next/navigation";
-import { Controller } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
 import BackIcon from "/public/images/header/chevron-left.svg";
 import Header from "@/components/layout/header/Header";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -16,6 +16,7 @@ import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
 import { DISEASE_CATEGORY_LIST } from "@/constants";
 import { AnySchema } from 'yup';
+import { createCleanedEntries } from "@/utils/healthNote/createCleanedEntries";
 
 const fullCheckSurveySchema = yup.object(
   DISEASE_CATEGORY_LIST.reduce((acc, q) => {
@@ -33,10 +34,12 @@ const defaultFullCheckSurveyValues = DISEASE_CATEGORY_LIST.reduce((acc, q) => {
 }, {} as Record<string, number | number[] | null>);
 
 const FullCheckSurvey = () => {
+	const router = useRouter();
+	const goBack = useBackNavigation(undefined, true);
+
 	const { control, setValue, watch, handleSubmit, formState } = useFormHandler(fullCheckSurveySchema, defaultFullCheckSurveyValues);
 	const { dogInfo } = usePersistHealthNoteStore();
-	const goBack = useBackNavigation(undefined, true);
-	const router = useRouter();
+	const walkValue = useWatch({ control, name: "walk" });
 
 	const onSpecialOptionSelect = (option) => {
 		if (currentQuestion.key === 'walk' && option === 0) {
@@ -45,6 +48,7 @@ const FullCheckSurvey = () => {
 			return;
 		}
 	}
+
 	const {
 		currentStep,
 		currentQuestion,
@@ -58,12 +62,11 @@ const FullCheckSurvey = () => {
 		questions: DISEASE_CATEGORY_LIST, onSpecialOptionSelect, watch, setValue, formState,
 	})
 
-	const ImageIcon = currentQuestion?.imageUrl;
 	const title = currentQuestion?.title?.split('@') || '';
 
 	const onPrevStep = () => {
 		// 산책 횟수 값(walk)이 0인 경우 산책 시간 값(walkTime) 2단계 전으로 이동
-		if (currentStep === 4 && watch('walk') === 0) {
+		if (currentStep === 4 && walkValue === 0) {
 			handlePrevStep(currentStep - 2)
 		} else {
 			handlePrevStep();
@@ -79,50 +82,25 @@ const FullCheckSurvey = () => {
 		}
 	}
 
-	const onSubmit = (data) => {
+	const onSubmit = (data: typeof defaultFullCheckSurveyValues) => {
 		console.log('onSubmit data', data)
-
-		const cleaned = Object.fromEntries(
-			Object.entries(data).flatMap(([key, value]) => {
-				// walkTime 제거
-				if (key === 'walkTime') {
-					return [];
-				}
-				// walk * walkTime 계산
-				if (key === 'walk' && typeof value === 'number') {
-					const walkTime = data.walkTime || 0;
-					const totalMinutes = value * walkTime;
-
-					// 점수 계산 로직
-					let walkScore = 0;
-
-					if (totalMinutes >= 480) { // 8시간 이상 (≥ 480분)
-						walkScore = 4;
-					} else if (totalMinutes >= 300) { // 5–7시간 (300–479분)
-						walkScore = 2;
-					} else if (totalMinutes >= 60) { // 1–4시간 (60–299분)
-						walkScore = 1;
-					} else {
-						walkScore = 0; // 0시간 (0–59분)
-					}
-
-					return [['walk', walkScore]]; // 최종 점수로 대체
-				}
-				// 다중 선택 항목일 경우 가장 적은 값 적용
-				if (Array.isArray(value)) {
-					const min = Math.min(...value);
-					return [[key, min]];
-				}
-				// 그 외 그대로 유지
-				return [[key, value]];
-			})
-		);
-	
+		const cleaned = createCleanedEntries(data, (key, value, fullData) => {
+			if (key === 'walkTime') return []; // walkTime 제거
+			if (key === 'walk') { // walk * walkTime 계산
+				const total = (value as number) * (fullData.walkTime as number);
+				// 8시간 이상 (≥ 480분)
+				// 5–7시간 (300–479분)
+				// 1–4시간 (60–299분)
+				// 0시간 (0–59분)
+				const score = total >= 480 ? 4 : total >= 300 ? 2 : total >= 60 ? 1 : 0;
+				return [['walk', score]];
+			}
+		});
+		console.log('cleaned data', cleaned)
 		const totalScore = Object.values(cleaned).reduce((sum: number, val) => {
 			return typeof val === 'number' ? sum + val : sum;
 		}, 0);
-
-		router.push(`/health-note/full-check/result?totalScore=${totalScore}`)
+		// router.push(`/health-note/full-check/result?totalScore=${totalScore}`)
 	}
 	return (
 		<>
@@ -155,7 +133,6 @@ const FullCheckSurvey = () => {
 							증상을 모두 체크해 주세요
 						</>
 					}
-
 				</DefaultText>
 			</article>
 			<article className={styles.surveyAnswerList({ flexWrap: currentQuestion?.flexWrap || false })}>

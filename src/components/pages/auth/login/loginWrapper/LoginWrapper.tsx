@@ -14,6 +14,9 @@ import {
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect, useMemo, useState } from "react";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import { getCookie } from "@/utils/auth/cookie";
+import { AUTH_CONFIG } from "@/constants/auth";
+import { resetStores } from "@/store/resetStores";
 
 const LoginWrapper = () => {
   // -------> 라우팅 함수
@@ -44,6 +47,9 @@ const LoginWrapper = () => {
     defaultLoginValues(initialUserEmail)
   );
 
+  // ------->cookie 초기화시 stores reset 을 위한 login 확인 용도
+  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+  const isLoggedIn = isAuthenticated(token);
 
   const handleLogin = (data: LoginFormValues) => {
     const formData = {
@@ -63,6 +69,9 @@ const LoginWrapper = () => {
   // 서버와 클라이언트의 로그인 상태 차이로 인한 에러 방지
   useEffect(() => {
     setMounted(true);
+    if (!isLoggedIn) {
+      resetStores();
+    }
   }, []);
   
   // 로그인 중이면 로그인 페이지 접근 제한

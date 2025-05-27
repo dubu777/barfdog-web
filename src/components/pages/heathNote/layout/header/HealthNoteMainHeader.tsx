@@ -1,9 +1,10 @@
+'use client';
 import * as styles from './HealthNoteMainHeader.css';
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { createDogButton, dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import Link from "next/link";
 import Image from "next/image";
-import AccountCircle from '/public/images/icons/account_circle.svg';
 import ChevronDown from '/public/images/icons/chevron-sort-up.svg';
 import CheckCircle from '/public/images/mypage/check_circle.svg'
 import PlusIcon from "/public/images/subscription/plus.svg";
@@ -20,18 +21,27 @@ import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
 import { AUTH_CONFIG } from "@/constants/auth";
-import { useRouter } from "next/navigation";
+import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
 
 const HealthNoteMainHeader = () => {
 	const router = useRouter();
 	const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-	const isLogin = isAuthenticated(token);
+	const isLoggedIn = isAuthenticated(token);
 
-	const { data: dogList } = useGetDogList();
+	const { data: dogList = [] } = useGetDogList();
 	const representativeDog = dogList?.find(dog => dog.representative);
-	const { dogInfo, setDogInfo } = usePersistHealthNoteStore();
+
+	const { dogInfo, setDogInfo, reset } = usePersistHealthNoteStore();
+	const dogImageUrl = dogInfo?.imageUrl ? dogInfo.imageUrl : DogIcon;
 
 	const { isOpen, onClose, onToggle } = useModal();
+	const { mutate: updateTargetDogMutate } = useUpdateRepresentativeDog();
+
+	useEffect(() => {
+		if (!isLoggedIn) {
+			reset();
+		}
+	}, [isLoggedIn])
 
 	useEffect(() => {
 		if (representativeDog) {
@@ -40,30 +50,63 @@ const HealthNoteMainHeader = () => {
 				name: representativeDog.name,
 				imageUrl: representativeDog.pictureUrl,
 			})
+		} else {
+			setDogInfo({
+				dogId: dogList[0].id,
+				name: dogList[0].name,
+				imageUrl: dogList[0].pictureUrl,
+			})
 		}
 	}, []);
 
+	const handleShowDogList = () => {
+		if (!isLoggedIn) {
+			router.push('/login');
+		} else if (dogList.length === 0) {
+			router.push('/health-note/dogs/create');
+		} else {
+			onToggle();
+		}
+	}
+
 	const handleChangeDogInfo = (dogInfo: DogInfo) => {
 		setDogInfo(dogInfo);
+	}
+
+	const handleCloseChangeDogInfo = () => {
+		if (dogInfo?.dogId) {
+			updateTargetDogMutate(
+				{ dogId: dogInfo.dogId }, {
+					onSuccess: (data) => {
+						console.log('data!!!', data)
+					},
+					onError: (err) => {
+						console.log('err', err);
+					}
+				}
+			);
+		}
 		onClose();
 	}
 
 	return (
 		<>
 			<header className={styles.heathNoteHeaderContainer}>
-				{!isLogin && dogInfo
-					? <SvgIcon src={AccountCircle} size={40} />
-					: <Image src={dogInfo?.imageUrl || DogIcon} alt='대표 반려견' width={40} height={40} className={dogImage({ borderRadius: 'lg' })} />
-				}
-				<button onClick={onToggle} className={styles.selectButton}>
-					<DefaultText type='headline1'>{!isLogin ? '반려견 등록' : dogInfo?.name}</DefaultText>
+				<Image src={dogImageUrl} alt='대표 반려견' width={40} height={40} className={dogImage({ borderRadius: 'lg' })} />
+				<button onClick={handleShowDogList} className={styles.selectButton}>
+					<DefaultText type='headline1'>
+						{!isLoggedIn || dogList.length === 0
+							? '반려견 등록'
+							: dogInfo?.name
+						}
+					</DefaultText>
 					<SvgIcon src={ChevronDown} style={{ transform: 'rotate(180deg)' }} />
 				</button>
 			</header>
-			{isOpen &&
+			{isLoggedIn && dogList && isOpen &&
 				<BottomSheet
 					isOpen={isOpen}
-					onClose={onClose}
+					onClose={handleCloseChangeDogInfo}
 				>
 					<div className={styles.selectBottomSheetHeader}>
 						<DefaultText type='title4'>반려견 선택</DefaultText>
@@ -73,26 +116,25 @@ const HealthNoteMainHeader = () => {
 					</div>
 					<div className={styles.selectBottomSheetBox}>
 						{dogList.map((dog, index) => {
-							const active = dog.id === dogInfo?.dogId || false;
+							const active = dog.id === Number(dogInfo?.dogId) || false;
 							return (
-								<>
-								<button
-									key={dog.id}
-									className={styles.selectDogButton}
-									onClick={() => handleChangeDogInfo({ dogId: dog.id, name: dog.name, imageUrl: dog.pictureUrl })}
-								>
-									<div className={styles.selectBottomSheetDogInfo}>
-										<Image src={dog.pictureUrl} alt={dog.name} width={40} height={40} className={dogImage({ borderRadius: 'lg', active })} />
-										<DefaultText type='headline1'>{dog.name}</DefaultText>
-									</div>
-									{active &&
-										<SvgIcon src={CheckCircle} size={24} color='red' />
+								<Fragment key={dog.id}>
+									<button
+										className={styles.selectDogButton}
+										onClick={() => handleChangeDogInfo({ dogId: dog.id, name: dog.name, imageUrl: dog?.pictureUrl })}
+									>
+										<div className={styles.selectBottomSheetDogInfo}>
+											<Image src={dog?.pictureUrl || DogIcon} alt={dog.name} width={40} height={40} className={dogImage({ borderRadius: 'lg', active })} />
+											<DefaultText type='headline1'>{dog.name}</DefaultText>
+										</div>
+										{active &&
+											<SvgIcon src={CheckCircle} size={24} color='red' />
+										}
+									</button>
+									{dogList.length !== index + 1 &&
+										<Divider thickness={1} color='gray100' />
 									}
-								</button>
-								{dogList.length !== index + 1 &&
-									<Divider thickness={1} color='gray100' />
-								}
-								</>
+								</Fragment>
 							)
 						})}
 					</div>

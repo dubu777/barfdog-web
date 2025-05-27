@@ -10,6 +10,7 @@ export const heathNoteHeaderContainer = style({
 export const selectButton = style({
 	display: 'flex',
 	alignItems: 'center',
+	cursor: 'pointer'
 })
 
 export const selectBottomSheetHeader = style({
@@ -33,6 +34,7 @@ export const selectDogButton = style({
 	justifyContent: 'space-between',
 	padding: '12px 16px',
 	height: 'auto',
+	cursor: 'pointer',
 })
 
 export const selectBottomSheetDogInfo = style({
