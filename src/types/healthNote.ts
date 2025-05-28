@@ -14,10 +14,10 @@ interface SurveyOption {
 
 interface SurveyQuestion {
 	key: string;
-	label: string;
+	label?: string;
 	options: SurveyOption[];
-	imageUrl: ComponentType<SVGProps<SVGSVGElement>>;
-	title?: string;
+	imageUrl?: ComponentType<SVGProps<SVGSVGElement>>;
+	title?: string | string[];
 	multiple?: boolean;
 	maxSelectable?: number; // 최대 선택 가능 개수
 	flexWrap?: boolean;

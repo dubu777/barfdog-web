@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { FieldValues, FormState, Path, PathValue, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { SurveyQuestion } from "@/types/healthNote";
-import { DISEASE_INFO_POSITIVE } from "@/constants";
 
 interface UseSurveyFlowProps<TFormValues extends FieldValues> {
 	questions: SurveyQuestion[];
@@ -26,8 +25,8 @@ export const useSurveyFlow = <TFormValues extends FieldValues>({
 	const currentQuestion = questions[currentStep - 1];
 	const currentValue = watch(currentQuestion?.key as PathValue<TFormValues, Path<TFormValues>>);
 
-	const positiveValue = DISEASE_INFO_POSITIVE.value as PathValue<TFormValues, Path<TFormValues>>;
-	
+	const positiveValue = currentQuestion?.options.find(option => option.key === 'none')?.value as PathValue<TFormValues, Path<TFormValues>>;
+
 	// 버튼 비활성화 여부 계산
 	const isButtonDisabled = useMemo(() => {
 		// 마지막 질문인 경우 전체 폼 유효성 검사

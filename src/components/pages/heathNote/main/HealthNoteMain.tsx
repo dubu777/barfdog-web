@@ -17,13 +17,23 @@ const HealthNoteMain = () => {
 	const router = useRouter();
 	const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
 	const isLoggedIn = isAuthenticated(token);
-	const { data: dogList } = useGetDogList();
+	const { data: dogList = [] } = useGetDogList();
 
 	const [mounted, setMounted] = useState(false);
+
+	const isFirstFullCheck = false;
 
 	useEffect(() => {
 		setMounted(true);
 	}, [])
+
+	const handleGotoMenu = (url) => {
+		if (url === '/health-note/full-check') {
+			window.location.href = `${url}${isFirstFullCheck ? '/survey' : ''}`;
+		} else {
+			window.location.href = url;
+		}
+	}
 
 	if (!mounted) return null;
 
@@ -40,13 +50,14 @@ const HealthNoteMain = () => {
 			</article>
 		)
 	}
+
 	return (
 		<section className={styles.heathNoteMainContainer}>
 			{dogList?.length > 0 ? (
 				<article>
 					<div className={styles.menuCategoryBox}>
 						{HEALTH_NOTE_MENU_CATEGORY.map(menu => (
-							<Link key={menu.url} href={menu.url} className={styles.menuCategory({ fullWidth: !!menu.fullWidth })}>
+							<button key={menu.url} onClick={() => handleGotoMenu(menu.url)} className={styles.menuCategory({ fullWidth: !!menu.fullWidth })}>
 								<Card shadow='normal' className={styles.menuCategoryCard({ fullWidth: !!menu.fullWidth })}>
 									<div>
 										<DefaultText type='headline1' block>{menu.label}</DefaultText>
@@ -58,7 +69,7 @@ const HealthNoteMain = () => {
 									</div>
 									<Image src={menu.imageUrl} alt={menu.label} width={menu.width} height={menu.height} className={!menu.fullWidth ? styles.menuImage : ''} />
 								</Card>
-							</Link>
+							</button>
 						))}
 					</div>
 				</article>

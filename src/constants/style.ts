@@ -18,6 +18,9 @@ const COLORS: Record<colors, string> = {
   gray50: themeVars.colors.gray.gray50,
   gray0: themeVars.colors.gray.gray0,
   blue500: themeVars.colors.blue.blue500,
+  blue400: themeVars.colors.blue.blue400,
+  green400: themeVars.colors.green.green400,
+  yellow400: themeVars.colors.yellow.yellow400,
 } as const;
 
 export const CHIPS_COLORS = {
@@ -28,6 +31,8 @@ export const CHIPS_COLORS = {
   gray800: themeVars.colors.gray.gray800,
   gray900: themeVars.colors.gray.gray900,
   blue50: themeVars.colors.blue.blue50,
+  blue600: themeVars.colors.blue.blue600,
+  green500: themeVars.colors.green.green500,
 } as const;
 
 export const MAIN_BACKGROUND_COLORS = {
@@ -36,4 +41,15 @@ export const MAIN_BACKGROUND_COLORS = {
   gray50: themeVars.colors.gray.gray50,
   gray200: themeVars.colors.gray.gray200,
   white: themeVars.colors.gray.gray0,
+} as const;
+
+export const HEALTH_NOTE_PROGRESS_BAR_COLORS = {
+  blue500: themeVars.colors.blue.blue500,
+  blue400: themeVars.colors.blue.blue400,
+  green500: themeVars.colors.green.green500,
+  green400: themeVars.colors.green.green400,
+  yellow500: themeVars.colors.yellow.yellow500,
+  yellow400: themeVars.colors.yellow.yellow400,
+  red: themeVars.colors.red.red,
+  pastelRed: themeVars.colors.red.pastelRed,
 } as const;

@@ -37,6 +37,7 @@ const HealthNoteHeader = () => {
 		}
 		> = {
 		'/health-note/dogs': { centerTitle: '반려견 전체보기', showBackButton: true, onBack: goBack },
+		'/health-note/full-check': { centerTitle: '건강 종합 진단', showBackButton: true, onBack: goBackPreviousPage },
 	};
 
 	const dynamicHeaderConfigs: Record<
@@ -67,9 +68,14 @@ const HealthNoteHeader = () => {
 		() => getHeaderProps({ pathname, headerConfigs, dynamicHeaderConfigs, params, searchParams })
 		, [pathname, params]);
 
+	const excludePaths = [
+		'/health-note/full-check/survey',
+		'/health-note/full-check/result',
+	]
+
 	return (
 		<>
-			{pathname !== '/health-note/full-check/survey' && (
+			{!excludePaths.some(path => pathname.includes(path)) && (
 				pathname === '/health-note'
 					? <HealthNoteMainHeader/>
 					: <Header

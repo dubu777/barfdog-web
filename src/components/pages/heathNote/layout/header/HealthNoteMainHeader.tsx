@@ -1,6 +1,6 @@
 'use client';
 import * as styles from './HealthNoteMainHeader.css';
-import { Fragment, useEffect } from "react";
+import {Fragment, useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import { createDogButton, dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import Link from "next/link";
@@ -37,6 +37,12 @@ const HealthNoteMainHeader = () => {
 	const { isOpen, onClose, onToggle } = useModal();
 	const { mutate: updateTargetDogMutate } = useUpdateRepresentativeDog();
 
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => {
+		setMounted(true);
+	}, [])
+
 	useEffect(() => {
 		if (!isLoggedIn) {
 			reset();
@@ -51,11 +57,13 @@ const HealthNoteMainHeader = () => {
 				imageUrl: representativeDog.pictureUrl,
 			})
 		} else {
-			setDogInfo({
-				dogId: dogList[0].id,
-				name: dogList[0].name,
-				imageUrl: dogList[0].pictureUrl,
-			})
+			if (dogList) {
+				setDogInfo({
+					dogId: dogList[0]?.id,
+					name: dogList[0]?.name,
+					imageUrl: dogList[0]?.pictureUrl,
+				});
+			}
 		}
 	}, []);
 
@@ -88,6 +96,8 @@ const HealthNoteMainHeader = () => {
 		}
 		onClose();
 	}
+
+	if (!mounted) return null;
 
 	return (
 		<>

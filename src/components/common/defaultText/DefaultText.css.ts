@@ -136,7 +136,12 @@ export const fontColors = {
   gray200: style({ color: themeVars.colors.gray.gray200 }),
   gray100: style({ color: themeVars.colors.gray.gray100 }),
   gray0: style({ color: themeVars.colors.gray.gray0 }),
-  blue: style({ color: themeVars.colors.blue.blue500 })
+  blue500: style({ color: themeVars.colors.blue.blue500 }),
+  green500: style({ color: themeVars.colors.green.green500 }),
+  yellow500: style({ color: themeVars.colors.yellow.yellow500 }),
+  blue400: style({ color: themeVars.colors.blue.blue400 }),
+  green400: style({ color: themeVars.colors.green.green400 }),
+  yellow400: style({ color: themeVars.colors.yellow.yellow400 }),
 };
 
 export const alignStyles = {

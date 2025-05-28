@@ -2,6 +2,7 @@
 import * as yup from 'yup';
 import * as styles from './FullCheckSurvey.css';
 import { pointColor } from "@/styles/common.css";
+import { useState } from "react";
 import { useRouter} from "next/navigation";
 import { Controller, useWatch } from 'react-hook-form';
 import BackIcon from "/public/images/header/chevron-left.svg";
@@ -10,7 +11,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { useBackNavigation } from "@/utils";
+import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
@@ -35,11 +36,13 @@ const defaultFullCheckSurveyValues = DISEASE_CATEGORY_LIST.reduce((acc, q) => {
 
 const FullCheckSurvey = () => {
 	const router = useRouter();
-	const goBack = useBackNavigation(undefined, true);
 
 	const { control, setValue, watch, handleSubmit, formState } = useFormHandler(fullCheckSurveySchema, defaultFullCheckSurveyValues);
 	const { dogInfo } = usePersistHealthNoteStore();
 	const walkValue = useWatch({ control, name: "walk" });
+
+	const [shouldBlock, setShouldBlock] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const onSpecialOptionSelect = (option) => {
 		if (currentQuestion.key === 'walk' && option === 0) {
@@ -62,7 +65,7 @@ const FullCheckSurvey = () => {
 		questions: DISEASE_CATEGORY_LIST, onSpecialOptionSelect, watch, setValue, formState,
 	})
 
-	const title = currentQuestion?.title?.split('@') || '';
+	const title = typeof currentQuestion?.title === 'string' && currentQuestion?.title?.split('@') || '';
 
 	const onPrevStep = () => {
 		// 산책 횟수 값(walk)이 0인 경우 산책 시간 값(walkTime) 2단계 전으로 이동
@@ -83,7 +86,9 @@ const FullCheckSurvey = () => {
 	}
 
 	const onSubmit = (data: typeof defaultFullCheckSurveyValues) => {
-		console.log('onSubmit data', data)
+		setIsLoading(true);
+		setShouldBlock(false);
+
 		const cleaned = createCleanedEntries(data, (key, value, fullData) => {
 			if (key === 'walkTime') return []; // walkTime 제거
 			if (key === 'walk') { // walk * walkTime 계산
@@ -96,81 +101,85 @@ const FullCheckSurvey = () => {
 				return [['walk', score]];
 			}
 		});
-		console.log('cleaned data', cleaned)
+		
 		const totalScore = Object.values(cleaned).reduce((sum: number, val) => {
 			return typeof val === 'number' ? sum + val : sum;
 		}, 0);
-		// router.push(`/health-note/full-check/result?totalScore=${totalScore}`)
+
+		setTimeout(() => {
+			router.push(`/health-note/full-check/result/${1}?score=${totalScore}`)
+		}, 2000)
 	}
+
 	return (
-		<>
-		<Header
-			leftElement={
-				!isFirstStep && <div className={styles.fullCheckSurveyHeader}>
-					<SvgIcon
-						src={BackIcon}
-						size={24}
-						color="gray900"
-						onClick={onPrevStep}
+		<NavigationGuard shouldBlock={shouldBlock}>
+			<Header
+				leftElement={
+					!isFirstStep && <div className={styles.fullCheckSurveyHeader}>
+						<SvgIcon
+							src={BackIcon}
+							size={24}
+							color="gray900"
+							onClick={onPrevStep}
+						/>
+						<DefaultText type='headline3' color='gray500'>이전</DefaultText>
+					</div>
+				}
+				onClose={() => router.back()}
+				showCloseButton
+			/>
+			<section className={styles.fullCheckSurveyContainer}>
+				<article className={styles.fullCheckSurveyTitle}>
+					<SvgIcon src={currentQuestion.imageUrl!} size={64} />
+					<DefaultText type='title3'>
+						{currentQuestion?.title
+							? <>
+								{dogInfo ? `${dogInfo.name}` : '반려견'}의<br/>
+								<span className={pointColor}>{title[0]}</span>{title[1]}
+							</>
+							: <>
+								<span className={pointColor}>{currentQuestion?.label} 관련 나타나는</span><br/>
+								증상을 모두 체크해 주세요
+							</>
+						}
+					</DefaultText>
+				</article>
+				<article className={styles.surveyAnswerList({ flexWrap: currentQuestion?.flexWrap || false })}>
+					<Controller
+						control={control}
+						name={currentQuestion?.key}
+						render={({ field }) => (
+							<>
+								{currentQuestion?.options.map(option => {
+									const watchedValue = watch(field.name);
+									const isSelected = currentQuestion?.multiple
+										? Array.isArray(watchedValue) && watchedValue.includes(option.value as number)
+										: watchedValue === option.value;
+									return (
+										<div key={option.label} style={{ width: currentQuestion?.flexWrap ? 'calc(50% - 6px)' : '100%' }}>
+											<SurveyButton
+												key={option.label}
+												label={option.label}
+												value={option.value}
+												inputType="checkbox"
+												onToggle={() => handleOptionSelect(option.value as number, option.key === 'none')}
+												isChecked={isSelected}
+											/>
+										</div>
+									)
+								})}
+							</>
+						)}
 					/>
-					<DefaultText type='headline3' color='gray500'>이전</DefaultText>
-				</div>
-			}
-			onClose={goBack}
-			showCloseButton
-		/>
-		<section className={styles.fullCheckSurveyContainer}>
-			<article className={styles.fullCheckSurveyTitle}>
-				<SvgIcon src={currentQuestion.imageUrl} size={64} />
-				<DefaultText type='title3'>
-					{currentQuestion?.title
-						? <>
-							{dogInfo ? `${dogInfo.name}${!dogInfo.name.endsWith('이') ? '이' : ''}` : '반려견'}의<br/>
-							<span className={pointColor}>{title[0]}</span>{title[1]}
-						</>
-						: <>
-							<span className={pointColor}>{currentQuestion?.label} 관련 나타나는</span><br/>
-							증상을 모두 체크해 주세요
-						</>
-					}
-				</DefaultText>
-			</article>
-			<article className={styles.surveyAnswerList({ flexWrap: currentQuestion?.flexWrap || false })}>
-				<Controller
-					control={control}
-					name={currentQuestion?.key}
-					render={({ field }) => (
-						<>
-						{currentQuestion?.options.map(option => {
-							const watchedValue = watch(field.name);
-							const isSelected = currentQuestion?.multiple
-								? Array.isArray(watchedValue) && watchedValue.includes(option.value as number)
-								: watchedValue === option.value;
-							return (
-								<div key={option.label} style={{ width: currentQuestion?.flexWrap ? 'calc(50% - 6px)' : '100%' }}>
-									<SurveyButton
-										key={option.label}
-										label={option.label}
-										value={option.value}
-										inputType="checkbox"
-										onToggle={() => handleOptionSelect(option.value as number, option.key === 'none')}
-										isChecked={isSelected}
-									/>
-								</div>
-							)
-						})}
-						</>
-					)}
-				/>
-			</article>
-		</section>
-		<ButtonDocked
-			type='full-button'
-			primaryButtonLabel='다음'
-			onPrimaryClick={onNextStep}
-			isPrimaryDisabled={isButtonDisabled}
-		/>
-		</>
+				</article>
+			</section>
+			<ButtonDocked
+				type='full-button'
+				primaryButtonLabel='다음'
+				onPrimaryClick={onNextStep}
+				isPrimaryDisabled={isButtonDisabled}
+			/>
+		</NavigationGuard>
 	);
 };
 
