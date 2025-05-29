@@ -1,8 +1,4 @@
-import {
-  GeneralOrderSheetResponse,
-  SaveGeneralOrderRequest,
-  SaveSubscriptionOrderRequest,
-} from "@/types";
+import { GeneralOrderSheetResponse, SaveGeneralOrderRequest } from "@/types";
 
 const initialGeneralOrderBody: SaveGeneralOrderRequest = {
   orderItemDtoList: [],
@@ -28,53 +24,27 @@ const initialGeneralOrderBody: SaveGeneralOrderRequest = {
   agreePrivacy: false,
 };
 
-const initialSubscriptionOrderBody: SaveSubscriptionOrderRequest = {
-  customerUid: "",
-  memberCouponId: null,
-  deliveryDto: {
-    recipientName: "",
-    phoneNumber: "",
-    zipcode: "",
-    street: "",
-    detailAddress: "",
-    request: "",
-  },
-  deliveryPrice: 0,
-  discountCoupon: 0,
-  discountGrade: 0,
-  discountReward: 0,
-  discountSubscriptionMonth: 0,
-  discountTotal: 0,
-  nextDeliveryDate: "",
-  orderPrice: 0,
-  overDiscount: 0,
-  paymentMethod: "NAVER_PAY",
-  paymentPrice: 0,
-  subscriptionMonth: null,
-  agreePrivacy: true,
-};
-
 const initialGeneralOrderSheetResponse: GeneralOrderSheetResponse = {
   defaultAddress: {
-    city: '',
+    city: "",
     default: false,
     deliveryName: null,
-    detailAddress: '',
+    detailAddress: "",
     id: 0,
-    phoneNumber: '',
-    recipientName: '',
-    request: '',
-    street: '',
-    zipcode: '',
+    phoneNumber: "",
+    recipientName: "",
+    request: "",
+    street: "",
+    zipcode: "",
   },
   deliveryAddress: [],
   deliveryPrice: 0,
-  email: '',
+  email: "",
   freeCondition: 0,
-  nextSubscribeDeliveryDate: '',
+  nextSubscribeDeliveryDate: "",
   orderItemDtoList: [],
   orderPrice: 0,
-  orderStatus: 'UNSUBSCRIBE_ORDER', // 초기값으로 적당한 기본 상태를 설정
+  orderStatus: "UNSUBSCRIBE_ORDER", // 초기값으로 적당한 기본 상태를 설정
   reward: 0,
 };
 
@@ -90,5 +60,8 @@ const initialDeliveryDto = {
   request: "",
 };
 
-
-export { initialDeliveryDto, initialGeneralOrderBody, initialSubscriptionOrderBody, initialGeneralOrderSheetResponse }
+export {
+  initialDeliveryDto,
+  initialGeneralOrderBody,
+  initialGeneralOrderSheetResponse,
+};

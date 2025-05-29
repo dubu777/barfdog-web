@@ -48,6 +48,11 @@ const HealthNoteHeader = () => {
       showBackButton: true,
       onBack: goBack,
     },
+    "/health-note/body-check": {
+      centerTitle: "부위별 진단",
+      showBackButton: true,
+      onBack: goBack,
+    },
   };
 
   const dynamicHeaderConfigs: Record<

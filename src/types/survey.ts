@@ -1,8 +1,16 @@
 import { fontColors } from "@/components/common/defaultText/DefaultText.css";
-import {RecipeDto} from "@/types/recipe";
+import { RecipeDto } from "@/types/recipe";
 
-export type { SubscribePlan, SurveyFormData, FoodAnalysis, ResultData, RecipeData, SurveySection, SurveyTitleConfig, SubtitlePart };
-
+export type {
+  SubscribePlan,
+  SurveyFormData,
+  FoodAnalysis,
+  ResultData,
+  RecipeData,
+  SurveySection,
+  SurveyTitleConfig,
+  SubtitlePart,
+};
 
 interface SurveyFormData {
   name: string;
@@ -116,7 +124,6 @@ interface DogActivity {
   walkingTimePerOneTime: number;
 }
 
-
 interface ResultData {
   lastSurveyDate: string;
   myDogName: string;
@@ -179,11 +186,11 @@ interface SubscribePlan {
   weeklyPaymentCycle: number;
   totalNumberOfPacks: number;
   maxRecipeCount: number;
-};
+}
 
 interface SurveySection {
-  key: string;
-  label: string;
+  key?: string;
+  label?: string;
   steps: number;
 }
 

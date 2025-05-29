@@ -1,6 +1,6 @@
 "use client";
 import * as styles from "./HealthNoteMainHeader.css";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   createDogButton,
@@ -30,6 +30,7 @@ const HealthNoteMainHeader = () => {
   const router = useRouter();
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
   const isLoggedIn = isAuthenticated(token);
+  const [mounted, setMounted] = useState(false);
 
   const { data: dogList = [] } = useGetDogList();
   const representativeDog = dogList?.find((dog) => dog.representative);
@@ -39,6 +40,10 @@ const HealthNoteMainHeader = () => {
 
   const { isOpen, onClose, onToggle } = useModal();
   const { mutate: updateTargetDogMutate } = useUpdateRepresentativeDog();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -92,6 +97,8 @@ const HealthNoteMainHeader = () => {
     }
     onClose();
   };
+
+  if (!mounted) return null;
 
   return (
     <>

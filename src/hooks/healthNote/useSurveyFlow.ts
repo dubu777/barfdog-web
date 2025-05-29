@@ -1,114 +1,127 @@
 import { useCallback, useMemo, useState } from "react";
-import { FieldValues, FormState, Path, PathValue, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { SurveyQuestion } from "@/types/healthNote";
-import { DISEASE_INFO_POSITIVE } from "@/constants";
+import {
+  Control,
+  FieldValues,
+  FormState,
+  Path,
+  PathValue,
+  UseFormSetValue,
+  UseFormWatch,
+  useWatch,
+} from "react-hook-form";
+import { SurveyOption, SurveyQuestion } from "@/types/healthNote";
+import { POSITIVE_KEY } from "@/constants";
 
 interface UseSurveyFlowProps<TFormValues extends FieldValues> {
-	questions: SurveyQuestion[];
-	onSpecialOptionSelect?: (option: number) => void;
-	watch: UseFormWatch<TFormValues>;
-	setValue: UseFormSetValue<TFormValues>;
-	formState: FormState<TFormValues>;
+  questions: SurveyQuestion[];
+  onSpecialOptionSelect?: (option: number) => void;
+  watch: UseFormWatch<TFormValues>;
+  setValue: UseFormSetValue<TFormValues>;
+  formState: FormState<TFormValues>;
+  control: Control<TFormValues>;
 }
 
 export const useSurveyFlow = <TFormValues extends FieldValues>({
-	questions,
-	onSpecialOptionSelect,
-	watch,
-	setValue,
-	formState,
+  questions,
+  onSpecialOptionSelect,
+  watch,
+  setValue,
+  formState,
+  control,
 }: UseSurveyFlowProps<TFormValues>) => {
-	const [currentStep, setCurrentStep] = useState<number>(1);
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
-	const isFirstStep = currentStep === 1;
-	const isLastStep = currentStep === questions.length;
+  const isFirstStep = currentStep === 1;
+  const isLastStep = currentStep === questions.length;
 
-	const currentQuestion = questions[currentStep - 1];
-	const currentValue = watch(currentQuestion?.key as PathValue<TFormValues, Path<TFormValues>>);
+  const currentQuestion = questions[currentStep - 1];
+  const { options, multiple = false } = currentQuestion;
+  const fieldKey = currentQuestion.key as Path<TFormValues>;
+  const currentValue = useWatch({ name: fieldKey, control });
 
-	const positiveValue = DISEASE_INFO_POSITIVE.value as PathValue<TFormValues, Path<TFormValues>>;
-	
-	// 버튼 비활성화 여부 계산
-	const isButtonDisabled = useMemo(() => {
-		// 마지막 질문인 경우 전체 폼 유효성 검사
-		if (isLastStep) return !formState.isValid;
+  const isButtonDisabled = useMemo(() => {
+    if (isLastStep) return !formState.isValid;
+    if (multiple) {
+      return !(Array.isArray(currentValue) && currentValue.length > 0);
+    }
+    return currentValue == null;
+  }, [currentValue, multiple, isLastStep, formState.isValid]);
 
-		// 다중 선택 질문인 경우 최소 1개 이상 선택
-		if (currentQuestion?.multiple) {
-			return !(Array.isArray(currentValue) && currentValue.length > 0);
-		}
+  // step을 지정하면 해당 단계로, 아니면 현재+1로 이동
+  const handleNextStep = useCallback(
+    (step?: number) =>
+      setCurrentStep((prev) =>
+        step != null ? step : Math.min(prev + 1, questions.length)
+      ),
+    [questions.length]
+  );
 
-		// 단일 선택 질문인 경우 선택 값이 있는지 여부
-		return currentValue === undefined || currentValue === null;
-	}, [currentValue, currentQuestion, isLastStep, formState.isValid]);
+  // step을 지정하면 해당 단계로, 아니면 현재-1로 이동
+  const handlePrevStep = useCallback(
+    (step?: number) =>
+      setCurrentStep((prev) => (step != null ? step : Math.max(prev - 1, 1))),
+    [questions.length]
+  );
 
-	// step 인자가 주어지면 해당 스텝으로 강제 이동
-	const handleNextStep = useCallback((step?: number) => {
-		setCurrentStep((prev) => step ?? Math.min(prev + 1, questions.length));
-	}, []);
+  // 옵션 선택 함수
+  const handleOptionSelect = (selectedOption: SurveyOption) => {
+    const selectedValue = selectedOption.value;
+    const previousSelections = (watch(fieldKey) as number[]) ?? [];
 
-	const handlePrevStep = useCallback((step?: number) => {
-		setCurrentStep((prev) => step ?? Math.max(prev - 1, 1));
-	}, []);
+    if (multiple) {
+      // 1) "없어요" 옵션 선택 시: 기존 선택 모두 제거하고 none만 남김, 자동 다음 단계
+      if (selectedOption.key === POSITIVE_KEY) {
+        const newSelections = [selectedValue];
+        setValue(
+          fieldKey,
+          newSelections as PathValue<TFormValues, Path<TFormValues>>,
+          { shouldValidate: true }
+        );
+        handleNextStep();
+        return;
+      }
 
-	// 옵션 선택 처리
-	const handleOptionSelect = useCallback((option: PathValue<TFormValues, Path<TFormValues>>, directPass = false) => {
-		const key = currentQuestion.key as Path<TFormValues>;
-		let updated: number[] | string[] = [];
+      // 2) 일반 옵션 클릭
+      //   a) 만약 이전에 none이 선택되어 있었다면 none 제거
+      const selectionsWithoutNone = previousSelections.filter((value) => {
+        const option = options.find((o) => o.value === value);
+        return option?.key !== POSITIVE_KEY;
+      });
 
-		if (currentQuestion.multiple) {
-			const prev = watch(key) ?? [];
-			const isPositive = option === positiveValue;
-			const hasPositive = prev.includes(positiveValue);
-			const isSelected = prev.includes(option);
+      //    b) 토글 on/off
+      const isAlreadySelected = selectionsWithoutNone.includes(selectedValue);
+      const newSelections = isAlreadySelected
+        ? selectionsWithoutNone.filter((value) => value !== selectedValue)
+        : [...selectionsWithoutNone, selectedValue];
 
-			const maxSelectable = currentQuestion.maxSelectable ?? 2;
+      setValue(
+        fieldKey,
+        newSelections as PathValue<TFormValues, Path<TFormValues>>,
+        { shouldValidate: true }
+      );
+      return;
+    } else {
+      // 단일 선택: 항상 선택 즉시 다음 단계
+      setValue(
+        fieldKey,
+        selectedValue as PathValue<TFormValues, Path<TFormValues>>,
+        { shouldValidate: true }
+      );
+      onSpecialOptionSelect?.(selectedValue);
 
-			if (isPositive) {
-				// 긍정 선택 항목[없어요] 클릭시 토글 처리
-				updated = hasPositive ? [] : [option];
-				setValue(key, updated as PathValue<TFormValues, Path<TFormValues>>, { shouldValidate: true });
+      handleNextStep();
+    }
+  };
 
-				// 값 존재시 다음 스탭으로 이동
-				if (updated.length > 0) handleNextStep();
-				return;
-			}
-
-			// 긍정 선택 항목[없어요] 이미 선택한 상태에 다른 항목 선택시 긍정 항목 제거 및 일반 다중 선택 토글 처리
-			if (hasPositive) {
-				updated = [option];
-			} else if (isSelected) {
-				updated = prev.filter(v => v !== option);
-			} else {
-				if (prev.length >= maxSelectable) {
-					return;
-				}
-				updated = [...prev, option];
-			}
-			setValue(key, updated as PathValue<TFormValues, Path<TFormValues>>, { shouldValidate: true });
-
-			// 긍정 선택 항목[없어요] 을 선택했거나 2개 이상 선택된 경우 다음 스탭으로 이동
-			if (directPass || updated.length >= maxSelectable) handleNextStep();
-		} else {
-			// 단일 선택인 경우 즉시 다음 스텝
-			setValue(key, option, { shouldValidate: true });
-
-			if (onSpecialOptionSelect) {
-				onSpecialOptionSelect(option);
-			}
-			handleNextStep();
-		}
-	}, [currentQuestion, watch, setValue, handleNextStep, onSpecialOptionSelect]);
-
-	return {
-		currentStep,
-		currentQuestion,
-		currentValue,
-		isLastStep,
-		isFirstStep,
-		isButtonDisabled,
-		handleNextStep,
-		handlePrevStep,
-		handleOptionSelect
-	}
-}
+  return {
+    currentStep,
+    currentQuestion,
+    currentValue,
+    isLastStep,
+    isFirstStep,
+    isButtonDisabled,
+    handleNextStep,
+    handlePrevStep,
+    handleOptionSelect,
+  };
+};

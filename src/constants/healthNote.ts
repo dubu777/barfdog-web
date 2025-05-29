@@ -24,7 +24,7 @@ const HEALTH_NOTE_MENU_CATEGORY = [
   },
   {
     label: "부위별 진단",
-    url: "/health-note/body-check/survey",
+    url: "/health-note/body-check",
     imageUrl: BodyCheckImage,
     width: 58,
     height: 61,
@@ -696,6 +696,150 @@ const DISEASE_CATEGORY_LIST = Object.entries(DISEASE_CATEGORY).map(
   })
 );
 
+const POSITIVE_KEY = "none";
+
+const GI_SURVEY_SECTION = [{ steps: 5 }, { steps: 5 }, { steps: 5 }];
+
+const GI_COMMON_OPTIONS = [
+  { label: "없어요", value: 8 },
+  { label: "주 1-2회", value: 6 },
+  { label: "주 3-4회", value: 3 },
+  { label: "거의 매일", value: 1 },
+];
+
+const GI_SURVEY_ITEMS = [
+  {
+    key: "vomiting",
+    label: "구토",
+    options: GI_COMMON_OPTIONS,
+    title: ["식후 음식물을", "토해내는 경우가 있나요?"],
+  },
+  {
+    key: "hematemesis",
+    label: "토혈",
+    options: GI_COMMON_OPTIONS,
+    title: ["구토 시 피가", "섞여 나온 적이 있나요?"],
+  },
+  {
+    key: "diarrhea",
+    label: "설사",
+    options: GI_COMMON_OPTIONS,
+    title: ["배변이 묽거나 물처럼", "흐르는 경우가 있나요?"],
+  },
+  {
+    key: "stoolMucus",
+    label: "배변점액",
+    options: GI_COMMON_OPTIONS,
+    title: ["배변에 끈적한 점액이", "묻어 나온 적이 있나요?"],
+  },
+  {
+    key: "stoolColor",
+    label: "배변 색",
+    options: [
+      { label: "정상적인 갈색변이에요", value: 8 },
+      { label: "가끔 혈변이 나와요", value: 6 },
+      { label: "혈변을 자주 해요", value: 3 },
+      { label: "종종 까만 변이 나와요", value: 1 },
+    ],
+    title: ["배변 색이 검거나", "피가 섞여 나온 적이 있나요?"],
+  },
+  {
+    key: "frequentBowelMovement",
+    label: "잦은 배변",
+    options: GI_COMMON_OPTIONS,
+    title: ["배변을 자주 시도하지만", "양이 적거나 힘만 주는 경우가 있나요?"],
+  },
+  {
+    key: "decreasedAppetite",
+    label: "식욕 저하",
+    options: [
+      { label: "식욕이 좋아요", value: 8 },
+      { label: "평소보다 덜 먹어요", value: 6 },
+      { label: "식사량이 절반으로 줄었어요", value: 3 },
+      { label: "거의 먹으려 하지 않아요", value: 1 },
+    ],
+    title: ["식욕이 줄거나 평소보다", "양이 급격하게 감소했나요?"],
+  },
+  {
+    key: "abdominalPain",
+    label: "복통",
+    options: [
+      { label: "아니요", value: 8 },
+      { label: "약간 불편해 해요", value: 6 },
+      { label: "불편해 해요", value: 3 },
+      { label: "매우 불편해 해요", value: 1 },
+    ],
+    title: ["배를 만지면 아파하거나", "불편한 듯한 반응을 보이나요?"],
+  },
+  {
+    key: "lethargy",
+    label: "무기력",
+    options: [
+      { label: "활발해요", value: 8 },
+      { label: "평소보다 지쳐보여요", value: 6 },
+      { label: "활동량 중 쉽게 지쳐해요", value: 3 },
+      { label: "요즘들어 항상 무기력해요", value: 1 },
+    ],
+    title: ["평소보다 무기력하거나", "쉽게 지치는 모습을 보이나요?"],
+  },
+  {
+    key: "borborygmus",
+    label: "복명음",
+    options: GI_COMMON_OPTIONS,
+    title: ["배에서 꾸르륵거리는", "소리가 자주 들리나요?"],
+  },
+  {
+    key: "mealRoutine",
+    label: "식사 시간과 횟수",
+    options: GI_COMMON_OPTIONS,
+    title: ["식사 시간과 ", "횟수가 일정한가요?"],
+  },
+  {
+    key: "snacks",
+    label: "간식",
+    options: [
+      { label: "거의 먹지 않아요", value: 8 },
+      { label: "하루 1회", value: 6 },
+      { label: "하루 2회", value: 3 },
+      { label: "하루 3회 이상", value: 1 },
+    ],
+    title: ["간식을", "얼마나 자주 먹나요?"],
+  },
+  {
+    key: "humanFood",
+    label: "사람 음식",
+    options: [
+      { label: "먹지 않아요", value: 8 },
+      { label: "가끔 먹어요", value: 6 },
+      { label: "종종 먹어요", value: 3 },
+      { label: "매일 먹어요", value: 1 },
+    ],
+    title: ["사람 음식을", "자주 섭취하나요?"],
+  },
+  {
+    key: "stress",
+    label: "스트레스",
+    options: [
+      { label: "받지 않아요", value: 8 },
+      { label: "가끔 받아요", value: 6 },
+      { label: "자주 스트레스를 받아요", value: 3 },
+      { label: "지속적으로 받아요", value: 1 },
+    ],
+    title: ["스트레스를", "자주 받는 환경인가요?"],
+  },
+  {
+    key: "probiotics",
+    label: "유산균",
+    options: [
+      { label: "먹지 않아요", value: 8 },
+      { label: "주 1-2회", value: 6 },
+      { label: "주 3-4회", value: 3 },
+      { label: "거의 매일", value: 1 },
+    ],
+    title: ["장 건강을 위해 유산균이나", "섬유질을 급여하나요?"],
+  },
+];
+
 export {
   DISEASE_CATEGORY,
   DISEASE_CATEGORY_LIST,
@@ -703,4 +847,7 @@ export {
   DISEASE_INFO_POSITIVE,
   DISEASE_INFO,
   DISEASE_INFO_LIST,
+  GI_SURVEY_SECTION,
+  GI_SURVEY_ITEMS,
+  POSITIVE_KEY,
 };
