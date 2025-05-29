@@ -97,6 +97,7 @@ const HealthNoteHeader = () => {
   const excludePaths = [
     "/health-note/full-check/survey",
     "/health-note/full-check/result",
+    "health-note/body-check/survey",
   ];
 
   return (
