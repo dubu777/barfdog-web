@@ -59,6 +59,24 @@ const HealthNoteMainHeader = () => {
         imageUrl: representativeDog.pictureUrl,
       });
     } else {
+      if (dogList) {
+        setDogInfo({
+          dogId: dogList[0]?.id,
+          name: dogList[0]?.name,
+          imageUrl: dogList[0]?.pictureUrl,
+        });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (representativeDog) {
+      setDogInfo({
+        dogId: representativeDog.id,
+        name: representativeDog.name,
+        imageUrl: representativeDog.pictureUrl,
+      });
+    } else {
       setDogInfo({
         dogId: dogList[0].id,
         name: dogList[0].name,

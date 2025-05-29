@@ -55,6 +55,15 @@ export const [themeClass, themeVars] = createTheme({
       yellow100: "#FFF4DE",
       yellow50: "#FFFAF0",
     },
+    green: {
+      green600: "#06AE62",
+      green500: "#24BB77",
+      green400: "#5CCC9A",
+      green300: "#95DEBD",
+      green200: "#C5EDDB",
+      green100: "#E6F7EF",
+      green50: "#F2FBF7",
+    },
     gray: {
       gray900: "#2B2B2B",
       gray800: "#454545",

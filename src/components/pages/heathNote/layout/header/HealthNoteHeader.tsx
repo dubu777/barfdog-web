@@ -48,10 +48,10 @@ const HealthNoteHeader = () => {
       showBackButton: true,
       onBack: goBack,
     },
-    "/health-note/body-check": {
-      centerTitle: "부위별 진단",
+    "/health-note/full-check": {
+      centerTitle: "건강 종합 진단",
       showBackButton: true,
-      onBack: goBack,
+      onBack: goBackPreviousPage,
     },
   };
 
@@ -94,9 +94,14 @@ const HealthNoteHeader = () => {
     [pathname, params]
   );
 
+  const excludePaths = [
+    "/health-note/full-check/survey",
+    "/health-note/full-check/result",
+  ];
+
   return (
     <>
-      {pathname !== "/health-note/full-check/survey" &&
+      {!excludePaths.some((path) => pathname.includes(path)) &&
         (pathname === "/health-note" ? (
           <HealthNoteMainHeader />
         ) : (

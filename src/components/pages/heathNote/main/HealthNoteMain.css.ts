@@ -17,6 +17,7 @@ export const menuCategoryBox = style({
 export const menuCategory = recipe({
 	base: {
 		display: 'flex',
+		cursor: 'pointer',
 	},
 	variants: {
 		fullWidth: {

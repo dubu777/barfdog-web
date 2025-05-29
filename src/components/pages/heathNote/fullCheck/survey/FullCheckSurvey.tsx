@@ -2,6 +2,7 @@
 import * as yup from "yup";
 import * as styles from "./FullCheckSurvey.css";
 import { pointColor } from "@/styles/common.css";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Controller, useWatch } from "react-hook-form";
 import BackIcon from "/public/images/header/chevron-left.svg";
@@ -10,7 +11,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { useBackNavigation } from "@/utils";
+import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
@@ -35,7 +36,6 @@ const defaultFullCheckSurveyValues = DISEASE_CATEGORY_LIST.reduce((acc, q) => {
 
 const FullCheckSurvey = () => {
   const router = useRouter();
-  const goBack = useBackNavigation(undefined, true);
 
   const { control, setValue, watch, handleSubmit, formState } = useFormHandler(
     fullCheckSurveySchema,
@@ -43,6 +43,9 @@ const FullCheckSurvey = () => {
   );
   const { dogInfo } = usePersistHealthNoteStore();
   const walkValue = useWatch({ control, name: "walk" });
+
+  const [shouldBlock, setShouldBlock] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSpecialOptionSelect = (option) => {
     if (currentQuestion.key === "walk" && option === 0) {
@@ -70,9 +73,10 @@ const FullCheckSurvey = () => {
     control,
   });
 
-  console.log("watch values", watch());
-
-  const title = currentQuestion?.title?.split("@") || "";
+  const title =
+    (typeof currentQuestion?.title === "string" &&
+      currentQuestion?.title?.split("@")) ||
+    "";
 
   const onPrevStep = () => {
     // 산책 횟수 값(walk)이 0인 경우 산책 시간 값(walkTime) 2단계 전으로 이동
@@ -93,7 +97,9 @@ const FullCheckSurvey = () => {
   };
 
   const onSubmit = (data: typeof defaultFullCheckSurveyValues) => {
-    console.log("onSubmit data", data);
+    setIsLoading(true);
+    setShouldBlock(false);
+
     const cleaned = createCleanedEntries(data, (key, value, fullData) => {
       if (key === "walkTime") return []; // walkTime 제거
       if (key === "walk") {
@@ -107,14 +113,18 @@ const FullCheckSurvey = () => {
         return [["walk", score]];
       }
     });
-    console.log("cleaned data", cleaned);
+
     const totalScore = Object.values(cleaned).reduce((sum: number, val) => {
       return typeof val === "number" ? sum + val : sum;
     }, 0);
-    // router.push(`/health-note/full-check/result?totalScore=${totalScore}`)
+
+    setTimeout(() => {
+      router.push(`/health-note/full-check/result/${1}?score=${totalScore}`);
+    }, 2000);
   };
+
   return (
-    <>
+    <NavigationGuard shouldBlock={shouldBlock}>
       <Header
         leftElement={
           !isFirstStep && (
@@ -131,7 +141,7 @@ const FullCheckSurvey = () => {
             </div>
           )
         }
-        onClose={goBack}
+        onClose={() => router.back()}
         showCloseButton
       />
       <section className={styles.fullCheckSurveyContainer}>
@@ -140,10 +150,7 @@ const FullCheckSurvey = () => {
           <DefaultText type="title3">
             {currentQuestion?.title ? (
               <>
-                {dogInfo
-                  ? `${dogInfo.name}${!dogInfo.name.endsWith("이") ? "이" : ""}`
-                  : "반려견"}
-                의<br />
+                {dogInfo ? `${dogInfo.name}` : "반려견"}의<br />
                 <span className={pointColor}>{title[0]}</span>
                 {title[1]}
               </>
@@ -205,7 +212,7 @@ const FullCheckSurvey = () => {
         onPrimaryClick={onNextStep}
         isPrimaryDisabled={isButtonDisabled}
       />
-    </>
+    </NavigationGuard>
   );
 };
 

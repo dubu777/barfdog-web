@@ -17,7 +17,7 @@ const HEALTH_NOTE_MENU_CATEGORY = [
     label: "건강 종합 진단",
     description: `몇 가지 질문으로 우리 아이의\n건강 상태를 체크할 수 있어요`,
     fullWidth: true,
-    url: "/health-note/full-check/survey",
+    url: "/health-note/full-check",
     imageUrl: FullCheckImage,
     width: 140,
     height: 168,
