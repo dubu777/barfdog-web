@@ -1,56 +1,22 @@
-import FullCheckImage from "/public/images/healthNote/main/full-check.png";
-import BodyCheckImage from "/public/images/healthNote/main/body-check.png";
-import GutCheckImage from "/public/images/healthNote/main/gut-check.png";
+import WalkImage from '/public/images/healthNote/full-check/walk.svg';
+import SkinImage from '/public/images/healthNote/full-check/skin.svg';
+import EyesImage from '/public/images/healthNote/full-check/eyes.svg';
+import TeethImage from '/public/images/healthNote/full-check/teeth.svg';
+import GutImage from '/public/images/healthNote/full-check/gut.svg';
+import ThyroidImage from '/public/images/healthNote/full-check/thyroid.svg';
+import JointImage from '/public/images/healthNote/full-check/joint.svg';
+import HeartImage from '/public/images/healthNote/full-check/heart.svg';
+import KidneyImage from '/public/images/healthNote/full-check/kidney.svg';
+import ImmuneImage from '/public/images/healthNote/full-check/immune.svg';
 
-import SkinImage from "/public/images/healthNote/full-check/skin.svg";
-import EyesImage from "/public/images/healthNote/full-check/eyes.svg";
-import TeethImage from "/public/images/healthNote/full-check/teeth.svg";
-import GutImage from "/public/images/healthNote/full-check/gut.svg";
-import ThyroidImage from "/public/images/healthNote/full-check/thyroid.svg";
-import JointImage from "/public/images/healthNote/full-check/joint.svg";
-import HeartImage from "/public/images/healthNote/full-check/heart.svg";
-import KidneyImage from "/public/images/healthNote/full-check/kidney.svg";
-import ImmuneImage from "/public/images/healthNote/full-check/immune.svg";
+import GoodImage from '/public/images/healthNote/full-check/good.svg';
+import NormalImage from '/public/images/healthNote/full-check/normal.svg';
+import WarningImage from '/public/images/healthNote/full-check/warning.svg';
+import DangerImage from '/public/images/healthNote/full-check/danger.svg';
 
-const HEALTH_NOTE_MENU_CATEGORY = [
-  {
-    label: "건강 종합 진단",
-    description: `몇 가지 질문으로 우리 아이의\n건강 상태를 체크할 수 있어요`,
-    fullWidth: true,
-    url: "/health-note/full-check",
-    imageUrl: FullCheckImage,
-    width: 140,
-    height: 168,
-  },
-  {
-    label: "부위별 진단",
-    url: "/health-note/body-check",
-    imageUrl: BodyCheckImage,
-    width: 58,
-    height: 61,
-  },
-  {
-    label: "장내 미생물 검사",
-    url: "/health-note/gut-check",
-    imageUrl: GutCheckImage,
-    width: 50,
-    height: 62,
-  },
-  {
-    label: "건강 검진",
-    url: "/health-note/health-check",
-    imageUrl: GutCheckImage,
-    width: 50,
-    height: 62,
-  },
-  {
-    label: "견종 백과",
-    url: "/health-note/dogpedia",
-    imageUrl: GutCheckImage,
-    width: 50,
-    height: 62,
-  },
-];
+import SmallSizeIcon from '/public/images/healthNote/full-check/small-size.svg';
+import MiddleSizeIcon from '/public/images/healthNote/full-check/middle-size.svg';
+import LargeSizeIcon from '/public/images/healthNote/full-check/large-size.svg';
 
 const DISEASE_INFO_POSITIVE = {
   key: "none",
@@ -613,7 +579,7 @@ const DISEASE_CATEGORY = {
   },
   walk: {
     label: "평균 산책 횟수",
-    imageUrl: SkinImage,
+    imageUrl: WalkImage,
     options: WALK_TIME_BY_WEEK_LIST,
     title: "평균 산책 횟수@는 어떻게 되나요?",
     flexWrap: true,
@@ -621,7 +587,7 @@ const DISEASE_CATEGORY = {
   },
   walkTime: {
     label: "평균 산책 시간",
-    imageUrl: SkinImage,
+    imageUrl: WalkImage,
     options: WALK_MINUTE_BY_WEEK_LIST,
     title: "평균 산책 시간@은 어떻게 되나요?",
     flexWrap: true,
@@ -696,166 +662,134 @@ const DISEASE_CATEGORY_LIST = Object.entries(DISEASE_CATEGORY).map(
   })
 );
 
-const POSITIVE_KEY = "none";
-
-const GI_SURVEY_SECTION = [{ steps: 5 }, { steps: 5 }, { steps: 5 }];
-
-const GI_COMMON_OPTIONS = [
-  { key: "common-1", label: "없어요", value: 8 },
-  { key: "common-2", label: "주 1-2회", value: 6 },
-  { key: "common-3", label: "주 3-4회", value: 3 },
-  { key: "common-4", label: "거의 매일", value: 1 },
+const BODY_PART_PRIORITY = [
+  "심혈관계",
+  "신장",
+  "면역력",
+  "갑상선",
+  "위/장",
+  "뼈/관절",
+  "슬개골 탈구",
+  "눈",
+  "치아/구강",
+  "피부",
 ];
 
-const GI_SURVEY_ITEMS = [
-  {
-    key: "vomiting",
-    label: "구토",
-    options: GI_COMMON_OPTIONS,
-    title: ["식후 음식물을", "토해내는 경우가 있나요?"],
+const BODY_PART_TO_CATEGORY: Record<string, string> = {
+  heart: "심혈관계",
+  kidney: "신장",
+  immune: "면역력",
+  thyroid: "갑상선",
+  gut: "위/장",
+  joint: "뼈/관절",
+  knee: "슬개골 탈구",
+  eyes: "눈",
+  teeth: "치아/구강",
+  skin: "피부",
+};
+
+const BODY_CATEGORY_TAG = {
+  ...BODY_PART_TO_CATEGORY,
+  diet: '체중 조절',
+  senior: '노령견 건강',
+}
+
+const DOG_SIZE_BASED_DISEASES = [
+  'thyroid',
+  'knee',
+  'heart',
+  'kidney',
+]
+
+const DISEASE_BASED_PRODUCTS = {
+  skin: {
+    title: '윤기 있고 건강한 모질',
+    itemName: '램앤비프+ 1kg',
+    description: '양과 소의 질 좋은 단백질에 항산화 채소와 햄프씨드를 더해 건강한 피부 장벽과 윤기 나는 모질을 함께 관리할 수 있어요.',
   },
-  {
-    key: "hematemesis",
-    label: "토혈",
-    options: GI_COMMON_OPTIONS,
-    title: ["구토 시 피가", "섞여 나온 적이 있나요?"],
+  eyes: {
+    title: '맑고 건강한 눈 컨디션',
+    itemName: '프리미엄 비프 1kg',
+    description: '항산화력이 뛰어난 블루베리와 당근, 대구간유를 조합한 식단으로 망막을 보호하고 눈의 노화와 시력 저하 예방에 도움을 줄 수 있어요. ',
   },
-  {
-    key: "diarrhea",
-    label: "설사",
-    options: GI_COMMON_OPTIONS,
-    title: ["배변이 묽거나 물처럼", "흐르는 경우가 있나요?"],
+  teeth: {
+    title: '튼튼하고 깨끗한 치아 관리',
+    itemName: '바프독 생식 올인원 패키지 1.5kg',
+    description: '씹는 과정에서 자연스럽게 치태를 제거하고, 자연식 중심의 식단은 치아와 잇몸을 튼튼하게 유지하는 데 도움을 줘요.',
   },
-  {
-    key: "stoolMucus",
-    label: "배변점액",
-    options: GI_COMMON_OPTIONS,
-    title: ["배변에 끈적한 점액이", "묻어 나온 적이 있나요?"],
+  gut: {
+    title: '균형 잡힌 장내 환경',
+    itemName: '바프레드',
+    description: '유기농 채소를 자연 발효시켜 만든 천연 유산균이 유익균이 자라기 좋은 환경을 만들어주고 장내 균형 회복에 도움을 줘요. ',
   },
-  {
-    key: "stoolColor",
-    label: "배변 색",
-    options: [
-      { key: "stoolColor-1", label: "정상적인 갈색변이에요", value: 8 },
-      { key: "stoolColor-2", label: "가끔 혈변이 나와요", value: 6 },
-      { key: "stoolColor-3", label: "혈변을 자주 해요", value: 3 },
-      { key: "stoolColor-4", label: "종종 까만 변이 나와요", value: 1 },
-    ],
-    title: ["배변 색이 검거나", "피가 섞여 나온 적이 있나요?"],
+  joint: {
+    title: '유연하고 편안한 관절 움직임',
+    itemName: '터메릭슈퍼큐브',
+    description: '관절 건강에 좋은 커큐민이 풍부한 유기농 강황으로 만들어진 제품이에요. 염증 완화와 움직임 개선에 도움을 줄 수 있어 꾸준한 관리에 적합해요.',
   },
-  {
-    key: "frequentBowelMovement",
-    label: "잦은 배변",
-    options: GI_COMMON_OPTIONS,
-    title: ["배변을 자주 시도하지만", "양이 적거나 힘만 주는 경우가 있나요?"],
+  immune: {
+    title: '컨디션 회복을 돕는 면역 케어',
+    itemName: '치킨스프 200ml × 2',
+    description: '고단백 닭과 면역 기능에 도움을 주는 버섯, 채소를 함께 고아낸 스프입니다. 영양이 부족하거나 기운이 없을 때 면역력 보충용으로 간편하게 급여할 수 있어요.',
   },
-  {
-    key: "decreasedAppetite",
-    label: "식욕 저하",
-    options: [
-      { key: "decreasedAppetite-1", label: "식욕이 좋아요", value: 8 },
-      { key: "decreasedAppetite-2", label: "평소보다 덜 먹어요", value: 6 },
-      {
-        key: "decreasedAppetite-3",
-        label: "식사량이 절반으로 줄었어요",
-        value: 3,
-      },
-      {
-        key: "decreasedAppetite-4",
-        label: "거의 먹으려 하지 않아요",
-        value: 1,
-      },
-    ],
-    title: ["식욕이 줄거나 평소보다", "양이 급격하게 감소했나요?"],
-  },
-  {
-    key: "abdominalPain",
-    label: "복통",
-    options: [
-      { key: "abdominalPain-1", label: "아니요", value: 8 },
-      { key: "abdominalPain-2", label: "약간 불편해 해요", value: 6 },
-      { key: "abdominalPain-3", label: "불편해 해요", value: 3 },
-      { key: "abdominalPain-4", label: "매우 불편해 해요", value: 1 },
-    ],
-    title: ["배를 만지면 아파하거나", "불편한 듯한 반응을 보이나요?"],
-  },
-  {
-    key: "lethargy",
-    label: "무기력",
-    options: [
-      { key: "lethargy-1", label: "활발해요", value: 8 },
-      { key: "lethargy-2", label: "평소보다 지쳐보여요", value: 6 },
-      { key: "lethargy-3", label: "활동량 중 쉽게 지쳐해요", value: 3 },
-      { key: "lethargy-4", label: "요즘들어 항상 무기력해요", value: 1 },
-    ],
-    title: ["평소보다 무기력하거나", "쉽게 지치는 모습을 보이나요?"],
-  },
-  {
-    key: "borborygmus",
-    label: "복명음",
-    options: GI_COMMON_OPTIONS,
-    title: ["배에서 꾸르륵거리는", "소리가 자주 들리나요?"],
-  },
-  {
-    key: "mealRoutine",
-    label: "식사 시간과 횟수",
-    options: GI_COMMON_OPTIONS,
-    title: ["식사 시간과 ", "횟수가 일정한가요?"],
-  },
-  {
-    key: "snacks",
-    label: "간식",
-    options: [
-      { key: "snacks-1", label: "거의 먹지 않아요", value: 8 },
-      { key: "snacks-2", label: "하루 1회", value: 6 },
-      { key: "snacks-3", label: "하루 2회", value: 3 },
-      { key: "snacks-4", label: "하루 3회 이상", value: 1 },
-    ],
-    title: ["간식을", "얼마나 자주 먹나요?"],
-  },
-  {
-    key: "humanFood",
-    label: "사람 음식",
-    options: [
-      { key: "humanFood-1", label: "먹지 않아요", value: 8 },
-      { key: "humanFood-2", label: "가끔 먹어요", value: 6 },
-      { key: "humanFood-3", label: "종종 먹어요", value: 3 },
-      { key: "humanFood-4", label: "매일 먹어요", value: 1 },
-    ],
-    title: ["사람 음식을", "자주 섭취하나요?"],
-  },
-  {
-    key: "stress",
-    label: "스트레스",
-    options: [
-      { key: "stress-1", label: "받지 않아요", value: 8 },
-      { key: "stress-2", label: "가끔 받아요", value: 6 },
-      { key: "stress-3", label: "자주 스트레스를 받아요", value: 3 },
-      { key: "stress-4", label: "지속적으로 받아요", value: 1 },
-    ],
-    title: ["스트레스를", "자주 받는 환경인가요?"],
-  },
-  {
-    key: "probiotics",
-    label: "유산균",
-    options: [
-      { key: "probiotics-1", label: "먹지 않아요", value: 8 },
-      { key: "probiotics-2", label: "주 1-2회", value: 6 },
-      { key: "probiotics-3", label: "주 3-4회", value: 3 },
-      { key: "probiotics-4", label: "거의 매일", value: 1 },
-    ],
-    title: ["장 건강을 위해 유산균이나", "섬유질을 급여하나요?"],
-  },
-];
+} as const;
+
+const DISEASE_PRODUCTS_BY_DOG_SIZE = {
+  LARGE: [
+    {
+      tag: 'joint',
+      ...DISEASE_BASED_PRODUCTS.joint,
+    },
+    {
+      tag: 'diet',
+      title: '체중 부담을 줄이는 식단 관리',
+      itemName: '바프독 생식 올인원 패키지 1.5kg',
+      description: '생식 기반의 저지방・고단백 레시피는 체중 조절이 필요한 반려견에게 필수 영양은 유지하면서 과도한 열량을 줄여줘요. 관절과 장기 부담을 줄이는 데 도움이 돼요.',
+    },
+    {
+      tag: 'senior',
+      title: '근육과 관절을 위한 노령견 영양식',
+      itemName: '램앤비프+ 1kg',
+      description: '근육 유지에 도움을 주는 단백질로, 관절과 체력을 함께 관리할 수 있는 균형 잡힌 식단이에요. 에너지 대사와 면역력까지 함께 고려해 노령견 케어에 적합해요.',
+    }
+  ],
+  MIDDLE: [
+    { tag: 'skin', ...DISEASE_BASED_PRODUCTS.skin },
+    { tag: 'gut', ...DISEASE_BASED_PRODUCTS.gut },
+    { tag: 'immune', ...DISEASE_BASED_PRODUCTS.immune }
+  ],
+  SMALL: [
+    { tag: 'teeth', ...DISEASE_BASED_PRODUCTS.teeth },
+    { tag: 'eyes', ...DISEASE_BASED_PRODUCTS.eyes },
+    { tag: 'gut', ...DISEASE_BASED_PRODUCTS.gut }
+  ],
+};
+
+const RESULT_HEALTH_STATUS_ICON_MAP = {
+  good: GoodImage,
+  normal: NormalImage,
+  warning: WarningImage,
+  danger: DangerImage,
+}
+
+const RESULT_DOG_SIZE_ICON_MAP = {
+  SMALL: SmallSizeIcon,
+  MIDDLE: MiddleSizeIcon,
+  LARGE: LargeSizeIcon,
+}
 
 export {
   DISEASE_CATEGORY,
   DISEASE_CATEGORY_LIST,
-  HEALTH_NOTE_MENU_CATEGORY,
   DISEASE_INFO_POSITIVE,
   DISEASE_INFO,
   DISEASE_INFO_LIST,
-  GI_SURVEY_SECTION,
-  GI_SURVEY_ITEMS,
-  POSITIVE_KEY,
+  BODY_PART_PRIORITY,
+  BODY_PART_TO_CATEGORY,
+  DOG_SIZE_BASED_DISEASES,
+  DISEASE_BASED_PRODUCTS,
+  DISEASE_PRODUCTS_BY_DOG_SIZE,
+  RESULT_HEALTH_STATUS_ICON_MAP,
+  RESULT_DOG_SIZE_ICON_MAP,
+  BODY_CATEGORY_TAG,
 };

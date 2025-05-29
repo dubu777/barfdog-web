@@ -12,4 +12,5 @@ export * from './subscription';
 export * from './review';
 export * from './mypage';
 export * from './membership';
-export * from './healthNote';
+export * from './healthNote/healthNote';
+export * from './healthNote/fullCheck';

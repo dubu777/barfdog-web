@@ -4,7 +4,6 @@ export const fullCheckSurvey = style({
 	padding: '10px 20px 16px'
 })
 
-
 export const fullCheckSurveyCard = style({
 	display: 'flex',
 	padding: '0 !important',

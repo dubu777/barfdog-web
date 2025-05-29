@@ -142,6 +142,7 @@ export const fontColors = {
   blue400: style({ color: themeVars.colors.blue.blue400 }),
   green400: style({ color: themeVars.colors.green.green400 }),
   yellow400: style({ color: themeVars.colors.yellow.yellow400 }),
+  blue600: style({ color: themeVars.colors.blue.blue600 }),
 };
 
 export const alignStyles = {

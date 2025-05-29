@@ -2,31 +2,17 @@ import * as styles from './ComparisonProgressBar.css';
 import { ReactNode } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
+import { getScoreChangeStatus}  from "@/utils/healthNote/getHealthStatus";
 
 interface ComparisonProgressBarProps {
 	prevScore: number;
 	currentScore: number;
-	diffValue: number;
+	diffValue?: number;
 	barSize?: 'sm' | 'md';
 	isCurrentScoreChips?: boolean;
 	prevBottomChildren?: ReactNode;
 	currentBottomChildren?: ReactNode;
 }
-
-type ScoreStatus =
-	| 'downLarge'
-	| 'downSmall'
-	| 'same'
-	| 'upSmall'
-	| 'upLarge';
-
-const getScoreChangeStatus = (diff: number, diffValue: number): ScoreStatus => {
-	if (diff >= diffValue) return 'upLarge';
-	if (diff > 0) return 'upSmall';
-	if (diff === 0) return 'same';
-	if (diff >- diffValue) return 'downSmall';
-	return 'downLarge';
-};
 
 const ComparisonProgressBar = ({
 	prevScore,

@@ -21,6 +21,9 @@ export const cardShadow = {
 }
 
 export const cardPadding = {
+	0: style({
+		padding: '0',
+	}),
 	12: style({
 		padding: '12px',
 	}),

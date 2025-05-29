@@ -16,7 +16,7 @@ export const svg = style({
 
 export const circleBackground = style({
 	fill: 'none',
-	stroke: themeVars.colors.gray.gray200,
+	stroke: themeVars.colors.gray.gray300,
 });
 
 

@@ -6,6 +6,7 @@ export const comparisonProgressBarBox = style({
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
+	marginTop: '10px',
 });
 
 export const bars = style({
