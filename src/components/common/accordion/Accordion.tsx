@@ -34,9 +34,7 @@ const Accordion = ({
       <button onClick={toggleAccordion} className={`${styles.accordionButton({ noChildren: !children, isOpen })} ${buttonClassName || ''}`}>
         {title}
         {showArrow &&
-          <span className={styles.accordionIcon({ isOpen: isOpen })}>
-            <SvgIcon src={AccordionIcon} size={24} style={{ transform: 'rotate(90deg)' }} />
-          </span>
+          <SvgIcon src={AccordionIcon} size={24} className={styles.accordionIcon({ isOpen: isOpen })}/>
         }
       </button>
       {children &&

@@ -36,7 +36,10 @@ export const accordionIcon = recipe({
   variants: {
     isOpen: {
       true: {
-        transform: 'rotate(180deg)',
+        transform: 'rotate(-90deg)',
+      },
+      false: {
+        transform: 'rotate(90deg)',
       }
     }
   }

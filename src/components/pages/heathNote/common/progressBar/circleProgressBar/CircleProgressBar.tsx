@@ -4,6 +4,7 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { fontColors } from '@/components/common/defaultText/DefaultText.css';
 import { COLORS } from '@/constants/style';
+import { getSimpleHealthStatus } from "@/utils/healthNote/getHealthStatus";
 
 interface CircleProgressBarProps {
 	score: number;
@@ -11,20 +12,13 @@ interface CircleProgressBarProps {
 	hasFontColor?: boolean;
 }
 
-const getStatusInfo = (score: number) => {
-	if (score >= 90) return { label: '건강해요!', color: 'blue400' };
-	if (score >= 70) return { label: '양호해요', color: 'green400' };
-	if (score >= 40) return { label: '주의가 필요해요', color: 'yellow400',  };
-	return { label: '위험해요', color: 'pastelRed' };
-};
-
 const circleFullDegree = 360;
 const displayDegree = 270;
 const radius = 120;
 const stroke = 12;
 
 const CircleProgressBar = ({ score, svgImage, hasFontColor }: CircleProgressBarProps) => {
-	const { label, color } = getStatusInfo(score);
+	const { label, color } = getSimpleHealthStatus(score, '400');
 
 	const normalizedRadius = radius - stroke / 2;
 	const circumference = normalizedRadius * 2 * Math.PI;
