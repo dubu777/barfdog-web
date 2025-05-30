@@ -5,6 +5,7 @@ import {
   textareaStyle
 } from "./DefaultTextarea.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import { textStyles } from "@/components/common/defaultText/DefaultText.css";
 
 interface DefaultTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>{
   id: string;
@@ -37,7 +38,7 @@ const DefaultTextarea = forwardRef<HTMLTextAreaElement, DefaultTextareaProps>(({
           id={id}
           ref={ref}
           maxLength={maxLength}
-          className={textareaStyle({ active: value?.length !== 0 })}
+          className={`${textareaStyle({ active: value?.length !== 0 })} ${textStyles.body3}`}
           onChange={handleInputChange}
           value={value}
           {...rest}

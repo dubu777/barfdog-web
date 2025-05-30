@@ -2,7 +2,6 @@
 import * as styles from './HealthNoteMain.css';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -12,6 +11,8 @@ import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants";
 import { useGetDogList } from "@/api/dog/queries/useGetDogList";
+import ComparisonProgressBar
+	from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 
 const HealthNoteMain = () => {
 	const router = useRouter();
@@ -22,6 +23,11 @@ const HealthNoteMain = () => {
 	const [mounted, setMounted] = useState(false);
 
 	const isFirstFullCheck = false;
+	const dogData = {
+		fullCheckRank: 2.4,
+		prevScore: 70,
+		currentScore: 94,
+	}
 
 	useEffect(() => {
 		setMounted(true);
@@ -62,12 +68,30 @@ const HealthNoteMain = () => {
 									<div>
 										<DefaultText type='headline1' block>{menu.label}</DefaultText>
 										{menu.description &&
-										<DefaultText type='body3' color='gray700' block preLine className={styles.menuDescription}>
-											{menu.description}
-										</DefaultText>
+											<DefaultText type='body3' color='gray700' block preLine className={styles.menuDescription}>
+												{isFirstFullCheck
+													? menu.description
+													: <>
+														상위 <DefaultText type='body3' color='blue600'>{dogData.fullCheckRank}</DefaultText>%로<br/> 우리 아이는 아주 건강해요!
+													</>
+												}
+											</DefaultText>
 										}
 									</div>
-									<Image src={menu.imageUrl} alt={menu.label} width={menu.width} height={menu.height} className={!menu.fullWidth ? styles.menuImage : ''} />
+									{menu.fullWidth && !isFirstFullCheck
+										? (
+											<ComparisonProgressBar
+												prevScore={dogData.prevScore}
+												currentScore={dogData.currentScore}
+												isCurrentScoreChips
+												barSize='sm'
+												prevBottomChildren={<DefaultText type='caption' color='gray600'>전체 평균</DefaultText>}
+												currentBottomChildren={<DefaultText type='caption' color='gray700'>우리 아이</DefaultText>}
+											/>
+										)
+										: <Image src={menu.imageUrl} alt={menu.label} width={menu.width} height={menu.height} className={!menu.fullWidth ? styles.menuImage : ''} />
+									}
+
 								</Card>
 							</button>
 						))}

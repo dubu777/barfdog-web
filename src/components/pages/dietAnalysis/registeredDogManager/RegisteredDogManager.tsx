@@ -6,7 +6,7 @@ import { commonWrapper } from "@/styles/common.css";
 import DogCard from "./dogCard/DogCard";
 import { useInfiniteList } from "@/hooks/useInfiniteList";
 import { DogListData } from "@/types";
-import CreateDogButton from "@/components/pages/heathNote/common/createDogButton/CreateDogButton";
+import CreateButton from "@/components/common/createButton/CreateButton";
 
 interface RegisteredDogManagerProps {
   dogListData: DogListData[];
@@ -32,7 +32,7 @@ export default function RegisteredDogManager({
         padding: 20,
       })}
     >
-      <CreateDogButton from="dietAnalysis" />
+      <CreateButton from="dietAnalysis" />
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         {visibleDogs.map((item) => (
           <DogCard

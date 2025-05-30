@@ -1,11 +1,9 @@
 "use client";
 import * as styles from "./HealthNoteMainHeader.css";
+import { createButton } from "@/components/common/createButton/CreateButton.css";
+import { dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  createDogButton,
-  dogImage,
-} from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import Link from "next/link";
 import Image from "next/image";
 import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
@@ -188,7 +186,7 @@ const HealthNoteMainHeader = () => {
             primaryButtonVariant="outline"
             primaryButtonType="assistive"
             primaryButtonLabel={
-              <DefaultText type="headline3" className={createDogButton}>
+              <DefaultText type="headline3" className={createButton}>
                 <SvgIcon src={PlusIcon} />
                 새로운 아이 등록하기
               </DefaultText>

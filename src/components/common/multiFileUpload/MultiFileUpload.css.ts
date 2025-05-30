@@ -1,11 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const fileUploadContainer = style({
-  padding: '20px',
-  background: themeVars.colors.gray.gray0,
-})
-
 export const fileUploadTitle = style({
   display: 'flex',
   alignItems: 'center',
@@ -20,7 +15,7 @@ export const uploadBox = style({
 export const uploadLabel = style({
   width: '100px',
   height: '100px',
-  background: themeVars.colors.gray.gray200,
+  background: themeVars.colors.gray.gray100,
   border: `1px solid ${themeVars.colors.gray.gray500}`,
   borderRadius: '8px',
   display: 'flex',

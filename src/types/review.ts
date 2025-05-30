@@ -1,5 +1,5 @@
 import { REVIEW_STATUS, REVIEW_TYPE } from "@/constants";
-import { Page } from "@/types";
+import {ImageFile, Page} from "@/types";
 
 export type {
   BaseReviewItem,
@@ -46,15 +46,9 @@ interface ReviewListItem extends BaseReviewItem{
   orderType?: string;
 }
 
-interface ReviewImage {
-  id?: number;
-  filename: string;
-  url: string;
-}
-
 interface BestReviewDetail {
   reviewDto: ReviewListItem;
-  reviewImageDtoList: ReviewImage[];
+  reviewImageDtoList: ImageFile[];
 }
 
 interface ReviewList {
@@ -101,7 +95,7 @@ interface ReviewDetailItem extends BaseReviewItem{
   reviewType: ReviewItemType;
 }
 
-interface ReviewDetailImage extends ReviewImage {
+interface ReviewDetailImage extends ImageFile {
   id: number;
 }
 

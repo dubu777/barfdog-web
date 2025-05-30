@@ -1,12 +1,5 @@
-import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
-
-export const createDogButton = style({
-	display: 'flex',
-	alignItems: 'center',
-	gap: '6px',
-})
 
 export const dogImage = recipe({
 	base: {

@@ -17,6 +17,7 @@ interface ButtonProps {
   disabled?: boolean;
   iconSrc?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   iconPosition?: "left" | "right";
+  iconColor?: keyof typeof COLORS;
   onClick?: (() => void) | ((e: MouseEvent<HTMLButtonElement>) => void);
   children: React.ReactNode;
   fullWidth?: boolean;
@@ -36,6 +37,7 @@ export default function Button({
   disabled = false,
   iconSrc,
   iconPosition = "left",
+  iconColor = 'gray900',
   onClick,
   children,
   fullWidth = false,
@@ -96,9 +98,9 @@ export default function Button({
     >
       {iconSrc ? (
         <div className={iconContainer}>
-          {isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} />}
+          {isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} color={iconColor || 'gray900'} />}
           <span className={textStyle}>{children}</span>
-          {!isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} />}
+          {!isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} color={iconColor || 'gray900'} />}
         </div>
       ) : (
         <span

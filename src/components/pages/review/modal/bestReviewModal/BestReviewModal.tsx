@@ -10,7 +10,7 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import ImageSlide from "@/components/common/imageSlide/ImageSlide";
 import useModal from "@/hooks/useModal";
-import ReviewImagesModal from "@/components/common/modal/reviewImagesModal/ReviewImagesModal";
+import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
 import ReviewInfoTop from "@/components/pages/review/common/ReviewInfoTop";
 import Divider from "@/components/common/divider/Divider";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -81,11 +81,11 @@ const BestReviewModal = ({ isOpen, onClose, reviewId }: BestReviewModalProps) =>
         primaryButtonVariant='outline'
       />
       {isOpenImageDetail &&
-        <ReviewImagesModal
+        <ImagesModal
           isOpen={isOpenImageDetail}
           onClose={onCloseImageDetail}
           defaultImageIndex={defaultImageIndex}
-          reviewImageList={reviewImageList}
+          imageList={reviewImageList}
         />
       }
     </FullModalWrapper>

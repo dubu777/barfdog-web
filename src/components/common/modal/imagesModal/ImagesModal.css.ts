@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const reviewImagesModalContainer = style({
+export const imagesModalContainer = style({
 	maxWidth: '600px',
 	width: '100%',
 	height: '100vh',
@@ -10,21 +10,21 @@ export const reviewImagesModalContainer = style({
 	justifyContent: 'center',
 })
 
-export const reviewImageModalHeader = style({
+export const imageModalHeader = style({
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'space-between',
 	padding: "14px 20px",
 })
 
-export const reviewImageSliderWrapper = style({
+export const imageSliderWrapper = style({
 	display: 'flex',
 	justifyContent: 'center',
 	alignItems: 'center',
 	height: 'calc(100% - 52px)',
 })
 
-export const reviewImageSlider = style({
+export const imageSlider = style({
 	width: '100%',
 	height: 'auto !important',
 	maxHeight: 'calc(100vh - 56px)',
@@ -34,7 +34,7 @@ export const reviewImageSlider = style({
 	alignItems: 'center',
 })
 
-export const reviewImage = style({
+export const image = style({
 	position: 'static',
 	width: '100%',
 	objectFit: 'contain'

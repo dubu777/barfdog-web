@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Loader from "@/components/common/loader/Loader";
-import DogList from "@/components/pages/heathNote/dogs/dogList/DogList";
+import DogList from "@/components/pages/heathNote/dogs/list/DogList";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import { prefetchGetFullDogList } from "@/api/dog/queries/usePrefetchGetFullDogList";
 

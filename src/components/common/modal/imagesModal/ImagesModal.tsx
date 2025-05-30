@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import * as styles from './ReviewImagesModal.css';
+import * as styles from './ImagesModal.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -10,24 +10,24 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Header from "@/components/layout/header/Header";
-import { ReviewImage } from "@/types";
+import { ImageFile } from "@/types";
 
-interface ReviewImagesModalProps {
+interface ImagesModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 	defaultImageIndex: number;
-	reviewImageList: ReviewImage[]
+	imageList: ImageFile[]
 }
 
-const ReviewImagesModal = ({
-	reviewImageList,
+const ImagesModal = ({
+	imageList,
 	isOpen,
 	onClose,
 	defaultImageIndex = 0
-}: ReviewImagesModalProps) => {
+}: ImagesModalProps) => {
 	const [activeIndex, setActiveIndex] = useState<number>(defaultImageIndex);
 
-	if(reviewImageList?.length === 0) return null;
+	if(imageList?.length === 0) return null;
 	return (
 		<ModalBackground
 			isVisible={isOpen}
@@ -35,11 +35,11 @@ const ReviewImagesModal = ({
 			isDimmed={false}
 			closeOnBackgroundClick={false}
 		>
-			<div className={styles.reviewImagesModalContainer}>
+			<div className={styles.imagesModalContainer}>
 				<Header
 					leftElement={(
 						<DefaultText type='headline3' color='white'>
-							{activeIndex+1}/{reviewImageList.length}
+							{activeIndex+1} / {imageList.length}
 						</DefaultText>
 					)}
 					rightElement={(
@@ -52,14 +52,14 @@ const ReviewImagesModal = ({
 				<Swiper
 					initialSlide={defaultImageIndex}
 					onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-					className={styles.reviewImageSliderWrapper}
+					className={styles.imageSliderWrapper}
 				>
-					{reviewImageList?.map(reviewImage => (
+					{imageList?.map(image => (
 						<SwiperSlide
-							key={reviewImage.filename}
-							className={styles.reviewImageSlider}
+							key={image.filename}
+							className={styles.imageSlider}
 						>
-							<Image src={reviewImage.url} alt={reviewImage.filename} sizes="350px" fill style={{ objectFit: 'contain' }} className={styles.reviewImage} />
+							<Image src={image.url} alt={image.filename} sizes="350px" fill style={{ objectFit: 'contain' }} className={styles.image} />
 						</SwiperSlide>
 					))}
 				</Swiper>
@@ -68,4 +68,4 @@ const ReviewImagesModal = ({
 	);
 };
 
-export default ReviewImagesModal;
+export default ImagesModal;

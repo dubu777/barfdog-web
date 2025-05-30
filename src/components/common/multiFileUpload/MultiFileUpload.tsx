@@ -23,6 +23,10 @@ interface MultiFileUploadProps {
   initialImages?: ImageFile[];
   onFilesChange: (file: ImageFile[] | null) => void;
   handleRemove: (id: number) => void;
+  title: string;
+  subTitle?: string;
+  className?: string;
+  showRepresentativeLabel?: boolean;
 }
 
 const MultiFileUpload = ({
@@ -35,6 +39,10 @@ const MultiFileUpload = ({
   imageHeight = 100,
   initialImages = [],
   handleRemove,
+  title,
+  subTitle,
+  className,
+  showRepresentativeLabel = false,
 }: MultiFileUploadProps) => {
   const [uploadedImages, setUploadedImages] = useState<InitialImages[]>(initialImages);
   const [errors, setErrors] = useState<string[]>([]);
@@ -106,12 +114,13 @@ const MultiFileUpload = ({
     }
   }
 
-  console.log('uploadedImages', uploadedImages)
   return (
-    <div className={styles.fileUploadContainer}>
+    <div className={className || ''}>
       <div className={styles.fileUploadTitle}>
-        <DefaultText type='label4'>사진첨부</DefaultText>
-        <DefaultText type='caption' color='gray500'>포토 후기 작성 시 500원 적립!</DefaultText>
+        <DefaultText type='label4'>{title}</DefaultText>
+        {subTitle &&
+          <DefaultText type='caption' color='gray500'>포토 후기 작성 시 500원 적립!</DefaultText>
+        }
       </div>
       <div>
         <div className={styles.uploadBox}>
@@ -128,7 +137,13 @@ const MultiFileUpload = ({
           />
           {uploadedImages.length > 0 &&
             <div style={{ width: 'calc(100% - 104px)' }}>
-              <ImageCarousel width={imageWidth} height={imageHeight} imageList={uploadedImages} handleRemoveFile={handleRemoveFile} />
+              <ImageCarousel
+                width={imageWidth}
+                height={imageHeight}
+                imageList={uploadedImages}
+                handleRemoveFile={handleRemoveFile}
+                showRepresentativeLabel={showRepresentativeLabel}
+              />
             </div>
           }
         </div>
@@ -141,8 +156,7 @@ const MultiFileUpload = ({
           </div>
           }
           <DefaultText type='caption' color='gray500'>
-            • 첫 번째 이미지가 대표 이미지로 노출됩니다.<br/>
-            • 이미지는 최대 10장 이내로 등록 가능합니다.<br/>
+            • 파일은 최대 10장 이내로 등록 가능합니다.<br/>
             • 파일크기는 20MB이하 / jpg, jpeg, png, gif 형식만 등록 가능합니다.
           </DefaultText>
         </div>

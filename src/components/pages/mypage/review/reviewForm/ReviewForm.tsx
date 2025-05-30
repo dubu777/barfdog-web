@@ -161,6 +161,10 @@ const ReviewForm = <T extends 'create' | 'update'>({
           imageHeight={100}
           initialImages={reviewImageDtoList}
           handleRemove={(id) => handleFileRemove(id)}
+          title='사진첨부'
+          subTitle='포토 후기 작성 시 500원 적립!'
+          className={styles.reviewFileUpload}
+          showRepresentativeLabel
         />
       </div>
       <ButtonDocked
