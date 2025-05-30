@@ -1,9 +1,5 @@
-// "use client";
-
-import { redirect } from "next/navigation";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
-import BodyCheckSurveyContainer from "@/components/pages/heathNote/bodyCheck/survey/BodyCheckSurveyContainer";
-import { bodyCheckSurveyConfig } from "@/config/bodyCheckSurveyConfig";
+import BodyCheckSurvey from "@/components/pages/heathNote/bodyCheck/survey/BodyCheckSurvey";
 import { BodyCheckPart } from "@/types/healthNote";
 
 export default function BodyCheckSurveyPage({
@@ -15,7 +11,7 @@ export default function BodyCheckSurveyPage({
 
   return (
     <NavigationGuard>
-      <BodyCheckSurveyContainer part={part} />
+      <BodyCheckSurvey part={part} />
     </NavigationGuard>
   );
 }
