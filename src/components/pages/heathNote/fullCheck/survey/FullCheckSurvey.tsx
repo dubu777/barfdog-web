@@ -70,6 +70,7 @@ const FullCheckSurvey = () => {
     watch,
     setValue,
     formState,
+    control,
   });
 
   const title =

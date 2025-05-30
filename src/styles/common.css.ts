@@ -16,38 +16,38 @@ export const commonLayoutContainer = style({
 
 export const ellipsis = recipe({
   base: {
-    width: '100%',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
+    width: "100%",
+    textOverflow: "ellipsis",
+    overflow: "hidden",
   },
   variants: {
     lineSize: {
       line1: {
-        display: 'block',
-        whiteSpace: 'nowrap',
-        webkitLineClamp: 'none',
-        webkitBoxOrient: 'none',
-        lineHeight: 'normal',
+        display: "block",
+        whiteSpace: "nowrap",
+        webkitLineClamp: "none",
+        webkitBoxOrient: "none",
+        lineHeight: "normal",
       },
       line2: {
-        display: '-webkit-box !important',
-        '-webkit-box-orient': 'vertical',
-        '-webkit-line-clamp': '2',
+        display: "-webkit-box !important",
+        "-webkit-box-orient": "vertical",
+        "-webkit-line-clamp": "2",
       },
       line3: {
-        display: '-webkit-box !important',
-        '-webkit-box-orient': 'vertical',
-        '-webkit-line-clamp': '3',
+        display: "-webkit-box !important",
+        "-webkit-box-orient": "vertical",
+        "-webkit-line-clamp": "3",
       },
       line4: {
-        display: '-webkit-box !important',
-        '-webkit-box-orient': 'vertical',
-        '-webkit-line-clamp': '4',
+        display: "-webkit-box !important",
+        "-webkit-box-orient": "vertical",
+        "-webkit-line-clamp": "4",
       },
       line5: {
-        display: '-webkit-box !important',
-        '-webkit-box-orient': 'vertical',
-        '-webkit-line-clamp': '5',
+        display: "-webkit-box !important",
+        "-webkit-box-orient": "vertical",
+        "-webkit-line-clamp": "5",
       },
     },
     wordBreak: {
@@ -151,7 +151,7 @@ export const commonWrapper = recipe({
       },
       32: {
         padding: "32px 20px",
-      }
+      },
     },
     direction: {
       col: {
@@ -217,12 +217,11 @@ export const commonWrapper = recipe({
       },
     },
     borderRadius: {
-      none: {
-      },
+      none: {},
       8: {
         borderRadius: "8px",
       },
-    }
+    },
   },
   defaultVariants: {
     gap: 0,
@@ -238,6 +237,6 @@ export const commonWrapper = recipe({
 });
 
 export const infiniteTrigger = style({
-  height: '72px',
+  height: "72px",
   background: themeVars.colors.gray.gray50,
 });

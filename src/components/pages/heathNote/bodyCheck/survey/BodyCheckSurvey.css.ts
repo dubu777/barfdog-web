@@ -8,3 +8,9 @@ export const bodyCheckSurveyContainer = style({
   width: "100%",
   height: "100%",
 });
+
+export const bodyCheckSurveyHeader = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "6px",
+});

@@ -22,4 +22,6 @@ interface SurveyQuestion {
   flexWrap?: boolean;
 }
 
-export type { DogInfo, SurveyOption, SurveyQuestion };
+type BodyCheckPart = "gut" | "skin" | "obesity";
+
+export type { DogInfo, SurveyOption, SurveyQuestion, BodyCheckPart };
