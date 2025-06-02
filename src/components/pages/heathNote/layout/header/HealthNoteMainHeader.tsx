@@ -23,15 +23,11 @@ import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
 import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
 
-interface HealthNoteMainHeaderProps {
-  isLoggedIn: boolean;
-}
+interface HealthNoteMainHeaderProps {}
 
-const HealthNoteMainHeader = ({ isLoggedIn }: HealthNoteMainHeaderProps) => {
+const HealthNoteMainHeader = ({}: HealthNoteMainHeaderProps) => {
   const router = useRouter();
-  const { data: dogList = [] } = useGetDogList({
-    enabled: isLoggedIn,
-  });
+  const { data: dogList = [] } = useGetDogList();
   const representativeDog = dogList?.find((dog) => dog.representative);
 
   const { dogInfo, setDogInfo } = useHealthNoteStore();
@@ -53,9 +49,7 @@ const HealthNoteMainHeader = ({ isLoggedIn }: HealthNoteMainHeaderProps) => {
   }, [dogList, setDogInfo, representativeDog]);
 
   const handleShowDogList = () => {
-    if (!isLoggedIn) {
-      router.push("/login");
-    } else if (dogList.length === 0) {
+    if (dogList.length === 0) {
       router.push("/health-note/dogs/create");
     } else {
       onToggle();
@@ -95,14 +89,12 @@ const HealthNoteMainHeader = ({ isLoggedIn }: HealthNoteMainHeaderProps) => {
         />
         <button onClick={handleShowDogList} className={styles.selectButton}>
           <DefaultText type="headline1">
-            {!isLoggedIn || dogList.length === 0
-              ? "반려견 등록"
-              : dogInfo?.name}
+            {dogList.length === 0 ? "반려견 등록" : dogInfo?.name}
           </DefaultText>
           <SvgIcon src={ChevronDown} style={{ transform: "rotate(180deg)" }} />
         </button>
       </header>
-      {isLoggedIn && dogList && isOpen && (
+      {dogList && isOpen && (
         <BottomSheet isOpen={isOpen} onClose={handleCloseChangeDogInfo}>
           <div className={styles.selectBottomSheetHeader}>
             <DefaultText type="title4">반려견 선택</DefaultText>

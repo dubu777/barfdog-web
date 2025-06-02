@@ -4,6 +4,8 @@ import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
 import HealthNoteUser from "@/components/pages/heathNote/main/healthNoteUser/healthNoteUser";
 import { HydrationBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
+import HealthNoteMainHeader from "@/components/pages/heathNote/layout/header/HealthNoteMainHeader";
+import { Suspense } from "react";
 
 export default async function HeathNotePage() {
   const queryClient = new QueryClient();
@@ -14,8 +16,11 @@ export default async function HeathNotePage() {
     <>
       <HydrationBoundary state={dehydratedState}>
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
-          <HealthNoteUser />
-          <BottomNavBar />
+          <Suspense fallback={<div>Loading...</div>}>
+            <HealthNoteMainHeader />
+            <HealthNoteUser />
+            <BottomNavBar />
+          </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>
     </>

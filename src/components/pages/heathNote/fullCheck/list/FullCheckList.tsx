@@ -9,10 +9,10 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Chips from "@/components/common/chips/Chips";
 import HorizontalProgressBar from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
-import { usePersistHealthNoteStore } from "@/store/useHealthNoteStore";
+import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 
 const FullCheckList = () => {
-  const { dogInfo } = usePersistHealthNoteStore();
+  const { dogInfo } = useHealthNoteStore();
   const healthCheckResults = [
     {
       id: 101,

@@ -2,7 +2,6 @@
 import { useMemo } from "react";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Header from "@/components/layout/header/Header";
-import HealthNoteMainHeader from "@/components/pages/heathNote/layout/header/HealthNoteMainHeader";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useBackNavigation } from "@/utils";
@@ -12,11 +11,9 @@ type HealthNoteParams = {
   dogId?: string;
 };
 
-interface HealthNoteHeaderProps {
-  isLoggedIn: boolean;
-}
+interface HealthNoteHeaderProps {}
 
-const HealthNoteHeader = ({ isLoggedIn }: HealthNoteHeaderProps) => {
+const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const rawParams = useParams();
@@ -106,17 +103,19 @@ const HealthNoteHeader = ({ isLoggedIn }: HealthNoteHeaderProps) => {
   const excludePaths = [
     "/health-note/full-check/survey",
     "/health-note/full-check/result",
-    "health-note/body-check/survey",
+    "/health-note/body-check/survey",
+    "/health-note/guest",
+    "/health-note",
   ];
+
+  const shouldRenderHeader = useMemo(() => {
+    // pathname이 excludePaths 중 하나라도 포함하면 false
+    return !excludePaths.some((path) => pathname === path);
+  }, [pathname]);
 
   return (
     <>
-      {!excludePaths.some((path) => pathname.includes(path)) &&
-        (pathname === "/health-note" ? (
-          <HealthNoteMainHeader isLoggedIn={isLoggedIn} />
-        ) : (
-          <Header {...headerProps} />
-        ))}
+      {shouldRenderHeader && <Header {...headerProps} />}
       {isOpenConfirmAlert && (
         <AlertModal
           title="등록을 종료하시겠어요?"

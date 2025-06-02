@@ -25,12 +25,13 @@ export async function middleware(req: NextRequest) {
     loginUrl.searchParams.set("next", pathname + search);
 
     const res = NextResponse.redirect(loginUrl);
-    [AUTH_CONFIG.ACCESS_TOKEN_COOKIE, AUTH_CONFIG.REFRESH_TOKEN_COOKIE].forEach((cookie) => {
-      res.cookies.set(cookie, "", { path: "/", maxAge: 0 });
-    });
+    [AUTH_CONFIG.ACCESS_TOKEN_COOKIE, AUTH_CONFIG.REFRESH_TOKEN_COOKIE].forEach(
+      (cookie) => {
+        res.cookies.set(cookie, "", { path: "/", maxAge: 0 });
+      }
+    );
     return res;
   };
-
 
   // 보호된 경로에 대한 접근 체크
   if (isProtectedPath(pathname) && !isAuth) {
