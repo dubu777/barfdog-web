@@ -18,22 +18,7 @@ import {
   MergeOrderAndRecipe,
   SubscriptionOrderData,
 } from "@/types";
-
-export {
-  getOrderDetail,
-  getSubscriptionOrderList,
-  getGeneralOrderList,
-  getSubscriptionOrder,
-  getGeneralOrder,
-  saveGeneralOrder,
-  successGeneralPayment,
-  failGeneralPayment,
-  saveSubscriptionOrder,
-  validateSubscriptionPayment,
-  successSubscriptionPayment,
-  invalidSuccessSubscriptionPayment,
-  failSubscriptionPayment,
-};
+import { AxiosInstance } from "axios";
 
 // 구독 결제 주문 정보 조회
 const getSubscriptionOrder = async (
@@ -146,9 +131,10 @@ const failGeneralPayment = async (id: number): Promise<any> => {
 // SubscribeOrderDto 타입이 정의되어 있지 않음
 const getSubscriptionOrderList = async (
   page: number,
-  size: number
+  size: number,
+  instance: AxiosInstance = axiosInstance
 ): Promise<SubscriptionOrderData[]> => {
-  const { data } = await axiosInstance.get(
+  const { data } = await instance.get(
     `/api/orders/subscribe?page=${page}&size=${size}`
   );
   return (
@@ -168,9 +154,10 @@ const getSubscriptionOrderList = async (
 
 const getGeneralOrderList = async (
   page: number,
-  size: number
+  size: number,
+  instance: AxiosInstance = axiosInstance
 ): Promise<GeneralOrderData[]> => {
-  const { data } = await axiosInstance.get(
+  const { data } = await instance.get(
     `/api/orders/general?page=${page}&size=${size}`
   );
   return data._embedded?.queryGeneralOrdersDtoList || [];
@@ -178,9 +165,10 @@ const getGeneralOrderList = async (
 
 const getOrderDetail = async (
   orderId: number,
-  type: OrderType
+  type: OrderType,
+  instance: AxiosInstance = axiosInstance
 ): Promise<MergeOrderAndRecipe> => {
-  const { data } = await axiosInstance.get(`/api/orders/${orderId}/${type.toLowerCase()}`);
+  const { data } = await instance.get(`/api/orders/${orderId}/${type.toLowerCase()}`);
   
   const mergeOrderAndRecipe: MergeOrderAndRecipe = {
     ...data,
@@ -193,4 +181,20 @@ const getOrderDetail = async (
   };
 
   return mergeOrderAndRecipe || null;
+};
+
+export {
+  getOrderDetail,
+  getSubscriptionOrderList,
+  getGeneralOrderList,
+  getSubscriptionOrder,
+  getGeneralOrder,
+  saveGeneralOrder,
+  successGeneralPayment,
+  failGeneralPayment,
+  saveSubscriptionOrder,
+  validateSubscriptionPayment,
+  successSubscriptionPayment,
+  invalidSuccessSubscriptionPayment,
+  failSubscriptionPayment,
 };

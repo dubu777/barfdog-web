@@ -3,9 +3,7 @@ import { ORDER_TYPE, queryKeys } from "@/constants";
 import { getGeneralOrderList, getSubscriptionOrderList } from "@/api/order/order";
 import { GeneralOrderData, MergeOrderData, SubscriptionOrderData } from "@/types";
 
-export { useMergeOrderList };
-
-function useMergeOrderList({ filterValue, statusFilter }: { filterValue?: keyof typeof ORDER_TYPE, statusFilter?: 'ORDER' | 'CANCEL' }) {
+export function useMergeOrderList({ filterValue, statusFilter }: { filterValue?: keyof typeof ORDER_TYPE, statusFilter?: 'ORDER' | 'CANCEL' }) {
   const page = 0;
   const {
     data: SubscriptionOrderData,
@@ -29,7 +27,7 @@ function useMergeOrderList({ filterValue, statusFilter }: { filterValue?: keyof 
     hasNextPage: hasNextGeneralPage,
     isFetchingNextPage: isFetchingNextGeneralPage
   } = useInfiniteQuery<GeneralOrderData[], Error>({
-    queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_GENERAL_ORDER_LIST,filterValue,  page],
+    queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_GENERAL_ORDER_LIST, filterValue,  page],
       queryFn: ({ pageParam = 0 }) => { 
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
       return getGeneralOrderList(pageNumber, 5)

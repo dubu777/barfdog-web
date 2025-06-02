@@ -1,8 +1,8 @@
-import Notification from "@/components/pages/mypage/account/notification/Notification";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { prefetchGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
-import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { prefetchGetUserInfo } from "@/api/auth/queries/usePrefetchGetUserInfo";
+import Notification from "@/components/pages/mypage/account/notification/Notification";
 import Loader from "@/components/common/loader/Loader";
 
 

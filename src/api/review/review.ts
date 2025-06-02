@@ -7,19 +7,7 @@ import {
   WritableReviewList,
   WrittenReviewList
 } from "@/types/review";
-
-export {
-  getBestReviewList,
-  getReviewList,
-  getBestReviewDetail,
-  getWritableReviewList,
-  getWrittenReviewList,
-  getReviewDetail,
-  getReviewDetailImages,
-  updateReviewDetail,
-  createReviewDetail,
-  deleteReview,
-};
+import { AxiosInstance } from "axios";
 
 const getBestReviewList = async () => {
   const { data } = await axiosInstance.get(`/api/reviews/best`);
@@ -42,8 +30,9 @@ const getBestReviewDetail = async (reviewId: number): Promise<BestReviewDetail> 
 const getWritableReviewList = async ({
   pageParam = 0,
   size = 5,
-}: { pageParam: number; size: number }): Promise<WritableReviewList> => {
-  const { data } = await axiosInstance.get(`/api/reviews/writeable`, {
+  instance = axiosInstance
+}: { pageParam: number; size: number; instance?: AxiosInstance; }): Promise<WritableReviewList> => {
+  const { data } = await instance.get(`/api/reviews/writeable`, {
     params: { page: pageParam, size }
   });
   const writableReviewList = data?._embedded?.queryWriteableReviewsDtoList || [];
@@ -58,8 +47,9 @@ const getWritableReviewList = async ({
 const getWrittenReviewList = async ({
   pageParam = 0,
   size = 5,
-}: { pageParam: number; size: number }): Promise<WrittenReviewList> => {
-  const { data } = await axiosInstance.get(`/api/reviews`, {
+  instance = axiosInstance
+}: { pageParam: number; size: number; instance?: AxiosInstance; }): Promise<WrittenReviewList> => {
+  const { data } = await instance.get(`/api/reviews`, {
     params: { page: pageParam, size }
   });
   const writtenReviewList = data?._embedded?.queryReviewsDtoList || [];
@@ -95,3 +85,16 @@ const deleteReview = async (reviewId: number) => {
   const { data } = await axiosInstance.delete(`/api/reviews/${reviewId}`);
   return data;
 }
+
+export {
+  getBestReviewList,
+  getReviewList,
+  getBestReviewDetail,
+  getWritableReviewList,
+  getWrittenReviewList,
+  getReviewDetail,
+  getReviewDetailImages,
+  updateReviewDetail,
+  createReviewDetail,
+  deleteReview,
+};

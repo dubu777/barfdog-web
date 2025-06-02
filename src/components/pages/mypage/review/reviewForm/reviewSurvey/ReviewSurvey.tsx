@@ -29,16 +29,16 @@ const SurveyIcon = ({ active, type }: { active: boolean, type: SurveyValue }) =>
 	return (
 		<>
 			<svg width="53" height="52" viewBox="0 0 53 52" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<circle cx="26.5" cy="26" r="25" fill={fill} stroke={stroke} stroke-width="2"/>
+				<circle cx="26.5" cy="26" r="25" fill={fill} stroke={stroke} strokeWidth="2"/>
 				{type === 'dislike' ?
-					<path d="M18.375 36.5625C18.375 32.0752 22.0127 28.4375 26.5 28.4375C30.9873 28.4375 34.625 32.0752 34.625 36.5625" stroke={stroke} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M18.375 36.5625C18.375 32.0752 22.0127 28.4375 26.5 28.4375C30.9873 28.4375 34.625 32.0752 34.625 36.5625" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 					: type === 'normal' ?
-						<path d="M34.625 30.875C30.5625 34.9375 26.5 30.0625 26.5 30.0625C26.5 30.0625 22.4375 34.9375 18.375 30.875" stroke={stroke} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						: type === 'like' && <path d="M34.625 28.4375C34.625 32.9248 30.9873 36.5625 26.5 36.5625C22.0127 36.5625 18.375 32.9248 18.375 28.4375" stroke={stroke} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M34.625 30.875C30.5625 34.9375 26.5 30.0625 26.5 30.0625C26.5 30.0625 22.4375 34.9375 18.375 30.875" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+						: type === 'like' && <path d="M34.625 28.4375C34.625 32.9248 30.9873 36.5625 26.5 36.5625C22.0127 36.5625 18.375 32.9248 18.375 28.4375" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 
 				}
-				<circle cx="18.7812" cy="20.7188" r="0.71875" fill={stroke} stroke={stroke} stroke-linecap="round" stroke-linejoin="round"/>
-				<circle cx="34.2188" cy="20.7188" r="0.71875" fill={stroke} stroke={stroke} stroke-linecap="round" stroke-linejoin="round"/>
+				<circle cx="18.7812" cy="20.7188" r="0.71875" fill={stroke} stroke={stroke} strokeLinecap="round" strokeLinejoin="round"/>
+				<circle cx="34.2188" cy="20.7188" r="0.71875" fill={stroke} stroke={stroke} strokeLinecap="round" strokeLinejoin="round"/>
 			</svg>
 		</>
 	)

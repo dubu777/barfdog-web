@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosInstance} from "axios";
 import axiosInstance from "@/api/axiosInstance";
 import {
   TemporaryUserEmail,
@@ -15,24 +15,6 @@ import {
   ConnectSnsResponse,
 } from "@/types";
 import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
-
-export {
-  findUserEmail,
-  sendTemporaryPassword,
-  login,
-  getUserInfo,
-  connectSns,
-  getAccessTokenByNaver,
-  snsLogin,
-  setPassword,
-  changePassword,
-  getConnectedSns,
-  disconnectSns,
-  getAuthNumber,
-  updateUserInfo,
-  withdrawalUser,
-  logout,
-};
 
 const findUserEmail = async (
   name: string,
@@ -55,8 +37,8 @@ const connectSns = async (body: ConnectSns): Promise<ConnectSnsResponse> => {
   return data;
 };
 
-const getConnectedSns = async (): Promise<SnSProvider | null> => {
-  const { data } = await axiosInstance.get("/api/members/sns");
+const getConnectedSns = async (instance: AxiosInstance = axiosInstance): Promise<SnSProvider | null> => {
+  const { data } = await instance.get("/api/members/sns");
   return data?.provider || null;
 };
 
@@ -79,9 +61,9 @@ const getAuthNumber = async (body: {
   return data;
 };
 
-const getUserInfo = async (): Promise<GetUserInfo | null> => {
+const getUserInfo = async (instance: AxiosInstance = axiosInstance): Promise<GetUserInfo | null> => {
   try {
-    const { data } = await axiosInstance.get(`/api/members`);
+    const { data } = await instance.get(`/api/members`);
     console.log(data)
     return data;
   } catch (err) {
@@ -273,3 +255,21 @@ const CodeMessage: Record<number, string> = {
   403: "호출 권한이 없습니다.",
   404: "해당 데이터가 없습니다.",
 } as const;
+
+export {
+  findUserEmail,
+  sendTemporaryPassword,
+  login,
+  getUserInfo,
+  connectSns,
+  getAccessTokenByNaver,
+  snsLogin,
+  setPassword,
+  changePassword,
+  getConnectedSns,
+  disconnectSns,
+  getAuthNumber,
+  updateUserInfo,
+  withdrawalUser,
+  logout,
+};

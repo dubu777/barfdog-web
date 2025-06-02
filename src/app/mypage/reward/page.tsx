@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetRewardList } from "@/api/mypage/queries/useGetRewardList";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { prefetchGetRewardList } from "@/api/mypage/queries/usePrefetchGetRewardList";
 import Reward from "@/components/pages/mypage/reward/Reward";
 
 export default async function RewardPage() {

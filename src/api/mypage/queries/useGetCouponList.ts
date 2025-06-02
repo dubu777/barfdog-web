@@ -1,24 +1,12 @@
-import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { getCouponList } from "../mypage";
 import { Coupon, UseSuspenseQueryCustomOptions } from "@/types";
 
-export { useGetCouponList, prefetchGetCouponList };
-
-const getCouponListQueryKey = [queryKeys.COUPON.BASE, queryKeys.COUPON.GET_COUPON_LIST];
-
-function useGetCouponList(queryOptions?: UseSuspenseQueryCustomOptions<Coupon[]>){
+export function useGetCouponList(queryOptions?: UseSuspenseQueryCustomOptions<Coupon[]>){
   return useSuspenseQuery<Coupon[]>({
-    queryKey: getCouponListQueryKey,
-    queryFn: getCouponList,
+    queryKey: [queryKeys.COUPON.BASE, queryKeys.COUPON.GET_COUPON_LIST],
+    queryFn: () => getCouponList(),
     ...queryOptions,
   })
-}
-
-async function prefetchGetCouponList(queryClient: QueryClient) {
-  await queryClient.prefetchQuery<Coupon[]>({
-    queryKey: getCouponListQueryKey,
-    queryFn: getCouponList,
-  });
-
 }

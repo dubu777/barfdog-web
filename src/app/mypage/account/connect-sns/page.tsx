@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetConnectedSns } from "@/api/auth/queries/useGetConnectedSns";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { prefetchGetConnectedSns } from "@/api/auth/queries/usePrefetchGetConnectedSns";
 import ConnectSns from "@/components/pages/mypage/account/connectSns/ConnectSns";
 import Loader from "@/components/common/loader/Loader";
 
