@@ -2,15 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { isAuthenticated } from "./utils/auth/isAuthenticated";
 
-const protectedPaths = [
-  "/mypage",
-  "/order",
-  "/diet-analysis/",
-  "/health-note/",
-];
+// 보호가 필요한 경로
+const protectedPaths = ["/mypage", "/order", "/diet-analysis/", "/health-note"];
+
+// 예외 경로
+const exceptionPaths = ["/health-note/guest"];
 
 const isProtectedPath = (pathname: string): boolean => {
-  return protectedPaths.some((path) => pathname.startsWith(path));
+  // 예외 경로와 일치하면 보호 대상 아님
+  if (exceptionPaths.includes(pathname)) {
+    return false;
+  }
+
+  // 2) 그 외에 protectedPaths 배열에 정의된 접두사로 시작하면 보호 대상
+  return protectedPaths.some((prefix) => {
+    // 접두사와 정확히 같거나, 접두사 + "/" 로 시작하는 경우
+    return pathname === prefix || pathname.startsWith(prefix + "/");
+  });
 };
 
 export async function middleware(req: NextRequest) {
