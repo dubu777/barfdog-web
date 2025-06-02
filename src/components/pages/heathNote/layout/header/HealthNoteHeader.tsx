@@ -12,7 +12,11 @@ type HealthNoteParams = {
   dogId?: string;
 };
 
-const HealthNoteHeader = () => {
+interface HealthNoteHeaderProps {
+  isLoggedIn: boolean;
+}
+
+const HealthNoteHeader = ({ isLoggedIn }: HealthNoteHeaderProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const rawParams = useParams();
@@ -50,6 +54,11 @@ const HealthNoteHeader = () => {
     },
     "/health-note/full-check": {
       centerTitle: "건강 종합 진단",
+      showBackButton: true,
+      onBack: goBackPreviousPage,
+    },
+    "/health-note/body-check": {
+      centerTitle: "부위별 진단",
       showBackButton: true,
       onBack: goBackPreviousPage,
     },
@@ -104,7 +113,7 @@ const HealthNoteHeader = () => {
     <>
       {!excludePaths.some((path) => pathname.includes(path)) &&
         (pathname === "/health-note" ? (
-          <HealthNoteMainHeader />
+          <HealthNoteMainHeader isLoggedIn={isLoggedIn} />
         ) : (
           <Header {...headerProps} />
         ))}

@@ -3,7 +3,6 @@
 import * as styles from "./BodyCheckSurvey.css";
 import { commonWrapper } from "@/styles/common.css";
 import BackIcon from "public/images/header/chevron-left.svg";
-import GutIcon from "public/images/healthNote/full-check/gut.svg";
 import Header from "@/components/layout/header/Header";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";

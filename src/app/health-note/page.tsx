@@ -1,26 +1,23 @@
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import HealthNoteMain from "@/components/pages/heathNote/main/HealthNoteMain";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
-import Loader from "@/components/common/loader/Loader";
 import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
+import HealthNoteUser from "@/components/pages/heathNote/main/healthNoteUser/healthNoteUser";
+import { HydrationBoundary } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
 
 export default async function HeathNotePage() {
   const queryClient = new QueryClient();
   await prefetchGetDogList(queryClient);
-  const dehydrateState = dehydrate(queryClient);
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <>
-    <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>반려견 정보 로딩 실패</div>}>
-        <Suspense fallback={<Loader fullscreen />}>
-          <HealthNoteMain />
-        </Suspense>
-      </ErrorBoundary>
-    </HydrationBoundary>
-    <BottomNavBar />
+      <HydrationBoundary state={dehydratedState}>
+        <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+          <HealthNoteUser />
+          <BottomNavBar />
+        </ErrorBoundary>
+      </HydrationBoundary>
     </>
   );
 }

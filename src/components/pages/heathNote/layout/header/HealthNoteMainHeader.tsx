@@ -1,6 +1,6 @@
 "use client";
 import * as styles from "./HealthNoteMainHeader.css";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   createDogButton,
@@ -18,38 +18,29 @@ import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Divider from "@/components/common/divider/Divider";
 import useModal from "@/hooks/useModal";
-import { getCookie } from "@/utils/auth/cookie";
-import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { useGetDogList } from "@/api/dog/queries/useGetDogList";
-import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
+import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
-import { AUTH_CONFIG } from "@/constants/auth";
 import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
 
-const HealthNoteMainHeader = () => {
-  const router = useRouter();
-  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-  const isLoggedIn = isAuthenticated(token);
-  const [mounted, setMounted] = useState(false);
+interface HealthNoteMainHeaderProps {
+  isLoggedIn: boolean;
+}
 
-  const { data: dogList = [] } = useGetDogList();
+const HealthNoteMainHeader = ({ isLoggedIn }: HealthNoteMainHeaderProps) => {
+  const router = useRouter();
+  const { data: dogList = [] } = useGetDogList({
+    enabled: isLoggedIn,
+  });
   const representativeDog = dogList?.find((dog) => dog.representative);
 
-  const { dogInfo, setDogInfo, reset } = usePersistHealthNoteStore();
+  const { dogInfo, setDogInfo } = useHealthNoteStore();
   const dogImageUrl = dogInfo?.imageUrl ? dogInfo.imageUrl : DogIcon;
 
   const { isOpen, onClose, onToggle } = useModal();
   const { mutate: updateTargetDogMutate } = useUpdateRepresentativeDog();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      reset();
-    }
-  }, [isLoggedIn]);
+  console.log("dogList", dogList);
+  console.log("doginfo", dogInfo);
 
   useEffect(() => {
     if (representativeDog) {
@@ -58,32 +49,8 @@ const HealthNoteMainHeader = () => {
         name: representativeDog.name,
         imageUrl: representativeDog.pictureUrl,
       });
-    } else {
-      if (dogList) {
-        setDogInfo({
-          dogId: dogList[0]?.id,
-          name: dogList[0]?.name,
-          imageUrl: dogList[0]?.pictureUrl,
-        });
-      }
     }
-  }, []);
-
-  useEffect(() => {
-    if (representativeDog) {
-      setDogInfo({
-        dogId: representativeDog.id,
-        name: representativeDog.name,
-        imageUrl: representativeDog.pictureUrl,
-      });
-    } else {
-      setDogInfo({
-        dogId: dogList[0].id,
-        name: dogList[0].name,
-        imageUrl: dogList[0].pictureUrl,
-      });
-    }
-  }, []);
+  }, [dogList, setDogInfo, representativeDog]);
 
   const handleShowDogList = () => {
     if (!isLoggedIn) {
@@ -115,8 +82,6 @@ const HealthNoteMainHeader = () => {
     }
     onClose();
   };
-
-  if (!mounted) return null;
 
   return (
     <>

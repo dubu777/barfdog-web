@@ -1,7 +1,24 @@
 import { themeVars } from "@/styles/theme.css";
-export {COLORS}
+export { COLORS };
 
-type colors = "white" | "red" | "pastelRed" | "gray900" | "gray800" | "gray700" | "gray600" | "gray500" | "gray300" | "gray200" | "gray100" | "gray50" |  "gray0" | "blue500";
+type colors =
+  | "white"
+  | "red"
+  | "pastelRed"
+  | "gray900"
+  | "gray800"
+  | "gray700"
+  | "gray600"
+  | "gray500"
+  | "gray300"
+  | "gray200"
+  | "gray100"
+  | "gray50"
+  | "gray0"
+  | "blue500"
+  | "blue400"
+  | "green400"
+  | "yellow400";
 
 const COLORS: Record<colors, string> = {
   white: themeVars.colors.gray.gray0,

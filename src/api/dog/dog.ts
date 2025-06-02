@@ -11,21 +11,8 @@ import {
 const getDogList = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<DogListData[]> => {
-  try {
-    const { data } = await instance.get("/api/dogs");
-    return data?._embedded?.queryDogsDtoList || [];
-  } catch (error: any) {
-    const status = error?.response?.status;
-
-    if (status === 401) {
-      // 로그인 안 된 상태 - 화면 유지를 위한 빈 배열 값 반환
-      return [];
-    }
-
-    // 500 등 서버 오류 - 화면 유지를 위한 빈 배열 값 반환
-    console.error("반려견 리스트 요청 중 에러:", error);
-    return [];
-  }
+  const { data } = await instance.get("/api/dogs");
+  return data?._embedded?.queryDogsDtoList || [];
 };
 
 const updateRepresentativeDog = async (dogId: number) => {

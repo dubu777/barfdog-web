@@ -2,7 +2,6 @@
 import * as yup from "yup";
 import * as styles from "./FullCheckSurvey.css";
 import { pointColor } from "@/styles/common.css";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Controller, useWatch } from "react-hook-form";
 import BackIcon from "/public/images/header/chevron-left.svg";
@@ -13,7 +12,7 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { usePersistHealthNoteStore } from "@/store/usePersistHealthNoteStore";
+import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
 import { DISEASE_CATEGORY_LIST } from "@/constants";
 import { AnySchema } from "yup";
@@ -41,11 +40,8 @@ const FullCheckSurvey = () => {
     fullCheckSurveySchema,
     defaultFullCheckSurveyValues
   );
-  const { dogInfo } = usePersistHealthNoteStore();
+  const { dogInfo } = useHealthNoteStore();
   const walkValue = useWatch({ control, name: "walk" });
-
-  const [shouldBlock, setShouldBlock] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
 
   const onSpecialOptionSelect = (option) => {
     if (currentQuestion.key === "walk" && option === 0) {
@@ -97,9 +93,6 @@ const FullCheckSurvey = () => {
   };
 
   const onSubmit = (data: typeof defaultFullCheckSurveyValues) => {
-    setIsLoading(true);
-    setShouldBlock(false);
-
     const cleaned = createCleanedEntries(data, (key, value, fullData) => {
       if (key === "walkTime") return []; // walkTime 제거
       if (key === "walk") {
@@ -124,7 +117,7 @@ const FullCheckSurvey = () => {
   };
 
   return (
-    <NavigationGuard shouldBlock={shouldBlock}>
+    <NavigationGuard>
       <Header
         leftElement={
           !isFirstStep && (

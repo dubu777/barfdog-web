@@ -1,18 +1,21 @@
-'use client';
-import * as styles from './SubscriptionAddressForm.css';
+"use client";
+import * as styles from "./SubscriptionAddressForm.css";
 import { useState } from "react";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { pointColor } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
-import AlertModal from "@/components/common/alertModal/AlertModal";
 import AddressForm from "@/components/common/addressForm/AddressForm";
 import { DefaultObjectType } from "@/types/common";
 import { AddressDto } from "@/types/subscription";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { addressSchema, defaultAddressValues } from "@/utils/validation/addressValidation";
+import {
+  addressSchema,
+  defaultAddressValues,
+} from "@/utils/validation/addressValidation";
 import { useUpdateSubscriptionAddress } from "@/api/subscription/mutations/useUpdateSubscriptionAddress";
 import { useToastStore } from "@/store/useToastStore";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 interface AddressFormProps {
   subscribeId: number;
@@ -20,13 +23,25 @@ interface AddressFormProps {
   nextDeliveryDate: string;
 }
 
-const SubscriptionAddressForm = ({ subscribeId, changeTypeList, nextDeliveryDate }: AddressFormProps) => {
+const SubscriptionAddressForm = ({
+  subscribeId,
+  changeTypeList,
+  nextDeliveryDate,
+}: AddressFormProps) => {
   const searchParams = useSearchParams();
-  const shippingChangeType = changeTypeList.find(type => type?.value === searchParams.get('changeType'));
+  const shippingChangeType = changeTypeList.find(
+    (type) => type?.value === searchParams.get("changeType")
+  );
   const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
 
-  const { control, watch, setValue, isValid, handleSubmit } = useFormHandler(addressSchema, defaultAddressValues);
-  const { mutate } = useUpdateSubscriptionAddress(subscribeId, shippingChangeType?.value as string);
+  const { control, watch, setValue, isValid, handleSubmit } = useFormHandler(
+    addressSchema,
+    defaultAddressValues
+  );
+  const { mutate } = useUpdateSubscriptionAddress(
+    subscribeId,
+    shippingChangeType?.value as string
+  );
   const { addToast } = useToastStore();
   const router = useRouter();
 
@@ -38,10 +53,10 @@ const SubscriptionAddressForm = ({ subscribeId, changeTypeList, nextDeliveryDate
           setOpenConfirmModal(false);
           addToast(`${shippingChangeType?.name}이 완료되었습니다!`);
           router.replace(window.location.pathname);
-        }
+        },
       }
-    )
-  }
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -53,9 +68,17 @@ const SubscriptionAddressForm = ({ subscribeId, changeTypeList, nextDeliveryDate
         transition={{ duration: 0.5, ease: "easeInOut" }}
         className={styles.addressForm}
       >
-        <Text type='title' size='md' weight='normal' className={styles.addressFormTitle}>
-          <b>{shippingChangeType?.name}</b>을 선택하셨습니다.<br/>
-          <span className={pointColor}>{shippingChangeType?.name} 후 다시 기존 주소로 배송됩니다.</span>
+        <Text
+          type="title"
+          size="md"
+          weight="normal"
+          className={styles.addressFormTitle}
+        >
+          <b>{shippingChangeType?.name}</b>을 선택하셨습니다.
+          <br />
+          <span className={pointColor}>
+            {shippingChangeType?.name} 후 다시 기존 주소로 배송됩니다.
+          </span>
         </Text>
         <AddressForm
           control={control}
@@ -63,7 +86,7 @@ const SubscriptionAddressForm = ({ subscribeId, changeTypeList, nextDeliveryDate
           setValue={setValue}
           isValid={isValid}
           onSubmit={() => setOpenConfirmModal(true)}
-          confirmText='변경하기'
+          confirmText="변경하기"
         />
         <AlertModal
           isOpen={openConfirmModal}
@@ -71,11 +94,15 @@ const SubscriptionAddressForm = ({ subscribeId, changeTypeList, nextDeliveryDate
           onConfirm={handleSubmit(handleUpdateSubscriptionAddress)}
           message={
             <div className={styles.confirmModal}>
-              <p><b>{shippingChangeType?.name}</b>을 선택하셨습니다.</p>
               <p>
-                변경된 주소로<br/>
-                <b>{shippingChangeType?.name}</b> 예정입니다.<br/>
-                ({nextDeliveryDate} 건에 해당)<br/>
+                <b>{shippingChangeType?.name}</b>을 선택하셨습니다.
+              </p>
+              <p>
+                변경된 주소로
+                <br />
+                <b>{shippingChangeType?.name}</b> 예정입니다.
+                <br />({nextDeliveryDate} 건에 해당)
+                <br />
               </p>
               <p>이대로 변경하시겠습니까?</p>
             </div>
