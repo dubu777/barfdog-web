@@ -1,5 +1,5 @@
 "use client";
-import * as styles from "../HealthNoteMain.css";
+import * as styles from "./HealthNoteUser.css";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Card from "@/components/common/card/Card";

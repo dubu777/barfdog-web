@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
-import { createDogButton } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import AddIcon from "/public/images/icons/add-circle.svg";
+import { createDogButton } from "../../dogs/list/DogList.css";
 
 interface CreateDogButtonProps {
   from: "dietAnalysis" | "healthNote";
