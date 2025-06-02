@@ -221,6 +221,9 @@ export const commonWrapper = recipe({
       8: {
         borderRadius: "8px",
       },
+      12: {
+        borderRadius: "12px",
+      },
     },
   },
   defaultVariants: {
