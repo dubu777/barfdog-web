@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const previewSlider = style({
 	width: '100%',
@@ -7,14 +8,22 @@ export const previewSlider = style({
 	gap: '4px',
 })
 
-export const previewSlide = style({
-	position: 'relative',
-	borderRadius: '8px',
-	overflow: 'hidden',
-	selectors: {
-		'&:first-child': {
-			borderRadius: '6.667px',
-			border: `1px solid ${themeVars.colors.red.red}`,
+export const previewSlide = recipe({
+	base: {
+		position: 'relative',
+		borderRadius: '8px',
+		overflow: 'hidden',
+		border: `1px solid ${themeVars.colors.gray.gray500}`,
+	},
+	variants: {
+		showRepresentativeLabel: {
+			true: {
+				selectors: {
+					'&:first-child': {
+						border: `1px solid ${themeVars.colors.red.red}`,
+					}
+				},
+			}
 		}
 	}
 })

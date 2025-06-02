@@ -21,7 +21,8 @@ export const fullCheckSurveyButton = style({
 	display: 'flex',
 	alignItems: 'center',
 	gap: '4px',
-	padding: '6px 0'
+	padding: '6px 0',
+	cursor: 'pointer',
 })
 
 export const fullCheckResultList = style({

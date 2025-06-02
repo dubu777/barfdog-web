@@ -14,7 +14,7 @@ export const textareaStyle = recipe({
     height: '100%',
     padding: '12px',
     border: `1px solid ${themeVars.colors.gray.gray500}`,
-    background: themeVars.colors.gray.gray200,
+    background: themeVars.colors.gray.gray100,
     borderRadius: '8px',
     transition: 'all .35s',
     outline: 'none',

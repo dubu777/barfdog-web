@@ -42,6 +42,11 @@ export const reviewTemporaryReward = style({
   textAlign: 'left',
 })
 
+export const reviewFileUpload = style({
+  padding: '20px',
+  background: themeVars.colors.gray.gray0,
+})
+
 export const bottomSheetBox = style({
   padding: '0 20px',
   marginBottom: '12px'

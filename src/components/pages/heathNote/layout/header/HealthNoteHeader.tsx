@@ -9,6 +9,7 @@ import { getHeaderProps } from "@/utils/getHeaderProps";
 
 type HealthNoteParams = {
   dogId?: string;
+  historyId?: string;
 };
 
 interface HealthNoteHeaderProps {}
@@ -59,6 +60,16 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
       showBackButton: true,
       onBack: goBackPreviousPage,
     },
+    "/health-note/health-check-history": {
+      centerTitle: "건강검진 내역",
+      showBackButton: true,
+      onBack: goBackPreviousPage,
+    },
+    "/health-note/health-check-history/create": {
+      centerTitle: "건강검진 등록",
+      showBackButton: true,
+      onBack: goBackPreviousPage,
+    },
   };
 
   const dynamicHeaderConfigs: Record<
@@ -76,8 +87,8 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
       onBack?: () => void;
     }
   > = {
-    "/health-note/dogs/": (param) => {
-      const dogDetail = !!param?.dogId;
+    "/health-note/dogs/": (params) => {
+      const dogDetail = !!params?.dogId;
       return {
         centerTitle: dogDetail ? "반려견 정보 수정" : "반려견 추가",
         showBackButton: dogDetail,
@@ -106,6 +117,8 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
     "/health-note/body-check/survey",
     "/health-note/guest",
     "/health-note",
+    "health-note/body-check/survey",
+    `/health-note/health-check-history/${params.historyId}`,
   ];
 
   const shouldRenderHeader = useMemo(() => {

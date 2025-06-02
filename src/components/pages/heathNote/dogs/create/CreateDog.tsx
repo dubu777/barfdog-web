@@ -1,6 +1,6 @@
 'use client';
 import { useState } from "react";
-import DogForm from "@/components/pages/heathNote/dogs/dogForm/DogForm";
+import DogForm from "@/components/pages/heathNote/dogs/form/DogForm";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { defaultDogInfoValues, dogInfoSchema } from "@/utils/validation/dogValidation";
 import { DogFormValues } from "@/types";

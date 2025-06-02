@@ -6,7 +6,7 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Divider from "@/components/common/divider/Divider";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
-import ReviewImagesModal from "@/components/common/modal/reviewImagesModal/ReviewImagesModal";
+import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
 import ReviewInfoTop from "@/components/pages/review/common/ReviewInfoTop";
 import useModal from "@/hooks/useModal";
 import { ReviewImage } from "@/types";
@@ -75,11 +75,11 @@ const ReviewInfoWithImages = ({
 			</div>
 		</div>
 			{isOpen &&
-				<ReviewImagesModal
+				<ImagesModal
 					isOpen={isOpen}
 					onClose={handleCloseModal}
 					defaultImageIndex={defaultImageIndex}
-					reviewImageList={reviewImageList}
+					imageList={reviewImageList}
 				/>
 			}
 		</>

@@ -4,7 +4,7 @@ import KeepGramIcon from '/public/images/healthNote/keepGram.svg';
 import ChangeGramIcon from '/public/images/healthNote/changeGram.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import ChangeGramButton from "@/components/pages/heathNote/dogs/dogDetail/changeGramBottomSheet/changeGramButton/ChangeGramButton";
+import ChangeGramButton from "@/components/pages/heathNote/dogs/detail/changeGramBottomSheet/changeGramButton/ChangeGramButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 

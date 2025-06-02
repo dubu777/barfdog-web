@@ -1,5 +1,5 @@
 import { ComponentType, SVGProps } from "react";
-import { BODY_PART_TO_CATEGORY } from "@/constants";
+import { BODY_PART_TO_CATEGORY, HEALTH_CHECK_HISTORY_TAG_MAP } from "@/constants";
 import { DOG_SIZE } from "@/constants/dog";
 
 interface DogInfo {
@@ -71,15 +71,23 @@ type RecommendProduct = FlatProduct[] | GroupedProduct;
 
 type BodyCheckPart = "gut" | "skin" | "obesity";
 
+interface HealthCheckHistoryFormValue {
+	hospitalName: string;
+	date: string;
+	testItems: (keyof typeof HEALTH_CHECK_HISTORY_TAG_MAP)[];
+	note: string;
+}
+
 export type {
-  DogInfo,
-  SurveyOption,
-  SurveyQuestion,
-  DiseaseInfo,
-  DiseaseData,
-  Product,
-  FlatProduct,
-  GroupedProduct,
-  RecommendProduct,
-  BodyCheckPart,
+	DogInfo,
+	SurveyOption,
+	SurveyQuestion,
+	DiseaseInfo,
+	DiseaseData,
+	Product,
+	FlatProduct,
+	GroupedProduct,
+	RecommendProduct,
+	BodyCheckPart,
+	HealthCheckHistoryFormValue,
 };

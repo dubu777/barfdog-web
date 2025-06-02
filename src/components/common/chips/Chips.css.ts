@@ -185,3 +185,8 @@ export const chipsTailPosition = {
 export const chipsTailFixedFont = style({
   fontSize: "12px",
 });
+
+
+export const chipsWidthIcon = style({
+  padding: '4px 12px 4px 6px !important',
+})

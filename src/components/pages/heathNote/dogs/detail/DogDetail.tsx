@@ -2,7 +2,7 @@
 import * as yup from "yup";
 import { useState } from "react";
 import Loader from "@/components/common/loader/Loader";
-import DogForm from "@/components/pages/heathNote/dogs/dogForm/DogForm";
+import DogForm from "@/components/pages/heathNote/dogs/form/DogForm";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useToastStore } from "@/store/useToastStore";
 import { useBackNavigation } from "@/utils";
@@ -13,8 +13,8 @@ import { useGetFullDogList } from "@/api/dog/queries/useGetFullDogList";
 import { DogFormValues } from "@/types";
 import useModal from "@/hooks/useModal";
 import ChangeGramBottomSheet
-	from "@/components/pages/heathNote/dogs/dogDetail/changeGramBottomSheet/ChangeGramBottomSheet";
-import ChangePriceModal from "@/components/pages/heathNote/dogs/dogDetail/changePriceModal/ChangePriceModal";
+	from "@/components/pages/heathNote/dogs/detail/changeGramBottomSheet/ChangeGramBottomSheet";
+import ChangePriceModal from "@/components/pages/heathNote/dogs/detail/changePriceModal/ChangePriceModal";
 import { defaultDogInfoValues, dogInfoSchema } from "@/utils/validation/dogValidation";
 
 

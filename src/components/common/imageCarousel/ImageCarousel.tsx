@@ -18,6 +18,7 @@ interface ImageCarouselProps {
 	height?: number;
 	handleRemoveFile?: (filename: string, id: number | undefined) => void;
 	handleThumbnailClick?: (index: number, id?: number) => void;
+	showRepresentativeLabel?: boolean;
 }
 
 export default function ImageCarousel({
@@ -26,6 +27,7 @@ export default function ImageCarousel({
 	height = 100,
 	handleRemoveFile,
 	handleThumbnailClick,
+	showRepresentativeLabel = false,
 }: ImageCarouselProps) {
 	return (
 		<Swiper
@@ -38,11 +40,13 @@ export default function ImageCarousel({
 					return (
 						<SwiperSlide
 								key={preview.id ? `image-${preview.id}` : `image-${preview.filename}-${index}`}
-								className={previewSlide}
+								className={previewSlide({ showRepresentativeLabel })}
 								style={{ width: width, height: height, cursor: handleRemoveFile ? 'grabbing' : 'default' }}
 								onClick={handleThumbnailClick ? () => handleThumbnailClick(index, preview.id) : undefined}
 						>
-								{index === 0 && <DefaultText type='caption' color='white' className={thumbnail}>대표</DefaultText>}
+								{index === 0 && showRepresentativeLabel &&
+									<DefaultText type='caption' color='white' className={thumbnail}>대표</DefaultText>
+								}
 								<li>
 									<Image
 										src={preview.url}

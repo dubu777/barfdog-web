@@ -5,13 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import FemaleIcon from "/public/images/healthNote/female.svg";
 import MaleIcon from "/public/images/healthNote/male.svg";
-import PenIcon from "/public/images/healthNote/pen.svg";
+import PenIcon from "/public/images/icons/pen.svg";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Chips from "@/components/common/chips/Chips";
-import CreateDogButton from "@/components/pages/heathNote/common/createDogButton/CreateDogButton";
+import CreateButton from "@/components/common/createButton/CreateButton";
 import { DOG_GENDER } from "@/constants/dog";
 import { useGetFullDogList } from "@/api/dog/queries/useGetFullDogList";
 
@@ -47,7 +47,7 @@ const DogList = () => {
   return (
     <section>
       <article className={styles.createDogButton}>
-        <CreateDogButton from="healthNote" />
+        <CreateButton from="healthNoteDog" />
       </article>
       <article>
         <div className={styles.dogList}>
@@ -81,7 +81,7 @@ const DogList = () => {
                       )}
                     </div>
                     <Link href={`/health-note/dogs/${dog.id}`}>
-                      <SvgIcon src={PenIcon} size={32} />
+                      <SvgIcon src={PenIcon} size={32} color='gray500' />
                     </Link>
                   </div>
                   <DefaultText
