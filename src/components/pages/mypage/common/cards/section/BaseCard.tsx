@@ -75,17 +75,18 @@ const BaseCard = ({
 					isButtonWrap={isButtonWrap}
 				/>
 			}
-			{createPortal(
-				<CardModal
-					data={data}
-					orderId={data.id}
-					orderType={data.orderType}
-					modalState={isOpenModal}
-					onClose={() => setIsOpenModal({ id: null, isOpen: false })}
-					isOrderDetail={isOrderDetail}
-				/>, document.body
-			)}
-
+			{isOpenModal.isOpen &&
+				createPortal(
+					<CardModal
+						data={data}
+						orderId={data.id}
+						orderType={data.orderType}
+						modalState={isOpenModal}
+						onClose={() => setIsOpenModal({ id: null, isOpen: false })}
+						isOrderDetail={isOrderDetail}
+					/>, document.body
+				)
+			}
 		</CardSection>
 	);
 };

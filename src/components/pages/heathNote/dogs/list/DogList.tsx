@@ -45,7 +45,7 @@ const DogList = () => {
   const { data: dogList } = useGetFullDogList();
 
   return (
-    <section>
+    <section className={styles.dogListContainer}>
       <article className={styles.createDogButton}>
         <CreateButton from="healthNoteDog" />
       </article>

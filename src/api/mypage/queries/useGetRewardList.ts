@@ -1,15 +1,11 @@
-import { QueryClient, useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { getRewardList } from "../mypage";
 import { RewardListData, RewardListDataWithTotals } from "@/types/reward";
 
-export { useGetRewardList, prefetchGetRewardList };
-
-const getRewardListQueryKey = [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_REWARD_LIST];
-
-function useGetRewardList() {
+export function useGetRewardList() {
   return useInfiniteQuery<RewardListData | RewardListDataWithTotals, Error>({
-    queryKey: getRewardListQueryKey,
+    queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_REWARD_LIST],
     queryFn: async ({ pageParam = 0 }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
       const data = await getRewardList({ pageParam: pageNumber, size: 5 });
@@ -27,19 +23,5 @@ function useGetRewardList() {
       return nextPage < totalPages ? nextPage : undefined;
     },
     initialPageParam: 0,
-  });
-}
-
-
-async function prefetchGetRewardList(queryClient: QueryClient) {
-  await queryClient.prefetchQuery({
-    queryKey: getRewardListQueryKey,
-    queryFn: async () => {
-      const data = await getRewardList({ pageParam: 0, size: 5 });
-      return {
-        pages: [data],
-        pageParams: [0],
-      };
-    },
   });
 }

@@ -136,7 +136,7 @@ const HealthNoteMainHeader = () => {
         </button>
       </header>
       {isLoggedIn && dogList && isOpen && (
-        <BottomSheet isOpen={isOpen} onClose={handleCloseChangeDogInfo}>
+        <BottomSheet isOpen={isOpen} onClose={handleCloseChangeDogInfo} className={styles.selectBottomSheet}>
           <div className={styles.selectBottomSheetHeader}>
             <DefaultText type="title4">반려견 선택</DefaultText>
             <Link href="/health-note/dogs">

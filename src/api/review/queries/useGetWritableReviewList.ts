@@ -9,7 +9,7 @@ const getWritableReviewListQueryKey = [queryKeys.REVIEW.BASE, queryKeys.REVIEW.G
 
 function useGetWritableReviewList() {
   return useInfiniteQuery<WritableReviewList>({
-    queryKey: getWritableReviewListQueryKey,
+    queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_WRITABLE_REVIEW_LIST],
     queryFn: async ({ pageParam = 0 }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
       return await getWritableReviewList({pageParam: pageNumber, size: 6});

@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { themeVars } from "@/styles/theme.css";
 
 export const heathNoteHeaderContainer = style({
 	padding: '6px 20px',
@@ -13,12 +14,20 @@ export const selectButton = style({
 	cursor: 'pointer'
 })
 
+export const selectBottomSheet = style({
+	maxHeight: '90vh',
+	overflowY: 'scroll'
+})
+
 export const selectBottomSheetHeader = style({
 	width: '100%',
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'space-between',
 	padding: '20px 20px 8px',
+	position: 'sticky',
+	top: 0,
+	background: themeVars.colors.gray.gray0,
 })
 
 export const selectBottomSheetBox = style({

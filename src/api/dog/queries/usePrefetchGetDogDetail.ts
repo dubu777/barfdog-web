@@ -1,4 +1,3 @@
-'use server';
 import { QueryClient } from "@tanstack/react-query";
 import { DogDetailData } from "@/types";
 import { queryKeys } from "@/constants";

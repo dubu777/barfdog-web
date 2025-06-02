@@ -5,6 +5,7 @@ import {
   PlanDiscountResponse, SubscriptionAddressData, SubscriptionListData,
   SubscriptionDetailDto, SubscriptionSkipType, AddressDto, UsingCoupon
 } from "@/types";
+import { AxiosInstance } from "axios";
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse[]> => {
   const {data} = await axiosInstance.get('/api/planDiscount');
@@ -25,8 +26,8 @@ const updateSubscription = async ({
   return response;
 };
 
-const getSubscriptionDetail = async (subscribeId: number): Promise<SubscriptionDetailDto> => {
-  const { data } = await axiosInstance.get(`/api/subscribes/${subscribeId}`);
+const getSubscriptionDetail = async (subscribeId: number, instance: AxiosInstance = axiosInstance): Promise<SubscriptionDetailDto> => {
+  const { data } = await instance.get(`/api/subscribes/${subscribeId}`);
   const matchedRecipes = data?.subscribeRecipeDtoList.map(recipe => {
     const matchedRecipe = data?.recipeDtoList.find(r => r.id === recipe.recipeId);
     return {
@@ -41,8 +42,8 @@ const getSubscriptionDetail = async (subscribeId: number): Promise<SubscriptionD
   };
 }
 
-const getSubscriptionList = async (page = 0, size = 50): Promise<SubscriptionListData[]> => {
-  const { data } = await axiosInstance.get(`/api/subscribes?page=${page}&size=${size}`);
+const getSubscriptionList = async (page = 0, size = 50, instance: AxiosInstance = axiosInstance): Promise<SubscriptionListData[]> => {
+  const { data } = await instance.get(`/api/subscribes?page=${page}&size=${size}`);
   return data?._embedded?.querySubscribesDtoList || [];
 };
 
@@ -51,8 +52,8 @@ const getSubscriptionBenefits = async (subscribeId: string): Promise<BenefitDto[
   return data._embedded.subscribeBenefitDtoList;
 }
 
-const getSubscriptionAddress = async (subscribeId: number): Promise<SubscriptionAddressData> => {
-  const { data } = await axiosInstance.get(`/api/address/subscribe/${subscribeId}`);
+const getSubscriptionAddress = async (subscribeId: number, instance: AxiosInstance = axiosInstance): Promise<SubscriptionAddressData> => {
+  const { data } = await instance.get(`/api/address/subscribe/${subscribeId}`);
   return data;
 }
 

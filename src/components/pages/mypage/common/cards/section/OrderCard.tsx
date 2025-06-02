@@ -47,8 +47,8 @@ const OrderCard = ({ data, type, hasBottomSheet = false }: OrderCardProps) => {
 	const orderType = normalizedData.orderType;
 
 	const orderStatusLabelActions = getOrderStatusActions(status, orderType, type);
-	const orderActions = orderStatusLabelActions.actions;
-	const orderStatusLabel = orderStatusLabelActions.label;
+	const orderActions = orderStatusLabelActions?.actions;
+	const orderStatusLabel = orderStatusLabelActions?.label;
 
 	const [isOpenModal, setIsOpenModal] = useState<IsOpenCardModal>({ id: null, isOpen: false });
 
@@ -105,7 +105,7 @@ const OrderCard = ({ data, type, hasBottomSheet = false }: OrderCardProps) => {
 			cardHeaderTitle={
 				<div className={styles.orderCardInfoTop}>
 					<DefaultText type='label4'>
-						{orderType === 'subscription' ? `정기배송 ${normalizedData.subscribeCount}회차 ` : '일반배송 '}
+						{orderType === ORDER_TYPE.SUBSCRIPTION ? `정기배송 ${normalizedData.subscribeCount}회차 ` : '일반배송 '}
 						<span>
 							{orderStatusLabel}
 						</span>
