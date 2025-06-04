@@ -7,16 +7,16 @@ export const cancelSubscriptionTitle = style({
 
 export const cancelSubscriptionCard = style({
 	padding: '20px',
-	background: themeVars.colors.gray.gray50,
+	backgroundColor: themeVars.colors.gray.gray50,
 })
 
 export const cancelSubscriptionNotice = style({
 	padding: '20px',
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const cancelSubscriptionNoticeBox = style({
-	background: themeVars.colors.red.pinkWhite,
+	backgroundColor: themeVars.colors.red.pinkWhite,
 	border: `1px solid ${themeVars.colors.red.pastelRed}`,
 })
 

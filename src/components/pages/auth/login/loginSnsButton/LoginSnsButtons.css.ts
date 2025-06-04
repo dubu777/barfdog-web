@@ -17,11 +17,11 @@ export const loginButton = recipe({
   variants: {
     provider: {
       kakao: {
-        background: themeVars.backgroundColors.kakao,
+        backgroundColor: themeVars.backgroundColors.kakao,
         color: themeVars.colors.gray.gray900,
       },
       naver: {
-        background: themeVars.backgroundColors.naver,
+        backgroundColor: themeVars.backgroundColors.naver,
         color: themeVars.colors.gray.gray0,
       }
     },
@@ -60,7 +60,7 @@ export const loginButton = recipe({
 export const lastLoginActivity = style({
   minWidth: '55px',
   padding: '3px 6px',
-  background: themeVars.colors.red.red,
+  backgroundColor: themeVars.colors.red.red,
   color: themeVars.colors.gray.gray0,
   fontSize: themeVars.fontSize["text-2xs"],
   fontWeight: themeVars.fontWeight.normal,

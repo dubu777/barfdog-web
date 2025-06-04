@@ -4,7 +4,7 @@ import {style} from "@vanilla-extract/css";
 export const mainSurveyWrapper = style({
   width: '100%',
   minHeight: '680px',
-  background: themeVars.backgroundColors.pinkF1,
+  backgroundColor: themeVars.backgroundColors.pinkF1,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',

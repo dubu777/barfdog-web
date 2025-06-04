@@ -4,7 +4,7 @@ import { themeVars } from "@/styles/theme.css";
 
 export const sendMessageModalContainer = style({
 	width: '100%',
-	background: themeVars.colors.gray.gray50,
+	backgroundColor: themeVars.colors.gray.gray50,
 	padding: '20px',
 	display: 'flex',
 	flexDirection: 'column',

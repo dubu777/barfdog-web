@@ -26,8 +26,8 @@ export const selectBottomSheetHeader = style({
 	justifyContent: 'space-between',
 	padding: '20px 20px 8px',
 	position: 'sticky',
-	top: 0,
-	background: themeVars.colors.gray.gray0,
+	top: '-1px',
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const selectBottomSheetBox = style({

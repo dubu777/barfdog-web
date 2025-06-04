@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const orderStatusFilterTabBar = style({
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
   marginTop: '2px',
 });
 

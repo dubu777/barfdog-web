@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const detailContainer = style({
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const detailHeader = style({
@@ -10,7 +10,7 @@ export const detailHeader = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '20px',
-	background: themeVars.colors.gray.gray50,
+	backgroundColor: themeVars.colors.gray.gray50,
 })
 
 export const detailContents = style({

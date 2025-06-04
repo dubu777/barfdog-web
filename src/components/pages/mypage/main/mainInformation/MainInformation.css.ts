@@ -3,7 +3,7 @@ import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const userInfoContainer = style({
-  background: themeVars.colors.gray.gray50,
+  backgroundColor: themeVars.colors.gray.gray50,
 })
 
 export const accountLinkBox = style({
@@ -33,7 +33,7 @@ export const userName = style({
 })
 
 export const membership = style({
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
   padding: '18px 20px 12px',
 })
 
@@ -62,7 +62,7 @@ export const rewardItem = recipe({
     flexDirection: 'column',
     gap: '4px',
     width: 'calc(100% / 3)',
-    background: themeVars.colors.gray.gray0,
+    backgroundColor: themeVars.colors.gray.gray0,
     padding: '8px 20px',
   },
   variants: {

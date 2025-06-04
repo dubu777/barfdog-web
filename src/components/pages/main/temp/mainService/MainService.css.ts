@@ -23,7 +23,7 @@ export const mainServiceBox = style({
     display: 'block',
     width: '1px',
     height: '32px',
-    background: themeVars.colors.gray.gray900,
+    backgroundColor: themeVars.colors.gray.gray900,
     position: 'absolute',
     left: '50%',
     bottom: '22px'

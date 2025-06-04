@@ -78,7 +78,7 @@ export const mainBannerImage = style({
 export const mainReviewDescription = style({
 	margin: '28px 40px 57px',
 	padding: '20px',
-	background: themeVars.colors.red.pastelPink,
+	backgroundColor: themeVars.colors.red.pastelPink,
 	borderRadius: '8px',
 	position: 'relative',
 	selectors: {
@@ -149,7 +149,7 @@ export const mainFAQDescriptionBox = style({
 
 export const mainFAQDescription = style({
 	padding: '12px 20px',
-	background: themeVars.colors.yellow.yellow200,
+	backgroundColor: themeVars.colors.yellow.yellow200,
 	borderRadius: '48px',
 	selectors: {
 		'&:nth-child(2)': {

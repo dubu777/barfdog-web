@@ -3,7 +3,7 @@ import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
 export const articleListContainer = style({
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const categoryFilter = style({

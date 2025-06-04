@@ -19,7 +19,7 @@ export const productName = style({
 export const productAvatar = style({
 	objectFit: 'cover',
 	borderRadius: '8px',
-	background: themeVars.colors.gray.gray400,
+	backgroundColor: themeVars.colors.gray.gray400,
 });
 
 export const statusContainer = recipe({
@@ -97,6 +97,6 @@ export const divider = style({
 	display: 'inline-block',
 	width: '1px',
 	height: '12px',
-	background: themeVars.colors.gray.gray400,
+	backgroundColor: themeVars.colors.gray.gray400,
 	margin: '0 4px',
 })

@@ -37,7 +37,7 @@ export const checkboxStyle = recipe({
   base: {
     width: '20px',
     height: '20px',
-    background: themeVars.colors.gray.gray400,
+    backgroundColor: themeVars.colors.gray.gray400,
     padding: 0,
     margin: 0,
     transition: 'all .35s',

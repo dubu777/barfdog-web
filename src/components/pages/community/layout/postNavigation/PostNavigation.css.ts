@@ -7,7 +7,7 @@ export const postNavigationContainer = style({
 
 export const postNavigationHeader = style({
   padding: '20px 20px 12px',
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -23,9 +23,9 @@ export const postNavigationGoBack = style({
 export const postNavigationButton = style({
   width: '100%',
   padding: '12px 20px',
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const currentItem = style({
-  background: themeVars.colors.gray.gray100,
+  backgroundColor: themeVars.colors.gray.gray100,
 })

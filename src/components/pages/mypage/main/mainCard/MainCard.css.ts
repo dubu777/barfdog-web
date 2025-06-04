@@ -4,7 +4,7 @@ import { themeVars } from "@/styles/theme.css";
 
 export const dogInfoContainer = recipe({
   base: {
-    background: themeVars.colors.gray.gray50,
+    backgroundColor: themeVars.colors.gray.gray50,
     padding: '20px 0 14px',
   },
   variants: {
