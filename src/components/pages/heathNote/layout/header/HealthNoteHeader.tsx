@@ -111,20 +111,32 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
     [pathname, params]
   );
 
-  const excludePaths = [
-    "/health-note/full-check/survey",
-    "/health-note/full-check/result",
-    "/health-note/body-check/survey",
+  // 정확히 일치하면 제외할 경로
+  const exactExcludePaths = [
     "/health-note/guest",
     "/health-note",
-    "health-note/body-check/survey",
     `/health-note/health-check-history/${params.historyId}`,
   ];
 
+  // 접두사로 시작하면 제외할 경로
+  const prefixExcludePaths = [
+    "/health-note/full-check/survey",
+    "/health-note/full-check/result",
+    "/health-note/body-check/survey",
+    "/health-note/body-check/result",
+  ];
+
   const shouldRenderHeader = useMemo(() => {
-    // pathname이 excludePaths 중 하나라도 포함하면 false
-    return !excludePaths.some((path) => pathname === path);
-  }, [pathname]);
+    if (exactExcludePaths.includes(pathname)) {
+      return false;
+    }
+
+    if (prefixExcludePaths.some((prefix) => pathname.startsWith(prefix))) {
+      return false;
+    }
+
+    return true;
+  }, [pathname, params.historyId]);
 
   return (
     <>

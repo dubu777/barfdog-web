@@ -1,7 +1,7 @@
 import { themeVars } from "@/styles/theme.css";
 export { COLORS };
 
-type colors =
+export type Colors =
   | "white"
   | "red"
   | "pastelRed"
@@ -20,7 +20,7 @@ type colors =
   | "green400"
   | "yellow400";
 
-const COLORS: Record<colors, string> = {
+const COLORS: Record<Colors, string> = {
   white: themeVars.colors.gray.gray0,
   red: themeVars.colors.red.red,
   pastelRed: themeVars.colors.red.pastelRed,
@@ -48,8 +48,10 @@ export const CHIPS_COLORS = {
   gray800: themeVars.colors.gray.gray800,
   gray900: themeVars.colors.gray.gray900,
   blue50: themeVars.colors.blue.blue50,
+  blue500: themeVars.colors.blue.blue500,
   blue600: themeVars.colors.blue.blue600,
   green500: themeVars.colors.green.green500,
+  yellow500: themeVars.colors.yellow.yellow500,
 } as const;
 
 export const MAIN_BACKGROUND_COLORS = {

@@ -44,12 +44,20 @@ export const chipVariantStyles = {
       backgroundColor: themeVars.colors.blue.blue50,
       color: themeVars.colors.blue.blue400,
     }),
+    blue500: style({
+      backgroundColor: themeVars.colors.blue.blue500,
+      color: themeVars.colors.gray.gray0,
+    }),
     blue600: style({
       backgroundColor: themeVars.colors.blue.blue600,
       color: themeVars.colors.gray.gray0,
     }),
     green500: style({
       backgroundColor: themeVars.colors.green.green500,
+      color: themeVars.colors.gray.gray0,
+    }),
+    yellow500: style({
+      backgroundColor: themeVars.colors.yellow.yellow500,
       color: themeVars.colors.gray.gray0,
     }),
   },
@@ -186,7 +194,6 @@ export const chipsTailFixedFont = style({
   fontSize: "12px",
 });
 
-
 export const chipsWidthIcon = style({
-  padding: '4px 12px 4px 6px !important',
-})
+  padding: "4px 12px 4px 6px !important",
+});

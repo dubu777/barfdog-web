@@ -31,6 +31,7 @@ export const bodyCheckSurveyConfig: Record<
     questions: SurveyQuestion[]; // SurveyQuestion[]
     sections: SurveySection[]; // SurveySection[]
     Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+    name: string;
   }
 > = {
   gut: {
@@ -39,6 +40,7 @@ export const bodyCheckSurveyConfig: Record<
     questions: GUT_SURVEY_ITEMS,
     sections: GUT_SURVEY_SECTION,
     Icon: GutIcon,
+    name: "위/장",
   },
   skin: {
     schema: skinSurveySchema,
@@ -46,6 +48,7 @@ export const bodyCheckSurveyConfig: Record<
     questions: SKIN_SURVEY_ITEMS,
     sections: SKIN_SURVEY_SECTION,
     Icon: SkinIcon,
+    name: "피부",
   },
   obesity: {
     schema: obesitySurveySchema,
@@ -53,5 +56,6 @@ export const bodyCheckSurveyConfig: Record<
     questions: OBESITY_SURVEY_ITEMS,
     sections: OBESITY_SURVEY_SECTION,
     Icon: ObesityIcon,
+    name: "비만",
   },
 };

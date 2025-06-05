@@ -1,4 +1,4 @@
-import { DOG_GENDER, DOG_SIZE } from "@/constants/dog";
+import { DOG_GENDER } from "@/constants/dog";
 import { subscriptionStatus } from "@/constants";
 
 interface DogData {
@@ -38,11 +38,11 @@ interface DogListData {
 interface DogDetailData {
   id: number;
   name: string;
-  gender: keyof typeof DOG_GENDER | '';
+  gender: keyof typeof DOG_GENDER | "";
   birth: string;
   oldDog: boolean;
   dogType: string;
-  dogSize: keyof typeof DOG_SIZE | null;
+  dogSize: DogSize | null;
   weight: number;
   neutralization: boolean;
   activityLevel: string;
@@ -58,10 +58,18 @@ interface DogDetailData {
   memberId: number;
   subscribeId: number;
 }
-type FullDogDetail = (DogListData & DogDetailData);
+type FullDogDetail = DogListData & DogDetailData;
 
-type DogFormValues = Pick<DogDetailData, 
-  'name' | 'gender' | 'neutralization' | 'dogSize' | 'weight' | 'birth' | 'oldDog' | 'dogType'
+type DogFormValues = Pick<
+  DogDetailData,
+  | "name"
+  | "gender"
+  | "neutralization"
+  | "dogSize"
+  | "weight"
+  | "birth"
+  | "oldDog"
+  | "dogType"
 > & {
   nameVerified: boolean;
 };
@@ -78,4 +86,15 @@ interface CheckDuplicateDogNameResponse {
   errorCode: null | string;
 }
 
-export type { DogData, FullDogDetail, DogFormValues, DogListData, DogDetailData, UploadDogProfileImage, CheckDuplicateDogNameResponse };
+type DogSize = "SMALL" | "MIDDLE" | "LARGE";
+
+export type {
+  DogData,
+  FullDogDetail,
+  DogFormValues,
+  DogListData,
+  DogDetailData,
+  UploadDogProfileImage,
+  CheckDuplicateDogNameResponse,
+  DogSize,
+};
