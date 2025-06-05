@@ -22,10 +22,12 @@ export default function DiseasePhaseCard({
   const { healthGuide } = getBodyCheckDiseaseMeta(diseaseName);
   return (
     <ResultCard gap={12}>
-      <Card shadow="light" padding={16} backgroundColor="gray0">
-        <div className={commonWrapper({ gap: 6, justify: "start" })}>
+      <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
+        <div className={commonWrapper({ gap: 8, justify: "start" })}>
           <SvgIcon src={SirenIcon} size={24} />
-          <DefaultText type="headline2">증상별 경과</DefaultText>
+          <DefaultText type="headline2" applyLineHeight={false}>
+            증상별 경과
+          </DefaultText>
         </div>
         {phases.map((phase) => (
           <div
@@ -35,16 +37,16 @@ export default function DiseasePhaseCard({
               gap: 6,
             })}
           >
-            <div className={commonWrapper({ justify: "start" })}>
+            <div className={commonWrapper({ justify: "start", gap: 8 })}>
               <DefaultText type="headline2">{phase}</DefaultText>
+              <DefaultText type="body3" color="gray700">
+                {getPhaseDescription(diseaseName, phase)}
+              </DefaultText>
             </div>
-            <DefaultText type="body3" color="gray700">
-              {getPhaseDescription(diseaseName, phase)}
-            </DefaultText>
           </div>
         ))}
       </Card>
-      <Card shadow="light" padding={16} backgroundColor="gray0">
+      <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
         <div className={commonWrapper({ gap: 6, justify: "start" })}>
           <SvgIcon src={LightIcon} size={24} />
           <DefaultText type="headline2">건강 관리 가이드</DefaultText>

@@ -8,7 +8,7 @@ interface ResultCardProps {
   className?: string;
   title?: string;
   subTitle?: string;
-  gap?: 0 | 4 | 8 | 12 | 16 | 20;
+  gap?: "none" | 4 | 8 | 12 | 16 | 20;
 }
 
 const ResultCard = ({
@@ -16,7 +16,7 @@ const ResultCard = ({
   className,
   title,
   subTitle,
-  gap = 0,
+  gap,
 }: ResultCardProps) => {
   return (
     <Card

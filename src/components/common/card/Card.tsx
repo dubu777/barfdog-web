@@ -1,50 +1,56 @@
 import { ReactNode } from "react";
-import {
-  cardAlign,
-  cardColorStyle,
-  cardBorderRadius,
-  cardPadding,
-  cardShadow,
-  cardGap,
-  cardBaseStyle,
-} from "@/components/common/card/Card.css";
-import { Colors } from "@/constants/style";
+
+import { commonWrapper } from "@/styles/common.css";
 
 interface CardProps {
-  shadow: "light" | "normal" | "strong" | "none";
-  padding?: 0 | 12 | 16 | 20 | "20/16";
-  align?: "left" | "center";
+  direction?: "row" | "col";
+  justify?: "start" | "center" | "end" | "between";
+  align?: "start" | "center" | "end" | "between";
+  width?: "full" | "auto";
+  height?: "full" | "auto";
+  shadow: "light" | "normal" | "none";
+  padding?: "none" | 12 | 16 | 20 | 32 | "20/16";
+  textAlign?: "none" | "left" | "center";
   children: ReactNode;
   className?: string;
-  width?: number;
-  backgroundColor?: Colors;
-  borderRadius?: "default" | "none";
-  gap?: 0 | 4 | 8 | 12 | 16 | 20;
+  backgroundColor?: "none" | "gray0" | "gray50" | "gray100" | "transparent";
+  borderRadius?: "none" | 8 | 12;
+  gap?: "none" | 4 | 8 | 12 | 16 | 20;
 }
 
 const Card = ({
-  shadow = "normal",
-  padding = 20,
-  align = "left",
-  className,
-  children,
+  direction = "col",
+  justify,
+  align,
   width,
+  height,
+  textAlign,
+  shadow = "light",
+  padding,
+  children,
   backgroundColor = "gray0",
-  borderRadius = "default",
-  gap = 0,
+  borderRadius = 8,
+  gap,
+  className,
 }: CardProps) => {
   return (
     <div
       className={`
-        ${cardBaseStyle}
-				${cardColorStyle[backgroundColor]}
-				${cardShadow[shadow]} 
-				${cardPadding[padding]} 
-				${cardAlign[align]}
-				${cardBorderRadius[borderRadius]}
+        ${commonWrapper({
+          direction,
+          justify,
+          align,
+          gap,
+          padding,
+          textAlign,
+          shadow,
+          backgroundColors: backgroundColor,
+          width,
+          height,
+          borderRadius,
+        })}
 				${className || ""}
 			`}
-      style={{ width: width || "100%" }}
     >
       {children}
     </div>
