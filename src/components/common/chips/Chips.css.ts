@@ -69,6 +69,11 @@ export const chipVariantStyles = {
       color: themeVars.colors.gray.gray700,
       backgroundColor: themeVars.colors.gray.gray0,
     }),
+    blue50: style({
+      border: `1px solid ${themeVars.colors.blue.blue300}`,
+      color: themeVars.colors.blue.blue500,
+      backgroundColor: themeVars.colors.blue.blue50,
+    }),
   },
 };
 

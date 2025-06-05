@@ -10,6 +10,7 @@ import { getHeaderProps } from "@/utils/getHeaderProps";
 type HealthNoteParams = {
   dogId?: string;
   historyId?: string;
+  reportId?: string;
 };
 
 interface HealthNoteHeaderProps {}
@@ -70,6 +71,11 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
       showBackButton: true,
       onBack: goBackPreviousPage,
     },
+    "/health-note/dogpedia": {
+      centerTitle: "견종 백과",
+      showBackButton: true,
+      onBack: goBackPreviousPage,
+    },
   };
 
   const dynamicHeaderConfigs: Record<
@@ -113,7 +119,7 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
 
   const excludePaths = [
     "/health-note/full-check/survey",
-    "/health-note/full-check/result",
+    `/health-note/full-check/result/${params.reportId}`,
     "/health-note/body-check/survey",
     "/health-note/guest",
     "/health-note",

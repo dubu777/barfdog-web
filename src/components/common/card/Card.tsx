@@ -1,5 +1,13 @@
 import { ReactNode } from "react";
-import { cardAlign, cardBaseStyle, cardBorderRadius, cardPadding, cardShadow } from "@/components/common/card/Card.css";
+import {
+	cardAlign,
+	cardBackgroundStyle,
+	cardBaseStyle,
+	cardBorderRadius,
+	cardPadding,
+	cardShadow
+} from "@/components/common/card/Card.css";
+import {COLORS} from "@/constants/style";
 
 interface CardProps {
 	shadow: 'light' | 'normal' | 'strong' | 'none';
@@ -9,6 +17,7 @@ interface CardProps {
 	className?: string;
 	width?: number;
 	borderRadius?: 'default' | 'none';
+	background?: keyof typeof COLORS;
 }
 
 const Card = ({
@@ -19,11 +28,13 @@ const Card = ({
 	children,
 	width,
 	borderRadius = 'default',
+	background = 'white',
 }: CardProps) => {
 	return (
 		<div
 			className={`
 				${cardBaseStyle} 
+				${cardBackgroundStyle[background]}
 				${cardShadow[shadow]} 
 				${cardPadding[padding]} 
 				${cardAlign[align]}
