@@ -3,7 +3,7 @@ import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import * as styles from "./SurveySteps.css";
-import SurveyButton from "../surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import useModal from "@/hooks/useModal";
 import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";

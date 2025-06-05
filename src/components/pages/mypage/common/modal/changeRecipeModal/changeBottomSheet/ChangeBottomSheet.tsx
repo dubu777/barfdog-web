@@ -5,7 +5,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { numberOfPacksPerDay, subscriptionPlanInfo } from "@/constants";
 import { PlanKey } from "@/types";
-import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 
 interface SelectedInfo {
 	plan: PlanKey;

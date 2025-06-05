@@ -12,7 +12,7 @@ import {
 } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import InputLabel from "@/components/common/inputLabel/InputLabel";
-import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";

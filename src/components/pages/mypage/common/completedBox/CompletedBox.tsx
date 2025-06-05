@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import * as styles from './CompletedBox.css';
-import CheckCircle from '/public/images/mypage/check_circle.svg'
+import CheckCircle from '/public/images/icons/check_circle.svg'
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 const CompletedBox = ({ children }: { children: ReactNode }) => {

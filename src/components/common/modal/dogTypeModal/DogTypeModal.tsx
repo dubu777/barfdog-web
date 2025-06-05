@@ -1,6 +1,6 @@
 import * as styles from './DogTypeModal.css';
 import { DOG_TYPE } from "@/constants/dog";
-import SearchableSelector from "@/components/pages/survey/searchableSelector/SearchableSelector";
+import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 

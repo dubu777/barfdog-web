@@ -3,7 +3,7 @@ import * as styles from "./SurveySteps.css";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import SearchableSelector from "../searchableSelector/SearchableSelector";
+import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
 
 interface SurveyStepProps {
   handleChange: () => void;
