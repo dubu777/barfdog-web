@@ -10,7 +10,7 @@ import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/Mo
 import useDeviceState from "@/hooks/useDeviceState";
 import DefaultRadio from "@/components/common/defaultRadio/DefaultRadio";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import { UpdateUserInfo } from "@/types/auth";
+import { GetUserInfo, UpdateUserInfo } from "@/types/auth";
 import { useGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
 import { useUpdateUserInfo } from "@/api/auth/mutations/useUpdateUserInfo";
 import { useGetAuthNumber } from "@/api/auth/mutations/useGetAuthNumber";
@@ -24,7 +24,7 @@ import CustomDatePicker from '@/components/common/datePicker/CustomDatePicker';
 const UserInfo = () => {
 	const { data: userInfo } = useGetUserInfo();
 
-	const { handleSubmit, control, getValues, watch, errors, setValue, setError, isValid, clearErrors, dirtyFields } = useFormHandler<UpdateUserInfo>(updateUserInfoSchema, defaultUpdateUserInfoValues(userInfo));
+	const { handleSubmit, control, getValues, watch, errors, setValue, setError, isValid, clearErrors, dirtyFields } = useFormHandler<UpdateUserInfo>(updateUserInfoSchema, defaultUpdateUserInfoValues(userInfo as GetUserInfo));
 
 	const [changedPhoneNumber, setChangedPhoneNumber] = useState<boolean>(false);
 	const [authNumber, setAuthNumber] = useState<string>('');
@@ -34,6 +34,8 @@ const UserInfo = () => {
 
 	const { addToast } = useToastStore();
 	const { isMobileDevice } = useDeviceState();
+
+	console.log('userInfo', userInfo);
 
 	// 연락처 변경 X
 	const keepCurrentPhoneNumber = !changedPhoneNumber || watch('phoneNumber') === watch('defaultPhoneNumber');
@@ -174,7 +176,6 @@ const UserInfo = () => {
 							placeholder='이름을 입력해주세요.'
 							label='이름'
 							error={errors?.name?.message}
-							touched
 							isRequired
 						/>
 					}

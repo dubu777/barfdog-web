@@ -63,7 +63,8 @@ export const inputStyle = style({
       color: themeVars.colors.gray.gray300,
     },
     '&[type = "button"]': {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      color: themeVars.colors.gray.gray300,
     }
   }
 })

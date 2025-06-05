@@ -1,7 +1,7 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { prefetchGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
+import { ErrorBoundary } from "react-error-boundary";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { prefetchGetSubscriptionDetail } from "@/api/subscription/queries/usePrefetchSubscriptionAndDogDetail";
 import PostponeShippingModal from "@/components/pages/mypage/common/modal/postponeShippingModal/PostponeShippingModal";
 
 interface PostponeShippingPageParams {

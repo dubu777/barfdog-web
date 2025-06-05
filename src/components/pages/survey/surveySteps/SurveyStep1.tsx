@@ -4,7 +4,7 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
-import SurveyButton from "../surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import ImageButton from "../imageButton/ImageButton";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";

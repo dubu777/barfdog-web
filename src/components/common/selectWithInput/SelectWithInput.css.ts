@@ -59,7 +59,7 @@ export const customInputStyle = style({
 
 export const selectDropdownFloatingStyle = style({
 	position: 'absolute',
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 	width: '100%',
 	maxHeight: '255px',
 	overflow: 'scroll',

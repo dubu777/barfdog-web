@@ -5,6 +5,7 @@ import UnCheckedRadio from "public/images/option/unchecked_radio.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
+import { ReactNode } from "react";
 
 interface SurveyButtonProps<T> {
   label: string;
@@ -15,6 +16,8 @@ interface SurveyButtonProps<T> {
   chipText?: string;
   onToggle: (value: T) => void;
   isDisabled?: boolean;
+  className?: string;
+  rightElement?: ReactNode;
 }
 
 export default function SurveyButton<T>({
@@ -26,6 +29,8 @@ export default function SurveyButton<T>({
   chipText,
   onToggle,
   isDisabled = false,
+  className,
+  rightElement,
 }: SurveyButtonProps<T>) {
   const iconSrc =
     inputType === "radio"
@@ -48,10 +53,10 @@ export default function SurveyButton<T>({
   return (
     <button
       disabled={isDisabled}
-      className={styles.surveyButtonContainer({
+      className={`${styles.surveyButtonContainer({
         isChecked,
         isNormal: inputType === "normal",
-      })}
+      })} ${className || ''}`}
       onClick={(e) => {
         e.preventDefault();
         onToggle(value)
@@ -81,6 +86,7 @@ export default function SurveyButton<T>({
           </DefaultText>
         )}
       </div>
+      {rightElement && rightElement}
     </button>
   );
 }

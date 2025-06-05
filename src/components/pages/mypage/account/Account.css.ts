@@ -25,7 +25,7 @@ export const accountButtonBox = style({
 	transform: 'translateX(-50%)',
 	padding: '20px',
 	borderTop: `1px solid ${themeVars.colors.gray.gray200}`,
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const accountImage = style({
@@ -37,7 +37,7 @@ export const accountLinkBox = style({
 	flexDirection: 'column',
 	alignItems: 'flex-start',
 	padding: '0 20px 20px',
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const accountLink = style({
@@ -106,7 +106,7 @@ export const connectedSns = style({
 	display: 'flex',
 	alignItems: 'center',
 	justifyContent: 'space-between',
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 	padding: '16px 20px',
 })
 

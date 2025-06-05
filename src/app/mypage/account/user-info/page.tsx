@@ -1,8 +1,8 @@
-import UserInfo from "@/components/pages/mypage/account/userInfo/UserInfo";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { prefetchGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
-import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { prefetchGetUserInfo } from "@/api/auth/queries/usePrefetchGetUserInfo";
+import UserInfo from "@/components/pages/mypage/account/userInfo/UserInfo";
 import Loader from "@/components/common/loader/Loader";
 
 export default async function UserInfoPage() {

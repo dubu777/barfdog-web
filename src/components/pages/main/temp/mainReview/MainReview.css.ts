@@ -20,7 +20,7 @@ export const mainSliderWrapper = style({
 })
 
 export const reviewSlideItem = style({
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
   width: '345px !important',
   height: '411px !important',
   borderRadius: '7px',
@@ -66,7 +66,7 @@ export const reviewSlideTitle = style([textLeft, {
     height: '1px',
     position: 'absolute',
     bottom: '12px',
-    background: themeVars.colors.gray.gray900,
+    backgroundColor: themeVars.colors.gray.gray900,
   }
 }])
 

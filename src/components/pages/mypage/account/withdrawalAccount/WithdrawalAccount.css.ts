@@ -87,7 +87,7 @@ export const dogCardImage = style({
 })
 
 export const reasonCheckboxList = style({
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 	padding: '40px 20px',
 	display: 'flex',
 	flexDirection: 'column',

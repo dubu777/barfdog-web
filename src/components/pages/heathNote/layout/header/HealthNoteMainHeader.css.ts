@@ -15,12 +15,20 @@ export const selectButton = style({
   cursor: "pointer",
 });
 
+export const selectBottomSheet = style({
+  maxHeight: "90vh",
+  overflowY: "scroll",
+});
+
 export const selectBottomSheetHeader = style({
   width: "100%",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   padding: "20px 20px 8px",
+  position: "sticky",
+  top: "-1px",
+  backgroundColor: themeVars.colors.gray.gray0,
 });
 
 export const selectBottomSheetBox = style({

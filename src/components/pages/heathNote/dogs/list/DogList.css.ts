@@ -1,11 +1,15 @@
 import { style } from "@vanilla-extract/css";
 
+export const dogListContainer = style({
+	paddingBottom: '85px',
+})
+
 export const createDogButton = style({
 	padding: '20px',
 })
 
 export const dogList = style({
-	padding: '0 20px',
+	padding: '0 20px 20px',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '12px',

@@ -1,6 +1,6 @@
 import * as yup from 'yup';
-import { FindUserEmail, TemporaryPassword, ConnectSnsPassword, GenderType } from "@/types";
-import { LoginUserInfo, UpdateUserInfo, SignUpFormValues } from "@/types";
+import { FindUserEmail, TemporaryPassword, ConnectSnsPassword, GenderType, GetUserInfo } from "@/types";
+import { LoginUserInfo, SignUpFormValues } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 
 export {
@@ -159,7 +159,7 @@ const updateUserInfoSchema = yup.object().shape({
 		.required('휴대폰 번호는 필수입니다.'),
 })
 
-const defaultUpdateUserInfoValues = (userInfo: UpdateUserInfo | undefined) => ({
+const defaultUpdateUserInfoValues = (userInfo: GetUserInfo | undefined) => ({
 	name: userInfo?.name || '',
 	phoneNumber: userInfo?.phoneNumber || '',
 	birthday: formatDate(userInfo?.birthday as string, 'onlyDateDot') || '',

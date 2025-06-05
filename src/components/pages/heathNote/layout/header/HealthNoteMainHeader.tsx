@@ -2,12 +2,12 @@
 import * as styles from "./HealthNoteMainHeader.css";
 import { createButton } from "@/components/common/createButton/CreateButton.css";
 import { dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
-import CheckCircle from "/public/images/mypage/check_circle.svg";
+import CheckCircle from "/public/images/icons/check_circle.svg";
 import PlusIcon from "/public/images/subscription/plus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
@@ -21,9 +21,7 @@ import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
 import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
 
-interface HealthNoteMainHeaderProps {}
-
-const HealthNoteMainHeader = ({}: HealthNoteMainHeaderProps) => {
+const HealthNoteMainHeader = () => {
   const router = useRouter();
   const { data: dogList = [] } = useGetDogList();
   const representativeDog = dogList?.find((dog) => dog.representative);
@@ -33,8 +31,6 @@ const HealthNoteMainHeader = ({}: HealthNoteMainHeaderProps) => {
 
   const { isOpen, onClose, onToggle } = useModal();
   const { mutate: updateTargetDogMutate } = useUpdateRepresentativeDog();
-  console.log("dogList", dogList);
-  console.log("doginfo", dogInfo);
 
   useEffect(() => {
     if (representativeDog) {
@@ -59,7 +55,11 @@ const HealthNoteMainHeader = ({}: HealthNoteMainHeaderProps) => {
   };
 
   const handleCloseChangeDogInfo = () => {
-    if (dogInfo?.dogId) {
+    const isChangedDog = 
+      dogInfo?.dogId && 
+      (!representativeDog?.id || (dogInfo?.dogId !== representativeDog?.id));
+
+    if (isChangedDog) {
       updateTargetDogMutate(
         { dogId: dogInfo.dogId },
         {
@@ -93,7 +93,7 @@ const HealthNoteMainHeader = ({}: HealthNoteMainHeaderProps) => {
         </button>
       </header>
       {dogList && isOpen && (
-        <BottomSheet isOpen={isOpen} onClose={handleCloseChangeDogInfo}>
+        <BottomSheet isOpen={isOpen} onClose={handleCloseChangeDogInfo} className={styles.selectBottomSheet}>
           <div className={styles.selectBottomSheetHeader}>
             <DefaultText type="title4">반려견 선택</DefaultText>
             <Link href="/health-note/dogs">

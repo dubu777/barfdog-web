@@ -12,6 +12,7 @@ import {useGetSubscriptionAddress} from "@/api/subscription/queries/useGetSubscr
 import isEqual from 'lodash/isEqual';
 import Divider from "@/components/common/divider/Divider";
 import InfoBox from "@/components/common/infoBox/InfoBox";
+import {usePersistMypageStore} from "@/store/usePersistMypageStore";
 
 interface AddressInfoProps {
 	data: any;
@@ -31,18 +32,19 @@ const AddressInfo = ({
 		setBackupDeliveryDto,
 	} = useDeliveryStore();
 
-	// const { paymentMethodDetail } = usePersistMypageStore();
-	// const cardDetail = paymentMethodDetail?.subscribeCardDto;
+	const { paymentMethodDetail } = usePersistMypageStore();
+	const cardDetail = paymentMethodDetail?.subscribeCardDto;
 
 	const deliveryName = '집';
 
 	const { data: addressListData } = useGetAddressList();
 	const { isOpen, onToggle, onClose } = useModal();
 
-	const { data: addressData } = useGetSubscriptionAddress(data.id);
-	const { currentAddress, nextAddress } = addressData;
+	console.log(addressListData.find(v => `${v.street} ${v.detailAddress}` === `${data.street} ${data.detailAddress}`))
+	// const { data: addressData } = useGetSubscriptionAddress(data.id);
+	// const { currentAddress, nextAddress } = addressData;
 
-	const isAddressSame = isEqual(currentAddress, nextAddress);
+	// const isAddressSame = isEqual(currentAddress, nextAddress);
 
 	return (
 		<article className={styles.infoContainer({ isOpen: true })}>
@@ -52,34 +54,34 @@ const AddressInfo = ({
 					<button onClick={onToggle}><DefaultText type='label4' color='gray400'>배송지 변경</DefaultText></button>
 				}
 			</div>
-			<Card shadow='none' className={styles.infoDetailContainer} padding={12}>
-				<AddressContent
-					deliveryName={deliveryName}
-					isDefault={!!(!isAddressSame && nextAddress)}
-					recipientName={currentAddress?.recipientName}
-					phoneNumber={currentAddress?.phoneNumber}
-					street={currentAddress?.street}
-					detailAddress={currentAddress?.detailAddress}
-				/>
-				{!isAddressSame && nextAddress &&
-					<>
-						<Divider thickness={1} direction='horizontal' color='gray200' />
-						<AddressContent
-							deliveryName={deliveryName}
-							recipientName={nextAddress?.recipientName}
-							phoneNumber={nextAddress?.phoneNumber}
-							street={nextAddress?.street}
-							detailAddress={nextAddress?.detailAddress}
-						/>
-						<InfoBox text='n회차부터 배송지가 변경돼요' color='gray' />
-					</>
-				}
-				{showEditAddressInfo && !isTextButtonType &&
-					<Button onClick={onToggle} variant='outline' size='sm' fullWidth className={styles.addressEditButton}>
-						정기 배송지 변경
-					</Button>
-				}
-			</Card>
+			{/*<Card shadow='none' className={styles.infoDetailContainer} padding={12}>*/}
+			{/*	<AddressContent*/}
+			{/*		deliveryName={deliveryName}*/}
+			{/*		isDefault={!!(!isAddressSame && nextAddress)}*/}
+			{/*		recipientName={currentAddress?.recipientName}*/}
+			{/*		phoneNumber={currentAddress?.phoneNumber}*/}
+			{/*		street={currentAddress?.street}*/}
+			{/*		detailAddress={currentAddress?.detailAddress}*/}
+			{/*	/>*/}
+			{/*	{!isAddressSame && nextAddress &&*/}
+			{/*		<>*/}
+			{/*			<Divider thickness={1} direction='horizontal' color='gray200' />*/}
+			{/*			<AddressContent*/}
+			{/*				deliveryName={deliveryName}*/}
+			{/*				recipientName={nextAddress?.recipientName}*/}
+			{/*				phoneNumber={nextAddress?.phoneNumber}*/}
+			{/*				street={nextAddress?.street}*/}
+			{/*				detailAddress={nextAddress?.detailAddress}*/}
+			{/*			/>*/}
+			{/*			<InfoBox text='n회차부터 배송지가 변경돼요' color='gray' />*/}
+			{/*		</>*/}
+			{/*	}*/}
+			{/*	{showEditAddressInfo && !isTextButtonType &&*/}
+			{/*		<Button onClick={onToggle} variant='outline' size='sm' fullWidth className={styles.addressEditButton}>*/}
+			{/*			정기 배송지 변경*/}
+			{/*		</Button>*/}
+			{/*	}*/}
+			{/*</Card>*/}
 			{isOpen &&
 				<DeliveryModal
 					addressData={addressListData}

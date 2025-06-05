@@ -3,7 +3,7 @@ import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import * as styles from "./SurveySteps.css";
-import SurveyButton from "../surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 

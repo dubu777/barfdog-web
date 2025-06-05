@@ -10,27 +10,15 @@ import {
   PaymentItem, SendMessage,
   InviteRewardResponse,
 } from "@/types";
+import { AxiosInstance } from "axios";
 
-export {
-  getMyPageInfo,
-  getMyPageBanner,
-  getCouponList,
-  applyCoupon,
-  getRewardList,
-  getInviteRewardList,
-  applyRecommendCode,
-  getPaymentList,
-  deletePaymentMethod,
-  sendRecommendCodeMessage,
-}
-
-const getMyPageInfo = async (): Promise<MyPageInfoData> => {
-  const { data }: { data: MyPageInfoData } = await axiosInstance.get('/api/mypage');
+const getMyPageInfo = async (instance: AxiosInstance = axiosInstance): Promise<MyPageInfoData> => {
+  const { data }: { data: MyPageInfoData } = await instance.get('/api/mypage');
   return data;
 }
 
-const getCouponList = async (): Promise<Coupon[]> => {
-  const { data } = await axiosInstance.get('/api/coupons');
+const getCouponList = async (instance: AxiosInstance = axiosInstance): Promise<Coupon[]> => {
+  const { data } = await instance.get('/api/coupons');
   return data.couponsPageDto?._embedded?.queryCouponsDtoList || [];
 }
 
@@ -42,8 +30,9 @@ const applyCoupon = async (code: string) => {
 const getRewardList = async ({
   pageParam = 0,
   size = 5,
-}: { pageParam: number; size: number }): Promise<RewardListData | RewardListDataWithTotals> => {
-  const { data } = await axiosInstance.get<RewardResponse>(`/api/rewards`, {
+  instance = axiosInstance
+}: { pageParam: number; size: number; instance?: AxiosInstance }): Promise<RewardListData | RewardListDataWithTotals> => {
+  const { data } = await instance.get<RewardResponse>(`/api/rewards`, {
     params: { page: pageParam, size },
   });
 
@@ -66,8 +55,8 @@ const getRewardList = async ({
   }
 };
 
-const getMyPageBanner = async (): Promise<MyPageBannerData> => {
-  const { data } = await axiosInstance.get('/api/banners/myPage');
+const getMyPageBanner = async (instance: AxiosInstance = axiosInstance): Promise<MyPageBannerData> => {
+  const { data } = await instance.get('/api/banners/myPage');
   const { id, name, status, filenamePc, filenameMobile, pcLinkUrl, mobileLinkUrl, _links } = data;
 
   return {
@@ -88,8 +77,9 @@ const getMyPageBanner = async (): Promise<MyPageBannerData> => {
 const getInviteRewardList = async ({
   pageParam = 0,
   size = 5,
-}: { pageParam: number; size: number }): Promise<InviteRewardList> => {
-  const { data } = await axiosInstance.get<InviteRewardResponse>(`/api/rewards/invite`, {
+  instance = axiosInstance
+}: { pageParam: number; size: number; instance?: AxiosInstance}): Promise<InviteRewardList> => {
+  const { data } = await instance.get<InviteRewardResponse>(`/api/rewards/invite`, {
     params: { page: pageParam, size },
   });
   const { recommend, joinedCount, orderedCount, totalRewards, pagedModel } = data;
@@ -109,8 +99,8 @@ const applyRecommendCode = async (body: { recommendCode: string }) => {
   return data;
 }
 
-const getPaymentList = async (): Promise<PaymentItem[]> => {
-  const { data } = await axiosInstance.get('/api/cards');
+const getPaymentList = async (instance: AxiosInstance = axiosInstance): Promise<PaymentItem[]> => {
+  const { data } = await instance.get('/api/cards');
   return data._embedded?.querySubscribeCardsDtoList || [];
 }
 
@@ -160,4 +150,17 @@ const sendRecommendCodeMessage = async (body: SendMessage) => {
     return err;
   }
 
+}
+
+export {
+  getMyPageInfo,
+  getMyPageBanner,
+  getCouponList,
+  applyCoupon,
+  getRewardList,
+  getInviteRewardList,
+  applyRecommendCode,
+  getPaymentList,
+  deletePaymentMethod,
+  sendRecommendCodeMessage,
 }

@@ -23,15 +23,15 @@ export const infoTextStyle = style({
 
 export const infoBoxColor = {
 	red: style({
-		background: themeVars.colors.red.pinkWhite,
+		backgroundColor: themeVars.colors.red.pinkWhite,
 		border: `1px solid ${themeVars.colors.red.pastelPink}`,
 	}),
 	blue: style({
-		background: themeVars.colors.gray.gray50,
+		backgroundColor: themeVars.colors.gray.gray50,
 		border: `1px solid ${themeVars.colors.blue.blue500}`,
 	}),
 	gray: style({
-		background: themeVars.colors.gray.gray100,
+		backgroundColor: themeVars.colors.gray.gray100,
 		border: `1px solid ${themeVars.colors.gray.gray400}`,
 	})
 }

@@ -1,7 +1,7 @@
 <svg width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M47.9697 18.1523L39.3604 44.6533H11.498L2.8877 18.1523L25.4287 1.77539L47.9697 18.1523Z" stroke="white" stroke-width="1.55349"/>
-<path d="M37.1836 21.6562L32.6943 35.4756H18.165L13.6738 21.6562L25.4287 13.1152L37.1836 21.6562Z" stroke="white" stroke-width="1.55349"/>
-<path d="M25.4292 2.95313L25.4292 25.2806M46.9838 18.381L25.4292 25.2806M38.7507 43.3438L25.4292 25.2806M12.1077 43.3438L25.4292 25.2806M3.87451 18.381L25.4292 25.2806" stroke="white" stroke-width="1.55349" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.66 4.66"/>
+<path d="M47.9697 18.1523L39.3604 44.6533H11.498L2.8877 18.1523L25.4287 1.77539L47.9697 18.1523Z" stroke="white" strokeWidth="1.55349"/>
+<path d="M37.1836 21.6562L32.6943 35.4756H18.165L13.6738 21.6562L25.4287 13.1152L37.1836 21.6562Z" stroke="white" strokeWidth="1.55349"/>
+<path d="M25.4292 2.95313L25.4292 25.2806M46.9838 18.381L25.4292 25.2806M38.7507 43.3438L25.4292 25.2806M12.1077 43.3438L25.4292 25.2806M3.87451 18.381L25.4292 25.2806" stroke="white" strokeWidth="1.55349" strokeLinecap="round" stroke-linejoin="round" stroke-dasharray="4.66 4.66"/>
 <circle cx="43.1002" cy="33.2448" r="4.27209" fill="white"/>
 <ellipse cx="9.50575" cy="13.439" rx="3.30116" ry="3.10698" fill="white"/>
 </svg>

@@ -52,7 +52,7 @@ export const tabBarVariants = {
 	chips: style({
 		padding: '4px 12px',
 		color: themeVars.colors.gray.gray700,
-		background: themeVars.colors.gray.gray100,
+		backgroundColor: themeVars.colors.gray.gray100,
 		borderRadius: '4px',
 	})
 }
@@ -64,7 +64,7 @@ export const tabBarActiveVariants = {
 			'&::after': {
 				content: '',
 				display: 'block',
-				background: themeVars.colors.gray.gray900,
+				backgroundColor: themeVars.colors.gray.gray900,
 				width: '20px',
 				height: '2px',
 				position: 'absolute',

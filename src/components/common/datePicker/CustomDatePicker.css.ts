@@ -77,7 +77,7 @@ globalStyle(`${datePickerContainer} .react-datepicker__day-name, .react-datepick
 })
 
 globalStyle(`${datePickerContainer} .react-datepicker__header`, {
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 	padding: '16px 20px 0',
 	borderBottom: `1px solid ${themeVars.colors.gray.gray200}`
 })
@@ -101,7 +101,7 @@ globalStyle(`${datePickerContainer} .react-datepicker__day, .react-datepicker__t
 
 globalStyle(`${datePickerContainer} .react-datepicker__day:not([aria-disabled=true]):hover`, {
 	color: themeVars.colors.blue.blue500,
-	background: themeVars.colors.blue.blue50,
+	backgroundColor: themeVars.colors.blue.blue50,
 	borderRadius: '50%',
 })
 

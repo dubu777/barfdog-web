@@ -17,7 +17,7 @@ export const sideNavBarWrapper = style({
 export const sideNavBarContainer = style({
   width: '70%',
   height: '100%',
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
   position: 'relative',
   padding: '100px 18px 36px',
 })
@@ -30,7 +30,7 @@ export const closeBtn = style({
 })
 
 export const background = style({
-  background: themeVars.backgroundColors.darkOpacity,
+  backgroundColor: themeVars.backgroundColors.darkOpacity,
   width: '100%',
   height: '100%',
   position: 'absolute',
@@ -108,7 +108,7 @@ export const subItemsContainer = style({
   display: 'flex',
   flexWrap: 'wrap',
   padding: '18px',
-  background: themeVars.backgroundColors.greyF7,
+  backgroundColor: themeVars.backgroundColors.greyF7,
   marginTop: '14px',
   overflow: 'hidden',
 })

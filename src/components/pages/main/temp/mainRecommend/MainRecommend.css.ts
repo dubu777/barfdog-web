@@ -81,7 +81,7 @@ export const healthCheckFakeBg = style({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  background: themeVars.backgroundColors.darkOpacity,
+  backgroundColor: themeVars.backgroundColors.darkOpacity,
 })
 
 export const healthCheckTitle = style({

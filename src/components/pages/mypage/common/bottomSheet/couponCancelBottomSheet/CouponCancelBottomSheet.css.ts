@@ -14,7 +14,7 @@ export const couponCancelBody = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '40px',
-	background: themeVars.colors.gray.gray50,
+	backgroundColor: themeVars.colors.gray.gray50,
 })
 
 export const couponCardContainer = style({

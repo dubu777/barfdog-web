@@ -15,7 +15,7 @@ export const uploadBox = style({
 export const uploadLabel = style({
   width: '100px',
   height: '100px',
-  background: themeVars.colors.gray.gray100,
+  backgroundColor: themeVars.colors.gray.gray100,
   border: `1px solid ${themeVars.colors.gray.gray500}`,
   borderRadius: '8px',
   display: 'flex',

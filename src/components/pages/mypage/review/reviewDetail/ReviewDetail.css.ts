@@ -2,12 +2,12 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const reviewDetailContainer = style({
-  background: themeVars.colors.gray.gray50,
+  backgroundColor: themeVars.colors.gray.gray50,
 })
 
 export const reviewDetailBox = style({
   padding: '20px',
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const reviewDetailHeader = style({
@@ -15,7 +15,7 @@ export const reviewDetailHeader = style({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  background: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const reviewDetailContents = style({
@@ -43,7 +43,7 @@ export const profile = style({
   width: '32px',
   height: '32px',
   borderRadius: '50%',
-  background: themeVars.colors.gray.gray300,
+  backgroundColor: themeVars.colors.gray.gray300,
 })
 
 export const noComment = style({

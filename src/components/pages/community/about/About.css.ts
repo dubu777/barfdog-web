@@ -3,7 +3,7 @@ import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const aboutContainer = style({
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const sectionBox = recipe({
@@ -12,12 +12,12 @@ export const sectionBox = recipe({
 		display: 'flex',
 		flexDirection: 'column',
 		gap: '28px',
-		background: themeVars.colors.gray.gray0,
+		backgroundColor: themeVars.colors.gray.gray0,
 	},
 	variants: {
 		background: {
 			pinkWhite: {
-				background: themeVars.colors.red.pinkWhite,
+				backgroundColor: themeVars.colors.red.pinkWhite,
 			}
 		}
 	}
@@ -80,7 +80,7 @@ export const snsList = style({
 			display: 'block',
 			width: '40px',
 			height: '2px',
-			background: themeVars.colors.gray.gray300,
+			backgroundColor: themeVars.colors.gray.gray300,
 			position: 'absolute',
 			top: 0,
 			left: '50%',

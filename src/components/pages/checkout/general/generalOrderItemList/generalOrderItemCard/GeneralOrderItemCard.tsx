@@ -6,7 +6,7 @@ import { formatNumberWithCommas } from "@/utils";
 import {
   colStartWrapper,
   rowStartWrapper,
-} from "../../../common/deliveryAddress/DeliveryAddress.css";
+} from "@/components/common/deliveryAddress/DeliveryAddress.css";
 import Chips from "@/components/common/chips/Chips";
 import Divider from "@/components/common/divider/Divider";
 

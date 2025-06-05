@@ -1,6 +1,6 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { selectOptionWrapper } from "../DeliveryOptions.css";
-import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { deliveryOptions } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";

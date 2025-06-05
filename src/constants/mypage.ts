@@ -38,7 +38,7 @@ const MENU_LIST: MenuList[] = [
 		category: "나의 회원정보",
 		menus: [
 			{ label: "계정 정보", url: "/mypage/account" },
-			{ label: "반려견 정보", url: "/pet-info" },
+			{ label: "반려견 정보", url: "/health-note/dogs" },
 			{ label: "배송지 관리", url: "/mypage/delivery-address" },
 			{ label: "친구 초대", url: "/mypage/invite-friends" },
 		],

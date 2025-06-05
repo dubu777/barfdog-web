@@ -4,7 +4,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import * as styles from "./SurveySteps.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SurveyButton from "../surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 
 interface SurveyStepProps {

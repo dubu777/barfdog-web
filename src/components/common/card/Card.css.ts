@@ -33,6 +33,15 @@ export const cardShadow = {
   }),
 };
 
+export const cardBackgroundStyle = {
+	white: style({
+		backgroundColor: themeVars.colors.gray.gray0,
+	}),
+	gray50: style({
+		backgroundColor: themeVars.colors.gray.gray50,
+	}),
+}
+
 export const cardPadding = {
   0: style({
     padding: "0",

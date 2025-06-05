@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { prefetchGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
-import { prefetchGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
 import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
+import { prefetchGetWritableReviewList } from "@/api/review/queries/usePrefetchGetWritableReviewList";
+import { prefetchGetWrittenReviewList } from "@/api/review/queries/usePrefetchGetWrittenReviewList";
 import ReviewList from "@/components/pages/mypage/review/ReviewList";
 import EmptyStateReview from "@/components/pages/mypage/common/emptyState/emptyState/EmptyState";
 

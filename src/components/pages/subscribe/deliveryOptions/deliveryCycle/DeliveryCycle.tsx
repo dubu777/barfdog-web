@@ -4,7 +4,7 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { commonWrapper } from "@/styles/common.css";
 import { deliveryOptions } from "@/constants";
-import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useEffect } from "react";
 
 export default function DeliveryCycle() {

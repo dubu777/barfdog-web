@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { prefetchGetSubscriptionList } from "@/api/subscription/queries/usePrefetchGetSubscriptionList";
 import ManageSubscription from "@/components/pages/mypage/subscription/manageSubscription/ManageSubscription";
 
 export default async function ManageSubscriptionPage() {

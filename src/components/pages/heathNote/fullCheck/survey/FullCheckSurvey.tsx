@@ -7,7 +7,7 @@ import { Controller, useWatch } from "react-hook-form";
 import BackIcon from "/public/images/header/chevron-left.svg";
 import Header from "@/components/layout/header/Header";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SurveyButton from "@/components/pages/survey/surveyButton/SurveyButton";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
@@ -201,7 +201,7 @@ const FullCheckSurvey = () => {
       </section>
       <ButtonDocked
         type="full-button"
-        primaryButtonLabel="다음"
+        primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
         onPrimaryClick={onNextStep}
         isPrimaryDisabled={isButtonDisabled}
       />

@@ -4,7 +4,7 @@ import { themeVars } from "@/styles/theme.css";
 export const bankTransferRefundContainer = style({
 	marginTop: '2px',
 	padding: '20px',
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const bankTransferRefundForm = style({

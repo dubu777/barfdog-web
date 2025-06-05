@@ -1,11 +1,9 @@
-import { QueryClient, useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
 import { InviteRewardList } from "@/types";
 import { getInviteRewardList } from "@/api/mypage/mypage";
 
-export { useGetInviteRewardList, prefetchGetInviteRewardList };
-
-function useGetInviteRewardList() {
+export function useGetInviteRewardList() {
   return useInfiniteQuery<InviteRewardList>({
     queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST],
     queryFn: async ({ pageParam = 0 }) => {
@@ -24,12 +22,5 @@ function useGetInviteRewardList() {
       return nextPage < totalPages ? nextPage : undefined;
     },
     initialPageParam: 0,
-  })
-}
-
-async function prefetchGetInviteRewardList(queryClient: QueryClient, page: number) {
-  return queryClient.prefetchQuery<InviteRewardList>({
-    queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST, page],
-    queryFn: () => getInviteRewardList({ pageParam: page, size: 5 }),
   })
 }

@@ -7,7 +7,7 @@ export const modalContainer = recipe({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    background: themeVars.backgroundColors.white,
+    backgroundColor: themeVars.backgroundColors.white,
     padding: '20px',
     borderRadius: '10px',
     width: '100%',

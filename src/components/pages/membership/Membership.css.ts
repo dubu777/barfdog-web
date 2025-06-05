@@ -18,7 +18,7 @@ export const closeButton = style({
 })
 
 export const membershipList = style({
-	background: themeVars.colors.gray.gray50,
+	backgroundColor: themeVars.colors.gray.gray50,
 	padding: '20px',
 	display: 'flex',
 	flexDirection: 'column',
@@ -26,7 +26,7 @@ export const membershipList = style({
 })
 
 export const membershipItem = style({
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 	borderRadius: '8px',
 	padding: '20px',
 })
@@ -66,7 +66,7 @@ export const benefitList = recipe({
 })
 
 export const membershipDescription = style({
-	background: themeVars.colors.gray.gray50,
+	backgroundColor: themeVars.colors.gray.gray50,
 	padding: '20px 20px 57px',
 	textAlign: 'left',
 	display: 'flex',

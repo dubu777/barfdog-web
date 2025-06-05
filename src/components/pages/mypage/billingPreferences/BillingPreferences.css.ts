@@ -3,7 +3,7 @@ import { themeVars } from "@/styles/theme.css";
 
 // 결제수단 자동적립금
 export const billingPreferencesContainer = style({
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 	marginTop: '2px',
 })
 
@@ -43,7 +43,7 @@ export const paymentCardPolicyInfo = style({
 // 결제수단 상세
 export const detailSubscription = style({
 	padding: '20px',
-	background: themeVars.colors.gray.gray0,
+	backgroundColor: themeVars.colors.gray.gray0,
 })
 
 export const detailSubscriptionTitle = style({
