@@ -35,7 +35,7 @@ import FillPancreas from "public/images/survey/IconFill-pancreas.svg";
 import FillPuppy from "public/images/survey/IconFill-Puppy.svg";
 import FillSkin from "public/images/survey/IconFill-Skin.svg";
 import FillSkincare from "public/images/survey/IconFill-Skincare.svg";
-import { DOG_TYPE}  from "@/constants/dog";
+import { DOG_TYPE } from "@/constants/dog";
 
 export {
   surveyFormInfo,
@@ -178,7 +178,7 @@ const surveyFormInfo = {
     },
   },
   dogLifestyle: {
-    bodyCondition: {
+    dogBodyCondition: {
       options: [
         {
           value: "VERY_THIN",

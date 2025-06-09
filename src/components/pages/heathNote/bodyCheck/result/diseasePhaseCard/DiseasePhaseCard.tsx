@@ -10,6 +10,7 @@ import {
 } from "@/utils/healthNote/bodyCheckScore";
 import { DiseaseName, DiseasePhase } from "@/types/healthNote";
 import Card from "@/components/common/card/Card";
+import { phaseTextStyle } from "./DiseasePhaseCard.css";
 
 interface DiseasePhaseCardProps {
   diseaseName: DiseaseName;
@@ -37,8 +38,20 @@ export default function DiseasePhaseCard({
               gap: 6,
             })}
           >
-            <div className={commonWrapper({ justify: "start", gap: 8 })}>
-              <DefaultText type="headline2">{phase}</DefaultText>
+            <div
+              className={commonWrapper({
+                justify: "start",
+                gap: 8,
+                align: "start",
+              })}
+            >
+              <DefaultText
+                type="headline2"
+                className={phaseTextStyle}
+                applyLineHeight={false}
+              >
+                {phase}
+              </DefaultText>
               <DefaultText type="body3" color="gray700">
                 {getPhaseDescription(diseaseName, phase)}
               </DefaultText>

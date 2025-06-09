@@ -29,7 +29,7 @@ export default function SurveyStep2({
       <SurveyTitle petName={petName} config={surveyTitles.step2} />
       {!isResurvey && (
         <Controller
-          name="step2.birthDate"
+          name="step2.birthDay"
           control={control}
           render={({ field }) => (
             <>

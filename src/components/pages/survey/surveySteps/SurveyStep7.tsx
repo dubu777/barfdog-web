@@ -1,4 +1,3 @@
-
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -16,42 +15,42 @@ export default function SurveyStep7({
   handleChange,
   petName,
 }: SurveyStepProps) {
-    const { control } = useFormContext<SurveyStepValues>();
-  
+  const { control } = useFormContext<SurveyStepValues>();
+
   return (
     <>
       <SurveyTitle petName={petName} config={surveyTitles.step7} />
-            <Controller
-              name="step7.bodyCondition"
-              control={control}
-              render={({ field }) => {
-                const { onToggle, isSelected } = useSurveyToggleOption(
-                  field.value,
-                  "radio",
-                  (value) => {
-                    field.onChange(value);
-                    handleChange();
-                  }
-                );
-                return (
-                  <div className={styles.colSurveyButtonWrapper}>
-                    {surveyFormInfo.dogLifestyle.bodyCondition.options.map(
-                      (option) => (
-                        <DogImageButton
-                          key={option.label}
-                          imageSrc={option.imageUrl}
-                          label={option.label}
-                          value={option.value}
-                          subLabel={option.subLabel}
-                          isChecked={isSelected(option.value)}
-                          onToggle={onToggle}
-                        />
-                      )
-                    )}
-                  </div>
-                );
-              }}
-            />
+      <Controller
+        name="step7.dogBodyCondition"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "radio",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              {surveyFormInfo.dogLifestyle.dogBodyCondition.options.map(
+                (option) => (
+                  <DogImageButton
+                    key={option.label}
+                    imageSrc={option.imageUrl}
+                    label={option.label}
+                    value={option.value}
+                    subLabel={option.subLabel}
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
+      />
     </>
   );
 }
