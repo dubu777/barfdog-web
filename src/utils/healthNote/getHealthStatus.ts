@@ -83,3 +83,15 @@ export function getSimplifyStatus(status: ScoreStatus): SimplifiedStatus {
 	if (status.startsWith('up')) return 'up';
 	return 'down';
 }
+
+export function getSimplifyStatusLabel (simplifyStatus: SimplifiedStatus): string {
+	if (simplifyStatus === 'same') return '우리 아이는 딱 평균이에요!';
+	if (simplifyStatus === 'up') return '우리 아이는 아주 건강해요!';
+	return '우리 아이는 관리가 필요해요!';
+}
+
+export function getSimplifyStatusColor (simplifyStatus: SimplifiedStatus): 'green500' | 'blue600' | 'red' {
+	if (simplifyStatus === 'same') return 'green500';
+	if (simplifyStatus === 'up') return 'blue600';
+	return 'red';
+}

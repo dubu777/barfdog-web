@@ -8,7 +8,7 @@ import Card from "@/components/common/card/Card";
 import ComparisonProgressBar
 	from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 import { BODY_PART_TO_CATEGORY } from "@/constants";
-import { getScoreChangeStatus, getSimplifyStatus } from "@/utils/healthNote/getHealthStatus";
+import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
 
 interface ScoreInfoProps {
 	date: string;
@@ -47,8 +47,7 @@ const ChangedScore = ({
 	createdDate,
 	bodyPart = [],
 }: ChangedScoreProps) => {
-	const diffScore = score - prevScore;
-	const status = getSimplifyStatus(getScoreChangeStatus(diffScore, 10));
+	const { diff: diffScore, status } = useScoreStatus({ current: score, previous: prevScore });
 
 	return (
 		<article>
