@@ -3,8 +3,10 @@ export { itemFilterCategory, itemSortBy };
 const itemFilterCategory = {
   ALL: '전체',
   RAW: '생식',
+  COOKED: '화식',
   TOPPING: '토퍼',
-  GOODS: '용품',
+  SNACK: '간식',
+  ETC: '기타',
 } as const;
 
 
