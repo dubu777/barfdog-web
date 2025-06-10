@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
+import { createDietAnalysisResult } from "@/api/dog/dog";
 import { UseMutationCustomOptions } from "@/types";
-import { saveGeneralOrder } from "../order";
 
-export function useSaveGeneralOrder(
+export function useCreateDietAnalysisResult(
   mutationOptions?: UseMutationCustomOptions
 ) {
   return useMutation({
-    mutationFn: saveGeneralOrder,
+    mutationFn: createDietAnalysisResult,
     ...mutationOptions,
   });
 }

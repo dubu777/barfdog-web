@@ -15,7 +15,10 @@ import {
 import BodyCheckTotalScore from "../bodyCheckTotalScore/BodyCheckTotalScore";
 import { BodyCheckPart, DiseaseName } from "@/types/healthNote";
 import { bodyCheckSurveyConfig } from "@/config/bodyCheckSurveyConfig";
-import DiseasePhaseCard from "../\bdiseasePhaseCard/DiseasePhaseCard";
+import DiseasePhaseCard from "../diseasePhaseCard/DiseasePhaseCard";
+import { BODY_PART_HEALTH_TIPS } from "@/constants/healthNote/bodyCheck/result";
+import BodyCheckHealthTips from "../bodyCheckHealthTips/BodyCheckHealthTips";
+import FreshGut from "../freshGut/FreshGut";
 
 const data = {
   name: "바푸동",
@@ -40,9 +43,11 @@ const data = {
 export default function BodyCheckResult() {
   const router = useRouter();
   const name = bodyCheckSurveyConfig[data.part].name;
+  const tips = BODY_PART_HEALTH_TIPS[data.part];
   const handleDelete = () => {
     // 삭제 로직
   };
+
   return (
     <>
       <Header
@@ -71,6 +76,8 @@ export default function BodyCheckResult() {
           />
         </div>
         <DiseasePhaseCard diseaseName={data.warningDiseases} />
+        <BodyCheckHealthTips tips={tips} name={name} />
+        <FreshGut />
       </section>
     </>
   );

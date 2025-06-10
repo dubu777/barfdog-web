@@ -19,7 +19,7 @@ export const surveyStepsSchema = yup.object({
       ),
   }),
   step2: yup.object({
-    birthDate: yup
+    birthDay: yup
       .string()
       .matches(/^\d{4}-\d{2}-\d{2}$/, "생년월일을 모두 입력해주세요.")
       .required("출생일은 필수입니다."),
@@ -62,7 +62,7 @@ export const surveyStepsSchema = yup.object({
     lactation: yup.string().required("수유여부를 선택해주세요."),
   }),
   step7: yup.object({
-    bodyCondition: yup.string().required("체형을 선택해주세요."),
+    dogBodyCondition: yup.string().required("체형을 선택해주세요."),
   }),
   step8: yup.object({
     activityLevel: yup.string().required("활동량을 선택해주세요."),
@@ -92,7 +92,7 @@ export const surveyStepsSchema = yup.object({
       .required(),
   }),
   step13: yup.object({
-    supplement: yup
+    supplements: yup
       .array()
       .of(yup.string().defined())
       .min(1, "영양제를 선택해주세요.")
@@ -113,19 +113,19 @@ export type SurveyStepKeys = keyof SurveyStepValues;
 
 export const defaultStepValues: SurveyStepValues = {
   step1: { gender: "", name: "", nameVerified: false, neutralization: null },
-  step2: { birthDate: "", oldDog: null },
+  step2: { birthDay: "", oldDog: null },
   step3: { dogSize: "", weight: "" },
   step4: { dogType: "" },
   step5: { pregnancy: "" },
   step6: { lactation: "" },
   step7: {
-    bodyCondition: "",
+    dogBodyCondition: "",
   },
   step8: { activityLevel: "" },
   step9: { snackCountLevel: "" },
   step10: { inedibleFood: [] },
   step11: { healthConcerns: [] },
   step12: { currentMeal: [] },
-  step13: { supplement: [] },
+  step13: { supplements: [] },
   step14: { healthIssues: [] },
 };

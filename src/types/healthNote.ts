@@ -4,6 +4,7 @@ import {
   HEALTH_CHECK_HISTORY_TAG_MAP,
 } from "@/constants";
 import { DOG_SIZE } from "@/constants/dog";
+import { Colors } from "@/constants/style";
 
 interface DogInfo {
   dogId: number;
@@ -93,6 +94,14 @@ type DiseaseName =
   | "ibs" // IBS
   | "lifestyle"; // 생활습관
 
+interface BodyCheckRecommendItem {
+  step: string;
+  title: string;
+  description: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+  practices: string[];
+}
+
 export type {
   DogInfo,
   SurveyOption,
@@ -107,4 +116,5 @@ export type {
   HealthCheckHistoryFormValue,
   DiseasePhase,
   DiseaseName,
+  BodyCheckRecommendItem,
 };

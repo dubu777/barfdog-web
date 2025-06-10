@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
-import CheckCircle from "/public/images/icons/check_circle.svg";
+import CheckCircle from "public/images/icons/check_circle.svg";
 import PlusIcon from "/public/images/subscription/plus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
@@ -93,7 +93,11 @@ const HealthNoteMainHeader = () => {
         </button>
       </header>
       {dogList && isOpen && (
-        <BottomSheet isOpen={isOpen} onClose={handleCloseChangeDogInfo} className={styles.selectBottomSheet}>
+        <BottomSheet
+          isOpen={isOpen}
+          onClose={handleCloseChangeDogInfo}
+          className={styles.selectBottomSheet}
+        >
           <div className={styles.selectBottomSheetHeader}>
             <DefaultText type="title4">반려견 선택</DefaultText>
             <Link href="/health-note/dogs">

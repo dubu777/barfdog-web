@@ -32,7 +32,7 @@ export default function SurveyStep13({
       <SurveyTitle petName={petName} config={surveyTitles.step13} />
 
       <Controller
-        name="step13.supplement"
+        name="step13.supplements"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption(

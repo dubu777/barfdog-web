@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useGetSurveyRecipe } from "@/api/survey/queries/useGetSurveyRecipe";
 import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import { FormProvider, useWatch } from "react-hook-form";
 import { useSubscriptionForm } from "@/hooks/survey/useSubscriptionForm";
@@ -23,6 +22,7 @@ import Chips from "@/components/common/chips/Chips";
 import * as styles from "./SubscribePageContainer.css";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useGetRecipeList } from "@/api/recipes/queries/useGetRecipeList";
+import { useGetDietAnalysisResult } from "@/api/survey/queries/useGetDietAnalysisResult";
 
 interface SubscribePageContainerProps {
   reportId: number;
@@ -34,7 +34,7 @@ export default function SubscribePageContainer({
   const [step, setStep] = useState<SubscriptionStep>("recipe");
 
   const router = useRouter();
-  const { data: recipeData } = useGetSurveyRecipe(reportId);
+  const { data: recipeData } = useGetDietAnalysisResult(reportId);
   const { data: resultData } = useGetSurveyResult(reportId);
   const { data: recipeListData } = useGetRecipeList();
 
@@ -96,7 +96,9 @@ export default function SubscribePageContainer({
   return (
     <FormProvider {...formMethods}>
       <Header onBack={handleBack} showBackButton />
-      <div className={recipeCount > 0 ? styles.subscribePageContainer : undefined}>
+      <div
+        className={recipeCount > 0 ? styles.subscribePageContainer : undefined}
+      >
         <SubscribeProgressBar currentStep={currentStep} />
         {step === "recipe" && recipeData && resultData && (
           <RecipeOptions
@@ -112,7 +114,7 @@ export default function SubscribePageContainer({
         {step === "delivery-cycle" && recipeData && resultData && (
           <DeliveryOptions recipeData={recipeData} />
         )}
-        {(recipeCount === 2 && step ==="recipe" ) && (
+        {recipeCount === 2 && step === "recipe" && (
           <div className={styles.recipeTailChipWrapper}>
             <Chips
               variant="solid"

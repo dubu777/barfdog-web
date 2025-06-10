@@ -5,7 +5,6 @@ import { DiseaseName } from "@/types/healthNote";
 import {
   getBodyCheckDiseaseMeta,
   getBodyCheckScoreStatus,
-  getPhaseDescription,
 } from "@/utils/healthNote/bodyCheckScore";
 
 interface BodyCheckScoreCardProps {

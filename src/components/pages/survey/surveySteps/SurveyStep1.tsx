@@ -1,4 +1,4 @@
-import { surveyFormInfo } from "@/constants";
+import { NONE_VALUE, surveyFormInfo } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -128,11 +128,11 @@ export default function SurveyStep1({
 
               // 중성화 여부에 따라 step5와 step6의 값을 초기화
               if (value === true) {
-                setValue("step5.pregnancy", "none", {
+                setValue("step5.pregnancy", NONE_VALUE, {
                   shouldValidate: false,
                   shouldDirty: true,
                 });
-                setValue("step6.lactation", "none", {
+                setValue("step6.lactation", NONE_VALUE, {
                   shouldValidate: false,
                   shouldDirty: true,
                 });

@@ -7,8 +7,13 @@ const getStoreItemList = async (page = 0, size = 10, sortBy = 'recent', itemType
   const { data } = await axiosInstance.get(`/api/items?page=${page}&size=${size}&sortBy=${sortBy}&itemType=${itemType.toUpperCase()}`);
 
   return {
-    page: data.page,
-    itemList: data?._embedded?.queryItemsDtoList || [],
+    page: {
+      size: data.size,
+      totalElements: data.totalElements,
+      totalPages: data.totalPages,
+      number: data.number,
+    },
+    itemList: data?.content || [],
   };
 };
 

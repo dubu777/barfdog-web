@@ -1,23 +1,23 @@
 import { Fragment } from "react";
-import * as styles from './SliderQuestion.css';
-import CheckCircle from "/public/images/icons/check_circle.svg";
+import * as styles from "./SliderQuestion.css";
+import CheckCircle from "public/images/icons/check_circle.svg";
 import SliderCircle from "/public/images/healthNote/dogpedia/slider_circle.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
 
 interface SliderQuestionProps {
-	label: string;
-	minLevel: string;
-	maxLevel: string;
-	value: number;
+  label: string;
+  minLevel: string;
+  maxLevel: string;
+  value: number;
 }
 
 const SliderQuestion = ({
-	label,
-	minLevel,
-	maxLevel,
-	value,
+  label,
+  minLevel,
+  maxLevel,
+  value,
 }: SliderQuestionProps) => {
 	return (
 		<div className={styles.sliderContainer}>
