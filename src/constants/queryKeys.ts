@@ -12,11 +12,11 @@ const queryKeys = {
   },
   SURVEY: {
     BASE: "survey",
-    GET_SURVEY_RECIPE: "getSurveyRecipe",
     GET_SURVEY_RESULT: "getSurveyResult",
   },
   DIET_ANALYSIS: {
     BASE: "dietAnalysis",
+    GET_DIET_ANALYSIS_RESULT: "getDietAnalysisResult",
     CREATE_DIET_ANALYSIS_RESULT: "createDietAnalysisResult",
   },
   COUPON: {

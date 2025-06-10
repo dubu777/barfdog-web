@@ -37,7 +37,8 @@ export default function SurveyPageContainer() {
     onSuccess: (response) => {
       console.log("createDietAnalysisResult response:", response);
     },
-    onError: () => {
+    onError: (err) => {
+      console.log("에러>>>>>>>", err);
       setIsLoading(false);
     },
   });

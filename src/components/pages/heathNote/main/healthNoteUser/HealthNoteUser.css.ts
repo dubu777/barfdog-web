@@ -28,24 +28,6 @@ export const menuCategory = recipe({
   },
 });
 
-export const menuCategoryCard = recipe({
-  base: {
-    display: "flex",
-  },
-  variants: {
-    fullWidth: {
-      true: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-      },
-      false: {
-        flexDirection: "column",
-        gap: "32px",
-      },
-    },
-  },
-});
-
 export const menuDescription = style({
   marginTop: "4px",
 });

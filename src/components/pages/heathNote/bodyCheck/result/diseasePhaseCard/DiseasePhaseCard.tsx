@@ -10,7 +10,7 @@ import {
 } from "@/utils/healthNote/bodyCheckScore";
 import { DiseaseName, DiseasePhase } from "@/types/healthNote";
 import Card from "@/components/common/card/Card";
-import { phaseTextStyle } from "./DiseasePhaseCard.css";
+import { phaseTextStyle } from "../bodyCheckResult/BodyCheckResult.css";
 
 interface DiseasePhaseCardProps {
   diseaseName: DiseaseName;

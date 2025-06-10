@@ -20,6 +20,8 @@ const createDietAnalysisResult = async (
   body: DietAnalysisPayload
 ): Promise<any> => {
   const { data } = await axiosInstance.post("/api/dogs", body);
+  console.log(">>createDietAnalysisResult", data);
+
   return data;
 };
 

@@ -18,6 +18,7 @@ import { bodyCheckSurveyConfig } from "@/config/bodyCheckSurveyConfig";
 import DiseasePhaseCard from "../diseasePhaseCard/DiseasePhaseCard";
 import { BODY_PART_HEALTH_TIPS } from "@/constants/healthNote/bodyCheck/result";
 import BodyCheckHealthTips from "../bodyCheckHealthTips/BodyCheckHealthTips";
+import FreshGut from "../freshGut/FreshGut";
 
 const data = {
   name: "바푸동",
@@ -76,6 +77,7 @@ export default function BodyCheckResult() {
         </div>
         <DiseasePhaseCard diseaseName={data.warningDiseases} />
         <BodyCheckHealthTips tips={tips} name={name} />
+        <FreshGut />
       </section>
     </>
   );

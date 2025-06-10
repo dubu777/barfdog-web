@@ -35,9 +35,10 @@ const HealthNoteUser = () => {
               >
                 <Card
                   shadow="normal"
-                  className={styles.menuCategoryCard({
-                    fullWidth: !!menu.fullWidth,
-                  })}
+                  padding={16}
+                  {...(menu.fullWidth
+                    ? { direction: "row", justify: "between", align: "start" }
+                    : { align: "between", gap: 32 })}
                 >
                   <div>
                     <DefaultText type="headline1" block>
