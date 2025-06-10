@@ -6,9 +6,10 @@ interface UsePaginationProps {
   prefetchFn: (page: number) => Promise<void>;
   pushWithQuery: (path: string, newQuery: QueryParams, removeQueryKeys?: string[], preserveScroll?: boolean) => void;
   preserveScroll?: boolean;
+  callback?: () => void;
 }
 
-export function usePagination({ prefetchFn, pushWithQuery, preserveScroll = false }: UsePaginationProps) {
+export function usePagination({ prefetchFn, pushWithQuery, preserveScroll = true, callback }: UsePaginationProps) {
   const searchParams = useSearchParams();
   const pageParam = Number(searchParams.get('page')) > 0 && (Number(searchParams.get('page')) - 1) || 0;
 
@@ -16,10 +17,14 @@ export function usePagination({ prefetchFn, pushWithQuery, preserveScroll = fals
   const currentPage = pageParam;
 
   const onPageChange = useCallback(async (page: number) => {
-      if (page < 0 || page >= totalPages) return;
+    if (page < 0 || page >= totalPages) return;
 
       pushWithQuery(window.location.pathname, { page: page + 1 }, [], preserveScroll);
       await prefetchFn(page);
+
+      if (callback) {
+        callback();
+      }
 
     },[totalPages, prefetchFn, pushWithQuery]
   );

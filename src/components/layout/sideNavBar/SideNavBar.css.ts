@@ -1,9 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { commonLayoutStyle } from "@/styles/common.css";
 import { themeVars } from "@/styles/theme.css";
 
-export const sideNavBarWrapper = style([commonLayoutStyle, {
+export const sideNavBarWrapper = style({
   position: 'fixed',
   top: 0,
   width: '100%',
@@ -13,12 +12,12 @@ export const sideNavBarWrapper = style([commonLayoutStyle, {
   justifyContent: 'flex-end',
   margin: '0 auto',
   // overflow: 'hidden'
-}])
+})
 
 export const sideNavBarContainer = style({
   width: '70%',
   height: '100%',
-  background: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
   position: 'relative',
   padding: '100px 18px 36px',
 })
@@ -31,7 +30,7 @@ export const closeBtn = style({
 })
 
 export const background = style({
-  background: themeVars.backgroundColors.darkOpacity,
+  backgroundColor: themeVars.backgroundColors.darkOpacity,
   width: '100%',
   height: '100%',
   position: 'absolute',
@@ -109,7 +108,7 @@ export const subItemsContainer = style({
   display: 'flex',
   flexWrap: 'wrap',
   padding: '18px',
-  background: themeVars.backgroundColors.greyF7,
+  backgroundColor: themeVars.backgroundColors.greyF7,
   marginTop: '14px',
   overflow: 'hidden',
 })

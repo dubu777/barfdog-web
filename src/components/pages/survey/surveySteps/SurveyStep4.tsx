@@ -1,41 +1,44 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
-import * as styles from './SurveySteps.css';
-import SearchableSelectBox from "../searchableSelectBox/SearchableSelectBox";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import * as styles from "./SurveySteps.css";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  petName: string;
 }
 
 export default function SurveyStep4({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
-  
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
+  const dogTypeOptions = surveyFormInfo.dogBasicInfo.dogType.options;
+
   return (
-    <div className={styles.surveyStep4Container}>
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.dogSize.options}
-        title={SURVEY_FORM_INFO.dogSize.title}
-        selectedValue={formData.dogSize}
-        petName={formData.name}
-        layoutType="row"
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.dogSize.id, value as string)
-        }
+    <>
+      <SurveyTitle petName={petName} config={surveyTitles.step4} />
+      
+      <Controller
+        name="step4.dogType" // surveyStepsSchema에 있는 필드 이름
+        control={control}
+        render={({ field }) => {
+          return (
+            <SearchableSelector
+              label="견종 검색"
+              placeholder="견종을 검색해 보세요"
+              options={dogTypeOptions}
+              selectedValue={field.value || ""}
+              onChange={(value) => {
+                field.onChange(value);
+                handleChange();
+              }}
+            />
+          );
+        }}
       />
-        <SearchableSelectBox
-          selectedValue={formData.dogType}
-          options={SURVEY_FORM_INFO.dogType.options}
-          onChange={(value) => handleChange(SURVEY_FORM_INFO.dogType.id, value)}
-          placeholder1={SURVEY_FORM_INFO.dogType.placeholder1}
-          placeholder2={SURVEY_FORM_INFO.dogType.placeholder2}
-        />
-    </div>
+    </>
   );
 }

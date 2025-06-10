@@ -1,8 +1,9 @@
 import * as styles from './MultiFileUpload.css';
 import { ChangeEvent, useState } from "react";
-import Image from "next/image";
-import CloseButton from '/public/images/icons/close-black.png';
-import Text from "@/components/common/text/Text";
+import UploadLabel from '/public/images/icons/upload-label.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import { useUploadImage } from "@/api/common/mutations/useUploadImage";
 import { ImageFile } from '@/types';
 
@@ -17,11 +18,15 @@ interface MultiFileUploadProps {
   maxFiles?: number;
   maxSize?: number;
   allowedExtensions?: string[];
-  imageWidth: number;
-  imageHeight: number;
+  imageWidth?: number;
+  imageHeight?: number;
   initialImages?: ImageFile[];
   onFilesChange: (file: ImageFile[] | null) => void;
   handleRemove: (id: number) => void;
+  title: string;
+  subTitle?: string;
+  className?: string;
+  showRepresentativeLabel?: boolean;
 }
 
 const MultiFileUpload = ({
@@ -30,10 +35,14 @@ const MultiFileUpload = ({
   maxFiles = 10,
   maxSize = 9 * 1024 * 1024,
   allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
-  imageWidth,
-  imageHeight,
+  imageWidth = 100,
+  imageHeight = 100,
   initialImages = [],
   handleRemove,
+  title,
+  subTitle,
+  className,
+  showRepresentativeLabel = false,
 }: MultiFileUploadProps) => {
   const [uploadedImages, setUploadedImages] = useState<InitialImages[]>(initialImages);
   const [errors, setErrors] = useState<string[]>([]);
@@ -105,16 +114,19 @@ const MultiFileUpload = ({
     }
   }
 
-  console.log('uploadedImages', uploadedImages)
   return (
-    <div className={styles.reviewImageContainer}>
+    <div className={className || ''}>
       <div className={styles.fileUploadTitle}>
-        <p>사진 첨부</p>
-        <span className={styles.subTitle}>500원 추가 적립!</span>
+        <DefaultText type='label4'>{title}</DefaultText>
+        {subTitle &&
+          <DefaultText type='caption' color='gray500'>포토 후기 작성 시 500원 적립!</DefaultText>
+        }
       </div>
-      <div className={styles.fileUpload}>
+      <div>
         <div className={styles.uploadBox}>
-          <label htmlFor='file-input' className={styles.uploadLabel} />
+          <label htmlFor='file-input' className={styles.uploadLabel}>
+            <SvgIcon src={UploadLabel} size={24} />
+          </label>
           <input
             type="file"
             id="file-input"
@@ -124,37 +136,29 @@ const MultiFileUpload = ({
             onChange={handleFileChange}
           />
           {uploadedImages.length > 0 &&
-          <ul className={styles.previewFiles}>
-            {uploadedImages.map((preview, index) => (
-              <li key={`${preview.filename}-${index}`} className={styles.previewFile}>
-                <Image
-                  src={preview.url}
-                  alt={`${preview.filename}-${index}`}
-                  width={imageWidth}
-                  height={imageHeight}
-                  className={styles.previewImage}
-                />
-                <button type='button' onClick={() => handleRemoveFile(preview.filename, preview.id)} className={styles.removeButton}>
-                  <Image src={CloseButton} alt='close button' width={8} height={8} />
-                </button>
-              </li>
-            ))}
-          </ul>
+            <div style={{ width: 'calc(100% - 104px)' }}>
+              <ImageCarousel
+                width={imageWidth}
+                height={imageHeight}
+                imageList={uploadedImages}
+                handleRemoveFile={handleRemoveFile}
+                showRepresentativeLabel={showRepresentativeLabel}
+              />
+            </div>
           }
         </div>
         <div className={styles.uploadInfo}>
           {errors.length > 0 &&
           <div className={styles.error}>
             {errors.map(error => (
-              <Text key={error} type='description' size='xs' color='red'>{error}</Text>
+              <DefaultText key={error} type='caption' color='red'>{error}</DefaultText>
             ))}
           </div>
           }
-          <Text type='description' size='xs' color='grey' align='left'>
-            * 첫 번째 이미지가 대표 이미지로 노출됩니다.<br/>
-            * 이미지는 최대 10장 이내로 등록 가능합니다.<br/>
-            * 파일크기는 20MB이하 / jpg, jpeg, png, gif 형식만 등록 가능합니다.
-          </Text>
+          <DefaultText type='caption' color='gray500'>
+            • 파일은 최대 10장 이내로 등록 가능합니다.<br/>
+            • 파일크기는 20MB이하 / jpg, jpeg, png, gif 형식만 등록 가능합니다.
+          </DefaultText>
         </div>
       </div>
     </div>

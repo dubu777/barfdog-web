@@ -31,7 +31,14 @@ export const originalPrice = style({
   marginLeft: '5px'
 })
 
-export const totalPrice = style({
-  marginTop: 'auto',
+export const totalPriceBox = style({
   marginLeft: 'auto',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'flex-end'
+})
+
+export const closeBtn = style({
+  cursor: 'pointer',
 })

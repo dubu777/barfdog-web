@@ -4,7 +4,7 @@ import { getPlanDiscount } from "@/api/subscription/subscription";
 import { PlanDiscountResponse, UseQueryCustomOptions } from "@/types";
 
 
-export function useGetPlanDiscount(queryOptions?: UseQueryCustomOptions<PlanDiscountResponse>) {
+export function useGetPlanDiscount(queryOptions?: UseQueryCustomOptions<PlanDiscountResponse[]>) {
   return useQuery({
     queryFn: () => getPlanDiscount(),
     queryKey: [queryKeys.SUBSCRIPTION.BASE, queryKeys.SUBSCRIPTION.GET_PLAN_DISCOUNT],

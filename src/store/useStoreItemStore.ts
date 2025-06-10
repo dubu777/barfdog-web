@@ -1,4 +1,4 @@
-import {create} from "zustand";
+import { create } from "zustand";
 
 interface ItemOption {
   value: number;
@@ -21,13 +21,14 @@ interface StoreItemStore {
   updateOptionCount: (value: number, count: number) => void; // 옵션 수량 업데이트
   removeOption: (value: number) => void; // 옵션 제거
   calculateTotalPrice: () => void; // 총 가격 재계산
+  resetStore: () => void;
 }
 
 const calculateOptionsTotal = (options: { count: number, price: number }[]) => {
   return options.reduce((total, option) => total + option.count * option.price, 0);
 }
 
-export const useStoreItemStore = create<StoreItemStore>((set, get) => ({
+export const useStoreItemStore = create<StoreItemStore>((set) => ({
   itemPrice: 0,
   totalPrice: 0,
   itemAmount: 1,

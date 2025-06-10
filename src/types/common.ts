@@ -16,7 +16,14 @@ export type {
   QueryParams,
   Page,
   ImageFile,
+  Option,
 };
+
+declare global {
+  interface Window {
+    IMP?: any;
+  }
+}
 
 type SearchParamProps = {
   param: { [key: string]: string | number };
@@ -68,4 +75,9 @@ interface ImageFile {
   id?: number;
   filename: string;
   url: string;
+}
+
+interface Option {
+  label: string;
+  value: string;
 }

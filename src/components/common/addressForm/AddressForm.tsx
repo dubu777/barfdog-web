@@ -1,11 +1,11 @@
 import * as styles from './AddressForm.css';
 import { Fragment, useState } from "react";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import SearchAddress from "@/components/common/searchAddress/SearchAddress";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { Control, Controller, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import { Address } from "react-daum-postcode";
 import { AddressDto } from "@/types";
+import InputField from "@/components/common/inputField/InputField";
 
 interface FormFieldListProps {
   id: "deliveryName" | "recipientName" | "phoneNumber" | "request" | "zipcode" | "street" | "detailAddress" | 'address';
@@ -73,7 +73,7 @@ const AddressForm = ({ control, watch, setValue, isValid, onSubmit, confirmText 
               name={input.id}
               control={control}
               render={({ field }) =>
-                <DefaultTextField
+                <InputField
                   {...field}
                   type={input.type}
                   id={input.id}

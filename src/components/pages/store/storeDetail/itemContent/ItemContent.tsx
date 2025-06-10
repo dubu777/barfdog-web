@@ -5,10 +5,10 @@ import { prefetchGetStoreItemReviewList } from "@/api/store/queries/useGetStoreI
 import { StoreItemDetail } from "@/types";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 import { sanitizedHTML } from "@/styles/common.css";
-import Tabs from "@/components/common/tabs/Tabs";
 import RefundExchangeGuide from "@/components/common/refundExchangeGuide/RefundExchangeGuide";
 import ItemReview from "@/components/pages/store/storeDetail/itemContent/itemReview/ItemReview";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import TabBar from "@/components/common/tabBar/TabBar";
 
 interface ItemContentProps {
   itemDetail: StoreItemDetail;
@@ -65,10 +65,11 @@ const ItemContent = ({ itemDetail }: ItemContentProps) => {
   }
   return (
     <>
-      <Tabs
+      <TabBar
+        hasTabContent
+        variant='text'
         tabs={tabs}
         defaultIndex={defaultTabIndex}
-        type='button'
       />
     </>
   );

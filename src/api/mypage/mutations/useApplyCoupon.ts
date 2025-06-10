@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { applyCoupon } from "@/api/mypage/myPage";
+import { applyCoupon } from "@/api/mypage/mypage";
 import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
 
@@ -10,7 +10,7 @@ const getCouponListQueryKey = [queryKeys.COUPON.BASE, queryKeys.COUPON.GET_COUPO
 function useApplyCoupon(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: { code: string }) => applyCoupon(body),
+    mutationFn: applyCoupon,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: getCouponListQueryKey,

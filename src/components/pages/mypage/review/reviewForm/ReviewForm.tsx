@@ -1,40 +1,69 @@
+import * as yup from "yup";
 import * as styles from './ReviewForm.css';
 import { useState } from "react";
-import Image from "next/image";
-import NoImage from "/public/images/icons/noImage.png";
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
-import { CreateReviewDetail, ImageFile, ReviewDetailImage, ReviewFormData, ReviewType, UpdateReviewDetail } from "@/types";
+import { useFormHandler } from "@/hooks/useFormHandler";
+import { Controller } from "react-hook-form";
+import {
+  CreateReviewDetail,
+  ImageFile,
+  ReviewDetailImage,
+  ReviewDetailItem,
+  ReviewFormData, SurveyKey, SurveyValue,
+  UpdateReviewDetail
+} from "@/types";
 import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
 import MultiFileUpload from "@/components/common/multiFileUpload/MultiFileUpload";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import RateStar from "@/components/common/rateStar/RateStar";
-import Text from "@/components/common/text/Text";
-import { reviewType } from "@/constants";
-import { formatDate } from "@/utils/dateUtils";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
+import ReviewSurvey from "@/components/pages/mypage/review/reviewForm/reviewSurvey/ReviewSurvey";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import Divider from "@/components/common/divider/Divider";
 
-interface ReviewFormValues {
-  id: number;
-  targetId: number;
-  star: number;
-  contents: string;
-  reviewType?: ReviewType;
-  addImageIdList?: number[];
-  deleteImageIdList?: number[];
-}
+const defaultReviewForm = (reviewDetail: ReviewFormData | ReviewDetailItem) => {
+  return {
+    id: reviewDetail?.id,
+    star: reviewDetail?.star || 0,
+    contents: reviewDetail?.contents || '',
+    reviewType: reviewDetail?.reviewType,
+    orderId: 'orderId' in reviewDetail ? reviewDetail.orderId : null,
+    targetId: 'targetId' in reviewDetail ? reviewDetail.targetId : null,
+  };
+};
 
-interface ReviewFormProps {
-  type: 'create' | 'update';
-  reviewDetail: ReviewFormData;
+const reviewFormSchema = yup.object().shape({
+  contents: yup
+    .string()
+    .min(10, '10글자 이상 입력해주세요.')
+    .max(1000, '리뷰는 최대 1000자까지 입력 가능합니다.')
+    // .matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
+    .required('리뷰 내용을 작성해주세요.'),
+})
+
+interface ReviewFormProps<T extends 'create' | 'update'> {
+  type: T;
+  reviewDetail: T extends 'create' ? ReviewFormData : ReviewDetailItem;
   reviewImageDtoList?: ReviewDetailImage[];
-  handleSubmitForm: (body: UpdateReviewDetail | CreateReviewDetail) => void;
+  handleSubmitForm: (CreateReviewDetail : UpdateReviewDetail) => void;
 }
 
-const ReviewForm = ({ type, reviewDetail, reviewImageDtoList, handleSubmitForm }: ReviewFormProps) => {
-  const { control, register, handleSubmit, formState: { errors } } = useForm<ReviewFormValues>();
+const ReviewForm = <T extends 'create' | 'update'>({
+  type,
+  reviewDetail,
+  reviewImageDtoList,
+  handleSubmitForm,
+}: ReviewFormProps<T>) => {
+  const { control, handleSubmit, errors, setValue, watch, isValid } = useFormHandler<
+    CreateReviewDetail | UpdateReviewDetail
+  >(reviewFormSchema, defaultReviewForm(reviewDetail) as any);
+
   const [addImageIdList, setAddImageIdList] = useState<number[]>([]);
   const [deleteImageIdList, setDeleteImageIdList] = useState<number[]>([]);
-
-  console.log('reviewDetail', reviewDetail);
+  const [surveyFormData, setSurveyFormData] = useState<Record<SurveyKey, SurveyValue>>({
+    preference: null,
+    freshness: null,
+    deliveryStatus: null,
+  })
+  const formData = watch();
 
   const handleFileUpload = async (files: ImageFile[]) => {
     const uploadedImageList: number[] = [];
@@ -61,112 +90,94 @@ const ReviewForm = ({ type, reviewDetail, reviewImageDtoList, handleSubmitForm }
     }
   }
 
-  const onSubmit: SubmitHandler<ReviewFormValues> = (data) => {
-    const body: CreateReviewDetail | UpdateReviewDetail = type === 'update'
-      ? {
+  const onSubmit = (data: CreateReviewDetail | UpdateReviewDetail) => {
+    if (type === 'update') {
+      const body: UpdateReviewDetail = {
         contents: data.contents,
-        star : data.star,
+        star: data.star,
         addImageIdList,
         deleteImageIdList,
-      }
-      : {
-        id : reviewDetail.id,
-        targetId : reviewDetail.targetId,
-        reviewType : reviewDetail.reviewType,
+      };
+      handleSubmitForm(body);
+    } else {
+      const body: CreateReviewDetail = {
+        id: reviewDetail.id as number,
+        orderId: "orderId" in reviewDetail ? reviewDetail.orderId : null,
+        reviewType: reviewDetail.reviewType,
         contents: data.contents,
-        star : data.star,
+        star: data.star,
         reviewImageIdList: addImageIdList,
       };
-    handleSubmitForm(type === 'update' ? body as UpdateReviewDetail : body as CreateReviewDetail);
+    if ("targetId" in reviewDetail) {
+      body.targetId = reviewDetail.targetId;
+    }
+      handleSubmitForm(body);
+    }
   };
-  
-  console.log('addImageIdList', addImageIdList)
-  console.log('deleteImageIdList', deleteImageIdList)
+
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.reviewFormContainer}>
-      <div>
-        <Text type='description' size='sm' color='grey' align='right'>
-          {type === 'update' ? `${reviewDetail.writtenDate} 작성` : reviewDetail.orderedDate ?`${formatDate(reviewDetail.orderedDate, 'onlyDate')} 주문` : ''}
-        </Text>
-        <Image
-          src={reviewDetail.thumbnailUrl ? reviewDetail.thumbnailUrl : reviewDetail.imageUrl ? reviewDetail.imageUrl : NoImage}
-          alt={reviewDetail.title}
-          width={80}
-          height={80}
-        />
-        <div className={styles.reviewTitle}>
-          <Text type='description' size='md' color='black'>{reviewDetail.title}</Text>
-          <Text type='description' size='sm' color='grey'>{reviewType[reviewDetail.reviewType as ReviewType]}</Text>
+    <>
+    <form className={styles.reviewFormContainer}>
+      <DefaultText type='title4' className={styles.reviewFormTitle}>이 상품 어떠셨나요?</DefaultText>
+      <ReviewCard
+        reviewDetail={reviewDetail}
+        formData={formData}
+        setValue={setValue}
+        isEditable
+        isReviewDetail
+      />
+      <Divider thickness={4} />
+      <ReviewSurvey surveyFormData={surveyFormData} setSurveyFormData={setSurveyFormData} />
+      <Divider thickness={4} />
+      <div className={styles.reviewContentsBox}>
+        <div className={styles.reviewContents}>
+          <DefaultText type='title4'>어떤 점이 좋았나요?</DefaultText>
+          <div className={styles.reviewContentsTitle}>
+            <DefaultText type='label4'>상세 후기</DefaultText>
+            <DefaultText type='caption' color={formData?.contents?.length > 0 ? 'pastelRed' : 'gray500'}>20자 이상 작성시 300원 추가 적립!</DefaultText>
+          </div>
+          <Controller
+            name='contents'
+            control={control}
+            render={({ field }) => (
+              <DefaultTextarea
+                {...field}
+                id='contents'
+                value={formData?.contents}
+                placeholder='정기구독 상품을 통해 느낀 만족도에 대한 상세후기를 남겨주세요. (최소 10자 이상)'
+                minLength={10}
+                maxLength={1000}
+                error={errors.contents?.message || ''}
+              />
+            )}
+          />
         </div>
-      </div>
-      <div className={styles.reviewRate}>
-        <Text type='description' size='md' color='black'>
-          상품은 어떠셨나요?
-        </Text>
-        <Controller
-          name='star'
-          control={control}
-          defaultValue={reviewDetail?.star || 5}
-          render={({ field }) => (
-            <RateStar
-              value={field.value || 5}
-              rateLength={reviewDetail?.star || 5}
-              onChange={field.onChange}
-              color='yellow'
-              isEdit
-            />
-          )}
-        />
-      </div>
-      <div className={styles.reviewForm}>
-        <Controller
-          name='contents'
-          control={control}
-          defaultValue={reviewDetail?.contents || ''}
-          render={({ field }) => (
-            <DefaultTextarea
-              {...field}
-              id='contents'
-              label='상세 리뷰'
-              placeholder='50자 이상 작성시 300원이 적립됩니다. \n 상품에 대한 견주님의 의견을 남겨주시면 큰 힘이 됩니다.'    
-              minLength={10}
-              maxLength={1000}
-              {...register('contents', {
-                required: '리뷰를 작성해주세요.',
-                minLength: {
-                  value: 10,
-                  message: '10글자 이상 입력해주세요.',
-                },
-                maxLength: {
-                  value: 1000,
-                  message: '리뷰는 최대 1000자까지 입력 가능합니다.',
-                },
-              })}
-              error={errors.contents?.message}
-            />
-          )}
-        />
         <MultiFileUpload
           uploadApiUrl='/api/reviews/upload'
           onFilesChange={(files) => handleFileUpload(files as ImageFile[])}
           maxFiles={10}
-          imageWidth={75}
-          imageHeight={75}
+          imageWidth={100}
+          imageHeight={100}
           initialImages={reviewImageDtoList}
           handleRemove={(id) => handleFileRemove(id)}
+          title='사진첨부'
+          subTitle='포토 후기 작성 시 500원 적립!'
+          className={styles.reviewFileUpload}
+          showRepresentativeLabel
         />
       </div>
-      <div className={styles.submitContainer}>
-        <DefaultButton
-          type='main'
-          borderRadius='sm'
-          isSubmit
-          onClick={() => console.log('')}
-        >
-          {type === 'update' ? '수정' : '등록'}
-        </DefaultButton>
-      </div>
+      <ButtonDocked
+        type='full-button'
+        primaryButtonSize='md'
+        primaryButtonLabel={`${type === 'create' ? '등록' : '수정' }하기`}
+        onPrimaryClick={handleSubmit(onSubmit)}
+        isPrimaryDisabled={!isValid}
+        position='sticky'
+      />
     </form>
+
+    </>
   );
 };
 

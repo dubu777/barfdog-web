@@ -21,7 +21,7 @@ interface MainStore {
 export const useMainStore = create<MainStore>((set) => ({
   selectedHealth: { key: 'Diarrhea', isChecked: true },
   setSelectedHealth: (selectedHealth) => set({ selectedHealth }),
-  isTopBannerVisible: true,
+  isTopBannerVisible: false,
   isBottomBannerVisible: true,
   closeTopBanner: () => set({ isTopBannerVisible: false }),
   closeBottomBanner: () => set({ isBottomBannerVisible: false }),

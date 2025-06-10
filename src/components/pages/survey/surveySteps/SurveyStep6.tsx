@@ -1,48 +1,62 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyTextField from "../surveyTextField/SurveyTextField";
-import { ErrorValuesType } from "@/store/useSurveyStore";
-import { errorMessage } from "./SurveySteps.css";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import * as styles from "./SurveySteps.css";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
-  handleBlur: (
-    e: React.FocusEvent<HTMLInputElement>,
-    key: keyof SurveyFormData
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  handleBlur: (fieldName: string) => Promise<void>;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
-    key: keyof SurveyFormData
-  ) => void;
-  errorMessages: ErrorValuesType;
+    fieldName: string
+  ) => Promise<void>;
+  petName: string;
 }
 
 export default function SurveyStep6({
-  formData,
   handleChange,
   handleBlur,
   handleKeyDown,
-  errorMessages,
-}: SurveyStep2Props) {
-  
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
+
   return (
     <>
-      <SurveyTextField
-        id={SURVEY_FORM_INFO.weight.id}
-        title={SURVEY_FORM_INFO.weight.title}
-        value={formData.weight}
-        placeholder={SURVEY_FORM_INFO.weight.placeholder}
-        petName={formData.name}
-        onChange={(value) => handleChange(SURVEY_FORM_INFO.weight.id, value)}
-        onBlur={(e) => handleBlur(e, SURVEY_FORM_INFO.weight.id)}
-        onKeyDown={(e) => handleKeyDown(e, SURVEY_FORM_INFO.weight.id)}
-        unit="kg"
-      />
-      <p className={errorMessage}>{errorMessages["step5"]["weight"]}</p>
+      <SurveyTitle petName={petName} config={surveyTitles.step6} />
+            <Controller
+              name="step6.lactation"
+              control={control}
+              render={({ field }) => {
+                const { onToggle, isSelected } = useSurveyToggleOption(
+                  field.value,
+                  "radio",
+                  (value) => {
+                    field.onChange(value);
+                    handleChange();
+                  }
+                );
+                return (
+                  <div className={styles.colSurveyButtonWrapper}>
+                    {surveyFormInfo.dogBasicInfo.lactation.options.map(
+                      (option) => (
+                        <SurveyButton
+                          key={option.label}
+                          label={option.label}
+                          value={option.value}
+                          inputType="radio"
+                          isChecked={isSelected(option.value)}
+                          onToggle={onToggle}
+                        />
+                      )
+                    )}
+                  </div>
+                );
+              }}
+            />
     </>
   );
 }

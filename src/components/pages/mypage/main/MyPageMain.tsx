@@ -1,30 +1,30 @@
-import * as styles from "@/components/pages/mypage/main/myPageInfo/MypageInfo.css";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import MyPageInfo from "@/components/pages/mypage/main/myPageInfo/MypageInfo";
-import MyPageDogList from "@/components/pages/mypage/main/myPageDogList/MyPageDogList";
-import MyPageMenu from "@/components/pages/mypage/main/myPageMenu/MyPageMenu";
-import MyPageBanner from "@/components/pages/mypage/main/myPageBanner/MyPageBanner";
+import MainInformation from "@/components/pages/mypage/main/mainInformation/MainInformation";
+import MainBanner from "@/components/pages/mypage/main/mainBanner/MainBanner";
+import MainMenus from "@/components/pages/mypage/main/mainMenus/MainMenus";
+import MainCard from "@/components/pages/mypage/main/mainCard/MainCard";
+import Loader from "@/components/common/loader/Loader";
 
 const MyPageMain = () => {
   return (
-    <section className={styles.mainContainer}>
-      <ErrorBoundary fallback={<div>MyPage info 로딩 실패</div>}>
-        <Suspense fallback={<div>MyPage info Loading...</div>}>
-          <MyPageInfo />
+    <section style={{ marginBottom: '60px' }}>
+      <ErrorBoundary fallback={<div>회원 정보 로딩 실패</div>}>
+        <Suspense fallback={<Loader height={295} />}>
+          <MainInformation />
         </Suspense>
       </ErrorBoundary>
-      <ErrorBoundary fallback={<div>Dog List 로딩 실패</div>}>
-        <Suspense fallback={<div>Dog List Loading...</div>}>
-          <MyPageDogList />
+      <ErrorBoundary fallback={<div>구독 정보 로딩 실패</div>}>
+        <Suspense fallback={<Loader height={222} />}>
+          <MainCard />
         </Suspense>
       </ErrorBoundary>
-      <ErrorBoundary fallback={<div>MyPage banner 로딩 실패</div>}>
-        <Suspense fallback={<div>MyPage banner Loading...</div>}>
-          <MyPageBanner />
+      <ErrorBoundary fallback={<div>배너 로딩 실패</div>}>
+        <Suspense fallback={<Loader padding={20} />}>
+          <MainBanner />
         </Suspense>
       </ErrorBoundary>
-      <MyPageMenu />
+      <MainMenus />
     </section>
   );
 };

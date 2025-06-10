@@ -1,7 +1,7 @@
 import * as styles from "./SelectBox.css";
 import { MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { expandFromTopVariants } from "@/constants";
+import { MOTION } from "@/constants";
 import useModal from "@/hooks/useModal";
 
 type SelectBoxProps<T extends { label: string; value: string | number }> = {
@@ -67,7 +67,7 @@ export default function SelectBox<T extends { label: string; value: string | num
             <motion.div
               className={styles.optionsWrapper}
               key="selectBox"
-              variants={expandFromTopVariants}
+              variants={MOTION.EXPAND_FROM_TOP}
               initial="hidden"
               animate="visible"
               exit="exit"

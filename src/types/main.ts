@@ -1,11 +1,12 @@
 import { StaticImageData } from "next/image";
 
 export type {
-  MainBannerDto,
-  MainBestReviewsDto,
-  MainRecipeDto,
-  MainTopBannerDto,
-  MainPopupBannerDto,
+  MainData,
+  MainBanner,
+  MainBestReviewList,
+  MainRecipe,
+  MainTopBanner,
+  MainPopupBanner,
   MainInfoData,
   SelectedHealthType,
   SelectedHealthData,
@@ -13,7 +14,33 @@ export type {
   PopupPosition,
 };
 
-interface MainBannerDto {
+interface MainDataAction {
+	label: string;
+	variant: string;
+	url: string;
+	fullWidth?: boolean;
+}
+
+interface MainDescription {
+	label: string;
+	imageUrl: string;
+	width: number;
+	height: number;
+}
+
+interface MainData {
+	id?: string;
+	title: string;
+	subTitle?: string;
+	action?: MainDataAction;
+	actions?: MainDataAction[];
+	description?: string | MainDescription;
+	descriptions?: string[] | MainDescription[];
+	imageUrl?: string;
+	imagesUrl?: string[];
+}
+// ----------------------------------------------
+interface MainBanner {
   id: number;
   leakedOrder: number;
   name: string;
@@ -26,7 +53,7 @@ interface MainBannerDto {
   mobileLinkUrl: string;
 }
 
-interface MainBestReviewsDto {
+interface MainBestReviewList {
   id: number;
   imageUrl: string;
   leakedOrder: number;
@@ -36,7 +63,7 @@ interface MainBestReviewsDto {
   orderType: string;
 }
 
-interface MainRecipeDto {
+interface MainRecipe {
   id: number;
   name: string;
   description: string;
@@ -48,7 +75,7 @@ interface MainRecipeDto {
   imageUrl2: string;
 }
 
-interface MainPopupBannerDto {
+interface MainPopupBanner {
   id: number;
   position: PopupPosition;
   name: string;
@@ -61,7 +88,7 @@ interface MainPopupBannerDto {
   mobileLinkUrl: string;
 }
 
-interface MainTopBannerDto {
+interface MainTopBanner {
   name: string;
   backgroundColor: string;
   fontColor: string;
@@ -70,11 +97,11 @@ interface MainTopBannerDto {
 }
 
 interface MainInfoData {
-  mainBannerDtoList: MainBannerDto[];
-  popupBannerDtoList: MainPopupBannerDto[];
-  queryBestReviewsDtoList: MainBestReviewsDto[];
-  recipeDtoList: MainRecipeDto[];
-  topBannerDto: MainTopBannerDto;
+  mainBannerList: MainBanner[];
+  popupBannerList: MainPopupBanner[];
+  bestReviewList: MainBestReviewList[];
+  recipeList: MainRecipe[];
+  topBanner: MainTopBanner;
 }
 
 interface SelectedHealthData {

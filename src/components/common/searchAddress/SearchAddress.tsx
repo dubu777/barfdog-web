@@ -1,71 +1,88 @@
-import * as styles from './SearchAddress.css';
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
+import * as styles from "./SearchAddress.css";
 import AddressModal from "@/components/common/addressModal/AddressModal";
-import DefaultTextField from "@/components/common/defaultTextField/DefaultTextField";
 import { AddressDto } from "@/types/subscription";
 import { Control, Controller } from "react-hook-form";
-import { Address } from 'react-daum-postcode';
+import { Address } from "react-daum-postcode";
+import InputField from "@/components/common/inputField/InputField";
+import Button from "../button/Button";
+import { themeVars } from "@/styles/theme.css";
 
 interface SearchAddressProps {
   addressValues: AddressDto;
   openAddressModal: boolean;
   setOpenAddressModal: (openAddressModal: boolean) => void;
   handleSelectAddressData: (data: Address) => void;
-  control: Control<AddressDto>;
+  control: Control<AddressDto | any>;
+  isInAddressObject?: boolean;
+  flexDirection?: "column";
 }
 
-const SearchAddress = ({ addressValues, openAddressModal, setOpenAddressModal, handleSelectAddressData, control }: SearchAddressProps) => {
+const SearchAddress = ({
+  addressValues,
+  openAddressModal,
+  setOpenAddressModal,
+  handleSelectAddressData,
+  control,
+  isInAddressObject,
+  flexDirection,
+}: SearchAddressProps) => {
   return (
-    <>
-      <DefaultButton
-        type='gray'
-        size='lg'
-        borderRadius='sm'
+    <div className={`${styles.searchAddressContainer({ flexDirection })}`}>
+      <Button
+        type="primary"
+        variant="solid"
+        style={{
+          backgroundColor: themeVars.colors.gray.gray800,
+          color: themeVars.colors.gray.gray0,
+        }}
         onClick={() => setOpenAddressModal(true)}
-        className={styles.searchAddressInput}
       >
-        주소 검색
-      </DefaultButton>
-      {openAddressModal &&
+        주소검색
+      </Button>
+      {openAddressModal && (
         <AddressModal
           isOpen={openAddressModal}
           onSelectAddressData={handleSelectAddressData}
           onClose={() => setOpenAddressModal(false)}
         />
-      }
+      )}
       <Controller
-        name='zipcode'
+        name={isInAddressObject ? "address.zipcode" : "zipcode"}
         control={control}
-        render={({ field }) =>
-          <DefaultTextField
+        render={({ field }) => (
+          <InputField
             {...field}
-            type='text'
-            id='zipcode'
-            name='zipcode'
-            isDisabled
-            value={field.value && `(${field.value}) ${addressValues.street}`}
-            placeholder='(우편번호) 주소'
+            id="zipcode"
+            name="zipcode"
+            disabled
+            value={
+              !addressValues.zipcode && !addressValues.street
+                ? "(우편번호) 주소"
+                : `(${
+                    addressValues.zipcode ? addressValues.zipcode : field.value
+                  }) ${addressValues.street}`
+            }
+            placeholder="(우편번호) 주소"
             className={styles.searchAddressInput}
           />
-        }
+        )}
       />
       <Controller
-        name='detailAddress'
+        name={isInAddressObject ? "address.detailAddress" : "detailAddress"}
         control={control}
-        render={({ field }) =>
-          <DefaultTextField
+        render={({ field }) => (
+          <InputField
             {...field}
-            type='text'
-            id='detailAddress'
-            name='detailAddress'
+            id="detailAddress"
+            name="detailAddress"
             value={field.value}
-            onChange={(value) => field.onChange(value)}
-            placeholder='나머지 주소'
+            onChange={(e) => field.onChange(e.target.value)}
+            placeholder="나머지 주소"
             className={styles.searchAddressInput}
           />
-        }
+        )}
       />
-    </>
+    </div>
   );
 };
 

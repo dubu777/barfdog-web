@@ -1,22 +1,24 @@
 'use client';
-import * as styles from './UpdateDetail.css';
+import { reviewDetailContainer } from "@/components/pages/mypage/review/reviewDetail/ReviewDetail.css";
+import { useBackNavigation } from "@/utils";
 import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
 import { useUpdateReviewDetail } from "@/api/review/mutations/useUpdateReviewDetail";
-import { ReviewType, UpdateReviewDetail } from "@/types";
+import { ReviewDetailItem, ReviewItemType, UpdateReviewDetail } from "@/types";
 import { useToastStore } from '@/store/useToastStore';
 import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
 
 interface ReviewDetailProps {
   reviewId: number;
-  reviewType: ReviewType;
+  reviewType: ReviewItemType;
 }
 
 const UpdateDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const { data } = useGetReviewDetail(reviewId);
   const { mutate } = useUpdateReviewDetail(reviewId);
   const { addToast } = useToastStore();
-  
-  const reviewDetail = {
+  const goBackPreviousPage = useBackNavigation(undefined, true);
+
+  const reviewDetail: ReviewDetailItem = {
     ...data.reviewDto,
     reviewType
   }
@@ -24,15 +26,16 @@ const UpdateDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   const handleSubmit = (body: UpdateReviewDetail) => {
     mutate(body, {
       onSuccess: () => {
-        addToast('리뷰 수정이 완료되었습니다!', 'success')
+        addToast('리뷰 수정이 완료되었습니다!')
+        goBackPreviousPage();
       },
       onError: () => {
-        addToast('리뷰 수정이 실패했습니다.', 'error')
+        addToast('리뷰 수정이 실패했습니다.', 'above-button')
       }
     })
   }
   return (
-    <section className={styles.reviewDetailContainer}>
+    <section className={reviewDetailContainer}>
       <ReviewForm
         type='update'
         reviewDetail={reviewDetail}

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { applyRecommendCode } from "@/api/mypage/myPage";
+import { applyRecommendCode } from "@/api/mypage/mypage";
 import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
 
@@ -11,7 +11,7 @@ function useApplyRecommendCode(mutationOptions?: UseMutationCustomOptions) {
     mutationFn: (body: { recommendCode: string }) => applyRecommendCode(body),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST, 0],
+        queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST],
       });
     },
     ...mutationOptions,

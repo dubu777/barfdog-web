@@ -4,7 +4,7 @@ import { themeVars } from "@/styles/theme.css";
 export const itemReviewContainer = style({})
 
 export const itemReviewTop = style({
-  background: themeVars.backgroundColors.greyF7,
+  backgroundColor: themeVars.backgroundColors.greyF7,
   padding: '1rem 0',
   margin: '0 10px',
 })
@@ -36,5 +36,5 @@ export const accordionTitleRight = style({
 })
 
 export const reviewAccordionBox = style({
-  background: themeVars.backgroundColors.greyF7,
+  backgroundColor: themeVars.backgroundColors.greyF7,
 })

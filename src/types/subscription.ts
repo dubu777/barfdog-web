@@ -2,9 +2,6 @@ import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 import { RecipeDto } from "./recipe";
 
 export type {
-  PlanDiscountResponseDto,
-  Links,
-  Embedded,
   PlanDiscountResponse,
   RecipeMeal,
   CalculateSubscribePriceInput,
@@ -22,66 +19,16 @@ export type {
   PaymentBody,
   SubscriptionResponse,
   SubscriptionData,
-  OrderSheetResponse,
   BenefitStatus,
   SubscriptionSkipType,
   SubscriptionStatusKey,
   PlanKey,
   PlanName,
+  PlanInfo,
+  // UsingCoupon,
+  SubscribeGeneralItem,
+  SubscriptionStep,
 };
-
-
-interface OrderSheetResponse {
-  brochure: boolean;
-  coupons: Coupon[];
-  defaultAddress: DefaultAddress;
-  email: string;
-  grade: string;
-  gradeDiscountPercent: number;
-  name: string;
-  nextDeliveryDate: string; // ISO 8601 형식
-  phoneNumber: string;
-  recipeNameList: string[];
-  reward: number;
-  subscribeDto: SubscribeDto;
-  _links: Links;
-}
-
-interface Coupon {
-  availableMaxDiscount: number;
-  availableMinPrice: number;
-  discountDegree: number; // 할인율 또는 금액
-  discountType: "FIXED_RATE" | "FIXED_AMOUNT"; // 할인 유형
-  expiredDate: string;
-  memberCouponId: number;
-  name: string; // 쿠폰 이름
-  remaining: number; // 남은 쿠폰 수
-}
-
-interface DefaultAddress {
-  deliveryName: string | null;
-  zipcode: string;
-  city: string;
-  street: string;
-  detailAddress: string;
-}
-
-interface SubscribeDto {
-  id: number;
-  plan: string; 
-  nextPaymentPrice: number;
-  discountGrade: number;
-  oneMealGramsPerRecipe: string;
-}
-
-interface Links {
-  self: Link;
-  order_subscribe: Link;
-}
-
-interface Link {
-  href: string; 
-}
 
 interface SubscriptionResponse<T> {
   isDone: boolean;
@@ -103,7 +50,7 @@ interface PaymentBody {
   subscribeItemList: string[] | null;
 }
 
-interface PlanDiscountResponseDto {
+interface PlanDiscountResponse {
   createdDate: string;
   modifiedDate: string;
   full: number;
@@ -113,22 +60,6 @@ interface PlanDiscountResponseDto {
   toppingHalf: number;
 }
 
-interface Link {
-  href: string;
-}
-
-interface Links {
-  self: Link; // 현재 리소스에 대한 링크
-}
-
-interface Embedded {
-  planDiscountResponseDtoList: PlanDiscountResponseDto[]; // 할인 정보 리스트
-}
-
-interface PlanDiscountResponse {
-  _embedded: Embedded; // 중첩된 데이터
-  _links: Links; // 하이퍼미디어 링크
-}
 
 interface RecipeMeal {
   recipeId: number;
@@ -230,14 +161,14 @@ interface SubscriptionAddressData {
 }
 
 interface AddressDto {
-  deliveryName?: null | string;
-  recipientName: string;
-  phoneNumber: string;
+  deliveryName?: string;
+  recipientName?: string;
+  phoneNumber?: string;
   zipcode: string;
   street: string;
   city: string;
   detailAddress: string;
-  request?: null | string;
+  request?: string;
 }
 
 interface SubscriptionListData {
@@ -257,6 +188,31 @@ interface BenefitDto {
   subscribeId: number;
 }
 
+interface PlanInfo {
+  id: string;
+  label: string;
+  numberOfPacksPerDay: number;
+  weeklyPaymentCycle: number;
+  totalNumberOfPacks: number;
+  maxRecipeCount?: number;
+}
+
+// interface UsingCoupon {
+//   memberCouponId: number;
+//   discount: number;
+//   overDiscount: number;
+// }
+
+interface SubscribeGeneralItem {
+  id: number;
+  imageUrl: string;
+  name: string;
+  originalPrice: number;
+  inStock: boolean;
+  benefit: string[];
+  type: "topping" | "snack";
+}
+
 type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
 
 type SubscriptionSkipType = 'ONCE' | 'WEEK';
@@ -266,3 +222,5 @@ type SubscriptionStatusKey = keyof typeof subscriptionStatus;
 type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
 
 type PlanName = keyof typeof subscriptionPlanInfo;
+
+type SubscriptionStep = "recipe" | "general-item" | "delivery-cycle";

@@ -11,7 +11,7 @@ export const selectedOption = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '8px 1rem',
-  background: themeVars.backgroundColors.purpleFF,
+  backgroundColor: themeVars.backgroundColors.purpleFF,
 })
 
 export const optionName = style({

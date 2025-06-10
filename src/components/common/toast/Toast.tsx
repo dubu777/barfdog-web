@@ -1,19 +1,29 @@
-'use client';
-import React, { useEffect } from 'react';
-import * as styles from './Toast.css';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+import React, { useEffect, useState } from "react";
+import * as styles from "./Toast.css";
+import { ellipsis } from "@/styles/common.css";
+import CloseButton from "/public/images/icons/close.svg";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import { motion, AnimatePresence } from "framer-motion";
 import { useToastStore } from "@/store/useToastStore";
+import { toastPosition } from "./Toast.css";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface ToastProps {
   id: string;
   message: string;
   onClose: () => void;
   duration?: number;
-  type: 'error' | 'success' | 'warning' | 'info';
+  closeButton?: boolean;
 }
 
-const ToastItem = ({ id, message, onClose, duration = 10000, type }: ToastProps) => {
-
+const ToastItem = ({
+  id,
+  message,
+  onClose,
+  duration = 10000,
+  closeButton = false,
+}: ToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -23,36 +33,62 @@ const ToastItem = ({ id, message, onClose, duration = 10000, type }: ToastProps)
   }, [onClose, duration]);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        key={id}
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -50 }}
-        transition={{ duration: 0.3 }}
-        className={`${styles.toast({ type })}`} // Apply different styles based on the toast type
+    <motion.div
+      key={id}
+      initial={{ opacity: 0, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{
+        opacity: 0,
+        y: 0,
+        transition: { duration: 1, ease: "easeInOut" },
+      }}
+      className={`${styles.toast}`}
+    >
+      <DefaultText
+        type="label3"
+        color="white"
+        className={ellipsis({ lineSize: "line2" })}
       >
         {message}
-      </motion.div>
-    </AnimatePresence>
+      </DefaultText>
+      {closeButton && (
+        <button onClick={onClose}>
+          <SvgIcon src={CloseButton} />
+        </button>
+      )}
+    </motion.div>
   );
 };
 
 const Toast = () => {
-  const { toasts, removeToast } = useToastStore();
+  const { currentToast, removeToast } = useToastStore();
+
+  const [position, setPosition] = useState("bottom");
+
+  useEffect(() => {
+    if (currentToast && currentToast.position) {
+      setPosition(currentToast.position);
+    }
+  }, [currentToast]);
 
   return (
-    <div className={styles.toastContainer}>
-      {toasts.map(toast => (
-        <ToastItem
-          key={toast.id}
-          id={toast.id}
-          message={toast.message}
-          duration={toast.duration}
-          type={toast.type}
-          onClose={() => removeToast(toast.id)}
-        />
-      ))}
+    <div
+      className={`
+      ${styles.toastContainer} 
+      ${toastPosition[position]}`}
+    >
+      <AnimatePresence mode="wait">
+        {currentToast && (
+          <ToastItem
+            key={currentToast.id}
+            id={currentToast.id}
+            message={currentToast.message}
+            duration={currentToast.duration}
+            onClose={removeToast}
+            closeButton={currentToast.closeButton}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

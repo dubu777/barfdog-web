@@ -1,29 +1,76 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { NONE_VALUE, surveyFormInfo, surveyTitles } from "@/constants";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import * as styles from "./SurveySteps.css";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import useModal from "@/hooks/useModal";
+import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  handleNextStep: () => void;
+  petName: string;
 }
 
 export default function SurveyStep10({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
-  
+  handleNextStep,
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
+  const { isOpen, onToggle, onClose } = useModal();
   return (
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.snackCountLevel.options}
-        title={SURVEY_FORM_INFO.snackCountLevel.title}
-        selectedValue={formData.snackCountLevel}
-        petName={formData.name}
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.snackCountLevel.id, value as string)
-        }
+    <>
+      <SurveyTitle
+        petName={petName}
+        config={surveyTitles.step10}
+        infoBoxContent="알러지 분류 참고사항"
+        onInfoBoxClick={onToggle}
       />
+      <Controller
+        name="step10.inedibleFood"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "checkbox",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+
+          const handleToggleAndNext = (value: string) => {
+            onToggle(value);
+            if (value === NONE_VALUE) {
+              handleNextStep();
+            }
+          };
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              <DefaultText type="label2" color="gray500">
+                *복수응답가능
+              </DefaultText>
+              {surveyFormInfo.dogLifestyle.inedibleFood.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.label}
+                    label={option.label}
+                    value={option.value}
+                    inputType="checkbox"
+                    isChecked={isSelected(option.value)}
+                    onToggle={handleToggleAndNext}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
+      />
+      <InedibleBottomSheet isOpen={isOpen} onClose={onClose} />
+    </>
   );
 }

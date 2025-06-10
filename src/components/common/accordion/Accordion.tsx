@@ -1,7 +1,8 @@
-import {ReactNode, useState} from 'react';
+import { ReactNode, useState } from 'react';
 import { motion } from 'framer-motion';
 import * as styles from './Accordion.css';
-import AccordionIcon from '/public/images/icons/accordion.svg';
+import AccordionIcon from '/public/images/icons/chevron-right-blue.svg';
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface AccordionProps {
   title: string | ReactNode;
@@ -10,20 +11,30 @@ interface AccordionProps {
   showArrow?: boolean;
   buttonClassName?: string;
   contentClassName?: string;
+  onToggle?: (isOpen: boolean) => void;
 }
 
-const Accordion = ({ title, children, open = false, showArrow = true, buttonClassName, contentClassName }: AccordionProps) => {
+const Accordion = ({
+  title,
+  children,
+  open = false,
+  showArrow = true,
+  buttonClassName,
+  contentClassName,
+  onToggle,
+}: AccordionProps) => {
   const [isOpen, setIsOpen] = useState(open);
-  const toggleAccordion = () => setIsOpen(!isOpen);
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen);
+    onToggle?.(!isOpen);
+  }
 
   return (
-    <div className={styles.accordionContainer}>
-      <button onClick={toggleAccordion} className={`${styles.accordionButton({ noChildren: !children })} ${buttonClassName || ''}`}>
+    <>
+      <button onClick={toggleAccordion} className={`${styles.accordionButton({ noChildren: !children, isOpen })} ${buttonClassName || ''}`}>
         {title}
         {showArrow &&
-          <span className={styles.accordionIcon({ isOpen: isOpen })}>
-            <AccordionIcon />
-          </span>
+          <SvgIcon src={AccordionIcon} size={24} className={styles.accordionIcon({ isOpen: isOpen })}/>
         }
       </button>
       {children &&
@@ -36,7 +47,7 @@ const Accordion = ({ title, children, open = false, showArrow = true, buttonClas
           <div className={`${styles.accordionContent} ${contentClassName || ''}`}>{children}</div>
         </motion.div>
       }
-    </div>
+    </>
   );
 };
 

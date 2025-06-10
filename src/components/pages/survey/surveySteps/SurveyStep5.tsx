@@ -1,63 +1,59 @@
 "use client";
 
-import { SurveyFormData } from "@/types/survey";
 import * as styles from "./SurveySteps.css";
-import SelectBox from "../selectBox/SelectBox";
-import { surveyInputWrapper, surveyTitle } from "@/app/survey/Survey.css";
-import { useState } from "react";
-import { getNameWithPossessiveSuffix } from "@/utils";
-import { SURVEY_FORM_INFO } from "@/constants";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  petName: string;
 }
 
 export default function SurveyStep5({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
+  petName,
+}: SurveyStepProps) {
 
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-// console.log(year, 'year');
+  const { control } = useFormContext<SurveyStepValues>();
 
-  const handleBirthChange = (newYear: string, newMonth: string) => {
-    setYear(newYear);
-    setMonth(newMonth);
-
-    if (newYear && newMonth) {
-      handleChange(SURVEY_FORM_INFO.birth.id, `${newYear}${newMonth}`);
-    }
-  };
-
-  const title = SURVEY_FORM_INFO.birth.title
-  const petName = formData.name
-  const fullTitle = title && petName
-  ? getNameWithPossessiveSuffix(petName, title) 
-  : title;
 
   return (
-    <div className={surveyInputWrapper}>
-      <h2 className={surveyTitle}>{fullTitle}</h2>
-      <div className={styles.birthContainer}>
-        <SelectBox
-          options={SURVEY_FORM_INFO.birth.years}
-          placeholder="년도"
-          onSelect={(value) => handleBirthChange(value, month)}
-          selectedValue={year || formData.birth.slice(0, 4)}
-        />
-
-        <SelectBox
-          options={SURVEY_FORM_INFO.birth.months}
-          placeholder="월"
-          onSelect={(value) => handleBirthChange(year, value)}
-          selectedValue={month || formData.birth.slice(4, 6)}
-        />
-      </div>
-    </div>
+    <>
+      <SurveyTitle petName={petName} config={surveyTitles.step5} />
+            <Controller
+              name="step5.pregnancy"
+              control={control}
+              render={({ field }) => {
+                const { onToggle, isSelected } = useSurveyToggleOption(
+                  field.value,
+                  "radio",
+                  (value) => {
+                    field.onChange(value);
+                    handleChange();
+                  }
+                );
+                return (
+                  <div className={styles.colSurveyButtonWrapper}>
+                    {surveyFormInfo.dogBasicInfo.pregnancy.options.map(
+                      (option) => (
+                        <SurveyButton
+                          key={option.label}
+                          label={option.label}
+                          value={option.value}
+                          inputType="radio"
+                          isChecked={isSelected(option.value)}
+                          onToggle={onToggle}
+                        />
+                      )
+                    )}
+                  </div>
+                );
+              }}
+            />
+    </>
   );
 }

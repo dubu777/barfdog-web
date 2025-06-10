@@ -1,7 +1,6 @@
 import {style} from "@vanilla-extract/css";
-import {commonLayoutStyle} from "@/styles/common.css";
 
-export const overlayStyle = style([commonLayoutStyle, {
+export const overlayStyle = style({
   height: '100vh',
   position: 'fixed',
   top: 0,
@@ -12,4 +11,4 @@ export const overlayStyle = style([commonLayoutStyle, {
   justifyContent: 'center',
   alignItems: 'center',
   zIndex: 1000,
-}]);
+});

@@ -1,16 +1,40 @@
-export { CouponData };
+export type {
+  Coupon,
+  DiscountType,
+  DiscountUnitType,
+  Reason,
+  CouponUsabilityResult,
+  UsingCoupon,
+};
 
-interface CouponData {
-  id: number;
-  name: string;
-  status: string;
-  amount: number;
-  remaining: number;
+interface Coupon {
   availableMaxDiscount: number;
-  availableMinPrice: number;
-  couponTarget: string;
+  availableMinPrice: number; // 최소 사용 금액
+  couponTarget: "ALL" | "GENERAL" | "SUBSCRIBE";
   description: string;
-  discountDegree: number;
-  discountType: string;
+  discountDegree: number; // 할인율 또는 금액
+  discountType: DiscountType; // 할인 유형
   expiredDate: string;
+  memberCouponId: number;
+  name: string; // 쿠폰 이름
+  remaining: number; // 남은 쿠폰 수
+}
+
+
+type DiscountType = 'FLAT_RATE' | 'FIXED_RATE';
+
+type DiscountUnitType = '%' | '원';
+
+type Reason = "minPrice" | "orderType"
+
+interface CouponUsabilityResult {
+  usable: boolean;
+  reasons: Reason[];
+}
+
+interface UsingCoupon {
+  memberCouponId: number | null;
+  discount: number;
+  overDiscount?: number;
+  couponName?: string | null;
 }

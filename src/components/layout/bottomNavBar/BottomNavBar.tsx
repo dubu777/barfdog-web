@@ -1,72 +1,83 @@
 "use client";
-
 import Link from "next/link";
 import * as styles from "./BottomNavBar.css";
-import Image from "next/image";
-import Home from "/public/images/icons/home.jpg";
-import Ai from "/public/images/icons/ai.jpg";
-import Store from "/public/images/icons/store.jpg";
-import Note from "/public/images/icons/note.jpg";
-import HomeActive from "/public/images/icons/home-active.jpg";
-import AiActive from "/public/images/icons/ai-active.jpg";
-import StoreActive from "/public/images/icons/store-active.jpg";
-import NoteActive from "/public/images/icons/note-active.jpg";
 import { usePathname } from "next/navigation";
+import Home from "/public/images/icons/bottomNavBar/home.svg";
+import Ai from "/public/images/icons/bottomNavBar/ai.svg";
+import Store from "/public/images/icons/bottomNavBar/store.svg";
+import Note from "/public/images/icons/bottomNavBar/note.svg";
+import MyPage from "/public/images/icons/bottomNavBar/mypage.svg";
+import HomeActive from "/public/images/icons/bottomNavBar/home-active.svg";
+import AiActive from "/public/images/icons/bottomNavBar/ai-active.svg";
+import StoreActive from "/public/images/icons/bottomNavBar/store-active.svg";
+import NoteActive from "/public/images/icons/bottomNavBar/note-active.svg";
+import MyPageActive from "/public/images/icons/bottomNavBar/mypage-active.svg";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import useDeviceState from "@/hooks/useDeviceState";
+import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import { getCookie } from "@/utils/auth/cookie";
+import { AUTH_CONFIG } from "@/constants/auth";
+import { useEffect, useState } from "react";
 
 export default function BottomNavBar() {
   const pathname = usePathname();
+  const { deviceOS } = useDeviceState();
+  const [healthNoteHref, setHealthNoteHref] =
+    useState<string>("/health-note/guest");
+
+  useEffect(() => {
+    const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+    const loggedIn = isAuthenticated(token);
+    if (loggedIn) {
+      setHealthNoteHref("/health-note");
+    } else {
+      setHealthNoteHref("/health-note/guest");
+    }
+  }, []);
+  const MENU_LIST = [
+    {
+      icon: pathname === "/" ? <HomeActive /> : <Home />,
+      label: "메인 홈",
+      url: "/",
+    },
+    {
+      icon: pathname === "/store" ? <StoreActive /> : <Store />,
+      label: "스토어",
+      url: "/store",
+    },
+    {
+      icon: pathname === "/diet-analysis" ? <AiActive /> : <Ai />,
+      label: "Ai추천식단",
+      url: "/diet-analysis",
+    },
+    {
+      icon: pathname.startsWith("/health-note") ? <NoteActive /> : <Note />,
+      label: "건강수첩",
+      url: healthNoteHref,
+    },
+    {
+      icon: pathname.startsWith("/mypage") ? <MyPageActive /> : <MyPage />,
+      label: "마이페이지",
+      url: "/mypage",
+    },
+  ];
   return (
-    <nav className={styles.bottomNavBarContainer}>
-      <section className={styles.bottomNavBarWrapper}>
-        <Link href="/" className={styles.navItemWrapper}>
-          <Image
-            src={pathname === "/" ? HomeActive : Home}
-            alt="홈"
-            width={31}
-            height={31}
-          />
-          <span className={styles.navText({ active: pathname === "/" })}>
-            홈
-          </span>
-        </Link>
-        <Link href="/store" className={styles.navItemWrapper}>
-          <Image
-            src={pathname === "/store" ? StoreActive : Store}
-            alt="스토어"
-            width={31}
-            height={31}
-          />
-          <span className={styles.navText({ active: pathname === "/store" })}>
-            스토어
-          </span>
-        </Link>
-        <Link href="/survey" className={styles.navItemWrapper}>
-          <Image
-            src={pathname.startsWith("/survey") ? AiActive : Ai}
-            alt="AI 추천"
-            width={31}
-            height={31}
-          />
-          <span
-            className={styles.navText({
-              active: pathname.startsWith("/survey"),
-            })}
+    <nav
+      className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]}`}
+    >
+      {MENU_LIST.map((menu) => (
+        <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
+          {menu.icon}
+          <DefaultText
+            type="caption"
+            color={pathname === menu.url ? "red" : "gray600"}
+            block
+            // className={styles.navLabel}
           >
-            AI 추천 식단
-          </span>
+            {menu.label}
+          </DefaultText>
         </Link>
-        <Link href="/note" className={styles.navItemWrapper}>
-          <Image
-            src={pathname === "/note" ? NoteActive : Note}
-            alt="건강 노트"
-            width={31}
-            height={31}
-          />
-          <span className={styles.navText({ active: pathname === "/note" })}>
-            건강 노트
-          </span>
-        </Link>
-      </section>
+      ))}
     </nav>
   );
 }

@@ -1,60 +1,59 @@
 "use client";
 
-import { SurveyFormData } from "@/types/survey";
-import * as styles from "./SurveySteps.css";
-import SelectBox from "../selectBox/SelectBox";
-import { surveyInputWrapper, surveyTitle } from "@/app/survey/Survey.css";
-import { SURVEY_FORM_INFO } from "@/constants";
-import { getNameWithPossessiveSuffix } from "@/utils";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
+import * as styles from "./SurveySteps.css";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+
+interface SurveyStepProps {
+  handleChange: () => void;
+  petName: string;
 }
 
 export default function SurveyStep9({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
-
-  const title = SURVEY_FORM_INFO.walkingCountPerWeek.title
-  const petName = formData.name
-  const fullTitle = title && petName
-  ? getNameWithPossessiveSuffix(petName, title) 
-  : title;
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
 
   return (
-    <div className={surveyInputWrapper}>
-      <h2 className={surveyTitle}>{fullTitle}</h2>
-      <div className={styles.walkingContainer}>
-        <SelectBox
-          options={SURVEY_FORM_INFO.walkingCountPerWeek.options}
-          placeholder={SURVEY_FORM_INFO.walkingCountPerWeek.placeholder}
-          frontWord={SURVEY_FORM_INFO.walkingCountPerWeek.frontWord}
-          selectedValue={formData.walkingCountPerWeek}
-          onSelect={(value) =>
-            handleChange(
-              SURVEY_FORM_INFO.walkingCountPerWeek.id,
-              value as string
-            )
-          }
-        />
-        <SelectBox
-          options={SURVEY_FORM_INFO.walkingTimePerOneTime.options}
-          placeholder={SURVEY_FORM_INFO.walkingTimePerOneTime.placeholder}
-          frontWord={SURVEY_FORM_INFO.walkingTimePerOneTime.frontWord}
-          selectedValue={formData.walkingTimePerOneTime}
-          onSelect={(value) =>
-            handleChange(
-              SURVEY_FORM_INFO.walkingTimePerOneTime.id,
-              value as string
-            )
-          }
-        />
-      </div>
-    </div>
+    <>
+      <SurveyTitle petName={petName} config={surveyTitles.step9} />
+      <Controller
+        name="step9.snackCountLevel"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "radio",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              {surveyFormInfo.dogLifestyle.snackCountLevel.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.label}
+                    label={option.label}
+                    value={option.value}
+                    subLabel={option.subLabel}
+                    inputType="radio"
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
+      />
+    </>
   );
 }

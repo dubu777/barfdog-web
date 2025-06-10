@@ -1,30 +1,84 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import * as styles from "./SurveySteps.css";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import ImageButton from "../imageButton/ImageButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";
+import InputField from "@/components/common/inputField/InputField";
 
-interface SurveyStep3Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K],
-    isMultiSelect?: boolean
-  ) => void;
+interface SurveyStepProps {
+  petName: string;
+  handleChange: () => void;
+  handleBlur: (fieldName: string) => Promise<void>;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    fieldName: string
+  ) => Promise<void>;
 }
 
 export default function SurveyStep3({
-  formData,
+  petName,
   handleChange,
-}: SurveyStep3Props) {
-  
+  handleBlur,
+  handleKeyDown,
+}: SurveyStepProps) {
+  const { control, formState: {errors}, setValue } = useFormContext<SurveyStepValues>();
+
   return (
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.neutralization.options}
-        title={SURVEY_FORM_INFO.neutralization.title}
-        selectedValue={formData.neutralization}
-        petName={formData.name}
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.neutralization.id, value as boolean)
-        }
+    <>
+      <SurveyTitle petName={petName} config={surveyTitles.step3} />
+      <Controller
+        name="step3.dogSize"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "radio",
+            (value) => {
+              field.onChange(value);
+            }
+          );
+          return (
+            <SurveyButtonGroup title="견사이즈">
+              {surveyFormInfo.dogBasicInfo.dogSize.options.map((option) => (
+                <ImageButton
+                  key={option.label}
+                  label={option.label}
+                  value={option.value}
+                  inputType="radio"
+                  imageSrc={option.imageUrl}
+                  imageWidth={70}
+                  imageHeight={70}
+                  isChecked={isSelected(option.value)}
+                  onToggle={onToggle}
+                />
+              ))}
+            </SurveyButtonGroup>
+          );
+        }}
       />
+      <SurveyButtonGroup title="몸무게" error={errors.step3?.weight?.message}>
+        <Controller
+          name="step3.weight"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              unit="kg"
+              placeholder="몸무게 입력"
+              onChange={(e) => {
+                field.onChange(e);
+                console.log('field.name', field.name);
+                
+              }}
+              onKeyDown={(e) => handleKeyDown(e, field.name)}
+              onBlur={() => handleBlur(field.name)}
+            />
+          )}
+        />
+      </SurveyButtonGroup>
+    </>
   );
 }

@@ -1,760 +1,504 @@
-import { formatTime } from "@/utils";
+import { SurveyTitleConfig } from "@/types";
+import { SurveyStepKeys } from "@/utils/validation/surveyValidation";
+import Born from "public/images/survey/Icon-Born.svg";
+import Bowel from "public/images/survey/Icon-Bowel.svg";
+import Diabetes from "public/images/survey/Icon-Diabetes.svg";
+import Diet from "public/images/survey/Icon-Diet.svg";
+import Energy from "public/images/survey/Icon-Energy.svg";
+import Ear from "public/images/survey/Icon-Ear.svg";
+import Eye from "public/images/survey/Icon-Eye.svg";
+import Heart from "public/images/survey/Icon-Heart.svg";
+import Hyperlipidemia from "public/images/survey/Icon-hyperlipidemia.svg";
+import Kidney from "public/images/survey/Icon-Kidney.svg";
+import Liver from "public/images/survey/Icon-Liver.svg";
+import Non from "public/images/survey/Icon-Non.svg";
+import Olddog from "public/images/survey/Icon-Olddog.svg";
+import Pancreas from "public/images/survey/Icon-pancreas.svg";
+import Puppy from "public/images/survey/Icon-Puppy.svg";
+import Skin from "public/images/survey/Icon-Skin.svg";
+import Skincare from "public/images/survey/Icon-Skincare.svg";
+
+import FillBorn from "public/images/survey/IconFill-Born.svg";
+import FillBowel from "public/images/survey/IconFill-Bowel.svg";
+import FillDiabetes from "public/images/survey/IconFill-Diabetes.svg";
+import FillDiet from "public/images/survey/IconFill-Diet.svg";
+import FillEar from "public/images/survey/IconFill-Ear.svg";
+import FillEnergy from "public/images/survey/IconFill-Energy.svg";
+import FillEye from "public/images/survey/IconFill-Eye.svg";
+import FillHeart from "public/images/survey/IconFill-Heart.svg";
+import FillHyperlipidemia from "public/images/survey/IconFill-hyperlipidemia.svg";
+import FillKidney from "public/images/survey/IconFill-Kidney.svg";
+import FillLiver from "public/images/survey/IconFill-Liver.svg";
+import FillNon from "public/images/survey/IconFill-Non.svg";
+import FillOlddog from "public/images/survey/IconFill-Olddog.svg";
+import FillPancreas from "public/images/survey/IconFill-pancreas.svg";
+import FillPuppy from "public/images/survey/IconFill-Puppy.svg";
+import FillSkin from "public/images/survey/IconFill-Skin.svg";
+import FillSkincare from "public/images/survey/IconFill-Skincare.svg";
+import { DOG_TYPE } from "@/constants/dog";
 
 export {
-  initialSurveyValue,
-  initialStepValues,
-  initialErrorValues,
-  SURVEY_FORM_INFO,
-  RECIPE_TEMP_DATA,
-  INEDIBLE_FOOD_TO_ID,
-  ID_TO_INEDIBLE_FOOD,
-  ID_TO_INGREDIENT_LIST,
-  PLAN_SELECT_INFO,
+  surveyFormInfo,
+  recipeTempData,
+  SURVEY_NO_AUTO_STEP,
+  NONE_VALUE,
+  surveySections,
+  surveyTitles,
+  CRITICAL_DISEASES,
 };
 
+const surveySections = [
+  { key: "dogBasicInfo", label: "기본 정보", steps: 6 },
+  { key: "dogLifestyle", label: "생활 정보", steps: 5 },
+  { key: "dogDietHealth", label: "식단/건강", steps: 3 },
+];
 
-const initialSurveyValue = {
-  name: "",
-  gender: "",
-  birth: "",
-  oldDog: false,
-  dogSize: "",
-  dogType: "",
-  weight: "",
-  neutralization: null,
-  activityLevel: "",
-  walkingCountPerWeek: "",
-  walkingTimePerOneTime: "",
-  dogStatus: "",
-  specificDogStatus: "",
-  specificDogStatusEtc: "",
-  snackCountLevel: "",
-  waterCountLevel: "",
-  supplement: "",
-  supplementEtc: "",
-  currentMeal: "",
-  inedibleFood: "",
-  inedibleFoodEtc: "",
-  recommendRecipeId: null,
-  caution: "NONE",
-  cautionEtc: "",
-  expectedPregnancyDay: "",
-  newToRawDiet: null,
-  priorityConcerns: "",
-} as const;
-
-const initialStepValues = {
-  step0: { name: "" },
-  step1: { gender: "" },
-  step2: { neutralization: "" },
-  step3: { dogSize: "", dogType: "" },
-  step4: { birth: "" },
-  step5: { weight: "" },
+const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
+  step1: {
+    titleTemplates: ["반려견에 대해 알려주세요"],
+  },
+  step2: {
+    titleTemplates: ["{petName}의", "생년월일은 언제인가요?"],
+    subtitleTemplates: [
+      [{ text: "아이의 생년월에 따라 급여량이 달라져요.", color: "gray600" }],
+      [{ text: "정확히 모르신다면 대략적으로 알려주세요.", color: "gray600" }],
+    ],
+  },
+  step3: {
+    titleTemplates: ["{petName}의", "몸무게는 얼마인가요?"],
+  },
+  step4: {
+    titleTemplates: ["{petName}의", "견종은 무엇인가요?"],
+  },
+  step5: {
+    titleTemplates: ["{petName:topic}", "현재 임신 중인가요?"],
+  },
   step6: {
-    dogStatus: "",
-    specificDogStatus: "NONE",
-    specificDogStatusEtc: "NONE",
-    expectedPregnancyDay: "NONE",
+    titleTemplates: ["{petName:topic}", "현재 수유 중인가요?"],
   },
-  step7: { activityLevel: "" },
-  step8: { walkingCountPerWeek: "", walkingTimePerOneTime: "" },
-  step9: { snackCountLevel: "" },
-  step10: { waterCountLevel: "" },
-  step11: { supplement: "", supplementEtc: "NONE" },
-  step12: { inedibleFood: "", inedibleFoodEtc: "NONE" },
-  step13: { currentMeal: "" },
-  step14: { caution: "", cautionEtc: "NONE" },
-  step15: { newToRawDiet: "" },
-  step16: { priorityConcerns: "" },
+  step7: {
+    titleTemplates: ["{petName}의", "체형은 어느 쪽에 가까운가요?"],
+  },
+  step8: {
+    titleTemplates: ["{petName}의", "활동량은 어느 쪽에 가까운가요?"],
+  },
+  step9: {
+    titleTemplates: ["{petName}의", "간식량은 어떤가요?"],
+  },
+  step10: {
+    titleTemplates: ["{petName:subject}", "못 먹는 재료는 무엇인가요?"],
+  },
+  step11: {
+    titleTemplates: ["{petName}의", "건강고민은 무엇인가요?"],
+    subtitleTemplates: [
+      [{ text: "1순위부터 3순위까지 선택해 주세요", color: "red" }],
+    ],
+  },
+  step12: {
+    titleTemplates: ["{petName:subject}", "현재 먹고 있는 사료는 무엇인가요?"],
+  },
+  step13: {
+    titleTemplates: ["{petName:subject}", "현재 먹고 있는 영양제가 있나요?"],
+  },
+  step14: {
+    titleTemplates: ["{petName:topic}", "앓고 있는 질병이 있나요?"],
+  },
 };
 
-const initialErrorValues = {
-  step0: { name: "" },
-  step1: { gender: "" },
-  step2: { neutralization: "" },
-  step3: { dogSize: "", dogType: "" },
-  step4: { birth: "" },
-  step5: { weight: "" },
-  step6: { dogStatus: "", specificDogStatus: null, expectedPregnancyDay: null },
-  step7: { activityLevel: "" },
-  step8: { walkingCountPerWeek: "", walkingTimePerOneTime: "" },
-  step9: { snackCountLevel: "" },
-  step10: { waterCountLevel: "" },
-  step11: { supplement: "", supplementEtc: null },
-  step12: { inedibleFood: "", inedibleFoodEtc: null },
-  step13: { currentMeal: "" },
-  step14: { caution: "", cautionEtc: null },
-  step15: { newToRawDiet: "" },
-  step16: { priorityConcerns: "" },
+const surveyFormInfo = {
+  dogBasicInfo: {
+    gender: {
+      title: "성별",
+      options: [
+        {
+          value: "FEMALE",
+          label: "암컷",
+          imageUrl: "/images/survey/female.png",
+        },
+        {
+          value: "MALE",
+          label: "수컷",
+          imageUrl: "/images/survey/male.png",
+        },
+      ],
+    },
+    neutralization: {
+      title: "중성화 여부",
+      options: [
+        { value: true, label: "중성화 했어요" },
+        { value: false, label: "중성화 안했어요" },
+      ],
+    },
+    oldDog: {
+      title: "노령견",
+      options: [
+        { value: true, label: "노령견이에요" },
+        { value: false, label: "노령견이 아니에요" },
+      ],
+    },
+    dogSize: {
+      title: "견사이즈",
+      options: [
+        {
+          value: "SMALL",
+          label: "소형",
+          imageUrl: "/images/survey/small-dog.png",
+        },
+        {
+          value: "MEDIUM",
+          label: "중형",
+          imageUrl: "/images/survey/medium-dog.png",
+        },
+        {
+          value: "LARGE",
+          label: "대형",
+          imageUrl: "/images/survey/large-dog.png",
+        },
+      ],
+    },
+    dogType: {
+      placeholder: "견종을 검색해 보세요",
+      options: DOG_TYPE,
+    },
+    pregnancy: {
+      options: [
+        { value: "NONE", label: "아니요" },
+        { value: "EARLY", label: "임신 초기" },
+        { value: "LATE", label: "임신 후기" },
+      ],
+    },
+    lactation: {
+      options: [
+        { value: "NONE", label: "아니요" },
+        { value: "LACTATION_ONE", label: "1~2마리" },
+        { value: "LACTATION_THREE", label: "3~4마리" },
+        { value: "LACTATION_FIVE", label: "5~6마리" },
+        { value: "LACTATION_SEVEN", label: "7마리 이상" },
+      ],
+    },
+  },
+  dogLifestyle: {
+    dogBodyCondition: {
+      options: [
+        {
+          value: "VERY_THIN",
+          label: "매우 마름",
+          subLabel: ["근육이 거의 느껴지지 않음", "허리뼈와 골반뼈가 튀어나옴"],
+          imageUrl: "/images/survey/very-thin.png",
+        },
+        {
+          value: "THIN",
+          label: "마름",
+          subLabel: ["갈비뼈가 쉽게 만져짐", "허리선이 움푹 들어감"],
+          imageUrl: "/images/survey/thin.png",
+        },
+        {
+          value: "NORMAL",
+          label: "적정 체중",
+          subLabel: ["복부가 위로 올라가 있음", "허리선이 잘 구별됨"],
+          imageUrl: "/images/survey/normal.png",
+        },
+        {
+          value: "OVERWEIGHT",
+          label: "과체중",
+          subLabel: ["복부가 평평", "허리선이 거의 보이지 않음"],
+          imageUrl: "/images/survey/overweight.png",
+        },
+        {
+          value: "OBESE",
+          label: "심각한 비만",
+          subLabel: ["복부가 심하게 쳐짐", "허리선이 없고 옆으로 볼록함"],
+          imageUrl: "/images/survey/obese.png",
+        },
+      ],
+    },
+    activityLevel: {
+      options: [
+        { value: "VERY_MUCH", label: "매우 많아요" },
+        { value: "MUCH", label: "많아요" },
+        { value: "NORMAL", label: "보통이에요" },
+        { value: "LITTLE", label: "적어요" },
+        { value: "VERY_LITTLE", label: "매우 적어요" },
+      ],
+    },
+    snackCountLevel: {
+      options: [
+        {
+          value: "LITTLE",
+          label: "적어요",
+          subLabel: "식사에 영향을 주지 않는 양",
+        },
+        {
+          value: "NORMAL",
+          label: "적당해요",
+          subLabel: "어느정도 영향을 주는 양",
+        },
+        {
+          value: "MUCH",
+          label: "많아요",
+          subLabel: "식사에 상당한 영향을 주는 양",
+        },
+      ],
+    },
+    inedibleFood: {
+      options: [
+        { value: "NONE", label: "없어요" },
+        { value: "CHICKEN", label: "닭" },
+        { value: "TURKEY", label: "칠면조" },
+        { value: "DUCK", label: "오리" },
+        { value: "LAMB", label: "양" },
+        { value: "COW", label: "소" },
+        { value: "KANGAROO", label: "캥거루" },
+        { value: "GOAT", label: "염소" },
+        { value: "QUAIL", label: "메추리" },
+        { value: "HEART", label: "심장" },
+      ],
+    },
+    healthConcerns: {
+      options: [
+        {
+          value: "VOMITING_DIARRHEA",
+          label: "구토•설사",
+          Icon: Bowel,
+          SelectedIcon: FillBowel,
+        },
+        {
+          value: "WEIGHT_CONTROL",
+          label: "체중조절",
+          Icon: Diet,
+          SelectedIcon: FillDiet,
+        },
+        {
+          value: "ENERGY_BOOST",
+          label: "기력보충",
+          Icon: Energy,
+          SelectedIcon: FillEnergy,
+        },
+        {
+          value: "TEARS",
+          label: "눈물•눈곱",
+          Icon: Eye,
+          SelectedIcon: FillEye,
+        },
+        {
+          value: "SKIN_HAIR",
+          label: "피부•모질",
+          Icon: Skincare,
+          SelectedIcon: FillSkincare,
+        },
+        {
+          value: "JOINT_HEALTH",
+          label: "관절 건강",
+          Icon: Born,
+          SelectedIcon: FillBorn,
+        },
+        {
+          value: "PUPPY_DEVELOPMENT",
+          label: "자견 발육",
+          Icon: Puppy,
+          SelectedIcon: FillPuppy,
+        },
+        {
+          value: "SENIOR_HEALTH",
+          label: "노령견 건강",
+          Icon: Olddog,
+          SelectedIcon: FillOlddog,
+        },
+      ],
+    },
+  },
+  dogDietHealth: {
+    currentMeal: {
+      options: [
+        { value: "DRY", label: "건사료" },
+        { value: "WET", label: "습식사료" },
+        { value: "HOMEMADE", label: "홈메이드식" },
+        { value: "FREEZE_DRIED", label: "동결건조" },
+        { value: "COOKED", label: "화식" },
+        { value: "RAW", label: "생식" },
+      ],
+    },
+    supplements: {
+      options: [
+        { value: "NONE", label: "없어요" },
+        { value: "PROBIOTICS", label: "유산균" },
+        { value: "OMEGA_3", label: "오메가-3" },
+        { value: "ANTIOXIDANT", label: "항산화" },
+        { value: "JOINT", label: "관절" },
+        { value: "EYE", label: "눈" },
+        { value: "SKIN", label: "피부" },
+        { value: "IMMUNITY", label: "면역력" },
+        { value: "HEART", label: "심장" },
+        { value: "TEETH", label: "치아" },
+        { value: "BRONCHUS", label: "기관지" },
+        { value: "GENERAL", label: "종합" },
+      ],
+    },
+    healthIssues: {
+      options: [
+        { value: "NONE", label: "없어요", Icon: Non, SelectedIcon: FillNon },
+        {
+          value: "HYPERLIPIDEMIA",
+          label: "고지혈증",
+          Icon: Hyperlipidemia,
+          SelectedIcon: FillHyperlipidemia,
+        },
+        {
+          value: "PANCREATIC",
+          label: "췌장질환",
+          Icon: Pancreas,
+          SelectedIcon: FillPancreas,
+        },
+        {
+          value: "HEART",
+          label: "심장병",
+          Icon: Heart,
+          SelectedIcon: FillHeart,
+        },
+        {
+          value: "KIDNEY",
+          label: "신장병",
+          Icon: Kidney,
+          SelectedIcon: FillKidney,
+        },
+        {
+          value: "DERMATITIS",
+          label: "피부염",
+          Icon: Skin,
+          SelectedIcon: FillSkin,
+        },
+        {
+          value: "CHOLELITHIASIS",
+          label: "쓸개골탈구",
+          Icon: Born,
+          SelectedIcon: FillBorn,
+        },
+        {
+          value: "LIVER_DISEASE",
+          label: "간질환",
+          Icon: Liver,
+          SelectedIcon: FillLiver,
+        },
+        {
+          value: "DIABETES",
+          label: "당뇨병",
+          Icon: Diabetes,
+          SelectedIcon: FillDiabetes,
+        },
+        {
+          value: "EAR_INFLAMMATION",
+          label: "귀염증",
+          Icon: Ear,
+          SelectedIcon: FillEar,
+        },
+        {
+          value: "TEARS",
+          label: "눈물•안구",
+          Icon: Eye,
+          SelectedIcon: FillEye,
+        },
+      ],
+    },
+  },
 };
 
-const SURVEY_FORM_INFO = {
-  name: {
-    id: "name",
-    inputType: "textField",
-    title: "반려견 이름이 무엇인가요?",
-    placeholder: "이름을 입력해주세요",
-  },
-  gender: {
-    id: "gender",
-    inputType: "button",
-    title: "의 성별은 무엇인가요?",
-    isMultiSelect: false,
-    options: [
-      { id: "gender-MALE", value: "MALE", label: "수컷" },
-      { id: "gender-FEMALE", value: "FEMALE", label: "암컷" },
-    ],
-  },
-  neutralization: {
-    id: "neutralization",
-    inputType: "button",
-    title: "의 중성화 여부를 알려주세요",
-    isMultiSelect: false,
-    options: [
-      { id: "neutralization했습니다", value: true, label: "했습니다" },
-      { id: "neutralization안했습니다", value: false, label: "안했습니다" },
-    ],
-  },
-  dogSize: {
-    id: "dogSize",
-    inputType: "button",
-    title: "의 견종은 무엇인가요?",
-    isMultiSelect: false,
-    options: [
-      { id: "dogSize-SMALL", value: "SMALL", label: "소형견" },
-      { id: "dogSize-MIDDLE", value: "MIDDLE", label: "중형견" },
-      { id: "dogSize-LARGE", value: "LARGE", label: "대형견" },
-    ],
-  },
-  dogType: {
-    id: "dogType",
-    inputType: "searchableSelectBox",
-    placeholder1: "견종을 선택해주세요.",
-    placeholder2: "견종을 입력해주세요.",
-    options: [
-      "품종 모름",
-      "믹스",
-      "골든 리트리버",
-      "골든두들",
-      "그레이 하운드",
-      "그레이트 데인",
-      "그레이트 피레니즈",
-      "그린란드견",
-      "기슈견",
-      "꼬똥 드 툴레아",
-      "나폴리탄 마스티프",
-      "뉴기니고산개",
-      "뉴펀들랜드",
-      "닥스훈트",
-      "도고 아르헨티노",
-      "도베르만 핀셔",
-      "라사압소",
-      "라페이로 도 알렌테조",
-      "래브라도 리트리버",
-      "레온베르거",
-      "로트와일러",
-      "마스티프",
-      "말티즈",
-      "미니어처 슈나우저",
-      "미니어처 핀셔",
-      "바셋 하운드",
-      "베들링턴 테리어",
-      "벨지언 쉽독",
-      "보더 콜리",
-      "보르도 마스티프",
-      "보르조이",
-      "보비에 드 플랜더스",
-      "보스턴 테리어",
-      "복서",
-      "불도그",
-      "불리 쿠타",
-      "브리어드",
-      "블러드 하운드",
-      "비글",
-      "비숑 프리제",
-      "빠삐용",
-      "사모예드",
-      "사플라니낙",
-      "삽살개",
-      "샤페이",
-      "세인트 버나드",
-      "솔로이츠 쿠인틀레",
-      "스코티쉬 테리어",
-      "스키퍼키",
-      "스피츠",
-      "시코쿠견",
-      "실키 테리어",
-      "아메리칸 불리",
-      "아메리칸 스태퍼드셔 테리어",
-      "아이디",
-      "아키타견",
-      "아펜핀셔",
-      "아프간 하운드",
-      "알래스칸 클리카이",
-      "에스트렐라 마운틴 독",
-      "오브차카",
-      "요크셔 테리어",
-      "웨스트 하이랜드 화이트테리어",
-      "재패니즈 스피츠",
-      "재패니즈 친",
-      "잭 러셀 테리어",
-      "저먼 셰퍼드",
-      "제주개",
-      "진돗개",
-      "차우차우",
-      "치와와",
-      "카네 코르소",
-      "카발리에 킹 찰스 스파니엘",
-      "코리안 마스티프",
-      "코몬도르",
-      "코커 스파니엘",
-      "콜리",
-      "고든 세터",
-      "그레이트 스위스 마운틴 도그",
-      "글렌 오브 이말 테리어",
-      "노르웨지안 부훈트",
-      "노르웨이 엘크 하운드",
-      "노리치 테리어",
-      "노바 스코셔 덕 톨링 레트리버",
-      "노퍽 테리어",
-      "댄디 딘몬트 테리어",
-      "도고 까나리오",
-      "도그 드 보르도",
-      "도사견",
-      "동경이",
-      "라포니안 허더",
-      "레이크랜드 테리어",
-      "로디지아 리지백",
-      "로첸",
-      "미니어처 불 테리어",
-      "바센지",
-      "버니즈 마운틴 도그",
-      "벨기에 말리노이즈",
-      "벨기에 테뷰런",
-      "벨지안 그리펀",
-      "보더 테리어",
-      "보스롱",
-      "볼로네즈",
-      "불 마스티프",
-      "불 테리어",
-      "브뤼셀 그리펀",
-      "브리타니",
-      "블랙 러시안 테리어",
-      "블랙 앤드 탄 쿤하운드",
-      "비어디드 콜리",
-      "비즐라",
-      "살루키",
-      "서식스 스패니얼",
-      "셔틀랜드 쉽독",
-      "소프트 코티드 휘튼 테리어",
-      "스무스 폭스 테리어",
-      "스웨디쉬 발훈트",
-      "스카이 테리어",
-      "스코티시 디어하운드",
-      "스태퍼드셔 불 테리어",
-      "스탠더드 슈나우저",
-      "스패니쉬 그레이 하운드",
-      "스패니쉬 마스티프",
-      "스피노네 이탈리아노",
-      "시바 이누",
-      "실리엄 테리어",
-      "아메리칸 불도그",
-      "아메리칸 아키다",
-      "아메리칸 에스키모 도그",
-      "아메리칸 워터 스패니얼",
-      "아메리칸 코커 스패니얼",
-      "아메리칸 폭스하운드",
-      "아이리시 소프트코티드 휘튼 테리어",
-      "아이리시 레드 앤드 화이트 세터",
-      "아이리시 세터",
-      "아이리시 울프 하운드",
-      "아이리시 워터 스패니얼",
-      "아이리시 테리어",
-      "알래스칸 맬러뮤트",
-      "에어데일 테리어",
-      "오스트레일리안 실키 테리어",
-      "오스트레일리안 켈피",
-      "오스트레일리안 셰퍼드",
-      "오스트레일리안 캐틀 도그",
-      "오스트레일리안 테리어",
-      "오터 하운드",
-      "올드 잉글리시 쉽독",
-      "와이머라너",
-      "와이어 폭스 테리어",
-      "와이어헤어드 포인팅 그리펀",
-      "웰시 스프링어 스패니얼",
-      "웰시 테리어",
-      "이비전 하운드",
-      "이탤리언 그레이하운드",
-      "잉글리시 세터",
-      "잉글리시 스프링어 스패니얼",
-      "잉글리시 코커 스패니얼",
-      "잉글리시 토이 스패니얼",
-      "잉글리시 폭스하운드",
-      "자이언트 슈나우저",
-      "저먼 쇼트헤어드 포인터",
-      "저먼 와이어헤어드 포인터",
-      "저먼 핀셔",
-      "저먼 헌팅 테리어",
-      "차이니즈 샤페이",
-      "차이니즈 크레스티드",
-      "체서피크 베이 레트리버",
-      "카디건 웰시 코기",
-      "컬리코티드 레트리버",
-      "케리 블루 테리어",
-      "케언 테리어",
-      "케이넌 도그",
-      "케이스혼트",
-      "쿠바스",
-      "쿠이커혼제",
-      "클럼버 스패니얼",
-      "토이 폭스 테리어",
-      "티베탄 마스티프",
-      "티베탄 스패니얼",
-      "티베탄 테리어",
-      "파라오 하운드",
-      "파슨 러셀 테리어",
-      "패터데일 테리어",
-      "퍼그",
-      "페키니즈",
-      "펨브록 웰시 코기",
-      "포르투기즈 워터 도그",
-      "포메라니안",
-      "포인터",
-      "폭스 테리어",
-      "폴리시 롤런드 시프도그",
-      "폼피츠",
-      "푸미",
-      "풀리",
-      "풍산개",
-      "프렌치 불도그",
-      "프티 바세 그리퐁 방댕",
-      "플랫코티드 레트리버",
-      "플롯 하운드",
-      "피니시 스피츠",
-      "피레니안 마스티프",
-      "피레니안 쉽독",
-      "피레니안 셰퍼드",
-      "필드 스패니얼",
-      "필라 브라질레이로",
-      "핏 불 테리어",
-      "해리어",
-      "하바니즈",
-      "홋카이도 이누",
-      "휘핏",
-      "달마시안",
-      "시베리안 허스키",
-      "시추",
-      "말티푸",
-      "맨체스터 테리어(스탠다드)",
-      "맨체스터 테리어(토이)",
-      "푸들(미니어처)",
-      "푸들(스탠다드)",
-      "푸들(토이)",
-      "아나톨리아 셰퍼드(캉갈)",
-    ],
-  },
-  birth: {
-    id: "birth",
-    inputType: "selectBox",
-    title: "의 출생일은 언제인가요?",
-    years: Array.from({ length: 50 }, (_, i) => {
-      const year = new Date().getFullYear() - i;
-      return {
-        label: `${year}년`,
-        value: year.toString(),
-      };
-    }),
-    months: Array.from({ length: 12 }, (_, i) => {
-      const month = (i + 1).toString().padStart(2, "0");
-      return {
-        label: `${month}월`,
-        value: month,
-      };
-    }),
-  },
-  weight: {
-    id: "weight",
-    inputType: "textField",
-    title: "의 몸무게는 얼마인가요?",
-    placeholder: "몸무게를 입력해주세요",
-    unit: "kg",
-  },
-  dogStatus: {
-    id: "dogStatus",
-    inputType: "button",
-    title: "의 현재 상태는 어떤가요?",
-    isMultiSelect: true,
-    options: [
-      { id: "dogStatus-HEALTHY", value: "HEALTHY", label: "건강해요" },
-      { id: "dogStatus-NEED_DIET", value: "NEED_DIET", label: "다이어트 필요" },
-      { id: "dogStatus-OBESITY", value: "OBESITY", label: "심각한 비만" },
-      { id: "dogStatus-PREGNANT", value: "PREGNANT", label: "임신한 상태" },
-      { id: "dogStatus-LACTATING", value: "LACTATING", label: "수유 중" },
-    ],
-  },
-  activityLevel: {
-    id: "activityLevel",
-    inputType: "button",
-    title: "의 활동량은 어떤가요?",
-    isMultiSelect: false,
-    options: [
-      {
-        id: "activityLevel-VERY_MUCH",
-        value: "VERY_MUCH",
-        label: "매우 많아요",
-      },
-      { id: "activityLevel-MUCH", value: "MUCH", label: "많아요" },
-      { id: "activityLevel-NORMAL", value: "NORMAL", label: "보통" },
-      { id: "activityLevel-LITTLE", value: "LITTLE", label: "적어요" },
-      {
-        id: "activityLevel-VERY_LITTLE",
-        value: "VERY_LITTLE",
-        label: "매우 적어요",
-      },
-    ],
-  },
-  walkingCountPerWeek: {
-    id: "walkingCountPerWeek",
-    inputType: "selectBox",
-    title: "의 산책량은 어떤가요?",
-    frontWord: "주 평균",
-    placeholder: "횟수",
-    options: Array.from({ length: 20 }, (_, i) => {
-      const label = i === 19 ? `${i + 1} 회 이상` : `${i + 1} 회`;
-      return {
-        label,
-        value: (i + 1).toString(),
-      };
-    }),
-  },
-  walkingTimePerOneTime: {
-    id: "walkingTimePerOneTime",
-    inputType: "selectBox",
-    title: "의 일주일 산책 횟수",
-    frontWord: "1회 당",
-    placeholder: "시간",
-    options: Array.from({ length: 6 }, (_, i) => {
-      const value = (i * 0.5 + 0.5).toString();
-      const label = i === 5 ? "3시간 이상" : formatTime(i * 0.5 + 0.5);
-      return {
-        label,
-        value,
-      };
-    }),
-  },
-  snackCountLevel: {
-    id: "snackCountLevel",
-    inputType: "button",
-    title: "의 간식량은 어떤가요?",
-    isMultiSelect: false,
-    options: [
-      { id: "snackCountLevel-LITTLE", value: "LITTLE", label: "적어요" },
-      { id: "snackCountLevel-NORMAL", value: "NORMAL", label: "적당해요" },
-      { id: "snackCountLevel-MUCH", value: "MUCH", label: "많아요" },
-    ],
-  },
-  waterCountLevel: {
-    id: "waterCountLevel",
-    inputType: "button",
-    title: "의 음수량은 어떤가요?",
-    isMultiSelect: false,
-    options: [
-      { id: "waterCountLevel-LITTLE", value: "LITTLE", label: "적어요" },
-      { id: "waterCountLevel-NORMAL", value: "NORMAL", label: "적당해요" },
-      { id: "waterCountLevel-MUCH", value: "MUCH", label: "많아요" },
-    ],
-  },
-  supplement: {
-    id: "supplement",
-    inputType: "button",
-    title: "의 현재 먹고 있는 영양제는 무엇인가요?",
-    isMultiSelect: true,
-    options: [
-      { id: "supplement-NONE", value: "NONE", label: "없어요" },
-      { id: "supplement-유산균", value: "유산균", label: "유산균" },
-      { id: "supplement-오메가", value: "오메가-3", label: "오메가-3" },
-      { id: "supplement-항산화", value: "항산화", label: "항산화" },
-      { id: "supplement-관절", value: "관절", label: "관절" },
-      { id: "supplement-눈", value: "눈", label: "눈" },
-      { id: "supplement-피부", value: "피부", label: "피부" },
-      { id: "supplement-면역력", value: "면역력", label: "면역력" },
-      { id: "supplement-심장", value: "심장", label: "심장" },
-      { id: "supplement-치아", value: "치아", label: "치아" },
-      { id: "supplement-종합", value: "종합", label: "종합" },
-      { id: "supplement-ETC", value: "ETC", label: "기타" },
-    ],
-  },
-  supplementEtc: {
-    id: "supplementEtc",
-    name: "supplementEtc",
-    placeholder: "선택지에 없는 경우 기재해주세요.",
-  },
-  inedibleFood: {
-    id: "inedibleFood",
-    inputType: "button",
-    title: "의 못 먹는 재료가 있나요?",
-    isMultiSelect: true,
-    options: [
-      { id: "inedibleFood-NONE", value: "NONE", label: "없어요" },
-      { id: "inedibleFood-닭", value: "닭", label: "닭" },
-      { id: "inedibleFood-칠면조", value: "칠면조", label: "칠면조" },
-      { id: "inedibleFood-소", value: "소", label: "소" },
-      { id: "inedibleFood-오리", value: "오리", label: "오리" },
-      { id: "inedibleFood-양", value: "양", label: "양" },
-      { id: "inedibleFood-ETC", value: "ETC", label: "기타" },
-    ],
-  },
-  inedibleFoodEtc: {
-    id: "inedibleFoodEtc",
-    name: "inedibleFoodEtc",
-    placeholder: "선택지에 없는 경우 기재해주세요.",
-  },
-  currentMeal: {
-    id: "currentMeal",
-    inputType: "button",
-    title: "의 현재 먹고 있는 식사는 어떤 것인가요?",
-    isMultiSelect: true,
-    options: [
-      { id: "currentMeal-건사료", value: "건사료", label: "건사료" },
-      {
-        id: "currentMeal-습식사료/캔",
-        value: "습식사료/캔",
-        label: "습식사료/캔",
-      },
-      { id: "currentMeal-생식", value: "생식", label: "생식" },
-      { id: "currentMeal-화식", value: "화식", label: "화식" },
-      { id: "currentMeal-수제사료", value: "수제사료", label: "수제사료" },
-      {
-        id: "currentMeal-동결건조사료",
-        value: "동결건조사료",
-        label: "동결건조사료",
-      },
-    ],
-  },
-  caution: {
-    id: "caution",
-    inputType: "button",
-    title: "의 건강적 특이사항, 질병이 있나요?",
-    isMultiSelect: true,
-    options: [
-      { id: "caution-NONE", value: "NONE", label: "없어요" },
-      { id: "caution-관절염", value: "관절염", label: "관절염" },
-      { id: "caution-슬개골 탈구", value: "슬개골 탈구", label: "슬개골 탈구" },
-      { id: "caution-피부염", value: "피부염", label: "피부염" },
-      { id: "caution-당뇨병", value: "당뇨병", label: "당뇨병" },
-      { id: "caution-귀 염증", value: "귀 염증", label: "귀 염증" },
-      { id: "caution-눈물/안구", value: "눈물/안구", label: "눈물/안구" },
-      { id: "caution-치주염", value: "치주염", label: "치주염" },
-      { id: "caution-신장 질환", value: "신장 질환", label: "신장 질환" },
-      { id: "caution-간 질환", value: "간 질환", label: "간 질환" },
-      { id: "caution-췌장염", value: "췌장염", label: "췌장염" },
-      { id: "caution-심장 질환", value: "심장 질환", label: "심장 질환" },
-      { id: "caution-기타", value: "ETC", label: "기타" },
-    ],
-  },
-  cautionEtc: {
-    id: "cautionEtc",
-    name: "cautionEtc",
-    placeholder: "선택지에 없는 경우 기재해주세요.",
-  },
-  newToRawDiet: {
-    id: "newToRawDiet",
-    inputType: "button",
-    title: "의 생식 급여가 처음인가요?",
-    isMultiSelect: false,
-    options: [
-      { id: "newToRawDiet-Yes", value: true, label: "네" },
-      { id: "newToRawDiet-NO", value: false, label: "아니요" },
-    ],
-  },
-  priorityConcerns: {
-    id: "priorityConcerns",
-    inputType: "button",
-    title: "의 고민되는 항목 우성 순위 3가지를 선택해주세요.",
-    isMultiSelect: true,
-    options: [
-      {
-        id: "recommendRecipeId-5",
-        value: "구토·설사·복통",
-        label: "구토·설사·복통",
-      },
-      { id: "recommendRecipeId-6", value: "체중 조절", label: "체중 조절" },
-      { id: "recommendRecipeId-7", value: "피로회복", label: "피로회복" },
-      { id: "recommendRecipeId-8", value: "눈물·눈곱", label: "눈물·눈곱" },
-      { id: "recommendRecipeId-9", value: "적은 음수량", label: "적은 음수량" },
-      { id: "recommendRecipeId-10", value: "피부·모질", label: "피부·모질" },
-      { id: "recommendRecipeId-11", value: "관절 건강", label: "관절 건강" },
-      { id: "recommendRecipeId-12", value: "자견 발육", label: "자견 발육" },
-      {
-        id: "recommendRecipeId-13",
-        value: "노령견 건강",
-        label: "노령견 건강",
-      },
-    ],
-  },
-} as const;
+const CRITICAL_DISEASES = [
+  { value: "HYPERLIPIDEMIA", label: "고지혈증" },
+  { value: "PANCREATIC", label: "췌장질환" },
+  { value: "HEART", label: "심장병" },
+  { value: "KIDNEY", label: "신장병" },
+];
 
 export interface RecipeTempData {
   id: number;
   name: string;
-  imageURL: string;
-  description: string[];
-  type: "single" | "double";
+  englishName: string;
+  imageUrl: string;
+  ingredients: string[];
+  benefits: string[];
 }
 
-const RECIPE_TEMP_DATA: Record<number, RecipeTempData> = {
+export interface TempRecipeDto {
+  id: number;
+  name: string;
+  imageUrl: string;
+}
+
+const recipeTempData: Record<number, RecipeTempData> = {
   5: {
     id: 5,
     name: "스타터 프리미엄",
-    imageURL: "/images/recipe/starter_premium.png",
-    description: [
-      "주재료: 닭, 칠면조",
-      "첫 생식에 추천",
-      "부드러워 소화에 적은 부담",
-    ],
-    type: "double",
+    englishName: "STARTER PREMIUM",
+    imageUrl: "/images/recipe/starter_premium.png",
+    ingredients: ["닭", "칠면조"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   6: {
     id: 6,
     name: "터키앤비프",
-    imageURL: "/images/recipe/turkey_and_beef.png",
-    description: [
-      "주재료: 칠면조, 소",
-      "성장기 자견에게 추천",
-      "영양 보충 & 면역력 강화",
-    ],
-    type: "double",
+    englishName: "TURKEY & BEEF",
+    imageUrl: "/images/recipe/turkey_and_beef.png",
+    ingredients: ["칠면조", "소"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   7: {
     id: 7,
     name: "덕앤램",
-    imageURL: "/images/recipe/duck_and_lamb.png",
-    description: [
-      "주재료: 오리, 양",
-      "기력회복이 필요하다면 추천",
-      "관절 강화 & 근력 회복",
-    ],
-    type: "double",
+    englishName: "DUCK & LAMB",
+    imageUrl: "/images/recipe/duck_and_lamb.png",
+    ingredients: ["오리", "양"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   8: {
     id: 8,
     name: "램앤비프",
-    imageURL: "/images/recipe/lamb_and_beef.png",
-    description: [
-      "주재료: 소, 양",
-      "푸석푸석한 모질이라면 추천",
-      "윤기나는 피부와 모질",
-    ],
-    type: "double",
+    englishName: "LAMB & BEEF",
+    imageUrl: "/images/recipe/lamb_and_beef.png",
+    ingredients: ["양", "소"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   9: {
     id: 9,
     name: "프리미엄 치킨",
-    imageURL: "/images/recipe/premium_chicken.png",
-    description: ["주재료: 닭", "전 연령 추천", "관절 강화 & 소화 흡수율 높음"],
-    type: "single",
+    englishName: "PREMIUM CHICKEN",
+    imageUrl: "/images/recipe/premium_chicken.png",
+    ingredients: ["닭"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   10: {
     id: 10,
     name: "프리미엄 터키",
-    imageURL: "/images/recipe/premium_turkey.png",
-    description: [
-      "주재료: 칠면조",
-      "성장기 자견에게 추천",
-      "영양 보충 & 면역력 강화",
-    ],
-    type: "single",
+    englishName: "PREMIUM TURKEY",
+    imageUrl: "/images/recipe/premium_turkey.png",
+    ingredients: ["칠면조"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   11: {
     id: 11,
     name: "프리미엄 램",
-    imageURL: "/images/recipe/premium_lamb.png",
-    description: ["주재료: 양", "활동량이 많다면 추천", "피로회복 & 피모관리"],
-    type: "single",
+    englishName: "PREMIUM LAMB",
+    imageUrl: "/images/recipe/premium_lamb.png",
+    ingredients: ["양"],
+    benefits: ["구토•설사", "관절 건강"],
   },
   12: {
     id: 12,
     name: "프리미엄 비프",
-    imageURL: "/images/recipe/premium_beef.png",
-    description: ["주재료: 소", "전 연령 추천", "체중관리 & 빈혈회복"],
-    type: "single",
+    englishName: "PREMIUM BEEF",
+    imageUrl: "/images/recipe/premium_beef.png",
+    ingredients: ["소"],
+    benefits: ["구토•설사", "관절 건강"],
   },
 };
-const INEDIBLE_FOOD_TO_ID: Record<string, string> = {
-  없음: "0",
-  닭: "1",
-  칠면조: "2",
-  오리: "3",
-  양: "4",
-  소: "5",
-  캥거루: "6",
-  토끼: "7",
-  말: "8",
-  염소: "9",
-  메추리: "10",
-  돼지: "11",
-  황태: "12",
-  타조: "13",
-  ETC: "14",
-};
 
-const ID_TO_INEDIBLE_FOOD: Record<string, string> = {
-  "0": "없음",
-  "1": "닭",
-  "2": "칠면조",
-  "3": "오리",
-  "4": "양",
-  "5": "소",
-  "6": "캥거루",
-  "7": "토끼",
-  "8": "말",
-  "9": "염소",
-  "10": "메추리",
-  "11": "돼지",
-  "12": "황태",
-  "13": "타조",
-  "14": "ETC",
-};
+// 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
+const SURVEY_NO_AUTO_STEP = new Set<SurveyStepKeys>([
+  "step3",
+  "step10",
+  "step11",
+  "step12",
+  "step13",
+  "step14",
+]);
 
-const ID_TO_INGREDIENT_LIST: Record<string, string[]> = {
-  "5": ["닭", "칠면조"],
-  "6": ["칠면조", "소"],
-  "7": ["오리", "양"],
-  "8": ["소", "양"],
-  "9": ["닭"],
-  "10": ["칠면조"],
-  "11": ["양"],
-  "12": ["소"],
-} as const;
-
-type Plan = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF";
-
-interface PlanInfo {
-  key: Plan;
-  title: string;
-  content: string[];
-}
-const PLAN_SELECT_INFO: PlanInfo[] = [
-  {
-    key: "FULL",
-    title: "풀플랜",
-    content: ["하루", "2팩", "/", "2주 간격 배송", "/", "총 28팩"],
-  },
-  {
-    key: "HALF",
-    title: "하프플랜",
-    content: ["하루", "1팩", "/", "4주 간격 배송", "/", "총 28팩"],
-  },
-  {
-    key: "TOPPING_FULL",
-    title: "토핑 풀플랜",
-    content: ["하루", "2팩", "/", "2주 간격 배송", "/", "총 28팩"],
-  },
-  {
-    key: "TOPPING_HALF",
-    title: "토핑 하프플랜",
-    content: ["하루", "1팩", "/", "4주 간격 배송", "/", "총 28팩"],
-  },
-];
-
+const NONE_VALUE = "NONE";

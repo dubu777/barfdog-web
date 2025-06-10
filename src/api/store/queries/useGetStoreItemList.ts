@@ -6,18 +6,18 @@ import { getStoreItemList } from "@/api/store/store";
 
 export { useGetStoreItemList, prefetchGetStoreItemList };
 
-function useGetStoreItemList(page: number, sortBy: SortByType, itemType: ItemType, queryOptions?: UseSuspenseQueryCustomOptions<StoreItemList>) {
+function useGetStoreItemList(page: number, sortBy: SortByType, itemType: ItemType, size: number = 6, queryOptions?: UseSuspenseQueryCustomOptions<StoreItemList>) {
   return useSuspenseQuery<StoreItemList>({
     queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST, page, sortBy, itemType],
-    queryFn: () => getStoreItemList(page, 6, sortBy, itemType),
+    queryFn: () => getStoreItemList(page, size, sortBy, itemType),
     keepPreviousData: true,
     ...queryOptions,
   })
 }
 
-async function prefetchGetStoreItemList(queryClient: QueryClient, page: number, sortBy: SortByType, itemType: ItemType) {
+async function prefetchGetStoreItemList(queryClient: QueryClient, page: number, sortBy: SortByType, itemType: ItemType, size: number = 6) {
   return queryClient.prefetchQuery<StoreItemList>({
     queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST, page, sortBy, itemType],
-    queryFn: () => getStoreItemList(page, 6, sortBy, itemType),
+    queryFn: () => getStoreItemList(page, size, sortBy, itemType),
   })
 }

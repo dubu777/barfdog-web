@@ -1,9 +1,9 @@
 import * as styles from './ItemPurchase.css';
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
-import {useUpdateCartInfo} from "@/api/cart/mutations/useUpdateCartInfo";
-import {useStoreItemStore} from "@/store/useStoreItemStore";
-import {UpdateCartInfo} from "@/types";
-import {useToastStore} from "@/store/useToastStore";
+import { useUpdateCartInfo} from "@/api/cart/mutations/useUpdateCartInfo";
+import { useStoreItemStore} from "@/store/useStoreItemStore";
+import { CartOption, UpdateCartInfo } from "@/types";
+import { useToastStore} from "@/store/useToastStore";
 
 interface ItemPurchaseProps {
   itemId: number;
@@ -14,20 +14,20 @@ const ItemPurchase = ({ itemId }: ItemPurchaseProps) => {
   const { itemAmount, selectedOptions, resetStore } = useStoreItemStore();
 
   const { addToast } = useToastStore();
-  const optionDtoList = selectedOptions.map(option => ({ optionId: option.value, optionAmount: option.count }));
 
-  const body = {
+  const optionDtoList: CartOption[] = selectedOptions.map(option => ({ optionId: option.value, optionAmount: option.count }));
+
+  const body: UpdateCartInfo = {
     itemId,
     itemAmount,
     optionDtoList
   };
   const handleAddToCart = () => {
     // 로그인 여부 확인 및 적용 필요
-    console.log('body', body)
     mutate(
-      { body: body as UpdateCartInfo }, {
+      { body: body }, {
         onSuccess: () => {
-          addToast('장바구니에 추가되었습니다!', 'success');
+          addToast('장바구니에 추가되었습니다!');
           resetStore();
         }
       }

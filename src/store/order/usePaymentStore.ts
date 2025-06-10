@@ -1,0 +1,47 @@
+import { PaymentMethod } from "@/types";
+import { create } from "zustand";
+
+interface PaymentStore {
+  paymentMethod: PaymentMethod;
+  discountTotal: number;
+  paymentPrice: number;
+  discountPlan: number;
+  deliveryPrice: number;
+  finalPrice: number;
+  orderPrice: number;
+  discountSubscribeAlliance: number;
+  discountGrade: number;
+
+  setPaymentMethod: (method: PaymentMethod) => void;
+  setDiscountTotal: (amount: number) => void;
+  setDeliveryPrice: (amount: number) => void;
+  setPaymentPrice: (amount: number) => void;
+  setDiscountPlan: (amount: number) => void;
+  setFinalPrice: (amount: number) => void;
+  setOrderPrice: (amount: number) => void;
+  setDiscountSubscribeAlliance: (amount: number) => void;
+  setDiscountGrade: (amount: number) => void;
+}
+
+export const usePaymentStore = create<PaymentStore>((set) => ({
+  paymentMethod: "NAVER_PAY",
+  discountTotal: 0,
+  discountPlan: 0,
+  paymentPrice: 0,
+  deliveryPrice: 0,
+  finalPrice: 0,
+  orderPrice: 0,
+  discountSubscribeAlliance: 0,
+  discountGrade: 0,
+
+  setPaymentMethod: (method) => set({ paymentMethod: method }),
+  setDiscountTotal: (amount) => set({ discountTotal: Number(amount) }),
+  setDeliveryPrice: (amount) => set({ deliveryPrice: Number(amount) }),
+  setPaymentPrice: (amount) => set({ paymentPrice: Number(amount) }),
+  setDiscountPlan: (amount) => set({ discountPlan: Number(amount) }),
+  setFinalPrice: (amount) => set({ finalPrice: Number(amount) }),
+  setOrderPrice: (amount) => set({ orderPrice: Number(amount) }),
+  setDiscountSubscribeAlliance: (amount) =>
+    set({ discountSubscribeAlliance: Number(amount) }),
+  setDiscountGrade: (amount) => set({ discountGrade: Number(amount) }),
+}));

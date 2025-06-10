@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import Pagination from "@/components/common/pagination/Pagination";
 import StoreItem from "@/components/pages/store/storeList/Item/Item";
-import useDynamicQueryPush from "@/hooks/useDynamicQueryPush";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
 import { ItemType, SortByType, StoreItemListData } from "@/types";
 import { prefetchGetStoreItemList, useGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";

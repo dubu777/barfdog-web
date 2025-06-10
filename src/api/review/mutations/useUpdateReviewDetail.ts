@@ -13,6 +13,9 @@ function useUpdateReviewDetail(reviewId: number, mutationOptions?: UseMutationCu
       await queryClient.invalidateQueries({
         queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_REVIEW_DETAIL, reviewId],
       })
+      await queryClient.invalidateQueries({
+        queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_WRITTEN_REVIEW_LIST],
+      })
     },
     ...mutationOptions,
   })

@@ -1,30 +1,55 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import * as styles from "./SurveySteps.css";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K]
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  petName: string;
 }
 
 export default function SurveyStep8({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
-  
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
+
   return (
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.activityLevel.options}
-        title={SURVEY_FORM_INFO.activityLevel.title}
-        selectedValue={formData.activityLevel}
-        petName={formData.name}
-        layoutType="col"
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.activityLevel.id, value as string)
-        }
+    <>
+      <SurveyTitle petName={petName} config={surveyTitles.step8} />
+      <Controller
+        name="step8.activityLevel"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "radio",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              {surveyFormInfo.dogLifestyle.activityLevel.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.label}
+                    label={option.label}
+                    value={option.value}
+                    inputType="radio"
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
       />
+    </>
   );
 }

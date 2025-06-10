@@ -68,7 +68,7 @@ export const optionsContainer = style({
   borderRadius: '0.5rem',
   fontSize: themeVars.fontSize["text-sm"],
   boxShadow: '0 0 1.5625rem rgba(0, 0, 0, 0.1)',
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
 });
 
 

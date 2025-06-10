@@ -1,54 +1,52 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
 
-export const bottomNavBarContainer = style({
+export const bottomNavBarBase = style({
   position: "fixed",
   left: 0,
   right: 0,
   bottom: 0,
-  display: "flex",
   width: "100%",
   minWidth: "320px",
   maxWidth: "600px",
   margin: "0 auto",
-  height: "60px",
-  padding: '20px 15px',
   zIndex: 200,
-  backgroundColor: themeVars.colors.white,
+  backgroundColor: themeVars.colors.gray.gray0,
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  borderTop: `1px solid ${themeVars.colors.gray.gray200}`
 });
+
+export const bottomNavBarOs = {
+  iOS: style({
+    padding: '8px 12px 34px',
+  }),
+  Android: style({
+    padding: '14px 12px 24px',
+  }),
+  Other: style({
+    padding: '14px 12px 24px',
+  }),
+}
 
 export const bottomNavBarWrapper = style({
   flex: 1,
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+  width: '100%',
+  height: '100%',
 });
 
-export const navItemWrapper = style({
+export const navLinkItem = style({
+  width: 'calc(100% / 5)',
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: 'center',
 });
 
-export const navText = recipe({
-  base: {
-    color: themeVars.fontColors.black,
-    fontSize: themeVars.fontSize["text-xs"],
-    marginTop: "5px",
-  },
-  variants: {
-    active: {
-      true: {
-        color: themeVars.fontColors.darkRed,
-      },
-      false: {
-        color: themeVars.fontColors.black,
-      },
-    },
-  },
-  defaultVariants: {
-    active: false,
-  },
+export const navLabel = style({
+  height: '17px',
 });

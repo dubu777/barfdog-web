@@ -6,7 +6,7 @@ interface CounterProps {
   max?: number;
   initialCount?: number;
   step?: number;
-  onChange?: (value: number) => void;
+  onChange?: (value: number, type?: 'increase' | 'decrease') => void;
   fullWidth?: boolean;
   className?: string;
 }
@@ -24,13 +24,13 @@ const Counter = ({
   const handleIncrement = () => {
     if (initialCount + step <= max) {
       const newValue = initialCount + step;
-      onChange?.(newValue);
+      onChange?.(newValue, 'increase');
     }
   }
   const handleDecrement = () => {
     if (initialCount - step >= min) {
       const newValue = initialCount - step;
-      onChange?.(newValue);
+      onChange?.(newValue, 'decrease');
     }
   }
 

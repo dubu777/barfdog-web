@@ -1,32 +1,76 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { NONE_VALUE, surveyFormInfo, surveyTitles } from "@/constants";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import * as styles from "./SurveySteps.css";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import SurveyGridButtonGroup from "../surveyGridButtonGroup/SurveyGridButtonGroup";
+import ImageButton from "../imageButton/ImageButton";
+import { colStartWrapper } from "../../checkout/common/deliveryAddress/DeliveryAddress.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K],
-    isMultiSelect?: boolean
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  handleNextStep: () => void;
+  petName: string;
 }
 
 export default function SurveyStep14({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
-  
+  handleNextStep,
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
+
   return (
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.currentMeal.options}
-        title={SURVEY_FORM_INFO.currentMeal.title}
-        selectedValue={formData.currentMeal}
-        petName={formData.name}
-        layoutType="grid"
-        isMultiSelect
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.currentMeal.id, value as string, true)
-        }
+    <>
+      <SurveyTitle
+        petName={petName}
+        config={surveyTitles.step14}
+        chipContent="마지막 질문이에요! 🎉"
+        chipColor="red"
       />
+      <Controller
+        name="step14.healthIssues"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "checkbox",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+
+          const handleToggleAndNext = (value: string) => {
+            onToggle(value);
+            if (value === NONE_VALUE) {
+              handleNextStep();
+            }
+          };
+          return (
+              <SurveyGridButtonGroup>
+                {surveyFormInfo.dogDietHealth.healthIssues.options.map(
+                  (option) => (
+                    <ImageButton
+                      key={option.value}
+                      label={option.label}
+                      value={option.value}
+                      inputType="checkbox"
+                      defaultSvg={option.Icon}
+                      selectedSvg={option.SelectedIcon}
+                      isChecked={isSelected(option.value)}
+                      onToggle={handleToggleAndNext}
+                      display="grid2"
+                    />
+                  )
+                )}
+              </SurveyGridButtonGroup>
+          );
+        }}
+      />
+    </>
   );
 }

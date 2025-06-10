@@ -1,5 +1,5 @@
-import { reviewStatus, reviewType } from "@/constants";
-import { Page } from "@/types";
+import { REVIEW_STATUS, REVIEW_TYPE } from "@/constants";
+import {ImageFile, Page} from "@/types";
 
 export type {
   BaseReviewItem,
@@ -13,13 +13,16 @@ export type {
   WrittenReviewList,
   WritableReviewItem,
   WritableReviewList,
-  ReviewType,
+  ReviewItemType,
   ReviewStatus,
   ReviewDetailItem,
   ReviewDetailImage,
   ReviewFormData,
   UpdateReviewDetail,
   CreateReviewDetail,
+  SurveyKey,
+  SurveyValue,
+  SurveyQuestionType,
 };
 
 interface BaseReviewItem {
@@ -43,14 +46,9 @@ interface ReviewListItem extends BaseReviewItem{
   orderType?: string;
 }
 
-interface ReviewImage {
-  filename: string;
-  url: string;
-}
-
 interface BestReviewDetail {
   reviewDto: ReviewListItem;
-  reviewImageDtoList: ReviewImage[];
+  reviewImageDtoList: ImageFile[];
 }
 
 interface ReviewList {
@@ -60,7 +58,7 @@ interface ReviewList {
 
 interface WrittenReviewItem extends BaseReviewItem {
   title: string;
-  reviewType: ReviewType;
+  reviewType: ReviewItemType;
   createdDate: string;
   imageUrl: string;
   imageCount: number;
@@ -76,10 +74,13 @@ interface WrittenReviewList {
 interface WritableReviewItem {
   id: number;
   targetId: number;
-  reviewType: ReviewType;
+  reviewType: ReviewItemType;
   imageUrl: string;
   title: string;
   orderedDate: string;
+  orderPaymentPrice?: number;
+  orderId?: number;
+  merchantUid?: string;
 }
 
 interface WritableReviewList {
@@ -91,10 +92,10 @@ interface ReviewDetailItem extends BaseReviewItem{
   title: string;
   writtenDate: string;
   name?: string;
-  reviewType?: ReviewType;
+  reviewType: ReviewItemType;
 }
 
-interface ReviewDetailImage extends ReviewImage {
+interface ReviewDetailImage extends ImageFile {
   id: number;
 }
 
@@ -104,9 +105,9 @@ interface ReviewDetail {
 }
 
 interface ReviewFormData {
-  id: number;
+  id?: number;
   title: string;
-  reviewType: ReviewType | null;
+  reviewType: ReviewItemType | null;
 
   name?: string;
   thumbnailUrl?: string;
@@ -115,6 +116,7 @@ interface ReviewFormData {
   titleByAdmin?: null | string;
   contents?: string;
 
+  orderId: number | null;
   targetId?: number;
   imageUrl?: string;
   orderedDate?: string;
@@ -129,10 +131,20 @@ interface UpdateReviewDetail {
 
 interface CreateReviewDetail extends UpdateReviewDetail{
   id: number;
-  targetId: number;
-  reviewType: ReviewType | null;
+  orderId: number | null;
+  targetId?: number;
+  reviewType: ReviewItemType | null;
   reviewImageIdList: number[];
 }
 
-type ReviewType = keyof typeof reviewType;
-type ReviewStatus = keyof typeof reviewStatus;
+type ReviewItemType = keyof typeof REVIEW_TYPE;
+type ReviewStatus = keyof typeof REVIEW_STATUS;
+
+
+type SurveyKey = "preference" | "freshness" | "deliveryStatus";
+type SurveyValue = "dislike" | "normal" | "like" | null;
+
+interface SurveyQuestionType {
+  key: SurveyKey;
+  label: string;
+}

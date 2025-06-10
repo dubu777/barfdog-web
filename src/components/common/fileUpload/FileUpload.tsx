@@ -1,11 +1,10 @@
 'use client';
-import * as styles from './FileUpload.css';
 import { ChangeEvent, useState } from "react";
+import * as styles from './FileUpload.css';
 import Image from "next/image";
-import NoImage from "/public/images/icons/noImage.png";
-import Text from "@/components/common/text/Text";
-import CloseButton from '/public/images/icons/close-black.png';
-import { ellipsis } from "@/styles/common.css";
+import AddProfileIcon from '/public/images/icons/add_profile.svg';
+import DogIcon from '/public/images/healthNote/dogIcon.png';
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
 type ImageFileObjectFit = 'cover' | 'contain';
 
@@ -37,8 +36,8 @@ const FileUpload = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [clearFile, setClearFile] = useState<boolean>(false);
 
-  const imageSrc = !clearFile && (previewUrl ? previewUrl : defaultImageUrl) || NoImage;
-  const imageNameInfo = !clearFile && (file ? `선택된 파일:\n ${file.name}` : defaultImageName && defaultImageName) || '선택된 파일이 없습니다.';
+  const imageSrc = !clearFile && (previewUrl ? previewUrl : defaultImageUrl) || DogIcon;
+  // const imageNameInfo = !clearFile && (file ? `선택된 파일:\n ${file.name}` : defaultImageName && defaultImageName) || '선택된 파일이 없습니다.';
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setClearFile(false);
@@ -82,9 +81,7 @@ const FileUpload = ({
   
   return (
     <div className={styles.fileUploadContainer}>
-      <label
-        htmlFor="file-input"
-      >
+      <label htmlFor="file-input">
         <Image
           src={imageSrc}
           alt={imageName}
@@ -92,32 +89,34 @@ const FileUpload = ({
           height={imageHeight}
           className={styles.imageFile({ borderRadius, objectFit })}
         />
+        <div className={styles.background}>
+          <AddProfileIcon />
+        </div>
       </label>
-      <div className={styles.fileInfoContainer}>
-        <input
-          type="file"
-          id="file-input"
-          accept='image/jpeg, image/jpg, image/png, image/gif'
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
-        <label
-          htmlFor="file-input"
-          className={styles.fileInputLabel}
-        >
-          파일 업로드
-        </label>
-        <Text type='description' size='sm' color='black' align='left' className={ellipsis({ lineSize: 'line2' })}>
-          {imageNameInfo}
-        </Text>
-        <button onClick={handleClearFile} className={styles.clearButton}>
-          <Image src={CloseButton} alt='close button' width={10} height={10} />
-        </button>
-      </div>
-      {error && <Text type='description' size='xs' color='red'>{error}</Text>}
-      <Text type='description' size='xs' color='grey'>
-        * 파일 크기 10MB 이하 / 확장자: jpg, jpeg, png, gif
-      </Text>
+      <input
+        type="file"
+        id="file-input"
+        accept='image/jpeg, image/jpg, image/png, image/gif'
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
+      <button onClick={handleClearFile}>
+        <DefaultText type='headline4' color='gray600' align='center' style={{ cursor: 'pointer', textDecoration: 'underline' }}>
+          기본 이미지
+        </DefaultText>
+      </button>
+      {/*<div className={styles.fileInfoContainer}>*/}
+      {/*  <Text type='description' size='sm' color='black' align='left' className={ellipsis({ lineSize: 'line2' })}>*/}
+      {/*    {imageNameInfo}*/}
+      {/*  </Text>*/}
+      {/*  <button onClick={handleClearFile} className={styles.clearButton}>*/}
+      {/*    <Image src={CloseButton} alt='close button' width={10} height={10} />*/}
+      {/*  </button>*/}
+      {/*</div>*/}
+      {/*{error && <Text type='description' size='xs' color='red'>{error}</Text>}*/}
+      {/*<Text type='description' size='xs' color='grey'>*/}
+      {/*  * 파일 크기 10MB 이하 / 확장자: jpg, jpeg, png, gif*/}
+      {/*</Text>*/}
     </div>
   );
 };

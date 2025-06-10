@@ -1,32 +1,56 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import * as styles from "./SurveySteps.css";
+import DogImageButton from "../dogImageButton/DogImageButton";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K],
-    isMultiSelect?: boolean
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  petName: string;
 }
 
 export default function SurveyStep7({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
-  
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
+
   return (
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.dogStatus.options}
-        title={SURVEY_FORM_INFO.dogStatus.title}
-        selectedValue={formData.dogStatus}
-        petName={formData.name}
-        layoutType="col"
-        isMultiSelect={true}
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.dogStatus.id, value as string, true)
-        }
+    <>
+      <SurveyTitle petName={petName} config={surveyTitles.step7} />
+      <Controller
+        name="step7.dogBodyCondition"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "radio",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              {surveyFormInfo.dogLifestyle.dogBodyCondition.options.map(
+                (option) => (
+                  <DogImageButton
+                    key={option.label}
+                    imageSrc={option.imageUrl}
+                    label={option.label}
+                    value={option.value}
+                    subLabel={option.subLabel}
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
       />
+    </>
   );
 }

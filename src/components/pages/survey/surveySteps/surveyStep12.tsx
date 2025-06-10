@@ -1,58 +1,72 @@
-import { SurveyFormData } from "@/types/survey";
-import { SURVEY_FORM_INFO } from "@/constants";
-import SurveyButtonList from "../surveyButtonList/SurveyButtonList";
-import SurveyTextField from "../surveyTextField/SurveyTextField";
-import { useEffect, useState } from "react";
+import { surveyFormInfo, surveyTitles } from "@/constants";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
+import { Controller, useFormContext } from "react-hook-form";
+import SurveyTitle from "../surveyTitle/SurveyTitle";
+import * as styles from "./SurveySteps.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 
-interface SurveyStep2Props {
-  formData: SurveyFormData;
-  handleChange: <K extends keyof SurveyFormData>(
-    key: K,
-    value: SurveyFormData[K],
-    isMultiSelect?: boolean
-  ) => void;
+interface SurveyStepProps {
+  handleChange: () => void;
+  handleBlur: (fieldName: string) => Promise<void>;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    fieldName: string
+  ) => Promise<void>;
+  handleNextStep: () => void;
+  petName: string;
 }
 
 export default function SurveyStep12({
-  formData,
   handleChange,
-}: SurveyStep2Props) {
-  const [showEtcField, setShowEtcField] = useState(false);
-
-  useEffect(() => {
-    if (
-      Array.isArray(formData.supplement) &&
-      formData.supplement.includes("ETC")
-    ) {
-      setShowEtcField(true);
-    } else {
-      setShowEtcField(false);
-    }
-  }, [formData.supplement]);
+  handleBlur,
+  handleKeyDown,
+  handleNextStep,
+  petName,
+}: SurveyStepProps) {
+  const { control } = useFormContext<SurveyStepValues>();
 
   return (
     <>
-      <SurveyButtonList
-        options={SURVEY_FORM_INFO.supplement.options}
-        title={SURVEY_FORM_INFO.supplement.title}
-        selectedValue={formData.supplement}
-        petName={formData.name}
-        layoutType="grid"
-        isMultiSelect
-        onChange={(value) =>
-          handleChange(SURVEY_FORM_INFO.supplement.id, value as string, true)
-        }
+      <SurveyTitle
+        petName={petName}
+        config={surveyTitles.step12}
+        chipContent="더 정밀한 추천을 위해 3가지만 더 여쭤볼게요 🐶"
       />
-      {showEtcField && (
-        <SurveyTextField
-          id={SURVEY_FORM_INFO.supplementEtc.id}
-          value={formData.supplementEtc}
-          onChange={(value) =>
-            handleChange(SURVEY_FORM_INFO.supplementEtc.id, value)
-          }
-          placeholder={SURVEY_FORM_INFO.supplementEtc.placeholder}
-        />
-      )}
+      <Controller
+        name="step12.currentMeal"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "checkbox",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              <DefaultText type="label2" color="gray500">
+                *복수응답가능
+              </DefaultText>
+              {surveyFormInfo.dogDietHealth.currentMeal.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.label}
+                    label={option.label}
+                    value={option.value}
+                    inputType="checkbox"
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
+      />
     </>
   );
 }

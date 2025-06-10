@@ -1,17 +1,46 @@
-import {create} from "zustand";
-import {UserInfoData} from "@/types/user";
-import {initialUserInfo} from "@/constants";
+import { create } from "zustand";
+import { TemporaryUserEmail, TemporaryPassword } from "@/types";
+import { LoginUserInfo, UserInfo } from "@/types";
+
 
 interface AuthStore {
-  isLoggedIn: boolean;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
-  userInfo: UserInfoData;
-  setUserInfo: (userInfo: UserInfoData) => void;
+  loginUserInfo: LoginUserInfo | null;
+  setLoginUserInfo: (loginUserInfo: LoginUserInfo) => void;
+  userInfo: UserInfo | null;
+  setUserInfo: (userInfo: UserInfo) => void;
+  tempEmailUserInfo: TemporaryUserEmail;
+  setTempEmailUserInfo: (tempEmailUserInfo: TemporaryUserEmail) => void;
+  tempPwUserInfo: TemporaryPassword | null;
+  setTempPwUserInfo: (tempPwUserInfo: TemporaryPassword) => void;
+  clientLoggedIn: boolean | null;
+  setClientLoggedIn: (loggedIn: boolean | null) => void;
 }
 
-export const useAuthStore = create<AuthStore>((set, get) => ({
-  isLoggedIn: true,
-  setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
-  userInfo: initialUserInfo,
-  setUserInfo: (userInfo) => set({ userInfo }),
-}))
+
+export const useAuthStore = create<AuthStore>((set) => ({
+  userInfo: null,
+  loginUserInfo: null,
+  setUserInfo: (userInfo) => {
+    set({
+      userInfo: userInfo,
+    });
+  },
+  setLoginUserInfo: (loginUserInfo) => {
+    set({
+      loginUserInfo: loginUserInfo,
+    });
+  },
+  tempEmailUserInfo: {
+    email: "",
+    provider: null,
+  },
+  setTempEmailUserInfo: (tempEmailUserInfo) => set({ tempEmailUserInfo }),
+  tempPwUserInfo: {
+    email: "",
+    name: "",
+    phoneNumber: "",
+  },
+  setTempPwUserInfo: (tempPwUserInfo) => set({ tempPwUserInfo }),
+  clientLoggedIn: null,
+  setClientLoggedIn: (loggedIn) => set({ clientLoggedIn: loggedIn }),
+}));

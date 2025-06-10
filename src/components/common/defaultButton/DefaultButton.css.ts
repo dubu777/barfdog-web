@@ -19,7 +19,7 @@ export const defaultButtonStyle = recipe({
       main: {
         border: 'none',
         backgroundColor: themeVars.backgroundColors.mainRed,
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       },
       white: {
         border: 'none',
@@ -39,7 +39,7 @@ export const defaultButtonStyle = recipe({
       mainBorder: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
         backgroundColor: themeVars.backgroundColors.white,
-        color: themeVars.colors.mainRed,
+        color: themeVars.colors.red.red,
       },
       grayBorder: {
         border: `1px solid ${themeVars.borderColors.greyBB}`,
@@ -49,17 +49,17 @@ export const defaultButtonStyle = recipe({
       blackBorder: {
         border: `1px solid ${themeVars.borderColors.black}`,
         backgroundColor: themeVars.backgroundColors.white,
-        color: themeVars.colors.black,
+        color: themeVars.colors.gray.gray900,
       },
     },
     size: {
-      xxs: { fontSize: '10px', height: '19px', padding: '0 8px' },
-      xs: { fontSize: '12px', height: '23px', padding: '0 8px' },
-      sm: { fontSize: '13px', height: '35px', width: '100%' },
-      md: { fontSize: '14px', height: '40px', width: '100%' },
-      lg: { fontSize: '16px', height: '45px', width: '100%' },
-      xl: { fontSize: '20px', height: '50px', width: '100%' },
-      xxl: { fontSize: '20px', height: '54px', width: '100%' },
+      xxs: { fontSize: '10px', minHeight: '19px', padding: '0 8px' },
+      xs: { fontSize: '12px', minHeight: '23px', padding: '0 8px' },
+      sm: { fontSize: '13px', minHeight: '35px', width: '100%' },
+      md: { fontSize: '14px', minHeight: '40px', width: '100%' },
+      lg: { fontSize: '16px', minHeight: '45px', width: '100%' },
+      xl: { fontSize: '20px', minHeight: '50px', width: '100%' },
+      xxl: { fontSize: '20px', minHeight: '54px', width: '100%' },
     },
     borderRadius: {
       sm: { borderRadius: '3px' },
@@ -96,7 +96,7 @@ export const defaultButtonStyle = recipe({
     isActive: {
       true: {
         backgroundColor: themeVars.backgroundColors.mainRed,
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       }
     }
   },
@@ -108,31 +108,11 @@ export const defaultButtonStyle = recipe({
         cursor: 'not-allowed',
       },
     },
-    // hover 시 효과 추가 시 적용
-    // {
-    //   variants: { type: 'main', hover: true },
-    //   style: {
-    //     ':hover': {
-    //       background: themeVars.backgroundColors.pinkFF,
-    //       border: `1px solid ${themeVars.borderColors.mainRed}`,
-    //       color: themeVars.fontColors.mainRed,
-    //     }
-    //   }
-    // },
-    // {
-    //   variants: { type: 'mainBorder', hover: true },
-    //   style: {
-    //     ':hover': {
-    //       background: themeVars.backgroundColors.pinkFF,
-    //       color: themeVars.fontColors.mainRed,
-    //     }
-    //   }
-    // },
     {
       variants: { type: 'grayBorder', isActive: true },
       style: {
         border: `1px solid ${themeVars.borderColors.mainRed}`,
-        color: themeVars.colors.white,
+        color: themeVars.colors.gray.gray0,
       }
     }
   ],

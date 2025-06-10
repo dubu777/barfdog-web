@@ -3,18 +3,23 @@ import { ReactNode } from "react";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import CloseButton from "/public/images/icons/close-black.png";
 import Image from "next/image";
-import DefaultModalBackground from "../defaultModalBackground/DefaultModalBackground";
+import ModalBackground from "../modalBackground/ModalBackground";
+import Button from "@/components/common/button/Button";
 
 interface DefaultModalProps {
   children: ReactNode;
   isVisible: boolean;
   onClose: () => void;
-  size: "sm" | "md" | "lg";
+  size: "sm" | "md" | "lg" | "xl";
   type: "alert" | "info";
   cancelText?: string;
   confirmText?: string;
   scroll?: boolean;
   onClickConfirm?: () => void;
+  extraButton?: boolean;
+  extraButtonText?: string;
+  onClickExtraButton?: () => void;
+  confirmDisabled?: boolean;
 }
 
 export default function DefaultModal({
@@ -27,9 +32,13 @@ export default function DefaultModal({
   confirmText,
   scroll,
   onClickConfirm,
+  extraButton,
+  extraButtonText,
+  onClickExtraButton,
+  confirmDisabled = false,
 }: DefaultModalProps) {
   return (
-    <DefaultModalBackground isVisible={isVisible} onClose={onClose}>
+    <ModalBackground isVisible={isVisible} onClose={onClose}>
       <div
         className={styles.modalContainer({ size, scroll })}
         onClick={(e) => e.stopPropagation()}
@@ -45,18 +54,23 @@ export default function DefaultModal({
             />
           </div>
         )}
-        <div className={styles.modalContentWrapper({scroll})}>{children}</div>
+        <div className={styles.modalContentWrapper({ scroll })}>{children}</div>
         {type === "alert" && (
           <div className={styles.modalButtonWrapper}>
-            <DefaultButton type="mainBorder" size="sm" onClick={onClose}>
+            <Button variant='outline' size="sm" onClick={onClose} fullWidth>
               {cancelText}
-            </DefaultButton>
-            <DefaultButton size="sm" onClick={onClickConfirm}>
+            </Button>
+            <Button size="sm" onClick={onClickConfirm} disabled={confirmDisabled} fullWidth>
               {confirmText}
-            </DefaultButton>
+            </Button>
           </div>
         )}
+        {extraButton && (
+          <DefaultButton size="md" onClick={onClickExtraButton} borderRadius="sm">
+            {extraButtonText}
+          </DefaultButton>
+        )}
       </div>
-    </DefaultModalBackground>
+    </ModalBackground>
   );
 }
