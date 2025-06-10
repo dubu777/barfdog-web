@@ -17,7 +17,5 @@ export const tabContent = style({
 })
 
 export const sliderQuestion = style({
-	display: 'flex',
-	flexDirection: 'column',
 	gap: '28px',
 })

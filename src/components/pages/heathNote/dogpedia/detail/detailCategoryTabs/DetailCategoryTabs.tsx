@@ -53,7 +53,12 @@ const DetailCategoryTabs = ({
 				<DefaultText type='title4'>
 					{DOGPEDIA_CATEGORY[tab]} {String(tab).includes('_') ? String(tab).split('_').join(' ') : tab}
 				</DefaultText>
-				<Card shadow='light' background='gray50' padding={16} className={styles.sliderQuestion}>
+				<Card
+					shadow='light'
+					backgroundColor='gray50'
+					padding={16}
+					className={styles.sliderQuestion}
+				>
 					{Object.entries(categoryQuestionData).map(([key, meta]) => {
 						const tabKey = tab.toLowerCase() as keyof DetailCategoryTabData;
 						const questionKey = key.toLowerCase() as keyof DetailCategoryTabData[typeof tabKey];

@@ -55,8 +55,8 @@ const HealthNoteMainHeader = () => {
   };
 
   const handleCloseChangeDogInfo = () => {
-    const isChangedDog = 
-      dogInfo?.dogId && 
+    const isChangedDog =
+      dogInfo?.dogId &&
       (!representativeDog?.id || (dogInfo?.dogId !== representativeDog?.id));
 
     if (isChangedDog) {

@@ -45,14 +45,13 @@ export const shippingInfoBox = style({
 })
 
 export const completedBoxDateInfo = style({
-	display: 'flex',
-	flexDirection: 'column',
 	gap: '14px',
-	padding: '16px 20px',
 	marginTop: '40px',
 })
 
 export const completedDate = style({
+	width: '100%',
 	display: 'flex',
+	alignItems: 'center',
 	justifyContent: 'space-between',
 })

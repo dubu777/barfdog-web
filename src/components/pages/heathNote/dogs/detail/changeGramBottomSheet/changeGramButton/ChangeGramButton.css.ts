@@ -10,11 +10,11 @@ export const changeGramButtonWrapper = recipe({
 		isChecked: {
 			true: {
 				border: `1px solid ${themeVars.colors.red.red}`,
-				background: `${themeVars.colors.red.pinkWhite} !important`,
+				backgroundColor: `${themeVars.colors.red.pinkWhite} !important`,
 			},
 			false: {
 				border: `1px solid ${themeVars.colors.gray.gray200}`,
-				background: `${themeVars.colors.gray.gray0} !important`,
+				backgroundColor: `${themeVars.colors.gray.gray0} !important`,
 			}
 		}
 	}

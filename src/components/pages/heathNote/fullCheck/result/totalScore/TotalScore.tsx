@@ -51,7 +51,11 @@ const TotalScore = ({
         score={totalScore}
         svgImage={RESULT_HEALTH_STATUS_ICON_MAP[healthStatusKey]}
       />
-      <Card shadow="none" className={styles.rankBox}>
+      <Card
+        shadow="none"
+        direction='row'
+        className={styles.rankBox}
+      >
         {rankInfo.map((info) => (
           <InfoBox
             key={info.label}

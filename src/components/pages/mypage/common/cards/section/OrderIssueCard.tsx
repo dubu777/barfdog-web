@@ -50,17 +50,15 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 				itemName={cardDetail?.recipeNames || cardDetail?.itemName}
 				price={cardDetail?.paymentPrice || 1000}
 			/>
-			<div className={styles.buttonContainer}>
-				<div className={styles.actionsControls({ isWrap: false })}>
-					{!isDetail
-						? <Button variant='outline' type='assistive' size='sm' fullWidth onClick={handleActions}>
-							{issueLabel} 상세보기
-						</Button>
-						: <Button variant='solid' size='sm' fullWidth onClick={handleActions}>
-							{orderType === ORDER_TYPE.SUBSCRIPTION ? `재구독하고 최대 ${totalDiscount}% 할인받기` : '재구매'}
-						</Button>
-					}
-				</div>
+			<div className={styles.actionsControls({ isWrap: false })}>
+				{!isDetail
+					? <Button variant='outline' type='assistive' size='sm' fullWidth onClick={handleActions}>
+						{issueLabel} 상세보기
+					</Button>
+					: <Button variant='solid' size='sm' fullWidth onClick={handleActions}>
+						{orderType === ORDER_TYPE.SUBSCRIPTION ? `재구독하고 최대 ${totalDiscount}% 할인받기` : '재구매'}
+					</Button>
+				}
 			</div>
 		</CardSection>
 	);

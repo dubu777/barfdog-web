@@ -16,19 +16,15 @@ export const walkScoreContentBox = style({
 	gap: '8px',
 })
 
-export const walkScoreInfoCard = style({
-	display: 'flex',
-	flexDirection: 'column',
-	padding: '0 !important'
-})
-
 export const walkScore = style({
+	width: '100%',
 	display: 'flex',
 	justifyContent: 'space-between',
 	padding: '12px 12px 0'
 })
 
 export const walkScoreInfo = style({
+	width: '100%',
 	display: 'flex',
 	padding: '12px 16px'
 })
@@ -58,9 +54,6 @@ export const averageDurations = style({
 })
 
 export const walkNotice = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '6px',
 	border: `2px dashed ${themeVars.colors.blue.blue300}`,
 	marginTop: '4px',
 })

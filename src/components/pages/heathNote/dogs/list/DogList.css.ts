@@ -15,12 +15,6 @@ export const dogList = style({
 	gap: '12px',
 })
 
-export const dogCard = style({
-	display: 'flex',
-	gap: '12px',
-	borderRadius: '12px !important'
-})
-
 export const dogInfo = style({
 	width: 'calc(100% - 76px)',
 	display: 'flex',

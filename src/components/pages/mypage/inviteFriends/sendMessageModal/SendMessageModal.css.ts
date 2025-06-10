@@ -12,9 +12,6 @@ export const sendMessageModalContainer = style({
 })
 
 export const sendMessageCard = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '16px',
 	border: `1px solid ${themeVars.colors.gray.gray200}`,
 })
 

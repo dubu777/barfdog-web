@@ -20,7 +20,7 @@ const SliderQuestion = ({
 	value,
 }: SliderQuestionProps) => {
 	return (
-		<div>
+		<div className={styles.sliderContainer}>
 			<DefaultText type='headline2'>{label}</DefaultText>
 			<div className={styles.sliderBox}>
 				{[1, 2, 3, 4, 5].map(step => {

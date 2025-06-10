@@ -3,6 +3,7 @@ import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
 export const productInfoBox = style({
+	width: '100%',
 	display: 'flex',
 	gap: '12px',
 	marginBottom: '12px',
@@ -24,6 +25,7 @@ export const productAvatar = style({
 
 export const statusContainer = recipe({
 	base: {
+		width: '100%',
 		marginBottom: '10px',
 	},
 	variants: {
@@ -53,6 +55,7 @@ export const buttonContainer = style({
 
 export const actionsControls = recipe({
 	base: {
+		width: '100%',
 		display: 'flex',
 		gap: '10px 8px',
 	},

@@ -25,7 +25,7 @@ const StatusTracker = ({ statusTitle, steps }: StatusTrackerProps) => {
 		<article className={styles.statusTrackerContainer}>
 			<DefaultText type='headline1' className={styles.statusTracker}>{statusTitle}</DefaultText>
 			<div className={styles.statusTrackerStepBox}>
-				{updatedSteps.map((step, index) => (
+				{updatedSteps?.map((step, index) => (
 					<>
 						<div key={step.key} className={styles.statusTrackerStepInfo}>
 							{step.count !== undefined &&

@@ -28,6 +28,7 @@ interface BaseCardProps {
 	isButtonWrap?: boolean;
 	showBoxShadow?: boolean;
 	className?: string;
+	align?: 'start' | 'between';
 }
 
 const BaseCard = ({
@@ -46,9 +47,10 @@ const BaseCard = ({
 	isButtonWrap = type === 'order',
 	showBoxShadow = true,
 	className,
+	align = 'start',
 }: BaseCardProps) => {
 	return (
-		<CardSection shadow={showBoxShadow ? 'strong' : 'none'} className={className}>
+		<CardSection shadow={showBoxShadow ? 'strong' : 'none'} align={align} className={className}>
 			{cardHeaderTitle}
 			<CardProductInfo
 				name={data.name}

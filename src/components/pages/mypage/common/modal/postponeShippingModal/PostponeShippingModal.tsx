@@ -149,7 +149,7 @@ const PostponeShippingModal = ({
 						<DefaultText type='label2'>정기배송 {nextCycle}회차 도착 예정일</DefaultText>
 						이 변경되었습니다
 					</DefaultText>
-					<Card shadow='none' className={styles.completedBoxDateInfo}>
+					<Card shadow='none' padding='20/16' className={styles.completedBoxDateInfo}>
 						<div className={styles.completedDate}>
 							<DefaultText type='body3' color='gray600'>기존 발송 예정일</DefaultText>
 							<DefaultText type='body2' color='gray700'>{defaultNextDeliveryDate} (화)</DefaultText>

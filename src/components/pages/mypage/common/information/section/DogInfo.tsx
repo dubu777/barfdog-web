@@ -47,7 +47,11 @@ const DogInfo = ({
 				setIsOpen={!isDefaultOpen ? setIsOpen : undefined}
 			/>
 			{isOpen &&
-				<Card shadow='none' padding={12} className={styles.infoDetailContainer}>
+				<Card
+					shadow='none'
+					padding={12}
+					className={styles.infoDetailContainer}
+				>
 					<div className={styles.petInfo}>
 						<Image src={SampleDog1} alt={data.name} width={76} height={76} className={styles.petImage} />
 						<div className={styles.infoBox}>

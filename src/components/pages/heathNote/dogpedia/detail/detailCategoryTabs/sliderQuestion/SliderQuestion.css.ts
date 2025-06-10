@@ -1,5 +1,9 @@
 import { style } from "@vanilla-extract/css";
 
+export const sliderContainer = style({
+	width: '100%',
+})
+
 export const sliderBox = style({
 	width: '100%',
 	display: 'flex',

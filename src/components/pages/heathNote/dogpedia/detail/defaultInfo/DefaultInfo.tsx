@@ -71,7 +71,13 @@ const DefaultInfo = ({
 						const isDiseases = info.key === 'diseases';
 						const valueLabel = info.key === 'weight' ? 'kg' : info.key === 'height' && 'cm';
 						return (
-							<Card key={info.key} shadow='light' padding={16} className={styles.infoCard}>
+							<Card
+								key={info.key}
+								direction='row'
+								shadow='light'
+								padding={16}
+								justify='between'
+							>
 								<div className={styles.infoCardLabel}>
 									<SvgIcon src={info.icon} />
 									<DefaultText type='headline2'>{info.label}</DefaultText>

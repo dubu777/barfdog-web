@@ -19,11 +19,6 @@ export const defaultInfoList = style({
 	gap: '8px',
 })
 
-export const infoCard = style({
-	display: 'flex',
-	justifyContent: 'space-between',
-})
-
 export const infoCardLabel = style({
 	display: 'flex',
 	alignItems: 'center',

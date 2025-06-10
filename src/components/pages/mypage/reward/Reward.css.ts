@@ -10,7 +10,7 @@ export const totalRewardCard = style({
 });
 
 export const rewardSummary = style({
-  marginTop: '16px',
+  width: '100%',
 });
 
 export const summaryInfo = style({

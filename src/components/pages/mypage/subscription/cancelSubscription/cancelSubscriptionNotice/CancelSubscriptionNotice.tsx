@@ -69,7 +69,7 @@ const CancelSubscriptionNotice = ({
 				</>
 			}
 			<div className={styles.cancelSubscriptionNotice}>
-				<Card padding={12} shadow='none' className={styles.cancelSubscriptionNoticeBox}>
+				<Card padding={12} shadow='none' align='start' className={styles.cancelSubscriptionNoticeBox}>
 					<div className={styles.cancelSubscriptionNoticeTitle}>
 						<SvgIcon src={InfoIcon} color='pastelRed' size={24} />
 						<DefaultText type='label4' color='pastelRed'>구독 해지 안내</DefaultText>

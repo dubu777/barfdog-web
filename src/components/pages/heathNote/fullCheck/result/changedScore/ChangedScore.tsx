@@ -56,7 +56,13 @@ const ChangedScore = ({
 				title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${Math.abs(diffScore)}점 ` : ''}${STATUS_MESSAGE[status].title}`}
 			>
 				{status !== 'same' &&
-					<Card shadow='none' className={styles.changedScoreNotice}>
+					<Card
+						shadow='none'
+						direction='row'
+						padding={12}
+						gap={12}
+						className={styles.changedScoreNotice}
+					>
 						<SvgIcon src={STATUS_MESSAGE[status].icon} />
 						<DefaultText type='label4' color='gray700'>
 							{bodyPart.map(v => BODY_PART_TO_CATEGORY[v]).join(', ')}

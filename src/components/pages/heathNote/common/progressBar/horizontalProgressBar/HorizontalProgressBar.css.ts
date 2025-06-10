@@ -2,6 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const progressBarWrapper = style({
+	width: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 });

@@ -64,7 +64,7 @@ const SendMessageModal = ({
 			title='문자 보내기'
 		>
 			<div className={styles.sendMessageModalContainer}>
-				<Card shadow='none' padding={16} className={styles.sendMessageCard}>
+				<Card shadow='none' padding={16} gap={16} align='start'>
 					<DefaultText type='headline3'>[바프독]</DefaultText>
 					<DefaultText type='body1'>
 						{username} 님이&nbsp;

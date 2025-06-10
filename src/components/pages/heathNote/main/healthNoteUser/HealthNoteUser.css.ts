@@ -29,17 +29,11 @@ export const menuCategory = recipe({
 });
 
 export const menuCategoryCard = recipe({
-  base: {
-    display: "flex",
-  },
+  base: {},
   variants: {
     fullWidth: {
-      true: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-      },
+      true: {},
       false: {
-        flexDirection: "column",
         gap: "32px",
       },
     },

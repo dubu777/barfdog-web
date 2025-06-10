@@ -102,6 +102,7 @@ const OrderCard = ({ data, type, hasBottomSheet = false }: OrderCardProps) => {
 		<BaseCard
 			type='order'
 			data={normalizedData}
+			align='between'
 			cardHeaderTitle={
 				<div className={styles.orderCardInfoTop}>
 					<DefaultText type='label4'>
