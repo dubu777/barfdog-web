@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
-import StoreHeader from "@/components/pages/store/layout/StoreHeader";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
+import Header from "@/components/layout/header/Header";
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -9,7 +9,10 @@ interface DefaultLayoutProps {
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <>
-      <StoreHeader />
+      <Header
+        showCartButton
+        leftTitle='스토어'
+      />
       <Wrapper>
         {children}
       </Wrapper>
