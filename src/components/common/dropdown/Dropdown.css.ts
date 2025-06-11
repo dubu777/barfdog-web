@@ -20,6 +20,7 @@ export const dropdownBoxStyle = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '4px',
+	zIndex: '100'
 })
 
 export const dropdownOptionStyle = style({

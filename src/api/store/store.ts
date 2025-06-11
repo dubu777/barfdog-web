@@ -1,19 +1,24 @@
 import axiosInstance from "@/api/axiosInstance";
-import {StoreItemDetail, StoreItemDetailReviewList, StoreItemList} from "@/types/store";
+import { AxiosInstance } from "axios";
+import { StoreItemDetail, StoreItemDetailReviewList, StoreItemList } from "@/types/store";
 
 export { getStoreItemList, getStoreItemDetail, getStoreItemReviewList };
 
-const getStoreItemList = async (page = 0, size = 10, sortBy = 'recent', itemType = 'ALL'): Promise<StoreItemList> => {
-  const { data } = await axiosInstance.get(`/api/items?page=${page}&size=${size}&sortBy=${sortBy}&itemType=${itemType.toUpperCase()}`);
+const getStoreItemList = async (page = 0, size = 10, sortBy = 'recent', itemType = 'ALL', instance: AxiosInstance = axiosInstance): Promise<StoreItemList> => {
+  const { data } = await instance.get(`/api/items?page=${page}&size=${size}&sortBy=${sortBy}&itemType=${itemType.toUpperCase()}`);
 
+  // return {
+  //   page: {
+  //     size: data.size,
+  //     totalElements: data.totalElements,
+  //     totalPages: data.totalPages,
+  //     number: data.number,
+  //   },
+  //   itemList: data?.content || [],
+  // };
   return {
-    page: {
-      size: data.size,
-      totalElements: data.totalElements,
-      totalPages: data.totalPages,
-      number: data.number,
-    },
-    itemList: data?.content || [],
+    page: data.page,
+    itemList: data?._embedded?.queryItemsDtoList || [],
   };
 };
 
