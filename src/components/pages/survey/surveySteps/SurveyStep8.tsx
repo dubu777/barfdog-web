@@ -1,4 +1,4 @@
-import { surveyFormInfo, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -34,7 +34,7 @@ export default function SurveyStep8({
           );
           return (
             <div className={styles.colSurveyButtonWrapper}>
-              {surveyFormInfo.dogLifestyle.activityLevel.options.map(
+              {DIET_ANALYSIS_FORM_INFO.dogLifestyle.activityLevel.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

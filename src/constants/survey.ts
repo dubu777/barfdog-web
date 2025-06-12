@@ -38,7 +38,7 @@ import FillSkincare from "public/images/survey/IconFill-Skincare.svg";
 import { DOG_TYPE } from "@/constants/dog";
 
 export {
-  surveyFormInfo,
+  DIET_ANALYSIS_FORM_INFO,
   recipeTempData,
   SURVEY_NO_AUTO_STEP,
   NONE_VALUE,
@@ -105,7 +105,7 @@ const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
   },
 };
 
-const surveyFormInfo = {
+const DIET_ANALYSIS_FORM_INFO = {
   dogBasicInfo: {
     gender: {
       title: "성별",

@@ -8,18 +8,16 @@ import {
   getBodyCheckDiseaseMeta,
   getPhaseDescription,
 } from "@/utils/healthNote/bodyCheckScore";
-import { DiseaseName, DiseasePhase } from "@/types/healthNote";
+import { DiseaseName } from "@/types/healthNote";
 import Card from "@/components/common/card/Card";
-import { phaseTextStyle } from "../bodyCheckResult/BodyCheckResult.css";
+import { phaseTextStyle } from "../BodyCheckResult.css";
 
-interface DiseasePhaseCardProps {
+interface DiseasePhaseProps {
   diseaseName: DiseaseName;
 }
 
-export default function DiseasePhaseCard({
-  diseaseName,
-}: DiseasePhaseCardProps) {
-  const phases: DiseasePhase[] = ["초기", "중기", "심화"];
+export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
+  const phases = ["초기", "중기", "심화"];
   const { healthGuide } = getBodyCheckDiseaseMeta(diseaseName);
   return (
     <ResultCard gap={12}>

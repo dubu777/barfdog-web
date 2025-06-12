@@ -21,7 +21,8 @@ import {
   inputWrapStyle,
   rightButtonsStyle,
   searchButtonStyle,
-  unitStyle, inputStateTextStyle,
+  unitStyle,
+  inputStateTextStyle,
 } from "./InputField.css";
 import CheckIcon from "public/images/survey/check_small.svg";
 import SearchIcon from "/public/images/icons/search.svg";
@@ -29,7 +30,7 @@ import InputClearIcon from "/public/images/icons/input_clear.svg";
 import VisibilityIcon from "/public/images/icons/visibility.svg";
 import VisibilityOffIcon from "/public/images/icons/visibility_off.svg";
 import Button from "@/components/common/button/Button";
-import ErrorIcon from '/public/images/icons/close_small.svg';
+import ErrorIcon from "/public/images/icons/close_small.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import InputLabel from "@/components/common/inputLabel/InputLabel";
 
@@ -43,7 +44,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   maskingButton?: boolean;
   confirmButton?: boolean;
   confirmButtonText?: string;
-  confirmButtonVariant?: 'solid' | 'outline';
+  confirmButtonVariant?: "solid" | "outline";
   confirmButtonDisabled?: boolean;
   clearButton?: boolean;
   searchButton?: boolean;
@@ -68,14 +69,14 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       error,
       onChange,
       onBlur,
-      variants = 'box',
+      variants = "box",
       width,
       masking = false,
       maskingButton = false,
       confirmButton = false,
       confirmButtonText = "입력",
-      confirmButtonVariant= 'outline',
-      confirmButtonDisabled= false,
+      confirmButtonVariant = "outline",
+      confirmButtonDisabled = false,
       clearButton = false,
       searchButton = false,
       onReset,
@@ -115,24 +116,24 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       if (onKeyDown) {
         onKeyDown(e);
       }
-      if (e.key === 'Enter' && onSubmit) {
+      if (e.key === "Enter" && onSubmit) {
         e.preventDefault();
         onSubmit();
       }
     };
     const handleReset = (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      if(onReset) {
+      if (onReset) {
         onReset();
       }
-    }
+    };
 
-      const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      if(onSubmit) {
+      if (onSubmit) {
         onSubmit();
       }
-    }
+    };
     return (
       <div
         onClick={handlePressInput}
@@ -140,17 +141,21 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         style={{ width: width || "100%" }}
       >
         {/* label 유무에 따라 상단 노출 */}
-        {label &&
+        {label && (
           <InputLabel
             label={label}
             labelColor={labelColor}
             isRequired={isRequired}
           />
-        }
-        <div className={inputBoxStyle} style={{ width: width || '100%' }}>
+        )}
+        <div className={inputBoxStyle} style={{ width: width || "100%" }}>
           <div
-            className={`${inputWrapStyle} ${inputBaseStyle} ${inputVariants[variants]} ${error ? inputError[variants] : ''} ${disabled ? 'disabled' : ''}`}
-            style={{ flex: confirmButton ? '1 0 0' : 'unset' }}
+            className={`${inputWrapStyle} ${inputBaseStyle} ${
+              inputVariants[variants]
+            } ${error ? inputError[variants] : ""} ${
+              disabled ? "disabled" : ""
+            }`}
+            style={{ flex: confirmButton ? "1 0 0" : "unset" }}
           >
             {/* 검색 기능 추가 필요 */}
             {searchButton && (
@@ -175,8 +180,12 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               }}
               onKeyDown={handleInternalKeyDown}
             />
-              {unit && (
-              <DefaultText type="headline3" color="gray900" className={unitStyle}>
+            {unit && (
+              <DefaultText
+                type="headline3"
+                color="gray900"
+                className={unitStyle}
+              >
                 {unit}
               </DefaultText>
             )}
@@ -187,29 +196,32 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                   onClick={handleToggleMasking}
                   className={baseButtonStyle}
                 >
-                  <SvgIcon src={isMasked ? VisibilityOffIcon : VisibilityIcon} size={24} />
+                  <SvgIcon
+                    src={isMasked ? VisibilityOffIcon : VisibilityIcon}
+                    size={24}
+                  />
                 </button>
               )}
               {/* value 리셋 기능 */}
-              {clearButton &&
-              <button onClick={handleReset} className={baseButtonStyle}>
-                <SvgIcon src={InputClearIcon} size={24} />
-              </button>
-              }
+              {clearButton && (
+                <button onClick={handleReset} className={baseButtonStyle}>
+                  <SvgIcon src={InputClearIcon} size={24} />
+                </button>
+              )}
             </div>
           </div>
           {/* 버튼 사이드 confirm 버튼 (인증하기 / 확인 등)*/}
-          {confirmButton &&
-          <Button
-            variant={confirmButtonVariant}
-            onClick={handleSubmit}
-            size='lg'
-            className={confirmButtonStyle}
-            disabled={confirmButtonDisabled}
-          >
-            {confirmButtonText}
-          </Button>
-          }
+          {confirmButton && (
+            <Button
+              variant={confirmButtonVariant}
+              onClick={handleSubmit}
+              size="lg"
+              className={confirmButtonStyle}
+              disabled={confirmButtonDisabled}
+            >
+              {confirmButtonText}
+            </Button>
+          )}
         </div>
         {error && (
           <div className={inputStateTextStyle}>
@@ -221,8 +233,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         )}
         {success && (
           <div className={inputStateTextStyle}>
-            <SvgIcon src={CheckIcon} color='blue500' size={18} />
-            <DefaultText type="caption" color='blue' align="left">
+            <SvgIcon src={CheckIcon} color="blue500" size={18} />
+            <DefaultText type="caption" color="blue500" align="left">
               {success}
             </DefaultText>
           </div>

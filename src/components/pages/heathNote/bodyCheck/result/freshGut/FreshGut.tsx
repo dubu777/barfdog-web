@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import ResultCard from "../../../common/resultCard/ResultCard";
-import { freshGutInfoBox } from "../bodyCheckResult/BodyCheckResult.css";
+import { freshGutInfoBox } from "../BodyCheckResult.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Microbe from "public/images/healthNote/body-check/microbe.svg";
 import FreshGutImage from "public/images/healthNote/body-check/fresh-gut.png";

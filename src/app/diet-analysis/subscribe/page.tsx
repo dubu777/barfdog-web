@@ -1,4 +1,4 @@
-import { prefetchGetDietAnalysisResult } from "@/api/survey/queries/useGetDietAnalysisResult";
+import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/usePrefetchGetDietAnalysisResult";
 import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
 import SubscribePageContainer from "@/components/pages/subscribe/SubscribePageContainer";
 import {

@@ -82,8 +82,6 @@ interface HealthCheckHistoryFormValue {
   note: string;
 }
 
-type DiseasePhase = "초기" | "중기" | "심화";
-
 /**
  * 2) 영어 키로 들어오는 질병 이름 타입 정의
  */
@@ -114,7 +112,6 @@ export type {
   RecommendProduct,
   BodyCheckPart,
   HealthCheckHistoryFormValue,
-  DiseasePhase,
   DiseaseName,
   BodyCheckRecommendItem,
 };

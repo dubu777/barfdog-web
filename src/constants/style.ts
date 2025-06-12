@@ -5,6 +5,7 @@ export type Colors =
   | "white"
   | "red"
   | "pastelRed"
+  | "pinkWhite"
   | "gray900"
   | "gray800"
   | "gray700"
@@ -17,14 +18,18 @@ export type Colors =
   | "gray0"
   | "blue500"
   | "blue400"
+  | "blue300"
+  | "blue200"
   | "green400"
   | "green500"
+  | "yellow500"
   | "yellow400";
 
 const COLORS: Record<Colors, string> = {
   white: themeVars.colors.gray.gray0,
   red: themeVars.colors.red.red,
   pastelRed: themeVars.colors.red.pastelRed,
+  pinkWhite: themeVars.colors.red.pinkWhite,
   gray900: themeVars.colors.gray.gray900,
   gray800: themeVars.colors.gray.gray800,
   gray700: themeVars.colors.gray.gray700,
@@ -37,14 +42,19 @@ const COLORS: Record<Colors, string> = {
   gray0: themeVars.colors.gray.gray0,
   blue500: themeVars.colors.blue.blue500,
   blue400: themeVars.colors.blue.blue400,
+  blue300: themeVars.colors.blue.blue300,
+  blue200: themeVars.colors.blue.blue200,
   green400: themeVars.colors.green.green400,
   green500: themeVars.colors.green.green500,
+  yellow500: themeVars.colors.yellow.yellow500,
   yellow400: themeVars.colors.yellow.yellow400,
 } as const;
 
 export const CHIPS_COLORS = {
   red: themeVars.colors.red.red,
   lightPink: themeVars.colors.red.lightPink,
+  pinkWhite: themeVars.colors.red.pinkWhite,
+  gray100: themeVars.colors.gray.gray100,
   gray200: themeVars.colors.gray.gray200,
   gray700: themeVars.colors.gray.gray700,
   gray800: themeVars.colors.gray.gray800,

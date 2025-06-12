@@ -140,6 +140,9 @@ export const commonWrapper = recipe({
       32: {
         gap: "32px",
       },
+      40: {
+        gap: "40px",
+      },
     },
     padding: {
       none: {},
@@ -157,6 +160,9 @@ export const commonWrapper = recipe({
       },
       "20/16": {
         padding: "20px 16px",
+      },
+      "0/20": {
+        padding: "0 20px",
       },
     },
     direction: {
@@ -243,6 +249,9 @@ export const commonWrapper = recipe({
       12: {
         borderRadius: "12px",
       },
+      16: {
+        borderRadius: "16px",
+      },
     },
     shadow: {
       none: {},
@@ -252,6 +261,15 @@ export const commonWrapper = recipe({
       normal: {
         boxShadow: themeVars.shadow.normal,
       },
+      strong: {
+        boxShadow: themeVars.shadow.strong,
+      },
+    },
+    wrap: {
+      wrap: {
+        flexWrap: "wrap",
+      },
+      nowrap: {},
     },
   },
   defaultVariants: {
@@ -266,6 +284,7 @@ export const commonWrapper = recipe({
     borderRadius: "none",
     textAlign: "none",
     shadow: "none",
+    wrap: "nowrap",
   },
 });
 

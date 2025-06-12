@@ -21,7 +21,7 @@ import SurveyResultLoading from "../surveyResultLoading/SurveyResultLoading";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/layout/header/Header";
 import { buildDietAnalysisPayload } from "@/utils/healthNote/buildDietAnalysisPayload";
-import { useCreateDietAnalysisResult } from "@/api/dog/mutations/\buseCreateDietAnalysisResult";
+import { useCreateDietAnalysisResult } from "@/api/dietAnalysis/mutations/useCreateDietAnalysisResult";
 
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
@@ -35,7 +35,8 @@ export default function SurveyPageContainer() {
 
   const { mutate: submitResult } = useCreateDietAnalysisResult({
     onSuccess: (response) => {
-      console.log("createDietAnalysisResult response:", response);
+      const { surveyReportId } = response;
+      router.push(`/diet-analysis/result/${surveyReportId}`);
     },
     onError: (err) => {
       console.log("에러>>>>>>>", err);

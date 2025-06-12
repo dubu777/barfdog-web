@@ -30,17 +30,19 @@ export default function SurveyButtonGroup({
           {title}
         </DefaultText>
       )}
-      <div className={styles.surveyButtonContainer}>
-        {children}
-      </div>
+      <div className={styles.surveyButtonContainer}>{children}</div>
       {(error || info) && (
         <div className={styles.surveyErrorWrapper}>
           {error === specialErrorMessage ? (
             <InfoBox text={error} color="gray" type="info" fullWidth />
           ) : (
             <>
-              <SvgIcon src={error ? CloseIcon : CheckIcon} size={19} />
-              <DefaultText type="caption" color={error ? "red" : "blue"}>
+              <SvgIcon
+                src={error ? CloseIcon : CheckIcon}
+                color="red"
+                size={19}
+              />
+              <DefaultText type="caption" color={error ? "red" : "blue500"}>
                 {error || info}
               </DefaultText>
             </>

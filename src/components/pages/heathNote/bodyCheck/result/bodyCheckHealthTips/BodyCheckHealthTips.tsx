@@ -8,7 +8,7 @@ import { commonWrapper } from "@/styles/common.css";
 import { BodyCheckRecommendItem } from "@/types/healthNote";
 import Chips from "@/components/common/chips/Chips";
 import { CHIPS_COLORS, Colors } from "@/constants/style";
-import { bodyCheckChipsStyle } from "../bodyCheckResult/BodyCheckResult.css";
+import { bodyCheckChipsStyle } from "../BodyCheckResult.css";
 
 interface BodyCheckHealthTipsProps {
   tips: BodyCheckRecommendItem[];

@@ -1,7 +1,7 @@
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
-import { surveyFormInfo, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import * as styles from "./SurveySteps.css";
 import DogImageButton from "../dogImageButton/DogImageButton";
@@ -34,7 +34,7 @@ export default function SurveyStep7({
           );
           return (
             <div className={styles.colSurveyButtonWrapper}>
-              {surveyFormInfo.dogLifestyle.dogBodyCondition.options.map(
+              {DIET_ANALYSIS_FORM_INFO.dogLifestyle.dogBodyCondition.options.map(
                 (option) => (
                   <DogImageButton
                     key={option.label}

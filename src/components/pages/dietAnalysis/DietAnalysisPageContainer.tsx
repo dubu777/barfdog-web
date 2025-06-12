@@ -3,7 +3,7 @@
 import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import FirstTimeRegistration from "./firstTimeRegistration/FirstTimeRegistration";
 import RegisteredDogManager from "./registeredDogManager/RegisteredDogManager";
-import { useGetDietAnalysisResult } from "@/api/survey/queries/useGetDietAnalysisResult";
+import { useGetDietAnalysisResult } from "@/api/dietAnalysis/queries/useGetDietAnalysisResult";
 export default function DietAnalysisPageContainer() {
   const { data: dogListData = [] } = useGetDogList();
   const { data: dietAnalysisResult } = useGetDietAnalysisResult(4);
@@ -16,9 +16,8 @@ export default function DietAnalysisPageContainer() {
   return (
     <>
       {isExistDogList ? (
-        <p>반려견이 등록되어 있습니다.</p>
+        <RegisteredDogManager dogListData={dogListData} />
       ) : (
-        // <RegisteredDogManager dogListData={dogListData} />
         <FirstTimeRegistration />
       )}
     </>

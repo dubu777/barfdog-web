@@ -1,4 +1,4 @@
-import { surveyFormInfo, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import * as styles from "./SurveySteps.css";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
@@ -24,7 +24,11 @@ export default function SurveyStep3({
   handleBlur,
   handleKeyDown,
 }: SurveyStepProps) {
-  const { control, formState: {errors}, setValue } = useFormContext<SurveyStepValues>();
+  const {
+    control,
+    formState: { errors },
+    setValue,
+  } = useFormContext<SurveyStepValues>();
 
   return (
     <>
@@ -42,19 +46,21 @@ export default function SurveyStep3({
           );
           return (
             <SurveyButtonGroup title="견사이즈">
-              {surveyFormInfo.dogBasicInfo.dogSize.options.map((option) => (
-                <ImageButton
-                  key={option.label}
-                  label={option.label}
-                  value={option.value}
-                  inputType="radio"
-                  imageSrc={option.imageUrl}
-                  imageWidth={70}
-                  imageHeight={70}
-                  isChecked={isSelected(option.value)}
-                  onToggle={onToggle}
-                />
-              ))}
+              {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.dogSize.options.map(
+                (option) => (
+                  <ImageButton
+                    key={option.label}
+                    label={option.label}
+                    value={option.value}
+                    inputType="radio"
+                    imageSrc={option.imageUrl}
+                    imageWidth={70}
+                    imageHeight={70}
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
             </SurveyButtonGroup>
           );
         }}
@@ -70,8 +76,7 @@ export default function SurveyStep3({
               placeholder="몸무게 입력"
               onChange={(e) => {
                 field.onChange(e);
-                console.log('field.name', field.name);
-                
+                console.log("field.name", field.name);
               }}
               onKeyDown={(e) => handleKeyDown(e, field.name)}
               onBlur={() => handleBlur(field.name)}

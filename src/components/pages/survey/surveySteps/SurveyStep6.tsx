@@ -1,4 +1,4 @@
-import { surveyFormInfo, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
@@ -27,36 +27,36 @@ export default function SurveyStep6({
   return (
     <>
       <SurveyTitle petName={petName} config={surveyTitles.step6} />
-            <Controller
-              name="step6.lactation"
-              control={control}
-              render={({ field }) => {
-                const { onToggle, isSelected } = useSurveyToggleOption(
-                  field.value,
-                  "radio",
-                  (value) => {
-                    field.onChange(value);
-                    handleChange();
-                  }
-                );
-                return (
-                  <div className={styles.colSurveyButtonWrapper}>
-                    {surveyFormInfo.dogBasicInfo.lactation.options.map(
-                      (option) => (
-                        <SurveyButton
-                          key={option.label}
-                          label={option.label}
-                          value={option.value}
-                          inputType="radio"
-                          isChecked={isSelected(option.value)}
-                          onToggle={onToggle}
-                        />
-                      )
-                    )}
-                  </div>
-                );
-              }}
-            />
+      <Controller
+        name="step6.lactation"
+        control={control}
+        render={({ field }) => {
+          const { onToggle, isSelected } = useSurveyToggleOption(
+            field.value,
+            "radio",
+            (value) => {
+              field.onChange(value);
+              handleChange();
+            }
+          );
+          return (
+            <div className={styles.colSurveyButtonWrapper}>
+              {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.lactation.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.label}
+                    label={option.label}
+                    value={option.value}
+                    inputType="radio"
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
+              )}
+            </div>
+          );
+        }}
+      />
     </>
   );
 }

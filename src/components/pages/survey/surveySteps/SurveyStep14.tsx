@@ -1,4 +1,4 @@
-import { NONE_VALUE, surveyFormInfo, surveyTitles } from "@/constants";
+import { NONE_VALUE, DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -51,23 +51,23 @@ export default function SurveyStep14({
             }
           };
           return (
-              <SurveyGridButtonGroup>
-                {surveyFormInfo.dogDietHealth.healthIssues.options.map(
-                  (option) => (
-                    <ImageButton
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                      inputType="checkbox"
-                      defaultSvg={option.Icon}
-                      selectedSvg={option.SelectedIcon}
-                      isChecked={isSelected(option.value)}
-                      onToggle={handleToggleAndNext}
-                      display="grid2"
-                    />
-                  )
-                )}
-              </SurveyGridButtonGroup>
+            <SurveyGridButtonGroup>
+              {DIET_ANALYSIS_FORM_INFO.dogDietHealth.healthIssues.options.map(
+                (option) => (
+                  <ImageButton
+                    key={option.value}
+                    label={option.label}
+                    value={option.value}
+                    inputType="checkbox"
+                    defaultSvg={option.Icon}
+                    selectedSvg={option.SelectedIcon}
+                    isChecked={isSelected(option.value)}
+                    onToggle={handleToggleAndNext}
+                    display="grid2"
+                  />
+                )
+              )}
+            </SurveyGridButtonGroup>
           );
         }}
       />

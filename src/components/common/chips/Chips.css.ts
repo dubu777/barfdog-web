@@ -3,7 +3,6 @@ import { style } from "@vanilla-extract/css";
 
 export const chipsVariants = {
   solid: style({
-    border: "none",
     position: "relative",
     zIndex: 0,
   }),
@@ -19,6 +18,14 @@ export const chipVariantStyles = {
     red: style({
       backgroundColor: themeVars.colors.red.red,
       color: themeVars.colors.gray.gray0,
+    }),
+    pinkWhite: style({
+      backgroundColor: themeVars.colors.red.pinkWhite,
+      color: themeVars.colors.red.pastelRed,
+    }),
+    gray100: style({
+      backgroundColor: themeVars.colors.gray.gray100,
+      color: themeVars.colors.gray.gray700,
     }),
     gray200: style({
       backgroundColor: themeVars.colors.gray.gray200,

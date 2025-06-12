@@ -1,4 +1,4 @@
-import { NONE_VALUE, surveyFormInfo } from "@/constants";
+import { NONE_VALUE, DIET_ANALYSIS_FORM_INFO } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -83,12 +83,12 @@ export default function SurveyStep1({
                 handleChange();
 
                 // ── 성별이 male 이면 step5·6 자동 none 설정
-                if (value === "male") {
-                  setValue("step5.pregnancy", "none", {
+                if (value === "MALE") {
+                  setValue("step5.pregnancy", NONE_VALUE, {
                     shouldValidate: false,
                     shouldDirty: true,
                   });
-                  setValue("step6.lactation", "none", {
+                  setValue("step6.lactation", NONE_VALUE, {
                     shouldValidate: false,
                     shouldDirty: true,
                   });
@@ -97,19 +97,21 @@ export default function SurveyStep1({
             );
             return (
               <SurveyButtonGroup title="성별">
-                {surveyFormInfo.dogBasicInfo.gender.options.map((option) => (
-                  <ImageButton
-                    key={option.value}
-                    label={option.label}
-                    value={option.value}
-                    inputType="radio"
-                    imageSrc={option.imageUrl}
-                    imageWidth={80}
-                    imageHeight={80}
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                ))}
+                {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.gender.options.map(
+                  (option) => (
+                    <ImageButton
+                      key={option.value}
+                      label={option.label}
+                      value={option.value}
+                      inputType="radio"
+                      imageSrc={option.imageUrl}
+                      imageWidth={80}
+                      imageHeight={80}
+                      isChecked={isSelected(option.value)}
+                      onToggle={onToggle}
+                    />
+                  )
+                )}
               </SurveyButtonGroup>
             );
           }}
@@ -142,7 +144,7 @@ export default function SurveyStep1({
 
           return (
             <SurveyButtonGroup title="중성화 여부">
-              {surveyFormInfo.dogBasicInfo.neutralization.options.map(
+              {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.neutralization.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

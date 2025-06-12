@@ -1,19 +1,16 @@
+import { ComponentType, SVGProps } from "react";
+
 /** 성별 */
-export type Gender = "MALE" | "FEMALE";
+type Gender = "MALE" | "FEMALE";
 
 /** 견사이즈 */
-export type DogSize = "SMALL" | "MEDIUM" | "LARGE";
+type DogSize = "SMALL" | "MEDIUM" | "LARGE";
 
 /** 활동량 */
-export type ActivityLevel =
-  | "VERY_MUCH"
-  | "MUCH"
-  | "NORMAL"
-  | "LITTLE"
-  | "VERY_LITTLE";
+type ActivityLevel = "VERY_MUCH" | "MUCH" | "NORMAL" | "LITTLE" | "VERY_LITTLE";
 
 /** 체형(BCS) */
-export type DogBodyCondition =
+type DogBodyCondition =
   | "VERY_THIN"
   | "THIN"
   | "NORMAL"
@@ -21,10 +18,10 @@ export type DogBodyCondition =
   | "OBESE";
 
 /** 임신 단계 */
-export type PregnancyStatus = "NONE" | "EARLY" | "LATE";
+type PregnancyStatus = "NONE" | "EARLY" | "LATE";
 
 /** 수유 상태 */
-export type LactationStatus =
+type LactationStatus =
   | "NONE"
   | "LACTATION_ONE"
   | "LACTATION_THREE"
@@ -32,10 +29,10 @@ export type LactationStatus =
   | "LACTATION_SEVEN";
 
 /** 간식 섭취량 */
-export type SnackCountLevel = "LITTLE" | "NORMAL" | "MUCH";
+type SnackCountLevel = "LITTLE" | "NORMAL" | "MUCH";
 
 /** 못 먹는 식재료 */
-export type InedibleFood =
+type InedibleFood =
   | "NONE"
   | "CHICKEN"
   | "TURKEY"
@@ -48,7 +45,7 @@ export type InedibleFood =
   | "HEART";
 
 /** 주요 건강 고민 */
-export type HealthConcern =
+type HealthConcern =
   | "VOMITING_DIARRHEA"
   | "WEIGHT_CONTROL"
   | "ENERGY_BOOST"
@@ -59,7 +56,7 @@ export type HealthConcern =
   | "SENIOR_HEALTH";
 
 /** 현재 식단 */
-export type CurrentMeal =
+type CurrentMeal =
   | "DRY"
   | "WET"
   | "HOMEMADE"
@@ -68,7 +65,7 @@ export type CurrentMeal =
   | "RAW";
 
 /** 영양제 */
-export type Supplements =
+type Supplements =
   | "NONE"
   | "PROBIOTICS"
   | "OMEGA_3"
@@ -83,7 +80,7 @@ export type Supplements =
   | "GENERAL";
 
 /** 기저 질환 */
-export type HealthIssue =
+type HealthIssue =
   | "NONE"
   | "HYPERLIPIDEMIA"
   | "PANCREATIC"
@@ -96,8 +93,18 @@ export type HealthIssue =
   | "EAR_INFLAMMATION"
   | "TEARS";
 
+type RecipeEfficacy =
+  | "부드러운 소화"
+  | "균형 잡힌 체형"
+  | "빠른 기력 회복"
+  | "눈가 청결 유지"
+  | "윤기나는 모질"
+  | "관절 기능 강화"
+  | "튼튼한 성장"
+  | "활기찬 노후";
+
 /** 설문 제출‧결과 공통 인터페이스 */
-export interface DietAnalysisPayload {
+interface DietAnalysisPayload {
   name: string;
   gender: Gender;
   birthDay: string;
@@ -117,3 +124,69 @@ export interface DietAnalysisPayload {
   supplementss: Supplements[];
   healthIssues: HealthIssue[];
 }
+
+// 추천 식단 설문 결과지
+interface DietAnalysisResult {
+  subscribeId: number;
+  subscribeStatus: string;
+  recommendRecipeExist: boolean;
+  firstResultResponse: FirstResultResponse;
+  secondResultResponse: SecondResultResponse;
+  thirdResultResponse: ThirdResultResponse;
+}
+
+interface FirstResultResponse {
+  firstHealthConcernsSymptomsList: string[];
+  healthConcernsOtherSymptomsList: string[];
+  activityLevel: ActivityLevel;
+  snackCountLevel: SnackCountLevel;
+  inedibleFoodType: InedibleFood[];
+}
+
+interface SecondResultResponse {
+  dogId: number;
+  dogName: string;
+  firstHealthConcerns: HealthConcern;
+  firstHealthConcernsCauseList: string[];
+  recipeEfficacyList: string[];
+}
+
+interface ThirdResultResponse {
+  recommendRecipeRankDtoList: RecommendRecipeRankDto[];
+  oneDayRecommendKcal: number;
+}
+
+interface RecommendRecipeRankDto {
+  rank: number;
+  recommendRecipeId: number;
+  recommendRecipeName: string;
+  recommendRecipeDescription: string;
+  recommendRecipeImgUrl: string;
+  ingredientsList: InedibleFood[];
+  uiNameKorean: string;
+  uiNameEnglish: string;
+}
+
+interface CreateDietAnalysisResultResponse {
+  surveyReportId: number;
+}
+
+interface EfficacyData {
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  symptom: string;
+}
+
+export type {
+  DietAnalysisPayload,
+  DietAnalysisResult,
+  CreateDietAnalysisResultResponse,
+  FirstResultResponse,
+  SecondResultResponse,
+  ThirdResultResponse,
+  ActivityLevel,
+  SnackCountLevel,
+  InedibleFood,
+  RecipeEfficacy,
+  RecommendRecipeRankDto,
+  EfficacyData,
+};

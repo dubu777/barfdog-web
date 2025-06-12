@@ -7,22 +7,12 @@ import {
   UploadDogProfileImage,
   CheckDuplicateDogNameResponse,
 } from "@/types";
-import { DietAnalysisPayload } from "@/types/dietAnalysis";
 
 const getDogList = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<DogListData[]> => {
   const { data } = await instance.get("/api/dogs");
   return data?._embedded?.queryDogsDtoList || [];
-};
-
-const createDietAnalysisResult = async (
-  body: DietAnalysisPayload
-): Promise<any> => {
-  const { data } = await axiosInstance.post("/api/dogs", body);
-  console.log(">>createDietAnalysisResult", data);
-
-  return data;
 };
 
 const updateRepresentativeDog = async (dogId: number) => {
@@ -126,5 +116,4 @@ export {
   getFullDogList,
   updateDogInfo,
   checkDuplicateDogName,
-  createDietAnalysisResult,
 };

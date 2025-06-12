@@ -9,6 +9,7 @@ import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
 import DietAnalysisPageContainer from "@/components/pages/dietAnalysis/DietAnalysisPageContainer";
 import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
+import Loader from "@/components/common/loader/Loader";
 
 export default async function DietAnalysisPage() {
   const queryClient = new QueryClient();
@@ -18,8 +19,8 @@ export default async function DietAnalysisPage() {
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>MyPage info 로딩 실패</div>}>
-        <Suspense fallback={<div>MyPage info Loading...</div>}>
+      <ErrorBoundary fallback={<div>추천식단 에러</div>}>
+        <Suspense fallback={<Loader />}>
           <Header leftTitle="AI 추천식단" showCartButton />
           <DietAnalysisPageContainer />
           <BottomNavBar />

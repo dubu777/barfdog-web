@@ -1,4 +1,4 @@
-import { NONE_VALUE, surveyFormInfo, surveyTitles } from "@/constants";
+import { NONE_VALUE, DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -55,7 +55,7 @@ export default function SurveyStep13({
               <DefaultText type="label2" color="gray500">
                 *복수응답가능
               </DefaultText>
-              {surveyFormInfo.dogDietHealth.supplements.options.map(
+              {DIET_ANALYSIS_FORM_INFO.dogDietHealth.supplements.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

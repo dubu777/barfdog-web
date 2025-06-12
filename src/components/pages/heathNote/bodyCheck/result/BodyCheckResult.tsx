@@ -11,14 +11,14 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import {
   deleteButton,
   fullCheckResultTitle,
-} from "../../../fullCheck/result/FullCheckResult.css";
-import BodyCheckTotalScore from "../bodyCheckTotalScore/BodyCheckTotalScore";
+} from "../../fullCheck/result/FullCheckResult.css";
+import BodyCheckTotalScore from "./bodyCheckTotalScore/BodyCheckTotalScore";
 import { BodyCheckPart, DiseaseName } from "@/types/healthNote";
 import { bodyCheckSurveyConfig } from "@/config/bodyCheckSurveyConfig";
-import DiseasePhaseCard from "../diseasePhaseCard/DiseasePhaseCard";
+import DiseasePhase from "./diseasePhase/DiseasePhase";
 import { BODY_PART_HEALTH_TIPS } from "@/constants/healthNote/bodyCheck/result";
-import BodyCheckHealthTips from "../bodyCheckHealthTips/BodyCheckHealthTips";
-import FreshGut from "../freshGut/FreshGut";
+import BodyCheckHealthTips from "./bodyCheckHealthTips/BodyCheckHealthTips";
+import FreshGut from "./freshGut/FreshGut";
 
 const data = {
   name: "바푸동",
@@ -75,7 +75,7 @@ export default function BodyCheckResult() {
             totalScore={data.totalScore}
           />
         </div>
-        <DiseasePhaseCard diseaseName={data.warningDiseases} />
+        <DiseasePhase diseaseName={data.warningDiseases} />
         <BodyCheckHealthTips tips={tips} name={name} />
         <FreshGut />
       </section>
