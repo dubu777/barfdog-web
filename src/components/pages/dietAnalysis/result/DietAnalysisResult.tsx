@@ -5,7 +5,7 @@ import ResultSummary from "./resultSummary/ResultSummary";
 import DietReason from "./dietReason/DietReason";
 import Divider from "@/components/common/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
-import RecommendedRecipeList from "./RecommendedrecipeList/RecommendedRecipeList";
+import RecommendedRecipeList from "./recommendedRecipeList/RecommendedRecipeList";
 
 interface DietAnalysisResultProps {
   reportId: number;
