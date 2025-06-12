@@ -13,8 +13,8 @@ interface DietAnalysisResultProps {
 export default function DietAnalysisResult({
   reportId,
 }: DietAnalysisResultProps) {
-  const { data: surveyResult } = useGetDietAnalysisResult(reportId);
-  console.log("surveyResult", surveyResult);
+  const { data: dietAnalysisResult } = useGetDietAnalysisResult(reportId);
+  console.log("dietAnalysisResult", dietAnalysisResult);
 
   return (
     <div
@@ -25,16 +25,16 @@ export default function DietAnalysisResult({
       })}
     >
       <ResultSummary
-        dogName={surveyResult.secondResultResponse.dogName}
-        firstResponse={surveyResult.firstResultResponse}
+        dogName={dietAnalysisResult.secondResultResponse.dogName}
+        firstResponse={dietAnalysisResult.firstResultResponse}
       />
       <Divider thickness={8} color="gray100" />
-      <DietReason secondResponse={surveyResult.secondResultResponse} />
+      <DietReason secondResponse={dietAnalysisResult.secondResultResponse} />
       <Divider thickness={8} color="gray100" />
       <RecommendedRecipeList
-        dogName={surveyResult.secondResultResponse.dogName}
+        dogName={dietAnalysisResult.secondResultResponse.dogName}
         recommendRecipeList={
-          surveyResult.thirdResultResponse.recommendRecipeRankDtoList
+          dietAnalysisResult.thirdResultResponse.recommendRecipeRankDtoList
         }
       />
     </div>
