@@ -13,19 +13,19 @@ const updateNewCartInfo = async (queryClient: QueryClient) => {
 	});
 }
 
-function useIncreaseItemQuantity(itemId: number, mutationOptions?: UseMutationCustomOptions) {
+function useIncreaseItemQuantity(mutationOptions?: UseMutationCustomOptions) {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: () => increaseCartItem(itemId),
+		mutationFn: ({ basketId }: { basketId: number }) => increaseCartItem(basketId),
 		onSuccess: async () => await updateNewCartInfo(queryClient),
 		...mutationOptions,
 	})
 }
 
-function useDecreaseItemQuantity(itemId: number, mutationOptions?: UseMutationCustomOptions) {
+function useDecreaseItemQuantity(mutationOptions?: UseMutationCustomOptions) {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: () => decreaseCartItem(itemId),
+		mutationFn: ({ basketId }: { basketId: number }) => decreaseCartItem(basketId),
 		onSuccess: async () => await updateNewCartInfo(queryClient),
 		...mutationOptions,
 	})

@@ -1,116 +1,102 @@
 'use client';
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import * as styles from './Cart.css';
-import Text from "@/components/common/text/Text";
-import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
+import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import Divider from "@/components/common/divider/Divider";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import Loader from "@/components/common/loader/Loader";
 import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";
-import { useDeleteCartItemById } from "@/api/cart/mutations/useDeleteCartItem";
 import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
-import { CartInfo } from "@/types";
+import { useCart } from "@/hooks/cart/useCart";
+import useModal from "@/hooks/useModal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 const Cart = () => {
-  const { data: cartInfo } = useGetCartInfo();
-  const { setCartInfo, selectedItems, setSelectedItems } = useCartStore();
-  const { mutate: deleteMutate } = useDeleteCartItemById();
+  const { data: cartData } = useGetCartInfo();
+  const { cartInfo, setCartInfo, selectedItems, calculatedPrices } = useCartStore();
+  const { totalOrderPrice } = calculatedPrices;
 
-  const isSelectedAll = selectedItems?.length === cartInfo?.basketDtoList?.length;
+  const { handleDeleteSelectedItems, handleItemSelect, handleSelectAll, isSelectedAll } = useCart();
+
+  const { isOpen: isOpenSoldOutModal, onClose: onCloseSoldOutModal, onToggle: onToggleSoldOutModal } = useModal();
+  const isSoldOut = true;
 
   useEffect(() => {
-    if(cartInfo) {
-      setCartInfo(cartInfo);
+    if(cartData) {
+      setCartInfo(cartData);
     }
-  }, [cartInfo])
+  }, [cartData])
 
-  // 선택 삭제하는 deleteCartItemByIds 400error 이슈로 개별 삭제 순차적으로 적용
-  const deleteItemById = async (itemId: number) => {
-    await deleteMutate(
-      { itemId: itemId },
-      {
-      onSuccess: () => {
-          console.log('itemId delete');
-        }
-      }
-    )
+  const handleSubmit = () => {
+    console.log('주문하기')
   }
 
-  const handleDeleteSelected = async () => {
-    for (const itemId of selectedItems) {
-      await deleteItemById(itemId);
-    }
-    const updatedBasketDtoList = cartInfo?.basketDtoList.filter((item) => !selectedItems.includes(item.itemDto.basketId));
-    const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
-    setCartInfo(updatedCartInfo as CartInfo);
-    setSelectedItems([]);
-  }
-
-  const handleItemSelect = (basketId: number) => {
-    setSelectedItems(
-      selectedItems.includes(basketId)
-        ? selectedItems.filter((id) => id !== basketId)
-        : [...selectedItems, basketId]
-    );
-  }
-
-  const handleSelectAll = () => {
-    if (selectedItems.length === cartInfo?.basketDtoList.length) {
-      setSelectedItems([]);
-    } else {
-      const allBasketIds = cartInfo?.basketDtoList.map((item) => item.itemDto.basketId);
-      setSelectedItems(allBasketIds as number[]);
-    }
-  }
-
-  // if (!cartInfo || cartInfo.basketDtoList.length === 0) return <Loader fullscreen />;
-
+  if (!cartData) return <Loader fullscreen />;
   return (
-    <section className={styles.cartContainer}>
-      <Text className={styles.cartTitle} type='title' size='titleLg'>장바구니</Text>
-      <article>
-        <div className={styles.cartItemControls}>
-          <DefaultCheckbox
-            id='all'
-            name='all'
+    <>
+      <section className={styles.cartContainer}>
+        <article className={styles.cartItemControls}>
+          <LabeledCheckbox
             value={isSelectedAll}
-            onChange={handleSelectAll}
-            labelPosition='right'
-            label='전체 선택'
-          />
-          <DefaultButton
-            type='mainBorder'
-            size='xs'
-            borderRadius='sm'
-            onClick={handleDeleteSelected}
-            isDisabled={selectedItems.length === 0}
+            isChecked={isSelectedAll}
+            onToggle={handleSelectAll}
+            iconType='circle'
           >
-            선택 삭제
-          </DefaultButton>
-        </div>
-        <ul className={styles.cartItemList}>
-          {cartInfo?.basketDtoList?.map(basketItem => (
-            <CartItem
-              key={basketItem.itemDto.basketId}
-              item={basketItem.itemDto}
-              options={basketItem.itemOptionDtoList}
-              totalPrice={basketItem.totalPrice}
-              isSelected={selectedItems.includes(basketItem.itemDto.basketId)}
-              onSelect={() => handleItemSelect(basketItem.itemDto.basketId)}
-            />
-          ))}
-        </ul>
-      </article>
-      <CartPriceInfo />
-      <DefaultButton
-        type='main'
-        borderRadius='sm'
-        size='lg'
-        isDisabled={selectedItems.length < 1}
-      >
-        총 {selectedItems.length}건 주문하기
-      </DefaultButton>
-    </section>
+            <DefaultText type='label2'>
+              전체 선택 ({selectedItems.length}/{cartInfo?.basketDtoList.length})
+            </DefaultText>
+          </LabeledCheckbox>
+          <button onClick={handleDeleteSelectedItems} disabled={selectedItems.length === 0} className={styles.deleteButton}>
+            <DefaultText type='body3' color='gray700'>상품삭제</DefaultText>
+          </button>
+        </article>
+        <Divider thickness={8} color='gray50' />
+        <article className={styles.cartListBox}>
+          <div className={styles.cartItemList}>
+            {cartInfo?.basketDtoList?.map((item, index) => (
+              <Fragment key={item.itemDto.basketId}>
+                <div key={item.itemDto.basketId}>
+                  <CartItem
+                    key={item.itemDto.basketId}
+                    item={item.itemDto}
+                    options={item.itemOptionDtoList}
+                    isSelected={selectedItems.includes(item.itemDto.basketId)}
+                    onSelect={() => handleItemSelect(item.itemDto.basketId)}
+                  />
+                </div>
+                {index + 1 !== cartInfo?.basketDtoList.length &&
+                <Divider thickness={1} color='gray200' />
+                }
+              </Fragment>
+            ))}
+          </div>
+        </article>
+        <Divider thickness={8} color='gray50' />
+        <CartPriceInfo />
+        <ButtonDocked
+          type='full-button'
+          primaryButtonLabel={`${totalOrderPrice.toLocaleString()}원 주문하기`}
+          onPrimaryClick={isSoldOut ? onToggleSoldOutModal : handleSubmit}
+          isPrimaryDisabled={selectedItems.length < 1}
+          primaryButtonVariant='solid'
+          primaryCount={selectedItems.length}
+        />
+      </section>
+      {isOpenSoldOutModal &&
+        <AlertModal
+          title='품절 상품은 제외하고 결제돼요'
+          content='추가상품이 품절되어 제외하고 결제됩니다'
+          isOpen={isOpenSoldOutModal}
+          onClose={onCloseSoldOutModal}
+          confirmText='결제하기'
+          cancelText='취소'
+          onConfirm={handleSubmit}
+        />
+      }
+    </>
   );
 };
 

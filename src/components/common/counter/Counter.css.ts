@@ -4,13 +4,14 @@ import { themeVars } from "@/styles/theme.css";
 
 export const counterContainer = recipe({
   base: {
-    width: '120px',
+    width: '100px',
+    height: '32px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    border: `1px solid #ddd`,
-    borderRadius: '8px',
-    padding: '10px',
+    border: `1px solid ${themeVars.colors.gray.gray200}`,
+    borderRadius: '6px',
+    padding: '4px',
     background: themeVars.colors.gray.gray0
   },
   variants: {

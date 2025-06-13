@@ -1,12 +1,16 @@
 'use client';
 import * as styles from './Counter.css';
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import PlusIcon from "/public/images/icons/plus.svg";
+import MinusIcon from "/public/images/icons/minus.svg";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface CounterProps {
   min?: number;
   max?: number;
   initialCount?: number;
   step?: number;
-  onChange?: (value: number, type?: 'increase' | 'decrease') => void;
+  onChange?: (value: number, type: 'increase' | 'decrease') => void;
   fullWidth?: boolean;
   className?: string;
 }
@@ -36,12 +40,12 @@ const Counter = ({
 
   return (
     <div className={`${styles.counterContainer({ fullWidth: fullWidth })} ${className || ''}`}>
-      <button onClick={handleDecrement} disabled={initialCount <= min} className={styles.countButton}>
-        -
+      <button onClick={handleDecrement} disabled={initialCount <= min}>
+        <SvgIcon src={MinusIcon} size={24} color={initialCount <= min ? 'gray300' : 'gray800'} />
       </button>
-      <p className={styles.count}>{initialCount}</p>
-      <button onClick={handleIncrement} disabled={initialCount >= max} className={styles.countButton}>
-        +
+      <DefaultText type='label4' color='gray800'>{initialCount}</DefaultText>
+      <button onClick={handleIncrement} disabled={initialCount >= max}>
+        <SvgIcon src={PlusIcon} size={24} color={initialCount >= max ? 'gray300' : 'gray800'} />
       </button>
     </div>
   );

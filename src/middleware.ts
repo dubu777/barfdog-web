@@ -3,7 +3,7 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { isAuthenticated } from "./utils/auth/isAuthenticated";
 
 // 보호가 필요한 경로
-const protectedPaths = ["/mypage", "/order", "/diet-analysis/", "/health-note"];
+const protectedPaths = ["/mypage", "/order", "/diet-analysis/", "/health-note", "/cart"];
 
 // 예외 경로
 const exceptionPaths = ["/health-note/guest"];
@@ -62,5 +62,6 @@ export const config = {
     "/login",
     "/diet-analysis/:path*",
     "/health-note/:path*",
+    "/cart",
   ],
 };

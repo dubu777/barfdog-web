@@ -1,95 +1,88 @@
 import * as styles from './CartItem.css';
-import CloseButton from '/public/images/icons/close-black.png';
 import Image from "next/image";
-import Text from "@/components/common/text/Text";
+import CloseIcon from "/public/images/header/close.svg";
 import Counter from "@/components/common/counter/Counter";
-import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
-import { useCartStore } from "@/store/useCartStore";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Card from "@/components/common/card/Card";
+import Chips from "@/components/common/chips/Chips";
+import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { CartItemDto, CartItemOptionDto } from "@/types/cart";
-import { useDecreaseItemQuantity, useIncreaseItemQuantity } from "@/api/cart/mutations/useUpdateItemQuantity";
-import { useDeleteCartItemById } from "@/api/cart/mutations/useDeleteCartItem";
+import { useCart } from "@/hooks/cart/useCart";
 
 interface CartItemProps {
   item: CartItemDto;
   options: CartItemOptionDto[];
-  totalPrice: number;
   isSelected: boolean;
   onSelect: () => void;
 }
 
-const CartItem = ({ item, options, totalPrice, isSelected, onSelect }: CartItemProps) => {
-  const samePrice = item.salePrice === item.originalPrice;
-  const { updateItemAmount }  = useCartStore();
-  const { mutate: increaseMutate } = useIncreaseItemQuantity(item.basketId);
-  const { mutate: decreaseMutate } = useDecreaseItemQuantity(item.basketId);
-  const { mutate: deleteMutate } = useDeleteCartItemById();
+const CartItem = ({ item, options, isSelected, onSelect }: CartItemProps) => {
+  const { handleItemAmountChange, handleItemOptionAmountChange, handleDeleteItemById } = useCart();
 
-  const handleUpdateItemQuantity = (value: number, type: 'increase' | 'decrease') => {
-    updateItemAmount(item.basketId, value);
-    console.log(type)
-    const mutateFn = type === 'increase' ? increaseMutate : decreaseMutate;
-
-    mutateFn(undefined, {
-      onSuccess: () => {
-        console.log(`${type} 성공!!`)
-      },
-      onError: (error) => {
-        console.log('error', error)
-      },
-    })
-  }
-
-  const handleDeleteItem = () => {
-    deleteMutate(
-      { itemId: item.basketId },
-      {
-        onSuccess: () => {
-          console.log('delete 성공!!')
-        }
-      }
-    )
-  }
   return (
-    <li className={styles.cartItem} key={item.itemId}>
-      <DefaultCheckbox
-        id='all'
-        name='all'
-        value={isSelected}
-        onChange={onSelect}
-      />
-      <div className={styles.itemInfoBox}>
-        <div className={styles.itemInfo}>
-          <Image src={item.thumbnailUrl} alt={item.name} width={60} height={60} />
-          <div className={styles.itemInfoText}>
-            <p>{item.name}</p>
-            <p>
-              <b>{item.salePrice.toLocaleString()}원</b>
-              {!samePrice &&
-                <span className={styles.originalPrice}>{item.originalPrice}원</span>
-              }
-            </p>
-            {options.length > 0 &&
-              options.map(option => (
-                <Text key={option.id} type='description' size='xs' color='grey'>
-                  {option.name} ({option.optionPrice.toLocaleString()}원) / {option.amount}개 / {option.optionPrice.toLocaleString()}원
-                </Text>
-              ))
-            }
+    <LabeledCheckbox
+      value={isSelected}
+      isChecked={isSelected}
+      onToggle={onSelect}
+      iconType='circle'
+      iconClick
+    >
+      <div className={styles.cartItem}>
+        <div className={styles.cartItemInfoWrapper}>
+          <Image src={item.thumbnailUrl} alt={item.name} width={88} height={88} className={styles.cartItemImage} />
+          <div className={styles.cartItemInfo}>
+            <div className={styles.cartItemInfoTop}>
+              <div className={styles.cartItemContent}>
+                <div>
+                  <DefaultText type='label2' color='gray700'>{item.name}</DefaultText>
+                  <DefaultText type='body3' color='gray600' block>구매 수량 {item.amount}</DefaultText>
+                </div>
+                <DefaultText type='headline2' color='gray800'>{item.salePrice.toLocaleString()}원</DefaultText>
+              </div>
+              <button onClick={() => handleDeleteItemById(item.basketId)}><SvgIcon src={CloseIcon} size={20} color='gray500' /></button>
+            </div>
+            <Counter
+              min={1}
+              initialCount={item.amount}
+              onChange={(value, type) => handleItemAmountChange(item.basketId, value, type)}
+              className={styles.cartItemCounter}
+            />
           </div>
         </div>
-        <Counter
-          min={1}
-          initialCount={item.amount}
-          onChange={(value, type) => handleUpdateItemQuantity(value, type)}
-        />
+        {options.length > 0 &&
+        options.map(option => (
+          <Card
+            key={option.id}
+            shadow='none'
+            backgroundColor='gray100'
+            direction='row'
+            gap={8}
+            padding={12}
+            align='start'
+            justify='start'
+          >
+            <Chips variant='outlined' color='gray700'>추가상품</Chips>
+            <div className={styles.cartItemInfo}>
+              <div className={styles.cartItemInfoTop}>
+                <div className={styles.cartItemContent}>
+                  <DefaultText type='body3' color='gray700'>{option.name}</DefaultText>
+                  <DefaultText type='label3' color='gray800'>{option.optionPrice.toLocaleString()}원</DefaultText>
+                </div>
+                <button><SvgIcon src={CloseIcon} size={20} color='gray500' /></button>
+              </div>
+              <Counter
+                min={1}
+                initialCount={option.amount}
+                onChange={(value) => handleItemOptionAmountChange(item.basketId, option.id, value)}
+                className={styles.cartItemCounter}
+              />
+            </div>
+          </Card>
+        ))
+        }
       </div>
-      <div className={styles.totalPriceBox}>
-        <button onClick={handleDeleteItem} className={styles.closeBtn}>
-          <Image src={CloseButton} alt='close button' width={10} height={10} />
-        </button>
-        <Text type='title' size='titleMd' weight='bold'>{totalPrice.toLocaleString()}원</Text>
-      </div>
-    </li>
+    </LabeledCheckbox>
   );
 };
 
