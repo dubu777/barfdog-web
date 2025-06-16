@@ -1,64 +1,47 @@
 import * as styles from './CartPriceInfo.css';
-import Text from "@/components/common/text/Text";
-import { DefaultObjectType } from "@/types/common";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import Divider from "@/components/common/divider/Divider";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 import { useCartStore } from "@/store/useCartStore";
 
 const CartPriceInfo = () => {
   const { calculatedPrices } = useCartStore();
-  const { productTotalPrice, discount, deliveryFee, totalOrderPrice, diffDeliveryFee }  = calculatedPrices;
-  const infoList: DefaultObjectType[] = [
+  const { productTotalPrice, discount, deliveryFee, totalOrderPrice }  = calculatedPrices;
+  
+  const infoList = [
     {
-      id: '상품 금액',
-      name: '상품 금액',
-      value: productTotalPrice,
-      visible: true,
+      label: '총 금액',
+      value: <DefaultText type='headline2'>{productTotalPrice.toLocaleString()}원</DefaultText>,
     },
     {
-      id: '할인',
-      name: '할인',
-      value: discount,
-      visible: true,
+      label: '할인',
+      value: <DefaultText type='body2'>{discount.toLocaleString()}원</DefaultText>,
     },
     {
-      id: '배송비',
-      name: '배송비',
-      value: deliveryFee,
-      visible: true,
+      label: '배송비',
+      value: (
+        <DefaultText type='body2' color={deliveryFee === 0 ? 'red' : 'gray900'}>
+          {deliveryFee === 0 ? '무료' : `${deliveryFee.toLocaleString()}원`}
+        </DefaultText>
+      ),
     },
-    {
-      id: '무료배송',
-      name: '',
-      value: <Text type='description' size='sm' color='red'>{diffDeliveryFee.toLocaleString()}원 추가 시 <b>무료배송</b></Text>,
-      visible: productTotalPrice !== 0 && diffDeliveryFee !== 0,
-    },
-    {
-      id: '총 주문 금액',
-      name: <b>총 주문 금액</b>,
-      value: <Text type='title' size='titleLg' color='red'>{productTotalPrice === 0 ? 0 : totalOrderPrice.toLocaleString()}원</Text>,
-      visible: true,
-    }
   ]
+
   return (
     <article className={styles.cartPriceInfoContainer}>
-      <ul className={styles.priceInfoList}>
-        {infoList.map((info, index) => (
-          info.visible &&
-          <li key={`${info.id}${index}`} className={styles.priceInfo}>
-            <Text type='description' size='md' color='black' weight='normal'>
-              {info.name}
-            </Text>
-            {typeof info.value === 'number' ?
-              <Text type='description' size='md' color='black' weight='normal'>
-                {info.value.toLocaleString()}원
-              </Text>
-              : info.value
-            }
-          </li>
-        ))}
-      </ul>
-      <Text type='description' size='sm' color='grey' align='right'>
-        쿠폰/적립금은 주문서에서 사용 가능합니다.
-      </Text>
+      <DefaultText type='title4'>결제 예상 금액</DefaultText>
+      {infoList.map(info => (
+        <div key={info.label} className={styles.priceInfo}>
+          <DefaultText type='label2' color='gray700'>{info.label}</DefaultText>
+          {info.value}
+        </div>
+      ))}
+      <Divider thickness={2} color='gray200' />
+      <div className={styles.priceInfo}>
+        <DefaultText type='headline2'>결제 금액</DefaultText>
+        <DefaultText type='title2' color='red'>{totalOrderPrice.toLocaleString()}원</DefaultText>
+      </div>
+      <InfoBox text='쿠폰•적립금은 결제 화면에서 사용할 수 있어요!' color='gray' />
     </article>
   );
 };

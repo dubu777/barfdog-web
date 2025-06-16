@@ -21,6 +21,7 @@ const ItemList = () => {
   const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
     prefetchFn: (page: number) => prefetchGetStoreItemList(queryClient, page, sortBy, itemType),
     pushWithQuery,
+    preserveScroll: false,
   })
 
   const paginationProps = useMemo(() => ({
@@ -36,17 +37,17 @@ const ItemList = () => {
     }
   }, [data.page, setPaginationData]);
 
-  console.log('storeItemList', storeItemList)
-
   return (
-    <article className={styles.storeItemListContainer}>
-      <ul className={styles.storeItemList}>
-        {storeItemList.map(item => (
-          <StoreItem key={item.id} item={item} />
-        ))}
-      </ul>
+    <>
+      <article className={styles.storeItemListContainer}>
+        <ul className={styles.storeItemList}>
+          {storeItemList.map(item => (
+            <StoreItem key={item.id} item={item} />
+          ))}
+        </ul>
+      </article>
       <Pagination {...paginationProps} />
-    </article>
+    </>
   );
 };
 

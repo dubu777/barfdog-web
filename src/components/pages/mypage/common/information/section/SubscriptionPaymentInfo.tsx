@@ -159,6 +159,7 @@ const SubscriptionPaymentInfo = ({
 		<InfoSection
 			title="결제 예정 금액"
 			isDefaultOpen
+			gap={12}
 		>
 			<div className={styles.infoBoxItemColumn}>
 				{paidInfo.map((info, index) => {

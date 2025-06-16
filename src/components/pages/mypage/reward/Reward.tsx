@@ -40,9 +40,17 @@ const Reward = () => {
     <section>
       <article className={styles.totalRewardContainer}>
         <DefaultText type='title4'>적립금</DefaultText>
-        <Card shadow='light' className={styles.totalRewardCard}>
-          <DefaultText type='label4'>사용 가능 적립금</DefaultText>
-          <DefaultText type='title2'>{totalReward?.toLocaleString()} P</DefaultText>
+        <Card
+          shadow='light'
+          padding={20}
+          align='start'
+          gap={16}
+          className={styles.totalRewardCard}
+        >
+          <div>
+            <DefaultText type='label4'>사용 가능 적립금</DefaultText>
+            <DefaultText type='title2'>{totalReward?.toLocaleString()} P</DefaultText>
+          </div>
           <ul className={styles.rewardSummary}>
             <li className={styles.summaryInfo}>
               <DefaultText type='label4'>다음달 소멸 예정 금액</DefaultText>

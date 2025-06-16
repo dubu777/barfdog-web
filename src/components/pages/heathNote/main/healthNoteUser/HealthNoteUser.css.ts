@@ -28,6 +28,18 @@ export const menuCategory = recipe({
   },
 });
 
+export const menuCategoryCard = recipe({
+  base: {},
+  variants: {
+    fullWidth: {
+      true: {},
+      false: {
+        gap: "32px",
+      },
+    },
+  },
+});
+
 export const menuDescription = style({
   marginTop: "4px",
 });

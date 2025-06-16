@@ -90,7 +90,6 @@ const getFullDogList = async (
         };
 
         // ingredients, recipeDtoList는 이미 구조 분해에서 제거됨
-        console.log("merged!!!", merged);
         return merged;
       }
       return null;

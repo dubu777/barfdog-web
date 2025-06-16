@@ -44,7 +44,13 @@ const ReviewSection = ({ bestReviewList }: ReviewSectionProps) => {
 			</motion.div>
 			<Marquee speed={100}>
 				{[...bestReviewList, ...bestReviewList].map((review, index) => (
-					<Card key={`${review.id}-${index}`} shadow='none' className={mainReviewCard}>
+					<Card
+						key={`${review.id}-${index}`}
+						shadow='none'
+						padding='none'
+						align='start'
+						className={mainReviewCard}
+					>
 						<Image src={review.imageUrl} alt={review.username} width={120} height={120} className={mainReviewImage} />
 						<div className={mainReviewCardContent}>
 							<div>

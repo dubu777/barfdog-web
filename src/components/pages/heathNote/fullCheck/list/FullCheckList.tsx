@@ -47,7 +47,13 @@ const FullCheckList = () => {
   return (
     <section>
       <div className={styles.fullCheckSurvey}>
-        <Card shadow="light" className={styles.fullCheckSurveyCard}>
+        <Card
+          shadow="light"
+          align='start'
+          direction='row'
+          justify='between'
+          padding='none'
+        >
           <div className={styles.fullCheckSurveyCardContent}>
             <DefaultText type="headline2">
               우리 아이 건강,
@@ -76,7 +82,13 @@ const FullCheckList = () => {
             href={`/health-note/full-check/result/${result.id}?score=${result.score}`}
             key={index}
           >
-            <Card shadow="light" padding={16}>
+            <Card
+              shadow="light"
+              padding={16}
+              direction='col'
+              width='full'
+              align='start'
+            >
               <DefaultText type="label4" color="gray600">
                 {result.createdDate}
               </DefaultText>

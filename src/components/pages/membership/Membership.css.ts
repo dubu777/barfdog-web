@@ -32,6 +32,7 @@ export const membershipItem = style({
 })
 
 export const membershipInfo = style({
+	width: '100%',
 	paddingBottom: '12px',
 	marginBottom: '12px',
 	borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,

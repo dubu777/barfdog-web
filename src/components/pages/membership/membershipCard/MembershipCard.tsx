@@ -11,7 +11,13 @@ interface MembershipCardProps {
 
 const MembershipCard = ({ tier, className }: MembershipCardProps) => {
 	return (
-		<Card shadow='light' key={tier.tier} className={className || ''}>
+		<Card
+			shadow='light'
+			key={tier.tier}
+			align='start'
+			padding={20}
+			className={className || ''}
+		>
 			<div className={styles.membershipInfo}>
 				<div className={styles.membershipName}>
 					<Image src={tier.image} alt={tier.tierKR} width={44} height={44} />

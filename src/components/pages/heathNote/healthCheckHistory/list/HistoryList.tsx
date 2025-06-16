@@ -50,7 +50,12 @@ const HistoryList = () => {
 						<div className={styles.healthCheckList}>
 							{dummyData.map(data => (
 								<Link href={`/health-note/health-check-history/${data.id}`} key={data.id} >
-									<Card shadow='light' padding={16} className={styles.healthCheckItem}>
+									<Card
+										shadow='light'
+										padding={16}
+										gap={12}
+										align='start'
+									>
 										<div className={styles.healthCheckInfo}>
 											<DefaultText type='label4' color='gray600'>{data.createdDate}</DefaultText>
 											<DefaultText type='headline2' color='gray800'>{data.hospitalName}</DefaultText>

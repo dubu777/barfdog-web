@@ -8,15 +8,8 @@ export const historyDetailContainer = style({
 	minHeight: 'calc(100vh - 52px)',
 })
 
-export const historyDetailItem = style({
-	padding: '20px 16px !important',
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '12px',
-	borderRadius: '16px !important'
-})
-
 export const defaultInfo = style({
+	width: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '12px',

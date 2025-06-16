@@ -105,10 +105,6 @@ export const mainReviewCard = style({
 	width: '120px !important',
 	margin: '0 2px',
 	overflow: 'hidden',
-	padding: '0 !important',
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'flex-start',
 })
 
 export const mainReviewImage = style({

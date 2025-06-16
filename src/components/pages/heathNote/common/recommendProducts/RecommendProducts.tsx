@@ -27,7 +27,6 @@ const RecommendProducts = ({
 		<ResultCard
 			title={title}
 			subTitle={subTitle}
-			className={styles.recommendProductsContainer}
 		>
 			<div className={styles.itemList}>
 				{products.map((item, index) => (
@@ -36,7 +35,11 @@ const RecommendProducts = ({
 							<Chips variant='solid' color='red' size='sm' borderRadius='lg'>{index + 1}</Chips>
 							<DefaultText type='headline1'>{item.title}</DefaultText>
 						</div>
-						<Card shadow='none' padding={12} className={styles.itemCard}>
+						<Card
+							shadow='none'
+							padding={12}
+							gap={12}
+						>
 							<div className={styles.itemInfoBox}>
 								<div className={styles.itemInfo}>
 									<div className={styles.itemImage} />

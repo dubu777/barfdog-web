@@ -12,6 +12,7 @@ export const containerBaseStyle = style({
 	borderTop: `1px solid ${themeVars.colors.gray.gray200}`,
 	margin: '0 auto',
 	bottom: 0,
+	zIndex: 100
 })
 
 export const containerPositionStyle = {

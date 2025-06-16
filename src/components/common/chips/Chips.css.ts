@@ -31,6 +31,10 @@ export const chipVariantStyles = {
       backgroundColor: themeVars.colors.gray.gray200,
       color: themeVars.colors.gray.gray700,
     }),
+    gray600: style({
+      backgroundColor: themeVars.colors.gray.gray600,
+      color: themeVars.colors.gray.gray0,
+    }),
     gray700: style({
       backgroundColor: themeVars.colors.gray.gray700,
       color: themeVars.colors.gray.gray0,

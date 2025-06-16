@@ -1,16 +1,11 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const recommendProductsContainer = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '20px',
-})
-
 export const itemList = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '20px',
+	marginTop: '20px',
 })
 
 export const itemHeader = style({
@@ -20,13 +15,8 @@ export const itemHeader = style({
 	marginBottom: '12px',
 })
 
-export const itemCard = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '12px',
-})
-
 export const itemInfoBox = style({
+	width: '100%',
 	display: 'flex',
 	justifyContent: 'space-between',
 	alignItems: 'center',

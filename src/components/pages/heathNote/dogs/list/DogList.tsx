@@ -55,9 +55,11 @@ const DogList = () => {
             return (
               <Card
                 key={dog.id}
-                shadow="strong"
+                shadow="light"
                 padding={12}
-                className={styles.dogCard}
+                gap={12}
+                borderRadius={12}
+                direction='row'
               >
                 <Image
                   src={dog.pictureUrl || DogIcon}

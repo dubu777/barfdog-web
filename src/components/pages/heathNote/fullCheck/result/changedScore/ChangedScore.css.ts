@@ -8,10 +8,7 @@ export const changedScoreContainer = style({
 
 export const changedScoreNotice = style({
 	marginTop: '12px',
-	marginBottom: '16px',
-	display: 'flex',
-	alignItems: 'center',
-	gap: '12px',
+	marginBottom: '6px',
 	border: `1px solid ${themeVars.colors.gray.gray200}`
 })
 

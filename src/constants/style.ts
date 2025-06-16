@@ -56,6 +56,7 @@ export const CHIPS_COLORS = {
   pinkWhite: themeVars.colors.red.pinkWhite,
   gray100: themeVars.colors.gray.gray100,
   gray200: themeVars.colors.gray.gray200,
+  gray600: themeVars.colors.gray.gray600,
   gray700: themeVars.colors.gray.gray700,
   gray800: themeVars.colors.gray.gray800,
   gray900: themeVars.colors.gray.gray900,

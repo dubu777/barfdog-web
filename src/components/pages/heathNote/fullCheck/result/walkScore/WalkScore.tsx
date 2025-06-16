@@ -81,7 +81,10 @@ const WalkScore = ({
 			>
 				<div className={styles.walkScoreContentBox}>
 					<Image src={WalkDogImage} alt='walk dog' width={303} height={140} />
-					<Card shadow='none' className={styles.walkScoreInfoCard}>
+					<Card
+						shadow='none'
+						padding='none'
+					>
 						<div className={styles.walkScore}>
 							<DefaultText type='headline2'>{dogName}의 산책 점수</DefaultText>
 							<DefaultText type='display1' applyLineHeight>
@@ -118,7 +121,12 @@ const WalkScore = ({
 						))}
 					</div>
 				</div>
-				<Card shadow='none' padding={12} className={styles.walkNotice}>
+				<Card
+					shadow='none'
+					padding={12}
+					gap={6}
+					className={styles.walkNotice}
+				>
 					<DefaultText type='headline2' color='blue600'>반려견에게 산책은 왜 중요할까요?</DefaultText>
 					<DefaultText type='body3' color='gray700'>
 						산책은 반려견의 체중을 조절하고 비만을 예방하는 데 중요한 역할을 해요. 근육과 관절을 튼튼하게 유지해주고, 에너지를 건강하게 소모하면서 스트레스 해소와 정서 안정에도 도움을 줄 수 있어요.

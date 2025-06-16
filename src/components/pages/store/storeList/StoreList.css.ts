@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-export const storeContainer = style({
-  margin: '100px 0'
+export const storeListContainer = style({
+	paddingBottom: '85px',
 })

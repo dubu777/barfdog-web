@@ -34,11 +34,8 @@ export const recommendationCodeBox = style({
 })
 
 export const recommendationCode = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
   background: themeVars.colors.gray.gray0,
-  padding: '20px 0 0 !important',
+  padding: '20px 0 0',
   border: `1px solid ${themeVars.colors.gray.gray300}`,
 })
 

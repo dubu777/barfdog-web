@@ -26,12 +26,6 @@ export const healthCheckList = style({
 	marginTop: '20px',
 })
 
-export const healthCheckItem = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '12px',
-})
-
 export const healthCheckInfo = style({
 	display: 'flex',
 	flexDirection: 'column',

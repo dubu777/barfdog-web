@@ -47,7 +47,7 @@ const ChangeRecipe = ({ subscriptionId }: ChangeRecipeProps) => {
 						<span className={pointColor}>식단 변경은 {nextCycle}회차부터 변경돼요</span> (현재: {detail.subscribeCount}회차)
 					</DefaultText>
 				</div>
-				<Card shadow='none' padding={16} className={styles.changeRecipeTopInfo}>
+				<Card shadow='none' padding={16} gap={18}>
 					{subscriptionInfo.map((info, index) => (
 						<Fragment key={info.value}>
 							<div className={styles.topInfo}>
@@ -63,15 +63,13 @@ const ChangeRecipe = ({ subscriptionId }: ChangeRecipeProps) => {
 						</Fragment>
 					))}
 				</Card>
-				<Card shadow='none' padding={12} className={styles.changeRecipeBottomInfo}>
+				<Card shadow='none' padding={12} gap={12}>
 					<div className={styles.bottomInfoTitle}>
 						<DefaultText type='headline2'>구독 상품</DefaultText>
 						<Button variant='outline' type='assistive' size='sm'>수정</Button>
 					</div>
 					<Divider thickness={2} color='gray900' />
-					<div>
-						<RecipeList data={detail} />
-					</div>
+					<RecipeList data={detail} />
 				</Card>
 			</article>
 			<ButtonDocked

@@ -10,6 +10,7 @@ interface CartStore {
   selectedItems: number[];
   setSelectedItems: (selectedItems: number[]) => void;
   calculatedPrices: CartSummary;
+  updateItemOptionAmount: (basketId: number, optionId: number, newAmount: number) => void;
 }
 
 const initialCalculatedPrices = {
@@ -25,7 +26,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
   selectedItems: [],
   calculatedPrices: initialCalculatedPrices,
 
-  // 장바구니 데이터 초기화 및 전체 데이터를 업데이트 시 (전체선택 상태 기본값 설정 및 장바구니 항목 수, 선택된 항목 업데이트 및 요약 정보 계산)
+    // 장바구니 데이터 초기화 및 전체 데이터를 업데이트 시 (전체선택 상태 기본값 설정 및 장바구니 항목 수, 선택된 항목 업데이트 및 요약 정보 계산)
   setCartInfo: (cartInfo) => {
     if (!cartInfo) {
       console.error("Invalid cart data");
@@ -41,13 +42,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
       calculatedPrices,
     })
   },
+
   // 장바구니 개별 항목 수량 변경 시 (선택된 항목에 맞춘 데이터 필터링, 특정 항목 수량 업데이트 후 총 가격 계산 및 요약 정보 계산)
   updateItemAmount: (basketId, newAmount) => {
-    const { cartInfo, selectedItems } = get();
-    if (!cartInfo) {
-      console.error("Cart data is not available");
-      return;
-    }
+    const { cartInfo } = get();
+    if (!cartInfo) return;
 
     const updatedBasketDtoList = cartInfo.basketDtoList.map((item) => {
       if (item.itemDto.basketId === basketId) {
@@ -64,21 +63,55 @@ export const useCartStore = create<CartStore>((set, get) => ({
       return item;
     });
 
-    const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
+    const updatedCartInfo = {
+      ...cartInfo,
+      basketDtoList: updatedBasketDtoList,
+    };
 
-    const updatedSelectedItems = selectedItems.includes(basketId)
-      ? selectedItems
-      : [...selectedItems, basketId];
-
-    const filteredBasketDtoList = filterBySelectedItems(updatedCartInfo, updatedSelectedItems);
-    const filteredCartInfo = { ...updatedCartInfo, basketDtoList: filteredBasketDtoList };
-
-    const calculatedPrices = calculateSummary(filteredCartInfo);
+    const calculatedPrices = calculateSummary(updatedCartInfo);
 
     set({
       cartInfo: updatedCartInfo,
       calculatedPrices,
-      selectedItems: updatedSelectedItems,
+    });
+  },
+
+  // 장바구니 옵션 수량 변경 시
+  updateItemOptionAmount: (basketId, optionId, newAmount) => {
+    const { cartInfo } = get();
+
+    if (!cartInfo) return;
+
+
+    const updatedBasketDtoList = cartInfo.basketDtoList.map(item => {
+      if (item.itemDto.basketId === basketId) {
+        const updatedItemOptionDtoList = item.itemOptionDtoList.map(option =>
+          option.id === optionId
+            ? { ...option, amount: Math.max(1, newAmount) }
+            : option
+        );
+
+        const updatedTotalPrice = item.itemDto.amount * item.itemDto.salePrice +
+          updatedItemOptionDtoList.reduce(
+            (sum, option) => sum + option.optionPrice * option.amount, 0
+          );
+
+        return {
+          ...item,
+          itemOptionDtoList: updatedItemOptionDtoList,
+          totalPrice: updatedTotalPrice,
+        };
+      }
+      return item;
+    });
+
+    const updatedCartInfo = { ...cartInfo, basketDtoList: updatedBasketDtoList };
+
+    const calculatedPrices = calculateSummary(updatedCartInfo);
+
+    set({
+      cartInfo: updatedCartInfo,
+      calculatedPrices
     })
   },
   // 장바구니 선택한 항목 업데이트 시 (선택한 항목을 기반으로 ID Array 업데이트 및 요약 정보 다시 계산)

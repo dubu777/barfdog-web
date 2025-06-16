@@ -31,6 +31,7 @@ export const cardChip = style({
 })
 
 export const smallCardBox = style({
+	width: '100%',
 	display: 'flex',
 	gap: '16px',
 	alignItems: 'center',

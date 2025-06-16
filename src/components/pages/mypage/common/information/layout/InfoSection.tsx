@@ -16,6 +16,7 @@ interface InfoSectionProps {
 	buttons?: InfoListsButtons[];
 	className?: string;
 	children?: ReactNode;
+	gap?: 'none' | 12;
 }
 
 const InfoSection = ({
@@ -27,6 +28,7 @@ const InfoSection = ({
 	buttons,
 	className,
 	children,
+	gap = 'none',
 }: InfoSectionProps) => {
 	const [isOpen, setIsOpen] = useState(isDefaultOpen);
 
@@ -34,7 +36,12 @@ const InfoSection = ({
 		<article className={`${styles.infoContainer({ isOpen })} ${className || ''}`}>
 			<InfoTitleButton title={title} subTitleRight={subTitleRight} isOpen={isOpen} setIsOpen={!isDefaultOpen ? setIsOpen : undefined} />
 			{isOpen && (
-				<Card shadow="none" padding={12} className={styles.infoDetailContainer}>
+				<Card
+					shadow="none"
+					padding={12}
+					gap={gap}
+					className={styles.infoDetailContainer}
+				>
 					{infoLists
 						? <>
 							{subTitle && (

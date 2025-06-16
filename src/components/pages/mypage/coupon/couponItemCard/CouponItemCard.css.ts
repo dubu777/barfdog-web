@@ -1,11 +1,5 @@
 import { style } from "@vanilla-extract/css";
 
-export const couponItem = style({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-})
-
 export const discount = style({
   marginBottom: '4px',
 })

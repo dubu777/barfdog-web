@@ -102,7 +102,14 @@ const HistoryDetail = ({ historyId }: { historyId: number }) => {
 			<section className={styles.historyDetailContainer}>
 				{infoList.map(info => (
 					info.visible &&
-					<Card key={info.title} shadow='light' className={styles.historyDetailItem}>
+					<Card
+						key={info.title}
+						shadow='light'
+						padding='20/16'
+						gap={12}
+						borderRadius={16}
+						align='start'
+					>
 						<DefaultText type='headline1'>{info.title}</DefaultText>
 						<Divider thickness={2} color='gray900' />
 						{info.content}

@@ -129,7 +129,11 @@ const InviteFriends = () => {
       }
       <article>
         <div className={styles.recommendationCodeBox}>
-          <Card borderRadius='none' shadow='light' className={styles.recommendationCode}>
+          <Card
+            borderRadius='none'
+            shadow='light'
+            className={styles.recommendationCode}
+          >
             <DefaultText type='label4'>나의 추천코드</DefaultText>
             <DefaultText type='title1'>{mypageUserInfo.myRecommendationCode}</DefaultText>
             <div className={styles.recommendationCodeActions}>

@@ -1,5 +1,6 @@
 import { CartInfo, UpdateCartInfo } from "@/types";
 import axiosInstance from "@/api/axiosInstance";
+import { AxiosInstance } from "axios";
 
 export {
 	getCartInfo,
@@ -10,8 +11,8 @@ export {
 	deleteCartItemByIds,
 };
 
-const getCartInfo = async (): Promise<CartInfo> => {
-	const { data } = await axiosInstance.get('/api/baskets');
+const getCartInfo = async (instance: AxiosInstance = axiosInstance): Promise<CartInfo> => {
+	const { data } = await instance.get('/api/baskets');
 	return data;
 }
 
@@ -31,11 +32,15 @@ const decreaseCartItem = async (itemId: number) => {
 }
 
 const deleteCartItemById = async (itemId: number) => {
-	const { data } = await axiosInstance.delete(`/api/baskets/${itemId}`, { id: itemId });
+	const { data } = await axiosInstance.delete(`/api/baskets/${itemId}`, {
+		data: { id: itemId }
+	});
 	return data;
 }
 
 const deleteCartItemByIds = async (deleteBasketIdList: number[]) => {
-	const { data } = await axiosInstance.delete(`/api/baskets`, deleteBasketIdList);
+	const { data } = await axiosInstance.delete(`/api/baskets`, {
+		data: deleteBasketIdList,
+	});
 	return data;
 }

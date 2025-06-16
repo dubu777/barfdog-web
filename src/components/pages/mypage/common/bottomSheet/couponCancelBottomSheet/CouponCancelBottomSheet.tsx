@@ -52,7 +52,12 @@ const CouponCancelBottomSheet = ({
 				<div>
 					<DefaultText type={coupons ? 'title4' : 'headline2'}>적용중 쿠폰</DefaultText>
 					<div className={styles.couponCardContainer}>
-						<Card shadow='strong' className={styles.usingCoupon}>
+						<Card
+							shadow='strong'
+							padding={20}
+							align='start'
+							className={styles.usingCoupon}
+						>
 							<DefaultText type='title1' color='red'>{usingDiscountCoupon}</DefaultText>
 							<DefaultText type='label1' color='gray700'>{usingCoupon.couponName}</DefaultText>
 						</Card>
@@ -103,6 +108,7 @@ const CouponCancelBottomSheet = ({
 				primaryButtonLabel={confirmText}
 				onPrimaryClick={handleCancel}
 				onSecondaryClick={onClose}
+				position='sticky'
 			/>
 		</BottomSheet>
 	);

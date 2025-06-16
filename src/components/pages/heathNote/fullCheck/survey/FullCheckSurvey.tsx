@@ -119,6 +119,7 @@ const FullCheckSurvey = () => {
   return (
     <NavigationGuard>
       <Header
+        backgroundColor='gray50'
         leftElement={
           !isFirstStep && (
             <div className={styles.fullCheckSurveyHeader}>
@@ -199,12 +200,14 @@ const FullCheckSurvey = () => {
           />
         </article>
       </section>
-      <ButtonDocked
-        type="full-button"
-        primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
-        onPrimaryClick={onNextStep}
-        isPrimaryDisabled={isButtonDisabled}
-      />
+      {currentStep >= 4 &&
+        <ButtonDocked
+          type="full-button"
+          primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
+          onPrimaryClick={onNextStep}
+          isPrimaryDisabled={isButtonDisabled}
+        />
+      }
     </NavigationGuard>
   );
 };

@@ -1,18 +1,12 @@
 import * as styles from './StoreList.css';
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import ItemList from "@/components/pages/store/storeList/itemList/ItemList";
 import ItemFilter from "@/components/pages/store/storeList/itemFilter/ItemFilter";
 
 const StoreList = () => {
   return (
-    <section className={styles.storeContainer}>
+    <section className={styles.storeListContainer}>
       <ItemFilter />
-      <ErrorBoundary fallback={<div>상품이 없습니다.</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <ItemList />
-        </Suspense>
-      </ErrorBoundary>
+      <ItemList />
     </section>
   );
 };

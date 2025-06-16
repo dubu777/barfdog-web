@@ -22,17 +22,6 @@ export const infoAccordion = style({
 	gap: '8px'
 })
 
-export const infoAccordionButton = recipe({
-	base: {
-		background: 'transparent',
-	},
-	variants: {
-		isOpen: {
-			false: { background: themeVars.colors.gray.gray0 }
-		}
-	}
-})
-
 export const infoAccordionIcon = recipe({
 	base: {
 		transition: 'all .35s',
@@ -47,9 +36,6 @@ export const infoAccordionIcon = recipe({
 
 export const infoDetailContainer = style({
 	marginTop: '8px',
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '10px',
 })
 
 export const infoSubTitle = style({
@@ -60,6 +46,7 @@ export const infoSubTitle = style({
 
 export const infoListBox = recipe({
 	base: {
+		width: '100%',
 		display: 'flex',
 		flexDirection: 'column',
 		paddingBottom: '12px',
@@ -125,17 +112,20 @@ export const petImage = style({
 })
 
 export const infoBox = style({
+	width: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '4px',
 })
 
 export const infoBoxItem = style({
+	width: '100%',
 	display: 'flex',
 	gap: '8px',
 })
 
 export const infoBoxItemColumn = style({
+	width: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '16px',

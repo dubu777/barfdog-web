@@ -134,6 +134,9 @@ export const commonWrapper = recipe({
       16: {
         gap: "16px",
       },
+      18: {
+        gap: "18px",
+      },
       20: {
         gap: "20px",
       },

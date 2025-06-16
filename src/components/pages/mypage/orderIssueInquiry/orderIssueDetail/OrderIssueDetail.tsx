@@ -23,12 +23,12 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 	const issueTypeName = ORDER_ISSUE_TYPE[issueType];
 	const data = {
 		"id": 3,
-		"issueType": "REFUND",
+		"issueType": "CANCEL",
 		"requestDate": "2025.01.15",
 		"name": "ProductName",
 		"imageUrl": "https://dev.barfdogserver.com/product2-image.jpg",
 		"orderPrice": 272400,
-		"orderType": 'items',
+		"orderType": 'subscription',
 		"requestStatus": 'COMPLETED',
 		"requestReason": '급여 방법을 잘 모르겠어요',
 		"subscribeId": 6666,
@@ -65,7 +65,7 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 					<div className={infoItem}>
 						<DefaultText type='title4'>취소사유</DefaultText>
 					</div>
-					<Card shadow='none' className={`${infoDetailContainer} ${infoCard}`}>
+					<Card shadow='none' padding={12} className={infoDetailContainer}>
 						<DefaultText type='body3'>{data.requestReason}</DefaultText>
 					</Card>
 				</article>

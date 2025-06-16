@@ -49,7 +49,7 @@ const ItemReview = ({ itemId }: ItemReviewProps) => {
           <Text type='title' size='titleXXl' weight='bold'>{averageStar}&nbsp;/</Text>
           <Text type='title' size='titleXXl' color='grey' weight='bold'>&nbsp;5.0</Text>
         </div>
-        <RateStar rateLength={Number(averageStar)} color='yellow' size='xxl' />
+        <RateStar rateLength={Number(averageStar)} color='yellow' size={24} />
       </div>
       <div className={styles.createAdminReview}>
         <DefaultButton type='main' borderRadius='sm'>
