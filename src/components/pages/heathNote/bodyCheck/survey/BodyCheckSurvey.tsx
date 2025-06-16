@@ -52,6 +52,13 @@ export default function BodyCheckSurvey({ part }: BodyCheckSurveyProps) {
     control,
   });
 
+  const handleClick = () => {
+    handleNextStep();
+    if (isLastStep) {
+      console.log("부위별 진단 제출");
+    }
+  };
+
   console.log("watch", watch());
   return (
     <NavigationGuard>
@@ -123,8 +130,8 @@ export default function BodyCheckSurvey({ part }: BodyCheckSurveyProps) {
       </section>
       <ButtonDocked
         type="full-button"
-        primaryButtonLabel="다음"
-        onPrimaryClick={handleNextStep}
+        primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
+        onPrimaryClick={handleClick}
         isPrimaryDisabled={isButtonDisabled}
       />
     </NavigationGuard>
