@@ -54,27 +54,34 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
     "/health-note/full-check": {
       centerTitle: "건강 종합 진단",
       showBackButton: true,
-      onBack: goBackPreviousPage,
     },
     "/health-note/body-check": {
       centerTitle: "부위별 진단",
       showBackButton: true,
-      onBack: goBackPreviousPage,
     },
     "/health-note/health-check-history": {
       centerTitle: "건강검진 내역",
       showBackButton: true,
-      onBack: goBackPreviousPage,
     },
     "/health-note/health-check-history/create": {
       centerTitle: "건강검진 등록",
       showBackButton: true,
-      onBack: goBackPreviousPage,
     },
     "/health-note/dogpedia": {
       centerTitle: "견종 백과",
       showBackButton: true,
-      onBack: goBackPreviousPage,
+    },
+    "/health-note/gut-check": {
+      centerTitle: "장내 미생물 검사",
+      showBackButton: true,
+    },
+    "/health-note/gut-check/create": {
+      centerTitle: "",
+      showBackButton: true,
+    },
+    "/health-note/gut-check/create/survey": {
+      centerTitle: "",
+      showBackButton: true,
     },
   };
 
@@ -130,6 +137,7 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
     "/health-note/full-check/survey",
     "/health-note/body-check/survey",
     "/health-note/body-check/result",
+    "/health-note/gut-check/return-request",
   ];
 
   const shouldRenderHeader = useMemo(() => {

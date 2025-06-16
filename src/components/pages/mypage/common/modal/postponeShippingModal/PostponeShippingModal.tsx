@@ -16,7 +16,7 @@ import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubsc
 import useModal from "@/hooks/useModal";
 import CouponCancelBottomSheet
 	from "@/components/pages/mypage/common/bottomSheet/couponCancelBottomSheet/CouponCancelBottomSheet";
-import CompletedBox from "@/components/pages/mypage/common/completedBox/CompletedBox";
+import CompletedBox from "@/components/common/completedBox/CompletedBox";
 import { useCompletedMode } from "@/hooks/useCompletedMode";
 
 interface PostponeShippingModalProps {

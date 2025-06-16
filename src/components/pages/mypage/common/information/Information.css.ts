@@ -71,6 +71,7 @@ export const infoList = style({
 })
 
 export const infoCard = style({
+	width: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 })
@@ -157,10 +158,6 @@ export const subscriptionPaymentDiscount = style({
 
 export const couponButton = style({
 	marginTop: '2px',
-})
-
-export const addressHeader = style({
-	marginBottom: '12px',
 })
 
 export const addressEditButton = style({

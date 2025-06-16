@@ -11,14 +11,6 @@ export const fullCheckSurveyCardContent = style({
 	padding: '12px 0 12px 12px',
 })
 
-export const fullCheckSurveyButton = style({
-	display: 'flex',
-	alignItems: 'center',
-	gap: '4px',
-	padding: '6px 0',
-	cursor: 'pointer',
-})
-
 export const fullCheckResultList = style({
 	padding: '0 20px',
 	display: 'flex',
