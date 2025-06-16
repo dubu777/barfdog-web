@@ -164,7 +164,7 @@ export default function SurveyPageContainer() {
       </FormProvider>
       <ButtonDocked
         type="full-button"
-        primaryButtonLabel={isLastStep ? "제출" : "다음"}
+        primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
         onPrimaryClick={handleFooterButtonClick}
         isPrimaryDisabled={!isCanNextStep}
       />
