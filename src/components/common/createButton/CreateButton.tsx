@@ -3,28 +3,30 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import AddIcon from "/public/images/icons/add-circle.svg";
+import AddIcon from "/public/images/icons/plus.svg";
 
 interface CreateButtonProps {
-  from: "dietAnalysis" | "healthNoteDog" | 'healthCheck';
   text?: string;
+  url?: string;
+  routeType?: 'router' | 'location';
+  onClick?: () => void;
 }
 
-const CreateButton = ({ from, text }: CreateButtonProps) => {
+const CreateButton = ({ text, url, routeType = 'router', onClick }: CreateButtonProps) => {
   const router = useRouter();
 
   const handleNavigateToCreateDog = () => {
-    switch (from) {
-      case "dietAnalysis":
-        window.location.href = "/diet-analysis/survey";
-        break;
-      case "healthNoteDog":
-        router.push("/health-note/dogs/create");
-        break;
-      case "healthCheck":
-        router.push("/health-note/health-check-history/create");
-        break;
-      default: return;
+    if (onClick) {
+      onClick();
+      return;
+    }
+
+    if(url) {
+      if (routeType === 'router') {
+        window.location.href = url;
+      } else {
+        router.push(url);
+      }
     }
   };
 
@@ -37,7 +39,7 @@ const CreateButton = ({ from, text }: CreateButtonProps) => {
       onClick={handleNavigateToCreateDog}
     >
       <DefaultText type="headline3" className={styles.createButton}>
-        <SvgIcon src={AddIcon} />
+        <SvgIcon src={AddIcon} size={24} />
         {text ? text : '새로운 아이 등록하기'}
       </DefaultText>
     </Button>

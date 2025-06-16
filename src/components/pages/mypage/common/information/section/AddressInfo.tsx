@@ -13,6 +13,7 @@ import isEqual from 'lodash/isEqual';
 import Divider from "@/components/common/divider/Divider";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import {usePersistMypageStore} from "@/store/usePersistMypageStore";
+import AddressContent from "@/components/common/addressContent/AddressContent";
 
 interface AddressInfoProps {
 	data: any;
@@ -94,27 +95,5 @@ const AddressInfo = ({
 		</article>
 	);
 };
-
-const AddressContent = ({
-	deliveryName,
-	isDefault = false,
-	recipientName,
-	phoneNumber,
-	street,
-	detailAddress,
-}) => (
-	<div className={styles.infoCard}>
-		<div className={`${styles.infoBoxItem} ${styles.addressHeader}`}>
-			<DefaultText type='headline2'>{deliveryName}</DefaultText>
-			{isDefault && <Chips variant='outlined' borderRadius='lg'>기본배송지</Chips>}
-		</div>
-		<DefaultText type='body3' color='gray800'>
-			{recipientName} • {phoneNumber ? formatPhoneNumber(phoneNumber) : ''}
-		</DefaultText>
-		<DefaultText type='body3' color='gray800'>
-			{street} {detailAddress}
-		</DefaultText>
-	</div>
-)
 
 export default AddressInfo;

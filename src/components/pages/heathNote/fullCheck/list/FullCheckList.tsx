@@ -3,13 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import * as styles from "./FullCheckList.css";
 import DogImage from "/public/images/healthNote/full-check/list-dog.png";
-import ArrowRightIcon from "/public/images/icons/chevron-right-sm.svg";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Chips from "@/components/common/chips/Chips";
 import HorizontalProgressBar from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
 import { useHealthNoteStore } from "@/store/useHealthNoteStore";
+import TextButton from "@/components/common/textButton/TextButton";
 
 const FullCheckList = () => {
   const { dogInfo } = useHealthNoteStore();
@@ -63,15 +62,7 @@ const FullCheckList = () => {
             <DefaultText type="caption2" color="gray600">
               건강 종합 진단으로 건강 변화를 쉽게 기록할 수 있어요
             </DefaultText>
-            <button
-              onClick={handleGoToSurvey}
-              className={styles.fullCheckSurveyButton}
-            >
-              <DefaultText type="headline4" color="red">
-                진단하러 가기
-              </DefaultText>
-              <SvgIcon src={ArrowRightIcon} color="red" size={20} />
-            </button>
+            <TextButton text='진단하러 가기' onClick={handleGoToSurvey} />
           </div>
           <Image src={DogImage} alt="Dog Image" width={120} height={146} />
         </Card>

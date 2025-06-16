@@ -6,7 +6,7 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import CompletedBox from "@/components/pages/mypage/common/completedBox/CompletedBox";
+import CompletedBox from "@/components/common/completedBox/CompletedBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { cubicBezier, motion } from 'framer-motion';
 import { useToastStore } from "@/store/useToastStore";

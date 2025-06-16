@@ -4,7 +4,7 @@ import { useBackNavigation } from "@/utils";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
 import Header from "@/components/layout/header/Header";
-import InfoText from "@/components/pages/mypage/common/infoText/InfoText";
+import InfoText from "@/components/common/infoText/InfoText";
 
 const Membership = () => {
 	const goBack = useBackNavigation();

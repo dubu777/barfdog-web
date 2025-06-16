@@ -5,7 +5,7 @@ import { SubscribeGeneralItem } from "@/types";
 import Image from "next/image";
 import * as styles from "./GeneralItemDetailModal.css"
 import MinusIcon from "public/images/subscription/minus.svg";
-import PlusIcon from "public/images/subscription/plus.svg";
+import PlusIcon from "public/images/icons/plus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { useEffect } from "react";
 import { useToastStore } from "@/store/useToastStore";
