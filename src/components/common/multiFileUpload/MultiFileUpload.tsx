@@ -23,7 +23,7 @@ interface MultiFileUploadProps {
   initialImages?: ImageFile[];
   onFilesChange: (file: ImageFile[] | null) => void;
   handleRemove: (id: number) => void;
-  title: string;
+  title?: string;
   subTitle?: string;
   className?: string;
   showRepresentativeLabel?: boolean;
@@ -117,7 +117,9 @@ const MultiFileUpload = ({
   return (
     <div className={className || ''}>
       <div className={styles.fileUploadTitle}>
-        <DefaultText type='label4'>{title}</DefaultText>
+        {title &&
+          <DefaultText type='label4'>{title}</DefaultText>
+        }
         {subTitle &&
           <DefaultText type='caption' color='gray500'>포토 후기 작성 시 500원 적립!</DefaultText>
         }

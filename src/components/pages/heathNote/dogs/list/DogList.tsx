@@ -47,7 +47,7 @@ const DogList = () => {
   return (
     <section className={styles.dogListContainer}>
       <article className={styles.createDogButton}>
-        <CreateButton from="healthNoteDog" />
+        <CreateButton url='/health-note/dogs/create' text='새로운 아이 등록하기' />
       </article>
       <article>
         <div className={styles.dogList}>

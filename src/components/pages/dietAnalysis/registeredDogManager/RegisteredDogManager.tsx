@@ -32,7 +32,7 @@ export default function RegisteredDogManager({
         padding: 20,
       })}
     >
-      <CreateButton from="dietAnalysis" />
+      <CreateButton routeType='location' url='/diet-analysis/survey' text='새로운 아이 등록하기' />
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         {visibleDogs.map((item) => (
           <DogCard

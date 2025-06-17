@@ -46,7 +46,7 @@ const HistoryList = () => {
 				</article>
 				: (
 					<article>
-						<CreateButton from='healthCheck' text='건강검진 내역 등록하기' />
+						<CreateButton url='/health-note/health-check-history/create' text='건강검진 내역 등록하기' />
 						<div className={styles.healthCheckList}>
 							{dummyData.map(data => (
 								<Link href={`/health-note/health-check-history/${data.id}`} key={data.id} >

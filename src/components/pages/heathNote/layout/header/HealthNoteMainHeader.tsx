@@ -8,7 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
 import CheckCircle from "public/images/icons/check_circle.svg";
-import PlusIcon from "/public/images/subscription/plus.svg";
+import PlusIcon from "/public/images/icons/plus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
 import DefaultText from "@/components/common/defaultText/DefaultText";

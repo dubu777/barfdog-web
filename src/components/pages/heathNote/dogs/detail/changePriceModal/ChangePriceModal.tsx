@@ -7,7 +7,7 @@ import InfoBox from "@/components/common/infoBox/InfoBox";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import Divider from "@/components/common/divider/Divider";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import CompletedBox from "@/components/pages/mypage/common/completedBox/CompletedBox";
+import CompletedBox from "@/components/common/completedBox/CompletedBox";
 import { useBackNavigation } from "@/utils";
 import { useCompletedMode } from "@/hooks/useCompletedMode";
 import { useToastStore } from "@/store/useToastStore";
