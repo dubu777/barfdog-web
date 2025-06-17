@@ -4,69 +4,69 @@ import { themeVars } from "@/styles/theme.css";
 
 export const loginButton = recipe({
   base: {
-    width: '100%',
+    width: "100%",
     fontSize: themeVars.fontSize["text-md"],
     fontWeight: themeVars.fontWeight.bold,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '8px',
-    position: 'relative',
-    cursor: 'pointer'
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
+    position: "relative",
+    cursor: "pointer",
   },
   variants: {
     provider: {
       kakao: {
-        backgroundColor: themeVars.backgroundColors.kakao,
+        backgroundColor: themeVars.colors.kakao,
         color: themeVars.colors.gray.gray900,
       },
       naver: {
-        backgroundColor: themeVars.backgroundColors.naver,
+        backgroundColor: themeVars.colors.naver,
         color: themeVars.colors.gray.gray0,
-      }
+      },
     },
     lastLoginActivity: {
       true: {
         border: `1px solid ${themeVars.colors.red.red}`,
-      }
+      },
     },
     size: {
       sm: {
-        height: '54px',
+        height: "54px",
       },
       md: {
-        height: '62px',
-      }
+        height: "62px",
+      },
     },
     borderRadius: {
       sm: {
-        borderRadius: '4px',
+        borderRadius: "4px",
       },
       md: {
-        borderRadius: '33px',
-      }
-    }
+        borderRadius: "33px",
+      },
+    },
   },
   compoundVariants: [
     {
-      variants: { provider: 'kakao', size: 'md' },
+      variants: { provider: "kakao", size: "md" },
       style: {
-        marginBottom: '12px',
+        marginBottom: "12px",
       },
     },
-  ]
-})
+  ],
+});
 
 export const lastLoginActivity = style({
-  minWidth: '55px',
-  padding: '3px 6px',
+  minWidth: "55px",
+  padding: "3px 6px",
   backgroundColor: themeVars.colors.red.red,
   color: themeVars.colors.gray.gray0,
   fontSize: themeVars.fontSize["text-2xs"],
   fontWeight: themeVars.fontWeight.normal,
-  borderRadius: '33px',
-  position: 'absolute',
-  left: '-25px',
-  top: '50%',
-  transform: 'translateY(-50%)'
-})
+  borderRadius: "33px",
+  position: "absolute",
+  left: "-25px",
+  top: "50%",
+  transform: "translateY(-50%)",
+});
