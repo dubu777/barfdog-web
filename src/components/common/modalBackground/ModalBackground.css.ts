@@ -1,18 +1,18 @@
-import { style } from '@vanilla-extract/css';
-import { themeVars } from '@/styles/theme.css';
-import { recipe } from '@vanilla-extract/recipes';
+import { style } from "@vanilla-extract/css";
+import { themeVars } from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const modalBackground = recipe({
   base: {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
 
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     zIndex: 300,
   },
   variants: {
@@ -20,18 +20,17 @@ export const modalBackground = recipe({
       true: {
         backgroundColor: themeVars.colors.dimmed.gary60,
       },
-      false: {
-      }
-    }
-  }
+      false: {},
+    },
+  },
 });
 
 export const modalContent = style({
-  background: themeVars.backgroundColors.white,
-  padding: '20px',
-  borderRadius: '10px',
-  width: '100%',
-  maxWidth: '300px',
-  height: '300px',
-  overflowY: 'auto',
+  background: themeVars.colors.gray.gray0,
+  padding: "20px",
+  borderRadius: "10px",
+  width: "100%",
+  maxWidth: "300px",
+  height: "300px",
+  overflowY: "auto",
 });

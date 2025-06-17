@@ -4,93 +4,91 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const modalContainer = recipe({
   base: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: themeVars.backgroundColors.white,
-    padding: '20px',
-    borderRadius: '10px',
-    width: '100%',
-    overflowY: 'hidden',
-    margin: '0 16px',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: themeVars.colors.gray.gray0,
+    padding: "20px",
+    borderRadius: "10px",
+    width: "100%",
+    overflowY: "hidden",
+    margin: "0 16px",
   },
   variants: {
     size: {
       sm: {
-        maxWidth: '300px',
+        maxWidth: "300px",
       },
       md: {
-        maxWidth: '350px',
+        maxWidth: "350px",
       },
       lg: {
-        maxWidth: '420px',
+        maxWidth: "420px",
       },
       xl: {
-        maxWidth: '600px',
-      }
+        maxWidth: "600px",
+      },
     },
     scroll: {
       true: {
-        height: '500px',
+        height: "500px",
       },
-      false: {
-      },
+      false: {},
     },
   },
   compoundVariants: [
     {
-      variants: { size: 'xl', scroll: true },
+      variants: { size: "xl", scroll: true },
       style: {
-        height: 'auto',
-        maxHeight: '600px',
+        height: "auto",
+        maxHeight: "600px",
       },
-    }
+    },
   ],
-})
+});
 
 export const modalContentWrapper = recipe({
   base: {
     display: "flex",
-    justifyContent: 'center',
-    width: '100%',
-    margin: '20px 0',
+    justifyContent: "center",
+    width: "100%",
+    margin: "20px 0",
   },
   variants: {
     scroll: {
       true: {
         padding: "0 10px",
         overflowY: "auto",
-        '::-webkit-scrollbar': {
-          width: '8px',
+        "::-webkit-scrollbar": {
+          width: "8px",
         },
-        '::-webkit-scrollbar-thumb': {
+        "::-webkit-scrollbar-thumb": {
           backgroundColor: themeVars.colors.gray.gray0,
-          border: `1px solid ${themeVars.borderColors.greyBB}`,
-          borderRadius: '10px',
+          border: `1px solid ${themeVars.colors.gray.gray700}`,
+          borderRadius: "10px",
         },
-      
-        '::-webkit-scrollbar-track': {
-          backgroundColor: themeVars.borderColors.greyDD,
-          borderRadius: '10px',
+
+        "::-webkit-scrollbar-track": {
+          backgroundColor: themeVars.colors.gray.gray500,
+          borderRadius: "10px",
         },
       },
-      false: {
-      },
+      false: {},
     },
   },
   defaultVariants: {
     scroll: false,
-  }
-})
+  },
+});
 
 export const closeButtonWrapper = style({
   display: "flex",
-  justifyContent: 'flex-end',
-  width: '100%',
-})
+  justifyContent: "flex-end",
+  width: "100%",
+});
 export const modalButtonWrapper = style({
   display: "flex",
-  justifyContent: 'center',
-  width: '100%',
-  gap: '20px',
-})
+  justifyContent: "center",
+  width: "100%",
+  gap: "20px",
+});

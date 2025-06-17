@@ -3,12 +3,12 @@ import { themeVars } from "@/styles/theme.css";
 
 export const title = recipe({
   base: {
-    fontStyle: 'normal',
+    fontStyle: "normal",
     fontWeight: themeVars.fontWeight.normal,
-    fontSize: '23px',
+    fontSize: "23px",
     zIndex: 100,
-    lineHeight: 'normal',
-    textAlign: 'center',
+    lineHeight: "normal",
+    textAlign: "center",
   },
   variants: {
     size: {
@@ -18,35 +18,35 @@ export const title = recipe({
       },
       lg: {
         fontSize: themeVars.fontSize["text-lg"],
-        letterSpacing: '-0.05em',
+        letterSpacing: "-0.05em",
       },
       titleMd: {
         fontSize: themeVars.fontSize["title-md"],
         fontWeight: themeVars.fontWeight.semibold,
-        letterSpacing: '-0.06em',
+        letterSpacing: "-0.06em",
       },
       titleLg: {
         fontSize: themeVars.fontSize["title-lg"],
-        letterSpacing: '-0.06em',
+        letterSpacing: "-0.06em",
       },
       titleXl: {
         fontSize: themeVars.fontSize["title-xl"],
-        letterSpacing: '-0.01em',
+        letterSpacing: "-0.01em",
       },
       titleXXl: {
         fontSize: themeVars.fontSize["title-xxl"],
-        letterSpacing: '-0.01em',
+        letterSpacing: "-0.01em",
       },
     },
     color: {
       white: {
-        color: themeVars.colors.gray.gray0
+        color: themeVars.colors.gray.gray0,
       },
       red: {
-        color: themeVars.colors.red.red
+        color: themeVars.colors.red.red,
       },
       grey: {
-        color: `${themeVars.fontColors.grey89} !important`,
+        color: `${themeVars.colors.gray.gray700} !important`,
       },
     },
     weight: {
@@ -65,29 +65,28 @@ export const title = recipe({
     },
     align: {
       left: {
-        textAlign: 'left',
+        textAlign: "left",
       },
     },
     isEmpty: {
       true: {
-        padding: '60px 0'
-      }
-    }
+        padding: "60px 0",
+      },
+    },
   },
   defaultVariants: {
-    size: 'titleLg',
-  }
-})
-
+    size: "titleLg",
+  },
+});
 
 export const description = recipe({
   base: {
     fontWeight: themeVars.fontWeight.normal,
     fontSize: themeVars.fontSize["text-sm"],
-    letterSpacing: '-0.05em',
-    lineHeight: 'normal',
+    letterSpacing: "-0.05em",
+    lineHeight: "normal",
     zIndex: 100,
-    whiteSpace: 'pre-line'
+    whiteSpace: "pre-line",
   },
   variants: {
     size: {
@@ -101,12 +100,12 @@ export const description = recipe({
       md: {
         fontSize: themeVars.fontSize["text-md"],
         fontWeight: themeVars.fontWeight.semibold,
-        letterSpacing: '-0.01em',
+        letterSpacing: "-0.01em",
       },
     },
     color: {
       grey: {
-        color: `${themeVars.fontColors.grey89} !important`,
+        color: `${themeVars.colors.gray.gray700} !important`,
       },
       white: {
         color: themeVars.colors.gray.gray0,
@@ -120,14 +119,14 @@ export const description = recipe({
     },
     align: {
       center: {
-        textAlign: 'center',
+        textAlign: "center",
       },
       left: {
-        textAlign: 'left',
+        textAlign: "left",
       },
       right: {
-        textAlign: 'right',
-      }
+        textAlign: "right",
+      },
     },
     weight: {
       light: {
@@ -138,28 +137,28 @@ export const description = recipe({
       },
       bold: {
         fontWeight: themeVars.fontWeight.bold,
-      }
+      },
     },
     pageName: {
       myPage: {
         color: themeVars.colors.gray.gray900,
         lineHeight: 1.5,
-        textAlign: 'left',
-      }
+        textAlign: "left",
+      },
     },
     lineHeight: {
       inherit: {
-        lineHeight: 'inherit'
-      }
+        lineHeight: "inherit",
+      },
     },
     isEmpty: {
       true: {
-        padding: '60px 0'
-      }
-    }
+        padding: "60px 0",
+      },
+    },
   },
   defaultVariants: {
-    color: 'white',
-    align: 'center',
+    color: "white",
+    align: "center",
   },
-})
+});

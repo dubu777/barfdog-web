@@ -4,59 +4,58 @@ import { themeVars } from "@/styles/theme.css";
 
 export const articleListContainer = style({
   backgroundColor: themeVars.colors.gray.gray0,
-})
+});
 
 export const categoryFilter = style({
-  padding: '20px',
-  display: 'flex',
-  justifyContent: 'space-between',
-})
+  padding: "20px",
+  display: "flex",
+  justifyContent: "space-between",
+});
 
 export const articleList = recipe({
   base: {
-    borderTop: `1px solid ${themeVars.borderColors.greyED}`
+    borderTop: `1px solid ${themeVars.colors.gray.gray100}`,
   },
   variants: {
     isEmpty: {
       true: {
-        padding: '50px 0 150px',
-      }
-    }
-  }
-})
+        padding: "50px 0 150px",
+      },
+    },
+  },
+});
 
 export const articleItem = recipe({
-  base: {
-  },
-  variants :{
+  base: {},
+  variants: {
     mode: {
       gallery: {
         position: "relative",
         overflow: "hidden",
       },
       board: {
-        display: 'flex',
-      }
-    }
-  }
+        display: "flex",
+      },
+    },
+  },
 });
 
 export const articleItemTitle = style({
   display: "flex",
-  gap: '4px',
+  gap: "4px",
 });
 
 export const articleItemCategory = style({
-  minWidth: '34px',
+  minWidth: "34px",
 });
 
 export const articleContents = style({
   // width: '100%',
   display: "flex",
   flexDirection: "column",
-  justifyContent: 'space-between',
-  gap: '16px',
-  padding: '10px',
+  justifyContent: "space-between",
+  gap: "16px",
+  padding: "10px",
 });
 
 export const articleGallery = style({

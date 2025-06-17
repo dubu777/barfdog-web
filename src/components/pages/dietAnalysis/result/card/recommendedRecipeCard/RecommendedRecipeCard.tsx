@@ -20,7 +20,7 @@ export default function RecommendedRecipeCard({
   dogName,
 }: RecommendedRecipeCardProps) {
   console.log("recipe", recipe.recommendRecipeImgUrl);
-  const symptoms = ["임시 데이터", "임시 데이터"];
+  const symptoms = ["임시 데이터1", "임시 데이터2"];
   return (
     <Card shadow="strong" padding={"20/16"} gap={20}>
       <div className={commonWrapper({ justify: "start", gap: 8 })}>
@@ -48,7 +48,7 @@ export default function RecommendedRecipeCard({
         />
         <div className={commonWrapper({ justify: "start", gap: 4 })}>
           {symptoms.map((symptom) => (
-            <Chips variant="solid" color="gray100">
+            <Chips key={symptom} variant="solid" color="gray100">
               {symptom}
             </Chips>
           ))}

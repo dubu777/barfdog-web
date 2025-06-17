@@ -43,23 +43,23 @@ export const birthContainer = style({
   justifyContent: "space-between",
   gap: "1.25rem",
   fontSize: themeVars.fontSize["text-sm"],
-  width: '100%',
+  width: "100%",
 });
 
 export const walkingContainer = style({
   display: "flex",
-  flexDirection: 'column',
+  flexDirection: "column",
   alignItems: "center",
   justifyContent: "space-between",
   gap: "1.25rem",
   fontSize: themeVars.fontSize["text-sm"],
-  width: '100%',
+  width: "100%",
 });
 
 export const errorMessage = style({
   fontSize: themeVars.fontSize["text-xs"],
-  color: themeVars.fontColors.mainRed,
-  marginTop: '10px',
+  color: themeVars.colors.red.red,
+  marginTop: "10px",
 });
 
 export const surveyButtonLayoutContainer = style({
@@ -67,4 +67,3 @@ export const surveyButtonLayoutContainer = style({
   justifyContent: "center",
   width: "100%",
 });
-
