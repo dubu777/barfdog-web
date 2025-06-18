@@ -14,7 +14,7 @@ interface SurveyStepProps {
   handleChange: () => void;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
-    fieldName: string
+    fieldName: Path<SurveyStepValues>
   ) => Promise<void>;
   isResurvey: boolean;
 }

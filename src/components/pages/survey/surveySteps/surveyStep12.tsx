@@ -9,10 +9,10 @@ import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 
 interface SurveyStepProps {
   handleChange: () => void;
-  handleBlur: (fieldName: string) => Promise<void>;
+  handleBlur: (fieldName: Path<SurveyStepValues>) => Promise<void>;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
-    fieldName: string
+    fieldName: Path<SurveyStepValues>
   ) => Promise<void>;
   handleNextStep: () => void;
   petName: string;

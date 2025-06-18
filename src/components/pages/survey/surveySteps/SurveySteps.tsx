@@ -12,13 +12,15 @@ import SurveyStep11 from "./SurveyStep11";
 import SurveyStep12 from "./surveyStep12";
 import SurveyStep13 from "./SurveyStep13";
 import SurveyStep14 from "./SurveyStep14";
+import { Path } from "react-hook-form";
+import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 
 interface Props {
   handleChange: () => void;
-  handleBlur: (fieldName: string) => Promise<void>;
+  handleBlur: (fieldName: Path<SurveyStepValues>) => Promise<void>;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
-    fieldName: string
+    fieldName: Path<SurveyStepValues>
   ) => Promise<void>;
   handleNextStep: () => void;
   petName: string;
@@ -50,41 +52,23 @@ export const getSurveySteps = ({
       handleBlur={handleBlur}
       petName={petName}
     />,
-    <SurveyStep4
-      handleChange={handleChange}
-      petName={petName}
-    />,
-    <SurveyStep5
-      handleChange={handleChange}
-      petName={petName}
-    />,
+    <SurveyStep4 handleChange={handleChange} petName={petName} />,
+    <SurveyStep5 handleChange={handleChange} petName={petName} />,
     <SurveyStep6
       handleChange={handleChange}
       handleBlur={handleBlur}
       handleKeyDown={handleKeyDown}
       petName={petName}
     />,
-    <SurveyStep7
-      handleChange={handleChange}
-      petName={petName}
-    />,
-    <SurveyStep8
-      handleChange={handleChange}
-      petName={petName}
-    />,
-    <SurveyStep9
-      handleChange={handleChange}
-      petName={petName}
-    />,
+    <SurveyStep7 handleChange={handleChange} petName={petName} />,
+    <SurveyStep8 handleChange={handleChange} petName={petName} />,
+    <SurveyStep9 handleChange={handleChange} petName={petName} />,
     <SurveyStep10
       handleChange={handleChange}
       handleNextStep={handleNextStep}
       petName={petName}
     />,
-    <SurveyStep11
-      handleChange={handleChange}
-      petName={petName}
-    />,
+    <SurveyStep11 handleChange={handleChange} petName={petName} />,
     <SurveyStep12
       handleChange={handleChange}
       handleBlur={handleBlur}
@@ -103,6 +87,6 @@ export const getSurveySteps = ({
       handleChange={handleChange}
       handleNextStep={handleNextStep}
       petName={petName}
-    />
+    />,
   ];
 };

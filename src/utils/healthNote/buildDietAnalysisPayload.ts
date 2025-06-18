@@ -28,7 +28,7 @@ export function buildDietAnalysisPayload(
     gender,
     birthDay,
     oldDog,
-    dogType: "mix",
+    dogType,
     dogSize,
     weight,
     neutralization,

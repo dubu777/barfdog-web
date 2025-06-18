@@ -1,27 +1,34 @@
 "use client";
 
-import useSurveyStep from "@/hooks/survey/useSurveyStep";
 import { getSurveySteps } from "@/components/pages/survey/surveySteps/SurveySteps";
 import SurveyForm from "@/components/pages/survey/surveyForm/SurveyForm";
 import * as styles from "./Survey.css";
-import { useSurveyForm } from "@/hooks/survey/useSurveyForm";
+import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
 import {
   defaultStepValues,
+  SurveyStepKeys,
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
-import { FormProvider, useWatch } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import SurveyProgressBar from "@/components/pages/survey/surveyProgressBar/SurveyProgressBar";
-import { CRITICAL_DISEASES, surveySections } from "@/constants";
+import {
+  CRITICAL_DISEASES,
+  SURVEY_NO_AUTO_STEP,
+  surveySections,
+} from "@/constants";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import CriticalDiseaseAlertBottomSheet from "@/components/pages/survey/bottomSheet/CriticalDiseaseAlertBottomSheet";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SurveyResultLoading from "../surveyResultLoading/SurveyResultLoading";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/layout/header/Header";
 import { buildDietAnalysisPayload } from "@/utils/healthNote/buildDietAnalysisPayload";
 import { useCreateDietAnalysisResult } from "@/api/dietAnalysis/mutations/useCreateDietAnalysisResult";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SkipCondition, useSurveyStep } from "@/hooks/survey/useSurveyStep";
 
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
@@ -31,7 +38,6 @@ export default function SurveyPageContainer() {
   const isResurvey = params.get("mode") === "resurvey";
 
   const [isLoading, setIsLoading] = useState(false);
-  const skipPregnancyRef = useRef(false);
 
   const { mutate: submitResult } = useCreateDietAnalysisResult({
     onSuccess: (response) => {
@@ -44,41 +50,53 @@ export default function SurveyPageContainer() {
     },
   });
 
+  const methods = useForm<yup.InferType<typeof surveyStepsSchema>>({
+    resolver: yupResolver(surveyStepsSchema),
+    defaultValues: defaultStepValues,
+    mode: "all",
+  });
+  const {
+    control,
+    watch,
+    trigger,
+    getValues,
+    formState: { errors },
+  } = methods;
+
+  const stepKeys = Object.keys(defaultStepValues) as SurveyStepKeys[];
+
+  const petName = useWatch({ name: "step1.name", control }) ?? "";
+  const gender = useWatch({ name: "step1.gender", control });
+  const neutralization = useWatch({ name: "step1.neutralization", control });
+
+  const skipConditions = useMemo<SkipCondition<SurveyStepKeys>[]>(
+    () => [
+      {
+        from: "step4",
+        to: "step7",
+        predicate: () => gender === "MALE" || neutralization === true,
+      },
+    ],
+    [gender, neutralization]
+  );
+
   const {
     currentStep,
     currentStepKey,
     handleNextStep,
     handlePrevStep,
-    direction,
     isLastStep,
     isFirstStep,
-  } = useSurveyStep(14, skipPregnancyRef);
+    direction,
+  } = useSurveyStep<SurveyStepKeys>(stepKeys, skipConditions);
 
-  const surveyForm = useSurveyForm<typeof surveyStepsSchema>(
-    surveyStepsSchema,
-    defaultStepValues,
-    currentStepKey,
-    handleNextStep
-  );
-
-  const {
-    watch,
-    handleChange,
-    handleBlur,
-    handleKeyDown,
-    trigger,
-    getValues,
-    errors,
-    isCanNextStep,
-    control,
-  } = surveyForm;
-
-  const petName = useWatch({ name: "step1.name", control }) ?? "";
-  const gender = useWatch({ name: "step1.gender", control });
-  const neutralization = useWatch({ name: "step1.neutralization", control });
-  useEffect(() => {
-    skipPregnancyRef.current = gender === "MALE" || neutralization === true;
-  }, [gender, neutralization]);
+  const { isCanNextStep, handleChange, handleBlur, handleKeyDown } =
+    useSurveyNavigator({
+      methods,
+      currentStepKey,
+      handleNextStep,
+      noAutoStepSet: SURVEY_NO_AUTO_STEP,
+    });
 
   const steps = getSurveySteps({
     handleChange,
@@ -155,7 +173,7 @@ export default function SurveyPageContainer() {
         leftSlotGap="sm"
       />
       <SurveyProgressBar currentStep={currentStep} sections={surveySections} />
-      <FormProvider {...surveyForm}>
+      <FormProvider {...methods}>
         <SurveyForm
           currentStep={currentStep}
           direction={direction}
@@ -166,7 +184,7 @@ export default function SurveyPageContainer() {
         type="full-button"
         primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
         onPrimaryClick={handleFooterButtonClick}
-        isPrimaryDisabled={!isCanNextStep}
+        isPrimaryDisabled={!isCanNextStep()}
       />
       <CriticalDiseaseAlertBottomSheet
         isOpen={isOpen}

@@ -121,7 +121,7 @@ interface DietAnalysisPayload {
   inedibleFood: InedibleFood[];
   healthConcerns: HealthConcern[];
   currentMeal: CurrentMeal[];
-  supplementss: Supplements[];
+  supplements: Supplements[];
   healthIssues: HealthIssue[];
 }
 

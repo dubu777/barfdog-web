@@ -45,6 +45,7 @@ export {
   surveySections,
   surveyTitles,
   CRITICAL_DISEASES,
+  CRITICAL_SET,
 };
 
 const surveySections = [
@@ -500,5 +501,7 @@ const SURVEY_NO_AUTO_STEP = new Set<SurveyStepKeys>([
   "step13",
   "step14",
 ]);
+
+const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
 const NONE_VALUE = "NONE";

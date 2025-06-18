@@ -11,10 +11,10 @@ import InputField from "@/components/common/inputField/InputField";
 interface SurveyStepProps {
   petName: string;
   handleChange: () => void;
-  handleBlur: (fieldName: string) => Promise<void>;
+  handleBlur: (fieldName: Path<SurveyStepValues>) => Promise<void>;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
-    fieldName: string
+    fieldName: Path<SurveyStepValues>
   ) => Promise<void>;
 }
 
