@@ -60,11 +60,7 @@ export function useSurveyStep<K extends string>(
     setStep((prev) => Math.min(prev + 1, maxStep));
   }, [step, skipConditions, stepKeys, maxStep]);
 
-  /**
-   * 이전 단계 이동 핸들러
-   * - skipConditions 역방향 우선 적용
-   * - 일반 이전 단계로 이동 (최소 1)
-   */
+  // 이전 단계 이동 핸들러
   const handlePrevStep = useCallback(() => {
     setDirection(-1);
     const currentKey = stepKeys[step - 1];
