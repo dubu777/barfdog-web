@@ -38,3 +38,9 @@ export const infoValue = style({
 	alignItems: 'center',
 	gap: '8px',
 })
+
+export const lifeExpectancy = style({
+	display: 'flex',
+	alignItems: 'center',
+	gap: '4px',
+})
