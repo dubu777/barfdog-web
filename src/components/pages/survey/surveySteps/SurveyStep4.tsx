@@ -1,4 +1,4 @@
-import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
@@ -18,7 +18,7 @@ export default function SurveyStep4({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={surveyTitles.step4} />
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step4} />
 
       <Controller
         name="step4.dogType" // surveyStepsSchema에 있는 필드 이름

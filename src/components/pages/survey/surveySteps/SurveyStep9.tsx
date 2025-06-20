@@ -1,7 +1,7 @@
 "use client";
 
 import * as styles from "./SurveySteps.css";
-import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
@@ -21,7 +21,7 @@ export default function SurveyStep9({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={surveyTitles.step9} />
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step9} />
       <Controller
         name="step9.snackCountLevel"
         control={control}

@@ -1,4 +1,4 @@
-import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import * as styles from "./SurveySteps.css";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, Path, useFormContext } from "react-hook-form";
@@ -29,7 +29,7 @@ export default function SurveyStep3({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={surveyTitles.step3} />
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step3} />
       <Controller
         name="step3.dogSize"
         control={control}

@@ -91,6 +91,11 @@ export function useSurveyToggleOption<T>({
     [selectedValue, mode, onChange, maxSelectionCount]
   );
 
+  /**
+   * 주어진 값이 현재 선택된 값인지 여부를 반환
+   * - radio/selectionBox 모드: 단일 값 비교
+   * - checkbox 모드: 배열에 포함 여부 확인
+   */
   const isSelected = useCallback(
     (value: T) => {
       if (mode === "radio" || mode === "selectionBox") {

@@ -1,4 +1,4 @@
-import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, Path, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -31,7 +31,7 @@ export default function SurveyStep12({
     <>
       <SurveyTitle
         petName={petName}
-        config={surveyTitles.step12}
+        config={SURVEY_TITLES.step12}
         chipContent="더 정밀한 추천을 위해 3가지만 더 여쭤볼게요 🐶"
       />
       <Controller

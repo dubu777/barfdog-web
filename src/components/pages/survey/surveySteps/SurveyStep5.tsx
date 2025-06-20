@@ -1,7 +1,7 @@
 "use client";
 
 import * as styles from "./SurveySteps.css";
-import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -21,7 +21,7 @@ export default function SurveyStep5({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={surveyTitles.step5} />
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step5} />
       <Controller
         name="step5.pregnancy"
         control={control}

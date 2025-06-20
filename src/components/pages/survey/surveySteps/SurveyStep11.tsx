@@ -1,4 +1,4 @@
-import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -39,7 +39,7 @@ export default function SurveyStep11({
             <>
               <SurveyTitle
                 petName={petName}
-                config={surveyTitles.step11}
+                config={SURVEY_TITLES.step11}
                 onReselect={onReselect}
               />
               <SurveyGridButtonGroup>

@@ -14,7 +14,7 @@ import SurveyProgressBar from "@/components/pages/survey/surveyProgressBar/Surve
 import {
   CRITICAL_DISEASES,
   SURVEY_NO_AUTO_STEP,
-  surveySections,
+  SURVEY_SECTIONS,
 } from "@/constants";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
@@ -112,6 +112,7 @@ export default function SurveyPageContainer() {
 
   const { isOpen, onClose, onToggle } = useModal();
 
+  // 임시 값
   const navigateToResult = () => {
     setIsLoading(true);
     setTimeout(() => {
@@ -119,6 +120,7 @@ export default function SurveyPageContainer() {
     }, 2000);
   };
 
+  // 임시 값
   const handleContinue = () => {
     onClose();
     navigateToResult();
@@ -172,7 +174,7 @@ export default function SurveyPageContainer() {
         backgroundColor="gray50"
         leftSlotGap="sm"
       />
-      <SurveyProgressBar currentStep={currentStep} sections={surveySections} />
+      <SurveyProgressBar currentStep={currentStep} sections={SURVEY_SECTIONS} />
       <FormProvider {...methods}>
         <SurveyForm
           currentStep={currentStep}

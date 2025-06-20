@@ -1,4 +1,8 @@
-import { NONE_VALUE, DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import {
+  NONE_VALUE,
+  DIET_ANALYSIS_FORM_INFO,
+  SURVEY_TITLES,
+} from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Control, Controller, Path, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
@@ -22,7 +26,7 @@ export default function SurveyStep13({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={surveyTitles.step13} />
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step13} />
 
       <Controller
         name="step13.supplements"

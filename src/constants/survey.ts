@@ -42,19 +42,19 @@ export {
   recipeTempData,
   SURVEY_NO_AUTO_STEP,
   NONE_VALUE,
-  surveySections,
-  surveyTitles,
+  SURVEY_SECTIONS,
+  SURVEY_TITLES,
   CRITICAL_DISEASES,
   CRITICAL_SET,
 };
 
-const surveySections = [
+const SURVEY_SECTIONS = [
   { key: "dogBasicInfo", label: "기본 정보", steps: 6 },
   { key: "dogLifestyle", label: "생활 정보", steps: 5 },
   { key: "dogDietHealth", label: "식단/건강", steps: 3 },
 ];
 
-const surveyTitles: Record<SurveyStepKeys, SurveyTitleConfig> = {
+const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
   step1: {
     titleTemplates: ["반려견에 대해 알려주세요"],
   },

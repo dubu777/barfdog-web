@@ -1,7 +1,7 @@
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
-import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import * as styles from "./SurveySteps.css";
 import DogImageButton from "../dogImageButton/DogImageButton";
@@ -19,7 +19,7 @@ export default function SurveyStep7({
 
   return (
     <>
-      <SurveyTitle petName={petName} config={surveyTitles.step7} />
+      <SurveyTitle petName={petName} config={SURVEY_TITLES.step7} />
       <Controller
         name="step7.dogBodyCondition"
         control={control}

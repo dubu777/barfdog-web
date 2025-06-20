@@ -1,8 +1,10 @@
+import { GutCheckStepKeys } from "@/utils/validation/gutCheckValidation";
+
 const GUT_CHECK_FORM_INFO = {
   // 1. 건강상태 관련 묶음
   healthStatus: {
     // 1-1. 질환 증상 여부
-    diseaseSymptoms: {
+    disease: {
       title: "바푸동에게 해당되는 질환 및 증상이 있나요?",
       options: [
         { value: "NONE", label: "해당없음" },
@@ -12,8 +14,7 @@ const GUT_CHECK_FORM_INFO = {
       ],
     },
     // 1-2. 비만 여부(체형)
-    bodyCondition: {
-      title: "바푸동의 체형은 어느 쪽에 가까운가요?",
+    dogBodyCondition: {
       options: [
         {
           value: "VERY_THIN",
@@ -48,22 +49,15 @@ const GUT_CHECK_FORM_INFO = {
       ],
     },
     // 1-3. 유산균 급여 여부
-    probioticFeeding: {
+    probiotic: {
       title: "바푸동은 유산균을 급여중인가요?",
-      options: [
-        { value: "exists", label: "급여 중이에요" },
-        { value: "NOT_FEEDING", label: "급여하지 않아요" },
-      ],
-      placeholder: "유산균 제품명을 입력해주세요",
-    },
-    lactation: {
-      title: "유산균 급여 여부",
       options: [
         { value: true, label: "급여 중이에요" },
         { value: false, label: "급여하지 않아요" },
       ],
       placeholder: "유산균 제품명을 입력해주세요",
     },
+
     antibiotic: {
       title: "항생제를 투여중인가요?",
       options: [
@@ -292,6 +286,15 @@ const GUT_CHECK_FORM_INFO = {
         { value: "LATE", label: "임신 후기 (5주 이상)" },
       ],
     },
+    activityLevel: {
+      options: [
+        { value: "VERY_MUCH", label: "매우 많아요" },
+        { value: "MUCH", label: "많아요" },
+        { value: "NORMAL", label: "보통이에요" },
+        { value: "LITTLE", label: "적어요" },
+        { value: "VERY_LITTLE", label: "매우 적어요" },
+      ],
+    },
     treatmentDiseases: {
       title: "바푸동이 치료중인 질환이 있나요?",
       yesNoOptions: [
@@ -421,7 +424,7 @@ const GUT_CHECK_FORM_INFO = {
     },
 
     // 2-4. 배변 습관
-    bathroomHabit: {
+    bowelHabits: {
       title: "바푸동의 배변 습관은 어떤가요?",
       options: [
         {
@@ -443,7 +446,7 @@ const GUT_CHECK_FORM_INFO = {
     },
 
     // 2-5. 간식량
-    snackAmount: {
+    snackCountLevel: {
       title: "바푸동의 간식량은 어떤가요?",
       options: [
         {
@@ -475,7 +478,7 @@ const GUT_CHECK_FORM_INFO = {
       ],
     },
     // 2-7. 영양제 급여 및 제품명
-    nutritionSupplement: {
+    supplements: {
       title: "바푸동은 먹고 있는 영양제가 있나요?",
       yesNoOptions: [
         { value: "YES", label: "있어요" },
@@ -536,4 +539,22 @@ const GUT_CHECK_FORM_INFO = {
       multiple: false,
     },
   },
-};
+} as const;
+
+const GUT_CHECK_NO_AUTO_STEP = new Set<GutCheckStepKeys>([
+  "step3",
+  "step5",
+  "step8",
+  "step11",
+  "step14",
+  "step15",
+  "step16",
+]);
+
+const GUT_CHECK_SECTIONS = [
+  { key: "healthStatus", label: "건강 상태", steps: 8 },
+  { key: "dogLifestyle", label: "생활 습관", steps: 7 },
+  { key: "additionalInfo", label: "추가 정보", steps: 2 },
+];
+
+export { GUT_CHECK_FORM_INFO, GUT_CHECK_NO_AUTO_STEP, GUT_CHECK_SECTIONS };

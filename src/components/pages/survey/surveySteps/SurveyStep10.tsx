@@ -1,4 +1,8 @@
-import { NONE_VALUE, DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
+import {
+  NONE_VALUE,
+  DIET_ANALYSIS_FORM_INFO,
+  SURVEY_TITLES,
+} from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -26,7 +30,7 @@ export default function SurveyStep10({
     <>
       <SurveyTitle
         petName={petName}
-        config={surveyTitles.step10}
+        config={SURVEY_TITLES.step10}
         infoBoxContent="알러지 분류 참고사항"
         onInfoBoxClick={onToggle}
       />
