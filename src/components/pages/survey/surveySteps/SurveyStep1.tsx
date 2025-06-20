@@ -1,6 +1,6 @@
 import { NONE_VALUE, DIET_ANALYSIS_FORM_INFO } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { Controller, Path, useFormContext, useWatch } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
@@ -75,13 +75,12 @@ export default function SurveyStep1({
           name="step1.gender"
           control={control}
           render={({ field }) => {
-            const { onToggle, isSelected } = useSurveyToggleOption(
-              field.value,
-              "radio",
-              (value) => {
+            const { onToggle, isSelected } = useSurveyToggleOption({
+              selectedValue: field.value,
+              mode: "radio",
+              onChange: (value) => {
                 field.onChange(value);
                 handleChange();
-
                 // ── 성별이 male 이면 step5·6 자동 none 설정
                 if (value === "MALE") {
                   setValue("step5.pregnancy", NONE_VALUE, {
@@ -93,8 +92,8 @@ export default function SurveyStep1({
                     shouldDirty: true,
                   });
                 }
-              }
-            );
+              },
+            });
             return (
               <SurveyButtonGroup title="성별">
                 {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.gender.options.map(
@@ -121,14 +120,13 @@ export default function SurveyStep1({
         name="step1.neutralization"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "radio",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "radio",
+            onChange: (value) => {
               field.onChange(value);
               handleChange();
-
-              // 중성화 여부에 따라 step5와 step6의 값을 초기화
+              // 중성화 여부에 따라 step5와 step6 초기화
               if (value === true) {
                 setValue("step5.pregnancy", NONE_VALUE, {
                   shouldValidate: false,
@@ -139,8 +137,8 @@ export default function SurveyStep1({
                   shouldDirty: true,
                 });
               }
-            }
-          );
+            },
+          });
 
           return (
             <SurveyButtonGroup title="중성화 여부">

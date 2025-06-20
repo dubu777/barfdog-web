@@ -1,6 +1,6 @@
 import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, Path, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import * as styles from "./SurveySteps.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -38,14 +38,14 @@ export default function SurveyStep12({
         name="step12.currentMeal"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "checkbox",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "checkbox",
+            onChange: (value) => {
               field.onChange(value);
               handleChange();
-            }
-          );
+            },
+          });
           return (
             <div className={styles.colSurveyButtonWrapper}>
               <DefaultText type="label2" color="gray500">

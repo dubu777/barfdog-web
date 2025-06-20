@@ -2,11 +2,7 @@ import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
-import * as styles from "./SurveySteps.css";
 import ImageButton from "../imageButton/ImageButton";
-import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";
 import SurveyGridButtonGroup from "../surveyGridButtonGroup/SurveyGridButtonGroup";
 import { useSurveyRankOption } from "@/hooks/survey/\buseSurveyRankOption";
 

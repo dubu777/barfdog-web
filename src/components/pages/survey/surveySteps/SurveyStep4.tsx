@@ -1,5 +1,4 @@
 import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
-import * as styles from "./SurveySteps.css";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";

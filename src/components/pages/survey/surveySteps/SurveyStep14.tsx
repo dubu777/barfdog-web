@@ -2,13 +2,9 @@ import { NONE_VALUE, DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
-import * as styles from "./SurveySteps.css";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyGridButtonGroup from "../surveyGridButtonGroup/SurveyGridButtonGroup";
 import ImageButton from "../imageButton/ImageButton";
-import { colStartWrapper } from "../../checkout/common/deliveryAddress/DeliveryAddress.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import InfoBox from "@/components/common/infoBox/InfoBox";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -35,14 +31,14 @@ export default function SurveyStep14({
         name="step14.healthIssues"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "checkbox",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "checkbox",
+            onChange: (value) => {
               field.onChange(value);
               handleChange();
-            }
-          );
+            },
+          });
 
           const handleToggleAndNext = (value: string) => {
             onToggle(value);

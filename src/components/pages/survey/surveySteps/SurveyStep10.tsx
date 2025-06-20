@@ -34,14 +34,14 @@ export default function SurveyStep10({
         name="step10.inedibleFood"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "checkbox",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "checkbox",
+            onChange: (value) => {
               field.onChange(value);
               handleChange();
-            }
-          );
+            },
+          });
 
           const handleToggleAndNext = (value: string) => {
             onToggle(value);

@@ -21,19 +21,31 @@ export type SurveyToggleMode = "radio" | "checkbox" | "selectionBox";
  *    onToggle: 주어진 값에 대해 토글 동작을 수행합니다.
  *    isSelected: 주어진 값이 선택되었는지 여부를 boolean으로 반환합니다.
  */
-export function useSurveyToggleOption<T>(
-  selectedValue: T | T[] | null,
-  mode: SurveyToggleMode,
-  onChange: (value: T | T[] | null) => void,
-  maxSelectionCount?: number
-) {
+
+interface UseSurveyToggleOptionProps<T> {
+  /** 현재 선택된 값 (단일 혹은 배열, 혹은 null) */
+  selectedValue: T | T[] | null;
+  /** 토글 모드 */
+  mode: SurveyToggleMode;
+  /** 값 변경 콜백 */
+  onChange: (value: T | T[] | null) => void;
+  /** (checkbox 전용) 최대 선택 개수 */
+  maxSelectionCount?: number;
+}
+
+export function useSurveyToggleOption<T>({
+  selectedValue,
+  mode,
+  onChange,
+  maxSelectionCount,
+}: UseSurveyToggleOptionProps<T>) {
   const onToggle = useCallback(
     (value: T) => {
       if (mode === "radio") {
         // radio 모드: 단순히 선택한 값으로 변경 (해제 불가)
         onChange(value);
       } else if (mode === "selectionBox") {
-        // selectionBox 모드: 이미 선택된 값이면 해제 (null로), 아니면 선택
+        // selectionBox 모드: radio와 유사하지만, 선택된 값이 다시 클릭되면 해제됨
         if (selectedValue === value) {
           onChange(null);
         } else {
@@ -50,13 +62,16 @@ export function useSurveyToggleOption<T>(
             const currentSelection = selectedValue.includes(NONE_VALUE as T)
               ? selectedValue.filter((item) => item !== NONE_VALUE)
               : selectedValue;
-  
+
             if (currentSelection.includes(value)) {
               // 이미 선택된 값이면 제거
               onChange(currentSelection.filter((item) => item !== value));
             } else {
               // 추가하기 전에 최대 선택 개수가 지정되어 있는 경우 체크
-              if (maxSelectionCount !== undefined && currentSelection.length >= maxSelectionCount) {
+              if (
+                maxSelectionCount !== undefined &&
+                currentSelection.length >= maxSelectionCount
+              ) {
                 // 최대 개수에 도달했다면 아무것도 추가하지 않음
                 return;
               }
@@ -64,7 +79,7 @@ export function useSurveyToggleOption<T>(
             }
           }
         } else {
-          // checkbox 모드인데 단일 값인 경우 (예: boolean 전용)
+          // checkbox 모드인데 배열이 아닌 경우 경우 (예: boolean 전용)
           if (selectedValue === value) {
             onChange(false as T);
           } else {

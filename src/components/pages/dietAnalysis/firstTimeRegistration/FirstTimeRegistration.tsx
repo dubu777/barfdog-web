@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -9,14 +9,13 @@ import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
 
 export default function FirstTimeRegistration() {
-  const router = useRouter()
+  const router = useRouter();
   const handleGotoSurvey = () => {
     window.location.href = "/diet-analysis/survey";
-  }
+  };
   const handleGotoSheet = () => {
     router.push("/diet-analysis/subscribe?reportId=3752");
-  }
-  
+  };
 
   return (
     <div className={styles.firstTimeRegistrationContainer}>
@@ -30,10 +29,20 @@ export default function FirstTimeRegistration() {
         </DefaultText>
       </div>
       <SvgIcon src={DogIcon} width={175} height={140} />
-      <Button buttonColor="gray900" size="lg" fullWidth onClick={handleGotoSurvey}>
+      <Button
+        buttonColor="gray900"
+        size="lg"
+        fullWidth
+        onClick={handleGotoSurvey}
+      >
         식단 추천받기
       </Button>
-      <Button buttonColor="gray900" size="lg" fullWidth onClick={handleGotoSheet}>
+      <Button
+        buttonColor="gray900"
+        size="lg"
+        fullWidth
+        onClick={handleGotoSheet}
+      >
         주문서 이동
       </Button>
     </div>

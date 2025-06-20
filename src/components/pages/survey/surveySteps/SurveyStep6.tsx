@@ -8,18 +8,11 @@ import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 
 interface SurveyStepProps {
   handleChange: () => void;
-  handleBlur: (fieldName: Path<SurveyStepValues>) => Promise<void>;
-  handleKeyDown: (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    fieldName: Path<SurveyStepValues>
-  ) => Promise<void>;
   petName: string;
 }
 
 export default function SurveyStep6({
   handleChange,
-  handleBlur,
-  handleKeyDown,
   petName,
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
@@ -31,14 +24,14 @@ export default function SurveyStep6({
         name="step6.lactation"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "radio",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "radio",
+            onChange: (value) => {
               field.onChange(value);
               handleChange();
-            }
-          );
+            },
+          });
           return (
             <div className={styles.colSurveyButtonWrapper}>
               {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.lactation.options.map(

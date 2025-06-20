@@ -1,7 +1,7 @@
 import { DIET_ANALYSIS_FORM_INFO, surveyTitles } from "@/constants";
 import * as styles from "./SurveySteps.css";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, Path, useFormContext } from "react-hook-form";
 import ImageButton from "../imageButton/ImageButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "../surveyTitle/SurveyTitle";
@@ -10,7 +10,6 @@ import InputField from "@/components/common/inputField/InputField";
 
 interface SurveyStepProps {
   petName: string;
-  handleChange: () => void;
   handleBlur: (fieldName: Path<SurveyStepValues>) => Promise<void>;
   handleKeyDown: (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -20,14 +19,12 @@ interface SurveyStepProps {
 
 export default function SurveyStep3({
   petName,
-  handleChange,
   handleBlur,
   handleKeyDown,
 }: SurveyStepProps) {
   const {
     control,
     formState: { errors },
-    setValue,
   } = useFormContext<SurveyStepValues>();
 
   return (
@@ -37,13 +34,13 @@ export default function SurveyStep3({
         name="step3.dogSize"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "radio",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "radio",
+            onChange: (value) => {
               field.onChange(value);
-            }
-          );
+            },
+          });
           return (
             <SurveyButtonGroup title="견사이즈">
               {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.dogSize.options.map(

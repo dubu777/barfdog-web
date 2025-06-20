@@ -68,14 +68,14 @@ export default function SurveyStep2({
         name="step2.oldDog"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "radio",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "radio",
+            onChange: (value) => {
               field.onChange(value);
               handleChange();
-            }
-          );
+            },
+          });
           return (
             <div className={styles.rowSurveyButtonWrapper}>
               {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.oldDog.options.map(

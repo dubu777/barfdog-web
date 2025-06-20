@@ -26,14 +26,14 @@ export default function SurveyStep9({
         name="step9.snackCountLevel"
         control={control}
         render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption(
-            field.value,
-            "radio",
-            (value) => {
+          const { onToggle, isSelected } = useSurveyToggleOption({
+            selectedValue: field.value,
+            mode: "radio",
+            onChange: (value) => {
               field.onChange(value);
               handleChange();
-            }
-          );
+            },
+          });
           return (
             <div className={styles.colSurveyButtonWrapper}>
               {DIET_ANALYSIS_FORM_INFO.dogLifestyle.snackCountLevel.options.map(

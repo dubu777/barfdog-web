@@ -47,19 +47,13 @@ export const getSurveySteps = ({
       isResurvey={isResurvey}
     />,
     <SurveyStep3
-      handleChange={handleChange}
       handleKeyDown={handleKeyDown}
       handleBlur={handleBlur}
       petName={petName}
     />,
     <SurveyStep4 handleChange={handleChange} petName={petName} />,
     <SurveyStep5 handleChange={handleChange} petName={petName} />,
-    <SurveyStep6
-      handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleKeyDown={handleKeyDown}
-      petName={petName}
-    />,
+    <SurveyStep6 handleChange={handleChange} petName={petName} />,
     <SurveyStep7 handleChange={handleChange} petName={petName} />,
     <SurveyStep8 handleChange={handleChange} petName={petName} />,
     <SurveyStep9 handleChange={handleChange} petName={petName} />,
@@ -78,8 +72,6 @@ export const getSurveySteps = ({
     />,
     <SurveyStep13
       handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleKeyDown={handleKeyDown}
       handleNextStep={handleNextStep}
       petName={petName}
     />,
