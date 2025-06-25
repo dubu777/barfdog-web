@@ -3,11 +3,11 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 
 interface DetailInfoData {
 	health?: string;
-	recommended_health_tests?: string;
+	recommendedHealthTests?: string;
 	grooming?: string;
 	exercise?: string;
 	training?: string;
-	nutrition?: string;
+	nutritionIntake?: string;
 }
 
 interface DetailInfoProps {
@@ -24,7 +24,7 @@ const DetailInfo = ({
 		},
 		{
 			label: '권장 건강 테스트',
-			value: data?.recommended_health_tests,
+			value: data?.recommendedHealthTests,
 		},
 		{
 			label: '그루밍',
@@ -40,7 +40,7 @@ const DetailInfo = ({
 		},
 		{
 			label: '영양섭취',
-			value: data?.nutrition,
+			value: data?.nutritionIntake,
 		},
 	]
 	return (

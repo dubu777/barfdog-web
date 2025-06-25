@@ -1,29 +1,38 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import * as styles from './DetailCategoryTabs.css';
 import TabBar from "@/components/common/tabBar/TabBar";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import SliderQuestion
 	from "@/components/pages/heathNote/dogpedia/detail/detailCategoryTabs/sliderQuestion/SliderQuestion";
+import CoatQuestion from "@/components/pages/heathNote/dogpedia/detail/detailCategoryTabs/coatQuestion/CoatQuestion";
 import { DOGPEDIA_CATEGORY, DOGPEDIA_CATEGORY_QUESTION } from "@/constants/healthNote/dogpedia";
 
-type CategoryQuestion = typeof DOGPEDIA_CATEGORY_QUESTION;
 
-type ToSnakeCase<S extends string> =
-	S extends `${infer T1}_${infer T2}`
-		? `${Lowercase<T1>}_${ToSnakeCase<T2>}`
-		: Lowercase<S>;
-
-type QuestionValue<T> = {
-	[K in keyof T as ToSnakeCase<string & K>]: number;
-};
-
-type DetailCategoryTabData = {
-	[K in keyof CategoryQuestion as ToSnakeCase<string & K>]: QuestionValue<CategoryQuestion[K]>;
+type FlatQuestionData = {
+	[key in
+		| 'familyAffection'
+		| 'childrenInteraction'
+		| 'friendliness'
+		| 'shedding'
+		| 'groomingFrequency'
+		| 'droolingLevel'
+		| 'coat_type'
+		| 'coat_length'
+		| 'sociability'
+		| 'playfulness'
+		| 'guardingStance'
+		| 'adaptability'
+		| 'trainability'
+		| 'activityLevel'
+		| 'barkingFrequency'
+		| 'mentalStimulationNeeds'
+		| 'furType'
+		| 'furLength']: number | string;
 };
 
 interface DetailCategoryTabsProps {
-	data: DetailCategoryTabData;
+	data: FlatQuestionData;
 }
 
 const DetailCategoryTabs = ({
@@ -60,16 +69,26 @@ const DetailCategoryTabs = ({
 					className={styles.sliderQuestion}
 				>
 					{Object.entries(categoryQuestionData).map(([key, meta]) => {
-						const tabKey = tab.toLowerCase() as keyof DetailCategoryTabData;
-						const questionKey = key.toLowerCase() as keyof DetailCategoryTabData[typeof tabKey];
+						const flatKey = key as keyof FlatQuestionData;
 						return (
-							<SliderQuestion
-								key={key}
-								label={meta.label}
-								minLevel={meta.minLevel}
-								maxLevel={meta.maxLevel}
-								value={data[tabKey][questionKey]}
-							/>
+							<Fragment key={key}>
+								{key !== 'coat'
+									? (
+										<SliderQuestion
+											label={meta.label}
+											minLevel={meta.minLevel}
+											maxLevel={meta.maxLevel}
+											value={data[flatKey] as number}
+										/>
+									) : (
+										<CoatQuestion
+											label={meta.label}
+											furType={data['furType'] as '이중모' | '단일모'}
+											furLength={data['furLength'] as '짧은' | '중간' | '긴'}
+										/>
+									)
+								}
+							</Fragment>
 						)
 					})}
 				</Card>

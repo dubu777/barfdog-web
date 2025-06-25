@@ -1,18 +1,16 @@
 "use client";
 import * as styles from "./HealthNoteUser.css";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import Button from "@/components/common/button/Button";
 import ComparisonProgressBar
   from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants";
 import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
+import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
 
 const HealthNoteUser = () => {
-  const router = useRouter();
   const { data: dogList = [] } = useGetDogList();
 
   const isFirstFullCheck = false;
@@ -111,13 +109,7 @@ const HealthNoteUser = () => {
           </div>
         </article>
       ) : (
-        <Button
-          buttonColor="gray900"
-          fullWidth
-          onClick={() => router.push("/health-note/dogs/create")}
-        >
-          반려견 추가하기
-        </Button>
+        <CreateDogCard buttonLabel='반려견 추가하기' />
       )}
     </section>
   );
