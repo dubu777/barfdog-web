@@ -11,7 +11,7 @@ import Heart from "public/images/survey/Icon-Heart.svg";
 import Hyperlipidemia from "public/images/survey/Icon-hyperlipidemia.svg";
 import Kidney from "public/images/survey/Icon-Kidney.svg";
 import Liver from "public/images/survey/Icon-Liver.svg";
-import Non from "public/images/survey/Icon-Non.svg";
+import None from "public/images/survey/Icon-None.svg";
 import Olddog from "public/images/survey/Icon-Olddog.svg";
 import Pancreas from "public/images/survey/Icon-pancreas.svg";
 import Puppy from "public/images/survey/Icon-Puppy.svg";
@@ -29,7 +29,7 @@ import FillHeart from "public/images/survey/IconFill-Heart.svg";
 import FillHyperlipidemia from "public/images/survey/IconFill-hyperlipidemia.svg";
 import FillKidney from "public/images/survey/IconFill-Kidney.svg";
 import FillLiver from "public/images/survey/IconFill-Liver.svg";
-import FillNon from "public/images/survey/IconFill-Non.svg";
+import FillNone from "public/images/survey/IconFill-None.svg";
 import FillOlddog from "public/images/survey/IconFill-Olddog.svg";
 import FillPancreas from "public/images/survey/IconFill-pancreas.svg";
 import FillPuppy from "public/images/survey/IconFill-Puppy.svg";
@@ -59,50 +59,50 @@ const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
     titleTemplates: ["반려견에 대해 알려주세요"],
   },
   step2: {
-    titleTemplates: ["{petName}의", "생년월일은 언제인가요?"],
+    titleTemplates: ["{dogName}의", "생년월일은 언제인가요?"],
     subtitleTemplates: [
       [{ text: "아이의 생년월에 따라 급여량이 달라져요.", color: "gray600" }],
       [{ text: "정확히 모르신다면 대략적으로 알려주세요.", color: "gray600" }],
     ],
   },
   step3: {
-    titleTemplates: ["{petName}의", "몸무게는 얼마인가요?"],
+    titleTemplates: ["{dogName}의", "몸무게는 얼마인가요?"],
   },
   step4: {
-    titleTemplates: ["{petName}의", "견종은 무엇인가요?"],
+    titleTemplates: ["{dogName}의", "견종은 무엇인가요?"],
   },
   step5: {
-    titleTemplates: ["{petName:topic}", "현재 임신 중인가요?"],
+    titleTemplates: ["{dogName:topic}", "현재 임신 중인가요?"],
   },
   step6: {
-    titleTemplates: ["{petName:topic}", "현재 수유 중인가요?"],
+    titleTemplates: ["{dogName:topic}", "현재 수유 중인가요?"],
   },
   step7: {
-    titleTemplates: ["{petName}의", "체형은 어느 쪽에 가까운가요?"],
+    titleTemplates: ["{dogName}의", "체형은 어느 쪽에 가까운가요?"],
   },
   step8: {
-    titleTemplates: ["{petName}의", "활동량은 어느 쪽에 가까운가요?"],
+    titleTemplates: ["{dogName}의", "활동량은 어느 쪽에 가까운가요?"],
   },
   step9: {
-    titleTemplates: ["{petName}의", "간식량은 어떤가요?"],
+    titleTemplates: ["{dogName}의", "간식량은 어떤가요?"],
   },
   step10: {
-    titleTemplates: ["{petName:subject}", "못 먹는 재료는 무엇인가요?"],
+    titleTemplates: ["{dogName:subject}", "못 먹는 재료는 무엇인가요?"],
   },
   step11: {
-    titleTemplates: ["{petName}의", "건강고민은 무엇인가요?"],
+    titleTemplates: ["{dogName}의", "건강고민은 무엇인가요?"],
     subtitleTemplates: [
       [{ text: "1순위부터 3순위까지 선택해 주세요", color: "red" }],
     ],
   },
   step12: {
-    titleTemplates: ["{petName:subject}", "현재 먹고 있는 사료는 무엇인가요?"],
+    titleTemplates: ["{dogName:subject}", "현재 먹고 있는 사료는 무엇인가요?"],
   },
   step13: {
-    titleTemplates: ["{petName:subject}", "현재 먹고 있는 영양제가 있나요?"],
+    titleTemplates: ["{dogName:subject}", "현재 먹고 있는 영양제가 있나요?"],
   },
   step14: {
-    titleTemplates: ["{petName:topic}", "앓고 있는 질병이 있나요?"],
+    titleTemplates: ["{dogName:topic}", "앓고 있는 질병이 있나요?"],
   },
 };
 
@@ -337,7 +337,7 @@ const DIET_ANALYSIS_FORM_INFO = {
     },
     healthIssues: {
       options: [
-        { value: "NONE", label: "없어요", Icon: Non, SelectedIcon: FillNon },
+        { value: "NONE", label: "없어요", Icon: None, SelectedIcon: FillNone },
         {
           value: "HYPERLIPIDEMIA",
           label: "고지혈증",

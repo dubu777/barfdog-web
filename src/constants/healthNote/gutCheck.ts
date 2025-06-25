@@ -1,3 +1,4 @@
+import { SurveyTitleConfig } from "@/types";
 import { GutCheckStepKeys } from "@/utils/validation/gutCheckValidation";
 
 const GUT_CHECK_FORM_INFO = {
@@ -7,10 +8,30 @@ const GUT_CHECK_FORM_INFO = {
     disease: {
       title: "바푸동에게 해당되는 질환 및 증상이 있나요?",
       options: [
-        { value: "NONE", label: "해당없음" },
-        { value: "GASTROINTESTINAL", label: "장 질환" },
-        { value: "SKIN", label: "피부" },
-        { value: "OBESITY", label: "비만" },
+        {
+          value: "NONE",
+          label: "해당없음",
+          subLabel: ["해당되는 질환 및 증상이 없어요"],
+          imageUrl: "/images/survey/icon-None.svg",
+        },
+        {
+          value: "GASTROINTESTINAL",
+          label: "장 질환",
+          subLabel: ["설사, 구토 변비 등"],
+          imageUrl: "/images/survey/icon-Bowel.svg",
+        },
+        {
+          value: "SKIN",
+          label: "피부",
+          subLabel: ["가려움, 붉은 반점, 탈모 등"],
+          imageUrl: "/images/survey/icon-Skin.svg",
+        },
+        {
+          value: "OBESITY",
+          label: "비만",
+          subLabel: ["체중 조절이 필요한 상태"],
+          imageUrl: "/images/survey/icon-Diet.svg",
+        },
       ],
     },
     // 1-2. 비만 여부(체형)
@@ -49,11 +70,11 @@ const GUT_CHECK_FORM_INFO = {
       ],
     },
     // 1-3. 유산균 급여 여부
-    probiotic: {
+    probioticsExist: {
       title: "바푸동은 유산균을 급여중인가요?",
       options: [
-        { value: true, label: "급여 중이에요" },
-        { value: false, label: "급여하지 않아요" },
+        { value: "EXIST", label: "급여 중이에요" },
+        { value: "NONE", label: "급여하지 않아요" },
       ],
       placeholder: "유산균 제품명을 입력해주세요",
     },
@@ -297,9 +318,9 @@ const GUT_CHECK_FORM_INFO = {
     },
     treatmentDiseases: {
       title: "바푸동이 치료중인 질환이 있나요?",
-      yesNoOptions: [
-        { value: "YES", label: "있어요" },
-        { value: "NO", label: "없어요" },
+      existenceOptions: [
+        { value: "EXIST", label: "있어요" },
+        { value: "NONE", label: "없어요" },
       ],
       groups: [
         {
@@ -397,30 +418,28 @@ const GUT_CHECK_FORM_INFO = {
     },
 
     // 2-3. 식사 습관
-    eatingHabit: {
-      title: "바푸동의 식사 습관은 어떻게 되나요?",
-      // (1) 급여 중인 사료명
-      feedName: {
-        title: "급여중인 사료명은 무엇인가요?",
-        placeholder: "제품명을 적어주세요",
-      },
-      // (2) 하루 급여 시간
-      feedTime: {
-        title: "하루 급여 시간을 알려주세요",
-        options: [
-          { value: "MORNING", label: "아침" },
-          { value: "EVENING", label: "저녁" },
-          { value: "BOTH", label: "아침&저녁" },
-        ],
-      },
-      // (3) 하루 급여 주기
-      feedFrequency: {
-        title: "하루 급여 주기를 알려주세요",
-        options: [
-          { value: "ONCE_A_DAY", label: "1일 1회" },
-          { value: "TWO_TO_THREE", label: "1일 2~3회" },
-        ],
-      },
+
+    feedName: {
+      title: "급여중인 사료명은 무엇인가요?",
+      placeholder: "제품명을 적어주세요",
+      info: "사람이 먹는 음식을 선택한 경우, 주로 급여하는 음식이 무엇인지 적어주세요",
+    },
+    // (2) 하루 급여 시간
+    feedTime: {
+      title: "하루 급여 시간을 알려주세요",
+      options: [
+        { value: "MORNING", label: "아침" },
+        { value: "EVENING", label: "저녁" },
+        { value: "BOTH", label: "아침&저녁" },
+      ],
+    },
+    // (3) 하루 급여 주기
+    feedFrequency: {
+      title: "하루 급여 주기를 알려주세요",
+      options: [
+        { value: "ONCE_A_DAY", label: "1일 1회" },
+        { value: "TWO_TO_THREE", label: "1일 2~3회" },
+      ],
     },
 
     // 2-4. 배변 습관
@@ -474,30 +493,29 @@ const GUT_CHECK_FORM_INFO = {
         { value: "NONE", label: "없어요" },
         { value: "DOG", label: "강아지" },
         { value: "CAT", label: "고양이" },
-        { value: "OTHER", label: "기타" },
       ],
     },
     // 2-7. 영양제 급여 및 제품명
-    supplements: {
-      title: "바푸동은 먹고 있는 영양제가 있나요?",
-      yesNoOptions: [
-        { value: "YES", label: "있어요" },
-        { value: "NO", label: "없어요" },
-      ],
-      // 복수 선택 가능한 영양제 목록 (기존 supplements 항목과 동일)
+
+    supplementsExist: {
       options: [
-        { value: "PROBIOTICS", label: "유산균" },
-        { value: "OMEGA_3", label: "오메가-3" },
-        { value: "ANTIOXIDANT", label: "항산화" },
-        { value: "JOINT", label: "관절" },
-        { value: "EYE", label: "눈" },
-        { value: "SKIN", label: "피부" },
-        { value: "IMMUNITY", label: "면역력" },
-        { value: "HEART", label: "심장" },
-        { value: "TEETH", label: "치아" },
-        { value: "BRONCHUS", label: "기관지" },
-        { value: "GENERAL", label: "종합" },
+        { value: "EXIST", label: "있어요" },
+        { value: "None", label: "없어요" },
       ],
+      placeholder: "제품명을 입력해주세요",
+    },
+    supplements: {
+      title: "급여중인 영양제를 모두 선택해주세요",
+      options: [
+        { value: "PROBIOTICS", label: "눈" },
+        { value: "OMEGA_3", label: "관절" },
+        { value: "ANTIOXIDANT", label: "장" },
+        { value: "JOINT", label: "구강" },
+        { value: "EYE", label: "기타" },
+      ],
+    },
+    supplementsName: {
+      title: "급여중인 영양제 제품을 입력해주세요 (선택 입력)",
       placeholder: "제품명을 입력해주세요",
     },
   },
@@ -515,7 +533,6 @@ const GUT_CHECK_FORM_INFO = {
         { value: "NUTRITION", label: "영양보충" },
         { value: "OBESITY", label: "비만" },
         { value: "UNDERWEIGHT", label: "저체중" },
-        { value: "OTHER", label: "기타" },
       ],
       note: "더 정확한 결과를 위해 3가지까지 선택해보세요",
       multiple: true,
@@ -528,28 +545,89 @@ const GUT_CHECK_FORM_INFO = {
         {
           value: "EVENT_RECEIVED",
           label: "이벤트로 진단키트 수령",
-          description: "체험단, 프로젝트, 협업 이벤트 등",
+          subLabel: "체험단, 프로젝트, 협업 이벤트 등",
         },
         {
           value: "PURCHASED",
           label: "구매 후 진단키트 수령",
-          description: "바푸독 홈페이지/스마트 스토어 구매",
+          subLabel: "바푸독 홈페이지/스마트 스토어 구매",
         },
       ],
       multiple: false,
     },
   },
-} as const;
+};
+
+const GUT_CHECK_TITLES: Record<GutCheckStepKeys, SurveyTitleConfig> = {
+  step1: {
+    titleTemplates: ["{dogName}에게 해당되는", "질환 및 증상이 있나요?"],
+    subtitleTemplates: [
+      [{ text: "가장 심한 증상을 선택해 주세요", color: "red" }],
+    ],
+  },
+  step2: {
+    titleTemplates: ["{dogName}의", "체형은 어느 쪽에 가까운가요?"],
+  },
+  step3: {
+    titleTemplates: ["{dogName:topic}", "유산균을 급여중인가요?"],
+  },
+  step4: {
+    titleTemplates: ["{dogName:topic}", "항생제를 투여중인가요?"],
+  },
+  step5: {
+    titleTemplates: ["{dogName:topic}", "알러지가 있나요?"],
+  },
+  step6: {
+    titleTemplates: ["{dogName:topic}", "임신 중인가요?"],
+  },
+  step7: {
+    titleTemplates: ["{dogName}의", "활동량은 어느 쪽에 가까운가요?"],
+  },
+  step8: {
+    titleTemplates: ["{dogName:subject}", "치료중인 질환이 있나요?"],
+  },
+  step9: {
+    titleTemplates: ["{dogName}의", "사료 급여 방식은 무엇인가요?"],
+  },
+  step10: {
+    titleTemplates: ["{dogName:subject}", "먹고 있는 주사료는 무엇인가요?"],
+  },
+  step11: {
+    titleTemplates: ["{dogName}의", "식사 습관은 어떻게 되나요?"],
+  },
+  step12: {
+    titleTemplates: ["{dogName}의", "배변습관은 어떤가요?"],
+  },
+  step13: {
+    titleTemplates: ["{dogName}의", "간식량은 어떤가요?"],
+  },
+  step14: {
+    titleTemplates: ["{dogName:and} 함께 거주중인", "다른 반려동물이 있나요?"],
+  },
+  step15: {
+    titleTemplates: ["{dogName:topic}", "먹고있는 영양제가 있나요?"],
+  },
+  step16: {
+    titleTemplates: ["{dogName:topic} 다음 중", "어떤 고민이 있나요?"],
+  },
+  step17: {
+    titleTemplates: ["진단 키트 분류를 위해", "해당 사항을 체크 해주세요"],
+  },
+};
 
 const GUT_CHECK_NO_AUTO_STEP = new Set<GutCheckStepKeys>([
-  "step3",
-  "step5",
   "step8",
-  "step11",
   "step14",
   "step15",
   "step16",
 ]);
+
+const GUT_CHECK_OPTIONAL_FIELDS: Record<string, string[]> = {
+  step3: ["probiotics"],
+  step5: ["allergy"], // 현재 알러지 설문은 기획 확정을 기다려야 하므로 임시로 설정
+  step8: ["treatmentDiseases"],
+  step15: ["supplementsName"],
+};
 
 const GUT_CHECK_SECTIONS = [
   { key: "healthStatus", label: "건강 상태", steps: 8 },
@@ -557,4 +635,10 @@ const GUT_CHECK_SECTIONS = [
   { key: "additionalInfo", label: "추가 정보", steps: 2 },
 ];
 
-export { GUT_CHECK_FORM_INFO, GUT_CHECK_NO_AUTO_STEP, GUT_CHECK_SECTIONS };
+export {
+  GUT_CHECK_FORM_INFO,
+  GUT_CHECK_NO_AUTO_STEP,
+  GUT_CHECK_SECTIONS,
+  GUT_CHECK_TITLES,
+  GUT_CHECK_OPTIONAL_FIELDS,
+};

@@ -8,18 +8,12 @@ export const gutCheckStepSchema = yup.object({
     dogBodyCondition: yup.string().required("체형을 선택해주세요."),
   }),
   step3: yup.object({
-    probiotic: yup
-      .boolean()
-      .nullable()
-      .test(
-        "required-probiotic",
-        "프로바이오틱스 급여 여부를 선택해주세요.",
-        (val) => val === true || val === false
-      ),
-    probioticName: yup.string().when("probiotic", {
-      is: true, // boolean true 일 때
-      then: (s) => s.required("프로바이오틱스 제품명을 입력해주세요."),
-      otherwise: (s) => s.notRequired(),
+    probioticsExist: yup.string().required("유산균 급여 여부를 선택해주세요."),
+    // ① 존재 여부가 EXIST일 때만 string 타입으로 검증
+    probiotics: yup.string().when("probioticsExist", {
+      is: "EXIST",
+      then: (schema) => schema.required("유산균 제품명을 입력해주세요."),
+      otherwise: (schema) => schema.notRequired(),
     }),
   }),
   step4: yup.object({
@@ -38,10 +32,25 @@ export const gutCheckStepSchema = yup.object({
     activityLevel: yup.string().required("활동량을 선택해주세요."),
   }),
   step8: yup.object({
+    // ① 존재 여부 필드 추가 (EXIST | NONE)
+    treatmentDiseasesExist: yup
+      .string()
+      .required("치료중 질병 여부를 선택해주세요."),
+
+    // ② 존재 여부가 EXIST일 때만 배열 검증
     treatmentDiseases: yup
       .array()
-      .of(yup.string().required("치료 중인 질병을 선택해주세요."))
-      .min(1, "치료 중인 질병을 선택해주세요."),
+      // 기본적으로는 string 타입 배열이지만, 길이나 required 검증은 when 안에서만
+      .of(yup.string())
+      .when("treatmentDiseasesExist", {
+        is: "EXIST",
+        then: (schema) =>
+          schema
+            .of(yup.string().required("치료 중인 질병을 선택해주세요."))
+            .min(1, "치료 중인 질병을 선택해주세요.")
+            .required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
   }),
   step9: yup.object({
     feedingMethod: yup.string().required("급여 방법을 선택해주세요."),
@@ -67,13 +76,24 @@ export const gutCheckStepSchema = yup.object({
       .min(1, "동거 반려동물을 선택해주세요."),
   }),
   step15: yup.object({
+    // boolean 으로 변경
+    supplementsExist: yup.string().required("영양제 급여 여부를 선택해주세요."),
+
+    // 보충제 종류 (눈, 관절, 장, 구강) 배열
     supplements: yup
       .array()
-      .of(yup.string().required("영양 보충제를 선택해주세요."))
-      .min(1, "영양 보충제를 선택해주세요."),
-    supplementsName: yup.string().when("supplements", {
-      is: (value: string[]) => value.length > 0,
-      then: (s) => s.required("영양 보충제 이름을 입력해주세요."),
+      .of(yup.string().required("영양제 종류를 선택해주세요."))
+      .min(1, "영양제 종류를 최소 하나 선택해주세요.")
+      .when("supplementsExist", {
+        is: "EXIST",
+        then: (schema) => schema.required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
+
+    // 보충제 이름
+    supplementsName: yup.string().when("supplementsExist", {
+      is: "EXIST",
+      then: (s) => s.required("영양제 이름을 입력해주세요."),
       otherwise: (s) => s.notRequired(),
     }),
   }),
@@ -94,19 +114,19 @@ export type GutCheckStepKeys = keyof GutCheckStepValues;
 export const defaultGutCheckStepValues: GutCheckStepValues = {
   step1: { disease: "" },
   step2: { dogBodyCondition: "" },
-  step3: { probiotic: null, probioticName: "" },
+  step3: { probioticsExist: "", probiotics: "" },
   step4: { antibiotic: "" },
-  step5: { allergy: [] },
+  step5: { allergy: ["임시데이터"] },
   step6: { pregnancy: "" },
   step7: { activityLevel: "" },
-  step8: { treatmentDiseases: [] },
+  step8: { treatmentDiseasesExist: "", treatmentDiseases: [] },
   step9: { feedingMethod: "" },
   step10: { mainFeed: "" },
   step11: { feedName: "", feedTime: "", feedFrequency: "" },
   step12: { bowelHabits: "" },
   step13: { snackCountLevel: "" },
   step14: { cohabitantPets: [] },
-  step15: { supplements: [], supplementsName: "" },
+  step15: { supplementsExist: "", supplements: [], supplementsName: "" },
   step16: { petConcerns: [] },
   step17: { diagnosticKit: "" },
 };

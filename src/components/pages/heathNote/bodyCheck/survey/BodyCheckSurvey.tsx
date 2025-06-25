@@ -13,7 +13,7 @@ import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
 import { useRouter } from "next/navigation";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import { Controller, FieldValues, Path } from "react-hook-form";
-import SurveyProgressBar from "@/components/pages/survey/surveyProgressBar/SurveyProgressBar";
+import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
 import { BodyCheckPart } from "@/types/healthNote";
 import { bodyCheckSurveyConfig } from "@/config/bodyCheckSurveyConfig";
 

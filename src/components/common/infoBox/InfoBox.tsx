@@ -1,6 +1,6 @@
-import HelpIcon from '/public/images/icons/help.svg';
-import InfoIcon from '/public/images/icons/info.svg';
-import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
+import HelpIcon from "/public/images/icons/help.svg";
+import InfoIcon from "/public/images/icons/info.svg";
+import ArrowRightIcon from "/public/images/icons/chevron-right-blue.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import {
   infoBoxBase,
@@ -8,19 +8,19 @@ import {
   infoBoxColor,
   infoBoxStyle,
   infoTextStyle,
-	infoBoxFullWidth,
+  infoBoxFullWidth,
 } from "@/components/common/infoBox/InfoBox.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { COLORS } from '@/constants/style';
+import { COLORS } from "@/constants/style";
 
 interface InfoBoxProps {
   type?: "help" | "info";
   color?: "red" | "blue" | "gray";
   showRightArrowButton?: boolean;
   text: string;
-	fullWidth?: boolean;
+  fullWidth?: boolean;
   onClick?: () => void;
-	style?: React.CSSProperties;
+  style?: React.CSSProperties;
   className?: string;
 }
 
@@ -29,19 +29,19 @@ const InfoBox = ({
   color = "gray",
   showRightArrowButton = false,
   text,
-	fullWidth = false,
+  fullWidth = false,
   onClick,
-	style,
+  style,
   className,
 }: InfoBoxProps) => {
-	const iconColor: keyof typeof COLORS =
-  color === "gray"
-    ? "gray700"
-    : color === "red"
-    ? "pastelRed"
-    : color === "blue"
-    ? "blue500"
-    : "gray700";
+  const iconColor: keyof typeof COLORS =
+    color === "gray"
+      ? "gray700"
+      : color === "red"
+      ? "pastelRed"
+      : color === "blue"
+      ? "blue500"
+      : "gray700";
 
   return (
     <div
@@ -49,15 +49,14 @@ const InfoBox = ({
         infoBoxClickEvent[!!onClick ? "true" : "false"]
       } ${fullWidth ? infoBoxFullWidth : ""} ${className || ""}`}
       onClick={onClick || undefined}
-			style={style}
+      style={style}
     >
       <div className={infoBoxStyle}>
-			<SvgIcon src={type === 'help' ? HelpIcon : InfoIcon} color={iconColor} />
-        <DefaultText
-          type="label4"
-          color={color === "gray" ? "gray700" : color}
-          className={infoTextStyle}
-        >
+        <SvgIcon
+          src={type === "help" ? HelpIcon : InfoIcon}
+          color={iconColor}
+        />
+        <DefaultText type="label4" color={iconColor} className={infoTextStyle}>
           {text}
         </DefaultText>
       </div>

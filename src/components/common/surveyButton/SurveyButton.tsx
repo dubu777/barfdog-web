@@ -42,24 +42,23 @@ export default function SurveyButton<T>({
         ? CheckedBox
         : UnCheckedRadio
       : null;
-  const labelColor =
-    isChecked
-      ? isDisabled
-        ? "gray500"
-        : "red"
-      : isDisabled
-        ? "gray300"
-        : "gray900";
+  const labelColor = isChecked
+    ? isDisabled
+      ? "gray500"
+      : "red"
+    : isDisabled
+    ? "gray300"
+    : "gray900";
   return (
     <button
       disabled={isDisabled}
       className={`${styles.surveyButtonContainer({
         isChecked,
         isNormal: inputType === "normal",
-      })} ${className || ''}`}
+      })} ${className || ""}`}
       onClick={(e) => {
         e.preventDefault();
-        onToggle(value)
+        onToggle(value);
       }}
     >
       {iconSrc && <SvgIcon src={iconSrc} />}
@@ -77,11 +76,15 @@ export default function SurveyButton<T>({
             {chipText}
           </Chips>
         )}
-        <DefaultText type="headline3" color={labelColor}>
+        <DefaultText
+          type="headline3"
+          color={labelColor}
+          applyLineHeight={false}
+        >
           {label}
         </DefaultText>
         {subLabel && (
-          <DefaultText type="body3" color="gray600">
+          <DefaultText type="body3" color="gray600" applyLineHeight={false}>
             {subLabel}
           </DefaultText>
         )}

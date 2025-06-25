@@ -1,5 +1,6 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const chipsVariants = {
   solid: style({
@@ -125,41 +126,65 @@ export const chipsBorderRadius = {
   }),
 };
 
-export const chipsSize = {
-  sm: style({
+export const chipsSize = recipe({
+  base: {
     display: "inline-flex",
     alignItems: "center",
     letterSpacing: "-0.4px",
-    fontSize: "12px",
-    fontWeight: 400,
-    padding: "2px 8px",
-    height: "24px",
-    maxWidth: "fit-content",
     whiteSpace: "nowrap",
-  }),
-  md: style({
-    display: "inline-flex",
-    alignItems: "center",
-    letterSpacing: "-0.4px",
-    fontSize: "14px",
-    fontWeight: 500,
-    padding: "4px 12px",
-    height: "32px",
     maxWidth: "fit-content",
-    whiteSpace: "nowrap",
-  }),
-  lg: style({
-    display: "inline-flex",
-    alignItems: "center",
-    letterSpacing: "-0.4px",
-    fontSize: "16px",
-    fontWeight: 700,
-    padding: "4px 12px",
-    height: "32px",
-    maxWidth: "fit-content",
-    whiteSpace: "nowrap",
-  }),
-};
+  },
+  variants: {
+    // 1) size 에서만 기본 padding 을 정의
+    size: {
+      sm: {
+        fontSize: "12px",
+        fontWeight: 400,
+        height: "24px",
+        padding: "2px 8px",
+      },
+      md: {
+        fontSize: "14px",
+        fontWeight: 500,
+        height: "32px",
+        padding: "4px 12px",
+      },
+      lg: {
+        fontSize: "16px",
+        fontWeight: 600,
+        height: "32px",
+        padding: "4px 12px",
+      },
+    },
+    showCheckIcon: {
+      true: {},
+      false: {},
+    },
+    switchOff: {
+      true: {},
+      false: {},
+    },
+  },
+  compoundVariants: [
+    {
+      variants: { size: "sm", showCheckIcon: true, switchOff: false },
+      style: { padding: "2px 8px 2px 4px" },
+    },
+    {
+      variants: { size: "md", showCheckIcon: true, switchOff: false },
+      style: { padding: "4px 12px 4px 6px" },
+    },
+    {
+      variants: { size: "lg", showCheckIcon: true, switchOff: false },
+      style: { padding: "4px 12px 4px 6px" },
+    },
+  ],
+  defaultVariants: {
+    size: "sm",
+    showCheckIcon: false,
+    switchOff: false,
+  },
+});
 
 export const chipsTailStyle = style({
   position: "absolute",
@@ -212,8 +237,4 @@ export const chipsTailPosition = {
 
 export const chipsTailFixedFont = style({
   fontSize: "12px",
-});
-
-export const chipsWidthIcon = style({
-  padding: "4px 12px 4px 6px !important",
 });

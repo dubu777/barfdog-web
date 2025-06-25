@@ -57,6 +57,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   labelColor?: "gray700" | "gray800";
   labelPosition?: "top" | "left";
+  labelType?: "label4" | "headline4";
   isRequired?: boolean;
   unit?: string;
   success?: string;
@@ -86,6 +87,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       className,
       label,
       isRequired,
+      labelType = "label4",
       labelColor = "gray700",
       unit,
       success,
@@ -144,6 +146,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         {label && (
           <InputLabel
             label={label}
+            labelType={labelType}
             labelColor={labelColor}
             isRequired={isRequired}
           />

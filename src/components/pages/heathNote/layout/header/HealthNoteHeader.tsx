@@ -79,10 +79,6 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
       centerTitle: "",
       showBackButton: true,
     },
-    "/health-note/gut-check/create/survey": {
-      centerTitle: "",
-      showBackButton: true,
-    },
   };
 
   const dynamicHeaderConfigs: Record<
@@ -130,7 +126,7 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
     "/health-note",
     `/health-note/health-check-history/${params.historyId}`,
     `/health-note/full-check/result/${params.reportId}`,
-    "/health-note/gut-check/create/survey",
+    "/health-note/gut-check/survey",
   ];
 
   // 접두사로 시작하면 제외할 경로

@@ -1,4 +1,6 @@
 "use client";
+import { NONE_VALUE } from "@/constants";
+import { GUT_CHECK_OPTIONAL_FIELDS } from "@/constants/healthNote/gutCheck";
 import { useCallback } from "react";
 import { UseFormReturn, Path } from "react-hook-form";
 
@@ -42,8 +44,15 @@ export function useSurveyNavigator<T extends Record<string, any>>({
     const stepValues = watch(currentStepKey as Path<T>);
     if (!stepValues) return false;
 
+    // 이번 스텝의 옵셔널 필드 목록
+    const allowedEmpty =
+      GUT_CHECK_OPTIONAL_FIELDS[currentStepKey as Path<T>] ?? [];
+
     // 모든 필드가 비어있지 않은지 검사
-    const allFilled = Object.entries(stepValues).every(([_, value]) => {
+    const allFilled = Object.entries(stepValues).every(([key, value]) => {
+      // optionalEmptyFields에 있으면 항상 통과
+      if (allowedEmpty.includes(key)) return true;
+
       if (typeof value === "string") return value.trim() !== "";
       if (Array.isArray(value)) return value.length > 0;
       return value != null; // boolean, number 등의 경우 null/undefined 체크

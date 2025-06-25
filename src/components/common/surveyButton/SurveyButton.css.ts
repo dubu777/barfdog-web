@@ -9,7 +9,6 @@ export const surveyButtonContainer = recipe({
     alignItems: "center",
     borderRadius: "8px",
     width: "100%",
-    height: "64px",
   },
   variants: {
     isChecked: {
@@ -17,23 +16,23 @@ export const surveyButtonContainer = recipe({
         backgroundColor: themeVars.colors.red.pinkWhite,
         border: `1px solid ${themeVars.colors.red.red}`,
         selectors: {
-          '&:disabled': {
+          "&:disabled": {
             background: themeVars.colors.gray.gray200,
             border: `1px solid ${themeVars.colors.gray.gray500}`,
-          }
-        }
+          },
+        },
       },
       false: {
         backgroundColor: themeVars.colors.gray.gray0,
         border: `1px solid ${themeVars.colors.gray.gray200}`,
         boxShadow: themeVars.shadow.light,
         selectors: {
-          '&:disabled': {
-            boxShadow: 'unset',
+          "&:disabled": {
+            boxShadow: "unset",
             background: themeVars.colors.gray.gray50,
             border: `1px solid ${themeVars.colors.gray.gray300}`,
-          }
-        }
+          },
+        },
       },
     },
     isNormal: {
@@ -45,7 +44,7 @@ export const surveyButtonContainer = recipe({
         justifyContent: "flex-start",
         padding: "20px 24px",
       },
-    }
+    },
   },
   defaultVariants: {
     isChecked: false,
@@ -68,7 +67,7 @@ export const surveyButtonContentWrapper = recipe({
       false: {
         justifyContent: "flex-start",
       },
-    }
+    },
   },
   defaultVariants: {
     isNormal: false,
