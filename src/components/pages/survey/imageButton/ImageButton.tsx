@@ -17,7 +17,7 @@ interface ImageButtonProps<T> {
   inputType?: "radio" | "checkbox" | "rank";
   onToggle: (value: T) => void;
   display?: "flex" | "grid1" | "grid2";
-  disabled?: boolean; 
+  disabled?: boolean;
   rank?: number;
 }
 
@@ -60,10 +60,14 @@ export default function ImageButton<T>({
           alt={label}
           height={imageHeight}
           width={imageWidth}
+          priority
         />
       )}
       {(defaultSvg || selectedSvg) && (
-        <SvgIcon src={isChecked && selectedSvg ? selectedSvg : defaultSvg!} size={64}/>
+        <SvgIcon
+          src={isChecked && selectedSvg ? selectedSvg : defaultSvg!}
+          size={64}
+        />
       )}
       <DefaultText type="headline4" color={isChecked ? "red" : "gray900"}>
         {label}

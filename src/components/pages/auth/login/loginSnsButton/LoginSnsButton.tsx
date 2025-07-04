@@ -5,23 +5,21 @@ import { SnSProvider } from "@/types";
 import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
 import { useCallback } from "react";
 import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
+import Button from "@/components/common/button/Button";
 
 interface LoginSnsButtonProps {
   provider: SnSProvider;
   lastLoginActivity?: boolean;
   callbackUrl?: string;
-  size?: 'sm' | 'md';
-  borderRadius?: 'sm' | 'md';
+  size?: "sm" | "md";
+  borderRadius?: "sm" | "md";
   defer?: boolean;
   onDeferredLoginClick?: (fn: () => void) => void;
 }
 
 const LoginSnsButton = ({
   provider,
-  lastLoginActivity,
   callbackUrl,
-  size = 'md',
-  borderRadius = 'md',
   defer = false,
   onDeferredLoginClick,
 }: LoginSnsButtonProps) => {
@@ -48,22 +46,23 @@ const LoginSnsButton = ({
       // 마이페이지 SNS 연동 로그인 실행시 부모가 결정하도록 넘겨줌
       onDeferredLoginClick(handleLogin);
     } else {
-       // 기본 즉시 실행
+      // 기본 즉시 실행
       handleLogin();
     }
-  }
+  };
 
   return (
-    <button
+    <Button
+      variant="solid"
+      fullWidth
       onClick={handleClick}
-      className={styles.loginButton({ provider, lastLoginActivity, size, borderRadius })}
+      buttonColor={provider === "kakao" ? "kakao" : "naver"}
+      textColor={provider === "kakao" ? "gray900" : "gray0"}
+      size="lg"
     >
-      {lastLoginActivity && (
-        <span className={styles.lastLoginActivity}>최근로그인</span>
-      )}
       <Image src={config.image} alt={config.alt} width={40} height={40} />
       <span>{config.loginText}</span>
-    </button>
+    </Button>
   );
 };
 

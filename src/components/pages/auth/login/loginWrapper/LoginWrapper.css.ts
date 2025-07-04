@@ -2,32 +2,27 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
 export const loginContainer = style({
-  padding: "0 55px",
-  minWidth: "281px",
-  width: "80%",
-  height: "100vh",
-  margin: "0 auto",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
+  maxWidth: "375px",
+  width: "100%",
+  height: "calc(100vh - 52px)",
+  margin: "0 auto",
 });
 
-export const loginTitle = style({
-  fontSize: themeVars.fontSize["title-md"],
-  fontWeight: themeVars.fontWeight.bold,
-  marginBottom: "7px",
-});
-
-export const loginDescription = style({
-  fontSize: themeVars.fontSize["text-sm"],
-  color: themeVars.colors.gray.gray700,
-  marginBottom: "26px",
-});
-
-export const submitButtons = style({
+export const lineBox = style({
   width: "100%",
   display: "flex",
-  flexDirection: "column",
-  gap: "10px",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "16px",
+  padding: "0 20px",
+});
+
+export const line = style({
+  width: "26%",
+  height: "2px",
+  background: themeVars.colors.gray.gray200,
 });

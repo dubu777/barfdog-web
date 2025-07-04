@@ -92,6 +92,8 @@ type DiseaseName =
   | "ibs" // IBS
   | "lifestyle"; // 생활습관
 
+type DiseasePhase = "초기" | "중기" | "심화";
+
 interface BodyCheckRecommendItem {
   step: string;
   title: string;
@@ -113,5 +115,6 @@ export type {
   BodyCheckPart,
   HealthCheckHistoryFormValue,
   DiseaseName,
+  DiseasePhase,
   BodyCheckRecommendItem,
 };

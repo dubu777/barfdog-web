@@ -17,6 +17,8 @@ import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { resetStores } from "@/store/resetStores";
+import { commonWrapper } from "@/styles/common.css";
+import DefaultText from "@/components/common/defaultText/DefaultText";
 
 const LoginWrapper = () => {
   // -------> 라우팅 함수
@@ -26,9 +28,8 @@ const LoginWrapper = () => {
     () => searchParams.get("next") ?? "/",
     [searchParams]
   );
-  
-  const router = useRouter();
 
+  const router = useRouter();
 
   // ------->상태관리
   const [mounted, setMounted] = useState(false);
@@ -73,7 +74,7 @@ const LoginWrapper = () => {
       resetStores();
     }
   }, []);
-  
+
   // 로그인 중이면 로그인 페이지 접근 제한
   useEffect(() => {
     if (mounted && isAuthenticated()) {
@@ -87,40 +88,30 @@ const LoginWrapper = () => {
   // 로그인 상태이면 컴포넌트 내용 대신 null 반환
   if (isAuthenticated()) return null;
 
-
   return (
     <div className={styles.loginContainer}>
-      <h2 className={styles.loginTitle}>안녕하세요, 보호자님!</h2>
-      <p className={styles.loginDescription}>
-        다양한 맞춤 서비스를 위해 로그인해주세요.
-      </p>
-      <LoginSnsButton provider="kakao" />
-      <LoginSnsButton provider="naver" />
+      <div className={commonWrapper({ direction: "col", gap: 4, padding: 20 })}>
+        <DefaultText type="title1">👋 안녕하세요 보호자님!</DefaultText>
+        <DefaultText type="body3" color="gray500">
+          다양한 맞춤 서비스를 위해 로그인해주세요
+        </DefaultText>
+      </div>
       <LoginForm
         control={control}
         handleSubmit={handleSubmit}
         handleLogin={handleLogin}
         isValid={isValid}
       />
-      <div className={styles.submitButtons}>
-        <DefaultButton
-          type="main"
-          borderRadius="sm"
-          size="lg"
-          onClick={handleSubmit(handleLogin)}
-          isDisabled={!isValid}
-        >
-          로그인
-        </DefaultButton>
-        <DefaultButton
-          type="mainBorder"
-          borderRadius="sm"
-          size="lg"
-          hover={false}
-          linkUrl="/signup"
-        >
-          이메일로 회원가입
-        </DefaultButton>
+      <span className={styles.lineBox}>
+        <em className={styles.line} />
+        <DefaultText type="body3" color="gray500">
+          또는 SNS 간편 로그인
+        </DefaultText>
+        <em className={styles.line} />
+      </span>
+      <div className={commonWrapper({ gap: 8, direction: "col", padding: 20 })}>
+        <LoginSnsButton provider="naver" />
+        <LoginSnsButton provider="kakao" />
       </div>
     </div>
   );
