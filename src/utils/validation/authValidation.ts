@@ -6,12 +6,9 @@ import {
   GenderType,
   GetUserInfo,
 } from "@/types";
-import { LoginUserInfo } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 
 export {
-  signupSchema,
-  defaultSignupValues,
   findUserEmailSchema,
   defaultFindUserEmailValues,
   sendTempPwSchema,
@@ -24,9 +21,11 @@ export {
   defaultUpdateUserInfoValues,
 };
 
-const signupSchema = yup.object().shape({
+// --- STEP 1: 이름 · 이메일 검증 ------------------------------------------------
+const step1 = yup.object({
   name: yup
     .string()
+    .trim()
     .min(2, "이름은 최소 2자 이상이어야 합니다.")
     .required("이름은 필수입니다."),
   email: yup
@@ -34,41 +33,57 @@ const signupSchema = yup.object().shape({
     .email("유효한 이메일 주소를 입력해주세요.")
     .required("이메일 주소는 필수입니다."),
   confirmEmail: yup.boolean().oneOf([true], "이메일 중복체크를 해주세요."),
+});
+
+// --- STEP 2: 비밀번호 검증 ---------------------------------------------------
+const step2 = yup.object({
   password: yup
     .string()
+    .required("비밀번호는 필수입니다.")
     .min(8, "비밀번호는 최소 8자 이상이어야 합니다.")
     .matches(
-      /^(?=.*[a-zA-Z])(?=.*\d)/,
-      "비밀번호는 문자와 숫자를 포함해야 합니다."
+      /(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9])/,
+      "문자·숫자·특수문자를 각각 하나 이상 포함해야 합니다."
     )
-    .required("비밀번호는 필수입니다."),
+    .test(
+      "no-repeat-seq",
+      "3회 이상 동일하거나 연속성이 있는 문자 사용을 금지합니다.",
+      (value = "") => {
+        for (let i = 0; i < value.length - 2; i++) {
+          const a = value.charCodeAt(i),
+            b = value.charCodeAt(i + 1),
+            c = value.charCodeAt(i + 2);
+          if (a === b && b === c) return false;
+          if (b - a === 1 && c - b === 1) return false;
+          if (a - b === 1 && b - c === 1) return false;
+        }
+        return true;
+      }
+    ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "비밀번호가 일치하지 않습니다.")
     .required("비밀번호 확인은 필수입니다."),
+});
+
+// --- STEP 3: 연락처·인증·생년월일·성별·추천코드 ---------------------------------
+const step3 = yup.object({
   phoneNumber: yup
     .string()
     .matches(/^\d{10,11}$/, "휴대폰 번호는 10~11자리 숫자여야 합니다.")
     .required("휴대폰 번호는 필수입니다."),
   authNumber: yup.string().required("인증번호는 필수입니다."),
-
-  address: yup.object().shape({
-    zipcode: yup.string().required("우편번호는 필수입니다."),
-    city: yup.string().required("도시명은 필수입니다."),
-    street: yup.string().required("도로명 주소는 필수입니다."),
-    detailAddress: yup.string().required("상세 주소는 필수입니다."),
-  }),
-
   birthday: yup.string().required("생년월일은 필수입니다."),
   gender: yup.string().required("성별은 필수입니다."),
-
   recommendCode: yup
     .string()
     .max(20, "추천코드는 최대 20자까지 입력 가능합니다."),
+});
 
+// --- STEP 4: 약관 동의 · 제휴 정보 ---------------------------------------------
+const step4 = yup.object({
   agreement: yup
-    .object()
-    .shape({
+    .object({
       servicePolicy: yup.boolean().oneOf([true], "이용약관에 동의해주세요."),
       privacyPolicy: yup
         .boolean()
@@ -80,14 +95,12 @@ const signupSchema = yup.object().shape({
       receiveEmail: yup.boolean(),
     })
     .required(),
-
   allianceInfo: yup
     .object({
       alliance: yup.string().nullable(),
       alliancePolicy: yup
         .boolean()
         .when("alliance", (allianceValue, schema) =>
-          // allianceValue가 null이 아니면(즉, 사용자가 제휴 코드를 입력했다면)
           allianceValue != null
             ? schema.oneOf(
                 [true],
@@ -95,40 +108,44 @@ const signupSchema = yup.object().shape({
               )
             : schema
         )
-        .required(), // boolean 자체는 항상 존재하도록
+        .required(),
     })
     .required(),
 });
-export type SignupFormValues = yup.InferType<typeof signupSchema>;
-export type SignupKeys = keyof SignupFormValues;
 
-const defaultSignupValues: SignupFormValues = {
-  name: "",
-  email: "",
-  confirmEmail: false,
-  password: "",
-  confirmPassword: "",
-  phoneNumber: "",
-  authNumber: "",
-  address: {
-    zipcode: "",
-    city: "",
-    street: "",
-    detailAddress: "",
+// --- 전체 STEP 스키마 & 타입 & 기본값 -----------------------------------------
+export const signupStepsSchema = yup.object({
+  step1,
+  step2,
+  step3,
+  step4,
+});
+
+export type SignupStepValues = yup.InferType<typeof signupStepsSchema>;
+export type SignupStepKeys = keyof SignupStepValues;
+
+export const defaultSignupStepValues: SignupStepValues = {
+  step1: { name: "", email: "", confirmEmail: true }, // 임시로 true
+  step2: { password: "", confirmPassword: "" },
+  step3: {
+    phoneNumber: "",
+    authNumber: "",
+    birthday: "",
+    gender: "", // "" 또는 "NONE" 등 초기 옵션
+    recommendCode: "",
   },
-  birthday: "",
-  gender: "NONE",
-  recommendCode: "",
-  agreement: {
-    servicePolicy: false,
-    privacyPolicy: false,
-    receiveSms: false,
-    receiveEmail: false,
-    over14YearsOld: false,
-  },
-  allianceInfo: {
-    alliance: null,
-    alliancePolicy: false,
+  step4: {
+    agreement: {
+      servicePolicy: false,
+      privacyPolicy: false,
+      over14YearsOld: false,
+      receiveSms: false,
+      receiveEmail: false,
+    },
+    allianceInfo: {
+      alliance: null,
+      alliancePolicy: false,
+    },
   },
 };
 

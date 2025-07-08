@@ -5,6 +5,7 @@ import Header from "@/components/layout/header/Header";
 import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
 import {
   GUT_CHECK_NO_AUTO_STEP,
+  GUT_CHECK_OPTIONAL_FIELDS,
   GUT_CHECK_SECTIONS,
 } from "@/constants/healthNote/gutCheck";
 import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
@@ -89,6 +90,7 @@ export default function GutCheckSurvey() {
       currentStepKey,
       handleNextStep,
       noAutoStepSet: GUT_CHECK_NO_AUTO_STEP,
+      optionalField: GUT_CHECK_OPTIONAL_FIELDS,
     });
 
   const steps = buildGutCheckStepElements({

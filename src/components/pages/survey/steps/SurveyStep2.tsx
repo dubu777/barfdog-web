@@ -35,9 +35,9 @@ export default function SurveyStep2({
             <>
               {isMobileDevice ? (
                 <MobileDatePicker
-                  value={formatDate(field.value, "onlyDateDash")}
+                  value={field.value}
                   onChange={(date) => {
-                    field.onChange(date);
+                    field.onChange(format(date as Date, "yyyy-MM-dd"));
                     handleChange();
                   }}
                   label="생년월일"
@@ -45,22 +45,46 @@ export default function SurveyStep2({
                 />
               ) : (
                 <CustomDatePicker
-                  name="birthday"
-                  value={formatDate(field.value, "onlyDateDash")}
+                  name={field.name}
+                  value={field.value}
                   onChange={(date) => {
-                    const selected: Date | null = Array.isArray(date)
-                      ? date[0]
-                      : date;
-
-                    const formatted = selected
-                      ? format(selected, "yyyy-MM-dd")
-                      : "";
-                    field.onChange(formatted);
-                    handleChange();
+                    field.onChange(format(date as Date, "yyyy-MM-dd"));
                   }}
+                  dateFormat="yyyy-MM-dd"
+                  marginBottom={false}
                 />
               )}
             </>
+            // 수정전
+            // <>
+            //   {isMobileDevice ? (
+            //     <MobileDatePicker
+            //       value={formatDate(field.value, "onlyDateDash")}
+            //       onChange={(date) => {
+            //         field.onChange(date);
+            //         handleChange();
+            //       }}
+            //       label="생년월일"
+            //       isRequired
+            //     />
+            //   ) : (
+            //     <CustomDatePicker
+            //       name="birthday"
+            //       value={formatDate(field.value, "onlyDateDash")}
+            //       onChange={(date) => {
+            //         const selected: Date | null = Array.isArray(date)
+            //           ? date[0]
+            //           : date;
+
+            //         const formatted = selected
+            //           ? format(selected, "yyyy-MM-dd")
+            //           : "";
+            //         field.onChange(formatted);
+            //         handleChange();
+            //       }}
+            //     />
+            //   )}
+            // </>
           )}
         />
       )}

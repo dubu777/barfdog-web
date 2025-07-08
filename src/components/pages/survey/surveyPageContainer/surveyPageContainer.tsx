@@ -97,6 +97,7 @@ export default function SurveyPageContainer() {
       currentStepKey,
       handleNextStep,
       noAutoStepSet: SURVEY_NO_AUTO_STEP,
+      optionalField: {},
     });
 
   const steps = getSurveySteps({

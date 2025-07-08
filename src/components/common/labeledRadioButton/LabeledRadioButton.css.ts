@@ -1,10 +1,23 @@
-import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
-export const labeledRadioButtonContainer = style({
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "flex-start",
-  width: "100%",
-  gap: "8px",
-  cursor: "pointer",
+export const labeledRadioButtonContainer = recipe({
+  base: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+
+    gap: "8px",
+    cursor: "pointer",
+  },
+  variants: {
+    fullWidth: {
+      true: {
+        width: "100%",
+      },
+      false: {},
+    },
+  },
+  defaultVariants: {
+    fullWidth: true,
+  },
 });

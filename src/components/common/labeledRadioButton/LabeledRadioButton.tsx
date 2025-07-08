@@ -11,6 +11,7 @@ export interface LabeledRadioButtonProps<T = string> {
   value: T;
   isChecked: boolean;
   onToggle: (value: T) => void;
+  fullWidth?: boolean;
   className?: string;
 }
 
@@ -21,6 +22,7 @@ export default function LabeledRadioButton<T = string>({
   value,
   isChecked,
   onToggle,
+  fullWidth = false,
   className,
 }: LabeledRadioButtonProps<T>) {
   const icon = !isChecked
@@ -30,7 +32,9 @@ export default function LabeledRadioButton<T = string>({
     : CheckedSelection;
   return (
     <div
-      className={`${styles.labeledRadioButtonContainer} ${className || ''}`}
+      className={`${styles.labeledRadioButtonContainer({ fullWidth })} ${
+        className || ""
+      }`}
       onClick={() => onToggle(value)}
     >
       <SvgIcon src={icon} size={iconSize} />

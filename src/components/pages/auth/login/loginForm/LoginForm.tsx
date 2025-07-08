@@ -62,7 +62,7 @@ const LoginForm = ({
         </Button>
       </div>
       <div className={commonWrapper({ gap: 4, justify: "end" })}>
-        <Link href="/account/signup">
+        <Link href="/signup">
           <DefaultText type="headline4" color="gray400">
             회원가입
           </DefaultText>
@@ -70,7 +70,7 @@ const LoginForm = ({
         <DefaultText type="headline4" color="gray400">
           |
         </DefaultText>
-        <Link href="/account/find-password">
+        <Link href="">
           <DefaultText type="headline4" color="gray400">
             계정찾기
           </DefaultText>

@@ -1,10 +1,9 @@
-import * as styles from './MobileDatePicker.css';
+import * as styles from "./MobileDatePicker.css";
 import Picker from "react-mobile-picker";
 import React, { useEffect, useState } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { labelStyle } from "@/components/common/inputField/InputField.css";
 import { pointColor } from "@/styles/common.css";
-import { format, getDaysInMonth, getYear } from 'date-fns';
+import { format, getDaysInMonth, getYear } from "date-fns";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
 
 const getYears = () => {
@@ -17,8 +16,12 @@ const getMonths = () => {
 };
 
 const getDays = (year: string, month: string) => {
-  const daysInMonth = getDaysInMonth(new Date(parseInt(year), parseInt(month) - 1));
-  return Array.from({ length: daysInMonth }, (_, i) => String(i + 1).padStart(2, "0"));
+  const daysInMonth = getDaysInMonth(
+    new Date(parseInt(year), parseInt(month) - 1)
+  );
+  return Array.from({ length: daysInMonth }, (_, i) =>
+    String(i + 1).padStart(2, "0")
+  );
 };
 
 /**
@@ -43,10 +46,19 @@ interface MobileDatePickerProps {
   isRequired?: boolean;
 }
 
-const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePickerProps) => {
+const MobileDatePicker = ({
+  value,
+  onChange,
+  label,
+  isRequired,
+}: MobileDatePickerProps) => {
   // value가 "YYYY-MM-DD"면 초기 상태를 null로 설정하여 아무 날짜도 선택되지 않았음을 표시
   const initialDate = value && value !== "YYYY-MM-DD" ? parseDate(value) : null;
-  const [selectedDate, setSelectedDate] = useState<{ year: string; month: string; day: string } | null>(initialDate);
+  const [selectedDate, setSelectedDate] = useState<{
+    year: string;
+    month: string;
+    day: string;
+  } | null>(initialDate);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -70,7 +82,11 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
     setIsOpen((prev) => !prev);
   };
 
-  const handleChange = (newValue: { year: string; month: string; day: string }) => {
+  const handleChange = (newValue: {
+    year: string;
+    month: string;
+    day: string;
+  }) => {
     setSelectedDate(newValue);
     onChange(`${newValue.year}-${newValue.month}-${newValue.day}`);
   };
@@ -80,16 +96,25 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
     ? `${selectedDate.year}-${selectedDate.month}-${selectedDate.day}`
     : "YYYY-MM-DD";
   // Picker에 전달할 값에는 selectedDate가 없을 경우 안전하게 기본 객체를 사용합니다.
-  const safeSelectedDate = selectedDate || { year: "YYYY", month: "MM", day: "DD" };
+  const safeSelectedDate = selectedDate || {
+    year: "YYYY",
+    month: "MM",
+    day: "DD",
+  };
 
   return (
     <div className={styles.mobileDatePickerContainer}>
       {label && (
-        <DefaultText type="label4" className={labelStyle}>
+        <DefaultText type="label4">
           {label} {isRequired && <span className={pointColor}>*</span>}
         </DefaultText>
       )}
-      <DatePickerButton isOpen={isOpen} onToggle={handleOpenPicker} value={displayValue} isMobile>
+      <DatePickerButton
+        isOpen={isOpen}
+        onToggle={handleOpenPicker}
+        value={displayValue}
+        isMobile
+      >
         {isOpen && (
           <div className={styles.mobileDatePickerBox}>
             <Picker
@@ -104,7 +129,11 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
                 {getYears().map((year) => (
                   <Picker.Item key={year} value={year}>
                     {({ selected }) => (
-                      <span className={styles.mobilePickerSelected({ selected })}>{year}년</span>
+                      <span
+                        className={styles.mobilePickerSelected({ selected })}
+                      >
+                        {year}년
+                      </span>
                     )}
                   </Picker.Item>
                 ))}
@@ -113,7 +142,11 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
                 {getMonths().map((month) => (
                   <Picker.Item key={month} value={month}>
                     {({ selected }) => (
-                      <span className={styles.mobilePickerSelected({ selected })}>{month}월</span>
+                      <span
+                        className={styles.mobilePickerSelected({ selected })}
+                      >
+                        {month}월
+                      </span>
                     )}
                   </Picker.Item>
                 ))}
@@ -123,7 +156,11 @@ const MobileDatePicker = ({ value, onChange, label, isRequired }: MobileDatePick
                   getDays(selectedDate.year, selectedDate.month).map((day) => (
                     <Picker.Item key={day} value={day}>
                       {({ selected }) => (
-                        <span className={styles.mobilePickerSelected({ selected })}>{day}일</span>
+                        <span
+                          className={styles.mobilePickerSelected({ selected })}
+                        >
+                          {day}일
+                        </span>
                       )}
                     </Picker.Item>
                   ))}

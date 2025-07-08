@@ -12,6 +12,7 @@ export interface UseSurveyNavigatorOptions<T extends Record<string, any>> {
   handleNextStep: () => void;
   /** 자동 스텝 제외용 키 집합 */
   noAutoStepSet: Set<keyof T>;
+  optionalField: Record<string, string[]>;
 }
 
 export interface UseSurveyNavigatorReturn<T> {
@@ -30,6 +31,7 @@ export function useSurveyNavigator<T extends Record<string, any>>({
   currentStepKey,
   handleNextStep,
   noAutoStepSet,
+  optionalField,
 }: UseSurveyNavigatorOptions<T>): UseSurveyNavigatorReturn<T> {
   const {
     watch,
@@ -45,8 +47,7 @@ export function useSurveyNavigator<T extends Record<string, any>>({
     if (!stepValues) return false;
 
     // 이번 스텝의 옵셔널 필드 목록
-    const allowedEmpty =
-      GUT_CHECK_OPTIONAL_FIELDS[currentStepKey as Path<T>] ?? [];
+    const allowedEmpty = optionalField[currentStepKey as Path<T>] ?? [];
 
     // 모든 필드가 비어있지 않은지 검사
     const allFilled = Object.entries(stepValues).every(([key, value]) => {
