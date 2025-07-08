@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import useModal from "@/hooks/useModal";
 import TermsBottomSheet from "./termsBottomSheet/TermsBottomSheet";
 
-const SignUp = () => {
+export default function SignUp() {
   const router = useRouter();
   const { isOpen, onClose, onToggle } = useModal();
   const methods = useForm<yup.InferType<typeof signupStepsSchema>>({
@@ -109,6 +109,4 @@ const SignUp = () => {
       <TermsBottomSheet isOpen={isOpen} onClose={onClose} />
     </>
   );
-};
-
-export default SignUp;
+}
