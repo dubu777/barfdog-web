@@ -9,10 +9,9 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import yup from "yup";
-import SignupStep1 from "./signupForm/SignupStep1";
-import SignupStep2 from "./signupForm/SignupStep2";
-import SignupStep3 from "./signupForm/SignupStep3";
-import { useState } from "react";
+import SignupStep1 from "./step/SignupStep1";
+import SignupStep2 from "./step/SignupStep2";
+import SignupStep3 from "./step/SignupStep3";
 import { commonWrapper } from "@/styles/common.css";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useSurveyStep } from "@/hooks/survey/useSurveyStep";
@@ -20,7 +19,6 @@ import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
 import { SIGNUP_NO_AUTO_STEP, SIGNUP_OPTIONAL_FIELDS } from "@/constants/auth";
 import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import useModal from "@/hooks/useModal";
 import TermsBottomSheet from "./termsBottomSheet/TermsBottomSheet";
 
