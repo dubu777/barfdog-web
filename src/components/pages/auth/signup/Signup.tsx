@@ -107,7 +107,7 @@ const SignUp = () => {
           onPrimaryClick={handleFooterButtonClick}
           primaryButtonSize="lg"
           isPrimaryDisabled={!isCanNextStep()}
-        ></ButtonDocked>
+        />
       </div>
       <TermsBottomSheet isOpen={isOpen} onClose={onClose} />
     </>
