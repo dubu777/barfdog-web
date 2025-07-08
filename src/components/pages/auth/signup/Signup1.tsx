@@ -1,5 +1,4 @@
 "use client";
-import * as styles from "./Signup.css";
 import {
   defaultSignupStepValues,
   SignupStepValues,
