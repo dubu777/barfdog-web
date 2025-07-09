@@ -8,14 +8,18 @@ import {
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
 import { colSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
+import { NONE_VALUE } from "@/constants";
 
 interface SurveyStepProps {
   handleChange: () => void;
+  handleNextStep: () => void;
   dogName: string;
 }
 
 export default function GutCheckStep13({
   handleChange,
+  handleNextStep,
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<GutCheckStepValues>();
@@ -24,33 +28,35 @@ export default function GutCheckStep13({
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step13} />
       <Controller
-        name="step13.snackCountLevel"
+        name="step13.cohabitingPetList"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
             selectedValue: field.value,
-            mode: "radio",
+            mode: "checkbox",
             onChange: (value) => {
               field.onChange(value);
               handleChange();
+              if (Array.isArray(value) && value.includes(NONE_VALUE)) {
+                handleNextStep();
+              }
             },
           });
           return (
-            <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.dogLifestyle.snackCountLevel.options.map(
+            <SurveyButtonGroup isMultiple direction="col">
+              {GUT_CHECK_FORM_INFO.dogLifestyle.cohabitingPetList.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}
                     label={option.label}
-                    subLabel={option.subLabel}
                     value={option.value}
-                    inputType="radio"
+                    inputType="checkbox"
                     isChecked={isSelected(option.value)}
                     onToggle={onToggle}
                   />
                 )
               )}
-            </div>
+            </SurveyButtonGroup>
           );
         }}
       />

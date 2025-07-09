@@ -1,21 +1,21 @@
-import { Controller, useFormContext } from "react-hook-form";
-import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import { Controller, Path, useFormContext, useWatch } from "react-hook-form";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import {
-  GUT_CHECK_FORM_INFO,
-  GUT_CHECK_TITLES,
-} from "@/constants/healthNote/gutCheck";
+import { GUT_CHECK_TITLES } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { colSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import InputField from "@/components/common/inputField/InputField";
 
 interface SurveyStepProps {
-  handleChange: () => void;
+  handleBlur: (fieldName: Path<GutCheckStepValues>) => Promise<void>;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    fieldName: Path<GutCheckStepValues>
+  ) => Promise<void>;
   dogName: string;
 }
 
 export default function GutCheckStep17({
-  handleChange,
+  handleBlur,
+  handleKeyDown,
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<GutCheckStepValues>();
@@ -23,36 +23,25 @@ export default function GutCheckStep17({
   return (
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step17} />
+
       <Controller
-        name="step17.diagnosticKit"
+        name="step17.otherComment"
         control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "radio",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-            },
-          });
-          return (
-            <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.additionalInfo.diagnosticKit.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    subLabel={option.subLabel}
-                    value={option.value}
-                    inputType="radio"
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
-            </div>
-          );
-        }}
+        render={({ field }) => (
+          <InputField
+            {...field}
+            label="문진 항목 외 기타 특이사항을 적어주세요"
+            labelType="headline4"
+            labelColor="gray800"
+            placeholder="기타 특이 사항을 적어주세요"
+            onChange={(e) => {
+              field.onChange(e);
+              console.log("field.name", field.name);
+            }}
+            onKeyDown={(e) => handleKeyDown(e, field.name)}
+            onBlur={() => handleBlur(field.name)}
+          />
+        )}
       />
     </>
   );

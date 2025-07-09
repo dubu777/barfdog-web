@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, Path, useFormContext, useWatch } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import {
@@ -6,16 +6,27 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { colSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
+import { rowSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import InputField from "@/components/common/inputField/InputField";
+import InfoBox from "@/components/common/infoBox/InfoBox";
+import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
+import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {
   handleChange: () => void;
+  handleBlur: (fieldName: Path<GutCheckStepValues>) => Promise<void>;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    fieldName: Path<GutCheckStepValues>
+  ) => Promise<void>;
   dogName: string;
 }
 
 export default function GutCheckStep10({
   handleChange,
+  handleBlur,
+  handleKeyDown,
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<GutCheckStepValues>();
@@ -23,8 +34,36 @@ export default function GutCheckStep10({
   return (
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step10} />
+      <div className={commonWrapper({ direction: "col", gap: 8 })}>
+        <Controller
+          name="step10.foodProduct"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              label={GUT_CHECK_FORM_INFO.dogLifestyle.foodProduct.title}
+              labelType="headline4"
+              labelColor="gray800"
+              placeholder={
+                GUT_CHECK_FORM_INFO.dogLifestyle.foodProduct.placeholder
+              }
+              onChange={(e) => {
+                field.onChange(e);
+                console.log("field.name", field.name);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, field.name)}
+              onBlur={() => handleBlur(field.name)}
+            />
+          )}
+        />
+        <InfoBox
+          type="info"
+          text={GUT_CHECK_FORM_INFO.dogLifestyle.foodProduct.info}
+          fullWidth
+        />
+      </div>
       <Controller
-        name="step10.mainFeed"
+        name="step10.feedTime"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -36,20 +75,21 @@ export default function GutCheckStep10({
             },
           });
           return (
-            <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.dogLifestyle.mainFeed.options.map(
+            <SurveyButtonGroup
+              title={GUT_CHECK_FORM_INFO.dogLifestyle.feedTime.title}
+            >
+              {GUT_CHECK_FORM_INFO.dogLifestyle.feedTime.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}
                     label={option.label}
                     value={option.value}
-                    inputType="radio"
                     isChecked={isSelected(option.value)}
                     onToggle={onToggle}
                   />
                 )
               )}
-            </div>
+            </SurveyButtonGroup>
           );
         }}
       />

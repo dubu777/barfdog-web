@@ -24,7 +24,7 @@ export default function GutCheckStep6({
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step6} />
       <Controller
-        name="step6.pregnancy"
+        name="step6.activityLevel"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -37,7 +37,7 @@ export default function GutCheckStep6({
           });
           return (
             <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.healthStatus.pregnancy.options.map(
+              {GUT_CHECK_FORM_INFO.healthStatus.activityLevel.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

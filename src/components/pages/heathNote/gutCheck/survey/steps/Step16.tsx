@@ -6,8 +6,8 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
-import Chips from "@/components/common/chips/Chips";
+import { colSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -19,43 +19,38 @@ export default function GutCheckStep16({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<GutCheckStepValues>();
+
   return (
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step16} />
       <Controller
-        name="step16.petConcerns"
+        name="step16.acquisitionType"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
             selectedValue: field.value,
-            mode: "checkbox",
+            mode: "radio",
             onChange: (value) => {
               field.onChange(value);
               handleChange();
             },
           });
           return (
-            <SurveyButtonGroup isWrap isMultiple>
-              {GUT_CHECK_FORM_INFO.additionalInfo.petConcerns.options.map(
-                (option) => {
-                  const selected = isSelected(option.value);
-                  return (
-                    <Chips
-                      key={option.value}
-                      variant="solid"
-                      color={selected ? "red" : "gray800"}
-                      size="lg"
-                      borderRadius="lg"
-                      switchOff={!selected}
-                      showCheckIcon={true}
-                      onClick={() => onToggle(option.value)}
-                    >
-                      {option.label}
-                    </Chips>
-                  );
-                }
+            <div className={colSurveyButtonWrapper}>
+              {GUT_CHECK_FORM_INFO.additionalInfo.acquisitionType.options.map(
+                (option) => (
+                  <SurveyButton
+                    key={option.label}
+                    label={option.label}
+                    subLabel={option.subLabel}
+                    value={option.value}
+                    inputType="radio"
+                    isChecked={isSelected(option.value)}
+                    onToggle={onToggle}
+                  />
+                )
               )}
-            </SurveyButtonGroup>
+            </div>
           );
         }}
       />

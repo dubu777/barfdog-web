@@ -6,10 +6,12 @@ import InfoBox from "@/components/common/infoBox/InfoBox";
 
 interface SurveyGridButtonGroupProps {
   children: React.ReactNode;
+  infoBoxText?: string;
 }
 
 export default function SurveyGridButtonGroup({
   children,
+  infoBoxText,
 }: SurveyGridButtonGroupProps) {
   return (
     <div className={surveyButtonWrapper}>
@@ -18,11 +20,9 @@ export default function SurveyGridButtonGroup({
           <DefaultText type="label2" color="gray500">
             *복수응답가능
           </DefaultText>
-          <InfoBox
-            text="질병에 따라 급여가 불가할 수 있어, 질병이 있는 경우 필수로 체크해 주세요"
-            type="info"
-            color="red"
-          />
+          {infoBoxText && (
+            <InfoBox text={infoBoxText} type="info" color="red" />
+          )}
           <div className={styles.surveyGridButtonLayoutWrapper}>{children}</div>
         </div>
       </div>

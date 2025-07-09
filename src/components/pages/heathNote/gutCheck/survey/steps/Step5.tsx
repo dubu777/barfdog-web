@@ -1,5 +1,3 @@
-// 기획 변경 가능성 있어서 추후에 개발
-
 import { Controller, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
@@ -26,7 +24,7 @@ export default function GutCheckStep5({
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step5} />
       <Controller
-        name="step5.allergy"
+        name="step5.pregnancyStatus"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -39,7 +37,7 @@ export default function GutCheckStep5({
           });
           return (
             <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.healthStatus.pregnancy.options.map(
+              {GUT_CHECK_FORM_INFO.healthStatus.pregnancyStatus.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

@@ -171,6 +171,12 @@ export const commonWrapper = recipe({
         padding: "0 20px",
       },
     },
+    paddingBottom: {
+      none: {},
+      85: {
+        paddingBottom: "85px",
+      },
+    },
     direction: {
       col: {
         flexDirection: "column",
@@ -291,6 +297,7 @@ export const commonWrapper = recipe({
     textAlign: "none",
     shadow: "none",
     wrap: "nowrap",
+    paddingBottom: "none",
   },
 });
 

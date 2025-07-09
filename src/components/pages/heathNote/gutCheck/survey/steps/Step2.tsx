@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, Path, useFormContext, useWatch } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import {
@@ -6,25 +6,36 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { colSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
-import SurveyOptionCard from "@/components/common/survey/surveyOptionCard/SurveyOptionCard";
+import { rowSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import InputField from "@/components/common/inputField/InputField";
 
 interface SurveyStepProps {
   handleChange: () => void;
+  handleBlur: (fieldName: Path<GutCheckStepValues>) => Promise<void>;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    fieldName: Path<GutCheckStepValues>
+  ) => Promise<void>;
   dogName: string;
 }
 
 export default function GutCheckStep2({
   handleChange,
+  handleBlur,
+  handleKeyDown,
   dogName,
 }: SurveyStepProps) {
-  const { control } = useFormContext<GutCheckStepValues>();
-
+  const { control, setValue } = useFormContext<GutCheckStepValues>();
+  const probioticsOption = useWatch({
+    name: "step2.probioticsStatus",
+    control,
+  });
   return (
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step2} />
       <Controller
-        name="step2.dogBodyCondition"
+        name="step2.probioticsStatus"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -33,20 +44,21 @@ export default function GutCheckStep2({
             onChange: (value) => {
               field.onChange(value);
               handleChange();
+              if (value === "NONE") {
+                setValue("step2.probioticsStatus", "", {
+                  shouldValidate: true,
+                });
+              }
             },
           });
           return (
-            <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.healthStatus.dogBodyCondition.options.map(
+            <div className={rowSurveyButtonWrapper}>
+              {GUT_CHECK_FORM_INFO.healthStatus.probioticsStatus.options.map(
                 (option) => (
-                  <SurveyOptionCard
+                  <SurveyButton
                     key={option.label}
-                    imageSrc={option.imageUrl}
                     label={option.label}
                     value={option.value}
-                    imageSize={114}
-                    imageWrapperSize={114}
-                    subLabel={option.subLabel}
                     isChecked={isSelected(option.value)}
                     onToggle={onToggle}
                   />
@@ -56,6 +68,27 @@ export default function GutCheckStep2({
           );
         }}
       />
+      {probioticsOption === "TAKING" && (
+        <Controller
+          name="step2.probioticsProduct"
+          control={control}
+          render={({ field }) => (
+            <InputField
+              {...field}
+              label="급여 중 제품명 (선택사항)"
+              labelType="headline4"
+              labelColor="gray800"
+              placeholder="유산균 제품명을 입력해주세요"
+              onChange={(e) => {
+                field.onChange(e);
+                console.log("field.name", field.name);
+              }}
+              onKeyDown={(e) => handleKeyDown(e, field.name)}
+              onBlur={() => handleBlur(field.name)}
+            />
+          )}
+        />
+      )}
     </>
   );
 }

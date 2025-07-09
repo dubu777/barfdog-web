@@ -24,7 +24,7 @@ export default function GutCheckStep1({
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step1} />
       <Controller
-        name="step1.disease"
+        name="step1.bodyFit"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -37,15 +37,15 @@ export default function GutCheckStep1({
           });
           return (
             <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.healthStatus.disease.options.map(
+              {GUT_CHECK_FORM_INFO.healthStatus.bodyFit.options.map(
                 (option) => (
                   <SurveyOptionCard
                     key={option.label}
                     imageSrc={option.imageUrl}
                     label={option.label}
                     value={option.value}
-                    imageSize={64}
-                    imageWrapperSize={100}
+                    imageSize={114}
+                    imageWrapperSize={114}
                     subLabel={option.subLabel}
                     isChecked={isSelected(option.value)}
                     onToggle={onToggle}

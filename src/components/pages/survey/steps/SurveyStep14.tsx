@@ -51,7 +51,7 @@ export default function SurveyStep14({
             }
           };
           return (
-            <SurveyGridButtonGroup>
+            <SurveyGridButtonGroup infoBoxText="질병에 따라 급여가 불가할 수 있어, 질병이 있는 경우 필수로 체크해 주세요">
               {DIET_ANALYSIS_FORM_INFO.dogDietHealth.healthIssues.options.map(
                 (option) => (
                   <ImageButton

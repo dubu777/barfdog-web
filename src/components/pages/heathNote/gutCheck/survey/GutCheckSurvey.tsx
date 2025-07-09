@@ -17,15 +17,26 @@ import {
 } from "@/utils/validation/gutCheckValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { buildGutCheckStepElements } from "./steps/StepElements";
 import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import { useCreateGutCheckResult } from "@/api/healthNote/mutations/useCreateGutCheckResult";
+import { buildGutCheckPayload } from "@/utils/healthNote/buildGutCheckPayload";
 
 export default function GutCheckSurvey() {
   const router = useRouter();
+  const { mutate: submitResult } = useCreateGutCheckResult({
+    onSuccess: (response) => {
+      console.log("장내미생물 응답값", response);
+    },
+    onError: (err) => {
+      console.log("에러>>>>>>>", err);
+    },
+  });
+
   // const gender = "FEMALE"; // 임시로, 실제로는 사용자 정보에서 가져와야 함
   const dogName = "임시데이터";
 
@@ -51,26 +62,28 @@ export default function GutCheckSurvey() {
   const stepKeys = Object.keys(defaultGutCheckStepValues) as GutCheckStepKeys[];
 
   // 임시로 추후에 개발할 step들을 스킵
-  const skipConditions = useMemo<SkipCondition<GutCheckStepKeys>[]>(
-    () => [
-      {
-        from: "step4",
-        to: "step6",
-        predicate: () => true, // 임시
-      },
-    ],
-    []
-  );
   // const skipConditions = useMemo<SkipCondition<GutCheckStepKeys>[]>(
   //   () => [
   //     {
-  //       from: "step5",
-  //       to: "step7",
-  //       predicate: () => gender === "MALE", // 임시
+  //       from: "step4",
+  //       to: "step6",
+  //       predicate: () => true, // 임시
   //     },
   //   ],
-  //   [gender]
+  //   []
   // );
+
+  const gender = "FEMALE";
+  const skipConditions = useMemo<SkipCondition<GutCheckStepKeys>[]>(
+    () => [
+      {
+        from: "step5",
+        to: "step7",
+        predicate: () => gender === "MALE", // 임시
+      },
+    ],
+    [gender]
+  );
 
   const {
     currentStep,
@@ -101,9 +114,20 @@ export default function GutCheckSurvey() {
     dogName,
   });
 
+  const handleSurveySubmit = useCallback(async () => {
+    if (!(await trigger())) return;
+
+    const values = getValues();
+
+    const payload = buildGutCheckPayload(values);
+    console.log("payload", payload);
+
+    submitResult(payload);
+  }, [trigger, getValues, submitResult]);
+
   const handleFooterButtonClick = () => {
     if (isLastStep) {
-      console.log("결과 보기 클릭");
+      handleSurveySubmit();
     } else {
       handleNextStep();
     }

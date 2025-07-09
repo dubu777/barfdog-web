@@ -24,7 +24,7 @@ export default function GutCheckStep12({
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step12} />
       <Controller
-        name="step12.bowelHabits"
+        name="step12.snackLevel"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -37,7 +37,7 @@ export default function GutCheckStep12({
           });
           return (
             <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.dogLifestyle.bowelHabits.options.map(
+              {GUT_CHECK_FORM_INFO.dogLifestyle.snackLevel.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}
