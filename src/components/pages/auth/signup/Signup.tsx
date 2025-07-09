@@ -1,9 +1,9 @@
 "use client";
 import {
-  defaultSignupStepValues,
   SignupStepValues,
   signupStepsSchema,
   SignupStepKeys,
+  defaultSignupStepValues,
 } from "@/utils/validation/authValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import useModal from "@/hooks/useModal";
 import TermsBottomSheet from "./termsBottomSheet/TermsBottomSheet";
 
-export default function SignUp() {
+export default function Signup() {
   const router = useRouter();
   const { isOpen, onClose, onToggle } = useModal();
   const methods = useForm<yup.InferType<typeof signupStepsSchema>>({

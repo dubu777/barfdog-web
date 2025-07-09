@@ -19,6 +19,8 @@ export {
   defaultConnectSnsValue,
   updateUserInfoSchema,
   defaultUpdateUserInfoValues,
+  defaultSignupStepValues,
+  signupStepsSchema,
 };
 
 // --- STEP 1: 이름 · 이메일 검증 ------------------------------------------------
@@ -114,7 +116,7 @@ const step4 = yup.object({
 });
 
 // --- 전체 STEP 스키마 & 타입 & 기본값 -----------------------------------------
-export const signupStepsSchema = yup.object({
+const signupStepsSchema = yup.object({
   step1,
   step2,
   step3,
@@ -124,7 +126,7 @@ export const signupStepsSchema = yup.object({
 export type SignupStepValues = yup.InferType<typeof signupStepsSchema>;
 export type SignupStepKeys = keyof SignupStepValues;
 
-export const defaultSignupStepValues: SignupStepValues = {
+const defaultSignupStepValues: SignupStepValues = {
   step1: { name: "", email: "", confirmEmail: true }, // 임시로 true
   step2: { password: "", confirmPassword: "" },
   step3: {

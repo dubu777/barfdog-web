@@ -70,7 +70,7 @@ const LoginForm = ({
         <DefaultText type="headline4" color="gray400">
           |
         </DefaultText>
-        <Link href="">
+        <Link href="/find-account">
           <DefaultText type="headline4" color="gray400">
             계정찾기
           </DefaultText>
