@@ -37,8 +37,9 @@ export default function GutCheckSurvey() {
     },
   });
 
-  // const gender = "FEMALE"; // 임시로, 실제로는 사용자 정보에서 가져와야 함
+  // 임시로, 실제로는 사용자 정보에서 가져와야 함
   const dogName = "임시데이터";
+  const gender = "FEMALE";
 
   const methods = useForm<yup.InferType<typeof gutCheckStepSchema>>({
     resolver: yupResolver(gutCheckStepSchema),
@@ -73,7 +74,6 @@ export default function GutCheckSurvey() {
   //   []
   // );
 
-  const gender = "FEMALE";
   const skipConditions = useMemo<SkipCondition<GutCheckStepKeys>[]>(
     () => [
       {
@@ -119,6 +119,7 @@ export default function GutCheckSurvey() {
 
     const values = getValues();
 
+    // 임시로 petId, kitId 넣는중 수정 필요
     const payload = buildGutCheckPayload(values);
     console.log("payload", payload);
 

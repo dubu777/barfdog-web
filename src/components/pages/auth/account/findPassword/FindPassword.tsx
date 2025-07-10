@@ -13,16 +13,18 @@ import {
 } from "@/utils/validation/authValidation";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import useModal from "@/hooks/useModal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 const FindPassword = () => {
   const router = useRouter();
+  const { isOpen, onClose, onToggle } = useModal();
   const { handleSubmit, control, errors, isValid } =
     useFormHandler<TemporaryPassword>(
       sendTempPwSchema,
       defaultSendTempPwValues
     );
   const { mutate } = useSendTemporaryPassword();
-  const { setTempPwUserInfo } = useAuthStore();
   const { addToast } = useToastStore();
 
   const onSubmit = (data: TemporaryPassword) => {
@@ -33,16 +35,10 @@ const FindPassword = () => {
     };
     mutate(body, {
       onSuccess: () => {
-        console.log("onSuccess data", data);
-        addToast("임시비밀번호가 성공적으로 발급되었습니다!");
-        setTempPwUserInfo(body);
-
-        setTimeout(() => {
-          router.push("/find-account/password/result");
-        }, 500);
+        onToggle();
       },
       onError: () => {
-        addToast("일치하는 정보를 찾을 수 없습니다.");
+        addToast("일치하는 정보를 찾을 수 없습니다", "above-button");
       },
     });
   };
@@ -96,6 +92,15 @@ const FindPassword = () => {
         onPrimaryClick={handleSubmit(onSubmit)}
         primaryButtonSize="lg"
         isPrimaryDisabled={!isValid}
+      />
+      <AlertModal
+        title="임시 비밀번호가 발급되었습니다"
+        content="가입 시 등록하신 연락처로 임시 비밀번호가 발급되었습니다"
+        confirmText="로그인하기"
+        cancelText="돌아가기"
+        isOpen={isOpen}
+        onClose={onClose}
+        onConfirm={() => router.push("/login")}
       />
     </section>
   );
