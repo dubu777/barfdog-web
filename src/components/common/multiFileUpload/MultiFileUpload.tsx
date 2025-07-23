@@ -1,11 +1,11 @@
-import * as styles from './MultiFileUpload.css';
+import * as styles from "./MultiFileUpload.css";
 import { ChangeEvent, useState } from "react";
-import UploadLabel from '/public/images/icons/upload-label.svg';
+import UploadLabel from "/public/images/icons/upload-label.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import { useUploadImage } from "@/api/common/mutations/useUploadImage";
-import { ImageFile } from '@/types';
+import { ImageFile } from "@/types";
 
 interface InitialImages {
   id?: number;
@@ -34,7 +34,7 @@ const MultiFileUpload = ({
   onFilesChange,
   maxFiles = 10,
   maxSize = 9 * 1024 * 1024,
-  allowedExtensions = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'],
+  allowedExtensions = ["image/jpeg", "image/jpg", "image/png", "image/gif"],
   imageWidth = 100,
   imageHeight = 100,
   initialImages = [],
@@ -44,7 +44,8 @@ const MultiFileUpload = ({
   className,
   showRepresentativeLabel = false,
 }: MultiFileUploadProps) => {
-  const [uploadedImages, setUploadedImages] = useState<InitialImages[]>(initialImages);
+  const [uploadedImages, setUploadedImages] =
+    useState<InitialImages[]>(initialImages);
   const [errors, setErrors] = useState<string[]>([]);
   const { mutate } = useUploadImage(uploadApiUrl);
 
@@ -67,7 +68,9 @@ const MultiFileUpload = ({
 
     for (const file of selectedFiles) {
       if (file.size > maxSize) {
-        newErrors.push(`${file.name}: 파일 크기가 ${maxSize / 1024 / 1024}MB를 초과했습니다.`);
+        newErrors.push(
+          `${file.name}: 파일 크기가 ${maxSize / 1024 / 1024}MB를 초과했습니다.`
+        );
       } else if (!allowedExtensions.includes(file.type)) {
         newErrors.push(`${file.name}: 허용되지 않는 파일 형식입니다.`);
       } else {
@@ -80,13 +83,17 @@ const MultiFileUpload = ({
                 onSuccess: (data) => {
                   const reader = new FileReader();
                   reader.onloadend = () => {
-                    uploadedFiles.push({ id: data.id, filename: file.name, url: reader.result as string });
+                    uploadedFiles.push({
+                      id: data.id,
+                      filename: file.name,
+                      url: reader.result as string,
+                    });
                     resolve();
                   };
                   reader.readAsDataURL(file);
                 },
                 onError: (error) => {
-                  console.error('Upload Error:', error);
+                  console.error("Upload Error:", error);
                   reject();
                 },
               }
@@ -103,7 +110,7 @@ const MultiFileUpload = ({
     setErrors(newErrors);
     setUploadedImages((prev) => [...prev, ...uploadedFiles]);
     onFilesChange([...uploadedImages, ...uploadedFiles]);
-  }
+  };
 
   const handleRemoveFile = (filename: string, id: number | undefined) => {
     const newUploadedImages = uploadedImages.filter((file) => file.id !== id);
@@ -112,33 +119,33 @@ const MultiFileUpload = ({
     if (id) {
       handleRemove(id);
     }
-  }
+  };
 
   return (
-    <div className={className || ''}>
+    <div className={className || ""}>
       <div className={styles.fileUploadTitle}>
-        {title &&
-          <DefaultText type='label4'>{title}</DefaultText>
-        }
-        {subTitle &&
-          <DefaultText type='caption' color='gray500'>포토 후기 작성 시 500원 적립!</DefaultText>
-        }
+        {title && <DefaultText type="label4">{title}</DefaultText>}
+        {subTitle && (
+          <DefaultText type="caption" color="gray500">
+            포토 후기 작성 시 500원 적립!
+          </DefaultText>
+        )}
       </div>
       <div>
         <div className={styles.uploadBox}>
-          <label htmlFor='file-input' className={styles.uploadLabel}>
+          <label htmlFor="file-input" className={styles.uploadLabel}>
             <SvgIcon src={UploadLabel} size={24} />
           </label>
           <input
             type="file"
             id="file-input"
-            accept='image/jpeg, image/jpg, image/png, image/gif'
+            accept="image/jpeg, image/jpg, image/png, image/gif"
             multiple
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             onChange={handleFileChange}
           />
-          {uploadedImages.length > 0 &&
-            <div style={{ width: 'calc(100% - 104px)' }}>
+          {uploadedImages.length > 0 && (
+            <div style={{ width: "calc(100% - 104px)" }}>
               <ImageCarousel
                 width={imageWidth}
                 height={imageHeight}
@@ -147,19 +154,22 @@ const MultiFileUpload = ({
                 showRepresentativeLabel={showRepresentativeLabel}
               />
             </div>
-          }
+          )}
         </div>
         <div className={styles.uploadInfo}>
-          {errors.length > 0 &&
-          <div className={styles.error}>
-            {errors.map(error => (
-              <DefaultText key={error} type='caption' color='red'>{error}</DefaultText>
-            ))}
-          </div>
-          }
-          <DefaultText type='caption' color='gray500'>
-            • 파일은 최대 10장 이내로 등록 가능합니다.<br/>
-            • 파일크기는 20MB이하 / jpg, jpeg, png, gif 형식만 등록 가능합니다.
+          {errors.length > 0 && (
+            <div className={styles.error}>
+              {errors.map((error) => (
+                <DefaultText key={error} type="caption" color="red">
+                  {error}
+                </DefaultText>
+              ))}
+            </div>
+          )}
+          <DefaultText type="caption" color="gray500">
+            • 파일은 최대 10장 이내로 등록 가능합니다.
+            <br />• 파일크기는 20MB이하 / jpg, jpeg, png, gif 형식만 등록
+            가능합니다.
           </DefaultText>
         </div>
       </div>

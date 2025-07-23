@@ -3,12 +3,9 @@ import Image from "next/image";
 import * as styles from "../../../subscription/subscriptionOrderItemList/orderItemCard/OrderItemCard.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
-import {
-  colStartWrapper,
-  rowStartWrapper,
-} from "@/components/common/deliveryAddress/DeliveryAddress.css";
 import Chips from "@/components/common/chips/Chips";
 import Divider from "@/components/common/divider/Divider";
+import { commonWrapper } from "@/styles/common.css";
 
 interface GeneralOrderItemCardProps {
   orderItemData: GeneralOrderItem;
@@ -20,7 +17,7 @@ export default function GeneralOrderItemCard({
   const baseImageUrl = process.env.NEXT_PUBLIC_S3_URL;
   return (
     <div className={styles.orderItemCardContainer}>
-      <div className={rowStartWrapper({ gap: 8 })}>
+      <div className={commonWrapper({ gap: 8, justify: "start" })}>
         <Image
           src={`${baseImageUrl}${orderItemData.itemImageFilename}`}
           alt="임시"
@@ -41,12 +38,20 @@ export default function GeneralOrderItemCard({
           </DefaultText>
         </div>
       </div>
-      <div className={colStartWrapper({ gap: 4 })}>
+      <div
+        className={commonWrapper({ gap: 4, direction: "col", align: "start" })}
+      >
         {orderItemData.optionDtoList?.map((option) => (
           <div key={option.optionId} className={styles.orderOptionWrapper}>
             <Chips variant="outlined">추가상품</Chips>
-            <div className={colStartWrapper({ gap: 4 })}>
-              <div className={rowStartWrapper({ gap: 8 })}>
+            <div
+              className={commonWrapper({
+                gap: 4,
+                direction: "col",
+                align: "start",
+              })}
+            >
+              <div className={commonWrapper({ gap: 8, justify: "start" })}>
                 <DefaultText type="body3" color="gray700">
                   {option.name}
                 </DefaultText>
