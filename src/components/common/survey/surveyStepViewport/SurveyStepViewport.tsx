@@ -19,6 +19,9 @@ export default function SurveyStepViewport({
   direction,
   steps,
 }: SurveyFormProps) {
+  const currentStepIndex = currentStep - 1;
+  const currentStepElement = steps[currentStepIndex];
+
   return (
     <section className={surveyFormContainer}>
       <AnimatePresence initial={false} custom={direction}>
@@ -30,7 +33,7 @@ export default function SurveyStepViewport({
           animate="visible"
           custom={direction}
         >
-          {steps[currentStep - 1]}
+          {currentStepElement}
         </motion.div>
       </AnimatePresence>
     </section>

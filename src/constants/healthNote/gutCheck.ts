@@ -377,18 +377,19 @@ const GUT_CHECK_FORM_INFO = {
       title: "급여중인 영양제를 모두 선택해주세요",
       options: [
         { value: "NONE", label: "없음" },
-        { value: "PROBIOTICS_OMEGA3", label: "유산균 오메가3" },
-        { value: "JOINT", label: "관절" },
-        { value: "EYE", label: "눈" },
         { value: "PROBIOTICS", label: "유산균" },
         { value: "OMEGA_3", label: "오메가-3" },
         { value: "ANTIOXIDANT", label: "항산화" },
+        { value: "EYE", label: "눈" },
+        { value: "JOINT", label: "관절" },
         { value: "SKIN", label: "피부" },
-        { value: "IMMUNITY", label: "면역력" },
+        { value: "IMMUNE", label: "면역력" },
         { value: "HEART", label: "심장" },
         { value: "TEETH", label: "치아" },
-        { value: "BRONCHUS", label: "기관지" },
-        { value: "GENERAL", label: "종합" },
+        { value: "RESPIRATORY", label: "기관지" },
+        { value: "VITAMIN", label: "종합비타민" },
+        { value: "INTESTINE", label: "장" },
+        { value: "OTHER", label: "기타" },
       ],
     },
 
@@ -548,6 +549,7 @@ const GUT_CHECK_NO_AUTO_STEP = new Set<GutCheckStepKeys>([
 
 const GUT_CHECK_OPTIONAL_FIELDS: Record<string, string[]> = {
   step2: ["probioticsProduct"],
+  step4: ["allergenFoodList"],
   step14: ["supplementProduct", "supplementTypeList"],
 };
 

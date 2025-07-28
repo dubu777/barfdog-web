@@ -107,4 +107,9 @@ const queryKeys = {
     BASE: "delivery",
     GET_ADDRESS_LIST: "getAddressList",
   },
+  GUT_CHECK: {
+    BASE: "gutCheck",
+    GET_GUT_CHECK_RESULT: "getGutCheckResult",
+    GET_GUT_CHECK_LIST: "getGutCheckList",
+  },
 } as const;

@@ -7,10 +7,10 @@ type Gender = "MALE" | "FEMALE";
 type DogSize = "SMALL" | "MEDIUM" | "LARGE";
 
 /** 활동량 */
-type ActivityLevel = "VERY_MUCH" | "MUCH" | "NORMAL" | "LITTLE" | "VERY_LITTLE";
+type ActivityLevel = "VERY_HIGH" | "HIGH" | "NORMAL" | "LOW" | "VERY_LOW";
 
 /** 체형(BCS) */
-type BodyCondition = "VERY_THIN" | "THIN" | "NORMAL" | "FAT" | "VERY_FAT";
+type BodyFit = "VERY_THIN" | "THIN" | "NORMAL" | "FAT" | "VERY_FAT";
 
 /** 임신 단계 */
 type PregnancyStatus = "NONE" | "EARLY" | "LATE";
@@ -109,7 +109,7 @@ interface DietAnalysisPayload {
   weight: string; // '5.2'처럼 문자열로 받되 필요 시 number 변환
   neutralization: boolean;
   activityLevel: ActivityLevel;
-  bodyCondition: BodyCondition;
+  bodyCondition: BodyFit;
   pregnancy: PregnancyStatus;
   lactation: LactationStatus;
   snackCountLevel: SnackCountLevel;

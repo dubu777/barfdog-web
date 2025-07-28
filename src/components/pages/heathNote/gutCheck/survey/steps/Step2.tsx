@@ -44,8 +44,8 @@ export default function GutCheckStep2({
             onChange: (value) => {
               field.onChange(value);
               handleChange();
-              if (value === "NONE") {
-                setValue("step2.probioticsStatus", "", {
+              if (value === "NOT_TAKING") {
+                setValue("step2.probioticsProduct", "", {
                   shouldValidate: true,
                 });
               }

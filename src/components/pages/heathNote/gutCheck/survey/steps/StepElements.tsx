@@ -1,4 +1,5 @@
 import { Path } from "react-hook-form";
+import { useMemo } from "react";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
 import GutCheckStep1 from "./Step1";
 import GutCheckStep2 from "./Step2";
@@ -29,14 +30,14 @@ interface Props {
   dogName: string;
 }
 
-export const buildGutCheckStepElements = ({
+export const useGutCheckStepElements = ({
   handleChange,
   handleBlur,
   handleKeyDown,
   handleNextStep,
   dogName,
 }: Props) => {
-  return [
+  return useMemo(() => [
     <GutCheckStep1 key="step1" handleChange={handleChange} dogName={dogName} />,
     <GutCheckStep2
       key="step2"
@@ -46,7 +47,12 @@ export const buildGutCheckStepElements = ({
       dogName={dogName}
     />,
     <GutCheckStep3 key="step3" handleChange={handleChange} dogName={dogName} />,
-    <GutCheckStep4 key="step4" handleChange={handleChange} dogName={dogName} />,
+    <GutCheckStep4
+      key="step4"
+      handleChange={handleChange}
+      handleNextStep={handleNextStep}
+      dogName={dogName}
+    />,
     <GutCheckStep5 key="step5" handleChange={handleChange} dogName={dogName} />,
     <GutCheckStep6 key="step6" handleChange={handleChange} dogName={dogName} />,
     <GutCheckStep7
@@ -102,5 +108,5 @@ export const buildGutCheckStepElements = ({
       handleKeyDown={handleKeyDown}
       dogName={dogName}
     />,
-  ];
+  ], [handleChange, handleBlur, handleKeyDown, handleNextStep, dogName]);
 };

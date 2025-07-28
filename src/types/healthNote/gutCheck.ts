@@ -1,4 +1,4 @@
-interface CreateGutCheckRequest {
+interface CreateGutCheckSurvey {
   acquisitionType: string;
   activityLevel: string;
   allergenFoodList: string[];
@@ -12,18 +12,20 @@ interface CreateGutCheckRequest {
   foodProduct: string;
   foodType: string;
   healthConcernTypeList: string[];
-  kitId: string;
   otherComment: string;
-  petId: number;
   pregnancyStatus: string;
   probioticsProduct: string;
   probioticsStatus: string;
   snackLevel: string;
   supplementProduct: string;
   supplementTypeList: string[];
-  supplementsExist: string;
   treatingDiseaseList: string[];
-  treatmentDiseasesExist: string;
+}
+
+interface CreateGutCheckRequest {
+  kitId: number;
+  petId: number;
+  survey: CreateGutCheckSurvey;
 }
 
 interface CreateGutCheckResponse {

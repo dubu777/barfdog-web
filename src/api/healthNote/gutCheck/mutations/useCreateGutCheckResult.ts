@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { UseMutationCustomOptions } from "@/types";
-import { createGutCheckResult } from "../healthNote";
+import { createGutCheckResult } from "../gutCheck";
 import { CreateGutCheckResponse } from "@/types/healthNote/gutCheck";
 
 export function useCreateGutCheckResult(

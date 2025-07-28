@@ -20,20 +20,20 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { buildGutCheckStepElements } from "./steps/StepElements";
+import { useGutCheckStepElements } from "./steps/StepElements";
 import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import { useCreateGutCheckResult } from "@/api/healthNote/mutations/useCreateGutCheckResult";
+import { useCreateGutCheckResult } from "@/api/healthNote/gutCheck/mutations/useCreateGutCheckResult";
 import { buildGutCheckPayload } from "@/utils/healthNote/buildGutCheckPayload";
 
 export default function GutCheckSurvey() {
   const router = useRouter();
   const { mutate: submitResult } = useCreateGutCheckResult({
     onSuccess: (response) => {
-      console.log("장내미생물 응답값", response);
+      // TODO: 성공 시 결과 페이지로 이동 또는 사용자 피드백 처리
     },
     onError: (err) => {
-      console.log("에러>>>>>>>", err);
+      // TODO: 에러 처리 로직 추가 (사용자에게 에러 메시지 표시)
     },
   });
 
@@ -57,8 +57,6 @@ export default function GutCheckSurvey() {
 
   const stepValues = watch();
   const stepErrors = errors;
-  console.log("stepValues", stepValues);
-  console.log("stepErrors", stepErrors);
 
   const stepKeys = Object.keys(defaultGutCheckStepValues) as GutCheckStepKeys[];
 
@@ -94,8 +92,6 @@ export default function GutCheckSurvey() {
     isFirstStep,
     direction,
   } = useSurveyStep<GutCheckStepKeys>(stepKeys, skipConditions);
-  console.log("currentStep", currentStep);
-  console.log("currentStepKey", currentStepKey);
 
   const { isCanNextStep, handleChange, handleBlur, handleKeyDown } =
     useSurveyNavigator({
@@ -106,7 +102,7 @@ export default function GutCheckSurvey() {
       optionalField: GUT_CHECK_OPTIONAL_FIELDS,
     });
 
-  const steps = buildGutCheckStepElements({
+  const steps = useGutCheckStepElements({
     handleChange,
     handleBlur,
     handleKeyDown,
@@ -119,9 +115,8 @@ export default function GutCheckSurvey() {
 
     const values = getValues();
 
-    // 임시로 petId, kitId 넣는중 수정 필요
+    // TODO: petId, kitId를 실제 사용자 데이터에서 가져오도록 수정 필요
     const payload = buildGutCheckPayload(values);
-    console.log("payload", payload);
 
     submitResult(payload);
   }, [trigger, getValues, submitResult]);

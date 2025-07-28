@@ -6,10 +6,7 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import {
-  colSurveyButtonWrapper,
-  rowSurveyButtonWrapper,
-} from "@/components/pages/survey/steps/StepElements.css";
+import { rowSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
@@ -18,14 +15,16 @@ import Chips from "@/components/common/chips/Chips";
 
 interface SurveyStepProps {
   handleChange: () => void;
+  handleNextStep: () => void;
   dogName: string;
 }
 
 export default function GutCheckStep4({
   handleChange,
+  handleNextStep,
   dogName,
 }: SurveyStepProps) {
-  const { control } = useFormContext<GutCheckStepValues>();
+  const { control, setValue } = useFormContext<GutCheckStepValues>();
   const allergyStatus = useWatch({
     name: "step4.allergyStatus",
     control,
@@ -43,6 +42,12 @@ export default function GutCheckStep4({
             onChange: (value) => {
               field.onChange(value);
               handleChange();
+              if (value === "NO_ALLERGY") {
+                setValue("step4.allergenFoodList", [], {
+                  shouldValidate: true,
+                });
+                handleNextStep();
+              }
             },
           });
           return (
