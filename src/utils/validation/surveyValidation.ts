@@ -62,7 +62,7 @@ export const surveyStepsSchema = yup.object({
     lactation: yup.string().required("수유여부를 선택해주세요."),
   }),
   step7: yup.object({
-    dogBodyCondition: yup.string().required("체형을 선택해주세요."),
+    bodyCondition: yup.string().required("체형을 선택해주세요."),
   }),
   step8: yup.object({
     activityLevel: yup.string().required("활동량을 선택해주세요."),
@@ -119,7 +119,7 @@ export const defaultStepValues: SurveyStepValues = {
   step5: { pregnancy: "" },
   step6: { lactation: "" },
   step7: {
-    dogBodyCondition: "",
+    bodyCondition: "",
   },
   step8: { activityLevel: "" },
   step9: { snackCountLevel: "" },

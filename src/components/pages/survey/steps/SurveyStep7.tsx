@@ -21,7 +21,7 @@ export default function SurveyStep7({
     <>
       <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step7} />
       <Controller
-        name="step7.dogBodyCondition"
+        name="step7.bodyCondition"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -34,7 +34,7 @@ export default function SurveyStep7({
           });
           return (
             <div className={styles.colSurveyButtonWrapper}>
-              {DIET_ANALYSIS_FORM_INFO.dogLifestyle.dogBodyCondition.options.map(
+              {DIET_ANALYSIS_FORM_INFO.dogLifestyle.bodyCondition.options.map(
                 (option) => (
                   <SurveyOptionCard
                     key={option.label}

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 export default function FirstTimeRegistration() {
   const router = useRouter();
+
   const handleGotoSurvey = () => {
     window.location.href = "/diet-analysis/survey";
   };

@@ -179,7 +179,7 @@ const DIET_ANALYSIS_FORM_INFO = {
     },
   },
   dogLifestyle: {
-    dogBodyCondition: {
+    bodyCondition: {
       options: [
         {
           value: "VERY_THIN",
@@ -200,13 +200,13 @@ const DIET_ANALYSIS_FORM_INFO = {
           imageUrl: "/images/survey/normal.png",
         },
         {
-          value: "OVERWEIGHT",
+          value: "FAT",
           label: "과체중",
           subLabel: ["복부가 평평", "허리선이 거의 보이지 않음"],
           imageUrl: "/images/survey/overweight.png",
         },
         {
-          value: "OBESE",
+          value: "VERY_FAT",
           label: "심각한 비만",
           subLabel: ["복부가 심하게 쳐짐", "허리선이 없고 옆으로 볼록함"],
           imageUrl: "/images/survey/obese.png",
@@ -215,11 +215,11 @@ const DIET_ANALYSIS_FORM_INFO = {
     },
     activityLevel: {
       options: [
-        { value: "VERY_MUCH", label: "매우 많아요" },
-        { value: "MUCH", label: "많아요" },
+        { value: "VERY_HIGH", label: "매우 많아요" },
+        { value: "HIGH", label: "많아요" },
         { value: "NORMAL", label: "보통이에요" },
-        { value: "LITTLE", label: "적어요" },
-        { value: "VERY_LITTLE", label: "매우 적어요" },
+        { value: "LOW", label: "적어요" },
+        { value: "VERY_LOW", label: "매우 적어요" },
       ],
     },
     snackCountLevel: {
@@ -313,9 +313,10 @@ const DIET_ANALYSIS_FORM_INFO = {
       options: [
         { value: "DRY", label: "건사료" },
         { value: "WET", label: "습식사료" },
-        { value: "HOMEMADE", label: "홈메이드식" },
-        { value: "FREEZE_DRIED", label: "동결건조" },
         { value: "COOKED", label: "화식" },
+        { value: "HOME_MADE_FOOD", label: "홈메이드식" },
+        { value: "HUMAN_FOOD", label: "사람이 먹는 음식" },
+        { value: "FREEZE_DRY_FOOD", label: "동결건조" },
         { value: "RAW", label: "생식" },
       ],
     },
