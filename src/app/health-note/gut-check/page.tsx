@@ -1,15 +1,16 @@
 import GutCheckList from "@/components/pages/heathNote/gutCheck/list/GutCheckList";
 
 interface GutCheckListPageProps {
-  searchParams: {
+  searchParams: Promise<{
     dogId: string;
-  };
+  }>;
 }
 
-export default function GutCheckListPage({
+export default async function GutCheckListPage({
   searchParams,
 }: GutCheckListPageProps) {
-  const dogId = parseInt(searchParams.dogId);
+  const { dogId } = await searchParams;
+  const parsedDogId = parseInt(dogId);
 
-  return <GutCheckList dogId={dogId} />;
+  return <GutCheckList dogId={parsedDogId} />;
 }

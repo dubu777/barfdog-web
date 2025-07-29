@@ -1,6 +1,6 @@
 import CreateGutCheck from "@/components/pages/heathNote/gutCheck/create/CreateGutCheck";
 
-export default async function CreateGutCheckPage() {
+export default function CreateGutCheckPage() {
 	return (
 		<CreateGutCheck />
 	);

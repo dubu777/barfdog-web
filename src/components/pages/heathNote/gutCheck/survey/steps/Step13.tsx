@@ -44,7 +44,7 @@ export default function GutCheckStep13({
           });
           return (
             <SurveyButtonGroup isMultiple direction="col">
-              {GUT_CHECK_FORM_INFO.dogLifestyle.cohabitingPetList.options.map(
+              {GUT_CHECK_FORM_INFO.lifestyle.cohabitingPetList.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

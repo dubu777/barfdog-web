@@ -58,7 +58,7 @@ export default function SurveyStep10({
               <DefaultText type="label2" color="gray500">
                 *복수응답가능
               </DefaultText>
-              {DIET_ANALYSIS_FORM_INFO.dogLifestyle.inedibleFood.options.map(
+              {DIET_ANALYSIS_FORM_INFO.lifestyle.inedibleFood.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

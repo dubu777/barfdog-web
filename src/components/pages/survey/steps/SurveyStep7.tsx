@@ -34,7 +34,7 @@ export default function SurveyStep7({
           });
           return (
             <div className={styles.colSurveyButtonWrapper}>
-              {DIET_ANALYSIS_FORM_INFO.dogLifestyle.bodyCondition.options.map(
+              {DIET_ANALYSIS_FORM_INFO.lifestyle.bodyCondition.options.map(
                 (option) => (
                   <SurveyOptionCard
                     key={option.label}

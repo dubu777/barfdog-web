@@ -1,14 +1,15 @@
 import { queryKeys } from "@/constants/queryKeys";
 import { UseSuspenseQueryCustomOptions } from "@/types";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getGutCheckResult } from "../gutCheck";
+import { getGutCheckDetail } from "../gutCheck";
+import { GutCheckDetailResponse } from "@/types/healthNote/gutCheck";
 
-export function useGetGutCheckResult(
+export function useGetGutCheckDetail(
   diagnosisId: number,
-  queryOptions?: UseSuspenseQueryCustomOptions<any>
+  queryOptions?: UseSuspenseQueryCustomOptions<GutCheckDetailResponse>
 ) {
   return useSuspenseQuery({
-    queryFn: () => getGutCheckResult(diagnosisId),
+    queryFn: () => getGutCheckDetail(diagnosisId),
     queryKey: [
       queryKeys.GUT_CHECK.BASE,
       queryKeys.GUT_CHECK.GET_GUT_CHECK_RESULT,

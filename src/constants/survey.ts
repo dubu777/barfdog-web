@@ -50,7 +50,7 @@ export {
 
 const SURVEY_SECTIONS = [
   { key: "dogBasicInfo", label: "기본 정보", steps: 6 },
-  { key: "dogLifestyle", label: "생활 정보", steps: 5 },
+  { key: "lifestyle", label: "생활 정보", steps: 5 },
   { key: "dogDietHealth", label: "식단/건강", steps: 3 },
 ];
 
@@ -178,7 +178,7 @@ const DIET_ANALYSIS_FORM_INFO = {
       ],
     },
   },
-  dogLifestyle: {
+  lifestyle: {
     bodyCondition: {
       options: [
         {

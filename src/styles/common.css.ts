@@ -115,7 +115,6 @@ export const commonWrapper = recipe({
   },
   variants: {
     gap: {
-      none: {},
       2: {
         gap: "2px",
       },
@@ -148,7 +147,6 @@ export const commonWrapper = recipe({
       },
     },
     padding: {
-      none: {},
       12: {
         padding: "12px",
       },
@@ -172,9 +170,22 @@ export const commonWrapper = recipe({
       },
     },
     paddingBottom: {
-      none: {},
       85: {
         paddingBottom: "85px",
+      },
+    },
+    paddingTop: {
+      4: {
+        paddingTop: "4px",
+      },
+      12: {
+        paddingTop: "12px",
+      },
+      16: {
+        paddingTop: "16px",
+      },
+      20: {
+        paddingTop: "20px",
       },
     },
     direction: {
@@ -214,15 +225,11 @@ export const commonWrapper = recipe({
       },
     },
     height: {
-      auto: {
-        height: "auto",
-      },
       full: {
         height: "100vh",
       },
     },
     backgroundColors: {
-      none: {},
       transparent: {
         backgroundColor: "transparent",
       },
@@ -237,7 +244,6 @@ export const commonWrapper = recipe({
       },
     },
     textAlign: {
-      none: {},
       left: {
         textAlign: "left",
       },
@@ -254,7 +260,6 @@ export const commonWrapper = recipe({
       },
     },
     borderRadius: {
-      none: {},
       8: {
         borderRadius: "8px",
       },
@@ -266,7 +271,6 @@ export const commonWrapper = recipe({
       },
     },
     shadow: {
-      none: {},
       light: {
         boxShadow: themeVars.shadow.light,
       },
@@ -281,23 +285,13 @@ export const commonWrapper = recipe({
       wrap: {
         flexWrap: "wrap",
       },
-      nowrap: {},
     },
   },
   defaultVariants: {
-    gap: "none",
-    padding: "none",
     direction: "row",
     justify: "center",
     align: "center",
-    height: "auto",
-    backgroundColors: "none",
     width: "full",
-    borderRadius: "none",
-    textAlign: "none",
-    shadow: "none",
-    wrap: "nowrap",
-    paddingBottom: "none",
   },
 });
 

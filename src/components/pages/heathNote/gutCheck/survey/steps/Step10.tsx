@@ -41,11 +41,11 @@ export default function GutCheckStep10({
           render={({ field }) => (
             <InputField
               {...field}
-              label={GUT_CHECK_FORM_INFO.dogLifestyle.foodProduct.title}
+              label={GUT_CHECK_FORM_INFO.lifestyle.foodProduct.title}
               labelType="headline4"
               labelColor="gray800"
               placeholder={
-                GUT_CHECK_FORM_INFO.dogLifestyle.foodProduct.placeholder
+                GUT_CHECK_FORM_INFO.lifestyle.foodProduct.placeholder
               }
               onChange={(e) => {
                 field.onChange(e);
@@ -58,7 +58,7 @@ export default function GutCheckStep10({
         />
         <InfoBox
           type="info"
-          text={GUT_CHECK_FORM_INFO.dogLifestyle.foodProduct.info}
+          text={GUT_CHECK_FORM_INFO.lifestyle.foodProduct.info}
           fullWidth
         />
       </div>
@@ -76,19 +76,17 @@ export default function GutCheckStep10({
           });
           return (
             <SurveyButtonGroup
-              title={GUT_CHECK_FORM_INFO.dogLifestyle.feedTime.title}
+              title={GUT_CHECK_FORM_INFO.lifestyle.feedTime.title}
             >
-              {GUT_CHECK_FORM_INFO.dogLifestyle.feedTime.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
+              {GUT_CHECK_FORM_INFO.lifestyle.feedTime.options.map((option) => (
+                <SurveyButton
+                  key={option.label}
+                  label={option.label}
+                  value={option.value}
+                  isChecked={isSelected(option.value)}
+                  onToggle={onToggle}
+                />
+              ))}
             </SurveyButtonGroup>
           );
         }}

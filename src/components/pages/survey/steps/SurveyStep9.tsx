@@ -36,7 +36,7 @@ export default function SurveyStep9({
           });
           return (
             <div className={styles.colSurveyButtonWrapper}>
-              {DIET_ANALYSIS_FORM_INFO.dogLifestyle.snackCountLevel.options.map(
+              {DIET_ANALYSIS_FORM_INFO.lifestyle.snackCountLevel.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

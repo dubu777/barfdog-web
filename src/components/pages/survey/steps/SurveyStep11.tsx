@@ -43,7 +43,7 @@ export default function SurveyStep11({
                 onReselect={onReselect}
               />
               <SurveyGridButtonGroup>
-                {DIET_ANALYSIS_FORM_INFO.dogLifestyle.healthConcerns.options.map(
+                {DIET_ANALYSIS_FORM_INFO.lifestyle.healthConcerns.options.map(
                   (option) => (
                     <ImageButton
                       key={option.value}

@@ -48,7 +48,7 @@ export default function GutCheckStep14({
           });
           return (
             <div className={rowSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.dogLifestyle.supplementsExist.options.map(
+              {GUT_CHECK_FORM_INFO.lifestyle.supplementsExist.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}
@@ -78,12 +78,10 @@ export default function GutCheckStep14({
             });
             return (
               <SurveyButtonGroup
-                title={
-                  GUT_CHECK_FORM_INFO.dogLifestyle.supplementTypeList.title
-                }
+                title={GUT_CHECK_FORM_INFO.lifestyle.supplementTypeList.title}
                 isWrap
               >
-                {GUT_CHECK_FORM_INFO.dogLifestyle.supplementTypeList.options.map(
+                {GUT_CHECK_FORM_INFO.lifestyle.supplementTypeList.options.map(
                   (option) => {
                     const selected = isSelected(option.value);
                     return (

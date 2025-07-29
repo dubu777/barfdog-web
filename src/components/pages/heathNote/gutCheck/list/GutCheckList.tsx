@@ -10,11 +10,8 @@ import Card from "@/components/common/card/Card";
 import useModal from "@/hooks/useModal";
 import KitGuideModal from "@/components/pages/heathNote/gutCheck/modal/KitGuideModal";
 import { useGetGutCheckList } from "@/api/healthNote/gutCheck/queries/useGetGutCheckList";
-
-const GUT_CHECK_STATUS = {
-  REQUEST_DONE: "회수신청",
-  SUBMITTED: "문진 작성완료",
-};
+import { GUT_CHECK_STATUS } from "@/constants/healthNote/gutCheck";
+import { GutCheckStatus } from "@/types/healthNote/gutCheck";
 
 interface GutCheckListProps {
   dogId: number;
@@ -32,6 +29,13 @@ const GutCheckList = ({ dogId }: GutCheckListProps) => {
   const { data: gutCheckList = [] } = useGetGutCheckList(dogId);
   console.log(gutCheckList);
 
+  // SUBMITTED: "문진 작성완료",
+  // KIT_PICKUP_REQUESTED: "회수 신청",
+  // KIT_PICKUP_DONE: "회수 완료",
+  // ANALYZING: "분석 중",
+  // COMPLETED: "분석 완료",
+
+  const tempStatus = "SUBMITTED" as GutCheckStatus;
   return (
     <>
       <section className={styles.gutCheckListContainer}>
@@ -59,9 +63,9 @@ const GutCheckList = ({ dogId }: GutCheckListProps) => {
         />
         <article className={styles.gutCheckList}>
           {gutCheckList.length > 0 ? (
-            gutCheckList.map((data) => (
+            gutCheckList.map(({ id, status, petName, submitDate }) => (
               <Card
-                key={data.id}
+                key={id}
                 shadow="strong"
                 gap={12}
                 padding={12}
@@ -69,30 +73,42 @@ const GutCheckList = ({ dogId }: GutCheckListProps) => {
               >
                 <div className={styles.gutCheckCardItem}>
                   <Chips variant="outlined" color="red" borderRadius="lg">
-                    {GUT_CHECK_STATUS[data.status]}
+                    {GUT_CHECK_STATUS[tempStatus]}
                   </Chips>
                   <DefaultText type="body3" color="gray600">
-                    {data.submitDate}
+                    {submitDate}
                   </DefaultText>
                 </div>
-                <DefaultText type="title4">{data.petName}</DefaultText>
+                <DefaultText type="title4">{petName}</DefaultText>
                 <div className={styles.gutCheckCardItem}>
                   <Button
                     variant="outline"
                     type="assistive"
                     fullWidth
-                    disabled={data.status === "REQUEST_DONE"}
                     onClick={() =>
-                      router.push(
-                        `/health-note/gut-check/return-request/${data.id}`
-                      )
+                      router.push(`/health-note/gut-check/detail/${id}`)
                     }
                   >
-                    회수 신청 {data.status === "REQUEST_DONE" && "완료"}
+                    신청 상세
                   </Button>
-                  <Button variant="outline" fullWidth>
-                    상세보기
-                  </Button>
+                  {tempStatus === "SUBMITTED" && (
+                    <Button
+                      variant="outline"
+                      fullWidth
+                      onClick={() =>
+                        router.push(
+                          `/health-note/gut-check/return-request/${id}`
+                        )
+                      }
+                    >
+                      회수 신청
+                    </Button>
+                  )}
+                  {tempStatus === "COMPLETED" && (
+                    <Button variant="outline" fullWidth>
+                      결과 다운로드
+                    </Button>
+                  )}
                 </div>
               </Card>
             ))

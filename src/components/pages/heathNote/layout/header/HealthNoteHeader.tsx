@@ -76,7 +76,7 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
       showBackButton: true,
     },
     "/health-note/gut-check/create": {
-      centerTitle: "",
+      centerTitle: "장내 미생물 검사",
       showBackButton: true,
     },
   };
@@ -106,6 +106,14 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
         onClose: onToggleConfirmAlert,
       };
     },
+    "/health-note/gut-check/detail/": () => ({
+      centerTitle: "",
+      showBackButton: true,
+    }),
+    "/health-note/gut-check/return-request/": () => ({
+      centerTitle: "회수신청",
+      showBackButton: true,
+    }),
   };
 
   const headerProps = useMemo(
@@ -134,7 +142,6 @@ const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
     "/health-note/full-check/survey",
     "/health-note/body-check/survey",
     "/health-note/body-check/result",
-    "/health-note/gut-check/return-request",
   ];
 
   const shouldRenderHeader = useMemo(() => {

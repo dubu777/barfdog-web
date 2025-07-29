@@ -1,6 +1,8 @@
 import {
   CreateGutCheckRequest,
   CreateGutCheckResponse,
+  GutCheckDetailResponse,
+  GutCheckList,
 } from "@/types/healthNote/gutCheck";
 import axiosInstance from "../../axiosInstance";
 import { AxiosInstance } from "axios";
@@ -16,21 +18,21 @@ const createGutCheckResult = async (
   return data;
 };
 
-const getGutCheckResult = async (
+const getGutCheckDetail = async (
   diagnosisId: number,
   instance: AxiosInstance = axiosInstance
-): Promise<any> => {
+): Promise<GutCheckDetailResponse> => {
   const { data } = await instance.get(
     `/api/v2/health-book/probiome-diagnoses/${diagnosisId}`
   );
 
-  return data;
+  return data.data;
 };
 
 const getGutCheckList = async (
   petId: number,
   instance: AxiosInstance = axiosInstance
-): Promise<any> => {
+): Promise<GutCheckList> => {
   const { data } = await instance.get(
     `/api/v2/health-book/probiome-diagnoses/pet/${petId}`
   );
@@ -38,4 +40,4 @@ const getGutCheckList = async (
   return data.data.probiomeDiagnosisList;
 };
 
-export { createGutCheckResult, getGutCheckResult, getGutCheckList };
+export { createGutCheckResult, getGutCheckDetail, getGutCheckList };

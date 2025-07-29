@@ -37,7 +37,7 @@ export default function GutCheckStep12({
           });
           return (
             <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.dogLifestyle.snackLevel.options.map(
+              {GUT_CHECK_FORM_INFO.lifestyle.snackLevel.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

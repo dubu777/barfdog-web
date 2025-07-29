@@ -1,7 +1,7 @@
 import { queryKeys } from "@/constants";
 import { QueryClient } from "@tanstack/react-query";
 import { createSSRRequest } from "@/api/withAuthSSR";
-import { getGutCheckResult } from "../gutCheck";
+import { getGutCheckDetail } from "../gutCheck";
 
 export async function prefetchGetGutCheckResult(
   queryClient: QueryClient,
@@ -9,7 +9,7 @@ export async function prefetchGetGutCheckResult(
 ) {
   const ssrAxios = createSSRRequest();
   await queryClient.prefetchQuery({
-    queryFn: () => getGutCheckResult(Number(id), ssrAxios),
+    queryFn: () => getGutCheckDetail(Number(id), ssrAxios),
     queryKey: [
       queryKeys.GUT_CHECK.BASE,
       queryKeys.GUT_CHECK.GET_GUT_CHECK_RESULT,

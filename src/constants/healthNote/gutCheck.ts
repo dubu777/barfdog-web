@@ -23,6 +23,7 @@ const GUT_CHECK_FORM_INFO = {
   healthStatus: {
     // 1-1. 체형 → bodyFit
     bodyFit: {
+      key: "반려견 체형",
       options: [
         {
           value: "VERY_THIN",
@@ -59,6 +60,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 1-2. 유산균 급여 여부 → probioticsStatus
     probioticsStatus: {
+      key: "유산균 급여",
       title: "바푸동은 유산균을 급여중인가요?",
       options: [
         { value: "TAKING", label: "급여 중이에요" },
@@ -69,6 +71,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 1-3. 항생제 급여 여부 → antibioticsStatus
     antibioticsStatus: {
+      key: "항생제 투여",
       title: "항생제를 투여중인가요?",
       options: [
         { value: "TAKING", label: "투여 중이에요" },
@@ -79,6 +82,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 1-4. 알러지 여부 → allergyStatus + allergenFoodList
     allergyStatus: {
+      key: "알러지 여부",
       title: "알러지가 있나요?",
       options: [
         { value: "HAS_ALLERGY", label: "있어요" },
@@ -86,6 +90,7 @@ const GUT_CHECK_FORM_INFO = {
       ],
     },
     allergenFoodList: {
+      key: "알러지원",
       groups: [
         {
           category: "육류",
@@ -149,6 +154,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 1-5. 임신 여부 → pregnancyStatus
     pregnancyStatus: {
+      key: "임신 여부",
       title: "현재 임신 중인가요?",
       options: [
         { value: "NONE", label: "아니요" },
@@ -159,6 +165,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 1-6. 활동량 → activityLevel (GeneralLevel)
     activityLevel: {
+      key: "활동량",
       options: [
         { value: "VERY_HIGH", label: "매우 많아요" },
         { value: "HIGH", label: "많아요" },
@@ -177,6 +184,7 @@ const GUT_CHECK_FORM_INFO = {
       ],
     },
     treatingDiseaseList: {
+      key: "치료 중 질병",
       groups: [
         {
           category: "신경계 질환",
@@ -267,9 +275,10 @@ const GUT_CHECK_FORM_INFO = {
   },
 
   // 2. 생활 습관
-  dogLifestyle: {
+  lifestyle: {
     // 2-1. 사료 급여 방식 → feedType (FeedType)
     feedType: {
+      key: "급여방식",
       title: "사료 급여 방식",
       options: [
         { value: "FREE", label: "자율급식" },
@@ -279,6 +288,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-2. 주 식사 사료 → foodType (FoodType)
     foodType: {
+      key: "주급여 사료",
       title: "바푸동이 현재 먹고 있는 주사료는 무엇인가요?",
       options: [
         { value: "DRY", label: "건사료" },
@@ -293,6 +303,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-3. 사료명 → foodProduct
     foodProduct: {
+      key: "급여중 사료명",
       title: "급여중인 사료명은 무엇인가요?",
       placeholder: "제품명을 입력해주세요",
       info: "사람이 먹는 음식을 선택한 경우, 주로 급여하는 음식이 무엇인지 적어주세요",
@@ -300,6 +311,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-4. 급여 시간 → feedTime (FeedTime)
     feedTime: {
+      key: "급식 시간",
       title: "하루 급여 시간을 알려주세요",
       options: [
         { value: "MORNING", label: "아침" },
@@ -310,6 +322,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-5. 배변 습관 → defecationHabit (DefecationHabit)
     defecationHabit: {
+      key: "배변습관",
       title: "바푸동의 배변 습관은 어떤가요?",
       options: [
         {
@@ -332,6 +345,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-6. 간식량 → snackCountLevel (GeneralLevel)
     snackLevel: {
+      key: "간식량",
       title: "바푸동의 간식량은 어떤가요?",
       options: [
         {
@@ -354,6 +368,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-7. 동거 반려동물 → cohabitingPetList
     cohabitingPetList: {
+      key: "동거 반려동물",
       title: "바푸동과 함께 거주 중인 다른 반려동물이 있나요?",
       options: [
         { value: "NONE", label: "없어요" },
@@ -374,6 +389,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-9. 영양제 종류 → supplementTypeList (SupplementType)
     supplementTypeList: {
+      key: "급여 영양제",
       title: "급여중인 영양제를 모두 선택해주세요",
       options: [
         { value: "NONE", label: "없음" },
@@ -395,6 +411,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 2-10. 영양제 제품명 → supplementProduct
     supplementProduct: {
+      key: "영양제 제품명",
       title: "급여중인 영양제 제품을 입력해주세요",
       placeholder: "제품명을 입력해주세요",
     },
@@ -404,6 +421,7 @@ const GUT_CHECK_FORM_INFO = {
   additionalInfo: {
     // 3-1. 건강 관심사 → healthConcernTypeList (HealthConcernType)
     healthConcernTypeList: {
+      key: "그 외 고민사항",
       title: "바푸동은 다음 중 어떤 고민이 있나요?",
       options: [
         {
@@ -461,6 +479,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 3-2. 진단키트 수령 경로 → acquisitionType (AcquisitionType)
     acquisitionType: {
+      key: "키트 수령 경로",
       title: "진단 키트 분류를 위해 해당 사항을 체크해주세요",
       options: [
         {
@@ -479,6 +498,7 @@ const GUT_CHECK_FORM_INFO = {
 
     // 3-3. 기타 의견 → otherComment
     otherComment: {
+      key: "그 외 특이사항",
       title: "그 외 특이사항이 있으면 적어주세요",
       placeholder: "기타 의견을 입력해주세요",
     },
@@ -555,9 +575,17 @@ const GUT_CHECK_OPTIONAL_FIELDS: Record<string, string[]> = {
 
 const GUT_CHECK_SECTIONS = [
   { key: "healthStatus", label: "건강 상태", steps: 7 },
-  { key: "dogLifestyle", label: "생활 습관", steps: 7 },
+  { key: "lifestyle", label: "생활 습관", steps: 7 },
   { key: "additionalInfo", label: "추가 정보", steps: 3 },
 ];
+
+const GUT_CHECK_STATUS = {
+  SUBMITTED: "문진 작성완료",
+  KIT_PICKUP_REQUESTED: "회수 신청",
+  KIT_PICKUP_DONE: "회수 완료",
+  ANALYZING: "분석 중",
+  COMPLETED: "분석 완료",
+};
 
 export {
   GUT_CHECK_FORM_INFO,
@@ -565,4 +593,5 @@ export {
   GUT_CHECK_SECTIONS,
   GUT_CHECK_TITLES,
   GUT_CHECK_OPTIONAL_FIELDS,
+  GUT_CHECK_STATUS,
 };

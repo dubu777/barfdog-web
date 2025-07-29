@@ -37,18 +37,16 @@ export default function GutCheckStep9({
           });
           return (
             <div className={colSurveyButtonWrapper}>
-              {GUT_CHECK_FORM_INFO.dogLifestyle.foodType.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    inputType="radio"
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
+              {GUT_CHECK_FORM_INFO.lifestyle.foodType.options.map((option) => (
+                <SurveyButton
+                  key={option.label}
+                  label={option.label}
+                  value={option.value}
+                  inputType="radio"
+                  isChecked={isSelected(option.value)}
+                  onToggle={onToggle}
+                />
+              ))}
             </div>
           );
         }}
