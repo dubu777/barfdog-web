@@ -1,19 +1,18 @@
-"use client";
-
-import * as styles from "./StepElements.css";
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
-import SurveyTitle from "../../../common/survey/surveyTitle/SurveyTitle";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import * as styles from "./StepElements.css";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {
   handleChange: () => void;
   dogName: string;
 }
 
-export default function SurveyStep5({
+export default function SurveyStep8({
   handleChange,
   dogName,
 }: SurveyStepProps) {
@@ -21,9 +20,9 @@ export default function SurveyStep5({
 
   return (
     <>
-      <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step5} />
+      <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step8} />
       <Controller
-        name="step5.pregnancy"
+        name="step8.activityLevel"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -35,8 +34,14 @@ export default function SurveyStep5({
             },
           });
           return (
-            <div className={styles.colSurveyButtonWrapper}>
-              {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.pregnancy.options.map(
+            <div
+              className={commonWrapper({
+                direction: "col",
+                align: "start",
+                gap: 12,
+              })}
+            >
+              {DIET_ANALYSIS_FORM_INFO.lifestyle.activityLevel.options.map(
                 (option) => (
                   <SurveyButton
                     key={option.label}

@@ -6,8 +6,8 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { colSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -36,7 +36,13 @@ export default function GutCheckStep9({
             },
           });
           return (
-            <div className={colSurveyButtonWrapper}>
+            <div
+              className={commonWrapper({
+                direction: "col",
+                align: "start",
+                gap: 12,
+              })}
+            >
               {GUT_CHECK_FORM_INFO.lifestyle.foodType.options.map((option) => (
                 <SurveyButton
                   key={option.label}

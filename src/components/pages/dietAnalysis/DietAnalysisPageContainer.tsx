@@ -10,8 +10,7 @@ export default function DietAnalysisPageContainer() {
   console.log("dietAnalysisResult", dietAnalysisResult);
   console.log("dogListData", dogListData);
 
-  // const isExistDogList = dogListData.length > 0;
-  const isExistDogList = false;
+  const isExistDogList = dogListData.length > 0;
 
   return (
     <>

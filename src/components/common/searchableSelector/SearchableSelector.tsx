@@ -3,8 +3,8 @@
 import React, { useState, useMemo, ReactNode } from "react";
 import InputField from "@/components/common/inputField/InputField";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import * as styles from "../../pages/survey/steps/StepElements.css";
 import { Option } from "@/types";
+import { commonWrapper } from "@/styles/common.css";
 
 interface SearchableSelectorProps {
   label?: string; // 상단 InputField 라벨 (선택사항)
@@ -49,7 +49,13 @@ export default function SearchableSelector({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <div className={styles.colSurveyButtonWrapper}>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 12,
+        })}
+      >
         {filteredOptions.length > 0
           ? filteredOptions.map((opt) => (
               <SurveyButton

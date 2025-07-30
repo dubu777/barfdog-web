@@ -7,10 +7,10 @@ import {
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
 import Chips from "@/components/common/chips/Chips";
 import { commonWrapper } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;

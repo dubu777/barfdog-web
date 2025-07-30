@@ -17,7 +17,7 @@ import { useToggleOption } from "@/hooks/useToggleOption";
 import { useRewardStore } from "@/store/order/useRewardStore";
 import { OrderType } from "@/types";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import { colStartWrapper } from "../deliveryAddress/DeliveryAddress.css";
+import { commonWrapper } from "@/styles/common.css";
 
 interface RewardUsageProps {
   control: Control<OrderFormValues>;
@@ -116,11 +116,23 @@ export default function RewardUsage({
       </div>
       {orderType === ORDER_TYPE.SUBSCRIPTION &&
         (isAutoUseReward ? (
-          <div className={colStartWrapper({gap: 8})}>
+          <div
+            className={commonWrapper({
+              direction: "col",
+              align: "start",
+              gap: 8,
+            })}
+          >
             <InfoBox text="적립금 자동 사용 적용중" color="blue" fullWidth />
-            <div className={colStartWrapper({gap: 0})}>
-            <DefaultText type="caption" color="gray700">{ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_1}</DefaultText>
-            <DefaultText type="caption" color="gray700">{ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_2}</DefaultText>
+            <div
+              className={commonWrapper({ direction: "col", align: "start" })}
+            >
+              <DefaultText type="caption" color="gray700">
+                {ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_1}
+              </DefaultText>
+              <DefaultText type="caption" color="gray700">
+                {ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_2}
+              </DefaultText>
             </div>
           </div>
         ) : (

@@ -2,10 +2,7 @@ import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRa
 import * as styles from "./BundleDeliveryCard.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { BundleDeliveryAddress } from "@/types";
-import {
-  colStartWrapper,
-  rowStartWrapper,
-} from "@/components/pages/checkout/common/deliveryAddress/DeliveryAddress.css";
+import { commonWrapper } from "@/styles/common.css";
 
 interface BundleDeliveryCardProps {
   address: BundleDeliveryAddress;
@@ -18,23 +15,34 @@ export default function BundleDeliveryCard({
   isSelected,
   onToggle,
 }: BundleDeliveryCardProps) {
-
   return (
-    <div className={styles.bundleBottomSheetCardBox({isSelected})}>
+    <div className={styles.bundleBottomSheetCardBox({ isSelected })}>
       <LabeledRadioButton
         value={address.id}
         isChecked={isSelected}
         onToggle={onToggle}
         optionType="selection"
       >
-        <div className={colStartWrapper({ gap: 4 })}>
+        <div
+          className={commonWrapper({
+            direction: "col",
+            gap: 4,
+            align: "start",
+          })}
+        >
           <div className={styles.bundleDeliveryCardTitleWrapper}>
             <DefaultText type="headline2">
               {address.deliveryName ?? address.recipientName}
             </DefaultText>
           </div>
-          <div className={colStartWrapper({ gap: 2 })}>
-            <div className={rowStartWrapper({ gap: 4 })}>
+          <div
+            className={commonWrapper({
+              direction: "col",
+              gap: 2,
+              align: "start",
+            })}
+          >
+            <div className={commonWrapper({ gap: 4, justify: "start" })}>
               <DefaultText type="body3">
                 {address.deliveryName ?? address.recipientName}
               </DefaultText>

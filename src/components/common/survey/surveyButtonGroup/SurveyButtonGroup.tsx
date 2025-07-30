@@ -51,7 +51,7 @@ export default function SurveyButtonGroup({
         className={commonWrapper({
           direction,
           gap: 8,
-          wrap: isWrap ? "wrap" : "nowrap",
+          wrap: isWrap ? "wrap" : undefined,
           justify: isWrap ? "start" : "center",
         })}
       >

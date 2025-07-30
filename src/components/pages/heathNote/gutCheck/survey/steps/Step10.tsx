@@ -6,12 +6,11 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { rowSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import InputField from "@/components/common/inputField/InputField";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
 import { commonWrapper } from "@/styles/common.css";
+import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;

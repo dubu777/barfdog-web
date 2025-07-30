@@ -6,12 +6,11 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { rowSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
-import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
 import Chips from "@/components/common/chips/Chips";
+import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -51,7 +50,7 @@ export default function GutCheckStep4({
             },
           });
           return (
-            <div className={rowSurveyButtonWrapper}>
+            <div className={commonWrapper({ align: "start", gap: 8 })}>
               {GUT_CHECK_FORM_INFO.healthStatus.allergyStatus.options.map(
                 (option) => (
                   <SurveyButton

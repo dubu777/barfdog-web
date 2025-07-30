@@ -198,7 +198,7 @@ const GUT_CHECK_FORM_INFO = {
           category: "심혈관계 질환",
           options: [
             { value: "HEART_DISEASE", label: "심장병" },
-            { value: "MMVD", label: "MMVD(승모판막 폐쇄부전증)" },
+            { value: "MMVD", label: "이첨판 폐쇄부전증(MMVD)" },
             { value: "HYPERLIPIDEMIA", label: "고지혈증" },
             { value: "HEARTWORM", label: "심장사상충증" },
           ],
@@ -216,9 +216,9 @@ const GUT_CHECK_FORM_INFO = {
           options: [
             { value: "ATOPIC_DERMATITIS", label: "아토피성 피부염" },
             { value: "ALLERGIC_DERMATITIS", label: "알러지성 피부염" },
-            { value: "FLEA_TICK_INFESTATION", label: "벼룩/진드기 감염" },
+            { value: "FLEA_TICK_INFESTATION", label: "벼룩•진드기 피부염" },
             { value: "OTITIS", label: "귀 염증" },
-            { value: "HAIR_LOSS_FUNGAL", label: "탈모 또는 곰팡이성 피부염" },
+            { value: "MYCOTIC_DERMATITIS", label: "진균성 피부염" },
           ],
         },
         {
@@ -242,8 +242,8 @@ const GUT_CHECK_FORM_INFO = {
         {
           category: "구강 및 치아 질환",
           options: [
-            { value: "PERIODONTAL_DISEASE", label: "치주질환" },
-            { value: "TARTAR_PLAQUE", label: "치석 또는 플라크" },
+            { value: "PERIODONTAL_DISEASE", label: "치주염" },
+            { value: "TARTAR_PLAQUE", label: "치석 축적" },
           ],
         },
         {

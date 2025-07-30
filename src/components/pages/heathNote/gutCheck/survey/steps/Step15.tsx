@@ -6,10 +6,8 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
-import Chips from "@/components/common/chips/Chips";
-import SurveyGridButtonGroup from "@/components/pages/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
-import ImageButton from "@/components/pages/survey/imageButton/ImageButton";
+import SurveyGridButtonGroup from "@/components/common/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
+import ImageButton from "@/components/pages/dietAnalysis/survey/imageButton/ImageButton";
 
 interface SurveyStepProps {
   handleChange: () => void;

@@ -1,8 +1,8 @@
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { Controller, useFormContext } from "react-hook-form";
-import SurveyTitle from "../../../common/survey/surveyTitle/SurveyTitle";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
+import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 
 interface SurveyStepProps {
   handleChange: () => void;

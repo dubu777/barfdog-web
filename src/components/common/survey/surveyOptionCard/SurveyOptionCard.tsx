@@ -2,7 +2,6 @@ import * as styles from "./SurveyOptionCard.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 
 import Image from "next/image";
-import { colStartWrapper } from "../../../pages/checkout/common/deliveryAddress/DeliveryAddress.css";
 import { commonWrapper } from "@/styles/common.css";
 
 interface surveyOptionCardProps<T> {

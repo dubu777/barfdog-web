@@ -20,23 +20,6 @@ export const surveyButtonWrapper = style({
   width: "100%",
 });
 
-export const rowSurveyButtonWrapper = style({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "flex-start",
-  gap: "8px",
-  width: "100%",
-});
-
-export const colSurveyButtonWrapper = style({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "flex-start",
-  gap: "12px",
-  width: "100%",
-});
-
 export const birthContainer = style({
   display: "flex",
   alignItems: "center",

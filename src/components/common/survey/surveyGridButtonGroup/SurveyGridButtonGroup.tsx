@@ -1,6 +1,6 @@
 import React from "react";
 import * as styles from "./SurveyGridButtonGroup.css"; // 필요에 따라 스타일 작성
-import { surveyButtonWrapper } from "../steps/StepElements.css";
+import { surveyButtonWrapper } from "../../../pages/dietAnalysis/survey/steps/StepElements.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 

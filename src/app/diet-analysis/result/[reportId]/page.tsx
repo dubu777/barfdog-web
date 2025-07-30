@@ -1,4 +1,3 @@
-import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import {
   dehydrate,
   HydrationBoundary,
@@ -6,10 +5,9 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import * as styles from "../../../../components/pages/survey/surveyPageContainer/Survey.css";
 import Header from "@/components/layout/header/Header";
-import DietAnalysisResult from "@/components/pages/dietAnalysis/result/DietAnalysisResult";
 import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/usePrefetchGetDietAnalysisResult";
+import DietAnalysisResult from "@/components/pages/dietAnalysis/\bresult/DietAnalysisResult";
 
 export default async function ResultPage({
   params,

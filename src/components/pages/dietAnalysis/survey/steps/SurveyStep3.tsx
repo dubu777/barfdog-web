@@ -1,12 +1,11 @@
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
-import * as styles from "./StepElements.css";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, Path, useFormContext } from "react-hook-form";
 import ImageButton from "../imageButton/ImageButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyTitle from "../../../common/survey/surveyTitle/SurveyTitle";
-import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";
+import SurveyButtonGroup from "../../../../common/survey/surveyButtonGroup/SurveyButtonGroup";
 import InputField from "@/components/common/inputField/InputField";
+import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 
 interface SurveyStepProps {
   dogName: string;

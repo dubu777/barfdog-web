@@ -1,4 +1,4 @@
-import { Controller, Path, useFormContext, useWatch } from "react-hook-form";
+import { Controller, Path, useFormContext } from "react-hook-form";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import { GUT_CHECK_TITLES } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";

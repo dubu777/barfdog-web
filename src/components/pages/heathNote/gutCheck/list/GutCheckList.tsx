@@ -27,13 +27,6 @@ const GutCheckList = ({ dogId }: GutCheckListProps) => {
 
   // dogId가 있는 경우에만 API 호출
   const { data: gutCheckList = [] } = useGetGutCheckList(dogId);
-  console.log(gutCheckList);
-
-  // SUBMITTED: "문진 작성완료",
-  // KIT_PICKUP_REQUESTED: "회수 신청",
-  // KIT_PICKUP_DONE: "회수 완료",
-  // ANALYZING: "분석 중",
-  // COMPLETED: "분석 완료",
 
   const tempStatus = "SUBMITTED" as GutCheckStatus;
   return (

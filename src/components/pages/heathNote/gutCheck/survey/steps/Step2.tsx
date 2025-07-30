@@ -6,9 +6,9 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { rowSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import InputField from "@/components/common/inputField/InputField";
+import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -52,7 +52,7 @@ export default function GutCheckStep2({
             },
           });
           return (
-            <div className={rowSurveyButtonWrapper}>
+            <div className={commonWrapper({ align: "start", gap: 8 })}>
               {GUT_CHECK_FORM_INFO.healthStatus.probioticsStatus.options.map(
                 (option) => (
                   <SurveyButton

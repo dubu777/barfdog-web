@@ -1,17 +1,17 @@
-import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { Controller, useFormContext } from "react-hook-form";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import * as styles from "./StepElements.css";
-import SurveyTitle from "../../../common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import { commonWrapper } from "@/styles/common.css";
+import SurveyOptionCard from "@/components/common/survey/surveyOptionCard/SurveyOptionCard";
 
 interface SurveyStepProps {
   handleChange: () => void;
   dogName: string;
 }
 
-export default function SurveyStep6({
+export default function SurveyStep7({
   handleChange,
   dogName,
 }: SurveyStepProps) {
@@ -19,9 +19,9 @@ export default function SurveyStep6({
 
   return (
     <>
-      <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step6} />
+      <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step7} />
       <Controller
-        name="step6.lactation"
+        name="step7.bodyCondition"
         control={control}
         render={({ field }) => {
           const { onToggle, isSelected } = useSurveyToggleOption({
@@ -33,14 +33,23 @@ export default function SurveyStep6({
             },
           });
           return (
-            <div className={styles.colSurveyButtonWrapper}>
-              {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.lactation.options.map(
+            <div
+              className={commonWrapper({
+                direction: "col",
+                align: "start",
+                gap: 12,
+              })}
+            >
+              {DIET_ANALYSIS_FORM_INFO.lifestyle.bodyCondition.options.map(
                 (option) => (
-                  <SurveyButton
+                  <SurveyOptionCard
                     key={option.label}
+                    imageSrc={option.imageUrl}
                     label={option.label}
                     value={option.value}
-                    inputType="radio"
+                    imageSize={114}
+                    imageWrapperSize={114}
+                    subLabel={option.subLabel}
                     isChecked={isSelected(option.value)}
                     onToggle={onToggle}
                   />

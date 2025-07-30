@@ -1,7 +1,5 @@
 "use client";
 
-import { getSurveySteps } from "@/components/pages/survey/steps/StepsElements";
-import SurveyForm from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
 import * as styles from "./Survey.css";
 import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
 import {
@@ -19,8 +17,7 @@ import {
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
-import CriticalDiseaseAlertBottomSheet from "@/components/pages/survey/bottomSheet/CriticalDiseaseAlertBottomSheet";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import SurveyResultLoading from "../resultLoading/SurveyResultLoading";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/layout/header/Header";
@@ -30,6 +27,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SkipCondition, useSurveyStep } from "@/hooks/survey/useSurveyStep";
 import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
+import { getSurveySteps } from "../steps/StepsElements";
+import CriticalDiseaseAlertBottomSheet from "../bottomSheet/CriticalDiseaseAlertBottomSheet";
 
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
@@ -46,7 +45,6 @@ export default function SurveyPageContainer() {
       router.push(`/diet-analysis/result/${surveyReportId}`);
     },
     onError: (err) => {
-      console.log("에러>>>>>>>", err);
       setIsLoading(false);
     },
   });

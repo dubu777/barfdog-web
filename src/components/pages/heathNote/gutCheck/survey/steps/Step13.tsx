@@ -6,10 +6,9 @@ import {
   GUT_CHECK_TITLES,
 } from "@/constants/healthNote/gutCheck";
 import { GutCheckStepValues } from "@/utils/validation/gutCheckValidation";
-import { colSurveyButtonWrapper } from "@/components/pages/survey/steps/StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import SurveyButtonGroup from "@/components/pages/survey/surveyButtonGroup/SurveyButtonGroup";
 import { NONE_VALUE } from "@/constants";
+import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;

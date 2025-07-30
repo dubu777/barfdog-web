@@ -7,7 +7,7 @@ import Button from "@/components/common/button/Button";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import ImageButton from "../imageButton/ImageButton";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import SurveyButtonGroup from "../surveyButtonGroup/SurveyButtonGroup";
+import SurveyButtonGroup from "../../../../common/survey/surveyButtonGroup/SurveyButtonGroup";
 import { useCheckDuplicateDogName } from "@/api/dog/queries/useCheckDuplicateDogName";
 import { useCallback, useState } from "react";
 interface SurveyStepProps {
