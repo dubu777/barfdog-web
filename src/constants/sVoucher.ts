@@ -1,0 +1,7 @@
+const LIFET_USERNAME = 'BARFDOG';
+const LIFET_PASSWORD = 'QmFyZkRvRzIxNTEkIWE=';
+
+export{
+  LIFET_USERNAME,
+  LIFET_PASSWORD,
+}

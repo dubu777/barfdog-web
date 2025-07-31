@@ -139,6 +139,9 @@ export const commonWrapper = recipe({
       20: {
         gap: "20px",
       },
+      28: {
+        gap: "28px",
+      },
       32: {
         gap: "32px",
       },
@@ -271,6 +274,7 @@ export const commonWrapper = recipe({
       },
     },
     shadow: {
+      none: {},
       light: {
         boxShadow: themeVars.shadow.light,
       },

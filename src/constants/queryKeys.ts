@@ -112,4 +112,8 @@ const queryKeys = {
     GET_GUT_CHECK_RESULT: "getGutCheckResult",
     GET_GUT_CHECK_LIST: "getGutCheckList",
   },
+  S_VOUCHER: {
+    BASE: "sVoucher",
+    GET_OBESITY_DETAIL: "getObesityDetail",
+  }
 } as const;
