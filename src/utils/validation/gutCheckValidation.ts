@@ -23,7 +23,7 @@ export const gutCheckStepSchema = yup.object({
       .array()
       .of(yup.string().required())
       .when("allergyStatus", {
-        is: "TAKING",
+        is: "HAS_ALLERGY",
         then: (schema) =>
           schema
             .min(1, "해당되는 알레르기 항목을 하나 이상 선택해주세요.")

@@ -19,9 +19,9 @@ export function buildDietAnalysisPayload(
     step7: { bodyCondition },
     step8: { activityLevel },
     step9: { snackCountLevel },
-    step10: { inedibleFood },
+    step10: { inedibleFoods },
     step11: { healthConcerns },
-    step12: { currentMeal },
+    step12: { currentMeals },
     step13: { supplements },
     step14: { healthIssues },
   } = values;
@@ -40,9 +40,9 @@ export function buildDietAnalysisPayload(
     pregnancy,
     lactation,
     snackCountLevel,
-    inedibleFood,
+    inedibleFoods,
     healthConcerns,
-    currentMeal,
+    currentMeals,
     supplements,
     healthIssues,
   };

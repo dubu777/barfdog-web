@@ -43,7 +43,9 @@ export default function SurveyPageContainer() {
   const { mutate: submitResult } = useCreateDietAnalysisResult({
     onSuccess: (response) => {
       const { surveyReportId } = response;
-      router.push(`/diet-analysis/result/${surveyReportId}`);
+      console.log("response", response);
+
+      // router.push(`/diet-analysis/result/${surveyReportId}`);
     },
     onError: (err) => {
       console.error(err);
@@ -114,21 +116,28 @@ export default function SurveyPageContainer() {
 
   const { isOpen, onClose, onToggle } = useModal();
 
-  // 임시 값
-  const navigateToResult = () => {
+  // 공통 설문 제출 함수
+  const submitSurveyAndNavigate = useCallback(async () => {
+    if (!(await trigger())) return;
+
+    const values = getValues();
     setIsLoading(true);
+
+    const payload = buildDietAnalysisPayload(values as DietAnalysisFormValues);
+    console.log("payload", payload);
+
+    submitResult(payload);
+
     setTimeout(() => {
-      router.push("/");
+      router.push("/diet-analysis");
     }, 2000);
-  };
+  }, [trigger, getValues, submitResult, router]);
 
-  // 임시 값
-  const handleContinue = () => {
+  const handleContinue = useCallback(async () => {
     onClose();
-    navigateToResult();
-  };
+    await submitSurveyAndNavigate();
+  }, [onClose, submitSurveyAndNavigate]);
 
-  // 임시 설문 제출 함수
   const handleSurveySubmit = useCallback(async () => {
     if (!(await trigger())) return;
 
@@ -140,12 +149,8 @@ export default function SurveyPageContainer() {
       return;
     }
 
-    setIsLoading(true);
-    const payload = buildDietAnalysisPayload(values as DietAnalysisFormValues);
-    console.log("payload", payload);
-
-    submitResult(payload);
-  }, [trigger, getValues, onToggle, submitResult]);
+    await submitSurveyAndNavigate();
+  }, [trigger, getValues, onToggle, submitSurveyAndNavigate]);
 
   const handleFooterButtonClick = () => {
     if (isLastStep) {

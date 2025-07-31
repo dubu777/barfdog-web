@@ -27,7 +27,7 @@ type LactationStatus =
 type SnackCountLevel = "LITTLE" | "NORMAL" | "MUCH";
 
 /** 못 먹는 식재료 */
-type InedibleFood =
+type InedibleFoods =
   | "NONE"
   | "CHICKEN"
   | "TURKEY"
@@ -51,7 +51,7 @@ type HealthConcern =
   | "SENIOR_HEALTH";
 
 /** 현재 식단 */
-type CurrentMeal =
+type CurrentMeals =
   | "DRY"
   | "WET"
   | "HOMEMADE"
@@ -113,9 +113,9 @@ interface DietAnalysisPayload {
   pregnancy: PregnancyStatus;
   lactation: LactationStatus;
   snackCountLevel: SnackCountLevel;
-  inedibleFood: InedibleFood[];
+  inedibleFoods: InedibleFoods[];
   healthConcerns: HealthConcern[];
-  currentMeal: CurrentMeal[];
+  currentMeals: CurrentMeals[];
   supplements: Supplements[];
   healthIssues: HealthIssue[];
 }
@@ -130,9 +130,9 @@ interface DietAnalysisFormValues {
   step7: Pick<DietAnalysisPayload, "bodyCondition">;
   step8: Pick<DietAnalysisPayload, "activityLevel">;
   step9: Pick<DietAnalysisPayload, "snackCountLevel">;
-  step10: Pick<DietAnalysisPayload, "inedibleFood">;
+  step10: Pick<DietAnalysisPayload, "inedibleFoods">;
   step11: Pick<DietAnalysisPayload, "healthConcerns">;
-  step12: Pick<DietAnalysisPayload, "currentMeal">;
+  step12: Pick<DietAnalysisPayload, "currentMeals">;
   step13: Pick<DietAnalysisPayload, "supplements">;
   step14: Pick<DietAnalysisPayload, "healthIssues">;
 }
@@ -152,7 +152,7 @@ interface FirstResultResponse {
   healthConcernsOtherSymptomsList: string[];
   activityLevel: ActivityLevel;
   snackCountLevel: SnackCountLevel;
-  inedibleFoodType: InedibleFood[];
+  inedibleFoodType: InedibleFoods[];
 }
 
 interface SecondResultResponse {
@@ -174,7 +174,7 @@ interface RecommendRecipeRankDto {
   recommendRecipeName: string;
   recommendRecipeDescription: string;
   recommendRecipeImgUrl: string;
-  ingredientsList: InedibleFood[];
+  ingredientsList: InedibleFoods[];
   uiNameKorean: string;
   uiNameEnglish: string;
 }
@@ -197,7 +197,7 @@ export type {
   ThirdResultResponse,
   ActivityLevel,
   SnackCountLevel,
-  InedibleFood,
+  InedibleFoods,
   RecipeEfficacy,
   RecommendRecipeRankDto,
   EfficacyData,

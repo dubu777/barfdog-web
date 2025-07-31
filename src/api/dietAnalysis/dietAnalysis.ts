@@ -9,8 +9,7 @@ import { AxiosInstance } from "axios";
 const createDietAnalysisResult = async (
   body: DietAnalysisPayload
 ): Promise<CreateDietAnalysisResultResponse> => {
-  const { data } = await axiosInstance.post("/api/dogs", body);
-  console.log(">>createDietAnalysisResult", data);
+  const { data } = await axiosInstance.post("/api/v2/recipeSurvey", body);
 
   return data;
 };

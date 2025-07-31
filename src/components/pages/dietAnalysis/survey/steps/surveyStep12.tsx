@@ -21,7 +21,7 @@ export default function SurveyStep12({
 
   // useController로 필드를 최상단에서 가져옵니다.
   const { field: currentMealField } = useController({
-    name: "step12.currentMeal",
+    name: "step12.currentMeals",
     control,
   });
 
@@ -52,7 +52,7 @@ export default function SurveyStep12({
         <DefaultText type="label2" color="gray500">
           *복수응답가능
         </DefaultText>
-        {DIET_ANALYSIS_FORM_INFO.dogDietHealth.currentMeal.options.map(
+        {DIET_ANALYSIS_FORM_INFO.dogDietHealth.currentMeals.options.map(
           (option) => (
             <SurveyButton
               key={option.label}

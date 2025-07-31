@@ -71,11 +71,18 @@ export const surveyStepsSchema = yup.object({
     snackCountLevel: yup.string().required("간식량을 선택해주세요."),
   }),
   step10: yup.object({
-    inedibleFood: yup
+    inedibleFoodStatus: yup.string().required("알러지 여부를 선택해주세요."),
+    inedibleFoods: yup
       .array()
-      .of(yup.string().defined())
-      .min(1, "못 먹는 재료를 선택해주세요.")
-      .required(),
+      .of(yup.string().required())
+      .when("inedibleFoodStatus", {
+        is: "HAS_ALLERGY",
+        then: (schema) =>
+          schema
+            .min(1, "해당되는 알레르기 항목을 하나 이상 선택해주세요.")
+            .required(),
+        otherwise: (schema) => schema.notRequired(),
+      }),
   }),
   step11: yup.object({
     healthConcerns: yup
@@ -85,7 +92,7 @@ export const surveyStepsSchema = yup.object({
       .required(),
   }),
   step12: yup.object({
-    currentMeal: yup
+    currentMeals: yup
       .array()
       .of(yup.string().defined())
       .min(1, "사료를 선택해주세요.")
@@ -123,9 +130,9 @@ export const defaultStepValues: SurveyStepValues = {
   },
   step8: { activityLevel: "" },
   step9: { snackCountLevel: "" },
-  step10: { inedibleFood: [] },
+  step10: { inedibleFoodStatus: "", inedibleFoods: [] },
   step11: { healthConcerns: [] },
-  step12: { currentMeal: [] },
+  step12: { currentMeals: [] },
   step13: { supplements: [] },
   step14: { healthIssues: [] },
 };
