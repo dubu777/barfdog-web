@@ -8,12 +8,18 @@ export async function GET(req: NextRequest) {
     const impUid = searchParams.get("impUid");
 
     if (!impUid) {
-      return NextResponse.json({ message: "impUid must be provided" }, { status: 400 });
+      return NextResponse.json(
+        { message: "impUid must be provided" },
+        { status: 400 }
+      );
     }
 
     const accessToken = await getIamportAccessToken();
     if (!accessToken) {
-      return NextResponse.json({ message: "Failed to get IAMPORT token" }, { status: 500 });
+      return NextResponse.json(
+        { message: "Failed to get IAMPORT token" },
+        { status: 500 }
+      );
     }
 
     const response = await iamportAxiosInstance.get(`/payments/${impUid}`, {
@@ -22,6 +28,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { message: `Internal Server Error-${error}` },
+      { status: 500 }
+    );
   }
 }

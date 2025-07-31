@@ -1,5 +1,5 @@
 import * as styles from "./DeliveryModal.css";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ClientDeliveryDto } from "@/types";
 import Header from "@/components/layout/header/Header";
 import AddressList from "./addressList/AddressList";
@@ -27,7 +27,6 @@ export default function DeliveryModal({
   setBackupDeliveryDto,
   showSelectButton = true,
 }: DeliveryModalProps) {
-
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
@@ -83,12 +82,17 @@ export default function DeliveryModal({
     }
   };
 
-  const headerProps = useMemo(() => getHeaderProps(viewMode), [viewMode]);
+  const headerProps = getHeaderProps(viewMode);
 
   return (
     <AnimatePresence>
       {isVisible && (
-        <ModalBackground isVisible={isVisible} onClose={handleClose} closeOnBackgroundClick={false} isDimmed={false}>
+        <ModalBackground
+          isVisible={isVisible}
+          onClose={handleClose}
+          closeOnBackgroundClick={false}
+          isDimmed={false}
+        >
           <motion.div
             className={styles.modalContainer}
             onClick={(e) => e.stopPropagation()}

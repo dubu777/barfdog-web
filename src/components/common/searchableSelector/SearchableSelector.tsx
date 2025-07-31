@@ -7,7 +7,6 @@ import { Option } from "@/types";
 import { commonWrapper } from "@/styles/common.css";
 
 interface SearchableSelectorProps {
-  label?: string; // 상단 InputField 라벨 (선택사항)
   placeholder?: string; // InputField placeholder
   options: Option[]; // 전체 견종 옵션
   selectedValue: string | null; // 현재 선택된 값 (radio)
@@ -19,7 +18,6 @@ interface SearchableSelectorProps {
 }
 
 export default function SearchableSelector({
-  label,
   placeholder,
   options,
   selectedValue,

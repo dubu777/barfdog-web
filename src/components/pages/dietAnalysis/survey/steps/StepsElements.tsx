@@ -37,45 +37,45 @@ export const getSurveySteps = ({
 }: Props) => {
   return [
     <SurveyStep1
+      key="step1"
       handleChange={handleChange}
       handleKeyDown={handleKeyDown}
       isResurvey={isResurvey}
     />,
     <SurveyStep2
+      key="step2"
       handleChange={handleChange}
       dogName={dogName}
       isResurvey={isResurvey}
     />,
     <SurveyStep3
+      key="step3"
       handleKeyDown={handleKeyDown}
       handleBlur={handleBlur}
       dogName={dogName}
     />,
-    <SurveyStep4 handleChange={handleChange} dogName={dogName} />,
-    <SurveyStep5 handleChange={handleChange} dogName={dogName} />,
-    <SurveyStep6 handleChange={handleChange} dogName={dogName} />,
-    <SurveyStep7 handleChange={handleChange} dogName={dogName} />,
-    <SurveyStep8 handleChange={handleChange} dogName={dogName} />,
-    <SurveyStep9 handleChange={handleChange} dogName={dogName} />,
+    <SurveyStep4 key="step4" handleChange={handleChange} dogName={dogName} />,
+    <SurveyStep5 key="step5" handleChange={handleChange} dogName={dogName} />,
+    <SurveyStep6 key="step6" handleChange={handleChange} dogName={dogName} />,
+    <SurveyStep7 key="step7" handleChange={handleChange} dogName={dogName} />,
+    <SurveyStep8 key="step8" handleChange={handleChange} dogName={dogName} />,
+    <SurveyStep9 key="step9" handleChange={handleChange} dogName={dogName} />,
     <SurveyStep10
+      key="step10"
       handleChange={handleChange}
       handleNextStep={handleNextStep}
       dogName={dogName}
     />,
-    <SurveyStep11 handleChange={handleChange} dogName={dogName} />,
-    <SurveyStep12
-      handleChange={handleChange}
-      handleBlur={handleBlur}
-      handleKeyDown={handleKeyDown}
-      handleNextStep={handleNextStep}
-      dogName={dogName}
-    />,
+    <SurveyStep11 key="step11" handleChange={handleChange} dogName={dogName} />,
+    <SurveyStep12 key="step12" handleChange={handleChange} dogName={dogName} />,
     <SurveyStep13
+      key="step13"
       handleChange={handleChange}
       handleNextStep={handleNextStep}
       dogName={dogName}
     />,
     <SurveyStep14
+      key="step14"
       handleChange={handleChange}
       handleNextStep={handleNextStep}
       dogName={dogName}

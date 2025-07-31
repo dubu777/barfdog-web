@@ -216,7 +216,7 @@ const GUT_CHECK_FORM_INFO = {
           options: [
             { value: "ATOPIC_DERMATITIS", label: "아토피성 피부염" },
             { value: "ALLERGIC_DERMATITIS", label: "알러지성 피부염" },
-            { value: "FLEA_TICK_INFESTATION", label: "벼룩•진드기 피부염" },
+            { value: "FLEA_TICK_DERMATITIS", label: "벼룩•진드기 피부염" },
             { value: "OTITIS", label: "귀 염증" },
             { value: "MYCOTIC_DERMATITIS", label: "진균성 피부염" },
           ],

@@ -1,6 +1,5 @@
 "use client";
 
-import * as styles from "./BodyCheckResult.css";
 import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
 import DeleteIcon from "/public/images/icons/trashbag.svg";

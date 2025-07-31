@@ -7,16 +7,8 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 import CheckIcon from "public/images/survey/check_small.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
-interface SignupStep2Props {
-  onNext: () => void;
-}
-
-export default function SignupStep2({ onNext }: SignupStep2Props) {
-  const {
-    control,
-    watch,
-    formState: { errors },
-  } = useFormContext<SignupStepValues>();
+export default function SignupStep2() {
+  const { control } = useFormContext<SignupStepValues>();
 
   const password = useWatch({ control, name: "step2.password" });
   // 1) 최소 8자 이상

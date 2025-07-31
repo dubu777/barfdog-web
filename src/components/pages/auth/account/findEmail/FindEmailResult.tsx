@@ -1,19 +1,16 @@
 "use client";
 import * as styles from "../FindAccount.css";
-import Text from "@/components/common/text/Text";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useAuthStore } from "@/store/useAuthStore";
-import { DefaultObjectType } from "@/types";
 import { useRouter } from "next/navigation";
 import Card from "@/components/common/card/Card";
 import { commonWrapper } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Divider from "@/components/common/divider/Divider";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import CheckIcon from "public/images/survey/check_small.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import KakaoIcon from "public/images/social/kakao_logo.svg";
 import NaverIcon from "public/images/social/naver_logo.svg";
+
 const FindEmailResult = () => {
   const { tempEmailUserInfo } = useAuthStore();
   const router = useRouter();
@@ -52,6 +49,7 @@ const FindEmailResult = () => {
           <div className={commonWrapper({ direction: "col", gap: 8 })}>
             {result.map((item) => (
               <div
+                key={item.id}
                 className={commonWrapper({
                   justify: "start",
                 })}

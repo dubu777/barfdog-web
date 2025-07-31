@@ -1,6 +1,5 @@
 import * as styles from "./LoginForm.css";
 import Link from "next/link";
-import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import {
   Control,
   Controller,

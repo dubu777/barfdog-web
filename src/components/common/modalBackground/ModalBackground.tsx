@@ -26,7 +26,7 @@ export default function ModalBackground({
         allowScroll(prevScrollY);
       };
     }
-  }, [isVisible]);
+  }, [isVisible, allowScroll, preventScroll]);
 
   if (!isVisible) return null;
   return (
@@ -34,7 +34,7 @@ export default function ModalBackground({
       {isVisible && (
         <ModalPortal>
           <div
-            className={styles.modalBackground({isDimmed})}
+            className={styles.modalBackground({ isDimmed })}
             onClick={closeOnBackgroundClick ? onClose : undefined}
           >
             {children}

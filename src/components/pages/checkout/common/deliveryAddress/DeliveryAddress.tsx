@@ -9,16 +9,10 @@ import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
 import { commonWrapper } from "@/styles/common.css";
 
-interface DeliveryAddressProps {}
-
-export default function DeliveryAddress({}: DeliveryAddressProps) {
+export default function DeliveryAddress() {
   const { isOpen, onToggle, onClose } = useModal();
-  const {
-    deliveryDto,
-    setDeliveryDto,
-    setBackupDeliveryDto,
-    isBundleDelivery,
-  } = useDeliveryStore();
+  const { deliveryDto, setDeliveryDto, setBackupDeliveryDto } =
+    useDeliveryStore();
 
   const { data: addressData } = useGetAddressList();
 

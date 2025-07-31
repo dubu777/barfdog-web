@@ -16,9 +16,8 @@ const getAddressList = async (): Promise<AddressResponse[]> => {
   return data?._embedded?.addressResponseDtoList || [];
 };
 
-
 // 주소 등록
-const createAddress = async (body: AddressRequest): Promise<any> => {
+const createAddress = async (body: AddressRequest) => {
   const { data } = await axiosInstance.post("/api/address/save", body);
 
   return data;
@@ -31,21 +30,26 @@ const updateAddress = async ({
 }: {
   deliveryId: number;
   body: AddressRequest;
-}): Promise<any> => {
-  const { data } = await axiosInstance.put(`/api/address/update/${deliveryId}`, body);
+}) => {
+  const { data } = await axiosInstance.put(
+    `/api/address/update/${deliveryId}`,
+    body
+  );
 
   return data;
 };
 
 // 주소 삭제
-const deleteAddress = async (deliveryId: number): Promise<any> => {
-  const { data } = await axiosInstance.delete(`/api/address/delete/${deliveryId}`);
+const deleteAddress = async (deliveryId: number) => {
+  const { data } = await axiosInstance.delete(
+    `/api/address/delete/${deliveryId}`
+  );
 
   return data;
 };
 
 // 기본 배송지 등록
-const applyDefaultAddress = async (deliveryId: number): Promise<any> => {
+const applyDefaultAddress = async (deliveryId: number) => {
   const { data } = await axiosInstance.post(
     `/api/address/default/${deliveryId}`
   );

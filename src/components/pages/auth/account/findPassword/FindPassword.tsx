@@ -6,7 +6,6 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSendTemporaryPassword } from "@/api/auth/mutations/useFindAccount";
 import { TemporaryPassword } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
-import { useAuthStore } from "@/store/useAuthStore";
 import {
   defaultSendTempPwValues,
   sendTempPwSchema,

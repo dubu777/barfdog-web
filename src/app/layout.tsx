@@ -3,11 +3,11 @@ import "@/styles/global.css";
 import { themeClass } from "@/styles/theme.css";
 import { Metadata } from "next";
 import { commonLayoutContainer } from "@/styles/common.css";
-import localFont from 'next/font/local';
+import localFont from "next/font/local";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import Toast from "@/components/common/toast/Toast";
 import SnackBar from "@/components/common/snackBar/SnackBar";
-import ChannelTalkProvider from "@/providers/ChannelTalkProvider";
+// import ChannelTalkProvider from "@/providers/ChannelTalkProvider";
 
 export const metadata: Metadata = {
   title: "바프독",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const pretendard = localFont({
   src: "../../public/fonts/PretendardVariable.woff2",
   display: "swap",
-  variable: "--font-pretendard"
+  variable: "--font-pretendard",
 });
 export default function RootLayout({
   children,
@@ -30,12 +30,12 @@ export default function RootLayout({
       <body className={pretendard.className}>
         <ReactQueryProvider>
           {/* <ChannelTalkProvider> */}
-            <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
-              {children}
-            </div>
-            <SnackBar />
-            <Toast />
-            <div id="modal-root" />
+          <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
+            {children}
+          </div>
+          <SnackBar />
+          <Toast />
+          <div id="modal-root" />
           {/* </ChannelTalkProvider> */}
         </ReactQueryProvider>
       </body>

@@ -4,9 +4,8 @@ import {
   SURVEY_TITLES,
 } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Controller, useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import * as styles from "./StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import useModal from "@/hooks/useModal";
@@ -26,61 +25,57 @@ export default function SurveyStep10({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
-  const { isOpen, onToggle, onClose } = useModal();
+  const { isOpen, onToggle: toggleModal, onClose } = useModal();
+
+  // inedibleFood field controller
+  const { field: inedibleField } = useController({
+    name: "step10.inedibleFood",
+    control,
+  });
+  const { onToggle: onFoodToggle, isSelected: isFoodSelected } =
+    useSurveyToggleOption<string>({
+      selectedValue: inedibleField.value ?? null,
+      mode: "checkbox",
+      onChange: (value) => {
+        inedibleField.onChange(value);
+        handleChange();
+      },
+    });
+
+  const handleToggleAndNext = (value: string) => {
+    onFoodToggle(value);
+    if (value === NONE_VALUE) {
+      handleNextStep();
+    }
+  };
+
   return (
     <>
       <SurveyTitle
         dogName={dogName}
         config={SURVEY_TITLES.step10}
         infoBoxContent="알러지 분류 참고사항"
-        onInfoBoxClick={onToggle}
+        onInfoBoxClick={toggleModal}
       />
-      <Controller
-        name="step10.inedibleFood"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "checkbox",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-            },
-          });
-
-          const handleToggleAndNext = (value: string) => {
-            onToggle(value);
-            if (value === NONE_VALUE) {
-              handleNextStep();
-            }
-          };
-          return (
-            <div
-              className={commonWrapper({
-                direction: "col",
-                align: "start",
-                gap: 12,
-              })}
-            >
-              <DefaultText type="label2" color="gray500">
-                *복수응답가능
-              </DefaultText>
-              {DIET_ANALYSIS_FORM_INFO.lifestyle.inedibleFood.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    inputType="checkbox"
-                    isChecked={isSelected(option.value)}
-                    onToggle={handleToggleAndNext}
-                  />
-                )
-              )}
-            </div>
-          );
-        }}
-      />
+      <div
+        className={commonWrapper({ direction: "col", align: "start", gap: 12 })}
+      >
+        <DefaultText type="label2" color="gray500">
+          *복수응답가능
+        </DefaultText>
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.inedibleFood.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.value}
+              label={option.label}
+              value={option.value}
+              inputType="checkbox"
+              isChecked={isFoodSelected(option.value)}
+              onToggle={() => handleToggleAndNext(option.value)}
+            />
+          )
+        )}
+      </div>
       <InedibleBottomSheet isOpen={isOpen} onClose={onClose} />
     </>
   );

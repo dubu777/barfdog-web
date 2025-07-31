@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
 // import * as styles from "./RegisteredDogManager.css";
@@ -16,7 +15,6 @@ export default function RegisteredDogManager({
   dogListData,
 }: RegisteredDogManagerProps) {
   console.log(dogListData, "dog");
-  const router = useRouter();
   // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아니고, 데이터는 한번에 받아오고, 10개씩 렌더링 하게 구현
   const [visibleDogs, loadMoreRef] = useInfiniteList(dogListData, {
     pageSize: 10,
@@ -32,7 +30,11 @@ export default function RegisteredDogManager({
         padding: 20,
       })}
     >
-      <CreateButton routeType='location' url='/diet-analysis/survey' text='새로운 아이 등록하기' />
+      <CreateButton
+        routeType="location"
+        url="/diet-analysis/survey"
+        text="새로운 아이 등록하기"
+      />
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         {visibleDogs.map((item) => (
           <DogCard

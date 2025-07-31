@@ -3,9 +3,7 @@ import ResultCard from "../../../common/resultCard/ResultCard";
 import { freshGutInfoBox } from "../BodyCheckResult.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Microbe from "public/images/healthNote/body-check/microbe.svg";
-import FreshGutImage from "public/images/healthNote/body-check/fresh-gut.png";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import Image from "next/image";
 
 export default function FreshGut() {
   return (

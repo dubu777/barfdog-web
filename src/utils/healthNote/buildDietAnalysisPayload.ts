@@ -1,10 +1,13 @@
-import { DietAnalysisPayload } from "@/types/dietAnalysis";
+import {
+  DietAnalysisFormValues,
+  DietAnalysisPayload,
+} from "@/types/dietAnalysis";
 
 /**
  * Survey form values를 DietAnalysisPayload로 매핑
  */
 export function buildDietAnalysisPayload(
-  values: Record<string, any>
+  values: DietAnalysisFormValues
 ): DietAnalysisPayload {
   const {
     step1: { name, gender, neutralization },

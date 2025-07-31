@@ -1,9 +1,9 @@
 "use client";
 
-import * as styles from "./StepElements.css";
+import React from "react";
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext, useController } from "react-hook-form";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
@@ -20,46 +20,44 @@ export default function SurveyStep9({
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
 
+  const { field: snackCountLevelField } = useController({
+    name: "step9.snackCountLevel",
+    control,
+  });
+
+  const { onToggle, isSelected } = useSurveyToggleOption({
+    selectedValue: snackCountLevelField.value,
+    mode: "radio",
+    onChange: (value) => {
+      snackCountLevelField.onChange(value);
+      handleChange();
+    },
+  });
+
   return (
     <>
       <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step9} />
-      <Controller
-        name="step9.snackCountLevel"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "radio",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-            },
-          });
-          return (
-            <div
-              className={commonWrapper({
-                direction: "col",
-                align: "start",
-                gap: 12,
-              })}
-            >
-              {DIET_ANALYSIS_FORM_INFO.lifestyle.snackCountLevel.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    subLabel={option.subLabel}
-                    inputType="radio"
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
-            </div>
-          );
-        }}
-      />
+      <div
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 12,
+        })}
+      >
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.snackCountLevel.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.label}
+              label={option.label}
+              value={option.value}
+              subLabel={option.subLabel}
+              inputType="radio"
+              isChecked={isSelected(option.value)}
+              onToggle={onToggle}
+            />
+          )
+        )}
+      </div>
     </>
   );
 }

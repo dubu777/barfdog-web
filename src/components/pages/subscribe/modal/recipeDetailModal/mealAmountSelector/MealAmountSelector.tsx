@@ -78,7 +78,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
         pricePer10g,
         under20g,
       });
-    }, [entry, dailyRecommendKcal, recipeDto, subscribeId]);
+    }, [entry, dailyRecommendKcal, recipeDto, subscribeId, recipeId]);
 
     const handleInputChange = useCallback(
       (val: string) => {
@@ -121,7 +121,6 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     }, [
       inputValue,
       onApply,
-      recipeId,
       dailyRecommendKcal,
       recipeDto,
       subscribeId,
@@ -206,8 +205,8 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
               <div className={commonWrapper({ align: "start", gap: 8 })}>
                 <SvgIcon src={WarningIcon} size={20} />
                 <DefaultText type="body3" color="gray900">
-                <DefaultText type="label3" color="gray900">
-                  추천 급여량 {display.under20g}g
+                  <DefaultText type="label3" color="gray900">
+                    추천 급여량 {display.under20g}g
                   </DefaultText>
                   구독 급여량은{" "}
                   <DefaultText type="label3" color="gray900">

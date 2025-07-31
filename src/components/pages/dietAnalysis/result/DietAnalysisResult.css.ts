@@ -1,4 +1,3 @@
-import { underline } from "./../../../common/defaultText/DefaultText.css";
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 

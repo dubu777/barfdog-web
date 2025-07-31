@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSuccessGeneralPayment } from '@/api/order/mutations/useSuccessGeneralPayment';
-import { useFailGeneralPayment } from '@/api/order/mutations/useFailGeneralPayment';
+import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
+import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
 import { useToastStore } from "@/store/useToastStore";
 import { DotSpinner } from "@/components/common/spinner/DotSpinner";
 import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
@@ -13,8 +13,6 @@ export default function MobileGeneralPaymentRedirect() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isProcessing, setIsProcessing] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const addToast = useToastStore((state) => state.addToast);
 
   const { mutateAsync: successPayment } = useSuccessGeneralPayment();
@@ -25,14 +23,20 @@ export default function MobileGeneralPaymentRedirect() {
       if (processedRef.current) return;
       processedRef.current = true;
       try {
-        const impUid = searchParams.get('imp_uid');
-        const impSuccess = searchParams.get('imp_success');
-        const merchantUid = searchParams.get('merchantUid');
-        const orderIdStr = searchParams.get('order_id');
-        const discountRewardStr = searchParams.get('discount_reward');
-        const errorMsg = searchParams.get('error_msg') ?? "";
+        const impUid = searchParams.get("imp_uid");
+        const impSuccess = searchParams.get("imp_success");
+        const merchantUid = searchParams.get("merchantUid");
+        const orderIdStr = searchParams.get("order_id");
+        const discountRewardStr = searchParams.get("discount_reward");
+        const errorMsg = searchParams.get("error_msg") ?? "";
 
-        if (!impUid || !impSuccess || !merchantUid || !orderIdStr || !discountRewardStr) {
+        if (
+          !impUid ||
+          !impSuccess ||
+          !merchantUid ||
+          !orderIdStr ||
+          !discountRewardStr
+        ) {
           throw new Error("필수 결제 정보가 누락되었습니다.");
         }
 
@@ -46,8 +50,8 @@ export default function MobileGeneralPaymentRedirect() {
           });
           router.push("/order/checkout/completed");
           return;
-        } 
-        
+        }
+
         // 2) 사용자가 결제창을 닫거나 취소 버튼 클릭한 경우
         if (errorMsg === "결제를 취소하였습니다.") {
           addToast("결제를 취소하였습니다.", "above-button");
@@ -61,20 +65,16 @@ export default function MobileGeneralPaymentRedirect() {
         router.push("/order/checkout/failed");
       } catch (e) {
         console.error("모바일 결제 처리 실패:", e);
-        setError(e instanceof Error ? e.message : "알 수 없는 오류가 발생했습니다.");
         router.push("/order/checkout/failed");
-      } finally {
-        setIsProcessing(false);
       }
     };
 
     processFinalPayment();
   }, [searchParams, router, successPayment, failPayment, addToast]);
 
-
-    return (
-      <div className={mobilePaymentResultContainer}>
-        <DotSpinner />
-      </div>
-    );
+  return (
+    <div className={mobilePaymentResultContainer}>
+      <DotSpinner />
+    </div>
+  );
 }

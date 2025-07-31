@@ -26,7 +26,6 @@ export default function SurveyStep4({
         render={({ field }) => {
           return (
             <SearchableSelector
-              label="견종 검색"
               placeholder="견종을 검색해 보세요"
               options={dogTypeOptions}
               selectedValue={field.value || ""}

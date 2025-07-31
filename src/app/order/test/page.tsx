@@ -4,16 +4,15 @@ import Button from "@/components/common/button/Button";
 import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
 import { useRouter } from "next/navigation";
 import * as styles from "./Test.css";
-import { deleteCookie, getCookie, setCookie } from "@/utils/auth/cookie";
+import { deleteCookie, getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
-import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 
 export default function GeneralShopTest() {
   const router = useRouter();
-  const { setOrderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
+  const { setOrderItemDtoList } = usePersistOrderStore();
   const { mutate: logout } = useLogout();
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
   const isLogin = isAuthenticated(token);
@@ -50,10 +49,8 @@ export default function GeneralShopTest() {
     });
   };
 
-
   const handleSubscriptionOptions = async () => {
-    router.push("/diet-analysis/subscribe?reportId=3769")
-      
+    router.push("/diet-analysis/subscribe?reportId=3769");
   };
 
   return (

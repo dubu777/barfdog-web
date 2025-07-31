@@ -8,12 +8,10 @@ import { useFormContext, useWatch } from "react-hook-form";
 import useModal from "@/hooks/useModal";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useToastStore } from "@/store/useToastStore";
-
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
 import { useGeneralItemManager } from "@/hooks/subscription/useGeneralItemManager";
 import GeneralItemDetailModal from "../../modal/generalItemDetailModal/GeneralItemDetailModal";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 interface GeneralItemCardProps {
   generalItemTempData: SubscribeGeneralItem;
@@ -33,6 +31,8 @@ export default function GeneralItemCard({
     onToggle: onDetailToggle,
   } = useModal();
 
+  console.log("selectedIds", selectedIds); // 빌드 에러 방지용 데이터 바인딩 후 제거
+
   const { control } = useFormContext<SubscriptionValues>();
   const watchedList = useWatch({ control, name: "generalItemList" }) ?? [];
   const currentEntry = watchedList.find(
@@ -40,11 +40,12 @@ export default function GeneralItemCard({
   );
   const currentAmount = currentEntry?.amount ?? 1;
 
-  const { applyLocal, commitEntry, removeEntry, pending, existing } = useGeneralItemManager(
-    generalItemTempData.id,
-    1,
-    generalItemTempData.originalPrice
-  );
+  const { applyLocal, commitEntry, removeEntry, pending, existing } =
+    useGeneralItemManager(
+      generalItemTempData.id,
+      1,
+      generalItemTempData.originalPrice
+    );
 
   const handleButtonClick = () => {
     if (isSelected) {
@@ -86,7 +87,13 @@ export default function GeneralItemCard({
               gap: 2,
             })}
           >
-            <div className={commonWrapper({ direction: "row", gap: 4, justify: "start" })}>
+            <div
+              className={commonWrapper({
+                direction: "row",
+                gap: 4,
+                justify: "start",
+              })}
+            >
               <DefaultText type="headline1" color="gray900">
                 {generalItemTempData.originalPrice.toLocaleString()}원
               </DefaultText>

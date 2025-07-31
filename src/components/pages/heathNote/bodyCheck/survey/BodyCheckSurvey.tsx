@@ -25,15 +25,14 @@ export default function BodyCheckSurvey({ part }: BodyCheckSurveyProps) {
   const router = useRouter();
   const config = bodyCheckSurveyConfig[part];
 
-  // 혹시 잘못된 part라면 클라이언트에서라도 리다이렉트
-  if (!config) {
-    router.replace("/health-note/body-check");
-    return null;
-  }
-
-  const { schema, defaultValues, questions, sections, Icon } = config;
-  const { control, setValue, watch, handleSubmit, formState } =
-    useFormHandler<FieldValues>(schema, defaultValues);
+  // 기본값으로 첫 번째 config 사용 (훅 호출을 위해)
+  const safeConfig = config || bodyCheckSurveyConfig.gut;
+  const { schema, defaultValues, questions, sections, Icon } = safeConfig;
+  
+  const { control, setValue, watch, formState } = useFormHandler<FieldValues>(
+    schema,
+    defaultValues
+  );
 
   const {
     currentStep,
@@ -51,6 +50,12 @@ export default function BodyCheckSurvey({ part }: BodyCheckSurveyProps) {
     formState,
     control,
   });
+
+  // 잘못된 part라면 리다이렉트 후 null 반환
+  if (!config) {
+    router.replace("/health-note/body-check");
+    return null;
+  }
 
   const handleClick = () => {
     handleNextStep();

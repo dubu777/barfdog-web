@@ -12,14 +12,13 @@ import Skincare from "public/images/survey/Icon-Skincare.svg";
 import Born from "public/images/survey/Icon-Born.svg";
 import Puppy from "public/images/survey/Icon-Puppy.svg";
 import Olddog from "public/images/survey/Icon-Olddog.svg";
-import { ComponentType, SVGProps } from "react";
 
 const ACTIVITY_LEVEL_MAP = {
-  VERY_MUCH: 5,
-  MUCH: 4,
+  VERY_HIGH: 5,
+  HIGH: 4,
   NORMAL: 3,
-  LITTLE: 2,
-  VERY_LITTLE: 1,
+  LOW: 2,
+  VERY_LOW: 1,
 } as const satisfies Record<ActivityLevel, number>;
 
 const SNACK_COUNT_LEVEL_MAP = {

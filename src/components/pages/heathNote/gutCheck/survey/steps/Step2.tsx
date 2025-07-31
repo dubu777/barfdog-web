@@ -1,4 +1,4 @@
-import { Controller, Path, useFormContext, useWatch } from "react-hook-form";
+import { Controller, Path, useFormContext, useWatch, useController } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import {
@@ -27,47 +27,47 @@ export default function GutCheckStep2({
   dogName,
 }: SurveyStepProps) {
   const { control, setValue } = useFormContext<GutCheckStepValues>();
+  
+  const { field: probioticsStatusField } = useController({
+    name: "step2.probioticsStatus",
+    control,
+  });
+
+  const { onToggle, isSelected } = useSurveyToggleOption({
+    selectedValue: probioticsStatusField.value,
+    mode: "radio",
+    onChange: (value) => {
+      probioticsStatusField.onChange(value);
+      handleChange();
+      if (value === "NOT_TAKING") {
+        setValue("step2.probioticsProduct", "", {
+          shouldValidate: true,
+        });
+      }
+    },
+  });
+
   const probioticsOption = useWatch({
     name: "step2.probioticsStatus",
     control,
   });
+
   return (
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step2} />
-      <Controller
-        name="step2.probioticsStatus"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "radio",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-              if (value === "NOT_TAKING") {
-                setValue("step2.probioticsProduct", "", {
-                  shouldValidate: true,
-                });
-              }
-            },
-          });
-          return (
-            <div className={commonWrapper({ align: "start", gap: 8 })}>
-              {GUT_CHECK_FORM_INFO.healthStatus.probioticsStatus.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
-            </div>
-          );
-        }}
-      />
+      <div className={commonWrapper({ align: "start", gap: 8 })}>
+        {GUT_CHECK_FORM_INFO.healthStatus.probioticsStatus.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.label}
+              label={option.label}
+              value={option.value}
+              isChecked={isSelected(option.value)}
+              onToggle={onToggle}
+            />
+          )
+        )}
+      </div>
       {probioticsOption === "TAKING" && (
         <Controller
           name="step2.probioticsProduct"

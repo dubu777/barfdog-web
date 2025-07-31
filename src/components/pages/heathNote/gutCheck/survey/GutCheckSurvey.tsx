@@ -31,9 +31,11 @@ export default function GutCheckSurvey() {
   const { mutate: submitResult } = useCreateGutCheckResult({
     onSuccess: (response) => {
       // TODO: 성공 시 결과 페이지로 이동 또는 사용자 피드백 처리
+      console.log("response", response); // 임시
     },
     onError: (err) => {
       // TODO: 에러 처리 로직 추가 (사용자에게 에러 메시지 표시)
+      console.error("err", err);
     },
   });
 
@@ -47,16 +49,10 @@ export default function GutCheckSurvey() {
     mode: "all",
   });
 
-  const {
-    control,
-    watch,
-    trigger,
-    getValues,
-    formState: { errors },
-  } = methods;
+  const { trigger, getValues } = methods;
 
-  const stepValues = watch();
-  const stepErrors = errors;
+  // const stepValues = watch();
+  // const stepErrors = errors;
 
   const stepKeys = Object.keys(defaultGutCheckStepValues) as GutCheckStepKeys[];
 

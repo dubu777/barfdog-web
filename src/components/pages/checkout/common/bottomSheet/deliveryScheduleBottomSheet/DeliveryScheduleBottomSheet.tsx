@@ -20,6 +20,9 @@ export default function DeliveryScheduleBottomSheet({
   nextDeliveryDate,
   onClose,
 }: DeliveryScheduleBottomSheetProps) {
+  // 필요 유무 판단후 삭제 예정 25.07.30
+  console.log("nextDeliveryDate", nextDeliveryDate);
+
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.deliveryScheduleBottomSheetContainer}>

@@ -9,25 +9,21 @@ import { PAYMENT_METHOD_INFO } from "@/constants";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
 
-interface PaymentMethodProps {}
-
-
-
-export default function PaymentMethod({}: PaymentMethodProps) {
+export default function PaymentMethod() {
   const { paymentMethod, setPaymentMethod } = usePaymentStore();
 
-    // radio 모드로 toggle 로직 적용
-    const { onToggle, isSelected } = useToggleOption(
-      paymentMethod,
-      "radio",
-      setPaymentMethod
-    );
-  
+  // radio 모드로 toggle 로직 적용
+  const { onToggle, isSelected } = useToggleOption(
+    paymentMethod,
+    "radio",
+    setPaymentMethod
+  );
+
   return (
     <OrderSection title="결제 수단">
       {Object.entries(PAYMENT_METHOD_INFO).map(
         ([key, { value, label, imageUrl }]) => (
-        <LabeledRadioButton
+          <LabeledRadioButton
             key={key}
             value={value}
             isChecked={isSelected(value)}

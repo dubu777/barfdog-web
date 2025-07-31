@@ -1,11 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import {
-  ActivityLevel,
-  FirstResultResponse,
-  SnackCountLevel,
-} from "@/types/dietAnalysis";
+import { FirstResultResponse } from "@/types/dietAnalysis";
 import Card from "@/components/common/card/Card";
 import DotIcon from "public/images/dietAnalysis/square-dot.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -134,7 +130,7 @@ export default function ResultSummary({
               color="yellow"
             />
           </div>
-          <Card shadow="none" className={resultCardStyle} padding={12} gap={12}>
+          <Card className={resultCardStyle} padding={12} gap={12}>
             <div className={commonWrapper({ gap: 6, justify: "start" })}>
               <SvgIcon src={WarningIcon} />
               <DefaultText type="headline2">알러지</DefaultText>

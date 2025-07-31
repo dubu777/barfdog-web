@@ -1,6 +1,11 @@
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Controller, Path, useFormContext } from "react-hook-form";
+import {
+  Controller,
+  Path,
+  useController,
+  useFormContext,
+} from "react-hook-form";
 import ImageButton from "../imageButton/ImageButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyButtonGroup from "../../../../common/survey/surveyButtonGroup/SurveyButtonGroup";
@@ -26,41 +31,37 @@ export default function SurveyStep3({
     formState: { errors },
   } = useFormContext<SurveyStepValues>();
 
+  const { field: dogSizeField } = useController({
+    name: "step3.dogSize",
+    control,
+  });
+
+  const { onToggle, isSelected } = useSurveyToggleOption({
+    selectedValue: dogSizeField.value,
+    mode: "radio",
+    onChange: (value) => dogSizeField.onChange(value),
+  });
+
   return (
     <>
       <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step3} />
-      <Controller
-        name="step3.dogSize"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "radio",
-            onChange: (value) => {
-              field.onChange(value);
-            },
-          });
-          return (
-            <SurveyButtonGroup title="견사이즈">
-              {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.dogSize.options.map(
-                (option) => (
-                  <ImageButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    inputType="radio"
-                    imageSrc={option.imageUrl}
-                    imageWidth={70}
-                    imageHeight={70}
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
-            </SurveyButtonGroup>
-          );
-        }}
-      />
+
+      <SurveyButtonGroup title="견사이즈">
+        {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.dogSize.options.map((option) => (
+          <ImageButton
+            key={option.label}
+            label={option.label}
+            value={option.value}
+            inputType="radio"
+            imageSrc={option.imageUrl}
+            imageWidth={70}
+            imageHeight={70}
+            isChecked={isSelected(option.value)}
+            onToggle={onToggle}
+          />
+        ))}
+      </SurveyButtonGroup>
+
       <SurveyButtonGroup title="몸무게" error={errors.step3?.weight?.message}>
         <Controller
           name="step3.weight"
@@ -72,7 +73,6 @@ export default function SurveyStep3({
               placeholder="몸무게 입력"
               onChange={(e) => {
                 field.onChange(e);
-                console.log("field.name", field.name);
               }}
               onKeyDown={(e) => handleKeyDown(e, field.name)}
               onBlur={() => handleBlur(field.name)}

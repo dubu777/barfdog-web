@@ -1,5 +1,4 @@
 import { useRouter } from "next/navigation";
-import * as styles from "./LoginSnsButtons.css";
 import Image from "next/image";
 import { SnSProvider } from "@/types";
 import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
@@ -39,7 +38,7 @@ const LoginSnsButton = ({
     });
     const url = `${auth.codeUrl}?${params.toString()}`;
     router.push(url);
-  }, [config, router]);
+  }, [config, router, callbackUrl]);
 
   const handleClick = () => {
     if (defer && onDeferredLoginClick) {

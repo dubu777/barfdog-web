@@ -201,12 +201,12 @@ export default function CouponModal({
         discountAmount: appliedCoupon.discountAmount,
       });
     }
-  }, [appliedCoupon, isOpen]);
+  }, [appliedCoupon, isOpen, setSelectedCoupon]);
 
   return (
     <FullModalWrapper
       isVisible={isOpen}
-      headerTitle='쿠폰'
+      headerTitle="쿠폰"
       handleClose={handleModalClose}
       className={styles.couponModalContainer}
     >

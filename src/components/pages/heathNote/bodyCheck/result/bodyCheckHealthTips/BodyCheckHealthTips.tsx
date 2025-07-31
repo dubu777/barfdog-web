@@ -1,4 +1,3 @@
-import { BODY_PART_HEALTH_TIPS } from "@/constants/healthNote/bodyCheck/result";
 import ResultCard from "../../../common/resultCard/ResultCard";
 import ResultAccordion from "../../../common/resultAccordion/ResultAccordion";
 import DefaultText from "@/components/common/defaultText/DefaultText";

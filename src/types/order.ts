@@ -1,42 +1,6 @@
 import { PAYMENT_METHOD } from "@/constants";
 import { PlanName } from "./subscription";
 
-export type {
-  SubscriptionOrderData,
-  GeneralOrderData,
-  OrderDetailDto,
-  SubscriptionOrderDto,
-  OrderItemDtoList,
-  MergeOrderData,
-  OrderDetailData,
-  MergeOrderAndRecipe,
-  PaymentMethod,
-  OrderDetailType,
-  GeneralOrderSheetResponse,
-  GeneralOrderSheetRequest,
-  GeneralOrderItem,
-  OrderItemDto,
-  OrderItem,
-  GeneralOrderItemRequest,
-  SaveOrderResponse,
-  SaveGeneralOrderRequest,
-  OrderType,
-  DeliveryDto,
-  SaveSubscriptionOrderRequest,
-  OrderTypeKey,
-  SuccessGeneralPaymentRequest,
-  SuccessGeneralOrderResponse,
-  PaymentMethodInfo,
-  BundleDeliveryAddress,
-  DefaultAddress,
-  ClientDeliveryDto,
-  OrderStatus,
-  SubscriptionOrderSheetResponse,
-  PaymentResponse,
-  PaymentData,
-  PaymentValidationData,
-};
-
 interface SuccessGeneralPaymentRequest {
   impUid: string;
   merchantUid: string | null;
@@ -53,7 +17,6 @@ interface SuccessGeneralOrderResponse {
     };
   };
 }
-
 
 interface SaveSubscriptionOrderRequest {
   agreePrivacy: boolean; // 개인정보 제공 동의 여부
@@ -79,7 +42,6 @@ interface SaveOrderResponse {
     id: number;
     merchantUid: string;
     status: string; // 'BEFORE_PAYMENT'와 같은 상태
-    _links?: Record<string, any>; // 필요한 경우 구체적으로 선언
   };
   status: number; // HTTP 상태 코드
 }
@@ -130,7 +92,6 @@ interface ClientDeliveryDto extends DeliveryDto {
   default: boolean;
 }
 
-
 interface GeneralOrderItemRequest {
   itemDto: {
     itemId: number;
@@ -167,7 +128,6 @@ interface GeneralOrderItem {
   optionDtoList?: OptionDto[];
 }
 
-
 interface DefaultAddress {
   city: string;
   default: boolean;
@@ -191,7 +151,10 @@ interface BundleDeliveryAddress {
   street: string; // 도로명 주소
 }
 
-type OrderStatus = "UNSUBSCRIBE_ORDER" | "TODAY_IS_NEXT_DELIVERY" | "SUBSCRIBE_ORDER"
+type OrderStatus =
+  | "UNSUBSCRIBE_ORDER"
+  | "TODAY_IS_NEXT_DELIVERY"
+  | "SUBSCRIBE_ORDER";
 
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
@@ -212,11 +175,9 @@ interface OrderItem {
   name: string;
 }
 
-
-
 interface SubscriptionOrderSheetResponse {
   autoUseReward: boolean;
-  defaultAddress: DefaultAddress; 
+  defaultAddress: DefaultAddress;
   deliveryDate: string; // 현재 결제 건 배송 예정일
   discountSubscribeAlliance: number;
   email: string;
@@ -231,7 +192,7 @@ interface SubscriptionOrderSheetResponse {
 
 interface SubscribeDto {
   id: number;
-  plan: PlanName; 
+  plan: PlanName;
   nextPaymentPrice: number;
   discountGrade: number;
   oneMealGramsPerRecipe: string;
@@ -362,8 +323,6 @@ interface MergeOrderAndRecipe extends OrderDetailData {
   recipeDto?: OrderRecipeDto;
 }
 
-
-
 interface PaymentMethodInfo {
   value: PaymentMethod;
   label: string;
@@ -398,11 +357,47 @@ interface PaymentValidationData {
   merchantUid: string;
 }
 
-
 type PaymentMethod = keyof typeof PAYMENT_METHOD;
 
-type OrderDetailType = 'general' | 'subscribe';
+type OrderDetailType = "general" | "subscribe";
 
 type OrderType = "SUBSCRIBE" | "GENERAL";
 
 type OrderTypeKey = "SUBSCRIPTION" | "GENERAL";
+
+export type {
+  SubscriptionOrderData,
+  GeneralOrderData,
+  OrderDetailDto,
+  SubscriptionOrderDto,
+  OrderItemDtoList,
+  MergeOrderData,
+  OrderDetailData,
+  MergeOrderAndRecipe,
+  PaymentMethod,
+  OrderDetailType,
+  GeneralOrderSheetResponse,
+  GeneralOrderSheetRequest,
+  GeneralOrderItem,
+  OrderItemDto,
+  OrderItem,
+  GeneralOrderItemRequest,
+  SaveOrderResponse,
+  SaveGeneralOrderRequest,
+  OrderType,
+  DeliveryDto,
+  SaveSubscriptionOrderRequest,
+  OrderTypeKey,
+  SuccessGeneralPaymentRequest,
+  SuccessGeneralOrderResponse,
+  PaymentMethodInfo,
+  BundleDeliveryAddress,
+  DefaultAddress,
+  ClientDeliveryDto,
+  OrderStatus,
+  SubscriptionOrderSheetResponse,
+  PaymentResponse,
+  PaymentData,
+  PaymentValidationData,
+  SubscribeDto,
+};

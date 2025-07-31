@@ -21,7 +21,10 @@ export type {
 
 declare global {
   interface Window {
-    IMP?: any;
+    IMP?: {
+      init: (userCode: string) => void;
+      request_pay: <T = unknown>(data: unknown, callback?: (response: T) => void) => void;
+    };
   }
 }
 

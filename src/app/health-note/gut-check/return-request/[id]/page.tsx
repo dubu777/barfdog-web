@@ -10,8 +10,6 @@ export default async function ReturnRequestPage({
   params,
 }: ReturnRequestPageProps) {
   const { id } = await params;
-  
-  return (
-    <ReturnRequest />
-  );
+  const diagnosisId = parseInt(id, 10);
+  return <ReturnRequest diagnosisId={diagnosisId} />;
 }

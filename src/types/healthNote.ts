@@ -4,7 +4,6 @@ import {
   HEALTH_CHECK_HISTORY_TAG_MAP,
 } from "@/constants";
 import { DOG_SIZE } from "@/constants/dog";
-import { Colors } from "@/constants/style";
 
 interface DogInfo {
   dogId: number;

@@ -2,7 +2,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper, pointColor } from "@/styles/common.css";
 import { SignupStepValues } from "@/utils/validation/authValidation";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { Controller, useController, useFormContext } from "react-hook-form";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
 import { format } from "date-fns";
 import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
@@ -17,12 +17,22 @@ interface SignupStep3Props {
 }
 
 export default function SignupStep3({ handleChange }: SignupStep3Props) {
-  const {
-    control,
-    watch,
-    formState: { errors },
-  } = useFormContext<SignupStepValues>();
+  const { control } = useFormContext<SignupStepValues>();
   const { isMobileDevice } = useDeviceState();
+
+  const { field: genderField } = useController({
+    name: "step3.gender",
+    control,
+  });
+  const { onToggle: onGenderToggle, isSelected: isGenderSelected } =
+    useSurveyToggleOption<string>({
+      selectedValue: genderField.value ?? null,
+      mode: "radio",
+      onChange: (value) => {
+        genderField.onChange(value);
+        handleChange();
+      },
+    });
   return (
     <>
       <DefaultText type="title2">
@@ -68,47 +78,33 @@ export default function SignupStep3({ handleChange }: SignupStep3Props) {
           />
         )}
       />
-      <Controller
-        name="step3.gender"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "radio",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-            },
-          });
-          return (
-            <div
-              className={commonWrapper({
-                direction: "col",
-                gap: 8,
-                align: "start",
-              })}
+
+      <div
+        className={commonWrapper({
+          direction: "col",
+          gap: 8,
+          align: "start",
+        })}
+      >
+        <DefaultText type="label4" color="gray600">
+          성별정보<span className={pointColor}> *</span>
+        </DefaultText>
+        <div className={commonWrapper({ justify: "start", gap: 20 })}>
+          {GENDER_CATEGORY.map(({ label, value }) => (
+            <LabeledRadioButton
+              key={label}
+              value={value}
+              fullWidth={false}
+              optionType="radio"
+              isChecked={isGenderSelected(value)}
+              onToggle={() => onGenderToggle(value)}
             >
-              <DefaultText type="label4" color="gray600">
-                성별정보<span className={pointColor}> *</span>
-              </DefaultText>
-              <div className={commonWrapper({ justify: "start", gap: 20 })}>
-                {GENDER_CATEGORY.map(({ label, value }) => (
-                  <LabeledRadioButton
-                    key={label}
-                    value={value}
-                    fullWidth={false}
-                    optionType="radio"
-                    isChecked={isSelected(value)}
-                    onToggle={onToggle}
-                  >
-                    <DefaultText type="label2">{label}</DefaultText>
-                  </LabeledRadioButton>
-                ))}
-              </div>
-            </div>
-          );
-        }}
-      />
+              <DefaultText type="label2">{label}</DefaultText>
+            </LabeledRadioButton>
+          ))}
+        </div>
+      </div>
+
       <Controller
         name="step3.birthday"
         control={control}

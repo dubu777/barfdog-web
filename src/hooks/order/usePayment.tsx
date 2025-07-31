@@ -36,9 +36,16 @@ export function usePayment() {
     }
 
     const IMP = window.IMP;
-    IMP.init(process.env.NEXT_PUBLIC_IAMPORT_CODE);
+    const iamportCode = process.env.NEXT_PUBLIC_IAMPORT_CODE;
+    
+    if (!iamportCode) {
+      console.error("IAMPORT_CODE가 설정되지 않았습니다.");
+      return;
+    }
+    
+    IMP.init(iamportCode);
 
-    IMP.request_pay(paymentData, (response: IamportResponseMap[T]) => {
+    IMP.request_pay<IamportResponseMap[T]>(paymentData, (response: IamportResponseMap[T]) => {
       if (orderType === ORDER_TYPE.GENERAL) {
         callback(response);
       } else if (orderType === ORDER_TYPE.SUBSCRIPTION) {

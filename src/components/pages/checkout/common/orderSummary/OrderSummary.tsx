@@ -81,6 +81,7 @@ export default function OrderSummary({
     orderItemDtoList,
     appliedCoupon,
     plan,
+    originPrice,
   ]);
 
   const {
@@ -102,7 +103,20 @@ export default function OrderSummary({
     setDiscountTotal(totalDiscountWithoutPlan);
     setDiscountPlan(planDiscount);
     setPaymentPrice(finalPaymentAmount);
-  }, [maxAvailableCoupon, maxAvailableReward, finalPaymentAmount]);
+  }, [
+    maxAvailableCoupon,
+    maxAvailableReward,
+    deliveryFee,
+    planDiscount,
+    totalDiscountWithoutPlan,
+    finalPaymentAmount,
+    setMaxAvailableCouponDiscount,
+    setMaxAvailableReward,
+    setDeliveryPrice,
+    setDiscountTotal,
+    setDiscountPlan,
+    setPaymentPrice,
+  ]);
   const itemDiscountAmount = originPrice - appliedDefaultDiscountPrice;
   const { isOpen, onClose, onToggle } = useModal();
 
@@ -147,7 +161,11 @@ export default function OrderSummary({
               <DefaultText type="label4" color="gray700">
                 2회차 예상 결제 금액
               </DefaultText>
-              <SvgIcon src={HelpIcon} color="gray700" onClick={() => onToggle()} />
+              <SvgIcon
+                src={HelpIcon}
+                color="gray700"
+                onClick={() => onToggle()}
+              />
             </div>
             <DefaultText type="headline2" color="gray700">
               {formatNumberWithCommas(appliedDefaultDiscountPrice)}원

@@ -2,17 +2,22 @@ import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import * as styles from "./TermsBottomSheet.css";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { commonWrapper } from "@/styles/common.css";
 
 interface TermsBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: () => void;
 }
 
 export default function TermsBottomSheet({
   isOpen,
   onClose,
+  onSubmit,
 }: TermsBottomSheetProps) {
+  const handleSubmit = () => {
+    onSubmit();
+    onClose();
+  };
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.termsBottomSheetContainer}>
@@ -21,7 +26,7 @@ export default function TermsBottomSheet({
       <ButtonDocked
         type="full-button"
         primaryButtonLabel="확인"
-        onPrimaryClick={onClose}
+        onPrimaryClick={handleSubmit}
         primaryButtonSize="lg"
       />
     </BottomSheet>

@@ -1,11 +1,7 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
-import Card from "@/components/common/card/Card";
-import {
-  RecommendRecipeRankDto,
-  ThirdResultResponse,
-} from "@/types/dietAnalysis";
+import { RecommendRecipeRankDto } from "@/types/dietAnalysis";
 import RecommendedRecipeCard from "../card/recommendedRecipeCard/RecommendedRecipeCard";
 
 interface RecommendedRecipeListProps {

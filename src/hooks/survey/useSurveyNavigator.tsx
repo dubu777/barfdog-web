@@ -1,10 +1,9 @@
 "use client";
-import { NONE_VALUE } from "@/constants";
-import { GUT_CHECK_OPTIONAL_FIELDS } from "@/constants/healthNote/gutCheck";
+
 import { useCallback } from "react";
 import { UseFormReturn, Path } from "react-hook-form";
 
-export interface UseSurveyNavigatorOptions<T extends Record<string, any>> {
+export interface UseSurveyNavigatorOptions<T extends Record<string, unknown>> {
   methods: UseFormReturn<T>;
   /** 현재 단계의 최상위 key (예: 'step1') */
   currentStepKey: keyof T;
@@ -26,7 +25,7 @@ export interface UseSurveyNavigatorReturn<T> {
   handleKeyDown: (e: React.KeyboardEvent, fieldName: Path<T>) => Promise<void>;
 }
 
-export function useSurveyNavigator<T extends Record<string, any>>({
+export function useSurveyNavigator<T extends Record<string, unknown>>({
   methods,
   currentStepKey,
   handleNextStep,
@@ -64,7 +63,7 @@ export function useSurveyNavigator<T extends Record<string, any>>({
       path.startsWith(String(currentStepKey))
     );
     return allFilled && !hasError;
-  }, [watch, errors, currentStepKey]);
+  }, [watch, errors, currentStepKey, optionalField]);
 
   /**
    * 입력값 변경 시 호출: 해당 스텝 전체 필드 검증하고,

@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-type DeviceOS = 'iOS' | 'Android' | 'Other';
+type DeviceOS = "iOS" | "Android" | "Other";
 
-// 반환 타입 정의
 interface DeviceState {
   isMobileWidth: boolean;
   isMobileDevice: boolean;
@@ -10,18 +9,24 @@ interface DeviceState {
   deviceOS: DeviceOS;
 }
 
-// Debounce 함수 추가
-const debounce = (func: () => void, delay: number) => {
-  let timer: NodeJS.Timeout;
+/**
+ * debounce 유틸
+ */
+function debounce(func: () => void, delay: number): () => void {
+  let timer: ReturnType<typeof setTimeout>;
   return () => {
     clearTimeout(timer);
     timer = setTimeout(func, delay);
   };
-};
+}
 
-const getMobileOS = (): DeviceOS => {
-  const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
-  const hasMSStream = typeof (window as any).MSStream !== 'undefined';
+/**
+ * 모바일 OS 감지
+ */
+function getMobileOS(): DeviceOS {
+  // navigator.userAgentData가 없는 경우 전통적 userAgent나 window.opera 확인
+  const userAgent = navigator.userAgent || window.opera || "";
+  const hasMSStream = typeof window.MSStream !== "undefined";
 
   if (/android/i.test(userAgent)) return "Android";
   if (/iPad|iPhone|iPod/.test(userAgent) && !hasMSStream) return "iOS";
@@ -33,19 +38,22 @@ export default function useDeviceState(): DeviceState {
     isMobileWidth: false,
     isMobileDevice: false,
     deviceWidth: 0,
-    deviceOS: 'Other',
+    deviceOS: "Other",
   });
 
-  // 모바일 디바이스 여부 확인 함수
-  const checkIsMobileDevice = (): boolean => {
-    if ("userAgentData" in navigator) {
-      return (navigator as any).userAgentData.mobile || navigator.maxTouchPoints > 0;
+  /** 모바일 디바이스 여부 확인 */
+  const checkIsMobileDevice = useCallback(() => {
+    if (navigator.userAgentData) {
+      return navigator.userAgentData.mobile || navigator.maxTouchPoints > 0;
     }
-    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || navigator.maxTouchPoints > 0;
-  };
+    return (
+      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+      navigator.maxTouchPoints > 0
+    );
+  }, []);
 
-  // 디바이스 상태 업데이트 함수
-  const updateDeviceState = () => {
+  /** 디바이스 상태 업데이트 */
+  const updateDeviceState = useCallback(() => {
     const deviceWidth = window.innerWidth;
     setDeviceState({
       isMobileWidth: deviceWidth <= 600,
@@ -53,7 +61,7 @@ export default function useDeviceState(): DeviceState {
       deviceWidth,
       deviceOS: getMobileOS(),
     });
-  };
+  }, [checkIsMobileDevice]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -68,7 +76,7 @@ export default function useDeviceState(): DeviceState {
     return () => {
       window.removeEventListener("resize", debouncedUpdate);
     };
-  }, []);
+  }, [updateDeviceState]);
 
   return deviceState;
 }

@@ -1,4 +1,9 @@
-export function buildGutCheckPayload(values: Record<string, any>) {
+import { CreateGutCheckRequest } from "@/types/healthNote/gutCheck";
+import { GutCheckStepValues } from "../validation/gutCheckValidation";
+
+export function buildGutCheckPayload(
+  values: GutCheckStepValues
+): CreateGutCheckRequest {
   const {
     step1: { bodyFit },
     step2: { probioticsStatus, probioticsProduct },
@@ -25,25 +30,28 @@ export function buildGutCheckPayload(values: Record<string, any>) {
     survey: {
       bodyFit,
       probioticsStatus,
-      probioticsProduct,
+      probioticsProduct: probioticsProduct ?? "",
       antibioticsStatus,
       allergyStatus,
-      allergenFoodList,
+      allergenFoodList: allergenFoodList ?? [],
       pregnancyStatus,
       activityLevel,
-      treatingDiseaseList,
+      treatingDiseaseList:
+        treatingDiseaseList?.filter(
+          (item): item is string => item !== undefined
+        ) ?? [],
       feedType,
       foodType,
-      foodProduct,
+      foodProduct: foodProduct ?? "",
       feedTime,
       defecationHabit,
       snackLevel,
-      cohabitingPetList,
-      supplementTypeList,
-      supplementProduct,
-      healthConcernTypeList,
+      cohabitingPetList: cohabitingPetList ?? [],
+      supplementTypeList: supplementTypeList ?? [],
+      supplementProduct: supplementProduct ?? "",
+      healthConcernTypeList: healthConcernTypeList ?? [],
       acquisitionType,
-      otherComment,
+      otherComment: otherComment ?? "",
     },
   };
 }

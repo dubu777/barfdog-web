@@ -1,58 +1,85 @@
 import { GUT_CHECK_FORM_INFO } from "@/constants/healthNote/gutCheck";
 
+// ===== 1) 타입 선언 =====
+interface GutCheckOption {
+  value: string;
+  label: string;
+}
+
+interface GutCheckGroup {
+  options?: GutCheckOption[];
+}
+
+interface GutCheckField {
+  key?: string;
+  options?: GutCheckOption[];
+  groups?: GutCheckGroup[];
+}
+
+// GUT_CHECK_FORM_INFO의 키 ('healthStatus' | 'lifestyle' | 'additionalInfo')
+type SectionType = keyof typeof GUT_CHECK_FORM_INFO;
+
+// 각 섹션은 필드 키 → GutCheckField 로 매핑된 객체
+type GutCheckSection = Record<string, GutCheckField>;
+
+// ===== 2) 유틸 함수 수정 =====
+
 // 필드의 라벨(key) 가져오기
-export function getFieldLabel(fieldKey: string, sectionType: 'healthStatus' | 'lifestyle' | 'additionalInfo'): string {
-  const section = GUT_CHECK_FORM_INFO[sectionType];
-  const field = section[fieldKey as keyof typeof section] as any;
-  
-  if (field && typeof field === 'object' && 'key' in field) {
-    return field.key as string;
-  }
-  
-  return fieldKey; // key 없으면 원본 필드명 반환
+export function getFieldLabel(
+  fieldKey: string,
+  sectionType: SectionType
+): string {
+  // GUT_CHECK_FORM_INFO가 이미 올바른 구조를 가진다고 가정
+  const section = GUT_CHECK_FORM_INFO[sectionType] as GutCheckSection;
+  const field = section[fieldKey];
+
+  // key가 있으면 반환, 없으면 원본 fieldKey
+  return field?.key ?? fieldKey;
 }
 
 // 값을 라벨로 변환하기
-export function formatFieldValue(value: string | string[], fieldKey: string, sectionType: 'healthStatus' | 'lifestyle' | 'additionalInfo'): string {
+export function formatFieldValue(
+  value: string | string[],
+  fieldKey: string,
+  sectionType: SectionType
+): string {
   const EMPTY_TEXT = "없음";
-  
+
   if (Array.isArray(value)) {
     if (value.length === 0) return EMPTY_TEXT;
-    
-    const formattedValues = value.map(v => {
-      const singleValue = formatSingleValue(v, fieldKey, sectionType);
-      return singleValue;
-    });
-    
-    return formattedValues.join(", ");
+    return value
+      .map((v) => formatSingleValue(v, fieldKey, sectionType))
+      .join(", ");
   }
-  
-  if (!value || value.trim() === "") return EMPTY_TEXT;
-  
+
+  if (!value.trim()) return EMPTY_TEXT;
   return formatSingleValue(value, fieldKey, sectionType);
 }
 
 // 단일 값을 라벨로 변환
-function formatSingleValue(value: string, fieldKey: string, sectionType: 'healthStatus' | 'lifestyle' | 'additionalInfo'): string {
-  const section = GUT_CHECK_FORM_INFO[sectionType];
-  const field = section[fieldKey as keyof typeof section] as any;
-  
-  if (!field || typeof field !== 'object') return value;
-  
+function formatSingleValue(
+  value: string,
+  fieldKey: string,
+  sectionType: SectionType
+): string {
+  const section = GUT_CHECK_FORM_INFO[sectionType] as GutCheckSection;
+  const field = section[fieldKey];
+  if (!field) return value;
+
   // options가 있는 경우
-  if ('options' in field && Array.isArray(field.options)) {
-    const option = field.options.find((opt: any) => opt.value === value);
-    if (option) return option.label;
+  if (field.options) {
+    const opt = field.options.find((o) => o.value === value);
+    if (opt) return opt.label;
   }
-  
-  // groups가 있는 경우 (allergenFoodList, treatingDiseaseList 등)
-  if ('groups' in field && Array.isArray(field.groups)) {
+
+  // groups가 있는 경우
+  if (field.groups) {
     for (const group of field.groups) {
-      const option = group.options?.find((opt: any) => opt.value === value);
-      if (option) return option.label;
+      const opt = group.options?.find((o) => o.value === value);
+      if (opt) return opt.label;
     }
   }
-  
+
   // 매칭되지 않으면 원본 값 반환
   return value;
 }

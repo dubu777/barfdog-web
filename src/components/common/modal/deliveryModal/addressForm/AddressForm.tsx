@@ -41,8 +41,7 @@ export default function AddressForm({
     useFormHandler<AddressRequest>(addressSchema, initialValues, "onBlur");
 
   // 수정 모드일 경우 기존 배송지 id와 기본 배송지 id 비교, 추가 모드면 기본 배송지 선택 false
-  const isDefaultAddress =
-    mode === "edit" && address ? address.default : false;
+  const isDefaultAddress = mode === "edit" && address ? address.default : false;
 
   const { onToggle: onToggleDefault, isSelected: isDefaultSelected } =
     useToggleOption<boolean>(pendingDefault, "checkbox", setPendingDefault);
@@ -181,7 +180,6 @@ export default function AddressForm({
                   value={combinedAddress}
                   error={combinedError}
                   readOnly
-                  isReadOnly={!!combinedAddress}
                   disabled
                 />
               )}
@@ -207,7 +205,6 @@ export default function AddressForm({
                 placeholder="우편번호"
                 error={error?.message}
                 readOnly
-                isReadOnly={!!field.value}
                 disabled
               />
             )}

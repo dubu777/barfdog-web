@@ -12,7 +12,6 @@ interface useNavigationGuardProps {
 }
 
 export function useNavigationGuard({ shouldBlock }: useNavigationGuardProps) {
-  
   useEffect(() => {
     if (!shouldBlock) return;
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -24,5 +23,5 @@ export function useNavigationGuard({ shouldBlock }: useNavigationGuardProps) {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [shouldBlock]);
 }

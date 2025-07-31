@@ -120,6 +120,23 @@ interface DietAnalysisPayload {
   healthIssues: HealthIssue[];
 }
 
+interface DietAnalysisFormValues {
+  step1: Pick<DietAnalysisPayload, "name" | "gender" | "neutralization">;
+  step2: { birthDay: string; oldDog: boolean };
+  step3: Pick<DietAnalysisPayload, "dogSize" | "weight">;
+  step4: Pick<DietAnalysisPayload, "dogType">;
+  step5: Pick<DietAnalysisPayload, "pregnancy">;
+  step6: Pick<DietAnalysisPayload, "lactation">;
+  step7: Pick<DietAnalysisPayload, "bodyCondition">;
+  step8: Pick<DietAnalysisPayload, "activityLevel">;
+  step9: Pick<DietAnalysisPayload, "snackCountLevel">;
+  step10: Pick<DietAnalysisPayload, "inedibleFood">;
+  step11: Pick<DietAnalysisPayload, "healthConcerns">;
+  step12: Pick<DietAnalysisPayload, "currentMeal">;
+  step13: Pick<DietAnalysisPayload, "supplements">;
+  step14: Pick<DietAnalysisPayload, "healthIssues">;
+}
+
 // 추천 식단 설문 결과지
 interface DietAnalysisResult {
   subscribeId: number;
@@ -184,4 +201,5 @@ export type {
   RecipeEfficacy,
   RecommendRecipeRankDto,
   EfficacyData,
+  DietAnalysisFormValues,
 };

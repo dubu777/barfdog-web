@@ -4,9 +4,8 @@ import {
   SURVEY_TITLES,
 } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Control, Controller, Path, useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import * as styles from "./StepElements.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import DefaultText from "@/components/common/defaultText/DefaultText";
@@ -25,56 +24,57 @@ export default function SurveyStep13({
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
 
+  // supplements field controller
+  const { field: supplementsField } = useController({
+    name: "step13.supplements",
+    control,
+  });
+
+  // useSurveyToggleOption must be at top level
+  const { onToggle: onSupplementToggle, isSelected: isSupplementSelected } =
+    useSurveyToggleOption<string>({
+      selectedValue: supplementsField.value ?? null,
+      mode: "checkbox",
+      onChange: (value) => {
+        supplementsField.onChange(value);
+        handleChange();
+      },
+    });
+
+  const handleToggleAndNext = (value: string) => {
+    onSupplementToggle(value);
+    if (value === NONE_VALUE) {
+      handleNextStep();
+    }
+  };
+
   return (
     <>
       <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step13} />
 
-      <Controller
-        name="step13.supplements"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "checkbox",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-            },
-          });
-
-          const handleToggleAndNext = (value: string) => {
-            onToggle(value);
-            if (value === NONE_VALUE) {
-              handleNextStep();
-            }
-          };
-          return (
-            <div
-              className={commonWrapper({
-                direction: "col",
-                align: "start",
-                gap: 12,
-              })}
-            >
-              <DefaultText type="label2" color="gray500">
-                *복수응답가능
-              </DefaultText>
-              {DIET_ANALYSIS_FORM_INFO.dogDietHealth.supplements.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    isChecked={isSelected(option.value)}
-                    inputType="checkbox"
-                    onToggle={handleToggleAndNext}
-                  />
-                )
-              )}
-            </div>
-          );
-        }}
-      />
+      <DefaultText type="label2" color="gray500">
+        *복수응답가능
+      </DefaultText>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 12,
+        })}
+      >
+        {DIET_ANALYSIS_FORM_INFO.dogDietHealth.supplements.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.value}
+              label={option.label}
+              value={option.value}
+              inputType="checkbox"
+              isChecked={isSupplementSelected(option.value)}
+              onToggle={() => handleToggleAndNext(option.value)}
+            />
+          )
+        )}
+      </div>
     </>
   );
 }

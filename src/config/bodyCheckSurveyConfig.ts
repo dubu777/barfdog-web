@@ -23,16 +23,18 @@ import GutIcon from "public/images/healthNote/full-check/gut.svg";
 import SkinIcon from "public/images/healthNote/full-check/skin.svg";
 import ObesityIcon from "public/images/healthNote/full-check/diet.svg";
 
+export interface BodyCheckSurveyConfigItem<TValues extends Record<string, any>> {
+  schema: yup.ObjectSchema<any>;
+  defaultValues: DefaultValues<TValues>;
+  questions: SurveyQuestion[];
+  sections: SurveySection[];
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  name: string;
+}
+
 export const bodyCheckSurveyConfig: Record<
   BodyCheckPart,
-  {
-    schema: yup.ObjectSchema<any, any>; // 모두 yup.ObjectSchema 타입
-    defaultValues: DefaultValues<Record<string, any>>; // DefaultValues<TFormValues>
-    questions: SurveyQuestion[]; // SurveyQuestion[]
-    sections: SurveySection[]; // SurveySection[]
-    Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-    name: string;
-  }
+  BodyCheckSurveyConfigItem<any>
 > = {
   gut: {
     schema: gutSurveySchema,

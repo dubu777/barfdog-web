@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
 import { useValidateSubscriptionPayment } from "@/api/order/mutations/useValidateSubscriptionPayment";
 import { useInvalidSubscriptionPayment } from "@/api/order/mutations/useInvalidSubscriptionPayment";
 import { useSuccessSubscriptionPayment } from "@/api/order/mutations/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/order/mutations/useFailSubscriptionPayment";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useToastStore } from "@/store/useToastStore";
 import { DotSpinner } from "@/components/common/spinner/DotSpinner";
 import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
@@ -16,8 +15,6 @@ export default function MobileSubscriptionPaymentRedirect() {
   const processedRef = useRef(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isProcessing, setIsProcessing] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const addToast = useToastStore((state) => state.addToast);
 
   const { mutateAsync: createIamportPayment } =
@@ -149,14 +146,7 @@ export default function MobileSubscriptionPaymentRedirect() {
         }
       } catch (error) {
         console.error("결제 처리 실패", error);
-        setError(
-          error instanceof Error
-            ? error.message
-            : "알 수 없는 오류가 발생했습니다."
-        );
         router.push("/order/checkout/failed");
-      } finally {
-        setIsProcessing(false);
       }
     };
 
@@ -169,6 +159,7 @@ export default function MobileSubscriptionPaymentRedirect() {
     successPayment,
     invalidPayment,
     failPayment,
+    addToast,
   ]);
 
   return (

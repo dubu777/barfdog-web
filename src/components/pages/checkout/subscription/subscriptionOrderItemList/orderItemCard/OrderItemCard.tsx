@@ -32,16 +32,19 @@ export default function OrderItemCard({
     return `${oneMealGramPerPack}g | ${mealPerDay} | ${deliveryDuration} | ${packCount}팩`;
   };
 
+  // 필요 유무 판단 후 삭제 예정 25.07.30
+  console.log("orderType", orderType);
+
   return (
     <div className={styles.orderItemCardContainer}>
-        <Image
-          src={TEMP_RECIPE_DTO_DATA[recipeName].imageURL}
-          alt={recipeName}
-          width={88}
-          height={88}
-          priority
-          className={styles.orderItemCardImage}
-        />
+      <Image
+        src={TEMP_RECIPE_DTO_DATA[recipeName].imageUrl}
+        alt={recipeName}
+        width={88}
+        height={88}
+        priority
+        className={styles.orderItemCardImage}
+      />
       <div className={styles.orderItemContentWrapper}>
         <div className={styles.orderItemInfoWrapper}>
           <DefaultText type="label2">

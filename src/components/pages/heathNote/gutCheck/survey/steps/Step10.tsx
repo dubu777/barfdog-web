@@ -1,4 +1,9 @@
-import { Controller, Path, useFormContext, useWatch } from "react-hook-form";
+import {
+  Controller,
+  Path,
+  useFormContext,
+  useController,
+} from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import {
@@ -29,6 +34,20 @@ export default function GutCheckStep10({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<GutCheckStepValues>();
+
+  const { field: feedTimeField } = useController({
+    name: "step10.feedTime",
+    control,
+  });
+
+  const { onToggle, isSelected } = useSurveyToggleOption({
+    selectedValue: feedTimeField.value,
+    mode: "radio",
+    onChange: (value) => {
+      feedTimeField.onChange(value);
+      handleChange();
+    },
+  });
 
   return (
     <>
@@ -61,35 +80,17 @@ export default function GutCheckStep10({
           fullWidth
         />
       </div>
-      <Controller
-        name="step10.feedTime"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "radio",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-            },
-          });
-          return (
-            <SurveyButtonGroup
-              title={GUT_CHECK_FORM_INFO.lifestyle.feedTime.title}
-            >
-              {GUT_CHECK_FORM_INFO.lifestyle.feedTime.options.map((option) => (
-                <SurveyButton
-                  key={option.label}
-                  label={option.label}
-                  value={option.value}
-                  isChecked={isSelected(option.value)}
-                  onToggle={onToggle}
-                />
-              ))}
-            </SurveyButtonGroup>
-          );
-        }}
-      />
+      <SurveyButtonGroup title={GUT_CHECK_FORM_INFO.lifestyle.feedTime.title}>
+        {GUT_CHECK_FORM_INFO.lifestyle.feedTime.options.map((option) => (
+          <SurveyButton
+            key={option.label}
+            label={option.label}
+            value={option.value}
+            isChecked={isSelected(option.value)}
+            onToggle={onToggle}
+          />
+        ))}
+      </SurveyButtonGroup>
     </>
   );
 }

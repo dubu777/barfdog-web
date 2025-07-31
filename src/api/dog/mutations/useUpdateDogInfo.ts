@@ -6,7 +6,10 @@ import { DogDetailData, UseMutationCustomOptions } from "@/types";
 export { useUpdateDogInfo };
 
 const getDogDetailQueryKey = [queryKeys.DOG.BASE, queryKeys.DOG.GET_DOG_DETAIL];
-const getDogListQueryKey = [queryKeys.DOG.BASE, queryKeys.DOG.GET_FULL_DOG_LIST];
+const getDogListQueryKey = [
+  queryKeys.DOG.BASE,
+  queryKeys.DOG.GET_FULL_DOG_LIST,
+];
 
 function useUpdateDogInfo(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
@@ -15,13 +18,13 @@ function useUpdateDogInfo(mutationOptions?: UseMutationCustomOptions) {
       const dogId = body.id;
       return await updateDogInfo(dogId, body);
     },
-    onSuccess: async (onMealRecommendGram: number) => {
+    onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: getDogDetailQueryKey });
       await queryClient.invalidateQueries({ queryKey: getDogListQueryKey });
     },
     onError: (error) => {
-      console.log(error)
+      console.log(error);
     },
-    ...mutationOptions
-  })
+    ...mutationOptions,
+  });
 }

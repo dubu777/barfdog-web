@@ -1,8 +1,7 @@
-// src/app/api/iamport/token/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import axios from "axios";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const { data } = await axios.post("https://api.iamport.kr/users/getToken", {
       imp_key: `${process.env.NEXT_PUBLIC_IAMPORT_REST_API_KEY}`,

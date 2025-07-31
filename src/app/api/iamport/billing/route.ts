@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: `Internal Server Error-${error}` },
       { status: 500 }
     );
   }
@@ -67,7 +67,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json(response.data, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: `Internal Server Error-${error}` },
       { status: 500 }
     );
   }

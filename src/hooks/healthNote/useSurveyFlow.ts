@@ -55,20 +55,16 @@ export const useSurveyFlow = <TFormValues extends FieldValues>({
   }, [currentValue, multiple, isLastStep, formState.isValid]);
 
   // step을 지정하면 해당 단계로, 아니면 현재+1로 이동
-  const handleNextStep = useCallback(
-    (step?: number) =>
-      setCurrentStep((prev) =>
-        step != null ? step : Math.min(prev + 1, questions.length)
-      ),
-    [questions.length]
-  );
+  const handleNextStep = (step?: number) => {
+    setCurrentStep((prev) =>
+      step != null ? step : Math.min(prev + 1, questions.length)
+    );
+  };
 
   // step을 지정하면 해당 단계로, 아니면 현재-1로 이동
-  const handlePrevStep = useCallback(
-    (step?: number) =>
-      setCurrentStep((prev) => (step != null ? step : Math.max(prev - 1, 1))),
-    [questions.length]
-  );
+  const handlePrevStep = (step?: number) => {
+    setCurrentStep((prev) => (step != null ? step : Math.max(prev - 1, 1)));
+  };
 
   // 옵션 선택 함수
   const handleOptionSelect = (selectedOption: SurveyOption) => {

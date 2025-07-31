@@ -8,7 +8,7 @@ interface CardProps {
   align?: "start" | "center" | "end" | "between";
   width?: "full" | "auto";
   height?: "full";
-  shadow: "light" | "normal" | "strong";
+  shadow?: "light" | "normal" | "strong";
   padding?: 12 | 16 | 20 | 32 | "20/16";
   textAlign?: "left" | "center";
   children: ReactNode;

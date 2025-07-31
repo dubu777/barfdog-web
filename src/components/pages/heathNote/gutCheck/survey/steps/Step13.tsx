@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext, useController } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import {
@@ -22,43 +22,40 @@ export default function GutCheckStep13({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<GutCheckStepValues>();
+  const { field: cohabitingPetListField } = useController({
+    name: "step13.cohabitingPetList",
+    control,
+  });
+
+  const { onToggle, isSelected } = useSurveyToggleOption({
+    selectedValue: cohabitingPetListField.value,
+    mode: "checkbox",
+    onChange: (value) => {
+      cohabitingPetListField.onChange(value);
+      handleChange();
+      if (Array.isArray(value) && value.includes(NONE_VALUE)) {
+        handleNextStep();
+      }
+    },
+  });
 
   return (
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step13} />
-      <Controller
-        name="step13.cohabitingPetList"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "checkbox",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-              if (Array.isArray(value) && value.includes(NONE_VALUE)) {
-                handleNextStep();
-              }
-            },
-          });
-          return (
-            <SurveyButtonGroup isMultiple direction="col">
-              {GUT_CHECK_FORM_INFO.lifestyle.cohabitingPetList.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    inputType="checkbox"
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
-            </SurveyButtonGroup>
-          );
-        }}
-      />
+      <SurveyButtonGroup isMultiple direction="col">
+        {GUT_CHECK_FORM_INFO.lifestyle.cohabitingPetList.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.label}
+              label={option.label}
+              value={option.value}
+              inputType="checkbox"
+              isChecked={isSelected(option.value)}
+              onToggle={onToggle}
+            />
+          )
+        )}
+      </SurveyButtonGroup>
     </>
   );
 }

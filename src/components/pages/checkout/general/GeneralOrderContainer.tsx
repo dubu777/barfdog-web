@@ -41,7 +41,7 @@ export default function GeneralOrderContainer() {
   const paymentPrice = usePaymentStore((state) => state.paymentPrice);
   const getRequestBody = useOrderStore((state) => state.getRequestBody);
   const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
-  const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
+  const { orderItemDtoList } = usePersistOrderStore();
   const [generalOrderSheetData, setGeneralOrderSheetData] =
     useState<GeneralOrderSheetResponse>(initialGeneralOrderSheetResponse);
   const addToast = useToastStore((state) => state.addToast);
@@ -76,7 +76,7 @@ export default function GeneralOrderContainer() {
         setGeneralOrderSheetData(data);
       });
     }
-  }, [orderItemDtoList]);
+  }, [orderItemDtoList, getGeneralOrderMutate]);
 
   const handlePaymentSubmit = async () => {
     if (!agreePrivacy) {

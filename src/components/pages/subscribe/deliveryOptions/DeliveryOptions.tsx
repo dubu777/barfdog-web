@@ -2,8 +2,6 @@
 
 import * as styles from "./DeliveryOptions.css";
 import Divider from "@/components/common/divider/Divider";
-import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
-import { useGetPlanDiscount } from "@/api/subscription/queries/useGetPlanDiscount";
 import MealFrequency from "./mealFrequency/MealFrequency";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -25,8 +23,9 @@ interface DeliveryOptionsProps {
 
 export default function DeliveryOptions({ recipeData }: DeliveryOptionsProps) {
   const { control, setValue } = useFormContext<SubscriptionValues>();
-  const { data: discountData } = useGetPlanDiscount();
-  const { mutate: updateSubscription } = useUpdateSubscription();
+  // const { data: discountData } = useGetPlanDiscount();
+  // const { mutate: updateSubscription } = useUpdateSubscription();
+  console.log("recipeData", recipeData); // 빌드 에러 방지용 데이터 바인딩 후에 제거
 
   // 폼 필드 구독
   const recipeList = useWatch({ control, name: "recipeList" });

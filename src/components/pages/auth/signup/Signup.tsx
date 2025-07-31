@@ -1,6 +1,5 @@
 "use client";
 import {
-  SignupStepValues,
   signupStepsSchema,
   SignupStepKeys,
   defaultSignupStepValues,
@@ -30,10 +29,7 @@ export default function Signup() {
     mode: "all",
   });
   const {
-    control,
     watch,
-    trigger,
-    getValues,
     formState: { errors },
   } = methods;
   console.log("watch", watch());
@@ -50,22 +46,23 @@ export default function Signup() {
     direction,
   } = useSurveyStep<SignupStepKeys>(stepKeys);
 
-  const { isCanNextStep, handleChange, handleBlur, handleKeyDown } =
-    useSurveyNavigator({
-      methods,
-      currentStepKey,
-      handleNextStep,
-      noAutoStepSet: SIGNUP_NO_AUTO_STEP,
-      optionalField: SIGNUP_OPTIONAL_FIELDS,
-    });
+  console.log(isLastStep);
+  console.log(direction);
 
-  const onSubmit = (data: SignupStepValues) => {
-    console.log("formData", data);
+  const { isCanNextStep, handleChange } = useSurveyNavigator({
+    methods,
+    currentStepKey,
+    handleNextStep,
+    noAutoStepSet: SIGNUP_NO_AUTO_STEP,
+    optionalField: SIGNUP_OPTIONAL_FIELDS,
+  });
+
+  const onSubmit = () => {
+    console.log("제출"); // 임시
   };
 
   const handleFooterButtonClick = () => {
     if (currentStepKey === "step3") {
-      console.log("##");
       onToggle();
     } else {
       handleNextStep();
@@ -94,8 +91,8 @@ export default function Signup() {
         })}
       >
         <FormProvider {...methods}>
-          {currentStep === 1 && <SignupStep1 onNext={handleNextStep} />}
-          {currentStep === 2 && <SignupStep2 onNext={handleNextStep} />}
+          {currentStep === 1 && <SignupStep1 />}
+          {currentStep === 2 && <SignupStep2 />}
           {currentStep === 3 && <SignupStep3 handleChange={handleChange} />}
         </FormProvider>
         <ButtonDocked
@@ -106,7 +103,7 @@ export default function Signup() {
           isPrimaryDisabled={!isCanNextStep()}
         />
       </div>
-      <TermsBottomSheet isOpen={isOpen} onClose={onClose} />
+      <TermsBottomSheet isOpen={isOpen} onClose={onClose} onSubmit={onSubmit} />
     </>
   );
 }

@@ -5,7 +5,7 @@ import * as yup from "yup";
 export function useFormHandler<T extends FieldValues>(
   schema: yup.ObjectSchema<any>,
   defaultValues: DefaultValues<T>,
-  mode: "all" | "onChange" | "onBlur"  = "onChange",
+  mode: "all" | "onChange" | "onBlur" = "onChange"
 ) {
   const {
     register,

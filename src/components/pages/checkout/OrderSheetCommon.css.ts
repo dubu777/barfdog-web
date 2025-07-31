@@ -1,4 +1,3 @@
-import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
@@ -10,8 +9,6 @@ export const orderSheetWrapper = style({
   padding: "20px",
   width: "100%",
 });
-
-
 
 export const orderCommonWrapper = recipe({
   base: {

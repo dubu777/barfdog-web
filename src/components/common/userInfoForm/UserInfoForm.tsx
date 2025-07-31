@@ -138,7 +138,7 @@ const UserInfoForm = <T extends boolean>({
             )
           : userInfoFormFields
         : userInfoFormFields.filter((field) => !field.isSignUp),
-    [isSignUp]
+    [isSignUp, formValues]
   );
 
   const [authNumber, setAuthNumber] = useState<string | null>(null);

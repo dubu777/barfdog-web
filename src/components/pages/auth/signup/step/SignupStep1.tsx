@@ -4,11 +4,7 @@ import { SignupStepValues } from "@/utils/validation/authValidation";
 import { useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
-interface SignupStep1Props {
-  onNext: () => void;
-}
-
-export default function SignupStep1({ onNext }: SignupStep1Props) {
+export default function SignupStep1() {
   const {
     control,
     formState: { errors },

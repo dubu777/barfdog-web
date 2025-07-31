@@ -1,4 +1,4 @@
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import { useFormContext, useWatch, useController } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import {
@@ -24,104 +24,102 @@ export default function GutCheckStep4({
   dogName,
 }: SurveyStepProps) {
   const { control, setValue } = useFormContext<GutCheckStepValues>();
+  
+  const { field: allergyStatusField } = useController({
+    name: "step4.allergyStatus",
+    control,
+  });
+
+  const { field: allergenFoodListField } = useController({
+    name: "step4.allergenFoodList",
+    control,
+  });
+
+  const { onToggle: allergyToggle, isSelected: allergySelected } = useSurveyToggleOption({
+    selectedValue: allergyStatusField.value,
+    mode: "radio",
+    onChange: (value) => {
+      allergyStatusField.onChange(value);
+      handleChange();
+      if (value === "NO_ALLERGY") {
+        setValue("step4.allergenFoodList", [], {
+          shouldValidate: true,
+        });
+        handleNextStep();
+      }
+    },
+  });
+
+  const { onToggle: allergenToggle, isSelected: allergenSelected } = useSurveyToggleOption({
+    selectedValue: allergenFoodListField.value,
+    mode: "checkbox",
+    onChange: (value) => {
+      allergenFoodListField.onChange(value);
+      handleChange();
+    },
+  });
+
   const allergyStatus = useWatch({
     name: "step4.allergyStatus",
     control,
   });
+
   return (
     <>
       <SurveyTitle dogName={dogName} config={GUT_CHECK_TITLES.step4} />
-      <Controller
-        name="step4.allergyStatus"
-        control={control}
-        render={({ field }) => {
-          const { onToggle, isSelected } = useSurveyToggleOption({
-            selectedValue: field.value,
-            mode: "radio",
-            onChange: (value) => {
-              field.onChange(value);
-              handleChange();
-              if (value === "NO_ALLERGY") {
-                setValue("step4.allergenFoodList", [], {
-                  shouldValidate: true,
-                });
-                handleNextStep();
-              }
-            },
-          });
-          return (
-            <div className={commonWrapper({ align: "start", gap: 8 })}>
-              {GUT_CHECK_FORM_INFO.healthStatus.allergyStatus.options.map(
-                (option) => (
-                  <SurveyButton
-                    key={option.label}
-                    label={option.label}
-                    value={option.value}
-                    isChecked={isSelected(option.value)}
-                    onToggle={onToggle}
-                  />
-                )
-              )}
-            </div>
-          );
-        }}
-      />
+      <div className={commonWrapper({ align: "start", gap: 8 })}>
+        {GUT_CHECK_FORM_INFO.healthStatus.allergyStatus.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.label}
+              label={option.label}
+              value={option.value}
+              isChecked={allergySelected(option.value)}
+              onToggle={allergyToggle}
+            />
+          )
+        )}
+      </div>
       {allergyStatus === "HAS_ALLERGY" && (
-        <Controller
-          name="step4.allergenFoodList"
-          control={control}
-          render={({ field }) => {
-            const { onToggle, isSelected } = useSurveyToggleOption({
-              selectedValue: field.value,
-              mode: "checkbox",
-              onChange: (value) => {
-                field.onChange(value);
-                handleChange();
-              },
-            });
-            return (
-              <>
-                <DefaultText type="label2" color="gray500">
-                  *아래 해당되는 사항을 모두 선택해주세요
-                </DefaultText>
-                <div
-                  className={commonWrapper({
-                    direction: "col",
-                    gap: 32,
-                    paddingBottom: 85,
-                  })}
+        <>
+          <DefaultText type="label2" color="gray500">
+            *아래 해당되는 사항을 모두 선택해주세요
+          </DefaultText>
+          <div
+            className={commonWrapper({
+              direction: "col",
+              gap: 32,
+              paddingBottom: 85,
+            })}
+          >
+            {GUT_CHECK_FORM_INFO.healthStatus.allergenFoodList.groups.map(
+              (group) => (
+                <SurveyButtonGroup
+                  key={group.category}
+                  title={group.category}
+                  isWrap
                 >
-                  {GUT_CHECK_FORM_INFO.healthStatus.allergenFoodList.groups.map(
-                    (group) => (
-                      <SurveyButtonGroup
-                        key={group.category}
-                        title={group.category}
-                        isWrap
+                  {group.options.map((opt) => {
+                    return (
+                      <Chips
+                        key={opt.value}
+                        variant="solid"
+                        color={allergenSelected(opt.value) ? "red" : "gray800"}
+                        size="lg"
+                        borderRadius="lg"
+                        switchOff={!allergenSelected(opt.value)}
+                        showCheckIcon
+                        onClick={() => allergenToggle(opt.value)}
                       >
-                        {group.options.map((opt) => {
-                          return (
-                            <Chips
-                              key={opt.value}
-                              variant="solid"
-                              color={isSelected(opt.value) ? "red" : "gray800"}
-                              size="lg"
-                              borderRadius="lg"
-                              switchOff={!isSelected(opt.value)}
-                              showCheckIcon
-                              onClick={() => onToggle(opt.value)}
-                            >
-                              {opt.label}
-                            </Chips>
-                          );
-                        })}
-                      </SurveyButtonGroup>
-                    )
-                  )}
-                </div>
-              </>
-            );
-          }}
-        />
+                        {opt.label}
+                      </Chips>
+                    );
+                  })}
+                </SurveyButtonGroup>
+              )
+            )}
+          </div>
+        </>
       )}
     </>
   );

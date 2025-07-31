@@ -1,6 +1,6 @@
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { Controller, useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import ImageButton from "../imageButton/ImageButton";
 import SurveyGridButtonGroup from "../../../../common/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
@@ -17,54 +17,49 @@ export default function SurveyStep11({
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
 
+  // healthConcerns field controller
+  const { field: concernsField } = useController({
+    name: "step11.healthConcerns",
+    control,
+  });
+
+  // useSurveyRankOption must be called at top level
+  const selected = (concernsField.value as string[]) ?? [];
+  const { onToggle, isDisabled, getRank, onReselect } =
+    useSurveyRankOption<string>(
+      selected,
+      (next) => {
+        concernsField.onChange(next);
+        handleChange();
+      },
+      3
+    );
+
   return (
     <>
-      <Controller
-        name="step11.healthConcerns"
-        control={control}
-        render={({ field }) => {
-          // field.value 는 string[] 이어야 합니다.
-          const selected: string[] = field.value || [];
-          const { onToggle, isDisabled, getRank, onReselect } =
-            useSurveyRankOption<string>(
-              selected,
-              (next) => {
-                field.onChange(next);
-                handleChange();
-              },
-              3
-            );
-
-          return (
-            <>
-              <SurveyTitle
-                dogName={dogName}
-                config={SURVEY_TITLES.step11}
-                onReselect={onReselect}
-              />
-              <SurveyGridButtonGroup>
-                {DIET_ANALYSIS_FORM_INFO.lifestyle.healthConcerns.options.map(
-                  (option) => (
-                    <ImageButton
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                      inputType="rank"
-                      defaultSvg={option.Icon}
-                      selectedSvg={option.SelectedIcon}
-                      isChecked={selected.includes(option.value)}
-                      rank={getRank(option.value)}
-                      disabled={isDisabled(option.value)}
-                      onToggle={onToggle}
-                      display="grid1"
-                    />
-                  )
-                )}
-              </SurveyGridButtonGroup>
-            </>
-          );
-        }}
+      <SurveyTitle
+        dogName={dogName}
+        config={SURVEY_TITLES.step11}
+        onReselect={onReselect}
       />
+      <SurveyGridButtonGroup>
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.healthConcerns.options.map(
+          (option) => (
+            <ImageButton
+              key={option.value}
+              label={option.label}
+              value={option.value}
+              inputType="rank"
+              defaultSvg={option.Icon}
+              selectedSvg={option.SelectedIcon}
+              isChecked={selected.includes(option.value)}
+              rank={getRank(option.value)}
+              disabled={isDisabled(option.value)}
+              onToggle={() => onToggle(option.value)}
+            />
+          )
+        )}
+      </SurveyGridButtonGroup>
     </>
   );
 }

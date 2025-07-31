@@ -29,6 +29,7 @@ import { SkipCondition, useSurveyStep } from "@/hooks/survey/useSurveyStep";
 import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
 import { getSurveySteps } from "../steps/StepsElements";
 import CriticalDiseaseAlertBottomSheet from "../bottomSheet/CriticalDiseaseAlertBottomSheet";
+import { DietAnalysisFormValues } from "@/types/dietAnalysis";
 
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
@@ -45,6 +46,7 @@ export default function SurveyPageContainer() {
       router.push(`/diet-analysis/result/${surveyReportId}`);
     },
     onError: (err) => {
+      console.error(err);
       setIsLoading(false);
     },
   });
@@ -139,7 +141,7 @@ export default function SurveyPageContainer() {
     }
 
     setIsLoading(true);
-    const payload = buildDietAnalysisPayload(values);
+    const payload = buildDietAnalysisPayload(values as DietAnalysisFormValues);
     console.log("payload", payload);
 
     submitResult(payload);

@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DefaultValues, FieldValues, useForm } from "react-hook-form";
+import { DefaultValues, FieldValues, Resolver, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 export function useOrderForm<T extends FieldValues>(
-  schema: yup.ObjectSchema<any>,
+  schema: yup.ObjectSchema<T>,
   defaultValues: DefaultValues<T>
 ) {
   const {
@@ -16,7 +16,7 @@ export function useOrderForm<T extends FieldValues>(
     setValue,
     trigger,
   } = useForm<T>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema) as unknown as Resolver<T>,
     defaultValues,
     mode: "all",
   });

@@ -1,7 +1,6 @@
 "use client";
 import * as styles from "./LoginWrapper.css";
 import { useRouter, useSearchParams } from "next/navigation";
-import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import LoginSnsButton from "@/components/pages/auth/login/loginSnsButton/LoginSnsButton";
 import LoginForm from "@/components/pages/auth/login/loginForm/LoginForm";
 import { useEmailLogin } from "@/api/auth/mutations/useEmailLogin";
@@ -73,7 +72,7 @@ const LoginWrapper = () => {
     if (!isLoggedIn) {
       resetStores();
     }
-  }, []);
+  }, [isLoggedIn]);
 
   // 로그인 중이면 로그인 페이지 접근 제한
   useEffect(() => {

@@ -112,7 +112,7 @@ export type SurveyStepValues = yup.InferType<typeof surveyStepsSchema>;
 export type SurveyStepKeys = keyof SurveyStepValues;
 
 export const defaultStepValues: SurveyStepValues = {
-  step1: { gender: "", name: "", nameVerified: false, neutralization: null },
+  step1: { gender: "", name: "", nameVerified: true, neutralization: null }, // 중복체크 API 정상화 되면 주석 해제
   step2: { birthDay: "", oldDog: null },
   step3: { dogSize: "", weight: "" },
   step4: { dogType: "" },

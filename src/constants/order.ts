@@ -51,11 +51,14 @@ const ORDER_MESSAGE: Record<string, string> = {
   BUNDLE_DELIVERY_TITLE: "정기구독 배송 시 묶음 배송 신청",
   BUNDLE_DELIVERY_SUBTITLE: "구독 상품과 같이 배송되어 배송비가 무료에요",
   BUNDLE_DELIVERY_UNAVAILABLE_TITLE: "묶음 배송 신청 불가능",
-  BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE: "배송 예정일 당일에는 묶음 배송 신청이 불가능해요.",
+  BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE:
+    "배송 예정일 당일에는 묶음 배송 신청이 불가능해요.",
   NO_AVAILABLE_COUPONS: "사용가능한 쿠폰이 없어요",
   COUPON_PLACEHOLDER: "쿠폰 번호를 입력하세요",
-  REWARD_AUTO_APPLY_NOTICE_1: "・ 다음 회차의 정기 결제일마다 적립금이 자동으로 적용돼요.",
-  REWARD_AUTO_APPLY_NOTICE_2: "・ 해당 설정은 ‘마이 > 자동 적립금 관리’에서 변경하실 수 있어요.",
+  REWARD_AUTO_APPLY_NOTICE_1:
+    "・ 다음 회차의 정기 결제일마다 적립금이 자동으로 적용돼요.",
+  REWARD_AUTO_APPLY_NOTICE_2:
+    "・ 해당 설정은 ‘마이 > 자동 적립금 관리’에서 변경하실 수 있어요.",
 } as const;
 
 const SUBSCRIPTION_NOTICE = {
@@ -73,42 +76,42 @@ const TEMP_RECIPE_DTO_DATA: Record<string, TempRecipeDto> = {
   "STARTER PREMIUM +": {
     id: 5,
     name: "스타터 프리미엄",
-    imageURL: "/images/recipe/starter_premium.png",
+    imageUrl: "/images/recipe/starter_premium.png",
   },
   "TURKEY&BEEF +": {
     id: 6,
     name: "터키앤비프",
-    imageURL: "/images/recipe/turkey_and_beef.png",
+    imageUrl: "/images/recipe/turkey_and_beef.png",
   },
   "DUCK&LAMB +": {
     id: 7,
     name: "덕앤램",
-    imageURL: "/images/recipe/duck_and_lamb.png",
+    imageUrl: "/images/recipe/duck_and_lamb.png",
   },
   "LAMB&BEEF +": {
     id: 8,
     name: "램앤비프",
-    imageURL: "/images/recipe/lamb_and_beef.png",
+    imageUrl: "/images/recipe/lamb_and_beef.png",
   },
   "Premium CHICKEN": {
     id: 9,
     name: "프리미엄 치킨",
-    imageURL: "/images/recipe/premium_chicken.png",
+    imageUrl: "/images/recipe/premium_chicken.png",
   },
   "Premium TURKEY": {
     id: 10,
     name: "프리미엄 터키",
-    imageURL: "/images/recipe/premium_turkey.png",
+    imageUrl: "/images/recipe/premium_turkey.png",
   },
   "Premium LAMB": {
     id: 11,
     name: "프리미엄 램",
-    imageURL: "/images/recipe/premium_lamb.png",
+    imageUrl: "/images/recipe/premium_lamb.png",
   },
   "Premium BEEF": {
     id: 12,
     name: "프리미엄 비프",
-    imageURL: "/images/recipe/premium_beef.png",
+    imageUrl: "/images/recipe/premium_beef.png",
   },
 };
 

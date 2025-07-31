@@ -1,7 +1,6 @@
-import { GeneralOrderItemRequest, OrderItemDto } from '@/types';
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
+import { OrderItemDto } from "@/types";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface PersistOrderStore {
   orderItemDtoList: OrderItemDto[];
@@ -17,7 +16,7 @@ export const usePersistOrderStore = create(
       clearOrderItemDtoList: () => set({ orderItemDtoList: [] }),
     }),
     {
-      name: 'general-order',
+      name: "general-order",
     }
   )
 );
