@@ -6,7 +6,7 @@ interface CardSectionProps {
 	children: ReactNode;
 	padding?: 12 | 20;
 	className?: string;
-	borderRadius?: 8 | 'none';
+	borderRadius?: 8 | 12 | 16;
 	align?: 'start' | 'between';
 }
 

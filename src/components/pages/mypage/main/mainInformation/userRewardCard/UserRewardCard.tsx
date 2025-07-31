@@ -21,12 +21,12 @@ interface UserRewardCardProps {
 
 const UserRewardCard = ({ myPageData, isDisabled = false, className }: UserRewardCardProps) => {
 	const router = useRouter();
-	const userData: MyPageMemberDto = myPageData?.mypageMemberDto;
+	const userData: MyPageMemberDto = myPageData?.mypageMemberDto ?? { reward: 0 };
 
-	const valueMap: Record<MenuLink['key'], string | number> = {
+	const valueMap: Record<'review' | 'coupon' | 'reward', string | number> = {
 		review: 3,
-		coupon: myPageData.couponCount || 0,
-		reward: `${userData.reward.toLocaleString() || 0} P`,
+		coupon: myPageData.couponCount ?? 0,
+		reward: `${(userData.reward ?? 0).toLocaleString()} P`,
 	};
 
 	return (

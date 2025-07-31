@@ -10,7 +10,7 @@ const getCouponListQueryKey = [queryKeys.COUPON.BASE, queryKeys.COUPON.GET_COUPO
 function useApplyCoupon(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: applyCoupon,
+    mutationFn: ({ code }: { code: string }) => applyCoupon(code),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: getCouponListQueryKey,

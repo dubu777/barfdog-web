@@ -21,6 +21,7 @@ export type {
   IsValidUpdateUserInfo,
   GetAuthNumber,
   GenderType,
+  SignupStepValues,
 };
 
 // 로그인
@@ -104,34 +105,34 @@ interface ChangePassword {
 type SignUpTermsModal = "servicePolicy" | "privacyPolicy" | "alliancePolicy";
 
 // 사용 안하는중 지울예정
-// interface SignupStepValues {
-//   name: string;
-//   email: string;
-//   password: string;
-//   confirmPassword: string;
-//   phoneNumber: string;
-//   authNumber: string;
-//   address: AddressDto;
-//   birthday: string | Date | null;
-//   gender: GenderType;
-//   recommendCode?: string;
-//   agreement: {
-//     servicePolicy: boolean;
-//     privacyPolicy: boolean;
-//     receiveSms: boolean;
-//     receiveEmail: boolean;
-//     over14YearsOld: boolean;
-//     thirdPolicy?: boolean;
-//   };
-//   allianceInfo?: {
-//     alliance: "cb" | null;
-//     alliancePolicy: boolean;
-//   };
-//   provider?: string;
-//   providerId?: string;
-//   defaultPhoneNumber?: string;
-//   hasCheckedAuthNumber?: boolean;
-// }
+interface SignupStepValues {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  phoneNumber: string;
+  authNumber: string;
+  address: AddressDto;
+  birthday: string | Date | null;
+  gender: GenderType;
+  recommendCode?: string;
+  agreement: {
+    servicePolicy: boolean;
+    privacyPolicy: boolean;
+    receiveSms: boolean;
+    receiveEmail: boolean;
+    over14YearsOld: boolean;
+    thirdPolicy?: boolean;
+  };
+  allianceInfo?: {
+    alliance: "cb" | null;
+    alliancePolicy: boolean;
+  };
+  provider?: string;
+  providerId?: string;
+  defaultPhoneNumber?: string;
+  hasCheckedAuthNumber?: boolean;
+}
 
 // 마이페이지 회원 정보 수정
 interface UserInfoFormFields {

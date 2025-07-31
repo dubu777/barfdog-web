@@ -271,6 +271,7 @@ export const commonWrapper = recipe({
       },
     },
     shadow: {
+      none: {},
       light: {
         boxShadow: themeVars.shadow.light,
       },

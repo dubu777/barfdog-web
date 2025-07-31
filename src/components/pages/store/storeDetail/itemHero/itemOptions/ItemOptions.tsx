@@ -66,7 +66,7 @@ const ItemOptions = ({ itemOptionListData }: ItemOptionsProps) => {
             <SelectBox
               id="selectedOption"
               options={itemOptionList}
-              onSelect={(selected: ItemOption) => handleSelect(selected as ItemOption)}
+              onSelect={(selected) => handleSelect(selected as ItemOption)}
               fullWidth
               objectValue
               placeholder={itemOptionList.length === 0 ? '상품 옵션이 없습니다.' : '상품 옵션 선택'}

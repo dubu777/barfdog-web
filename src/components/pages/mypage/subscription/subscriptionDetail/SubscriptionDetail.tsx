@@ -23,9 +23,7 @@ interface SubscriptionDetailProps {
 const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
   const { pushWithQuery } = useDynamicQueryPush();
   const { data: subscriptionDetail } = useGetSubscriptionDetail(subscriptionId);
-  const { data: dogDetail } = useGetDogDetail(subscriptionDetail?.dogId, {
-    enabled: !!subscriptionDetail?.dogId, // dogId가 있을 때만 실행
-  });
+  const { data: dogDetail } = useGetDogDetail(subscriptionDetail?.dogId);
 
   const setPaymentMethodDetail = usePaymentMethodDetail();
 
@@ -35,7 +33,10 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
   // const subscriptionStatus = subscriptionDetail.subscribeStatus;
   const subscriptionStatus = "BEFORE_PAYMENT";
   const subscriptionOrderStatus = "PAYMENT_DONE";
-  const isBeforePaying = subscriptionOrderStatus === "BEFORE_PAYMENT";
+  // const isBeforePaying = subscriptionOrderStatus === "BEFORE_PAYMENT";
+  const isBeforePaying = true;
+  const isSubscriptionCancel = true;
+  const willSubscriptionCancel = true;
 
   useEffect(() => {
     setPaymentMethodDetail(subscriptionId);
@@ -45,7 +46,7 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
     <section>
       <article className={styles.subscriptionDetailBox}>
         <DefaultText type="title4">
-          {subscriptionStatus !== "SUBSCRIBE_CANCEL" ? (
+          {isSubscriptionCancel ? (
             <>
               <span className={pointColor}>{weeklyPaymentCycle}주</span>마다
               <br />
@@ -64,11 +65,11 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
           className={styles.subscriptionDetailCard}
         />
       </article>
-      {subscriptionStatus !== "SUBSCRIBE_CANCEL" && (
+      {!isSubscriptionCancel && (
         <SubscriptionPaymentInfo
           data={subscriptionDetail}
           isSubscriptionStatusWillCancel={
-            subscriptionStatus === "SUBSCRIBE_WILL_CANCEL"
+            willSubscriptionCancel
           }
         />
       )}
@@ -85,8 +86,8 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
         subscribeCount={subscriptionDetail.subscribeCount}
         isBeforePaying={isBeforePaying}
       />
-      {dogDetail?.dogDto && (
-        <DogInfo data={dogDetail?.dogDto} showEditDogInfo />
+      {dogDetail && (
+        <DogInfo data={dogDetail} showEditDogInfo />
       )}
       <div className={styles.cancelSubscriptionContainer}>
         <button

@@ -36,6 +36,7 @@ interface MyPageMemberDto {
   memberName: string;
   myRecommendationCode: string;
   reward: string;
+  imageUrl?: string;
 }
 
 interface MyPageRepresentativeDogDto {

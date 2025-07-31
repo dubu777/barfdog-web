@@ -4,10 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import * as styles from './Popup.css';
 import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
-import { MainPopupBannerDto, PopupPosition } from "@/types";
+import { MainPopupBanner, PopupPosition } from "@/types";
 import { useMainStore } from "@/store/useMainStore";
 
-const positionStyle = (popup: MainPopupBannerDto) => {
+const positionStyle = (popup: MainPopupBanner) => {
   const defaultOffset = 20;
   const positionGap = 30;
   const top = `calc(45% + ${(popup.leakedOrder - 1) * positionGap}px)`;
@@ -43,11 +43,11 @@ const Popup = () => {
 
   // visiblePopupList 를 leakedOrder 기준으로 정렬
   const visiblePopupList = useMemo(() => {
-    const popupBannerList: MainPopupBannerDto[] = mainInfoData?.popupBannerDtoList || [];
+    const popupBannerList: MainPopupBanner[] = mainInfoData?.popupBannerList || [];
     return popupBannerList
       .filter((popup) => !allClosedIds.has(popup.id))
       .sort((a, b) => a.leakedOrder - b.leakedOrder);
-  }, [mainInfoData?.popupBannerDtoList, allClosedIds]);
+  }, [mainInfoData?.popupBannerList, allClosedIds]);
   
   if (isLoading || isError) return null;
 

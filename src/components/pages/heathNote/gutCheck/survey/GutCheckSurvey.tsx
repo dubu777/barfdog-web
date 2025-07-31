@@ -73,7 +73,8 @@ export default function GutCheckSurvey() {
       {
         from: "step5",
         to: "step7",
-        predicate: () => gender === "MALE", // 임시
+        // predicate: () => gender === "MALE", // 임시
+        predicate: () => true, // 임시
       },
     ],
     [gender]

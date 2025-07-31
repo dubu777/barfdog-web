@@ -1,5 +1,5 @@
 import { BaseReviewItem, Page, ReviewImage, SelectedHealthType } from "@/types";
-import { itemFilterCategory, itemSortBy } from "@/constants/store";
+import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
 
 export type {
   SortByType,
@@ -14,8 +14,8 @@ export type {
   StoreItemDetailReviewList,
 };
 
-type SortByType = keyof typeof itemSortBy;
-type ItemType = keyof typeof itemFilterCategory;
+type SortByType = keyof typeof ITEM_SORT_BY;
+type ItemType = keyof typeof ITEM_FILTER_CATEGORY;
 type ItemTagType = 'BEST' | 'NEW';
 
 interface StoreItemBase {

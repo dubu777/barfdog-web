@@ -16,7 +16,7 @@ interface InfoSectionProps {
 	buttons?: InfoListsButtons[];
 	className?: string;
 	children?: ReactNode;
-	gap?: 'none' | 12;
+	gap?: 12;
 }
 
 const InfoSection = ({
@@ -28,7 +28,7 @@ const InfoSection = ({
 	buttons,
 	className,
 	children,
-	gap = 'none',
+	gap,
 }: InfoSectionProps) => {
 	const [isOpen, setIsOpen] = useState(isDefaultOpen);
 
