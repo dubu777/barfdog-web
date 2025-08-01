@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
@@ -8,7 +8,16 @@ import { useToastStore } from "@/store/useToastStore";
 import { DotSpinner } from "@/components/common/spinner/DotSpinner";
 import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
 
-export default function MobileGeneralPaymentRedirect() {
+
+export default function Page() {
+  return (
+    <Suspense fallback={<DotSpinner /> }>
+      <MobileGeneralPaymentRedirect />
+    </Suspense>
+  )
+}
+
+function MobileGeneralPaymentRedirect() {
   const processedRef = useRef(false);
 
   const router = useRouter();
