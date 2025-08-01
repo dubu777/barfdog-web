@@ -45,6 +45,7 @@ export const surveyInfoImage = style({
 })
 
 export const surveyUploadContainer = style({
+	width: '100%',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '16px',
@@ -73,6 +74,7 @@ export const surveyUploadBox = style({
 })
 
 export const surveyPreviewContainer = style({
+	width: '100%',
 	padding: '0 20px',
 	display: 'flex',
 	flexDirection: 'column',

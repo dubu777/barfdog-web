@@ -33,14 +33,14 @@ export default function ResultInfo({
 			filename: index === 0 ? 'fileUrl' : 'oriFileUrl'
 		})
 	);
-
-	const downloadImage = (url: string) => {
-		const link = document.createElement('a');
-		link.href = url;
-		link.download = `분석결과-${surveyId}.jpg`;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
+	const downloadImage = async (url: string) => {
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `분석결과-${surveyId}.jpg`;
+		document.body.appendChild(a);
+		a.click();
+		a.remove();
+		URL.revokeObjectURL(url);
 	};
 
 	return (
@@ -85,7 +85,7 @@ export default function ResultInfo({
 				<Button
 					variant='solid'
 					iconSrc={DownloadIcon}
-					onClick={() => downloadImage(data.fileUrl)}
+					onClick={() => downloadImage(data.oriFileUrl)}
 				>
 					이미지 저장
 				</Button>

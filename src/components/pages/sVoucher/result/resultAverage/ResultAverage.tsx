@@ -3,12 +3,18 @@ import { pointColor } from "@/styles/common.css";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 
-export default function ResultAverage() {
+interface ResultAverageProps {
+	score: number;
+}
+
+export default function ResultAverage({
+	score,
+}: ResultAverageProps) {
 
 	const averageList = [
 		{
 			label: '우리 아이',
-			value: 60,
+			value: score,
 			height: 160,
 		},
 		{

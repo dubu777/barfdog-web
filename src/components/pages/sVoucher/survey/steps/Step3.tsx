@@ -28,7 +28,7 @@ export default function Step3({
 	}, [files, steps]);
 
 	return (
-		<div>
+		<>
 			<DefaultText type='title2' className={styles.surveyTitle}>
 				우리 아이 사진을<br/>업로드해 주세요
 			</DefaultText>
@@ -51,6 +51,6 @@ export default function Step3({
 					<Button variant='solid' buttonColor='gray900'>쵤영/업로드</Button>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

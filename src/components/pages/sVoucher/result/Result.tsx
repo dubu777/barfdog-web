@@ -18,7 +18,7 @@ export default function Result({ surveyId }: SurveyResultProps) {
 		<div className={styles.resultContainer}>
 			<ResultInfo data={data} surveyId={surveyId} />
 			<Divider thickness={8} color='gray100' />
-			<ResultAverage />
+			<ResultAverage score={data.score} />
 			<Divider thickness={8} color='gray100' />
 			<ResultProductItems />
 		</div>

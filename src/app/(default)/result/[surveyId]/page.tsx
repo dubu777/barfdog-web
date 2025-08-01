@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Result from "@/components/pages/sVoucher/result/Result";
-import Loader from "@/components/common/loader/Loader";
+import LoadingImage from '/public/images/sVoucher/scan.gif';
+import Image from "next/image";
 
 interface ReviewPageProps {
   params: {
@@ -11,7 +12,7 @@ interface ReviewPageProps {
 export default async function ReviewPage({ params }: ReviewPageProps) {
   const surveyId = Number(params.surveyId)
   return (
-    <Suspense fallback={<Loader fullscreen />}>
+    <Suspense fallback={<Image src={LoadingImage} alt='loadingImage' width={265} height={425} />}>
       <Result surveyId={surveyId} />
     </Suspense>
   )

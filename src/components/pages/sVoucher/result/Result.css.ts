@@ -32,6 +32,7 @@ export const resultDetail = style({
 	display: 'flex',
 	gap: '12px',
 	justifyContent: 'center',
+	alignItems: 'center',
 	padding: '0 12px',
 	height: '60px'
 })

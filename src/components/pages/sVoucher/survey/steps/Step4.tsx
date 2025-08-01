@@ -9,15 +9,18 @@ interface Step4Props {
 	previews: string[];
 	setSteps: Dispatch<SetStateAction<1 | 2 | 3 | 4 | 5>>;
 	resetFiles: () => void;
+	handleSubmit: () => Promise<void>;
+	loading: boolean;
 }
 
 export default function Step4({
 	previews,
 	setSteps,
 	resetFiles,
+	handleSubmit,
+	loading,
 }: Step4Props) {
 
-	console.log('previews', previews)
 	const handleGoBack = () => {
 		resetFiles();
 		setSteps(3);
@@ -40,7 +43,8 @@ export default function Step4({
 			<ButtonDocked
 				type='dual-button'
 				primaryButtonLabel='제출하기'
-				onPrimaryClick={() => setSteps(5)}
+				onPrimaryClick={handleSubmit}
+				isPrimaryDisabled={loading}
 				secondaryButtonLabel='재촬영/업로드'
 				onSecondaryClick={handleGoBack}
 			/>

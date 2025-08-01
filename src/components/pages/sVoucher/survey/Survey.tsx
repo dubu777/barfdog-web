@@ -1,6 +1,6 @@
 'use client';
 import * as styles from './Survey.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import LoadingImage from '/public/images/sVoucher/scan.gif';
@@ -23,6 +23,7 @@ export default function Survey() {
 
 	const [weight, setWeight] = useState<number | null>( null);
 	const [steps, setSteps] = useState<1 | 2 | 3 | 4 | 5>(1);
+	const [loading, setLoading] = useState(false);
 
 	const {
 		files,
@@ -32,32 +33,43 @@ export default function Survey() {
 	} = useImageUpload({ multiple: false });
 	const { mutateAsync } = useUploadObesityImage();
 
-	useEffect(() => {
-		if (steps === 5 && files.length > 0 && weight !== null) {
-			const upload = async () => {
-				try {
-					await sleep(1000);
-					const res = await mutateAsync({ file: files[0], weight });
+	const handleSubmit = async () => {
+		if (files.length < 1 || !weight) return;
+		setLoading(true);
+		try {
+			await sleep(1000);
+			const res = await mutateAsync({ file: files[0], weight });
+			const surveyId = res?.surveyId;
 
-					const surveyId = res?.surveyId;
-					if (surveyId) {
-						await queryClient.prefetchQuery({
-							queryKey: [queryKeys.S_VOUCHER.BASE, queryKeys.S_VOUCHER.GET_OBESITY_DETAIL, surveyId],
-							queryFn: () => getObesityDetail(surveyId),
-						});
-						router.push(`/result/${surveyId}`);
-					} else {
-						console.warn('surveyId가 응답에 없음');
-					}
+			if (surveyId) {
+				await queryClient.prefetchQuery({
+					queryKey: [queryKeys.S_VOUCHER.BASE, queryKeys.S_VOUCHER.GET_OBESITY_DETAIL, surveyId],
+					queryFn: () => getObesityDetail(surveyId),
+				});
 
-				} catch (err) {
-					console.error('업로드 실패:', err);
-				}
-			};
-
-			upload();
+				router.push(`/result/${surveyId}`);
+			} else {
+				console.warn("응답에 surveyId 없음");
+				alert('응답에 surveyId가 없습니다.')
+				setLoading(false);
+			}
+		} catch (err) {
+			console.error("업로드 실패:", err);
+			alert('업로드에 실패했습니다.')
+			setLoading(false);
 		}
-	}, [steps, files, weight]);
+	};
+
+	if (loading) {
+		return (
+			<section className={styles.surveyContainer}>
+				<DefaultText type='title2' className={styles.surveyTitle}>
+					우리 아이의 결과를<br />분석하고 있어요
+				</DefaultText>
+				<Image src={LoadingImage} alt='loadingImage' width={265} height={425} />
+			</section>
+		);
+	}
 
 	return (
 		<section className={styles.surveyContainer}>
@@ -76,15 +88,9 @@ export default function Survey() {
 					previews={previews}
 					setSteps={setSteps}
 					resetFiles={resetFiles}
+					handleSubmit={handleSubmit}
+					loading={loading}
 				/>
-			}
-			{ steps === 5 &&
-				<>
-					<DefaultText type='title2' className={styles.surveyTitle}>
-						우리 아이의 결과를<br/>분석하고 있어요
-					</DefaultText>
-					<Image src={LoadingImage} alt='loadingImage' width={265} height={425} />
-				</>
 			}
 		</section>
 	);
