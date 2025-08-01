@@ -83,7 +83,6 @@ const WalkScore = ({
 					<Image src={WalkDogImage} alt='walk dog' width={303} height={140} />
 					<Card
 						shadow='none'
-						padding='none'
 					>
 						<div className={styles.walkScore}>
 							<DefaultText type='headline2'>{dogName}의 산책 점수</DefaultText>
@@ -124,7 +123,7 @@ const WalkScore = ({
 				<Card
 					shadow='none'
 					padding={12}
-					gap={6}
+					gap={8}
 					className={styles.walkNotice}
 				>
 					<DefaultText type='headline2' color='blue600'>반려견에게 산책은 왜 중요할까요?</DefaultText>

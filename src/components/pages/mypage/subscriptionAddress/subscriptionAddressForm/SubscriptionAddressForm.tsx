@@ -1,5 +1,4 @@
 "use client";
-import * as styles from "./SubscriptionAddressForm.css";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -34,9 +33,9 @@ const SubscriptionAddressForm = ({
   );
   const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
 
-  const { control, watch, setValue, isValid, handleSubmit } = useFormHandler(
+  const { control, watch, setValue, isValid, handleSubmit } = useFormHandler<AddressDto>(
     addressSchema,
-    defaultAddressValues
+    defaultAddressValues()
   );
   const { mutate } = useUpdateSubscriptionAddress(
     subscribeId,
@@ -66,13 +65,13 @@ const SubscriptionAddressForm = ({
         animate={{ x: 0 }}
         exit={{ x: "100%" }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className={styles.addressForm}
+        // className={styles.addressForm}
       >
         <Text
           type="title"
           size="md"
           weight="normal"
-          className={styles.addressFormTitle}
+          // className={styles.addressFormTitle}
         >
           <b>{shippingChangeType?.name}</b>을 선택하셨습니다.
           <br />
@@ -92,8 +91,9 @@ const SubscriptionAddressForm = ({
           isOpen={openConfirmModal}
           onClose={() => setOpenConfirmModal(false)}
           onConfirm={handleSubmit(handleUpdateSubscriptionAddress)}
-          message={
-            <div className={styles.confirmModal}>
+          content={(
+            // <div className={styles.confirmModal}>
+            <div>
               <p>
                 <b>{shippingChangeType?.name}</b>을 선택하셨습니다.
               </p>
@@ -106,7 +106,7 @@ const SubscriptionAddressForm = ({
               </p>
               <p>이대로 변경하시겠습니까?</p>
             </div>
-          }
+          )}
         />
       </motion.div>
     </AnimatePresence>

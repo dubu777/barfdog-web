@@ -5,15 +5,16 @@ import Image from "next/image";
 import CloseButton from '/public/images/icons/close-white.png';
 import { useMainStore } from "@/store/useMainStore";
 import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
-import { MainTopBannerDto } from "@/types";
+import { MainTopBanner } from "@/types";
 import { sanitizedHTML } from "@/styles/common.css";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 
 const TopBanner = () => {
   const { isTopBannerVisible, closeTopBanner } = useMainStore();
   const { data: mainInfoData, isLoading, isError } = useGetMainInfo();
-  const topBanner: MainTopBannerDto | undefined = mainInfoData?.topBannerDto; 
+  const topBanner: MainTopBanner | undefined = mainInfoData?.topBanner; 
   const sanitizedHTMLContents = useSanitizedHTML(topBanner?.name || '')
+  
 
   if (isLoading || isError || !topBanner || !isTopBannerVisible) return null;
 

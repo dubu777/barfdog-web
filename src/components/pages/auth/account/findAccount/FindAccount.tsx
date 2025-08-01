@@ -12,8 +12,6 @@ export default function FindAccount() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
 
-  console.log(type);
-
   const tabs: Tab[] = [
     {
       label: "아이디찾기",

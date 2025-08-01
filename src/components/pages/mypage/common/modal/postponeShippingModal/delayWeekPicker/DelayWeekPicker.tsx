@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import * as styles from '@/components/common/datePicker/mobileDatePicker/MobileDatePicker.css';
 import { pointColor } from "@/styles/common.css";
-import { labelStyle } from "@/components/common/inputField/InputField.css";
 import { addDays, addWeeks, format, getDay } from 'date-fns';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Picker from "react-mobile-picker";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
+import { labelStyle } from "@/components/common/inputLabel/InputLabel.css";
 
 // 오늘 날짜 기준으로 가장 가까운 '화요일' 찾기 (오늘 제외)
 const getNextAvailableTuesday = (today: Date) => {

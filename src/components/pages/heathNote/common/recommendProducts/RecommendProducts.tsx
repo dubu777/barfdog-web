@@ -52,7 +52,9 @@ const RecommendProducts = ({
 							</div>
 							<Divider thickness={1} color='gray100' />
 							<div className={styles.itemContent}>
-								<Chips variant='solid' color='blue50'>{tagMap[item.tag]}</Chips>
+								{item.tag && 
+									<Chips variant='solid' color='blue50'>{tagMap[item.tag]}</Chips>
+								}
 								<DefaultText type='body3' color='gray700'>{item.description}</DefaultText>
 							</div>
 						</Card>

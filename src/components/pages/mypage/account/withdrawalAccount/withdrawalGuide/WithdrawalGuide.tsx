@@ -11,8 +11,8 @@ import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userR
 import Card from "@/components/common/card/Card";
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 import Image from "next/image";
-import SampleDog1 from "public/images/myPage/sample/sample1.jpg";
-import SampleDog2 from "public/images/myPage/sample/sample2.jpg";
+import SampleDog1 from "public/images/mypage/sample/sample1.jpg";
+import SampleDog2 from "public/images/mypage/sample/sample2.jpg";
 import { MembershipTier } from "@/types/membership";
 
 interface GuideSteps {

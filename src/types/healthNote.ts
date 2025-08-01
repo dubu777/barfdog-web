@@ -55,6 +55,7 @@ interface Product {
   title: string;
   itemName: string;
   description: string;
+  tag?: string;
 }
 
 // { ...Product } 형태
@@ -91,7 +92,7 @@ type DiseaseName =
   | "ibs" // IBS
   | "lifestyle"; // 생활습관
 
-type DiseasePhase = "초기" | "중기" | "심화";
+type DiseasePhaseType = "초기" | "중기" | "심화";
 
 interface BodyCheckRecommendItem {
   step: string;
@@ -114,6 +115,6 @@ export type {
   BodyCheckPart,
   HealthCheckHistoryFormValue,
   DiseaseName,
-  DiseasePhase,
+  DiseasePhaseType,
   BodyCheckRecommendItem,
 };

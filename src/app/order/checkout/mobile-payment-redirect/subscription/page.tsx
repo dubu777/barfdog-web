@@ -1,6 +1,5 @@
 "use client";
-
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
 import { useValidateSubscriptionPayment } from "@/api/order/mutations/useValidateSubscriptionPayment";
@@ -11,7 +10,15 @@ import { useToastStore } from "@/store/useToastStore";
 import { DotSpinner } from "@/components/common/spinner/DotSpinner";
 import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
 
-export default function MobileSubscriptionPaymentRedirect() {
+export default function Page() {
+  return (
+    <Suspense fallback={<DotSpinner /> }>
+      <MobileSubscriptionPaymentRedirect />
+    </Suspense>
+  )
+}
+
+function MobileSubscriptionPaymentRedirect() {
   const processedRef = useRef(false);
   const router = useRouter();
   const searchParams = useSearchParams();

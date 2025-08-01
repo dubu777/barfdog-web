@@ -47,7 +47,6 @@ const ReviewSection = ({ bestReviewList }: ReviewSectionProps) => {
 					<Card
 						key={`${review.id}-${index}`}
 						shadow='none'
-						padding='none'
 						align='start'
 						className={mainReviewCard}
 					>

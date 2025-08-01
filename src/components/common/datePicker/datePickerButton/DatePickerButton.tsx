@@ -33,7 +33,17 @@ export default function DatePickerButton({
 				}}
 				className={styles.datePickerButton({ isOpen })}
 			>
-				<DefaultText type='body2' align='left' color={isOpen ? 'blue' : isDisabled ? 'gray500' :'gray800'}>
+				<DefaultText
+					type='body2'
+					align='left'
+					color={
+						isOpen
+							? 'blue600'
+							: isDisabled
+							? 'gray500'
+							: 'gray800'
+					}
+				>
 					{String(value)}
 				</DefaultText>
 				<SvgIcon src={ArrowUpIcon}  style={{ transform: !isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all .35s' }} />

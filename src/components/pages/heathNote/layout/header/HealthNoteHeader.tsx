@@ -13,9 +13,7 @@ type HealthNoteParams = {
   reportId?: string;
 };
 
-interface HealthNoteHeaderProps {}
-
-const HealthNoteHeader = ({}: HealthNoteHeaderProps) => {
+const HealthNoteHeader = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const rawParams = useParams();

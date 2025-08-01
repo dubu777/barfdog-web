@@ -3,7 +3,7 @@ import * as styles from '../Account.css';
 import axios from 'axios';
 import { ChangeEvent, useState } from "react";
 import { Controller } from "react-hook-form";
-import ProfileCircle from '/public/images/myPage/profile_circle.svg';
+import ProfileCircle from '/public/images/mypage/profile_circle.svg';
 import InputField from "@/components/common/inputField/InputField";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";

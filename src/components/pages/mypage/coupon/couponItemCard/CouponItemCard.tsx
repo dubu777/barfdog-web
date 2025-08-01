@@ -2,9 +2,9 @@ import * as styles from "./CouponItemCard.css";
 import { format } from "date-fns";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
-import { CouponData } from "@/types/coupon";
+import { Coupon } from "@/types/coupon";
 
-const CouponItemCard = ({ coupon }: { coupon: CouponData }) => {
+const CouponItemCard = ({ coupon }: { coupon: Coupon }) => {
   const won = coupon.discountType === 'FLAT_RATE';
   const percent = coupon.discountType === 'FIXED_RATE';
 

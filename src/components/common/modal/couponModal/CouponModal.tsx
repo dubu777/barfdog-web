@@ -118,7 +118,7 @@ export default function CouponModal({
 
   // 쿠폰 등록 함수
   const onCouponFormSubmit = handleSubmit((data) => {
-    createCouponMutate(data.code, {
+    createCouponMutate({ code: data.code }, {
       onSuccess: () => {
         addToast("쿠폰이 등록되었습니다", "above-button");
       },

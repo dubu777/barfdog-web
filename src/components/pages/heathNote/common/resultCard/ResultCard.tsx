@@ -8,7 +8,7 @@ interface ResultCardProps {
   className?: string;
   title?: string;
   subTitle?: string;
-  gap?: "none" | 4 | 8 | 12 | 16 | 20;
+  gap?: "none" | 4 | 8 | 12 | 16 | 20 | 32 | 40;
 }
 
 const ResultCard = ({
@@ -23,7 +23,7 @@ const ResultCard = ({
       shadow="light"
       padding="20/16"
       backgroundColor="gray100"
-      gap={gap}
+      gap={gap !== "none" ? gap : undefined}
       className={`${className || ""}`}
     >
       <div className={styles.resultCardHeader}>

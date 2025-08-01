@@ -41,7 +41,7 @@ const Coupon = () => {
           <Dropdown
             label={ItemSortByFilterList[sortBy as keyof typeof ItemSortByFilterList]?.label || "최신순"}
             options={Object.entries(ItemSortByFilterList).map(([value, { label }]) => ({label, value}))}
-            onSelect={(value) => setSortBy(value)}
+            onSelect={(value) => setSortBy(value as keyof typeof ItemSortByFilterList)}
           />
         </div>
         <ul className={styles.couponList}>

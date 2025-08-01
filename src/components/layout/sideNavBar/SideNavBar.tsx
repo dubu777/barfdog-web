@@ -93,7 +93,7 @@ const SideNavBar = () => {
   }
 
   const handleLinkClick = (link: string) => {
-    setIsOpenSideNavBar(false);
+    setIsOpenSideNavBar();
     router.push(link);
   }
 
@@ -132,7 +132,7 @@ const SideNavBar = () => {
                       {category.items.map(item => (
                         <li className={styles.navItem} key={item.name}>
                           {!item.subItems && item.link
-                            ? <button onClick={() => handleLinkClick(item.link)} className={styles.navItemLink}>
+                            ? <button onClick={() => handleLinkClick(item.link as string)} className={styles.navItemLink}>
                               {item.name}
                             </button>
                             : <>
