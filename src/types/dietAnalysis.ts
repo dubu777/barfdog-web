@@ -1,105 +1,31 @@
 import { ComponentType, SVGProps } from "react";
+import { SubscribeStatus } from "./subscription";
 
 /** 성별 */
 type Gender = "MALE" | "FEMALE";
 
 /** 견사이즈 */
-type DogSize = "SMALL" | "MEDIUM" | "LARGE";
+type DogSize = "SMALL" | "MEDDLE" | "LARGE";
 
-/** 활동량 */
-type ActivityLevel = "VERY_HIGH" | "HIGH" | "NORMAL" | "LOW" | "VERY_LOW";
+type GeneralLevel = "VERY_HIGH" | "HIGH" | "NORMAL" | "LOW" | "VERY_LOW";
+
+type SnackCountLevel = "HIGH" | "NORMAL" | "LOW";
 
 /** 체형(BCS) */
 type BodyFit = "VERY_THIN" | "THIN" | "NORMAL" | "FAT" | "VERY_FAT";
 
-/** 임신 단계 */
-type PregnancyStatus = "NONE" | "EARLY" | "LATE";
+type PregnancyStatus = "NONE" | "PREGNANCY_EARLY" | "PREGNANCY_LATE";
 
-/** 수유 상태 */
 type LactationStatus =
   | "NONE"
-  | "LACTATION_ONE"
-  | "LACTATION_THREE"
-  | "LACTATION_FIVE"
-  | "LACTATION_SEVEN";
-
-/** 간식 섭취량 */
-type SnackCountLevel = "LITTLE" | "NORMAL" | "MUCH";
-
-/** 못 먹는 식재료 */
-type InedibleFoods =
-  | "NONE"
-  | "CHICKEN"
-  | "TURKEY"
-  | "DUCK"
-  | "LAMB"
-  | "COW"
-  | "KANGAROO"
-  | "GOAT"
-  | "QUAIL"
-  | "HEART";
-
-/** 주요 건강 고민 */
-type HealthConcern =
-  | "VOMITING_DIARRHEA"
-  | "WEIGHT_CONTROL"
-  | "ENERGY_BOOST"
-  | "TEARS"
-  | "SKIN_HAIR"
-  | "JOINT_HEALTH"
-  | "PUPPY_DEVELOPMENT"
-  | "SENIOR_HEALTH";
-
-/** 현재 식단 */
-type CurrentMeals =
-  | "DRY"
-  | "WET"
-  | "HOMEMADE"
-  | "FREEZE_DRIED"
-  | "COOKED"
-  | "RAW";
-
-/** 영양제 */
-type Supplements =
-  | "NONE"
-  | "PROBIOTICS"
-  | "OMEGA_3"
-  | "ANTIOXIDANT"
-  | "JOINT"
-  | "EYE"
-  | "SKIN"
-  | "IMMUNITY"
-  | "HEART"
-  | "TEETH"
-  | "BRONCHUS"
-  | "GENERAL";
-
-/** 기저 질환 */
-type HealthIssue =
-  | "NONE"
-  | "HYPERLIPIDEMIA"
-  | "PANCREATIC"
-  | "HEART"
-  | "KIDNEY"
-  | "DERMATITIS"
-  | "CHOLELITHIASIS"
-  | "LIVER_DISEASE"
-  | "DIABETES"
-  | "EAR_INFLAMMATION"
-  | "TEARS";
-
-type RecipeEfficacy =
-  | "부드러운 소화"
-  | "균형 잡힌 체형"
-  | "빠른 기력 회복"
-  | "눈가 청결 유지"
-  | "윤기나는 모질"
-  | "관절 기능 강화"
-  | "튼튼한 성장"
-  | "활기찬 노후";
+  | "LACTATION_1_TO_2"
+  | "LACTATION_3_TO_4"
+  | "LACTATION_5_TO_6"
+  | "LACTATION_7_OR_MORE";
 
 /** 설문 제출‧결과 공통 인터페이스 */
 interface DietAnalysisPayload {
+  dogId: number;
   name: string;
   gender: Gender;
   birthDay: string;
@@ -108,16 +34,16 @@ interface DietAnalysisPayload {
   dogSize: DogSize;
   weight: string; // '5.2'처럼 문자열로 받되 필요 시 number 변환
   neutralization: boolean;
-  activityLevel: ActivityLevel;
+  activityLevel: GeneralLevel;
   bodyCondition: BodyFit;
   pregnancy: PregnancyStatus;
   lactation: LactationStatus;
   snackCountLevel: SnackCountLevel;
-  inedibleFoods: InedibleFoods[];
-  healthConcerns: HealthConcern[];
-  currentMeals: CurrentMeals[];
-  supplements: Supplements[];
-  healthIssues: HealthIssue[];
+  inedibleFoods: string[];
+  healthConcerns: string[];
+  currentMeals: string[];
+  supplements: string[];
+  healthIssues: string[];
 }
 
 interface DietAnalysisFormValues {
@@ -139,8 +65,9 @@ interface DietAnalysisFormValues {
 
 // 추천 식단 설문 결과지
 interface DietAnalysisResult {
+  surveyReportId: number;
   subscribeId: number;
-  subscribeStatus: string;
+  subscribeStatus: SubscribeStatus;
   recommendRecipeExist: boolean;
   firstResultResponse: FirstResultResponse;
   secondResultResponse: SecondResultResponse;
@@ -148,17 +75,19 @@ interface DietAnalysisResult {
 }
 
 interface FirstResultResponse {
-  firstHealthConcernsSymptomsList: string[];
-  healthConcernsOtherSymptomsList: string[];
-  activityLevel: ActivityLevel;
+  firstHealthConcernSymptomList: string[];
+  healthConcernOtherSymptomList: string[];
+  activityLevel: GeneralLevel;
   snackCountLevel: SnackCountLevel;
-  inedibleFoodType: InedibleFoods[];
+  foodAllergyTypes: string[];
+  surveyReportCreatedDate: string[];
+  surveyReportModifiedDate: string[];
 }
 
 interface SecondResultResponse {
   dogId: number;
   dogName: string;
-  firstHealthConcerns: HealthConcern;
+  firstHealthConcerns: string;
   firstHealthConcernsCauseList: string[];
   recipeEfficacyList: string[];
 }
@@ -173,14 +102,26 @@ interface RecommendRecipeRankDto {
   recommendRecipeId: number;
   recommendRecipeName: string;
   recommendRecipeDescription: string;
+  healthImprovements: HealthImprovements[];
   recommendRecipeImgUrl: string;
-  ingredientsList: InedibleFoods[];
+  foodAllergies: string[];
+  primaryIngredientList: string[];
+  healthConcernsList: string[];
   uiNameKorean: string;
   uiNameEnglish: string;
 }
 
+interface HealthImprovements {
+  healthConcernsExplanationTitle: string;
+  healthConcernsExplanation: string;
+}
+
 interface CreateDietAnalysisResultResponse {
-  surveyReportId: number;
+  success: boolean;
+  data: null | number;
+  message: null | string;
+  detailMessage: null | string;
+  errorCode: null | string;
 }
 
 interface EfficacyData {
@@ -195,11 +136,9 @@ export type {
   FirstResultResponse,
   SecondResultResponse,
   ThirdResultResponse,
-  ActivityLevel,
   SnackCountLevel,
-  InedibleFoods,
-  RecipeEfficacy,
   RecommendRecipeRankDto,
   EfficacyData,
   DietAnalysisFormValues,
+  GeneralLevel,
 };

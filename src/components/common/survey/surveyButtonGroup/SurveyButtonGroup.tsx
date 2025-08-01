@@ -65,7 +65,7 @@ export default function SurveyButtonGroup({
             <>
               <SvgIcon
                 src={error ? CloseIcon : CheckIcon}
-                color="red"
+                color={error ? "red" : "blue500"}
                 size={19}
               />
               <DefaultText type="caption" color={error ? "red" : "blue500"}>

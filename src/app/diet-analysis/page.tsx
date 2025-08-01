@@ -7,9 +7,9 @@ import {
 } from "@tanstack/react-query";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
-import DietAnalysisPageContainer from "@/components/pages/dietAnalysis/DietAnalysisPageContainer";
 import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
 import Loader from "@/components/common/loader/Loader";
+import DietAnalysisMain from "@/components/pages/dietAnalysis/main/DietAnalysisMain";
 
 export default async function DietAnalysisPage() {
   const queryClient = new QueryClient();
@@ -22,7 +22,7 @@ export default async function DietAnalysisPage() {
       <ErrorBoundary fallback={<div>추천식단 에러</div>}>
         <Suspense fallback={<Loader />}>
           <Header leftTitle="AI 추천식단" showCartButton />
-          <DietAnalysisPageContainer />
+          <DietAnalysisMain />
           <BottomNavBar />
         </Suspense>
       </ErrorBoundary>

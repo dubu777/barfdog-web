@@ -101,9 +101,9 @@ const checkDuplicateDogName = async (
   dogName: string
 ): Promise<CheckDuplicateDogNameResponse> => {
   const { data } = await axiosInstance.get(
-    `/api/dogs/name/duplication?dogName=${dogName}`
+    `/api/v2/pets/check-name?petName=${dogName}`
   );
-  return data._embedded.commonResponseList[0];
+  return data;
 };
 
 export {

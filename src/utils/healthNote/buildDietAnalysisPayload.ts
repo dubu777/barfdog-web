@@ -27,6 +27,7 @@ export function buildDietAnalysisPayload(
   } = values;
 
   return {
+    dogId: 3533, // 임시
     name,
     gender,
     birthDay,

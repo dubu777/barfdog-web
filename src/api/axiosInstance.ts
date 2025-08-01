@@ -113,6 +113,9 @@ axiosInstance.interceptors.response.use(
         .get(`/api/refresh`)
         .then(({ data }) => {
           const newToken: string = data.accessToken;
+          if (!newToken) {
+            throw new Error("토큰을 받지 못했습니다");
+          }
           setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, newToken);
           axiosInstance.defaults.headers.common[
             "Authorization"

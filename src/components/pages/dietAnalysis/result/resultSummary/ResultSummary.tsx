@@ -67,7 +67,7 @@ export default function ResultSummary({
                 align: "start",
               })}
             >
-              {firstResponse.firstHealthConcernsSymptomsList.map((symptom) => (
+              {firstResponse.firstHealthConcernSymptomList.map((symptom) => (
                 <div
                   key={symptom}
                   className={commonWrapper({
@@ -102,7 +102,7 @@ export default function ResultSummary({
                 wrap: "wrap",
               })}
             >
-              {firstResponse.healthConcernsOtherSymptomsList.map((symptom) => (
+              {firstResponse.healthConcernOtherSymptomList.map((symptom) => (
                 <Chips
                   key={symptom}
                   variant="solid"
@@ -136,7 +136,7 @@ export default function ResultSummary({
               <DefaultText type="headline2">알러지</DefaultText>
             </div>
             <div className={commonWrapper({ gap: 6, justify: "start" })}>
-              {firstResponse.inedibleFoodType.map((food) => (
+              {firstResponse.foodAllergyTypes.map((food) => (
                 <Chips
                   key={food}
                   variant="solid"

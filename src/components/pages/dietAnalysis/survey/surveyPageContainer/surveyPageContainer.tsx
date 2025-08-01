@@ -41,11 +41,16 @@ export default function SurveyPageContainer() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutate: submitResult } = useCreateDietAnalysisResult({
+    onMutate: () => {
+      setIsLoading(true);
+    },
     onSuccess: (response) => {
-      const { surveyReportId } = response;
-      console.log("response", response);
-
-      // router.push(`/diet-analysis/result/${surveyReportId}`);
+      const reportId = response.data;
+      // 로딩 화면 2초 렌더링 후에 결과 페이지로 이동
+      setTimeout(() => {
+        setIsLoading(false);
+        router.push(`/diet-analysis/result/${reportId}`);
+      }, 2000);
     },
     onError: (err) => {
       console.error(err);
@@ -127,10 +132,6 @@ export default function SurveyPageContainer() {
     console.log("payload", payload);
 
     submitResult(payload);
-
-    setTimeout(() => {
-      router.push("/diet-analysis");
-    }, 2000);
   }, [trigger, getValues, submitResult, router]);
 
   const handleContinue = useCallback(async () => {

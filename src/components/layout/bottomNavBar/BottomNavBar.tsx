@@ -24,14 +24,19 @@ export default function BottomNavBar() {
   const { deviceOS } = useDeviceState();
   const [healthNoteHref, setHealthNoteHref] =
     useState<string>("/health-note/guest");
+  const [dietAnalysisHref, setDietAnalysisHref] = useState<string>(
+    "/diet-analysis/guest"
+  );
 
   useEffect(() => {
     const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
     const loggedIn = isAuthenticated(token);
     if (loggedIn) {
       setHealthNoteHref("/health-note");
+      setDietAnalysisHref("/diet-analysis");
     } else {
       setHealthNoteHref("/health-note/guest");
+      setDietAnalysisHref("/diet-analysis/guest");
     }
   }, []);
   const MENU_LIST = [
@@ -48,7 +53,7 @@ export default function BottomNavBar() {
     {
       icon: pathname === "/diet-analysis" ? <AiActive /> : <Ai />,
       label: "Ai추천식단",
-      url: "/diet-analysis",
+      url: dietAnalysisHref,
     },
     {
       icon: pathname.startsWith("/health-note") ? <NoteActive /> : <Note />,

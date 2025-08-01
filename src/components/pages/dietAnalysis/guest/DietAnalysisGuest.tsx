@@ -4,22 +4,21 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { commonWrapper } from "@/styles/common.css";
 import DogIcon from "public/images/dietAnalysis/first-dog.svg";
-import * as styles from "./FirstTimeRegistration.css";
 import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
 
-export default function FirstTimeRegistration() {
+export default function DietAnalysisGuest() {
   const router = useRouter();
 
   const handleGotoSurvey = () => {
-    window.location.href = "/diet-analysis/survey";
+    window.location.href = "/diet-analysis/survey"; // 펫 등록 api 완성 되면 펫 등록 쪽으로 이동
   };
   const handleGotoSheet = () => {
     router.push("/diet-analysis/subscribe?reportId=3752");
   };
 
   return (
-    <div className={styles.firstTimeRegistrationContainer}>
+    <div className={commonWrapper({ direction: "col", padding: 20, gap: 32 })}>
       <div className={commonWrapper({ gap: 12, direction: "col" })}>
         <div>
           <DefaultText type="title2">바프독 AI가 추천하는</DefaultText>

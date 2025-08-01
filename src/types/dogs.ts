@@ -80,9 +80,10 @@ interface UploadDogProfileImage {
 }
 
 interface CheckDuplicateDogNameResponse {
-  result: "SUCCESS" | "FAIL";
+  success: boolean;
   data: null | string;
   message: null | string;
+  detailMessage: null | string;
   errorCode: null | string;
 }
 

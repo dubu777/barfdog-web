@@ -21,7 +21,7 @@ export type {
   SubscriptionData,
   BenefitStatus,
   SubscriptionSkipType,
-  SubscriptionStatusKey,
+  SubscribeStatus,
   PlanKey,
   PlanName,
   PlanInfo,
@@ -41,7 +41,6 @@ interface SubscriptionData {
   [key: string]: any; // 실제 데이터 구조에 따라 수정 필요
 }
 
-
 interface PaymentBody {
   plan: PlanName | null;
   recipeIdList: number[];
@@ -59,7 +58,6 @@ interface PlanDiscountResponse {
   toppingFull: number;
   toppingHalf: number;
 }
-
 
 interface RecipeMeal {
   recipeId: number;
@@ -131,7 +129,7 @@ interface DefaultSubscriptionDto {
 
 interface SubscriptionDetailDto extends DefaultSubscriptionDto {
   id: number;
-  subscribeStatus: SubscriptionStatusKey;
+  subscribeStatus: SubscribeStatus;
   dogId: number;
   dogName: string;
   cancelReason?: null | string;
@@ -146,8 +144,8 @@ interface SubscriptionDetailDto extends DefaultSubscriptionDto {
 
 interface SubscriptionDto extends DefaultSubscriptionDto {
   subscribeId: number;
-  pictureUrl?: null | string,
-  status: SubscriptionStatusKey;
+  pictureUrl?: null | string;
+  status: SubscribeStatus;
   startDate: string;
   packagePrice: number;
   packageOriginalPrice: number;
@@ -213,13 +211,13 @@ interface SubscribeGeneralItem {
   type: "topping" | "snack";
 }
 
-type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
+type BenefitStatus = "AVAILABLE" | "REQUESTED" | "USED";
 
-type SubscriptionSkipType = 'ONCE' | 'WEEK';
+type SubscriptionSkipType = "ONCE" | "WEEK";
 
-type SubscriptionStatusKey = keyof typeof subscriptionStatus;
+type SubscribeStatus = keyof typeof subscriptionStatus;
 
-type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
+type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";
 
 type PlanName = keyof typeof subscriptionPlanInfo;
 

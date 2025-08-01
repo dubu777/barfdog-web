@@ -32,7 +32,6 @@ export default function RecommendedRecipeCard({
         </DefaultText>
       </div>
       <Card
-        shadow="none"
         direction="row"
         justify="start"
         className={resultCardStyle}

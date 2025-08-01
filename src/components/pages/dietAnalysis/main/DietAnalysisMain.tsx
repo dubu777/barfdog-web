@@ -4,16 +4,11 @@ import { commonWrapper } from "@/styles/common.css";
 // import * as styles from "./RegisteredDogManager.css";
 import DogCard from "./dogCard/DogCard";
 import { useInfiniteList } from "@/hooks/useInfiniteList";
-import { DogListData } from "@/types";
 import CreateButton from "@/components/common/createButton/CreateButton";
+import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 
-interface RegisteredDogManagerProps {
-  dogListData: DogListData[];
-}
-
-export default function RegisteredDogManager({
-  dogListData,
-}: RegisteredDogManagerProps) {
+export default function DietAnalysisMain() {
+  const { data: dogListData = [] } = useGetDogList();
   console.log(dogListData, "dog");
   // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아니고, 데이터는 한번에 받아오고, 10개씩 렌더링 하게 구현
   const [visibleDogs, loadMoreRef] = useInfiniteList(dogListData, {

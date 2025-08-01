@@ -58,7 +58,7 @@ export default function SurveyStep1({
     }
 
     const { data } = await checkDuplicate();
-    const isSuccess = data?.result === "SUCCESS";
+    const isSuccess = data?.success;
 
     if (isSuccess) {
       setValue("step1.nameVerified", true, { shouldValidate: true });
@@ -179,10 +179,9 @@ export default function SurveyStep1({
                 placeholder="이름을 입력해주세요"
                 onChange={(e) => {
                   field.onChange(e);
-                  // 중복체크 API 정상화 되면 주석 해제
-                  // setValue("step1.nameVerified", false, {
-                  //   shouldValidate: true,
-                  // });
+                  setValue("step1.nameVerified", false, {
+                    shouldValidate: true,
+                  });
                 }}
                 onKeyDown={(e) => handleKeyDown(e, field.name)}
               />
