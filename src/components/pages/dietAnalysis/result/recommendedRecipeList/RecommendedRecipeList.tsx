@@ -3,6 +3,7 @@ import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
 import { RecommendRecipeRankDto } from "@/types/dietAnalysis";
 import RecommendedRecipeCard from "../card/recommendedRecipeCard/RecommendedRecipeCard";
+import BowlIcon from "public/images/dietAnalysis/feed-bowl.svg";
 
 interface RecommendedRecipeListProps {
   dogName: string;
@@ -23,7 +24,7 @@ export default function RecommendedRecipeList({
           <br />
           <span className={styles.pointText}>건강한 식사를</span> 만나보세요
         </DefaultText>
-        <div className={styles.tempIconStyle} />
+        <BowlIcon />
       </div>
       {recommendRecipeList.map((recipe) => (
         <RecommendedRecipeCard

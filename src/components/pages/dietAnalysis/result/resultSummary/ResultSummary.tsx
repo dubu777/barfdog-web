@@ -16,19 +16,27 @@ import CheckIcon from "public/images/survey/check_small.svg";
 import CloseIcon from "public/images/survey/close_small.svg";
 import {
   ACTIVITY_LEVEL_MAP,
+  HEALTH_CONCERN_IMAGE_MAP,
   SNACK_COUNT_LEVEL_MAP,
 } from "@/constants/dietAnalysis";
+import { HealthConcernType } from "@/types";
 
 interface ResultSummaryProps {
   dogName: string;
   firstResponse: FirstResultResponse;
+  firstHealthConcerns: HealthConcernType;
 }
 
 export default function ResultSummary({
   dogName,
   firstResponse,
+  firstHealthConcerns,
 }: ResultSummaryProps) {
   const date = "2024-12-24";
+  const ConcernIcon =
+    firstHealthConcerns !== "NONE"
+      ? HEALTH_CONCERN_IMAGE_MAP[firstHealthConcerns]
+      : null;
   return (
     <div className={commonWrapper({ direction: "col" })}>
       <div className={styles.resultSummaryTop}>
@@ -49,7 +57,9 @@ export default function ResultSummary({
           borderRadius={16}
           className={styles.resultSummaryCard}
         >
-          <div className={styles.tempImageStyle} />
+          {ConcernIcon && (
+            <ConcernIcon className={styles.healthConcernsImageWrapper} />
+          )}
           <div
             className={commonWrapper({
               direction: "col",

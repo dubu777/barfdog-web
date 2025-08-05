@@ -11,11 +11,10 @@ export const resultSummaryTop = style({
   padding: "40px 20px 88px 20px",
 });
 
-export const tempImageStyle = style({
+export const healthConcernsImageWrapper = style({
   width: "100%",
   height: "140px",
   marginBottom: "16px",
-  backgroundColor: themeVars.colors.gray.gray100,
 });
 
 export const resultCardWrapper = style({
@@ -40,21 +39,27 @@ export const inedibleFoodChipStyle = style({
 export const pointText = style({
   color: themeVars.colors.red.red,
 });
-export const tempIconStyle = style({
-  backgroundColor: themeVars.colors.gray.gray200,
-  width: "60px",
-  height: "60px",
-});
+
 export const pointTextBox = style({
   display: "flex",
-  padding: "0px 4px",
-  height: "24px",
+  padding: "4px 4px",
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "2px",
   backgroundColor: themeVars.colors.gray.gray900,
   color: themeVars.colors.gray.gray0,
 });
+
 export const underlineText = style({
   textDecoration: "underline",
+});
+
+export const calorieInfoBox = style({
+  display: "flex",
+  flexDirection: "column",
+  padding: "12px",
+  gap: "8px",
+  border: `1px solid ${themeVars.colors.gray.gray400}`,
+  borderRadius: "8px",
+  backgroundColor: themeVars.colors.gray.gray100,
 });

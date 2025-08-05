@@ -1,27 +1,15 @@
 import { ComponentType, SVGProps } from "react";
 import { SubscribeStatus } from "./subscription";
-
-/** 성별 */
-type Gender = "MALE" | "FEMALE";
-
-/** 견사이즈 */
-type DogSize = "SMALL" | "MEDDLE" | "LARGE";
-
-type GeneralLevel = "VERY_HIGH" | "HIGH" | "NORMAL" | "LOW" | "VERY_LOW";
-
-type SnackCountLevel = "HIGH" | "NORMAL" | "LOW";
-
-/** 체형(BCS) */
-type BodyFit = "VERY_THIN" | "THIN" | "NORMAL" | "FAT" | "VERY_FAT";
-
-type PregnancyStatus = "NONE" | "PREGNANCY_EARLY" | "PREGNANCY_LATE";
-
-type LactationStatus =
-  | "NONE"
-  | "LACTATION_1_TO_2"
-  | "LACTATION_3_TO_4"
-  | "LACTATION_5_TO_6"
-  | "LACTATION_7_OR_MORE";
+import {
+  BodyFit,
+  DogSize,
+  Gender,
+  GeneralLevel,
+  HealthConcernType,
+  LactationStatus,
+  PregnancyStatus,
+  SnackCountLevel,
+} from "./survey";
 
 /** 설문 제출‧결과 공통 인터페이스 */
 interface DietAnalysisPayload {
@@ -87,7 +75,7 @@ interface FirstResultResponse {
 interface SecondResultResponse {
   dogId: number;
   dogName: string;
-  firstHealthConcerns: string;
+  firstHealthConcerns: HealthConcernType;
   firstHealthConcernsCauseList: string[];
   recipeEfficacyList: string[];
 }
@@ -106,7 +94,7 @@ interface RecommendRecipeRankDto {
   recommendRecipeImgUrl: string;
   foodAllergies: string[];
   primaryIngredientList: string[];
-  healthConcernsList: string[];
+  healthConcernsList: HealthConcernType[];
   uiNameKorean: string;
   uiNameEnglish: string;
 }
@@ -136,9 +124,7 @@ export type {
   FirstResultResponse,
   SecondResultResponse,
   ThirdResultResponse,
-  SnackCountLevel,
   RecommendRecipeRankDto,
   EfficacyData,
   DietAnalysisFormValues,
-  GeneralLevel,
 };

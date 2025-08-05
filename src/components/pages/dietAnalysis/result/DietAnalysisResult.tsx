@@ -6,6 +6,8 @@ import DietReason from "./dietReason/DietReason";
 import Divider from "@/components/common/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 import RecommendedRecipeList from "./recommendedRecipeList/RecommendedRecipeList";
+import DailyCalorie from "./dailyCalorie/DailyCalorie";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 interface DietAnalysisResultProps {
   reportId: number;
@@ -22,11 +24,15 @@ export default function DietAnalysisResult({
         direction: "col",
         gap: 40,
         backgroundColors: "gray50",
+        paddingBottom: 128,
       })}
     >
       <ResultSummary
         dogName={dietAnalysisResult.secondResultResponse.dogName}
         firstResponse={dietAnalysisResult.firstResultResponse}
+        firstHealthConcerns={
+          dietAnalysisResult.secondResultResponse.firstHealthConcerns
+        }
       />
       <Divider thickness={8} color="gray100" />
       <DietReason secondResponse={dietAnalysisResult.secondResultResponse} />
@@ -36,6 +42,18 @@ export default function DietAnalysisResult({
         recommendRecipeList={
           dietAnalysisResult.thirdResultResponse.recommendRecipeRankDtoList
         }
+      />
+      <Divider thickness={8} color="gray100" />
+      <DailyCalorie
+        dogName={dietAnalysisResult.secondResultResponse.dogName}
+        dailyCalorie={
+          dietAnalysisResult.thirdResultResponse.oneDayRecommendKcal
+        }
+      />
+      <ButtonDocked
+        type="full-button"
+        primaryButtonLabel="레시피 주문하기"
+        onPrimaryClick={() => {}}
       />
     </div>
   );

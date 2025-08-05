@@ -11,6 +11,7 @@ import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
 import DefaultImage from "public/images/subscription/dog-default-profile.png";
 import Button from "@/components/common/button/Button";
+import { useRouter } from "next/navigation";
 
 interface DogCardProps {
   dogId: number;
@@ -35,7 +36,7 @@ export default function DogCard({
 }: DogCardProps) {
   // subscribeStatus 상태 어떤게 있는지 여부에 따라 렌더링
   const age = getAgeFromBirth(birthDate);
-
+  const router = useRouter();
   return (
     <div className={styles.dogCardContainer}>
       <div className={commonWrapper({ gap: 12 })}>
@@ -98,6 +99,7 @@ export default function DogCard({
           textColor="gray900"
           borderColor="gray300"
           size="sm"
+          // onClick={() => router.push(`/diet-analysis/result/${reportId}`)}
           fullWidth
         >
           맞춤 결과 확인

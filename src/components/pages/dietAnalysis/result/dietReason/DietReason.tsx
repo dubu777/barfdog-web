@@ -7,7 +7,7 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import CheckIcon from "public/images/survey/check_small.svg";
 import Divider from "@/components/common/divider/Divider";
 import { RECIPE_EFFICACY_DATA_MAP } from "@/constants/dietAnalysis";
-
+import StethoscopeIcon from "public/images/dietAnalysis/stethoscope.svg";
 interface DietReasonProps {
   secondResponse: SecondResultResponse;
 }
@@ -25,7 +25,7 @@ export default function DietReason({ secondResponse }: DietReasonProps) {
           <br />
           추천할까요?
         </DefaultText>
-        <div className={styles.tempIconStyle} />
+        <StethoscopeIcon />
       </div>
       <Card shadow="strong" padding={"20/16"} gap={20} align="start">
         <div
