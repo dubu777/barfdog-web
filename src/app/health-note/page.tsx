@@ -13,16 +13,14 @@ export default async function HeathNotePage() {
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <>
-      <HydrationBoundary state={dehydratedState}>
-        <ErrorBoundary fallback={<div>Something went wrong.</div>}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <HealthNoteMainHeader />
-            <HealthNoteUser />
-            <BottomNavBar />
-          </Suspense>
-        </ErrorBoundary>
-      </HydrationBoundary>
-    </>
+    <HydrationBoundary state={dehydratedState}>
+      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <HealthNoteMainHeader />
+          <HealthNoteUser />
+          <BottomNavBar />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrationBoundary>
   );
 }

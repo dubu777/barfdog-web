@@ -18,6 +18,8 @@ interface Coupon {
   memberCouponId: number;
   name: string; // 쿠폰 이름
   remaining: number; // 남은 쿠폰 수
+  status?: string; // 남은 쿠폰 수
+  id?: number;
 }
 
 

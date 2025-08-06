@@ -51,7 +51,6 @@ const FullCheckList = () => {
           align='start'
           direction='row'
           justify='between'
-          padding='none'
         >
           <div className={styles.fullCheckSurveyCardContent}>
             <DefaultText type="headline2">

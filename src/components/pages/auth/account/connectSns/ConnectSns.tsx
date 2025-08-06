@@ -24,7 +24,6 @@ const ConnectSns = () => {
   const { loginUserInfo } = useAuthStore.getState();
   const { mutate: connectSns } = useConnectSns();
   const { addToast } = useToastStore();
-  const { snsCallbackUrl } = getSnsCallbackUrl();
 
   const sanitizePhoneNumber = (phone: string): string => {
     let sanitized = phone;
@@ -61,6 +60,7 @@ const ConnectSns = () => {
         setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, response.token);
         addToast("SNS 연동이 완료되었습니다!", "above-button");
 
+        const { snsCallbackUrl } = getSnsCallbackUrl();
         // 마이페이지 sns 연동 리다이렉트를 위한 callbackUrl 적용 및 초기화
         if (snsCallbackUrl) {
           router.push(snsCallbackUrl || "/");

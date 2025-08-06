@@ -12,7 +12,7 @@ import ReviewListContainer from "@/components/pages/mypage/review/reviewListCont
 import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
 import { prefetchGetWrittenReviewList, useGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
 import { prefetchGetWritableReviewList, useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
-import { ReviewItemType } from '@/types';
+import { ReviewItemType, WritableReviewItem, WrittenReviewItem } from '@/types';
 
 const ItemTypeFilterList = {
   'ALL': { label: '전체보기' },
@@ -65,7 +65,7 @@ const Review = () => {
               listKey='writableReviewList'
               EmptyStateComponent={() => <EmptyStateReview hasOrderHistory={hasOrderHistory} />}
               ReviewCardComponent={({ review }) => (
-                <ReviewCard isWritableReview reviewDetail={review} />
+                <ReviewCard reviewDetail={review as unknown as WritableReviewItem} />
               )}
             />
           </Suspense>
@@ -86,7 +86,7 @@ const Review = () => {
               listKey='writtenReviewList'
               EmptyStateComponent={() => <EmptyStateReview type='writtenReviewList' />}
               ReviewCardComponent={({ review }) => (
-                <ReviewCard reviewDetail={review} />
+                <ReviewCard reviewDetail={review as unknown as WrittenReviewItem} />
               )}
             />
           </Suspense>

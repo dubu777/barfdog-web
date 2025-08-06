@@ -55,8 +55,7 @@ const Dogpedia = () => {
         </section>
       ) : (
         <DogpediaDetail
-          selectedDog={selectedDog}
-          setSelectedDog={setSelectedDog}
+          setSelectedDog={(dog) => setSelectedDog(dog as keyof typeof DOG_TYPE_TEMP | null)}
         />
       )}
     </>

@@ -8,10 +8,9 @@ import {
   getBodyCheckDiseaseMeta,
   getPhaseDescription,
 } from "@/utils/healthNote/bodyCheckScore";
-import { DiseaseName } from "@/types/healthNote";
+import { DiseaseName, DiseasePhaseType } from "@/types/healthNote";
 import Card from "@/components/common/card/Card";
 import { phaseTextStyle } from "../BodyCheckResult.css";
-
 interface DiseasePhaseProps {
   diseaseName: DiseaseName;
 }
@@ -51,7 +50,7 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
                 {phase}
               </DefaultText>
               <DefaultText type="body3" color="gray700">
-                {getPhaseDescription(diseaseName, phase)}
+                {getPhaseDescription(diseaseName, phase as DiseasePhaseType)}
               </DefaultText>
             </div>
           </div>

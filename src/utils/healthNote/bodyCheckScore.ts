@@ -1,5 +1,5 @@
 import { BODY_DISEASE_INFO } from "@/constants/healthNote/bodyCheck/result";
-import { DiseaseName, DiseasePhase } from "@/types/healthNote";
+import { DiseaseName, DiseasePhaseType } from "@/types/healthNote";
 
 /**
  * 3) 각 질병의 메타 정보 + 단계별 설명 + 헬스 가이드를 모두 담는 인터페이스
@@ -14,7 +14,7 @@ export interface DiseaseMeta {
   koreanName: string;
   scoreDescription: string;
   maxScore: number;
-  phaseDescriptions: Record<DiseasePhase, string>;
+  phaseDescriptions: Record<DiseasePhaseType, string>;
   healthGuide: string;
 }
 
@@ -87,7 +87,7 @@ export function getBodyCheckDiseaseMeta(diseaseName: DiseaseName): DiseaseMeta {
  */
 export function getPhaseDescription(
   diseaseName: DiseaseName,
-  phase: DiseasePhase
+  phase: DiseasePhaseType
 ): string {
   const disease = BODY_DISEASE_INFO[diseaseName];
   if (!disease) {

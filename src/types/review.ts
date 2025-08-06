@@ -8,7 +8,6 @@ export type {
   ReviewList,
   ReviewDetail,
   ReviewListItem,
-  ReviewImage,
   WrittenReviewItem,
   WrittenReviewList,
   WritableReviewItem,
@@ -23,6 +22,7 @@ export type {
   SurveyKey,
   SurveyValue,
   SurveyQuestionType,
+  ReviewImage,
 };
 
 interface BaseReviewItem {
@@ -147,4 +147,9 @@ type SurveyValue = "dislike" | "normal" | "like" | null;
 interface SurveyQuestionType {
   key: SurveyKey;
   label: string;
+}
+
+interface ReviewImage {
+  url: string;
+  filename: string;
 }

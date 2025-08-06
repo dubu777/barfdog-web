@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import SurveyPageContainer from "@/components/pages/dietAnalysis/survey/surveyPageContainer/surveyPageContainer";
 import { Gender } from "@/types";

@@ -130,7 +130,6 @@ const InviteFriends = () => {
       <article>
         <div className={styles.recommendationCodeBox}>
           <Card
-            borderRadius='none'
             shadow='light'
             className={styles.recommendationCode}
           >

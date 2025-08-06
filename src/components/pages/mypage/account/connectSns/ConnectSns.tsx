@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import * as styles from "../Account.css";
-import NaverImage from "public/images/myPage/naver.svg";
-import KakaoImage from "public/images/myPage/kakao.svg";
+import NaverImage from "public/images/mypage/naver.svg";
+import KakaoImage from "public/images/mypage/kakao.svg";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import DefaultText from "@/components/common/defaultText/DefaultText";

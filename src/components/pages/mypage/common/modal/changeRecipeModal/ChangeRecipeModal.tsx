@@ -56,7 +56,7 @@ const ChangeRecipeModal = ({
 						<span className={pointColor}>식단 변경은 {nextCycle}회차부터 변경돼요</span> (현재: {detail.subscribeCount}회차)
 					</DefaultText>
 				</div>
-				<Card shadow='none' padding={16} gap={18}>
+				<Card shadow='none' padding={16} gap={16}>
 					{subscriptionInfo.map((info, index) => (
 						<Fragment key={info.value}>
 							<div className={styles.topInfo}>

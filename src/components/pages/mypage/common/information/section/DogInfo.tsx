@@ -7,7 +7,7 @@ import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";
 import Image from "next/image";
-import SampleDog1 from '/public/images/myPage/sample/sample1.jpg'
+import SampleDog1 from '/public/images/mypage/sample/sample1.jpg'
 import { DOG_GENDER } from "@/constants/dog";
 
 interface PetInfoProps {
