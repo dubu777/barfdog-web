@@ -1,9 +1,12 @@
+"use client";
+
+import React from "react";
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { useController, useFormContext } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import { useFormContext, useController } from "react-hook-form";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {
@@ -17,16 +20,16 @@ export default function SurveyStep8({
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
 
-  const { field: activityLevelField } = useController({
-    name: "step8.activityLevel",
+  const { field: snackCountLevelField } = useController({
+    name: "step8.snackCountLevel",
     control,
   });
 
   const { onToggle, isSelected } = useSurveyToggleOption({
-    selectedValue: activityLevelField.value,
+    selectedValue: snackCountLevelField.value,
     mode: "radio",
     onChange: (value) => {
-      activityLevelField.onChange(value);
+      snackCountLevelField.onChange(value);
       handleChange();
     },
   });
@@ -41,12 +44,13 @@ export default function SurveyStep8({
           gap: 12,
         })}
       >
-        {DIET_ANALYSIS_FORM_INFO.lifestyle.activityLevel.options.map(
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.snackCountLevel.options.map(
           (option) => (
             <SurveyButton
               key={option.label}
               label={option.label}
               value={option.value}
+              subLabel={option.subLabel}
               inputType="radio"
               isChecked={isSelected(option.value)}
               onToggle={onToggle}

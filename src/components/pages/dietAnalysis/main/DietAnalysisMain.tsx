@@ -1,29 +1,27 @@
 "use client";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
-// import * as styles from "./RegisteredDogManager.css";
 import DogCard from "./dogCard/DogCard";
 import { useInfiniteList } from "@/hooks/useInfiniteList";
 import CreateButton from "@/components/common/createButton/CreateButton";
-import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
 import Button from "@/components/common/button/Button";
 import { dietAnalysisMainContainer } from "./DietAnalysisMain.css";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 
 export default function DietAnalysisMain() {
-  const { data: dogListData = [] } = useGetDogList();
-  const { data: petList = [] } = useGetPetList();
-  console.log(petList, "petList");
-  // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아니고, 데이터는 한번에 받아오고, 10개씩 렌더링 하게 구현
-  const [visibleDogs, loadMoreRef] = useInfiniteList(dogListData, {
+  const { data } = useGetPetList();
+
+  // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아님, 10개씩 렌더링 하게 구현
+  const [visibleDogs, loadMoreRef] = useInfiniteList(data.petList, {
     pageSize: 10,
     rootMargin: "50px",
   });
+  console.log(data);
 
   return (
     <div className={dietAnalysisMainContainer}>
-      {dogListData.length < 1 ? (
+      {data.petList.length < 1 ? (
         <>
           <div className={commonWrapper({ direction: "col", gap: 12 })}>
             <EmptyIcon />
@@ -50,20 +48,19 @@ export default function DietAnalysisMain() {
               <DogCard
                 key={item.id}
                 dogId={item.id}
-                // reportId={item.reportId}
-                profileImageUrl={item.pictureUrl}
+                reportId={item.recipeSurveyId}
+                profileImageUrl={item.displayImageUrl?.url ?? null}
                 dogType={"말티즈"}
                 name={item.name}
                 gender={item.gender}
-                birthDate={"2019-05-12"}
-                weight={7.4}
-                subscribeStatus={item.subscribeStatus}
+                birthDate={item.birthInfo.birthDay}
+                isSubscribing={item.isSubscribing}
               />
             ))}
           </div>
-          {visibleDogs.length < dogListData.length && (
+          {visibleDogs.length < data.petList.length && (
             <div ref={loadMoreRef}>
-              <DefaultText type="body3">불러오는 중…</DefaultText>
+              <DefaultText type="body3">불러오는 중</DefaultText>
             </div>
           )}
         </>

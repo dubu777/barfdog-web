@@ -7,14 +7,14 @@ import {
 } from "@tanstack/react-query";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
-import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
 import Loader from "@/components/common/loader/Loader";
 import DietAnalysisMain from "@/components/pages/dietAnalysis/main/DietAnalysisMain";
+import { prefetchGetPetList } from "@/api/pet/queries/usePrefetchGetPetList";
 
 export default async function DietAnalysisPage() {
   const queryClient = new QueryClient();
 
-  await prefetchGetDogList(queryClient);
+  await prefetchGetPetList(queryClient);
 
   const dehydrateState = dehydrate(queryClient);
   return (

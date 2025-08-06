@@ -49,59 +49,52 @@ export {
 };
 
 const SURVEY_SECTIONS = [
-  { key: "dogBasicInfo", label: "기본 정보", steps: 6 },
+  { key: "dogBasicInfo", label: "기본 정보", steps: 5 },
   { key: "lifestyle", label: "생활 정보", steps: 5 },
   { key: "dogDietHealth", label: "식단/건강", steps: 3 },
 ];
 
 const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
   step1: {
-    titleTemplates: ["반려견에 대해 알려주세요"],
+    titleTemplates: ["{dogName}의", "중성화 여부를 알려주세요"],
   },
   step2: {
-    titleTemplates: ["{dogName}의", "생년월일은 언제인가요?"],
-    subtitleTemplates: [
-      [{ text: "아이의 생년월에 따라 급여량이 달라져요.", color: "gray600" }],
-      [{ text: "정확히 모르신다면 대략적으로 알려주세요.", color: "gray600" }],
-    ],
+    titleTemplates: ["{dogName:topic}은", "노령견인가요?"],
   },
   step3: {
     titleTemplates: ["{dogName}의", "몸무게는 얼마인가요?"],
   },
   step4: {
-    titleTemplates: ["{dogName}의", "견종은 무엇인가요?"],
-  },
-  step5: {
     titleTemplates: ["{dogName:topic}", "현재 임신 중인가요?"],
   },
-  step6: {
+  step5: {
     titleTemplates: ["{dogName:topic}", "현재 수유 중인가요?"],
   },
-  step7: {
+  step6: {
     titleTemplates: ["{dogName}의", "체형은 어느 쪽에 가까운가요?"],
   },
-  step8: {
+  step7: {
     titleTemplates: ["{dogName}의", "활동량은 어느 쪽에 가까운가요?"],
   },
-  step9: {
+  step8: {
     titleTemplates: ["{dogName}의", "간식량은 어떤가요?"],
   },
-  step10: {
+  step9: {
     titleTemplates: ["{dogName:subject}", "못 먹는 재료는 무엇인가요?"],
   },
-  step11: {
+  step10: {
     titleTemplates: ["{dogName}의", "건강고민은 무엇인가요?"],
     subtitleTemplates: [
       [{ text: "1순위부터 3순위까지 선택해 주세요", color: "red" }],
     ],
   },
-  step12: {
+  step11: {
     titleTemplates: ["{dogName:subject}", "현재 먹고 있는 사료는 무엇인가요?"],
   },
-  step13: {
+  step12: {
     titleTemplates: ["{dogName:subject}", "현재 먹고 있는 영양제가 있나요?"],
   },
-  step14: {
+  step13: {
     titleTemplates: ["{dogName:topic}", "앓고 있는 질병이 있나요?"],
   },
 };
@@ -484,11 +477,11 @@ const recipeTempData: Record<number, RecipeTempData> = {
 // 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
 const SURVEY_NO_AUTO_STEP = new Set<SurveyStepKeys>([
   "step3",
+  "step9",
   "step10",
   "step11",
   "step12",
   "step13",
-  "step14",
 ]);
 
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));

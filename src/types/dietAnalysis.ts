@@ -14,11 +14,7 @@ import {
 /** 설문 제출‧결과 공통 인터페이스 */
 interface DietAnalysisPayload {
   dogId: number;
-  name: string;
-  gender: Gender;
-  birthDay: string;
   oldDog: boolean;
-  dogType: string;
   dogSize: DogSize;
   weight: string; // '5.2'처럼 문자열로 받되 필요 시 number 변환
   neutralization: boolean;
@@ -35,20 +31,19 @@ interface DietAnalysisPayload {
 }
 
 interface DietAnalysisFormValues {
-  step1: Pick<DietAnalysisPayload, "name" | "gender" | "neutralization">;
-  step2: { birthDay: string; oldDog: boolean };
+  step1: Pick<DietAnalysisPayload, "neutralization">;
+  step2: { oldDog: boolean };
   step3: Pick<DietAnalysisPayload, "dogSize" | "weight">;
-  step4: Pick<DietAnalysisPayload, "dogType">;
-  step5: Pick<DietAnalysisPayload, "pregnancy">;
-  step6: Pick<DietAnalysisPayload, "lactation">;
-  step7: Pick<DietAnalysisPayload, "bodyCondition">;
-  step8: Pick<DietAnalysisPayload, "activityLevel">;
-  step9: Pick<DietAnalysisPayload, "snackCountLevel">;
-  step10: Pick<DietAnalysisPayload, "inedibleFoods">;
-  step11: Pick<DietAnalysisPayload, "healthConcerns">;
-  step12: Pick<DietAnalysisPayload, "currentMeals">;
-  step13: Pick<DietAnalysisPayload, "supplements">;
-  step14: Pick<DietAnalysisPayload, "healthIssues">;
+  step4: Pick<DietAnalysisPayload, "pregnancy">;
+  step5: Pick<DietAnalysisPayload, "lactation">;
+  step6: Pick<DietAnalysisPayload, "bodyCondition">;
+  step7: Pick<DietAnalysisPayload, "activityLevel">;
+  step8: Pick<DietAnalysisPayload, "snackCountLevel">;
+  step9: Pick<DietAnalysisPayload, "inedibleFoods">;
+  step10: Pick<DietAnalysisPayload, "healthConcerns">;
+  step11: Pick<DietAnalysisPayload, "currentMeals">;
+  step12: Pick<DietAnalysisPayload, "supplements">;
+  step13: Pick<DietAnalysisPayload, "healthIssues">;
 }
 
 // 추천 식단 설문 결과지

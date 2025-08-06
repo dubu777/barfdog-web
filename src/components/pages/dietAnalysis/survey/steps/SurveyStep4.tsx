@@ -1,7 +1,11 @@
+"use client";
+
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
-import { Controller, useFormContext } from "react-hook-form";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
+import { useController, useFormContext } from "react-hook-form";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import { commonWrapper } from "@/styles/common.css";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 
 interface SurveyStepProps {
@@ -14,29 +18,44 @@ export default function SurveyStep4({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
-  const dogTypeOptions = DIET_ANALYSIS_FORM_INFO.dogBasicInfo.dogType.options;
+
+  const { field: pregnancyField } = useController({
+    name: "step4.pregnancy",
+    control,
+  });
+
+  const { onToggle, isSelected } = useSurveyToggleOption({
+    selectedValue: pregnancyField.value,
+    mode: "radio",
+    onChange: (value) => {
+      pregnancyField.onChange(value);
+      handleChange();
+    },
+  });
 
   return (
     <>
       <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step4} />
-
-      <Controller
-        name="step4.dogType" // surveyStepsSchema에 있는 필드 이름
-        control={control}
-        render={({ field }) => {
-          return (
-            <SearchableSelector
-              placeholder="견종을 검색해 보세요"
-              options={dogTypeOptions}
-              selectedValue={field.value || ""}
-              onChange={(value) => {
-                field.onChange(value);
-                handleChange();
-              }}
+      <div
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 12,
+        })}
+      >
+        {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.pregnancy.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.label}
+              label={option.label}
+              value={option.value}
+              inputType="radio"
+              isChecked={isSelected(option.value)}
+              onToggle={onToggle}
             />
-          );
-        }}
-      />
+          )
+        )}
+      </div>
     </>
   );
 }

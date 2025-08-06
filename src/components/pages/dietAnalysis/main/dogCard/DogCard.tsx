@@ -15,13 +15,13 @@ import { useRouter } from "next/navigation";
 
 interface DogCardProps {
   dogId: number;
-  profileImageUrl?: string | null;
+  profileImageUrl: string | null;
   dogType: string;
   name: string;
   gender: string;
   birthDate: string;
-  weight: number;
-  subscribeStatus: string;
+  isSubscribing: boolean;
+  reportId: number | null;
 }
 
 export default function DogCard({
@@ -31,34 +31,26 @@ export default function DogCard({
   name,
   gender,
   birthDate,
-  weight,
-  subscribeStatus,
+  isSubscribing,
+  reportId,
 }: DogCardProps) {
   // subscribeStatus 상태 어떤게 있는지 여부에 따라 렌더링
   const age = getAgeFromBirth(birthDate);
   const router = useRouter();
+  const handleGoToSurvey = () => {
+    window.location.href = `/diet-analysis/survey?dogName=${name}&dogId=${dogId}&gender=${gender}`;
+  };
   return (
     <div className={styles.dogCardContainer}>
       <div className={commonWrapper({ gap: 12 })}>
-        {profileImageUrl ? (
-          <Image
-            className={styles.profileImageStyle}
-            src={profileImageUrl}
-            alt="반려견 프로필"
-            width={76}
-            height={76}
-            priority
-          />
-        ) : (
-          <Image
-            className={styles.profileImageStyle}
-            src={DefaultImage}
-            alt="반려견 프로필"
-            width={76}
-            height={76}
-            priority
-          />
-        )}
+        <Image
+          className={styles.profileImageStyle}
+          src={profileImageUrl ?? DefaultImage}
+          alt="반려견 프로필"
+          width={76}
+          height={76}
+          priority
+        />
         <div
           className={commonWrapper({
             direction: "col",
@@ -70,9 +62,11 @@ export default function DogCard({
           <div className={commonWrapper({ justify: "between" })}>
             <div className={commonWrapper({ justify: "start", gap: 6 })}>
               <DefaultText type="headline1">{name}</DefaultText>
-              <Chips variant="solid" color="gray900" borderRadius="lg">
-                {subscribeStatus}
-              </Chips>
+              {isSubscribing && (
+                <Chips variant="solid" color="gray900" borderRadius="lg">
+                  구독중
+                </Chips>
+              )}
             </div>
             <Link href={`/health-note/dogs/${dogId}`}>
               <SvgIcon src={EditIcon} size={32} color="gray500" />
@@ -88,7 +82,7 @@ export default function DogCard({
             </DefaultText>
           </div>
           <DefaultText type="body3" color="gray600">
-            {age} | {weight}kg
+            {age}
           </DefaultText>
         </div>
       </div>
@@ -111,6 +105,7 @@ export default function DogCard({
           borderColor="red"
           size="sm"
           fullWidth
+          onClick={handleGoToSurvey}
         >
           다시 추천 받기
         </Button>

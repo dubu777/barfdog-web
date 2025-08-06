@@ -19,7 +19,7 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import { useCallback, useMemo, useState } from "react";
 import SurveyResultLoading from "../resultLoading/SurveyResultLoading";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
 import { buildDietAnalysisPayload } from "@/utils/healthNote/buildDietAnalysisPayload";
 import { useCreateDietAnalysisResult } from "@/api/dietAnalysis/mutations/useCreateDietAnalysisResult";
@@ -30,14 +30,24 @@ import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/Su
 import { getSurveySteps } from "../steps/StepsElements";
 import CriticalDiseaseAlertBottomSheet from "../bottomSheet/CriticalDiseaseAlertBottomSheet";
 import { DietAnalysisFormValues } from "@/types/dietAnalysis";
+import { Gender } from "@/types";
 
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
-export default function SurveyPageContainer() {
-  const router = useRouter();
-  const params = useSearchParams();
-  const isResurvey = params.get("mode") === "resurvey";
+interface SurveyPageContainerProps {
+  dogName: string;
+  dogId: number;
+  gender: Gender;
+  isResurvey: boolean;
+}
 
+export default function SurveyPageContainer({
+  dogName,
+  dogId,
+  gender,
+  isResurvey,
+}: SurveyPageContainerProps) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutate: submitResult } = useCreateDietAnalysisResult({
@@ -48,7 +58,6 @@ export default function SurveyPageContainer() {
       const reportId = response.data;
       // 로딩 화면 2초 렌더링 후에 결과 페이지로 이동
       setTimeout(() => {
-        setIsLoading(false);
         router.push(`/diet-analysis/result/${reportId}`);
       }, 2000);
     },
@@ -73,15 +82,13 @@ export default function SurveyPageContainer() {
 
   const stepKeys = Object.keys(defaultStepValues) as SurveyStepKeys[];
 
-  const dogName = useWatch({ name: "step1.name", control }) ?? "";
-  const gender = useWatch({ name: "step1.gender", control });
   const neutralization = useWatch({ name: "step1.neutralization", control });
 
   const skipConditions = useMemo<SkipCondition<SurveyStepKeys>[]>(
     () => [
       {
-        from: "step4",
-        to: "step7",
+        from: "step3",
+        to: "step6",
         predicate: () => gender === "MALE" || neutralization === true,
       },
     ],
@@ -128,7 +135,10 @@ export default function SurveyPageContainer() {
     const values = getValues();
     setIsLoading(true);
 
-    const payload = buildDietAnalysisPayload(values as DietAnalysisFormValues);
+    const payload = buildDietAnalysisPayload(
+      values as DietAnalysisFormValues,
+      dogId
+    );
     console.log("payload", payload);
 
     submitResult(payload);
@@ -143,7 +153,7 @@ export default function SurveyPageContainer() {
     if (!(await trigger())) return;
 
     const values = getValues();
-    const { healthIssues } = values.step14;
+    const { healthIssues } = values.step13;
 
     if (healthIssues.some((d: string) => CRITICAL_SET.has(d))) {
       onToggle();

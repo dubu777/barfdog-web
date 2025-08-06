@@ -1,140 +1,66 @@
-import {
-  NONE_VALUE,
-  DIET_ANALYSIS_FORM_INFO,
-  SURVEY_TITLES,
-} from "@/constants";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { useController, useFormContext, useWatch } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import useModal from "@/hooks/useModal";
-import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import { commonWrapper } from "@/styles/common.css";
-import { GUT_CHECK_FORM_INFO } from "@/constants/healthNote/gutCheck";
-import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
-import Chips from "@/components/common/chips/Chips";
+import ImageButton from "../imageButton/ImageButton";
+import SurveyGridButtonGroup from "../../../../common/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
+import { useSurveyRankOption } from "@/hooks/survey/useSurveyRankOption";
 
 interface SurveyStepProps {
   handleChange: () => void;
-  handleNextStep: () => void;
   dogName: string;
 }
 
 export default function SurveyStep10({
   handleChange,
-  handleNextStep,
   dogName,
 }: SurveyStepProps) {
-  const { control, setValue } = useFormContext<SurveyStepValues>();
-  const { isOpen, onToggle: toggleModal, onClose } = useModal();
+  const { control } = useFormContext<SurveyStepValues>();
 
-  // inedibleFoods field controller
-  const { field: inedibleStatusField } = useController({
-    name: "step10.inedibleFoodStatus",
-    control,
-  });
-  const { field: inedibleField } = useController({
-    name: "step10.inedibleFoods",
+  // healthConcerns field controller
+  const { field: concernsField } = useController({
+    name: "step10.healthConcerns",
     control,
   });
 
-  const { onToggle: onStatusToggle, isSelected: isStatusSelected } =
-    useSurveyToggleOption<string>({
-      selectedValue: inedibleStatusField.value ?? null,
-      mode: "radio",
-      onChange: (value) => {
-        inedibleStatusField.onChange(value);
-        handleChange();
-        if (value === "NO_ALLERGY") {
-          setValue("step10.inedibleFoods", [], {
-            shouldValidate: true,
-          });
-          handleNextStep();
-        }
-      },
-    });
-
-  const { onToggle: onFoodToggle, isSelected: isFoodSelected } =
-    useSurveyToggleOption<string>({
-      selectedValue: inedibleField.value ?? null,
-      mode: "checkbox",
-      onChange: (value) => {
-        inedibleField.onChange(value);
+  // useSurveyRankOption must be called at top level
+  const selected = (concernsField.value as string[]) ?? [];
+  const { onToggle, isDisabled, getRank, onReselect } =
+    useSurveyRankOption<string>(
+      selected,
+      (next) => {
+        concernsField.onChange(next);
         handleChange();
       },
-    });
-
-  const inedibleFoodStatus = useWatch({
-    name: "step10.inedibleFoodStatus",
-    control,
-  });
+      3
+    );
 
   return (
     <>
       <SurveyTitle
         dogName={dogName}
         config={SURVEY_TITLES.step10}
-        infoBoxContent="알러지 분류 참고사항"
-        onInfoBoxClick={toggleModal}
+        onReselect={onReselect}
       />
-
-      <div className={commonWrapper({ align: "start", gap: 8 })}>
-        {GUT_CHECK_FORM_INFO.healthStatus.allergyStatus.options.map(
+      <SurveyGridButtonGroup>
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.healthConcerns.options.map(
           (option) => (
-            <SurveyButton
-              key={option.label}
+            <ImageButton
+              key={option.value}
               label={option.label}
               value={option.value}
-              isChecked={isStatusSelected(option.value)}
-              onToggle={onStatusToggle}
+              inputType="rank"
+              defaultSvg={option.Icon}
+              selectedSvg={option.SelectedIcon}
+              isChecked={selected.includes(option.value)}
+              rank={getRank(option.value)}
+              disabled={isDisabled(option.value)}
+              onToggle={() => onToggle(option.value)}
+              display="grid1"
             />
           )
         )}
-      </div>
-      {inedibleFoodStatus === "HAS_ALLERGY" && (
-        <>
-          <DefaultText type="label2" color="gray500">
-            *아래 해당되는 사항을 모두 선택해주세요
-          </DefaultText>
-          <div
-            className={commonWrapper({
-              direction: "col",
-              gap: 32,
-              paddingBottom: 85,
-            })}
-          >
-            {GUT_CHECK_FORM_INFO.healthStatus.allergenFoodList.groups.map(
-              (group) => (
-                <SurveyButtonGroup
-                  key={group.category}
-                  title={group.category}
-                  isWrap
-                >
-                  {group.options.map((opt) => {
-                    return (
-                      <Chips
-                        key={opt.value}
-                        variant="solid"
-                        color={isFoodSelected(opt.value) ? "red" : "gray800"}
-                        size="lg"
-                        borderRadius="lg"
-                        switchOff={!isFoodSelected(opt.value)}
-                        showCheckIcon
-                        onClick={() => onFoodToggle(opt.value)}
-                      >
-                        {opt.label}
-                      </Chips>
-                    );
-                  })}
-                </SurveyButtonGroup>
-              )
-            )}
-          </div>
-        </>
-      )}
-      <InedibleBottomSheet isOpen={isOpen} onClose={onClose} />
+      </SurveyGridButtonGroup>
     </>
   );
 }

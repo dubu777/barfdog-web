@@ -1,10 +1,10 @@
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext } from "react-hook-form";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { commonWrapper } from "@/styles/common.css";
-import SurveyOptionCard from "@/components/common/survey/surveyOptionCard/SurveyOptionCard";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -16,16 +16,17 @@ export default function SurveyStep7({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
-  const { field: bodyConditionField } = useController({
-    name: "step7.bodyCondition",
+
+  const { field: activityLevelField } = useController({
+    name: "step7.activityLevel",
     control,
   });
 
   const { onToggle, isSelected } = useSurveyToggleOption({
-    selectedValue: bodyConditionField.value,
+    selectedValue: activityLevelField.value,
     mode: "radio",
     onChange: (value) => {
-      bodyConditionField.onChange(value);
+      activityLevelField.onChange(value);
       handleChange();
     },
   });
@@ -40,16 +41,13 @@ export default function SurveyStep7({
           gap: 12,
         })}
       >
-        {DIET_ANALYSIS_FORM_INFO.lifestyle.bodyCondition.options.map(
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.activityLevel.options.map(
           (option) => (
-            <SurveyOptionCard
+            <SurveyButton
               key={option.label}
-              imageSrc={option.imageUrl}
               label={option.label}
               value={option.value}
-              imageSize={114}
-              imageWrapperSize={114}
-              subLabel={option.subLabel}
+              inputType="radio"
               isChecked={isSelected(option.value)}
               onToggle={onToggle}
             />

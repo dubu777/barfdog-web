@@ -17,13 +17,14 @@ export const titleGrid = style({ gridArea: "title", alignSelf: "center" });
 export const descriptionGrid = style({ gridArea: "description" });
 
 export const ingredientSwiper = style({
+  display: "flex",
   width: "100%",
   paddingLeft: 0,
   paddingRight: 0,
 });
 
 export const ingredientSlide = style({
-  width: "auto !important",
+  flex: 1,
 });
 
 export const ingredientItem = style({
@@ -37,8 +38,8 @@ export const ingredientIcon = style({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "60px",
-  height: "60px",
+  width: "100%",
+  aspectRatio: "1 / 1",
   border: `1px solid ${themeVars.colors.gray.gray200}`,
   borderRadius: "8px",
   backgroundColor: themeVars.colors.gray.gray50,

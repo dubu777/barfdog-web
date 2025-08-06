@@ -4,10 +4,10 @@ interface PetListResponse {
 
 interface Pet {
   id: number;
-  recipeSurveyId?: number;
+  recipeSurveyId: number | null;
   name: string;
   gender: "MALE" | "FEMALE";
-  displayImageUrl: string | null;
+  displayImageUrl: DisplayImageUrl | null;
   isRepresentative: boolean;
   isSubscribing: boolean;
   isLegacyBreed: boolean;
@@ -15,6 +15,10 @@ interface Pet {
   breedInfo: BreedInfo;
   birthInfo: BirthInfo;
   subscribeInfo: SubscribeInfo;
+}
+
+interface DisplayImageUrl {
+  url: string;
 }
 
 interface BreedInfo {
