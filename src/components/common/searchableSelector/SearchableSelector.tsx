@@ -55,9 +55,9 @@ export default function SearchableSelector({
         })}
       >
         {filteredOptions.length > 0
-          ? filteredOptions.map((opt) => (
+          ? filteredOptions.map((opt, index) => (
               <SurveyButton
-                key={opt.label}
+                key={`${opt.label}-${index}`}
                 label={opt.label}
                 value={opt.value}
                 inputType={type === "radio" ? "radio" : "normal"}

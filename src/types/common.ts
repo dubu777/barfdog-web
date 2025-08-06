@@ -17,6 +17,7 @@ export type {
   Page,
   ImageFile,
   Option,
+  SelectOption,
 };
 
 declare global {
@@ -83,4 +84,9 @@ interface ImageFile {
 interface Option {
   label: string;
   value: string;
+}
+
+interface SelectOption<T extends string | number | boolean | null> {
+  label: string;
+  value: T;
 }

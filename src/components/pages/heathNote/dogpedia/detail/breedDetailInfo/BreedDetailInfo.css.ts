@@ -1,13 +1,13 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const detailInfoContainer = style({
-	padding: '20px',
+export const breedDetailInfo = style({
+	padding: '20px 20px 40px',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '20px',
 	backgroundColor: themeVars.colors.gray.gray0,
-	marginBottom: '181px',
+	marginBottom: '40px',
 })
 
 export const detailInfoList = style({
@@ -15,7 +15,6 @@ export const detailInfoList = style({
 	flexDirection: 'column',
 	gap: '28px',
 })
-
 
 export const detailInfoItem = style({
 	display: 'flex',

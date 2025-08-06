@@ -1,39 +1,35 @@
-import * as styles from './DefaultInfo.css';
+import * as styles from './BreedDefaultInfo.css';
+import Image from "next/image";
 import WeightIcon from '/public/images/healthNote/dogpedia/weight.svg';
 import HeightIcon from '/public/images/healthNote/dogpedia/hight.svg';
-import MedicalIcon from '/public/images/healthNote/dogpedia/medical.svg';
 import LifeIcon from '/public/images/healthNote/dogpedia/life_expectancy.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import Card from "@/components/common/card/Card";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { BreedPhysicalSpec } from "@/types/healthNote/dogpedia";
 
-interface DefaultInfoData {
-	dogType: string;
-	minHeight: number;
-	maxHeight: number;
-	minWeight: number;
-	maxWeight: number;
-	lifeExpectancy: string;
-	keyword: string;
-	diseases: string[];
+interface BreedDefaultInfo extends BreedPhysicalSpec {
+	name: string;
+	temperament: string;
+	imageUrl?: string;
 }
 
 interface DefaultInfoProps {
-	data: DefaultInfoData;
+	data: BreedDefaultInfo;
 }
 
-const DefaultInfo = ({
+export default function BreedDefaultInfo({
 	data,
-}: DefaultInfoProps) => {
+}: DefaultInfoProps) {
 	const defaultInfo = [
 		{
 			key: 'weight',
 			label: '몸무게',
 			icon: WeightIcon,
 			value: {
-				min: data.minWeight,
-				max: data.maxWeight,
+				min: data.minWeightKg,
+				max: data.maxWeightKg
 			},
 		},
 		{
@@ -41,31 +37,33 @@ const DefaultInfo = ({
 			label: '키',
 			icon: HeightIcon,
 			value: {
-				min: data.minHeight,
-				max: data.maxHeight,
+				min: data.minHeightCm,
+				max: data.maxHeightCm,
 			},
-		},
-		{
-			key: 'diseases',
-			label: '많이 걸리는 질병',
-			icon: MedicalIcon,
-			value: data.diseases,
 		},
 		{
 			key: 'lifeExpectancy',
 			label: '기대 수명',
 			icon: LifeIcon,
-			value: data.lifeExpectancy.split('-'),
+			value: [data.minLifespanYear, data.maxLifespanYear],
 		},
 	]
-
-	if(!data) return null;
+	
 	return (
-		<div className={styles.defaultInfoContainer}>
-			<DefaultText type='title2'>{data.dogType}에 대해<br/>알아볼까요?</DefaultText>
+		<div className={styles.breedDefaultInfo}>
+			<DefaultText type='title2'>{data.name}에 대해<br/>알아볼까요?</DefaultText>
+			{data.imageUrl &&
+				<Image
+					src={data.imageUrl}
+					alt={data.name}
+					width={600}
+					height={300}
+					className={styles.breedImage}
+				/>
+			}
 			<div>
 				<div className={styles.tagChips}>
-					{data.keyword.split('/').map(tag => (
+					{data.temperament.split(' , ').map(tag => (
 						<Chips key={tag} variant='outlined' color='blue50'># {tag}</Chips>
 					))}
 				</div>
@@ -91,16 +89,6 @@ const DefaultInfo = ({
 								</div>
 							</div>
 						)
-						const DiseasesComponent = () => (
-							<div className={styles.infoCardValue}>
-								{(info.value as string[]).map((value, index) => (
-									<div key={value} className={styles.infoValue}>
-										<DefaultText type='label4' color={index === 0 ? 'gray900' : 'gray700'}>{index+1}위</DefaultText>
-										<DefaultText type={index === 0 ? 'headline2' : 'label2'} color={index === 0 ? 'gray900' : 'gray700'}>{value}</DefaultText>
-									</div>
-								))}
-							</div>
-						)
 						const LifeExpectancyComponent = () => (
 							<div className={styles.infoCardValue}>
 								<div className={styles.infoValue}>
@@ -120,16 +108,17 @@ const DefaultInfo = ({
 								shadow='light'
 								padding={16}
 								justify='between'
+								align='start'
 							>
 								<div className={styles.infoCardLabel}>
 									<SvgIcon src={info.icon} />
 									<DefaultText type='headline2'>{info.label}</DefaultText>
 								</div>
 								<div>
-									{info.key === 'diseases' &&
-										<DiseasesComponent />
+									{info.key === 'weight' &&
+										<WeightHeightComponent />
 									}
-									{info.key === 'weight' || info.key === 'height' &&
+									{info.key === 'height' &&
 										<WeightHeightComponent />
 									}
 									{info.key === 'lifeExpectancy' &&
@@ -142,8 +131,5 @@ const DefaultInfo = ({
 				</ul>
 			</div>
 		</div>
-
 	);
 };
-
-export default DefaultInfo;

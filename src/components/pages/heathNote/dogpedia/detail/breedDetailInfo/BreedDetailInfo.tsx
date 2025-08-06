@@ -1,50 +1,42 @@
-import * as styles from './DetailInfo.css';
+import * as styles from './BreedDetailInfo.css';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-
-interface DetailInfoData {
-	health?: string;
-	recommendedHealthTests?: string;
-	grooming?: string;
-	exercise?: string;
-	training?: string;
-	nutritionIntake?: string;
-}
+import { BreedCareInfo } from "@/types/healthNote/dogpedia";
 
 interface DetailInfoProps {
-	data: DetailInfoData;
+	data: BreedCareInfo;
 }
 
-const DetailInfo = ({
+export default function BreedDetailInfo({
 	data,
-}: DetailInfoProps) => {
+}: DetailInfoProps) {
 	const infoList = [
 		{
 			label: '건강',
-			value: data?.health,
+			value: data?.healthInfo,
 		},
 		{
-			label: '권장 건강 테스트',
-			value: data?.recommendedHealthTests,
+			label: '유전 질환',
+			value: data?.diseaseInfo,
 		},
 		{
 			label: '그루밍',
-			value: data?.grooming,
+			value: data?.groomingInfo,
 		},
 		{
 			label: '운동',
-			value: data?.exercise,
+			value: data?.activityInfo,
 		},
 		{
 			label: '훈련',
-			value: data?.training,
+			value: data?.trainingInfo,
 		},
 		{
 			label: '영양섭취',
-			value: data?.nutritionIntake,
+			value: data?.nutritionInfo,
 		},
 	]
 	return (
-		<section className={styles.detailInfoContainer}>
+		<section className={styles.breedDetailInfo}>
 			<DefaultText type='title4'>상세정보</DefaultText>
 			<ul className={styles.detailInfoList}>
 				{infoList.map(info => (
@@ -62,5 +54,3 @@ const DetailInfo = ({
 		</section>
 	);
 };
-
-export default DetailInfo;

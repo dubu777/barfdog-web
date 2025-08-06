@@ -1,9 +1,16 @@
 import { style } from "@vanilla-extract/css";
 
-export const defaultInfoContainer = style({
+export const breedDefaultInfo = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '16px',
+})
+
+export const breedImage = style({
+	width: '100%',
+	height: 'auto',
+	objectFit: 'cover',
+	borderRadius: '16px',
 })
 
 export const tagChips = style({
@@ -23,7 +30,6 @@ export const infoCardLabel = style({
 	display: 'flex',
 	alignItems: 'center',
 	gap: '4px',
-	marginBottom: 'auto',
 })
 
 export const infoCardValue = style({

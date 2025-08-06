@@ -1,39 +1,41 @@
 import * as styles from './CoatQuestion.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import DoubleCoatIcon from '/public/images/healthNote/dogpedia/double_coat.svg';
 import SingleCoatIcon from '/public/images/healthNote/dogpedia/single_coat.svg';
 import ShortCoatIcon from '/public/images/healthNote/dogpedia/short_coat.svg';
 import MiddleCoatIcon from '/public/images/healthNote/dogpedia/middle_coat.svg';
 import LongCoatIcon from '/public/images/healthNote/dogpedia/long_coat.svg';
+import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { FUR_LENGTH, FUR_TYPE } from "@/constants/healthNote/dogpedia";
+import { FurLength, FurType } from "@/types/healthNote/dogpedia";
 
 interface CoatQuestionProps {
 	label: string;
-	furType: '이중모' | '단일모';
-	furLength: '짧은' | '중간' | '긴';
+	furType: FurType;
+	furLength: FurLength;
 }
 const CoatQuestion = ({
 	label,
 	furType,
 	furLength,
 }: CoatQuestionProps) => {
-	const FurTypeIcon = furType === '이중모' ? DoubleCoatIcon : SingleCoatIcon;
+	const FurTypeIcon = furType === 'DOUBLE_COAT' ? DoubleCoatIcon : SingleCoatIcon;
 	const FurLengthIcon =
-		furLength.includes('짧')
+		furLength === 'SHORT'
 		? ShortCoatIcon
-		: furLength.includes('중간')
+		: furLength === 'NORMAL'
 			? MiddleCoatIcon
 			: LongCoatIcon;
 
 	const coatInfoList = [
 		{
 			label: '털의 종류',
-			value: furType,
+			value: FUR_TYPE[furType],
 			icon: FurTypeIcon,
 		},
 		{
 			label: '털의 길이',
-			value: furLength,
+			value: FUR_LENGTH[furLength],
 			icon: FurLengthIcon,
 		},
 	]

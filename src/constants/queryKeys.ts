@@ -112,4 +112,10 @@ const queryKeys = {
     GET_GUT_CHECK_RESULT: "getGutCheckResult",
     GET_GUT_CHECK_LIST: "getGutCheckList",
   },
+  DOGPEDIA: {
+    BASE: "dogpedia",
+    GET_BREED_LIST: "getBreedList",
+    GET_BREED_DETAIL: "getBreedDetail",
+  }
+
 } as const;

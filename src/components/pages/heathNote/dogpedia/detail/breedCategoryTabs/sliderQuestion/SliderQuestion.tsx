@@ -13,12 +13,12 @@ interface SliderQuestionProps {
   value: number;
 }
 
-const SliderQuestion = ({
+export default function SliderQuestion({
   label,
   minLevel,
   maxLevel,
   value,
-}: SliderQuestionProps) => {
+}: SliderQuestionProps) {
 	return (
 		<div className={styles.sliderContainer}>
 			<DefaultText type='headline2'>{label}</DefaultText>
@@ -45,5 +45,3 @@ const SliderQuestion = ({
 		</div>
 	);
 };
-
-export default SliderQuestion;
