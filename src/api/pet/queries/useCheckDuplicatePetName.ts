@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { ApiResponse, UseQueryCustomOptions } from "@/types";
-import { checkDuplicateDogName } from "../dog";
+import { checkDuplicatePetName } from "../pet";
 
 export function useCheckDuplicateDogName(
-  dogName: string,
+  petName: string,
   queryOptions?: UseQueryCustomOptions<ApiResponse<string>>
 ) {
   return useQuery({
-    queryFn: async () => await checkDuplicateDogName(dogName),
+    queryFn: async () => await checkDuplicatePetName(petName),
     queryKey: [
-      queryKeys.DOG.BASE,
-      queryKeys.DOG.CHECK_DUPLICATE_DOG_NAME,
-      dogName,
+      queryKeys.PET.BASE,
+      queryKeys.PET.CHECK_DUPLICATE_PET_NAME,
+      petName,
     ],
     ...queryOptions,
   });

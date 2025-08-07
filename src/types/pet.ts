@@ -42,4 +42,26 @@ interface SubscribeInfo {
   subscribing: boolean;
 }
 
-export type { PetListResponse, Pet };
+interface PetId {
+  petId: number;
+}
+
+interface PetInfoUpdate {
+  petName?: string;
+  breedId?: number;
+  gender?: "MALE" | "FEMALE";
+  birthDay?: string; // YYYY-MM-DD
+  bodySize?: "SMALL" | "MEDIUM" | "LARGE";
+}
+
+interface MultipartField<T> {
+  type: string;
+  value: T;
+}
+
+interface UpdatePetRequest {
+  petInfo?: MultipartField<PetInfoUpdate>;
+  petPicture?: MultipartField<File>;
+}
+
+export type { PetListResponse, Pet, PetId, UpdatePetRequest };

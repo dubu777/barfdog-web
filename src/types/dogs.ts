@@ -79,14 +79,6 @@ interface UploadDogProfileImage {
   url: string;
 }
 
-interface CheckDuplicateDogNameResponse {
-  success: boolean;
-  data: null | string;
-  message: null | string;
-  detailMessage: null | string;
-  errorCode: null | string;
-}
-
 type DogSize = "SMALL" | "MIDDLE" | "LARGE";
 
 export type {
@@ -96,6 +88,5 @@ export type {
   DogListData,
   DogDetailData,
   UploadDogProfileImage,
-  CheckDuplicateDogNameResponse,
   DogSize,
 };

@@ -5,7 +5,7 @@ import {
   DogListData,
   FullDogDetail,
   UploadDogProfileImage,
-  CheckDuplicateDogNameResponse,
+  ApiResponse,
 } from "@/types";
 
 const getDogList = async (
@@ -99,7 +99,7 @@ const getFullDogList = async (
 
 const checkDuplicateDogName = async (
   dogName: string
-): Promise<CheckDuplicateDogNameResponse> => {
+): Promise<ApiResponse<string>> => {
   const { data } = await axiosInstance.get(
     `/api/v2/pets/check-name?petName=${dogName}`
   );

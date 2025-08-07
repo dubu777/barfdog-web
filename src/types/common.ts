@@ -94,6 +94,14 @@ type PageProps<P extends object = object, S extends object = object> = {
   searchParams: Promise<S>;
 };
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T | null;
+  message: string | null;
+  detailMessage: string | null;
+  errorCode: string | null;
+}
+
 export type {
   SearchParamProps,
   DefaultObjectType,
@@ -106,4 +114,5 @@ export type {
   ImageFile,
   Option,
   PageProps,
+  ApiResponse,
 };
