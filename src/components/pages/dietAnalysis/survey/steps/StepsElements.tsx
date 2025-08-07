@@ -9,7 +9,7 @@ import SurveyStep8 from "./SurveyStep8";
 import SurveyStep9 from "./SurveyStep9";
 import SurveyStep10 from "./SurveyStep10";
 import SurveyStep11 from "./SurveyStep11";
-import SurveyStep12 from "./SurveyStep12";
+import SurveyStep12 from "./surveyStep12";
 import SurveyStep13 from "./SurveyStep13";
 import { Path } from "react-hook-form";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
