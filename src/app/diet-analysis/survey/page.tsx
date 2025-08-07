@@ -1,5 +1,5 @@
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
-import SurveyPageContainer from "@/components/pages/dietAnalysis/survey/surveyPageContainer/surveyPageContainer";
+import SurveyPageContainer from "@/components/pages/dietAnalysis/survey/surveyPageContainer/SurveyPageContainer";
 import { Gender } from "@/types";
 import { redirect } from "next/navigation";
 
