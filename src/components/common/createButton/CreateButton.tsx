@@ -1,18 +1,23 @@
-import * as styles from "./CreateButton.css";
 import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import AddIcon from "/public/images/icons/plus.svg";
+import { commonWrapper } from "@/styles/common.css";
 
 interface CreateButtonProps {
   text?: string;
   url?: string;
-  routeType?: 'router' | 'location';
+  routeType?: "router" | "location";
   onClick?: () => void;
 }
 
-const CreateButton = ({ text, url, routeType = 'router', onClick }: CreateButtonProps) => {
+const CreateButton = ({
+  text,
+  url,
+  routeType = "router",
+  onClick,
+}: CreateButtonProps) => {
   const router = useRouter();
 
   const handleNavigateToCreateDog = () => {
@@ -21,8 +26,8 @@ const CreateButton = ({ text, url, routeType = 'router', onClick }: CreateButton
       return;
     }
 
-    if(url) {
-      if (routeType === 'router') {
+    if (url) {
+      if (routeType === "router") {
         window.location.href = url;
       } else {
         router.push(url);
@@ -38,9 +43,9 @@ const CreateButton = ({ text, url, routeType = 'router', onClick }: CreateButton
       fullWidth
       onClick={handleNavigateToCreateDog}
     >
-      <DefaultText type="headline3" className={styles.createButton}>
+      <DefaultText type="headline3" className={commonWrapper({ gap: 6 })}>
         <SvgIcon src={AddIcon} size={24} />
-        {text ? text : '새로운 아이 등록하기'}
+        {text ? text : "새로운 아이 등록하기"}
       </DefaultText>
     </Button>
   );

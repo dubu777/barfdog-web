@@ -47,7 +47,7 @@ const DogList = () => {
   return (
     <section className={styles.dogListContainer}>
       <article className={styles.createDogButton}>
-        <CreateButton url='/health-note/dogs/create' text='새로운 아이 등록하기' />
+        <CreateButton text="새로운 아이 등록하기" />
       </article>
       <article>
         <div className={styles.dogList}>
@@ -59,7 +59,7 @@ const DogList = () => {
                 padding={12}
                 gap={12}
                 borderRadius={12}
-                direction='row'
+                direction="row"
               >
                 <Image
                   src={dog.pictureUrl || DogIcon}
@@ -83,7 +83,7 @@ const DogList = () => {
                       )}
                     </div>
                     <Link href={`/health-note/dogs/${dog.id}`}>
-                      <SvgIcon src={PenIcon} size={32} color='gray500' />
+                      <SvgIcon src={PenIcon} size={32} color="gray500" />
                     </Link>
                   </div>
                   <DefaultText

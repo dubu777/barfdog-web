@@ -1,6 +1,4 @@
-interface PetListResponse {
-  petList: Pet[];
-}
+type PetListResponse = Pet[];
 
 interface Pet {
   id: number;
@@ -64,4 +62,11 @@ interface UpdatePetRequest {
   petPicture?: MultipartField<File>;
 }
 
-export type { PetListResponse, Pet, PetId, UpdatePetRequest };
+interface PetBreed {
+  breedId: number;
+  breedName: string;
+}
+
+type PetBreedList = PetBreed[];
+
+export type { PetListResponse, Pet, PetId, UpdatePetRequest, PetBreedList };

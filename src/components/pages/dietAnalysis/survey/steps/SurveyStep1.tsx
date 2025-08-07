@@ -4,15 +4,9 @@ import {
   SURVEY_TITLES,
 } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import {
-  Controller,
-  Path,
-  useController,
-  useFormContext,
-} from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import SurveyButtonGroup from "../../../../common/survey/surveyButtonGroup/SurveyButtonGroup";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
 

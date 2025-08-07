@@ -84,9 +84,9 @@ interface ImageFile {
   url: string;
 }
 
-interface Option {
+interface Option<T> {
   label: string;
-  value: string;
+  value: T;
 }
 
 type PageProps<P extends object = object, S extends object = object> = {

@@ -1,13 +1,25 @@
 import { AxiosInstance } from "axios";
 import axiosInstance from "../axiosInstance";
-import { Pet, PetId, PetListResponse, UpdatePetRequest } from "@/types/pet";
+import {
+  Pet,
+  PetBreedList,
+  PetId,
+  PetListResponse,
+  UpdatePetRequest,
+} from "@/types/pet";
 import { ApiResponse } from "@/types";
 
 const getPetList = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<PetListResponse> => {
   const { data } = await instance.get("/api/v2/pets");
-  return data.data;
+  return data.data.petList;
+};
+const getPetBreedList = async (
+  instance: AxiosInstance = axiosInstance
+): Promise<PetBreedList> => {
+  const { data } = await instance.get("/api/v2/pets/breeds/selectable");
+  return data.data.petBreedList;
 };
 
 const checkDuplicatePetName = async (
@@ -67,4 +79,5 @@ export {
   updateRepresentativePet,
   updatePet,
   createPet,
+  getPetBreedList,
 };

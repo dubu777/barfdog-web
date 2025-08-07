@@ -5,19 +5,19 @@ import { redirect } from "next/navigation";
 
 interface SurveyPageProps {
   searchParams: {
-    dogName?: string;
-    dogId?: string;
+    petName?: string;
+    petId?: string;
     gender?: string;
     mode?: string;
   };
 }
 
 export default function SurveyPage({ searchParams }: SurveyPageProps) {
-  const { dogName = "", dogId, gender = "MALE", mode } = searchParams;
+  const { petName = "", petId, gender = "MALE", mode } = searchParams;
 
-  // dogId는 필수, 없거나 숫자로 파싱 불가 시 리디렉트
-  const dogIdNum = Number(dogId);
-  if (!dogId || Number.isNaN(dogIdNum)) {
+  // petId는 필수, 없거나 숫자로 파싱 불가 시 리디렉트
+  const petIdNum = Number(petId);
+  if (!petId || Number.isNaN(petIdNum)) {
     return redirect("/diet-analysis");
   }
 
@@ -27,8 +27,8 @@ export default function SurveyPage({ searchParams }: SurveyPageProps) {
     <main>
       <NavigationGuard>
         <SurveyPageContainer
-          dogName={dogName}
-          dogId={dogIdNum}
+          petName={petName}
+          petId={petIdNum}
           gender={gender as Gender}
           isResurvey={isResurvey}
         />

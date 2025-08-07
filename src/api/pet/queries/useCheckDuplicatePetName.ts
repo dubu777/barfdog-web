@@ -3,7 +3,7 @@ import { queryKeys } from "@/constants/queryKeys";
 import { ApiResponse, UseQueryCustomOptions } from "@/types";
 import { checkDuplicatePetName } from "../pet";
 
-export function useCheckDuplicateDogName(
+export function useCheckDuplicatePetName(
   petName: string,
   queryOptions?: UseQueryCustomOptions<ApiResponse<string>>
 ) {

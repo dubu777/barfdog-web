@@ -1,5 +1,3 @@
-// src/components/pages/survey/searchableSelector/SearchableSelector.tsx
-
 import React, { useState, useMemo, ReactNode } from "react";
 import InputField from "@/components/common/inputField/InputField";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
@@ -8,9 +6,10 @@ import { commonWrapper } from "@/styles/common.css";
 
 interface SearchableSelectorProps {
   placeholder?: string; // InputField placeholder
-  options: Option[]; // 전체 견종 옵션
-  selectedValue: string | null; // 현재 선택된 값 (radio)
-  onChange: (value: string) => void; // 선택 변경 시 호출
+  options: Option<number>[]; // 전체 견종 옵션
+  selectedValue: number | null; // 현재 선택된 값 (radio)
+  onChange: (value: number) => void; // 선택 변경 시 호출
+  onClose: () => void;
   type?: "radio" | "button";
   className?: string;
   rightElement?: ReactNode;
@@ -22,6 +21,7 @@ export default function SearchableSelector({
   options,
   selectedValue,
   onChange,
+  onClose,
   type = "radio",
   className,
   rightElement,
@@ -62,7 +62,10 @@ export default function SearchableSelector({
                 value={opt.value}
                 inputType={type === "radio" ? "radio" : "normal"}
                 isChecked={selectedValue === opt.value}
-                onToggle={(val) => onChange?.(val)}
+                onToggle={(val) => {
+                  onChange?.(val);
+                  onClose();
+                }}
                 className={className || ""}
                 rightElement={rightElement}
               />

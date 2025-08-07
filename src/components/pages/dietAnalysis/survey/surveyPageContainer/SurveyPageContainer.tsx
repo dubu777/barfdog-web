@@ -35,15 +35,15 @@ import { Gender } from "@/types";
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
 interface SurveyPageContainerProps {
-  dogName: string;
-  dogId: number;
+  petName: string;
+  petId: number;
   gender: Gender;
   isResurvey: boolean;
 }
 
 export default function SurveyPageContainer({
-  dogName,
-  dogId,
+  petName,
+  petId,
   gender,
   isResurvey,
 }: SurveyPageContainerProps) {
@@ -119,7 +119,7 @@ export default function SurveyPageContainer({
     handleBlur,
     handleKeyDown,
     handleNextStep,
-    dogName,
+    dogName: petName,
     isResurvey,
   });
 
@@ -137,7 +137,7 @@ export default function SurveyPageContainer({
 
     const payload = buildDietAnalysisPayload(
       values as DietAnalysisFormValues,
-      dogId
+      petId
     );
     console.log("payload", payload);
 
@@ -172,7 +172,7 @@ export default function SurveyPageContainer({
   };
 
   if (isLoading) {
-    return <SurveyResultLoading dogName={dogName} />;
+    return <SurveyResultLoading dogName={petName} />;
   }
 
   return (

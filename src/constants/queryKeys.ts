@@ -116,6 +116,7 @@ const queryKeys = {
     BASE: "pet",
     GET_PET_LIST: "getPetList",
     GET_PET_DETAIL: "getPetDetail",
+    GET_PET_BREED_LIST: "getPetBreedList",
     CHECK_DUPLICATE_PET_NAME: "checkDuplicatePetName",
   },
 } as const;

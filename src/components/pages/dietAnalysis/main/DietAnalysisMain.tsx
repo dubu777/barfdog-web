@@ -8,20 +8,28 @@ import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
 import Button from "@/components/common/button/Button";
 import { dietAnalysisMainContainer } from "./DietAnalysisMain.css";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
+import useModal from "@/hooks/useModal";
+import PetCreateModal from "@/components/common/modal/pets/create/PetCreateModal";
 
 export default function DietAnalysisMain() {
   const { data } = useGetPetList();
 
   // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아님, 10개씩 렌더링 하게 구현
-  const [visibleDogs, loadMoreRef] = useInfiniteList(data.petList, {
+  const [visibleDogs, loadMoreRef] = useInfiniteList(data, {
     pageSize: 10,
     rootMargin: "50px",
   });
   console.log(data);
 
+  const {
+    isOpen: isPetCreateModalOpen,
+    onClose: onPetCreateModalClose,
+    onToggle: onPetCreateModalToggle,
+  } = useModal();
+
   return (
     <div className={dietAnalysisMainContainer}>
-      {data.petList.length < 1 ? (
+      {data.length < 1 ? (
         <>
           <div className={commonWrapper({ direction: "col", gap: 12 })}>
             <EmptyIcon />
@@ -39,15 +47,14 @@ export default function DietAnalysisMain() {
       ) : (
         <>
           <CreateButton
-            routeType="location"
-            url="/diet-analysis/survey"
             text="새로운 아이 등록하기"
+            onClick={onPetCreateModalToggle}
           />
           <div className={commonWrapper({ direction: "col", gap: 12 })}>
             {visibleDogs.map((item) => (
               <DogCard
                 key={item.id}
-                dogId={item.id}
+                petId={item.id}
                 reportId={item.recipeSurveyId}
                 profileImageUrl={item.displayImageUrl?.url ?? null}
                 dogType={"말티즈"}
@@ -58,13 +65,17 @@ export default function DietAnalysisMain() {
               />
             ))}
           </div>
-          {visibleDogs.length < data.petList.length && (
+          {visibleDogs.length < data.length && (
             <div ref={loadMoreRef}>
               <DefaultText type="body3">불러오는 중</DefaultText>
             </div>
           )}
         </>
       )}
+      <PetCreateModal
+        isOpen={isPetCreateModalOpen}
+        onClose={onPetCreateModalClose}
+      />
     </div>
   );
 }

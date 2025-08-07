@@ -1,12 +1,11 @@
 import { queryKeys } from "@/constants";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateRepresentativeDog } from "@/api/dog/dog";
+import { updateRepresentativePet } from "../pet";
 
 export function useUpdateRepresentativePet() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ dogId }: { dogId: number }) =>
-      updateRepresentativeDog(dogId),
+    mutationFn: updateRepresentativePet,
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({

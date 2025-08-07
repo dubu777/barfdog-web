@@ -12,9 +12,11 @@ import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
 import DefaultImage from "public/images/subscription/dog-default-profile.png";
 import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
+import useModal from "@/hooks/useModal";
+import PetEditModal from "@/components/common/modal/pets/edit/PetEditModal";
 
 interface DogCardProps {
-  dogId: number;
+  petId: number;
   profileImageUrl: string | null;
   dogType: string;
   name: string;
@@ -25,7 +27,7 @@ interface DogCardProps {
 }
 
 export default function DogCard({
-  dogId,
+  petId,
   profileImageUrl,
   dogType,
   name,
@@ -38,8 +40,13 @@ export default function DogCard({
   const age = getAgeFromBirth(birthDate);
   const router = useRouter();
   const handleGoToSurvey = () => {
-    window.location.href = `/diet-analysis/survey?dogName=${name}&dogId=${dogId}&gender=${gender}`;
+    window.location.href = `/diet-analysis/survey?petName=${name}&petId=${petId}&gender=${gender}`;
   };
+  const {
+    isOpen: isPetEditModalOpen,
+    onClose: onPetEditModalClose,
+    onToggle: onPetEditModalToggle,
+  } = useModal();
   return (
     <div className={styles.dogCardContainer}>
       <div className={commonWrapper({ gap: 12 })}>
@@ -68,9 +75,12 @@ export default function DogCard({
                 </Chips>
               )}
             </div>
-            <Link href={`/health-note/dogs/${dogId}`}>
-              <SvgIcon src={EditIcon} size={32} color="gray500" />
-            </Link>
+            <SvgIcon
+              src={EditIcon}
+              size={32}
+              color="gray500"
+              onClick={onPetEditModalToggle}
+            />
           </div>
           <div className={commonWrapper({ justify: "start", gap: 6 })}>
             <SvgIcon
@@ -110,6 +120,11 @@ export default function DogCard({
           다시 추천 받기
         </Button>
       </div>
+      <PetEditModal
+        petId={petId}
+        isOpen={isPetEditModalOpen}
+        onClose={onPetEditModalClose}
+      />
     </div>
   );
 }
