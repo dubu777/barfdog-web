@@ -9,7 +9,7 @@ import { dietAnalysisMainContainer } from "./DietAnalysisMain.css";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import useModal from "@/hooks/useModal";
 import PetCreateModal from "@/components/common/modal/pets/create/PetCreateModal";
-import PetCard from "./petCard/petCard-temp";
+import PetCard from "./petCard/petCard";
 
 export default function DietAnalysisMain() {
   const { data } = useGetPetList();

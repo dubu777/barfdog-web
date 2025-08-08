@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
-import * as styles from "./petCard-temp";
+import * as styles from "./petCard.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
