@@ -7,11 +7,11 @@ import { commonWrapper } from "@/styles/common.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface SurveyResultLoadingProps {
-  dogName: string;
+  petName: string;
 }
 
 export default function SurveyResultLoading({
-  dogName,
+  petName,
 }: SurveyResultLoadingProps) {
   return (
     <>
@@ -21,7 +21,7 @@ export default function SurveyResultLoading({
         <div className={commonWrapper({ gap: 8, direction: "col" })}>
           <div className={commonWrapper({ direction: "col" })}>
             <DefaultText type="title2">
-              {getNameWithPossessiveSuffix(dogName)}의
+              {getNameWithPossessiveSuffix(petName)}의
             </DefaultText>
             <DefaultText type="title2">
               1:1 맞춤 식단을 계산하고 있어요

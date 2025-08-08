@@ -1,7 +1,6 @@
 "use client";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
-import DogCard from "./dogCard/DogCard";
 import { useInfiniteList } from "@/hooks/useInfiniteList";
 import CreateButton from "@/components/common/createButton/CreateButton";
 import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
@@ -10,6 +9,7 @@ import { dietAnalysisMainContainer } from "./DietAnalysisMain.css";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import useModal from "@/hooks/useModal";
 import PetCreateModal from "@/components/common/modal/pets/create/PetCreateModal";
+import PetCard from "./petCard/petCard-temp";
 
 export default function DietAnalysisMain() {
   const { data } = useGetPetList();
@@ -52,15 +52,15 @@ export default function DietAnalysisMain() {
           />
           <div className={commonWrapper({ direction: "col", gap: 12 })}>
             {visibleDogs.map((item) => (
-              <DogCard
+              <PetCard
                 key={item.id}
-                petId={item.id}
                 reportId={item.recipeSurveyId}
+                petId={item.id}
                 profileImageUrl={item.displayImageUrl?.url ?? null}
-                dogType={"말티즈"}
                 name={item.name}
+                breedInfo={item.breedInfo}
                 gender={item.gender}
-                birthDate={item.birthInfo.birthDay}
+                birthDay={item.birthInfo.birthDay}
                 isSubscribing={item.isSubscribing}
               />
             ))}
@@ -72,10 +72,12 @@ export default function DietAnalysisMain() {
           )}
         </>
       )}
-      <PetCreateModal
-        isOpen={isPetCreateModalOpen}
-        onClose={onPetCreateModalClose}
-      />
+      {isPetCreateModalOpen && (
+        <PetCreateModal
+          isOpen={isPetCreateModalOpen}
+          onClose={onPetCreateModalClose}
+        />
+      )}
     </div>
   );
 }

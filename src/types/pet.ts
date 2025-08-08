@@ -1,3 +1,5 @@
+import { Gender } from "./survey";
+
 type PetListResponse = Pet[];
 
 interface Pet {
@@ -44,22 +46,11 @@ interface PetId {
   petId: number;
 }
 
-interface PetInfoUpdate {
-  petName?: string;
-  breedId?: number;
-  gender?: "MALE" | "FEMALE";
-  birthDay?: string; // YYYY-MM-DD
-  bodySize?: "SMALL" | "MEDIUM" | "LARGE";
-}
-
-interface MultipartField<T> {
-  type: string;
-  value: T;
-}
-
 interface UpdatePetRequest {
-  petInfo?: MultipartField<PetInfoUpdate>;
-  petPicture?: MultipartField<File>;
+  petName: string | null;
+  breedId: number | null;
+  gender: Gender | null;
+  birthDay: string | null;
 }
 
 interface PetBreed {
@@ -69,4 +60,11 @@ interface PetBreed {
 
 type PetBreedList = PetBreed[];
 
-export type { PetListResponse, Pet, PetId, UpdatePetRequest, PetBreedList };
+export type {
+  PetListResponse,
+  Pet,
+  PetId,
+  PetBreedList,
+  UpdatePetRequest,
+  BreedInfo,
+};

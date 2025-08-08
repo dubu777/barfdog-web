@@ -1,7 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
-import Link from "next/link";
-import * as styles from "./DogCard.css";
+import * as styles from "./petCard-temp";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -11,34 +10,32 @@ import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
 import DefaultImage from "public/images/subscription/dog-default-profile.png";
 import Button from "@/components/common/button/Button";
-import { useRouter } from "next/navigation";
 import useModal from "@/hooks/useModal";
 import PetEditModal from "@/components/common/modal/pets/edit/PetEditModal";
+import { BreedInfo } from "@/types/pet";
 
-interface DogCardProps {
+interface PetCardProps {
   petId: number;
   profileImageUrl: string | null;
-  dogType: string;
   name: string;
   gender: string;
-  birthDate: string;
+  birthDay: string;
+  breedInfo: BreedInfo;
   isSubscribing: boolean;
   reportId: number | null;
 }
 
-export default function DogCard({
+export default function PetCard({
   petId,
   profileImageUrl,
-  dogType,
   name,
   gender,
-  birthDate,
+  birthDay,
+  breedInfo,
   isSubscribing,
   reportId,
-}: DogCardProps) {
-  // subscribeStatus 상태 어떤게 있는지 여부에 따라 렌더링
-  const age = getAgeFromBirth(birthDate);
-  const router = useRouter();
+}: PetCardProps) {
+  const age = getAgeFromBirth(birthDay);
   const handleGoToSurvey = () => {
     window.location.href = `/diet-analysis/survey?petName=${name}&petId=${petId}&gender=${gender}`;
   };
@@ -47,6 +44,7 @@ export default function DogCard({
     onClose: onPetEditModalClose,
     onToggle: onPetEditModalToggle,
   } = useModal();
+
   return (
     <div className={styles.dogCardContainer}>
       <div className={commonWrapper({ gap: 12 })}>
@@ -88,7 +86,7 @@ export default function DogCard({
               size={18}
             />
             <DefaultText type="body3" color="gray600">
-              {dogType}
+              {breedInfo.name}
             </DefaultText>
           </div>
           <DefaultText type="body3" color="gray600">
@@ -120,11 +118,19 @@ export default function DogCard({
           다시 추천 받기
         </Button>
       </div>
-      <PetEditModal
-        petId={petId}
-        isOpen={isPetEditModalOpen}
-        onClose={onPetEditModalClose}
-      />
+      {isPetEditModalOpen && (
+        <PetEditModal
+          key={petId}
+          petId={petId}
+          profileImageUrl={profileImageUrl}
+          breedInfo={breedInfo}
+          name={name}
+          gender={gender}
+          birthDay={birthDay}
+          isOpen={isPetEditModalOpen}
+          onClose={onPetEditModalClose}
+        />
+      )}
     </div>
   );
 }

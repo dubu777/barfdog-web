@@ -172,7 +172,7 @@ export default function SurveyPageContainer({
   };
 
   if (isLoading) {
-    return <SurveyResultLoading dogName={petName} />;
+    return <SurveyResultLoading petName={petName} />;
   }
 
   return (

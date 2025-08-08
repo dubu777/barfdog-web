@@ -39,21 +39,48 @@ const getPetDetail = async (
   return data.data;
 };
 
+const makePetFormData = (body: object, petPicture: File | null): FormData => {
+  const formData = new FormData();
+  formData.append(
+    "petInfo",
+    new Blob([JSON.stringify(body)], { type: "application/json" })
+  );
+  formData.append(
+    "petPicture",
+    petPicture ?? new Blob([], { type: "application/octet-stream" })
+  );
+  return formData;
+};
+
 const updatePet = async ({
   petId,
   body,
+  petPicture,
 }: {
   petId: number;
   body: UpdatePetRequest;
+  petPicture: File | null;
 }): Promise<ApiResponse<PetId>> => {
-  const { data } = await axiosInstance.put(`/api/v2/pets/${petId}`, body);
+  const formData = makePetFormData(body, petPicture);
+  console.log("formData>>>>>>>", formData);
+
+  const { data } = await axiosInstance.put(`/api/v2/pets/${petId}`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return data;
 };
 
-const createPet = async (
-  body: UpdatePetRequest
-): Promise<ApiResponse<PetId>> => {
-  const { data } = await axiosInstance.put("/api/v2/pets", body);
+const createPet = async ({
+  body,
+  petPicture,
+}: {
+  body: UpdatePetRequest;
+  petPicture: File | null;
+}): Promise<ApiResponse<PetId>> => {
+  const formData = makePetFormData(body, petPicture);
+  const { data } = await axiosInstance.put("/api/v2/pets", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return data;
 };
 
@@ -80,4 +107,5 @@ export {
   updatePet,
   createPet,
   getPetBreedList,
+  makePetFormData,
 };

@@ -44,8 +44,9 @@ export default function PetCreateModal({
       handleClose={onClose}
     >
       <PetForm
-        type="create"
+        isEdit={false}
         form={form}
+        dogPictureUrl={null}
         handleFileChange={handleFileChange}
         handleSubmit={form.handleSubmit(onSubmit)}
       />

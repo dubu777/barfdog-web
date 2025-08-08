@@ -3,12 +3,7 @@
 import * as styles from "./PetForm.css";
 import { useCallback, useMemo, useState } from "react";
 import { format } from "date-fns";
-import {
-  Controller,
-  FieldNamesMarkedBoolean,
-  UseFormReturn,
-  useWatch,
-} from "react-hook-form";
+import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import InputLabel from "@/components/common/inputLabel/InputLabel";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
@@ -24,26 +19,23 @@ import { PetFormValues } from "@/utils/validation/petValidation";
 import { useGetPetBreedList } from "@/api/pet/queries/useGetPetBreedList";
 
 interface DogFormProps {
-  type: "update" | "create";
+  isEdit: boolean;
   form: UseFormReturn<PetFormValues>;
-  dogPictureUrl?: string;
+  dogPictureUrl: string | null;
   handleFileChange: (file: File | null) => void;
   handleSubmit: () => void;
-  // dirtyFields: FieldNamesMarkedBoolean<PetFormValues>;
 }
 
 export default function PetForm({
-  type,
+  isEdit,
   form,
   dogPictureUrl,
   handleFileChange,
   handleSubmit,
-}: // dirtyFields,
-DogFormProps) {
+}: DogFormProps) {
   const {
     control,
     setValue,
-    getValues,
     setError,
     watch,
     formState: { errors, isValid },
@@ -51,16 +43,8 @@ DogFormProps) {
   const { data: breedList } = useGetPetBreedList();
   console.log("watch", watch());
   console.log("errors", errors);
-  console.log("견종", breedList);
 
-  const breedMap = useMemo(() => {
-    const m = new Map<number, string>();
-    breedList.forEach(({ breedId, breedName }) => {
-      m.set(breedId, breedName);
-    });
-    return m;
-  }, [breedList]);
-
+  const nameVerified = useWatch({ control, name: "nameVerified" });
   const petName = useWatch({ control, name: "name" });
 
   const [successMessage, setSuccessMessage] = useState<string | undefined>(
@@ -143,6 +127,7 @@ DogFormProps) {
               confirmButtonText="중복확인"
               confirmButton
               confirmButtonVariant="solid"
+              confirmButtonDisabled={nameVerified}
               onSubmit={handleDuplicateCheck}
               success={successMessage}
             />
@@ -161,14 +146,12 @@ DogFormProps) {
                     value="MALE"
                     isChecked={field.value === "MALE"}
                     onToggle={field.onChange}
-                    isDisabled={type === "update"}
                   />
                   <SurveyButton
                     label={DOG_GENDER["FEMALE"]}
                     value="FEMALE"
                     isChecked={field.value === "FEMALE"}
                     onToggle={field.onChange}
-                    isDisabled={type === "update"}
                   />
                 </div>
               </>
@@ -189,7 +172,7 @@ DogFormProps) {
                 }}
                 dateFormat="yyyy-MM-dd"
                 marginBottom={false}
-                isDisabled={type === "update"}
+                isDisabled={isEdit}
               />
             </>
           )}
@@ -199,33 +182,41 @@ DogFormProps) {
           name="breedId"
           control={control}
           render={({ field }) => {
-            const selectedBreedName = breedMap.get(field.value) ?? "";
+            const label =
+              breedList?.find((b) => b.breedId === field.value)?.breedName ??
+              "견종을 검색해 보세요";
+
             return (
-              <InputField
-                searchButton
-                value={selectedBreedName}
-                label="견종"
-                onClick={onToggleDogTypeModal}
-                type="button"
-              />
+              <>
+                <InputField
+                  type="button"
+                  searchButton
+                  value={label}
+                  label="견종"
+                  onClick={onToggleDogTypeModal}
+                />
+                <DogTypeModal
+                  dogName={petName}
+                  breedList={breedList ?? []}
+                  value={field.value}
+                  isOpen={isOpenDogTypeModal}
+                  onChange={(v) => {
+                    field.onChange(v);
+                    onCloseDogTypeModal();
+                  }}
+                  onClose={onCloseDogTypeModal}
+                />
+              </>
             );
           }}
         />
       </form>
       <ButtonDocked
         type="full-button"
-        primaryButtonLabel="저장하기"
+        primaryButtonLabel={isEdit ? "수정하기" : "저장하기"}
         isPrimaryDisabled={!isValid}
         onPrimaryClick={handleSubmit}
         position="sticky"
-      />
-      <DogTypeModal
-        dogName={petName}
-        value={watch("breedId")}
-        onChange={(value) => setValue("breedId", value)}
-        isOpen={isOpenDogTypeModal}
-        onClose={onCloseDogTypeModal}
-        breedList={breedList}
       />
     </>
   );
