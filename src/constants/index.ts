@@ -15,4 +15,4 @@ export * from './membership';
 export * from './healthNote/healthNote';
 export * from './healthNote/fullCheck';
 export * from "./healthNote/bodyCheck/gut";
-export * from './healthNote/healthCheckHistory';
+export * from './healthNote/medicalHistory';

@@ -1,5 +1,4 @@
 import * as styles from './HistoryForm.css';
-import { Dispatch, SetStateAction } from 'react';
 import { useParams } from "next/navigation";
 import { format } from "date-fns";
 import { Control, Controller, FieldErrors } from "react-hook-form";
@@ -10,56 +9,35 @@ import InputLabel from "@/components/common/inputLabel/InputLabel";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import Chips from "@/components/common/chips/Chips";
-import MultiFileUpload from "@/components/common/multiFileUpload/MultiFileUpload";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import { ImageFile } from "@/types";
-import { HealthCheckHistoryFormValue } from "@/types/healthNote";
-import { HEALTH_CHECK_HISTORY_TAG_MAP } from "@/constants";
+import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
+import MultiFileUploader from "@/components/common/multiFileUploader/MultiFileUploader";
+import useDeviceState from "@/hooks/useDeviceState";
+import { UploadedFile } from "@/types";
+import { DIAGNOSIS_ITEM_LIST } from "@/constants";
+import { DiagnosisItem, MedicalHistoryFormValue } from "@/types/healthNote/medicalHistory";
 
 interface HistoryFormProps {
-	control: Control<HealthCheckHistoryFormValue>;
-	errors: FieldErrors<HealthCheckHistoryFormValue>;
+	control: Control<MedicalHistoryFormValue>;
+	errors: FieldErrors<MedicalHistoryFormValue>;
 	handleSubmit: () => void;
 	isValid: boolean;
-	setAddImageIdList: Dispatch<SetStateAction<number[]>>;
-	setDeleteImageIdList?: Dispatch<SetStateAction<number[]>>;
-	imageList?: ImageFile[];
+	uploadedFiles: UploadedFile[];
+	uploadFile: (file: File) => Promise<void>;
+	removeFile: (fileId: number) => Promise<void>;
 }
 
-const HistoryForm = ({
+export default function HistoryForm ({ 
 	control,
 	errors,
-	setAddImageIdList,
-	setDeleteImageIdList,
 	handleSubmit,
 	isValid,
-	imageList = [],
-}: HistoryFormProps) => {
+	uploadedFiles,
+	uploadFile,
+	removeFile,
+}: HistoryFormProps) {
 	const params = useParams();
-	const testItems = Object.entries(HEALTH_CHECK_HISTORY_TAG_MAP).map(([value, label]) => ({ label, value }));
-
-	const handleFileUpload = async (files: ImageFile[]) => {
-		const uploadedImageList: number[] = [];
-		for (const file of files) {
-			if (file.id) {
-				uploadedImageList.push(file.id);
-			}
-		}
-		setAddImageIdList((prev) => Array.from(new Set([...prev, ...uploadedImageList])));
-	}
-
-	const handleFileRemove = (id: number) => {
-		const isExistingFile = imageList ? imageList?.some(image => image.id === id) : false;
-		if (isExistingFile) {
-			// 기존 저장된 이미지라면 deleteImageIdList 추가
-			if (setDeleteImageIdList) {
-				setDeleteImageIdList(prev => [...prev, id]);
-			}
-		} else {
-			// 새로 업로드한 이미지라면 추가된 addImageIdList 에서 제거
-			setAddImageIdList(prev => prev.filter(imageId => imageId !== id));
-		}
-	}
+	const { isMobileDevice } = useDeviceState();
 
 	return (
 		<article className={styles.healthCheckFormContainer}>
@@ -79,7 +57,7 @@ const HistoryForm = ({
 					}
 				/>
 				<Controller
-					name='date'
+					name='diagnosisDate'
 					control={control}
 					render={({field}) =>
 						<div>
@@ -88,31 +66,40 @@ const HistoryForm = ({
 								labelColor='gray700'
 								isRequired
 							/>
-							<CustomDatePicker
-								name='date'
-								value={field.value}
-								dateFormat='yyyy.MM.dd'
-								marginBottom={false}
-								onChange={(date) => {
-									field.onChange(format(date as Date, 'yyyy.MM.dd'))
-								}}
-							/>
+							{isMobileDevice ? (
+								<MobileDatePicker
+									value={field.value}
+									onChange={(date) => {
+										field.onChange(format(date as Date, 'yyyy-MM-dd'))
+									}}
+								/>
+							) : (
+								<CustomDatePicker
+									value={field.value}
+									dateFormat='yyyy-MM-dd'
+									name={field.name}
+									marginBottom={false}
+									onChange={(date) => {
+										field.onChange(format(date as Date, 'yyyy-MM-dd'))
+									}}
+								/>
+							)}
 						</div>
 					}
 				/>
 				<Controller
-					name='testItems'
+					name='diagnosisItemList'
 					control={control}
 					render={({field}) =>
 						<div>
 							<InputLabel
 								label='검사 항목'
-								labelColor='gray700'
 								isRequired
+								labelColor='gray700'
 							/>
-							<div className={styles.testItemsBox}>
-								{testItems.map(item => {
-									const isChecked = field.value.includes(item.value as keyof typeof HEALTH_CHECK_HISTORY_TAG_MAP);
+							<div className={styles.diagnosisItemList}>
+								{DIAGNOSIS_ITEM_LIST.map(item => {
+									const isChecked = field.value.includes(item.value as DiagnosisItem);
 									return (
 										<LabeledCheckbox
 											key={item.value}
@@ -126,7 +113,7 @@ const HistoryForm = ({
 													field.onChange(field.value.filter(v => v !== value))
 												}
 											}}
-											className={styles.testItemsCheckbox}
+											className={styles.diagnosisItemCheckbox}
 										>
 											<Chips
 												variant='solid'
@@ -145,14 +132,11 @@ const HistoryForm = ({
 						</div>
 					}
 				/>
-				<MultiFileUpload
-					uploadApiUrl='/api/reviews/upload'
-					onFilesChange={(files) => handleFileUpload(files as ImageFile[])}
+				<MultiFileUploader
+					files={uploadedFiles}
+					onUpload={uploadFile}
+					onRemove={removeFile}
 					maxFiles={10}
-					imageWidth={100}
-					imageHeight={100}
-					initialImages={[]}
-					handleRemove={(id) => handleFileRemove(id)}
 					title='검사 및 결과 사진'
 				/>
 				<Controller
@@ -177,12 +161,10 @@ const HistoryForm = ({
 			</form>
 			<ButtonDocked
 				type='full-button'
-				primaryButtonLabel={`${params?.historyId ? '수정' : '등록'}하기`}
+				primaryButtonLabel={`${params?.diagnosisId ? '수정' : '등록'}하기`}
 				onPrimaryClick={handleSubmit}
 				isPrimaryDisabled={!isValid}
 			/>
 		</article>
 	);
 };
-
-export default HistoryForm;

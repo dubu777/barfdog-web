@@ -11,13 +11,13 @@ export const healthCheckForm = style({
 	padding: '20px',
 })
 
-export const testItemsBox = style({
+export const diagnosisItemList = style({
 	display: 'flex',
 	flexWrap: 'wrap',
 	gap: '8px',
 })
 
-export const testItemsCheckbox = style({
+export const diagnosisItemCheckbox = style({
 	width: 'auto !important',
 	gap: '0 !important',
 })

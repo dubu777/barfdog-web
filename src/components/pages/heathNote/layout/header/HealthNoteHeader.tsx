@@ -9,7 +9,7 @@ import { getHeaderProps } from "@/utils/getHeaderProps";
 
 type HealthNoteParams = {
   dogId?: string;
-  historyId?: string;
+  diagnosisId?: string;
   reportId?: string;
 };
 
@@ -57,12 +57,12 @@ const HealthNoteHeader = () => {
       centerTitle: "부위별 진단",
       showBackButton: true,
     },
-    "/health-note/health-check-history": {
-      centerTitle: "건강검진 내역",
+    "/health-note/medical-history": {
+      centerTitle: "병원 진료 기록",
       showBackButton: true,
     },
-    "/health-note/health-check-history/create": {
-      centerTitle: "건강검진 등록",
+    "/health-note/medical-history/create": {
+      centerTitle: "병원 진료 기록 등록",
       showBackButton: true,
     },
     "/health-note/dogpedia": {
@@ -130,7 +130,7 @@ const HealthNoteHeader = () => {
   const exactExcludePaths = [
     "/health-note/guest",
     "/health-note",
-    `/health-note/health-check-history/${params.historyId}`,
+    `/health-note/medical-history/${params.diagnosisId}`,
     `/health-note/full-check/result/${params.reportId}`,
     "/health-note/gut-check/survey",
   ];

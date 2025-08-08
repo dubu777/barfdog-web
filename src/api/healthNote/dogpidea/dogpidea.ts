@@ -4,24 +4,41 @@ import { BreedDetail, BreedList } from "@/types/healthNote/dogpedia";
 import { decodeImageFilenameFromUrl } from "@/utils/decodeImageFilenameFromUrl";
 
 const getBreedList = async (instance: AxiosInstance = axiosInstance): Promise<BreedList> => {
-  const { data } = await instance.get(`/api/v2/pets/breeds/selectable`);
+  const errorMessage = "견종 목록 조회에 실패했습니다.";
+  try {
+    const { data } = await instance.get(`/api/v2/pets/breeds/selectable`);
 
-  return data.data.petBreedList;
+    if(data.success) {
+      return data.data.petBreedList;
+    }
+    throw new Error(errorMessage);
+  } catch (error) {
+    console.error(error);
+    throw new Error(errorMessage);
+  }
 };
 
 const getBreedDetail = async (
   breedId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<BreedDetail> => {
-  const { data } = await instance.get(`/api/v2/pets/breeds/${breedId}`);
+  const errorMessage = "견종 목록 상세 조회에 실패했습니다.";
+  try {
+    const { data } = await instance.get(`/api/v2/pets/breeds/${breedId}`);
 
-  const { imageUrl, ...rest } = data.data;
-  const safeImageUrl = decodeImageFilenameFromUrl(imageUrl.url);
-
-  return {
-    ...rest,
-    imageUrl: safeImageUrl,
-  };
+    const { imageUrl, ...rest } = data.data;
+    const safeImageUrl = decodeImageFilenameFromUrl(imageUrl.url);
+    if(data.success) {
+      return {
+        ...rest,
+        imageUrl: safeImageUrl,
+    };
+    }
+    throw new Error(errorMessage);
+  } catch (error) {
+    console.error(error);
+    throw new Error(errorMessage);
+  }
 };
 
 export {
