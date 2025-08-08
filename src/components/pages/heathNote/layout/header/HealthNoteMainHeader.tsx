@@ -1,6 +1,5 @@
 "use client";
 import * as styles from "./HealthNoteMainHeader.css";
-import { createButton } from "@/components/common/createButton/CreateButton.css";
 import { dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import { Fragment, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -20,6 +19,7 @@ import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
 import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
+import { createButton } from "../../gutCheck/modal/KitGuideModal.css";
 
 const HealthNoteMainHeader = () => {
   const router = useRouter();
@@ -57,7 +57,7 @@ const HealthNoteMainHeader = () => {
   const handleCloseChangeDogInfo = () => {
     const isChangedDog =
       dogInfo?.dogId &&
-      (!representativeDog?.id || (dogInfo?.dogId !== representativeDog?.id));
+      (!representativeDog?.id || dogInfo?.dogId !== representativeDog?.id);
 
     if (isChangedDog) {
       updateTargetDogMutate(

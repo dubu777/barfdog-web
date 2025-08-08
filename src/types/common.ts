@@ -98,11 +98,19 @@ interface BaseUploadedFile {
   fileId: number;
   fileName: string;
   folder: string;
-  fileStatus: 'PENDING_ADD' | 'PENDING_DELETE' | 'ADDED';
+  fileStatus: "PENDING_ADD" | "PENDING_DELETE" | "ADDED";
   displayImageUrl?: { url: string };
 }
 
 type UploadedFile<T = unknown> = BaseUploadedFile & T;
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T | null;
+  message: string | null;
+  detailMessage: string | null;
+  errorCode: string | null;
+}
 
 export type {
   SearchParamProps,
@@ -117,4 +125,5 @@ export type {
   Option,
   SelectOption,
   UploadedFile,
+  ApiResponse,
 };
