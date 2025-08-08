@@ -1,76 +1,39 @@
 "use client";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import { commonWrapper } from "@/styles/common.css";
+
 import { useInfiniteList } from "@/hooks/useInfiniteList";
-import CreateButton from "@/components/common/createButton/CreateButton";
-import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
-import Button from "@/components/common/button/Button";
-import { dietAnalysisMainContainer } from "./DietAnalysisMain.css";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import useModal from "@/hooks/useModal";
 import PetCreateModal from "@/components/common/modal/pets/create/PetCreateModal";
-import PetCard from "./petCard/petCard";
+import EmptyPetList from "./EmptyPetList";
+import PetList from "./PetList";
 
 export default function DietAnalysisMain() {
   const { data } = useGetPetList();
 
-  // 무한 스크롤 - 서버와 연동해서 구현한 무한 스크롤은 아님, 10개씩 렌더링 하게 구현
+  // 서버와 연동해서 구현한 무한 스크롤은 아님, 10개씩 렌더링 하게 구현
   const [visibleDogs, loadMoreRef] = useInfiniteList(data, {
     pageSize: 10,
     rootMargin: "50px",
   });
-  console.log(data);
 
   const {
     isOpen: isPetCreateModalOpen,
     onClose: onPetCreateModalClose,
     onToggle: onPetCreateModalToggle,
   } = useModal();
+  console.log(data.length);
 
   return (
-    <div className={dietAnalysisMainContainer}>
-      {data.length < 1 ? (
-        <>
-          <div className={commonWrapper({ direction: "col", gap: 12 })}>
-            <EmptyIcon />
-            <DefaultText type="title2">멍...</DefaultText>
-            <DefaultText type="body2" color="gray600">
-              등록된 반려견 리스트가 없어요
-              <br />
-              반려견을 등록해보세요
-            </DefaultText>
-          </div>
-          <Button buttonColor="gray900" size="md" onClick={() => {}}>
-            반려견 등록하기
-          </Button>
-        </>
+    <>
+      {data.length < 0 ? (
+        <EmptyPetList />
       ) : (
-        <>
-          <CreateButton
-            text="새로운 아이 등록하기"
-            onClick={onPetCreateModalToggle}
-          />
-          <div className={commonWrapper({ direction: "col", gap: 12 })}>
-            {visibleDogs.map((item) => (
-              <PetCard
-                key={item.id}
-                reportId={item.recipeSurveyId}
-                petId={item.id}
-                profileImageUrl={item.displayImageUrl?.url ?? null}
-                name={item.name}
-                breedInfo={item.breedInfo}
-                gender={item.gender}
-                birthDay={item.birthInfo.birthDay}
-                isSubscribing={item.isSubscribing}
-              />
-            ))}
-          </div>
-          {visibleDogs.length < data.length && (
-            <div ref={loadMoreRef}>
-              <DefaultText type="body3">불러오는 중</DefaultText>
-            </div>
-          )}
-        </>
+        <PetList
+          pets={visibleDogs}
+          totalCount={data.length}
+          loadMoreRef={loadMoreRef}
+          onToggle={onPetCreateModalToggle}
+        />
       )}
       {isPetCreateModalOpen && (
         <PetCreateModal
@@ -78,6 +41,6 @@ export default function DietAnalysisMain() {
           onClose={onPetCreateModalClose}
         />
       )}
-    </div>
+    </>
   );
 }

@@ -37,16 +37,14 @@ export default function PetForm({
     control,
     setValue,
     setError,
-    watch,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
   } = form;
   const { data: breedList } = useGetPetBreedList();
-  console.log("watch", watch());
-  console.log("errors", errors);
 
   const nameVerified = useWatch({ control, name: "nameVerified" });
   const petName = useWatch({ control, name: "name" });
 
+  const [fileChanged, setFileChanged] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | undefined>(
     undefined
   );
@@ -91,13 +89,28 @@ export default function PetForm({
     setSuccessMessage(undefined);
   };
 
+  // 파일 변경 핸들러 플래그
+  const onFileChange = useCallback(
+    (file: File | null) => {
+      handleFileChange(file);
+      setFileChanged(!!file);
+    },
+    [handleFileChange]
+  );
+
+  // 수정 여부 확인
+  const isChanged = useMemo(
+    () => isDirty || fileChanged,
+    [isDirty, fileChanged]
+  );
+
   return (
     <>
       <article className={styles.dogProfileImageBox}>
         <DefaultText type="title4">반려견 정보</DefaultText>
         <div className={styles.dogProfileImageWrapper}>
           <FileUpload
-            onFileChange={handleFileChange}
+            onFileChange={onFileChange}
             defaultImageUrl={dogPictureUrl}
             defaultImageName={petName || ""}
             imageName="반려견 이미지"
@@ -214,7 +227,7 @@ export default function PetForm({
       <ButtonDocked
         type="full-button"
         primaryButtonLabel={isEdit ? "수정하기" : "저장하기"}
-        isPrimaryDisabled={!isValid}
+        isPrimaryDisabled={!(isValid && isChanged)}
         onPrimaryClick={handleSubmit}
         position="sticky"
       />

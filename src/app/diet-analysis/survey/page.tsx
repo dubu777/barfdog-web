@@ -8,20 +8,17 @@ interface SurveyPageProps {
     petName?: string;
     petId?: string;
     gender?: string;
-    mode?: string;
   };
 }
 
 export default function SurveyPage({ searchParams }: SurveyPageProps) {
-  const { petName = "", petId, gender = "MALE", mode } = searchParams;
+  const { petName = "", petId, gender = "MALE" } = searchParams;
 
   // petId는 필수, 없거나 숫자로 파싱 불가 시 리디렉트
   const petIdNum = Number(petId);
   if (!petId || Number.isNaN(petIdNum)) {
     return redirect("/diet-analysis");
   }
-
-  const isResurvey = mode === "resurvey";
 
   return (
     <main>
@@ -30,7 +27,6 @@ export default function SurveyPage({ searchParams }: SurveyPageProps) {
           petName={petName}
           petId={petIdNum}
           gender={gender as Gender}
-          isResurvey={isResurvey}
         />
       </NavigationGuard>
     </main>

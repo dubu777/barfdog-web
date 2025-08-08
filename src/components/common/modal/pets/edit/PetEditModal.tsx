@@ -14,6 +14,9 @@ import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrap
 import PetForm from "../form/PetForm";
 import { buildPetUpdateRequest } from "@/utils/pet/buildPetUpdateRequest";
 import { BreedInfo } from "@/types/pet";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import TrashIcon from "public/images/icons/trashbag.svg";
+import { useDeletePet } from "@/api/pet/mutations/useDeletePet";
 
 interface PetEditModalProps {
   petId: number;
@@ -37,6 +40,7 @@ export default function PetEditModal({
   onClose,
 }: PetEditModalProps) {
   const { mutate: updatePet } = useUpdatePet();
+  const { mutate: deletePet } = useDeletePet();
   const [file, setFile] = useState<File | null>(null);
 
   const { addToast } = useToastStore();
@@ -70,12 +74,26 @@ export default function PetEditModal({
     );
   };
 
+  const handleDeletePet = () => {
+    deletePet(petId, {
+      onSuccess: () => {
+        addToast("반려견 삭제가 완료됐습니다", "above-button");
+        onClose();
+      },
+      onError: () => {
+        addToast("반려견 삭제에 실패했습니다.", "above-button");
+      },
+    });
+  };
   return (
     <FullModalWrapper
       className={styles.petModalContainer}
       isVisible={isOpen}
       headerTitle="반려견 수정"
-      handleClose={onClose}
+      handleGoBack={onClose}
+      rightElement={
+        <SvgIcon src={TrashIcon} size={24} onClick={handleDeletePet} />
+      }
     >
       <PetForm
         isEdit={true}

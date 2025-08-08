@@ -11,6 +11,7 @@ interface FullModalWrapperProps {
   handleGoBack?: () => void;
   children: ReactNode;
   headerTitle?: string;
+  rightElement?: ReactNode;
   headerBackgroundColor?: keyof typeof backgroundColors;
   className?: string;
 }
@@ -21,6 +22,7 @@ const FullModalWrapper = ({
   handleGoBack,
   children,
   headerTitle,
+  rightElement,
   headerBackgroundColor = "gray0",
   className,
 }: FullModalWrapperProps) => {
@@ -43,6 +45,7 @@ const FullModalWrapper = ({
           >
             <Header
               {...(headerTitle ? { centerTitle: headerTitle } : {})}
+              rightElement={rightElement}
               showCloseButton={!!handleClose}
               showBackButton={!!handleGoBack}
               onClose={handleClose}

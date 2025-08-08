@@ -9,9 +9,8 @@ export function useCreatePet(mutationOptions?: UseMutationCustomOptions) {
     mutationFn: createPet,
     onSuccess: async (response) => {
       if (response.success) {
-        const petId = response.data?.petId;
         await queryClient.invalidateQueries({
-          queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_DETAIL, petId],
+          queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_LIST],
         });
       } else {
         throw new Error(response.message as string);

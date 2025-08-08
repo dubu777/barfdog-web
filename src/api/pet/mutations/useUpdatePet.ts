@@ -9,10 +9,6 @@ export function useUpdatePet(mutationOptions?: UseMutationCustomOptions) {
     mutationFn: updatePet,
     onSuccess: async (response) => {
       if (response.success) {
-        const petId = response.data?.petId;
-        await queryClient.invalidateQueries({
-          queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_DETAIL, petId],
-        });
         await queryClient.invalidateQueries({
           queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_LIST],
         });

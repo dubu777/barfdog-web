@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
-import * as styles from "./petCard.css";
+import * as styles from "./PetCard.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -13,6 +13,7 @@ import Button from "@/components/common/button/Button";
 import useModal from "@/hooks/useModal";
 import PetEditModal from "@/components/common/modal/pets/edit/PetEditModal";
 import { BreedInfo } from "@/types/pet";
+import { useRouter } from "next/navigation";
 
 interface PetCardProps {
   petId: number;
@@ -36,6 +37,7 @@ export default function PetCard({
   reportId,
 }: PetCardProps) {
   const age = getAgeFromBirth(birthDay);
+  const router = useRouter();
   const handleGoToSurvey = () => {
     window.location.href = `/diet-analysis/survey?petName=${name}&petId=${petId}&gender=${gender}`;
   };
@@ -75,7 +77,7 @@ export default function PetCard({
             </div>
             <SvgIcon
               src={EditIcon}
-              size={32}
+              size={28}
               color="gray500"
               onClick={onPetEditModalToggle}
             />
@@ -101,7 +103,7 @@ export default function PetCard({
           textColor="gray900"
           borderColor="gray300"
           size="sm"
-          // onClick={() => router.push(`/diet-analysis/result/${reportId}`)}
+          onClick={() => router.push(`/diet-analysis/result/${reportId}`)}
           fullWidth
         >
           맞춤 결과 확인

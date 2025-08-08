@@ -38,14 +38,12 @@ interface SurveyPageContainerProps {
   petName: string;
   petId: number;
   gender: Gender;
-  isResurvey: boolean;
 }
 
 export default function SurveyPageContainer({
   petName,
   petId,
   gender,
-  isResurvey,
 }: SurveyPageContainerProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -120,7 +118,6 @@ export default function SurveyPageContainer({
     handleKeyDown,
     handleNextStep,
     dogName: petName,
-    isResurvey,
   });
 
   console.log("watch", watch());

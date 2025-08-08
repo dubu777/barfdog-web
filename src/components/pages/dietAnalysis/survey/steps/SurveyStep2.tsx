@@ -9,7 +9,6 @@ import { commonWrapper } from "@/styles/common.css";
 interface SurveyStepProps {
   handleChange: () => void;
   dogName: string;
-  isResurvey: boolean;
 }
 
 export default function SurveyStep2({

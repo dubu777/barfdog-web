@@ -13,6 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreatePet } from "@/api/pet/mutations/useCreatePet";
 import { UpdatePetRequest } from "@/types/pet";
 import { useToastStore } from "@/store/useToastStore";
+import PetCreateSuccess from "./PetCreateSuccess";
 
 interface PetCreateModalProps {
   isOpen: boolean;
@@ -25,6 +26,14 @@ export default function PetCreateModal({
 }: PetCreateModalProps) {
   const { mutate: createPet } = useCreatePet();
   const [file, setFile] = useState<File | null>(null);
+  // 펫 등록 성공 여부
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // 추천식단으로 넘길 pet 정보
+  const [petId, setPetId] = useState<number | null>(null);
+  const [petName, setPetName] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+
   const { addToast } = useToastStore();
 
   const form = useForm<PetFormValues>({
@@ -37,22 +46,30 @@ export default function PetCreateModal({
     setFile(selectedFile);
   };
 
+  const handleGoToSurvey = () => {
+    window.location.href = `/diet-analysis/survey?petName=${petName}&petId=${petId}&gender=${gender}`;
+  };
+
   const onSubmit = (values: PetFormValues) => {
-    const petInfo = {
+    setPetName(values.name);
+    setGender(values.gender);
+
+    const body = {
       petName: values.name,
       gender: values.gender,
       birthDay: values.birthDay,
       breedId: values.breedId,
     } as UpdatePetRequest;
     createPet(
-      { body: petInfo, petPicture: file },
+      { body, petPicture: file },
       {
-        onSuccess: () => {
-          addToast("반려견 정보가 수정되었습니다.", "above-button");
-          onClose();
+        onSuccess: (res) => {
+          const newId = res.data?.petId ?? null;
+          setPetId(newId);
+          setIsSuccess(true);
         },
         onError: () => {
-          addToast("반려견 정보 수정에 실패했습니다.", "above-button");
+          addToast("반려견 등록에 실패했습니다", "above-button");
         },
       }
     );
@@ -65,13 +82,20 @@ export default function PetCreateModal({
       headerTitle="반려견 등록"
       handleClose={onClose}
     >
-      <PetForm
-        isEdit={false}
-        form={form}
-        dogPictureUrl={null}
-        handleFileChange={handleFileChange}
-        handleSubmit={form.handleSubmit(onSubmit)}
-      />
+      {isSuccess ? (
+        <PetCreateSuccess
+          handleClose={onClose}
+          handleGoToSurvey={handleGoToSurvey}
+        />
+      ) : (
+        <PetForm
+          isEdit={false}
+          form={form}
+          dogPictureUrl={null}
+          handleFileChange={handleFileChange}
+          handleSubmit={form.handleSubmit(onSubmit)}
+        />
+      )}
     </FullModalWrapper>
   );
 }

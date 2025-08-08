@@ -23,7 +23,6 @@ interface Props {
   ) => Promise<void>;
   handleNextStep: () => void;
   dogName: string;
-  isResurvey: boolean;
 }
 
 export const getSurveySteps = ({
@@ -32,16 +31,10 @@ export const getSurveySteps = ({
   handleKeyDown,
   handleNextStep,
   dogName,
-  isResurvey,
 }: Props) => {
   return [
     <SurveyStep1 key="step1" handleChange={handleChange} dogName={dogName} />,
-    <SurveyStep2
-      key="step2"
-      handleChange={handleChange}
-      dogName={dogName}
-      isResurvey={isResurvey}
-    />,
+    <SurveyStep2 key="step2" handleChange={handleChange} dogName={dogName} />,
     <SurveyStep3
       key="step3"
       handleKeyDown={handleKeyDown}

@@ -7,3 +7,14 @@ export const petModalContainer = style({
   height: "100vh",
   backgroundColor: themeVars.colors.gray.gray50,
 });
+
+export const completeCreateWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "80px 20px",
+});
+
+export const completeCreateTitle = style({
+  marginTop: "12px",
+});

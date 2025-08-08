@@ -190,6 +190,9 @@ export const commonWrapper = recipe({
       20: {
         paddingTop: "20px",
       },
+      80: {
+        paddingTop: "80px",
+      },
     },
     direction: {
       col: {
@@ -230,6 +233,14 @@ export const commonWrapper = recipe({
     height: {
       full: {
         height: "100vh",
+      },
+      fullWithHeader: {
+        height: "calc(100vh - 52px)",
+      },
+    },
+    minHeight: {
+      fullWithHeader: {
+        minHeight: "calc(100vh - 52px)",
       },
     },
     backgroundColors: {
