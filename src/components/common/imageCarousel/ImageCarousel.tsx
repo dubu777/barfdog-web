@@ -5,18 +5,17 @@ import Image from "next/image";
 import CloseButton from '/public/images/icons/close-circle-fill.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { ImageFile, UploadedFile } from "@/types";
 
-interface InitialImages {
-	id?: number;
-	filename: string;
-	url: string;
-}
+// 건강수첩 부분으로부터 UploadedFile type 형식이 바뀜
+// 현재 다른 곳 ImageFile type 으로 사용중임에 따라 임시로 처리
+// 추후 UploadedFile로 변경 필요
 
 interface ImageCarouselProps {
-	imageList: InitialImages[];
+	imageList: ImageFile[] | UploadedFile[];
 	width?: number;
 	height?: number;
-	handleRemoveFile?: (filename: string, id: number | undefined) => void;
+	handleRemoveFile?: (fileId: number) => void;
 	handleThumbnailClick?: (index: number, id?: number) => void;
 	showRepresentativeLabel?: boolean;
 }
@@ -29,6 +28,7 @@ export default function ImageCarousel({
 	handleThumbnailClick,
 	showRepresentativeLabel = false,
 }: ImageCarouselProps) {
+	
 	return (
 		<Swiper
 			slidesPerView='auto'
@@ -39,25 +39,25 @@ export default function ImageCarousel({
 				{imageList.map((preview, index) => {
 					return (
 						<SwiperSlide
-								key={preview.id ? `image-${preview.id}` : `image-${preview.filename}-${index}`}
+								key={preview.fileId ? `image-${preview.fileId}` : `image-${preview.fileName}-${index}`}
 								className={previewSlide({ showRepresentativeLabel })}
 								style={{ width: width, height: height, cursor: handleRemoveFile ? 'grabbing' : 'default' }}
-								onClick={handleThumbnailClick ? () => handleThumbnailClick(index, preview.id) : undefined}
+								onClick={handleThumbnailClick ? () => handleThumbnailClick(index, preview.fileId) : undefined}
 						>
 								{index === 0 && showRepresentativeLabel &&
 									<DefaultText type='caption' color='white' className={thumbnail}>대표</DefaultText>
 								}
 								<li>
 									<Image
-										src={preview.url}
-										alt={`${preview.filename}-${index}`}
+										src={preview.displayImageUrl?.url ?? ""}
+										alt={`${preview.fileName}-${index}`}
 										width={width}
 										height={height}
 										className={previewImage}
 									/>
 									{handleRemoveFile &&
-										<button type='button' onClick={() => handleRemoveFile(preview.filename, preview.id)} className={removeButton}>
-											<SvgIcon src={CloseButton} size={20} color='gray500' />
+										<button type='button' onClick={() => handleRemoveFile(preview.fileId)} className={removeButton}>
+											<SvgIcon src={CloseButton} size={24} color='gray500' />
 										</button>
 									}
 							</li>

@@ -43,6 +43,8 @@ export const thumbnail = style({
 })
 
 export const removeButton = style({
+	width: '24px',
+	height: '24px',
 	position: 'absolute',
 	right: '0',
 	top: '0',

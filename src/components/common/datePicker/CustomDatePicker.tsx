@@ -3,7 +3,7 @@ import * as styles from './CustomDatePicker.css';
 import ArrowLeftIcon from '/public/images/header/chevron-left.svg';
 import ArrowRightIcon from '/public/images/header/chevron-right.svg';
 import DatePicker from "react-datepicker";
-import { getMonth, getYear, isValid, parse } from "date-fns";
+import { getMonth, getYear, isSameDay, isValid, parse } from "date-fns";
 import { ko } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
@@ -65,6 +65,13 @@ const CustomDatePicker = ({
 					dateFormat={dateFormat}
 					locale={ko}
 					placeholderText="YYYY-MM-DD"
+					dayClassName={(date) => {
+						const selectedDate = new Date(value ?? '');
+						if (selectedDate && isSameDay(selectedDate, date)) {
+							return styles.activeDay;
+						}
+						return '';
+					}}
 					onChange={(date) => {
 						onChange(date);
 						setIsOpen(!isOpen);

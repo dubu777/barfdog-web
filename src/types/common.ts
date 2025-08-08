@@ -6,20 +6,6 @@ import {
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 
-export type {
-  SearchParamProps,
-  DefaultObjectType,
-  UseMutationCustomOptions,
-  UseQueryCustomOptions,
-  UseSuspenseQueryCustomOptions,
-  UseInfiniteQueryCustomOptions,
-  QueryParams,
-  Page,
-  ImageFile,
-  Option,
-  SelectOption,
-};
-
 declare global {
   interface Window {
     IMP?: {
@@ -90,3 +76,28 @@ interface SelectOption<T extends string | number | boolean | null> {
   label: string;
   value: T;
 }
+
+interface BaseUploadedFile {
+  fileId: number;
+  fileName: string;
+  folder: string;
+  fileStatus: 'PENDING_ADD' | 'PENDING_DELETE' | 'ADDED';
+  displayImageUrl?: { url: string };
+}
+
+type UploadedFile<T = unknown> = BaseUploadedFile & T;
+
+export type {
+  SearchParamProps,
+  DefaultObjectType,
+  UseMutationCustomOptions,
+  UseQueryCustomOptions,
+  UseSuspenseQueryCustomOptions,
+  UseInfiniteQueryCustomOptions,
+  QueryParams,
+  Page,
+  ImageFile,
+  Option,
+  SelectOption,
+  UploadedFile,
+};
