@@ -14,11 +14,6 @@ export const mobileDatePickerStyle = style({
   justifyContent: "center",
 });
 
-globalStyle(`${mobileDatePickerStyle} > div`, {
-  width: "auto !important",
-  flex: "unset !important",
-});
-
 globalStyle(`${mobileDatePickerStyle} > div:last-child`, {
   zIndex: -1,
   width: "calc(100% - 36px) !important",
@@ -27,9 +22,12 @@ globalStyle(`${mobileDatePickerStyle} > div:last-child`, {
   borderRadius: "4px",
   backgroundColor: themeVars.colors.gray.gray100,
   mixBlendMode: "multiply",
-  boxShadow:
-    "-1px -1px 1px 0px rgba(255, 255, 255, 0.08) inset, 0px 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.08)",
+  boxShadow: themeVars.shadow.light,
   color: themeVars.colors.gray.gray900,
+});
+
+globalStyle(`${mobileDatePickerStyle} > div:last-child div`, {
+  display: 'none'
 });
 
 export const mobileDatePickerBox = style({

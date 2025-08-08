@@ -2,8 +2,8 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import AddIcon from "/public/images/icons/plus.svg";
 import { commonWrapper } from "@/styles/common.css";
+import AddIcon from "/public/images/icons/add-circle.svg";
 
 interface CreateButtonProps {
   text?: string;

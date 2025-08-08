@@ -119,4 +119,14 @@ const queryKeys = {
     GET_PET_BREED_LIST: "getPetBreedList",
     CHECK_DUPLICATE_PET_NAME: "checkDuplicatePetName",
   },
+  DOGPEDIA: {
+    BASE: "dogpedia",
+    GET_BREED_LIST: "getBreedList",
+    GET_BREED_DETAIL: "getBreedDetail",
+  },
+  MEDICAL_HISTORY: {
+    BASE: "medicalHistory",
+    GET_MEDICAL_HISTORY_LIST: "getMedicalHistoryList",
+    GET_MEDICAL_HISTORY_DETAIL: "getMedicalHistoryDetail",
+  },
 } as const;

@@ -10,13 +10,17 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Header from "@/components/layout/header/Header";
-import { ImageFile } from "@/types";
+import { ImageFile, UploadedFile } from "@/types";
+
+// 건강수첩 부분으로부터 UploadedFile type 형식이 바뀜
+// 현재 다른 곳 ImageFile type 으로 사용중임에 따라 임시로 처리
+// 추후 UploadedFile로 변경 필요
 
 interface ImagesModalProps {
+	imageList: ImageFile[] | UploadedFile[]
 	isOpen: boolean;
 	onClose: () => void;
 	defaultImageIndex: number;
-	imageList: ImageFile[]
 }
 
 const ImagesModal = ({
@@ -56,10 +60,10 @@ const ImagesModal = ({
 				>
 					{imageList?.map(image => (
 						<SwiperSlide
-							key={image.filename}
+							key={image.fileName}
 							className={styles.imageSlider}
 						>
-							<Image src={image.url} alt={image.filename} sizes="350px" fill style={{ objectFit: 'contain' }} className={styles.image} />
+							<Image src={image.displayImageUrl?.url ?? ''} alt={image.fileName} sizes="350px" fill style={{ objectFit: 'contain' }} className={styles.image} />
 						</SwiperSlide>
 					))}
 				</Swiper>
