@@ -62,7 +62,6 @@ const updatePet = async ({
   petPicture: File | null;
 }): Promise<ApiResponse<PetId>> => {
   const formData = makePetFormData(body, petPicture);
-  console.log("formData>>>>>>>", formData);
 
   const { data } = await axiosInstance.put(`/api/v2/pets/${petId}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
@@ -78,7 +77,8 @@ const createPet = async ({
   petPicture: File | null;
 }): Promise<ApiResponse<PetId>> => {
   const formData = makePetFormData(body, petPicture);
-  const { data } = await axiosInstance.put("/api/v2/pets", formData, {
+
+  const { data } = await axiosInstance.post("/api/v2/pets", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
   return data;

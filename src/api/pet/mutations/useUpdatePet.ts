@@ -7,7 +7,7 @@ export function useUpdatePet(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updatePet,
-    onSuccess: async (response, variables, context) => {
+    onSuccess: async (response) => {
       if (response.success) {
         const petId = response.data?.petId;
         await queryClient.invalidateQueries({

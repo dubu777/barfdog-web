@@ -10,6 +10,9 @@ import * as styles from "../PetModal.css";
 import PetForm from "../form/PetForm";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useCreatePet } from "@/api/pet/mutations/useCreatePet";
+import { UpdatePetRequest } from "@/types/pet";
+import { useToastStore } from "@/store/useToastStore";
 
 interface PetCreateModalProps {
   isOpen: boolean;
@@ -20,7 +23,9 @@ export default function PetCreateModal({
   isOpen,
   onClose,
 }: PetCreateModalProps) {
+  const { mutate: createPet } = useCreatePet();
   const [file, setFile] = useState<File | null>(null);
+  const { addToast } = useToastStore();
 
   const form = useForm<PetFormValues>({
     resolver: yupResolver(petFormSchema),
@@ -28,12 +33,29 @@ export default function PetCreateModal({
     mode: "all",
   });
 
-  // 이미지 파일 업로드, 등록 적용 필요
   const handleFileChange = (selectedFile: File | null) => {
     setFile(selectedFile);
   };
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const onSubmit = (values: PetFormValues) => {
+    const petInfo = {
+      petName: values.name,
+      gender: values.gender,
+      birthDay: values.birthDay,
+      breedId: values.breedId,
+    } as UpdatePetRequest;
+    createPet(
+      { body: petInfo, petPicture: file },
+      {
+        onSuccess: () => {
+          addToast("반려견 정보가 수정되었습니다.", "above-button");
+          onClose();
+        },
+        onError: () => {
+          addToast("반려견 정보 수정에 실패했습니다.", "above-button");
+        },
+      }
+    );
   };
 
   return (
