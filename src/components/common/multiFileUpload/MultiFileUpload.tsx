@@ -112,7 +112,7 @@ const MultiFileUpload = ({
     onFilesChange([...uploadedImages, ...uploadedFiles]);
   };
 
-  const handleRemoveFile = (filename: string, id: number | undefined) => {
+  const handleRemoveFile = (id: number | undefined) => {
     const newUploadedImages = uploadedImages.filter((file) => file.id !== id);
 
     setUploadedImages(newUploadedImages);

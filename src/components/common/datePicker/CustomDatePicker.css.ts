@@ -36,6 +36,13 @@ export const datePickerPrevNextButton = style({
 	cursor: 'pointer',
 })
 
+export const activeDay = style({
+	background: `${themeVars.colors.blue.blue500} !important`,
+	color: `${themeVars.colors.gray.gray0} !important`,
+	borderRadius: '50%',
+	fontWeight: themeVars.fontWeight.bold,
+})
+
 globalStyle(`${datePickerContainer} .react-datepicker-popper`, {
 	position: 'static',
 	transform: 'unset !important',
@@ -110,4 +117,10 @@ globalStyle(`${datePickerContainer} .react-datepicker__day--selected, .react-dat
 	color: `${themeVars.colors.gray.gray0} !important`,
 	borderRadius: '50%',
 	fontWeight: themeVars.fontWeight.bold,
+})
+
+globalStyle(`${datePickerContainer} .react-datepicker__day--today, .react-datepicker__month-text--today, .react-datepicker__quarter-text--today, .react-datepicker__year-text--today`, {
+	color: themeVars.colors.blue.blue500,
+	backgroundColor: themeVars.colors.blue.blue50,
+	borderRadius: '50%',
 })

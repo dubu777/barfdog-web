@@ -3,24 +3,40 @@ import Picker from "react-mobile-picker";
 import React, { useEffect, useState } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { pointColor } from "@/styles/common.css";
-import { format, getDaysInMonth, getYear } from "date-fns";
+import { format, getDaysInMonth, getMonth, getYear } from "date-fns";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
 
-const getYears = () => {
-  const currentYear = getYear(new Date());
-  return Array.from({ length: 100 }, (_, i) => String(currentYear - i)); // 최근 100년
+const getYears = (minDate?: Date, maxDate?: Date) => {
+  const minYear = minDate ? getYear(minDate) : 1900;
+  const maxYear = maxDate ? getYear(maxDate) : getYear(new Date());
+  return Array.from({ length: maxYear - minYear + 1 }, (_, i) => String(maxYear - i));
 };
 
-const getMonths = () => {
-  return Array.from({ length: 12 }, (_, i) => format(new Date(2000, i), "MM")); // "01" ~ "12"
-};
-
-const getDays = (year: string, month: string) => {
-  const daysInMonth = getDaysInMonth(
-    new Date(parseInt(year), parseInt(month) - 1)
+const getMonths = (year: string, minDate?: Date, maxDate?: Date) => {
+  let startMonth = 1;
+  let endMonth = 12;
+  if (minDate && getYear(minDate) === parseInt(year)) {
+    startMonth = getMonth(minDate) + 1;
+  }
+  if (maxDate && getYear(maxDate) === parseInt(year)) {
+    endMonth = getMonth(maxDate) + 1;
+  }
+  return Array.from({ length: endMonth - startMonth + 1 }, (_, i) =>
+    String(startMonth + i).padStart(2, "0")
   );
-  return Array.from({ length: daysInMonth }, (_, i) =>
-    String(i + 1).padStart(2, "0")
+};
+
+const getDays = (year: string, month: string, minDate?: Date, maxDate?: Date) => {
+  let startDay = 1;
+  let endDay = getDaysInMonth(new Date(parseInt(year), parseInt(month) - 1));
+  if (minDate && getYear(minDate) === parseInt(year) && getMonth(minDate) + 1 === parseInt(month)) {
+    startDay = minDate.getDate();
+  }
+  if (maxDate && getYear(maxDate) === parseInt(year) && getMonth(maxDate) + 1 === parseInt(month)) {
+    endDay = maxDate.getDate();
+  }
+  return Array.from({ length: endDay - startDay + 1 }, (_, i) =>
+    String(startDay + i).padStart(2, "0")
   );
 };
 
@@ -44,6 +60,8 @@ interface MobileDatePickerProps {
   onChange: (date: Date | string) => void;
   label?: string;
   isRequired?: boolean;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 const MobileDatePicker = ({
@@ -51,6 +69,8 @@ const MobileDatePicker = ({
   onChange,
   label,
   isRequired,
+  minDate,
+  maxDate = new Date(),
 }: MobileDatePickerProps) => {
   // value가 "YYYY-MM-DD"면 초기 상태를 null로 설정하여 아무 날짜도 선택되지 않았음을 표시
   const initialDate = value && value !== "YYYY-MM-DD" ? parseDate(value) : null;
@@ -73,11 +93,13 @@ const MobileDatePicker = ({
     // Picker를 열 때, 아직 선택되지 않았다면 오늘 날짜를 기본값으로 설정할 수도 있습니다.
     if (!selectedDate) {
       const today = new Date();
-      setSelectedDate({
+      const todayObj = {
         year: String(getYear(today)),
         month: format(today, "MM"),
         day: format(today, "dd"),
-      });
+      };
+      setSelectedDate(todayObj);
+      onChange(`${todayObj.year}-${todayObj.month}-${todayObj.day}`); // 바로 반영
     }
     setIsOpen((prev) => !prev);
   };
@@ -126,7 +148,7 @@ const MobileDatePicker = ({
               className={styles.mobileDatePickerStyle}
             >
               <Picker.Column name="year">
-                {getYears().map((year) => (
+                {getYears(minDate, maxDate).map((year) => (
                   <Picker.Item key={year} value={year}>
                     {({ selected }) => (
                       <span
@@ -139,7 +161,7 @@ const MobileDatePicker = ({
                 ))}
               </Picker.Column>
               <Picker.Column name="month">
-                {getMonths().map((month) => (
+                {getMonths(safeSelectedDate.year, minDate, maxDate).map((month) => (
                   <Picker.Item key={month} value={month}>
                     {({ selected }) => (
                       <span
@@ -153,7 +175,7 @@ const MobileDatePicker = ({
               </Picker.Column>
               <Picker.Column name="day">
                 {selectedDate &&
-                  getDays(selectedDate.year, selectedDate.month).map((day) => (
+                  getDays(safeSelectedDate.year, safeSelectedDate.month, minDate, maxDate).map((day) => (
                     <Picker.Item key={day} value={day}>
                       {({ selected }) => (
                         <span

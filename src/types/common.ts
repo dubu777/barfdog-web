@@ -89,18 +89,20 @@ interface Option<T> {
   value: T;
 }
 
-type PageProps<P extends object = object, S extends object = object> = {
-  params: Promise<P>;
-  searchParams: Promise<S>;
-};
-
-interface ApiResponse<T> {
-  success: boolean;
-  data: T | null;
-  message: string | null;
-  detailMessage: string | null;
-  errorCode: string | null;
+interface SelectOption<T extends string | number | boolean | null> {
+  label: string;
+  value: T;
 }
+
+interface BaseUploadedFile {
+  fileId: number;
+  fileName: string;
+  folder: string;
+  fileStatus: 'PENDING_ADD' | 'PENDING_DELETE' | 'ADDED';
+  displayImageUrl?: { url: string };
+}
+
+type UploadedFile<T = unknown> = BaseUploadedFile & T;
 
 export type {
   SearchParamProps,
@@ -113,6 +115,6 @@ export type {
   Page,
   ImageFile,
   Option,
-  PageProps,
-  ApiResponse,
+  SelectOption,
+  UploadedFile,
 };

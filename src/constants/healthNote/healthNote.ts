@@ -29,8 +29,8 @@ const HEALTH_NOTE_MENU_CATEGORY = [
 		height: 64,
 	},
 	{
-		label: '건강 검진',
-		url: '/health-note/health-check-history',
+		label: '병원 진료 기록',
+		url: '/health-note/medical-history',
 		imageUrl: HealthCheckImage,
 		width: 50,
 		height: 62,
