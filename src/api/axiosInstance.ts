@@ -37,6 +37,12 @@ export const authAxios: AxiosInstance = axios.create({
   },
 });
 
+export const uploadAxiosInstance: AxiosInstance = axios.create({
+  baseURL,
+  timeout: 5000,
+  withCredentials: true,
+});
+
 const isClient = typeof window !== "undefined";
 
 /**
