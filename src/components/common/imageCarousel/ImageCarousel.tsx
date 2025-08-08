@@ -53,7 +53,7 @@ export default function ImageCarousel({
 										alt={`${preview.fileName}-${index}`}
 										width={width}
 										height={height}
-										className={previewImage}
+										className={previewImage({ cursor: handleThumbnailClick ? 'pointer' : 'default' })}
 									/>
 									{handleRemoveFile &&
 										<button type='button' onClick={() => handleRemoveFile(preview.fileId)} className={removeButton}>

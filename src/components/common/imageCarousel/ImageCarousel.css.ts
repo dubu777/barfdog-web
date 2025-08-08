@@ -28,8 +28,20 @@ export const previewSlide = recipe({
 	}
 })
 
-export const previewImage = style({
-	objectFit: 'cover',
+export const previewImage = recipe({
+	base: {
+		objectFit: 'cover',
+	},
+	variants: {
+		cursor: {
+			pointer: {
+				cursor: 'pointer',
+			},
+			default: {
+				cursor: 'default',
+			}
+		}
+	}
 })
 
 export const thumbnail = style({

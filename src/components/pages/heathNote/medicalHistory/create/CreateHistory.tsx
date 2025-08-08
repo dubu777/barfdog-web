@@ -62,7 +62,7 @@ export default function CreateHistory ({ petId }: CreateHistoryProps) {
 		mutate({
 			body
 		}, {
-			onSuccess: async () => {
+			onSuccess: async (data) => {
 				addToast("병원 진료 기록이 등록되었습니다.", 'above-button');
 
 				const diagnosisId = data?.diagnosisId;
