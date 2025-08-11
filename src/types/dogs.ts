@@ -1,5 +1,6 @@
 import { DOG_GENDER } from "@/constants/dog";
 import { subscriptionStatus } from "@/constants";
+import { DogSize } from "./survey";
 
 interface DogData {
   id: number;
@@ -79,8 +80,6 @@ interface UploadDogProfileImage {
   url: string;
 }
 
-type DogSize = "SMALL" | "MIDDLE" | "LARGE";
-
 export type {
   DogData,
   FullDogDetail,
@@ -88,5 +87,4 @@ export type {
   DogListData,
   DogDetailData,
   UploadDogProfileImage,
-  DogSize,
 };
