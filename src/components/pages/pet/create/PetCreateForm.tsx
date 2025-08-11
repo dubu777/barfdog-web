@@ -14,6 +14,7 @@ import { useToastStore } from "@/store/useToastStore";
 import PetCreateSuccess from "./PetCreateSuccess";
 import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
+import { petModalContainer } from "../PetModal.css";
 
 interface PetCreateFormProps {
   source: "diet-analysis" | "health-note";
@@ -80,7 +81,7 @@ export default function PetCreateForm({ source }: PetCreateFormProps) {
   };
 
   return (
-    <>
+    <div className={petModalContainer}>
       <Header centerTitle="반려견 등록" showBackButton />
       {isSuccess ? (
         <PetCreateSuccess
@@ -96,6 +97,6 @@ export default function PetCreateForm({ source }: PetCreateFormProps) {
           handleSubmit={form.handleSubmit(onSubmit)}
         />
       )}
-    </>
+    </div>
   );
 }

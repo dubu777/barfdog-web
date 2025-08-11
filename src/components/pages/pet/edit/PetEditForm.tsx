@@ -17,6 +17,7 @@ import { useDeletePet } from "@/api/pet/mutations/useDeletePet";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
+import { petModalContainer } from "../PetModal.css";
 
 interface PetEditFormProps {
   petId: number;
@@ -73,7 +74,7 @@ export default function PetEditForm({ petId }: PetEditFormProps) {
     });
   };
   return (
-    <>
+    <div className={petModalContainer}>
       <Header
         centerTitle="반려견 수정"
         showBackButton
@@ -88,6 +89,6 @@ export default function PetEditForm({ petId }: PetEditFormProps) {
         handleFileChange={handleFileChange}
         handleSubmit={form.handleSubmit(onSubmit)}
       />
-    </>
+    </div>
   );
 }

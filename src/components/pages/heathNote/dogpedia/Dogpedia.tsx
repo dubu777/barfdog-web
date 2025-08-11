@@ -12,8 +12,11 @@ import { Option } from "@/types";
 export default function Dogpedia() {
   const { data } = useGetBreedList();
 
-  const DOGPEDIA_OPTIONS: Option[] = useMemo(() => {
-    return data.map(breed => ({ label: breed.breedName, value: String(breed.breedId) }))
+  const DOGPEDIA_OPTIONS: Option<number>[] = useMemo(() => {
+    return data.map((breed) => ({
+      label: breed.breedName,
+      value: breed.breedId,
+    }));
   }, [data]);
 
   // 건강수첩 메인에서 선택한 대표 반려견의 dogType initialValue값 적용 필요
@@ -62,4 +65,4 @@ export default function Dogpedia() {
       )}
     </>
   );
-};
+}
