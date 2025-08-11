@@ -167,7 +167,7 @@ interface SurveyTitleConfig {
 type Gender = "MALE" | "FEMALE";
 
 /** 견사이즈 */
-type DogSize = "SMALL" | "MEDDLE" | "LARGE";
+type DogSize = "SMALL" | "MIDDLE" | "LARGE";
 
 type GeneralLevel = "VERY_HIGH" | "HIGH" | "NORMAL" | "LOW" | "VERY_LOW";
 
