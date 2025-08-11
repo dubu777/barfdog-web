@@ -9,9 +9,11 @@ import MaleIcon from "public/images/subscription/male.svg";
 import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
 import DefaultImage from "public/images/subscription/dog-default-profile.png";
-import Button from "@/components/common/button/Button";
 import { BreedInfo } from "@/types/pet";
 import { useRouter } from "next/navigation";
+import PetCardButton from "../PetCardButton";
+import useModal from "@/hooks/useModal";
+import RenewalNoticeBottomSheet from "../RenewalNoticeBottomSheet";
 
 interface PetCardProps {
   petId: number;
@@ -36,8 +38,25 @@ export default function PetCard({
 }: PetCardProps) {
   const age = getAgeFromBirth(birthDay);
   const router = useRouter();
+  const {
+    isOpen: isNoticeOpen,
+    onClose: onNoticeClose,
+    onToggle: onNoticeToggle,
+    onOpen: onNoticeOpen,
+  } = useModal();
+  const isRenewalSurvey = reportId != null;
+
   const handleGoToSurvey = () => {
-    window.location.href = `/diet-analysis/survey?petName=${name}&petId=${petId}&gender=${gender}`;
+    window.location.href = `/diet-analysis/survey?petName=${encodeURIComponent(
+      name
+    )}&petId=${petId}&gender=${encodeURIComponent(gender)}`;
+  };
+  const handleGoToResult = () => {
+    if (!isRenewalSurvey) {
+      onNoticeOpen();
+      return;
+    }
+    router.push(`/diet-analysis/result/${reportId}`);
   };
 
   return (
@@ -89,30 +108,19 @@ export default function PetCard({
           </DefaultText>
         </div>
       </div>
-      <div className={commonWrapper({ gap: 8 })}>
-        <Button
-          type="assistive"
-          variant="outline"
-          textColor="gray900"
-          borderColor="gray300"
-          size="sm"
-          onClick={() => router.push(`/diet-analysis/result/${reportId}`)}
-          fullWidth
-        >
-          맞춤 결과 확인
-        </Button>
-        <Button
-          type="assistive"
-          variant="outline"
-          textColor="red"
-          borderColor="red"
-          size="sm"
-          fullWidth
-          onClick={handleGoToSurvey}
-        >
-          다시 추천 받기
-        </Button>
-      </div>
+      <PetCardButton
+        showOnlySubscribeButton={!isSubscribing && !isRenewalSurvey}
+        isSubscribing={isSubscribing}
+        onSurvey={handleGoToSurvey}
+        onResult={handleGoToResult}
+      />
+      {isNoticeOpen && (
+        <RenewalNoticeBottomSheet
+          isOpen={isNoticeOpen}
+          onClose={onNoticeClose}
+          onSurvey={handleGoToSurvey}
+        />
+      )}
     </div>
   );
 }
