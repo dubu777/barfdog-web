@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 export default function DietAnalysisMain() {
   const router = useRouter();
   const { data } = useGetPetList();
+  console.log(data);
 
   // 서버와 연동해서 구현한 무한 스크롤은 아님, 10개씩 렌더링 하게 구현
   const [visibleDogs, loadMoreRef] = useInfiniteList(data, {
@@ -20,18 +21,16 @@ export default function DietAnalysisMain() {
     router.push("/pet/create?source=diet-analysis");
   };
 
+  if (data.length === 0) {
+    return <EmptyPetList onCreate={handleCreatePet} />;
+  }
+
   return (
-    <>
-      {data.length < 0 ? (
-        <EmptyPetList />
-      ) : (
-        <PetList
-          pets={visibleDogs}
-          totalCount={data.length}
-          loadMoreRef={loadMoreRef}
-          onCreate={handleCreatePet}
-        />
-      )}
-    </>
+    <PetList
+      pets={visibleDogs}
+      totalCount={data.length}
+      loadMoreRef={loadMoreRef}
+      onCreate={handleCreatePet}
+    />
   );
 }

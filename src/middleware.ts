@@ -72,5 +72,6 @@ export const config = {
     "/diet-analysis/:path*",
     "/health-note/:path*",
     "/cart",
+    "/pet/:path*",
   ],
 };

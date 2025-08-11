@@ -4,7 +4,11 @@ import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
 import Button from "@/components/common/button/Button";
 import * as styles from "./DietAnalysisMain.css";
 
-export default function EmptyPetList() {
+interface EmptyPetListProps {
+  onCreate: () => void;
+}
+
+export default function EmptyPetList({ onCreate }: EmptyPetListProps) {
   return (
     <div
       className={commonWrapper({
@@ -27,7 +31,7 @@ export default function EmptyPetList() {
         <br />
         반려견을 등록해보세요
       </DefaultText>
-      <Button buttonColor="gray900" size="md" onClick={() => {}}>
+      <Button buttonColor="gray900" size="md" onClick={onCreate}>
         반려견 등록하기
       </Button>
     </div>
