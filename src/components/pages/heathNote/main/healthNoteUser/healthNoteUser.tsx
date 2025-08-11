@@ -5,13 +5,13 @@ import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ComparisonProgressBar from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants";
-import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
 import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
 import { useHealthNoteStore } from "@/store/useHealthNoteStore";
+import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 
 const HealthNoteUser = () => {
-  const { data: dogList = [] } = useGetDogList();
+  const { data: petList = [] } = useGetPetList();
   const { dogInfo } = useHealthNoteStore();
   const isFirstFullCheck = false;
   const fullCheckTopRank = 2.4;
@@ -23,8 +23,7 @@ const HealthNoteUser = () => {
   const handleGotoMenu = (url) => {
     if (url === "/health-note/full-check") {
       window.location.href = `${url}${isFirstFullCheck ? "/survey" : ""}`;
-    } else if (url === "/health-note/gut-check" && dogInfo?.dogId
-    ) {
+    } else if (url === "/health-note/gut-check" && dogInfo?.dogId) {
       window.location.href = `${url}?dogId=${dogInfo.dogId}`;
     } else if (url === "/health-note/medical-history" && dogInfo?.dogId) {
       window.location.href = `${url}?petId=${dogInfo.dogId}`;
@@ -35,7 +34,7 @@ const HealthNoteUser = () => {
 
   return (
     <section className={styles.heathNoteMainContainer}>
-      {dogList?.length > 0 ? (
+      {petList?.length > 0 ? (
         <article>
           <div className={styles.menuCategoryBox}>
             {HEALTH_NOTE_MENU_CATEGORY.map((menu) => {

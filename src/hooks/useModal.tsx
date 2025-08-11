@@ -4,6 +4,10 @@ export default function useModal() {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const onOpen = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
   const onToggle = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
@@ -12,11 +16,14 @@ export default function useModal() {
     setIsOpen(false);
   }, []);
 
-  const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (ref.current && !ref.current.contains(event.target as Node)) {
-      onClose();
-    }
-  }, [onClose]);
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -33,6 +40,7 @@ export default function useModal() {
   return {
     isOpen,
     onToggle,
+    onOpen,
     onClose,
     ref,
   };

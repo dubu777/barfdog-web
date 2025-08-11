@@ -13,6 +13,9 @@ export const completeCreateWrapper = style({
   flexDirection: "column",
   alignItems: "center",
   padding: "80px 20px",
+  width: "100%",
+  height: "calc(100vh - 52px)",
+  backgroundColor: themeVars.colors.gray.gray50,
 });
 
 export const completeCreateTitle = style({

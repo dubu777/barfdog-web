@@ -273,6 +273,11 @@ export const commonWrapper = recipe({
         width: "auto",
       },
     },
+    maxWidth: {
+      600: {
+        maxWidth: "600px",
+      },
+    },
     borderRadius: {
       8: {
         borderRadius: "8px",

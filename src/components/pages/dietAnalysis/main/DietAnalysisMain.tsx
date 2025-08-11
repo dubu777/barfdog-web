@@ -2,12 +2,12 @@
 
 import { useInfiniteList } from "@/hooks/useInfiniteList";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
-import useModal from "@/hooks/useModal";
-import PetCreateModal from "@/components/common/modal/pets/create/PetCreateModal";
 import EmptyPetList from "./EmptyPetList";
 import PetList from "./PetList";
+import { useRouter } from "next/navigation";
 
 export default function DietAnalysisMain() {
+  const router = useRouter();
   const { data } = useGetPetList();
 
   // 서버와 연동해서 구현한 무한 스크롤은 아님, 10개씩 렌더링 하게 구현
@@ -16,12 +16,9 @@ export default function DietAnalysisMain() {
     rootMargin: "50px",
   });
 
-  const {
-    isOpen: isPetCreateModalOpen,
-    onClose: onPetCreateModalClose,
-    onToggle: onPetCreateModalToggle,
-  } = useModal();
-  console.log(data.length);
+  const handleCreatePet = () => {
+    router.push("/pet/create?source=diet-analysis");
+  };
 
   return (
     <>
@@ -32,13 +29,7 @@ export default function DietAnalysisMain() {
           pets={visibleDogs}
           totalCount={data.length}
           loadMoreRef={loadMoreRef}
-          onToggle={onPetCreateModalToggle}
-        />
-      )}
-      {isPetCreateModalOpen && (
-        <PetCreateModal
-          isOpen={isPetCreateModalOpen}
-          onClose={onPetCreateModalClose}
+          onCreate={handleCreatePet}
         />
       )}
     </>

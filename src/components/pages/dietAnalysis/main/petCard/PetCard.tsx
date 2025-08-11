@@ -10,8 +10,6 @@ import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
 import DefaultImage from "public/images/subscription/dog-default-profile.png";
 import Button from "@/components/common/button/Button";
-import useModal from "@/hooks/useModal";
-import PetEditModal from "@/components/common/modal/pets/edit/PetEditModal";
 import { BreedInfo } from "@/types/pet";
 import { useRouter } from "next/navigation";
 
@@ -41,11 +39,6 @@ export default function PetCard({
   const handleGoToSurvey = () => {
     window.location.href = `/diet-analysis/survey?petName=${name}&petId=${petId}&gender=${gender}`;
   };
-  const {
-    isOpen: isPetEditModalOpen,
-    onClose: onPetEditModalClose,
-    onToggle: onPetEditModalToggle,
-  } = useModal();
 
   return (
     <div className={styles.dogCardContainer}>
@@ -79,7 +72,7 @@ export default function PetCard({
               src={EditIcon}
               size={28}
               color="gray500"
-              onClick={onPetEditModalToggle}
+              onClick={() => router.push(`/pet/${petId}`)}
             />
           </div>
           <div className={commonWrapper({ justify: "start", gap: 6 })}>
@@ -120,19 +113,6 @@ export default function PetCard({
           다시 추천 받기
         </Button>
       </div>
-      {isPetEditModalOpen && (
-        <PetEditModal
-          key={petId}
-          petId={petId}
-          profileImageUrl={profileImageUrl}
-          breedInfo={breedInfo}
-          name={name}
-          gender={gender}
-          birthDay={birthDay}
-          isOpen={isPetEditModalOpen}
-          onClose={onPetEditModalClose}
-        />
-      )}
     </div>
   );
 }

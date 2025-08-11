@@ -1,6 +1,11 @@
 "use client";
 import { useMemo } from "react";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Header from "@/components/layout/header/Header";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
@@ -26,7 +31,7 @@ const HealthNoteHeader = () => {
   ) as Record<string, string>;
   const goBack = useBackNavigation();
   const goBackPreviousPage = useBackNavigation(undefined, true);
-  const goBackToMain = () => router.push('/health-note');
+  const goBackToMain = () => router.push("/health-note");
 
   const {
     isOpen: isOpenConfirmAlert,
@@ -97,16 +102,6 @@ const HealthNoteHeader = () => {
       onBack?: () => void;
     }
   > = {
-    "/health-note/dogs/": (params) => {
-      const dogDetail = !!params?.dogId;
-      return {
-        centerTitle: dogDetail ? "반려견 정보 수정" : "반려견 추가",
-        showBackButton: dogDetail,
-        onBack: goBackPreviousPage,
-        showCloseButton: !dogDetail,
-        onClose: onToggleConfirmAlert,
-      };
-    },
     "/health-note/gut-check/detail/": () => ({
       centerTitle: "",
       showBackButton: true,

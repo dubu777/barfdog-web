@@ -12,6 +12,9 @@ export function useUpdatePet(mutationOptions?: UseMutationCustomOptions) {
         await queryClient.invalidateQueries({
           queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_LIST],
         });
+        await queryClient.invalidateQueries({
+          queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_DETAIL],
+        });
       } else {
         throw new Error(response.message as string);
       }

@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import * as styles from "../PetModal.css";
 import { useToastStore } from "@/store/useToastStore";
 import { useUpdatePet } from "@/api/pet/mutations/useUpdatePet";
 import { useForm } from "react-hook-form";
@@ -10,42 +9,28 @@ import {
   PetFormValues,
 } from "@/utils/validation/petValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import PetForm from "../form/PetForm";
 import { buildPetUpdateRequest } from "@/utils/pet/buildPetUpdateRequest";
-import { BreedInfo } from "@/types/pet";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import TrashIcon from "public/images/icons/trashbag.svg";
 import { useDeletePet } from "@/api/pet/mutations/useDeletePet";
+import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
+import Header from "@/components/layout/header/Header";
+import { useRouter } from "next/navigation";
 
-interface PetEditModalProps {
+interface PetEditFormProps {
   petId: number;
-  profileImageUrl: string | null;
-  name: string;
-  gender: string;
-  birthDay: string;
-  breedInfo: BreedInfo;
-  isOpen: boolean;
-  onClose: () => void;
 }
 
-export default function PetEditModal({
-  petId,
-  profileImageUrl,
-  name,
-  gender,
-  birthDay,
-  breedInfo,
-  isOpen,
-  onClose,
-}: PetEditModalProps) {
+export default function PetEditForm({ petId }: PetEditFormProps) {
+  const router = useRouter();
+  const { data: petInfo } = useGetPetDetail(petId);
   const { mutate: updatePet } = useUpdatePet();
   const { mutate: deletePet } = useDeletePet();
+
   const [file, setFile] = useState<File | null>(null);
 
   const { addToast } = useToastStore();
-
-  const petInfo = { name, gender, birthDay, breedId: breedInfo?.id };
   const form = useForm<PetFormValues>({
     resolver: yupResolver(petFormSchema),
     defaultValues: defaultPetFormValues(petInfo),
@@ -57,7 +42,7 @@ export default function PetEditModal({
   };
 
   const onSubmit = (values: PetFormValues) => {
-    const body = buildPetUpdateRequest(petInfo as PetFormValues, values);
+    const body = buildPetUpdateRequest(petInfo, values);
     console.log("body", body);
 
     updatePet(
@@ -65,10 +50,11 @@ export default function PetEditModal({
       {
         onSuccess: () => {
           addToast("반려견 정보가 수정되었습니다.", "above-button");
-          onClose();
+          router.back();
         },
         onError: () => {
           addToast("반려견 정보 수정에 실패했습니다.", "above-button");
+          router.back();
         },
       }
     );
@@ -78,30 +64,30 @@ export default function PetEditModal({
     deletePet(petId, {
       onSuccess: () => {
         addToast("반려견 삭제가 완료됐습니다", "above-button");
-        onClose();
+        router.back();
       },
       onError: () => {
         addToast("반려견 삭제에 실패했습니다.", "above-button");
+        router.back();
       },
     });
   };
   return (
-    <FullModalWrapper
-      className={styles.petModalContainer}
-      isVisible={isOpen}
-      headerTitle="반려견 수정"
-      handleGoBack={onClose}
-      rightElement={
-        <SvgIcon src={TrashIcon} size={24} onClick={handleDeletePet} />
-      }
-    >
+    <>
+      <Header
+        centerTitle="반려견 수정"
+        showBackButton
+        rightElement={
+          <SvgIcon src={TrashIcon} size={24} onClick={handleDeletePet} />
+        }
+      />
       <PetForm
         isEdit={true}
         form={form}
-        dogPictureUrl={profileImageUrl}
+        dogPictureUrl={petInfo.displayImageUrl?.url ?? null}
         handleFileChange={handleFileChange}
         handleSubmit={form.handleSubmit(onSubmit)}
       />
-    </FullModalWrapper>
+    </>
   );
 }

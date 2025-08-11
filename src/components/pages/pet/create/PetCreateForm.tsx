@@ -5,8 +5,6 @@ import {
   petFormSchema,
   PetFormValues,
 } from "@/utils/validation/petValidation";
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import * as styles from "../PetModal.css";
 import PetForm from "../form/PetForm";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,16 +12,15 @@ import { useCreatePet } from "@/api/pet/mutations/useCreatePet";
 import { UpdatePetRequest } from "@/types/pet";
 import { useToastStore } from "@/store/useToastStore";
 import PetCreateSuccess from "./PetCreateSuccess";
+import Header from "@/components/layout/header/Header";
+import { useRouter } from "next/navigation";
 
-interface PetCreateModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface PetCreateFormProps {
+  source: "diet-analysis" | "health-note";
 }
 
-export default function PetCreateModal({
-  isOpen,
-  onClose,
-}: PetCreateModalProps) {
+export default function PetCreateForm({ source }: PetCreateFormProps) {
+  const router = useRouter();
   const { mutate: createPet } = useCreatePet();
   const [file, setFile] = useState<File | null>(null);
   // 펫 등록 성공 여부
@@ -47,7 +44,9 @@ export default function PetCreateModal({
   };
 
   const handleGoToSurvey = () => {
-    window.location.href = `/diet-analysis/survey?petName=${petName}&petId=${petId}&gender=${gender}`;
+    window.location.href = `/diet-analysis/survey?petName=${encodeURIComponent(
+      petName
+    )}&petId=${petId}&gender=${encodeURIComponent(gender)}`;
   };
 
   const onSubmit = (values: PetFormValues) => {
@@ -66,25 +65,26 @@ export default function PetCreateModal({
         onSuccess: (res) => {
           const newId = res.data?.petId ?? null;
           setPetId(newId);
-          setIsSuccess(true);
+          if (source === "diet-analysis") {
+            setIsSuccess(true);
+          } else {
+            addToast("반려견 등록이 완료됐어요", "above-button");
+            router.push("/health-note");
+          }
         },
         onError: () => {
-          addToast("반려견 등록에 실패했습니다", "above-button");
+          addToast("반려견 등록에 실패했어요", "above-button");
         },
       }
     );
   };
 
   return (
-    <FullModalWrapper
-      className={styles.petModalContainer}
-      isVisible={isOpen}
-      headerTitle="반려견 등록"
-      handleClose={onClose}
-    >
+    <>
+      <Header centerTitle="반려견 등록" showBackButton />
       {isSuccess ? (
         <PetCreateSuccess
-          handleClose={onClose}
+          handleClose={() => {}}
           handleGoToSurvey={handleGoToSurvey}
         />
       ) : (
@@ -96,6 +96,6 @@ export default function PetCreateModal({
           handleSubmit={form.handleSubmit(onSubmit)}
         />
       )}
-    </FullModalWrapper>
+    </>
   );
 }

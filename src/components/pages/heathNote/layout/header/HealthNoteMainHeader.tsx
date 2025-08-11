@@ -15,21 +15,26 @@ import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Divider from "@/components/common/divider/Divider";
 import useModal from "@/hooks/useModal";
-import { useGetDogList } from "@/api/dog/queries/useGetDogList";
 import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
 import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
 import { createButton } from "../../gutCheck/modal/KitGuideModal.css";
+import { useGetPetList } from "@/api/pet/queries/useGetPetList";
+import CreateButton from "@/components/common/createButton/CreateButton";
+import { commonWrapper } from "@/styles/common.css";
 
 const HealthNoteMainHeader = () => {
   const router = useRouter();
-  const { data: dogList = [] } = useGetDogList();
-  const representativeDog = dogList?.find((dog) => dog.representative);
+  const { data: petList = [] } = useGetPetList();
+  console.log(petList);
+
+  const representativeDog = petList?.find((dog) => dog.isRepresentative);
 
   const { dogInfo, setDogInfo } = useHealthNoteStore();
   const dogImageUrl = dogInfo?.imageUrl ? dogInfo.imageUrl : DogIcon;
 
   const { isOpen, onClose, onToggle } = useModal();
+
   const { mutate: updateTargetDogMutate } = useUpdateRepresentativeDog();
 
   useEffect(() => {
@@ -37,14 +42,14 @@ const HealthNoteMainHeader = () => {
       setDogInfo({
         dogId: representativeDog.id,
         name: representativeDog.name,
-        imageUrl: representativeDog.pictureUrl,
+        imageUrl: representativeDog.displayImageUrl?.url ?? null,
       });
     }
-  }, [dogList, setDogInfo, representativeDog]);
+  }, [petList, setDogInfo, representativeDog]);
 
   const handleShowDogList = () => {
-    if (dogList.length === 0) {
-      router.push("/health-note/dogs/create");
+    if (petList.length === 0) {
+      router.push("/pet/create?source=health-note");
     } else {
       onToggle();
     }
@@ -75,6 +80,11 @@ const HealthNoteMainHeader = () => {
     onClose();
   };
 
+  const handleCreatePet = () => {
+    onClose();
+    router.push("/pet/create?source=health-note");
+  };
+
   return (
     <>
       <header className={styles.heathNoteHeaderContainer}>
@@ -87,12 +97,12 @@ const HealthNoteMainHeader = () => {
         />
         <button onClick={handleShowDogList} className={styles.selectButton}>
           <DefaultText type="headline1">
-            {dogList.length === 0 ? "반려견 등록" : dogInfo?.name}
+            {petList.length === 0 ? "반려견 등록" : dogInfo?.name}
           </DefaultText>
           <SvgIcon src={ChevronDown} style={{ transform: "rotate(180deg)" }} />
         </button>
       </header>
-      {dogList && isOpen && (
+      {petList && isOpen && (
         <BottomSheet
           isOpen={isOpen}
           onClose={handleCloseChangeDogInfo}
@@ -100,14 +110,14 @@ const HealthNoteMainHeader = () => {
         >
           <div className={styles.selectBottomSheetHeader}>
             <DefaultText type="title4">반려견 선택</DefaultText>
-            <Link href="/health-note/dogs">
+            <Link href="/health-note/pets">
               <DefaultText type="label4" color="gray500">
                 전체보기
               </DefaultText>
             </Link>
           </div>
           <div className={styles.selectBottomSheetBox}>
-            {dogList.map((dog, index) => {
+            {petList.map((dog, index) => {
               const active = dog.id === Number(dogInfo?.dogId) || false;
               return (
                 <Fragment key={dog.id}>
@@ -117,13 +127,13 @@ const HealthNoteMainHeader = () => {
                       handleChangeDogInfo({
                         dogId: dog.id,
                         name: dog.name,
-                        imageUrl: dog?.pictureUrl,
+                        imageUrl: dog?.displayImageUrl?.url ?? null,
                       })
                     }
                   >
                     <div className={styles.selectBottomSheetDogInfo}>
                       <Image
-                        src={dog?.pictureUrl || DogIcon}
+                        src={dog?.displayImageUrl?.url || DogIcon}
                         alt={dog.name}
                         width={40}
                         height={40}
@@ -135,7 +145,7 @@ const HealthNoteMainHeader = () => {
                       <SvgIcon src={CheckCircle} size={24} color="red" />
                     )}
                   </button>
-                  {dogList.length !== index + 1 && (
+                  {petList.length !== index + 1 && (
                     <Divider thickness={1} color="gray100" />
                   )}
                 </Fragment>
@@ -147,12 +157,12 @@ const HealthNoteMainHeader = () => {
             primaryButtonVariant="outline"
             primaryButtonType="assistive"
             primaryButtonLabel={
-              <DefaultText type="headline3" className={createButton}>
+              <div className={commonWrapper({ gap: 6 })}>
                 <SvgIcon src={PlusIcon} />
-                새로운 아이 등록하기
-              </DefaultText>
+                <DefaultText type="headline3">새로운 아이 등록하기</DefaultText>
+              </div>
             }
-            onPrimaryClick={() => router.push("/health-note/dogs/create")}
+            onPrimaryClick={handleCreatePet}
             position="sticky"
           />
         </BottomSheet>

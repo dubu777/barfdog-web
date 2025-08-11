@@ -9,7 +9,9 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 interface SubscribePageProps {
-  searchParams: Record<string, string | string[] | undefined>;
+  searchParams: {
+    reportId: string;
+  };
 }
 
 export default async function SubscribePage({

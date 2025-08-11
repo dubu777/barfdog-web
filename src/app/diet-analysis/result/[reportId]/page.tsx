@@ -8,13 +8,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import Header from "@/components/layout/header/Header";
 import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/usePrefetchGetDietAnalysisResult";
 import DietAnalysisResult from "@/components/pages/dietAnalysis/result/DietAnalysisResult";
-import { PageProps } from "@/types";
 
 type Params = { reportId: string };
 
-export default async function ResultPage({ params }: PageProps<Params>) {
-  const resolvedParams = await params;
-  const reportId = Number(resolvedParams.reportId);
+export default async function ResultPage({ params }: { params: Params }) {
+  const reportId = Number(params.reportId);
   const queryClient = new QueryClient();
 
   // 서버에서 데이터 prefetching

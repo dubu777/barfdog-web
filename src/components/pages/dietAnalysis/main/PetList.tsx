@@ -13,14 +13,14 @@ export interface PetListProps {
   /** 스크롤 끝 감지용 ref */
   loadMoreRef: RefObject<HTMLDivElement>;
   /** 등록 모달 토글 핸들러 */
-  onToggle: () => void;
+  onCreate: () => void;
 }
 
 export default function PetList({
   pets,
   totalCount,
   loadMoreRef,
-  onToggle,
+  onCreate,
 }: PetListProps) {
   return (
     <div
@@ -33,7 +33,7 @@ export default function PetList({
         minHeight: "fullWithHeader",
       })}
     >
-      <CreateButton text="새로운 아이 등록하기" onClick={onToggle} />
+      <CreateButton text="새로운 아이 등록하기" onClick={onCreate} />
       <div
         className={commonWrapper({
           direction: "col",

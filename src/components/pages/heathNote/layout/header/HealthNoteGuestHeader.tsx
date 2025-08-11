@@ -19,7 +19,7 @@ const HealthNoteGuestHeader = () => {
         className={dogImage({ borderRadius: "lg" })}
       />
       <button
-        onClick={() => router.push("/health-note/dogs/create")}
+        onClick={() => router.push("/pet/create?source=health-note")}
         className={styles.selectButton}
       >
         <DefaultText type="headline1">반려견 등록</DefaultText>

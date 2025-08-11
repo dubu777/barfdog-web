@@ -5,7 +5,14 @@ import { isAuthenticated } from "./utils/auth/isAuthenticated";
 // 보호가 필요한 경로
 // const protectedPaths = ["/mypage", "/order", "/diet-analysis/", "/health-note", "/cart"];
 // renewal 서버에서 로그인이 안돼서 테스트를 위해 /health-note 임시로 제외함
-const protectedPaths = ["/mypage", "/order", "/diet-analysis", "/cart"];
+const protectedPaths = [
+  "/mypage",
+  "/order",
+  "/diet-analysis",
+  "/cart",
+  "/health-note",
+  "/pet",
+];
 
 // 예외 경로
 const exceptionPaths = ["/health-note/guest", "/diet-analysis/guest"];

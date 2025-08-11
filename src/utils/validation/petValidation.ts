@@ -1,3 +1,4 @@
+import { Pet } from "@/types/pet";
 import * as yup from "yup";
 
 export const petFormSchema = yup.object().shape({
@@ -10,17 +11,10 @@ export const petFormSchema = yup.object().shape({
 
 export type PetFormValues = yup.InferType<typeof petFormSchema>;
 
-export const defaultPetFormValues = (
-  petInfo: {
-    name: string;
-    gender: string;
-    birthDay: string;
-    breedId: number | null;
-  } | null
-): PetFormValues => ({
+export const defaultPetFormValues = (petInfo: Pet | null): PetFormValues => ({
   name: petInfo?.name ?? "",
   nameVerified: !!petInfo?.name,
   gender: petInfo?.gender ?? "",
-  birthDay: petInfo?.birthDay ?? "",
-  breedId: petInfo?.breedId ?? 0,
+  birthDay: petInfo?.birthInfo.birthDay ?? "",
+  breedId: petInfo?.breedInfo.id ?? 0,
 });
