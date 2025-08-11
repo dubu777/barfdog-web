@@ -1,6 +1,4 @@
-import { InedibleFood } from "@/types/dietAnalysis";
-
-const INEDIBLE_FOOD_LABELS: Record<InedibleFood, string> = {
+const INEDIBLE_FOOD_LABELS: Record<string, string> = {
   NONE: "알러지 없음",
   CHICKEN: "닭고기",
   TURKEY: "칠면조",
