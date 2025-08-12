@@ -1,3 +1,5 @@
+"use client";
+
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
 import CreateButton from "@/components/common/createButton/CreateButton";

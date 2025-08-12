@@ -3,7 +3,6 @@
 import { useInfiniteList } from "@/hooks/useInfiniteList";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { useRouter } from "next/navigation";
-import { Pet } from "@/types/pet";
 import Button from "@/components/common/button/Button";
 import PetList from "@/components/pages/dietAnalysis/main/PetList";
 import { useUpdateRepresentativePet } from "@/api/pet/mutations/useUpdateRepresentativePet";

@@ -1,3 +1,5 @@
+"use client";
+
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
 import * as styles from "./PetCard.css";
