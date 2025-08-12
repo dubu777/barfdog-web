@@ -1,20 +1,16 @@
-import {
-  NONE_VALUE,
-  DIET_ANALYSIS_FORM_INFO,
-  SURVEY_TITLES,
-} from "@/constants";
-import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { useController, useFormContext, useWatch } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useFormContext, useWatch, useController } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import useModal from "@/hooks/useModal";
-import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";
+import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import {
+  PROBIOME_FORM_INFO,
+  PROBIOME_TITLES,
+} from "@/constants/healthNote/probiome";
+import { ProbiomeStepValues } from "@/utils/validation/probiomeValidation";
+import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
-import { PROBIOME_FORM_INFO } from "@/constants/healthNote/probiome";
-import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
 import Chips from "@/components/common/chips/Chips";
+import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -22,33 +18,32 @@ interface SurveyStepProps {
   dogName: string;
 }
 
-export default function SurveyStep9({
+export default function ProbiomeStep4({
   handleChange,
   handleNextStep,
   dogName,
 }: SurveyStepProps) {
-  const { control, setValue } = useFormContext<SurveyStepValues>();
-  const { isOpen, onToggle: toggleModal, onClose } = useModal();
+  const { control, setValue } = useFormContext<ProbiomeStepValues>();
 
-  // inedibleFoods field controller
-  const { field: inedibleStatusField } = useController({
-    name: "step9.inedibleFoodStatus",
-    control,
-  });
-  const { field: inedibleField } = useController({
-    name: "step9.inedibleFoods",
+  const { field: allergyStatusField } = useController({
+    name: "step4.allergyStatus",
     control,
   });
 
-  const { onToggle: onStatusToggle, isSelected: isStatusSelected } =
-    useSurveyToggleOption<string>({
-      selectedValue: inedibleStatusField.value ?? null,
+  const { field: allergenFoodListField } = useController({
+    name: "step4.allergenFoodList",
+    control,
+  });
+
+  const { onToggle: allergyToggle, isSelected: allergySelected } =
+    useSurveyToggleOption({
+      selectedValue: allergyStatusField.value,
       mode: "radio",
       onChange: (value) => {
-        inedibleStatusField.onChange(value);
+        allergyStatusField.onChange(value);
         handleChange();
         if (value === "NO_ALLERGY") {
-          setValue("step9.inedibleFoods", [], {
+          setValue("step4.allergenFoodList", [], {
             shouldValidate: true,
           });
           handleNextStep();
@@ -56,42 +51,36 @@ export default function SurveyStep9({
       },
     });
 
-  const { onToggle: onFoodToggle, isSelected: isFoodSelected } =
-    useSurveyToggleOption<string>({
-      selectedValue: inedibleField.value ?? null,
+  const { onToggle: allergenToggle, isSelected: allergenSelected } =
+    useSurveyToggleOption({
+      selectedValue: allergenFoodListField.value,
       mode: "checkbox",
       onChange: (value) => {
-        inedibleField.onChange(value);
+        allergenFoodListField.onChange(value);
         handleChange();
       },
     });
 
-  const inedibleFoodStatus = useWatch({
-    name: "step9.inedibleFoodStatus",
+  const allergyStatus = useWatch({
+    name: "step4.allergyStatus",
     control,
   });
 
   return (
     <>
-      <SurveyTitle
-        dogName={dogName}
-        config={SURVEY_TITLES.step9}
-        infoBoxContent="알러지 분류 참고사항"
-        onInfoBoxClick={toggleModal}
-      />
-
+      <SurveyTitle dogName={dogName} config={PROBIOME_TITLES.step4} />
       <div className={commonWrapper({ align: "start", gap: 8 })}>
         {PROBIOME_FORM_INFO.healthStatus.allergyStatus.options.map((option) => (
           <SurveyButton
             key={option.label}
             label={option.label}
             value={option.value}
-            isChecked={isStatusSelected(option.value)}
-            onToggle={onStatusToggle}
+            isChecked={allergySelected(option.value)}
+            onToggle={allergyToggle}
           />
         ))}
       </div>
-      {inedibleFoodStatus === "HAS_ALLERGY" && (
+      {allergyStatus === "HAS_ALLERGY" && (
         <>
           <DefaultText type="label2" color="gray500">
             *아래 해당되는 사항을 모두 선택해주세요
@@ -115,12 +104,12 @@ export default function SurveyStep9({
                       <Chips
                         key={opt.value}
                         variant="solid"
-                        color={isFoodSelected(opt.value) ? "red" : "gray800"}
+                        color={allergenSelected(opt.value) ? "red" : "gray800"}
                         size="lg"
                         borderRadius="lg"
-                        switchOff={!isFoodSelected(opt.value)}
+                        switchOff={!allergenSelected(opt.value)}
                         showCheckIcon
-                        onClick={() => onFoodToggle(opt.value)}
+                        onClick={() => allergenToggle(opt.value)}
                       >
                         {opt.label}
                       </Chips>
@@ -132,7 +121,6 @@ export default function SurveyStep9({
           </div>
         </>
       )}
-      <InedibleBottomSheet isOpen={isOpen} onClose={onClose} />
     </>
   );
 }
