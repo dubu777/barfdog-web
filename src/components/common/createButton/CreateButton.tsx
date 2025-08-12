@@ -3,7 +3,7 @@ import Button from "@/components/common/button/Button";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { commonWrapper } from "@/styles/common.css";
-import AddIcon from "/public/images/icons/add-circle.svg";
+import AddIcon from "/public/images/icons/add.svg";
 
 interface CreateButtonProps {
   text?: string;
@@ -44,7 +44,7 @@ const CreateButton = ({
       onClick={handleNavigateToCreateDog}
     >
       <DefaultText type="headline3" className={commonWrapper({ gap: 6 })}>
-        <SvgIcon src={AddIcon} size={24} />
+        <SvgIcon src={AddIcon} size={24} color="gray900" />
         {text ? text : "새로운 아이 등록하기"}
       </DefaultText>
     </Button>

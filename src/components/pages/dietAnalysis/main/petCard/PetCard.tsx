@@ -11,9 +11,7 @@ import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
 import DefaultImage from "public/images/subscription/dog-default-profile.png";
 import { BreedInfo } from "@/types/pet";
 import { useRouter } from "next/navigation";
-import PetCardButton from "../PetCardButton";
-import useModal from "@/hooks/useModal";
-import RenewalNoticeBottomSheet from "../RenewalNoticeBottomSheet";
+import { ReactNode } from "react";
 
 interface PetCardProps {
   petId: number;
@@ -23,7 +21,7 @@ interface PetCardProps {
   birthDay: string;
   breedInfo: BreedInfo;
   isSubscribing: boolean;
-  reportId: number | null;
+  actionSlot: ReactNode;
 }
 
 export default function PetCard({
@@ -34,30 +32,10 @@ export default function PetCard({
   birthDay,
   breedInfo,
   isSubscribing,
-  reportId,
+  actionSlot,
 }: PetCardProps) {
   const age = getAgeFromBirth(birthDay);
   const router = useRouter();
-  const {
-    isOpen: isNoticeOpen,
-    onClose: onNoticeClose,
-    onToggle: onNoticeToggle,
-    onOpen: onNoticeOpen,
-  } = useModal();
-  const isRenewalSurvey = reportId != null;
-
-  const handleGoToSurvey = () => {
-    window.location.href = `/diet-analysis/survey?petName=${encodeURIComponent(
-      name
-    )}&petId=${petId}&gender=${encodeURIComponent(gender)}`;
-  };
-  const handleGoToResult = () => {
-    if (!isRenewalSurvey) {
-      onNoticeOpen();
-      return;
-    }
-    router.push(`/diet-analysis/result/${reportId}`);
-  };
 
   return (
     <div className={styles.dogCardContainer}>
@@ -108,19 +86,7 @@ export default function PetCard({
           </DefaultText>
         </div>
       </div>
-      <PetCardButton
-        showOnlySubscribeButton={!isSubscribing && !isRenewalSurvey}
-        isSubscribing={isSubscribing}
-        onSurvey={handleGoToSurvey}
-        onResult={handleGoToResult}
-      />
-      {isNoticeOpen && (
-        <RenewalNoticeBottomSheet
-          isOpen={isNoticeOpen}
-          onClose={onNoticeClose}
-          onSurvey={handleGoToSurvey}
-        />
-      )}
+      {actionSlot}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { commonWrapper } from "@/styles/common.css";
 import CreateButton from "@/components/common/createButton/CreateButton";
 import PetCard from "./petCard/PetCard";
 import { Pet } from "@/types/pet";
-import { RefObject } from "react";
+import React, { ReactNode, RefObject } from "react";
 
 export interface PetListProps {
   /** 표시할 반려견 배열 (무한 스크롤로 잘라낸 리스트) */
@@ -14,6 +14,7 @@ export interface PetListProps {
   loadMoreRef: RefObject<HTMLDivElement>;
   /** 등록 모달 토글 핸들러 */
   onCreate: () => void;
+  renderCardActions?: (pet: Pet) => ReactNode;
 }
 
 export default function PetList({
@@ -21,6 +22,7 @@ export default function PetList({
   totalCount,
   loadMoreRef,
   onCreate,
+  renderCardActions,
 }: PetListProps) {
   return (
     <div
@@ -41,19 +43,21 @@ export default function PetList({
           paddingBottom: 85,
         })}
       >
-        {pets.map((item) => (
-          <PetCard
-            key={item.id}
-            reportId={item.recipeSurveyId}
-            petId={item.id}
-            profileImageUrl={item.displayImageUrl?.url ?? null}
-            name={item.name}
-            breedInfo={item.breedInfo}
-            gender={item.gender}
-            birthDay={item.birthInfo.birthDay}
-            isSubscribing={item.isSubscribing}
-          />
-        ))}
+        {pets.map((item) => {
+          return (
+            <PetCard
+              key={item.id}
+              petId={item.id}
+              profileImageUrl={item.displayImageUrl?.url ?? null}
+              name={item.name}
+              breedInfo={item.breedInfo}
+              gender={item.gender}
+              birthDay={item.birthInfo.birthDay}
+              isSubscribing={item.isSubscribing}
+              actionSlot={renderCardActions ? renderCardActions(item) : null}
+            />
+          );
+        })}
       </div>
       {pets.length < totalCount && (
         <div ref={loadMoreRef}>

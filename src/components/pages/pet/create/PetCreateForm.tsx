@@ -85,7 +85,7 @@ export default function PetCreateForm({ source }: PetCreateFormProps) {
       <Header centerTitle="반려견 등록" showBackButton />
       {isSuccess ? (
         <PetCreateSuccess
-          handleClose={() => {}}
+          handleClose={() => router.push("/diet-analysis")}
           handleGoToSurvey={handleGoToSurvey}
         />
       ) : (
