@@ -33,11 +33,8 @@ const HealthNoteHeader = () => {
   const goBackPreviousPage = useBackNavigation(undefined, true);
   const goBackToMain = () => router.push("/health-note");
 
-  const {
-    isOpen: isOpenConfirmAlert,
-    onClose: onCloseConfirmAlert,
-    onToggle: onToggleConfirmAlert,
-  } = useModal();
+  const { isOpen: isOpenConfirmAlert, onClose: onCloseConfirmAlert } =
+    useModal();
 
   const headerConfigs: Record<
     string,
@@ -83,6 +80,10 @@ const HealthNoteHeader = () => {
     },
     "/health-note/gut-check/create": {
       centerTitle: "장내 미생물 검사",
+      showBackButton: true,
+    },
+    "/health-note/pets": {
+      centerTitle: "반려견 전체보기",
       showBackButton: true,
     },
   };

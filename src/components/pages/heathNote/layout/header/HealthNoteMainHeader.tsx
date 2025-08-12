@@ -18,9 +18,7 @@ import useModal from "@/hooks/useModal";
 import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { DogInfo } from "@/types/healthNote";
 import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
-import { createButton } from "../../gutCheck/modal/KitGuideModal.css";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
-import CreateButton from "@/components/common/createButton/CreateButton";
 import { commonWrapper } from "@/styles/common.css";
 
 const HealthNoteMainHeader = () => {
