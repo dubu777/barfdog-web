@@ -10,7 +10,6 @@ export const dogCardContainer = style({
   borderRadius: "12px",
   boxShadow: themeVars.shadow.light,
   width: "100%",
-  height: "148px",
 });
 
 export const profileImageStyle = style({

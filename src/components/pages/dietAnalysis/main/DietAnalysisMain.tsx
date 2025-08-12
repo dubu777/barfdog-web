@@ -48,6 +48,7 @@ export default function DietAnalysisMain() {
         totalCount={data.length}
         loadMoreRef={loadMoreRef}
         onCreate={handleCreatePet}
+        source="diet-analysis"
         renderCardActions={(pet) => {
           const isRenewalSurvey = pet.recipeSurveyId != null;
           return (

@@ -15,6 +15,7 @@ export interface PetListProps {
   /** 등록 모달 토글 핸들러 */
   onCreate: () => void;
   renderCardActions?: (pet: Pet) => ReactNode;
+  source: "health-note" | "diet-analysis";
 }
 
 export default function PetList({
@@ -23,6 +24,7 @@ export default function PetList({
   loadMoreRef,
   onCreate,
   renderCardActions,
+  source,
 }: PetListProps) {
   return (
     <div
@@ -54,6 +56,8 @@ export default function PetList({
               gender={item.gender}
               birthDay={item.birthInfo.birthDay}
               isSubscribing={item.isSubscribing}
+              isRepresentative={item.isRepresentative}
+              source={source}
               actionSlot={renderCardActions ? renderCardActions(item) : null}
             />
           );

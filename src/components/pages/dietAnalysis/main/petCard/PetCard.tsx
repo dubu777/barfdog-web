@@ -21,7 +21,9 @@ interface PetCardProps {
   birthDay: string;
   breedInfo: BreedInfo;
   isSubscribing: boolean;
+  isRepresentative: boolean;
   actionSlot: ReactNode;
+  source: "health-note" | "diet-analysis";
 }
 
 export default function PetCard({
@@ -32,7 +34,9 @@ export default function PetCard({
   birthDay,
   breedInfo,
   isSubscribing,
+  isRepresentative,
   actionSlot,
+  source,
 }: PetCardProps) {
   const age = getAgeFromBirth(birthDay);
   const router = useRouter();
@@ -62,6 +66,11 @@ export default function PetCard({
               {isSubscribing && (
                 <Chips variant="solid" color="gray900" borderRadius="lg">
                   구독중
+                </Chips>
+              )}
+              {isRepresentative && source === "health-note" && (
+                <Chips variant="outlined" color="red" borderRadius="lg">
+                  대표견
                 </Chips>
               )}
             </div>

@@ -11,7 +11,7 @@ import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 
 const HealthNoteUser = () => {
-  const { data: petList = [] } = useGetPetList();
+  const { data: petList } = useGetPetList();
   const { dogInfo } = useHealthNoteStore();
   const isFirstFullCheck = false;
   const fullCheckTopRank = 2.4;
