@@ -12,28 +12,31 @@ import {
 } from "@/components/common/infoBox/InfoBox.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { COLORS } from "@/constants/style";
+import { ReactNode } from "react";
 
 interface InfoBoxProps {
   type?: "help" | "info";
   color?: "red" | "blue" | "gray";
+  align?: 'start' | 'center';
   showRightArrowButton?: boolean;
-  text: string;
+  text: string | ReactNode;
   fullWidth?: boolean;
   onClick?: () => void;
   style?: React.CSSProperties;
   className?: string;
 }
 
-const InfoBox = ({
+export default function InfoBox ({
   type = "info",
   color = "gray",
+  align = "center",
   showRightArrowButton = false,
   text,
   fullWidth = false,
   onClick,
   style,
   className,
-}: InfoBoxProps) => {
+}: InfoBoxProps) {
   const iconColor: keyof typeof COLORS =
     color === "gray"
       ? "gray700"
@@ -51,7 +54,7 @@ const InfoBox = ({
       onClick={onClick || undefined}
       style={style}
     >
-      <div className={infoBoxStyle}>
+      <div className={infoBoxStyle({ align })}>
         <SvgIcon
           src={type === "help" ? HelpIcon : InfoIcon}
           color={iconColor}
@@ -68,5 +71,3 @@ const InfoBox = ({
     </div>
   );
 };
-
-export default InfoBox;

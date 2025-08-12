@@ -18,6 +18,7 @@ export const containerBaseStyle = style({
 export const containerPositionStyle = {
 	sticky: style({
 		position: 'sticky',
+		zIndex: 299,
 	}),
 	fixed: style({
 		position: 'fixed',

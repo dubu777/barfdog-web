@@ -2,7 +2,6 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const bottomNavBarBase = style({
-  position: "fixed",
   left: 0,
   right: 0,
   bottom: 0,
@@ -27,6 +26,15 @@ export const bottomNavBarOs = {
   }),
   Other: style({
     padding: '14px 12px 24px',
+  }),
+}
+
+export const bottomNavBarPosition = {
+  fixed: style({
+    position: 'fixed',
+  }),
+  sticky: style({
+    position: 'sticky',
   }),
 }
 

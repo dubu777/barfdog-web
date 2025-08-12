@@ -19,7 +19,13 @@ import { getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { useEffect, useState } from "react";
 
-export default function BottomNavBar() {
+interface BottomNavBarProps {
+  position?: "sticky" | "fixed";
+}
+
+export default function BottomNavBar({
+  position = "fixed",
+}: BottomNavBarProps) {
   const pathname = usePathname();
   const { deviceOS } = useDeviceState();
   const [healthNoteHref, setHealthNoteHref] =
@@ -68,7 +74,7 @@ export default function BottomNavBar() {
   ];
   return (
     <nav
-      className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]}`}
+      className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]} ${styles.bottomNavBarPosition[position]}`}
     >
       {MENU_LIST.map((menu) => (
         <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
