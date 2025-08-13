@@ -1,8 +1,8 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { prefetchGetStoreItemDetail } from "@/api/store/queries/useGetStoreItemDetail";
-import ItemDetail from "@/components/pages/store/storeDetail/ItemDetail";
+import { prefetchGetStoreItemDetail } from "@/api/store/queries/prefetchGetStoreItemDetail";
+import ItemDetail from "@/components/pages/store/detail/ItemDetail";
 
 interface StoreItemDetailPageProps {
   params: { itemId: string };
