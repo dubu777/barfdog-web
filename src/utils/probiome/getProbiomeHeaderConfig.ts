@@ -7,23 +7,23 @@ interface HeaderConfig {
 
 // 경로별 헤더 설정 매핑
 const HEADER_CONFIGS: Record<string, HeaderConfig> = {
-  "/health-note/gut-check": {
+  "/health-note/probiome": {
     title: "장내 미생물 검사",
     showCloseButton: false,
   },
-  "/health-note/gut-check/create": {
+  "/health-note/probiome/create": {
     title: "장내 미생물 검사",
     showCloseButton: false,
   },
-  "/health-note/gut-check/detail": {
+  "/health-note/probiome/detail": {
     title: "상세보기",
     showCloseButton: false,
   },
-  "/health-note/gut-check/return-request": {
+  "/health-note/probiome/return-request": {
     title: "회수신청",
     showCloseButton: false,
   },
-  "/health-note/gut-check/survey": {
+  "/health-note/probiome/survey": {
     title: "장내미생물 진단 설문",
     showCloseButton: true,
   },
@@ -35,11 +35,11 @@ export async function getProbiomeHeaderConfig(): Promise<HeaderConfig> {
 
   // 동적 경로 처리
   if (pathname.includes("/detail/")) {
-    return HEADER_CONFIGS["/health-note/gut-check/detail"];
+    return HEADER_CONFIGS["/health-note/probiome/detail"];
   }
   if (pathname.includes("/return-request/")) {
-    return HEADER_CONFIGS["/health-note/gut-check/return-request"];
+    return HEADER_CONFIGS["/health-note/probiome/return-request"];
   }
 
-  return HEADER_CONFIGS[pathname] || HEADER_CONFIGS["/health-note/gut-check"];
+  return HEADER_CONFIGS[pathname] || HEADER_CONFIGS["/health-note/probiome"];
 }

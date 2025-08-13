@@ -53,7 +53,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
           </Button>
         </div>
         <CreateButton
-          url="/health-note/gut-check/create"
+          url="/health-note/probiome/create"
           text="사전 문진 작성하기"
         />
         <article className={styles.probiomeList}>
@@ -81,7 +81,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
                     type="assistive"
                     fullWidth
                     onClick={() =>
-                      router.push(`/health-note/gut-check/detail/${id}`)
+                      router.push(`/health-note/probiome/detail/${id}`)
                     }
                   >
                     신청 상세
@@ -92,7 +92,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
                       fullWidth
                       onClick={() =>
                         router.push(
-                          `/health-note/gut-check/return-request/${id}`
+                          `/health-note/probiome/return-request/${id}`
                         )
                       }
                     >

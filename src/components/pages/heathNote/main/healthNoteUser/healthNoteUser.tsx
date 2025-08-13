@@ -23,7 +23,7 @@ const HealthNoteUser = () => {
   const handleGotoMenu = (url) => {
     if (url === "/health-note/full-check") {
       window.location.href = `${url}${isFirstFullCheck ? "/survey" : ""}`;
-    } else if (url === "/health-note/gut-check" && dogInfo?.dogId) {
+    } else if (url === "/health-note/probiome" && dogInfo?.dogId) {
       window.location.href = `${url}?dogId=${dogInfo.dogId}`;
     } else if (url === "/health-note/medical-history" && dogInfo?.dogId) {
       window.location.href = `${url}?petId=${dogInfo.dogId}`;

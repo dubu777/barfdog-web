@@ -7,8 +7,6 @@ import {
   useSearchParams,
 } from "next/navigation";
 import Header from "@/components/layout/header/Header";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
-import useModal from "@/hooks/useModal";
 import { useBackNavigation } from "@/utils";
 import { getHeaderProps } from "@/utils/getHeaderProps";
 
@@ -30,11 +28,7 @@ const HealthNoteHeader = () => {
     ])
   ) as Record<string, string>;
   const goBack = useBackNavigation();
-  const goBackPreviousPage = useBackNavigation(undefined, true);
   const goBackToMain = () => router.push("/health-note");
-
-  const { isOpen: isOpenConfirmAlert, onClose: onCloseConfirmAlert } =
-    useModal();
 
   const headerConfigs: Record<
     string,
@@ -74,11 +68,11 @@ const HealthNoteHeader = () => {
       centerTitle: "견종 백과",
       showBackButton: true,
     },
-    "/health-note/gut-check": {
+    "/health-note/probiome": {
       centerTitle: "장내 미생물 검사",
       showBackButton: true,
     },
-    "/health-note/gut-check/create": {
+    "/health-note/probiome/create": {
       centerTitle: "장내 미생물 검사",
       showBackButton: true,
     },
@@ -103,11 +97,11 @@ const HealthNoteHeader = () => {
       onBack?: () => void;
     }
   > = {
-    "/health-note/gut-check/detail/": () => ({
+    "/health-note/probiome/detail/": () => ({
       centerTitle: "",
       showBackButton: true,
     }),
-    "/health-note/gut-check/return-request/": () => ({
+    "/health-note/probiome/return-request/": () => ({
       centerTitle: "회수신청",
       showBackButton: true,
     }),
@@ -131,7 +125,7 @@ const HealthNoteHeader = () => {
     "/health-note",
     `/health-note/medical-history/${params.diagnosisId}`,
     `/health-note/full-check/result/${params.reportId}`,
-    "/health-note/gut-check/survey",
+    "/health-note/probiome/survey",
   ];
 
   // 접두사로 시작하면 제외할 경로
@@ -153,23 +147,7 @@ const HealthNoteHeader = () => {
     return true;
   }, [pathname, params.historyId]);
 
-  return (
-    <>
-      {shouldRenderHeader && <Header {...headerProps} />}
-      {isOpenConfirmAlert && (
-        <AlertModal
-          title="등록을 종료하시겠어요?"
-          content="입력하신 정보는 저장되지 않아요"
-          isOpen={isOpenConfirmAlert}
-          onClose={onCloseConfirmAlert}
-          cancelText="돌아가기"
-          confirmText="삭제하기"
-          onCancel={() => onCloseConfirmAlert()}
-          onConfirm={() => goBackPreviousPage()}
-        />
-      )}
-    </>
-  );
+  return <>{shouldRenderHeader && <Header {...headerProps} />}</>;
 };
 
 export default HealthNoteHeader;

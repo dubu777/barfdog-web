@@ -1,7 +1,7 @@
 import FullCheckImage from "/public/images/healthNote/main/full-check.png";
 import BodyCheckImage from "/public/images/healthNote/main/body-check.png";
 import HealthCheckImage from "/public/images/healthNote/main/health-check.png";
-import ProbiomeImage from "/public/images/healthNote/main/gut-check.png";
+import ProbiomeImage from "/public/images/healthNote/main/probiome.png";
 import DogPediaImage from "/public/images/healthNote/main/dogpedia.png";
 
 const HEALTH_NOTE_MENU_CATEGORY = [
@@ -23,7 +23,7 @@ const HEALTH_NOTE_MENU_CATEGORY = [
   },
   {
     label: "장내 미생물 검사",
-    url: "/health-note/gut-check",
+    url: "/health-note/probiome",
     imageUrl: ProbiomeImage,
     width: 46,
     height: 64,

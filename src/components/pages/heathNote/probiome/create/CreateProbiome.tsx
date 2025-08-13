@@ -8,7 +8,7 @@ const CreateProbiome = () => {
   const [serialNumber, setSerialNumber] = useState<string>("");
 
   const handleCheckSerialNumber = () => {
-    window.location.href = "/health-note/gut-check/survey";
+    window.location.href = "/health-note/probiome/survey";
   };
 
   return (
