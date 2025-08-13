@@ -1,5 +1,6 @@
 import { BaseReviewItem, DiscountType, Page, ReviewImage, SelectedHealthType } from "@/types";
 import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
+import { AxiosInstance } from "axios";
 
 type SortByType = keyof typeof ITEM_SORT_BY;
 type ItemType = keyof typeof ITEM_FILTER_CATEGORY;
@@ -8,6 +9,14 @@ type ItemTagType = 'BEST' | 'NEW';
 interface ItemTag {
   tag: ItemTagType;
   color: string;
+}
+
+interface StoreItemListSearchValues {
+  pageParam: number;
+  size: number;
+  sortBy: SortByType;
+  itemType: ItemType;
+  instance?: AxiosInstance
 }
 
 interface StoreItemBase {
@@ -97,6 +106,7 @@ export type {
   ItemType,
   ItemTagType,
   ItemTag,
+  StoreItemListSearchValues,
   StoreItemListData,
   StoreItemList,
   StoreItemDetail,
