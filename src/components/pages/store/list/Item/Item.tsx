@@ -11,7 +11,9 @@ interface StoreItemProps {
   item: StoreItemListData;
 }
 
-const Item = ({ item }: StoreItemProps) => {
+export default function Item({ 
+  item
+}: StoreItemProps) {
   const {
     isDiscounted,
     formattedOriginalPrice,
@@ -75,8 +77,6 @@ const Item = ({ item }: StoreItemProps) => {
             <RateStar rateLength={1} color='red' align='left' size={16} />
             <DefaultText type='caption2' color='gray600'>
               {starRating}
-              {item.star.toFixed(1).toString()}&nbsp;
-              ({item.reviewCount})
             </DefaultText>
           </div>
         </div>
@@ -84,5 +84,3 @@ const Item = ({ item }: StoreItemProps) => {
     </li>
   );
 };
-
-export default Item;

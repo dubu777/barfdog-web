@@ -70,6 +70,7 @@ export const CHIPS_COLORS = {
   green500: themeVars.colors.green.green500,
   green50: themeVars.colors.green.green50,
   yellow500: themeVars.colors.yellow.yellow500,
+  dimmed: themeVars.colors.dimmed.gray80,
 } as const;
 
 export const MAIN_BACKGROUND_COLORS = {

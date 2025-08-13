@@ -1,16 +1,16 @@
 'use client';
 import * as styles from './ItemFilter.css';
 import { usePathname, useSearchParams } from "next/navigation";
-import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
-import { ItemType, SortByType } from "@/types/store";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useQueryClient } from "@tanstack/react-query";
-import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
-import { QueryParams } from '@/types';
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Dropdown from "@/components/common/dropdown/Dropdown";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
+import { QueryParams } from '@/types';
+import { ItemType, SortByType } from "@/types/store";
+import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
 
-const ItemFilter = () => {
+export default function ItemFilter() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { pushWithQuery } = useDynamicQueryPush();
@@ -64,5 +64,3 @@ const ItemFilter = () => {
     </article>
   );
 };
-
-export default ItemFilter;

@@ -1,22 +1,20 @@
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
-import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
-import Header from "@/components/layout/header/Header";
+import Loader from "@/components/common/loader/Loader";
+import StoreHeader from "@/components/pages/store/layout/StoreHeader";
+import StoreBottomNavBar from "@/components/pages/store/layout/StoreBottomNavBar";
 
 interface DefaultLayoutProps {
   children: ReactNode;
 }
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
-    <>
-      <Header
-        showCartButton
-        leftTitle='스토어'
-      />
+    <Suspense fallback={<Loader />}>
+      <StoreHeader />
       <Wrapper>
         {children}
       </Wrapper>
-      <BottomNavBar />
-    </>
+      <StoreBottomNavBar />
+    </Suspense>
   );
 }
