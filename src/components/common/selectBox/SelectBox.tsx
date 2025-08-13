@@ -3,6 +3,8 @@ import { MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MOTION } from "@/constants";
 import useModal from "@/hooks/useModal";
+import ArrowIcon from 'public/images/icons/chevron-up.svg';
+import SvgIcon from "../svgIcon/SvgIcon";
 
 type SelectBoxProps<T extends { label: string; value: string | number }> = {
   id: string;
@@ -46,7 +48,7 @@ export default function SelectBox<T extends { label: string; value: string | num
   return (
     <div className={styles.selectBoxContainer({ fullWidth: fullWidth })} ref={ref}>
       {frontWord && <p className={styles.frontWord}>{frontWord}</p>}
-      <label htmlFor={id} className={styles.selectInputWrapper({ fullWidth: fullWidth })}>
+      <label htmlFor={id} className={styles.selectInputWrapper}>
         <input
           className={styles.inputField({ forFilter: forFilter, placeholderPosition: placeholderPosition })}
           type="text"
@@ -59,6 +61,11 @@ export default function SelectBox<T extends { label: string; value: string | num
             e.stopPropagation();
             onToggle();
           }}
+        />
+        <SvgIcon
+          src={ArrowIcon}
+          className={styles.arrowIcon({ isOpen })}
+          color={isOpen ? 'gray900' : 'gray500'}
         />
       </label>
       {!isDisabled && isOpen && (

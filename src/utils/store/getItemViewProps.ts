@@ -1,5 +1,7 @@
 import { StoreItemListData } from "@/types";
 import { ITEM_TAG_COLOR } from "@/constants/store";
+import { calculateDiscountDegree } from "@/utils/store/calculateDiscountDegree";
+import { parseItemTags } from "./parseItemTags";
 
 interface ItemViewProps {
 	isDiscounted: boolean;
@@ -13,10 +15,12 @@ interface ItemViewProps {
 		color: 'red' | 'gray900';
 	}[];
 }
+
+// 스토어 리스트 목록 필요 데이터 취합
 export function getItemViewProps(item: StoreItemListData): ItemViewProps {
 	const isDiscounted = item.originalPrice !== item.salePrice;
 	const discountRate = isDiscounted
-		? Math.ceil(Number(((1 - item.salePrice / item.originalPrice) * 100).toFixed(2)))
+		? calculateDiscountDegree(item.originalPrice, item.salePrice, 'FIXED_RATE')
 		: null;
 
 	return {
@@ -26,13 +30,7 @@ export function getItemViewProps(item: StoreItemListData): ItemViewProps {
 		formattedSalePrice: `${item.salePrice.toLocaleString()}원`,
 		isSoldOut: !item.inStock,
 		starRating: `${item.star.toFixed(1)} (${item.reviewCount})`,
-		tagList: item.itemIcons
-			.split(',')
-			.filter(value => value !== '')
-			.map(tag => ({
-				tag,
-				color: ITEM_TAG_COLOR[tag],
-			}))
+		tagList: parseItemTags(item.itemIcons)
 	}
 
 }

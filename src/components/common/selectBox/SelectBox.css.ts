@@ -19,36 +19,29 @@ export const selectBoxContainer = recipe({
   },
 });
 
-export const selectInputWrapper = recipe({
+export const selectInputWrapper = style({
+  position: "relative",
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+});
+
+export const arrowIcon = recipe({
   base: {
-    position: "relative",
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
-    ":after": {
-      content: "",
-      display: "block",
-      width: "10px",
-      height: "10px",
-      cursor: "pointer",
-      position: "absolute",
-      top: "50%",
-      right: "5px",
-      transform: "translateY(-50%)",
-      background: `url('/images/icons/filter-arrow.png') no-repeat center center / 10px 5px`,
-    },
+    cursor: "pointer",
+    position: "absolute",
+    top: "50%",
+    right: "20px",
+    transform: "translateY(-50%)",
+    transition: 'all .35s',
   },
   variants: {
-    fullWidth: {
+    isOpen: {
       true: {
-        ":after": {
-          width: "20px",
-          height: "20px",
-          background: `url('/images/icons/filter-arrow.png') no-repeat center center / 15px 8px`,
-        },
-      },
-    },
-  },
+        transform: "rotate(180deg) translateY(50%)",
+      }
+    }
+  }
 });
 
 export const inputField = recipe({
@@ -58,11 +51,12 @@ export const inputField = recipe({
     width: "100%",
     height: "100%",
     outline: "0",
-    padding: "4px 8px",
-    minHeight: "45px",
-    borderRadius: "9px",
-    border: `1px solid ${themeVars.colors.gray.gray500}`,
+    padding: "12px 20px",
+    minHeight: "48px",
+    borderRadius: "8px",
+    border: `1px solid ${themeVars.colors.gray.gray200}`,
     cursor: "pointer",
+    color: themeVars.colors.gray.gray500,
     ":disabled": {
       cursor: "auto",
     },
@@ -101,17 +95,18 @@ export const optionsContainer = style({
   left: "0",
   top: "100%",
   width: "100%",
+  minHeight: "48px",
   zIndex: 2,
   borderRadius: "0.5rem",
   fontSize: themeVars.fontSize["text-md"],
-  boxShadow: "0 0 1.5625rem rgba(0, 0, 0, 0.1)",
+  boxShadow: themeVars.shadow.strong,
   backgroundColor: themeVars.colors.gray.gray0,
+  border: `1px solid ${themeVars.colors.gray.gray300}`,
 });
 
 export const optionsWrapper = style({
-  maxHeight: "12.5rem",
+  height: '100%',
   overflowY: "scroll",
-  paddingBottom: "0.625rem",
 });
 
 globalStyle(`${optionsWrapper}::-webkit-scrollbar`, {
@@ -123,8 +118,8 @@ export const option = recipe({
     transitionTimingFunction: "ease",
     transitionDuration: "0.3s",
     transitionProperty: "background, color",
-    padding: "0.25rem 0.9375rem",
-    height: "2.375rem",
+    padding: '12px 20px',
+    height: "48px",
     display: "flex",
     alignItems: "center",
     cursor: "pointer",

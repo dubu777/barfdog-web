@@ -1,0 +1,110 @@
+import * as styles from './ItemReview.css';
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import RateStar from "@/components/common/rateStar/RateStar";
+import Pagination from "@/components/common/pagination/Pagination";
+import Divider from '@/components/common/divider/Divider';
+import DefaultText from '@/components/common/defaultText/DefaultText';
+import ImageCarousel from '@/components/common/imageCarousel/ImageCarousel';
+import ImagesModal from '@/components/common/modal/imagesModal/ImagesModal';
+import { maskString } from "@/utils/maskString";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { usePagination } from "@/hooks/usePagination";
+import { useImageModal } from '@/hooks/useImageModal';
+import { UploadedFile } from '@/types';
+import { prefetchGetStoreItemReviewList, useGetStoreItemReviewList } from "@/api/store/queries/useGetStoreItemReviewList";
+
+interface ItemReviewProps {
+  itemId: number;
+}
+
+export default function ItemReview({
+  itemId,
+}: ItemReviewProps) {
+  const queryClient = useQueryClient();
+  const { pushWithQuery } = useDynamicQueryPush();
+  const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
+    prefetchFn: (page: number) => prefetchGetStoreItemReviewList(queryClient, itemId, page),
+    pushWithQuery,
+    preserveScroll: true,
+  });
+
+  const paginationProps = useMemo(() => ({
+    currentPage, totalPages, onPageChange
+  }), [currentPage, totalPages, onPageChange]);
+
+  const { data } = useGetStoreItemReviewList(itemId, currentPage)
+  const reviewList = data?.reviewList || [];
+
+  const [selectedImageList, setSelectedImageList] = useState<UploadedFile[]>([]);
+
+  const {
+    isOpen,
+    onClose,
+    handleThumbnailClick,
+    defaultImageIndex,
+  } = useImageModal();
+
+
+  useEffect(() => {
+    if (data?.page) {
+      setPaginationData(data.page)
+    }
+  }, [data?.page, setPaginationData]);
+
+  return (
+    <div className={styles.reviewList}>
+      {reviewList.map((review, index) => {
+        const imageList = review.reviewImageDtoList.map(review => ({
+          filename: review.filename, // 추후 삭제 필요
+          url: review.url, // 추후 삭제 필요
+          fileId: review.filename,
+          fileName: review.filename,
+          folder: 'review',
+          fileStatus: 'ADDED',
+          displayImageUrl: { url: review.url },
+        }));
+        return (
+        <Fragment key={review.reviewDto.id}>
+          <div className={styles.reviewItem}>
+            <div className={styles.reviewDefaultInfo}>
+              <div className={styles.reviewUserName}>
+                <DefaultText type='body3'>
+                  {maskString(review?.reviewDto?.username ?? '', 1)}
+                </DefaultText>
+                <RateStar value={review?.reviewDto?.star} rateLength={5} />
+              </div>
+              <DefaultText type='body3'>
+                {review?.reviewDto?.createdDate}
+              </DefaultText>
+            </div>
+            <Divider thickness={1} color='gray300' />
+            <div className={styles.reviewContentsInfo}>
+              <ImageCarousel
+                imageList={imageList}
+                handleThumbnailClick={(index) => {
+                  handleThumbnailClick(index);
+                  setSelectedImageList(imageList as unknown as UploadedFile[]);
+                }}
+              />
+              <DefaultText type='body2'>{review.reviewDto.contents}</DefaultText>
+            </div>
+          </div>
+          {index !== reviewList.length && 
+            <Divider thickness={4} color='gray50' />
+          }
+        </Fragment>
+      )
+      })}
+      {isOpen && selectedImageList &&
+        <ImagesModal
+          isOpen={isOpen}
+          onClose={onClose}
+          defaultImageIndex={defaultImageIndex}
+          imageList={selectedImageList}
+        />
+      }
+      <Pagination {...paginationProps} />
+    </div>
+  );
+};

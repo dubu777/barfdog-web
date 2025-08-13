@@ -6,8 +6,9 @@ export const tabBarContainerBase = style({
   display: "flex",
   alignItems: "center",
 });
+
 export const tabBarBase = style({
-  zIndex: 1,
+  // zIndex: 1,
 });
 
 export const tabBarContainerAlign = {
@@ -23,7 +24,9 @@ export const tabBarContainerAlign = {
 };
 
 export const tabBarContainerVariants = {
-  text: style({}),
+  text: style({
+    backgroundColor: themeVars.colors.gray.gray0,
+  }),
   segmentedButton: style({
     border: `1px solid ${themeVars.colors.red.red}`,
     borderRadius: "8px",
@@ -39,11 +42,13 @@ export const tabBarBaseVariants = style({
   justifyContent: "center",
   alignItems: "center",
   cursor: "pointer",
+  zIndex: 999,
 });
 
 export const tabBarVariants = {
   text: style({
     padding: "20px 16px 10px",
+    backgroundColor: themeVars.colors.gray.gray0,
   }),
   segmentedButton: style({
     height: "42px",

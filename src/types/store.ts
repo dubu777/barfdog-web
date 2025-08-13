@@ -1,22 +1,23 @@
-import { BaseReviewItem, Page, ReviewImage, SelectedHealthType } from "@/types";
+import { BaseReviewItem, DiscountType, Page, ReviewImage, SelectedHealthType } from "@/types";
 import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
-
-export type {
-  SortByType,
-  ItemType,
-  ItemTagType,
-  StoreItemListData,
-  StoreItemList,
-  StoreItemDetail,
-  DetailItemImage,
-  DetailItemOption,
-  StoreItemDetailReview,
-  StoreItemDetailReviewList,
-};
+import { AxiosInstance } from "axios";
 
 type SortByType = keyof typeof ITEM_SORT_BY;
 type ItemType = keyof typeof ITEM_FILTER_CATEGORY;
 type ItemTagType = 'BEST' | 'NEW';
+
+interface ItemTag {
+  tag: ItemTagType;
+  color: string;
+}
+
+interface StoreItemListSearchValues {
+  pageParam: number;
+  size: number;
+  sortBy: SortByType;
+  itemType: ItemType;
+  instance?: AxiosInstance
+}
 
 interface StoreItemBase {
   id: number;
@@ -45,7 +46,7 @@ interface StoreItemList {
 
 interface DetailItemInfo extends StoreItemBase{
   description: string;
-  discountType: string;
+  discountType: DiscountType;
   discountDegree: number;
   remaining: number;
   totalSalesAmount: number;
@@ -99,3 +100,20 @@ interface StoreItemDetailReviewList {
   page: Page;
   reviewList: StoreItemDetailReview[]
 }
+
+export type {
+  SortByType,
+  ItemType,
+  ItemTagType,
+  ItemTag,
+  StoreItemListSearchValues,
+  StoreItemListData,
+  StoreItemList,
+  StoreItemDetail,
+  DetailItemReview,
+  DetailDeliveryConditionInfo,
+  DetailItemImage,
+  DetailItemOption,
+  StoreItemDetailReview,
+  StoreItemDetailReviewList,
+};
