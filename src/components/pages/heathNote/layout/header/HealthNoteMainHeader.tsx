@@ -9,7 +9,7 @@ import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
 import CheckCircle from "public/images/icons/check_circle.svg";
 import PlusIcon from "/public/images/icons/plus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import PetIcon from "/public/images/healthNote/DogIcon.png";
+import PetIcon from "/public/images/healthNote/dogIcon.png";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
