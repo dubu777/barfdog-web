@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { DogInfo } from "@/types/healthNote";
+import { PetInfo } from "@/types/healthNote";
 
 interface HealthNoteStore {
-  dogInfo: DogInfo | null;
-  setDogInfo: (dogInfo: DogInfo) => void;
+  petInfo: PetInfo | null;
+  setPetInfo: (petInfo: PetInfo) => void;
 }
 
 export const useHealthNoteStore = create<HealthNoteStore>((set) => ({
-  dogInfo: null,
-  setDogInfo: (dogInfo) => set({ dogInfo }),
+  petInfo: null,
+  setPetInfo: (petInfo) => set({ petInfo }),
 }));

@@ -40,7 +40,7 @@ const FullCheckSurvey = () => {
     fullCheckSurveySchema,
     defaultFullCheckSurveyValues
   );
-  const { dogInfo } = useHealthNoteStore();
+  const { petInfo } = useHealthNoteStore();
   const walkValue = useWatch({ control, name: "walk" });
 
   const onSpecialOptionSelect = (option) => {
@@ -144,7 +144,7 @@ const FullCheckSurvey = () => {
           <DefaultText type="title3">
             {currentQuestion?.title ? (
               <>
-                {dogInfo ? `${dogInfo.name}` : "반려견"}의<br />
+                {petInfo ? `${petInfo.name}` : "반려견"}의<br />
                 <span className={pointColor}>{title[0]}</span>
                 {title[1]}
               </>

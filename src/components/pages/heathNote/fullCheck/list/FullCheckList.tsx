@@ -11,7 +11,7 @@ import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import TextButton from "@/components/common/textButton/TextButton";
 
 const FullCheckList = () => {
-  const { dogInfo } = useHealthNoteStore();
+  const { petInfo } = useHealthNoteStore();
   const healthCheckResults = [
     {
       id: 101,
@@ -84,7 +84,7 @@ const FullCheckList = () => {
               </DefaultText>
               <div className={styles.resultTopRank}>
                 <DefaultText type="headline2">
-                  {dogInfo?.name}의 검사결과
+                  {petInfo?.name}의 검사결과
                 </DefaultText>
                 <Chips variant="solid" borderRadius="lg" color="gray200">
                   상위{result.rank}%

@@ -11,8 +11,8 @@ import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 
 const HealthNoteUser = () => {
-  const { data: petList } = useGetPetList();
-  const { dogInfo } = useHealthNoteStore();
+  const { data: petList = [] } = useGetPetList();
+  const { petInfo } = useHealthNoteStore();
   const isFirstFullCheck = false;
   const fullCheckTopRank = 2.4;
   const fullCheckScore = 50;
@@ -23,10 +23,10 @@ const HealthNoteUser = () => {
   const handleGotoMenu = (url) => {
     if (url === "/health-note/full-check") {
       window.location.href = `${url}${isFirstFullCheck ? "/survey" : ""}`;
-    } else if (url === "/health-note/probiome" && dogInfo?.dogId) {
-      window.location.href = `${url}?dogId=${dogInfo.dogId}`;
-    } else if (url === "/health-note/medical-history" && dogInfo?.dogId) {
-      window.location.href = `${url}?petId=${dogInfo.dogId}`;
+    } else if (url === "/health-note/probiome" && petInfo?.id) {
+      window.location.href = `${url}?dogId=${petInfo.id}`;
+    } else if (url === "/health-note/medical-history" && petInfo?.id) {
+      window.location.href = `${url}?petId=${petInfo.id}`;
     } else {
       window.location.href = url;
     }

@@ -5,9 +5,9 @@ import * as styles from "./HealthNoteMainHeader.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
 import Image from "next/image";
-import { dogImage } from "../../common/HealthNoteCommon.css";
+import { petImage } from "../../common/HealthNoteCommon.css";
 
-const HealthNoteGuestHeader = () => {
+export default function HealthNoteGuestHeader() {
   const router = useRouter();
   return (
     <header className={styles.heathNoteHeaderContainer}>
@@ -16,7 +16,7 @@ const HealthNoteGuestHeader = () => {
         alt="대표 반려견"
         width={40}
         height={40}
-        className={dogImage({ borderRadius: "lg" })}
+        className={petImage({ borderRadius: "lg" })}
       />
       <button
         onClick={() => router.push("/pet/create?source=health-note")}
@@ -27,5 +27,3 @@ const HealthNoteGuestHeader = () => {
     </header>
   );
 };
-
-export default HealthNoteGuestHeader;

@@ -1,6 +1,6 @@
 "use client";
 import * as styles from "./HealthNoteMainHeader.css";
-import { dogImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
+import { petImage } from "@/components/pages/heathNote/common/HealthNoteCommon.css";
 import { Fragment, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -9,43 +9,44 @@ import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
 import CheckCircle from "public/images/icons/check_circle.svg";
 import PlusIcon from "/public/images/icons/plus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DogIcon from "/public/images/healthNote/dogIcon.png";
+import PetIcon from "/public/images/healthNote/DogIcon.png";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Divider from "@/components/common/divider/Divider";
 import useModal from "@/hooks/useModal";
 import { useHealthNoteStore } from "@/store/useHealthNoteStore";
-import { DogInfo } from "@/types/healthNote";
-import { useUpdateRepresentativeDog } from "@/api/dog/mutations/useUpdateRepresentativeDog";
+import { PetInfo } from "@/types/healthNote";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { commonWrapper } from "@/styles/common.css";
+import { useUpdateRepresentativePet } from "@/api/pet/mutations/useUpdateRepresentativePet";
+import { useToastStore } from "@/store/useToastStore";
 
-const HealthNoteMainHeader = () => {
+export default function HealthNoteMainHeader() {
   const router = useRouter();
+  const { addToast } = useToastStore();
   const { data: petList = [] } = useGetPetList();
-  console.log(petList);
 
-  const representativeDog = petList?.find((dog) => dog.isRepresentative);
+  const representativePet = petList?.find((pet) => pet.isRepresentative);
 
-  const { dogInfo, setDogInfo } = useHealthNoteStore();
-  const dogImageUrl = dogInfo?.imageUrl ? dogInfo.imageUrl : DogIcon;
+  const { petInfo, setPetInfo } = useHealthNoteStore();
+  const petImageUrl = petInfo?.imageUrl ? petInfo.imageUrl : PetIcon;
 
   const { isOpen, onClose, onToggle } = useModal();
 
-  const { mutate: updateTargetDogMutate } = useUpdateRepresentativeDog();
+  const { mutate: updateRepresentative } = useUpdateRepresentativePet();
 
   useEffect(() => {
-    if (representativeDog) {
-      setDogInfo({
-        dogId: representativeDog.id,
-        name: representativeDog.name,
-        imageUrl: representativeDog.displayImageUrl?.url ?? null,
+    if (representativePet) {
+      setPetInfo({
+        id: representativePet.id,
+        name: representativePet.name,
+        imageUrl: representativePet.displayImageUrl?.url ?? null,
       });
     }
-  }, [petList, setDogInfo, representativeDog]);
+  }, [petList, setPetInfo, representativePet]);
 
-  const handleShowDogList = () => {
+  const handleShowPetList = () => {
     if (petList.length === 0) {
       router.push("/pet/create?source=health-note");
     } else {
@@ -53,27 +54,24 @@ const HealthNoteMainHeader = () => {
     }
   };
 
-  const handleChangeDogInfo = (dogInfo: DogInfo) => {
-    setDogInfo(dogInfo);
+  const handleChangePetInfo = (petInfo: PetInfo) => {
+    setPetInfo(petInfo);
   };
 
-  const handleCloseChangeDogInfo = () => {
-    const isChangedDog =
-      dogInfo?.dogId &&
-      (!representativeDog?.id || dogInfo?.dogId !== representativeDog?.id);
+  const handleCloseChangePetInfo = () => {
+    const isChangedPet =
+      petInfo?.id &&
+      (!representativePet?.id || petInfo?.id !== representativePet?.id);
 
-    if (isChangedDog) {
-      updateTargetDogMutate(
-        { dogId: dogInfo.dogId },
-        {
-          onSuccess: (data) => {
-            console.log("data!!!", data);
-          },
-          onError: (err) => {
-            console.log("err", err);
-          },
-        }
-      );
+    if (isChangedPet) {
+      updateRepresentative(petInfo?.id, {
+        onSuccess: () => {
+          addToast("대표견이 변경되었습니다", 'above-button');
+        },
+        onError: () => {
+          addToast("대표견 설정에 실패했습니다", 'above-button');
+        },
+      });
     }
     onClose();
   };
@@ -87,15 +85,15 @@ const HealthNoteMainHeader = () => {
     <>
       <header className={styles.heathNoteHeaderContainer}>
         <Image
-          src={dogImageUrl}
+          src={petImageUrl}
           alt="대표 반려견"
           width={40}
           height={40}
-          className={dogImage({ borderRadius: "lg" })}
+          className={petImage({ borderRadius: "lg" })}
         />
-        <button onClick={handleShowDogList} className={styles.selectButton}>
+        <button onClick={handleShowPetList} className={styles.selectButton}>
           <DefaultText type="headline1">
-            {petList.length === 0 ? "반려견 등록" : dogInfo?.name}
+            {petList.length === 0 ? "반려견 등록" : petInfo?.name}
           </DefaultText>
           <SvgIcon src={ChevronDown} style={{ transform: "rotate(180deg)" }} />
         </button>
@@ -103,7 +101,7 @@ const HealthNoteMainHeader = () => {
       {petList && isOpen && (
         <BottomSheet
           isOpen={isOpen}
-          onClose={handleCloseChangeDogInfo}
+          onClose={handleCloseChangePetInfo}
           className={styles.selectBottomSheet}
         >
           <div className={styles.selectBottomSheetHeader}>
@@ -115,29 +113,29 @@ const HealthNoteMainHeader = () => {
             </Link>
           </div>
           <div className={styles.selectBottomSheetBox}>
-            {petList.map((dog, index) => {
-              const active = dog.id === Number(dogInfo?.dogId) || false;
+            {petList.map((pet, index) => {
+              const active = pet.id === Number(petInfo?.id) || false;
               return (
-                <Fragment key={dog.id}>
+                <Fragment key={pet.id}>
                   <button
-                    className={styles.selectDogButton}
+                    className={styles.selectPetButton}
                     onClick={() =>
-                      handleChangeDogInfo({
-                        dogId: dog.id,
-                        name: dog.name,
-                        imageUrl: dog?.displayImageUrl?.url ?? null,
+                      handleChangePetInfo({
+                        id: pet.id,
+                        name: pet.name,
+                        imageUrl: pet?.displayImageUrl?.url ?? null,
                       })
                     }
                   >
-                    <div className={styles.selectBottomSheetDogInfo}>
+                    <div className={styles.selectBottomSheetPetInfo}>
                       <Image
-                        src={dog?.displayImageUrl?.url || DogIcon}
-                        alt={dog.name}
+                        src={pet?.displayImageUrl?.url || PetIcon}
+                        alt={pet.name}
                         width={40}
                         height={40}
-                        className={dogImage({ borderRadius: "lg", active })}
+                        className={petImage({ borderRadius: "lg", active })}
                       />
-                      <DefaultText type="headline1">{dog.name}</DefaultText>
+                      <DefaultText type="headline1">{pet.name}</DefaultText>
                     </div>
                     {active && (
                       <SvgIcon src={CheckCircle} size={24} color="red" />
@@ -168,5 +166,3 @@ const HealthNoteMainHeader = () => {
     </>
   );
 };
-
-export default HealthNoteMainHeader;

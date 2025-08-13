@@ -2,8 +2,8 @@ import { ComponentType, SVGProps } from "react";
 import { BODY_PART_TO_CATEGORY } from "@/constants";
 import { DOG_SIZE } from "@/constants/dog";
 
-interface DogInfo {
-  dogId: number;
+interface PetInfo {
+  id: number;
   name: string;
   imageUrl: string | null;
 }
@@ -93,7 +93,7 @@ interface BodyCheckRecommendItem {
 }
 
 export type {
-  DogInfo,
+  PetInfo,
   SurveyOption,
   SurveyQuestion,
   DiseaseInfo,

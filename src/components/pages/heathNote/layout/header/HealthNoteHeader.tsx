@@ -16,7 +16,7 @@ type HealthNoteParams = {
   reportId?: string;
 };
 
-const HealthNoteHeader = () => {
+export default function HealthNoteHeader() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -149,5 +149,3 @@ const HealthNoteHeader = () => {
 
   return <>{shouldRenderHeader && <Header {...headerProps} />}</>;
 };
-
-export default HealthNoteHeader;
