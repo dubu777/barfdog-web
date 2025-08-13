@@ -39,7 +39,7 @@ export default function ItemTopInfo({ data }: ItemTopInfoProps) {
           {data.tagList.length > 0 && 
             <div className={styles.itemTagList}>
               {data.tagList.map(tag => (
-                <Chips variant='solid' color={tag.color as keyof typeof CHIPS_COLORS}>
+                <Chips key={tag.tag} variant='solid' color={tag.color as keyof typeof CHIPS_COLORS}>
                   {tag.tag}
                 </Chips>
               ))}

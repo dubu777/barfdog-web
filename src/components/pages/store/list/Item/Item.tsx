@@ -6,6 +6,7 @@ import Chips from "@/components/common/chips/Chips";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { StoreItemListData } from "@/types/store";
 import { getItemViewProps } from "@/utils/store/getItemViewProps";
+import { CHIPS_COLORS } from '@/constants/style';
 
 interface StoreItemProps {
   item: StoreItemListData;
@@ -31,7 +32,7 @@ export default function Item({
           {tagList.length > 0 &&
             <div className={styles.itemTags}>
               {tagList.map(tag => (
-                <Chips key={tag.tag} variant='solid' color={tag.color} size='sm'>
+                <Chips key={tag.tag} variant='solid' color={tag.color as keyof typeof CHIPS_COLORS} size='sm'>
                   {tag.tag}
                 </Chips>
               ))}
