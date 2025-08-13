@@ -1,6 +1,7 @@
 import * as styles from './CartItem.css';
 import Image from "next/image";
 import CloseIcon from "/public/images/header/close.svg";
+import InfoIcon from '/public/images/icons/info-fill.svg';
 import Counter from "@/components/common/counter/Counter";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -15,75 +16,122 @@ interface CartItemProps {
   options: CartItemOptionDto[];
   isSelected: boolean;
   onSelect: () => void;
+  isSoldOut?: boolean;
 }
 
-const CartItem = ({ item, options, isSelected, onSelect }: CartItemProps) => {
+export default function CartItem({
+  item,
+  options,
+  isSelected,
+  onSelect,
+  isSoldOut = false,
+}: CartItemProps) {
   const { handleItemAmountChange, handleItemOptionAmountChange, handleDeleteItemById } = useCart();
 
-  return (
-    <LabeledCheckbox
-      value={isSelected}
-      isChecked={isSelected}
-      onToggle={onSelect}
-      iconType='circle'
-      iconClick
-    >
+  const ItemContent = () => {
+    return (
       <div className={styles.cartItem}>
-        <div className={styles.cartItemInfoWrapper}>
-          <Image src={item.thumbnailUrl} alt={item.name} width={88} height={88} className={styles.cartItemImage} />
-          <div className={styles.cartItemInfo}>
-            <div className={styles.cartItemInfoTop}>
-              <div className={styles.cartItemContent}>
-                <div>
-                  <DefaultText type='label2' color='gray700'>{item.name}</DefaultText>
-                  <DefaultText type='body3' color='gray600' block>구매 수량 {item.amount}</DefaultText>
+        <Image src={item.thumbnailUrl} alt={item.name} width={88} height={88} className={styles.cartItemImage({ isSoldOut })} />
+        <div className={styles.cartItemInfo}>
+          <DefaultText type='label2' color='gray700'>{item.name}</DefaultText>
+          {isSoldOut
+            ? <DefaultText type='headline1' color='red'>Sold Out</DefaultText>
+            : (
+              <>
+                <DefaultText type='body3' color='gray600' block>구매 수량 | {item.amount}개</DefaultText>
+                <div className={styles.cartItemInfoControls}>
+                  <div className={styles.cartItemPrice}>
+                    {item.originalPrice !== item.salePrice &&
+                      <DefaultText type='caption2' color='gray800' lineThrough>{item.originalPrice.toLocaleString()}원</DefaultText>
+                    }
+                    <DefaultText type='headline2' color='gray800'>{item.salePrice.toLocaleString()}원</DefaultText>
+                  </div>
+                  <Counter
+                    min={1}
+                    initialCount={item.amount}
+                    onChange={(value, type) => handleItemAmountChange(item.basketId, value, type)}
+                  />
                 </div>
-                <DefaultText type='headline2' color='gray800'>{item.salePrice.toLocaleString()}원</DefaultText>
-              </div>
-              <button onClick={() => handleDeleteItemById(item.basketId)}><SvgIcon src={CloseIcon} size={20} color='gray500' /></button>
-            </div>
-            <Counter
-              min={1}
-              initialCount={item.amount}
-              onChange={(value, type) => handleItemAmountChange(item.basketId, value, type)}
-              className={styles.cartItemCounter}
-            />
-          </div>
+              </>
+            )
+          }
         </div>
-        {options.length > 0 &&
-        options.map(option => (
-          <Card
-            key={option.id}
-            shadow='none'
-            backgroundColor='gray100'
-            direction='row'
-            gap={8}
-            padding={12}
-            align='start'
-            justify='start'
-          >
-            <Chips variant='outlined' color='gray700'>추가상품</Chips>
-            <div className={styles.cartItemInfo}>
-              <div className={styles.cartItemInfoTop}>
-                <div className={styles.cartItemContent}>
-                  <DefaultText type='body3' color='gray700'>{option.name}</DefaultText>
-                  <DefaultText type='label3' color='gray800'>{option.optionPrice.toLocaleString()}원</DefaultText>
-                </div>
-                <button><SvgIcon src={CloseIcon} size={20} color='gray500' /></button>
-              </div>
-              <Counter
-                min={1}
-                initialCount={option.amount}
-                onChange={(value) => handleItemOptionAmountChange(item.basketId, option.id, value)}
-                className={styles.cartItemCounter}
-              />
-            </div>
-          </Card>
-        ))
-        }
       </div>
-    </LabeledCheckbox>
+    )
+  }
+
+  return (
+    !isSoldOut ? (
+      <LabeledCheckbox
+        value={isSelected}
+        isChecked={isSelected}
+        onToggle={onSelect}
+        iconClick
+        direction='col'
+        className={styles.cartItemBox}
+      >
+        <button
+          onClick={() => handleDeleteItemById(item.basketId)}
+          className={styles.deleteButton}
+        >
+          <SvgIcon src={CloseIcon} size={20} color='gray500' />
+        </button>
+        <ItemContent />
+        {options.length > 0 &&
+          <div className={styles.cartItemOptionList}>
+            {options.map(option => {
+              const isOptionSoldOut = false;
+              return (
+                <Card
+                  key={option.id}
+                  shadow='none'
+                  backgroundColor='gray100'
+                  direction='col'
+                  gap={8}
+                  padding={12}
+                  align='start'
+                  justify='start'
+                >
+                  <div className={styles.cartItemOptionBox({ isOptionSoldOut })}>
+                    <div className={styles.cartItemOption}>
+                      <Chips variant='outlined' color='gray700'>{isOptionSoldOut ? '품절' : '추가'}상품</Chips>
+                      <button>
+                        <SvgIcon src={CloseIcon} size={16} color='gray500' />
+                      </button>
+                    </div>
+                    <DefaultText type='body3' color='gray700'>{option.name}</DefaultText>
+                  </div>
+                  <div className={styles.cartItemOption}>
+                    {isOptionSoldOut
+                      ? <DefaultText type='headline1' color='red'>Sold Out</DefaultText>
+                      : (
+                        <>
+                          <DefaultText type='label3' color='gray800'>{option.optionPrice.toLocaleString()}원</DefaultText>
+                          <Counter
+                            min={1}
+                            initialCount={option.amount}
+                            onChange={(value) => handleItemOptionAmountChange(item.basketId, option.id, value)}
+                          />
+                        </>
+                      )
+                    }
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
+        }
+      </LabeledCheckbox>
+    ) : (
+      <div className={styles.cartItemBox}>
+        <div className={styles.cartItemOption}>
+          <SvgIcon src={InfoIcon} size={18} color='gray700' />
+          <button onClick={() => handleDeleteItemById(item.basketId)}>
+            <SvgIcon src={CloseIcon} size={20} color='gray500' />
+          </button>
+        </div>
+        <ItemContent />
+      </div>
+    )
   );
 };
-
-export default CartItem;

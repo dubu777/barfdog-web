@@ -6,7 +6,7 @@ export const paginationContainer = recipe({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '40px 0 20px',
+    padding: '12px 0 40px',
     background: themeVars.colors.gray.gray0,
   },
   variants: {
