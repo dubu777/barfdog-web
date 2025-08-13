@@ -1,9 +1,9 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { prefetchGetStoreItemList } from "@/api/store/queries/usePrefetchGetStoreItemList";
+import { prefetchGetStoreItemList } from "@/api/store/queries/prefetchGetStoreItemList";
 import Loader from "@/components/common/loader/Loader";
-import StoreList from "@/components/pages/store/storeList/StoreList";
+import StoreList from "@/components/pages/store/list/StoreList";
 
 export default async function StorePage() {
   const queryClient = new QueryClient();

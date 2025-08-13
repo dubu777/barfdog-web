@@ -76,6 +76,10 @@ export const chipVariantStyles = {
       backgroundColor: themeVars.colors.yellow.yellow500,
       color: themeVars.colors.gray.gray0,
     }),
+    dimmed: style({
+      backgroundColor: themeVars.colors.dimmed.gray80,
+      color: themeVars.colors.gray.gray0,
+    }),
   },
   outlined: {
     red: style({

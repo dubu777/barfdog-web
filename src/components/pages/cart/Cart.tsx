@@ -1,6 +1,7 @@
 'use client';
-import { Fragment, useEffect } from "react";
 import * as styles from './Cart.css';
+import { Fragment, useEffect, useRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Divider from "@/components/common/divider/Divider";
@@ -8,11 +9,12 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Loader from "@/components/common/loader/Loader";
 import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
-import { useCartStore } from "@/store/useCartStore";
-import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
-import { useCart } from "@/hooks/cart/useCart";
 import useModal from "@/hooks/useModal";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import { useCartStore } from "@/store/useCartStore";
+import { useCart } from "@/hooks/cart/useCart";
+import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
+import { useUpdateCartInfo } from "@/api/cart/mutations/useUpdateCartInfo";
 
 const Cart = () => {
   const { data: cartData } = useGetCartInfo();
@@ -24,7 +26,27 @@ const Cart = () => {
   const { isOpen: isOpenSoldOutModal, onClose: onCloseSoldOutModal, onToggle: onToggleSoldOutModal } = useModal();
   const isSoldOut = true;
 
+  const { mutate } = useUpdateCartInfo({ retry: false });
+  const effectRan = useRef(false);
+
   useEffect(() => {
+    // StrictMode 환경에서 useEffect 두 번 실행되는 문제 방지용 플래그
+    if (effectRan.current) return;
+
+    // 로컬스토리지에 저장된 대기중인 장바구니 아이템 불러오기
+    const pending = localStorage.getItem('pendingCartItem');
+    if (pending) {
+      mutate({ body: JSON.parse(pending) });
+      // 중복 실행 방지를 위해 로컬스토리지에서 대기 아이템 삭제
+      localStorage.removeItem('pendingCartItem');
+    }
+
+    // 플래그 설정으로 다음 호출부터는 실행하지 않도록 함
+    effectRan.current = true;
+  }, []);
+
+  useEffect(() => {
+    // 서버에서 불러온 장바구니 데이터 store 반영
     if(cartData) {
       setCartInfo(cartData);
     }

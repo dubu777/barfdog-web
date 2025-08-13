@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from "react";
+import { forwardRef, ReactNode, useImperativeHandle, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import * as styles from "@/components/common/bottomSheet/BottomSheet.css";
 import CloseButton from "/public/images/icons/close.svg";
@@ -16,7 +16,7 @@ interface BottomSheetProps {
   className?: string;
 }
 
-export default function BottomSheet({
+const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(({
   isOpen,
   onClose,
   title,
@@ -24,7 +24,11 @@ export default function BottomSheet({
   closeOnBackgroundClick = true,
   fullHeight = false,
   className,
-}: BottomSheetProps) {
+}, ref) => {
+  const innerRef = useRef<HTMLDivElement>(null);
+
+  useImperativeHandle(ref, () => innerRef.current!);
+
   const initialHeight = fullHeight ? "95vh" : "auto";
   const [sheetHeight, setSheetHeight] = useState(initialHeight);
   // 모바일 더블 탭 감지
@@ -57,6 +61,7 @@ export default function BottomSheet({
           closeOnBackgroundClick={closeOnBackgroundClick}
         >
           <motion.div
+            ref={innerRef}
             className={`${styles.bottomSheetContainer} ${className || ""}`}
             style={{ height: sheetHeight }}
             animate={{ y: "0%", height: sheetHeight }}
@@ -86,4 +91,8 @@ export default function BottomSheet({
       )}
     </AnimatePresence>
   );
-}
+});
+
+BottomSheet.displayName = 'BottomSheet';
+
+export default BottomSheet;

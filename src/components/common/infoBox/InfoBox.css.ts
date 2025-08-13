@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const infoBoxBase = style({
 	padding: '12px',
@@ -9,11 +10,22 @@ export const infoBoxBase = style({
 	alignItems: 'center',
 })
 
-export const infoBoxStyle = style({
-	width: '100%',
-	display: 'flex',
-	alignItems: "center",
-	gap: '8px'
+export const infoBoxStyle = recipe({
+	base: {
+		width: '100%',
+		display: 'flex',
+		gap: '8px'
+	},
+	variants: {
+		align: {
+			start: {
+				alignItems: "flex-start",
+			},
+			center: {
+				alignItems: "center",
+			}
+		}
+	}
 })
 
 export const infoTextStyle = style({

@@ -30,6 +30,7 @@ interface TabBarProps {
   justifyContent?: "center" | "spaceBetween" | "flexStart";
   className?: string;
   isScrollable?: boolean;
+  onTabClick?: (index: number) => void;
 }
 
 export default function TabBar({
@@ -41,6 +42,7 @@ export default function TabBar({
   justifyContent = "flexStart",
   className,
   isScrollable = false,
+  onTabClick,
 }: TabBarProps) {
   const textType = variant === "text" ? "label1" : "headline3";
   const textColor = variant === "chips" ? "gray600" : "gray300";
@@ -55,6 +57,7 @@ export default function TabBar({
   const handleTabChange = (index: number) => {
     setActiveIndex(index);
     tabs[index]?.onInit?.();
+    onTabClick?.(index);
   };
 
   const TabButtonComponent = ({ tab, index }: { tab: Tab; index: number }) => (
