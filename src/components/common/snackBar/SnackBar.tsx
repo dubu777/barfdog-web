@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnackBarStore } from "@/store/useSnackBar";
 import * as styles from "./SnackBar.css";
@@ -12,7 +12,7 @@ interface SnackBarItemProps {
   id: string;
   title: string;
   caption?: string;
-  actionLabel?: string;
+  actionLabel?: string | ReactNode;
   onActionClick?: () => void;
   onClose: () => void;
 }

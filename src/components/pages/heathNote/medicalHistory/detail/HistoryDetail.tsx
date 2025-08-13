@@ -23,6 +23,7 @@ import { useToastStore } from "@/store/useToastStore";
 import { DIAGNOSIS_ITEM, queryKeys } from "@/constants";
 import { useGetMedicalHistoryDetail } from "@/api/healthNote/medicalHistory/queries/useGetMedicalHistoryDetail";
 import { useDeleteMedicalHistory } from "@/api/healthNote/medicalHistory/mutations/useDeleteMedicalHistory";
+import { useImageModal } from '@/hooks/useImageModal';
 
 interface HistoryDetailProps {
 	diagnosisId: number;
@@ -39,18 +40,17 @@ export default function HistoryDetail ({
 	
 	const { data } = useGetMedicalHistoryDetail(diagnosisId);
 	const { mutate } = useDeleteMedicalHistory();
-	
-	const [defaultImageIndex, setDefaultImageIndex] = useState<number>(0);
 
 	const { isOpen: isOpenControlBottomSheet, onClose: onCloseControlBottomSheet, onToggle: onToggleControlBottomSheet } = useModal();
 	const { isOpen: isOpenConfirmDelete, onClose: onCloseConfirmDelete, onToggle: onToggleConfirmDelete  } = useModal();
 	const { isOpen: isOpenEditModal, onClose: onCloseEditModal, onToggle: onToggleEditModal  } = useModal();
-	const { isOpen: isOpenImageModal, onClose: onCloseImageModal, onToggle: onToggleImageModal  } = useModal();
 
-	const handleThumbnailClick = (index: number) => {
-		setDefaultImageIndex(index);
-		onToggleImageModal();
-	}
+	const {
+    isOpen: isOpenImageModal,
+    onClose: onCloseImageModal,
+    handleThumbnailClick,
+    defaultImageIndex,
+  } = useImageModal();
 
 	const defaultInfo = [
 		{ label: '병원', value: data.diagnosisInfo.hospitalName },

@@ -24,5 +24,12 @@ export const cartListBox = style({
 export const cartItemList = style({
   display: 'flex',
   flexDirection: 'column',
-  gap: '16px',
+  gap: '24px',
+})
+
+export const cartSoldOutTitle = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
+  padding: '24px 20px 0'
 })

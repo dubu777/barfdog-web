@@ -4,7 +4,7 @@ import {
   fontColors,
   alignStyles,
   blockStyles,
-  underline, preLineStyles,
+  underline, preLineStyles, linethrough,
 } from "./DefaultText.css";
 
 interface DefaultTextProps {
@@ -14,6 +14,7 @@ interface DefaultTextProps {
   children: React.ReactNode;
   block?: boolean;
   underLine?: boolean;
+  lineThrough?: boolean;
   className?: string;
   style?: React.CSSProperties;
   preLine?: boolean;
@@ -49,6 +50,7 @@ export default function DefaultText({
   children,
   block = false,
   underLine = false,
+  lineThrough = false,
   className,
   style,
   preLine,
@@ -58,6 +60,7 @@ export default function DefaultText({
   const colorStyle = fontColors[color];
   const alignStyle = alignStyles[align];
   const underlineStyle = underLine ? underline : "";
+  const lineThroughStyle = lineThrough ? linethrough : "";
   const Tag = tagMap[type] || "span";
   const blockStyle = block ? blockStyles.true : "";
   const preLineStyle = preLine ? preLineStyles.true : "";
@@ -68,7 +71,7 @@ export default function DefaultText({
   const finalStyle = { ...style, ...overrideLineHeight };
   return (
     <Tag
-      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${blockStyle} ${preLineStyle} ${
+      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${lineThroughStyle} ${blockStyle} ${preLineStyle} ${
         className || ""
       }`}
       style={finalStyle}

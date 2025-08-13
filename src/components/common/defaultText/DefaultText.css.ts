@@ -162,3 +162,7 @@ export const preLineStyles = {
 export const underline = style({
   textDecoration: "underline",
 });
+
+export const linethrough = style({
+  textDecoration: "line-through",
+});

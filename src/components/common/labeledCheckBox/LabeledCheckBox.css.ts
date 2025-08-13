@@ -1,11 +1,23 @@
-import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
-export const labelCheckedBoxContainer = style({
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "flex-start",
-  alignSelf: "stretch",
-  gap: "8px",
-  cursor: "pointer",
-  width: "100%",
+export const labelCheckedBoxContainer = recipe({
+  base: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
+    gap: "8px",
+    cursor: "pointer",
+    width: "100%",
+  },
+  variants: {
+    direction: {
+      row: {
+        flexDirection: 'row',
+      },
+      col: {
+        flexDirection: 'column',
+      }
+    }
+  }
 });

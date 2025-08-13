@@ -16,19 +16,19 @@ import { ImageFile, UploadedFile } from "@/types";
 // 현재 다른 곳 ImageFile type 으로 사용중임에 따라 임시로 처리
 // 추후 UploadedFile로 변경 필요
 
-interface ImagesModalProps {
+export interface ImagesModalProps {
 	imageList: ImageFile[] | UploadedFile[]
 	isOpen: boolean;
 	onClose: () => void;
 	defaultImageIndex: number;
 }
 
-const ImagesModal = ({
+export default function ImagesModal ({
 	imageList,
 	isOpen,
 	onClose,
 	defaultImageIndex = 0
-}: ImagesModalProps) => {
+}: ImagesModalProps) {
 	const [activeIndex, setActiveIndex] = useState<number>(defaultImageIndex);
 
 	if(imageList?.length === 0) return null;
@@ -71,5 +71,3 @@ const ImagesModal = ({
 		</ModalBackground>
 	);
 };
-
-export default ImagesModal;
