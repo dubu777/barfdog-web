@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const fullCheckSurvey = style({
-	padding: '10px 20px 16px'
+	padding: '20px 20px 16px'
 })
 
 export const fullCheckSurveyCardContent = style({

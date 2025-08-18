@@ -25,7 +25,6 @@ export const bar = style({
 	borderRadius: '8px',
 });
 
-
 export const barProgress = style({
 	position: 'relative',
 	borderRadius: '8px',
@@ -43,6 +42,9 @@ export const barColorStyle = {
 	}),
 	red: style({
 		background: themeVars.colors.red.red,
+	}),
+	pastelRed: style({
+		background: themeVars.colors.red.pastelRed,
 	}),
 };
 

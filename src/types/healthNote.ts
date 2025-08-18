@@ -1,6 +1,6 @@
 import { ComponentType, SVGProps } from "react";
-import { BODY_PART_TO_CATEGORY } from "@/constants";
 import { DOG_SIZE } from "@/constants/dog";
+import { BODY_PART_TO_CATEGORY } from "@/constants";
 
 interface PetInfo {
   id: number;
@@ -40,12 +40,12 @@ type DiseaseCategoryKey = keyof typeof BODY_PART_TO_CATEGORY;
 type DiseaseCategory = (typeof BODY_PART_TO_CATEGORY)[DiseaseCategoryKey];
 
 interface DiseaseData {
-  categoryKey: DiseaseCategoryKey;
   category: DiseaseCategory;
   categoryImage: ComponentType<SVGProps<SVGSVGElement>>;
   disease: DiseaseInfo;
   score: number;
   diseaseKey: string;
+  name: string;
 }
 
 interface Product {

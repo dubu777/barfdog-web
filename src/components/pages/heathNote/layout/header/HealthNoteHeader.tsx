@@ -50,6 +50,7 @@ export default function HealthNoteHeader() {
     "/health-note/full-check": {
       centerTitle: "건강 종합 진단",
       showBackButton: true,
+      onBack: goBackToMain,
     },
     "/health-note/body-check": {
       centerTitle: "부위별 진단",
@@ -124,7 +125,7 @@ export default function HealthNoteHeader() {
     "/health-note/guest",
     "/health-note",
     `/health-note/medical-history/${params.diagnosisId}`,
-    `/health-note/full-check/result/${params.reportId}`,
+    `/health-note/full-check/result/${params.diagnosisId}`,
     "/health-note/probiome/survey",
   ];
 

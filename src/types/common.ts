@@ -78,6 +78,15 @@ interface Page {
   number: number;
 }
 
+interface Pagination {
+  page: number;
+  size: number;
+  totalPages: number;
+  totalCount: number;
+  isFirstPage: boolean;
+  isLastPage: boolean;
+}
+
 interface ImageFile {
   id?: number;
   filename: string;
@@ -121,6 +130,7 @@ export type {
   UseInfiniteQueryCustomOptions,
   QueryParams,
   Page,
+  Pagination,
   ImageFile,
   Option,
   SelectOption,

@@ -1,46 +1,46 @@
 "use client";
+import * as styles from "./FullCheckList.css";
+import { infiniteTrigger } from "@/styles/common.css";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import * as styles from "./FullCheckList.css";
 import DogImage from "/public/images/healthNote/full-check/list-dog.png";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import HorizontalProgressBar from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
-import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import TextButton from "@/components/common/textButton/TextButton";
+import { useInView } from "react-intersection-observer";
+import { useGetInfiniteFullCheckList } from "@/api/healthNote/fullCheck/queries/useGetInfiniteFullCheckList";
+import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 
-const FullCheckList = () => {
-  const { petInfo } = useHealthNoteStore();
-  const healthCheckResults = [
-    {
-      id: 101,
-      createdDate: "2025.03.17",
-      score: 94,
-      rank: 15.8,
-    },
-    {
-      id: 102,
-      createdDate: "2024.10.29",
-      score: 77,
-      rank: 20.8,
-    },
-    {
-      id: 103,
-      createdDate: "2024.09.21",
-      score: 50,
-      rank: 50.0,
-    },
-    {
-      id: 104,
-      createdDate: "2023.03.17",
-      score: 20,
-      rank: 79.8,
-    },
-  ];
+interface FullCheckListProps {
+  petId: number;
+}
+
+export default function FullCheckList ({ petId }: FullCheckListProps) {
+  const { data: petInfo } = useGetPetDetail(petId);
+  const {
+    data: infiniteData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useGetInfiniteFullCheckList(petId);
+
+  const checkupDiagnosisList = infiniteData?.pages?.flatMap((page) => page.checkupDiagnosisList) ?? [];
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView && !hasNextPage) return;
+
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+
+  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   const handleGoToSurvey = () => {
-    window.location.href = "/health-note/full-check/survey";
+    window.location.href = `/health-note/full-check/survey?petId=${petId}`;
   };
 
   return (
@@ -67,10 +67,10 @@ const FullCheckList = () => {
         </Card>
       </div>
       <article className={styles.fullCheckResultList}>
-        {healthCheckResults.map((result, index) => (
+        {checkupDiagnosisList.map((result, index) => (
           <Link
-            href={`/health-note/full-check/result/${result.id}?score=${result.score}`}
             key={index}
+            href={`/health-note/full-check/result/${result.diagnosisId}?petId=${petId}`}
           >
             <Card
               shadow="light"
@@ -80,23 +80,22 @@ const FullCheckList = () => {
               align='start'
             >
               <DefaultText type="label4" color="gray600">
-                {result.createdDate}
+                {result.diagnosisDate}
               </DefaultText>
               <div className={styles.resultTopRank}>
                 <DefaultText type="headline2">
                   {petInfo?.name}의 검사결과
                 </DefaultText>
                 <Chips variant="solid" borderRadius="lg" color="gray200">
-                  상위{result.rank}%
+                  상위{result.snapshot.totalCheckupScorePercentile}%
                 </Chips>
               </div>
-              <HorizontalProgressBar score={result.score} showLabel showIcon />
+              <HorizontalProgressBar score={result.checkupScore} showLabel showIcon />
             </Card>
           </Link>
         ))}
       </article>
+      <div ref={ref} className={infiniteTrigger} />
     </section>
   );
 };
-
-export default FullCheckList;
