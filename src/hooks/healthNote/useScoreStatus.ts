@@ -8,22 +8,22 @@ import {
 
 interface UseScoreStatusProps {
 	current: number;
-	previous: number;
+	scoreDifference: number;
 	threshold?: number;
 }
 
 export function useScoreStatus({
 	current,
-	previous,
+	scoreDifference,
 	threshold = 10,
 }: UseScoreStatusProps) {
-	const diff = current - previous;
-	const status = useMemo(() => getSimplifyStatus(getScoreChangeStatus(diff, threshold)), [diff, threshold]);
+	const prev = current - scoreDifference;
+	const status = useMemo(() => getSimplifyStatus(getScoreChangeStatus(scoreDifference, threshold)), [scoreDifference, threshold]);
 	const label = useMemo(() => getSimplifyStatusLabel(status), [status]) || null;
 	const color = useMemo(() => getSimplifyStatusColor(status), [status]) || null;
 
 	return {
-		diff,
+		prev,
 		status,
 		label,
 		color,

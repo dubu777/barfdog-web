@@ -5,7 +5,11 @@ import * as styles from "./BodyCheckMain.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { useRouter } from "next/navigation";
 
-export default function BodyCheckMain() {
+interface BodyCheckMainProps {
+  petId: number;
+}
+
+export default function BodyCheckMain({ petId }: BodyCheckMainProps) {
   const router = useRouter();
   const bodyCheckSurveyResult = [
     { name: "gut", score: 76, date: "2023-10-01" },
@@ -14,7 +18,7 @@ export default function BodyCheckMain() {
   ];
 
   const handleCardClick = (part: BodyCheckPart) => {
-    router.push(`/health-note/body-check/survey/${part}`);
+    router.push(`/health-note/${petId}/body-check/survey/${part}`);
   };
 
   return (

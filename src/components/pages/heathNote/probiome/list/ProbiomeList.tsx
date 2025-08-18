@@ -53,7 +53,7 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
           </Button>
         </div>
         <CreateButton
-          url={`/health-note/probiome/create?petId=${petId}`}
+          url={`/health-note/${petId}/probiome/create`}
           text="사전 문진 작성하기"
         />
         <article className={styles.probiomeList}>
@@ -81,7 +81,7 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
                     type="assistive"
                     fullWidth
                     onClick={() =>
-                      router.push(`/health-note/probiome/detail/${id}`)
+                      router.push(`/health-note/${petId}/probiome/detail/${id}`)
                     }
                   >
                     신청 상세
@@ -92,7 +92,7 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
                       fullWidth
                       onClick={() =>
                         router.push(
-                          `/health-note/probiome/return-request/${id}`
+                          `/health-note/${petId}/probiome/return-request/${id}`
                         )
                       }
                     >
@@ -121,6 +121,7 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
       </section>
       {isOpenKitGuideModal && (
         <KitGuideModal
+          petId={petId}
           isOpen={isOpenKitGuideModal}
           onClose={onCloseKitGuideModal}
         />

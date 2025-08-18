@@ -1,27 +1,33 @@
 import * as styles from './AverageBar.css';
 import Chips from "@/components/common/chips/Chips";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { CHIPS_COLORS, COLORS, HEALTH_NOTE_PROGRESS_BAR_COLORS } from "@/constants/style";
+
+function getBarHeightByHour(hour: number, maxValue: number): number {
+	const MIN_HEIGHT = 11;
+	const MAX_HEIGHT = 132;
+
+	if (maxValue === 0) return MIN_HEIGHT;
+
+	const ratio = hour / maxValue; // 0 ~ 1 사이 비율
+	return Math.round(MIN_HEIGHT + ratio * (MAX_HEIGHT - MIN_HEIGHT));
+}
 
 interface AverageBarProps {
 	label: string;
 	value: number;
+	maxValue: number;
 	color: 'gray300' | 'blue400' | 'pastelRed';
 	showChips?: boolean;
 }
 
-function getBarHeightByHour(hour: number): number {
-	const MIN_HOUR = 1;
-	const MAX_HOUR = 24;
-	const MIN_HEIGHT = 11;
-	const MAX_HEIGHT = 132;
-
-	const ratio = (hour - MIN_HOUR) / (MAX_HOUR - MIN_HOUR); // 0 ~ 1 사이 비율
-	return Math.round(MIN_HEIGHT + ratio * (MAX_HEIGHT - MIN_HEIGHT));
-}
-
-const AverageBar = ({ label, value, color, showChips = false }: AverageBarProps) => {
-	const height = getBarHeightByHour(value);
+export default function AverageBar ({
+	label,
+	value,
+	maxValue,
+	color,
+	showChips = false
+}: AverageBarProps) {
+	const height = getBarHeightByHour(value, maxValue);
 	return (
 		<div className={styles.barBox}>
 			{showChips ? (
@@ -36,5 +42,3 @@ const AverageBar = ({ label, value, color, showChips = false }: AverageBarProps)
 		</div>
 	)
 };
-
-export default AverageBar;

@@ -131,4 +131,10 @@ const queryKeys = {
     GET_MEDICAL_HISTORY_LIST: "getMedicalHistoryList",
     GET_MEDICAL_HISTORY_DETAIL: "getMedicalHistoryDetail",
   },
+  FULL_CHECK: {
+    BASE: "fullCheck",
+    GET_FULL_CHECK_SUMMARY: "getFullCheckSummary",
+    GET_FULL_CHECK_LIST: "getFullCheckList",
+    GET_FULL_CHECK_RESULT_DETAIL: "getFullCheckResultDetail",
+  },
 } as const;

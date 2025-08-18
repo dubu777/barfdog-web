@@ -1,60 +1,53 @@
 import * as styles from "./TotalScore.css";
 import CrownIcon from "/public/images/healthNote/full-check/crown.svg";
+import CohortIcon from "/public/images/healthNote/full-check/cohort.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import CircleProgressBar from "@/components/pages/heathNote/common/progressBar/circleProgressBar/CircleProgressBar";
 import Card from "@/components/common/card/Card";
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
 import InfoBox from "@/components/pages/heathNote/common/infoBox/InfoBox";
-import { DOG_SIZE } from "@/constants/dog";
-import {
-  RESULT_DOG_SIZE_ICON_MAP,
-  RESULT_HEALTH_STATUS_ICON_MAP,
-} from "@/constants";
+import { RESULT_HEALTH_STATUS_ICON_MAP } from "@/constants";
 import { getSimpleHealthStatus } from "@/utils/healthNote/getHealthStatus";
-import { DogSize } from "@/types";
 
 interface TotalScoreProps {
-  dogName: string;
-  totalScore: number;
-  rankOverall: number;
-  rankDogSize: number;
-  dogSize: DogSize;
+  petName: string;
+  checkupScore: number;
+  totalCheckupScorePercentile: number;
+  cohortCheckupScorePercentile: number;
 }
 
-const TotalScore = ({
-  dogName,
-  totalScore,
-  rankOverall,
-  rankDogSize,
-  dogSize,
-}: TotalScoreProps) => {
-  const healthStatusKey = getSimpleHealthStatus(totalScore).key;
+export default function TotalScore({
+  petName,
+  checkupScore,
+  totalCheckupScorePercentile,
+  cohortCheckupScorePercentile,
+}: TotalScoreProps) {
+  const healthStatusKey = getSimpleHealthStatus(checkupScore).key;
   const rankInfo = [
     {
-      label: "전체 반려견",
+      label: "전체 반려견 중",
       icon: CrownIcon,
-      value: rankOverall,
+      value: totalCheckupScorePercentile,
     },
     {
-      label: DOG_SIZE[dogSize],
-      icon: RESULT_DOG_SIZE_ICON_MAP[dogSize],
-      value: rankDogSize,
+      label: "또래 중",
+      icon: CohortIcon,
+      value: cohortCheckupScorePercentile,
     },
   ];
 
   return (
     <ResultCard
       className={styles.totalScoreContainer}
-      title={`${dogName}의\n건강 종합 점수`}
+      title={`${petName}의\n건강 종합 점수`}
     >
       <CircleProgressBar
-        score={totalScore}
+        score={checkupScore}
         svgImage={RESULT_HEALTH_STATUS_ICON_MAP[healthStatusKey]}
       />
       <Card
         shadow="none"
         direction='row'
-        className={styles.rankBox}
       >
         {rankInfo.map((info) => (
           <InfoBox
@@ -78,5 +71,3 @@ const TotalScore = ({
     </ResultCard>
   );
 };
-
-export default TotalScore;

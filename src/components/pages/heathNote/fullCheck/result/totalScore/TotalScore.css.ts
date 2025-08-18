@@ -7,10 +7,6 @@ export const totalScoreContainer = style({
 	gap: '20px',
 })
 
-export const rankBox = style({
-	padding: '12px 16px !important',
-})
-
 export const rankInfo = style({
 	width: '50%',
 	display: 'flex',

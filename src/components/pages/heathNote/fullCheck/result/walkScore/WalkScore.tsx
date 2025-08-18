@@ -1,4 +1,5 @@
 import * as styles from './WalkScore.css';
+import { Fragment } from "react";
 import Image from "next/image";
 import WalkDogImage from '/public/images/healthNote/full-check/walk-dog.png';
 import HistoryIcon from '/public/images/healthNote/full-check/history.svg';
@@ -9,95 +10,103 @@ import Divider from "@/components/common/divider/Divider";
 import InfoBox from "@/components/pages/heathNote/common/infoBox/InfoBox";
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
 import AverageBar from "@/components/pages/heathNote/fullCheck/result/walkScore/averageBar/AverageBar";
-import { DOG_SIZE } from "@/constants/dog";
-
-interface AverageDurations {
-	hourByOverall: number;
-	hourByPeers: number;
-	hourByDogSize: number;
-}
 
 interface WalkScoreProps {
-	dogName: string;
-	dogSize: keyof typeof DOG_SIZE;
-	walkRank: number;
-	averageCount: number;
-	averageDurationHours: number;
-	averageDurations: AverageDurations;
+	petName: string;
+	totalWalkScorePercentile: number;
+	avgTotalWalkCount: number;
+	avgTotalWalkHours: number;
+	avgCohortWalkScore: number;
+	avgTotalWalkScore: number;
+	walkHours: number;
+	walkCount: number;
 }
 
-const WalkScore = ({
-	dogName,
-	dogSize,
-	walkRank,
-	averageCount,
-	averageDurationHours,
-	averageDurations,
-}: WalkScoreProps) => {
-	const { hourByOverall, hourByPeers, hourByDogSize } = averageDurations;
+export default function WalkScore ({
+	petName,
+	totalWalkScorePercentile,
+	avgTotalWalkCount,
+	avgTotalWalkHours,
+	avgCohortWalkScore,
+	avgTotalWalkScore,
+	walkHours,
+	walkCount,
+}: WalkScoreProps) {
 	const walkInfo = [
 		{
-			label: '평균 산책 횟수',
+			label: '산책 횟수',
 			icon: FootprintIcon,
-			value: averageCount,
+			value: avgTotalWalkCount,
 		},
 		{
-			label: '평균 산책 시간',
+			label: '1회당 산책 시간',
 			icon: HistoryIcon,
-			value: averageDurationHours,
+			value: avgTotalWalkHours,
 		},
 	]
 
-	const averageDurationList = [
+	const averageGraphList = [
 		{
 			label: '전체평균',
-			value: hourByOverall,
+			value: avgTotalWalkScore,
 			color: 'pastelRed',
 		},
 		{
 			label: '또래',
-			value: hourByPeers,
+			value: avgCohortWalkScore,
 			color: 'gray300',
 		},
 		{
-			label: DOG_SIZE[dogSize],
-			value: hourByDogSize,
-			color: 'gray300',
-		},
-		{
-			label: dogName,
-			value: averageDurationHours,
+			label: petName,
+			value: walkHours * walkCount,
 			color: 'blue400',
 			showChips: true,
 		},
 	]
 
+	const maxValue = Math.max(...averageGraphList.map(d => d.value));
 	return (
 		<article>
 			<ResultCard
 				className={styles.walkScoreContainer}
-				title={`${dogName}의\n산책 점수는 어떻게 될까요?`}
+				title={`${petName}의 산책 습관\n 다른 아이들과 비교해볼까요?`}
 				subTitle='일주일 기준으로 점수가 매겨져요'
 			>
 				<div className={styles.walkScoreContentBox}>
 					<Image src={WalkDogImage} alt='walk dog' width={303} height={140} />
-					<Card
-						shadow='none'
-					>
-						<div className={styles.walkScore}>
-							<DefaultText type='headline2'>{dogName}의 산책 점수</DefaultText>
-							<DefaultText type='display1' applyLineHeight>
-								<DefaultText type='label4'>상위</DefaultText>
-								&nbsp;{walkRank}%
-							</DefaultText>
+					<Card shadow='none'>
+						<div className={styles.walkScoreTop}>
+							<DefaultText type='headline2'>{petName}의<br/>산책 활동 통계</DefaultText>
+							<div>
+								<DefaultText type='display1' applyLineHeight>
+									<DefaultText type='label4'>상위</DefaultText>
+									&nbsp;{totalWalkScorePercentile}
+									<DefaultText type='label4'>%</DefaultText>
+								</DefaultText>
+							</div>
 						</div>
 						<Divider thickness={1} color='gray100' />
-						<div className={styles.walkScoreInfo}>
-							{walkInfo.map((info, index) => (
+						<div className={styles.averageGraph}>
+							{averageGraphList.map(duration => (
+								<AverageBar
+									key={duration.label}
+									label={duration.label}
+									value={duration.value}
+									color={duration.color as "pastelRed" | "blue400" | "gray300"}
+									showChips={!!duration.showChips}
+									maxValue={maxValue}
+								/>
+							))}
+						</div>
+					</Card>
+					<DefaultText type='headline2' className={styles.walkScoreInfoTitle}>전체 반려견의 평균 산책 습관</DefaultText>
+					<Card direction='row' className={styles.walkScoreInfo}>
+						{walkInfo.map((info, index) => (
+							<Fragment key={info.label}>
 								<InfoBox
-									key={info.label}
 									label={info.label}
 									icon={info.icon}
+									align='start'
 									content={(
 										<>
 											<DefaultText type='title3'>{info.value}</DefaultText>
@@ -105,20 +114,12 @@ const WalkScore = ({
 										</>
 									)}
 								/>
-							))}
-						</div>
-					</Card>
-					<div className={styles.averageDurations}>
-						{averageDurationList.map(duration => (
-							<AverageBar
-								key={duration.label}
-								label={duration.label}
-								value={duration.value}
-								color={duration.color as "pastelRed" | "blue400" | "gray300"}
-								showChips={!!duration.showChips}
-							/>
+								{index === 0 &&
+									<Divider thickness={1} direction='vertical' color='gray100' />
+								}
+							</Fragment>
 						))}
-					</div>
+					</Card>
 				</div>
 				<Card
 					shadow='none'
@@ -135,5 +136,3 @@ const WalkScore = ({
 		</article>
 	);
 };
-
-export default WalkScore;

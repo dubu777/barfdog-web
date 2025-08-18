@@ -23,13 +23,20 @@ const STATUS_ICON_MAP = {
 };
 
 const STATUS_LABEL_MAP = {
-	good: '건강해요',
+	good: '건강해요!',
 	normal: '양호해요',
 	warning: '주의가 필요해요',
 	danger: '위험해요',
 };
 
-const STATUS_COLOR_BASE = {
+const STATUS_COLOR_BASE_FULL = {
+	good: 'blue',
+	normal: 'green',
+	warning: 'yellow',
+	danger: 'red',
+} as const;
+
+const STATUS_COLOR_BASE_SIMPLE = {
 	good: 'blue',
 	normal: 'green',
 	warning: 'yellow',
@@ -43,12 +50,14 @@ function getStatusLevel(score: number): StatusLevel {
 	return 'danger';
 }
 
-function getStatusColor(level: StatusLevel, tone: Tone = '400') {
-	const base = STATUS_COLOR_BASE[level];
-
-	if (base === 'pastelRed') return base;
-
-	return `${base}${tone}` as const;
+function getStatusColor(
+	base: typeof STATUS_COLOR_BASE_FULL | typeof STATUS_COLOR_BASE_SIMPLE,
+	level: StatusLevel,
+	tone: Tone = '400'
+) {
+	const color = base[level];
+	if (color === 'red' || color === 'pastelRed') return color;
+	return `${color}${tone}` as const;
 }
 
 export function getFullHealthStatus(score: number, tone: Tone = '400') {
@@ -56,7 +65,7 @@ export function getFullHealthStatus(score: number, tone: Tone = '400') {
 	return {
 		key: level,
 		label: STATUS_LABEL_MAP[level],
-		color: getStatusColor(level, tone),
+		color: getStatusColor(STATUS_COLOR_BASE_FULL, level, tone),
 		icon: STATUS_ICON_MAP[level],
 	};
 }
@@ -66,7 +75,7 @@ export function getSimpleHealthStatus(score: number, tone: Tone = '400') {
 	return {
 		key: level,
 		label: STATUS_LABEL_MAP[level],
-		color: getStatusColor(level, tone),
+		color: getStatusColor(STATUS_COLOR_BASE_SIMPLE, level, tone),
 	};
 }
 

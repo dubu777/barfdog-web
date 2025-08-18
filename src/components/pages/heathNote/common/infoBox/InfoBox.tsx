@@ -7,24 +7,24 @@ interface DualInfoBoxProps {
 	label: string;
 	content: ReactNode;
 	icon: ComponentType<SVGProps<SVGSVGElement>>;
+	align?: 'center' | 'start';
 }
 
-const InfoBox = ({
+export default function InfoBox({
 	label,
 	content,
 	icon,
-}: DualInfoBoxProps) => {
+	align = 'center'
+}: DualInfoBoxProps) {
 	return (
-		<div className={styles.infoBox}>
+		<div className={styles.infoBox({ align })}>
 			<div className={styles.infoContent}>
 				<SvgIcon src={icon} size={20} />
 				<DefaultText type='body3'>{label}</DefaultText>
 			</div>
-			<div className={styles.infoContent}>
+			<div className={`${styles.infoContent} ${align === 'start' ? styles.infoContentAlignStart : ''}`}>
 				{content}
 			</div>
 		</div>
 	);
 };
-
-export default InfoBox;

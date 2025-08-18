@@ -4,31 +4,49 @@ import Image from "next/image";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ComparisonProgressBar from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
+import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
 import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
-import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
-import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
+import { useGetFullCheckSummary } from "@/api/healthNote/fullCheck/queries/useGetFullCheckSummary";
 
 const HealthNoteUser = () => {
   const { data: petList = [] } = useGetPetList();
-  const { petInfo } = useHealthNoteStore();
-  const isFirstFullCheck = false;
-  const fullCheckTopRank = 2.4;
-  const fullCheckScore = 50;
-  const fullCheckPrevScore = 80;
+  const petInfo = petList?.find((pet) => pet.isRepresentative);
+
+  const { data: fullCheckSummary } = useGetFullCheckSummary(petInfo?.id, {
+    enabled: !!petInfo?.id, // petInfo.id가 있을 때만 호출
+  });
+
+  const isFirstFullCheck = !fullCheckSummary?.isExistDiagnosis;
+  const checkupScoreUpperPercentile =
+    fullCheckSummary?.checkupScoreUpperPercentile;
+  const checkupScore = fullCheckSummary?.checkupScore ?? 0;
+  const avgCheckupScore = fullCheckSummary?.avgCheckupScore ?? 0;
+
   const { label: fullCheckStatusLabel, color: fullCheckStatusColor } =
-    useScoreStatus({ current: fullCheckScore, previous: fullCheckPrevScore });
+    useScoreStatus({
+      current: checkupScore,
+      scoreDifference: checkupScore - avgCheckupScore,
+    });
 
   const handleGotoMenu = (url) => {
-    if (url === "/health-note/full-check") {
-      window.location.href = `${url}${isFirstFullCheck ? "/survey" : ""}`;
-    } else if (url === "/health-note/probiome" && petInfo?.id) {
-      window.location.href = `${url}?petId=${petInfo.id}`;
-    } else if (url === "/health-note/medical-history" && petInfo?.id) {
-      window.location.href = `${url}?petId=${petInfo.id}`;
-    } else {
-      window.location.href = url;
+    switch (url) {
+      case "/full-check":
+        if (!petInfo?.id) return;
+        window.location.href = `/health-note/${petInfo.id}${url}${
+          isFirstFullCheck ? "/survey" : ""
+        }`;
+        break;
+      case "/medical-history":
+      case "/body-check":
+      case "/dogpedia":
+      case "/probiome":
+        if (!petInfo?.id) return;
+        window.location.href = `/health-note/${petInfo.id}${url}`;
+        break;
+      default:
+        window.location.href = `/health-note${url}`;
     }
   };
 
@@ -79,7 +97,7 @@ const HealthNoteUser = () => {
                                 type="body3"
                                 color={fullCheckStatusColor}
                               >
-                                {fullCheckTopRank}%
+                                {checkupScoreUpperPercentile}%
                               </DefaultText>
                               로<br />
                               {fullCheckStatusLabel}
@@ -98,8 +116,8 @@ const HealthNoteUser = () => {
                       />
                     ) : (
                       <ComparisonProgressBar
-                        prevScore={fullCheckPrevScore}
-                        currentScore={fullCheckScore}
+                        prevScore={avgCheckupScore}
+                        currentScore={checkupScore}
                         isCurrentScoreChips
                         barSize="sm"
                         prevBottomChildren={

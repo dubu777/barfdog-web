@@ -11,7 +11,7 @@ import { useBackNavigation } from "@/utils";
 import { getHeaderProps } from "@/utils/getHeaderProps";
 
 type HealthNoteParams = {
-  dogId?: string;
+  petId?: string;
   diagnosisId?: string;
   reportId?: string;
 };
@@ -42,42 +42,35 @@ export default function HealthNoteHeader() {
       onBack?: () => void;
     }
   > = {
-    "/health-note/dogs": {
+    "/health-note/pets": {
       centerTitle: "반려견 전체보기",
       showBackButton: true,
       onBack: goBack,
     },
-    "/health-note/full-check": {
+    "full-check": {
       centerTitle: "건강 종합 진단",
       showBackButton: true,
+      onBack: goBackToMain,
     },
-    "/health-note/body-check": {
+    "body-check": {
       centerTitle: "부위별 진단",
       showBackButton: true,
     },
-    "/health-note/medical-history": {
+    "medical-history": {
       centerTitle: "병원 진료 기록",
       showBackButton: true,
       onBack: goBackToMain,
     },
-    "/health-note/medical-history/create": {
+    "medical-history/create": {
       centerTitle: "병원 진료 기록 등록",
       showBackButton: true,
     },
-    "/health-note/dogpedia": {
+    dogpedia: {
       centerTitle: "견종 백과",
       showBackButton: true,
     },
-    "/health-note/probiome": {
+    probiome: {
       centerTitle: "장내 미생물 검사",
-      showBackButton: true,
-    },
-    "/health-note/probiome/create": {
-      centerTitle: "장내 미생물 검사",
-      showBackButton: true,
-    },
-    "/health-note/pets": {
-      centerTitle: "반려견 전체보기",
       showBackButton: true,
     },
   };
@@ -97,12 +90,8 @@ export default function HealthNoteHeader() {
       onBack?: () => void;
     }
   > = {
-    "/health-note/probiome/detail/": () => ({
+    "probiome/detail/": () => ({
       centerTitle: "상세보기",
-      showBackButton: true,
-    }),
-    "/health-note/probiome/return-request/": () => ({
-      centerTitle: "회수신청",
       showBackButton: true,
     }),
   };
@@ -123,16 +112,17 @@ export default function HealthNoteHeader() {
   const exactExcludePaths = [
     "/health-note/guest",
     "/health-note",
-    `/health-note/medical-history/${params.diagnosisId}`,
-    `/health-note/full-check/result/${params.reportId}`,
-    "/health-note/probiome/survey",
+    `/health-note/${params.petId}/medical-history/${params.diagnosisId}`,
+    `/health-note/${params.petId}/full-check/result/${params.diagnosisId}`,
+    `/health-note/${params.petId}/probiome/survey`,
+    `/health-note/${params.petId}/probiome/return-request/${params.id}`,
   ];
 
   // 접두사로 시작하면 제외할 경로
   const prefixExcludePaths = [
-    "/health-note/full-check/survey",
-    "/health-note/body-check/survey",
-    "/health-note/body-check/result",
+    `/health-note/${params.petId}/full-check/survey`,
+    `/health-note/${params.petId}/body-check/survey`,
+    `/health-note/${params.petId}/body-check/result`,
   ];
 
   const shouldRenderHeader = useMemo(() => {

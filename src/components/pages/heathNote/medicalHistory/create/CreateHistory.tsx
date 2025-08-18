@@ -69,7 +69,7 @@ export default function CreateHistory ({ petId }: CreateHistoryProps) {
 				await queryClient.invalidateQueries({
 					queryKey: [queryKeys.MEDICAL_HISTORY.BASE, queryKeys.MEDICAL_HISTORY.GET_MEDICAL_HISTORY_DETAIL, diagnosisId],
 				});
-				router.push(`/health-note/medical-history/${diagnosisId}?petId=${petId}`)
+				router.push(`/health-note/${petId}/medical-history/${diagnosisId}`)
 			},
 			onError: (error) => {
 				if(axios.isAxiosError(error)) {

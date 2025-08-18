@@ -33,13 +33,21 @@ export async function getProbiomeHeaderConfig(): Promise<HeaderConfig> {
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
 
+  const normalizedPath = (() => {
+    const parts = pathname.split("/");
+    if (parts.length > 3 && parts[1] === "health-note") {
+      return `/health-note/${parts.slice(3).join("/")}`;
+    }
+    return pathname;
+  })();
+
   // 동적 경로 처리
-  if (pathname.includes("/detail/")) {
+  if (normalizedPath.includes("/detail/")) {
     return HEADER_CONFIGS["/health-note/probiome/detail"];
   }
-  if (pathname.includes("/return-request/")) {
+  if (normalizedPath.includes("/return-request/")) {
     return HEADER_CONFIGS["/health-note/probiome/return-request"];
   }
 
-  return HEADER_CONFIGS[pathname] || HEADER_CONFIGS["/health-note/probiome"];
+  return HEADER_CONFIGS[normalizedPath] || HEADER_CONFIGS["/health-note/probiome"];
 }
