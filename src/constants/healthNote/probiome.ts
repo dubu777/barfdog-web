@@ -579,14 +579,6 @@ const PROBIOME_SECTIONS = [
   { key: "additionalInfo", label: "추가 정보", steps: 3 },
 ];
 
-const PROBIOME_STATUS = {
-  SUBMITTED: "문진 작성완료",
-  KIT_PICKUP_REQUESTED: "회수 신청",
-  KIT_PICKUP_DONE: "회수 완료",
-  ANALYZING: "분석 중",
-  COMPLETED: "분석 완료",
-};
-
 const PROBIOME_ERROR_MESSAGES = {
   INVALID_RESOURCE: "이미 등록된 진단 키트입니다.",
   NOT_FOUND_RESOURCE: "잘못된 진단 키트 번호입니다.",
@@ -605,7 +597,6 @@ export {
   PROBIOME_SECTIONS,
   PROBIOME_TITLES,
   PROBIOME_OPTIONAL_FIELDS,
-  PROBIOME_STATUS,
   PROBIOME_ERROR_MESSAGES,
   BODY_SIZE_LABEL,
 };

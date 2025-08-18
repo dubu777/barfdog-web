@@ -4,8 +4,10 @@ import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard
 import { Gender } from "@/types";
 
 interface ProbiomeSurveyPageProps {
+  params: {
+    petId: string;
+  };
   searchParams: {
-    petId?: string;
     kitId?: string;
     petName?: string;
     gender?: Gender;
@@ -13,9 +15,11 @@ interface ProbiomeSurveyPageProps {
 }
 
 export default function ProbiomeSurveyPage({
+  params,
   searchParams,
 }: ProbiomeSurveyPageProps) {
-  const { petId, kitId, petName, gender } = searchParams;
+  const { kitId, petName, gender } = searchParams;
+  const { petId } = params;
 
   // 필수 파라미터 검증
   if (!petId || !kitId || !petName || !gender) {

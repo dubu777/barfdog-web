@@ -6,7 +6,10 @@ interface CreateProbiomePageProps {
   };
 }
 
-export default async function CreateProbiomePage({ params }: CreateProbiomePageProps) {
-  const { petId } = await params;
-  return <CreateProbiome petId={Number(petId)} />;
+export default function CreateProbiomePage({
+  params,
+}: CreateProbiomePageProps) {
+  const { petId } = params;
+  const parsedPetId = parseInt(petId);
+  return <CreateProbiome petId={parsedPetId} />;
 }

@@ -1,4 +1,3 @@
-import { PROBIOME_STATUS } from "@/constants/healthNote/probiome";
 import { DogSize, Gender } from "../survey";
 
 interface ProbiomeSurvey {
@@ -41,7 +40,12 @@ interface CreateProbiomeResponse {
   errorCode: string | null;
 }
 
-export type ProbiomeStatus = keyof typeof PROBIOME_STATUS;
+type ProbiomeStatus =
+  | "SUBMITTED"
+  | "KIT_PICKUP_REQUESTED"
+  | "KIT_PICKUP_DONE"
+  | "ANALYZING"
+  | "COMPLETED";
 
 interface ProbiomeDto {
   downloadReportUrl: string | null;
@@ -168,4 +172,5 @@ export type {
   ProbiomeKit,
   PetPreInfo,
   ProbiomePreInfo,
+  ProbiomeStatus,
 };

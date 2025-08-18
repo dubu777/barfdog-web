@@ -73,6 +73,10 @@ export default function HealthNoteHeader() {
       centerTitle: "장내 미생물 검사",
       showBackButton: true,
     },
+    "probiome/create": {
+      centerTitle: "",
+      showBackButton: true,
+    },
   };
 
   const dynamicHeaderConfigs: Record<

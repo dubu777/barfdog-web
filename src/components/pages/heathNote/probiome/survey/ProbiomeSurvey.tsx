@@ -17,7 +17,7 @@ import {
 } from "@/utils/validation/probiomeValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useProbiomeStepElements } from "./steps/StepElements";
@@ -26,6 +26,9 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useCreateProbiomeResult } from "@/api/healthNote/probiome/mutations/useCreateProbiomeResult";
 import { buildProbiomePayload } from "@/utils/healthNote/buildProbiomePayload";
 import { Gender } from "@/types";
+import { useToastStore } from "@/store/useToastStore";
+import useModal from "@/hooks/useModal";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 interface ProbiomeSurveyProps {
   petId: number;
@@ -41,14 +44,19 @@ export default function ProbiomeSurvey({
   gender,
 }: ProbiomeSurveyProps) {
   const router = useRouter();
+  const { isOpen, onClose, onOpen } = useModal();
+  const addToast = useToastStore((state) => state.addToast);
   const { mutate: submitResult } = useCreateProbiomeResult({
-    onSuccess: (response) => {
-      // TODO: 성공 시 결과 페이지로 이동 또는 사용자 피드백 처리
-      console.log("response", response); // 임시
+    onSuccess: (res) => {
+      if (res.success) {
+        router.push(`/health-note/${petId}/probiome`);
+        addToast("장내 미생물 설문이 완료됐어요", "above-button");
+      } else {
+        addToast("장내 미생물 설문에 실패했어요", "above-button");
+      }
     },
     onError: (err) => {
-      // TODO: 에러 처리 로직 추가 (사용자에게 에러 메시지 표시)
-      console.error("err", err);
+      addToast("장내 미생물 설문에 실패했어요", "above-button");
     },
   });
 
@@ -58,15 +66,31 @@ export default function ProbiomeSurvey({
     mode: "all",
   });
 
-  const { trigger, getValues } = methods;
+  const {
+    trigger,
+    getValues,
+    setValue,
+    formState: { errors },
+    watch,
+  } = methods;
+
+  console.log("watch", watch());
+  console.log("errors", errors);
 
   const stepKeys = Object.keys(defaultProbiomeStepValues) as ProbiomeStepKeys[];
+
+  // gender가 MALE일 때 step5의 pregnancyStatus를 "NONE"으로 설정
+  useEffect(() => {
+    if (gender === "MALE") {
+      setValue("step5.pregnancyStatus", "NONE");
+    }
+  }, [gender, setValue]);
 
   const skipConditions = useMemo<SkipCondition<ProbiomeStepKeys>[]>(
     () => [
       {
-        from: "step5",
-        to: "step7",
+        from: "step4",
+        to: "step6",
         predicate: () => gender === "MALE",
       },
     ],
@@ -101,7 +125,10 @@ export default function ProbiomeSurvey({
   });
 
   const handleSurveySubmit = useCallback(async () => {
-    if (!(await trigger())) return;
+    if (!(await trigger())) {
+      addToast("유효하지 않은 항목이 있습니다", "above-button");
+      return;
+    }
 
     const values = getValues();
 
@@ -109,11 +136,11 @@ export default function ProbiomeSurvey({
     const payload = buildProbiomePayload(values, petId, kitId);
 
     submitResult(payload);
-  }, [trigger, getValues, submitResult]);
+  }, [trigger, getValues, submitResult, addToast]);
 
   const handleFooterButtonClick = () => {
     if (isLastStep) {
-      handleSurveySubmit();
+      onOpen();
     } else {
       handleNextStep();
     }
@@ -151,6 +178,16 @@ export default function ProbiomeSurvey({
         primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
         onPrimaryClick={handleFooterButtonClick}
         isPrimaryDisabled={!isCanNextStep()}
+      />
+      <AlertModal
+        title="문진을 제출하시겠어요?"
+        content="한 번 제출한 문진은 다시 수정할 수 없어요"
+        confirmText="제출하기"
+        cancelText="돌아가기"
+        onConfirm={handleSurveySubmit}
+        onCancel={onClose}
+        onClose={onClose}
+        isOpen={isOpen}
       />
     </div>
   );

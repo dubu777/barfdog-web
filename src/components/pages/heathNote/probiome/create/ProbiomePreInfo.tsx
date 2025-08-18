@@ -31,7 +31,7 @@ export default function ProbiomePreInfo({
     { label: "견종", value: pet.breed },
     { label: "생년월일", value: pet.birthDay },
     { label: "성별", value: pet.gender === "FEMALE" ? "암컷" : "수컷" },
-    { label: "몸무게", value: `${pet.weight}kg` },
+    // { label: "몸무게", value: `${pet.weight}kg` },
     {
       label: "중성화 여부",
       value: pet.neutralization ? "중성화 했어요" : "중성화 안했어요",
@@ -43,7 +43,7 @@ export default function ProbiomePreInfo({
   ];
 
   const handleGoToSurvey = () => {
-    window.location.href = `/health-note/probiome/survey?kitId=${kitId}&petId=${petId}&petName=${pet.name}&gender=${pet.gender}`;
+    window.location.href = `/health-note/${petId}/probiome/survey?kitId=${kitId}&petName=${pet.name}&gender=${pet.gender}`;
   };
 
   return (
