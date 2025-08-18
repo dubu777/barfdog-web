@@ -6,11 +6,26 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
 import DogpediaDetail from "@/components/pages/heathNote/dogpedia/detail/DogpediaDetail";
-import { useGetBreedList } from "@/api/healthNote/dogpidea/queries/useGetBreedList";
 import { Option } from "@/types";
+import { useGetBreedList } from "@/api/healthNote/dogpidea/queries/useGetBreedList";
+import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 
-export default function Dogpedia() {
+interface DogpediaProps {
+  petId: number;
+}
+
+export default function Dogpedia({ petId }: DogpediaProps) {
   const { data } = useGetBreedList();
+  const { data: petInfo } = useGetPetDetail(petId);
+
+  // 건강수첩 메인에서 선택한 대표 반려견의 breed initialValue값 적용
+  const petBreedId = useMemo(() => {
+    if (!data || !petInfo || !petInfo.breedInfo) return null;
+    const found = data.find(breed => breed.breedName === petInfo.breedInfo.name);
+    return found ? found.breedId : null;
+  }, [data, petInfo]);
+
+  const [selectedBreedId, setSelectedBreedId] = useState<number | null>(petBreedId);
 
   const DOGPEDIA_OPTIONS: Option<number>[] = useMemo(() => {
     return data.map((breed) => ({
@@ -19,9 +34,6 @@ export default function Dogpedia() {
     }));
   }, [data]);
 
-  // 건강수첩 메인에서 선택한 대표 반려견의 dogType initialValue값 적용 필요
-  const [selectedBreedId, setSelectedBreedId] = useState<number | null>(null);
-
   const handleSelect = (value) => {
     setSelectedBreedId(Number(value));
     window.scrollTo(0, 0);
@@ -29,7 +41,7 @@ export default function Dogpedia() {
 
   return (
     <>
-      {selectedBreedId === null ? (
+      {selectedBreedId === null || !petInfo ? (
         <section className={styles.searchDogContainer}>
           <DefaultText type="title3">
             궁금한 견종이 있으신가요?

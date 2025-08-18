@@ -130,8 +130,6 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
     const suspectedDiseaseCategoryList = suspectedDiseases.map(disease => disease.category);
     const suspectedDiseaseTypeList = suspectedDiseases.map(disease => disease.diseaseKey);
 
-    console.log('suspectedDiseases', suspectedDiseases)
-
     const body = {
       petId,
       checkupScore,
@@ -148,7 +146,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
         await queryClient.invalidateQueries({
           queryKey: [queryKeys.FULL_CHECK.BASE, queryKeys.FULL_CHECK.GET_FULL_CHECK_RESULT_DETAIL, diagnosisId],
         });
-        router.push(`/health-note/full-check/result/${diagnosisId}?petId=${petId}`);
+        router.push(`/health-note/${petId}/full-check/result/${diagnosisId}`);
       },
       onError: (error) => {
         if(axios.isAxiosError(error)) {

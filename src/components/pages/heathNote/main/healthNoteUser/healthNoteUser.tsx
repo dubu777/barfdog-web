@@ -4,9 +4,9 @@ import Image from "next/image";
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ComparisonProgressBar from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
+import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
 import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
-import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { useGetFullCheckSummary } from "@/api/healthNote/fullCheck/queries/useGetFullCheckSummary";
 
@@ -27,16 +27,20 @@ const HealthNoteUser = () => {
     useScoreStatus({ current: checkupScore, scoreDifference: checkupScore - avgCheckupScore });
 
   const handleGotoMenu = (url) => {
-    if (url === "/health-note/full-check" && petInfo?.id) {
-      window.location.href = `${url}${isFirstFullCheck ? "/survey" : ""}?petId=${petInfo.id}`;
-    } else if (url === "/health-note/probiome" && petInfo?.id) {
-      window.location.href = `${url}?dogId=${petInfo.id}`;
-    } else if (url === "/health-note/medical-history" && petInfo?.id) {
-      window.location.href = `${url}?petId=${petInfo.id}`;
-    } else if (url === "/health-note/dogpedia" && petInfo?.id) {
-      window.location.href = `${url}?petId=${petInfo.id}`;
-    } else {
-      window.location.href = url;
+    switch (url) {
+      case '/full-check':
+        if (!petInfo?.id) return;
+        window.location.href = `/health-note/${petInfo.id}${url}${isFirstFullCheck ? "/survey" : ""}`;
+        break;
+      case '/medical-history':
+      case '/body-check':
+      case '/dogpedia':
+      case '/probiome':
+        if (!petInfo?.id) return;
+        window.location.href = `/health-note/${petInfo.id}${url}`;
+        break;
+      default:
+        window.location.href = `/health-note${url}`;
     }
   };
 

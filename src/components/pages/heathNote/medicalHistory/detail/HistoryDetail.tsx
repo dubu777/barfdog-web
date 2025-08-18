@@ -1,6 +1,5 @@
 'use client';
 import * as styles from './HistoryDetail.css';
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -95,13 +94,12 @@ export default function HistoryDetail ({
 		mutate({
 			diagnosisId,
 		}, {
-			onSuccess: async (data) => {
-				console.log(data)
+			onSuccess: async () => {
 				addToast("병원 진료 기록이 삭제되었습니다.");
 				await queryClient.invalidateQueries({
 					queryKey: [queryKeys.MEDICAL_HISTORY.BASE, queryKeys.MEDICAL_HISTORY.GET_MEDICAL_HISTORY_LIST],
 				})
-				router.push(`/health-note/medical-history?petId=${petId}`)
+				router.push(`/health-note/${petId}/medical-history`)
 			},
 			onError: (error) => {
 				if(axios.isAxiosError(error)) {
@@ -117,7 +115,7 @@ export default function HistoryDetail ({
 			<Header
 				centerTitle='상세'
 				showBackButton
-				onBack={() => router.push(`/health-note/medical-history?petId=${petId}`)}
+				onBack={() => router.push(`/health-note/${petId}/medical-history`)}
 				rightElement={(
 					<button className={styles.moreButton} onClick={onToggleControlBottomSheet}>
 						<SvgIcon src={MoreHorizIcon} style={{ transform: 'rotate(90deg)' }} size={24} />

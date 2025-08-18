@@ -14,10 +14,10 @@ import { ProbiomeStatus } from "@/types/healthNote/probiome";
 import { useGetProbiomeList } from "@/api/healthNote/probiome/queries/useGetGutProbiomeList";
 
 interface ProbiomeListProps {
-  dogId: number;
+  petId: number;
 }
 
-const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
+const ProbiomeList = ({ petId }: ProbiomeListProps) => {
   const router = useRouter();
   const {
     isOpen: isOpenKitGuideModal,
@@ -26,7 +26,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
   } = useModal();
 
   // dogId가 있는 경우에만 API 호출
-  const { data: probiomeList = [], isLoading } = useGetProbiomeList(dogId);
+  const { data: probiomeList = [], isLoading } = useGetProbiomeList(petId);
 
   if (isLoading) return null;
 
@@ -53,7 +53,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
           </Button>
         </div>
         <CreateButton
-          url="/health-note/probiome/create"
+          url={`/health-note/${petId}/probiome/create`}
           text="사전 문진 작성하기"
         />
         <article className={styles.probiomeList}>
@@ -81,7 +81,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
                     type="assistive"
                     fullWidth
                     onClick={() =>
-                      router.push(`/health-note/probiome/detail/${id}`)
+                      router.push(`/health-note/${petId}/probiome/detail/${id}`)
                     }
                   >
                     신청 상세
@@ -92,7 +92,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
                       fullWidth
                       onClick={() =>
                         router.push(
-                          `/health-note/probiome/return-request/${id}`
+                          `/health-note/${petId}/probiome/return-request/${id}`
                         )
                       }
                     >
@@ -121,6 +121,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
       </section>
       {isOpenKitGuideModal && (
         <KitGuideModal
+          petId={petId}
           isOpen={isOpenKitGuideModal}
           onClose={onCloseKitGuideModal}
         />

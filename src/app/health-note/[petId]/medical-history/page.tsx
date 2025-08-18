@@ -6,13 +6,13 @@ import HistoryList from "@/components/pages/heathNote/medicalHistory/list/Histor
 import { prefetchGetMedicalHistoryList } from "@/api/healthNote/medicalHistory/queries/prefetchGetMedicalHistoryList";
 
 interface MedicalHistoryListPageProps {
-  searchParams: Promise<{
+  params: Promise<{
     petId: string;
   }>;
 }
 
-export default async function MedicalHistoryListPage({ searchParams }: MedicalHistoryListPageProps) {
-  const { petId } = await searchParams;
+export default async function MedicalHistoryListPage({ params }: MedicalHistoryListPageProps) {
+  const { petId } = await params;
   const queryClient = new QueryClient();
   await prefetchGetMedicalHistoryList(Number(petId), queryClient);
   const dehydratedState = dehydrate(queryClient);

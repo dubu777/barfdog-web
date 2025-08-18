@@ -18,10 +18,11 @@ import { BodyCheckPart } from "@/types/healthNote";
 import { bodyCheckSurveyConfig } from "@/config/bodyCheckSurveyConfig";
 
 interface BodyCheckSurveyProps {
+  petId: number;
   part: BodyCheckPart;
 }
 
-export default function BodyCheckSurvey({ part }: BodyCheckSurveyProps) {
+export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
   const router = useRouter();
   const config = bodyCheckSurveyConfig[part];
 
@@ -53,7 +54,7 @@ export default function BodyCheckSurvey({ part }: BodyCheckSurveyProps) {
 
   // 잘못된 part라면 리다이렉트 후 null 반환
   if (!config) {
-    router.replace("/health-note/body-check");
+    router.replace(`/health-note/${petId}/body-check`);
     return null;
   }
 
@@ -83,7 +84,7 @@ export default function BodyCheckSurvey({ part }: BodyCheckSurveyProps) {
             </div>
           )
         }
-        onClose={() => router.push("/health-note/body-check")}
+        onClose={() => router.push(`/health-note/${petId}/body-check`)}
         showCloseButton
       />
       <SurveyProgressBar currentStep={currentStep} sections={sections} />

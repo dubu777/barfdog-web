@@ -43,20 +43,17 @@ export default function FullCheckResult({
   const { mutate } = useDeleteFullCheckResult();
 
   const topSuspectedDiseases = data?.suspectedDiseaseTypeList?.map(v => DISEASE_INFO[v]);
-  console.log('topSuspectedDiseases', topSuspectedDiseases);
-  
 
   const handleDelete = () => {
     mutate({
       diagnosisId,
     }, {
-      onSuccess: async (data) => {
-        console.log(data)
+      onSuccess: async () => {
         addToast("삭제가 완료되었습니다");
         await queryClient.invalidateQueries({
           queryKey: [queryKeys.FULL_CHECK.BASE, queryKeys.FULL_CHECK.GET_FULL_CHECK_LIST],
         })
-        router.push(`/health-note/full-check?petId=${petId}`)
+        router.push(`/health-note/${petId}/full-check`)
       },
       onError: (error) => {
         if(axios.isAxiosError(error)) {
@@ -73,7 +70,7 @@ export default function FullCheckResult({
       <Header
         showBackButton
         centerTitle="결과 상세"
-        onBack={() => router.push(`/health-note/full-check?petId=${petId}`)}
+        onBack={() => router.push(`/health-note/${petId}/full-check`)}
         rightElement={
           <button onClick={onToggle} className={styles.deleteButton}>
             <SvgIcon src={DeleteIcon} size={24} />
@@ -122,7 +119,7 @@ export default function FullCheckResult({
           {/*  dogName={data.name}*/}
           {/*  recommendProducts={recommendProducts}*/}
           {/*/>*/}
-          <BodyCheck />
+          <BodyCheck petId={petId} />
           <DietAnalysisSurvey />
         </div>
       </section>

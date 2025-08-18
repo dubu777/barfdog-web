@@ -1,13 +1,13 @@
 import CreateHistory from "@/components/pages/heathNote/medicalHistory/create/CreateHistory";
 
 interface CreateHistoryPageProps {
-	searchParams: Promise<{
+	params: Promise<{
 		petId: string;
 	}>;
 }
 
-export default async function CreateHistoryPage({ searchParams }: CreateHistoryPageProps) {
-	const { petId } = await searchParams;
+export default async function CreateHistoryPage({ params }: CreateHistoryPageProps) {
+	const { petId } = await params;
 	return (
 		<CreateHistory petId={Number(petId)} />
 	);

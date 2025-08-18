@@ -1,16 +1,16 @@
 import ProbiomeList from "@/components/pages/heathNote/probiome/list/ProbiomeList";
 
 interface ProbiomeListPageProps {
-  searchParams: {
-    dogId: string;
+  params: {
+    petId: string;
   };
 }
 
 export default async function ProbiomeListPage({
-  searchParams,
+  params,
 }: ProbiomeListPageProps) {
-  const { dogId } = searchParams;
-  const parsedDogId = parseInt(dogId);
+  const { petId } = params;
+  const parsedDogId = parseInt(petId);
 
-  return <ProbiomeList dogId={parsedDogId} />;
+  return <ProbiomeList petId={parsedDogId} />;
 }

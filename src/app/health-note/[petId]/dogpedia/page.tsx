@@ -4,17 +4,26 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import Loader from "@/components/common/loader/Loader";
 import Dogpedia from "@/components/pages/heathNote/dogpedia/Dogpedia";
 import { prefetchGetBreedList } from "@/api/healthNote/dogpidea/queries/prefetchGetBreedList";
+import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
 
-export default async function DogPediaPage() {
+interface DogPediaPageProps {
+	params: Promise<{
+		petId: string;
+	}>;
+}
+
+export default async function DogPediaPage({ params }: DogPediaPageProps) {
+	const { petId } = await params;
 	const queryClient = new QueryClient();
 	await prefetchGetBreedList(queryClient);
+	await prefetchGetPetDetail(queryClient, Number(petId));
 	const dehydratedState = dehydrate(queryClient);
 
 	return (
 		<HydrationBoundary state={dehydratedState}>
 			<ErrorBoundary fallback={<div>Something went wrong.</div>}>
 				<Suspense fallback={<Loader fullscreen />}>
-					<Dogpedia />
+					<Dogpedia petId={Number(petId)} />
 				</Suspense>
 			</ErrorBoundary>
 		</HydrationBoundary>

@@ -6,13 +6,13 @@ import FullCheckSurvey from "@/components/pages/heathNote/fullCheck/survey/FullC
 import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
 
 interface FullCheckSurveyPageProps {
-  searchParams: Promise<{
+  params: Promise<{
     petId: string;
   }>;
 }
 
-export default async function FullCheckSurveyPage({ searchParams }: FullCheckSurveyPageProps) {
-  const { petId } = await searchParams;
+export default async function FullCheckSurveyPage({ params }: FullCheckSurveyPageProps) {
+  const { petId } = await params;
 
   const queryClient = new QueryClient();
   await prefetchGetPetDetail(queryClient, Number(petId));

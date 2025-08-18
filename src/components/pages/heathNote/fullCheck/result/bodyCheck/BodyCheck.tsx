@@ -5,7 +5,11 @@ import BodyCheckImage from '/public/images/healthNote/full-check/body-check.png'
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
 import Button from "@/components/common/button/Button";
 
-export default function BodyCheck() {
+interface BodyCheckProps {
+	petId: number;
+}
+
+export default function BodyCheck({ petId }: BodyCheckProps) {
 	const router = useRouter();
 	return (
 		<ResultCard
@@ -14,7 +18,7 @@ export default function BodyCheck() {
 			className={commonWrapper({ direction: 'col', align: 'center', gap: 20 })}
 		>
 			<Image src={BodyCheckImage} alt='body check' width={303} height={140} />
-			<Button onClick={() => router.push('/health-note/body-check')} variant='outline'>부위별 진단 받으러 가기</Button>
+			<Button onClick={() => router.push(`/health-note/${petId}/body-check`)} variant='outline'>부위별 진단 받으러 가기</Button>
 		</ResultCard>
 	);
 };

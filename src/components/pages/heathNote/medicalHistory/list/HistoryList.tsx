@@ -33,7 +33,7 @@ export default function HistoryList ({ petId }: HistoryListProps) {
 						<DefaultText type='body3' color='gray600'>우리 아이 병원 진료 내역을 기록해 보세요</DefaultText>
 					</div>
 					<Button 
-						onClick={() => router.push(`/health-note/medical-history/create?petId=${petId}`)}
+						onClick={() => router.push(`/health-note/${petId}/medical-history/create`)}
 						variant='solid'
 					>
 						병원 진료 기록 등록하기
@@ -41,10 +41,10 @@ export default function HistoryList ({ petId }: HistoryListProps) {
 				</article>
 				: (
 					<article>
-						<CreateButton url={`/health-note/medical-history/create?petId=${petId}`} text='병원 진료 기록 등록하기' />
+						<CreateButton url={`/health-note/${petId}/medical-history/create`} text='병원 진료 기록 등록하기' />
 						<div className={styles.healthCheckList}>
 							{data.map(data => (
-								<Link href={`/health-note/medical-history/${data.diagnosisId}?petId=${petId}`} key={data.diagnosisId} >
+								<Link href={`/health-note/${petId}/medical-history/${data.diagnosisId}`} key={data.diagnosisId} >
 									<Card
 										shadow='light'
 										padding={16}

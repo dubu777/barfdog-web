@@ -6,13 +6,13 @@ import FullCheckList from "@/components/pages/heathNote/fullCheck/list/FullCheck
 import { prefetchGetInfiniteFullCheckList } from "@/api/healthNote/fullCheck/queries/prefetchGetInfiniteFullCheckList";
 
 interface FullCheckListPageProps {
-  searchParams: Promise<{
+  params: Promise<{
     petId: string;
   }>;
 }
 
-export default async function FullCheckListPage({ searchParams }: FullCheckListPageProps) {
-  const { petId } = await searchParams;
+export default async function FullCheckListPage({ params }: FullCheckListPageProps) {
+  const { petId } = await params;
   const queryClient = new QueryClient();
   await prefetchGetInfiniteFullCheckList(Number(petId), queryClient);
   const dehydratedState = dehydrate(queryClient);

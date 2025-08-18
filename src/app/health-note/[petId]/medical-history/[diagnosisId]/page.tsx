@@ -7,16 +7,13 @@ import { prefetchGetMedicalHistoryDetail } from "@/api/healthNote/medicalHistory
 
 interface MedicalHistoryDetailPageProps {
 	params: Promise<{
-		diagnosisId: string;
-	}>;
-	searchParams: Promise<{
 		petId: string;
+		diagnosisId: string;
 	}>;
 }
 
-export default async function MedicalHistoryDetailPage({ params, searchParams }: MedicalHistoryDetailPageProps) {
-	const { diagnosisId } = await params;
-	const { petId } = await searchParams;
+export default async function MedicalHistoryDetailPage({ params }: MedicalHistoryDetailPageProps) {
+	const { petId, diagnosisId } = await params;
 	const queryClient = new QueryClient();
 	await prefetchGetMedicalHistoryDetail(Number(diagnosisId), queryClient);
 	const dehydratedState = dehydrate(queryClient);

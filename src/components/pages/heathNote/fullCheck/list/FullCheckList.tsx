@@ -40,7 +40,7 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   const handleGoToSurvey = () => {
-    window.location.href = `/health-note/full-check/survey?petId=${petId}`;
+    window.location.href = `/health-note/${petId}/full-check/survey`;
   };
 
   return (
@@ -70,7 +70,7 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
         {checkupDiagnosisList.map((result, index) => (
           <Link
             key={index}
-            href={`/health-note/full-check/result/${result.diagnosisId}?petId=${petId}`}
+            href={`/health-note/${petId}/full-check/result/${result.diagnosisId}`}
           >
             <Card
               shadow="light"

@@ -3,12 +3,17 @@ import * as styles from "./CreateProbiome.css";
 import { useState } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
+import { useParams } from "next/navigation";
 
-const CreateProbiome = () => {
+interface CreateProbiomeProps {
+  petId: number;
+}
+
+const CreateProbiome = ({ petId }: CreateProbiomeProps) => {
   const [serialNumber, setSerialNumber] = useState<string>("");
 
   const handleCheckSerialNumber = () => {
-    window.location.href = "/health-note/probiome/survey";
+    window.location.href = `/health-note/${petId}/probiome/survey`;
   };
 
   return (

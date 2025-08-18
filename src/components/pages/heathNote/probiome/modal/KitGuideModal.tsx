@@ -16,6 +16,7 @@ import KitGuidStep5 from "/public/images/healthNote/probiome/kit-guide-step5.svg
 import KitGuidStep6 from "/public/images/healthNote/probiome/kit-guide-step6.svg";
 
 interface KitGuideModalProps {
+  petId: number;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -131,7 +132,7 @@ const KIT_GUIDE_NOTICE_LIST = [
   },
 ];
 
-const KitGuideModal = ({ isOpen, onClose }: KitGuideModalProps) => {
+const KitGuideModal = ({ petId, isOpen, onClose }: KitGuideModalProps) => {
   const router = useRouter();
   return (
     <FullModalWrapper
@@ -190,7 +191,7 @@ const KitGuideModal = ({ isOpen, onClose }: KitGuideModalProps) => {
               {step.buttonText && (
                 <TextButton
                   text="사전 문진 바로가기"
-                  onClick={() => router.push("/health-note/probiome/create")}
+                  onClick={() => router.push(`/health-note/${petId}/probiome/create`)}
                   className={styles.createButton}
                 />
               )}
