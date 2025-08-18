@@ -1,4 +1,5 @@
 import { PROBIOME_STATUS } from "@/constants/healthNote/probiome";
+import { DogSize, Gender } from "../survey";
 
 interface ProbiomeSurvey {
   acquisitionType: string;
@@ -117,6 +118,38 @@ interface DetailItem {
   value: string | string[];
 }
 
+interface ProbiomeKit {
+  id: number;
+  name: string;
+  serialNo: string;
+  type: string;
+  manufacturer: string;
+  manufactureDate: string;
+  used: false;
+}
+
+interface MemberPreInfo {
+  id: number;
+  name: string;
+  phoneNumber: string;
+}
+
+interface PetPreInfo {
+  id: number;
+  name: string;
+  breed: string;
+  bodySize: DogSize;
+  birthDay: string;
+  gender: Gender;
+  weight: number;
+  neutralization: boolean;
+}
+interface ProbiomePreInfo {
+  kit: ProbiomeKit;
+  member: MemberPreInfo;
+  pet: PetPreInfo;
+}
+
 export type {
   CreateProbiomeRequest,
   CreateProbiomeResponse,
@@ -132,4 +165,7 @@ export type {
   SectionConfig,
   SectionType,
   DetailItem,
+  ProbiomeKit,
+  PetPreInfo,
+  ProbiomePreInfo,
 };

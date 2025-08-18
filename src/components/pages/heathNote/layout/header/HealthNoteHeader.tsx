@@ -98,7 +98,7 @@ export default function HealthNoteHeader() {
     }
   > = {
     "/health-note/probiome/detail/": () => ({
-      centerTitle: "",
+      centerTitle: "상세보기",
       showBackButton: true,
     }),
     "/health-note/probiome/return-request/": () => ({
@@ -148,4 +148,4 @@ export default function HealthNoteHeader() {
   }, [pathname, params.historyId]);
 
   return <>{shouldRenderHeader && <Header {...headerProps} />}</>;
-};
+}

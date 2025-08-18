@@ -2,6 +2,7 @@
 
 import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
 import {
   ProbiomeDetailCardData,
   SectionType,
@@ -12,7 +13,6 @@ import {
   formatFieldValue,
 } from "@/utils/healthNote/probiomeDetailUtils";
 import { useMemo } from "react";
-import * as styles from "./ProbiomeDetailCard.css";
 import { commonWrapper } from "@/styles/common.css";
 import Divider from "@/components/common/divider/Divider";
 
@@ -35,22 +35,6 @@ export default function ProbiomeDetailCard({
     }));
   }, [data, sectionType]);
 
-  // 테이블 행 렌더링 함수
-  const renderTableRow = (item: DetailItem) => (
-    <div
-      key={item.label}
-      className={commonWrapper({ justify: "start", gap: 4 })}
-    >
-      <DefaultText type="body3" color="gray700" className={styles.labelText}>
-        {item.label}
-      </DefaultText>
-
-      <DefaultText type="label2" color="gray800">
-        {item.value}
-      </DefaultText>
-    </div>
-  );
-
   return (
     <Card shadow="light" padding={16} gap={12} align="start">
       <DefaultText type="title4" color="gray800">
@@ -60,7 +44,18 @@ export default function ProbiomeDetailCard({
       <div
         className={commonWrapper({ direction: "col", gap: 8, paddingTop: 4 })}
       >
-        {detailItems.map((item) => renderTableRow(item))}
+        {detailItems.map((item, index) => (
+          <LabelValueItem
+            key={index}
+            label={item.label}
+            value={item.value}
+            labelType="body3"
+            labelColor="gray700"
+            valueType="label2"
+            valueColor="gray800"
+            labelWidth={120}
+          />
+        ))}
       </div>
     </Card>
   );

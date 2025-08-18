@@ -1,37 +1,72 @@
 "use client";
 import * as styles from "./CreateProbiome.css";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import InputField from "@/components/common/inputField/InputField";
+import { useCheckProbiomeKit } from "@/api/healthNote/probiome/queries/useCheckProbiomeKit";
+import ProbiomePreInfo from "./ProbiomePreInfo";
+import { PROBIOME_ERROR_MESSAGES } from "@/constants/healthNote/probiome";
 
-const CreateProbiome = () => {
-  const [serialNumber, setSerialNumber] = useState<string>("");
+interface CreateProbiomeProps {
+  petId: number;
+}
 
-  const handleCheckSerialNumber = () => {
-    window.location.href = "/health-note/probiome/survey";
-  };
+export default function CreateProbiome({ petId }: CreateProbiomeProps) {
+  const [serialNo, setSerialNo] = useState<string>("");
+  const [kitId, setKitId] = useState<number | null>(null);
+  const [error, setError] = useState<string>("");
+  const [isKitVerified, setIsKitVerified] = useState<boolean>(false);
+  const { refetch: checkKit } = useCheckProbiomeKit(serialNo, {
+    enabled: false,
+  });
+
+  const handleCheckSerialNumber = useCallback(async () => {
+    const { data: kitInfo } = await checkKit();
+    const isSuccess = kitInfo?.errorCode === null;
+
+    if (isSuccess && kitInfo?.data) {
+      setIsKitVerified(true);
+      setError("");
+      setKitId(kitInfo.data?.id);
+    } else {
+      const errorMessage =
+        PROBIOME_ERROR_MESSAGES[
+          kitInfo?.errorCode as keyof typeof PROBIOME_ERROR_MESSAGES
+        ] ?? PROBIOME_ERROR_MESSAGES.DEFAULT;
+      setError(errorMessage);
+      setIsKitVerified(false);
+    }
+  }, [checkKit]);
 
   return (
     <section className={styles.createProbiomeContainer}>
-      <DefaultText type="title3">
-        진단 키트 [안내서에] 있는
-        <br />
-        시리얼 번호를 입력해 주세요
-      </DefaultText>
-      <div>
-        <InputField
-          value={serialNumber}
-          onChange={(e) => setSerialNumber(e.target.value)}
-          placeholder="시리얼 번호 입력"
-          confirmButton
-          confirmButtonDisabled={!serialNumber}
-          confirmButtonText="인증"
-          confirmButtonVariant="solid"
-          onSubmit={handleCheckSerialNumber}
-        />
-      </div>
+      {!isKitVerified ? (
+        <>
+          <DefaultText type="title3">
+            진단 키트 [안내서에] 있는
+            <br />
+            시리얼 번호를 입력해 주세요
+          </DefaultText>
+          <div>
+            <InputField
+              value={serialNo}
+              onChange={(e) => setSerialNo(e.target.value)}
+              placeholder="시리얼 번호 입력"
+              confirmButton
+              confirmButtonDisabled={!serialNo}
+              confirmButtonText="인증"
+              confirmButtonVariant="solid"
+              onSubmit={handleCheckSerialNumber}
+              error={error}
+            />
+          </div>
+        </>
+      ) : (
+        petId &&
+        kitId && (
+          <ProbiomePreInfo serialNo={serialNo} petId={petId} kitId={kitId} />
+        )
+      )}
     </section>
   );
-};
-
-export default CreateProbiome;
+}

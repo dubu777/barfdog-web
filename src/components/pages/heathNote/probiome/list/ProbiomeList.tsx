@@ -11,13 +11,13 @@ import useModal from "@/hooks/useModal";
 import KitGuideModal from "@/components/pages/heathNote/probiome/modal/KitGuideModal";
 import { PROBIOME_STATUS } from "@/constants/healthNote/probiome";
 import { ProbiomeStatus } from "@/types/healthNote/probiome";
-import { useGetProbiomeList } from "@/api/healthNote/probiome/queries/useGetGutProbiomeList";
+import { useGetProbiomeList } from "@/api/healthNote/probiome/queries/useGetProbiomeList";
 
 interface ProbiomeListProps {
-  dogId: number;
+  petId: number;
 }
 
-const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
+const ProbiomeList = ({ petId }: ProbiomeListProps) => {
   const router = useRouter();
   const {
     isOpen: isOpenKitGuideModal,
@@ -25,8 +25,8 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
     onToggle: onToggleKitGuideModal,
   } = useModal();
 
-  // dogId가 있는 경우에만 API 호출
-  const { data: probiomeList = [], isLoading } = useGetProbiomeList(dogId);
+  // petId가 있는 경우에만 API 호출
+  const { data: probiomeList = [], isLoading } = useGetProbiomeList(petId);
 
   if (isLoading) return null;
 
@@ -53,7 +53,7 @@ const ProbiomeList = ({ dogId }: ProbiomeListProps) => {
           </Button>
         </div>
         <CreateButton
-          url="/health-note/probiome/create"
+          url={`/health-note/probiome/create?petId=${petId}`}
           text="사전 문진 작성하기"
         />
         <article className={styles.probiomeList}>

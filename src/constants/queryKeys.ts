@@ -111,6 +111,8 @@ const queryKeys = {
     BASE: "probiome",
     GET_PROBIOME_RESULT: "getProbiomeResult",
     GET_PROBIOME_LIST: "getProbiomeList",
+    CHECK_PROBIOME_KIT: "checkProbiomeKit",
+    GET_PROBIOME_PRE_INFO: "getProbiomePreInfo",
   },
   PET: {
     BASE: "pet",

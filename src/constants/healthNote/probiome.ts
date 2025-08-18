@@ -1,4 +1,4 @@
-import { SurveyTitleConfig } from "@/types";
+import { DogSize, SurveyTitleConfig } from "@/types";
 import { ProbiomeStepKeys } from "@/utils/validation/probiomeValidation";
 import Born from "public/images/survey/Icon-Born.svg";
 import Bowel from "public/images/survey/Icon-Bowel.svg";
@@ -587,6 +587,18 @@ const PROBIOME_STATUS = {
   COMPLETED: "분석 완료",
 };
 
+const PROBIOME_ERROR_MESSAGES = {
+  INVALID_RESOURCE: "이미 등록된 진단 키트입니다.",
+  NOT_FOUND_RESOURCE: "잘못된 진단 키트 번호입니다.",
+  DEFAULT: "등록에 실패했어요",
+} as const;
+
+const BODY_SIZE_LABEL: Record<DogSize, string> = {
+  SMALL: "소형견",
+  MIDDLE: "중형견",
+  LARGE: "대형견",
+};
+
 export {
   PROBIOME_FORM_INFO,
   PROBIOME_NO_AUTO_STEP,
@@ -594,4 +606,6 @@ export {
   PROBIOME_TITLES,
   PROBIOME_OPTIONAL_FIELDS,
   PROBIOME_STATUS,
+  PROBIOME_ERROR_MESSAGES,
+  BODY_SIZE_LABEL,
 };

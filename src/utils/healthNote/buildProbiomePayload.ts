@@ -2,7 +2,9 @@ import { CreateProbiomeRequest } from "@/types/healthNote/probiome";
 import { ProbiomeStepValues } from "../validation/probiomeValidation";
 
 export function buildProbiomePayload(
-  values: ProbiomeStepValues
+  values: ProbiomeStepValues,
+  petId: number,
+  kitId: number
 ): CreateProbiomeRequest {
   const {
     step1: { bodyFit },
@@ -25,8 +27,8 @@ export function buildProbiomePayload(
   } = values;
 
   return {
-    petId: 3532,
-    kitId: 4,
+    petId,
+    kitId,
     survey: {
       bodyFit,
       probioticsStatus,

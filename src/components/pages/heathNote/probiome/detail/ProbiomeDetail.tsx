@@ -6,13 +6,18 @@ import ProbiomeDetailCard from "./ProbiomeDetailCard";
 import { buildProbiomeSectionData } from "@/utils/healthNote/buildProbiomeSectionData";
 import { commonWrapper } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
+import Loader from "@/components/common/loader/Loader";
 
 interface ProbiomeDetailProps {
   diagnosisId: number;
 }
 
 export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
-  const { data } = useGetProbiomeDetail(diagnosisId);
+  const { data, isLoading } = useGetProbiomeDetail(diagnosisId);
+
+  if (isLoading || !data) {
+    return <Loader />;
+  }
 
   const sectionData = buildProbiomeSectionData(data.survey);
   const sections: SectionType[] = [

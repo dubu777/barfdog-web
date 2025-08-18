@@ -39,11 +39,14 @@ export function getFieldLabel(
 
 // 값을 라벨로 변환하기
 export function formatFieldValue(
-  value: string | string[],
+  value: string | string[] | undefined | null,
   fieldKey: string,
   sectionType: SectionType
 ): string {
   const EMPTY_TEXT = "없음";
+
+  // null, undefined 체크
+  if (value == null) return EMPTY_TEXT;
 
   if (Array.isArray(value)) {
     if (value.length === 0) return EMPTY_TEXT;
@@ -52,7 +55,8 @@ export function formatFieldValue(
       .join(", ");
   }
 
-  if (!value.trim()) return EMPTY_TEXT;
+  // 문자열 타입 체크 및 trim 안전 호출
+  if (typeof value !== 'string' || !value.trim()) return EMPTY_TEXT;
   return formatSingleValue(value, fieldKey, sectionType);
 }
 
@@ -62,8 +66,11 @@ function formatSingleValue(
   fieldKey: string,
   sectionType: SectionType
 ): string {
+  // 안전성 체크
+  if (typeof value !== 'string') return String(value || '');
+  
   const section = PROBIOME_FORM_INFO[sectionType] as ProbiomeSection;
-  const field = section[fieldKey];
+  const field = section?.[fieldKey];
   if (!field) return value;
 
   // options가 있는 경우

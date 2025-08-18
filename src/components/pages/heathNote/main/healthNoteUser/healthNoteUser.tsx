@@ -24,7 +24,7 @@ const HealthNoteUser = () => {
     if (url === "/health-note/full-check") {
       window.location.href = `${url}${isFirstFullCheck ? "/survey" : ""}`;
     } else if (url === "/health-note/probiome" && petInfo?.id) {
-      window.location.href = `${url}?dogId=${petInfo.id}`;
+      window.location.href = `${url}?petId=${petInfo.id}`;
     } else if (url === "/health-note/medical-history" && petInfo?.id) {
       window.location.href = `${url}?petId=${petInfo.id}`;
     } else {

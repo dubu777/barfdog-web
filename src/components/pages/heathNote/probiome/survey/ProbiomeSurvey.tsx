@@ -25,8 +25,21 @@ import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/Su
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useCreateProbiomeResult } from "@/api/healthNote/probiome/mutations/useCreateProbiomeResult";
 import { buildProbiomePayload } from "@/utils/healthNote/buildProbiomePayload";
+import { Gender } from "@/types";
 
-export default function ProbiomeSurvey() {
+interface ProbiomeSurveyProps {
+  petId: number;
+  kitId: number;
+  petName: string;
+  gender: Gender;
+}
+
+export default function ProbiomeSurvey({
+  petId,
+  kitId,
+  petName,
+  gender,
+}: ProbiomeSurveyProps) {
   const router = useRouter();
   const { mutate: submitResult } = useCreateProbiomeResult({
     onSuccess: (response) => {
@@ -39,10 +52,6 @@ export default function ProbiomeSurvey() {
     },
   });
 
-  // 임시로, 실제로는 사용자 정보에서 가져와야 함
-  const dogName = "임시데이터";
-  const gender = "FEMALE";
-
   const methods = useForm<yup.InferType<typeof probiomeStepSchema>>({
     resolver: yupResolver(probiomeStepSchema),
     defaultValues: defaultProbiomeStepValues,
@@ -51,30 +60,14 @@ export default function ProbiomeSurvey() {
 
   const { trigger, getValues } = methods;
 
-  // const stepValues = watch();
-  // const stepErrors = errors;
-
   const stepKeys = Object.keys(defaultProbiomeStepValues) as ProbiomeStepKeys[];
-
-  // 임시로 추후에 개발할 step들을 스킵
-  // const skipConditions = useMemo<SkipCondition<ProbiomeStepKeys>[]>(
-  //   () => [
-  //     {
-  //       from: "step4",
-  //       to: "step6",
-  //       predicate: () => true, // 임시
-  //     },
-  //   ],
-  //   []
-  // );
 
   const skipConditions = useMemo<SkipCondition<ProbiomeStepKeys>[]>(
     () => [
       {
         from: "step5",
         to: "step7",
-        // predicate: () => gender === "MALE", // 임시
-        predicate: () => true, // 임시
+        predicate: () => gender === "MALE",
       },
     ],
     [gender]
@@ -104,7 +97,7 @@ export default function ProbiomeSurvey() {
     handleBlur,
     handleKeyDown,
     handleNextStep,
-    dogName,
+    dogName: petName,
   });
 
   const handleSurveySubmit = useCallback(async () => {
@@ -113,7 +106,7 @@ export default function ProbiomeSurvey() {
     const values = getValues();
 
     // TODO: petId, kitId를 실제 사용자 데이터에서 가져오도록 수정 필요
-    const payload = buildProbiomePayload(values);
+    const payload = buildProbiomePayload(values, petId, kitId);
 
     submitResult(payload);
   }, [trigger, getValues, submitResult]);
