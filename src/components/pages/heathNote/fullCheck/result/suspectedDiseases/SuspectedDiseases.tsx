@@ -4,16 +4,17 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ResultAccordion from "@/components/pages/heathNote/common/resultAccordion/ResultAccordion";
 import { DiseaseData } from "@/types/healthNote";
+import { BODY_PART_TO_CATEGORY, DISEASE_CATEGORY } from "@/constants";
 
 interface SuspectedDiseasesProps {
-	dogName: string;
+	petName: string;
 	diseaseList: DiseaseData[];
 }
 
-const SuspectedDiseases = ({
-	dogName,
+export default function SuspectedDiseases({
+	petName,
 	diseaseList,
-}: SuspectedDiseasesProps) => {
+}: SuspectedDiseasesProps) {
 	const diseaseItemInfoList = [
 		{ label: '원인', key: 'causes' },
 		{ label: '증상', key: 'symptoms' },
@@ -23,7 +24,7 @@ const SuspectedDiseases = ({
 		<article>
 			<ResultCard
 				className={styles.diseaseListContainer}
-				title={`${dogName}의\n의심되는 질병을 알려드릴게요`}
+				title={`${petName}의\n의심되는 질병을 알려드릴게요`}
 				subTitle='해당 부위는 지속적으로 관리가 필요해요'
 			>
 				<div className={styles.diseaseList}>
@@ -33,10 +34,10 @@ const SuspectedDiseases = ({
 							accordionButton={(
 								<div className={styles.diseaseAccordionHeader}>
 									<DefaultText type='headline2' color='gray400'>{index+1}</DefaultText>
-									<SvgIcon src={disease.categoryImage} size={46} className={styles.diseaseCategorySvg} />
+									<SvgIcon src={DISEASE_CATEGORY[disease.category].imageUrl} size={46} className={styles.diseaseCategorySvg} />
 									<div>
-										<DefaultText type='headline2' block>{disease.category}</DefaultText>
-										<DefaultText type='caption2' color='gray700' block>{disease.disease.ko}</DefaultText>
+										<DefaultText type='headline2' block>{BODY_PART_TO_CATEGORY[disease.category]}</DefaultText>
+										<DefaultText type='caption2' color='gray700' block>{disease.name}</DefaultText>
 									</div>
 								</div>
 							)}
@@ -45,7 +46,7 @@ const SuspectedDiseases = ({
 								{diseaseItemInfoList.map(item => (
 									<li key={item.key} className={styles.diseaseItem}>
 										<DefaultText type='label3' color='gray800' className={styles.diseaseItemLabel}>{item.label}</DefaultText>
-										<DefaultText type='body3' color='gray700'>{disease.disease[item.key]}</DefaultText>
+										<DefaultText type='body3' color='gray700'>{disease[item.key]}</DefaultText>
 									</li>
 								))}
 							</ul>
@@ -56,5 +57,3 @@ const SuspectedDiseases = ({
 		</article>
 	);
 };
-
-export default SuspectedDiseases;

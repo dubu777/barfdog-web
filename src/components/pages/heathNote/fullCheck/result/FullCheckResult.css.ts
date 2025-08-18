@@ -24,3 +24,10 @@ export const fullCheckResultTitle = style({
 	gap: '5px',
 	marginBottom: '12px',
 })
+
+export const fullCheckResultProduct = style({
+	width: '100%',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '12px',
+})

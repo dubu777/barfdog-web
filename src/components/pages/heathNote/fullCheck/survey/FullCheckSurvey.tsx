@@ -1,8 +1,11 @@
 "use client";
-import * as yup from "yup";
+import axios from "axios";
 import * as styles from "./FullCheckSurvey.css";
+import * as yup from "yup";
 import { pointColor } from "@/styles/common.css";
+import { AnySchema } from "yup";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useWatch } from "react-hook-form";
 import BackIcon from "/public/images/header/chevron-left.svg";
 import Header from "@/components/layout/header/Header";
@@ -12,11 +15,15 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { useHealthNoteStore } from "@/store/useHealthNoteStore";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
-import { DISEASE_CATEGORY_LIST } from "@/constants";
-import { AnySchema } from "yup";
+import { DISEASE_CATEGORY_LIST, queryKeys } from "@/constants";
+import { useToastStore } from "@/store/useToastStore";
 import { createCleanedEntries } from "@/utils/healthNote/createCleanedEntries";
+import { sumScores } from "@/utils/healthNote/sumScores";
+import { getTopSuspectedDiseases } from "@/utils/healthNote/getTopSuspectedDiseases";
+import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
+import { useCreateFullCheckResult } from "@/api/healthNote/fullCheck/mutations/useCreateFullCheckResult";
+import { FullCheckFormValues } from "@/types/healthNote/fullCheck";
 
 const fullCheckSurveySchema = yup.object(
   DISEASE_CATEGORY_LIST.reduce((acc, q) => {
@@ -33,19 +40,23 @@ const defaultFullCheckSurveyValues = DISEASE_CATEGORY_LIST.reduce((acc, q) => {
   return acc;
 }, {} as Record<string, number | number[] | null>);
 
-const FullCheckSurvey = () => {
+export default function FullCheckSurvey ({ petId }: { petId: number }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const { addToast } = useToastStore();
+
+  const { data: petInfo } = useGetPetDetail(petId);
+  const { mutate } = useCreateFullCheckResult();
 
   const { control, setValue, watch, handleSubmit, formState } = useFormHandler(
     fullCheckSurveySchema,
     defaultFullCheckSurveyValues
   );
-  const { petInfo } = useHealthNoteStore();
-  const walkValue = useWatch({ control, name: "walk" });
+  const walkValue = useWatch({ control, name: "walkCount" });
 
   const onSpecialOptionSelect = (option) => {
-    if (currentQuestion.key === "walk" && option === 0) {
-      setValue("walkTime", 0);
+    if (currentQuestion.key === "walkCount" && option === 0) {
+      setValue("walkHours", 0);
       handleNextStep(currentStep + 1);
       return;
     }
@@ -75,7 +86,7 @@ const FullCheckSurvey = () => {
     "";
 
   const onPrevStep = () => {
-    // 산책 횟수 값(walk)이 0인 경우 산책 시간 값(walkTime) 2단계 전으로 이동
+    // 산책 횟수 값(walk)이 0인 경우 산책 시간 값(walkHours) 2단계 전으로 이동
     if (currentStep === 4 && walkValue === 0) {
       handlePrevStep(currentStep - 2);
     } else {
@@ -94,26 +105,58 @@ const FullCheckSurvey = () => {
 
   const onSubmit = (data: typeof defaultFullCheckSurveyValues) => {
     const cleaned = createCleanedEntries(data, (key, value, fullData) => {
-      if (key === "walkTime") return []; // walkTime 제거
-      if (key === "walk") {
-        // walk * walkTime 계산
-        const total = (value as number) * (fullData.walkTime as number);
-        // 8시간 이상 (≥ 480분)
-        // 5–7시간 (300–479분)
-        // 1–4시간 (60–299분)
-        // 0시간 (0–59분)
-        const score = total >= 480 ? 4 : total >= 300 ? 2 : total >= 60 ? 1 : 0;
-        return [["walk", score]];
+      if (key === "walkHours") return [];
+      if (key === "walkCount") {
+        const hoursPerWalk = fullData.walkHours as number; // 시간 단위 값 (0.5, 1.0, 2.5 ...)
+        const totalHours = (value as number) * hoursPerWalk;
+
+        let walkScore = 0;
+        if (totalHours >= 8) walkScore = 4;
+        else if (totalHours >= 5) walkScore = 2;
+        else if (totalHours >= 1) walkScore = 1;
+
+        return [["walkScore", walkScore]];
       }
     });
+    const checkupScore = sumScores(cleaned);
+    // walkCount와 walkHours를 제외한 값만 ScoreInput 타입으로 변환하여 전달
+    const { walkScore: _, ...rest } = cleaned;
+    // undefined, null, 배열 등 number가 아닌 값은 제외
+    const scoreInputForDisease = Object.fromEntries(
+      Object.entries(rest).filter(([_, v]) => typeof v === "number")
+    ) as Record<string, number>;
 
-    const totalScore = Object.values(cleaned).reduce((sum: number, val) => {
-      return typeof val === "number" ? sum + val : sum;
-    }, 0);
+    const suspectedDiseases = getTopSuspectedDiseases(scoreInputForDisease);
+    const suspectedDiseaseCategoryList = suspectedDiseases.map(disease => disease.category);
+    const suspectedDiseaseTypeList = suspectedDiseases.map(disease => disease.diseaseKey);
 
-    setTimeout(() => {
-      router.push(`/health-note/full-check/result/${1}?score=${totalScore}`);
-    }, 2000);
+    console.log('suspectedDiseases', suspectedDiseases)
+
+    const body = {
+      petId,
+      checkupScore,
+      walkCount: data.walkCount,
+      walkHours: data.walkHours,
+      suspectedDiseaseCategoryList,
+      suspectedDiseaseTypeList,
+    }
+    mutate({
+      body: body as FullCheckFormValues
+    }, {
+      onSuccess: async (data) => {
+        const diagnosisId = data?.diagnosisId;
+        await queryClient.invalidateQueries({
+          queryKey: [queryKeys.FULL_CHECK.BASE, queryKeys.FULL_CHECK.GET_FULL_CHECK_RESULT_DETAIL, diagnosisId],
+        });
+        router.push(`/health-note/full-check/result/${diagnosisId}?petId=${petId}`);
+      },
+      onError: (error) => {
+        if(axios.isAxiosError(error)) {
+          addToast(error.message, 'above-button');
+        }
+        console.log(error);
+      }
+    })
   };
 
   return (
@@ -211,5 +254,3 @@ const FullCheckSurvey = () => {
     </NavigationGuard>
   );
 };
-
-export default FullCheckSurvey;

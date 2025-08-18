@@ -12,10 +12,10 @@ function isGroupedProduct(product: RecommendProduct): product is GroupedProduct 
   return !Array.isArray(product);
 }
 
-const ProductList = ({
+export default function ProductList({
 	dogName,
 	recommendProducts = [],
-}: RecommendProductsProps) => {
+}: RecommendProductsProps) {
 	const isProductsByDogSize = isGroupedProduct(recommendProducts);
 	const products = isProductsByDogSize ? recommendProducts.products : recommendProducts;
 
@@ -32,5 +32,3 @@ const ProductList = ({
 		/>
 	);
 };
-
-export default ProductList;

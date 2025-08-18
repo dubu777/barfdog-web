@@ -1,12 +1,12 @@
 import { ComponentType, SVGProps } from "react";
-import { BODY_PART_PRIORITY, BODY_PART_TO_CATEGORY, DISEASE_CATEGORY, DISEASE_INFO } from "@/constants";
+import { BODY_PART_PRIORITY, DISEASE_CATEGORY, DISEASE_INFO } from "@/constants";
 
 type ScoreInput = Record<string, number>;
 
 export function getTopSuspectedDiseases(scoreInput: ScoreInput) {
+	console.log('scoreInput', scoreInput)
 	// 최종 후보 질환 리스트를 저장할 배열
 	const candidates: {
-		categoryKey: string;
 		category: string;
 		categoryImage: ComponentType<SVGProps<SVGSVGElement>>;
 		diseaseKey: string;
@@ -15,9 +15,8 @@ export function getTopSuspectedDiseases(scoreInput: ScoreInput) {
 	}[] = [];
 
 	// 입력된 각 부위 순회
-	for (const part in scoreInput) {
+	for (const category in scoreInput) {
 		// 해당 부위의 카테고리 매핑
-		const category = BODY_PART_TO_CATEGORY[part];
 		if (!category) continue;
 
 		// 해당 카테고리에 해당하는 모든 질환 추출
@@ -26,7 +25,7 @@ export function getTopSuspectedDiseases(scoreInput: ScoreInput) {
 
 		// 점수와 일치하는 value 값을 가진 질환 찾기
 		const matchedDisease = relatedDiseases?.find(
-			([, d]) => d.value === scoreInput[part]
+			([, d]) => d.value === scoreInput[category]
 		);
 
 		// 일치하는 질환이 없으면 skip
@@ -36,12 +35,11 @@ export function getTopSuspectedDiseases(scoreInput: ScoreInput) {
 
 		// 후보 배열에 추가
 		candidates.push({
-			categoryKey: part,
 			category,
 			diseaseKey,
 			disease,
-			score: scoreInput[part],
-			categoryImage: DISEASE_CATEGORY[part].imageUrl,
+			score: scoreInput[category],
+			categoryImage: DISEASE_CATEGORY[category].imageUrl,
 		});
 	}
 
