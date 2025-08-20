@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
 import { useGetGeneralOrder } from "@/api/order/queries/useGetGeneralOrder";
-import { SaveGeneralOrderRequest, GeneralOrderSheetResponse } from "@/types";
+import { SaveGeneralOrderRequest } from "@/types";
+import { useUpdateOrderStores } from "@/utils/order/updateOrderStores";
 import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 
@@ -27,7 +28,6 @@ import OrderSection from "../common/orderSection/OrderSection";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { formatNumberWithCommas } from "@/utils";
 import FooterButton from "@/components/common/footerButton/FooterButton";
-import { initialGeneralOrderSheetResponse } from "@/config/orderInitialValues";
 import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
 import { useToastStore } from "@/store/useToastStore";
 import { usePaymentStore } from "@/store/order/usePaymentStore";
@@ -42,8 +42,6 @@ export default function GeneralOrderContainer() {
   const getRequestBody = useOrderStore((state) => state.getRequestBody);
   const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
   const { orderItemDtoList } = usePersistOrderStore();
-  const [generalOrderSheetData, setGeneralOrderSheetData] =
-    useState<GeneralOrderSheetResponse>(initialGeneralOrderSheetResponse);
   const addToast = useToastStore((state) => state.addToast);
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
@@ -52,31 +50,29 @@ export default function GeneralOrderContainer() {
     scrollToElement(termsRef.current);
   };
 
-  console.log("generalOrderSheetData", generalOrderSheetData);
-
   // <--------- 상태관리
 
   // 서버 호출 react query -------->
-  const { mutateAsync: getGeneralOrderMutate } = useGetGeneralOrder();
+  const updateOrderStores = useUpdateOrderStores();
+  const { data: generalOrderData } = useGetGeneralOrder({
+    orderItemDtoList,
+  });
 
   const { control, setValue } = useOrderForm<OrderFormValues>(
     getOrderSchema(maxAvailableReward),
     defaultOrderValues
   );
 
-  const { processPayment, isProcessing } = useGeneralPayment({
-    generalOrderSheetData,
-  });
-
-  // 일반 결제 주문 정보 데이터 가져오기
-  // post 요청이기 때문에 useEffect로 로컬스토리지에 있는 orderItemDtoList를 request body로 호출
+  // 데이터 로딩 완료시 상태 업데이트
   useEffect(() => {
-    if (orderItemDtoList.length > 0) {
-      getGeneralOrderMutate({ orderItemDtoList }).then((data) => {
-        setGeneralOrderSheetData(data);
-      });
+    if (generalOrderData) {
+      updateOrderStores(generalOrderData);
     }
-  }, [orderItemDtoList, getGeneralOrderMutate]);
+  }, [generalOrderData, updateOrderStores]);
+
+  const { processPayment, isProcessing } = useGeneralPayment({
+    generalOrderSheetData: generalOrderData,
+  });
 
   const handlePaymentSubmit = async () => {
     if (!agreePrivacy) {
@@ -92,26 +88,27 @@ export default function GeneralOrderContainer() {
     console.log("requestBody", requestBody);
     await processPayment(requestBody);
   };
+
   return (
     <>
       <DeliveryAddress />
       <Divider />
-      {generalOrderSheetData.orderStatus !== "UNSUBSCRIBE_ORDER" && (
+      {generalOrderData.orderStatus !== "UNSUBSCRIBE_ORDER" && (
         <>
           <BundleDeliverySelector
-            bundleDeliveryAddress={generalOrderSheetData.deliveryAddress}
-            orderStatus={generalOrderSheetData.orderStatus}
+            bundleDeliveryAddress={generalOrderData.deliveryAddress}
+            orderStatus={generalOrderData.orderStatus}
           />
           <Divider />
         </>
       )}
       <GeneralOrderItemList
-        orderItemDtoList={generalOrderSheetData.orderItemDtoList}
+        orderItemDtoList={generalOrderData.orderItemDtoList}
       />
       <Divider />
       <CouponSelector
         orderType={ORDER_TYPE.GENERAL}
-        orderPrice={generalOrderSheetData.orderPrice}
+        orderPrice={generalOrderData.orderPrice}
       />
       <Divider />
       <RewardUsage
@@ -125,11 +122,11 @@ export default function GeneralOrderContainer() {
       <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.GENERAL}
-        originPrice={generalOrderSheetData.orderPrice}
-        appliedDefaultDiscountPrice={generalOrderSheetData.orderPrice}
-        freeCondition={generalOrderSheetData.freeCondition}
-        deliveryPrice={generalOrderSheetData.deliveryPrice}
-        orderItemDtoList={generalOrderSheetData.orderItemDtoList}
+        originPrice={generalOrderData.orderPrice}
+        appliedDefaultDiscountPrice={generalOrderData.orderPrice}
+        freeCondition={generalOrderData.freeCondition}
+        deliveryPrice={generalOrderData.deliveryPrice}
+        orderItemDtoList={generalOrderData.orderItemDtoList}
       />
       <Divider />
       <OrderTerms

@@ -25,7 +25,7 @@ export default function CouponCard({
   onToggle,
 }: CouponCardProps) {
   const {
-    memberCouponId,
+    id,
     discountDegree,
     discountType,
     availableMinPrice,
@@ -33,14 +33,17 @@ export default function CouponCard({
     name,
   } = coupon;
 
-  const { discountBasedOnCoupon } =
-    calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount);
+  const { discountBasedOnCoupon } = calculateCouponDiscount(
+    orderPrice,
+    coupon,
+    maxAvailableCouponDiscount
+  );
   const { usable, reasons } = isCouponUsable(coupon, orderPrice, orderType);
 
   return (
     <div className={styles.couponCardContainer({ isSelected })}>
       <LabeledRadioButton
-        value={memberCouponId}
+        value={id}
         isChecked={isSelected}
         onToggle={!usable ? () => {} : onToggle}
         optionType="selection"

@@ -87,9 +87,7 @@ export default function CouponModal({
       if (newCouponId === null) {
         setSelectedCoupon(null);
       } else {
-        const coupon = coupons.find(
-          (coupon) => coupon.memberCouponId === newCouponId
-        );
+        const coupon = coupons.find((coupon) => coupon.id === newCouponId);
         if (coupon) {
           const { discountBasedOnCoupon, discountBasedOnCouponAndGlobal } =
             calculateCouponDiscount(
@@ -118,14 +116,17 @@ export default function CouponModal({
 
   // 쿠폰 등록 함수
   const onCouponFormSubmit = handleSubmit((data) => {
-    createCouponMutate({ code: data.code }, {
-      onSuccess: () => {
-        addToast("쿠폰이 등록되었습니다", "above-button");
-      },
-      onError: () => {
-        addToast("등록되지 않은 코드입니다", "above-button");
-      },
-    });
+    createCouponMutate(
+      { code: data.code },
+      {
+        onSuccess: () => {
+          addToast("쿠폰이 등록되었습니다", "above-button");
+        },
+        onError: () => {
+          addToast("등록되지 않은 코드입니다", "above-button");
+        },
+      }
+    );
     reset();
   });
 
@@ -239,12 +240,12 @@ export default function CouponModal({
         <div className={styles.couponCardWrapper}>
           {sortedCoupons.map((coupon) => (
             <CouponCard
-              key={coupon.memberCouponId}
+              key={coupon.id}
               orderType={orderType}
               coupon={coupon}
               orderPrice={orderPrice}
               onToggle={onToggle}
-              isSelected={isSelected(coupon.memberCouponId)}
+              isSelected={isSelected(coupon.id)}
               maxAvailableCouponDiscount={maxAvailableCouponDiscount}
             />
           ))}

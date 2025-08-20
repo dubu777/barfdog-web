@@ -39,7 +39,7 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
     return <Loader />;
   }
 
-  const tempStatus = "ANALYZING" as ProbiomeStatus;
+  const tempStatus = "SUBMITTED" as ProbiomeStatus;
   return (
     <>
       <section className={styles.probiomeListContainer}>
@@ -89,13 +89,11 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
           )}
         </article>
       </section>
-      {isOpenKitGuideModal && (
-        <KitGuideModal
-          petId={petId}
-          isOpen={isOpenKitGuideModal}
-          onClose={onCloseKitGuideModal}
-        />
-      )}
+      <KitGuideModal
+        petId={petId}
+        isOpen={isOpenKitGuideModal}
+        onClose={onCloseKitGuideModal}
+      />
     </>
   );
 };

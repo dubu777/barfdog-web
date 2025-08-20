@@ -19,15 +19,14 @@ interface Coupon {
   name: string; // 쿠폰 이름
   remaining: number; // 남은 쿠폰 수
   status?: string; // 남은 쿠폰 수
-  id?: number;
+  id: number;
 }
 
+type DiscountType = "FLAT_RATE" | "FIXED_RATE";
 
-type DiscountType = 'FLAT_RATE' | 'FIXED_RATE';
+type DiscountUnitType = "%" | "원";
 
-type DiscountUnitType = '%' | '원';
-
-type Reason = "minPrice" | "orderType"
+type Reason = "minPrice" | "orderType";
 
 interface CouponUsabilityResult {
   usable: boolean;
