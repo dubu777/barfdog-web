@@ -60,11 +60,7 @@ export default function PetForm({
   });
 
   const handleDuplicateCheck = useCallback(async () => {
-    if (!petName) {
-      setError("name", {
-        type: "manual",
-        message: "이름을 입력해주세요.",
-      });
+    if (errors?.name) {
       return;
     }
 
@@ -82,7 +78,7 @@ export default function PetForm({
       setValue("nameVerified", false, { shouldValidate: true });
       setSuccessMessage(undefined);
     }
-  }, [petName, checkDuplicate, setError, setValue]);
+  }, [petName, checkDuplicate, setError, setValue, errors?.name]);
 
   const handleChangeName = () => {
     setValue("nameVerified", false, { shouldValidate: true });
@@ -137,6 +133,7 @@ export default function PetForm({
               label="반려견 이름"
               error={errors?.name?.message}
               isRequired
+              maxLength={12}
               confirmButtonText="중복확인"
               confirmButton
               confirmButtonVariant="solid"

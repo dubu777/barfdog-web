@@ -15,8 +15,8 @@ import Loader from "@/components/common/loader/Loader";
 const GeneralOrderCSR = dynamic(
   () => import("@/components/pages/checkout/general/GeneralOrderContainer"),
   {
-    ssr: false, // 서버 렌더링 완전 비활성화
-    loading: () => <Loader fullscreen />, // 클라이언트 로딩 UI
+    ssr: false,
+    loading: () => <Loader fullscreen />,
   }
 );
 
