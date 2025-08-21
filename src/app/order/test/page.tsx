@@ -9,6 +9,8 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import DotSpinner from "@/components/common/spinner/DotSpinner";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -54,10 +56,12 @@ export default function GeneralShopTest() {
   };
 
   return (
-    <div className={styles.testContainer}>
-      <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-      <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
-      <Button onClick={handleLogout}>로그아웃 테스트</Button>
-    </div>
+    // <DotSpinner fullscreen />
+    <Spinner fullscreen />
+    // <div className={styles.testContainer}>
+    //   <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
+    //   <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
+    //   <Button onClick={handleLogout}>로그아웃 테스트</Button>
+    // </div>
   );
 }

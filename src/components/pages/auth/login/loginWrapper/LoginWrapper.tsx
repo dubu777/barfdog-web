@@ -87,30 +87,49 @@ const LoginWrapper = () => {
   // 로그인 상태이면 컴포넌트 내용 대신 null 반환
   if (isAuthenticated()) return null;
 
+  // display: "flex",
+  // flexDirection: "column",
+  // alignItems: "center",
+  // justifyContent: "center",
+
   return (
-    <div className={styles.loginContainer}>
-      <div className={commonWrapper({ direction: "col", gap: 4, padding: 20 })}>
-        <DefaultText type="title1">👋 안녕하세요 보호자님!</DefaultText>
-        <DefaultText type="body3" color="gray500">
-          다양한 맞춤 서비스를 위해 로그인해주세요
-        </DefaultText>
-      </div>
-      <LoginForm
-        control={control}
-        handleSubmit={handleSubmit}
-        handleLogin={handleLogin}
-        isValid={isValid}
-      />
-      <span className={styles.lineBox}>
-        <em className={styles.line} />
-        <DefaultText type="body3" color="gray500">
-          또는 SNS 간편 로그인
-        </DefaultText>
-        <em className={styles.line} />
-      </span>
-      <div className={commonWrapper({ gap: 8, direction: "col", padding: 20 })}>
-        <LoginSnsButton provider="naver" />
-        <LoginSnsButton provider="kakao" />
+    <div
+      className={commonWrapper({
+        direction: "col",
+        height: "fullWithHeader",
+        backgroundColors: "gray50",
+      })}
+    >
+      <div className={styles.loginContainer}>
+        <div
+          className={commonWrapper({
+            direction: "col",
+            gap: 4,
+            padding: "0/20",
+          })}
+        >
+          <DefaultText type="title1">👋 안녕하세요 보호자님!</DefaultText>
+          <DefaultText type="body3" color="gray500">
+            다양한 맞춤 서비스를 위해 로그인해주세요
+          </DefaultText>
+        </div>
+        <LoginForm
+          control={control}
+          handleSubmit={handleSubmit}
+          handleLogin={handleLogin}
+          isValid={isValid}
+        />
+        <span className={styles.lineBox}>
+          <em className={styles.line} />
+          <DefaultText type="body3" color="gray500">
+            또는
+          </DefaultText>
+          <em className={styles.line} />
+        </span>
+        <div className={commonWrapper({ gap: 16 })}>
+          <LoginSnsButton provider="naver" />
+          <LoginSnsButton provider="kakao" />
+        </div>
       </div>
     </div>
   );

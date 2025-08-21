@@ -7,5 +7,5 @@ export default function FindAccountPage() {
     <Suspense fallback={<Loader fullscreen />}>
       <FindAccount />
     </Suspense>
-  )
+  );
 }

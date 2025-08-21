@@ -68,6 +68,10 @@ export default function FindEmail() {
             label="휴대폰 번호"
             isRequired
             placeholder="번호만 입력해주세요"
+            confirmButton
+            confirmButtonDisabled={false}
+            confirmButtonText="인증번호"
+            onSubmit={() => console.log("인증번호 요청")}
             error={errors?.phoneNumber?.message}
             {...field}
           />

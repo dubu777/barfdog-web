@@ -1,6 +1,6 @@
 import { OrderItemDto } from "@/types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface PersistOrderStore {
   orderItemDtoList: OrderItemDto[];
@@ -17,6 +17,7 @@ export const usePersistOrderStore = create(
     }),
     {
       name: "general-order",
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

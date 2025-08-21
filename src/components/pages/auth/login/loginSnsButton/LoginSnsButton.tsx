@@ -5,6 +5,7 @@ import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
 import { useCallback } from "react";
 import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
 import Button from "@/components/common/button/Button";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface LoginSnsButtonProps {
   provider: SnSProvider;
@@ -51,17 +52,9 @@ const LoginSnsButton = ({
   };
 
   return (
-    <Button
-      variant="solid"
-      fullWidth
-      onClick={handleClick}
-      buttonColor={provider === "kakao" ? "kakao" : "naver"}
-      textColor={provider === "kakao" ? "gray900" : "gray0"}
-      size="lg"
-    >
-      <Image src={config.image} alt={config.alt} width={40} height={40} />
-      <span>{config.loginText}</span>
-    </Button>
+    <>
+      <SvgIcon src={config.icon} size={52} onClick={handleClick} />
+    </>
   );
 };
 

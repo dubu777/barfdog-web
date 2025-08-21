@@ -1,12 +1,11 @@
-import { StaticImageData } from "next/image";
-import KakaoImage from "/public/images/icons/kakao.png";
-import NaverImage from "/public/images/icons/naver.png";
+import KakaoIcon from "public/images/logo/auth/kakao-logo.svg";
+import NaverIcon from "public/images/logo/auth/naver-logo.svg";
 import { SnSProvider } from "@/types";
 
 interface ProviderOAuthConfig {
-  codeUrl: string;     // 인가 코드 요청 URL
-  tokenUrl: string;    // 토큰 요청 URL
-  grantType: string;   // 토큰 요청 시 grant_type 값
+  codeUrl: string; // 인가 코드 요청 URL
+  tokenUrl: string; // 토큰 요청 URL
+  grantType: string; // 토큰 요청 시 grant_type 값
   responseType: string; // 인가 코드 요청 시 response_type 값
 }
 
@@ -15,7 +14,7 @@ interface ProviderConfig {
   clientSecret: string;
   redirectUri: string;
   auth: ProviderOAuthConfig;
-  image: StaticImageData;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   alt: string;
   loginText: string;
 }
@@ -31,7 +30,7 @@ export const SNS_LOGIN_CONFIG: Record<SnSProvider, ProviderConfig> = {
       grantType: "authorization_code",
       responseType: "code",
     },
-    image: KakaoImage,
+    icon: KakaoIcon,
     alt: "카카오 이미지",
     loginText: "카카오로 1초만에 로그인",
   },
@@ -45,7 +44,7 @@ export const SNS_LOGIN_CONFIG: Record<SnSProvider, ProviderConfig> = {
       grantType: "authorization_code",
       responseType: "code",
     },
-    image: NaverImage,
+    icon: NaverIcon,
     alt: "네이버 이미지",
     loginText: "네이버로 1초만에 로그인",
   },

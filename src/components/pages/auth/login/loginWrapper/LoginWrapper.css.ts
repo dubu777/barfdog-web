@@ -8,8 +8,7 @@ export const loginContainer = style({
   justifyContent: "center",
   maxWidth: "375px",
   width: "100%",
-  height: "calc(100vh - 52px)",
-  margin: "0 auto",
+  gap: "20px",
 });
 
 export const lineBox = style({

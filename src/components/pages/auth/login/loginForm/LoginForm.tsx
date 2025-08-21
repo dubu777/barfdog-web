@@ -26,7 +26,7 @@ const LoginForm = ({
   isValid,
 }: LoginFormProps) => {
   return (
-    <form className={commonWrapper({ direction: "col", padding: 20 })}>
+    <form className={commonWrapper({ direction: "col", padding: "0/20" })}>
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         <Controller
           control={control}
@@ -60,18 +60,26 @@ const LoginForm = ({
           로그인
         </Button>
       </div>
-      <div className={commonWrapper({ gap: 4, justify: "end" })}>
+      <div className={commonWrapper({ gap: 4 })}>
         <Link href="/signup">
-          <DefaultText type="headline4" color="gray400">
+          <DefaultText type="headline4" color="gray500">
             회원가입
           </DefaultText>
         </Link>
-        <DefaultText type="headline4" color="gray400">
+        <DefaultText type="headline4" color="gray500">
           |
         </DefaultText>
         <Link href="/find-account">
-          <DefaultText type="headline4" color="gray400">
-            계정찾기
+          <DefaultText type="headline4" color="gray500">
+            아이디 찾기
+          </DefaultText>
+        </Link>
+        <DefaultText type="headline4" color="gray500">
+          |
+        </DefaultText>
+        <Link href="/find-account">
+          <DefaultText type="headline4" color="gray500">
+            비밀번호 찾기
           </DefaultText>
         </Link>
       </div>

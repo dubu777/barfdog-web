@@ -1,7 +1,5 @@
 import * as styles from "../../Order.css";
-import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import GeneralOrderContainer from "@/components/pages/checkout/general/GeneralOrderContainer";
 import {
   dehydrate,
   HydrationBoundary,
@@ -10,13 +8,13 @@ import {
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
 import dynamic from "next/dynamic";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 const GeneralOrderCSR = dynamic(
   () => import("@/components/pages/checkout/general/GeneralOrderContainer"),
   {
     ssr: false,
-    loading: () => <Loader fullscreen />,
+    loading: () => <Spinner fullscreen />,
   }
 );
 
