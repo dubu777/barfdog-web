@@ -16,6 +16,7 @@ interface LabelValueItemProps {
   value?: ReactNode;
   valueColor?: keyof typeof fontColors;
   valueType?: keyof typeof textStyles;
+  align?: "start" | "center" | "end";
 }
 
 export default function LabelValueItem({
@@ -26,13 +27,14 @@ export default function LabelValueItem({
   value,
   valueColor = "gray700",
   valueType = "body2",
+  align = "center",
 }: LabelValueItemProps) {
   const isNullish = value === null || value === undefined;
   const isEmptyString = typeof value === "string" && value.trim() === "";
 
   const displayValue = isNullish || isEmptyString ? "-" : value;
   return (
-    <div className={styles.labelValueItemContainer}>
+    <div className={styles.labelValueItemContainer({ align })}>
       <DefaultText
         type={labelType}
         color={labelColor}

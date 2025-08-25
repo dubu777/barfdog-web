@@ -40,3 +40,10 @@ export const valueCell = style({
   verticalAlign: "top",
   lineHeight: "1.5",
 });
+
+export const imagePreview = style({
+  width: "100px",
+  height: "100px",
+  objectFit: "cover",
+  borderRadius: "8px",
+});

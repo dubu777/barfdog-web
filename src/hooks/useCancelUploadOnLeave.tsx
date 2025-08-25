@@ -16,7 +16,7 @@ export function useCancelUploadOnLeave({
   const params = useSearchParams();
   const search = useMemo(() => params.toString(), [params]);
 
-  // ✅ 최신 값을 참조하기 위한 ref들
+  // 최신 값을 참조하기 위한 ref들
   const cancelRef = useRef(cancelUpload);
   const pendingRef = useRef(hasPendingUploads);
   const shouldCancelRef = useRef(!submitted);
@@ -31,7 +31,7 @@ export function useCancelUploadOnLeave({
     shouldCancelRef.current = !submitted;
   }, [submitted]);
 
-  // ✅ 0) 예전에 동작했던 "무조건 클린업 호출" 패턴을 유지하되,
+  // 0) 예전에 동작했던 "무조건 클린업 호출" 패턴을 유지하되,
   //     조건 판단은 최신 ref 값으로 수행
   useEffect(() => {
     return () => {
@@ -41,7 +41,7 @@ export function useCancelUploadOnLeave({
     };
   }, []);
 
-  // ✅ 1) 경로/쿼리 변경 시 (SPA 내 네비게이션)
+  // 1) 경로/쿼리 변경 시 (SPA 내 네비게이션)
   useEffect(() => {
     return () => {
       if (shouldCancelRef.current && pendingRef.current) {
@@ -50,7 +50,7 @@ export function useCancelUploadOnLeave({
     };
   }, [pathname, search]);
 
-  // ✅ 2) 새로고침/탭 닫기 (언로드 이벤트)
+  // 2) 새로고침/탭 닫기 (언로드 이벤트)
   useEffect(() => {
     const handler = () => {
       if (shouldCancelRef.current && pendingRef.current) {

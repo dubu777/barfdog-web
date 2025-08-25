@@ -1,12 +1,22 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const labelValueItemContainer = style({
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  alignSelf: "stretch",
-  gap: "6px",
+export const labelValueItemContainer = recipe({
+  base: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    alignSelf: "stretch",
+    gap: "6px",
+  },
+  variants: {
+    align: {
+      start: { alignItems: "flex-start" },
+      center: { alignItems: "center" },
+      end: { alignItems: "flex-end" },
+    },
+  },
+  defaultVariants: { align: "center" },
 });
 
 export const labelText = recipe({

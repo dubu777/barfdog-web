@@ -49,7 +49,7 @@ type ProbiomeStatus =
   | "ANALYZING"
   | "COMPLETED";
 
-interface DeliveryAddressSnapshot {
+interface DeliveryAddressInfo {
   addressId: number | null;
   deliveryName: string | null;
   recipientName: string | null;
@@ -70,7 +70,7 @@ interface ProbiomeDto {
   diagnosisStatus: ProbiomeStatus;
   submitDate: string;
   downloadReportUrl: string | null;
-  deliveryInfo: DeliveryAddressSnapshot;
+  deliveryInfo: DeliveryAddressInfo;
 }
 
 type ProbiomeList = ProbiomeDto[];
@@ -106,7 +106,8 @@ interface ProbiomeDetailResponse {
   defecationFileList: ProbiomeDefecationFile[];
   /** 설문 작성 내용 */
   survey: ProbiomeSurvey;
-  deliveryInfo: DeliveryAddressSnapshot | null;
+  defaultDeliveryAddress: DeliveryAddressInfo | null;
+  selectedDeliveryAddress: DeliveryAddressInfo | null;
 }
 
 // 필드의 한글 레이블 매핑
@@ -214,7 +215,7 @@ interface ProbiomeFileChangeInfo {
 interface CreateProbiomePickupResponse {
   diagnosisId: number;
   diagnosisStatus: ProbiomeStatus;
-  DeliveryAddressSnapshot: DeliveryAddressSnapshot;
+  selectedDeliveryAddress: DeliveryAddressInfo;
   fileChangeInfo: ProbiomeFileChangeInfo;
 }
 
@@ -243,7 +244,7 @@ export type {
   PetPreInfo,
   ProbiomePreInfo,
   ProbiomeStatus,
-  DeliveryAddressSnapshot,
+  DeliveryAddressInfo,
   ProbiomeFileChangeInfo,
   ProbiomePickupFileItem,
   CreateProbiomePickupResponse,
