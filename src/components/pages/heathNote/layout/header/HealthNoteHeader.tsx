@@ -119,7 +119,7 @@ export default function HealthNoteHeader() {
     `/health-note/${params.petId}/medical-history/${params.diagnosisId}`,
     `/health-note/${params.petId}/full-check/result/${params.diagnosisId}`,
     `/health-note/${params.petId}/probiome/survey`,
-    `/health-note/${params.petId}/probiome/return-request/${params.id}`,
+    `/health-note/${params.petId}/probiome/pickup/${params.diagnosisId}`,
   ];
 
   // 접두사로 시작하면 제외할 경로

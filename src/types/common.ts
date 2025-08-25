@@ -6,6 +6,7 @@ import {
   UseQueryOptions,
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
+import { TextColor, TextType } from "./typography";
 
 declare global {
   interface Window {
@@ -121,6 +122,23 @@ interface ApiResponse<T> {
   errorCode: string | null;
 }
 
+interface FileChangeInfo {
+  addFileIdList: number[];
+  deleteFileIdList: number[];
+}
+
+interface InfoToken {
+  text: string; // 줄바꿈은 \n 으로 표기
+  type?: TextType; // 이 토큰만의 타이포 (선택)
+  color?: TextColor; // 이 토큰만의 색상 (선택)
+}
+
+interface InfoTextType {
+  tokens: InfoToken[]; // 여러 조각으로 구성
+  type?: TextType; // 항목 기본 타이포 (선택)
+  color?: TextColor; // 항목 기본 색상 (선택)
+}
+
 export type {
   SearchParamProps,
   DefaultObjectType,
@@ -136,4 +154,6 @@ export type {
   SelectOption,
   UploadedFile,
   ApiResponse,
+  FileChangeInfo,
+  InfoTextType,
 };

@@ -10,8 +10,8 @@ import useModal from "@/hooks/useModal";
 import KitGuideModal from "@/components/pages/heathNote/probiome/modal/KitGuideModal";
 import { ProbiomeStatus } from "@/types/healthNote/probiome";
 import { useGetProbiomeList } from "@/api/healthNote/probiome/queries/useGetProbiomeList";
-import Loader from "@/components/common/loader/Loader";
 import ProbiomeCard from "./ProbiomeCard";
+import Spinner from "@/components/common/spinner/Spinner";
 
 interface ProbiomeListProps {
   petId: number;
@@ -32,14 +32,14 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
     router.push(`/health-note/${petId}/probiome/detail/${diagnosisId}`);
   };
   const handleReturn = (diagnosisId: number) => {
-    router.push(`/health-note/${petId}/probiome/return-request/${diagnosisId}`);
+    router.push(`/health-note/${petId}/probiome/pickup/${diagnosisId}`);
   };
 
   if (isLoading) {
-    return <Loader />;
+    return <Spinner fullscreen />;
   }
 
-  const tempStatus = "SUBMITTED" as ProbiomeStatus;
+  // const tempStatus = "SUBMITTED" as ProbiomeStatus;
   return (
     <>
       <section className={styles.probiomeListContainer}>
@@ -67,16 +67,18 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
         />
         <article className={styles.probiomeList}>
           {probiomeList.length > 0 ? (
-            probiomeList.map(({ id, status, petName, submitDate }) => (
-              <ProbiomeCard
-                key={id}
-                status={tempStatus}
-                submitDate={submitDate}
-                petName={petName}
-                onDetail={() => handleDetail(id)}
-                onReturn={() => handleReturn(id)}
-              />
-            ))
+            probiomeList.map(
+              ({ diagnosisId, diagnosisStatus, petName, submitDate }) => (
+                <ProbiomeCard
+                  key={diagnosisId}
+                  status={diagnosisStatus}
+                  submitDate={submitDate}
+                  petName={petName}
+                  onDetail={() => handleDetail(diagnosisId)}
+                  onReturn={() => handleReturn(diagnosisId)}
+                />
+              )
+            )
           ) : (
             <Card shadow="strong" className={styles.probiomeEmpty} gap={4}>
               <DefaultText type="label1" color="gray700">

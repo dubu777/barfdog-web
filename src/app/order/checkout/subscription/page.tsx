@@ -33,7 +33,7 @@ export default async function SubscriptionPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<div>Loading...</div>}>
-              <SubscriptionOrderContainer subscribeId={subscribeId} />
+            <SubscriptionOrderContainer subscribeId={subscribeId} />
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>

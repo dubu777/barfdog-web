@@ -1,27 +1,29 @@
+import { FileChangeInfo } from "../common";
 import { DogSize, Gender } from "../survey";
 
 interface ProbiomeSurvey {
-  acquisitionType: string;
-  activityLevel: string;
-  allergenFoodList: string[];
-  allergyStatus: string;
-  antibioticsStatus: string;
-  bodyFit: string;
-  cohabitingPetList: string[];
-  defecationHabit: string;
-  feedTime: string;
-  feedType: string;
-  foodProduct: string;
-  foodType: string;
-  healthConcernTypeList: string[];
-  otherComment: string;
-  pregnancyStatus: string;
+  bodyFit: string; // "NORMAL" 등
+  probioticsStatus: string; // "TAKING" 등
   probioticsProduct: string;
-  probioticsStatus: string;
-  snackLevel: string;
+  antibioticsStatus: string; // "TAKING" 등
+  allergyStatus: string; // "HAS_ALLERGY" 등
+  allergenFoodList: string[]; // ["APPLE", "BEEF"] 등
+  activityLevel: string; // "NORMAL" 등
+  treatingDiseaseList: string[]; // ["HEART_DISEASE", ...]
+  foodType: string; // "DRY" 등
+  feedType: string; // "RESTRICTED" 등
+  feedTime: string; // "NOON" 등
+  foodProduct: string;
+  defecationHabit: string; // "INDOOR" 등
+  snackLevel: string; // "LOW" 등
+  cohabitingPetList: string[]; // ["DOG", "CAT"] 등
+  supplementTypeList: string[]; // ["IMMUNE", "TEETH"] 등
   supplementProduct: string;
-  supplementTypeList: string[];
-  treatingDiseaseList: string[];
+  pregnancyStatus: string; // "PREGNANCY_EARLY" 등
+  /** 필드명 변경: healthConcernTypeList -> healthConcernList */
+  healthConcernList: string[]; // ["JOINT_CARE", "TEAR_STAIN"] 등
+  acquisitionType: string; // "PURCHASE" 등
+  otherComment: string; // "기타 특이사항 내용"
 }
 
 interface CreateProbiomeRequest {
@@ -47,23 +49,64 @@ type ProbiomeStatus =
   | "ANALYZING"
   | "COMPLETED";
 
+interface DeliveryAddressSnapshot {
+  addressId: number | null;
+  deliveryName: string | null;
+  recipientName: string | null;
+  phoneNumber: string | null;
+  zipCode: string | null;
+  city: string | null;
+  street: string | null;
+  detailAddress: string | null;
+}
+
 interface ProbiomeDto {
-  downloadReportUrl: string | null;
-  id: number;
+  diagnosisId: number;
+  memberId: number;
+  memberName: string;
+  petId: number;
   petName: string;
-  status: ProbiomeStatus;
+  kitId: number;
+  diagnosisStatus: ProbiomeStatus;
   submitDate: string;
+  downloadReportUrl: string | null;
+  deliveryInfo: DeliveryAddressSnapshot;
 }
 
 type ProbiomeList = ProbiomeDto[];
 
-interface ProbiomeDetailResponse {
+interface FileUrl {
+  url: string;
+}
+
+interface ProbiomeDiagnosisInfo {
   diagnosisId: number;
+  memberId: number;
+  memberName: string;
+  petId: number;
   petName: string;
-  status: ProbiomeStatus;
-  submitDate: string;
-  downloadReportUrl: string;
+  kitId: number;
+  diagnosisStatus: ProbiomeStatus;
+  submitDate: string; // e.g. "2025-08-21"
+  /** 기관 검진 결과 pdf 파일 URL (아직 없을 수 있으므로 null 허용) */
+  downloadReportUrl: FileUrl | null;
+  /** 배송지 정보 (상세 응답 기준 null 가능성 고려) */
+}
+
+interface ProbiomeDefecationFile {
+  diagnosisId: number;
+  petId: number;
+  displayImageUrl: FileUrl;
+}
+
+interface ProbiomeDetailResponse {
+  /** 미생물 진단 메타 정보(배송지 포함) */
+  diagnosisInfo: ProbiomeDiagnosisInfo;
+  /** 회수 요청 시 업로드한 똥 사진 파일 목록 */
+  defecationFileList: ProbiomeDefecationFile[];
+  /** 설문 작성 내용 */
   survey: ProbiomeSurvey;
+  deliveryInfo: DeliveryAddressSnapshot | null;
 }
 
 // 필드의 한글 레이블 매핑
@@ -154,6 +197,33 @@ interface ProbiomePreInfo {
   pet: PetPreInfo;
 }
 
+interface ProbiomePickupFileItem {
+  fileId: number;
+  fileName: string;
+  folder: string;
+  fileStatus: string;
+  diagnosisId: number | null;
+  displayImageUrl: FileUrl;
+}
+
+interface ProbiomeFileChangeInfo {
+  addFileList: ProbiomePickupFileItem[];
+  deleteFileList: ProbiomePickupFileItem[];
+}
+
+interface CreateProbiomePickupResponse {
+  diagnosisId: number;
+  diagnosisStatus: ProbiomeStatus;
+  DeliveryAddressSnapshot: DeliveryAddressSnapshot;
+  fileChangeInfo: ProbiomeFileChangeInfo;
+}
+
+interface CreateProbiomePickupRequest {
+  petId: number;
+  deliveryAddressId: number;
+  fileChangeInfo: FileChangeInfo;
+}
+
 export type {
   CreateProbiomeRequest,
   CreateProbiomeResponse,
@@ -173,4 +243,9 @@ export type {
   PetPreInfo,
   ProbiomePreInfo,
   ProbiomeStatus,
+  DeliveryAddressSnapshot,
+  ProbiomeFileChangeInfo,
+  ProbiomePickupFileItem,
+  CreateProbiomePickupResponse,
+  CreateProbiomePickupRequest,
 };

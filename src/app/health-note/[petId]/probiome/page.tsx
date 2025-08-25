@@ -1,5 +1,4 @@
 import ProbiomeList from "@/components/pages/heathNote/probiome/list/ProbiomeList";
-import { redirect } from "next/navigation";
 
 interface ProbiomeListPageProps {
   params: {

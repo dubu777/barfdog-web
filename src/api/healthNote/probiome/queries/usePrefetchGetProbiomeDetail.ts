@@ -3,7 +3,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { createSSRRequest } from "@/api/withAuthSSR";
 import { getProbiomeDetail } from "../probiome";
 
-export async function prefetchGetProbiomeResult(
+export async function prefetchGetProbiomeDetail(
   queryClient: QueryClient,
   id: number
 ) {

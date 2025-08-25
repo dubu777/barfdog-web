@@ -1,4 +1,4 @@
-import { DogSize, SurveyTitleConfig } from "@/types";
+import { DogSize, InfoTextType, SurveyTitleConfig } from "@/types";
 import { ProbiomeStepKeys } from "@/utils/validation/probiomeValidation";
 import Born from "public/images/survey/Icon-Born.svg";
 import Bowel from "public/images/survey/Icon-Bowel.svg";
@@ -591,6 +591,51 @@ const BODY_SIZE_LABEL: Record<DogSize, string> = {
   LARGE: "대형견",
 };
 
+const PICKUP_NOTICE_LIST: InfoTextType[] = [
+  {
+    tokens: [
+      {
+        text: "회수 신청 후 문 앞에 채취한 변이 담긴 키트를 포장하여 놓아주시면 수거 후 분석기관에 전달됩니다.",
+      },
+    ],
+  },
+  {
+    tokens: [
+      {
+        text: "요청하신 회수 택배비는 바프독에서 부담합니다.",
+      },
+    ],
+  },
+  {
+    tokens: [
+      { text: "한 주의 회수 신청 마감은 " },
+      { text: "매주 목요일 16시", type: "headline4", color: "red" },
+      {
+        text: " 입니다. 이후 신청하는 회수 신청 건은 차주 월요일 회수 진행될 예정입니다.",
+      },
+    ],
+  },
+  {
+    tokens: [
+      {
+        text: "ex)\n화요일 15시 신청 → 수요일 회수\n화요일 17시 신청 → 수요일 접수 → 목요일 회수\n목요일 17시 신청 → 금요일 접수 → 월요일 회수",
+      },
+    ],
+  },
+  {
+    tokens: [
+      {
+        text: "분석 결과는 키트 회수 시점 기준 평균 4~6주 후에 ",
+        type: "headline4",
+        color: "red",
+      },
+      {
+        text: "받아보실 수 있습니다. 보다 정확한 분석 결과를 제공드리기 위해 다소 오랜 시간이 소요되는 점 양해 말씀드립니다.",
+      },
+    ],
+  },
+];
+
 export {
   PROBIOME_FORM_INFO,
   PROBIOME_NO_AUTO_STEP,
@@ -599,4 +644,5 @@ export {
   PROBIOME_OPTIONAL_FIELDS,
   PROBIOME_ERROR_MESSAGES,
   BODY_SIZE_LABEL,
+  PICKUP_NOTICE_LIST,
 };

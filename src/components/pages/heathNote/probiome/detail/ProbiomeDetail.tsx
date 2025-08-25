@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetProbiomeDetail } from "@/api/healthNote/probiome/queries/useGetProbiomeResult";
+import { useGetProbiomeDetail } from "@/api/healthNote/probiome/queries/useGetProbiomeDetail";
 import { SectionType } from "@/types/healthNote/probiome";
 import ProbiomeDetailCard from "./ProbiomeDetailCard";
 import { buildProbiomeSectionData } from "@/utils/healthNote/buildProbiomeSectionData";
@@ -41,9 +41,11 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
       })}
     >
       <div className={commonWrapper({ justify: "between", paddingTop: 20 })}>
-        <DefaultText type="title3">{data.petName} 문진 상세</DefaultText>
+        <DefaultText type="title3">
+          {data.diagnosisInfo.petName} 문진 상세
+        </DefaultText>
         <DefaultText type="body2" color="gray700">
-          {data.submitDate}
+          {data.diagnosisInfo.submitDate}
         </DefaultText>
       </div>
       <div className={commonWrapper({ direction: "col", gap: 12 })}>

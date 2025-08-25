@@ -1,6 +1,9 @@
+"use client";
+
 import Lottie from "lottie-react";
 import { lottieAnimation } from "./Loader.css";
 import { commonWrapper } from "@/styles/common.css";
+import animationData from "public/animations/loader.json";
 
 interface LottieLoaderProps {
   fullscreen?: boolean;
@@ -21,11 +24,7 @@ const LottieLoader = ({
     >
       <div className={lottieAnimation({ size })}>
         {" "}
-        <Lottie
-          animationData={require("/public/animations/loader.json")}
-          loop
-          autoplay
-        />
+        <Lottie animationData={animationData} loop autoplay />
       </div>
     </div>
   );

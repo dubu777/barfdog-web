@@ -57,11 +57,11 @@ export default function GeneralShopTest() {
 
   return (
     // <DotSpinner fullscreen />
-    <Spinner fullscreen />
-    // <div className={styles.testContainer}>
-    //   <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-    //   <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
-    //   <Button onClick={handleLogout}>로그아웃 테스트</Button>
-    // </div>
+    // <Spinner fullscreen />
+    <div className={styles.testContainer}>
+      <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
+      <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
+      <Button onClick={handleLogout}>로그아웃 테스트</Button>
+    </div>
   );
 }

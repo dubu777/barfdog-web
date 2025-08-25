@@ -5,6 +5,8 @@ import {
   ProbiomeDetailResponse,
   ProbiomeList,
   ProbiomePreInfo,
+  CreateProbiomePickupResponse,
+  CreateProbiomePickupRequest,
 } from "@/types/healthNote/probiome";
 import axiosInstance from "../../axiosInstance";
 import { AxiosInstance } from "axios";
@@ -61,10 +63,28 @@ const getProbiomePreInfo = async (
   return data.data;
 };
 
+const createProbiomePickup = async ({
+  diagnosisId,
+  body,
+}: {
+  diagnosisId: number;
+  body: CreateProbiomePickupRequest;
+}) => {
+  const { data } = await axiosInstance.put(
+    `/api/v2/health-book/probiome-diagnoses/${diagnosisId}/kit-pickup`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  throw new Error(data.message);
+};
+
 export {
   createProbiomeResult,
   getProbiomeDetail,
   getProbiomeList,
   checkProbiomeKit,
   getProbiomePreInfo,
+  createProbiomePickup,
 };

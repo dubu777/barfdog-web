@@ -10,9 +10,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <Suspense fallback={<Loader />}>
       <MyPageHeader />
-      <Wrapper>
-        {children}
-      </Wrapper>
+      <Wrapper>{children}</Wrapper>
     </Suspense>
   );
 }
