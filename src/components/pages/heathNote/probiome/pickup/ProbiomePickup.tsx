@@ -49,6 +49,8 @@ export default function ProbiomePickup({
     }),
   });
 
+  console.log(fileChangeInfo);
+
   useCancelUploadOnLeave({
     hasPendingUploads: uploadedFiles.length > 0,
     cancelUpload: cancelUpload,

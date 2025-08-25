@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { UploadedFile } from "@/types";
 import { uploadAxiosInstance } from "@/api/axiosInstance";
+import { postKeepalive } from "@/utils/network/postKeepalive";
+import { toAbsoluteUrl } from "@/utils/network/url";
 
 export interface FileChangeInfo {
   addFileIdList: number[];
@@ -99,9 +101,15 @@ export function useMultiFileUpload({
     setDeleteFileIdList([]);
   };
 
-  const cancelUpload = async () => {
+  const cancelUpload = async (keepalive?: boolean) => {
     try {
-      await uploadAxiosInstance.post(cancelApiUrl);
+      if (keepalive && typeof window !== "undefined") {
+        // 언로드 타이밍: keepalive 유틸 사용
+        await postKeepalive(toAbsoluteUrl(cancelApiUrl));
+      } else {
+        // 일반 타이밍: 기존 axios 사용(인터셉터, 에러 핸들링 그대로)
+        await uploadAxiosInstance.post(cancelApiUrl);
+      }
       reset();
       callbacks.onCancel?.();
     } catch (err) {
