@@ -51,7 +51,7 @@ export default function ChangedScore({
 		<article>
 			<ResultCard
 				className={styles.changedScoreContainer}
-				title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${scoreDifference}점 ` : ''}${STATUS_MESSAGE[status].title}`}
+				title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${Math.abs(scoreDifference)}점 ` : ''}${STATUS_MESSAGE[status].title}`}
 			>
 				<Card
 					shadow='none'

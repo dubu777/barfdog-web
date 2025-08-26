@@ -1,5 +1,18 @@
 import { style } from "@vanilla-extract/css";
 
+export const fullCheckEmptyList = style({
+	height: 'calc(100vh - 52px)',
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	justifyContent: 'center',
+	gap: '20px',
+})
+
+export const createSurveyButton = style({
+	width: '163px',
+})
+
 export const fullCheckSurvey = style({
 	padding: '20px 20px 16px'
 })
