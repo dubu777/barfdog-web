@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { UploadedFile } from "@/types";
 import { uploadAxiosInstance } from "@/api/axiosInstance";
 import { postKeepalive } from "@/utils/network/postKeepalive";
@@ -122,6 +122,11 @@ export function useMultiFileUpload({
     deleteFileIdList,
   };
 
+  const hasPendingUploads = useMemo(
+    () => addFileIdList.length > 0 || deleteFileIdList.length > 0,
+    [addFileIdList.length, deleteFileIdList.length]
+  );
+
   return {
     uploadedFiles,
     fileChangeInfo,
@@ -129,5 +134,6 @@ export function useMultiFileUpload({
     removeFile,
     reset,
     cancelUpload,
+    hasPendingUploads,
   };
 }

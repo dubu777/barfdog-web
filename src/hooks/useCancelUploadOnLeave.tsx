@@ -39,7 +39,7 @@ export function useCancelUploadOnLeave({
     if (firedRef.current) return;
     firedRef.current = true;
     if (shouldCancelRef.current && pendingRef.current) {
-      // ⬇️ 언로드 계열 이벤트에서는 반드시 keepalive로!
+      // 언로드 계열 이벤트에서는 keepalive 옵션 사용
       cancelRef.current(true);
     }
   };

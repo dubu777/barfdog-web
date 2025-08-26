@@ -36,6 +36,7 @@ export default function ProbiomePickup({
     removeFile,
     cancelUpload,
     fileChangeInfo,
+    hasPendingUploads,
   } = useMultiFileUpload({
     fileKey: "uploadDiagnosisFile",
     uploadApiUrl: "/api/v2/health-book/probiome-diagnoses/files",
@@ -52,8 +53,8 @@ export default function ProbiomePickup({
   console.log(fileChangeInfo);
 
   useCancelUploadOnLeave({
-    hasPendingUploads: uploadedFiles.length > 0,
-    cancelUpload: cancelUpload,
+    hasPendingUploads,
+    cancelUpload,
     submitted: completedMode,
   });
 

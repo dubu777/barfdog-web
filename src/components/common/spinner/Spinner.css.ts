@@ -20,11 +20,21 @@ export const spinnerContainer = recipe({
   },
 });
 
-export const spinner = style({
-  position: "relative",
-  width: "64px",
-  height: "64px",
-  display: "inline-block",
+export const spinner = recipe({
+  base: {
+    position: "relative",
+
+    display: "inline-block",
+  },
+  variants: {
+    size: {
+      md: { width: "64px", height: "64px" },
+      sm: { width: "56px", height: "56px" },
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
 });
 
 export const spinnerOuter = style({
@@ -36,11 +46,19 @@ export const spinnerOuter = style({
   animation: `${rotate} 0.8s linear infinite`,
 });
 
-export const spinnerInner = style({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  width: "24px",
-  height: "24px",
-  transform: "translate(-50%, -50%)",
+export const spinnerInner = recipe({
+  base: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+
+    transform: "translate(-50%, -50%)",
+  },
+  variants: {
+    size: {
+      md: { width: "24px", height: "24px" },
+      sm: { width: "16px", height: "16px" },
+    },
+  },
+  defaultVariants: { size: "md" },
 });
