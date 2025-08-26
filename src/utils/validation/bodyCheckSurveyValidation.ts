@@ -1,17 +1,17 @@
-import { GUT_SURVEY_ITEMS } from "@/constants";
+import { GASTRO_SURVEY_ITEMS } from "@/constants/healthNote/bodyCheck/gastro";
 import { OBESITY_SURVEY_ITEMS } from "@/constants/healthNote/bodyCheck/obesity";
 import { SKIN_SURVEY_ITEMS } from "@/constants/healthNote/bodyCheck/skin";
 import { AnySchema } from "yup";
 import * as yup from "yup";
 
-const gutSurveySchema = yup.object(
-  GUT_SURVEY_ITEMS.reduce((acc, q) => {
+const gastroSurveySchema = yup.object(
+  GASTRO_SURVEY_ITEMS.reduce((acc, q) => {
     acc[q.key] = yup.number().required("필수 선택");
     return acc;
   }, {} as Record<string, AnySchema>)
 );
 
-const defaultGutSurveyValues = GUT_SURVEY_ITEMS.reduce((acc, q) => {
+const defaultGastroSurveyValues = GASTRO_SURVEY_ITEMS.reduce((acc, q) => {
   acc[q.key] = null;
   return acc;
 }, {} as Record<string, number | null>);
@@ -41,8 +41,8 @@ const defaultObesitySurveyValues = OBESITY_SURVEY_ITEMS.reduce((acc, q) => {
 }, {} as Record<string, number | null>);
 
 export {
-  gutSurveySchema,
-  defaultGutSurveyValues,
+  gastroSurveySchema,
+  defaultGastroSurveyValues,
   skinSurveySchema,
   defaultSkinSurveyValues,
   obesitySurveySchema,

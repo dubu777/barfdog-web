@@ -137,4 +137,10 @@ const queryKeys = {
     GET_FULL_CHECK_LIST: "getFullCheckList",
     GET_FULL_CHECK_RESULT_DETAIL: "getFullCheckResultDetail",
   },
+  BODY_CHECK: {
+    BASE: "bodyCheck",
+    GET_LATEST_BODY_CHECK: "getLatestBodyCheck",
+    GET_BODY_CHECK_LIST: "getBodyCheckList",
+    GET_BODY_CHECK_RESULT_DETAIL: "getBodyCheckResultDetail",
+  }
 } as const;
