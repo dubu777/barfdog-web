@@ -1,20 +1,29 @@
-import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import BodyCheckSurvey from "@/components/pages/heathNote/bodyCheck/survey/BodyCheckSurvey";
-import { BodyCheckPart } from "@/types/healthNote";
+import Loader from "@/components/common/loader/Loader";
+import { BodyPartType } from "@/types/healthNote/bodyCheck";
 
 interface BodyCheckSurveyPageProps {
   params: Promise<{
     petId: string;
-    part: BodyCheckPart;
+    part: BodyPartType;
   }>;
 }
 
 export default async function BodyCheckSurveyPage({ params }: BodyCheckSurveyPageProps) {
   const { petId, part } = await params;
 
+  const queryClient = new QueryClient();
+  const dehydratedState = dehydrate(queryClient);
   return (
-    <NavigationGuard>
-      <BodyCheckSurvey part={part} petId={Number(petId)} />
-    </NavigationGuard>
+    <HydrationBoundary state={dehydratedState}>
+      <ErrorBoundary fallback={<div>부위별 진단 설문 로딩 실패</div>}>
+        <Suspense fallback={<Loader fullscreen />}>
+          <BodyCheckSurvey part={part as BodyPartType} petId={Number(petId)} />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrationBoundary>
   );
 }

@@ -1,26 +1,21 @@
+import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { commonWrapper } from "@/styles/common.css";
-import { DiseaseName } from "@/types/healthNote";
-import {
-  getBodyCheckDiseaseMeta,
-  getBodyCheckScoreStatus,
-} from "@/utils/healthNote/bodyCheckScore";
+import { getBodyCheckScoreStatus } from "@/utils/healthNote/bodyCheck/bodyCheckScore";
+import { DiseaseCategoryKey } from "@/types/healthNote/bodyCheck";
+import { BODY_CHECK_DISEASE_INFO } from "@/constants/healthNote/bodyCheck/common";
 
 interface BodyCheckScoreCardProps {
-  diseaseName: DiseaseName;
+  diseaseName: DiseaseCategoryKey;
   score: number;
 }
 
-export default function BodyCheckScoreCard({
+export default function BodyCheckDiseaseCard({
   diseaseName,
   score,
 }: BodyCheckScoreCardProps) {
   const { label, color } = getBodyCheckScoreStatus(diseaseName, score);
-  const { koreanName, scoreDescription } = getBodyCheckDiseaseMeta(diseaseName);
-  console.log(
-    `Disease: ${diseaseName}, Score: ${score}, Label: ${label}, Color: ${color}`
-  );
+  const { name, description } = BODY_CHECK_DISEASE_INFO[diseaseName];
 
   return (
     <div
@@ -34,13 +29,13 @@ export default function BodyCheckScoreCard({
       })}
     >
       <div className={commonWrapper({ justify: "between" })}>
-        <DefaultText type="headline2">{koreanName}</DefaultText>
+        <DefaultText type="headline2">{name}</DefaultText>
         <Chips variant="solid" color={color} borderRadius="lg">
           {label}
         </Chips>
       </div>
       <DefaultText type="body3" color="gray700">
-        {scoreDescription}
+        {description}
       </DefaultText>
     </div>
   );

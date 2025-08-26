@@ -1,25 +1,24 @@
-import ResultCard from "../../../common/resultCard/ResultCard";
 import { commonWrapper } from "@/styles/common.css";
+import { phaseTextStyle } from "../BodyCheckResult.css";
 import SirenIcon from "public/images/healthNote/siren.svg";
 import LightIcon from "public/images/healthNote/light-bulb.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import {
-  getBodyCheckDiseaseMeta,
-  getPhaseDescription,
-} from "@/utils/healthNote/bodyCheckScore";
-import { DiseaseName, DiseasePhaseType } from "@/types/healthNote";
 import Card from "@/components/common/card/Card";
-import { phaseTextStyle } from "../BodyCheckResult.css";
+import ResultCard from "../../../common/resultCard/ResultCard";
+import DefaultText from "@/components/common/defaultText/DefaultText";
+import { getPhaseDescription } from "@/utils/healthNote/bodyCheck/bodyCheckScore";
+import { DiseaseCategoryKey, DiseasePhaseType } from "@/types/healthNote/bodyCheck";
+import { BODY_CHECK_DISEASE_INFO, DISEASE_PHASES_LIST } from "@/constants/healthNote/bodyCheck/common";
+
 interface DiseasePhaseProps {
-  diseaseName: DiseaseName;
+  diseaseName: DiseaseCategoryKey;
 }
 
 export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
-  const phases = ["초기", "중기", "심화"];
-  const { healthGuide } = getBodyCheckDiseaseMeta(diseaseName);
+  const { management } = BODY_CHECK_DISEASE_INFO[diseaseName];
+
   return (
-    <ResultCard gap={12}>
+    <ResultCard gap={12} title={`${BODY_CHECK_DISEASE_INFO[diseaseName].name}이\n의심된다면 이렇게 관리해 주세요`}>
       <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
         <div className={commonWrapper({ gap: 8, justify: "start" })}>
           <SvgIcon src={SirenIcon} size={24} />
@@ -27,9 +26,9 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
             증상별 경과
           </DefaultText>
         </div>
-        {phases.map((phase) => (
+        {DISEASE_PHASES_LIST.map((phase, index) => (
           <div
-            key={phase}
+            key={`${phase.value}-${index}`}
             className={commonWrapper({
               direction: "col",
               gap: 6,
@@ -47,10 +46,10 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
                 className={phaseTextStyle}
                 applyLineHeight={false}
               >
-                {phase}
+                {phase.label}
               </DefaultText>
               <DefaultText type="body3" color="gray700">
-                {getPhaseDescription(diseaseName, phase as DiseasePhaseType)}
+                {getPhaseDescription(diseaseName, phase.value as DiseasePhaseType)}
               </DefaultText>
             </div>
           </div>
@@ -62,7 +61,7 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
           <DefaultText type="headline2">건강 관리 가이드</DefaultText>
         </div>
         <DefaultText type="body3" color="gray700">
-          {healthGuide}
+          {management}
         </DefaultText>
       </Card>
     </ResultCard>

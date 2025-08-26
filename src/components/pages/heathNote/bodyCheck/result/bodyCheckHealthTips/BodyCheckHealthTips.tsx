@@ -1,21 +1,20 @@
+import { commonWrapper } from "@/styles/common.css";
+import CheckIcon from "public/images/healthNote/body-check/notice-check.svg";
 import ResultCard from "../../../common/resultCard/ResultCard";
 import ResultAccordion from "../../../common/resultAccordion/ResultAccordion";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import CheckIcon from "public/images/healthNote/body-check/notice-check.svg";
-import { commonWrapper } from "@/styles/common.css";
-import { BodyCheckRecommendItem } from "@/types/healthNote";
 import Chips from "@/components/common/chips/Chips";
 import { CHIPS_COLORS, Colors } from "@/constants/style";
 import { bodyCheckChipsStyle } from "../BodyCheckResult.css";
+import { BodyCheckHealthTip, BodyPartType } from "@/types/healthNote/bodyCheck";
+import { BODY_PART_HEALTH_TIPS } from "@/constants/healthNote/bodyCheck/common";
 
 interface BodyCheckHealthTipsProps {
-  tips: BodyCheckRecommendItem[];
-  name: string;
+  part: BodyPartType;
 }
 export default function BodyCheckHealthTips({
-  tips,
-  name,
+  part,
 }: BodyCheckHealthTipsProps) {
   const COLOR_MAP: Record<
     string,
@@ -25,16 +24,19 @@ export default function BodyCheckHealthTips({
     second: { iconColor: "blue500", chipColor: "blue50" },
     third: { iconColor: "green500", chipColor: "green50" },
   };
+  const { list: tips, title }  = BODY_PART_HEALTH_TIPS[part];
+
   return (
-    <ResultCard gap={12} title={`${name} 건강\n이렇게 관리해 주세요!`}>
-      {tips.map((item) => {
-        const { iconColor, chipColor } = COLOR_MAP[item.step] || {};
+    <ResultCard gap={12} title={title}>
+      {tips.map((item, idx) => {
+        const tip = item as BodyCheckHealthTip;
+        const { iconColor, chipColor } = COLOR_MAP[tip.step] || {};
         return (
           <ResultAccordion
-            key={item.step}
+            key={tip.step ?? idx}
             accordionButton={
               <div className={commonWrapper({ justify: "start", gap: 6 })}>
-                <SvgIcon src={item.Icon} color={iconColor} />
+                <SvgIcon src={item.icon} color={iconColor} />
                 <DefaultText type="headline4">{item.title}</DefaultText>
               </div>
             }
