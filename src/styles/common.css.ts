@@ -316,6 +316,6 @@ export const commonWrapper = recipe({
 });
 
 export const infiniteTrigger = style({
-  height: "72px",
+  height: "4px",
   background: themeVars.colors.gray.gray50,
 });

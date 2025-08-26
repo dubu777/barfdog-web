@@ -4,7 +4,7 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { fontColors } from '@/components/common/defaultText/DefaultText.css';
 import { COLORS } from '@/constants/style';
-import { getSimpleHealthStatus } from "@/utils/healthNote/getHealthStatus";
+import { getSimpleHealthStatus } from "@/utils/healthNote/common/getHealthStatus";
 
 interface CircleProgressBarProps {
 	score: number;
@@ -17,7 +17,11 @@ const displayDegree = 270;
 const radius = 120;
 const stroke = 12;
 
-const CircleProgressBar = ({ score, svgImage, hasFontColor }: CircleProgressBarProps) => {
+export default function CircleProgressBar({
+	score, 
+	svgImage, 
+	hasFontColor
+}: CircleProgressBarProps) {
 	const { label, color } = getSimpleHealthStatus(score, '400');
 
 	const normalizedRadius = radius - stroke / 2;
@@ -67,5 +71,3 @@ const CircleProgressBar = ({ score, svgImage, hasFontColor }: CircleProgressBarP
 		</div>
 	);
 };
-
-export default CircleProgressBar;

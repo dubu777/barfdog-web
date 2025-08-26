@@ -2,7 +2,7 @@ import * as styles from './ComparisonProgressBar.css';
 import { ReactNode } from "react";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
-import { getScoreChangeStatus}  from "@/utils/healthNote/getHealthStatus";
+import { getScoreChangeStatus }  from "@/utils/healthNote/common/getHealthStatus";
 
 interface ComparisonProgressBarProps {
 	prevScore: number;
@@ -14,7 +14,7 @@ interface ComparisonProgressBarProps {
 	currentBottomChildren?: ReactNode;
 }
 
-const ComparisonProgressBar = ({
+export default function ComparisonProgressBar({
 	prevScore,
 	currentScore,
 	diffValue = 10,
@@ -22,7 +22,7 @@ const ComparisonProgressBar = ({
 	isCurrentScoreChips = false,
 	prevBottomChildren,
 	currentBottomChildren,
-}: ComparisonProgressBarProps) => {
+}: ComparisonProgressBarProps) {
 	const diff = currentScore - prevScore;
 	const status = getScoreChangeStatus(diff, diffValue);
 
@@ -69,5 +69,3 @@ const ComparisonProgressBar = ({
 		</div>
 	);
 };
-
-export default ComparisonProgressBar;

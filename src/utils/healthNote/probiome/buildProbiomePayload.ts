@@ -1,5 +1,5 @@
 import { CreateProbiomeRequest } from "@/types/healthNote/probiome";
-import { ProbiomeStepValues } from "../validation/probiomeValidation";
+import { ProbiomeStepValues } from "../../validation/probiomeValidation";
 
 export function buildProbiomePayload(
   values: ProbiomeStepValues,

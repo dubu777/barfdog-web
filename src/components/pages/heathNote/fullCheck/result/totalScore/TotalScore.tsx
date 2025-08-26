@@ -7,7 +7,7 @@ import Card from "@/components/common/card/Card";
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
 import InfoBox from "@/components/pages/heathNote/common/infoBox/InfoBox";
 import { RESULT_HEALTH_STATUS_ICON_MAP } from "@/constants";
-import { getSimpleHealthStatus } from "@/utils/healthNote/getHealthStatus";
+import { getSimpleHealthStatus } from "@/utils/healthNote/common/getHealthStatus";
 
 interface TotalScoreProps {
   petName: string;

@@ -3,8 +3,8 @@ import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCar
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ResultAccordion from "@/components/pages/heathNote/common/resultAccordion/ResultAccordion";
-import { DiseaseData } from "@/types/healthNote";
 import { BODY_PART_TO_CATEGORY, DISEASE_CATEGORY } from "@/constants";
+import { DiseaseData } from '@/types/healthNote/fullCheck';
 
 interface SuspectedDiseasesProps {
 	petName: string;

@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
 import { useToastStore } from "@/store/useToastStore";
-import { DotSpinner } from "@/components/common/spinner/DotSpinner";
 import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
+import DotSpinner from "@/components/common/spinner/DotSpinner";
 
 
 export default function Page() {

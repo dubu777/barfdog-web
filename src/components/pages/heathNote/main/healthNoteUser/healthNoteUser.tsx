@@ -5,10 +5,10 @@ import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import ComparisonProgressBar from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
-import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { useGetFullCheckSummary } from "@/api/healthNote/fullCheck/queries/useGetFullCheckSummary";
+import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants/healthNote/\bcommon";
 
 const HealthNoteUser = () => {
   const { data: petList = [] } = useGetPetList();

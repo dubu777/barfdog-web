@@ -53,7 +53,7 @@ const SubscriptionPaymentInfo = ({
 	const { addToast } = useToastStore();
 	const { setMaxAvailableCouponDiscount } = useCouponStore();
 
-	const normalizedCoupons = (coupons as CouponWithId[]).map(({ id, ...rest }) => ({ ...rest, memberCouponId: id,  }));
+	const normalizedCoupons = (coupons as CouponWithId[]);
 
 	const subscriptionOrderStatus = 'BEFORE_PAYMENT';
 	const isBeforePaying = subscriptionOrderStatus === 'BEFORE_PAYMENT';

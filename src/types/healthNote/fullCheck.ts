@@ -1,6 +1,6 @@
-import {Pagination} from "@/types";
-import {BODY_PART_TO_CATEGORY, DISEASE_INFO} from "@/constants";
-import {AxiosInstance} from "axios";
+import { BODY_PART_TO_CATEGORY, DISEASE_INFO } from "@/constants";
+import { AxiosInstance } from "axios";
+import { ComponentType, SVGProps } from "react";
 
 type SuspectedDiseaseCategory = keyof typeof BODY_PART_TO_CATEGORY;
 type SuspectedDiseaseType = keyof typeof DISEASE_INFO;
@@ -34,6 +34,17 @@ interface Snapshot {
 	avgCohortWalkHours: number | null;          // 평균 산책시간(회당)
 }
 
+interface RecommendedItem {
+	diseaseCategoryId: number;
+	diseaseCategory: SuspectedDiseaseCategory & "ALL";
+	productId: number;
+	productName: string;
+	productPrice: number;
+	displayProductUrl: {
+		url: string;
+	}
+}
+
 interface CheckupDiagnosis {
 	diagnosisId: number;
 	petId: number;
@@ -44,11 +55,7 @@ interface CheckupDiagnosis {
 	suspectedDiseaseCategoryList: SuspectedDiseaseCategory[];
 	suspectedDiseaseTypeList: SuspectedDiseaseType[];
 	snapshot: Snapshot;
-}
-
-interface FullCheckList {
-	page: Pagination;
-	checkupDiagnosisList: CheckupDiagnosis[];
+	recommendedItemList: RecommendedItem[];
 }
 
 interface FullCheckListSearchValues {
@@ -67,12 +74,37 @@ interface FullCheckFormValues {
 	suspectedDiseaseTypeList: SuspectedDiseaseType[];
 }
 
+type DiseaseCategoryKey = keyof typeof BODY_PART_TO_CATEGORY;
+
+type DiseaseCategory = (typeof BODY_PART_TO_CATEGORY)[DiseaseCategoryKey];
+
+interface DiseaseInfo {
+  category: string;
+  ko: string;
+  en: string;
+  diagnosis: string;
+  causes: string;
+  symptoms: string;
+  management: string;
+  value: number;
+}
+
+interface DiseaseData {
+  category: DiseaseCategory;
+  categoryImage: ComponentType<SVGProps<SVGSVGElement>>;
+  disease: DiseaseInfo;
+  score: number;
+  diseaseKey: string;
+  name: string;
+}
+
 export type {
 	SuspectedDiseaseCategory,
 	SuspectedDiseaseType,
 	FullCheckSummary,
 	CheckupDiagnosis,
-	FullCheckList,
 	FullCheckListSearchValues,
 	FullCheckFormValues,
+	RecommendedItem,
+	DiseaseData,
 }

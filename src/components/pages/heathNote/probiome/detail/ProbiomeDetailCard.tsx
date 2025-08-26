@@ -11,7 +11,7 @@ import {
 import {
   getFieldLabel,
   formatFieldValue,
-} from "@/utils/healthNote/probiomeDetailUtils";
+} from "@/utils/healthNote/probiome/probiomeDetailUtils";
 import { useMemo } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import Divider from "@/components/common/divider/Divider";

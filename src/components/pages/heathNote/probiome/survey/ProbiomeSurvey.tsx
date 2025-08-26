@@ -24,11 +24,11 @@ import { useProbiomeStepElements } from "./steps/StepElements";
 import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useCreateProbiomeResult } from "@/api/healthNote/probiome/mutations/useCreateProbiomeResult";
-import { buildProbiomePayload } from "@/utils/healthNote/buildProbiomePayload";
 import { Gender } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import { buildProbiomePayload } from "@/utils/healthNote/probiome/buildProbiomePayload";
 
 interface ProbiomeSurveyProps {
   petId: number;

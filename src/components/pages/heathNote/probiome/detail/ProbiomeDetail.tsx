@@ -3,7 +3,7 @@
 import { useGetProbiomeDetail } from "@/api/healthNote/probiome/queries/useGetProbiomeDetail";
 import { SectionType } from "@/types/healthNote/probiome";
 import ProbiomeDetailCard from "./ProbiomeDetailCard";
-import { buildProbiomeSectionData } from "@/utils/healthNote/buildProbiomeSectionData";
+import { buildProbiomeSectionData } from "@/utils/healthNote/probiome/buildProbiomeSectionData";
 import { commonWrapper } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Loader from "@/components/common/loader/Loader";
