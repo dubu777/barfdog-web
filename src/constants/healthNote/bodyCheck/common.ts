@@ -64,7 +64,14 @@ const DISEASE_PHASES = {
 	advanced: "장기",
 } as const;
 
+const DISEASE_PHASES_WEIGHT_BALANCE = {
+	early: "저체중",
+	mid: "적정체중",
+	advanced: "과체중",
+} as const;
+
 const DISEASE_PHASES_LIST = toLabelValueList(DISEASE_PHASES);
+const DISEASE_PHASES_WEIGHT_BALANCE_LIST = toLabelValueList(DISEASE_PHASES_WEIGHT_BALANCE);
 
 
 // 부위별 진단 상세 정밀 진단 결과 및 의심 증상별 경과
@@ -206,7 +213,7 @@ const BODY_CHECK_DISEASE_INFO = {
 			mid: "균형 잡힌 라인, 만져지는 갈비뼈, 자연스러운 허리선",
 			advanced: "뚜렷하지 않은 허리선, 쳐진 복부, 잘 만져지지 않는 갈비뼈",
 		},
-		management: null,
+		management: "적정 체형을 유지하려면 활동량도 중요하지만, 무엇보다 식단 관리가 핵심이에요. 급여량을 조절하고 체형에 맞는 저지방·고단백 식사를 이어가는 게 가장 효과적인 방법이에요. 꾸준한 식단 관리만으로도 적정 체중을 지켜줄 수 있어요.",
 	},
 	activityScore: {
 		category: "OBD",
@@ -436,6 +443,7 @@ const BODY_PART_RECOMMENDED_ITEMS = {
 export {
 	DISEASE_PHASES,
 	DISEASE_PHASES_LIST,
+	DISEASE_PHASES_WEIGHT_BALANCE_LIST,
 	BODY_PART,
 	BODY_PART_HEALTH_TIPS,
 	BODY_CHECK_DISEASE_INFO,
