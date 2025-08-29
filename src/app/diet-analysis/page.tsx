@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import DietAnalysisMain from "@/components/pages/dietAnalysis/main/DietAnalysisMain";
 import { prefetchGetPetList } from "@/api/pet/queries/usePrefetchGetPetList";
 
@@ -20,7 +20,7 @@ export default async function DietAnalysisPage() {
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>추천식단 에러</div>}>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Spinner />}>
           <Header leftTitle="AI 추천식단" showCartButton />
           <DietAnalysisMain />
           <BottomNavBar />

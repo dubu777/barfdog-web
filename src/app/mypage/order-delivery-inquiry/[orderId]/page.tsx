@@ -6,7 +6,7 @@ import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddr
 import { OrderType } from "@/types";
 import OrderDetail
   from "@/components/pages/mypage/orderDeliveryInquiry/orderDetail/OrderDetail";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 interface OrderDetailPageProps {
   params: {
@@ -29,7 +29,7 @@ export default async function OrderDetailPage({ params, searchParams }: OrderDet
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>주문 데이터가 없습니다.</div>}>
-        <Suspense fallback={<Loader fullscreen />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <OrderDetail orderId={orderId} orderType={orderType}/>
         </Suspense>
       </ErrorBoundary>

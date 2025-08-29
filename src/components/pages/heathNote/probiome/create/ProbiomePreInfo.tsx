@@ -4,7 +4,7 @@ import Card from "@/components/common/card/Card";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Divider from "@/components/common/divider/Divider";
 import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import { commonWrapper } from "@/styles/common.css";
 import { formatPhoneNumber } from "@/utils";
 
@@ -23,7 +23,7 @@ export default function ProbiomePreInfo({
   const { pet, member } = data || {};
 
   if (isLoading || !pet || !member) {
-    return <Loader />;
+    return <Spinner />;
   }
 
   const petInfoItems = [

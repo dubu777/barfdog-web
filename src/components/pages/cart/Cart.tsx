@@ -5,7 +5,7 @@ import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Divider from "@/components/common/divider/Divider";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";
@@ -53,7 +53,7 @@ export default function Cart() {
     console.log('주문하기')
   }
 
-  if (!cartData) return <Loader fullscreen />;
+  if (!cartData) return <Spinner fullscreen />;
   return (
     <section className={styles.cartContainer}>
       <article className={styles.cartItemControls}>

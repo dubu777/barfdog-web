@@ -3,7 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import { prefetchGetUserInfo } from "@/api/auth/queries/usePrefetchGetUserInfo";
 import Notification from "@/components/pages/mypage/account/notification/Notification";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 
 export default async function NotificationPage() {
@@ -13,7 +13,7 @@ export default async function NotificationPage() {
 	return (
 		<HydrationBoundary state={dehydrateState}>
 			<ErrorBoundary fallback={<div>회원 정보가 없습니다.</div>}>
-				<Suspense fallback={<Loader fullscreen />}>
+				<Suspense fallback={<Spinner fullscreen />}>
 					<Notification />
 				</Suspense>
 			</ErrorBoundary>

@@ -6,7 +6,7 @@ import ProbiomeDetailCard from "./ProbiomeDetailCard";
 import { buildProbiomeSectionData } from "@/utils/healthNote/probiome/buildProbiomeSectionData";
 import { commonWrapper } from "@/styles/common.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import Card from "@/components/common/card/Card";
 import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
 import { formatPhoneNumber } from "@/utils";
@@ -22,7 +22,7 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
   const { data, isLoading } = useGetProbiomeDetail(diagnosisId);
 
   if (isLoading || !data) {
-    return <Loader />;
+    return <Spinner />;
   }
 
   const sectionData = buildProbiomeSectionData(data.survey);

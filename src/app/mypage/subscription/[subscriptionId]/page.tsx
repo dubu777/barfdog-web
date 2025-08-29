@@ -6,7 +6,7 @@ import { prefetchGetPaymentList } from "@/api/mypage/queries/usePrefetchGetPayme
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
 import SubscriptionDetail from "@/components/pages/mypage/subscription/subscriptionDetail/SubscriptionDetail";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 interface SubscriptionDetailPageProps {
   params: {
@@ -26,7 +26,7 @@ export default async function SubscriptionDetailPage({ params }: SubscriptionDet
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>페이지 접근이 불가합니다.</div>}>
-        <Suspense fallback={<Loader fullscreen />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <SubscriptionDetail subscriptionId={subscriptionId} />
         </Suspense>
       </ErrorBoundary>

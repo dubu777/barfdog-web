@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import BodyCheckList from "@/components/pages/heathNote/bodyCheck/list/BodyCheckList";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import { prefetchGetLatestBodyCheck } from "@/api/healthNote/bodyCheck/queries/prefetchGetLatestBodyCheck";
 import { prefetchGetInfiniteBodyCheckList } from "@/api/healthNote/bodyCheck/queries/prefetchGetInfiniteBodyCheckList";
 
@@ -22,7 +22,7 @@ export default async function BodyCheckPage({ params }: BodyCheckPageProps) {
   return (
     <HydrationBoundary state={dehydratedState}>
       <ErrorBoundary fallback={<div>부위별 진단 목록 로딩 실패</div>}>
-        <Suspense fallback={<Loader fullscreen />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <BodyCheckList petId={Number(petId)} />
         </Suspense>
       </ErrorBoundary>

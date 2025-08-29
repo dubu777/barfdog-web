@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { prefetchGetUserInfo } from "@/api/auth/queries/usePrefetchGetUserInfo";
 import UserInfo from "@/components/pages/mypage/account/userInfo/UserInfo";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default async function UserInfoPage() {
 	const queryClient = new QueryClient();
@@ -12,7 +12,7 @@ export default async function UserInfoPage() {
 	return (
 		<HydrationBoundary state={dehydrateState}>
 			<ErrorBoundary fallback={<div>회원 정보가 없습니다.</div>}>
-				<Suspense fallback={<Loader fullscreen />}>
+				<Suspense fallback={<Spinner fullscreen />}>
 					<UserInfo />
 				</Suspense>
 			</ErrorBoundary>

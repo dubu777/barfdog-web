@@ -13,7 +13,7 @@ import {
   getSnsCallbackUrl,
   removeSnsCallbackUrl,
 } from "@/utils/auth/snsCallbackUrl";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 // interface ConnectSnsProps {
 // }
@@ -83,7 +83,7 @@ const ConnectSns = () => {
       },
     });
   }, [loginUserInfo, connectSns]);
-  return <Loader fullscreen />;
+  return <Spinner fullscreen />;
 };
 
 export default ConnectSns;

@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import PetEditForm from "@/components/pages/pet/edit/PetEditForm";
 import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
 
@@ -24,7 +24,7 @@ export default async function PetEditPage({ params }: PetEditPageProps) {
     <>
       <HydrationBoundary state={dehydrateState}>
         <ErrorBoundary fallback={<div>반려견 상세 로딩 실패</div>}>
-          <Suspense fallback={<Loader fullscreen />}>
+          <Suspense fallback={<Spinner fullscreen />}>
             <PetEditForm petId={Number(params.petId)} />
           </Suspense>
         </ErrorBoundary>

@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import Account from "@/components/pages/mypage/account/Account";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default async function AccountPage() {
 	return (
-		<Suspense fallback={<Loader fullscreen />}>
+		<Suspense fallback={<Spinner fullscreen />}>
 			<Account />
 		</Suspense>
 	)
