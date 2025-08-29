@@ -8,7 +8,7 @@ import ResultCard from "../../../common/resultCard/ResultCard";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { getPhaseDescription } from "@/utils/healthNote/bodyCheck/bodyCheckScore";
 import { DiseaseCategoryKey, DiseasePhaseType } from "@/types/healthNote/bodyCheck";
-import { BODY_CHECK_DISEASE_INFO, DISEASE_PHASES_LIST } from "@/constants/healthNote/bodyCheck/common";
+import { BODY_CHECK_DISEASE_INFO, DISEASE_PHASES_LIST, DISEASE_PHASES_WEIGHT_BALANCE_LIST } from "@/constants/healthNote/bodyCheck/common";
 
 interface DiseasePhaseProps {
   diseaseName: DiseaseCategoryKey;
@@ -16,17 +16,26 @@ interface DiseasePhaseProps {
 
 export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
   const { management } = BODY_CHECK_DISEASE_INFO[diseaseName];
+  
+  const isWeightBalanceScore = diseaseName === 'weightBalanceScore';
+  const diseaseTitle = isWeightBalanceScore
+    ? '체중 불균형'
+    : BODY_CHECK_DISEASE_INFO[diseaseName].name;
+  const diseasePhasesList = isWeightBalanceScore ? DISEASE_PHASES_WEIGHT_BALANCE_LIST : DISEASE_PHASES_LIST;
 
   return (
-    <ResultCard gap={12} title={`${BODY_CHECK_DISEASE_INFO[diseaseName].name}이\n의심된다면 이렇게 관리해 주세요`}>
+    <ResultCard gap={12} title={`${diseaseTitle}이\n의심된다면 이렇게 관리해 주세요`}>
       <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
         <div className={commonWrapper({ gap: 8, justify: "start" })}>
           <SvgIcon src={SirenIcon} size={24} />
           <DefaultText type="headline2" applyLineHeight={false}>
-            증상별 경과
+            {isWeightBalanceScore
+              ? '체형별 상태'
+              : '증상별 경과'
+            }
           </DefaultText>
         </div>
-        {DISEASE_PHASES_LIST.map((phase, index) => (
+        {diseasePhasesList.map((phase, index) => (
           <div
             key={`${phase.value}-${index}`}
             className={commonWrapper({
@@ -42,8 +51,8 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
               })}
             >
               <DefaultText
-                type="headline2"
-                className={phaseTextStyle}
+                type="label3"
+                className={phaseTextStyle({ fixedMinWidth: isWeightBalanceScore })}
                 applyLineHeight={false}
               >
                 {phase.label}

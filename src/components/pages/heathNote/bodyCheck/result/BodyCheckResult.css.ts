@@ -1,5 +1,6 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const bodyCheckChipsStyle = style({
   margin: "20px 0 12px 0",
@@ -13,8 +14,18 @@ export const bodyCheckDiseaseList = style({
   gap: '18px',
 });
 
-export const phaseTextStyle = style({
-  whiteSpace: "nowrap",
+export const phaseTextStyle = recipe({
+  base: {
+    whiteSpace: "nowrap",
+  },
+  variants: {
+    fixedMinWidth: {
+      true: {
+        minWidth: "48px",
+      },
+      false: {}
+    }
+  }
 });
 
 export const freshGutInfoBox = style({

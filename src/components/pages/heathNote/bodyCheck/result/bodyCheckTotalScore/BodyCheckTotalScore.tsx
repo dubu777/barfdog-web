@@ -7,6 +7,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import BodyCheckDiseaseCard from "./bodyCheckDiseaseCard/BodyCheckDiseaseCard";
 import { BodyPartType, DiseaseCategoryKey } from "@/types/healthNote/bodyCheck";
 import { BODY_PART } from "@/constants/healthNote/bodyCheck/common";
+import { getNameWithPossessiveSuffix } from "@/utils";
 
 interface BodyCheckTotalScoreProps {
   petName: string;
@@ -27,7 +28,7 @@ export default function BodyCheckTotalScore({
         direction: "col",
         gap: 20,
       })}
-      title={`${petName}의\n${BODY_PART[part].name} 정밀 진단 결과`}
+      title={`${getNameWithPossessiveSuffix(petName)}의\n${BODY_PART[part].name} 정밀 진단 결과`}
       subTitle={`장내 미생물 데이터 기반 설계를 바탕으로\n우리 아이의 ${BODY_PART[part].name} 건강을 살펴볼 수 있어요`}
     >
       <CircleProgressBar
