@@ -1,16 +1,15 @@
 import * as styles from './LatestBodyCheck.css';
 import { commonWrapper } from "@/styles/common.css";
-import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import ArrowIcon from "/public/images/icons/chevron-right.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { BodyPartType } from "@/types/healthNote/bodyCheck";
-import { useGetLatestBodyCheck } from "@/api/healthNote/bodyCheck/queries/useGetLatestBodyCheck";
 import HorizontalProgressBar
 	from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
 import { BODY_PART } from '@/constants/healthNote/bodyCheck/common';
+import { BodyPartType } from "@/types/healthNote/bodyCheck";
+import { useGetLatestBodyCheck } from "@/api/healthNote/bodyCheck/queries/useGetLatestBodyCheck";
 
 interface LatestBodyCheckProps {
 	petId: number;
@@ -19,7 +18,6 @@ interface LatestBodyCheckProps {
 export default function LatestBodyCheck({
 	petId,
 }: LatestBodyCheckProps) {
-	const router = useRouter();
 	const { data } = useGetLatestBodyCheck(petId);
 
 	const order = ["gastro", "skin", "obesity"];
@@ -31,7 +29,7 @@ export default function LatestBodyCheck({
 		.sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key));
 
 	const handleCardClick = (part: BodyPartType) => {
-		router.push(`/health-note/${petId}/body-check/survey/${part}`);
+		window.location.href = `/health-note/${petId}/body-check/survey/${part}`;
 	};
 
 	return (

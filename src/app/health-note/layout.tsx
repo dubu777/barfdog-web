@@ -8,7 +8,7 @@ interface DefaultLayoutProps {
 }
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<Spinner fullscreen />}>
       <HealthNoteHeader />
       <Wrapper>{children}</Wrapper>
     </Suspense>

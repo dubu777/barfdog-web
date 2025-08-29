@@ -62,7 +62,6 @@ export const SKIN_SURVEY_ITEMS = [
       'bacterialDermatitisScore',
       'mycoticDermatitisScore',
       'fleaTickDermatitisScore',
-      'malasseziaDermatitisScore',
     ]
   },
   {

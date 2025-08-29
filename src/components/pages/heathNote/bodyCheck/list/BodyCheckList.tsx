@@ -106,9 +106,7 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
                         <HorizontalProgressBar score={result.simpleTotalScore} showLabel showIcon />
                       </Card>
                     </Link>
-                    {diagnosisList.length > index + 1 &&
-                      <Divider thickness={4} color='gray50' />
-                    }
+                    <Divider thickness={4} color='gray50' />
                   </Fragment>
                 ))}
               </div>

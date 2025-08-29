@@ -25,6 +25,7 @@ export const bodyCheckList = style({
   display: 'flex',
   flexDirection: 'column',
   margin: '20px 0 0',
+  paddingBottom: '40px'
 });
 
 export const bodyCheckListItem = style({

@@ -60,6 +60,7 @@ export const backgroundColors = {
 
 export const cartButton = style({
   position: 'relative',
+  cursor: 'pointer',
 })
 
 export const cartCount = style({
@@ -74,4 +75,8 @@ export const cartCount = style({
   top: -11,
   right: -5,
   background: `url('/images/icons/cartCircle.png') no-repeat center center / 17px 17px`,
+})
+
+export const button = style({
+  cursor: 'pointer',
 })

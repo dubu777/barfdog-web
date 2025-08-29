@@ -13,6 +13,7 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Spinner from "@/components/common/spinner/Spinner";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
@@ -46,7 +47,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
   const { addToast } = useToastStore();
 
   const { data: petInfo } = useGetPetDetail(petId);
-  const { mutate } = useCreateFullCheckResult();
+  const { mutate, isPending } = useCreateFullCheckResult();
 
   const { control, setValue, watch, handleSubmit, formState } = useFormHandler(
     fullCheckSurveySchema,
@@ -65,6 +66,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
   const {
     currentStep,
     currentQuestion,
+    currentValue,
     isFirstStep,
     isLastStep,
     isButtonDisabled,
@@ -77,7 +79,6 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
     watch,
     setValue,
     formState,
-    control,
   });
 
   const title =
@@ -157,6 +158,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
     })
   };
 
+  if (isPending) return <Spinner fullscreen />
   return (
     <NavigationGuard>
       <Header
@@ -179,7 +181,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
         onClose={() => router.back()}
         showCloseButton
       />
-      <section className={styles.fullCheckSurveyContainer}>
+      <div className={styles.fullCheckSurveyContainer}>
         <article className={styles.fullCheckSurveyTitle}>
           <SvgIcon src={currentQuestion.imageUrl!} size={64} />
           <DefaultText type="title3">
@@ -240,8 +242,8 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
             )}
           />
         </article>
-      </section>
-      {currentStep >= 4 &&
+      </div>
+      {(currentStep < 4 ? currentValue : true) &&
         <ButtonDocked
           type="full-button"
           primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}

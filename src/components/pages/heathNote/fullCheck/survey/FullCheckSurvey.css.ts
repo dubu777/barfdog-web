@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const fullCheckSurveyContainer = style({
-	marginBottom: '85px',
+	height: 'calc(100vh - 52px)'
 })
 
 export const fullCheckSurveyHeader = style({

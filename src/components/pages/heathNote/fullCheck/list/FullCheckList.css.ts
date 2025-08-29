@@ -25,7 +25,7 @@ export const fullCheckSurveyCardContent = style({
 })
 
 export const fullCheckResultList = style({
-	padding: '0 20px',
+	padding: '0 20px 50px',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '8px',

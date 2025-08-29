@@ -1,13 +1,11 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
-  Control,
   FieldValues,
   FormState,
   Path,
   PathValue,
   UseFormSetValue,
   UseFormWatch,
-  useWatch,
 } from "react-hook-form";
 import { SurveyOption, SurveyQuestion } from "@/types/healthNote";
 import { POSITIVE_KEY } from "@/constants";
@@ -18,7 +16,6 @@ interface UseSurveyFlowProps<TFormValues extends FieldValues> {
   watch: UseFormWatch<TFormValues>;
   setValue: UseFormSetValue<TFormValues>;
   formState: FormState<TFormValues>;
-  control: Control<TFormValues>;
 }
 
 export const useSurveyFlow = <TFormValues extends FieldValues>({
@@ -27,7 +24,6 @@ export const useSurveyFlow = <TFormValues extends FieldValues>({
   watch,
   setValue,
   formState,
-  control,
 }: UseSurveyFlowProps<TFormValues>) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
 
@@ -37,14 +33,18 @@ export const useSurveyFlow = <TFormValues extends FieldValues>({
   const currentQuestion = questions[currentStep - 1];
   const { options, multiple = false } = currentQuestion;
   const fieldKey = currentQuestion.key as Path<TFormValues>;
-  // const currentValue = watch(fieldKey) as PathValue<
-  //   TFormValues,
-  //   Path<TFormValues>
-  // >;
-  const currentValue = useWatch<TFormValues>({
-    control,
-    name: fieldKey,
-  }) as PathValue<TFormValues, Path<TFormValues>>;
+
+  // watch 적용
+  // - 현재 질문(currentQuestion)에 해당하는 필드만 읽어오기 때문에
+  //   fieldKey가 바뀔 때마다 항상 최신 값 반환
+  // - useWatch로 적용할 경우:
+  //    특정 필드의 변경만 구독(subscription)하기 때문에
+  //    currentQuestion이 바뀌어도 이전 subscription이 남아 있음
+  //    결과적으로 currentValue가 이전 값으로 유지되는 "stale state" 문제 발생
+  const currentValue = watch(fieldKey) as PathValue<
+    TFormValues,
+    Path<TFormValues>
+  >;
 
   const isButtonDisabled = useMemo(() => {
     if (isLastStep) return !formState.isValid;
@@ -70,7 +70,6 @@ export const useSurveyFlow = <TFormValues extends FieldValues>({
   const handleOptionSelect = (selectedOption: SurveyOption) => {
     const selectedValue = selectedOption.value;
     const previousSelections = (watch(fieldKey) as number[]) ?? [];
-    console.log("currentValue", currentValue);
 
     if (multiple) {
       // 1) "없어요" 옵션 선택 시: 기존 선택 모두 제거하고 none만 남김, 자동 다음 단계

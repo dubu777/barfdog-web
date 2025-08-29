@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import * as styles from "./BodyCheckSurvey.css";
 import { commonWrapper } from "@/styles/common.css";
 import { useRouter } from "next/navigation";
@@ -13,6 +12,7 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
+import Spinner from "@/components/common/spinner/Spinner";
 import { useToastStore } from "@/store/useToastStore";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
@@ -66,10 +66,9 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
     watch,
     setValue,
     formState,
-    control,
   });
 
-  const { mutate } = useCreateBodyCheckResult();
+  const { mutate, isPending } = useCreateBodyCheckResult();
 
   // 잘못된 part 일 경우 리다이렉트 후 null 반환
   if (!config) {
@@ -123,14 +122,13 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
         router.push(`/health-note/${petId}/body-check/result/${part}/${diagnosisId}`);
       },
       onError: (error) => {
-        if(axios.isAxiosError(error)) {
-          addToast(error.message, 'above-button');
-        }
-        console.log(error);
+        addToast(error.message, 'above-button');
+        console.log(typeof error);
       }
     })
   };
 
+  if (isPending) return <Spinner fullscreen />
   return (
     <NavigationGuard>
       <Header
@@ -150,6 +148,7 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
           )
         }
         onClose={() => router.back()}
+        backgroundColor='gray50'
         showCloseButton
       />
       <SurveyProgressBar currentStep={currentStep} sections={sections} />
