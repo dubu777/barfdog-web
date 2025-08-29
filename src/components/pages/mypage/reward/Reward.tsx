@@ -1,18 +1,18 @@
 'use client';
 import * as styles from "./Reward.css";
-import { infiniteTrigger } from "@/styles/common.css";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useInView } from "react-intersection-observer";
 import RewardFilter from "@/components/pages/mypage/reward/rewardFilter/RewardFilter";
 import RewardList from "@/components/pages/mypage/reward/rewardList/RewardList";
-import { useInView } from "react-intersection-observer";
-import { useGetRewardList } from "@/api/mypage/queries/useGetRewardList";
-import { RewardFilterType, RewardListData, RewardListDataWithTotals } from "@/types";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Card from "@/components/common/card/Card";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import useModal from "@/hooks/useModal";
 import RewardInfoBottomSheet from "@/components/pages/mypage/reward/rewardInfoBottomSheet/RewardInfoBottomSheet";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { RewardFilterType, RewardListData, RewardListDataWithTotals } from "@/types";
+import { useGetRewardList } from "@/api/mypage/queries/useGetRewardList";
 
 const Reward = () => {
   const { data: rewardListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetRewardList();
@@ -32,7 +32,7 @@ const Reward = () => {
   const totalReward = (rewardListData?.pages[0] as RewardListDataWithTotals)?.totalReward ?? 0;
 
   useEffect(() => {
-    if (inView && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
@@ -69,9 +69,11 @@ const Reward = () => {
       </article>
       <RewardFilter />
       <RewardList rewardList={rewardList || []} />
-      {rewardList && rewardList?.length > 0 &&
-        <div ref={ref} className={infiniteTrigger} />
-      }
+      <InfiniteScrollTrigger
+        ref={ref}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+      />
     </section>
   );
 };

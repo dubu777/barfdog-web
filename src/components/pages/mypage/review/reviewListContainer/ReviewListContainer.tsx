@@ -1,5 +1,5 @@
 import * as styles from './ReviewListContainer.css';
-import { infiniteTrigger } from '@/styles/common.css';
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { ComponentType, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { ReviewItemType, WritableReviewList, WrittenReviewList } from "@/types";
@@ -32,7 +32,7 @@ const ReviewListContainer = <T extends { id: string; reviewType: ReviewItemType 
 	const isEmpty = filteredReviewList.length === 0;
 
 	useEffect(() => {
-		if (inView && !isFetchingNextPage) {
+		if (inView && hasNextPage && !isFetchingNextPage) {
 			fetchNextPage();
 		}
 	}, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
@@ -51,7 +51,11 @@ const ReviewListContainer = <T extends { id: string; reviewType: ReviewItemType 
 								</li>
 							))}
 						</ul>
-						<div ref={ref} className={infiniteTrigger} />
+						<InfiniteScrollTrigger
+							ref={ref}
+							hasNextPage={hasNextPage}
+							isFetchingNextPage={isFetchingNextPage}
+						/>
 					</>
 				)
 			}

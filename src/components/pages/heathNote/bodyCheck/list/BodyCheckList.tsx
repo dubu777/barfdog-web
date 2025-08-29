@@ -1,6 +1,5 @@
 'use client';
 import * as styles from "./BodyCheckList.css";
-import { infiniteTrigger } from "@/styles/common.css";
 import { Fragment, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -15,6 +14,7 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import HorizontalProgressBar
   from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
 import LatestBodyCheck from "@/components/pages/heathNote/bodyCheck/list/latestBodyCheck/LatestBodyCheck";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { queryKeys } from "@/constants";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { BodyPartType } from "@/types/healthNote/bodyCheck";
@@ -41,12 +41,9 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
   const { pushWithQuery } = useDynamicQueryPush();
 
   useEffect(() => {
-    if (inView && !hasNextPage) return;
-
-    if (hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   const handleTabClick = async (tabPart: BodyPartType) => {
@@ -115,7 +112,11 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
                   </Fragment>
                 ))}
               </div>
-              <div ref={ref} className={infiniteTrigger} />
+              <InfiniteScrollTrigger
+                ref={ref} 
+                hasNextPage={hasNextPage} 
+                isFetchingNextPage={isFetchingNextPage}
+              />
             </>
           ) : (
             <div className={styles.bodyCheckEmptyList}>

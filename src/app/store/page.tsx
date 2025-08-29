@@ -1,18 +1,18 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import { prefetchGetStoreItemList } from "@/api/store/queries/prefetchGetStoreItemList";
-import Loader from "@/components/common/loader/Loader";
 import StoreList from "@/components/pages/store/list/StoreList";
+import Spinner from "@/components/common/spinner/Spinner";
+import { prefetchGetInfiniteStoreItemList } from "@/api/store/queries/prefetchGetInfiniteBodyCheckList";
 
 export default async function StorePage() {
   const queryClient = new QueryClient();
-  await prefetchGetStoreItemList(queryClient, 0, 'recent', 'ALL');
+  await prefetchGetInfiniteStoreItemList('recent', 'ALL', queryClient);
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>상품이 없습니다.</div>}>
-        <Suspense fallback={<Loader fullscreen /> }>
+        <Suspense fallback={<Spinner fullscreen /> }>
           <StoreList />
         </Suspense>
       </ErrorBoundary>

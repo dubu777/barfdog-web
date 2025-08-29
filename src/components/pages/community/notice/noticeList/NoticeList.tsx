@@ -1,6 +1,5 @@
 'use client';
 import * as styles from './NoticeList.css';
-import { infiniteTrigger } from '@/styles/common.css';
 import { useEffect } from "react";
 import { format } from "date-fns";
 import { useSearchParams } from "next/navigation";
@@ -9,6 +8,7 @@ import Link from "next/link";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import TabBar from "@/components/common/tabBar/TabBar";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
 import { NOTICE_CATEGORY } from "@/constants/community";
 import { NoticeCategory, NoticeListResponse } from "@/types";
@@ -35,7 +35,7 @@ const NoticeList = () => {
   })
 
   useEffect(() => {
-    if (inView && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
@@ -64,9 +64,11 @@ const NoticeList = () => {
           </Link>
         ))}
       </ul>
-      {filteredNoticeList && filteredNoticeList?.length > 0 &&
-        <div ref={ref} className={infiniteTrigger} />
-      }
+      <InfiniteScrollTrigger
+        ref={ref}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+      />
     </section>
   );
 };

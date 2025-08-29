@@ -1,5 +1,4 @@
 import { BODY_CHECK_DISEASE_INFO, BODY_PART, DISEASE_PHASES } from "@/constants/healthNote/bodyCheck/common";
-import { Pagination } from "@/types";
 import { RecommendedItem, SuspectedDiseaseCategory } from "@/types/healthNote/fullCheck";
 import { ComponentType, SVGProps } from "react";
 

@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import * as styles from "./InviteFriends.css";
-import { infiniteTrigger } from "@/styles/common.css";
 import InviteFriendsImage from "/public/images/mypage/inviteFriends.svg";
 import InviteFriendsIcon from "/public/images/mypage/inviteFriendsIcon.svg";
 import MessageIcon from "/public/images/mypage/message.svg";
 import CopyIcon from "/public/images/mypage/copy.svg";
 import InputField from "@/components/common/inputField/InputField";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -39,7 +39,7 @@ const InviteFriends = () => {
   const { isOpen: isOpenSendMessageModal, onToggle: onToggleSendMessageModal, onClose: onCloseSendMessageModal } = useModal();
 
   useEffect(() => {
-    if (inView && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
@@ -162,7 +162,11 @@ const InviteFriends = () => {
                 </li>
               ))}
             </ul>
-            <div ref={ref} className={infiniteTrigger} />
+            <InfiniteScrollTrigger
+              ref={ref}
+              hasNextPage={hasNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
           </>
         ) : <DefaultEmptyState title='친구 초대 적립 내역이 없습니다.' subTitle='친구 코드를 등록해주세요' />
         }

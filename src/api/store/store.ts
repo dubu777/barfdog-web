@@ -10,24 +10,24 @@ import {
 const getStoreItemList = async (page = 0, size = 10, sortBy = 'recent', itemType = 'ALL', instance: AxiosInstance = axiosInstance): Promise<StoreItemList> => {
   const { data } = await instance.get(`/api/items?page=${page}&size=${size}&sortBy=${sortBy}&itemType=${itemType.toUpperCase()}`);
 
-  // return {
-  //   page: {
-  //     size: data.size,
-  //     totalElements: data.totalElements,
-  //     totalPages: data.totalPages,
-  //     number: data.number,
-  //   },
-  //   itemList: data?.content || [],
-  // };
   return {
-    page: data.page,
-    itemList: data?._embedded?.queryItemsDtoList || [],
+    page: {
+      size: data.size,
+      totalElements: data.totalElements,
+      totalPages: data.totalPages,
+      number: data.number,
+    },
+    itemList: data?.content ?? [],
   };
+  // return {
+  //   page: data.page,
+  //   itemList: data?._embedded?.queryItemsDtoList || [],
+  // };
 };
 
 const getInfiniteStoreItemList = async ({
   pageParam = 0,
-  size = 6,
+  size = 20,
   sortBy = 'recent',
   itemType = 'ALL',
   instance = axiosInstance
@@ -36,13 +36,19 @@ const getInfiniteStoreItemList = async ({
     params: { page: pageParam, size, sortBy, itemType },
   });
 
-  const itemList = data?._embedded?.queryItemsDtoList || [];
-  const page = data?.page || { number: 0, totalPages: 1 };
-
   return {
-    itemList,
-    page,
-  }
+    page: {
+      size: data.size,
+      totalElements: data.totalElements,
+      totalPages: data.totalPages,
+      number: data.number,
+    },
+    itemList: data?.content ?? [],
+  };
+  // return {
+  //   itemList: data?._embedded?.queryItemsDtoList || [],
+  //   page: data?.page || { number: 0, totalPages: 1 },
+  // }
 };
 
 const getStoreItemDetail = async (itemId: number, instance: AxiosInstance = axiosInstance): Promise<StoreItemDetail> => {

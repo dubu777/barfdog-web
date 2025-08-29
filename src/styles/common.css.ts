@@ -314,8 +314,3 @@ export const commonWrapper = recipe({
     width: "full",
   },
 });
-
-export const infiniteTrigger = style({
-  height: "4px",
-  background: themeVars.colors.gray.gray50,
-});

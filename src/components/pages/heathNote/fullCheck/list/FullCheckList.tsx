@@ -1,6 +1,5 @@
 "use client";
 import * as styles from "./FullCheckList.css";
-import { infiniteTrigger } from "@/styles/common.css";
 import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +11,7 @@ import HorizontalProgressBar from "@/components/pages/heathNote/common/progressB
 import TextButton from "@/components/common/textButton/TextButton";
 import Button from "@/components/common/button/Button";
 import EmptyList from "@/components/pages/heathNote/common/emptyList/EmptyList";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import { useInView } from "react-intersection-observer";
 import { useGetInfiniteFullCheckList } from "@/api/healthNote/fullCheck/queries/useGetInfiniteFullCheckList";
@@ -34,12 +34,9 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (inView && !hasNextPage) return;
-
-    if (hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   const handleGoToSurvey = () => {
@@ -101,7 +98,11 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
                 </Link>
               ))}
             </article>
-            <div ref={ref} className={infiniteTrigger} />
+            <InfiniteScrollTrigger
+              ref={ref}
+              hasNextPage={hasNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
           </>
         ) : (
           <div className={styles.fullCheckEmptyList}>

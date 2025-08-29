@@ -8,7 +8,12 @@ export function useGetInfiniteStoreItemList(sortBy: SortByType, itemType: ItemTy
 		queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST, sortBy, itemType],
 		queryFn: async ({ pageParam = 0 }) => {
 			const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
-			const data = await getInfiniteStoreItemList({ pageParam: pageNumber, size: 6, sortBy, itemType });
+			const data = await getInfiniteStoreItemList({
+				pageParam: pageNumber,
+				size: 20,
+				sortBy,
+				itemType
+			});
 			return data;
 		},
 		getNextPageParam: (lastPage) => {
