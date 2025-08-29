@@ -35,7 +35,7 @@ interface MyPageMemberDto {
   grade: string;
   memberName: string;
   myRecommendationCode: string;
-  reward: string;
+  reward: number;
   imageUrl?: string;
 }
 
@@ -80,6 +80,7 @@ interface MenuLink {
   key?: string;
   label: string;
   url?: string;
+  action?: () => void;
 }
 
 interface MenuList {

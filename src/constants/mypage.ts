@@ -6,22 +6,7 @@ import {
 } from "@/types";
 import { formatDate } from "@/utils";
 import { ORDER_TYPE } from "./order";
-
-export {
-  MENU_LIST,
-  MYPAGE_DATE_FILTERS,
-  MYPAGE_SORT_FILTERS,
-  MYPAGE_ITEM_TYPE_FILTERS,
-  ORDER_ISSUE_TYPE,
-  ORDER_ISSUE_STATUS,
-  SUBSCRIPTION_ORDER_PROGRESS,
-  SUBSCRIPTION_ORDER_STATUS_LABEL,
-  SUBSCRIPTION_ORDER_STATUS_MESSAGES,
-  SUBSCRIPTION_ORDER_PROGRESS_BASE,
-  SUBSCRIPTION_ORDER_STATUSES,
-  COMMON_ACTIONS,
-  CARD_COLORS,
-};
+import { openChatChannelIO } from "@/utils/channelTalk";
 
 const MENU_LIST: MenuList[] = [
   {
@@ -29,9 +14,9 @@ const MENU_LIST: MenuList[] = [
     menus: [
       { label: "구독 상품 관리", url: "/mypage/subscription" },
       { label: "주문 및 배송조회", url: "/mypage/order-delivery-inquiry" },
-      { label: "취소/교환/반품 내역", url: "/mypage/order-issue-inquiry" },
-      { label: "자동 적립금", url: "/mypage/auto-reward" },
+      { label: "자동 적립금 관리", url: "/mypage/auto-reward" },
       { label: "리뷰 작성 내역", url: "/mypage/review" },
+      { label: "프로모션", url: "/mypage/promotion" },
     ],
   },
   {
@@ -48,7 +33,7 @@ const MENU_LIST: MenuList[] = [
     menus: [
       { label: "공지사항", url: "/community/notice" },
       { label: "자주 묻는 질문", url: "/community/faq" },
-      { label: "문의 내역", url: "/inquiries" },
+      { label: "채팅 상담하기", action: () => openChatChannelIO() },
     ],
   },
   {
@@ -297,4 +282,20 @@ const CARD_COLORS: Record<string, string> = {
   우체국: "#DE2429",
   페이코: "#F11835",
   default: "#7C7C7C",
+};
+
+export {
+  MENU_LIST,
+  MYPAGE_DATE_FILTERS,
+  MYPAGE_SORT_FILTERS,
+  MYPAGE_ITEM_TYPE_FILTERS,
+  ORDER_ISSUE_TYPE,
+  ORDER_ISSUE_STATUS,
+  SUBSCRIPTION_ORDER_PROGRESS,
+  SUBSCRIPTION_ORDER_STATUS_LABEL,
+  SUBSCRIPTION_ORDER_STATUS_MESSAGES,
+  SUBSCRIPTION_ORDER_PROGRESS_BASE,
+  SUBSCRIPTION_ORDER_STATUSES,
+  COMMON_ACTIONS,
+  CARD_COLORS,
 };

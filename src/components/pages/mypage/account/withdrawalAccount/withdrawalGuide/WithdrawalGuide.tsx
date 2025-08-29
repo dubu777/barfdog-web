@@ -2,18 +2,18 @@ import * as styles from "../WithdrawalAccount.css";
 import { ReactNode, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
+import Image from "next/image";
+import Card from "@/components/common/card/Card";
+import SampleDog1 from "public/images/mypage/sample/sample1.jpg";
+import SampleDog2 from "public/images/mypage/sample/sample2.jpg";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
-import Card from "@/components/common/card/Card";
-import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import Image from "next/image";
-import SampleDog1 from "public/images/mypage/sample/sample1.jpg";
-import SampleDog2 from "public/images/mypage/sample/sample2.jpg";
 import { MembershipTier } from "@/types/membership";
+import { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR } from "@/constants";
+import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 
 interface GuideSteps {
   id: number;
@@ -22,12 +22,13 @@ interface GuideSteps {
   component: ReactNode;
 }
 
-const WithdrawalGuide = () => {
+export default function WithdrawalGuide() {
   const pathname = usePathname();
   const { pushWithQuery } = useDynamicQueryPush();
-  const { data: myPageData } = useGetMyPageInfo();
-  const { userMembershipTier } = usePersistMypageStore();
-  const username = myPageData?.mypageMemberDto?.memberName;
+
+  const { data } = useGetMyPageInfo();
+  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[data?.mypageMemberDto?.grade ?? "브론즈"]];
+  const username = data?.mypageMemberDto?.memberName;
 
   const [confirm, setConfirm] = useState<boolean>(false);
 
@@ -50,9 +51,11 @@ const WithdrawalGuide = () => {
         "탈퇴 시 누적 포인트와 쿠폰 내역이 모두 소멸됩니다\n재가입 시에도 해당 내역은 복구되지 않습니다",
       component: (
         <UserRewardCard
-          myPageData={myPageData}
           isDisabled
           className={styles.guideCard}
+          couponCount={data?.couponCount ?? 0}
+          reviewCount={3}
+          rewardCount={data?.mypageMemberDto?.reward ?? 0}
         />
       ),
     },
@@ -148,5 +151,3 @@ const WithdrawalGuide = () => {
     </>
   );
 };
-
-export default WithdrawalGuide;

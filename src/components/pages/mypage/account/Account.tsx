@@ -3,9 +3,10 @@ import * as styles from './Account.css';
 import Link from "next/link";
 import AccountCircle from '/public/images/icons/account_circle.svg';
 import DefaultText from "@/components/common/defaultText/DefaultText";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
+import { MyPageMemberDto } from "@/types";
 
 const AccountLinkList = {
 	'user-info': { label: '회원정보 변경' },
@@ -16,8 +17,10 @@ const AccountLinkList = {
 
 // userInfo image 적용 필요
 const Account = () => {
-	const { mypageUserInfo } = usePersistMypageStore();
-	const recommendationCode: string | null = mypageUserInfo?.myRecommendationCode || null;
+	const { data } = useGetMyPageInfo();
+	const userData = data?.mypageMemberDto;
+
+	const recommendationCode: string | null = userData?.myRecommendationCode || null;
 
 	return (
 		<section className={styles.accountContainer}>
@@ -25,7 +28,7 @@ const Account = () => {
 				<div className={styles.accountImage}>
 					<SvgIcon src={AccountCircle} size={80} />
 				</div>
-				<DefaultText type='title1'>{mypageUserInfo?.memberName} 님</DefaultText>
+				<DefaultText type='title1'>{userData?.memberName} 님</DefaultText>
 				<RecommendationCode code={recommendationCode as string} />
 			</article>
 			<ul className={styles.accountLinkBox}>

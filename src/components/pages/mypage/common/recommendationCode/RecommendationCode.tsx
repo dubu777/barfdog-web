@@ -9,7 +9,11 @@ interface RecommendationCodeProps {
 	className?: string;
 }
 
-const RecommendationCode = ({ code, tailPosition = 'top', className }: RecommendationCodeProps) => {
+export default function RecommendationCode({
+	code,
+	tailPosition = 'top',
+	className
+}: RecommendationCodeProps) {
 	const { addToast } = useToastStore();
 	const handleCopyCode = async () => {
 		await copyToClipboard(code);
@@ -23,5 +27,3 @@ const RecommendationCode = ({ code, tailPosition = 'top', className }: Recommend
 		</div>
 	);
 };
-
-export default RecommendationCode;

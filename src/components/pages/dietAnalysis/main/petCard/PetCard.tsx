@@ -10,7 +10,7 @@ import FemaleIcon from "public/images/subscription/female.svg";
 import MaleIcon from "public/images/subscription/male.svg";
 import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
-import DefaultImage from "public/images/subscription/dog-default-profile.png";
+import DefaultImage from "public/images/icons/default-profile.png";
 import { BreedInfo } from "@/types/pet";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";

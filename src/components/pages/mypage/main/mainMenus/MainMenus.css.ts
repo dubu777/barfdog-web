@@ -33,6 +33,7 @@ export const menuLink = style({
   width: '100%',
   height: '100%',
   textAlign: 'left',
+  cursor: 'pointer',
 })
 
 export const logout = style({

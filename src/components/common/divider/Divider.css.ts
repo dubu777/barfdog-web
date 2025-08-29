@@ -6,7 +6,7 @@ export const dividerBase = styleVariants({
     width: "100%",
   },
   vertical: {
-    height: "70%",
+    height: "100%",
     marginTop: "auto",
     marginBottom: "auto",
   },

@@ -3,12 +3,19 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import BaseCard from "@/components/pages/mypage/common/cards/section/BaseCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { getProductionDates } from "@/utils";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import { SUBSCRIPTION_ORDER_STATUS_LABEL } from "@/constants/mypage";
 import { ORDER_TYPE, subscriptionPlanInfo } from "@/constants";
-import { CardActionsId, IsOpenCardModal, NormalizedSubscriptionCardData, OrderAction, SubscriptionOrderStatus } from "@/types";
+import {
+	CardActionsId,
+	IsOpenCardModal,
+	MyPageMemberDto,
+	NormalizedSubscriptionCardData,
+	OrderAction,
+	SubscriptionOrderStatus
+} from "@/types";
 import { getSubscriptionStatusActions } from "@/utils/mypage/getSubscriptionStatusActions";
+import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 
 const normalizeSubscriptionData = (data: any, isMyPage: boolean, subscriptionId?: number): NormalizedSubscriptionCardData => {
 	return {
@@ -56,22 +63,25 @@ interface SubscriptionCardProps {
 	className?: string;
 }
 
-const SubscriptionCard = ({
+export default function SubscriptionCard({
 	data,
 	type,
 	subscriptionId,
 	showBoxShadow = true,
 	showActions = true,
 	className,
-}: SubscriptionCardProps) => {
+}: SubscriptionCardProps) {
 	const { pushWithQuery } = useDynamicQueryPush();
-	const { mypageUserInfo } = usePersistMypageStore();
-	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === mypageUserInfo.grade);
+	const { data: userInfoData } = useGetMyPageInfo();
+	const userData = userInfoData?.mypageMemberDto;
+
+	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData?.grade);
 	const totalDiscount = (userMembershipTier?.subscriptionDiscount || 0) + 5;
 
 	const isMyPage = type === 'mypage';
 	const normalizedData = normalizeSubscriptionData(data, isMyPage, subscriptionId);
 	// const isSubscriptionCancel = normalizedData.orderStatus === 'SUBSCRIBE_CANCEL';
+	console.log('data', data)
 
 	const productionDates =
 		normalizedData.nextPaymentDate
@@ -83,7 +93,6 @@ const SubscriptionCard = ({
 	const subscriptionActions = normalizeActions(actions, normalizedData.orderStatus as string, totalDiscount);
 
 
-	console.log(productionDates)
 	const [isOpenModal, setIsOpenModal] = useState<IsOpenCardModal>({ id: null, isOpen: false });
 
 	const handleActions = (url?: string, params?: string, id?: CardActionsId) => {
@@ -132,7 +141,7 @@ const SubscriptionCard = ({
 			}
 		}
 	};
-	console.log(normalizedData.status === 'SUBSCRIBING')
+
 	return (
 		<BaseCard
 			type='subscription'
@@ -156,5 +165,3 @@ const SubscriptionCard = ({
 		/>
 	);
 };
-
-export default SubscriptionCard;

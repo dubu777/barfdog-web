@@ -22,10 +22,13 @@ import { useApplyRecommendCode } from "@/api/mypage/mutations/useApplyRecommendC
 import { isAxiosError } from "axios";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import { useToastStore } from "@/store/useToastStore";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
+import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
+import { MyPageMemberDto } from "@/types";
 
-const InviteFriends = () => {
-  const { mypageUserInfo } = usePersistMypageStore();
+export default function InviteFriends() {
+  const { data: userInfoData } = useGetMyPageInfo();
+  const userData = userInfoData?.mypageMemberDto;
+
   const { addToast } = useToastStore();
 
   const { ref, inView } = useInView();
@@ -46,10 +49,18 @@ const InviteFriends = () => {
 
   const rewardInfoElementList = [
     <>
-      <DefaultText type='body3'>친구가 내 추천코드로 가입하면<DefaultText type='label4' color='red'> 친구와 나에게 3,000 포인트</DefaultText>!</DefaultText>
+      <DefaultText type='body3'>
+        친구가 내 추천코드로 가입하면
+        <DefaultText type='label4' color='red'> 친구와 나에게 3,000 포인트</DefaultText>
+        !
+      </DefaultText>
     </>,
     <>
-      <DefaultText type='body3'>친구가 첫 구독주문 하면<DefaultText type='label4' color='red'> 친구에게 3,000 포인트, 나에게 20,000 포인트</DefaultText>를 드립니다!</DefaultText>
+      <DefaultText type='body3'>
+        친구가 첫 구독주문 하면
+        <DefaultText type='label4' color='red'> 친구에게 3,000 포인트, 나에게 20,000 포인트</DefaultText>
+        를 드립니다!
+      </DefaultText>
     </>,
   ]
 
@@ -69,7 +80,7 @@ const InviteFriends = () => {
   ]
 
   const handleCopyCode = async () => {
-    await copyToClipboard(mypageUserInfo.myRecommendationCode);
+    await copyToClipboard(userData?.myRecommendationCode ?? '');
     addToast('복사가 완료되었습니다!')
   };
 
@@ -134,7 +145,7 @@ const InviteFriends = () => {
             className={styles.recommendationCode}
           >
             <DefaultText type='label4'>나의 추천코드</DefaultText>
-            <DefaultText type='title1'>{mypageUserInfo.myRecommendationCode}</DefaultText>
+            <DefaultText type='title1'>{userData?.myRecommendationCode}</DefaultText>
             <div className={styles.recommendationCodeActions}>
               <button onClick={() => onToggleSendMessageModal()} className={styles.codeActionButton}><SvgIcon src={MessageIcon} size={16} />문자 보내기</button>
               <button onClick={handleCopyCode} className={styles.codeActionButton}><SvgIcon src={CopyIcon} size={20} />코드 복사</button>
@@ -183,8 +194,8 @@ const InviteFriends = () => {
       }
       {isOpenSendMessageModal &&
         <SendMessageModal
-          username={mypageUserInfo.memberName}
-          recommendCode={mypageUserInfo.myRecommendationCode}
+          username={userData?.memberName ?? ""}
+          recommendCode={userData?.myRecommendationCode ?? ""}
           isOpen={isOpenSendMessageModal}
           onClose={onCloseSendMessageModal}
         />
@@ -192,5 +203,3 @@ const InviteFriends = () => {
     </section>
   );
 };
-
-export default InviteFriends;

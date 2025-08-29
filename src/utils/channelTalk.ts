@@ -30,6 +30,12 @@ export const shutdownChannelIO = () => {
 	}
 };
 
+export const openChatChannelIO = () => {
+	if (typeof window !== 'undefined' && window.ChannelIO) {
+		window.ChannelIO('openChat');
+	}
+};
+
 export const trackChannelEvent = (eventName: string, props?: Record<string, any>) => {
 	if (typeof window !== 'undefined' && window.ChannelIO) {
 		window.ChannelIO('track', eventName, props);

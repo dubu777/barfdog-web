@@ -6,9 +6,9 @@ import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardP
 import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import { ORDER_TYPE } from "@/constants";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { OrderType } from "@/types";
+import { MyPageMemberDto, OrderType } from "@/types";
+import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
 
 interface OrderIssueCardProps {
 	// 마이페이지 취소/교환/반품 내역 데이터 타입 정의 및 적용 필요
@@ -19,7 +19,9 @@ interface OrderIssueCardProps {
 }
 
 const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderIssueCardProps) => {
-	const { mypageUserInfo } = usePersistMypageStore();
+	const { data: userInfoData } = useGetMyPageInfo();
+	const userData = userInfoData?.mypageMemberDto;
+
 	const { pushWithQuery } = useDynamicQueryPush();
 	const cardDetail = data;
 	// const status = 'REQUESTED';
@@ -30,7 +32,7 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 
 	const issueStatusLabel = `${issueLabel}${statusLabel}`
 
-	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === mypageUserInfo.grade);
+	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData?.grade);
 	const totalDiscount = (userMembershipTier?.subscriptionDiscount || 0) + 5;
 
 	const handleActions = () => {
