@@ -3,7 +3,7 @@ import Image from "next/image";
 import WeightIcon from '/public/images/healthNote/dogpedia/weight.svg';
 import HeightIcon from '/public/images/healthNote/dogpedia/hight.svg';
 import LifeIcon from '/public/images/healthNote/dogpedia/life_expectancy.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import Card from "@/components/common/card/Card";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -51,7 +51,7 @@ export default function BreedDefaultInfo({
 	
 	return (
 		<div className={styles.breedDefaultInfo}>
-			<DefaultText type='title2'>{data.name}에 대해<br/>알아볼까요?</DefaultText>
+			<Text type='title2'>{data.name}에 대해<br/>알아볼까요?</Text>
 			{data.imageUrl &&
 				<Image
 					src={data.imageUrl}
@@ -74,18 +74,18 @@ export default function BreedDefaultInfo({
 						const WeightHeightComponent = () => (
 							<div className={styles.infoCardValue}>
 								<div className={styles.infoValue}>
-									<DefaultText type='label4'>최대</DefaultText>
-									<DefaultText type='headline2'>
+									<Text type='label4'>최대</Text>
+									<Text type='headline2'>
 										{(info.value as { max: number }).max}
-										<DefaultText type='label2'>&nbsp;{valueLabel}</DefaultText>
-									</DefaultText>
+										<Text type='label2'>&nbsp;{valueLabel}</Text>
+									</Text>
 								</div>
 								<div className={styles.infoValue}>
-									<DefaultText type='label4'>최소</DefaultText>
-									<DefaultText type='headline2'>
+									<Text type='label4'>최소</Text>
+									<Text type='headline2'>
 										{(info.value as { min: number }).min}
-										<DefaultText type='label2'>&nbsp;{valueLabel}</DefaultText>
-									</DefaultText>
+										<Text type='label2'>&nbsp;{valueLabel}</Text>
+									</Text>
 								</div>
 							</div>
 						)
@@ -93,11 +93,11 @@ export default function BreedDefaultInfo({
 							<div className={styles.infoCardValue}>
 								<div className={styles.infoValue}>
 									<div className={styles.lifeExpectancy}>
-										<DefaultText type='headline2'>{info.value[0]}</DefaultText>
-										<DefaultText type='label4'>~</DefaultText>
-										<DefaultText type='headline2'>{info.value[1]}</DefaultText>
+										<Text type='headline2'>{info.value[0]}</Text>
+										<Text type='label4'>~</Text>
+										<Text type='headline2'>{info.value[1]}</Text>
 									</div>
-									<DefaultText type='label2'>년</DefaultText>
+									<Text type='label2'>년</Text>
 								</div>
 							</div>
 						)
@@ -112,7 +112,7 @@ export default function BreedDefaultInfo({
 							>
 								<div className={styles.infoCardLabel}>
 									<SvgIcon src={info.icon} />
-									<DefaultText type='headline2'>{info.label}</DefaultText>
+									<Text type='headline2'>{info.label}</Text>
 								</div>
 								<div>
 									{info.key === 'weight' &&

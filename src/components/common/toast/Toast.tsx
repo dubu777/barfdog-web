@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import * as styles from "./Toast.css";
 import { ellipsis } from "@/styles/common.css";
 import CloseButton from "/public/images/icons/close.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToastStore } from "@/store/useToastStore";
 import { toastPosition } from "./Toast.css";
@@ -44,13 +44,13 @@ const ToastItem = ({
       }}
       className={`${styles.toast}`}
     >
-      <DefaultText
+      <Text
         type="label3"
         color="white"
         className={ellipsis({ lineSize: "line2" })}
       >
         {message}
-      </DefaultText>
+      </Text>
       {closeButton && (
         <button onClick={onClose}>
           <SvgIcon src={CloseButton} />

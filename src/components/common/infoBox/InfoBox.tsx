@@ -1,7 +1,7 @@
 import HelpIcon from "/public/images/icons/help.svg";
 import InfoIcon from "/public/images/icons/info.svg";
 import ArrowRightIcon from "/public/images/icons/chevron-right-blue.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import {
   infoBoxBase,
   infoBoxClickEvent,
@@ -59,9 +59,9 @@ export default function InfoBox ({
           src={type === "help" ? HelpIcon : InfoIcon}
           color={iconColor}
         />
-        <DefaultText type="label4" color={iconColor} className={infoTextStyle}>
+        <Text type="label4" color={iconColor} className={infoTextStyle}>
           {text}
-        </DefaultText>
+        </Text>
       </div>
       {showRightArrowButton && (
         <button>

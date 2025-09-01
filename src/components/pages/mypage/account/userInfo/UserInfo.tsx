@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react";
 import { Controller } from "react-hook-form";
 import ProfileCircle from '/public/images/mypage/profile_circle.svg';
 import InputField from "@/components/common/inputField/InputField";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
 import useDeviceState from "@/hooks/useDeviceState";
 import DefaultRadio from "@/components/common/defaultRadio/DefaultRadio";
@@ -158,12 +158,12 @@ const UserInfo = () => {
 	}
 	return (
 		<section className={`${styles.accountContainer} ${styles.userInfoBox}`}>
-			<DefaultText type='title4'>
+			<Text type='title4'>
 				회원 정보
-			</DefaultText>
+			</Text>
 			<div className={styles.uploadProfile}>
 				<SvgIcon src={ProfileCircle} size={89} />
-				<DefaultText type='label4' color='gray600'>프로필 사진</DefaultText>
+				<Text type='label4' color='gray600'>프로필 사진</Text>
 			</div>
 			<form className={styles.userInfoForm}>
 				<Controller

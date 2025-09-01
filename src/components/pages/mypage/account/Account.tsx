@@ -2,7 +2,7 @@
 import * as styles from './Account.css';
 import Link from "next/link";
 import AccountCircle from '/public/images/icons/account_circle.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
@@ -28,7 +28,7 @@ const Account = () => {
 				<div className={styles.accountImage}>
 					<SvgIcon src={AccountCircle} size={80} />
 				</div>
-				<DefaultText type='title1'>{userData?.memberName} 님</DefaultText>
+				<Text type='title1'>{userData?.memberName} 님</Text>
 				<RecommendationCode code={recommendationCode as string} />
 			</article>
 			<ul className={styles.accountLinkBox}>
@@ -36,17 +36,17 @@ const Account = () => {
 					const typedKey = key as keyof typeof AccountLinkList;
 					return (
 						<Link href={`/mypage/account/${typedKey}`} key={typedKey}  className={styles.accountLink}>
-							<DefaultText type='label1'>
+							<Text type='label1'>
 								{AccountLinkList[typedKey].label}
-							</DefaultText>
+							</Text>
 						</Link>
 				)
 				})}
 			</ul>
 			<Link href='/mypage/account/withdrawal-account' className={styles.deleteAccountButton}>
-				<DefaultText type='label4' color='gray700'>
+				<Text type='label4' color='gray700'>
 					회원탈퇴
-				</DefaultText>
+				</Text>
 			</Link>
 		</section>
 	);

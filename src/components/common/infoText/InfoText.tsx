@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import * as styles from './InfoText.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import { fontColors, textStyles } from "@/components/common/defaultText/DefaultText.css";
+import Text from "@/components/common/text/Text";
+import { fontColors, textStyles } from "@/components/common/text/Text.css";
 
 interface InfoTextProps {
 	text?: string;
@@ -13,10 +13,10 @@ interface InfoTextProps {
 const InfoText = ({ text, color = 'gray500', type = 'caption', children }: InfoTextProps) => {
 	return (
 		<div className={styles.infoTextBox}>
-			<DefaultText type={type} color={color}>• </DefaultText>
+			<Text type={type} color={color}>• </Text>
 			{children
 				? children
-				: <DefaultText type={type} color={color}>{text}</DefaultText>
+				: <Text type={type} color={color}>{text}</Text>
 			}
 		</div>
 	);

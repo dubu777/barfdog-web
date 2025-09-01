@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BaseCard from "@/components/pages/mypage/common/cards/section/BaseCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { getProductionDates } from "@/utils";
@@ -147,9 +147,9 @@ export default function SubscriptionCard({
 			type='subscription'
 			data={normalizedData}
 			cardHeaderTitle={
-				<DefaultText type='label4'>
+				<Text type='label4'>
 					정기배송 {normalizedData.subscribeCount}회차 {orderStatusLabel}
-				</DefaultText>
+				</Text>
 			}
 			cardActions={subscriptionActions}
 			showCardActions={showActions}

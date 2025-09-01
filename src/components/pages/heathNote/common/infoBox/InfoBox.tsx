@@ -1,7 +1,7 @@
 import { ComponentType, ReactNode, SVGProps } from "react";
 import * as styles from './InfoBox.css';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface DualInfoBoxProps {
 	label: string;
@@ -20,7 +20,7 @@ export default function InfoBox({
 		<div className={styles.infoBox({ align })}>
 			<div className={styles.infoContent}>
 				<SvgIcon src={icon} size={20} />
-				<DefaultText type='body3'>{label}</DefaultText>
+				<Text type='body3'>{label}</Text>
 			</div>
 			<div className={`${styles.infoContent} ${align === 'start' ? styles.infoContentAlignStart : ''}`}>
 				{content}

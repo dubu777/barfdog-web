@@ -1,6 +1,6 @@
 import * as styles from './ResultTitle.css';
 import CalendarIcon from "/public/images/icons/calendar.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface ResultTitleProps {
@@ -13,9 +13,9 @@ export default function ResultTitle({
 	return (
 		<div className={styles.resultTitle}>
 			<SvgIcon src={CalendarIcon} size={20} />
-			<DefaultText type="body3" applyLineHeight={false}>
+			<Text type="body3" applyLineHeight={false}>
 				{title}
-			</DefaultText>
+			</Text>
 		</div>
 	);
 }

@@ -2,7 +2,7 @@ import { commonWrapper } from "@/styles/common.css";
 import CheckIcon from "public/images/healthNote/body-check/notice-check.svg";
 import ResultCard from "../../../common/resultCard/ResultCard";
 import ResultAccordion from "../../../common/resultAccordion/ResultAccordion";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Chips from "@/components/common/chips/Chips";
 import { CHIPS_COLORS, Colors } from "@/constants/style";
@@ -37,16 +37,16 @@ export default function BodyCheckHealthTips({
             accordionButton={
               <div className={commonWrapper({ justify: "start", gap: 6 })}>
                 <SvgIcon src={item.icon} color={iconColor} />
-                <DefaultText type="headline4">{item.title}</DefaultText>
+                <Text type="headline4">{item.title}</Text>
               </div>
             }
           >
             <div
               className={commonWrapper({ direction: "col", align: "start" })}
             >
-              <DefaultText type="body3" color="gray700">
+              <Text type="body3" color="gray700">
                 {item.description}
-              </DefaultText>
+              </Text>
               <Chips
                 variant="solid"
                 color={chipColor}
@@ -71,7 +71,7 @@ export default function BodyCheckHealthTips({
                     })}
                   >
                     <SvgIcon src={CheckIcon} color={iconColor} size={20} />
-                    <DefaultText type="body3">{p}</DefaultText>
+                    <Text type="body3">{p}</Text>
                   </li>
                 ))}
               </ul>

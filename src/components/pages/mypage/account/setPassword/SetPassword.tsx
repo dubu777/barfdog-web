@@ -1,7 +1,7 @@
 'use client';
 import * as styles from '../Account.css';
 import * as yup from "yup";
-import Text from "@/components/common/text/Text";
+import TestText from "@/components/common/testText/TestText";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Controller } from "react-hook-form";
@@ -57,9 +57,9 @@ const SetPasswordComponent = () => {
 	}
 	return (
 		<section>
-			<Text type='description' size='sm' color='grey'>
+			<TestText type='description' size='sm' color='grey'>
 				간편 로그인으로 회원가입한 경우, 회원정보 수정을 위해 비밀번호를 생성해야 합니다.
-			</Text>
+			</TestText>
 			<form className={styles.accountForm}>
 				<div className={styles.accountInputBox}>
 					<Controller

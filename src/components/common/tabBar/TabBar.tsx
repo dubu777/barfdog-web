@@ -10,7 +10,7 @@ import {
   tabBarSlider,
   tabBarVariants,
 } from "@/components/common/tabBar/TabBar.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
@@ -76,12 +76,12 @@ export default function TabBar({
       }`}
       onClick={() => handleTabChange(index)}
     >
-      <DefaultText
+      <Text
         type={textType}
         color={activeIndex === index ? activeTextColor : textColor}
       >
         {tab.label}
-      </DefaultText>
+      </Text>
     </button>
   );
 

@@ -1,5 +1,5 @@
 import * as styles from "./InputLabel.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { pointColor } from "@/styles/common.css";
 
 interface InputLabelProps {
@@ -16,13 +16,13 @@ const InputLabel = ({
   isRequired = false,
 }: InputLabelProps) => {
   return (
-    <DefaultText
+    <Text
       type={labelType}
       color={labelColor}
       className={styles.labelStyle}
     >
       {label} {isRequired && <span className={pointColor}>*</span>}
-    </DefaultText>
+    </Text>
   );
 };
 

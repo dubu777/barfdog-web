@@ -1,6 +1,6 @@
 // import * as styles from "./SignupTerms.css";
 // import { Fragment, useEffect, useState } from "react";
-// import Text from "@/components/common/text/Text";
+// import TestText from "@/components/common/testText/TestText";
 // import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 // import { DefaultObjectType, SignupStepValues, SignUpTermsModal } from "@/types";
 // import {
@@ -104,28 +104,28 @@
 //   };
 //   return (
 //     <article className={styles.signUpTermsContainer}>
-//       <Text type="title" size="titleLg">
+//       <TestText type="title" size="titleLg">
 //         이용약관 동의
-//       </Text>
+//       </TestText>
 //       <div className={styles.signUpTermsList}>
 //         <div className={styles.allAgreement}>
 //           <DefaultCheckbox
 //             id="all"
 //             name="all"
 //             label={
-//               <Text type="description" size="md" weight="bold" color="black">
+//               <TestText type="description" size="md" weight="bold" color="black">
 //                 전체 동의합니다.
-//               </Text>
+//               </TestText>
 //             }
 //             labelPosition="right"
 //             value={isAllChecked}
 //             onChange={(checked) => handleAllAgreeChange(checked as boolean)}
 //           />
 //           <div className={styles.subAgreement}>
-//             <Text type="description" size="sm" color="grey" align="left">
+//             <TestText type="description" size="sm" color="grey" align="left">
 //               선택항목에 동의하지 않은 경우도 회원가입 및 일반적인 서비스를
 //               이용할 수 있습니다.
-//             </Text>
+//             </TestText>
 //           </div>
 //         </div>
 //         <ul className={styles.agreementList}>
@@ -150,9 +150,9 @@
 //                       onClick={() => handleTermsModalOpen("alliancePolicy")}
 //                       className={styles.termsModal}
 //                     >
-//                       <Text type="description" size="sm" color="red">
+//                       <TestText type="description" size="sm" color="red">
 //                         약관 보기
-//                       </Text>
+//                       </TestText>
 //                     </button>
 //                   </li>
 //                 )
@@ -182,9 +182,9 @@
 //                           }
 //                           className={styles.termsModal}
 //                         >
-//                           <Text type="description" size="sm" color="red">
+//                           <TestText type="description" size="sm" color="red">
 //                             약관 보기
-//                           </Text>
+//                           </TestText>
 //                         </button>
 //                       )}
 //                     </>

@@ -5,7 +5,7 @@ import LightIcon from "public/images/healthNote/light-bulb.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Card from "@/components/common/card/Card";
 import ResultCard from "../../../common/resultCard/ResultCard";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { getPhaseDescription } from "@/utils/healthNote/bodyCheck/bodyCheckScore";
 import { DiseaseCategoryKey, DiseasePhaseType } from "@/types/healthNote/bodyCheck";
 import { BODY_CHECK_DISEASE_INFO, DISEASE_PHASES_LIST, DISEASE_PHASES_WEIGHT_BALANCE_LIST } from "@/constants/healthNote/bodyCheck/common";
@@ -28,12 +28,12 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
       <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
         <div className={commonWrapper({ gap: 8, justify: "start" })}>
           <SvgIcon src={SirenIcon} size={24} />
-          <DefaultText type="headline2" applyLineHeight={false}>
+          <Text type="headline2" applyLineHeight={false}>
             {isWeightBalanceScore
               ? '체형별 상태'
               : '증상별 경과'
             }
-          </DefaultText>
+          </Text>
         </div>
         {diseasePhasesList.map((phase, index) => (
           <div
@@ -50,16 +50,16 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
                 align: "start",
               })}
             >
-              <DefaultText
+              <Text
                 type="label3"
                 className={phaseTextStyle({ fixedMinWidth: isWeightBalanceScore })}
                 applyLineHeight={false}
               >
                 {phase.label}
-              </DefaultText>
-              <DefaultText type="body3" color="gray700">
+              </Text>
+              <Text type="body3" color="gray700">
                 {getPhaseDescription(diseaseName, phase.value as DiseasePhaseType)}
-              </DefaultText>
+              </Text>
             </div>
           </div>
         ))}
@@ -67,11 +67,11 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
       <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
         <div className={commonWrapper({ gap: 6, justify: "start" })}>
           <SvgIcon src={LightIcon} size={24} />
-          <DefaultText type="headline2">건강 관리 가이드</DefaultText>
+          <Text type="headline2">건강 관리 가이드</Text>
         </div>
-        <DefaultText type="body3" color="gray700">
+        <Text type="body3" color="gray700">
           {management}
-        </DefaultText>
+        </Text>
       </Card>
     </ResultCard>
   );

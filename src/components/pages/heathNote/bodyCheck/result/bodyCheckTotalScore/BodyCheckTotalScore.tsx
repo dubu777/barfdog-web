@@ -3,7 +3,7 @@ import { commonWrapper } from "@/styles/common.css";
 import { bodyCheckDiseaseList } from "@/components/pages/heathNote/bodyCheck/result/BodyCheckResult.css";
 import ResultCard from "../../../common/resultCard/ResultCard";
 import CircleProgressBar from "../../../common/progressBar/circleProgressBar/CircleProgressBar";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BodyCheckDiseaseCard from "./bodyCheckDiseaseCard/BodyCheckDiseaseCard";
 import { BodyPartType, DiseaseCategoryKey } from "@/types/healthNote/bodyCheck";
 import { BODY_PART } from "@/constants/healthNote/bodyCheck/common";
@@ -36,7 +36,7 @@ export default function BodyCheckTotalScore({
         svgImage={BODY_PART[part].smIcon}
       />
       <div className={bodyCheckDiseaseList}>
-        <DefaultText type='title3' align='center'>항목별 진단 정보</DefaultText>
+        <Text type='title3' align='center'>항목별 진단 정보</Text>
         <div className={commonWrapper({ direction: "col", gap: 8 })}>
           {scores.map((item) => (
             <BodyCheckDiseaseCard
@@ -47,10 +47,10 @@ export default function BodyCheckTotalScore({
           ))}
         </div>
       </div>
-      <DefaultText type="caption2" color="gray600" align="center">
+      <Text type="caption2" color="gray600" align="center">
         ※ 해당 결과지는 바프독 고객을 대상으로한 참고용 결과이니,<br/>
         자세한 반려견 건강 상태는 담당 수의사와 상담해 주세요.
-      </DefaultText>
+      </Text>
     </ResultCard>
   );
 }

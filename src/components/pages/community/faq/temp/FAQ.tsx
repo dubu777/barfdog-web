@@ -5,7 +5,7 @@ import TabBar from "@/components/common/tabBar/TabBar";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import {useSearchParams} from "next/navigation";
 import Accordion from "@/components/common/accordion/Accordion";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { FAQCategoryKey, FAQCategoryKeyWithAll, FAQSubCategoryKey } from "@/types";
 import { FAQ_CATEGORIES } from "@/constants/community";
 
@@ -126,14 +126,14 @@ const Faq = () => {
 								contentClassName={styles.faqAccordionContent}
 								title={
 									<div className={styles.faqAccordion}>
-										<DefaultText type='label3' className={styles.faqAccordionSubCategory} block>{faq.label}</DefaultText>
-										<DefaultText type='label4'>{item.question}</DefaultText>
+										<Text type='label3' className={styles.faqAccordionSubCategory} block>{faq.label}</Text>
+										<Text type='label4'>{item.question}</Text>
 									</div>
 								}
 							>
-								<DefaultText type='body3' color='gray700'>
+								<Text type='body3' color='gray700'>
 									{item.answer}
-								</DefaultText>
+								</Text>
 							</Accordion>
 						))}
 					</div>

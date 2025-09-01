@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import * as styles from "./SurveyTitle.css";
 import { SurveyTitleConfig } from "@/types";
 import Button from "@/components/common/button/Button";
@@ -53,9 +53,9 @@ export default function SurveyTitle({
           }
         );
         return (
-          <DefaultText key={idx} type="title2">
+          <Text key={idx} type="title2">
             {text}
-          </DefaultText>
+          </Text>
         );
       })}
       {subtitleTemplates && (
@@ -64,14 +64,14 @@ export default function SurveyTitle({
             {subtitleTemplates.map((line, lineIndex) => (
               <div key={lineIndex} className={styles.surveyRowSubtitleWrapper}>
                 {line.map(({ text, color }, idx) => (
-                  <DefaultText
+                  <Text
                     key={idx}
                     type="body3"
                     color={color}
                     applyLineHeight={false}
                   >
                     {text}
-                  </DefaultText>
+                  </Text>
                 ))}
               </div>
             ))}

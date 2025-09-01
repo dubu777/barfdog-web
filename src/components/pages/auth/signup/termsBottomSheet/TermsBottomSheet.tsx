@@ -1,7 +1,7 @@
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import * as styles from "./TermsBottomSheet.css";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface TermsBottomSheetProps {
   isOpen: boolean;
@@ -21,7 +21,7 @@ export default function TermsBottomSheet({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.termsBottomSheetContainer}>
-        <DefaultText type="title4">이용약관동의</DefaultText>
+        <Text type="title4">이용약관동의</Text>
       </div>
       <ButtonDocked
         type="full-button"

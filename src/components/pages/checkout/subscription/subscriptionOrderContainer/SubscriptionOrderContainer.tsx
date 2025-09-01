@@ -20,7 +20,7 @@ import {
   OrderFormValues,
 } from "@/utils/validation/rewardValidation";
 import { useRewardStore } from "@/store/order/useRewardStore";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { formatNumberWithCommas } from "@/utils";
 import CouponSelector from "../../common/couponSelector/CouponSelector";
@@ -151,7 +151,7 @@ export default function SubscriptionOrderContainer({
       />
       <Divider />
       <OrderSection padding="20px">
-        <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
+        <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
       </OrderSection>
       <Divider />
       <SubscriptionNotice />

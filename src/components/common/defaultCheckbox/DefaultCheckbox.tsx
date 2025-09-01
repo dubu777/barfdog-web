@@ -1,6 +1,6 @@
 'use client';
 import { ChangeEvent, forwardRef, ReactNode } from 'react';
-import { textStyles } from "@/components/common/defaultText/DefaultText.css";
+import { textStyles } from "@/components/common/text/Text.css";
 import * as styles from './DefaultCheckbox.css';
 
 interface DefaultCheckboxProps {

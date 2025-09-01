@@ -4,7 +4,7 @@ import Image from "next/image";
 import WalkDogImage from '/public/images/healthNote/full-check/walk-dog.png';
 import HistoryIcon from '/public/images/healthNote/full-check/history.svg';
 import FootprintIcon from '/public/images/healthNote/full-check/footprint.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import Divider from "@/components/common/divider/Divider";
 import InfoBox from "@/components/pages/heathNote/common/infoBox/InfoBox";
@@ -76,13 +76,13 @@ export default function WalkScore ({
 					<Image src={WalkDogImage} alt='walk dog' width={303} height={140} />
 					<Card shadow='none'>
 						<div className={styles.walkScoreTop}>
-							<DefaultText type='headline2'>{petName}의<br/>산책 활동 통계</DefaultText>
+							<Text type='headline2'>{petName}의<br/>산책 활동 통계</Text>
 							<div>
-								<DefaultText type='display1' applyLineHeight>
-									<DefaultText type='label4'>상위</DefaultText>
+								<Text type='display1' applyLineHeight>
+									<Text type='label4'>상위</Text>
 									&nbsp;{totalWalkScorePercentile}
-									<DefaultText type='label4'>%</DefaultText>
-								</DefaultText>
+									<Text type='label4'>%</Text>
+								</Text>
 							</div>
 						</div>
 						<Divider thickness={1} color='gray100' />
@@ -99,7 +99,7 @@ export default function WalkScore ({
 							))}
 						</div>
 					</Card>
-					<DefaultText type='headline2' className={styles.walkScoreInfoTitle}>전체 반려견의 평균 산책 습관</DefaultText>
+					<Text type='headline2' className={styles.walkScoreInfoTitle}>전체 반려견의 평균 산책 습관</Text>
 					<Card direction='row' className={styles.walkScoreInfo}>
 						{walkInfo.map((info, index) => (
 							<Fragment key={info.label}>
@@ -109,8 +109,8 @@ export default function WalkScore ({
 									align='start'
 									content={(
 										<>
-											<DefaultText type='title3'>{info.value}</DefaultText>
-											<DefaultText type='label3'>{index === 0 ? '회' : '시간'}</DefaultText>
+											<Text type='title3'>{info.value}</Text>
+											<Text type='label3'>{index === 0 ? '회' : '시간'}</Text>
 										</>
 									)}
 								/>
@@ -127,10 +127,10 @@ export default function WalkScore ({
 					gap={8}
 					className={styles.walkNotice}
 				>
-					<DefaultText type='headline2' color='blue600'>반려견에게 산책은 왜 중요할까요?</DefaultText>
-					<DefaultText type='body3' color='gray700'>
+					<Text type='headline2' color='blue600'>반려견에게 산책은 왜 중요할까요?</Text>
+					<Text type='body3' color='gray700'>
 						산책은 반려견의 체중을 조절하고 비만을 예방하는 데 중요한 역할을 해요. 근육과 관절을 튼튼하게 유지해주고, 에너지를 건강하게 소모하면서 스트레스 해소와 정서 안정에도 도움을 줄 수 있어요.
-					</DefaultText>
+					</Text>
 				</Card>
 			</ResultCard>
 		</article>

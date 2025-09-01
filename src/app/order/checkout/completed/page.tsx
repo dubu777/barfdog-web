@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
 import { useEffect } from "react";
 
@@ -15,7 +15,7 @@ export default function OrderCompleted() {
   }, [clearOrderItemDtoList]);
   return (
     <div>
-      <DefaultText type="display1">결제 완료</DefaultText>
+      <Text type="display1">결제 완료</Text>
     </div>
   );
 }

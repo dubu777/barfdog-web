@@ -1,5 +1,5 @@
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import NoticeIcon from "public/images/dietAnalysis/renewal-notice.svg";
 import { renewalNoticeButtonWrapper } from "./DietAnalysisMain.css";
@@ -27,15 +27,15 @@ export default function RenewalNoticeBottomSheet({
         })}
       >
         <div>
-          <DefaultText type="title3">AI 추천식단이</DefaultText>
-          <DefaultText type="title3" color="red">
+          <Text type="title3">AI 추천식단이</Text>
+          <Text type="title3" color="red">
             한층 더 정밀해졌어요
-          </DefaultText>
+          </Text>
         </div>
-        <DefaultText type="body2" color="gray600">
+        <Text type="body2" color="gray600">
           업그레이드된 설문과 분석을 통해 반려견에게 더 잘 맞는 식단을
           준비했습니다. 새 설문을 진행하고 새로운 추천을 받아보세요.
-        </DefaultText>
+        </Text>
       </div>
       <div className={commonWrapper({})}>
         <NoticeIcon />

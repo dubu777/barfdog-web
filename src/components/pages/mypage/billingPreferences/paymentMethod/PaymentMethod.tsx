@@ -1,6 +1,6 @@
 'use client';
 import * as styles from '../BillingPreferences.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import PaymentCard from "@/components/pages/mypage/common/paymentCard/PaymentCard";
 import { useGetPaymentList } from "@/api/mypage/queries/useGetPaymentList";
 import { PaymentItem } from "@/types";
@@ -45,8 +45,8 @@ const PaymentMethod = () => {
 				}
 			</article>
 			<article className={styles.paymentCardPolicyInfo}>
-				<DefaultText type='caption' color='gray500'>• 정기구독 예약에 연동된 카드 및 카드번호 앞 6자리가 표기됩니다</DefaultText>
-				<DefaultText type='caption' color='gray500'>• 간편결제(네이버·카카오) 사용 시, 당사에서 카드명 확인 불가합니다</DefaultText>
+				<Text type='caption' color='gray500'>• 정기구독 예약에 연동된 카드 및 카드번호 앞 6자리가 표기됩니다</Text>
+				<Text type='caption' color='gray500'>• 간편결제(네이버·카카오) 사용 시, 당사에서 카드명 확인 불가합니다</Text>
 			</article>
 		</section>
 	);

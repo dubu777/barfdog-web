@@ -1,7 +1,7 @@
 'use client'
 import * as styles from "./MainMenus.css";
 import Link from "next/link";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { MENU_LIST } from "@/constants/mypage";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 import { useRouter } from "next/navigation";
@@ -30,18 +30,18 @@ export default function MainMenus() {
       <div className={styles.myPageMenuContainer}>
         {MENU_LIST.map(({ category, menus }) => (
           <div key={category} className={styles.menuBox}>
-            <DefaultText type='headline1' className={styles.category}>{category}</DefaultText>
+            <Text type='headline1' className={styles.category}>{category}</Text>
             <ul>
               {menus.map(({ label, url, action }) => (
                 <li key={label} className={styles.menuItem}>
                   {
                     url ? (
                       <Link href={url ?? "/mypage"} className={styles.menuLink}>
-                        <DefaultText type='body1'>{label}</DefaultText>
+                        <Text type='body1'>{label}</Text>
                       </Link>
                     ) : action && (
                       <button onClick={action} className={styles.menuLink}>
-                        <DefaultText type='body1'>{label}</DefaultText>
+                        <Text type='body1'>{label}</Text>
                       </button>
                     )
                   }
@@ -53,7 +53,7 @@ export default function MainMenus() {
       </div>
       <div className={styles.logout}>
         <button className={styles.logoutButton} onClick={handleLogout}>
-          <DefaultText type='body2'>로그아웃</DefaultText>
+          <Text type='body2'>로그아웃</Text>
         </button>
       </div>
     </article>

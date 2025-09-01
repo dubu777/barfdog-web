@@ -2,7 +2,7 @@ import * as styles from "@/components/pages/mypage/common/information/Informatio
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import RecipeList from "@/components/pages/mypage/common/recipeList/RecipeList";
@@ -59,8 +59,8 @@ const SubscriptionCardInfo = ({
 			<div className={`${styles.infoSubTitle} ${styles.infoBox}`}>
 				{subscriptionTopInfo.map(info => (
 					<div key={info.label} className={styles.infoBoxItem}>
-						<DefaultText type="label3">{info.label}</DefaultText>
-						<DefaultText type="body3" color='gray700'>{info.value}</DefaultText>
+						<Text type="label3">{info.label}</Text>
+						<Text type="body3" color='gray700'>{info.value}</Text>
 					</div>
 				))}
 				{(hasPostponeShipping || hasChangedRecipe) &&
@@ -75,7 +75,7 @@ const SubscriptionCardInfo = ({
 				}
 			</div>
 			<div className={styles.infoBoxItemColumn}>
-				<DefaultText type="label3" block>구독 상품</DefaultText>
+				<Text type="label3" block>구독 상품</Text>
 				<RecipeList data={data} />
 				<div className={styles.infoBoxItem}>
 					{buttons.map((btn, index) => (
@@ -84,7 +84,7 @@ const SubscriptionCardInfo = ({
 						</Button>
 					))}
 				</div>
-				<DefaultText type='body3' color='gray600'>・ 진행중 회차에서 생산일인 ‘금요일' 자정 이후에 변경하신 옵션은 다음 회차부터 적용됩니다.</DefaultText>
+				<Text type='body3' color='gray600'>・ 진행중 회차에서 생산일인 ‘금요일' 자정 이후에 변경하신 옵션은 다음 회차부터 적용됩니다.</Text>
 			</div>
 		</InfoSection>
 		{postponeShippingOpen &&

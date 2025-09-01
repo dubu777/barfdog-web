@@ -1,5 +1,5 @@
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import { SubscribeGeneralItem } from "@/types";
 import Image from "next/image";
@@ -70,13 +70,13 @@ export default function GeneralItemDetailModal({
           alt={generalItemTempData.name}
           priority
         />
-          <DefaultText type="title4">{generalItemTempData.name}</DefaultText>
+          <Text type="title4">{generalItemTempData.name}</Text>
       </div>
       <div className={styles.quantitySelectorWrapper}>
-        <DefaultText type="title4">개수 선택</DefaultText>
+        <Text type="title4">개수 선택</Text>
         <div className={styles.quantitySelectorBox}>
           <SvgIcon src={MinusIcon} onClick={handleDecrease}/>
-          <DefaultText type="label1">{currentAmount}개</DefaultText>
+          <Text type="label1">{currentAmount}개</Text>
           <SvgIcon src={PlusIcon} onClick={handleIncrease}/>
         </div>
       </div>

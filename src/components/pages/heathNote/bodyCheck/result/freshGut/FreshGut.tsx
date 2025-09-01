@@ -13,7 +13,7 @@ import FreshGutImage from "public/images/healthNote/body-check/freshGut.svg";
 import LogoImage from "public/images/logo/logo-default.png";
 import ResultCard from "../../../common/resultCard/ResultCard";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Image from "next/image";
 import Button from "@/components/common/button/Button";
 import {useRouter} from "next/navigation";
@@ -32,14 +32,14 @@ export default function FreshGut({ petId }: FreshGutProps) {
       <div className={freshGutInfoBox}>
         <div className={commonWrapper({ gap: 6, justify: "start" })}>
           <SvgIcon src={Microbe} size={24} />
-          <DefaultText type="headline2" color="red">
+          <Text type="headline2" color="red">
             장내 미생물 균형
-          </DefaultText>
+          </Text>
         </div>
-        <DefaultText type="body3" color="gray700">
+        <Text type="body3" color="gray700">
           장염이나 설사처럼 자주 반복되는 증상은 장내 미생물 균형이 무너졌다는
           신호일 수 있어요 우리 아이의 장 속 미생물을 확인하여 관리해보세요
-        </DefaultText>
+        </Text>
       </div>
       <div className={freshGutImageBox}>
         <Image src={ProbiomeImage} alt='kit' width={600} height={360} className={freshGutImage} />
@@ -47,12 +47,12 @@ export default function FreshGut({ petId }: FreshGutProps) {
           <Image src={LogoImage} alt='kit' width={200} height={16} className={freshGutLogoImage} />
           <div className={freshGutTextBox}>
             <SvgIcon src={FreshGutImage} width={184} height={35} />
-            <DefaultText type='label4' color='white' className={freshGutText}>
+            <Text type='label4' color='white' className={freshGutText}>
               반려견 맞춤 건강 관리 장내 미생물 분석 키트
-            </DefaultText>
-            <DefaultText type='caption2' color='white' className={freshGutSubText}>
+            </Text>
+            <Text type='caption2' color='white' className={freshGutSubText}>
               마이크로바이옴 진단 + 맞춤 식이 솔루션
-            </DefaultText>
+            </Text>
           </div>
           <Button onClick={() => router.push(`/health-note/${petId}/probiome`)} variant='outline' type='primary' className={freshGutButton}>
             진단 키트 보러가기

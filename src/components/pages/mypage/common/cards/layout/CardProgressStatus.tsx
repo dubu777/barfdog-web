@@ -1,5 +1,5 @@
 import * as styles from '../Card.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ProgressBar from "@/components/pages/mypage/common/progressBar/ProgressBar";
 import {
 	SUBSCRIPTION_ORDER_PROGRESS,
@@ -27,7 +27,7 @@ const CardProgressStatus = ({ status, productionDates, subscribeCount, showProgr
 	return (
 		<div className={styles.statusContainer({ hasStatusLabel: showProgressLabel && !!progressInfo.label })}>
 			{showProgressLabel && orderStatusMessage &&
-				<DefaultText type='caption' color='red'>{orderStatusMessage}</DefaultText>
+				<Text type='caption' color='red'>{orderStatusMessage}</Text>
 			}
 			{showProgress &&
 				<ProgressBar
@@ -38,12 +38,12 @@ const CardProgressStatus = ({ status, productionDates, subscribeCount, showProgr
 			}
 			{showProgress &&
 				<div className={styles.dateInfo}>
-					<DefaultText type='caption' color='gray500'>
+					<Text type='caption' color='gray500'>
 						{productionDates?.paymentDate ? format(new Date(productionDates?.paymentDate), 'MM. dd.') : ''} {progressInfo.statusText?.payment}
-					</DefaultText>
-					<DefaultText type='caption' color='gray500'>
+					</Text>
+					<Text type='caption' color='gray500'>
 						{productionDates?.deliveryDate ? format(new Date(productionDates?.deliveryDate), 'MM. dd.') : ''} {progressInfo.statusText?.delivery}
-					</DefaultText>
+					</Text>
 				</div>
 			}
 		</div>

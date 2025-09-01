@@ -1,4 +1,4 @@
-import { fontColors } from "@/components/common/defaultText/DefaultText.css";
+import { fontColors } from "@/components/common/text/Text.css";
 import { RecipeDto } from "@/types/recipe";
 
 interface FoodAnalysis {

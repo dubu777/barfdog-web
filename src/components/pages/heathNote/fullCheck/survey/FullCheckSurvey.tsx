@@ -9,7 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useWatch } from "react-hook-form";
 import BackIcon from "/public/images/header/chevron-left.svg";
 import Header from "@/components/layout/header/Header";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -172,9 +172,9 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
                 color="gray900"
                 onClick={onPrevStep}
               />
-              <DefaultText type="headline3" color="gray500">
+              <Text type="headline3" color="gray500">
                 이전
-              </DefaultText>
+              </Text>
             </div>
           )
         }
@@ -184,7 +184,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
       <div className={styles.fullCheckSurveyContainer}>
         <article className={styles.fullCheckSurveyTitle}>
           <SvgIcon src={currentQuestion.imageUrl!} size={64} />
-          <DefaultText type="title3">
+          <Text type="title3">
             {currentQuestion?.title ? (
               <>
                 {petInfo ? `${petInfo.name}` : "반려견"}의<br />
@@ -200,7 +200,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
                 증상을 모두 체크해 주세요
               </>
             )}
-          </DefaultText>
+          </Text>
         </article>
         <article
           className={styles.surveyAnswerList({

@@ -6,11 +6,11 @@ import {
 	selectDropdownStyle,
 	selectLabelStyle
 } from "./SelectWithInput.css";
-import { textStyles } from "@/components/common/defaultText/DefaultText.css";
+import { textStyles } from "@/components/common/text/Text.css";
 import { ChangeEvent, useState } from "react";
 import { motion } from 'framer-motion';
 import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface SelectWithInputProps<T extends { label: string; value: string | number }>{
@@ -56,7 +56,7 @@ export default function SelectWithInput<T extends { label: string; value: string
 		<div className={selectContainerStyle}>
 			{label &&
 			<div onClick={handleSelectClick} className={selectLabelStyle({ isOpen })}>
-				<DefaultText type='label2'>{value ? selectedOptionLabel : label}</DefaultText>
+				<Text type='label2'>{value ? selectedOptionLabel : label}</Text>
 				<SvgIcon src={ArrowRightIcon} className={labelArrowIconStyle({ isOpen })} />
 			</div>
 			}
@@ -71,14 +71,14 @@ export default function SelectWithInput<T extends { label: string; value: string
 					{options.map((option) => (
 						option.value !== 'custom' ?
 							<div key={option.value} onClick={() => handleSelectChange(option.value as string)}>
-								<DefaultText
+								<Text
 									block
 									type='body2'
 									color={option.value === value ? 'red' : 'gray600'}
 									className={selectDropdownOptionStyle}
 								>
 									{option.label}
-								</DefaultText>
+								</Text>
 							</div>
 							:
 							<input

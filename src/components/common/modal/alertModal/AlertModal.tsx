@@ -1,6 +1,6 @@
 import ModalBackground from "../../modalBackground/ModalBackground";
 import * as styles from "./AlertModal.css";
-import DefaultText from "../../defaultText/DefaultText";
+import Text from "../../text/Text";
 import Button from "../../button/Button";
 import { ReactNode, useCallback, useMemo } from "react";
 
@@ -64,9 +64,9 @@ export default function AlertModal({
       <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalContentWrapper}>
           {title && 
-            <DefaultText type="title4">{title}</DefaultText>
+            <Text type="title4">{title}</Text>
           }
-          <DefaultText type="body2">{content}</DefaultText>
+          <Text type="body2">{content}</Text>
         </div>
         <div className={styles.modalButtonWrapper}>
           {cancelText && (

@@ -1,5 +1,5 @@
 import * as styles from "./ImageButton.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Image from "next/image";
 import CheckedBox from "public/images/option/checked_selection.svg";
@@ -44,9 +44,9 @@ export default function ImageButton<T>({
     >
       {inputType === "rank" && rank != null && (
         <div className={styles.rankChip}>
-          <DefaultText type="caption" color="gray0">
+          <Text type="caption" color="gray0">
             {rank}위
-          </DefaultText>
+          </Text>
         </div>
       )}
       {inputType === "checkbox" && (
@@ -69,9 +69,9 @@ export default function ImageButton<T>({
           size={64}
         />
       )}
-      <DefaultText type="headline4" color={isChecked ? "red" : "gray900"}>
+      <Text type="headline4" color={isChecked ? "red" : "gray900"}>
         {label}
-      </DefaultText>
+      </Text>
     </button>
   );
 }

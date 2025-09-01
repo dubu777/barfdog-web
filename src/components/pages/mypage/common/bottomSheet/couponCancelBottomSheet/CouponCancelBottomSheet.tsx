@@ -1,5 +1,5 @@
 import * as styles from './CouponCancelBottomSheet.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import Card from "@/components/common/card/Card";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
@@ -45,12 +45,12 @@ const CouponCancelBottomSheet = ({
 			closeOnBackgroundClick={false}
 		>
 			<div className={styles.couponCancelHeader}>
-				<DefaultText type='title4' preLine>{title}</DefaultText>
-				<DefaultText type='label4' color='gray600' preLine>{subTitle}</DefaultText>
+				<Text type='title4' preLine>{title}</Text>
+				<Text type='label4' color='gray600' preLine>{subTitle}</Text>
 			</div>
 			<div className={styles.couponCancelBody}>
 				<div>
-					<DefaultText type={coupons ? 'title4' : 'headline2'}>적용중 쿠폰</DefaultText>
+					<Text type={coupons ? 'title4' : 'headline2'}>적용중 쿠폰</Text>
 					<div className={styles.couponCardContainer}>
 						<Card
 							shadow='strong'
@@ -58,14 +58,14 @@ const CouponCancelBottomSheet = ({
 							align='start'
 							className={styles.usingCoupon}
 						>
-							<DefaultText type='title1' color='red'>{usingDiscountCoupon}</DefaultText>
-							<DefaultText type='label1' color='gray700'>{usingCoupon.couponName}</DefaultText>
+							<Text type='title1' color='red'>{usingDiscountCoupon}</Text>
+							<Text type='label1' color='gray700'>{usingCoupon.couponName}</Text>
 						</Card>
 					</div>
 				</div>
 				{coupons && orderPrice &&
 					<div>
-						<DefaultText type='title4'>사용 가능 쿠폰</DefaultText>
+						<Text type='title4'>사용 가능 쿠폰</Text>
 						<ul className={styles.couponCardContainer}>
 							{coupons.map(coupon => {
 								const {

@@ -2,7 +2,7 @@ import Image from "next/image";
 import * as styles from "./RecipeCard.css";
 import { RecipeTempData } from "@/constants";
 import RecipeBadge from "./recipeBadge/RecipeBadge";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
@@ -109,7 +109,7 @@ export default function RecipeCard({
               {rank}위
             </Chips>
           )}
-          <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
+          <Text type="headline2">{recipeTempData.name}</Text>
         </div>
         {!isUnder20g && (
           <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
@@ -132,9 +132,9 @@ export default function RecipeCard({
             gap: 2,
           })}
         >
-          <DefaultText type="caption" color="gray500">
+          <Text type="caption" color="gray500">
             (10g당 {pricePer10g.toLocaleString()}원)
-          </DefaultText>
+          </Text>
 
           <div
             className={commonWrapper({
@@ -143,18 +143,18 @@ export default function RecipeCard({
               justify: "start",
             })}
           >
-            <DefaultText type="headline1" color="gray900">
+            <Text type="headline1" color="gray900">
               {packPrice.toLocaleString()}원
-            </DefaultText>
-            <DefaultText type="caption" color="gray700">
+            </Text>
+            <Text type="caption" color="gray700">
               / 1팩 당
-            </DefaultText>
+            </Text>
           </div>
           <div className={commonWrapper({ gap: 4, justify: "start" })}>
             {recipeTempData.benefits.map((text, idx) => (
-              <DefaultText key={idx} type="caption" color="gray500">
+              <Text key={idx} type="caption" color="gray500">
                 #{text}
-              </DefaultText>
+              </Text>
             ))}
           </div>
         </div>
@@ -165,9 +165,9 @@ export default function RecipeCard({
             className={styles.subscribeUpdateInputBox}
             onClick={() => onDetailToggle()}
           >
-            <DefaultText type="headline4" color="gray700">
+            <Text type="headline4" color="gray700">
               {packGrams}g
-            </DefaultText>
+            </Text>
             <SvgIcon src={PenIcon} size={20} />
           </div>
         )}

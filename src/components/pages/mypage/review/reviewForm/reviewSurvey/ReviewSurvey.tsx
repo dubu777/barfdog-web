@@ -1,7 +1,7 @@
 import * as styles from './ReviewSurvey.css';
 import { themeVars } from "@/styles/theme.css";
 import { Dispatch, MouseEvent, SetStateAction } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { SurveyKey, SurveyQuestionType, SurveyValue } from "@/types";
 
 const surveyQuestions: SurveyQuestionType[] = [
@@ -46,9 +46,9 @@ const SurveyIcon = ({ active, type }: { active: boolean, type: SurveyValue }) =>
 
 const SurveyQuestion = ({ questionKey, label, value, onChange }: SurveyQuestionProps) => (
 	<div className={styles.reviewSurveyBox}>
-		<DefaultText type="title4" align="center">
+		<Text type="title4" align="center">
 			{label}
-		</DefaultText>
+		</Text>
 		<div className={styles.surveyIconBox}>
 			{surveyOptions.map(({ value: optionValue, type }) => (
 				<button 

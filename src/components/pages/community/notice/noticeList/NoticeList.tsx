@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import TabBar from "@/components/common/tabBar/TabBar";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
@@ -59,8 +59,8 @@ const NoticeList = () => {
       <ul className={styles.noticeList}>
         {filteredNoticeList?.map(notice => (
           <Link key={notice.id} href={`/community/notice/${notice.id}`} className={styles.noticeItem}>
-            <DefaultText type='label3'>{notice.title}</DefaultText>
-            <DefaultText type='label4'>{format(new Date(notice.createdDate), 'yyyy-MM-dd')}</DefaultText>
+            <Text type='label3'>{notice.title}</Text>
+            <Text type='label4'>{format(new Date(notice.createdDate), 'yyyy-MM-dd')}</Text>
           </Link>
         ))}
       </ul>

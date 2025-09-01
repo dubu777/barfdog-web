@@ -1,6 +1,6 @@
 import * as styles from './AverageBar.css';
 import Chips from "@/components/common/chips/Chips";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 function getBarHeightByHour(hour: number, maxValue: number): number {
 	const MIN_HEIGHT = 11;
@@ -35,10 +35,10 @@ export default function AverageBar ({
 					{value}시간
 				</Chips>
 			) : (
-				<DefaultText type='label4' color='gray600'>{value}시간</DefaultText>
+				<Text type='label4' color='gray600'>{value}시간</Text>
 			)}
 			<div className={styles.bar({ color })} style={{ height: height }} />
-			<DefaultText type='label4' color={showChips ? 'gray900' : 'gray600'}>{label}</DefaultText>
+			<Text type='label4' color={showChips ? 'gray900' : 'gray600'}>{label}</Text>
 		</div>
 	)
 };

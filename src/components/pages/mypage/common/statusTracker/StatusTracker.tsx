@@ -1,5 +1,5 @@
 import * as styles from './StatusTracker.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 
@@ -23,22 +23,22 @@ const StatusTracker = ({ statusTitle, steps }: StatusTrackerProps) => {
 	}));
 	return (
 		<article className={styles.statusTrackerContainer}>
-			<DefaultText type='headline1' className={styles.statusTracker}>{statusTitle}</DefaultText>
+			<Text type='headline1' className={styles.statusTracker}>{statusTitle}</Text>
 			<div className={styles.statusTrackerStepBox}>
 				{updatedSteps?.map((step, index) => (
 					<>
 						<div key={step.key} className={styles.statusTrackerStepInfo}>
 							{step.count !== undefined &&
-							<DefaultText type='label1' color='gray700'>{step.count}</DefaultText>
+							<Text type='label1' color='gray700'>{step.count}</Text>
 							}
-							<DefaultText
+							<Text
 								type='caption'
 								color={step.isActive === undefined ? 'gray700' : step.isActive ? 'red' : 'gray300'}
 								align='center'
 								className={styles.statusTrackerLabel}
 							>
 								{step.label}
-							</DefaultText>
+							</Text>
 						</div>
 						{index < steps.length - 1 && <SvgIcon src={ArrowRightIcon} size={20} color={step.isActive ? 'red' : 'gray300'} /> }
 					</>

@@ -1,7 +1,7 @@
 import * as styles from './Pagination.css';
 import Arrow from '/public/images/icons/chevron-left-blue.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import useDeviceState from "@/hooks/useDeviceState";
 
 interface PaginationProps {
@@ -113,14 +113,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
               disabled={isDisabled}
               className={styles.numberButton({ active: isActive }) || ''}
             >
-              <DefaultText type='label1' color={isActive ? 'white' : isDisabled ? 'gray300' : 'gray800'}>{page}</DefaultText>
+              <Text type='label1' color={isActive ? 'white' : isDisabled ? 'gray300' : 'gray800'}>{page}</Text>
             </button>
           )
         })
         : (
           <div>
-            <DefaultText type='label3' color='gray800'>{currentPage + 1}</DefaultText>&nbsp;/&nbsp;
-            <DefaultText type='label3' color={currentPage + 1 === totalPages ? 'gray800' : 'gray600'}>{totalPages}</DefaultText>
+            <Text type='label3' color='gray800'>{currentPage + 1}</Text>&nbsp;/&nbsp;
+            <Text type='label3' color={currentPage + 1 === totalPages ? 'gray800' : 'gray600'}>{totalPages}</Text>
           </div>
         )
       }

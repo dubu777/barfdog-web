@@ -1,7 +1,7 @@
 import * as styles from "./UserInfoForm.css";
 import { pointColor } from "@/styles/common.css";
 import { useCallback, useMemo, useState } from "react";
-import Text from "@/components/common/text/Text";
+import TestText from "@/components/common/testText/TestText";
 import DefaultButton from "@/components/common/defaultButton/DefaultButton";
 import DefaultRadio from "@/components/common/defaultRadio/DefaultRadio";
 import SearchAddress from "@/components/common/searchAddress/SearchAddress";
@@ -274,7 +274,7 @@ const UserInfoForm = <T extends boolean>({
           (input.id === "authNumber" ? authNumber !== null : true) && (
             <div key={input.id} className={styles.userInfoInputBox}>
               <label className={styles.userInfoLabel}>
-                <Text
+                <TestText
                   type="description"
                   size="md"
                   color="black"
@@ -283,7 +283,7 @@ const UserInfoForm = <T extends boolean>({
                 >
                   {input.label}
                   {input.isRequired && <span className={pointColor}>*</span>}
-                </Text>
+                </TestText>
               </label>
               {input.inputType === "text" || input.inputType === "password" ? (
                 <div className={styles.userInfoInput}>

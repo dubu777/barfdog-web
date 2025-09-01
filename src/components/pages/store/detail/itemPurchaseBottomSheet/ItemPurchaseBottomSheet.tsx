@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import ButtonDocked from '@/components/common/buttonDocked/ButtonDocked';
-import DefaultText from '@/components/common/defaultText/DefaultText';
+import Text from "@/components/common/text/Text";
 import Counter from '@/components/common/counter/Counter';
 import ProductOptionSelector
   from "@/components/pages/store/detail/itemPurchaseBottomSheet/productOptionSelector/ProductOptionSelector";
@@ -50,8 +50,8 @@ export default function ItemPurchaseBottomSheet({
       value: option.id,
       label: (
         <div className={commonWrapper({ justify: 'between' })}>
-          <DefaultText type='body3' color='gray600'>{option.name}</DefaultText>
-          <DefaultText type='headline4' color='red'>{option.optionPrice.toLocaleString()}원</DefaultText>
+          <Text type='body3' color='gray600'>{option.name}</Text>
+          <Text type='headline4' color='red'>{option.optionPrice.toLocaleString()}원</Text>
         </div>
       ),
       name: option.name,
@@ -101,7 +101,7 @@ export default function ItemPurchaseBottomSheet({
             resetStore();
             addSnackBar({
               title: '상품을 장바구니에 담았어요.',
-              actionLabel: <DefaultText type='headline3' underLine color='white'>바로가기</DefaultText>,
+              actionLabel: <Text type='headline3' underLine color='white'>바로가기</Text>,
               onActionClick: () => router.push('/cart'),
               position: 'above-button',
             });
@@ -123,12 +123,12 @@ export default function ItemPurchaseBottomSheet({
       <div className={styles.itemPurchaseContainer}>
         <div className={styles.itemPurchaseBox}>
           <div>
-            <DefaultText type='label1'>{data.name}</DefaultText>
+            <Text type='label1'>{data.name}</Text>
             <div className={styles.itemPurchaseTitle}>
               <div className={styles.itemPurchasePrice}>
-                <DefaultText type='title2'>{data.salePrice.toLocaleString()}원</DefaultText>
+                <Text type='title2'>{data.salePrice.toLocaleString()}원</Text>
                 {data.salePrice !== data.originalPrice &&
-                <DefaultText type='body3' color='gray600' lineThrough>{data.originalPrice.toLocaleString()}원</DefaultText>
+                <Text type='body3' color='gray600' lineThrough>{data.originalPrice.toLocaleString()}원</Text>
                 }
               </div>
               <Counter
@@ -156,8 +156,8 @@ export default function ItemPurchaseBottomSheet({
         <ProductOptions/>
         }
         <div className={styles.itemPurchaseTotalPrice}>
-          <DefaultText type='headline2'>총 주문 금액</DefaultText>
-          <DefaultText type='title2' color='red'>{totalPrice.toLocaleString()}원</DefaultText>
+          <Text type='headline2'>총 주문 금액</Text>
+          <Text type='title2' color='red'>{totalPrice.toLocaleString()}원</Text>
         </div>
         <ButtonDocked
           type='dual-button'

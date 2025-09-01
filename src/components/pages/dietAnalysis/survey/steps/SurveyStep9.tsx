@@ -10,7 +10,7 @@ import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import useModal from "@/hooks/useModal";
 import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { PROBIOME_FORM_INFO } from "@/constants/healthNote/probiome";
 import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
@@ -93,9 +93,9 @@ export default function SurveyStep9({
       </div>
       {inedibleFoodStatus === "HAS_ALLERGY" && (
         <>
-          <DefaultText type="label2" color="gray500">
+          <Text type="label2" color="gray500">
             *아래 해당되는 사항을 모두 선택해주세요
-          </DefaultText>
+          </Text>
           <div
             className={commonWrapper({
               direction: "col",

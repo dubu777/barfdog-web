@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import ArrowIcon from '/public/images/icons/chevron-sort-up.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BaseCard from "@/components/pages/mypage/common/cards/section/BaseCard";
 import { ORDER_TYPE, subscriptionPlanInfo } from "@/constants";
 import { IsOpenCardModal, NormalizedOrderCardData, CardActionsId } from "@/types";
@@ -105,18 +105,18 @@ const OrderCard = ({ data, type, hasBottomSheet = false }: OrderCardProps) => {
 			align='between'
 			cardHeaderTitle={
 				<div className={styles.orderCardInfoTop}>
-					<DefaultText type='label4'>
+					<Text type='label4'>
 						{orderType === ORDER_TYPE.SUBSCRIPTION ? `정기배송 ${normalizedData.subscribeCount}회차 ` : '일반배송 '}
 						<span>
 							{orderStatusLabel}
 						</span>
-					</DefaultText>
+					</Text>
 					{type === 'orderDeliveryInquiry' && !hasBottomSheet &&
 					<button
 						className={styles.orderCardDetailButton}
 						onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${normalizedData.id}`, { orderType: orderType })}
 					>
-						<DefaultText type='headline4' color='red'>주문 상세</DefaultText>
+						<Text type='headline4' color='red'>주문 상세</Text>
 						<SvgIcon src={ArrowIcon} size={20} style={{ transform: 'rotate(90deg)', color: themeVars.colors.red.red }} />
 					</button>
 					}

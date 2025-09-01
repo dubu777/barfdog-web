@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import BestReviewModal from "@/components/pages/review/modal/bestReviewModal/BestReviewModal";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import useModal from "@/hooks/useModal";
 import { useQueryClient } from "@tanstack/react-query";
@@ -48,8 +48,8 @@ const BestReview = () => {
   return (
     <article>
       <div className={styles.bestReviewTitle}>
-        <DefaultText type='title2'>바프독 견주님들의<br/>생생한 후기를 확인하세요</DefaultText>
-        <DefaultText type='body2' color='gray600'>명예의 바프독 BEST 리뷰 모음!</DefaultText>
+        <Text type='title2'>바프독 견주님들의<br/>생생한 후기를 확인하세요</Text>
+        <Text type='body2' color='gray600'>명예의 바프독 BEST 리뷰 모음!</Text>
       </div>
       <Swiper
         slidesPerView='auto'
@@ -75,15 +75,15 @@ const BestReview = () => {
                   <div className={styles.bestReviewContentTop}>
                     <div className={styles.bestReviewUsername}>
                       <SvgIcon src={UserIcon} size={19} />
-                      <DefaultText type='caption' color='gray900'>
+                      <Text type='caption' color='gray900'>
                         {review.username ? review.username.split('@')[0] : ''}
-                      </DefaultText>
+                      </Text>
                     </div>
                     <RateStar rateLength={5} value={5} size={12.8} />
                   </div>
-                  <DefaultText type='body3' color='gray700' className={ellipsis({ lineSize: 'line4' })}>
+                  <Text type='body3' color='gray700' className={ellipsis({ lineSize: 'line4' })}>
                     {review.contents}
-                  </DefaultText>
+                  </Text>
                 </div>
               </div>
             </Card>
@@ -115,9 +115,9 @@ const BestReview = () => {
         >
           <SvgIcon src={BannerStarIcon} size={17.45} color={isHover ? 'red' : 'pastelRed'} />
         </motion.div>
-        <DefaultText type='body2' color={isHover ? 'red' : 'gray0'} style={{ transition: 'all .35s' }}>
+        <Text type='body2' color={isHover ? 'red' : 'gray0'} style={{ transition: 'all .35s' }}>
           리뷰 작성하고 BEST 리뷰가 되어보세요!
-        </DefaultText>
+        </Text>
       </div>
       {reviewId &&
         <BestReviewModal isOpen={isOpen} onClose={handleCloseReview} reviewId={reviewId} />

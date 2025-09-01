@@ -1,6 +1,6 @@
 import * as styles from '../Card.css';
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
 import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardProductInfo";
 import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage";
@@ -40,12 +40,12 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 	}
 	return (
 		<CardSection>
-			<DefaultText type='label4'>
+			<Text type='label4'>
 				{orderType === ORDER_TYPE.SUBSCRIPTION ? `정기배송 ${cardDetail?.subscribeCount || 0}회차` : '일반배송'} {issueStatusLabel}
-				<DefaultText type='caption' color='gray600'>
+				<Text type='caption' color='gray600'>
 					&nbsp;&nbsp;신청일 {cardDetail?.requestDate || ''}
-				</DefaultText>
-			</DefaultText>
+				</Text>
+			</Text>
 			<CardProductInfo
 				name={cardDetail?.name || cardDetail?.dogName || cardDetail?.itemName}
 				imageUrl={cardDetail?.imageUrl}

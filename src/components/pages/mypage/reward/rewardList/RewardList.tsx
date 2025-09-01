@@ -1,7 +1,7 @@
 import * as styles from "./RewardList.css";
 import { formatDate } from "@/utils/dateUtils";
 import { RewardData } from "@/types/reward";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 
 interface RewardListProps {
@@ -15,16 +15,16 @@ const RewardList = ({ rewardList }: RewardListProps) => {
         <ul className={styles.rewardListContents}>
           {rewardList?.map((reward, index) => (
             <li className={styles.rewardItem} key={`${reward.name}${index}`}>
-              <DefaultText type='label3'>
+              <Text type='label3'>
                 {formatDate(reward.createdTime, 'onlyDateDot')}
-              </DefaultText>
+              </Text>
               <div className={styles.rewardItemBottom}>
-                <DefaultText type='label4' className={styles.rewardName}>
+                <Text type='label4' className={styles.rewardName}>
                   {reward.name}
-                </DefaultText>
-                <DefaultText type='label4' color={reward.rewardStatus === 'SAVED' ? 'gray500' : 'red'}>
+                </Text>
+                <Text type='label4' color={reward.rewardStatus === 'SAVED' ? 'gray500' : 'red'}>
                   {reward.rewardStatus === 'SAVED' ? '+' : '-'}{reward.tradeReward.toLocaleString()} P
-                </DefaultText>
+                </Text>
               </div>
             </li>
           ))}

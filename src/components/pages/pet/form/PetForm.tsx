@@ -7,7 +7,7 @@ import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import InputLabel from "@/components/common/inputLabel/InputLabel";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
 import FileUpload from "@/components/common/fileUpload/FileUpload";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
@@ -103,7 +103,7 @@ export default function PetForm({
   return (
     <>
       <article className={styles.dogProfileImageBox}>
-        <DefaultText type="title4">반려견 정보</DefaultText>
+        <Text type="title4">반려견 정보</Text>
         <div className={styles.dogProfileImageWrapper}>
           <FileUpload
             onFileChange={onFileChange}

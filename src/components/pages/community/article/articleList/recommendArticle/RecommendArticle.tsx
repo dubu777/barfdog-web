@@ -2,7 +2,7 @@ import * as styles from './RecommendArticle.css';
 import { articleImage, articleOverlay } from "@/components/pages/community/article/articleList/ArticleList.css";
 import Image from "next/image";
 import Link from "next/link";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useGetRecommendArticleList } from "@/api/community/queries/useGetRecommendArticleList";
@@ -12,7 +12,7 @@ const RecommendArticle = () => {
   return (
     <article className={styles.recommendArticleContainer}>
       <div className={styles.recommendArticleList}>
-        <DefaultText type='headline3' color='white' block className={styles.recommendArticleTitle}>추천 아티클</DefaultText>
+        <Text type='headline3' color='white' block className={styles.recommendArticleTitle}>추천 아티클</Text>
         <Swiper slidesPerView='auto'>
         {recommendArticles.map(article => (
           <SwiperSlide key={article.id}>
@@ -28,8 +28,8 @@ const RecommendArticle = () => {
                 className={`${styles.recommendArticleImage} ${articleImage}`}
               />
               <div className={`${styles.recommendArticleContents} ${articleOverlay}`}>
-                <DefaultText type='headline3' color='white'>{article.category}</DefaultText>
-                <DefaultText type='headline1' color='white'>{article.title}</DefaultText>
+                <Text type='headline3' color='white'>{article.category}</Text>
+                <Text type='headline1' color='white'>{article.title}</Text>
               </div>
             </Link>
           </SwiperSlide>

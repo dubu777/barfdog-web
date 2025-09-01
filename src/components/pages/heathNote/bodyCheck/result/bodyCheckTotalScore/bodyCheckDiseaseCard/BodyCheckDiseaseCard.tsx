@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { getBodyCheckScoreStatus } from "@/utils/healthNote/bodyCheck/bodyCheckScore";
 import { DiseaseCategoryKey } from "@/types/healthNote/bodyCheck";
 import { BODY_CHECK_DISEASE_INFO } from "@/constants/healthNote/bodyCheck/common";
@@ -29,14 +29,14 @@ export default function BodyCheckDiseaseCard({
       })}
     >
       <div className={commonWrapper({ justify: "between" })}>
-        <DefaultText type="headline2">{name}</DefaultText>
+        <Text type="headline2">{name}</Text>
         <Chips variant="solid" color={color} borderRadius="lg">
           {label}
         </Chips>
       </div>
-      <DefaultText type="body3" color="gray700">
+      <Text type="body3" color="gray700">
         {description}
-      </DefaultText>
+      </Text>
     </div>
   );
 }

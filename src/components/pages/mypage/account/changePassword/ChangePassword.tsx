@@ -4,7 +4,7 @@ import * as yup from "yup";
 import axios from "axios";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ErrorIcon from "/public/images/icons/close_small.svg";
 import SuccessIcon from "/public/images/icons/check_small.svg";
 import { Controller } from "react-hook-form";
@@ -136,13 +136,13 @@ const ChangePasswordComponent = () => {
                     style={{ marginTop: "8.5px" }}
                   >
                     <ErrorIcon />
-                    <DefaultText
+                    <Text
                       type="caption"
                       color={!passwordError ? "blue500" : "red"}
                     >
                       기존 비밀번호가{" "}
                       {passwordError ? "일치하지 않습니다" : "일치합니다"}
-                    </DefaultText>
+                    </Text>
                   </div>
                 )}
               </div>
@@ -176,12 +176,12 @@ const ChangePasswordComponent = () => {
                     return (
                       <div key={message} className={styles.accountError}>
                         {isValid ? <SuccessIcon /> : <ErrorIcon />}
-                        <DefaultText
+                        <Text
                           type="caption"
                           color={isValid ? "blue500" : "red"}
                         >
                           {message}
-                        </DefaultText>
+                        </Text>
                       </div>
                     );
                   })}
@@ -221,7 +221,7 @@ const ChangePasswordComponent = () => {
                       size={18}
                       color={!newPasswordConfirmError ? "blue500" : "red"}
                     />
-                    <DefaultText
+                    <Text
                       type="caption"
                       color={!newPasswordConfirmError ? "blue500" : "red"}
                     >
@@ -229,7 +229,7 @@ const ChangePasswordComponent = () => {
                       {newPasswordConfirmError
                         ? "일치하지 않습니다"
                         : "일치합니다"}
-                    </DefaultText>
+                    </Text>
                   </div>
                 )}
               </div>

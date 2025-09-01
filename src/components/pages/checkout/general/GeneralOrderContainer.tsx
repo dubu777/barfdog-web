@@ -25,7 +25,7 @@ import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelec
 import CouponSelector from "../common/couponSelector/CouponSelector";
 import OrderTerms from "../common/orderTerms/OrderTerms";
 import OrderSection from "../common/orderSection/OrderSection";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { formatNumberWithCommas } from "@/utils";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
@@ -135,7 +135,7 @@ export default function GeneralOrderContainer() {
         ref={termsRef}
       />
       <OrderSection padding="20px">
-        <DefaultText type="headline2">{ORDER_MESSAGE.CONFIRM}</DefaultText>
+        <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
       </OrderSection>
       <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>
         {isProcessing

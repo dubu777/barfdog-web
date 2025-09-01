@@ -3,7 +3,7 @@ import CloseIcon from "/public/images/header/close.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Card from "@/components/common/card/Card";
 import Chips from "@/components/common/chips/Chips";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Counter from "@/components/common/counter/Counter";
 import { useStoreItemStore } from "@/store/useStoreItemStore";
 
@@ -20,9 +20,9 @@ export default function ProductOptions() {
 							<SvgIcon src={CloseIcon} color='gray500' size={20} />
 						</button>
 					</div>
-					<DefaultText type='body3'>{option.name}</DefaultText>
+					<Text type='body3'>{option.name}</Text>
 					<div className={styles.productOptionInfo}>
-						<DefaultText type='headline1'>{option.price.toLocaleString()}원</DefaultText>
+						<Text type='headline1'>{option.price.toLocaleString()}원</Text>
 						<Counter
 							initialCount={option.count}
 							min={1}

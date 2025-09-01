@@ -4,7 +4,7 @@ import * as styles from "./FileUpload.css";
 import Image from "next/image";
 import AddProfileIcon from "/public/images/icons/add_profile.svg";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 type ImageFileObjectFit = "cover" | "contain";
 
@@ -109,27 +109,27 @@ const FileUpload = ({
         onChange={handleFileChange}
       />
       <button onClick={handleClearFile}>
-        <DefaultText
+        <Text
           type="headline4"
           color="gray600"
           align="center"
           style={{ cursor: "pointer", textDecoration: "underline" }}
         >
           기본 이미지
-        </DefaultText>
+        </Text>
       </button>
       {/*<div className={styles.fileInfoContainer}>*/}
-      {/*  <Text type='description' size='sm' color='black' align='left' className={ellipsis({ lineSize: 'line2' })}>*/}
+      {/*  <TestText type='description' size='sm' color='black' align='left' className={ellipsis({ lineSize: 'line2' })}>*/}
       {/*    {imageNameInfo}*/}
-      {/*  </Text>*/}
+      {/*  </TestText>*/}
       {/*  <button onClick={handleClearFile} className={styles.clearButton}>*/}
       {/*    <Image src={CloseButton} alt='close button' width={10} height={10} />*/}
       {/*  </button>*/}
       {/*</div>*/}
-      {/*{error && <Text type='description' size='xs' color='red'>{error}</Text>}*/}
-      {/*<Text type='description' size='xs' color='grey'>*/}
+      {/*{error && <TestText type='description' size='xs' color='red'>{error}</TestText>}*/}
+      {/*<TestText type='description' size='xs' color='grey'>*/}
       {/*  * 파일 크기 10MB 이하 / 확장자: jpg, jpeg, png, gif*/}
-      {/*</Text>*/}
+      {/*</TestText>*/}
     </div>
   );
 };

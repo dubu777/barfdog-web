@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useSnackBarStore } from "@/store/useSnackBar";
 import * as styles from "./SnackBar.css";
 import Button from "../button/Button";
-import DefaultText from "../defaultText/DefaultText";
+import Text from "../text/Text";
 import { MOTION } from "@/constants";
 
 interface SnackBarItemProps {
@@ -36,8 +36,8 @@ function SnackBarItem({
       className={styles.snackBarItem}
     >
       <div className={styles.snackBarContent}>
-        <DefaultText type="label3" color="gray0">{title}</DefaultText>
-        {caption && <DefaultText type="caption" color="gray200">{caption}</DefaultText>}
+        <Text type="label3" color="gray0">{title}</Text>
+        {caption && <Text type="caption" color="gray200">{caption}</Text>}
       </div>
 
       {actionLabel && (

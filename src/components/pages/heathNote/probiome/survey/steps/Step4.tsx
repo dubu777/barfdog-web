@@ -7,7 +7,7 @@ import {
 } from "@/constants/healthNote/probiome";
 import { ProbiomeStepValues } from "@/utils/validation/probiomeValidation";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
 import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
@@ -82,9 +82,9 @@ export default function ProbiomeStep4({
       </div>
       {allergyStatus === "HAS_ALLERGY" && (
         <>
-          <DefaultText type="label2" color="gray500">
+          <Text type="label2" color="gray500">
             *아래 해당되는 사항을 모두 선택해주세요
-          </DefaultText>
+          </Text>
           <div
             className={commonWrapper({
               direction: "col",

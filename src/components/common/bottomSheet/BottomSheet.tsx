@@ -4,7 +4,7 @@ import * as styles from "@/components/common/bottomSheet/BottomSheet.css";
 import CloseButton from "/public/images/icons/close.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ModalBackground from "../modalBackground/ModalBackground";
-import DefaultText from "../defaultText/DefaultText";
+import Text from "../text/Text";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -79,7 +79,7 @@ const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(({
             </div>
             {title && (
               <div className={styles.bottomSheetHeader}>
-                <DefaultText type="title4">{title}</DefaultText>
+                <Text type="title4">{title}</Text>
                 <button onClick={onClose}>
                   <SvgIcon src={CloseButton} />
                 </button>

@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import React, { useRef } from "react";
 import * as styles from "../recipeOptions/RecipeOptions.css";
 import TabBar from "@/components/common/tabBar/TabBar";
@@ -46,14 +46,14 @@ export default function GeneralItemOptions({
     <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
         <div>
-          <DefaultText type="title2">
+          <Text type="title2">
             식사와 함께 급여하면 좋을
             <br />
             토핑과 간식도 준비했어요
-          </DefaultText>
-          <DefaultText type="body2" color="gray600">
+          </Text>
+          <Text type="body2" color="gray600">
             담은 상품은 레시피와 함께 정기 배송돼요.
-          </DefaultText>
+          </Text>
         </div>
       </div>
       <div className={styles.recipeTabBarWrapper}>
@@ -64,10 +64,10 @@ export default function GeneralItemOptions({
           <React.Fragment key={key}>
             <div ref={refs[key]} className={styles.recipeSelectBox}>
               <div className={styles.recipeTitleWrapper}>
-                <DefaultText type="title4">{title}</DefaultText>
-                <DefaultText type="body3" color="gray600">
+                <Text type="title4">{title}</Text>
+                <Text type="body3" color="gray600">
                   {description}
-                </DefaultText>
+                </Text>
               </div>
               <div className={styles.recipeCardWrapper}>
                 {items.map((item) => (

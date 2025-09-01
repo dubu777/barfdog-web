@@ -8,7 +8,7 @@ import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
 import * as styles from "@/components/pages/mypage/review/reviewForm/ReviewForm.css";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import useModal from "@/hooks/useModal";
@@ -62,7 +62,7 @@ const CreateDetail = () => {
       />
       <BottomSheet isOpen={isOpen} onClose={onClose} title="작성시 유의사항">
         <div className={styles.bottomSheetBox}>
-          <DefaultText type='label4' block className={styles.bottomSheetSubTitle}>유의사항</DefaultText>
+          <Text type='label4' block className={styles.bottomSheetSubTitle}>유의사항</Text>
           <div className={styles.bottomSheetInfoDetail}>
             {createReviewNotice.map(notice => (
               <InfoText key={notice} text={notice} />

@@ -2,7 +2,7 @@
 import * as styles from './Cart.css';
 import { Fragment, useEffect, useRef } from "react";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Spinner from "@/components/common/spinner/Spinner";
@@ -62,12 +62,12 @@ export default function Cart() {
           isChecked={isSelectedAll}
           onToggle={handleSelectAll}
         >
-          <DefaultText type='label2'>
+          <Text type='label2'>
             전체 선택 ({selectedItems.length}/{cartInfo?.basketDtoList.length})
-          </DefaultText>
+          </Text>
         </LabeledCheckbox>
         <button onClick={handleDeleteSelectedItems} disabled={selectedItems.length === 0} className={styles.deleteButton}>
-          <DefaultText type='body3' color='gray700'>선택삭제</DefaultText>
+          <Text type='body3' color='gray700'>선택삭제</Text>
         </button>
       </article>
       <Divider thickness={8} color='gray50' />
@@ -96,8 +96,8 @@ export default function Cart() {
         <>
           <article>
             <div className={styles.cartSoldOutTitle}>
-              <DefaultText type='headline2'>품절/구매불가</DefaultText>
-              <DefaultText type='body3' color='gray700'>해당 상품에 포함된 추가 상품도 구매가 불가능해요.</DefaultText>
+              <Text type='headline2'>품절/구매불가</Text>
+              <Text type='body3' color='gray700'>해당 상품에 포함된 추가 상품도 구매가 불가능해요.</Text>
             </div>
             <div className={styles.cartListBox}>
               <div className={styles.cartItemList}>

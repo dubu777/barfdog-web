@@ -1,5 +1,5 @@
 import * as styles from "./CouponModal.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
 import { ORDER_MESSAGE } from "@/constants";
@@ -213,7 +213,7 @@ export default function CouponModal({
     >
       <div className={styles.couponModalWrapper}>
         <div className={styles.couponModalContentWrapper}>
-          <DefaultText type="label4">쿠폰 등록</DefaultText>
+          <Text type="label4">쿠폰 등록</Text>
           <div className={styles.couponApplyWrapper}>
             <Controller
               name="code"

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
 import * as styles from '../Account.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Switch from "@/components/common/switch/Switch";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
@@ -32,20 +32,20 @@ const Notification = () => {
 	return (
 		<section className={styles.notificationBox}>
 			<article className={styles.notificationInfo}>
-				<DefaultText type='title4'>이벤트 및 혜택 알림</DefaultText>
-				<DefaultText type='caption' color='gray600'>특가 및 쿠폰 등 이벤트 정보를 빠르게 알려드려요.</DefaultText>
+				<Text type='title4'>이벤트 및 혜택 알림</Text>
+				<Text type='caption' color='gray600'>특가 및 쿠폰 등 이벤트 정보를 빠르게 알려드려요.</Text>
 			</article>
 			<ul className={styles.accountLinkBox}>
 				<li className={styles.notificationItem}>
-					<DefaultText type='label4'>마케팅 개인정보 수집 및 이용 동의(선택)</DefaultText>
+					<Text type='label4'>마케팅 개인정보 수집 및 이용 동의(선택)</Text>
 					<Switch isOn={receiveAll} onChange={() => handleChange('all')} />
 				</li>
 				<li className={styles.notificationItem}>
-					<DefaultText type='label2'>이메일</DefaultText>
+					<Text type='label2'>이메일</Text>
 					<Switch isOn={receiveEvent.email} onChange={() => handleChange('email')} />
 				</li>
 				<li className={styles.notificationItem}>
-					<DefaultText type='label2'>문자 메세지</DefaultText>
+					<Text type='label2'>문자 메세지</Text>
 					<Switch isOn={receiveEvent.sms} onChange={() => handleChange('sms')} />
 				</li>
 			</ul>

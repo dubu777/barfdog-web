@@ -1,7 +1,7 @@
 import * as styles from './ReasonSelectionForm.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
-import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
+import Textarea from "@/components/common/textarea/Textarea";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 interface ReasonSelectionFormProps {
@@ -49,8 +49,8 @@ const ReasonSelectionForm = ({
 	return (
 		<>
 			<div className={styles.reasonSelectionTitle}>
-				<DefaultText type='title3' preLine>{title}</DefaultText>
-				<DefaultText type='body1' color='gray600' preLine>{subTitle}</DefaultText>
+				<Text type='title3' preLine>{title}</Text>
+				<Text type='body1' color='gray600' preLine>{subTitle}</Text>
 			</div>
 			<ul className={styles.reasonCheckboxList}>
 				{reasons.map(reason => (
@@ -63,7 +63,7 @@ const ReasonSelectionForm = ({
 							onChange={(checked) => handleToggle(reason.id, checked as boolean)}
 						/>
 						{selectedReasons.includes('other') && reason.id === 'other' &&
-							<DefaultTextarea
+							<Textarea
 								id='otherReason'
 								value={otherReason}
 								placeholder={textareaPlaceholder || '기타 사항을 입력해주세요 (선택)'}

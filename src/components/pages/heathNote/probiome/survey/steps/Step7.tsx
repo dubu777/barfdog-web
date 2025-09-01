@@ -9,7 +9,7 @@ import { ProbiomeStepValues } from "@/utils/validation/probiomeValidation";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import Chips from "@/components/common/chips/Chips";
 import { commonWrapper } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
@@ -91,9 +91,9 @@ export default function ProbiomeStep7({
       {/* 질병 리스트 선택 */}
       {exist === "EXIST" && (
         <>
-          <DefaultText type="label2" color="gray500">
+          <Text type="label2" color="gray500">
             *아래 해당되는 사항을 모두 선택해주세요
-          </DefaultText>
+          </Text>
           <div
             className={commonWrapper({
               direction: "col",

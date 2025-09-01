@@ -1,5 +1,5 @@
 import * as styles from '../Information.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ArrowIcon from '/public/images/icons/chevron-down.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
@@ -14,9 +14,9 @@ const InfoTitleButton = ({ title, subTitleRight, isOpen, setIsOpen }: InfoTitleB
 	return (
 		title &&
 		<button onClick={setIsOpen ? () => setIsOpen(!isOpen) : undefined} className={`${styles.infoItem}`}>
-			<DefaultText type="title4">{title}</DefaultText>
+			<Text type="title4">{title}</Text>
 			<div className={styles.infoAccordion}>
-				<DefaultText type="headline2" color="red">{subTitleRight}</DefaultText>
+				<Text type="headline2" color="red">{subTitleRight}</Text>
 				{setIsOpen &&
 					<SvgIcon src={ArrowIcon} className={styles.infoAccordionIcon({ isOpen })} />
 				}

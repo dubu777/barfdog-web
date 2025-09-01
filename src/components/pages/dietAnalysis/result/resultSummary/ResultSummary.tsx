@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { FirstResultResponse } from "@/types/dietAnalysis";
 import Card from "@/components/common/card/Card";
 import DotIcon from "public/images/dietAnalysis/square-dot.svg";
@@ -40,14 +40,14 @@ export default function ResultSummary({
   return (
     <div className={commonWrapper({ direction: "col" })}>
       <div className={styles.resultSummaryTop}>
-        <DefaultText type="body3" color="gray0">
+        <Text type="body3" color="gray0">
           {date}
-        </DefaultText>
-        <DefaultText type="title3" color="gray0">
+        </Text>
+        <Text type="title3" color="gray0">
           보호자님의 응답을 바탕으로
           <br />
           {dogName}의 건강 고민을 분석했어요
-        </DefaultText>
+        </Text>
       </div>
       <div className={styles.resultCardWrapper}>
         <Card
@@ -67,9 +67,9 @@ export default function ResultSummary({
               align: "start",
             })}
           >
-            <DefaultText type="headline2" color="gray800">
+            <Text type="headline2" color="gray800">
               아래의 증상이 자주 나타나나요?
-            </DefaultText>
+            </Text>
             <div
               className={commonWrapper({
                 direction: "col",
@@ -86,13 +86,13 @@ export default function ResultSummary({
                   })}
                 >
                   <SvgIcon src={DotIcon} size={24} />
-                  <DefaultText
+                  <Text
                     type="body2"
                     color="gray800"
                     applyLineHeight={false}
                   >
                     {symptom}
-                  </DefaultText>
+                  </Text>
                 </div>
               ))}
             </div>
@@ -104,7 +104,7 @@ export default function ResultSummary({
               align: "start",
             })}
           >
-            <DefaultText type="headline4">그 외 증상</DefaultText>
+            <Text type="headline4">그 외 증상</Text>
             <div
               className={commonWrapper({
                 justify: "start",
@@ -143,7 +143,7 @@ export default function ResultSummary({
           <Card className={resultCardStyle} padding={12} gap={12}>
             <div className={commonWrapper({ gap: 6, justify: "start" })}>
               <SvgIcon src={WarningIcon} />
-              <DefaultText type="headline2">알러지</DefaultText>
+              <Text type="headline2">알러지</Text>
             </div>
             <div className={commonWrapper({ gap: 6, justify: "start" })}>
               {firstResponse.foodAllergyTypes.map((food) => (

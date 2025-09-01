@@ -1,7 +1,7 @@
 import { GeneralOrderItem } from "@/types";
 import Image from "next/image";
 import * as styles from "../../../subscription/subscriptionOrderItemList/orderItemCard/OrderItemCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { formatNumberWithCommas } from "@/utils";
 import Chips from "@/components/common/chips/Chips";
 import Divider from "@/components/common/divider/Divider";
@@ -28,14 +28,14 @@ export default function GeneralOrderItemCard({
         />
         <div className={styles.orderItemContentWrapper}>
           <div className={styles.orderItemInfoWrapper}>
-            <DefaultText type="label2">{orderItemData.name}</DefaultText>
-            <DefaultText type="body3">
+            <Text type="label2">{orderItemData.name}</Text>
+            <Text type="body3">
               구매수량 | {orderItemData.amount}개
-            </DefaultText>
+            </Text>
           </div>
-          <DefaultText type="headline2">
+          <Text type="headline2">
             {formatNumberWithCommas(orderItemData.itemOriginalPrice)}원
-          </DefaultText>
+          </Text>
         </div>
       </div>
       <div
@@ -52,17 +52,17 @@ export default function GeneralOrderItemCard({
               })}
             >
               <div className={commonWrapper({ gap: 8, justify: "start" })}>
-                <DefaultText type="body3" color="gray700">
+                <Text type="body3" color="gray700">
                   {option.name}
-                </DefaultText>
+                </Text>
                 <Divider direction="vertical" thickness={1} color="gray300" />
-                <DefaultText type="body3" color="gray700">
+                <Text type="body3" color="gray700">
                   {option.amount}개
-                </DefaultText>
+                </Text>
               </div>
-              <DefaultText type="label3">
+              <Text type="label3">
                 {formatNumberWithCommas(option.price)}원
-              </DefaultText>
+              </Text>
             </div>
           </div>
         ))}

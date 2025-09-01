@@ -1,6 +1,6 @@
 import OrderSection from "../orderSection/OrderSection";
 import { getAvailableCoupons } from "@/utils/coupon/couponUtils";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { ORDER_MESSAGE } from "@/constants";
 import * as styles from "./CouponSelector.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -38,16 +38,16 @@ export default function CouponSelector({
     >
       <div className={styles.couponSelectorBox} onClick={onToggle}>
         {usableCouponCount === 0 ? (
-          <DefaultText type="label1" color="gray500">
+          <Text type="label1" color="gray500">
             {ORDER_MESSAGE.NO_AVAILABLE_COUPONS}
-          </DefaultText>
+          </Text>
         ) : (
-          <DefaultText type="label1">
+          <Text type="label1">
             사용 가능{" "}
-            <DefaultText type="headline1" color="red">
+            <Text type="headline1" color="red">
               {usableCouponCount}장
-            </DefaultText>
-          </DefaultText>
+            </Text>
+          </Text>
         )}
         <SvgIcon src={ArrowIcon} size={20} color="gray600" />
       </div>

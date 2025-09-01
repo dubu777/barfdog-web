@@ -1,7 +1,7 @@
 'use client'
 import * as styles from './ManageSubscription.css';
 import { useGetSubscriptionList } from "@/api/subscription/queries/useGetSubscriptionList";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filterBottomSheet/FilterBottomSheet";
@@ -44,14 +44,14 @@ const ManageSubscription = () => {
   return (
     <section>
       <article className={styles.manageSubscriptionTitle}>
-        <DefaultText type='label4' color='gray700'>나의 진행중 구독</DefaultText>
-        <DefaultText type='title1' className={styles.manageSubscriptionCount}>총 {subscribingSubscriptionList.length || 0}건</DefaultText>
-        <DefaultText type='caption' color='gray700'>
+        <Text type='label4' color='gray700'>나의 진행중 구독</Text>
+        <Text type='title1' className={styles.manageSubscriptionCount}>총 {subscribingSubscriptionList.length || 0}건</Text>
+        <Text type='caption' color='gray700'>
           {subscribingSubscriptionList.length < 1
             ? 'Tip. 맞춤 자연식을 통해 우리아이 면역력을 키워보세요! :)'
             : dogNames.map(dog => `#${dog} `)
           }
-        </DefaultText>
+        </Text>
       </article>
       <article className={styles.manageSubscriptionTabBar}>
         <TabBar

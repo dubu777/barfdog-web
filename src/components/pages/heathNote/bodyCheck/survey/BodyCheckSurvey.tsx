@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Controller, FieldValues, Path } from "react-hook-form";
 import BackIcon from "public/images/header/chevron-left.svg";
 import Header from "@/components/layout/header/Header";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -141,9 +141,9 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
                 color="gray900"
                 onClick={() => handlePrevStep()}
               />
-              <DefaultText type="headline3" color="gray500">
+              <Text type="headline3" color="gray500">
                 이전
-              </DefaultText>
+              </Text>
             </div>
           )
         }
@@ -168,9 +168,9 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
             })}
           >
             {(currentQuestion.title as string[]).map((text, idx) => (
-              <DefaultText key={idx} type="title3" color="gray900">
+              <Text key={idx} type="title3" color="gray900">
                 {text}
-              </DefaultText>
+              </Text>
             ))}
           </div>
         </article>

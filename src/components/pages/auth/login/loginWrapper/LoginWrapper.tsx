@@ -17,7 +17,7 @@ import { getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { resetStores } from "@/store/resetStores";
 import { commonWrapper } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 const LoginWrapper = () => {
   // -------> 라우팅 함수
@@ -108,10 +108,10 @@ const LoginWrapper = () => {
             padding: "0/20",
           })}
         >
-          <DefaultText type="title1">👋 안녕하세요 보호자님!</DefaultText>
-          <DefaultText type="body3" color="gray500">
+          <Text type="title1">👋 안녕하세요 보호자님!</Text>
+          <Text type="body3" color="gray500">
             다양한 맞춤 서비스를 위해 로그인해주세요
-          </DefaultText>
+          </Text>
         </div>
         <LoginForm
           control={control}
@@ -121,9 +121,9 @@ const LoginWrapper = () => {
         />
         <span className={styles.lineBox}>
           <em className={styles.line} />
-          <DefaultText type="body3" color="gray500">
+          <Text type="body3" color="gray500">
             또는
-          </DefaultText>
+          </Text>
           <em className={styles.line} />
         </span>
         <div className={commonWrapper({ gap: 16 })}>

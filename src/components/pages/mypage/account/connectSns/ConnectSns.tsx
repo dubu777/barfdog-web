@@ -5,7 +5,7 @@ import NaverImage from "public/images/mypage/naver.svg";
 import KakaoImage from "public/images/mypage/kakao.svg";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 import { useToastStore } from "@/store/useToastStore";
@@ -63,9 +63,9 @@ const ConnectSns = () => {
             <DefaultEmptyState title="현재 연동된 SNS가 없습니다." />
           ) : (
             <div className={styles.connectedSns}>
-              <DefaultText type="label1">
+              <Text type="label1">
                 {snsProvider === "naver" ? "네이버" : "카카오"}
-              </DefaultText>
+              </Text>
               {snsProvider === "naver" ? <NaverImage /> : <KakaoImage />}
             </div>
           )}

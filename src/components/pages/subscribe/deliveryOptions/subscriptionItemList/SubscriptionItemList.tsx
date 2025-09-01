@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import RecipeItemCard from "./recipeItemCard/RecipeItemCard";
@@ -39,13 +39,13 @@ export default function SubscriptionItemList({
         padding: 32,
       })}
     >
-      <DefaultText type="title4">
-        <DefaultText type="title4" color="red">
+      <Text type="title4">
+        <Text type="title4" color="red">
           {deliveryCycle}주
-        </DefaultText>
+        </Text>
         에 한 번씩 <br />
         아래의 상품이 배송돼요
-      </DefaultText>
+      </Text>
       {recipeList.map((item, idx) => (
         <React.Fragment key={item.recipeId}>
           <RecipeItemCard

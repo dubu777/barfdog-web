@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AccordionIcon from '/public/images/icons/chevron-right-blue.svg';
 import Chips from "@/components/common/chips/Chips";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
@@ -89,9 +89,9 @@ export default function RecommendedItemList({
 							<Chips variant='solid' color='red' size='sm' borderRadius='lg'>
 								{index + 1}
 							</Chips>
-							<DefaultText type='headline1'>
+							<Text type='headline1'>
 								{getTitle(item)}
-							</DefaultText>
+							</Text>
 						</div>
 						<Card
 							shadow='none'
@@ -102,8 +102,8 @@ export default function RecommendedItemList({
 								<div className={styles.itemInfo}>
 									<Image src={item.displayProductUrl.url} alt={item.productName} width={72} height={72} className={styles.itemImage} />
 									<div>
-										<DefaultText type='label4' color='gray800' block>{item.productName}</DefaultText>
-										<DefaultText type='headline2' block>{item.productPrice.toLocaleString() ?? ''}원</DefaultText>
+										<Text type='label4' color='gray800' block>{item.productName}</Text>
+										<Text type='headline2' block>{item.productPrice.toLocaleString() ?? ''}원</Text>
 									</div>
 								</div>
 								<Link href={`/store/${item.productId}`}>
@@ -113,9 +113,9 @@ export default function RecommendedItemList({
 							<Divider thickness={1} color='gray100' />
 							<div className={styles.itemContent}>
 								{getTagChip(item)}
-								<DefaultText type='body3' color='gray700'>
+								<Text type='body3' color='gray700'>
 									{getDescription(item)}
-								</DefaultText>
+								</Text>
 							</div>
 						</Card>
 					</div>

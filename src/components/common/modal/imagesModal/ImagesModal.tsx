@@ -8,7 +8,7 @@ import 'swiper/css/navigation';
 import CloseIcon from "/public/images/header/close.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Header from "@/components/layout/header/Header";
 import { ImageFile, UploadedFile } from "@/types";
 
@@ -42,9 +42,9 @@ export default function ImagesModal ({
 			<div className={styles.imagesModalContainer}>
 				<Header
 					leftElement={(
-						<DefaultText type='headline3' color='white'>
+						<Text type='headline3' color='white'>
 							{activeIndex+1} / {imageList.length}
-						</DefaultText>
+						</Text>
 					)}
 					rightElement={(
 						<button onClick={onClose}>

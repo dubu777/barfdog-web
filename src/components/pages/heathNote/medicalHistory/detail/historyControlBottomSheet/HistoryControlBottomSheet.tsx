@@ -3,7 +3,7 @@ import { pointColor } from "@/styles/common.css";
 import EditIcon from "/public/images/icons/pen.svg";
 import DeleteIcon from "/public/images/icons/trashbag.svg";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 
 interface HistoryControlBottomSheetProps {
@@ -25,7 +25,7 @@ export default function HistoryControlBottomSheet ({
 			onClose={onClose}
 			className={styles.controlBottomSheet}
 		>
-			<DefaultText type='title4' className={styles.controlBottomSheetTitle}>병원 진료 기록</DefaultText>
+			<Text type='title4' className={styles.controlBottomSheetTitle}>병원 진료 기록</Text>
 			<div className={styles.controlBottomSheetActions}>
 				<Button
 					onClick={() => {

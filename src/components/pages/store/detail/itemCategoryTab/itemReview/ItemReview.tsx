@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import RateStar from "@/components/common/rateStar/RateStar";
 import Pagination from "@/components/common/pagination/Pagination";
 import Divider from '@/components/common/divider/Divider';
-import DefaultText from '@/components/common/defaultText/DefaultText';
+import Text from "@/components/common/text/Text";
 import ImageCarousel from '@/components/common/imageCarousel/ImageCarousel';
 import ImagesModal from '@/components/common/modal/imagesModal/ImagesModal';
 import { maskString } from "@/utils/maskString";
@@ -69,14 +69,14 @@ export default function ItemReview({
           <div className={styles.reviewItem}>
             <div className={styles.reviewDefaultInfo}>
               <div className={styles.reviewUserName}>
-                <DefaultText type='body3'>
+                <Text type='body3'>
                   {maskString(review?.reviewDto?.username ?? '', 1)}
-                </DefaultText>
+                </Text>
                 <RateStar value={review?.reviewDto?.star} rateLength={5} />
               </div>
-              <DefaultText type='body3'>
+              <Text type='body3'>
                 {review?.reviewDto?.createdDate}
-              </DefaultText>
+              </Text>
             </div>
             <Divider thickness={1} color='gray300' />
             <div className={styles.reviewContentsInfo}>
@@ -87,7 +87,7 @@ export default function ItemReview({
                   setSelectedImageList(imageList as unknown as UploadedFile[]);
                 }}
               />
-              <DefaultText type='body2'>{review.reviewDto.contents}</DefaultText>
+              <Text type='body2'>{review.reviewDto.contents}</Text>
             </div>
           </div>
           {index !== reviewList.length && 

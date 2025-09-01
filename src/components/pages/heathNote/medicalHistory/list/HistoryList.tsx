@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import EmptyGif from '/public/images/healthNote/health-check/empty.gif';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import CreateButton from "@/components/common/createButton/CreateButton";
 import Card from "@/components/common/card/Card";
@@ -29,8 +29,8 @@ export default function HistoryList ({ petId }: HistoryListProps) {
 				<article className={styles.emptyBox}>
 					<div className={styles.emptyTitle}>
 						<Image src={EmptyGif} alt='empty' width={150} height={150} />
-						<DefaultText type='label1' color='gray700' align='center'>아직 병원 진료 기록을<br/>등록하지 않았어요</DefaultText>
-						<DefaultText type='body3' color='gray600'>우리 아이 병원 진료 내역을 기록해 보세요</DefaultText>
+						<Text type='label1' color='gray700' align='center'>아직 병원 진료 기록을<br/>등록하지 않았어요</Text>
+						<Text type='body3' color='gray600'>우리 아이 병원 진료 내역을 기록해 보세요</Text>
 					</div>
 					<Button 
 						onClick={() => router.push(`/health-note/${petId}/medical-history/create`)}
@@ -52,8 +52,8 @@ export default function HistoryList ({ petId }: HistoryListProps) {
 										align='start'
 									>
 										<div className={styles.healthCheckInfo}>
-											<DefaultText type='label4' color='gray600'>{format(new Date(data.diagnosisDate), 'yyyy.MM.dd')}</DefaultText>
-											<DefaultText type='headline2' color='gray800'>{data.hospitalName}</DefaultText>
+											<Text type='label4' color='gray600'>{format(new Date(data.diagnosisDate), 'yyyy.MM.dd')}</Text>
+											<Text type='headline2' color='gray800'>{data.hospitalName}</Text>
 										</div>
 										<div className={styles.tagList}>
 											{data.diagnosisItemList.map((tag, index) => (

@@ -1,5 +1,5 @@
 import * as styles from "./SurveyOptionCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 import Image from "next/image";
 import { commonWrapper } from "@/styles/common.css";
@@ -47,14 +47,14 @@ export default function SurveyOptionCard<T>({
         />
       </div>
       <div className={styles.surveyOptionCardContentWrapper}>
-        <DefaultText type="headline3" color={isChecked ? "red" : "gray900"}>
+        <Text type="headline3" color={isChecked ? "red" : "gray900"}>
           {label}
-        </DefaultText>
+        </Text>
         <div className={commonWrapper({ direction: "col", align: "start" })}>
           {subLabel.map((text, index) => (
-            <DefaultText key={index} type="body3" color="gray700">
+            <Text key={index} type="body3" color="gray700">
               {text}
-            </DefaultText>
+            </Text>
           ))}
         </div>
       </div>

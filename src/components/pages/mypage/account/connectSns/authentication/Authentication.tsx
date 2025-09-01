@@ -5,7 +5,7 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { connectSnsSchema, defaultConnectSnsValue } from "@/utils/validation/authValidation";
 import { ConnectSnsPassword } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 
 interface AuthenticationProps {
@@ -27,11 +27,11 @@ const Authentication = ({ onLogin, goBack }: AuthenticationProps) => {
 	return (
 		<section className={styles.connectSnSAuthContainer}>
 			<article className={styles.connectSnSAuthTitle}>
-				<DefaultText type='title3'>
+				<Text type='title3'>
 					계정정보 확인을 위해<br/>
 					비밀번호를 입력해주세요
-				</DefaultText>
-				<DefaultText type='body1' color='gray600'>개인정보 보호를 위해 인증절차가 필요합니다.</DefaultText>
+				</Text>
+				<Text type='body1' color='gray600'>개인정보 보호를 위해 인증절차가 필요합니다.</Text>
 			</article>
 			<article className={styles.connectSnSAuthForm}>
 				<Controller

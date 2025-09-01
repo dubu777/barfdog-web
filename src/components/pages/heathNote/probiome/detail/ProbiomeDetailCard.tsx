@@ -1,7 +1,7 @@
 "use client";
 
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
 import {
   ProbiomeDetailCardData,
@@ -37,9 +37,9 @@ export default function ProbiomeDetailCard({
 
   return (
     <Card shadow="light" padding={16} gap={12} align="start">
-      <DefaultText type="title4" color="gray800">
+      <Text type="title4" color="gray800">
         {title}
-      </DefaultText>
+      </Text>
       <Divider thickness={2} color="gray900" />
       <div
         className={commonWrapper({ direction: "col", gap: 8, paddingTop: 4 })}

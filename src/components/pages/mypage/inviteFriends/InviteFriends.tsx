@@ -8,7 +8,7 @@ import MessageIcon from "/public/images/mypage/message.svg";
 import CopyIcon from "/public/images/mypage/copy.svg";
 import InputField from "@/components/common/inputField/InputField";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Card from "@/components/common/card/Card";
@@ -49,18 +49,18 @@ export default function InviteFriends() {
 
   const rewardInfoElementList = [
     <>
-      <DefaultText type='body3'>
+      <Text type='body3'>
         친구가 내 추천코드로 가입하면
-        <DefaultText type='label4' color='red'> 친구와 나에게 3,000 포인트</DefaultText>
+        <Text type='label4' color='red'> 친구와 나에게 3,000 포인트</Text>
         !
-      </DefaultText>
+      </Text>
     </>,
     <>
-      <DefaultText type='body3'>
+      <Text type='body3'>
         친구가 첫 구독주문 하면
-        <DefaultText type='label4' color='red'> 친구에게 3,000 포인트, 나에게 20,000 포인트</DefaultText>
+        <Text type='label4' color='red'> 친구에게 3,000 포인트, 나에게 20,000 포인트</Text>
         를 드립니다!
-      </DefaultText>
+      </Text>
     </>,
   ]
 
@@ -103,7 +103,7 @@ export default function InviteFriends() {
   return (
     <section className={styles.inviteFriendsContainer}>
       <article className={styles.inviteFriendsInfo}>
-        <DefaultText type='title2' align='center'>친구 초대하고<br/>포인트 혜택 받아보세요!</DefaultText>
+        <Text type='title2' align='center'>친구 초대하고<br/>포인트 혜택 받아보세요!</Text>
         <InviteFriendsImage />
         {rewardListData?.recommend &&
           <Chips variant='solid' tailVisible tailPosition='top' borderRadius='md' color='gray800' className={styles.myRecommendationCode}>
@@ -121,7 +121,7 @@ export default function InviteFriends() {
       </article>
       {!rewardListData?.recommend &&
         <article className={styles.applyReferralCodeBox}>
-          <DefaultText type='label4'>추천코드 입력</DefaultText>
+          <Text type='label4'>추천코드 입력</Text>
           <div>
             <InputField
               name='recommendCode'
@@ -135,7 +135,7 @@ export default function InviteFriends() {
               onSubmit={handleSubmit}
             />
           </div>
-          <DefaultText type='caption' color='gray600'>* 친구 코드 입력은 계정 당 1회 입력할 수 있어요</DefaultText>
+          <Text type='caption' color='gray600'>* 친구 코드 입력은 계정 당 1회 입력할 수 있어요</Text>
         </article>
       }
       <article>
@@ -144,8 +144,8 @@ export default function InviteFriends() {
             shadow='light'
             className={styles.recommendationCode}
           >
-            <DefaultText type='label4'>나의 추천코드</DefaultText>
-            <DefaultText type='title1'>{userData?.myRecommendationCode}</DefaultText>
+            <Text type='label4'>나의 추천코드</Text>
+            <Text type='title1'>{userData?.myRecommendationCode}</Text>
             <div className={styles.recommendationCodeActions}>
               <button onClick={() => onToggleSendMessageModal()} className={styles.codeActionButton}><SvgIcon src={MessageIcon} size={16} />문자 보내기</button>
               <button onClick={handleCopyCode} className={styles.codeActionButton}><SvgIcon src={CopyIcon} size={20} />코드 복사</button>
@@ -155,8 +155,8 @@ export default function InviteFriends() {
         <div className={styles.rewardListTop}>
           {rewardCountList.map(rewardCount => (
             <div key={rewardCount.label} className={styles.rewardListTopBox}>
-              <DefaultText type='caption' color='gray600'>{rewardCount.label}</DefaultText>
-              <DefaultText type='label2'>{rewardCount.value}</DefaultText>
+              <Text type='caption' color='gray600'>{rewardCount.label}</Text>
+              <Text type='label2'>{rewardCount.value}</Text>
             </div>
           ))}
         </div>
@@ -165,10 +165,10 @@ export default function InviteFriends() {
             <ul className={styles.rewardList}>
               {rewardList.map((reward, index) => (
                 <li key={index} className={styles.rewardItem}>
-                  <DefaultText type='label3'>{format(new Date(reward.createdTime), 'yy.MM.dd')}</DefaultText>
+                  <Text type='label3'>{format(new Date(reward.createdTime), 'yy.MM.dd')}</Text>
                   <div className={styles.rewardItemBottom}>
-                    <DefaultText type='label4'>{reward.name}</DefaultText>
-                    <DefaultText type='label4' color='red'>+{reward.tradeReward.toLocaleString()}P</DefaultText>
+                    <Text type='label4'>{reward.name}</Text>
+                    <Text type='label4' color='red'>+{reward.tradeReward.toLocaleString()}P</Text>
                   </div>
                 </li>
               ))}

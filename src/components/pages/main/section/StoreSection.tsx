@@ -6,7 +6,7 @@ import { mainBox, mainStoreItem, mainStoreItemList } from "@/components/pages/ma
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { MAIN_DATA } from "@/constants/main";
@@ -36,8 +36,8 @@ const StoreSection = () => {
 						>
 							<Image src={item.thumbnailUrl} alt={item.name} width={120} height={120} style={{ borderRadius: '8px' }} className={cardShadow.normal} />
 							<div>
-								<DefaultText type='label4' className={ellipsis({ lineSize: 'line1' })}>{item.name}</DefaultText>
-								<DefaultText type='headline2'>{item.originalPrice.toLocaleString()}원</DefaultText>
+								<Text type='label4' className={ellipsis({ lineSize: 'line1' })}>{item.name}</Text>
+								<Text type='headline2'>{item.originalPrice.toLocaleString()}원</Text>
 							</div>
 						</SwiperSlide>
 					))}

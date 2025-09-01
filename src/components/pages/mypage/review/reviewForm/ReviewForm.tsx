@@ -11,9 +11,9 @@ import {
   ReviewFormData, SurveyKey, SurveyValue,
   UpdateReviewDetail
 } from "@/types";
-import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
+import Textarea from "@/components/common/textarea/Textarea";
 import MultiFileUpload from "@/components/common/multiFileUpload/MultiFileUpload";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
 import ReviewSurvey from "@/components/pages/mypage/review/reviewForm/reviewSurvey/ReviewSurvey";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
@@ -119,7 +119,7 @@ const ReviewForm = <T extends 'create' | 'update'>({
   return (
     <>
     <form className={styles.reviewFormContainer}>
-      <DefaultText type='title4' className={styles.reviewFormTitle}>이 상품 어떠셨나요?</DefaultText>
+      <Text type='title4' className={styles.reviewFormTitle}>이 상품 어떠셨나요?</Text>
       <ReviewCard
         reviewDetail={reviewDetail}
         formData={formData}
@@ -132,16 +132,16 @@ const ReviewForm = <T extends 'create' | 'update'>({
       <Divider thickness={4} />
       <div className={styles.reviewContentsBox}>
         <div className={styles.reviewContents}>
-          <DefaultText type='title4'>어떤 점이 좋았나요?</DefaultText>
+          <Text type='title4'>어떤 점이 좋았나요?</Text>
           <div className={styles.reviewContentsTitle}>
-            <DefaultText type='label4'>상세 후기</DefaultText>
-            <DefaultText type='caption' color={formData?.contents?.length > 0 ? 'pastelRed' : 'gray500'}>20자 이상 작성시 300원 추가 적립!</DefaultText>
+            <Text type='label4'>상세 후기</Text>
+            <Text type='caption' color={formData?.contents?.length > 0 ? 'pastelRed' : 'gray500'}>20자 이상 작성시 300원 추가 적립!</Text>
           </div>
           <Controller
             name='contents'
             control={control}
             render={({ field }) => (
-              <DefaultTextarea
+              <Textarea
                 {...field}
                 id='contents'
                 value={formData?.contents}

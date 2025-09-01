@@ -1,7 +1,7 @@
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import * as styles from "./DeliveryScheduleBottomSheet.css";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Image from "next/image";
 import ScheduleImage from "public/images/subscription/delivery-schedule.png";
 import InfoBox from "@/components/common/infoBox/InfoBox";
@@ -26,18 +26,18 @@ export default function DeliveryScheduleBottomSheet({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.deliveryScheduleBottomSheetContainer}>
-        <DefaultText type="title4">배송 일정 안내</DefaultText>
+        <Text type="title4">배송 일정 안내</Text>
         <div className={styles.deliveryScheduleTextWrapper}>
-          <DefaultText type="body3" color="gray800">
+          <Text type="body3" color="gray800">
             바프독은{" "}
-            <DefaultText type="label3" color="gray800">
+            <Text type="label3" color="gray800">
               선 주문 후 생산 시스템
-            </DefaultText>
+            </Text>
             입니다.
-          </DefaultText>
-          <DefaultText type="body3" color="gray800">
+          </Text>
+          <Text type="body3" color="gray800">
             여유있게 주문해 주시면 감사드리겠습니다 :)
-          </DefaultText>
+          </Text>
         </div>
       </div>
       <div className={styles.deliveryScheduleImageWrapper}>

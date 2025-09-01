@@ -1,6 +1,6 @@
 import * as styles from './TermsCheckbox.css';
 import InfoIcon from '/public/images/icons/info-fill.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
@@ -40,7 +40,7 @@ const TermsCheckbox = ({
 		});
 	return (
 		<div className={styles.termsBox}>
-			<DefaultText type='title4'>이용약관동의</DefaultText>
+			<Text type='title4'>이용약관동의</Text>
 			<div>
 				<LabeledCheckbox
 					value={true}
@@ -49,18 +49,18 @@ const TermsCheckbox = ({
 					className={styles.termCheckbox}
 				>
 					<div className={styles.agreeAllTerms}>
-						<DefaultText type="label2">약관 전체동의</DefaultText>
+						<Text type="label2">약관 전체동의</Text>
 						<button>
-							<DefaultText type="label2" color='red' style={{ textDecorationLine: 'underline', textUnderlinePosition: 'from-font' }}>
+							<Text type="label2" color='red' style={{ textDecorationLine: 'underline', textUnderlinePosition: 'from-font' }}>
 								전체보기
-							</DefaultText>
+							</Text>
 						</button>
 					</div>
 				</LabeledCheckbox>
 				{!agreeAll &&
 					<div className={styles.termsNotice}>
 						<SvgIcon src={InfoIcon} color='red' size={15} />
-						<DefaultText type='caption' color='red'>결제 필수 사항에 동의해 주세요</DefaultText>
+						<Text type='caption' color='red'>결제 필수 사항에 동의해 주세요</Text>
 					</div>
 				}
 			</div>
@@ -72,10 +72,10 @@ const TermsCheckbox = ({
 					onToggle={() => onPrivacyToggle(true)}
 					className={styles.termCheckbox}
 				>
-					<DefaultText type="label2">
+					<Text type="label2">
 						<span style={{ color: COLORS.red }}>(필수) </span>
 						{ORDER_MESSAGE.AGREE_PRIVACY}
-					</DefaultText>
+					</Text>
 				</LabeledCheckbox>
 				<LabeledCheckbox
 					value={true}
@@ -83,10 +83,10 @@ const TermsCheckbox = ({
 					onToggle={() => onSubscriptionToggle(true)}
 					className={styles.termCheckbox}
 				>
-					<DefaultText type="label2">
+					<Text type="label2">
 						<span style={{ color: COLORS.red }}>(필수) </span>
 						{ORDER_MESSAGE.AGREE_SUBSCRIPTION}
-					</DefaultText>
+					</Text>
 				</LabeledCheckbox>
 			</div>
 		</div>

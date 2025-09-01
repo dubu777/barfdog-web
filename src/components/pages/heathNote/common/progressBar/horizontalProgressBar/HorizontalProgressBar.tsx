@@ -1,6 +1,6 @@
 import * as styles from './HorizontalProgressBar.css';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { getFullHealthStatus } from "@/utils/healthNote/common/getHealthStatus";
 
 interface HealthProgressBarProps {
@@ -20,8 +20,8 @@ export default function HorizontalProgressBar({
 		<div className={styles.progressBarWrapper}>
 			{showLabel &&
 				<div className={styles.labelRow}>
-					<DefaultText type='headline1' color={color}>{label}</DefaultText>
-					<DefaultText type='headline1' color={color}>{score}점</DefaultText>
+					<Text type='headline1' color={color}>{label}</Text>
+					<Text type='headline1' color={color}>{score}점</Text>
 				</div>
 			}
 			<div className={styles.barContainer({ fixedHeight })}>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import EmptyList from "@/components/pages/heathNote/common/emptyList/EmptyList";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Card from "@/components/common/card/Card";
@@ -61,9 +61,9 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
       />
       <article className={styles.bodyCheckListBox}>
         <div className={styles.bodyCheckListTab}>
-          <DefaultText type="title3" className={styles.bodyCheckListTitle}>
+          <Text type="title3" className={styles.bodyCheckListTitle}>
             결과 조회 내역
-          </DefaultText>
+          </Text>
           <TabBar
             tabs={[
               { label: BODY_PART.gastro.name, onInit: () => handleTabClick('gastro') },
@@ -95,13 +95,13 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
                         className={styles.bodyCheckListItemCard}
                       >
                         <div className={styles.bodyCheckListItemTop}>
-                          <DefaultText type="label4" color="gray600">
+                          <Text type="label4" color="gray600">
                             {result.diagnosisDate}
-                          </DefaultText>
-                          <DefaultText type="headline2" className={styles.bodyCheckListItemTitle}>
+                          </Text>
+                          <Text type="headline2" className={styles.bodyCheckListItemTitle}>
                             <SvgIcon src={BODY_PART[part].smIcon} size={28} />
                             {BODY_PART[part].name} 진단 결과
-                          </DefaultText>
+                          </Text>
                         </div>
                         <HorizontalProgressBar score={result.simpleTotalScore} showLabel showIcon />
                       </Card>

@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import RewardFilter from "@/components/pages/mypage/reward/rewardFilter/RewardFilter";
 import RewardList from "@/components/pages/mypage/reward/rewardList/RewardList";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import useModal from "@/hooks/useModal";
@@ -39,7 +39,7 @@ const Reward = () => {
   return (
     <section>
       <article className={styles.totalRewardContainer}>
-        <DefaultText type='title4'>적립금</DefaultText>
+        <Text type='title4'>적립금</Text>
         <Card
           shadow='light'
           padding={20}
@@ -48,17 +48,17 @@ const Reward = () => {
           className={styles.totalRewardCard}
         >
           <div>
-            <DefaultText type='label4'>사용 가능 적립금</DefaultText>
-            <DefaultText type='title2'>{totalReward?.toLocaleString()} P</DefaultText>
+            <Text type='label4'>사용 가능 적립금</Text>
+            <Text type='title2'>{totalReward?.toLocaleString()} P</Text>
           </div>
           <ul className={styles.rewardSummary}>
             <li className={styles.summaryInfo}>
-              <DefaultText type='label4'>다음달 소멸 예정 금액</DefaultText>
-              <DefaultText type='label4'>1,000 P</DefaultText>
+              <Text type='label4'>다음달 소멸 예정 금액</Text>
+              <Text type='label4'>1,000 P</Text>
             </li>
             <li className={styles.summaryInfo}>
-              <DefaultText type='label4'>포인트로 할인받은 총액</DefaultText>
-              <DefaultText type='label4'>1,000,000 원</DefaultText>
+              <Text type='label4'>포인트로 할인받은 총액</Text>
+              <Text type='label4'>1,000,000 원</Text>
             </li>
           </ul>
         </Card>

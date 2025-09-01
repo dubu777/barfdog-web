@@ -8,7 +8,7 @@ import SampleDog1 from "public/images/mypage/sample/sample1.jpg";
 import SampleDog2 from "public/images/mypage/sample/sample2.jpg";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 import { MembershipTier } from "@/types/membership";
@@ -67,8 +67,8 @@ export default function WithdrawalGuide() {
       component: (
         <div className={styles.guideCard}>
           <Card shadow="light" className={styles.dogCount}>
-            <DefaultText type="headline3">등록된 반려견 수</DefaultText>
-            <DefaultText type="label2">2마리</DefaultText>
+            <Text type="headline3">등록된 반려견 수</Text>
+            <Text type="label2">2마리</Text>
           </Card>
           <Card shadow="light">
             <ul>
@@ -81,10 +81,10 @@ export default function WithdrawalGuide() {
                   className={styles.dogCardImage}
                 />
                 <div className={styles.dogCardInfo}>
-                  <DefaultText type="headline1">코코</DefaultText>
-                  <DefaultText type="caption" color="gray600">
+                  <Text type="headline1">코코</Text>
+                  <Text type="caption" color="gray600">
                     1년 1개월 | 12kg | 암컷 | 중형견
-                  </DefaultText>
+                  </Text>
                 </div>
               </li>
               <li className={styles.dogCardItem}>
@@ -96,10 +96,10 @@ export default function WithdrawalGuide() {
                   className={styles.dogCardImage}
                 />
                 <div className={styles.dogCardInfo}>
-                  <DefaultText type="headline1">율무</DefaultText>
-                  <DefaultText type="caption" color="gray600">
+                  <Text type="headline1">율무</Text>
+                  <Text type="caption" color="gray600">
                     2년 1개월 | 12kg | 수컷 | 중형견
-                  </DefaultText>
+                  </Text>
                 </div>
               </li>
             </ul>
@@ -113,22 +113,22 @@ export default function WithdrawalGuide() {
     <>
       <article className={styles.withdrawalContainerBox({ type: "guide" })}>
         <div className={styles.withdrawalContainerTitle({ type: "guide" })}>
-          <DefaultText type="title3">
+          <Text type="title3">
             잠깐! {username}님,
             <br />
             탈퇴하시기 전에 꼭 확인해주세요
-          </DefaultText>
-          <DefaultText type="body1" color="gray600">
+          </Text>
+          <Text type="body1" color="gray600">
             탈퇴 시 바프독 회원 혜택이 사라집니다
-          </DefaultText>
+          </Text>
         </div>
         {guideSteps.map((guide) => (
           <div key={guide.id} className={styles.guideTitle}>
-            <DefaultText type="title4">0{guide.id}</DefaultText>
-            <DefaultText type="title4">{guide.title}</DefaultText>
-            <DefaultText type="body2" color="gray600">
+            <Text type="title4">0{guide.id}</Text>
+            <Text type="title4">{guide.title}</Text>
+            <Text type="body2" color="gray600">
               {guide.description}
-            </DefaultText>
+            </Text>
             {guide.component}
           </div>
         ))}

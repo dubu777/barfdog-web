@@ -13,7 +13,7 @@ import useModal from "@/hooks/useModal";
 import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
 import ReviewInfoTop from "@/components/pages/review/common/ReviewInfoTop";
 import Divider from "@/components/common/divider/Divider";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface BestReviewModalProps {
   isOpen: boolean;
@@ -72,7 +72,7 @@ const BestReviewModal = ({ isOpen, onClose, reviewId }: BestReviewModalProps) =>
       </div>
       <Divider thickness={4} color='gray50' />
       <div className={contentBox({ background: 'white' })}>
-        <DefaultText type='body2'>{review.contents}</DefaultText>
+        <Text type='body2'>{review.contents}</Text>
       </div>
       <ButtonDocked
         type='full-button'

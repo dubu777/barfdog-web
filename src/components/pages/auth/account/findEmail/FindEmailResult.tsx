@@ -4,7 +4,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import Card from "@/components/common/card/Card";
 import { commonWrapper } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -44,7 +44,7 @@ const FindEmailResult = () => {
     <section className={styles.findAccountContainer}>
       {tempEmailUserInfo.email && (
         <Card shadow="light" align="start" padding={16} gap={12}>
-          <DefaultText type="title4">아이디 내역</DefaultText>
+          <Text type="title4">아이디 내역</Text>
           <Divider thickness={2} color="gray900" />
           <div className={commonWrapper({ direction: "col", gap: 8 })}>
             {result.map((item) => (
@@ -54,16 +54,16 @@ const FindEmailResult = () => {
                   justify: "start",
                 })}
               >
-                <DefaultText
+                <Text
                   type="body3"
                   color="gray700"
                   className={styles.findIdLabel}
                 >
                   {item.label}
-                </DefaultText>
-                <DefaultText type="label2" color="gray800">
+                </Text>
+                <Text type="label2" color="gray800">
                   {item.value}
-                </DefaultText>
+                </Text>
               </div>
             ))}
           </div>

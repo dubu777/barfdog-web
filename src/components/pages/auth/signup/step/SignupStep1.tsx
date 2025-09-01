@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { SignupStepValues } from "@/utils/validation/authValidation";
 import { useRef } from "react";
@@ -14,11 +14,11 @@ export default function SignupStep1() {
 
   return (
     <>
-      <DefaultText type="title2">
+      <Text type="title2">
         처음 오셨나요?
         <br />
         바프독에 오신걸 환영해요!
-      </DefaultText>
+      </Text>
       <Controller
         name="step1.name"
         control={control}

@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import {
   mealFrequencyButtonWrapper,
   selectOptionWrapper,
@@ -35,7 +35,7 @@ export default function DeliveryCycle() {
 
   return (
     <div className={selectOptionWrapper}>
-      <DefaultText type="title4">배송주기</DefaultText>
+      <Text type="title4">배송주기</Text>
       <div className={commonWrapper({ gap: 8, justify: "start" })}>
         {availableCycles.map((item) => (
           <div className={mealFrequencyButtonWrapper} key={item.value}>

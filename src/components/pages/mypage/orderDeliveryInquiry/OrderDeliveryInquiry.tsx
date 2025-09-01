@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import { useInView } from "react-intersection-observer";
 import { useMergeOrderList } from "@/api/order/queries/useGetMergeOrderList";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import TabBar from "@/components/common/tabBar/TabBar";
 import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filterBottomSheet/FilterBottomSheet";
@@ -109,7 +109,7 @@ const OrderDeliveryInquiry = () => {
             {orderData.map(orderData => {
               return (
                 <div key={orderData?.orderId || orderData?.id} className={styles.orderListItem}>
-                  <DefaultText type='caption' color='gray600'>주문일 {format(new Date(orderData.orderDate), 'yy.MM.dd')}</DefaultText>
+                  <Text type='caption' color='gray600'>주문일 {format(new Date(orderData.orderDate), 'yy.MM.dd')}</Text>
                   {orderData?.itemNameList?.length > 0 ?
                     <div className={styles.orderItemsBox}>
                       {orderData?.itemNameList?.map(item => {

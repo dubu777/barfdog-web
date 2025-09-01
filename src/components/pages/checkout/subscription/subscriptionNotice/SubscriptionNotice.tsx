@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { SUBSCRIPTION_NOTICE } from "@/constants";
 import * as styles from "./SubscriptionNotice.css";
@@ -6,10 +6,10 @@ import * as styles from "./SubscriptionNotice.css";
 export default function SubscriptionNotice() {
   return (
     <OrderSection>
-      <DefaultText type="title4">{SUBSCRIPTION_NOTICE.TITLE}</DefaultText>
+      <Text type="title4">{SUBSCRIPTION_NOTICE.TITLE}</Text>
       <div className={styles.subscriptionNoticeContentBox}>
       {SUBSCRIPTION_NOTICE.CONTENT.map((content) => (
-        <DefaultText key={content} type="label4" color="gray600">{content}</DefaultText>
+        <Text key={content} type="label4" color="gray600">{content}</Text>
       ))}
       </div>
     </OrderSection>

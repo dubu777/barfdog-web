@@ -1,7 +1,7 @@
 import {Fragment, useEffect} from "react";
 import * as styles from "@/components/pages/mypage/common/information/Information.css";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
 import Chips from "@/components/common/chips/Chips";
@@ -171,21 +171,21 @@ const SubscriptionPaymentInfo = ({
 								<div className={styles.infoBoxItem}>
 									<Chips variant='outlined' size='sm' borderRadius='lg'>{info.label}</Chips>
 									<div className={styles.subscriptionCardInfo}>
-										<DefaultText type='label2' color='gray700'>{info.subLabel}</DefaultText>
+										<Text type='label2' color='gray700'>{info.subLabel}</Text>
 										{hasUsingCoupon && paymentPrice && discountCoupon &&
 											<div>
-												<DefaultText type='body3' color='gray600' block>{paymentPrice.label}</DefaultText>
-												<DefaultText type='body3' color='gray600'>{discountCoupon.label}</DefaultText>
+												<Text type='body3' color='gray600' block>{paymentPrice.label}</Text>
+												<Text type='body3' color='gray600'>{discountCoupon.label}</Text>
 											</div>
 										}
 									</div>
 								</div>
 								<div className={`${styles.subscriptionCardInfo} ${styles.subscriptionPaymentDiscount}`}>
-									<DefaultText type='headline2'>{info.value}</DefaultText>
+									<Text type='headline2'>{info.value}</Text>
 									{hasUsingCoupon && paymentPrice && discountCoupon &&
 									<div className={styles.subscriptionPaymentDiscount}>
-										<DefaultText type='body3' color='gray600' block>{paymentPrice.value}</DefaultText>
-										<DefaultText type='body3' color='red'>{discountCoupon.value}</DefaultText>
+										<Text type='body3' color='gray600' block>{paymentPrice.value}</Text>
+										<Text type='body3' color='red'>{discountCoupon.value}</Text>
 									</div>
 									}
 								</div>

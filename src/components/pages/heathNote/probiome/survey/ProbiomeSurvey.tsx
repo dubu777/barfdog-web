@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Header from "@/components/layout/header/Header";
 import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
 import {
@@ -150,9 +150,9 @@ export default function ProbiomeSurvey({
       <Header
         leftElement={
           !isFirstStep && (
-            <DefaultText type="headline3" color="gray700">
+            <Text type="headline3" color="gray700">
               이전
-            </DefaultText>
+            </Text>
           )
         }
         showBackButton={!isFirstStep}

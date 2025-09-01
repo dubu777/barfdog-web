@@ -1,6 +1,6 @@
 import * as styles from './ComparisonProgressBar.css';
 import { ReactNode } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import { getScoreChangeStatus }  from "@/utils/healthNote/common/getHealthStatus";
 
@@ -43,7 +43,7 @@ export default function ComparisonProgressBar({
 		<div className={styles.comparisonProgressBarBox}>
 			<div className={styles.bars}>
 				<div className={styles.barBox}>
-					<DefaultText type="label4" color='gray500'>{prevScore}점</DefaultText>
+					<Text type="label4" color='gray500'>{prevScore}점</Text>
 					<div className={`${styles.barBase({ size: barSize })} ${styles.prevBar[status]}`} />
 					{prevBottomChildren}
 				</div>

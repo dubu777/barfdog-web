@@ -5,7 +5,7 @@ import {
   mealSelectorHelpIcon,
   recipeDetailSection,
 } from "../RecipeDetailModal.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
@@ -130,9 +130,9 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     return (
       <section ref={ref} className={recipeDetailSection}>
         <div className={commonWrapper({ direction: "col", align: "start" })}>
-          <DefaultText type="title4">
+          <Text type="title4">
             {getNameWithPossessiveSuffix(dogName)}의
-          </DefaultText>
+          </Text>
           <div
             className={commonWrapper({
               align: "center",
@@ -140,9 +140,9 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
               gap: 4,
             })}
           >
-            <DefaultText type="title4">
+            <Text type="title4">
               한 끼 추천 급여량을 계산했어요
-            </DefaultText>
+            </Text>
             <SvgIcon
               className={mealSelectorHelpIcon}
               src={HelpIcon}
@@ -167,16 +167,16 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
               })}
             >
               {!display.under20g && (
-                <DefaultText type="label2" color="gray900">
+                <Text type="label2" color="gray900">
                   한 끼 추천 급여량
-                </DefaultText>
+                </Text>
               )}
-              <DefaultText type="label2" color="red">
+              <Text type="label2" color="red">
                 구독 급여량
-              </DefaultText>
-              <DefaultText type="label2" color="red">
+              </Text>
+              <Text type="label2" color="red">
                 한 팩당 가격
-              </DefaultText>
+              </Text>
             </div>
             <div
               className={commonWrapper({
@@ -187,16 +187,16 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
               })}
             >
               {!display.under20g && (
-                <DefaultText type="label2" color="gray900">
+                <Text type="label2" color="gray900">
                   {display.recommendedPackGrams}g
-                </DefaultText>
+                </Text>
               )}
-              <DefaultText type="label2" color="red">
+              <Text type="label2" color="red">
                 {display.packGrams}g
-              </DefaultText>
-              <DefaultText type="label2" color="red">
+              </Text>
+              <Text type="label2" color="red">
                 {display.packPrice.toLocaleString()}원
-              </DefaultText>
+              </Text>
             </div>
           </div>
           {display.under20g && (
@@ -204,22 +204,22 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
               <Divider color="gray800" thickness={1} />
               <div className={commonWrapper({ align: "start", gap: 8 })}>
                 <SvgIcon src={WarningIcon} size={20} />
-                <DefaultText type="body3" color="gray900">
-                  <DefaultText type="label3" color="gray900">
+                <Text type="body3" color="gray900">
+                  <Text type="label3" color="gray900">
                     추천 급여량 {display.under20g}g
-                  </DefaultText>
+                  </Text>
                   구독 급여량은{" "}
-                  <DefaultText type="label3" color="gray900">
+                  <Text type="label3" color="gray900">
                     최소 20g
-                  </DefaultText>
+                  </Text>
                   부터 설정 가능해요. 추천 급여량보다 많더라도 급여는 아이에게
                   맞게 소분해 주세요.
-                </DefaultText>
+                </Text>
               </div>
             </>
           )}
         </div>
-        <DefaultText type="label2">급여량 수정</DefaultText>
+        <Text type="label2">급여량 수정</Text>
         <div className={commonWrapper({ gap: 8 })}>
           <InputField
             type="number"

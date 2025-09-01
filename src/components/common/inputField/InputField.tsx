@@ -8,7 +8,7 @@ import React, {
   MouseEvent,
 } from "react";
 import { mergeRefs } from "@/utils";
-import DefaultText from "../defaultText/DefaultText";
+import Text from "../text/Text";
 import {
   inputContainerStyle,
   baseButtonStyle,
@@ -184,13 +184,13 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               onKeyDown={handleInternalKeyDown}
             />
             {unit && (
-              <DefaultText
+              <Text
                 type="headline3"
                 color="gray900"
                 className={unitStyle}
               >
                 {unit}
-              </DefaultText>
+              </Text>
             )}
             <div className={rightButtonsStyle}>
               {/* 비밀번호 숨김 토글 기능 */}
@@ -229,17 +229,17 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         {error && (
           <div className={inputStateTextStyle}>
             <SvgIcon src={ErrorIcon} color="red" size={18} />
-            <DefaultText type="caption" color="red" align="left">
+            <Text type="caption" color="red" align="left">
               {error}
-            </DefaultText>
+            </Text>
           </div>
         )}
         {success && (
           <div className={inputStateTextStyle}>
             <SvgIcon src={CheckIcon} color="blue500" size={18} />
-            <DefaultText type="caption" color="blue500" align="left">
+            <Text type="caption" color="blue500" align="left">
               {success}
-            </DefaultText>
+            </Text>
           </div>
         )}
       </div>

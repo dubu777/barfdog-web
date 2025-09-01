@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import CreateButton from "@/components/common/createButton/CreateButton";
 import PetCard from "./petCard/PetCard";
@@ -67,7 +67,7 @@ export default function PetList({
       </div>
       {pets.length < totalCount && (
         <div ref={loadMoreRef}>
-          <DefaultText type="body3">불러오는 중</DefaultText>
+          <Text type="body3">불러오는 중</Text>
         </div>
       )}
     </div>

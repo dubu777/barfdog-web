@@ -3,7 +3,7 @@ import * as styles from "./MainInformation.css";
 import Link from "next/link";
 import Image from "next/image";
 import DefaultImage from "public/images/icons/default-profile.png";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
@@ -33,17 +33,17 @@ export default function MainInformation() {
             height={48}
             className={styles.accountImage}
           />
-          <DefaultText type='title1'>{userData?.memberName}</DefaultText>
+          <Text type='title1'>{userData?.memberName}</Text>
         </div>
       </div>
       <div className={styles.membership}>
         <div className={styles.membershipInfoTop}>
-          <DefaultText type='headline1'>{userMembershipTier?.tier} 등급</DefaultText>
+          <Text type='headline1'>{userMembershipTier?.tier} 등급</Text>
           <Link href='/membership'>
-            <DefaultText type='headline4' color='gray300'>자세히 보기</DefaultText>
+            <Text type='headline4' color='gray300'>자세히 보기</Text>
           </Link>
         </div>
-        <DefaultText type='caption' color='red'>{userMembershipTier?.description}</DefaultText>
+        <Text type='caption' color='red'>{userMembershipTier?.description}</Text>
       </div>
       <UserRewardCard
         couponCount={data?.couponCount ?? 0}

@@ -2,7 +2,7 @@ import InputField from "@/components/common/inputField/InputField";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useEffect, useState } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { AddressRequest, AddressResponse } from "@/types/delivery";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useFormHandler } from "@/hooks/useFormHandler";
@@ -247,9 +247,9 @@ export default function AddressForm({
             }}
             isChecked={isDefaultSelected(true)}
           >
-            <DefaultText type="label2" color="gray700">
+            <Text type="label2" color="gray700">
               기본 배송지로 설정
-            </DefaultText>
+            </Text>
           </LabeledCheckbox>
         )}
 

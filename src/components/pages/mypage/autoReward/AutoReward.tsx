@@ -1,7 +1,7 @@
 'use client';
 import * as styles from './AutoReward.css';
 import { useState } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Switch from "@/components/common/switch/Switch";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import { debounce } from "lodash";
@@ -29,7 +29,7 @@ const AutoReward = () => {
 		<section>
 			<article>
 				<div className={styles.autoRewardSwitch}>
-					<DefaultText type='label1'>적립금 자동사용</DefaultText>
+					<Text type='label1'>적립금 자동사용</Text>
 					<Switch isOn={activeAutoReward} onChange={handleToggle} />
 				</div>
 				<div className={styles.autoRewardInfo}>

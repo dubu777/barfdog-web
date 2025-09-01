@@ -1,6 +1,6 @@
 import * as styles from "./CouponItemCard.css";
 import { format } from "date-fns";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import { Coupon } from "@/types/coupon";
 
@@ -15,26 +15,26 @@ const CouponItemCard = ({ coupon }: { coupon: Coupon }) => {
   return (
     <li>
       <Card shadow='light' align='start' padding={20}>
-        <DefaultText type='title1' color='red' className={styles.discount}>
+        <Text type='title1' color='red' className={styles.discount}>
           { won ? `${coupon.discountDegree.toLocaleString()}원 `
             : percent && `${coupon.discountDegree}% `
           }
-        </DefaultText>
-        <DefaultText type='label1' className={styles.couponName}>
+        </Text>
+        <Text type='label1' className={styles.couponName}>
           {coupon.name}
-        </DefaultText>
+        </Text>
         {percent &&
-          <DefaultText type='body3'>
+          <Text type='body3'>
             (최대 {coupon.availableMaxDiscount.toLocaleString()}원 할인)
-          </DefaultText>
+          </Text>
         }
-        <DefaultText type='caption' color='gray500' className={styles.minPrice}>
+        <Text type='caption' color='gray500' className={styles.minPrice}>
           {coupon.availableMinPrice.toLocaleString()}원 이상 주문 시
-        </DefaultText>
+        </Text>
         <div className={styles.expiredDateBox}>
-          <DefaultText type='caption' color='gray500'>
+          <Text type='caption' color='gray500'>
             {format(new Date(coupon.expiredDate), 'yyyy.MM.dd')} 까지&nbsp;&nbsp;l&nbsp;&nbsp;{couponTargetName}
-          </DefaultText>
+          </Text>
         </div>
       </Card>
     </li>

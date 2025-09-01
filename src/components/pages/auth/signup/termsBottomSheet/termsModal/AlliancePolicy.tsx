@@ -1,6 +1,6 @@
 import * as styles from './TermsModal.css';
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
-import Text from "@/components/common/text/Text";
+import TestText from "@/components/common/testText/TestText";
 
 interface AlliancePolicyProps {
 	isOpen: boolean;
@@ -17,7 +17,7 @@ const AlliancePolicy = ({ isOpen, onClose }: AlliancePolicyProps) => {
 			scroll
 		>
 			<div className={styles.termsModalContainer}>
-				<Text type='title' size='titleLg'>개인정보 제3자 제공동의</Text>
+				<TestText type='title' size='titleLg'>개인정보 제3자 제공동의</TestText>
 				<div className={styles.termsModalContent}>
 					1. 제공받는 자 : 농업협동조합중앙회<br />
 					<br />

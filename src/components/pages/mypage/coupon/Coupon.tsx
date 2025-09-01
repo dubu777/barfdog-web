@@ -1,7 +1,7 @@
 'use client';
 import { useState } from "react";
 import * as styles from "./Coupon.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import CouponItemCard from "@/components/pages/mypage/coupon/couponItemCard/CouponItemCard";
 import ApplyCoupon from "@/components/pages/mypage/coupon/applyCoupon/ApplyCoupon";
@@ -32,12 +32,12 @@ const Coupon = () => {
   return (
     <section>
       <article className={styles.applyCouponContainer}>
-        <DefaultText type='label4'>쿠폰 등록</DefaultText>
+        <Text type='label4'>쿠폰 등록</Text>
         <ApplyCoupon />
       </article>
       <article className={styles.couponListContainer}>
         <div className={styles.couponSortBy}>
-          <DefaultText type='label4'>사용가능한 쿠폰: {newCouponList.filter(coupon => coupon.status === 'ACTIVE').length}개</DefaultText>
+          <Text type='label4'>사용가능한 쿠폰: {newCouponList.filter(coupon => coupon.status === 'ACTIVE').length}개</Text>
           <Dropdown
             label={ItemSortByFilterList[sortBy as keyof typeof ItemSortByFilterList]?.label || "최신순"}
             options={Object.entries(ItemSortByFilterList).map(([value, { label }]) => ({label, value}))}

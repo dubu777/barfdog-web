@@ -15,7 +15,7 @@ import { useCouponStore } from "@/store/order/useCouponStore";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import { usePaymentStore } from "@/store/order/usePaymentStore";
 import { orderSummaryRowContainer } from "./orderSummaryRow/OrderSummaryRow.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import HelpIcon from "public/images/icons/help.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { nextPaymentTextWrapper } from "./OrderSummary.css";
@@ -158,18 +158,18 @@ export default function OrderSummary({
           )}
           <div className={orderSummaryRowContainer}>
             <div className={nextPaymentTextWrapper}>
-              <DefaultText type="label4" color="gray700">
+              <Text type="label4" color="gray700">
                 2회차 예상 결제 금액
-              </DefaultText>
+              </Text>
               <SvgIcon
                 src={HelpIcon}
                 color="gray700"
                 onClick={() => onToggle()}
               />
             </div>
-            <DefaultText type="headline2" color="gray700">
+            <Text type="headline2" color="gray700">
               {formatNumberWithCommas(appliedDefaultDiscountPrice)}원
-            </DefaultText>
+            </Text>
           </div>
         </div>
       ) : (

@@ -1,7 +1,7 @@
 import * as styles from './About.css';
 import Image from "next/image";
 import Link from "next/link";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { ABOUT_DATA } from "@/constants/community";
@@ -17,18 +17,18 @@ const About = () => {
 			<article className={styles.sectionBox({})}>
 				<div className={styles.sectionTitle}>
 					<Image src={ourStory.logoImageUrl} alt={ourStory.title} width={119} height={84} />
-					<DefaultText type='headline2' color='red'>{ourStory.title}</DefaultText>
-					<DefaultText type='body2'>{ourStory.subTitle}</DefaultText>
+					<Text type='headline2' color='red'>{ourStory.title}</Text>
+					<Text type='body2'>{ourStory.subTitle}</Text>
 				</div>
 				<Image src={ourStory.imageUrl} alt={ourStory.title} width={375} height={320} className={styles.sectionImage} />
 				<div className={styles.sectionContent}>
 					{ourStoryContentList.map((content, index) => (
-						<DefaultText key={index} type={index === 1 ? 'label2' : 'body2'} preLine>
+						<Text key={index} type={index === 1 ? 'label2' : 'body2'} preLine>
 							{content}
-						</DefaultText>
+						</Text>
 					))}
 					<div className={styles.signatureBox}>
-						<DefaultText type='caption' color='gray700'>{ourStory.subContent.text}</DefaultText>
+						<Text type='caption' color='gray700'>{ourStory.subContent.text}</Text>
 						<Image src={ourStory.subContent.imageUrl} alt={ourStory.subContent.text} width={74} height={80} />
 					</div>
 				</div>
@@ -38,14 +38,14 @@ const About = () => {
 				<div className={styles.sectionBox({ background: 'pinkWhite' })}>
 					<div className={styles.sectionTitle}>
 						<Image src={ourProcess.logoImageUrl} alt={ourProcess.title} width={166} height={77} />
-						<DefaultText type='headline2' color='red'>{ourProcess.title}</DefaultText>
-						<DefaultText type='body2'>{ourProcess.subTitle}</DefaultText>
+						<Text type='headline2' color='red'>{ourProcess.title}</Text>
+						<Text type='body2'>{ourProcess.subTitle}</Text>
 					</div>
 					<div className={styles.ourProcessBox}>
 						{ourProcess.descriptions.map(description => (
 							<div key={description.title} className={styles.sectionDescription}>
-								<DefaultText type='headline2'>{description.title}</DefaultText>
-								<DefaultText type='body2' preLine>{description.description}</DefaultText>
+								<Text type='headline2'>{description.title}</Text>
+								<Text type='body2' preLine>{description.description}</Text>
 							</div>
 						))}
 					</div>
@@ -55,8 +55,8 @@ const About = () => {
 				<Image src={ourSns.imageUrl} alt={ourSns.title} width={375} height={320} className={styles.sectionImage} />
 				<div className={styles.snsBox}>
 					<div className={styles.sectionTitle}>
-						<DefaultText type='headline2'>{ourSns.title}</DefaultText>
-						<DefaultText type='body2' preLine>{ourSns.subTitle}</DefaultText>
+						<Text type='headline2'>{ourSns.title}</Text>
+						<Text type='body2' preLine>{ourSns.subTitle}</Text>
 						<Link href={ourSns.action.url} target='_blank'>
 							<Button buttonType='button' size='sm'>
 								{ourSns.action.label}

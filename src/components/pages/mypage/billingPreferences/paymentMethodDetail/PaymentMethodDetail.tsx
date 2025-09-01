@@ -1,7 +1,7 @@
 'use client';
 import * as styles from '../BillingPreferences.css';
 import { useState } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
@@ -89,7 +89,7 @@ const PaymentMethodDetail = ({ cardId, subscriptionId }: PaymentMethodDetailProp
 			</article>
 			<article className={styles.detailSubscription}>
 				<div className={styles.detailSubscriptionTitle}>
-					<DefaultText type='title4'>관리중 구독상품</DefaultText>
+					<Text type='title4'>관리중 구독상품</Text>
 				</div>
 				<div className={styles.detailSubscriptionList}>
 					<SubscriptionCard
@@ -136,9 +136,9 @@ const PaymentMethodDetail = ({ cardId, subscriptionId }: PaymentMethodDetailProp
 									onToggle={onToggle}
 									iconType='circle'
 								>
-									<DefaultText type="label2">
+									<Text type="label2">
 										{method.label}
-									</DefaultText>
+									</Text>
 								</LabeledCheckbox>
 							</Button>
 						))}

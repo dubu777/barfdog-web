@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { pointColor } from "@/styles/common.css";
 import {
   optionLabel,
@@ -38,9 +38,9 @@ export default function DefaultRadio({
   return (
     <div>
       {label &&
-      <DefaultText type='label4' color='gray600' className={radioLabel}>
+      <Text type='label4' color='gray600' className={radioLabel}>
         {label} {isRequired && <span className={pointColor}>*</span>}
-      </DefaultText>
+      </Text>
       }
       <div className={`${radioContainer({ optionLabelPosition, justifyContent })} ${className || ''}`}>
         {options.map((option, index) => (
@@ -57,7 +57,7 @@ export default function DefaultRadio({
               className={radioInput}
             />
             <label htmlFor={`${id}${index}`} className={optionLabel}>
-              <DefaultText type='label2'>{option.name}</DefaultText>
+              <Text type='label2'>{option.name}</Text>
             </label>
           </div>
         ))}

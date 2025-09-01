@@ -1,6 +1,6 @@
 import Image from "next/image";
 import * as styles from "./GeneralItemCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscribeGeneralItem } from "@/types";
@@ -62,7 +62,7 @@ export default function GeneralItemCard({
         isSelected,
       })}
     >
-      <DefaultText type="headline2">{generalItemTempData.name}</DefaultText>
+      <Text type="headline2">{generalItemTempData.name}</Text>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image
           src={generalItemTempData.imageUrl}
@@ -94,18 +94,18 @@ export default function GeneralItemCard({
                 justify: "start",
               })}
             >
-              <DefaultText type="headline1" color="gray900">
+              <Text type="headline1" color="gray900">
                 {generalItemTempData.originalPrice.toLocaleString()}원
-              </DefaultText>
-              <DefaultText type="caption" color="gray700">
+              </Text>
+              <Text type="caption" color="gray700">
                 / 1개 당
-              </DefaultText>
+              </Text>
             </div>
             <div className={commonWrapper({ gap: 4, justify: "start" })}>
               {generalItemTempData.benefit.map((text, idx) => (
-                <DefaultText key={idx} type="caption" color="gray500">
+                <Text key={idx} type="caption" color="gray500">
                   #{text}
-                </DefaultText>
+                </Text>
               ))}
             </div>
           </div>
@@ -115,9 +115,9 @@ export default function GeneralItemCard({
                 className={styles.subscribeUpdateInputBox}
                 onClick={() => onDetailToggle()}
               >
-                <DefaultText type="headline4" color="gray700">
+                <Text type="headline4" color="gray700">
                   {currentAmount}개
-                </DefaultText>
+                </Text>
                 <SvgIcon src={PenIcon} size={20} />
               </div>
             )}

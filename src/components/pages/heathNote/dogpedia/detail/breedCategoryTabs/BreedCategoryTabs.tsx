@@ -1,7 +1,7 @@
 import * as styles from './BreedCategoryTabs.css';
 import { useState } from "react";
 import TabBar from "@/components/common/tabBar/TabBar";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import SliderQuestion
 	from "@/components/pages/heathNote/dogpedia/detail/breedCategoryTabs/sliderQuestion/SliderQuestion";
@@ -41,9 +41,9 @@ export default function BreedCategoryTabs({
 				variant='text'
 			/>
 			<article className={styles.tabContent}>
-				<DefaultText type='title4'>
+				<Text type='title4'>
 					{BREED_CHARACTERISTICS_CATEGORY[tab]} {String(tab).includes('_') ? String(tab).split('_').join(' ') : tab}
-				</DefaultText>
+				</Text>
 				<Card
 					shadow='light'
 					backgroundColor='gray50'

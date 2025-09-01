@@ -12,7 +12,7 @@ import AiActive from "/public/images/icons/bottomNavBar/ai-active.svg";
 import StoreActive from "/public/images/icons/bottomNavBar/store-active.svg";
 import NoteActive from "/public/images/icons/bottomNavBar/note-active.svg";
 import MyPageActive from "/public/images/icons/bottomNavBar/mypage-active.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import useDeviceState from "@/hooks/useDeviceState";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { getCookie } from "@/utils/auth/cookie";
@@ -79,14 +79,14 @@ export default function BottomNavBar({
       {MENU_LIST.map((menu) => (
         <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
           {menu.icon}
-          <DefaultText
+          <Text
             type="caption"
             color={pathname === menu.url ? "red" : "gray600"}
             block
             // className={styles.navLabel}
           >
             {menu.label}
-          </DefaultText>
+          </Text>
         </Link>
       ))}
     </nav>

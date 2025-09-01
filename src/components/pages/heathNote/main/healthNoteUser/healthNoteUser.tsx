@@ -2,7 +2,7 @@
 import * as styles from "./HealthNoteUser.css";
 import Image from "next/image";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ComparisonProgressBar from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
@@ -77,11 +77,11 @@ const HealthNoteUser = () => {
                     })}
                   >
                     <div>
-                      <DefaultText type="headline1" block>
+                      <Text type="headline1" block>
                         {menu.label}
-                      </DefaultText>
+                      </Text>
                       {menu.description && (
-                        <DefaultText
+                        <Text
                           type="body3"
                           color="gray700"
                           block
@@ -93,17 +93,17 @@ const HealthNoteUser = () => {
                           ) : (
                             <>
                               상위&nbsp;
-                              <DefaultText
+                              <Text
                                 type="body3"
                                 color={fullCheckStatusColor}
                               >
                                 {checkupScoreUpperPercentile}%
-                              </DefaultText>
+                              </Text>
                               로<br />
                               {fullCheckStatusLabel}
                             </>
                           )}
-                        </DefaultText>
+                        </Text>
                       )}
                     </div>
                     {!isFullCheck || isFullCheckAndFirst ? (
@@ -121,14 +121,14 @@ const HealthNoteUser = () => {
                         isCurrentScoreChips
                         barSize="sm"
                         prevBottomChildren={
-                          <DefaultText type="caption" color="gray600">
+                          <Text type="caption" color="gray600">
                             전체 평균
-                          </DefaultText>
+                          </Text>
                         }
                         currentBottomChildren={
-                          <DefaultText type="caption" color="gray700">
+                          <Text type="caption" color="gray700">
                             우리 아이
-                          </DefaultText>
+                          </Text>
                         }
                       />
                     )}

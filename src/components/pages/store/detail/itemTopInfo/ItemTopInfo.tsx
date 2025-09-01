@@ -2,7 +2,7 @@ import * as styles from './ItemTopInfo.css';
 import { pointColor } from '@/styles/common.css';
 import CheckIcon from "public/images/survey/check_small.svg";
 import SvgIcon from '@/components/common/svgIcon/SvgIcon';
-import DefaultText from '@/components/common/defaultText/DefaultText';
+import Text from "@/components/common/text/Text";
 import Divider from '@/components/common/divider/Divider';
 import RateStar from '@/components/common/rateStar/RateStar';
 import ItemImageSlider from "@/components/pages/store/detail/itemTopInfo/itemImageSlider/ItemImageSlider";
@@ -46,22 +46,22 @@ export default function ItemTopInfo({ data }: ItemTopInfoProps) {
             </div>
           }
           <div className={styles.itemTitle}>
-            <DefaultText type='title2' block>{data.name}</DefaultText>
+            <Text type='title2' block>{data.name}</Text>
             <div className={styles.itemStar}>
               <RateStar rateLength={5} value={data.reviewInfo.star} size={12.8} />
-              <DefaultText type='caption2'>{data.reviewInfo.star} ({data.reviewInfo.count})</DefaultText>
+              <Text type='caption2'>{data.reviewInfo.star} ({data.reviewInfo.count})</Text>
             </div>
           </div>
           <div>
             {diffPrice &&
               <p className={styles.itemDiscountPrice}>
-                <DefaultText type='body2' color='red'>할인특가</DefaultText>
-                <DefaultText type='body2' color='gray600' lineThrough>
+                <Text type='body2' color='red'>할인특가</Text>
+                <Text type='body2' color='gray600' lineThrough>
                   {data.originalPrice.toLocaleString()}원
-                </DefaultText>
+                </Text>
               </p>
             }
-            <DefaultText type='title2' className={styles.itemPrice}>
+            <Text type='title2' className={styles.itemPrice}>
               {diffPrice &&
                 <span className={pointColor}>
                   {data.discountRate}{DISCOUNT_UNIT.FIXED_RATE}
@@ -70,26 +70,26 @@ export default function ItemTopInfo({ data }: ItemTopInfoProps) {
               <span>
                 {data.salePrice.toLocaleString()}원
               </span>
-            </DefaultText>
+            </Text>
           </div>
         </div>
         <Divider thickness={2} color='gray100' />
         <div className={styles.itemDeliveryInfo}>
-          <DefaultText className={styles.infoTitle} type='body2' color='gray700'>배송정보</DefaultText>
+          <Text className={styles.infoTitle} type='body2' color='gray700'>배송정보</Text>
           <div className={styles.infoContent}>
             <span>
-              <DefaultText type='label2'>{data.deliveryFree ? '무료' : '택배배송'}&nbsp;&nbsp;</DefaultText>
+              <Text type='label2'>{data.deliveryFree ? '무료' : '택배배송'}&nbsp;&nbsp;</Text>
               {!data.deliveryFree && 
-                <DefaultText type='headline3'>{data.deliveryInfo.price.toLocaleString()}원</DefaultText>
+                <Text type='headline3'>{data.deliveryInfo.price.toLocaleString()}원</Text>
               }
             </span>
             {!data.deliveryFree && 
-              <DefaultText type='body3' color='red'>({data.deliveryInfo.freeCondition.toLocaleString()}원 이상 구매 시 무료)</DefaultText>
+              <Text type='body3' color='red'>({data.deliveryInfo.freeCondition.toLocaleString()}원 이상 구매 시 무료)</Text>
             }
-            <DefaultText className={styles.itemDeliveryDescription} type='caption2' color='gray500'>
+            <Text className={styles.itemDeliveryDescription} type='caption2' color='gray500'>
               <SvgIcon src={CheckIcon} width={16} height={17} />
               제주 및 도서산간 지역 배송비 동일
-            </DefaultText>
+            </Text>
           </div>
         </div>
       </div>

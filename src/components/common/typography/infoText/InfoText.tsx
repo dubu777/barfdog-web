@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import * as styles from "./InfoText.css";
 import { TextColor, TextType } from "@/types/typography";
 
@@ -16,9 +16,9 @@ export default function InfoText({
 }: InfoTextProps) {
   return (
     <li className={styles.infoTextBox}>
-      <DefaultText type={type} color={color}>
+      <Text type={type} color={color}>
         •
-      </DefaultText>
+      </Text>
       <div>{children}</div>
     </li>
   );

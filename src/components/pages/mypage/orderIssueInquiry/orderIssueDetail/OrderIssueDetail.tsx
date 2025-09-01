@@ -8,7 +8,7 @@ import PaymentInfo from "@/components/pages/mypage/common/information/section/Pa
 import SubscriptionRefundInfo from "@/components/pages/mypage/common/information/section/SubscriptionRefundInfo";
 import AddressInfo from "@/components/pages/mypage/common/information/section/AddressInfo";
 import OrderItemInfo from "@/components/pages/mypage/common/information/section/OrderItemInfo";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import StatusTracker from "@/components/pages/mypage/common/statusTracker/StatusTracker";
 import { ORDER_TYPE } from '@/constants';
@@ -63,10 +63,10 @@ const OrderIssueDetail = ({ issueId, issueType }: OrderIssueDetailProps) => {
 			{issueType === 'CANCEL' && data.orderType === 'subscription' &&
 				<article className={infoContainer({ isOpen: true })}>
 					<div className={infoItem}>
-						<DefaultText type='title4'>취소사유</DefaultText>
+						<Text type='title4'>취소사유</Text>
 					</div>
 					<Card shadow='none' padding={12} className={infoDetailContainer}>
-						<DefaultText type='body3'>{data.requestReason}</DefaultText>
+						<Text type='body3'>{data.requestReason}</Text>
 					</Card>
 				</article>
 			}

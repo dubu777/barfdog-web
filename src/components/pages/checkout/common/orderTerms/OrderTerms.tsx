@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import { COLORS } from "@/constants/style";
@@ -41,23 +41,23 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
             isChecked={isPrivacySelected(true)}
             onToggle={() => onPrivacyToggle(true)}
           >
-            <DefaultText type="label2">
+            <Text type="label2">
               <span style={{ color: COLORS.red }}>(필수) </span>
               {ORDER_MESSAGE.AGREE_PRIVACY}
-            </DefaultText>
+            </Text>
           </LabeledCheckbox>
           <Button type="assistive" variant="text" size="sm">
-            <DefaultText type="label2" color="red" underLine>
+            <Text type="label2" color="red" underLine>
               내용보기
-            </DefaultText>
+            </Text>
           </Button>
         </div>
         {showErrors && !agreePrivacy && (
           <div className={styles.orderTermErrorWrapper}>
             <SvgIcon src={InfoIcon} size={14} />
-            <DefaultText type="label4" color="red">
+            <Text type="label4" color="red">
               결제 필수 사항에 동의해 주세요
-            </DefaultText>
+            </Text>
           </div>
         )}
         </div>
@@ -68,17 +68,17 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
               isChecked={isSubscriptionSelected(true)}
               onToggle={() => onSubscriptionToggle(true)}
             >
-              <DefaultText type="label2">
+              <Text type="label2">
                 <span style={{ color: COLORS.red }}>(필수) </span>
                 {ORDER_MESSAGE.AGREE_SUBSCRIPTION}
-              </DefaultText>
+              </Text>
             </LabeledCheckbox>
             {showErrors && !agreeSubscription && (
               <div className={styles.orderTermErrorWrapper}>
                 <SvgIcon src={InfoIcon} size={14} />
-                <DefaultText type="label4" color="red">
+                <Text type="label4" color="red">
                   결제 필수 사항에 동의해 주세요
-                </DefaultText>
+                </Text>
               </div>
             )}
           </div>

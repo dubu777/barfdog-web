@@ -1,5 +1,5 @@
 import React from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import CheckIcon from "public/images/survey/check_small.svg";
 import CloseIcon from "public/images/survey/close_small.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -34,18 +34,18 @@ export default function SurveyButtonGroup({
       className={commonWrapper({ direction: "col", gap: 8, align: "start" })}
     >
       {title && (
-        <DefaultText type="headline4" color="gray800">
+        <Text type="headline4" color="gray800">
           {title}
-        </DefaultText>
+        </Text>
       )}
       {isMultiple === true && (
-        <DefaultText
+        <Text
           type="label2"
           color="gray500"
           className={surveyButtonGroupText}
         >
           *복수응답가능
-        </DefaultText>
+        </Text>
       )}
       <div
         className={commonWrapper({
@@ -68,9 +68,9 @@ export default function SurveyButtonGroup({
                 color={error ? "red" : "blue500"}
                 size={19}
               />
-              <DefaultText type="caption" color={error ? "red" : "blue500"}>
+              <Text type="caption" color={error ? "red" : "blue500"}>
                 {error || info}
-              </DefaultText>
+              </Text>
             </>
           )}
         </div>

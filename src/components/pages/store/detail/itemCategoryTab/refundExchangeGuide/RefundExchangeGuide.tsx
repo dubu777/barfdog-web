@@ -1,7 +1,7 @@
 import * as styles from './RefundExchangeGuide.css';
 import { commonWrapper } from '@/styles/common.css';
 import ItemDetailLayout from '../../../layout/ItemDetailLayout';
-import DefaultText from '@/components/common/defaultText/DefaultText';
+import Text from "@/components/common/text/Text";
 import InfoBox from '@/components/common/infoBox/InfoBox';
 import Divider from '@/components/common/divider/Divider';
 import InfoText from '@/components/common/infoText/InfoText';
@@ -16,8 +16,8 @@ export default function RefundExchangeGuide() {
       label: '반품 배송비',
       value: (
         <div className={commonWrapper({ direction: 'col', align: 'start', gap: 2 })}>
-          <DefaultText type='label2' color='gray800'>편도 3,000원</DefaultText>
-          <DefaultText type='caption2'>(최소 배송비 무료인 경우 6,000원 부과)</DefaultText>
+          <Text type='label2' color='gray800'>편도 3,000원</Text>
+          <Text type='caption2'>(최소 배송비 무료인 경우 6,000원 부과)</Text>
         </div>
       )
     },
@@ -43,9 +43,9 @@ export default function RefundExchangeGuide() {
           text={(
             <>
             단, 주문이 생산되기 전 컷오프
-            <DefaultText type='label3' color='red'>
+            <Text type='label3' color='red'>
               (다음 주문의 배송 전 금요일 24시) 전 까지 고객님이 직접 취소 가능
-            </DefaultText>
+            </Text>
             <br/><br/>
             바프독은 항상 목요일 주문마감, 금~일요일에 생산되어 화요일 일괄 배송 됩니다
             </>
@@ -100,8 +100,8 @@ export default function RefundExchangeGuide() {
         <div className={styles.infoSection}>
           {defaultInfo.map((info, index) => (
             <div key={index} className={styles.infoSectionItem}>
-              <DefaultText className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</DefaultText>
-              <DefaultText type='label2' color='gray800'>{info.value}</DefaultText>
+              <Text className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</Text>
+              <Text type='label2' color='gray800'>{info.value}</Text>
             </div>
           ))}
         </div>
@@ -115,10 +115,10 @@ export default function RefundExchangeGuide() {
         {periodInfo.map((info, index) => (
           <div key={index} className={styles.infoSectionItem}>
             {info.label && 
-              <DefaultText className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</DefaultText>
+              <Text className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</Text>
             }
             {typeof info.value === 'string'
-              ? <DefaultText type='label2' color='gray800'>{info.value}</DefaultText>
+              ? <Text type='label2' color='gray800'>{info.value}</Text>
               : info.value
             }
           </div>
@@ -146,8 +146,8 @@ export default function RefundExchangeGuide() {
         <div className={styles.infoSection}>
           {sellerInfo.map((info, index) => (
             <div key={index} className={styles.infoSectionItem}>
-              <DefaultText className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</DefaultText>
-              <DefaultText type='label2' color='gray800'>{info.value}</DefaultText>
+              <Text className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</Text>
+              <Text type='label2' color='gray800'>{info.value}</Text>
             </div>
           ))}
         </div>

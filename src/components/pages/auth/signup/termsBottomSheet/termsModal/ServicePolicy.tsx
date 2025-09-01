@@ -1,6 +1,6 @@
 import * as styles from './TermsModal.css';
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
-import Text from "@/components/common/text/Text";
+import TestText from "@/components/common/testText/TestText";
 
 interface ServicePolicyProps {
 	isOpen: boolean;
@@ -17,7 +17,7 @@ const ServicePolicy = ({ isOpen, onClose }: ServicePolicyProps) => {
 			scroll
 		>
 			<div className={styles.termsModalContainer}>
-				<Text type='title' size='titleLg'>이용약관</Text>
+				<TestText type='title' size='titleLg'>이용약관</TestText>
 				<div className={styles.termsModalContent}>
 					<h6>제1조(목적)</h6>
 					이 약관은 주식회사 프레쉬아워(전자상거래 사업자)가 운영하는 BARFDOG®(이하 &quot;몰&quot;이라

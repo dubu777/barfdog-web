@@ -3,11 +3,11 @@ import {
   charCount, errorText,
   textareaBoxStyle,
   textareaStyle
-} from "./DefaultTextarea.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import { textStyles } from "@/components/common/defaultText/DefaultText.css";
+} from "./Textarea.css";
+import Text from "@/components/common/text/Text";
+import { textStyles } from "@/components/common/text/Text.css";
 
-interface DefaultTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>{
+interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>{
   id: string;
   value: string;
   label?: string;
@@ -16,7 +16,7 @@ interface DefaultTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   maxLength?: number;
 }
 
-const DefaultTextarea = forwardRef<HTMLTextAreaElement, DefaultTextareaProps>(({
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
   id,
   error,
   className,
@@ -44,15 +44,15 @@ const DefaultTextarea = forwardRef<HTMLTextAreaElement, DefaultTextareaProps>(({
           {...rest}
         />
         {maxLength && (
-          <DefaultText type='caption' color='gray500' className={charCount}>
+          <Text type='caption' color='gray500' className={charCount}>
             {currentLength} / {maxLength.toLocaleString()}
-          </DefaultText>
+          </Text>
         )}
       </div>
-      {error && <DefaultText type='caption' color='red' align='left' className={errorText}>{error}</DefaultText>}
+      {error && <Text type='caption' color='red' align='left' className={errorText}>{error}</Text>}
     </div>
   );
 });
 
-DefaultTextarea.displayName = 'DefaultTextarea';
-export default DefaultTextarea;
+Textarea.displayName = 'Textarea';
+export default Textarea;

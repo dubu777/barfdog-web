@@ -4,7 +4,7 @@ import * as styles from "./RecipeOptions.css";
 import RecipeCard from "./recipeCard/RecipeCard";
 import { recipeTempData, recipeTab } from "@/constants";
 import { RecipeData, RecipeDto } from "@/types";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
 import React, { useMemo, useRef } from "react";
@@ -96,14 +96,14 @@ export default function RecipeOptions({
     <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
         <div>
-          <DefaultText type="title2">
+          <Text type="title2">
             {name}의 구독 레시피를
             <br />
             선택해 주세요
-          </DefaultText>
-          <DefaultText type="body2" color="gray600">
+          </Text>
+          <Text type="body2" color="gray600">
             레시피는 최대 2가지를 선택할 수 있어요.
-          </DefaultText>
+          </Text>
         </div>
         <InfoBox
           text={`${name}의 하루 권장 칼로리 ${kcal}kcal에 따라 한 끼 급여량을 추천해 드려요`}
@@ -121,10 +121,10 @@ export default function RecipeOptions({
           <React.Fragment key={key}>
             <div ref={refs[key]} className={styles.recipeSelectBox}>
               <div className={styles.recipeTitleWrapper}>
-                <DefaultText type="title4">{title}</DefaultText>
-                <DefaultText type="body3" color="gray600">
+                <Text type="title4">{title}</Text>
+                <Text type="body3" color="gray600">
                   {description}
-                </DefaultText>
+                </Text>
               </div>
               <div className={styles.recipeCardWrapper}>
                 {items.map((recipeTempData) => {

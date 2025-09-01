@@ -2,7 +2,7 @@ import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import { dropdownBoxStyle, dropdownContainerStyle, dropdownLabelStyle, dropdownOptionStyle } from "./Dropdown.css";
 import { cardShadow } from "@/components/common/card/Card.css";
 import { motion, AnimatePresence } from "framer-motion";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ArrowUpIcon from '/public/images/icons/chevron-sort-up.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
@@ -51,9 +51,9 @@ export default function Dropdown({
 			<button onClick={() => setIsOpen(!isOpen)} className={dropdownContainerStyle}>
 				{trigger ? trigger :
 					<div className={dropdownLabelStyle}>
-						<DefaultText type="label4">
+						<Text type="label4">
 							{label || ''}
-						</DefaultText>
+						</Text>
 						<SvgIcon src={ArrowUpIcon} style={{ transform: 'rotate(180deg)' }} />
 					</div>
 				}
@@ -78,9 +78,9 @@ export default function Dropdown({
 									}}
 									className={dropdownOptionStyle}
 								>
-									<DefaultText type='label4' align='center'>
+									<Text type='label4' align='center'>
 										{option.label}
-									</DefaultText>
+									</Text>
 								</li>
 							))}
 						</motion.ul>

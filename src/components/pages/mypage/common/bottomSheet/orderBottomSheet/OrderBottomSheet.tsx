@@ -1,7 +1,7 @@
 import * as styles from './OrderBottomSheet.css';
 import { pointColor } from "@/styles/common.css";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
@@ -82,20 +82,20 @@ const OrderBottomSheet = ({
 			<div className={styles.bottomSheetTitle}>
 				<div>
 					{type === 'confirm' && (
-						<DefaultText type="title4" color="red">
+						<Text type="title4" color="red">
 							{isSubscription ? `정기배송 ${data.subscribeCount || 0}회차` : '일반배송상품'}
-						</DefaultText>
+						</Text>
 					)}
-					<DefaultText type="title4">{title}</DefaultText>
+					<Text type="title4">{title}</Text>
 				</div>
-				<DefaultText type="label4" color="gray600">{subtitle}</DefaultText>
+				<Text type="label4" color="gray600">{subtitle}</Text>
 			</div>
 			<div className={styles.bottomSheetItem}>
 				<div className={styles.bottomSheetItemTitle}>
-					<DefaultText type="title4">주문상품</DefaultText>
+					<Text type="title4">주문상품</Text>
 					{!isOrderDetail &&
 						<button onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${orderId}`, { orderType })}>
-							<DefaultText type="headline4" color="gray400">주문상세</DefaultText>
+							<Text type="headline4" color="gray400">주문상세</Text>
 						</button>
 					}
 				</div>

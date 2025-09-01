@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Image from "next/image";
 import CloseButton from '/public/images/icons/close-circle-fill.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { ImageFile, UploadedFile } from "@/types";
 
@@ -45,7 +45,7 @@ export default function ImageCarousel({
 								onClick={handleThumbnailClick ? () => handleThumbnailClick(index, preview.fileId) : undefined}
 						>
 								{index === 0 && showRepresentativeLabel &&
-									<DefaultText type='caption' color='white' className={thumbnail}>대표</DefaultText>
+									<Text type='caption' color='white' className={thumbnail}>대표</Text>
 								}
 								<li>
 									<Image

@@ -3,7 +3,7 @@ import * as styles from './ReviewCommonStyle.css';
 import { ellipsis } from "@/styles/common.css";
 import PictureIcon from '/public/images/icons/picture.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
@@ -68,9 +68,9 @@ const ReviewInfoWithImages = ({
 				}
 				<div className={styles.contents} onClick={handleToggleReviewIds}>
 					{!showContents && reviewImageList.length > 0 && <SvgIcon src={PictureIcon} size={24} />}
-					<DefaultText type='body2' className={!showContents ? ellipsis({ lineSize: 'line1' }) : ''}>
+					<Text type='body2' className={!showContents ? ellipsis({ lineSize: 'line1' }) : ''}>
 						{contents}
-					</DefaultText>
+					</Text>
 				</div>
 			</div>
 		</div>

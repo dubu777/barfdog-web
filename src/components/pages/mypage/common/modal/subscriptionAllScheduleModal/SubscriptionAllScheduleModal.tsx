@@ -1,6 +1,6 @@
 import * as styles from './SubscriptionAllScheduleModal.css';
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ArrowIcon from '/public/images/icons/chevron-sort-up.svg';
 import { themeVars } from "@/styles/theme.css";
@@ -154,41 +154,41 @@ const SubscriptionAllScheduleModal = ({
 						<div key={`${index}-${data.orderNumber}`} className={styles.scheduleItem({ active })}>
 							<div className={styles.scheduleItemStatus}>
 								{data.status !== 'canceled' &&
-								<DefaultText type='caption' color={active ? 'gray800' : 'gray400'}>{status}</DefaultText>
+								<Text type='caption' color={active ? 'gray800' : 'gray400'}>{status}</Text>
 								}
-								<DefaultText type='title3' color={active ? 'gray900' : 'gray600'} style={isDelayedOrCanceled ? textLineThrough : {}}>
+								<Text type='title3' color={active ? 'gray900' : 'gray600'} style={isDelayedOrCanceled ? textLineThrough : {}}>
 									{data.status !== 'canceled' ? `${data.round}회차` : status}
-								</DefaultText>
+								</Text>
 							</div>
 							<div className={styles.itemPaymentArrivalStatus}>
 								{data.paymentDate &&
-								<DefaultText type='caption' color={active ? 'gray800' : 'gray400'} style={isDelayedOrCanceled ? textLineThrough : {}}>
+								<Text type='caption' color={active ? 'gray800' : 'gray400'} style={isDelayedOrCanceled ? textLineThrough : {}}>
 									{data.paymentDate}
-								</DefaultText>
+								</Text>
 								}
 								{data.arrivalDate &&
-								<DefaultText type='caption' color={active ? 'gray800' : 'gray400'} style={isDelayedOrCanceled ? textLineThrough : {}}>
+								<Text type='caption' color={active ? 'gray800' : 'gray400'} style={isDelayedOrCanceled ? textLineThrough : {}}>
 									{data.arrivalDate}
-								</DefaultText>
+								</Text>
 								}
 							</div>
 							<div className={styles.itemPaymentArrivalStatus}>
 								{data.status === 'canceled'
-									? <DefaultText type='caption' color='gray800'>구독해지일</DefaultText>
+									? <Text type='caption' color='gray800'>구독해지일</Text>
 									: <>
-										<DefaultText type='caption' color={active ? 'gray800' : 'gray400'} style={data.status !== 'canceled_after_payment' && isDelayedOrCanceled ? textLineThrough : {}}>
+										<Text type='caption' color={active ? 'gray800' : 'gray400'} style={data.status !== 'canceled_after_payment' && isDelayedOrCanceled ? textLineThrough : {}}>
 											{paymentStatus}
-										</DefaultText>
-										<DefaultText type='caption' color={active ? 'gray800' : 'gray400'} style={isDelayedOrCanceled ? textLineThrough : {}}>
+										</Text>
+										<Text type='caption' color={active ? 'gray800' : 'gray400'} style={isDelayedOrCanceled ? textLineThrough : {}}>
 											{arrivalStatus}
-										</DefaultText>
+										</Text>
 									</>
 								}
 							</div>
 							<div className={styles.scheduleActions}>
 								{actions.map((action) => (
 									<button key={action.label} className={styles.scheduleActionButton}>
-										<DefaultText type='headline4' color='red'>{action.label}</DefaultText>
+										<Text type='headline4' color='red'>{action.label}</Text>
 										{action.label &&
 										<SvgIcon src={ArrowIcon} size={20} style={{ transform: 'rotate(90deg)', color: themeVars.colors.red.red }} />
 										}
@@ -200,11 +200,11 @@ const SubscriptionAllScheduleModal = ({
 				})}
 			</div>
 			<div className={styles.scheduleNotice}>
-				<DefaultText type='caption' color='gray500'>• ‘이전 회차의 도착완료 다음날’ 부터, ‘현재 회차의 도착 완료일'까지가 ‘진행중 회차'의 기간에 해당합니다.</DefaultText>
-				<DefaultText type='caption' color='gray500'>• ‘진행 중 회차' 이후에 대한 일정은, ‘이번 배송 미루기, 배송일 변경' 등에 따라 변경될 수 있습니다.</DefaultText>
-				<DefaultText type='caption' color='gray500'>• ‘진행 중 회차'가 결제 미진행 상태일 경우, 다음 회차 결제 예정일에 현재 회차가 다시 진행됩니다. (ex. 2회차 결제 실패 시, 3회차 결제 예정일에 2회차 결제 및 정기배송이 진행됩니다. 3회차를 포함한 이후 일정들이 다음 회차 예정일로 미뤄지는 형태입니다.)</DefaultText>
-				<DefaultText type='caption' color='gray500'>• 임시/대체공휴일로 인한 영업일 변경 시 배송 예정일이 영업일 기준으로 조정될 수 있습니다.</DefaultText>
-				<DefaultText type='caption' color='gray500'>• 진행 중인 구독의 전체 구독 일정은 ‘진행 완료 회차’ 및 ‘진행 중 회차'를 포함하며, ‘진행 중 회차’를 기준으로 최대 3개의 구독 진행 예정 일정이 추가됩니다.</DefaultText>
+				<Text type='caption' color='gray500'>• ‘이전 회차의 도착완료 다음날’ 부터, ‘현재 회차의 도착 완료일'까지가 ‘진행중 회차'의 기간에 해당합니다.</Text>
+				<Text type='caption' color='gray500'>• ‘진행 중 회차' 이후에 대한 일정은, ‘이번 배송 미루기, 배송일 변경' 등에 따라 변경될 수 있습니다.</Text>
+				<Text type='caption' color='gray500'>• ‘진행 중 회차'가 결제 미진행 상태일 경우, 다음 회차 결제 예정일에 현재 회차가 다시 진행됩니다. (ex. 2회차 결제 실패 시, 3회차 결제 예정일에 2회차 결제 및 정기배송이 진행됩니다. 3회차를 포함한 이후 일정들이 다음 회차 예정일로 미뤄지는 형태입니다.)</Text>
+				<Text type='caption' color='gray500'>• 임시/대체공휴일로 인한 영업일 변경 시 배송 예정일이 영업일 기준으로 조정될 수 있습니다.</Text>
+				<Text type='caption' color='gray500'>• 진행 중인 구독의 전체 구독 일정은 ‘진행 완료 회차’ 및 ‘진행 중 회차'를 포함하며, ‘진행 중 회차’를 기준으로 최대 3개의 구독 진행 예정 일정이 추가됩니다.</Text>
 			</div>
 		</FullModalWrapper>
 	);

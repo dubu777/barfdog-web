@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import Divider from "@/components/common/divider/Divider";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import TextButton from "@/components/common/textButton/TextButton";
 import InfoText from "@/components/common/infoText/InfoText";
@@ -74,12 +74,12 @@ const KIT_GUIDE_NOTICE_LIST = [
   {
     value: (
       <>
-        <DefaultText type="headline4" color="red">
+        <Text type="headline4" color="red">
           회수 신청 전 꼭 1번의 반려견 사전 문진을 먼저 작성
-        </DefaultText>
-        <DefaultText type="body3" color="gray700">
+        </Text>
+        <Text type="body3" color="gray700">
           해주세요. 사전 문진 미 작성 시 회수가 진행되지 않습니다!
-        </DefaultText>
+        </Text>
       </>
     ),
     isPointColor: true,
@@ -87,13 +87,13 @@ const KIT_GUIDE_NOTICE_LIST = [
   {
     value: (
       <>
-        <DefaultText type="headline4" color="red">
+        <Text type="headline4" color="red">
           반송 접수는 꼭 위 6번의 QR코드/바프독 서비스
-        </DefaultText>
-        <DefaultText type="body3" color="gray700">
+        </Text>
+        <Text type="body3" color="gray700">
           를 통해 진행해주세요. 타 택배사 이용 시 보호자님이 택배비 부담을
           하셔야 합니다
-        </DefaultText>
+        </Text>
       </>
     ),
     isPointColor: true,
@@ -101,15 +101,15 @@ const KIT_GUIDE_NOTICE_LIST = [
   {
     value: (
       <>
-        <DefaultText type="body3" color="gray700">
+        <Text type="body3" color="gray700">
           정상 반송 접수 시 수거 당일 택배 기사님의 연락이 가오니 그 때에{" "}
-        </DefaultText>
-        <DefaultText type="headline4" color="red">
+        </Text>
+        <Text type="headline4" color="red">
           회수용 봉투에 담아 문 앞에
-        </DefaultText>
-        <DefaultText type="body3" color="gray700">
+        </Text>
+        <Text type="body3" color="gray700">
           두시면 수거가 진행됩니다
-        </DefaultText>
+        </Text>
       </>
     ),
     isPointColor: false,
@@ -117,15 +117,15 @@ const KIT_GUIDE_NOTICE_LIST = [
   {
     value: (
       <>
-        <DefaultText type="body3" color="gray700">
+        <Text type="body3" color="gray700">
           결과 발송까지 키트 회수 후{" "}
-        </DefaultText>
-        <DefaultText type="headline4" color="red">
+        </Text>
+        <Text type="headline4" color="red">
           약 한 달 정도의 시간이 소요
-        </DefaultText>
-        <DefaultText type="body3" color="gray700">
+        </Text>
+        <Text type="body3" color="gray700">
           되며, 완료 후 작성해 주신 이메일로 결과지가 발송됩니다
-        </DefaultText>
+        </Text>
       </>
     ),
     isPointColor: false,
@@ -142,11 +142,11 @@ const KitGuideModal = ({ petId, isOpen, onClose }: KitGuideModalProps) => {
     >
       <Divider thickness={2} color="gray100" />
       <article className={styles.kitGuideContainer}>
-        <DefaultText type="title3" className={styles.kitGuideHeader}>
+        <Text type="title3" className={styles.kitGuideHeader}>
           장내 미생물 분석
           <br />
           서비스 키트 사용 안내
-        </DefaultText>
+        </Text>
         <Image
           src={KitGuidImage}
           alt="kit guide image"
@@ -155,17 +155,17 @@ const KitGuideModal = ({ petId, isOpen, onClose }: KitGuideModalProps) => {
           className={styles.kitGuideImage}
         />
         <div className={styles.bundledItemListBox}>
-          <DefaultText type="headline1">제공 구성품</DefaultText>
+          <Text type="headline1">제공 구성품</Text>
           <div className={styles.bundledItemList}>
             {BUNDLED_ITEM_LIST.map((item) => (
-              <DefaultText key={item} type="body2" color="gray800">
+              <Text key={item} type="body2" color="gray800">
                 {item}
-              </DefaultText>
+              </Text>
             ))}
           </div>
-          <DefaultText type="caption2" color="gray500">
+          <Text type="caption2" color="gray500">
             * 납품 시기에 따라 상세 구성품이 달라질 수 있습니다
-          </DefaultText>
+          </Text>
         </div>
       </article>
       <article className={styles.kitGuideStep}>
@@ -181,13 +181,13 @@ const KitGuideModal = ({ petId, isOpen, onClose }: KitGuideModalProps) => {
             borderRadius={16}
           >
             <div className={styles.kitGuideStepContent}>
-              <DefaultText type="title3">0{index + 1}</DefaultText>
-              <DefaultText type="body2" className={styles.kitGuideStepTitle}>
+              <Text type="title3">0{index + 1}</Text>
+              <Text type="body2" className={styles.kitGuideStepTitle}>
                 {step.title}
-              </DefaultText>
-              <DefaultText type="body3" color="red">
+              </Text>
+              <Text type="body3" color="red">
                 * {step.description}
-              </DefaultText>
+              </Text>
               {step.buttonText && (
                 <TextButton
                   text="사전 문진 바로가기"
@@ -201,7 +201,7 @@ const KitGuideModal = ({ petId, isOpen, onClose }: KitGuideModalProps) => {
         ))}
       </article>
       <article className={styles.kitGuideNotice}>
-        <DefaultText type="headline1">안내사항</DefaultText>
+        <Text type="headline1">안내사항</Text>
         <Card shadow="none" gap={8} backgroundColor="gray50" padding={16}>
           {KIT_GUIDE_NOTICE_LIST.map((notice, index) => (
             <InfoText

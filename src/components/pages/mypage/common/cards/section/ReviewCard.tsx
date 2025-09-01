@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import * as styles from '../Card.css';
 import { ellipsis } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import RateStar from "@/components/common/rateStar/RateStar";
 import Button from "@/components/common/button/Button";
 import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
@@ -82,8 +82,8 @@ const ReviewCard = ({
 		<></>
 		// <CardSection shadow='none' padding={20}>
 		// 	<div className={styles.productInfoBox}>
-		// 		{/*<DefaultText type='label4'>{orderType} {orderStatus} {reviewStatus}</DefaultText>*/}
-		// 		<DefaultText type='label4'>{orderType} {reviewStatus}</DefaultText>
+		// 		{/*<Text type='label4'>{orderType} {orderStatus} {reviewStatus}</Text>*/}
+		// 		<Text type='label4'>{orderType} {reviewStatus}</Text>
 		// 	</div>
 		// 	<div className={styles.productInfoBox}>
 		// 		{imageUrl
@@ -91,12 +91,12 @@ const ReviewCard = ({
 		// 			: <div className={styles.productAvatar} />
 		// 		}
 		// 		<div className={styles.productName}>
-		// 			<DefaultText type='label3'>{itemName}</DefaultText>
-		// 			<DefaultText type='caption' color='gray600'>
+		// 			<Text type='label3'>{itemName}</Text>
+		// 			<Text type='caption' color='gray600'>
 		// 				<span className={ellipsis({ lineSize: 'line2' })}>{subInfoItemDetail}<br/></span>
 		// 				{subInfoItemCount}
-		// 			</DefaultText>
-		// 			<DefaultText type='label3'>{orderPrice}</DefaultText>
+		// 			</Text>
+		// 			<Text type='label3'>{orderPrice}</Text>
 		// 		</div>
 		// 	</div>
 		// 	<div>

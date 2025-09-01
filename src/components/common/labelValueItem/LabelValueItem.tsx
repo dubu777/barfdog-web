@@ -1,11 +1,11 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import * as styles from "./LabelValueItem.css";
 import {
   fontColors,
   textStyles,
-} from "@/components/common/defaultText/DefaultText.css";
+} from "@/components/common/text/Text.css";
 import { ReactNode } from "react";
 
 interface LabelValueItemProps {
@@ -35,16 +35,16 @@ export default function LabelValueItem({
   const displayValue = isNullish || isEmptyString ? "-" : value;
   return (
     <div className={styles.labelValueItemContainer({ align })}>
-      <DefaultText
+      <Text
         type={labelType}
         color={labelColor}
         className={styles.labelText({ width: labelWidth })}
       >
         {label}
-      </DefaultText>
-      <DefaultText type={valueType} color={valueColor}>
+      </Text>
+      <Text type={valueType} color={valueColor}>
         {displayValue}
-      </DefaultText>
+      </Text>
     </div>
   );
 }

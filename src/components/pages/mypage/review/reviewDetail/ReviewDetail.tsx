@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useBackNavigation } from "@/utils";
 import MoreHorizIcon from "/public/images/icons/more_horiz.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
 import Dropdown from "@/components/common/dropdown/Dropdown";
@@ -17,7 +17,7 @@ import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
 import { ReviewDetailItem, ReviewItemType } from "@/types";
 import { useToastStore } from '@/store/useToastStore';
 import { sanitizedHTML } from "@/styles/common.css";
-import { textStyles } from "@/components/common/defaultText/DefaultText.css";
+import { textStyles } from "@/components/common/text/Text.css";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
 import { useDeleteReview } from "@/api/review/mutations/useDeleteReview";
@@ -89,7 +89,7 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
   return (
     <section className={styles.reviewDetailContainer}>
       <div className={styles.reviewDetailHeader}>
-        <DefaultText type='title4'>{format(new Date(reviewDetail.writtenDate), 'yy. MM. dd')} 리뷰 완료</DefaultText>
+        <Text type='title4'>{format(new Date(reviewDetail.writtenDate), 'yy. MM. dd')} 리뷰 완료</Text>
         <Dropdown
           trigger={<SvgIcon src={MoreHorizIcon} size={24} />}
           options={[
@@ -113,18 +113,18 @@ const ReviewDetail = ({ reviewId, reviewType }: ReviewDetailProps) => {
       }
       <article className={styles.reviewDetailComment}>
         <div className={styles.noComment}>
-          <DefaultText type='label4'>댓글0</DefaultText>
-          <DefaultText type='caption' color='gray600'>아직 댓글이 달리지 않았습니다.</DefaultText>
+          <Text type='label4'>댓글0</Text>
+          <Text type='caption' color='gray600'>아직 댓글이 달리지 않았습니다.</Text>
         </div>
         <div className={styles.commentHeader}>
           <div className={styles.profile} />
-          <DefaultText type='label4'>바프독 관리자</DefaultText>
-          <DefaultText type='caption' color='gray600'>N일 전</DefaultText>
+          <Text type='label4'>바프독 관리자</Text>
+          <Text type='caption' color='gray600'>N일 전</Text>
         </div>
-        <DefaultText type='caption' color='gray600'>
+        <Text type='caption' color='gray600'>
           안녕하세요 바프독 고객님<br/>
           기존 작성 후기와 동일한 사진 사용 및 단순문구 반복으로 글자수를 충족한 경우 후기 승인이 반려될 수 있음을 안내드립니다.
-        </DefaultText>
+        </Text>
       </article>
       {reviewImageModalOpen &&
         <ImagesModal

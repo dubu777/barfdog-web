@@ -4,7 +4,7 @@ import { ellipsis } from "@/styles/common.css";
 import { differenceInYears, isBefore, parse } from "date-fns";
 import InfoTitleButton from "@/components/pages/mypage/common/information/layout/InfoTitleButton";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import Image from "next/image";
 import SampleDog1 from '/public/images/mypage/sample/sample1.jpg'
@@ -55,13 +55,13 @@ const DogInfo = ({
 					<div className={styles.petInfo}>
 						<Image src={SampleDog1} alt={data.name} width={76} height={76} className={styles.petImage} />
 						<div className={styles.infoBox}>
-							<DefaultText type='headline1'>{data.name || '더듬'}</DefaultText>
-							<DefaultText type='caption' color='gray600' className={ellipsis({ lineSize: 'line1' })}>
+							<Text type='headline1'>{data.name || '더듬'}</Text>
+							<Text type='caption' color='gray600' className={ellipsis({ lineSize: 'line1' })}>
 								{getAgeFromYYYYMM(data.birth)}살 {data.weight}kg {DOG_GENDER[data.gender]} {data.dogType}<br/>
-							</DefaultText>
-							<DefaultText type='caption' color='gray600' className={ellipsis({ lineSize: 'line1' })}>
+							</Text>
+							<Text type='caption' color='gray600' className={ellipsis({ lineSize: 'line1' })}>
 								건강고민: 관절염, 피부염, 슬개골탈구
-							</DefaultText>
+							</Text>
 						</div>
 					</div>
 					{showEditDogInfo &&

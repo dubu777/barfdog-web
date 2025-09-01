@@ -2,7 +2,7 @@ import * as styles from './LatestBodyCheck.css';
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
 import ArrowIcon from "/public/images/icons/chevron-right.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import HorizontalProgressBar
@@ -34,11 +34,11 @@ export default function LatestBodyCheck({
 
 	return (
 		<article className={styles.bodyCheckTopCard}>
-			<DefaultText type="title3">
+			<Text type="title3">
 				몇 가지 질문으로
 				<br />
 				질환 가능성을 예측해 드려요
-			</DefaultText>
+			</Text>
 			<div className={commonWrapper({ gap: 8 })}>
 				{latestBodyCheckResult.map((result) => {
 					const part = result?.key;
@@ -64,17 +64,17 @@ export default function LatestBodyCheck({
 								className={styles.bodyCheckCard}
 							>
 								<div className={commonWrapper({ justify: "between" })}>
-									<DefaultText type="headline2">{name}</DefaultText>
+									<Text type="headline2">{name}</Text>
 									<SvgIcon src={ArrowIcon} color="gray500" size={16} />
 								</div>
 
 								{score && date ? (
 									<div className={commonWrapper({ direction: "col", gap: 4, align: 'start'})}>
-										<DefaultText type="title4">{score}점</DefaultText>
+										<Text type="title4">{score}점</Text>
 										<HorizontalProgressBar score={score} fixedHeight={false} />
-										<DefaultText type="caption" color="gray600">
+										<Text type="caption" color="gray600">
 											{format(new Date(date), "yyyy.MM.dd")}
-										</DefaultText>
+										</Text>
 									</div>
 								) : (
 									<div className={commonWrapper({ justify: "end" })}>

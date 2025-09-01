@@ -3,7 +3,7 @@ import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { BundleDeliveryAddress, OrderStatus } from "@/types";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { orderSummaryRowContainer } from "../../common/orderSummary/orderSummaryRow/OrderSummaryRow.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { ORDER_MESSAGE } from "@/constants";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
@@ -74,10 +74,10 @@ export default function BundleDeliverySelector({
   return (
     <OrderSection title="배송 일정">
       <div className={orderSummaryRowContainer}>
-        <DefaultText type="body2" color="gray700">
+        <Text type="body2" color="gray700">
           배송 예정일
-        </DefaultText>
-        <DefaultText type="label2">주문 후 1-2일 이내 발송 예정</DefaultText>
+        </Text>
+        <Text type="label2">주문 후 1-2일 이내 발송 예정</Text>
       </div>
       <div
         className={styles.bundleDeliveryBox({
@@ -91,12 +91,12 @@ export default function BundleDeliverySelector({
           onToggle={handleToggleCheckBox}
         >
           <div className={styles.bundleDeliveryContentWrapper}>
-            <DefaultText type="headline2" color={fontColor}>
+            <Text type="headline2" color={fontColor}>
               {title}
-            </DefaultText>
-            <DefaultText type="body3" color={fontColor}>
+            </Text>
+            <Text type="body3" color={fontColor}>
               {subtitle}
-            </DefaultText>
+            </Text>
           </div>
         </LabeledCheckbox>
       </div>

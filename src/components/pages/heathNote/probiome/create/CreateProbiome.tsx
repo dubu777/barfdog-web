@@ -1,7 +1,7 @@
 "use client";
 import * as styles from "./CreateProbiome.css";
 import { useCallback, useState } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { useCheckProbiomeKit } from "@/api/healthNote/probiome/queries/useCheckProbiomeKit";
 import ProbiomePreInfo from "./ProbiomePreInfo";
@@ -42,11 +42,11 @@ export default function CreateProbiome({ petId }: CreateProbiomeProps) {
     <section className={styles.createProbiomeContainer}>
       {!isKitVerified ? (
         <>
-          <DefaultText type="title3">
+          <Text type="title3">
             진단 키트 [안내서에] 있는
             <br />
             시리얼 번호를 입력해 주세요
-          </DefaultText>
+          </Text>
           <div>
             <InputField
               value={serialNo}

@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/common/pagination/Pagination";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
@@ -94,15 +94,15 @@ const ArticleItemList = () => {
                   <div className={`${styles.articleContents} ${mode === 'gallery' ? articleOverlay : ''}`}>
                     {mode === 'gallery'
                       ? <>
-                        <DefaultText type='caption' color='white'>{ARTICLE_CATEGORY[article.category].label}</DefaultText>
-                        <DefaultText type='label3' color='white'>{article.title}</DefaultText>
+                        <Text type='caption' color='white'>{ARTICLE_CATEGORY[article.category].label}</Text>
+                        <Text type='label3' color='white'>{article.title}</Text>
                       </>
                       : <div className={styles.articleItemTitle}>
-                        <DefaultText type='label3' color='gray900' className={styles.articleItemCategory}>[{ARTICLE_CATEGORY[article.category].label}]</DefaultText>
-                        <DefaultText type='label3' color='gray900'>{article.title}</DefaultText>
+                        <Text type='label3' color='gray900' className={styles.articleItemCategory}>[{ARTICLE_CATEGORY[article.category].label}]</Text>
+                        <Text type='label3' color='gray900'>{article.title}</Text>
                       </div>
                     }
-                    {mode === 'board' && <DefaultText type='label4'>{format(new Date(article.createdDate), 'yyyy-MM-dd')}</DefaultText>}
+                    {mode === 'board' && <Text type='label4'>{format(new Date(article.createdDate), 'yyyy-MM-dd')}</Text>}
                   </div>
                 </Link>
                 <Divider thickness={2} color='gray50' />

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DogImage from "/public/images/healthNote/full-check/list-dog.png";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import HorizontalProgressBar from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
 import TextButton from "@/components/common/textButton/TextButton";
@@ -56,14 +56,14 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
                 justify='between'
               >
                 <div className={styles.fullCheckSurveyCardContent}>
-                  <DefaultText type="headline2">
+                  <Text type="headline2">
                     우리 아이 건강,
                     <br />
                     한번 더 살펴볼까요?
-                  </DefaultText>
-                  <DefaultText type="caption2" color="gray600">
+                  </Text>
+                  <Text type="caption2" color="gray600">
                     건강 종합 진단으로 건강 변화를 쉽게 기록할 수 있어요
-                  </DefaultText>
+                  </Text>
                   <TextButton text='진단하러 가기' onClick={handleGoToSurvey} />
                 </div>
                 <Image src={DogImage} alt="Dog Image" width={120} height={146} />
@@ -82,13 +82,13 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
                     width='full'
                     align='start'
                   >
-                    <DefaultText type="label4" color="gray600">
+                    <Text type="label4" color="gray600">
                       {result.diagnosisDate}
-                    </DefaultText>
+                    </Text>
                     <div className={styles.resultTopRank}>
-                      <DefaultText type="headline2">
+                      <Text type="headline2">
                         {getNameWithPossessiveSuffix(petInfo?.name)}의 검사결과
-                      </DefaultText>
+                      </Text>
                       <Chips variant="solid" borderRadius="lg" color="gray200">
                         상위{result.snapshot.totalCheckupScorePercentile}%
                       </Chips>

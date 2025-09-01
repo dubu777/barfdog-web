@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import CheckIcon from "public/images/survey/check_small.svg";
 import InputField from "@/components/common/inputField/InputField";
-import DefaultTextarea from "@/components/common/defaultTextarea/DefaultTextarea";
+import Textarea from "@/components/common/textarea/Textarea";
 import InputLabel from "@/components/common/inputLabel/InputLabel";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
@@ -148,7 +148,7 @@ export default function HistoryForm ({
 								label='특이사항'
 								labelColor='gray700'
 							/>
-							<DefaultTextarea
+							<Textarea
 								{...field}
 								id='note'
 								value={field.value}

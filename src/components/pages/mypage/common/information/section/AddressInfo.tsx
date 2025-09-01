@@ -1,6 +1,6 @@
 import * as styles from "../Information.css";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
 import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
@@ -50,9 +50,9 @@ const AddressInfo = ({
 	return (
 		<article className={styles.infoContainer({ isOpen: true })}>
 			<div className={styles.infoItem}>
-				<DefaultText type='title4'>배송지</DefaultText>
+				<Text type='title4'>배송지</Text>
 				{showEditAddressInfo && isTextButtonType &&
-					<button onClick={onToggle}><DefaultText type='label4' color='gray400'>배송지 변경</DefaultText></button>
+					<button onClick={onToggle}><Text type='label4' color='gray400'>배송지 변경</Text></button>
 				}
 			</div>
 			{/*<Card shadow='none' className={styles.infoDetailContainer} padding={12}>*/}

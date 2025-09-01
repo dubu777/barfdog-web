@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { useRouter } from "next/navigation";
 import ArrowIcon from '/public/images/mypage/chevron-s.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import { MenuLink } from "@/types";
 
@@ -50,10 +50,10 @@ export default function UserRewardCard({
 						className={styles.rewardItem({ isDisabled })}
 					>
 						<div className={styles.userRewardTitle}>
-							<DefaultText type='body3' color='gray600'>{label}</DefaultText>
+							<Text type='body3' color='gray600'>{label}</Text>
 							<SvgIcon src={ArrowIcon} size={20} color='gray600' />
 						</div>
-						<DefaultText type='label2'>{valueMap[key]}</DefaultText>
+						<Text type='label2'>{valueMap[key]}</Text>
 					</button>
 					{MENU_LIST.length !== index + 1 &&
 						<span className={styles.userRewardLine}>

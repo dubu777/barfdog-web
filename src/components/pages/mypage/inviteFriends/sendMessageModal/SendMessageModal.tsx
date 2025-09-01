@@ -1,7 +1,7 @@
 import * as styles from './SendMessageModal.css';
 import * as yup from "yup";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InputField from "@/components/common/inputField/InputField";
@@ -65,8 +65,8 @@ const SendMessageModal = ({
 		>
 			<div className={styles.sendMessageModalContainer}>
 				<Card shadow='none' padding={16} gap={16} align='start'>
-					<DefaultText type='headline3'>[바프독]</DefaultText>
-					<DefaultText type='body1'>
+					<Text type='headline3'>[바프독]</Text>
+					<Text type='body1'>
 						{username} 님이&nbsp;
 						<Controller
 							control={control}
@@ -85,10 +85,10 @@ const SendMessageModal = ({
 						추천코드 :&nbsp;&nbsp;{recommendCode}<br/>
 						가입하러가기 : <br/>
 						https://www.barfdog.co.kr
-					</DefaultText>
+					</Text>
 				</Card>
 				<div>
-					<DefaultText type='headline4' block>친구 연락처</DefaultText>
+					<Text type='headline4' block>친구 연락처</Text>
 					<Controller
 						control={control}
 						name='phone'

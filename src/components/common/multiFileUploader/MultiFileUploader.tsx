@@ -1,7 +1,7 @@
 import * as styles from "@/components/common/multiFileUpload/MultiFileUpload.css";
 import { ChangeEvent, useRef } from "react";
 import UploadLabel from "/public/images/icons/upload-label.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import { UploadedFile } from "@/types";
@@ -48,7 +48,7 @@ export default function MultiFileUploader({
 	return (
 		<div className={className ?? ''}>
 			<div className={styles.fileUploadTitle}>
-				{title && <DefaultText type="label4">{title}</DefaultText>}
+				{title && <Text type="label4">{title}</Text>}
 			</div>
 			<div>
 				<div className={styles.uploadBox}>
@@ -86,17 +86,17 @@ export default function MultiFileUploader({
 					{errors && errors?.length > 0 && (
 						<div className={styles.error}>
 							{errors?.map((error) => (
-								<DefaultText key={error} type="caption" color="red">
+								<Text key={error} type="caption" color="red">
 									{error}
-								</DefaultText>
+								</Text>
 							))}
 						</div>
 					)}
-					<DefaultText type="caption" color="gray500">
+					<Text type="caption" color="gray500">
 						• 파일은 최대 10장 이내로 등록 가능합니다.
 						<br />• 파일크기는 10MB이하 / jpg, jpeg, png, gif 형식만 등록
 						가능합니다.
-					</DefaultText>
+					</Text>
 				</div>
 			</div>
 		</div>
