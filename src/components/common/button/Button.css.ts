@@ -1,7 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-
 export const baseStyle = style({
   display: "inline-flex",
   justifyContent: "center",
@@ -119,8 +118,8 @@ export const buttonVariants = {
 export const disabledVariants = {
   solid: {
     primary: style({
-      backgroundColor: themeVars.colors.gray.gray300,
-      color: themeVars.colors.gray.gray0,
+      backgroundColor: themeVars.colors.gray.gray100,
+      color: themeVars.colors.gray.gray300,
       cursor: "not-allowed",
     }),
   },

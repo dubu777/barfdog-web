@@ -25,6 +25,10 @@ const queryKeys = {
   },
   MYPAGE: {
     BASE: "mypage",
+    PROMOTION: {
+      BASE: "promotion",
+      GET_PROMOTION_LIST: "getPromotionList",
+    },
     GET_MYPAGE_INFO: "getMyPageInfo",
     GET_MYPAGE_BANNER: "getMyPageBanner",
     GET_CONNECTED_SNS: "getConnectedSns",

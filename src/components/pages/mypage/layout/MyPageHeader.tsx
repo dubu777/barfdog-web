@@ -43,6 +43,7 @@ const MyPageHeader = () => {
     }
     > = {
     '/mypage': { leftTitle: '마이페이지', showCartButton: true },
+    '/mypage/promotion': { centerTitle: '프로모션', showBackButton: true },
     '/mypage/coupon': { centerTitle: '쿠폰내역', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/reward': { centerTitle: '적립금내역', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/manage-card': { centerTitle: '카드관리' },

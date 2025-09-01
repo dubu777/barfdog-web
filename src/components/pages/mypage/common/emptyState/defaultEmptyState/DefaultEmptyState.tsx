@@ -6,7 +6,7 @@ interface EmptyStateProps {
 	subTitle?: string;
 }
 
-const DefaultEmptyState = ({ title, subTitle }: EmptyStateProps) => {
+export default function DefaultEmptyState({ title, subTitle }: EmptyStateProps) {
 	return (
 		<div className={styles.emptyStateContainer}>
 			<Text type='label1' color='gray700' align='center'>
@@ -20,5 +20,3 @@ const DefaultEmptyState = ({ title, subTitle }: EmptyStateProps) => {
 		</div>
 	);
 };
-
-export default DefaultEmptyState;
