@@ -1,6 +1,6 @@
 import { queryKeys } from "@/constants";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getMyPageBanner } from "@/api/mypage/mypage";
+import { getMyPageBanner } from "@/api/mypage/common/common";
 import { MyPageBannerData, UseSuspenseQueryCustomOptions } from "@/types";
 
 export function useGetMyPageBanner(queryOptions?: UseSuspenseQueryCustomOptions<MyPageBannerData>){

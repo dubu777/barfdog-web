@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { MyPageBannerData } from "@/types";
 import { queryKeys } from "@/constants";
-import { getMyPageBanner } from "@/api/mypage/mypage";
+import { getMyPageBanner } from "@/api/mypage/common/common";
 import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetMyPageBanner(queryClient: QueryClient) {

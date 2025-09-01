@@ -1,8 +1,8 @@
 import { QueryClient } from "@tanstack/react-query";
 import { InviteRewardList } from "@/types";
 import { queryKeys } from "@/constants";
-import { getInviteRewardList } from "@/api/mypage/mypage";
 import { createSSRRequest } from "@/api/withAuthSSR";
+import { getInviteRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
 
 export async function prefetchGetInviteRewardList(queryClient: QueryClient, page: number) {
 	const ssrAxios = createSSRRequest();

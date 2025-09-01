@@ -1,9 +1,8 @@
 import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-
 import Coupon from "@/components/pages/mypage/coupon/Coupon";
-import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
+import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 
 export default async function CouponPage() {
   const queryClient = new QueryClient();

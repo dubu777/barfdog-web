@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { PaymentItem } from "@/types";
-import { getPaymentList } from "@/api/mypage/mypage";
+import { getPaymentList } from "@/api/mypage/subscription/subscription";
 import { queryKeys } from "@/constants";
 import { createSSRRequest } from "@/api/withAuthSSR";
 

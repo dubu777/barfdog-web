@@ -12,7 +12,7 @@ import useModal from "@/hooks/useModal";
 import RewardInfoBottomSheet from "@/components/pages/mypage/reward/rewardInfoBottomSheet/RewardInfoBottomSheet";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { RewardFilterType, RewardListData, RewardListDataWithTotals } from "@/types";
-import { useGetRewardList } from "@/api/mypage/queries/useGetRewardList";
+import { useGetRewardList } from "@/api/mypage/reward/queries/useGetRewardList";
 
 const Reward = () => {
   const { data: rewardListData, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetRewardList();

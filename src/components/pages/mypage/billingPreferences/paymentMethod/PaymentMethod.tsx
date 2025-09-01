@@ -2,7 +2,7 @@
 import * as styles from '../BillingPreferences.css';
 import Text from "@/components/common/text/Text";
 import PaymentCard from "@/components/pages/mypage/common/paymentCard/PaymentCard";
-import { useGetPaymentList } from "@/api/mypage/queries/useGetPaymentList";
+import { useGetPaymentList } from "@/api/mypage/subscription/queries/useGetPaymentList";
 import { PaymentItem } from "@/types";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";

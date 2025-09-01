@@ -16,14 +16,13 @@ import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defau
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import SendMessageModal from "@/components/pages/mypage/inviteFriends/sendMessageModal/SendMessageModal";
 import useModal from "@/hooks/useModal";
-import { useGetInviteRewardList } from "@/api/mypage/queries/useGetInviteRewardList";
 import { useInView } from "react-intersection-observer";
-import { useApplyRecommendCode } from "@/api/mypage/mutations/useApplyRecommendCode";
 import { isAxiosError } from "axios";
 import { copyToClipboard } from "@/utils/copyToClipboard";
 import { useToastStore } from "@/store/useToastStore";
-import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import { MyPageMemberDto } from "@/types";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
+import { useGetInviteRewardList } from "@/api/mypage/inviteFriends/queries/useGetInviteRewardList";
+import { useCreateRecommendCode } from "@/api/mypage/inviteFriends/mutations/useCreateRecommendCode";
 
 export default function InviteFriends() {
   const { data: userInfoData } = useGetMyPageInfo();
@@ -37,7 +36,7 @@ export default function InviteFriends() {
   const rewardList = rewardListData?.rewardList || [];
 
   const [recommendCode, setRecommendCode] = useState<string>('');
-  const { mutate } = useApplyRecommendCode();
+  const { mutate } = useCreateRecommendCode();
   const { isOpen: isOpenErrorModal, onToggle: onToggleErrorModal, onClose: onCloseErrorModal } = useModal();
   const { isOpen: isOpenSendMessageModal, onToggle: onToggleSendMessageModal, onClose: onCloseSendMessageModal } = useModal();
 

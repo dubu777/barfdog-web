@@ -139,6 +139,9 @@ interface InfoTextType {
   color?: TextColor; // 항목 기본 색상 (선택)
 }
 
+type DiscountType = "FLAT_RATE" | "FIXED_RATE";
+type DiscountUnitType = "%" | "원";
+
 export type {
   SearchParamProps,
   DefaultObjectType,
@@ -156,4 +159,6 @@ export type {
   ApiResponse,
   FileChangeInfo,
   InfoTextType,
+  DiscountType,
+  DiscountUnitType,
 };

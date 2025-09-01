@@ -1,4 +1,4 @@
-import { DogData } from "./dogs";
+import { DogData } from "../dogs";
 import { SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage";
 import { PlanInfo } from "@/types/subscription";
 import { OrderType } from "@/types/order";

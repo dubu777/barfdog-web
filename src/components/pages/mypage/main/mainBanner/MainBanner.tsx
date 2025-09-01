@@ -2,7 +2,7 @@
 import * as styles from './MainBanner.css';
 import Image from "next/image";
 import Link from "next/link";
-import { useGetMyPageBanner } from "@/api/mypage/queries/useGetMypageBanner";
+import { useGetMyPageBanner } from "@/api/mypage/common/queries/useGetMypageBanner";
 
 export default function MainBanner() {
   const { data: banner } = useGetMyPageBanner();

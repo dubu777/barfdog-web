@@ -6,8 +6,7 @@ import DefaultImage from "public/images/icons/default-profile.png";
 import Text from "@/components/common/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
-import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import { MyPageMemberDto } from "@/types";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 import { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR } from "@/constants/membership";
 
 export default function MainInformation() {

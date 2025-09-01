@@ -13,7 +13,6 @@ import {
 } from "@/utils/coupon/couponUtils";
 import { formatNumberWithCommas } from "@/utils";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
 import { Controller } from "react-hook-form";
 import {
   couponDefaultValues,
@@ -25,6 +24,7 @@ import useModal from "@/hooks/useModal";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
+import { useCreateCoupon } from "@/api/mypage/coupon/mutations/useCreateCoupon";
 
 interface CouponModalProps {
   orderType: OrderType;
@@ -63,7 +63,7 @@ export default function CouponModal({
   } = useCouponStore();
 
   // 서버 호출 -------->
-  const { mutate: createCouponMutate } = useApplyCoupon();
+  const { mutate: createCouponMutate } = useCreateCoupon();
 
   // 커스텀 훅 & 유틸------->
   const {

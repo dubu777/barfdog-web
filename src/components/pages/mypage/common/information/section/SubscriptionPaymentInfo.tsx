@@ -8,7 +8,7 @@ import Chips from "@/components/common/chips/Chips";
 import useModal from "@/hooks/useModal";
 import { IAMPORT_MIN_PAYMENT_PRICE, ORDER_TYPE } from "@/constants";
 import { useToastStore } from "@/store/useToastStore";
-import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
+import { useGetCouponList } from "@/api/mypage/coupon/queries/useGetCouponList";
 import { useCancelUsingCoupon } from "@/api/subscription/mutations/useCancelUsingCoupon";
 import { useUpdateUsingCoupon } from "@/api/subscription/mutations/useUpdateUsingCoupon";
 import { useCouponStore } from "@/store/order/useCouponStore";

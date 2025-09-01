@@ -1,4 +1,4 @@
-import { useGetPaymentList } from "@/api/mypage/queries/useGetPaymentList";
+import { useGetPaymentList } from "@/api/mypage/subscription/queries/useGetPaymentList";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 
 export function usePaymentMethodDetail() {

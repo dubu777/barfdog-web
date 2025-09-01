@@ -5,8 +5,7 @@ import AccountCircle from '/public/images/icons/account_circle.svg';
 import Text from "@/components/common/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import { MyPageMemberDto } from "@/types";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 
 const AccountLinkList = {
 	'user-info': { label: '회원정보 변경' },

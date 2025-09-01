@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const applyCoupon = style({
+export const createCoupon = style({
 	display: 'flex',
 	gap: '8px',
 	alignItems: 'center',

@@ -1,7 +1,7 @@
+import { DiscountType } from "./common";
+
 export type {
   Coupon,
-  DiscountType,
-  DiscountUnitType,
   Reason,
   CouponUsabilityResult,
   UsingCoupon,
@@ -21,10 +21,6 @@ interface Coupon {
   status?: string; // 남은 쿠폰 수
   id: number;
 }
-
-type DiscountType = "FLAT_RATE" | "FIXED_RATE";
-
-type DiscountUnitType = "%" | "원";
 
 type Reason = "minPrice" | "orderType";
 

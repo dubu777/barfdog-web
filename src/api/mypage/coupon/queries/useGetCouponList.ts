@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { getCouponList } from "../mypage";
+import { getCouponList } from "../coupon";
 import { Coupon, UseSuspenseQueryCustomOptions } from "@/types";
 
 export function useGetCouponList(queryOptions?: UseSuspenseQueryCustomOptions<Coupon[]>){

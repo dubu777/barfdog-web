@@ -13,7 +13,7 @@ import { useBackNavigation } from "@/utils";
 import { useToastStore } from "@/store/useToastStore";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useGetSubscriptionDetail } from "@/api/subscription/queries/useGetSubscriptionDetail";
-import { useDeletePaymentMethod } from "@/api/mypage/mutations/useDeletePaymentMethod";
+import { useDeletePaymentMethod } from "@/api/mypage/subscription/mutations/useDeletePaymentMethod";
 import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { PAYMENT } from "@/constants";
 import { PaymentMethod } from '@/types';

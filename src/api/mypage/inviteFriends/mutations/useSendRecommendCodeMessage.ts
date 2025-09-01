@@ -1,10 +1,8 @@
 import { SendMessage, UseMutationCustomOptions } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { sendRecommendCodeMessage } from "@/api/mypage/mypage";
+import { sendRecommendCodeMessage } from "@/api/mypage/inviteFriends/inviteFriends";
 
-export { useSendRecommendCodeMessage };
-
-function useSendRecommendCodeMessage(mutationOptions?: UseMutationCustomOptions) {
+export function useSendRecommendCodeMessage(mutationOptions?: UseMutationCustomOptions) {
 	return useMutation({
 		mutationFn: (body: SendMessage) => sendRecommendCodeMessage(body),
 		...mutationOptions,

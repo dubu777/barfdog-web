@@ -9,13 +9,12 @@ import { ORDER_TYPE, subscriptionPlanInfo } from "@/constants";
 import {
 	CardActionsId,
 	IsOpenCardModal,
-	MyPageMemberDto,
 	NormalizedSubscriptionCardData,
 	OrderAction,
 	SubscriptionOrderStatus
 } from "@/types";
 import { getSubscriptionStatusActions } from "@/utils/mypage/getSubscriptionStatusActions";
-import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 
 const normalizeSubscriptionData = (data: any, isMyPage: boolean, subscriptionId?: number): NormalizedSubscriptionCardData => {
 	return {

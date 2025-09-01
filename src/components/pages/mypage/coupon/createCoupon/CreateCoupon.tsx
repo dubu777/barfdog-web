@@ -1,16 +1,16 @@
 import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from "react";
-import * as styles from "./ApplyCoupon.css";
+import * as styles from "./CreateCoupon.css";
 import { AxiosError, isAxiosError } from "axios";
-import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
-import { useApplyCoupon } from "@/api/mypage/mutations/useApplyCoupon";
+import { useGetCouponList } from "@/api/mypage/coupon/queries/useGetCouponList";
+import { useCreateCoupon } from "@/api/mypage/coupon/mutations/useCreateCoupon";
 import { useToastStore } from "@/store/useToastStore";
 import InputField from "@/components/common/inputField/InputField";
 
-const ApplyCoupon = () => {
+const CreateCoupon = () => {
   const [couponCode, setCouponCode] = useState<string>('');
   const [applyErrorMessage, setApplyErrorMessage] = useState<string>('');
   const { isLoading } = useGetCouponList();
-  const { mutate } = useApplyCoupon();
+  const { mutate } = useCreateCoupon();
   const { addToast } = useToastStore();
 
   const handleCouponCodeChange = (e: ChangeEvent<Element>) => {
@@ -47,7 +47,7 @@ const ApplyCoupon = () => {
   };
   return (
     <>
-    <div className={styles.applyCoupon}>
+    <div className={styles.createCoupon}>
       <div className={styles.couponInput}>
         <InputField
           placeholder='쿠폰 번호를 입력하세요'
@@ -72,4 +72,4 @@ const ApplyCoupon = () => {
   );
 };
 
-export default ApplyCoupon;
+export default CreateCoupon;

@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { getRewardList } from "../mypage";
 import { RewardListData, RewardListDataWithTotals } from "@/types/reward";
+import { getRewardList } from "@/api/mypage/reward/reward";
 
 export function useGetRewardList() {
   return useInfiniteQuery<RewardListData | RewardListDataWithTotals, Error>({

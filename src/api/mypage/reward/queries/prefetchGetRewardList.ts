@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import { getRewardList } from "@/api/mypage/mypage";
+import { getRewardList } from "@/api/mypage/reward/reward";
 import { createSSRRequest } from "@/api/withAuthSSR";
 import { queryKeys } from "@/constants";
 

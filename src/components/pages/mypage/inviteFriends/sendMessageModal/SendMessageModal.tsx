@@ -9,7 +9,7 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { Controller } from "react-hook-form";
 import { useToastStore } from "@/store/useToastStore";
 import { SendMessage } from "@/types";
-import { useSendRecommendCodeMessage } from "@/api/mypage/mutations/useSendRecommendCodeMessage";
+import { useSendRecommendCodeMessage } from '@/api/mypage/inviteFriends/mutations/useSendRecommendCodeMessage';
 
 interface SendMessageModalProps {
 	isOpen: boolean;

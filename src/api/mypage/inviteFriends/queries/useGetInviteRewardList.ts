@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
 import { InviteRewardList } from "@/types";
-import { getInviteRewardList } from "@/api/mypage/mypage";
+import { getInviteRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
 
 export function useGetInviteRewardList() {
   return useInfiniteQuery<InviteRewardList>({

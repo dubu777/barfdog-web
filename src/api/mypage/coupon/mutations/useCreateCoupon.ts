@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { applyRecommendCode } from "@/api/mypage/mypage";
+import { createCoupon } from "@/api/mypage/coupon/coupon";
 import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
 
-export { useApplyRecommendCode };
+const getCouponListQueryKey = [queryKeys.COUPON.BASE, queryKeys.COUPON.GET_COUPON_LIST];
 
-function useApplyRecommendCode(mutationOptions?: UseMutationCustomOptions) {
+export function useCreateCoupon(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: { recommendCode: string }) => applyRecommendCode(body),
+    mutationFn: ({ code }: { code: string }) => createCoupon(code),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST],
+        queryKey: getCouponListQueryKey,
       });
     },
     ...mutationOptions,

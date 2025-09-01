@@ -1,13 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
-import { deletePaymentMethod } from "@/api/mypage/mypage";
-
-export { useDeletePaymentMethod };
+import { deletePaymentMethod } from "@/api/mypage/subscription/subscription";
 
 const getPaymentListQueryKey = [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_PAYMENT_LIST];
 
-function useDeletePaymentMethod(mutationOptions?: UseMutationCustomOptions) {
+export function useDeletePaymentMethod(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (cardId: number) => deletePaymentMethod(cardId),

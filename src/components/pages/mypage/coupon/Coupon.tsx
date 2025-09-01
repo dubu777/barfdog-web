@@ -4,8 +4,8 @@ import * as styles from "./Coupon.css";
 import Text from "@/components/common/text/Text";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import CouponItemCard from "@/components/pages/mypage/coupon/couponItemCard/CouponItemCard";
-import ApplyCoupon from "@/components/pages/mypage/coupon/applyCoupon/ApplyCoupon";
-import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
+import CreateCoupon from "@/components/pages/mypage/coupon/createCoupon/CreateCoupon";
+import { useGetCouponList } from "@/api/mypage/coupon/queries/useGetCouponList";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 
 const ItemSortByFilterList = {
@@ -33,7 +33,7 @@ const Coupon = () => {
     <section>
       <article className={styles.applyCouponContainer}>
         <Text type='label4'>쿠폰 등록</Text>
-        <ApplyCoupon />
+        <CreateCoupon />
       </article>
       <article className={styles.couponListContainer}>
         <div className={styles.couponSortBy}>

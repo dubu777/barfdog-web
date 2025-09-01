@@ -13,7 +13,7 @@ import MembershipCard from "@/components/pages/membership/membershipCard/Members
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 import { MembershipTier } from "@/types/membership";
 import { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR } from "@/constants";
-import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 
 interface GuideSteps {
   id: number;
