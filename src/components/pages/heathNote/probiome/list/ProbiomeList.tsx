@@ -17,7 +17,7 @@ interface ProbiomeListProps {
   petId: number;
 }
 
-const ProbiomeList = ({ petId }: ProbiomeListProps) => {
+export default function ProbiomeList({ petId }: ProbiomeListProps) {
   const router = useRouter();
   const {
     isOpen: isOpenKitGuideModal,
@@ -26,7 +26,7 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
   } = useModal();
 
   // petId가 있는 경우에만 API 호출
-  const { data: probiomeList = [], isLoading } = useGetProbiomeList(petId);
+  const { data: probiomeList } = useGetProbiomeList(petId);
 
   const handleDetail = (diagnosisId: number) => {
     router.push(`/health-note/${petId}/probiome/detail/${diagnosisId}`);
@@ -34,10 +34,6 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
   const handleReturn = (diagnosisId: number) => {
     router.push(`/health-note/${petId}/probiome/pickup/${diagnosisId}`);
   };
-
-  if (isLoading) {
-    return <Spinner fullscreen />;
-  }
 
   // const tempStatus = "SUBMITTED" as ProbiomeStatus;
   return (
@@ -98,6 +94,4 @@ const ProbiomeList = ({ petId }: ProbiomeListProps) => {
       />
     </>
   );
-};
-
-export default ProbiomeList;
+}

@@ -8,6 +8,7 @@ import { commonWrapper } from "@/styles/common.css";
 import RecommendedRecipeList from "./recommendedRecipeList/RecommendedRecipeList";
 import DailyCalorie from "./dailyCalorie/DailyCalorie";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import { useRouter } from "next/navigation";
 
 interface DietAnalysisResultProps {
   reportId: number;
@@ -15,6 +16,7 @@ interface DietAnalysisResultProps {
 export default function DietAnalysisResult({
   reportId,
 }: DietAnalysisResultProps) {
+  const router = useRouter();
   const { data: dietAnalysisResult } = useGetDietAnalysisResult(reportId);
   console.log("dietAnalysisResult", dietAnalysisResult);
 
@@ -53,7 +55,7 @@ export default function DietAnalysisResult({
       <ButtonDocked
         type="full-button"
         primaryButtonLabel="레시피 주문하기"
-        onPrimaryClick={() => {}}
+        onPrimaryClick={() => router.push(`/subscribe/${reportId}`)}
       />
     </div>
   );

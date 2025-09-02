@@ -44,16 +44,7 @@ export function useCancelUploadOnLeave({
     }
   };
 
-  // 0) 컴포넌트 언마운트(정상 네비게이션 등) – 일반 호출
-  useEffect(() => {
-    return () => {
-      if (shouldCancelRef.current && pendingRef.current) {
-        cancelRef.current(); // keepalive 불필요
-      }
-    };
-  }, []);
-
-  // 1) SPA 경로/쿼리 변경 – 일반 호출
+  // 1) SPA 경로/쿼리 변경, 언마운트 – 일반 호출
   useEffect(() => {
     return () => {
       if (shouldCancelRef.current && pendingRef.current) {

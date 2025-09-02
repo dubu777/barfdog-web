@@ -132,6 +132,13 @@ const updateUsingCoupon = async (subscriptionId: number, body: UsingCoupon) => {
   return { ...data, subscriptionId: subscriptionId };
 };
 
+const getRawFoodOrderSheet = async (reportId: number): Promise<any> => {
+  const { data } = await axiosInstance.get(
+    `api/v2/orders/raw/sheet/subscription/${reportId}`
+  );
+  return data;
+};
+
 export {
   getPlanDiscount,
   getSubscriptionDetail,
@@ -143,4 +150,5 @@ export {
   updateSubscriptionAddress,
   cancelUsedCoupon,
   updateUsingCoupon,
+  getRawFoodOrderSheet,
 };

@@ -1,4 +1,7 @@
+import Spinner from "@/components/common/spinner/Spinner";
 import ProbiomeList from "@/components/pages/heathNote/probiome/list/ProbiomeList";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 interface ProbiomeListPageProps {
   params: {
@@ -12,5 +15,11 @@ export default async function ProbiomeListPage({
   const { petId } = params;
   const parsedDogId = parseInt(petId);
 
-  return <ProbiomeList petId={parsedDogId} />;
+  return (
+    <ErrorBoundary fallback={<div>에러가 발생했습니다</div>}>
+      <Suspense fallback={<Spinner fullscreen />}>
+        <ProbiomeList petId={parsedDogId} />
+      </Suspense>
+    </ErrorBoundary>
+  );
 }

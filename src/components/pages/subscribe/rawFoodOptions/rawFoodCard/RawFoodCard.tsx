@@ -1,7 +1,6 @@
 import Image from "next/image";
-import * as styles from "./RecipeCard.css";
+import * as styles from "./RawFoodCard.css";
 import { RecipeTempData } from "@/constants";
-import RecipeBadge from "./recipeBadge/RecipeBadge";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
@@ -16,8 +15,9 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
 import { CalculateRecipePackOutput } from "@/utils/subscription/calculateRecipe";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import RawFoodBadge from "./rawFoodBadge/RawFoodBadge";
 
-interface RecipeCardProps {
+interface RawFoodCardProps {
   recipeTempData: RecipeTempData;
   recipeDto: RecipeDto;
   dailyRecommendKcal: number;
@@ -31,7 +31,7 @@ interface RecipeCardProps {
   isUnder20g: boolean;
 }
 
-export default function RecipeCard({
+export default function RawFoodCard({
   recipeTempData,
   recipeDto,
   dailyRecommendKcal,
@@ -43,9 +43,8 @@ export default function RecipeCard({
   packData,
   rank,
   isUnder20g,
-}: RecipeCardProps) {
-  const { recommendedPackGrams, packGrams, packPrice, pricePer10g } =
-    packData;
+}: RawFoodCardProps) {
+  const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = packData;
 
   const toast = useToastStore((s) => s.addToast);
   const {
@@ -91,7 +90,7 @@ export default function RecipeCard({
       })}
     >
       {inedibleOverlap.length > 0 && (
-        <RecipeBadge inedibleFoodText={inedibleOverlap.join(", ")} />
+        <RawFoodBadge inedibleFoodText={inedibleOverlap.join(", ")} />
       )}
       <div
         className={commonWrapper({
@@ -115,7 +114,7 @@ export default function RecipeCard({
           <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
             추천 급여량 {recommendedPackGrams}g
           </Chips>
-        )} 
+        )}
       </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image

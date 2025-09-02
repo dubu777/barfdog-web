@@ -38,10 +38,14 @@ export function buildGeneralPaymentRequest({
     buyer_tel: deliveryDto.phoneNumber ?? "",
     buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
     buyer_postcode: deliveryDto.zipcode ?? "",
-    m_redirect_url: `${window.location.origin}/order/checkout/mobile-payment-redirect/general?` +
-    `order_id=${encodeURIComponent(orderId)}&` +
-    `merchantUid=${encodeURIComponent(merchantUid)}&` +
-    `discount_reward=${encodeURIComponent(requestBody.discountReward)}`
+    m_redirect_url:
+      `${window.location.origin}/order/checkout/mobile-payment-redirect/general?` +
+      `order_id=${encodeURIComponent(orderId)}&` +
+      `merchantUid=${encodeURIComponent(merchantUid)}&` +
+      `discount_reward=${encodeURIComponent(requestBody.discountReward)}&` +
+      `member_coupon_id=${encodeURIComponent(
+        requestBody.memberCouponId ?? ""
+      )}&`,
   };
 
   if (paymentMethod === "NAVER_PAY") {
@@ -88,20 +92,23 @@ export function buildSubscriptionPaymentRequest({
     buyer_tel: deliveryDto.phoneNumber,
     buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
     buyer_postcode: deliveryDto.zipcode,
-    m_redirect_url: `${window.location.origin}/order/checkout/mobile-payment-redirect/subscription?` +
-    `order_id=${encodeURIComponent(orderId)}&` +
-    `customer_uid=${encodeURIComponent(customerUid)}&` +
-    `merchantUid=${encodeURIComponent(merchantUid)}&` +
-    `amount=${encodeURIComponent(paymentPrice)}&` +
-    `name=${encodeURIComponent(itemName)}&` +
-    `discount_reward=${encodeURIComponent(requestBody.discountReward)}&` +
-    `buyer_name=${encodeURIComponent(deliveryDto.recipientName)}&` +
-    `buyer_tel=${encodeURIComponent(deliveryDto.phoneNumber)}&` +
-    `buyer_email=${encodeURIComponent(email)}&` +
-    `subscription_Id=${encodeURIComponent(subscribeId)}&` +
-    `buyer_addr=${encodeURIComponent(`${deliveryDto.street}, ${deliveryDto.detailAddress}`)}&` +
-    `buyer_postcode=${encodeURIComponent(deliveryDto.zipcode)}`
-  }
+    m_redirect_url:
+      `${window.location.origin}/order/checkout/mobile-payment-redirect/subscription?` +
+      `order_id=${encodeURIComponent(orderId)}&` +
+      `customer_uid=${encodeURIComponent(customerUid)}&` +
+      `merchantUid=${encodeURIComponent(merchantUid)}&` +
+      `amount=${encodeURIComponent(paymentPrice)}&` +
+      `name=${encodeURIComponent(itemName)}&` +
+      `discount_reward=${encodeURIComponent(requestBody.discountReward)}&` +
+      `buyer_name=${encodeURIComponent(deliveryDto.recipientName)}&` +
+      `buyer_tel=${encodeURIComponent(deliveryDto.phoneNumber)}&` +
+      `buyer_email=${encodeURIComponent(email)}&` +
+      `subscription_Id=${encodeURIComponent(subscribeId)}&` +
+      `buyer_addr=${encodeURIComponent(
+        `${deliveryDto.street}, ${deliveryDto.detailAddress}`
+      )}&` +
+      `buyer_postcode=${encodeURIComponent(deliveryDto.zipcode)}`,
+  };
   if (paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({
       subscribeId: subscribeDto.id,

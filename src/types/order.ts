@@ -5,6 +5,7 @@ interface SuccessGeneralPaymentRequest {
   impUid: string;
   merchantUid: string | null;
   discountReward: number;
+  memberCouponId: number | null;
 }
 
 interface SuccessGeneralOrderResponse {
@@ -129,25 +130,25 @@ interface GeneralOrderItem {
 }
 
 interface DefaultAddress {
-  city: string;
-  default: boolean;
-  deliveryName: string | null;
-  detailAddress: string;
   id: number;
-  phoneNumber: string;
+  deliveryName: string | null;
   recipientName: string;
-  request: string;
-  street: string;
+  phoneNumber: string;
   zipcode: string;
+  city: string;
+  street: string;
+  default: boolean;
+  detailAddress: string;
+  request: string;
 }
 
 interface BundleDeliveryAddress {
-  deliveryName: string;
-  detailAddress: string; // 상세 주소
   id: number;
+  deliveryName: string;
   recipientName: string; // 수령자 이름
   phoneNumber: string; // 수령자 전화번호
   zipcode: string; // 우편번호
+  detailAddress: string; // 상세 주소
   street: string; // 도로명 주소
 }
 

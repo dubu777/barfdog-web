@@ -56,12 +56,12 @@ export default function ProbiomeCard({
         >
           신청 상세
         </Button>
-        {status === "SUBMITTED" && (
+        {status === "SURVEY_SUBMITTED" && (
           <Button variant="outline" size="sm" fullWidth onClick={onReturn}>
             회수 신청
           </Button>
         )}
-        {status === "COMPLETED" && (
+        {status === "REPORT_COMPLETED" && (
           <Button variant="outline" size="sm" fullWidth>
             결과 다운로드
           </Button>

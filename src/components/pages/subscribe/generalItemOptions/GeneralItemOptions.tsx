@@ -1,6 +1,6 @@
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import React, { useRef } from "react";
-import * as styles from "../recipeOptions/RecipeOptions.css";
+import * as styles from "../rawFoodOptions/RawFoodOptions.css";
 import TabBar from "@/components/common/tabBar/TabBar";
 import { generalItemTab, generalTempItems } from "@/constants";
 import { scrollToElement } from "@/utils/scrollToElement";

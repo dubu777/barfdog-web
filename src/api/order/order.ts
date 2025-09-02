@@ -139,6 +139,12 @@ const failGeneralPayment = async (id: number) => {
 
   return data;
 };
+// 일반 결제 주문 취소
+const cancelGeneralPayment = async (id: number) => {
+  const { data } = await axiosInstance.post(`/api/orders/${id}/general/cancel`);
+
+  return data;
+};
 
 // SubscribeOrderDto 타입이 정의되어 있지 않음
 const getSubscriptionOrderList = async (
@@ -211,4 +217,5 @@ export {
   successSubscriptionPayment,
   invalidSuccessSubscriptionPayment,
   failSubscriptionPayment,
+  cancelGeneralPayment,
 };

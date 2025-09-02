@@ -1,14 +1,15 @@
 "use client";
 
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import * as styles from "./RecipeBadge.css";
+import * as styles from "./RawFoodBadge.css";
 import CloseIcon from "public/images/survey/close_small.svg";
 import DefaultText from "@/components/common/defaultText/DefaultText";
-interface RecipeBadgeProps {
+
+interface RawFoodBadgeProps {
   inedibleFoodText: string;
 }
 
-export default function RecipeBadge({ inedibleFoodText }: RecipeBadgeProps) {
+export default function RawFoodBadge({ inedibleFoodText }: RawFoodBadgeProps) {
   return (
     <div className={styles.recipeBadgeContainer}>
       <SvgIcon src={CloseIcon} color="red" size={20} />

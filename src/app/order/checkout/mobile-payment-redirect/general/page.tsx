@@ -5,16 +5,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useSuccessGeneralPayment } from "@/api/order/mutations/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/order/mutations/useFailGeneralPayment";
 import { useToastStore } from "@/store/useToastStore";
-import { DotSpinner } from "@/components/common/spinner/DotSpinner";
 import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
-
+import Spinner from "@/components/common/spinner/Spinner";
+import { useCancelGeneralPayment } from "@/api/order/mutations/useCancelGeneralPayment";
 
 export default function Page() {
   return (
-    <Suspense fallback={<DotSpinner /> }>
+    <Suspense fallback={<Spinner />}>
       <MobileGeneralPaymentRedirect />
     </Suspense>
-  )
+  );
 }
 
 function MobileGeneralPaymentRedirect() {
@@ -26,6 +26,7 @@ function MobileGeneralPaymentRedirect() {
 
   const { mutateAsync: successPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failPayment } = useFailGeneralPayment();
+  const { mutateAsync: cancelPayment } = useCancelGeneralPayment();
 
   useEffect(() => {
     const processFinalPayment = async () => {
@@ -37,6 +38,7 @@ function MobileGeneralPaymentRedirect() {
         const merchantUid = searchParams.get("merchantUid");
         const orderIdStr = searchParams.get("order_id");
         const discountRewardStr = searchParams.get("discount_reward");
+        const memberCouponIdStr = searchParams.get("member_coupon_id");
         const errorMsg = searchParams.get("error_msg") ?? "";
 
         if (
@@ -44,18 +46,20 @@ function MobileGeneralPaymentRedirect() {
           !impSuccess ||
           !merchantUid ||
           !orderIdStr ||
-          !discountRewardStr
+          !discountRewardStr ||
+          !memberCouponIdStr
         ) {
           throw new Error("필수 결제 정보가 누락되었습니다.");
         }
 
         const orderId = Number(orderIdStr);
         const discountReward = Number(discountRewardStr);
+        const memberCouponId = Number(memberCouponIdStr);
 
         if (impSuccess === "true") {
           await successPayment({
             id: orderId,
-            body: { impUid, merchantUid, discountReward },
+            body: { impUid, merchantUid, discountReward, memberCouponId },
           });
           router.push("/order/checkout/completed");
           return;
@@ -64,6 +68,7 @@ function MobileGeneralPaymentRedirect() {
         // 2) 사용자가 결제창을 닫거나 취소 버튼 클릭한 경우
         if (errorMsg === "결제를 취소하였습니다.") {
           addToast("결제를 취소하였습니다.", "above-button");
+          await cancelPayment(orderId);
           router.push("/order/checkout/general");
           return;
         }
@@ -83,7 +88,7 @@ function MobileGeneralPaymentRedirect() {
 
   return (
     <div className={mobilePaymentResultContainer}>
-      <DotSpinner />
+      <Spinner />
     </div>
   );
 }

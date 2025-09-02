@@ -1,34 +1,6 @@
 import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
 import { RecipeDto } from "./recipe";
-
-export type {
-  PlanDiscountResponse,
-  RecipeMeal,
-  CalculateSubscribePriceInput,
-  RecipePriceDetails,
-  CalculateSubscribePriceOutput,
-  calculateOneMealGramsInput,
-  calculateOneMealGramsOutput,
-  calculateOneMealGramsWithVolumeInput,
-  SubscriptionDetailDto,
-  SubscriptionDto,
-  SubscriptionAddressData,
-  AddressDto,
-  SubscriptionListData,
-  BenefitDto,
-  PaymentBody,
-  SubscriptionResponse,
-  SubscriptionData,
-  BenefitStatus,
-  SubscriptionSkipType,
-  SubscribeStatus,
-  PlanKey,
-  PlanName,
-  PlanInfo,
-  // UsingCoupon,
-  SubscribeGeneralItem,
-  SubscriptionStep,
-};
+import { HealthConcernType } from "./survey";
 
 interface SubscriptionResponse<T> {
   isDone: boolean;
@@ -211,6 +183,35 @@ interface SubscribeGeneralItem {
   type: "topping" | "snack";
 }
 
+type MeetType = "SINGLE" | "DOUBLE";
+
+/** 생식 레시피 아이템 */
+interface RawFoodOrderItem {
+  recipeId: number;
+  rank: number;
+  recipeNameKorea: string;
+  recipeNameEnglish: string;
+  /** g/kcal (서버 키 그대로: gramPerKal) */
+  gramPerKal: number;
+  /** g당 가격 */
+  pricePerGram: number;
+  itemImageFilename: string | null;
+  healthConcernsChips: HealthConcernType[];
+  /** 1회 급여 권장 g */
+  oneMealRecommendGram: number;
+  /** 단일/복수 단백질 구성 */
+  meet: MeetType;
+  /** 추천 여부 */
+  isRecommend: boolean;
+}
+
+/** 생식 주문서 응답 루트 */
+interface RawFoodOrderSheet {
+  petName: string;
+  oneDayRecommendKcal: number;
+  recipeList: RawFoodOrderItem[];
+}
+
 type BenefitStatus = "AVAILABLE" | "REQUESTED" | "USED";
 
 type SubscriptionSkipType = "ONCE" | "WEEK";
@@ -221,4 +222,36 @@ type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";
 
 type PlanName = keyof typeof subscriptionPlanInfo;
 
-type SubscriptionStep = "recipe" | "general-item" | "delivery-cycle";
+type SubscriptionStep = "rawFood" | "deliveryCycle";
+
+type DeliveryPlan = "ONE_WEEK" | "TWO_WEEK" | "FOUR_WEEK";
+
+export type {
+  PlanDiscountResponse,
+  RecipeMeal,
+  CalculateSubscribePriceInput,
+  RecipePriceDetails,
+  CalculateSubscribePriceOutput,
+  calculateOneMealGramsInput,
+  calculateOneMealGramsOutput,
+  calculateOneMealGramsWithVolumeInput,
+  SubscriptionDetailDto,
+  SubscriptionDto,
+  SubscriptionAddressData,
+  AddressDto,
+  SubscriptionListData,
+  BenefitDto,
+  PaymentBody,
+  SubscriptionResponse,
+  SubscriptionData,
+  BenefitStatus,
+  SubscriptionSkipType,
+  SubscribeStatus,
+  PlanKey,
+  PlanName,
+  PlanInfo,
+  SubscribeGeneralItem,
+  SubscriptionStep,
+  RawFoodOrderSheet,
+  DeliveryPlan,
+};

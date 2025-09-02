@@ -9,6 +9,7 @@ import useModal from "@/hooks/useModal";
 import { useGetCouponList } from "@/api/mypage/queries/useGetCouponList";
 import { OrderType } from "@/types";
 import CouponModal from "@/components/common/modal/couponModal/CouponModal";
+import { useCouponStore } from "@/store/order/useCouponStore";
 
 interface CouponSelectorProps {
   orderPrice: number;
@@ -20,14 +21,45 @@ export default function CouponSelector({
   orderType,
 }: CouponSelectorProps) {
   const { data: coupons } = useGetCouponList();
-
+  const appliedCoupon = useCouponStore((state) => state.appliedCoupon);
   const { isOpen, onClose, onToggle } = useModal();
-  
+
   const usableCouponCount = getAvailableCoupons(
     coupons,
     orderPrice,
     orderType
   ).length;
+
+  const renderCouponContent = () => {
+    if (appliedCoupon) {
+      return (
+        <DefaultText type="label1">
+          <DefaultText type="headline1" color="red">
+            {appliedCoupon.discountAmount.toLocaleString()}원
+          </DefaultText>{" "}
+          할인
+        </DefaultText>
+      );
+    }
+
+    if (usableCouponCount === 0) {
+      return (
+        <DefaultText type="label1" color="gray500">
+          {ORDER_MESSAGE.NO_AVAILABLE_COUPONS}
+        </DefaultText>
+      );
+    }
+
+    return (
+      <DefaultText type="label1">
+        사용 가능{" "}
+        <DefaultText type="headline1" color="red">
+          {usableCouponCount}장
+        </DefaultText>
+      </DefaultText>
+    );
+  };
+
   return (
     <OrderSection
       title="할인쿠폰"
@@ -37,21 +69,9 @@ export default function CouponSelector({
       ]}
     >
       <div className={styles.couponSelectorBox} onClick={onToggle}>
-        {usableCouponCount === 0 ? (
-          <DefaultText type="label1" color="gray500">
-            {ORDER_MESSAGE.NO_AVAILABLE_COUPONS}
-          </DefaultText>
-        ) : (
-          <DefaultText type="label1">
-            사용 가능{" "}
-            <DefaultText type="headline1" color="red">
-              {usableCouponCount}장
-            </DefaultText>
-          </DefaultText>
-        )}
+        {renderCouponContent()}
         <SvgIcon src={ArrowIcon} size={20} color="gray600" />
       </div>
-      {/* 쿠폰 모달 api 바뀌면 개발 예정 */}
       <CouponModal
         orderType={orderType}
         coupons={coupons}

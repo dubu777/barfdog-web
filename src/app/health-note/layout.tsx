@@ -9,7 +9,7 @@ interface DefaultLayoutProps {
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <Suspense fallback={<Loader />}>
-      <HealthNoteHeader />
+      {/* <HealthNoteHeader /> */}
       <Wrapper>{children}</Wrapper>
     </Suspense>
   );

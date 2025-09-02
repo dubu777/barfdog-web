@@ -7,15 +7,15 @@ import { useInvalidSubscriptionPayment } from "@/api/order/mutations/useInvalidS
 import { useSuccessSubscriptionPayment } from "@/api/order/mutations/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/order/mutations/useFailSubscriptionPayment";
 import { useToastStore } from "@/store/useToastStore";
-import { DotSpinner } from "@/components/common/spinner/DotSpinner";
 import { mobilePaymentResultContainer } from "../MobilePaymentRedirect.css";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default function Page() {
   return (
-    <Suspense fallback={<DotSpinner /> }>
+    <Suspense fallback={<Spinner fullscreen />}>
       <MobileSubscriptionPaymentRedirect />
     </Suspense>
-  )
+  );
 }
 
 function MobileSubscriptionPaymentRedirect() {
@@ -171,7 +171,7 @@ function MobileSubscriptionPaymentRedirect() {
 
   return (
     <div className={mobilePaymentResultContainer}>
-      <DotSpinner />
+      <Spinner fullscreen />
     </div>
   );
 }

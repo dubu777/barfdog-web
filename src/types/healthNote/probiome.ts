@@ -43,11 +43,11 @@ interface CreateProbiomeResponse {
 }
 
 type ProbiomeStatus =
-  | "SUBMITTED"
+  | "SURVEY_SUBMITTED"
   | "KIT_PICKUP_REQUESTED"
-  | "KIT_PICKUP_DONE"
-  | "ANALYZING"
-  | "COMPLETED";
+  | "KIT_PICKUP_COMPLETED"
+  | "ANALYSIS_IN_PROGRESS"
+  | "REPORT_COMPLETED";
 
 interface DeliveryAddressInfo {
   addressId: number | null;

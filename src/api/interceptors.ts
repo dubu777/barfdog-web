@@ -9,17 +9,18 @@ export function attachAuthInterceptors(
   jsonInst: AxiosInstance,
   uploadInst: AxiosInstance
 ) {
-  const isClient = typeof window !== "undefined";
+  if (typeof window === "undefined") return;
+
   const injectToken = (config: InternalAxiosRequestConfig) => {
-    if (isClient) {
-      const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-      if (token) {
-        config.headers = config.headers ?? {};
-        config.headers.Authorization = token.startsWith("Bearer ")
-          ? token
-          : `Bearer ${token}`;
-      }
+    const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+    if (token) {
+      console.log("SERVER REQUEST", config.url);
+      config.headers = config.headers ?? {};
+      config.headers.Authorization = token.startsWith("Bearer ")
+        ? token
+        : `Bearer ${token}`;
     }
+
     return config;
   };
 

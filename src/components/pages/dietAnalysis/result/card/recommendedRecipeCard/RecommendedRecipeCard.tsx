@@ -104,7 +104,7 @@ export default function RecommendedRecipeCard({
         freeMode={true}
         className={styles.ingredientSwiper}
       >
-        {recipe.primaryIngredientList.map((ingredient, index) => (
+        {recipe.primaryIngredients.map((ingredient, index) => (
           <SwiperSlide key={index} className={styles.ingredientSlide}>
             <div className={styles.ingredientItem}>
               <div className={styles.ingredientIcon}>

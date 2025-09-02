@@ -11,7 +11,7 @@ export const PROBIOME_STATUS_CONFIG: Record<
   ProbiomeStatus,
   ProbiomeStatusConfig
 > = {
-  SUBMITTED: {
+  SURVEY_SUBMITTED: {
     label: "문진 작성완료",
     chipColor: "gray100",
     iconColor: "gray700",
@@ -23,19 +23,19 @@ export const PROBIOME_STATUS_CONFIG: Record<
     iconColor: "pastelRed",
     showIcon: false,
   },
-  KIT_PICKUP_DONE: {
+  KIT_PICKUP_COMPLETED: {
     label: "회수 완료",
     chipColor: "lightPink",
     iconColor: "pastelRed",
     showIcon: true,
   },
-  ANALYZING: {
+  ANALYSIS_IN_PROGRESS: {
     label: "분석 중",
     chipColor: "blue50",
     iconColor: "blue400",
     showIcon: false,
   },
-  COMPLETED: {
+  REPORT_COMPLETED: {
     label: "분석 완료",
     chipColor: "blue50",
     iconColor: "blue400",

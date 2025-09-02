@@ -61,7 +61,6 @@ const numberOfPacksPerDay = {
   2: "하루 두 끼",
 };
 
-
 // 기본 하루 끼니 수
 const DEFAULT_MEALS_PER_DAY = 2;
 
@@ -80,7 +79,10 @@ const ORIGIN_SUBSCRIBE_ID_SET = new Set<number>([
 ]);
 
 // 레거시 계산용 상수 (레시피 ID → { gramPerKcal, pricePerGram })
-const LEGACY_RECIPE_CONSTANTS: Record<number, { gramPerKcal: number; pricePerGram: number }> = {
+const LEGACY_RECIPE_CONSTANTS: Record<
+  number,
+  { gramPerKcal: number; pricePerGram: number }
+> = {
   5: { gramPerKcal: 1.49462, pricePerGram: 35.649 },
   6: { gramPerKcal: 1.46324, pricePerGram: 39.9 },
   7: { gramPerKcal: 1.47532, pricePerGram: 40.452 },
@@ -125,20 +127,20 @@ const generalItemTab = [
   },
 ];
 
-  const recipeDetailTab = [
-    {
-      label: "급여량",
-      value: "amount",
-    },
-    {
-      label: "효능",
-      value: "benefits",
-    },
-    {
-      label: "성분",
-      value: "ingredients",
-    },
-  ];
+const recipeDetailTab = [
+  {
+    label: "급여량",
+    value: "amount",
+  },
+  {
+    label: "효능",
+    value: "benefits",
+  },
+  {
+    label: "성분",
+    value: "ingredients",
+  },
+];
 
 const deliveryOptions = {
   mealFrequency: [
@@ -148,20 +150,19 @@ const deliveryOptions = {
   deliveryCycle: [
     { label: "2주", value: 2 },
     { label: "4주", value: 4 },
-  ]
+  ],
 };
 
 const subscribeStepMap: Record<string, number> = {
-  "recipe": 1,
-  "general-item": 2,
-  "delivery-cycle": 3,
+  "raw-food": 1,
+  "delivery-cycle": 2,
 };
-
 
 const generalTempItems: SubscribeGeneralItem[] = [
   {
     id: 28,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=6d945436-725c-4d15-b4e7-446e01cda7e1.jpg",
+    imageUrl:
+      "http://www.barfdogserver.com/display/items?filename=6d945436-725c-4d15-b4e7-446e01cda7e1.jpg",
     name: "머쉬룸스프 200ml × 2",
     originalPrice: 16900,
     inStock: true,
@@ -170,7 +171,8 @@ const generalTempItems: SubscribeGeneralItem[] = [
   },
   {
     id: 27,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=2bf9fd47-4272-44ea-a969-503dedba83b1.jpg",
+    imageUrl:
+      "http://www.barfdogserver.com/display/items?filename=2bf9fd47-4272-44ea-a969-503dedba83b1.jpg",
     name: "치킨스프 200ml × 2",
     originalPrice: 15900,
     inStock: true,
@@ -179,7 +181,8 @@ const generalTempItems: SubscribeGeneralItem[] = [
   },
   {
     id: 17,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=8ada6262-3167-47c6-8bdc-e191a22ea8de.jpg",
+    imageUrl:
+      "http://www.barfdogserver.com/display/items?filename=8ada6262-3167-47c6-8bdc-e191a22ea8de.jpg",
     name: "바화이트",
     originalPrice: 15900,
     inStock: true,
@@ -188,7 +191,8 @@ const generalTempItems: SubscribeGeneralItem[] = [
   },
   {
     id: 14,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=b0c11e27-59ad-49af-8c67-ba4e050b1059.jpg",
+    imageUrl:
+      "http://www.barfdogserver.com/display/items?filename=b0c11e27-59ad-49af-8c67-ba4e050b1059.jpg",
     name: "터메릭슈퍼큐브",
     originalPrice: 15500,
     inStock: true,
@@ -197,7 +201,8 @@ const generalTempItems: SubscribeGeneralItem[] = [
   },
   {
     id: 13,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=56601eaf-db90-415c-a791-f857e553e69a.jpg",
+    imageUrl:
+      "http://www.barfdogserver.com/display/items?filename=56601eaf-db90-415c-a791-f857e553e69a.jpg",
     name: "바프레드",
     originalPrice: 16000,
     inStock: true,
@@ -206,7 +211,8 @@ const generalTempItems: SubscribeGeneralItem[] = [
   },
   {
     id: 25,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=d1257ef5-ac0a-4fcb-b917-85aecb09516d.jpg",
+    imageUrl:
+      "http://www.barfdogserver.com/display/items?filename=d1257ef5-ac0a-4fcb-b917-85aecb09516d.jpg",
     name: "노즈노우즈 닭(치킨)롤",
     originalPrice: 12900,
     inStock: true,
@@ -215,7 +221,8 @@ const generalTempItems: SubscribeGeneralItem[] = [
   },
   {
     id: 24,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=1612e845-f4da-406f-8a06-b2d4d67ea29d.jpg",
+    imageUrl:
+      "http://www.barfdogserver.com/display/items?filename=1612e845-f4da-406f-8a06-b2d4d67ea29d.jpg",
     name: "노즈노우즈 칠면조(터키)롤",
     originalPrice: 12900,
     inStock: true,
@@ -223,4 +230,3 @@ const generalTempItems: SubscribeGeneralItem[] = [
     type: "snack",
   },
 ];
-

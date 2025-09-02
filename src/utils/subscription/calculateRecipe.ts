@@ -76,8 +76,12 @@ export interface CalculateRecipePackOutput {
 }
 
 export interface CalculateRecipePackInput {
-  dailyRecommendKcal: number; // 하루 권장 칼로리
-  recipeDto: RecipeDto; // 선택된 레시피 DTO
+  rawFoodItem: {
+    recipeId: number;
+    gramPerKal: number;
+    pricePerGram: number;
+    oneMealRecommendGram: number; // 서버에서 계산된 추천 급여량
+  }; // rawFood 데이터
   subscribeId: number; // 구독 ID (레거시 여부 판단용)
   customPackGrams?: number; // 사용자 지정 팩당 그램 (없으면 추천 그램 사용)
 }
@@ -86,33 +90,27 @@ export interface CalculateRecipePackInput {
  * 한 팩당 그램 → 팩당 가격 → 10g당 가격 계산
  */
 export function calculateRecipePack({
-  dailyRecommendKcal,
-  recipeDto,
+  rawFoodItem,
   subscribeId,
   customPackGrams,
 }: CalculateRecipePackInput): CalculateRecipePackOutput {
-  // 레거시 여부에 따라 gramPerKcal/pricePerGram 결정
+  // 서버에서 이미 계산된 추천 급여량 사용
+  let recommendedPackGrams = rawFoodItem.oneMealRecommendGram;
+  let pricePerGram = rawFoodItem.pricePerGram;
+
+  // 레거시 여부에 따라 pricePerGram 조정
   const isLegacy = ORIGIN_SUBSCRIBE_ID_SET.has(subscribeId);
-  const legacyConst = LEGACY_RECIPE_CONSTANTS[recipeDto.id];
-  const { gramPerKcal, pricePerGram } =
-    isLegacy && legacyConst ? legacyConst : recipeDto;
+  const legacyConst = LEGACY_RECIPE_CONSTANTS[rawFoodItem.recipeId];
+  
+  if (isLegacy && legacyConst) {
+    pricePerGram = legacyConst.pricePerGram;
+  }
 
-
-  // 추천 급여량
-  const rawRecommendedPackGrams = roundTo(
-    (dailyRecommendKcal * gramPerKcal) / DEFAULT_MEALS_PER_DAY,
-    1
-  );
-
-  // 20g 미만일 때 값 사용자 안내용 값 반환
-  const under20g = rawRecommendedPackGrams < 20 ? rawRecommendedPackGrams : undefined;
-
-  // 추천 급여량 최소 20g 보장
-  const recommendedPackGrams = rawRecommendedPackGrams < 20 ? 20 : rawRecommendedPackGrams;
+  // 20g 미만일 때 사용자 안내용 값 반환
+  const under20g = recommendedPackGrams < 20 ? recommendedPackGrams : undefined;
 
   // 실제 계산에 사용할 그램: custom이 있으면 custom, 없으면 recommended
-  const usedPackGrams =
-    customPackGrams != null ? customPackGrams : recommendedPackGrams;
+  const usedPackGrams = customPackGrams != null ? customPackGrams : recommendedPackGrams;
 
   const packGrams = roundTo(usedPackGrams, 1);
   const packPrice = roundTo(packGrams * pricePerGram, 0);

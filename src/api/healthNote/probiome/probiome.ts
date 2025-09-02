@@ -5,7 +5,6 @@ import {
   ProbiomeDetailResponse,
   ProbiomeList,
   ProbiomePreInfo,
-  CreateProbiomePickupResponse,
   CreateProbiomePickupRequest,
 } from "@/types/healthNote/probiome";
 import axiosInstance from "../../axiosInstance";

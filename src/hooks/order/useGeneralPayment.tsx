@@ -15,6 +15,7 @@ import useDeviceState from "@/hooks/useDeviceState";
 import { buildGeneralPaymentRequest } from "@/store/order/paymentUtils";
 import { usePayment } from "./usePayment";
 import { useToastStore } from "@/store/useToastStore";
+import { useCancelGeneralPayment } from "@/api/order/mutations/useCancelGeneralPayment";
 
 interface UseGeneralPaymentProps {
   generalOrderSheetData: GeneralOrderSheetResponse;
@@ -33,6 +34,7 @@ export function useGeneralPayment({
   const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
   const { mutateAsync: successPayment } = useSuccessGeneralPayment();
   const { mutateAsync: failPayment } = useFailGeneralPayment();
+  const { mutateAsync: cancelPayment } = useCancelGeneralPayment();
 
   const handlePaymentResponse = useCallback(
     async (
@@ -48,11 +50,13 @@ export function useGeneralPayment({
               impUid: response.imp_uid,
               merchantUid: response.merchant_uid,
               discountReward: requestBody.discountReward,
+              memberCouponId: requestBody.memberCouponId,
             },
           });
           router.push("/order/order-completed");
         } catch (error) {
           console.error("결제 성공 처리 실패:", error);
+          await cancelPayment(orderId);
           router.push("/order/order-failed");
         }
         return;
@@ -60,6 +64,7 @@ export function useGeneralPayment({
 
       // 사용자가 팝업을 닫아서 취소한 경우
       if (response.error_msg === "사용자가 결제를 취소하였습니다.") {
+        await cancelPayment(orderId);
         addToast("결제를 취소하였습니다.", "above-button");
         return;
       }
@@ -69,8 +74,10 @@ export function useGeneralPayment({
         await failPayment(orderId);
         console.error("결제 실패:", response);
       } catch (e) {
+        await failPayment(orderId);
         console.error("결제 실패 처리 실패:", e);
       }
+      await failPayment(orderId);
       router.push("/order/order-failed");
     },
     [router, successPayment, failPayment, addToast]
@@ -83,7 +90,6 @@ export function useGeneralPayment({
 
       try {
         const saveOrderResponse = await saveGeneralOrder(requestBody);
-
         if (saveOrderResponse.status !== 200) {
           throw new Error("결제 요청 실패: 서버 검증 실패");
         }
@@ -111,7 +117,7 @@ export function useGeneralPayment({
         requestIamportPayment(paymentParams);
       } catch (error) {
         console.error("결제 요청 실패:", error);
-        // router.push("/order/order-failed");
+        router.push("/order/order-failed");
       } finally {
         setIsProcessing(false);
       }

@@ -1,9 +1,9 @@
 "use client";
 
-import * as styles from "./RecipeOptions.css";
-import RecipeCard from "./recipeCard/RecipeCard";
+import * as styles from "./RawFoodOptions.css";
 import { recipeTempData, recipeTab } from "@/constants";
 import { RecipeData, RecipeDto } from "@/types";
+import { RawFoodOrderSheet } from "@/types/subscription";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
@@ -16,62 +16,56 @@ import RecommendKcalBottomSheet from "../bottomSheet/RecommendKcalBottomSheet";
 import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useFormContext, useWatch } from "react-hook-form";
+import RawFoodCard from "./rawFoodCard/RawFoodCard";
 
-interface RecipeOptionsProps {
-  recipeData: RecipeData;
+interface RawFoodOptionsProps {
+  rawFoodData: RawFoodOrderSheet;
   inedibleFood: string[];
   selectedIds: number[];
 }
 
-export default function RecipeOptions({
-  recipeData,
+export default function RawFoodOptions({
+  rawFoodData,
   inedibleFood,
   selectedIds,
-}: RecipeOptionsProps) {
+}: RawFoodOptionsProps) {
   const { isOpen, onClose, onToggle } = useModal();
   const { control } = useFormContext<SubscriptionValues>();
   const recipeList = useWatch({ control, name: "recipeList" });
-  
-  // 임시 - Api 데이터 변경전까지
-  const allRecipes = useMemo(() => Object.values(recipeTempData), []);
 
-  // 레시피 데이터 맵핑
-  const recipeDtoMap = useMemo(() => {
-    return Object.fromEntries(
-      recipeData.recipeDtoList.map((dto) => [dto.id, dto] as const)
-    ) as Record<number, RecipeDto>;
-  }, [recipeData.recipeDtoList]);
-
-  const kcal = recipeData.foodAnalysis.oneDayRecommendKcal;
-  const subscribeId = recipeData.subscribeId;
+  // rawFoodData에서 레시피 리스트 가져오기
+  const allRecipes = useMemo(() => rawFoodData.recipeList, [rawFoodData.recipeList]);
 
   const packMap = useMemo(() => {
     const map: Record<number, ReturnType<typeof calculateRecipePack>> = {};
-    allRecipes.forEach((r) => {
-      const dto = recipeDtoMap[r.id];
-      const entry = recipeList.find((e) => e.recipeId === r.id);
-      map[r.id] = calculateRecipePack({
-        dailyRecommendKcal: kcal,
-        recipeDto: dto,
-        subscribeId,
+    allRecipes.forEach((rawFoodItem) => {
+      const entry = recipeList.find((e) => e.recipeId === rawFoodItem.recipeId);
+      map[rawFoodItem.recipeId] = calculateRecipePack({
+        rawFoodItem: {
+          recipeId: rawFoodItem.recipeId,
+          gramPerKal: rawFoodItem.gramPerKal,
+          pricePerGram: rawFoodItem.pricePerGram,
+          oneMealRecommendGram: rawFoodItem.oneMealRecommendGram,
+        },
+        subscribeId: 1, // 임시 subscribeId (실제 값으로 변경 필요)
         customPackGrams: entry?.packGrams,
       });
     });
     return map;
-  }, [allRecipes, recipeDtoMap, recipeList, kcal, subscribeId]);
+  }, [allRecipes, recipeList]);
 
   const sections = [
     {
       key: "double",
       title: "더블미트 레시피",
       description: "두 가지 고기가 섞인 복합 단백질",
-      items: allRecipes.filter((r) => r.ingredients.length === 2),
+      items: allRecipes.filter((r) => r.meet === "DOUBLE"),
     },
     {
       key: "single",
       title: "싱글미트 레시피",
       description: "한 가지 고기로 이루어진 단일 단백질",
-      items: allRecipes.filter((r) => r.ingredients.length === 1),
+      items: allRecipes.filter((r) => r.meet === "SINGLE"),
     },
   ];
 
@@ -89,8 +83,10 @@ export default function RecipeOptions({
     onInit: () => scrollToElement(refs[tab.value!].current),
   }));
 
-  const name = getNameWithPossessiveSuffix(recipeData.dogName);
-  const recommendedRecipeList = [5, 10, 7];
+  // dogName이 rawFoodData에 없으므로 임시로 처리 (실제로는 props로 전달받아야 함)
+  const dogName = "반려견"; // 임시값
+  const name = getNameWithPossessiveSuffix(dogName);
+  const recommendedRecipeList = allRecipes.filter(r => r.isRecommend).map(r => r.recipeId);
 
   return (
     <section className={styles.subscribeOptionContainer}>
@@ -106,7 +102,7 @@ export default function RecipeOptions({
           </DefaultText>
         </div>
         <InfoBox
-          text={`${name}의 하루 권장 칼로리 ${kcal}kcal에 따라 한 끼 급여량을 추천해 드려요`}
+          text={`${name}의 급여량을 추천해 드려요`}
           type="info"
           color="gray"
           showRightArrowButton
@@ -135,7 +131,7 @@ export default function RecipeOptions({
                     rankIndex >= 0 ? rankIndex + 1 : undefined;
                   const packData = packMap[recipeTempData.id];
                   return (
-                    <RecipeCard
+                    <RawFoodCard
                       key={recipeTempData.id}
                       recipeTempData={recipeTempData}
                       recipeDto={recipeDtoMap[recipeTempData.id]}
