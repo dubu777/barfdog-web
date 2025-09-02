@@ -4,9 +4,9 @@ import { RewardListData, RewardListDataWithTotals, RewardResponse } from "@/type
 
 const getRewardList = async ({
 	pageParam = 0,
-	size = 5,
+	size = 20,
 	instance = axiosInstance
-}: { pageParam: number; size: number; instance?: AxiosInstance }): Promise<RewardListData | RewardListDataWithTotals> => {
+}: { pageParam: number; size?: number; instance?: AxiosInstance }): Promise<RewardListData | RewardListDataWithTotals> => {
 	const { data } = await instance.get<RewardResponse>(`/api/rewards`, {
 		params: { page: pageParam, size },
 	});

@@ -1,8 +1,8 @@
-import * as styles from "./RewardFilter.css";
+import { commonWrapper } from "@/styles/common.css";
 import TabBar from "@/components/common/tabBar/TabBar";
 import useFilterTabs from "@/hooks/useFilterTabs";
 
-const RewardFilter = () => {
+export default function RewardFilter() {
   const tabs = [
     { label: '전체', value: 'ALL' },
     { label: '적립', value: 'SAVED' },
@@ -17,8 +17,18 @@ const RewardFilter = () => {
   })
 
   return (
-    <article className={styles.rewardFilterContainer}>
-      <div className={styles.rewardFilter}>
+    <article
+      className={commonWrapper({
+        padding: 20,
+        backgroundColors: 'gray0',
+      })}
+    >
+      <div
+        className={commonWrapper({
+          justify: 'between',
+          gap: 8
+        })}
+      >
         <TabBar
           variant='chips'
           tabs={tabs.map(tab => ({
@@ -33,5 +43,3 @@ const RewardFilter = () => {
     </article>
   );
 };
-
-export default RewardFilter;

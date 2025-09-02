@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
-import { RewardListData, RewardListDataWithTotals } from "@/types/reward";
+import { RewardListData, RewardListDataWithTotals } from "@/types/mypage/reward";
 import { getRewardList } from "@/api/mypage/reward/reward";
 
 export function useGetRewardList() {
@@ -8,7 +8,7 @@ export function useGetRewardList() {
     queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_REWARD_LIST],
     queryFn: async ({ pageParam = 0 }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
-      const data = await getRewardList({ pageParam: pageNumber, size: 5 });
+      const data = await getRewardList({ pageParam: pageNumber });
       // return data as RewardListData;
       return data;
     },

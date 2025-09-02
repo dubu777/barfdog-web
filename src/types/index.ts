@@ -5,7 +5,7 @@ export * from './common';
 export * from './mypage/common';
 export * from './order';
 export * from './auth';
-export * from './reward';
+export * from './mypage/reward';
 export * from './coupon';
 export * from './recipe';
 export * from './main';

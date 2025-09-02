@@ -1,12 +1,4 @@
-export type {
-  RewardFilterType,
-  RewardData,
-  RewardListData,
-  RewardResponse,
-  RewardListDataWithTotals,
-  InviteRewardList,
-  InviteRewardResponse,
-};
+import { Page } from "@/types";
 
 type RewardFilterType = 'ALL' | 'SAVED' | 'USED' | 'EXPIRED';
 
@@ -17,13 +9,6 @@ interface RewardData {
   tradeReward: number;
   rewardStatus: RewardStatus;
   createdTime: string;
-}
-
-interface Page {
-  size?: number;
-  totalElements?: number;
-  totalPages: number;
-  number: number;
 }
 
 interface RewardListData {
@@ -55,7 +40,6 @@ interface InviteRewardList {
   page: Page;
 }
 
-
 interface InviteRewardResponse {
   joinedCount: number;
   orderedCount: number;
@@ -68,3 +52,13 @@ interface InviteRewardResponse {
     page: Page;
   };
 }
+
+export type {
+  RewardFilterType,
+  RewardData,
+  RewardListData,
+  RewardResponse,
+  RewardListDataWithTotals,
+  InviteRewardList,
+  InviteRewardResponse,
+};

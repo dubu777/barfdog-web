@@ -8,7 +8,7 @@ export async function prefetchGetRewardList(queryClient: QueryClient) {
 	await queryClient.prefetchQuery({
 		queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_REWARD_LIST],
 		queryFn: async () => {
-			const data = await getRewardList({ pageParam: 0, size: 5, instance: ssrAxios });
+			const data = await getRewardList({ pageParam: 0, instance: ssrAxios });
 			return {
 				pages: [data],
 				pageParams: [0],

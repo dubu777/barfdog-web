@@ -1,8 +1,10 @@
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
-import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
-import Divider from "@/components/common/divider/Divider";
+import TitleText from "@/components/pages/mypage/common/card/typography/TitleText";
+import SubtitleText from "@/components/pages/mypage/common/card/typography/SubtitleText";
+import DescriptionText from "@/components/pages/mypage/common/card/typography/DescriptionText";
+import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
 import { Coupon } from "@/types/coupon";
 import { COUPON_TARGET, DISCOUNT_UNIT } from "@/constants";
 
@@ -23,34 +25,27 @@ export default function CouponItem({
       align='start'
     >
       <div className={commonWrapper({ direction: 'col', gap: 4, align: 'start' })}>
-        <Text type='title1' color='red'>
+        <TitleText color='red'>
           {coupon.discountDegree.toLocaleString()}
           {DISCOUNT_UNIT[coupon.discountType]}
-        </Text>
+        </TitleText>
         <div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>
-          <Text type='label1'>{coupon.name}</Text>
+          <SubtitleText text={coupon.name} />
           {percentType &&
-          <Text type='body3'>
-            (최대 {coupon.availableMaxDiscount.toLocaleString()}원 할인)
-          </Text>
+            <DescriptionText text={`(최대 ${coupon.availableMaxDiscount.toLocaleString()}원 할인)`} />
           }
         </div>
       </div>
       <div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>
-        <Text type='caption' color='gray700'>
-          {coupon.availableMinPrice.toLocaleString()}원 이상 주문 시
-        </Text>
-        <Text
-          type='caption'
+        <MetaText
           color='gray700'
-          className={commonWrapper({ align: 'center', justify: 'start', gap: 4 })}
-        >
-          {format(new Date(coupon.expiredDate), 'yyyy.MM.dd')}까지
-          <div style={{ height: '10px' }}>
-            <Divider thickness={1} direction='vertical' color='gray500' />
-          </div>
-          {COUPON_TARGET[coupon.couponTarget]} 사용 가능
-        </Text>
+          leftText={`${coupon.availableMinPrice.toLocaleString()}원 이상 주문 시`}
+        />
+        <MetaText
+          color='gray700'
+          leftText={`${format(new Date(coupon.expiredDate), 'yyyy.MM.dd')}까지`}
+          rightText={`${COUPON_TARGET[coupon.couponTarget]} 사용 가능`}
+        />
       </div>
     </Card>
   );
