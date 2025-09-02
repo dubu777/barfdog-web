@@ -5,7 +5,7 @@ import Header from "@/components/layout/header/Header";
 import Text from "@/components/common/text/Text";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants";
-import InfoText from "@/components/common/infoText/InfoText";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 
 export default function Membership() {
 	const router = useRouter();

@@ -6,7 +6,7 @@ import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import TextButton from "@/components/common/textButton/TextButton";
-import InfoText from "@/components/common/infoText/InfoText";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 import KitGuidImage from "/public/images/healthNote/probiome/kit-guide1.png";
 import KitGuidStep1 from "/public/images/healthNote/probiome/kit-guide-step1.svg";
 import KitGuidStep2 from "/public/images/healthNote/probiome/kit-guide-step2.svg";

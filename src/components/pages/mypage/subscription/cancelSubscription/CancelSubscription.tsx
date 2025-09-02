@@ -3,7 +3,7 @@ import * as styles from './CancelSubscription.css';
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ReasonSelectionForm from "@/components/pages/mypage/common/reasonSelectionForm/ReasonSelectionForm";
-import InfoText from "@/components/common/infoText/InfoText";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 import CancelSubscriptionNotice
 	from "@/components/pages/mypage/subscription/cancelSubscription/cancelSubscriptionNotice/CancelSubscriptionNotice";
 import { useBackNavigation } from "@/utils";

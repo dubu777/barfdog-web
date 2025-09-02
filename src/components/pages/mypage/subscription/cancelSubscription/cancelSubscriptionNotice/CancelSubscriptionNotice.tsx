@@ -5,7 +5,7 @@ import SubscriptionCard from "@/components/pages/mypage/common/cards/section/Sub
 import Card from "@/components/common/card/Card";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import InfoIcon from '/public/images/icons/info.svg';
-import InfoText from "@/components/common/infoText/InfoText";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useBackNavigation } from "@/utils";
 import { SubscriptionDetailDto } from "@/types";

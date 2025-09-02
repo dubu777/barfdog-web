@@ -3,7 +3,7 @@ import Image from "next/image";
 import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import Divider from "@/components/common/divider/Divider";
-import InfoText from "@/components/common/infoText/InfoText";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 import { MembershipTier } from "@/types/membership";
 
 interface MembershipCardProps {

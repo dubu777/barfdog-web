@@ -4,7 +4,7 @@ import ItemDetailLayout from '../../../layout/ItemDetailLayout';
 import Text from "@/components/common/text/Text";
 import InfoBox from '@/components/common/infoBox/InfoBox';
 import Divider from '@/components/common/divider/Divider';
-import InfoText from '@/components/common/infoText/InfoText';
+import InfoText from "@/components/common/typography/infoText/InfoText";
 
 export default function RefundExchangeGuide() {
   const defaultInfo = [

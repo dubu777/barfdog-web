@@ -12,7 +12,7 @@ import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import useModal from "@/hooks/useModal";
-import InfoText from "@/components/common/infoText/InfoText";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 
 const CreateDetail = () => {
   const { reviewFormData } = usePersistReviewStore();
