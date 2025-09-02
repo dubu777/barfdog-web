@@ -4,8 +4,7 @@ import Card from "@/components/common/card/Card";
 import Chips from "@/components/common/chips/Chips";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import { DISCOUNT_UNIT } from "@/constants";
-import { PROMOTION_COUPON_TYPE } from "@/constants/mypage/promotion";
+import { COUPON_TARGET, DISCOUNT_UNIT } from "@/constants";
 import { PromotionItem as PromotionItemType } from "@/types/mypage/promotion";
 
 interface PromotionItemProps {
@@ -78,7 +77,7 @@ export default function PromotionItem({
 					<PromotionInfo
 						isActive={isActive}
 						leftText={`${format(promotionCouponInfo.createdDate, 'yyyy.MM.dd')} 등록`}
-						rightText={`${PROMOTION_COUPON_TYPE[promotionCouponInfo.couponTarget]} 사용 가능`}
+						rightText={`${COUPON_TARGET[promotionCouponInfo.couponTarget]} 사용 가능`}
 					/>
 					<PromotionInfo
 						isActive={isActive}

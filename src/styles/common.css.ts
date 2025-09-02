@@ -176,6 +176,9 @@ export const commonWrapper = recipe({
       },
     },
     paddingBottom: {
+      0: {
+        paddingBottom: "0px",
+      },
       20: {
         paddingBottom: "20px",
       },

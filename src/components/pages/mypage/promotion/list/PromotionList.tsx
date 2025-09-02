@@ -79,11 +79,11 @@ export default function PromotionList() {
 					<Text type='body3' color='gray700'>등록된 쿠폰은 쿠폰함에서도 함께 보여집니다</Text>
 				</div>
 				<div className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
-					<Text type='label4'>프로모션 코드</Text>
 					<InputField
 						value={promotionCode}
 						onChange={(e) => setPromotionCode(e.target.value)}
 						onReset={() => setPromotionCode('')}
+						label='프로모션 코드'
 						placeholder='프로모션 코드를 입력하세요'
 						clearButton={!!promotionCode}
 						confirmButton

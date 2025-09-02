@@ -1,4 +1,4 @@
-import { DiscountType } from "./common";
+import { CouponTarget, DiscountType } from "./common";
 
 export type {
   Coupon,
@@ -10,7 +10,7 @@ export type {
 interface Coupon {
   availableMaxDiscount: number;
   availableMinPrice: number; // 최소 사용 금액
-  couponTarget: "ALL" | "GENERAL" | "SUBSCRIBE";
+  couponTarget: CouponTarget;
   description: string;
   discountDegree: number; // 할인율 또는 금액
   discountType: DiscountType; // 할인 유형

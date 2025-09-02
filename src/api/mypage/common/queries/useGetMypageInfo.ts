@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMyPageInfo } from "@/api/mypage/common/common";
 import { queryKeys } from "@/constants";
-import { MyPageInfoData } from "@/types/mypage/mypage";
+import { MyPageInfoData } from "@/types/mypage/common";
 import { UseQueryCustomOptions } from "@/types";
 
 export function useGetMyPageInfo(queryOptions?: UseQueryCustomOptions<MyPageInfoData>){

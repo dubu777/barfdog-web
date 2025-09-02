@@ -7,6 +7,7 @@ import {
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 import { TextColor, TextType } from "./typography";
+import { COUPON_TARGET } from "@/constants";
 
 declare global {
   interface Window {
@@ -141,6 +142,7 @@ interface InfoTextType {
 
 type DiscountType = "FLAT_RATE" | "FIXED_RATE";
 type DiscountUnitType = "%" | "원";
+type CouponTarget = keyof typeof COUPON_TARGET;
 
 export type {
   SearchParamProps,
@@ -161,4 +163,5 @@ export type {
   InfoTextType,
   DiscountType,
   DiscountUnitType,
+  CouponTarget,
 };

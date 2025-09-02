@@ -2,7 +2,7 @@ export * from './survey';
 export * from './subscription';
 export * from './cart';
 export * from './common';
-export * from './mypage/mypage';
+export * from './mypage/common';
 export * from './order';
 export * from './auth';
 export * from './reward';

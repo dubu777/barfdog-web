@@ -1,6 +1,5 @@
 import { AxiosInstance } from "axios";
-import { DiscountType } from "@/types";
-import { PROMOTION_COUPON_TYPE } from "@/constants/mypage/promotion";
+import { CouponTarget, DiscountType } from "@/types";
 
 interface PromotionListSearchValues {
 	pageParam?: number;
@@ -8,7 +7,6 @@ interface PromotionListSearchValues {
 	instance?: AxiosInstance;
 }
 
-type PromotionCouponTarget = keyof typeof PROMOTION_COUPON_TYPE;
 type PromotionStatus = "ACTIVE" | "INACTIVE";
 type PromotionType = "COUPON";
 
@@ -16,7 +14,7 @@ interface PromotionCouponInfo {
 	couponId: number;
 	code: string;
 	name: string;
-	couponTarget: PromotionCouponTarget;
+	couponTarget: CouponTarget;
 	discountDegree: number;
 	discountType: DiscountType;
 	availableMinPrice: number;

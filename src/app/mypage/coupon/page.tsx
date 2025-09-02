@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import Coupon from "@/components/pages/mypage/coupon/Coupon";
+import CouponList from "@/components/pages/mypage/coupon/list/CouponList";
 import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 
 export default async function CouponPage() {
@@ -13,7 +13,7 @@ export default async function CouponPage() {
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>사용 가능한 쿠폰이 없습니다.</div>}>
         <Suspense fallback={<div>Loading...</div>}>
-          <Coupon />
+          <CouponList />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
