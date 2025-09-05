@@ -39,12 +39,16 @@ export default function CouponItem({
       <div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>
         <MetaText
           color='gray700'
-          leftText={`${coupon.availableMinPrice.toLocaleString()}원 이상 주문 시`}
+          textList={[
+            `${coupon.availableMinPrice.toLocaleString()}원 이상 주문 시`,
+          ]}
         />
         <MetaText
           color='gray700'
-          leftText={`${format(new Date(coupon.expiredDate), 'yyyy.MM.dd')}까지`}
-          rightText={`${COUPON_TARGET[coupon.couponTarget]} 사용 가능`}
+          textList={[
+            `${format(new Date(coupon.expiredDate), 'yyyy.MM.dd')}까지`,
+            `${COUPON_TARGET[coupon.couponTarget]} 사용 가능`,
+          ]}
         />
       </div>
     </Card>

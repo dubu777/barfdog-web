@@ -5,7 +5,6 @@ import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { usePersistReviewStore } from "@/store/usePersistReviewStore";
 import { CardActionsId, NormalizedCardData, OrderType, ReviewItemType } from '@/types';
 import { ORDER_TYPE } from "@/constants";
 
@@ -45,7 +44,7 @@ const OrderBottomSheet = ({
 	const primaryLabel = type === 'orderCancel' ? (isSubscription ? '구독 유지하기' : '주문취소') : '리뷰 작성하기';
 	const secondaryLabel = type === 'orderCancel' ? (isSubscription ? '구독 취소' : '이전') : '이전';
 	
-	const { setReviewFormData } = usePersistReviewStore();
+	// const { setReviewFormData } = usePersistReviewStore();
 	const handlePrimaryClick = () => {
 		// confirm: 리뷰 작성하기
 		// cancel: general - 주문취소, subscription - 뒤로가기
@@ -61,7 +60,7 @@ const OrderBottomSheet = ({
 				thumbnailUrl: data.imageUrl
 			};
 
-			setReviewFormData(reviewData);
+			// setReviewFormData(reviewData);
 			pushWithQuery('/mypage/review/create', {});
 		} else {
 			onClose();

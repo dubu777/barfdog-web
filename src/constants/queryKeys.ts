@@ -29,6 +29,11 @@ const queryKeys = {
       BASE: "promotion",
       GET_PROMOTION_LIST: "getPromotionList",
     },
+    REVIEW: {
+      BASE: "review",
+      GET_MYPAGE_REVIEW_LIST: "getMypageReviewList",
+      GET_REVIEW_DETAIL: "getReviewDetail",
+    },
     GET_MYPAGE_INFO: "getMyPageInfo",
     GET_MYPAGE_BANNER: "getMyPageBanner",
     GET_CONNECTED_SNS: "getConnectedSns",
@@ -94,12 +99,8 @@ const queryKeys = {
   REVIEW: {
     BASE: "review",
     GET_BEST_REVIEW_LIST: "getBestReviewList",
-    GET_REVIEW_LIST: "getReviewList",
     GET_BEST_REVIEW_DETAIL: "getBestReviewDetail",
-    GET_WRITABLE_REVIEW_LIST: "getWritableReviewList",
-    GET_WRITTEN_REVIEW_LIST: "getWrittenReviewList",
-    GET_REVIEW_DETAIL: "getReviewDetail",
-    GET_REVIEW_DETAIL_IMAGE_LIST: "getReviewDetailImageList",
+    GET_REVIEW_LIST: "getReviewList",
   },
   STORE: {
     BASE: "store",

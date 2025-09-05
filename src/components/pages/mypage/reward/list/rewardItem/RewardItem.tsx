@@ -33,7 +33,9 @@ export default function RewardItem({
 					<div className={commonWrapper({ direction: 'col', align: 'start', gap: 4, width: 'auto' })}>
 						<Text type='label4'>{reward.name}</Text>
 						<MetaText
-							leftText={`${format(new Date(reward.createdTime), 'yyyy.MM.dd')} 까지 사용 가능`}
+							textList={[
+								`${format(new Date(reward.createdTime), 'yyyy.MM.dd')} 까지 사용 가능`
+							]}
 							type='caption2'
 						/>
 					</div>

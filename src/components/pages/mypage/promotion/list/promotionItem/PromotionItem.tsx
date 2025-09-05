@@ -49,19 +49,25 @@ export default function PromotionItem({
 				<div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>
 					<MetaText
 						color={isActive ? 'gray700' : 'gray500'}
-						leftText={`${promotionCouponInfo.availableMinPrice.toLocaleString()}원 이상 구매시`}
+						textList={[
+							`${promotionCouponInfo.availableMinPrice.toLocaleString()}원 이상 구매시`,
+						]}
 					/>
 					<MetaText
 						type='caption'
 						color={isActive ? 'gray700' : 'gray500'}
-						leftText={`${format(promotionCouponInfo.createdDate, 'yyyy.MM.dd')} 등록`}
-						rightText={`${COUPON_TARGET[promotionCouponInfo.couponTarget]} 사용 가능`}
+						textList={[
+							`${format(promotionCouponInfo.createdDate, 'yyyy.MM.dd')} 등록`,
+							`${COUPON_TARGET[promotionCouponInfo.couponTarget]} 사용 가능`
+						]}
 					/>
 					<MetaText
 						type='caption'
 						color={isActive ? 'gray700' : 'gray500'}
-						leftText='프로모션 코드'
-						rightText={promotionCouponInfo.code}
+						textList={[
+							'프로모션 코드',
+							promotionCouponInfo.code,
+						]}
 					/>
 				</div>
 			</div>
