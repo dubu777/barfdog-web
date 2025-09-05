@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const bottomSheetContainer = style({
   position: "fixed",
@@ -24,13 +25,42 @@ export const bottomSheetContentWrapper = style({
   width: "100%",
 });
 
-export const bottomSheetHeader = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  height: "52px",
-  width: "100%",
-  padding: "0 20px",
+export const bottomSheetHeaderWrapper = recipe({
+  base: {
+    width: "100%",
+    display: "flex",
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    gap: '12px',
+  },
+  variants: {
+    hasSubTitle: {
+      true: {
+        padding: '20px',
+      },
+      false: {}
+    }
+  }
+});
+
+export const bottomSheetHeader = recipe({
+  base: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+  variants: {
+    hasSubTitle: {
+      true: {
+        height: "auto",
+      },
+      false: {
+        height: "52px",
+        padding: "0 20px",
+      }
+    }
+  }
 });
 
 export const handleWrapper = style({

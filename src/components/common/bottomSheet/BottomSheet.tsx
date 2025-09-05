@@ -10,20 +10,24 @@ interface BottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
+  subTitle?: string;
   children: ReactNode;
   closeOnBackgroundClick?: boolean;
   fullHeight?: boolean;
   className?: string;
+  showCloseButton?: boolean;
 }
 
 const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(({
   isOpen,
   onClose,
   title,
+  subTitle,
   children,
   closeOnBackgroundClick = true,
   fullHeight = false,
   className,
+  showCloseButton = true,
 }, ref) => {
   const innerRef = useRef<HTMLDivElement>(null);
 
@@ -78,11 +82,18 @@ const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(({
               <button className={styles.handleButton} />
             </div>
             {title && (
-              <div className={styles.bottomSheetHeader}>
-                <Text type="title4">{title}</Text>
-                <button onClick={onClose}>
-                  <SvgIcon src={CloseButton} />
-                </button>
+              <div className={styles.bottomSheetHeaderWrapper({ hasSubTitle: !!subTitle })}>
+                <div className={styles.bottomSheetHeader({ hasSubTitle: !!subTitle })}>
+                  <Text type="title4">{title}</Text>
+                  {showCloseButton &&
+                    <button onClick={onClose}>
+                      <SvgIcon src={CloseButton} />
+                    </button>
+                  }
+                </div>
+                {subTitle &&
+                  <Text type='label4' color='gray600'>{subTitle}</Text>
+                }
               </div>
             )}
             <div className={styles.bottomSheetContentWrapper}>{children}</div>

@@ -24,9 +24,12 @@ export const inputBaseStyle = style({
 export const inputVariants = {
   box: style({
     borderRadius: "8px",
-    border: `1px solid ${themeVars.colors.gray.gray200}`,
+    border: `1px solid ${themeVars.colors.gray.gray300}`,
     backgroundColor: themeVars.colors.gray.gray0,
     selectors: {
+      "&::placeholder": {
+        color: themeVars.colors.gray.gra300,
+      },
       "&.disabled": {
         backgroundColor: themeVars.colors.gray.gray200,
       },

@@ -127,6 +127,9 @@ export const commonWrapper = recipe({
       8: {
         gap: "8px",
       },
+      10: {
+        gap: "10px",
+      },
       12: {
         gap: "12px",
       },
@@ -217,6 +220,9 @@ export const commonWrapper = recipe({
       20: {
         paddingTop: "20px",
       },
+      40: {
+        paddingTop: "40px",
+      },
       80: {
         paddingTop: "80px",
       },
@@ -306,6 +312,9 @@ export const commonWrapper = recipe({
       },
     },
     borderRadius: {
+      0: {
+        borderRadius: 0,
+      },
       8: {
         borderRadius: "8px",
       },

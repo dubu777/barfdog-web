@@ -8,6 +8,6 @@ export async function prefetchGetInviteRewardList(queryClient: QueryClient, page
 	const ssrAxios = createSSRRequest();
 	return queryClient.prefetchQuery<InviteRewardList>({
 		queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST, page],
-		queryFn: () => getInviteRewardList({ pageParam: page, size: 5, instance: ssrAxios }),
+		queryFn: () => getInviteRewardList({ pageParam: page, instance: ssrAxios	 }),
 	})
 }

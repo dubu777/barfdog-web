@@ -14,7 +14,7 @@ interface CardProps {
   children: ReactNode;
   className?: string;
   backgroundColor?: "gray0" | "gray50" | "gray100" | "transparent";
-  borderRadius?: 8 | 12 | 16;
+  borderRadius?: 0 | 8 | 12 | 16;
   gap?: 4 | 8 | 12 | 16 | 20 | 32 | 40;
 }
 

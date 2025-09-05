@@ -4,11 +4,10 @@ import { InviteRewardList, InviteRewardResponse, SendMessage } from "@/types";
 
 const getInviteRewardList = async ({
 	pageParam = 0,
-	size = 5,
 	instance = axiosInstance
-}: { pageParam: number; size: number; instance?: AxiosInstance}): Promise<InviteRewardList> => {
+}: { pageParam: number; instance?: AxiosInstance}): Promise<InviteRewardList> => {
 	const { data } = await instance.get<InviteRewardResponse>(`/api/rewards/invite`, {
-		params: { page: pageParam, size },
+		params: { page: pageParam, size: 20 },
 	});
 	const { recommend, joinedCount, orderedCount, totalRewards, pagedModel } = data;
 	console.log('data', data)
@@ -35,7 +34,11 @@ const sendRecommendCodeMessage = async (body: SendMessage) => {
 		const smsStatus = data.responseCode;
 		switch (smsStatus) {
 			case 200:
-				message = '친구에게 메시지를 성공적으로 전송했습니다.';
+				if(data.msg === null) {
+					message = '친구에게 문자로 추천 코드를 보냈어요';
+				} else {
+					message = data.msg;
+				}
 				break;
 			case 100:
 				message = '전송자의 번호가 유효하지 않습니다.';
