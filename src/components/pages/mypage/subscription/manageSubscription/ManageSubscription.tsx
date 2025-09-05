@@ -8,7 +8,7 @@ import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filt
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
 import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
-import { MYPAGE_DATE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage";
+import { MYPAGE_DATE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage/common";
 
 const ManageSubscription = () => {
   const { data: subscriptionData } = useGetSubscriptionList(0, 999);

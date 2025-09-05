@@ -5,7 +5,7 @@ import {
   SubscriptionOrderStatus,
 } from "@/types";
 import { formatDate } from "@/utils";
-import { ORDER_TYPE } from "./order";
+import { ORDER_TYPE } from "../order";
 import { openChatChannelIO } from "@/utils/channelTalk";
 
 const MENU_LIST: MenuList[] = [
@@ -23,7 +23,7 @@ const MENU_LIST: MenuList[] = [
     category: "나의 회원정보",
     menus: [
       { label: "계정 정보", url: "/mypage/account" },
-      { label: "반려견 정보", url: "/health-note/pets" },
+      { label: "반려견 정보", url: "/diet-analysis" },
       { label: "배송지 관리", url: "/mypage/delivery-address" },
       { label: "친구 초대", url: "/mypage/invite-friends" },
     ],

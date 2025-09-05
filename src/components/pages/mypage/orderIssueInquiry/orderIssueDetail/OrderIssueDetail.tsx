@@ -1,7 +1,7 @@
 'use client';
 import * as styles from './OrderIssueDetail.css';
 import { infoCard, infoContainer, infoDetailContainer, infoItem } from "@/components/pages/mypage/common/information/Information.css";
-import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
+import { ORDER_ISSUE_TYPE } from "@/constants/mypage/common";
 import SubscriptionInfo from "@/components/pages/mypage/common/information/section/SubscriptionInfo";
 import OrderInfo from "@/components/pages/mypage/common/information/section/OrderInfo";
 import PaymentInfo from "@/components/pages/mypage/common/information/section/PaymentInfo";

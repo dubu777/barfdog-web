@@ -4,7 +4,7 @@ import ProgressBar from "@/components/pages/mypage/common/progressBar/ProgressBa
 import {
 	SUBSCRIPTION_ORDER_PROGRESS,
 	SUBSCRIPTION_ORDER_STATUS_MESSAGES,
-} from "@/constants/mypage";
+} from "@/constants/mypage/common";
 import { format } from "date-fns";
 
 interface CardProgressStatusProps {

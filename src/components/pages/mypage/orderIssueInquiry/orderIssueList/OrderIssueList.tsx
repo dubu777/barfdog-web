@@ -4,7 +4,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import OrderIssueCard from "@/components/pages/mypage/common/cards/section/OrderIssueCard";
-import { ORDER_ISSUE_TYPE } from '@/constants/mypage';
+import { ORDER_ISSUE_TYPE } from '@/constants/mypage/common';
 import { ORDER_TYPE } from "@/constants";
 import { useMergeOrderList } from "@/api/order/queries/useGetMergeOrderList";
 import { useInView } from "react-intersection-observer";

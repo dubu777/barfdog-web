@@ -3,7 +3,7 @@ import Button from "@/components/common/button/Button";
 import Text from "@/components/common/text/Text";
 import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
 import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardProductInfo";
-import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage";
+import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage/common";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import { ORDER_TYPE } from "@/constants";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";

@@ -12,7 +12,7 @@ import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filt
 import EmptyState from "@/components/pages/mypage/common/emptyState/emptyState/EmptyState";
 import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import StatusTracker from "@/components/pages/mypage/common/statusTracker/StatusTracker";
-import { MYPAGE_ITEM_TYPE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage";
+import { MYPAGE_ITEM_TYPE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage/common";
 import { ORDER_TYPE } from "@/constants";
 
 const tabs = [

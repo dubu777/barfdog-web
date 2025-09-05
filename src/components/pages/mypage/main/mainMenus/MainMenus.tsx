@@ -2,7 +2,7 @@
 import * as styles from "./MainMenus.css";
 import Link from "next/link";
 import Text from "@/components/common/text/Text";
-import { MENU_LIST } from "@/constants/mypage";
+import { MENU_LIST } from "@/constants/mypage/common";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "@/utils/auth/cookie";

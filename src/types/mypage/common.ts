@@ -1,5 +1,5 @@
 import { DogData } from "../dogs";
-import { SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage";
+import { SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage/common";
 import { PlanInfo } from "@/types/subscription";
 import { OrderType } from "@/types/order";
 import { PAYMENT_METHOD } from "@/constants";

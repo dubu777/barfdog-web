@@ -4,7 +4,7 @@ import BaseCard from "@/components/pages/mypage/common/cards/section/BaseCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { getProductionDates } from "@/utils";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
-import { SUBSCRIPTION_ORDER_STATUS_LABEL } from "@/constants/mypage";
+import { SUBSCRIPTION_ORDER_STATUS_LABEL } from "@/constants/mypage/common";
 import { ORDER_TYPE, subscriptionPlanInfo } from "@/constants";
 import {
 	CardActionsId,

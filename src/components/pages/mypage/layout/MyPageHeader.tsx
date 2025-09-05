@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useBackNavigation } from "@/utils";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
+import { ORDER_ISSUE_TYPE } from "@/constants/mypage/common";
 import Header from "@/components/layout/header/Header";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
@@ -83,7 +83,7 @@ const MyPageHeader = () => {
         showBackButton: true,
         onBack: source === 'create' 
           ? () => router.push('/mypage/review?type=written', { scroll: false }) 
-          : goBack
+          : goBackToPreviousPage
         ,
       })
     },

@@ -11,7 +11,7 @@ export * from "./queryKeys";
 export * from "./subscription";
 // export * from './user';
 export * from './mypage/review';
-export * from './mypage';
+export * from './mypage/common';
 export * from './membership';
 export * from './healthNote/common';
 export * from './healthNote/fullCheck';
