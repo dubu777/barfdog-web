@@ -1,6 +1,6 @@
 'use client';
 import { useMemo } from "react";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useBackNavigation } from "@/utils";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
@@ -25,10 +25,13 @@ const MyPageHeader = () => {
   const { pushWithQuery } = useDynamicQueryPush();
   const goBack = useBackNavigation();
   const goBackToMain = useBackNavigation('/');
+  const goBackToMypageMain = useBackNavigation('/mypage');
   const goBackToPreviousPage = useBackNavigation(undefined, true);
   const { isOpen: cancelChangeNoticeOpen, onClose: onCloseCancelChangeNoticeOpen, onToggle: onToggleCancelChangeNoticeOpen } = useModal();
 
   const lastSection = pathname.split('/').pop();
+
+  const router = useRouter();
 
   const headerConfigs: Record<
     string,
@@ -53,7 +56,7 @@ const MyPageHeader = () => {
     '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/account/user-info': { centerTitle: '회원 정보 변경', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/account/notification': { centerTitle: '알림 설정', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/review': { centerTitle: '리뷰작성내역', showCartButton: true, showBackButton: true, onBack: useBackNavigation('/mypage') },
+    '/mypage/review': { centerTitle: '리뷰작성내역',showBackButton: true, onBack: goBackToMypageMain },
     '/mypage/review/create': { centerTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
     '/mypage/order-delivery-inquiry': { centerTitle: '주문 및 배송조회', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/order-issue-inquiry': { centerTitle: '취소/교환/반품 내역', showCartButton: true, showBackButton: true, onBack: goBack },
@@ -73,7 +76,17 @@ const MyPageHeader = () => {
       onBack?: () => void
     }
     > = {
-    '/mypage/review/': () => ({ centerTitle: '리뷰 상세', showBackButton: true, onBack: goBackToPreviousPage }),
+    '/mypage/review/': (_, searchParams) => {
+      const source = searchParams.get('source');
+      return ({ 
+        centerTitle: '리뷰 상세', 
+        showBackButton: true,
+        onBack: source === 'create' 
+          ? () => router.push('/mypage/review?type=written', { scroll: false }) 
+          : goBack
+        ,
+      })
+    },
     '/mypage/order-delivery-inquiry/': (_, searchParams) => {
       const showReceipt = searchParams.get('showReceipt');
       return {
