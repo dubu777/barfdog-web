@@ -109,7 +109,7 @@ interface BaseUploadedFile {
   fileId: number;
   fileName: string;
   folder: string;
-  fileStatus: "PENDING_ADD" | "PENDING_DELETE" | "ADDED";
+  fileStatus?: "PENDING_ADD" | "PENDING_DELETE" | "ADDED";
   displayImageUrl?: { url: string };
 }
 
