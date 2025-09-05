@@ -1,11 +1,14 @@
-import { ChangeEvent, forwardRef, TextareaHTMLAttributes } from "react";
+import { textStyles } from "@/components/common/text/Text.css";
 import {
-  charCount, errorText,
-  textareaBoxStyle,
+  charCount,
+  errorTextStyle,
+  textareaBoxStyle, textareaContainerStyle,
   textareaStyle
 } from "./Textarea.css";
+import { ChangeEvent, forwardRef, TextareaHTMLAttributes } from "react";
+import ErrorIcon from "/public/images/icons/close_small.svg";
+import SvgIcon from "../svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
-import { textStyles } from "@/components/common/text/Text.css";
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>{
   id: string;
@@ -14,6 +17,8 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>{
   error?: string;
   className?: string;
   maxLength?: number;
+  fullWidth?: boolean;
+  isDisabled?: boolean;
 }
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
@@ -22,6 +27,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
   className,
   maxLength,
   value,
+  fullWidth,
+  isDisabled = false,
   ...rest
 }, ref) => {
   const currentLength = typeof value === 'string' || Array.isArray(value) ? value.length : 0;
@@ -32,8 +39,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
     }
   }
   return (
-    <div className={className || ''}>
-      <div className={textareaBoxStyle}>
+    <div className={textareaContainerStyle({ fullWidth })}>
+      <div className={`${textareaBoxStyle} ${className ?? ''}`}>
         <textarea
           id={id}
           ref={ref}
@@ -41,6 +48,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
           className={`${textareaStyle({ active: value?.length !== 0 })} ${textStyles.body3}`}
           onChange={handleInputChange}
           value={value}
+          disabled={isDisabled}
           {...rest}
         />
         {maxLength && (
@@ -49,7 +57,14 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(({
           </Text>
         )}
       </div>
-      {error && <Text type='caption' color='red' align='left' className={errorText}>{error}</Text>}
+      {error && (
+        <div className={errorTextStyle}>
+          <SvgIcon src={ErrorIcon} color="red" size={18} />
+          <Text type="caption" color="red" align="left">
+            {error}
+          </Text>
+        </div>
+      )}
     </div>
   );
 });

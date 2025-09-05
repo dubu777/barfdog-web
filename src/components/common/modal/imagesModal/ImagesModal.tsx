@@ -63,7 +63,14 @@ export default function ImagesModal ({
 							key={image.fileName}
 							className={styles.imageSlider}
 						>
-							<Image src={image.displayImageUrl?.url ?? ''} alt={image.fileName} sizes="350px" fill style={{ objectFit: 'contain' }} className={styles.image} />
+							<Image
+								src={image.displayImageUrl?.url ?? ''}
+								alt={image.fileName}
+								sizes="600px"
+								fill
+								style={{ objectFit: 'contain' }}
+								className={styles.image}
+							/>
 						</SwiperSlide>
 					))}
 				</Swiper>

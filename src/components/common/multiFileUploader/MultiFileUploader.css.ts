@@ -1,11 +1,17 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
+export const fileUploadContainer = style({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+})
+
 export const fileUploadTitle = style({
   display: 'flex',
   alignItems: 'center',
   gap: '4px',
-  marginBottom: '8px',
 })
 
 export const uploadBox = style({
@@ -23,10 +29,6 @@ export const uploadLabel = style({
   alignItems: 'center',
   cursor: 'pointer',
   marginRight: '4px',
-})
-
-export const uploadInfo = style({
-  marginTop: '10px',
 })
 
 export const error = style({

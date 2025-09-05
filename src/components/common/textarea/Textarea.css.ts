@@ -2,8 +2,24 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
+export const textareaContainerStyle = recipe({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+  },
+  variants: {
+    fullWidth: {
+      true: {
+        width: '100%',
+      }
+    }
+  }
+})
+
 export const textareaBoxStyle = style({
-  minHeight: '142px',
+  width: '100%',
+  minHeight: '160px',
   position: 'relative',
 })
 
@@ -13,18 +29,23 @@ export const textareaStyle = recipe({
     minHeight: '160px',
     height: '100%',
     padding: '12px',
-    border: `1px solid ${themeVars.colors.gray.gray500}`,
-    background: themeVars.colors.gray.gray100,
+    border: `1px solid ${themeVars.colors.gray.gray300}`,
+    background: themeVars.colors.gray.gray0,
     borderRadius: '8px',
     transition: 'all .35s',
     outline: 'none',
     resize: 'vertical',
     '::placeholder': {
-      color: themeVars.colors.gray.gray500,
+      color: themeVars.colors.gray.gray300,
     },
     ':focus': {
       color: themeVars.colors.gray.gray900,
-      background: themeVars.colors.gray.gray0,
+      border: `1px solid ${themeVars.colors.gray.gray900}`,
+    },
+    ':disabled': {
+      border: `1px solid ${themeVars.colors.gray.gray300}`,
+      background: themeVars.colors.gray.gray200,
+      color: themeVars.colors.gray.gray500,
     },
   },
   variants: {
@@ -43,6 +64,7 @@ export const charCount = style({
   right: '12px',
 })
 
-export const errorText = style({
-  margin: '5px'
+export const errorTextStyle = style({
+  display: 'flex',
+  alignItems: 'center',
 })

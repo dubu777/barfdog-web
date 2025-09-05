@@ -1,6 +1,12 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
+export const rateStarBaseStyle = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 2
+})
+
 export const rateStarBoxAlignStyles = {
   center: style({
     textAlign: 'center',

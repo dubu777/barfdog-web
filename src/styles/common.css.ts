@@ -139,6 +139,9 @@ export const commonWrapper = recipe({
       20: {
         gap: "20px",
       },
+      24: {
+        gap: "24px",
+      },
       28: {
         gap: "28px",
       },
@@ -164,6 +167,9 @@ export const commonWrapper = recipe({
       },
       "12/20": {
         padding: "12px 20px",
+      },
+      "20/16": {
+        padding: "20px 16px",
       },
       "40/20": {
         padding: "40px 20px",
@@ -335,3 +341,40 @@ export const commonWrapper = recipe({
     width: "full",
   },
 });
+
+export const imageWrapper = recipe({
+  base: {},
+  variants: {
+    objectFit: {
+      cover: {
+        objectFit: 'cover',
+      },
+      contain: {
+        objectFit: 'contain',
+      }
+    },
+    borderRadius: {
+      8: {
+        borderRadius: 8,
+      }
+    },
+    width: {
+      72: {
+        width: 72,
+        height: 72,
+      },
+      76: {
+        width: 76,
+        height: 76,
+      },
+      80: {
+        width: 80,
+        height: 80,
+      },
+      100: {
+        width: 100,
+        height: 100,
+      },
+    }
+  }
+})

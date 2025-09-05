@@ -9,7 +9,7 @@ interface CardProps {
   width?: "full" | "auto";
   height?: "full";
   shadow?: "none" | "light" | "normal" | "strong";
-  padding?: 12 | 16 | 20 | 32 | "12/20";
+  padding?: 12 | 16 | 20 | 32 | "12/20" | "20/16";
   textAlign?: "left" | "center";
   children: ReactNode;
   className?: string;
