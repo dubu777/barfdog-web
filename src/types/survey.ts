@@ -1,5 +1,7 @@
 import { fontColors } from "@/components/common/defaultText/DefaultText.css";
 import { RecipeDto } from "@/types/recipe";
+import { ValueOfTuple } from "./common";
+import { HEALTH_CONCERNS } from "@/constants";
 
 interface FoodAnalysis {
   oneDayRecommendGram: number;
@@ -185,16 +187,7 @@ type LactationStatus =
   | "LACTATION_5_TO_6"
   | "LACTATION_7_OR_MORE";
 
-type HealthConcernType =
-  | "NONE"
-  | "DIGESTIVE_CARE"
-  | "WEIGHT_MANAGEMENT"
-  | "VITALITY_BOOST"
-  | "TEAR_STAIN"
-  | "SKIN_COAT"
-  | "JOINT_CARE"
-  | "PUPPY_GROWTH"
-  | "AGING_CARE";
+type HealthConcernType = ValueOfTuple<typeof HEALTH_CONCERNS>;
 
 type CurrentMealType =
   | "DRY"

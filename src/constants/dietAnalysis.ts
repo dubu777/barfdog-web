@@ -15,7 +15,7 @@ import SkinIcon from "public/images/dietAnalysis/concerns/skin.svg";
 import JointIcon from "public/images/dietAnalysis/concerns/joint.svg";
 import GrowthIcon from "public/images/dietAnalysis/concerns/growth.svg";
 import AgingIcon from "public/images/dietAnalysis/concerns/aging.svg";
-import { GeneralLevel, SnackCountLevel } from "@/types";
+import { GeneralLevel, HealthConcernType, SnackCountLevel } from "@/types";
 
 // 재료 아이콘 imports
 import ChickenIcon from "public/images/dietAnalysis/ingredients/icon-Chicken.svg";
@@ -32,7 +32,7 @@ import KelpIcon from "public/images/dietAnalysis/ingredients/icon-Kelp.svg";
 import CoconutOilIcon from "public/images/dietAnalysis/ingredients/icon-CoconutOil.svg";
 import TurmericIcon from "public/images/dietAnalysis/ingredients/icon-Turmeric.svg";
 import KaleIcon from "public/images/dietAnalysis/ingredients/icon-Kale.svg";
-import HampSeedIcon from "public/images/dietAnalysis/ingredients/icon-HampSeed.svg";
+import HempSeedIcon from "public/images/dietAnalysis/ingredients/icon-HempSeed.svg";
 import BananaIcon from "public/images/dietAnalysis/ingredients/icon-Banana.svg";
 import StrawberryIcon from "public/images/dietAnalysis/ingredients/icon-Strawberry.svg";
 import CarrotIcon from "public/images/dietAnalysis/ingredients/icon-Carrot.svg";
@@ -98,53 +98,68 @@ const HEALTH_CONCERN_IMAGE_MAP = {
   AGING_CARE: AgingIcon,
 };
 
-const HEALTH_CONCERN_LABEL_MAP = {
+const HEALTH_CONCERNS = [
+  "DIGESTIVE_CARE",
+  "WEIGHT_MANAGEMENT",
+  "VITALITY_BOOST",
+  "TEAR_STAIN",
+  "SKIN_COAT",
+  "JOINT_CARE",
+  "PUPPY_GROWTH",
+  "AGING_CARE",
+  "OBESITY",
+  "PREGNANCY",
+  "LACTATION",
+] as const;
+
+const HEALTH_CONCERN_LABEL = {
   DIGESTIVE_CARE: "구토•설사",
   WEIGHT_MANAGEMENT: "체중 조절",
-  VITALITY_BOOST: "기력보충",
+  VITALITY_BOOST: "기력 보충",
   TEAR_STAIN: "눈물•눈곱",
   SKIN_COAT: "피부•모질",
   JOINT_CARE: "관절 건강",
   PUPPY_GROWTH: "자견 발육",
   AGING_CARE: "노령견 건강",
   OBESITY: "과체중",
-  PREGNANCY: "임신중",
-  LACTATION: "수유중",
-};
+  PREGNANCY: "임신 중",
+  LACTATION: "수유 중",
+} as const satisfies Record<HealthConcernType, string>;
 
 const DAILY_CALORIE_TEXT = [
   "해당 결과는 '권장' 값이오니 보호자님이 지켜봐주시며 급여량을 증감해주시는 것이 가장 좋습니다!",
   "또한, 안내된 칼로리는 '하루' 권장량이오니 반려견의 끼니 수에 맞춰 나눠 급여해주세요 :)",
 ];
 
-const INGREDIENT_ICON_MAP = {
-  닭: ChickenIcon,
-  칠면조: TurkeyIcon,
-  콜리플라워: CauliflowerIcon,
-  표고버섯: MushroomShiitakeIcon,
-  블루베리: BlueberryIcon,
-  소: CowIcon,
-  사과: AppleIcon,
-  치아씨드: ChiaSeedIcon,
-  양: LambIcon,
-  오리: DuckIcon,
-  켈프: KelpIcon,
-  코코넛오일: CoconutOilIcon,
-  강황: TurmericIcon,
-  케일: KaleIcon,
-  햄프씨드: HampSeedIcon,
-  녹색바나나: BananaIcon,
-  딸기: StrawberryIcon,
-  당근: CarrotIcon,
-  난황: EggHalfIcon,
-} as const;
+const INGREDIENT_CONFIG = {
+  CHICKEN: { icon: ChickenIcon, label: "닭고기" },
+  TURKEY: { icon: TurkeyIcon, label: "칠면조" },
+  CAULIFLOWER: { icon: CauliflowerIcon, label: "콜리플라워" },
+  SHIITAKE: { icon: MushroomShiitakeIcon, label: "표고버섯" },
+  BLUEBERRY: { icon: BlueberryIcon, label: "블루베리" },
+  BEEF: { icon: CowIcon, label: "소고기" },
+  APPLE: { icon: AppleIcon, label: "사과" },
+  CHIA_SEED: { icon: ChiaSeedIcon, label: "치아씨드" },
+  LAMB: { icon: LambIcon, label: "양고기" },
+  DUCK: { icon: DuckIcon, label: "오리고기" },
+  KELP: { icon: KelpIcon, label: "켈프" },
+  COCONUT: { icon: CoconutOilIcon, label: "코코넛 오일" },
+  TURMERIC: { icon: TurmericIcon, label: "강황" },
+  KALE: { icon: KaleIcon, label: "케일" },
+  HEMP_SEED: { icon: HempSeedIcon, label: "햄프씨드" },
+  GREEN_BANANA: { icon: BananaIcon, label: "풋바나나" },
+  STRAWBERRY: { icon: StrawberryIcon, label: "딸기" },
+  EGG_YOLK: { icon: EggHalfIcon, label: "달걀 노른자" },
+  CARROT: { icon: CarrotIcon, label: "당근" },
+};
 
 export {
   ACTIVITY_LEVEL_MAP,
   SNACK_COUNT_LEVEL_MAP,
   RECIPE_EFFICACY_DATA_MAP,
   HEALTH_CONCERN_IMAGE_MAP,
-  HEALTH_CONCERN_LABEL_MAP,
+  HEALTH_CONCERNS,
+  HEALTH_CONCERN_LABEL,
   DAILY_CALORIE_TEXT,
-  INGREDIENT_ICON_MAP,
+  INGREDIENT_CONFIG,
 };

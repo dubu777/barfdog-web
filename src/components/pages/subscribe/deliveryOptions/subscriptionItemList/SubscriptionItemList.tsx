@@ -2,34 +2,26 @@ import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import RecipeItemCard from "./recipeItemCard/RecipeItemCard";
-import GeneralItemCard from "./generalItemCard/GeneralItemCard";
-import { generalTempItems, recipeTempData } from "@/constants";
 import React from "react";
 import Divider from "@/components/common/divider/Divider";
-import { SubscribeGeneralItem } from "@/types";
+import { DeliveryPlan, MealPlan, RawFoodOrderItem } from "@/types";
+import { DELIVERY_PLAN_LABEL } from "@/constants";
 
 interface SubscriptionItemListProps {
-  recipeList: SubscriptionValues["recipeList"];
-  generalItemList: SubscriptionValues["generalItemList"];
-  mealFrequency: 1 | 2;
-  deliveryCycle: 2 | 4;
+  recipeList: SubscriptionValues["rawFoods"];
+  rawFoodItems: RawFoodOrderItem[];
+  mealPlan: MealPlan;
+  deliveryPlan: DeliveryPlan;
   packCount: number;
 }
 
 export default function SubscriptionItemList({
   recipeList,
-  generalItemList = [],
-  mealFrequency,
-  deliveryCycle,
+  rawFoodItems,
+  mealPlan,
+  deliveryPlan,
   packCount,
 }: SubscriptionItemListProps) {
-
-  const GENERAL_ITEM_MAP: Record<number, SubscribeGeneralItem> =
-  generalTempItems.reduce((acc, item) => {
-    acc[item.id] = item;   // n개 아이템만큼 map 에 한 번씩 저장 → O(n)
-    return acc;
-  }, {});
-
   return (
     <div
       className={commonWrapper({
@@ -41,45 +33,34 @@ export default function SubscriptionItemList({
     >
       <DefaultText type="title4">
         <DefaultText type="title4" color="red">
-          {deliveryCycle}주
+          {DELIVERY_PLAN_LABEL[deliveryPlan]}
         </DefaultText>
         에 한 번씩 <br />
         아래의 상품이 배송돼요
       </DefaultText>
-      {recipeList.map((item, idx) => (
-        <React.Fragment key={item.recipeId}>
-          <RecipeItemCard
-            packGrams={item.packGrams}
-            originPrice={item.originPrice ?? 0}
-            recipeTempData={recipeTempData[item.recipeId]}
-            mealFrequency={mealFrequency}
-            deliveryCycle={deliveryCycle}
-            packCount={packCount}
-          />
-          {(idx < recipeList.length - 1 || generalItemList.length > 0) && (
-            <Divider color="gray200" thickness={1} />
-          )}
-        </React.Fragment>
-      ))}
+      {recipeList.map((item, idx) => {
+        // rawFoodItems에서 해당 recipeId에 맞는 정보 찾기
+        const rawFoodItem = rawFoodItems.find(
+          (rawItem) => rawItem.recipeId === item.recipeId
+        );
 
-      {generalItemList.length > 0 &&
-        generalItemList.map((item, idx) => {
-          const tempData = GENERAL_ITEM_MAP[item.itemId];
-          if (!tempData) return null; // safety
-  
-          return (
-            <React.Fragment key={item.itemId}>
-              <GeneralItemCard
-                amount={item.amount}
-                originPrice={item.originPrice}
-                generalTempData={tempData}
-              />
-              {idx < generalItemList.length - 1 && (
-                <Divider color="gray200" thickness={1} />
-              )}
-            </React.Fragment>
-          );
-        })}
+        return (
+          <React.Fragment key={item.recipeId}>
+            <RecipeItemCard
+              packGrams={item.oneMealGramsPerRecipe}
+              originPrice={item.originalPrice ?? 0}
+              mealPlan={mealPlan}
+              deliveryPlan={deliveryPlan}
+              packCount={packCount}
+              displayImageUrl={rawFoodItem?.displayImageUrl || ""}
+              recipeName={rawFoodItem?.recipeNameKorea || ""}
+            />
+            {idx < recipeList.length - 1 && (
+              <Divider color="gray200" thickness={1} />
+            )}
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 }

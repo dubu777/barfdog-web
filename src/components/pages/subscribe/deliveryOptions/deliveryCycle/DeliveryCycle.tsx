@@ -12,26 +12,26 @@ import { useEffect } from "react";
 
 export default function DeliveryCycle() {
   const { control } = useFormContext<SubscriptionValues>();
-  const mealFrequency = useWatch({ control, name: "mealFrequency" });
+  const mealFrequency = useWatch({ control, name: "mealPlan" });
 
   // deliveryCycle 필드 컨트롤러
   const { field: cycleField } = useController({
-    name: "deliveryCycle",
+    name: "deliveryPlan",
     control,
   });
 
   // mealFrequency가 1인 경우 자동으로 4 선택
   useEffect(() => {
-    if (mealFrequency === 1) {
-      cycleField.onChange(4);
+    if (mealFrequency === "ONE_MEAL") {
+      cycleField.onChange("FOUR_WEEK");
     }
-  }, [mealFrequency, cycleField]);
+  }, [mealFrequency]);
 
   // 선택 가능한 주기 결정
   const availableCycles =
-    mealFrequency === 1
-      ? deliveryOptions.deliveryCycle.filter((opt) => opt.value === 4)
-      : deliveryOptions.deliveryCycle;
+    mealFrequency === "ONE_MEAL"
+      ? deliveryOptions.deliveryPlan.filter((opt) => opt.value === "FOUR_WEEK")
+      : deliveryOptions.deliveryPlan;
 
   return (
     <div className={selectOptionWrapper}>

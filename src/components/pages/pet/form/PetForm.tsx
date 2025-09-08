@@ -226,7 +226,7 @@ export default function PetForm({
         primaryButtonLabel={isEdit ? "수정하기" : "저장하기"}
         isPrimaryDisabled={!(isValid && isChanged)}
         onPrimaryClick={handleSubmit}
-        position="sticky"
+        position="fixed"
       />
     </>
   );

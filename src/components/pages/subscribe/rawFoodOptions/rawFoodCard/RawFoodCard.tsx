@@ -1,11 +1,10 @@
 import Image from "next/image";
 import * as styles from "./RawFoodCard.css";
-import { RecipeTempData } from "@/constants";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
-import { RecipeDto } from "@/types";
+import { RawFoodOrderItem } from "@/types";
 import RecipeDetailModal from "../../modal/recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
 import { useRecipeEntryManager } from "@/hooks/subscription/useRecipeManager";
@@ -16,32 +15,27 @@ import PenIcon from "public/images/subscription/pen.svg";
 import { CalculateRecipePackOutput } from "@/utils/subscription/calculateRecipe";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import RawFoodBadge from "./rawFoodBadge/RawFoodBadge";
+import { HEALTH_CONCERN_LABEL } from "@/constants/dietAnalysis";
 
 interface RawFoodCardProps {
-  recipeTempData: RecipeTempData;
-  recipeDto: RecipeDto;
+  rawFoodItem: RawFoodOrderItem;
   dailyRecommendKcal: number;
-  subscribeId: number;
-  inedibleFood: string[];
-  dogName: string;
+  inedibleFoods: string[];
+  petName: string;
   isSelected: boolean;
   selectedIds: number[];
   packData: CalculateRecipePackOutput;
-  rank?: number;
   isUnder20g: boolean;
 }
 
 export default function RawFoodCard({
-  recipeTempData,
-  recipeDto,
+  rawFoodItem,
   dailyRecommendKcal,
-  subscribeId,
-  inedibleFood,
-  dogName,
+  inedibleFoods,
+  petName,
   isSelected,
   selectedIds,
   packData,
-  rank,
   isUnder20g,
 }: RawFoodCardProps) {
   const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = packData;
@@ -59,14 +53,14 @@ export default function RawFoodCard({
   } = useModal();
 
   const { applyLocal, commitEntry, removeEntry } = useRecipeEntryManager(
-    recipeTempData.id,
+    rawFoodItem.recipeId,
     packData
   );
 
   // 못먹는 재료 포함되는지 확인
-  const inedibleSet = useMemo(() => new Set(inedibleFood), [inedibleFood]);
+  const inedibleSet = useMemo(() => new Set(inedibleFoods), [inedibleFoods]);
 
-  const inedibleOverlap = recipeTempData.ingredients.filter((ing) =>
+  const inedibleOverlap = rawFoodItem.ingredients.filter((ing) =>
     inedibleSet.has(ing)
   );
 
@@ -90,7 +84,7 @@ export default function RawFoodCard({
       })}
     >
       {inedibleOverlap.length > 0 && (
-        <RawFoodBadge inedibleFoodText={inedibleOverlap.join(", ")} />
+        <RawFoodBadge inedibleFoods={inedibleOverlap} />
       )}
       <div
         className={commonWrapper({
@@ -103,12 +97,14 @@ export default function RawFoodCard({
             justify: "start",
           })}
         >
-          {rank && (
+          {rawFoodItem.rank > 0 && (
             <Chips variant="solid" color="red" size="sm" borderRadius="sm">
-              {rank}위
+              {rawFoodItem.rank}위
             </Chips>
           )}
-          <DefaultText type="headline2">{recipeTempData.name}</DefaultText>
+          <DefaultText type="headline2">
+            {rawFoodItem.recipeNameKorea}
+          </DefaultText>
         </div>
         {!isUnder20g && (
           <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
@@ -118,7 +114,7 @@ export default function RawFoodCard({
       </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image
-          src={recipeTempData.imageUrl}
+          src={rawFoodItem.displayImageUrl}
           alt="레시피 이미지"
           width={80}
           height={80}
@@ -150,9 +146,9 @@ export default function RawFoodCard({
             </DefaultText>
           </div>
           <div className={commonWrapper({ gap: 4, justify: "start" })}>
-            {recipeTempData.benefits.map((text, idx) => (
+            {rawFoodItem.healthConcernsChips.map((concern, idx) => (
               <DefaultText key={idx} type="caption" color="gray500">
-                #{text}
+                #{HEALTH_CONCERN_LABEL[concern]}
               </DefaultText>
             ))}
           </div>
@@ -184,11 +180,9 @@ export default function RawFoodCard({
       <RecipeDetailModal
         isOpen={isDetailOpen}
         onClose={onDetailClose}
-        recipeTempData={recipeTempData}
-        dogName={dogName}
+        rawFoodItem={rawFoodItem}
+        petName={petName}
         dailyRecommendKcal={dailyRecommendKcal}
-        recipeDto={recipeDto}
-        subscribeId={subscribeId}
         onApplyLocal={applyLocal}
         onCommit={commitEntry}
       />

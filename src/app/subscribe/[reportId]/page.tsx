@@ -1,5 +1,4 @@
-import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/usePrefetchGetDietAnalysisResult";
-import { prefetchGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
+import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/usePrefetchRawFoodOrderSheet";
 import Spinner from "@/components/common/spinner/Spinner";
 import SubscribePageContainer from "@/components/pages/subscribe/SubscribePageContainer";
 import {
@@ -17,9 +16,8 @@ export default async function SubscribePage({ params }: { params: Params }) {
 
   const queryClient = new QueryClient();
   // 서버에서 데이터 prefetching
-  await prefetchGetDietAnalysisResult(queryClient, reportId);
-  await prefetchGetSurveyResult(queryClient, reportId);
-  // 데이터 직렬화해서 클라이언트에 전달
+  await prefetchGetRawFoodOrderSheet(queryClient, reportId);
+
   const dehydrateState = dehydrate(queryClient);
 
   return (

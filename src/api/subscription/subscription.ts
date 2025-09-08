@@ -132,11 +132,18 @@ const updateUsingCoupon = async (subscriptionId: number, body: UsingCoupon) => {
   return { ...data, subscriptionId: subscriptionId };
 };
 
-const getRawFoodOrderSheet = async (reportId: number): Promise<any> => {
-  const { data } = await axiosInstance.get(
+const getRawFoodOrderSheet = async (
+  reportId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<any> => {
+  const { data } = await instance.get(
     `api/v2/orders/raw/sheet/subscription/${reportId}`
   );
-  return data;
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "생식 주문서 조회에 실패했습니다";
+  throw new Error(message);
 };
 
 export {

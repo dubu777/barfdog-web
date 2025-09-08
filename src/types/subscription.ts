@@ -1,6 +1,12 @@
-import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
+import {
+  DELIVERY_PLAN,
+  MEAL_PLAN,
+  subscriptionPlanInfo,
+  subscriptionStatus,
+} from "@/constants";
 import { RecipeDto } from "./recipe";
 import { HealthConcernType } from "./survey";
+import { ValueOfTuple } from "./common";
 
 interface SubscriptionResponse<T> {
   isDone: boolean;
@@ -167,12 +173,6 @@ interface PlanInfo {
   maxRecipeCount?: number;
 }
 
-// interface UsingCoupon {
-//   memberCouponId: number;
-//   discount: number;
-//   overDiscount: number;
-// }
-
 interface SubscribeGeneralItem {
   id: number;
   imageUrl: string;
@@ -195,7 +195,7 @@ interface RawFoodOrderItem {
   gramPerKal: number;
   /** g당 가격 */
   pricePerGram: number;
-  itemImageFilename: string | null;
+  displayImageUrl: string;
   healthConcernsChips: HealthConcernType[];
   /** 1회 급여 권장 g */
   oneMealRecommendGram: number;
@@ -203,12 +203,14 @@ interface RawFoodOrderItem {
   meet: MeetType;
   /** 추천 여부 */
   isRecommend: boolean;
+  ingredients: string[];
 }
 
 /** 생식 주문서 응답 루트 */
 interface RawFoodOrderSheet {
   petName: string;
   oneDayRecommendKcal: number;
+  inedibleFoods: string[];
   recipeList: RawFoodOrderItem[];
 }
 
@@ -224,7 +226,9 @@ type PlanName = keyof typeof subscriptionPlanInfo;
 
 type SubscriptionStep = "rawFood" | "deliveryCycle";
 
-type DeliveryPlan = "ONE_WEEK" | "TWO_WEEK" | "FOUR_WEEK";
+type DeliveryPlan = ValueOfTuple<typeof DELIVERY_PLAN>;
+
+type MealPlan = ValueOfTuple<typeof MEAL_PLAN>;
 
 export type {
   PlanDiscountResponse,
@@ -254,4 +258,6 @@ export type {
   SubscriptionStep,
   RawFoodOrderSheet,
   DeliveryPlan,
+  RawFoodOrderItem,
+  MealPlan,
 };

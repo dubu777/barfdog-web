@@ -2,31 +2,33 @@ import { commonWrapper } from "@/styles/common.css";
 import * as styles from "./RecipeItemCard.css";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import Image from "next/image";
-import { RecipeTempData } from "@/constants";
+import { DeliveryPlan, MealPlan } from "@/types";
+import { DELIVERY_PLAN_LABEL, MEAL_PLAN_LABEL } from "@/constants";
 
 interface RecipeItemCardProps {
   packGrams: number;
   originPrice: number;
   packCount: number;
-  mealFrequency: 1 | 2;
-  deliveryCycle: 2 | 4;
-  recipeTempData: RecipeTempData;
+  mealPlan: MealPlan;
+  deliveryPlan: DeliveryPlan;
+  displayImageUrl: string;
+  recipeName: string;
 }
 
 export default function RecipeItemCard({
   packGrams,
   originPrice,
   packCount,
-  mealFrequency,
-  deliveryCycle,
-  recipeTempData,
+  mealPlan,
+  deliveryPlan,
+  displayImageUrl,
+  recipeName,
 }: RecipeItemCardProps) {
-  const mealFrequencyText = mealFrequency === 1 ? "하루 한 끼" : "하루 두 끼";
   return (
     <div className={styles.itemCardContainer}>
       <Image
-        src={recipeTempData.imageUrl}
-        alt={recipeTempData.name}
+        src={displayImageUrl}
+        alt={recipeName}
         width={76}
         height={76}
         priority
@@ -40,14 +42,18 @@ export default function RecipeItemCard({
         })}
       >
         <div>
-          <DefaultText type="headline2" block>{recipeTempData.name}</DefaultText>
+          <DefaultText type="headline2" block>
+            {recipeName}
+          </DefaultText>
           <DefaultText
             type="body3"
             color="gray600"
             block
-          >{`${packGrams}g | ${mealFrequencyText} | ${deliveryCycle}주 | ${packCount}팩`}</DefaultText>
+          >{`${packGrams}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</DefaultText>
         </div>
-        <DefaultText type="label3">{originPrice.toLocaleString()}원</DefaultText>
+        <DefaultText type="label3">
+          {originPrice.toLocaleString()}원
+        </DefaultText>
       </div>
     </div>
   );

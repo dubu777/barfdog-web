@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useGetSurveyResult } from "@/api/survey/queries/useGetSurveyResult";
+import { useRouter } from "next/navigation";
 import { FormProvider, useWatch } from "react-hook-form";
 import { useSubscriptionForm } from "@/hooks/survey/useSubscriptionForm";
 import {
@@ -13,7 +12,6 @@ import DeliveryOptions from "./deliveryOptions/DeliveryOptions";
 import SubscribeProgressBar from "./subscribeProgressBar/SubscribeProgressBar";
 import { subscribeStepMap } from "@/constants";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import GeneralItemOptions from "./generalItemOptions/GeneralItemOptions";
 import { useCallback, useState } from "react";
 import { SubscriptionStep } from "@/types";
 import Header from "@/components/layout/header/Header";
@@ -32,7 +30,8 @@ export default function SubscribePageContainer({
 }: SubscribePageContainerProps) {
   const router = useRouter();
   const [step, setStep] = useState<SubscriptionStep>("rawFood");
-  const { data: rawFoodData } = useGetRawFoodOrderSheet(reportId);
+  const { data: rawFoodSheetData } = useGetRawFoodOrderSheet(reportId);
+  console.log(rawFoodSheetData);
 
   useScrollToTop(step);
 
@@ -41,14 +40,14 @@ export default function SubscribePageContainer({
     defaultSubscriptionValues
   );
 
-  const rawFoodList =
+  const rawFoods =
     useWatch<SubscriptionValues, "rawFoods">({
       control: formMethods.control,
       name: "rawFoods",
     }) ?? [];
 
-  const recipeCount = rawFoodList.length;
-  const selectedRawFoodIds = rawFoodList.map((f) => f.recipeId);
+  const recipeCount = rawFoods.length;
+  const selectedRawFoodIds = rawFoods.map((f) => f.recipeId);
   const currentStep = subscribeStepMap[step] ?? 1;
 
   console.log("주문서 form", formMethods.watch());
@@ -73,7 +72,6 @@ export default function SubscribePageContainer({
   const primaryLabel = step === "deliveryCycle" ? "결제하러 가기" : "주문하기";
   const primaryAction = step === "deliveryCycle" ? handleSubmit : handleNext;
 
-  const inedibleFood = ["닭", "칠면조"];
   return (
     <FormProvider {...formMethods}>
       <Header onBack={handleBack} showBackButton />
@@ -85,15 +83,14 @@ export default function SubscribePageContainer({
         <SubscribeProgressBar currentStep={currentStep} />
         {step === "rawFood" && (
           <RawFoodOptions
-            rawFoodData={rawFoodData}
-            inedibleFood={inedibleFood}
+            rawFoodSheetData={rawFoodSheetData}
             selectedIds={selectedRawFoodIds}
           />
         )}
 
-        {/* {step === "delivery-cycle" && (
-          <DeliveryOptions rawFoodData={rawFoodData} />
-        )} */}
+        {step === "deliveryCycle" && (
+          <DeliveryOptions rawFoodSheetData={rawFoodSheetData} />
+        )}
         {recipeCount === 2 && step === "rawFood" && (
           <div className={styles.recipeTailChipWrapper}>
             <Chips

@@ -11,17 +11,15 @@ import RecipeBenefits from "./recipeBenefits/RecipeBenefits";
 import RecipeIngredientsList from "./recipeIngredients/RecipeIngredients";
 import { useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
-import { RecipeDto } from "@/types";
+import { RawFoodOrderItem, RecipeDto } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
 
-
 interface RecipeDetailModalProps {
-  recipeTempData: RecipeTempData;
-  dogName: string;
+  rawFoodItem: RawFoodOrderItem;
+  petName: string;
   dailyRecommendKcal: number;
-  recipeDto: RecipeDto;
-  subscribeId: number;
+
   onApplyLocal: (packGrams: number, packPrice: number) => void;
   onCommit: () => void;
   isOpen: boolean;
@@ -29,11 +27,10 @@ interface RecipeDetailModalProps {
 }
 
 export default function RecipeDetailModal({
-  recipeTempData,
-  dogName,
+  rawFoodItem,
+  petName,
   dailyRecommendKcal,
-  recipeDto,
-  subscribeId,
+
   onApplyLocal,
   onCommit,
   isOpen,
@@ -56,26 +53,32 @@ export default function RecipeDetailModal({
     toast("레시피를 담았어요", "above-button");
     onCommit();
     onClose();
-  }
-  
+  };
+
   return (
-    <FullModalWrapper isVisible={isOpen} handleClose={onClose} headerBackgroundColor="gray50">
+    <FullModalWrapper
+      isVisible={isOpen}
+      handleClose={onClose}
+      headerBackgroundColor="gray50"
+    >
       <div className={commonWrapper({ direction: "col", gap: 8 })}>
         <Image
-          src={recipeTempData.imageUrl}
+          src={rawFoodItem.displayImageUrl}
           width={140}
           height={140}
-          alt={recipeTempData.name}
+          alt={rawFoodItem.recipeNameKorea}
           priority
         />
         <div>
-          <DefaultText type="title4" block>{recipeTempData.name}</DefaultText>
+          <DefaultText type="title4" block>
+            {rawFoodItem.recipeNameKorea}
+          </DefaultText>
           <DefaultText type="headline4" color="gray500" block>
-            {recipeTempData.englishName}
+            {rawFoodItem.recipeNameEnglish}
           </DefaultText>
         </div>
         <div className={commonWrapper({ direction: "row", gap: 4 })}>
-          {recipeTempData.ingredients.map((text, idx) => (
+          {rawFoodItem.ingredients.map((text, idx) => (
             <Chips
               key={idx}
               variant="solid"
@@ -94,11 +97,10 @@ export default function RecipeDetailModal({
         </div>
         <MealAmountSelector
           ref={refs.amount}
-          recipeId={recipeTempData.id}
-          dogName={dogName}
+          rawFoodItem={rawFoodItem}
+          recipeId={rawFoodItem.recipeId}
+          petName={petName}
           dailyRecommendKcal={dailyRecommendKcal}
-          recipeDto={recipeDto}
-          subscribeId={subscribeId}
           onApply={onApplyLocal}
         />
         <RecipeBenefits ref={refs.benefits} />

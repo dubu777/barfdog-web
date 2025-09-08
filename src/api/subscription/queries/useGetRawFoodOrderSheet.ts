@@ -9,8 +9,8 @@ export function useGetRawFoodOrderSheet(
 ) {
   return useSuspenseQuery<RawFoodOrderSheet>({
     queryKey: [
-      queryKeys.ORDER.BASE,
-      queryKeys.ORDER.GET_RAW_ORDER_SHEET,
+      queryKeys.SUBSCRIPTION.BASE,
+      queryKeys.SUBSCRIPTION.GET_RAW_ORDER_SHEET,
       reportId,
     ],
     queryFn: () => getRawFoodOrderSheet(reportId),

@@ -8,94 +8,46 @@ import { useFormContext, useWatch } from "react-hook-form";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
-import { RecipeData } from "@/types";
+import { RawFoodOrderSheet } from "@/types";
 import {
   calculateDeliveryCyclePackCount,
-  calculateRecipeTotal,
+  calculateTotalSubscriptionPrice,
 } from "@/utils/subscription/calculateRecipe";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import SubscriptionItemList from "./subscriptionItemList/SubscriptionItemList";
 import SubscriptionSummary from "./subscriptionSummary/SubscriptionSummary";
 
 interface DeliveryOptionsProps {
-  recipeData: RecipeData;
+  rawFoodSheetData: RawFoodOrderSheet;
 }
 
-export default function DeliveryOptions({ recipeData }: DeliveryOptionsProps) {
-  const { control, setValue } = useFormContext<SubscriptionValues>();
-  // const { data: discountData } = useGetPlanDiscount();
-  // const { mutate: updateSubscription } = useUpdateSubscription();
-  console.log("recipeData", recipeData); // 빌드 에러 방지용 데이터 바인딩 후에 제거
+export default function DeliveryOptions({
+  rawFoodSheetData,
+}: DeliveryOptionsProps) {
+  const { control } = useFormContext<SubscriptionValues>();
 
   // 폼 필드 구독
-  const recipeList = useWatch({ control, name: "recipeList" });
-  const generalItemList = useWatch({ control, name: "generalItemList" });
-  const mealFrequency = useWatch({ control, name: "mealFrequency" }) as 1 | 2;
-  const deliveryCycle = useWatch({ control, name: "deliveryCycle" }) as 2 | 4;
-  const finalPrice = useWatch({ control, name: "finalPrice" });
-  const originPrice = useWatch({ control, name: "originPrice" });
+  const recipeList = useWatch({ control, name: "rawFoods" });
+  const mealPlan =
+    useWatch({
+      control,
+      name: "mealPlan",
+    }) || "TWO_MEAL";
+  const deliveryPlan =
+    useWatch({
+      control,
+      name: "deliveryPlan",
+    }) || "TWO_WEEK";
   const packCount = calculateDeliveryCyclePackCount(
-    mealFrequency,
-    deliveryCycle,
-    recipeList.length as 1 | 2
+    mealPlan,
+    deliveryPlan,
+    recipeList.length
   );
 
-  useEffect(() => {
-    // 필수 값이 모두 있어야 계산
-    if (
-      !recipeList?.length ||
-      ![1, 2].includes(mealFrequency) ||
-      ![2, 4].includes(deliveryCycle)
-    ) {
-      return;
-    }
-
-    const recipeCount = recipeList.length as 1 | 2;
-
-    // 1) recipeList 각 항목별 originPrice / salePrice 계산
-    const updatedRecipes = recipeList.map((item) => {
-      const { originPrice, discountAmount, salePrice } = calculateRecipeTotal(
-        item.packPrice!,
-        mealFrequency as 1 | 2,
-        deliveryCycle as 2 | 4,
-        recipeCount
-      );
-      console.log(originPrice, "origin");
-      console.log(salePrice, "salePrice");
-      return {
-        ...item,
-        originPrice,
-        discountAmount,
-        salePrice,
-      };
-    });
-
-    const isSame =
-      JSON.stringify(recipeList) === JSON.stringify(updatedRecipes);
-    if (!isSame) {
-      setValue("recipeList", updatedRecipes, { shouldDirty: true });
-    }
-
-    // 2) top-level originPrice: 레시피 originPrice 합 + 일반 상품 orderPrice 합
-    const sumRecipeOrigin = updatedRecipes.reduce(
-      (sum, r) => sum + (r.originPrice ?? 0),
-      0
-    );
-    const sumGeneral =
-      generalItemList?.reduce((sum, g) => sum + g.originPrice, 0) ?? 0;
-    setValue("originPrice", sumRecipeOrigin + sumGeneral, {
-      shouldDirty: true,
-    });
-
-    // 3) top-level finalPrice: 레시피 salePrice 합 + 일반 상품 orderPrice 합
-    const sumRecipeSale = updatedRecipes.reduce(
-      (sum, r) => sum + (r.salePrice ?? 0),
-      0
-    );
-    setValue("finalPrice", sumRecipeSale + sumGeneral, {
-      shouldDirty: true,
-    });
-  }, [recipeList, generalItemList, mealFrequency, deliveryCycle, setValue]);
+  const pricing = useMemo(
+    () => calculateTotalSubscriptionPrice(recipeList, mealPlan, deliveryPlan),
+    [recipeList, mealPlan, deliveryPlan]
+  );
 
   return (
     <section className={styles.deliveryOptionsContainer}>
@@ -113,17 +65,17 @@ export default function DeliveryOptions({ recipeData }: DeliveryOptionsProps) {
       <Divider />
       <SubscriptionItemList
         recipeList={recipeList}
-        generalItemList={generalItemList}
-        deliveryCycle={deliveryCycle}
+        mealPlan={mealPlan}
+        deliveryPlan={deliveryPlan}
         packCount={packCount}
-        mealFrequency={mealFrequency}
+        rawFoodItems={rawFoodSheetData.recipeList}
       />
       <Divider />
       <SubscriptionSummary
-        finalPrice={finalPrice}
-        originPrice={originPrice}
-        discountAmount={originPrice - finalPrice}
-        deliveryCycle={deliveryCycle}
+        paymentExpectedPrice={pricing.paymentExpectedPrice}
+        totalOriginalPrice={pricing.totalOriginalPrice}
+        discountAmount={pricing.totalDiscountAmount}
+        deliveryPlan={deliveryPlan}
       />
     </section>
   );

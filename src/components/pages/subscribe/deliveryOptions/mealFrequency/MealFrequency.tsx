@@ -14,11 +14,11 @@ export default function MealFrequency() {
       <DefaultText type="title4">식사량</DefaultText>
 
       <Controller
-        name="mealFrequency"
+        name="mealPlan"
         control={control}
         render={({ field }) => (
           <div className={commonWrapper({ gap: 8 })}>
-            {deliveryOptions.mealFrequency.map((item) => (
+            {deliveryOptions.mealPlan.map((item) => (
               <SurveyButton
                 key={item.value}
                 label={item.label}

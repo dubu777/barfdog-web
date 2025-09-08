@@ -10,8 +10,8 @@ import ArrowIcon from "public/images/header/chevron-right.svg";
 import CheckIcon from "public/images/healthNote/body-check/notice-check.svg";
 import * as styles from "./RecommendedRecipeCard.css";
 import {
-  HEALTH_CONCERN_LABEL_MAP,
-  INGREDIENT_ICON_MAP,
+  HEALTH_CONCERN_LABEL,
+  INGREDIENT_CONFIG,
 } from "@/constants/dietAnalysis";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
@@ -56,7 +56,7 @@ export default function RecommendedRecipeCard({
         >
           {recipe.healthConcernsList.map((concern) => (
             <Chips key={concern} variant="solid" color="gray100">
-              {HEALTH_CONCERN_LABEL_MAP[concern]}
+              {HEALTH_CONCERN_LABEL[concern]}
             </Chips>
           ))}
         </div>
@@ -108,10 +108,10 @@ export default function RecommendedRecipeCard({
           <SwiperSlide key={index} className={styles.ingredientSlide}>
             <div className={styles.ingredientItem}>
               <div className={styles.ingredientIcon}>
-                <SvgIcon src={INGREDIENT_ICON_MAP[ingredient]} size={52} />
+                <SvgIcon src={INGREDIENT_CONFIG[ingredient].icon} size={52} />
               </div>
               <DefaultText type="caption" color="gray700">
-                {ingredient}
+                {INGREDIENT_CONFIG[ingredient].label}
               </DefaultText>
             </div>
           </SwiperSlide>

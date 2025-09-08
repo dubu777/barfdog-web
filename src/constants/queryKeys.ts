@@ -42,6 +42,7 @@ const queryKeys = {
     GET_SUBSCRIPTION_DETAIL: "getSubscriptionDetail",
     GET_SUBSCRIPTION_ADDRESS: "getSubscriptionAddress",
     GET_SUBSCRIPTION_BENEFITS: "getSubscriptionBenefits",
+    GET_RAW_ORDER_SHEET: "getRawOrderSheet",
   },
   CART: {
     BASE: "cart",
@@ -61,7 +62,6 @@ const queryKeys = {
     GET_GENERAL_ORDER_LIST: "getGeneralOrderList",
     GET_SUBSCRIPTION_ORDER_LIST: "getSubscriptionOrderList",
     GET_GENERAL_ORDER: "getGeneralOrder",
-    GET_RAW_ORDER_SHEET: "getRawOrderSheet",
   },
   MAIN: {
     BASE: "main",

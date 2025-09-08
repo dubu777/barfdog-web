@@ -139,6 +139,8 @@ interface InfoTextType {
   color?: TextColor; // 항목 기본 색상 (선택)
 }
 
+type ValueOfTuple<T extends readonly unknown[]> = T[number];
+
 export type {
   SearchParamProps,
   DefaultObjectType,
@@ -156,4 +158,5 @@ export type {
   ApiResponse,
   FileChangeInfo,
   InfoTextType,
+  ValueOfTuple,
 };

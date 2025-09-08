@@ -1,8 +1,7 @@
 "use client";
 
 import * as styles from "./RawFoodOptions.css";
-import { recipeTempData, recipeTab } from "@/constants";
-import { RecipeData, RecipeDto } from "@/types";
+import { recipeTab } from "@/constants";
 import { RawFoodOrderSheet } from "@/types/subscription";
 import DefaultText from "@/components/common/defaultText/DefaultText";
 import TabBar from "@/components/common/tabBar/TabBar";
@@ -19,36 +18,31 @@ import { useFormContext, useWatch } from "react-hook-form";
 import RawFoodCard from "./rawFoodCard/RawFoodCard";
 
 interface RawFoodOptionsProps {
-  rawFoodData: RawFoodOrderSheet;
-  inedibleFood: string[];
+  rawFoodSheetData: RawFoodOrderSheet;
   selectedIds: number[];
 }
 
 export default function RawFoodOptions({
-  rawFoodData,
-  inedibleFood,
+  rawFoodSheetData,
   selectedIds,
 }: RawFoodOptionsProps) {
   const { isOpen, onClose, onToggle } = useModal();
   const { control } = useFormContext<SubscriptionValues>();
-  const recipeList = useWatch({ control, name: "recipeList" });
+  const recipeList = useWatch({ control, name: "rawFoods" });
 
   // rawFoodData에서 레시피 리스트 가져오기
-  const allRecipes = useMemo(() => rawFoodData.recipeList, [rawFoodData.recipeList]);
+  const allRecipes = useMemo(
+    () => rawFoodSheetData.recipeList,
+    [rawFoodSheetData.recipeList]
+  );
 
   const packMap = useMemo(() => {
     const map: Record<number, ReturnType<typeof calculateRecipePack>> = {};
     allRecipes.forEach((rawFoodItem) => {
       const entry = recipeList.find((e) => e.recipeId === rawFoodItem.recipeId);
       map[rawFoodItem.recipeId] = calculateRecipePack({
-        rawFoodItem: {
-          recipeId: rawFoodItem.recipeId,
-          gramPerKal: rawFoodItem.gramPerKal,
-          pricePerGram: rawFoodItem.pricePerGram,
-          oneMealRecommendGram: rawFoodItem.oneMealRecommendGram,
-        },
-        subscribeId: 1, // 임시 subscribeId (실제 값으로 변경 필요)
-        customPackGrams: entry?.packGrams,
+        rawFoodItem,
+        customPackGrams: entry?.oneMealGramsPerRecipe,
       });
     });
     return map;
@@ -59,13 +53,15 @@ export default function RawFoodOptions({
       key: "double",
       title: "더블미트 레시피",
       description: "두 가지 고기가 섞인 복합 단백질",
-      items: allRecipes.filter((r) => r.meet === "DOUBLE"),
+      // items: allRecipes.filter((r) => r.meet === "DOUBLE"),
+      items: allRecipes.filter((r) => r.meet === null),
     },
     {
       key: "single",
       title: "싱글미트 레시피",
       description: "한 가지 고기로 이루어진 단일 단백질",
-      items: allRecipes.filter((r) => r.meet === "SINGLE"),
+      // items: allRecipes.filter((r) => r.meet === "SINGLE"),
+      items: allRecipes.filter((r) => r.meet === null),
     },
   ];
 
@@ -84,10 +80,8 @@ export default function RawFoodOptions({
   }));
 
   // dogName이 rawFoodData에 없으므로 임시로 처리 (실제로는 props로 전달받아야 함)
-  const dogName = "반려견"; // 임시값
-  const name = getNameWithPossessiveSuffix(dogName);
-  const recommendedRecipeList = allRecipes.filter(r => r.isRecommend).map(r => r.recipeId);
-
+  const petName = "임시"; // 임시값
+  const name = getNameWithPossessiveSuffix(petName);
   return (
     <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
@@ -123,26 +117,19 @@ export default function RawFoodOptions({
                 </DefaultText>
               </div>
               <div className={styles.recipeCardWrapper}>
-                {items.map((recipeTempData) => {
-                  const rankIndex = recommendedRecipeList.indexOf(
-                    recipeTempData.id
-                  );
-                  const displayRank =
-                    rankIndex >= 0 ? rankIndex + 1 : undefined;
-                  const packData = packMap[recipeTempData.id];
+                {items.map((rowFoodItem) => {
+                  const packData = packMap[rowFoodItem.recipeId];
                   return (
                     <RawFoodCard
-                      key={recipeTempData.id}
-                      recipeTempData={recipeTempData}
-                      recipeDto={recipeDtoMap[recipeTempData.id]}
-                      dailyRecommendKcal={kcal}
-                      packData={packData}
-                      subscribeId={recipeData.subscribeId}
-                      inedibleFood={inedibleFood}
-                      dogName={recipeData.dogName}
+                      key={rowFoodItem.recipeId}
+                      rawFoodItem={rowFoodItem}
+                      dailyRecommendKcal={rawFoodSheetData.oneDayRecommendKcal}
+                      inedibleFoods={rawFoodSheetData.inedibleFoods}
                       selectedIds={selectedIds}
-                      isSelected={selectedIds.includes(recipeTempData.id)}
-                      rank={displayRank}
+                      packData={packData}
+                      petName={petName}
+                      // petName={rawFoodSheetData.petName}
+                      isSelected={selectedIds.includes(rowFoodItem.recipeId)}
                       isUnder20g={packData.under20g !== undefined}
                     />
                   );
@@ -156,8 +143,8 @@ export default function RawFoodOptions({
       <RecommendKcalBottomSheet
         isOpen={isOpen}
         onClose={onClose}
-        dogName={recipeData.dogName}
-        oneDayRecommendKcal={recipeData.foodAnalysis.oneDayRecommendKcal}
+        petName={rawFoodSheetData.petName}
+        oneDayRecommendKcal={rawFoodSheetData.oneDayRecommendKcal}
       />
     </section>
   );

@@ -11,7 +11,7 @@ import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
 import { useFormContext, useWatch } from "react-hook-form";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
-import { RecipeDto } from "@/types";
+import { RawFoodOrderItem, RecipeDto } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
@@ -25,22 +25,21 @@ import Divider from "@/components/common/divider/Divider";
 import WarningIcon from "public/images/icons/warning.svg";
 
 interface MealAmountSelectorProps {
-  dogName: string;
+  rawFoodItem: RawFoodOrderItem;
+  petName: string;
   recipeId: number;
   dailyRecommendKcal: number;
-  recipeDto: RecipeDto;
-  subscribeId: number;
   onApply: (packGrams: number, packPrice: number) => void;
 }
 
 const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
   function MealAmountSelector(
-    { dogName, recipeId, dailyRecommendKcal, recipeDto, subscribeId, onApply },
+    { rawFoodItem, petName, recipeId, dailyRecommendKcal, onApply },
     ref
   ) {
     const { control } = useFormContext<SubscriptionValues>();
     const toast = useToastStore((s) => s.addToast);
-    const recipeList = useWatch({ control, name: "recipeList" });
+    const recipeList = useWatch({ control, name: "rawFoods" });
 
     // form entry if exists
     const entry = recipeList.find((r) => r.recipeId === recipeId);
@@ -64,10 +63,8 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
         pricePer10g,
         under20g,
       } = calculateRecipePack({
-        dailyRecommendKcal,
-        recipeDto,
-        subscribeId,
-        customPackGrams: entry?.packGrams,
+        rawFoodItem,
+        customPackGrams: entry?.oneMealGramsPerRecipe,
       });
 
       setInputValue(packGrams.toString());
@@ -78,7 +75,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
         pricePer10g,
         under20g,
       });
-    }, [entry, dailyRecommendKcal, recipeDto, subscribeId, recipeId]);
+    }, [entry, dailyRecommendKcal, recipeId]);
 
     const handleInputChange = useCallback(
       (val: string) => {
@@ -109,29 +106,20 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
 
       const { recommendedPackGrams, packGrams, packPrice, pricePer10g } =
         calculateRecipePack({
-          dailyRecommendKcal,
-          recipeDto,
-          subscribeId,
+          rawFoodItem,
           customPackGrams: clamped,
         });
 
       setDisplay({ recommendedPackGrams, packGrams, packPrice, pricePer10g });
       setInputValue(clamped.toString());
       onApply(clamped, packPrice);
-    }, [
-      inputValue,
-      onApply,
-      dailyRecommendKcal,
-      recipeDto,
-      subscribeId,
-      toast,
-    ]);
+    }, [inputValue, onApply, dailyRecommendKcal, toast]);
 
     return (
       <section ref={ref} className={recipeDetailSection}>
         <div className={commonWrapper({ direction: "col", align: "start" })}>
           <DefaultText type="title4">
-            {getNameWithPossessiveSuffix(dogName)}의
+            {getNameWithPossessiveSuffix(petName)}의
           </DefaultText>
           <div
             className={commonWrapper({
