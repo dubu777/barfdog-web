@@ -10,7 +10,7 @@ import { LoginFormValues } from "@/types";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface LoginFormProps {
   control: Control<LoginFormValues>;
@@ -62,25 +62,25 @@ const LoginForm = ({
       </div>
       <div className={commonWrapper({ gap: 4 })}>
         <Link href="/signup">
-          <DefaultText type="headline4" color="gray500">
+          <Text type="headline4" color="gray500">
             회원가입
-          </DefaultText>
+          </Text>
         </Link>
-        <DefaultText type="headline4" color="gray500">
+        <Text type="headline4" color="gray500">
           |
-        </DefaultText>
+        </Text>
         <Link href="/find-account">
-          <DefaultText type="headline4" color="gray500">
+          <Text type="headline4" color="gray500">
             아이디 찾기
-          </DefaultText>
+          </Text>
         </Link>
-        <DefaultText type="headline4" color="gray500">
+        <Text type="headline4" color="gray500">
           |
-        </DefaultText>
+        </Text>
         <Link href="/find-account">
-          <DefaultText type="headline4" color="gray500">
+          <Text type="headline4" color="gray500">
             비밀번호 찾기
-          </DefaultText>
+          </Text>
         </Link>
       </div>
     </form>

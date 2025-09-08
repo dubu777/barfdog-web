@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { commonWrapper } from "@/styles/common.css";
 import DogIcon from "public/images/dietAnalysis/first-dog.svg";
@@ -21,12 +21,12 @@ export default function DietAnalysisGuest() {
     <div className={commonWrapper({ direction: "col", padding: 20, gap: 32 })}>
       <div className={commonWrapper({ gap: 12, direction: "col" })}>
         <div>
-          <DefaultText type="title2">바프독 AI가 추천하는</DefaultText>
-          <DefaultText type="title2">우리 아이 맞춤 건강 식단</DefaultText>
+          <Text type="title2">바프독 AI가 추천하는</Text>
+          <Text type="title2">우리 아이 맞춤 건강 식단</Text>
         </div>
-        <DefaultText type="body3" color="gray800">
+        <Text type="body3" color="gray800">
           우리 아이 상태에 딱 맞는 식단을 알려드려요!
-        </DefaultText>
+        </Text>
       </div>
       <SvgIcon src={DogIcon} width={175} height={140} />
       <Button

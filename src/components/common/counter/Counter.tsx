@@ -1,6 +1,6 @@
 'use client';
 import * as styles from './Counter.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import PlusIcon from "/public/images/icons/plus.svg";
 import MinusIcon from "/public/images/icons/minus.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -43,7 +43,7 @@ const Counter = ({
       <button onClick={handleDecrement} disabled={initialCount <= min}>
         <SvgIcon src={MinusIcon} size={24} color={initialCount <= min ? 'gray300' : 'gray800'} />
       </button>
-      <DefaultText type='label4' color='gray800'>{initialCount}</DefaultText>
+      <Text type='label4' color='gray800'>{initialCount}</Text>
       <button onClick={handleIncrement} disabled={initialCount >= max}>
         <SvgIcon src={PlusIcon} size={24} color={initialCount >= max ? 'gray300' : 'gray800'} />
       </button>

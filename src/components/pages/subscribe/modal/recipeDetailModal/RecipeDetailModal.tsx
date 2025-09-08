@@ -1,5 +1,5 @@
 import Chips from "@/components/common/chips/Chips";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import { recipeDetailTab, RecipeTempData } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
@@ -70,12 +70,12 @@ export default function RecipeDetailModal({
           priority
         />
         <div>
-          <DefaultText type="title4" block>
+          <Text type="title4" block>
             {rawFoodItem.recipeNameKorea}
-          </DefaultText>
-          <DefaultText type="headline4" color="gray500" block>
+          </Text>
+          <Text type="headline4" color="gray500" block>
             {rawFoodItem.recipeNameEnglish}
-          </DefaultText>
+          </Text>
         </div>
         <div className={commonWrapper({ direction: "row", gap: 4 })}>
           {rawFoodItem.ingredients.map((text, idx) => (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as styles from './ChangeBottomSheet.css';
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { numberOfPacksPerDay, subscriptionPlanInfo } from "@/constants";
 import { PlanKey } from "@/types";
@@ -85,7 +85,7 @@ const ChangeBottomSheet = ({
 			<div className={styles.changeSubscriptionInfo}>
 				{subscriptionInfo.map(category => (
 					<div key={category.label} className={styles.subscriptionInfoItem}>
-						<DefaultText type='label2'>{category.label}</DefaultText>
+						<Text type='label2'>{category.label}</Text>
 						<div className={styles.selectBox}>
 							{category.items.map(item => {
 								const handleChange = () => {

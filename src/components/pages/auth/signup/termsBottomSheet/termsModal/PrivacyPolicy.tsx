@@ -1,6 +1,6 @@
 import * as styles from './TermsModal.css';
 import DefaultModal from "@/components/common/defaultModal/DefaultModal";
-import Text from "@/components/common/text/Text";
+import TestText from "@/components/common/testText/TestText";
 
 interface PrivacyPolicyProps {
 	isOpen: boolean;
@@ -17,7 +17,7 @@ const PrivacyPolicy = ({ isOpen, onClose }: PrivacyPolicyProps) => {
 			scroll
 		>
 			<div className={styles.termsModalContainer}>
-				<Text type='title' size='titleLg'>개인정보처리방침</Text>
+				<TestText type='title' size='titleLg'>개인정보처리방침</TestText>
 				<div className={styles.termsModalContent}>
 					주식회사 프레쉬아워는 (이하 &apos;회사&apos;는) 고객님의 개인정보를 중요시하며, &quot;정보통신망 이용촉진
 					및 정보보호&quot;에 관한 법률을 준수하고 있습니다.

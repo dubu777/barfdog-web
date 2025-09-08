@@ -2,7 +2,7 @@
 import * as styles from "./ProbiomeList.css";
 import { useRouter } from "next/navigation";
 import InfoIcon from "/public/images/icons/info.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import CreateButton from "@/components/common/createButton/CreateButton";
 import Card from "@/components/common/card/Card";
@@ -40,10 +40,10 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
     <>
       <section className={styles.probiomeListContainer}>
         <div className={styles.probiomeListTitle}>
-          <DefaultText type="title3">
+          <Text type="title3">
             진단 키트를 수령한 후<br />
             사전 문진을 작성해 주세요
-          </DefaultText>
+          </Text>
           <Button
             iconSrc={InfoIcon}
             size="sm"
@@ -77,12 +77,12 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
             )
           ) : (
             <Card shadow="strong" className={styles.probiomeEmpty} gap={4}>
-              <DefaultText type="label1" color="gray700">
+              <Text type="label1" color="gray700">
                 문진을 작성한 기록이 없어요
-              </DefaultText>
-              <DefaultText type="body3" color="gray600">
+              </Text>
+              <Text type="body3" color="gray600">
                 사전 문진을 작성해야 회수 신청을 할 수 있어요
-              </DefaultText>
+              </Text>
             </Card>
           )}
         </article>

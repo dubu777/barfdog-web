@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import {
 	mainFAQButton,
 	mainFAQButtonAvatar,
@@ -55,9 +55,9 @@ const FAQSection = () => {
 			>
 				{descriptions.map(description => (
 					<motion.div key={description} variants={childVariants} className={mainFAQDescription}>
-						<DefaultText type='label4'>
+						<Text type='label4'>
 							{description}
-						</DefaultText>
+						</Text>
 					</motion.div>
 				))}
 			</motion.div>

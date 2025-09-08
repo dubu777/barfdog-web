@@ -1,5 +1,5 @@
 "use client";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import { useSnsLogin } from "@/api/auth/mutations/useSnsLogin";
 import { useEffect } from "react";
 import { SnSProvider } from "@/types";
@@ -20,7 +20,7 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
     }
   }, [code, provider, snsLogin]);
 
-  return <Loader fullscreen />;
+  return <Spinner fullscreen />;
 };
 
 export default LoginRedirect;

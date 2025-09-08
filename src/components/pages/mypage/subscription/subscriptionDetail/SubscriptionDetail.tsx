@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import * as styles from "./SubscriptionDetail.css";
 import { pointColor } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import DogInfo from "@/components/pages/mypage/common/information/section/DogInfo";
 import AddressInfo from "@/components/pages/mypage/common/information/section/AddressInfo";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
@@ -45,7 +45,7 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
   return (
     <section>
       <article className={styles.subscriptionDetailBox}>
-        <DefaultText type="title4">
+        <Text type="title4">
           {isSubscriptionCancel ? (
             <>
               <span className={pointColor}>{weeklyPaymentCycle}주</span>마다
@@ -58,7 +58,7 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
               구독이 해지되었어요
             </>
           )}
-        </DefaultText>
+        </Text>
         <SubscriptionCard
           data={subscriptionDetail}
           type="subscriptionDetail"
@@ -98,9 +98,9 @@ const SubscriptionDetail = ({ subscriptionId }: SubscriptionDetailProps) => {
             )
           }
         >
-          <DefaultText type="label4" color="gray700">
+          <Text type="label4" color="gray700">
             해지하기
-          </DefaultText>
+          </Text>
         </button>
       </div>
     </section>

@@ -2,16 +2,17 @@
 import * as styles from './Cart.css';
 import { Fragment, useEffect, useRef } from "react";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";
 import { useCart } from "@/hooks/cart/useCart";
 import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
 import { useUpdateCartInfo } from "@/api/cart/mutations/useUpdateCartInfo";
+import ListDivider from "@/components/common/listDivider/ListDivider";
 
 // 옵션 삭제, 품절 기능 적용 필요
 export default function Cart() {
@@ -53,7 +54,7 @@ export default function Cart() {
     console.log('주문하기')
   }
 
-  if (!cartData) return <Loader fullscreen />;
+  if (!cartData) return <Spinner fullscreen />;
   return (
     <section className={styles.cartContainer}>
       <article className={styles.cartItemControls}>
@@ -62,12 +63,12 @@ export default function Cart() {
           isChecked={isSelectedAll}
           onToggle={handleSelectAll}
         >
-          <DefaultText type='label2'>
+          <Text type='label2'>
             전체 선택 ({selectedItems.length}/{cartInfo?.basketDtoList.length})
-          </DefaultText>
+          </Text>
         </LabeledCheckbox>
         <button onClick={handleDeleteSelectedItems} disabled={selectedItems.length === 0} className={styles.deleteButton}>
-          <DefaultText type='body3' color='gray700'>선택삭제</DefaultText>
+          <Text type='body3' color='gray700'>선택삭제</Text>
         </button>
       </article>
       <Divider thickness={8} color='gray50' />
@@ -84,9 +85,7 @@ export default function Cart() {
                   onSelect={() => handleItemSelect(item.itemDto.basketId)}
                 />
               </div>
-              {index + 1 !== cartInfo?.basketDtoList.length &&
-              <Divider thickness={1} color='gray200' />
-              }
+              <ListDivider listLength={cartInfo?.basketDtoList.length} index={index} color='gray200' />
             </Fragment>
           ))}
         </div>
@@ -96,8 +95,8 @@ export default function Cart() {
         <>
           <article>
             <div className={styles.cartSoldOutTitle}>
-              <DefaultText type='headline2'>품절/구매불가</DefaultText>
-              <DefaultText type='body3' color='gray700'>해당 상품에 포함된 추가 상품도 구매가 불가능해요.</DefaultText>
+              <Text type='headline2'>품절/구매불가</Text>
+              <Text type='body3' color='gray700'>해당 상품에 포함된 추가 상품도 구매가 불가능해요.</Text>
             </div>
             <div className={styles.cartListBox}>
               <div className={styles.cartItemList}>
@@ -113,9 +112,7 @@ export default function Cart() {
                         isSoldOut
                       />
                     </div>
-                    {index + 1 !== cartInfo?.basketDtoList.length &&
-                    <Divider thickness={1} color='gray200' />
-                    }
+                    <ListDivider listLength={cartInfo?.basketDtoList.length} index={index} color='gray200' />
                   </Fragment>
                 ))}
               </div>

@@ -1,44 +1,66 @@
 'use client';
-import * as styles from './Membership.css';
-import { useBackNavigation } from "@/utils";
-import { MEMBERSHIP_TIERS_LIST } from "@/constants";
-import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
+import { commonWrapper } from "@/styles/common.css";
+import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
-import InfoText from "@/components/common/infoText/InfoText";
+import Text from "@/components/common/text/Text";
+import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
+import { MEMBERSHIP_TIERS_LIST } from "@/constants";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 
-const Membership = () => {
-	const goBack = useBackNavigation();
+export default function Membership() {
+	const router = useRouter();
 
 	const noticeList = [
-		'멤버십 등급은 매월 1일, 최근 6개월 실 결제금액을 기준으로 새로운 등급이 부여됩니다.',
-		'적립률: 모든 결제에 대해 0.5% 적립',
-		'새로운 등급은 구매확정된 최종 결제 건에 한하여 부여됩니다.',
-		'예상 등급이란 현재를 기준으로 다음 달 1일 변경 예정인 등급입니다.',
-		'‘멤버십 할인 쿠폰’의 경우 매월 등급 기준에 맞춰 정기발행되며, 일반결제 건에 대하여 사용이 가능합니다.',
-		'정기 배송을 여러 건 진행하는 경우, 회차가 가장 많이 누적된 ‘진행중 구독’ 건을 기준으로 멤버십이 부여됩니다.',
+		'멤버십 등급은 매월 1일, 지난달 구매확정된 결제 내역을 기준으로 새롭게 부여돼요.',
+		'구매확정이 완료된 결제만 등급에 반영되니 말일 전에 꼭 확정해 주세요.',
+		'적립금은 할인 쿠폰 등을 제외한 실제 결제 금액에 적립율을 적용해 지급돼요.',
+		'멤버십 등급에 따라 매월 할인 쿠폰이 자동 발급되며 구독과 일반 결제 모두 사용 가능해요. ',
 	]
 
 	return (
-		<section className={styles.membershipContainer}>
-			<div className={styles.membershipHeader}>
-				<Header
-					showCloseButton
-					onClose={goBack}
-					centerTitle="멤버십 등급 안내"
-				/>
-			</div>
-			<article className={styles.membershipList}>
+		<>
+		<Header
+			showCloseButton
+			onClose={() => router.back()}
+			centerTitle="멤버십 등급 안내"
+		/>
+		<section>
+			<article
+				className={commonWrapper({
+					direction: 'col',
+					gap: 12,
+					padding: 20,
+					backgroundColors: 'gray50'
+				})}
+			>
 				{MEMBERSHIP_TIERS_LIST.map(tier => (
 					<MembershipCard key={tier.tier} tier={tier} />
 				))}
 			</article>
-			<article className={styles.membershipDescription}>
-				{noticeList.map(notice => (
-					<InfoText key={notice} text={notice} />
-				))}
+			<article
+				className={commonWrapper({
+					direction: 'col',
+					align: 'start',
+					gap: 16,
+					padding: '40/20',
+					paddingBottom: 60,
+					backgroundColors: 'gray0'
+				})}
+			>
+				<Text type='label3' color='gray800'>[등급 혜택 유의사항]</Text>
+				<div
+					className={commonWrapper({
+						direction: 'col',
+						align: 'start',
+						gap: 8,
+					})}
+				>
+					{noticeList.map(notice => (
+						<InfoText key={notice} text={notice} type='body3' color='gray700' />
+					))}
+				</div>
 			</article>
 		</section>
+		</>
 	);
 };
-
-export default Membership;

@@ -1,5 +1,5 @@
 import * as styles from './ProgressBar.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Indicator from '/public/images/mypage/progress-indicator.svg';
 
@@ -22,9 +22,9 @@ const ProgressBar = ({ progress, label, className }: ProgressBarProps) => {
 					style={{ left: `${progress}%` }}
 					className={styles.progressLabel}
 				>
-					<DefaultText type='caption'>
+					<Text type='caption'>
 						{label}
-					</DefaultText>
+					</Text>
 				</div>
 				</>
 			}

@@ -9,6 +9,7 @@ export const surveyButtonContainer = recipe({
     alignItems: "center",
     borderRadius: "8px",
     width: "100%",
+    cursor: 'pointer',
   },
   variants: {
     isChecked: {

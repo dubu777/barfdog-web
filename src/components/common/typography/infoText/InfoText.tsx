@@ -1,25 +1,32 @@
 import { ReactNode } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import * as styles from "./InfoText.css";
 import { TextColor, TextType } from "@/types/typography";
 
 interface InfoTextProps {
   color?: TextColor;
   type?: TextType;
-  children: ReactNode;
+  children?: ReactNode;
+  text?: string;
 }
 
 export default function InfoText({
   color = "gray700",
   type = "body3",
   children,
+  text,
 }: InfoTextProps) {
   return (
     <li className={styles.infoTextBox}>
-      <DefaultText type={type} color={color}>
+      <Text type={type} color={color}>
         •
-      </DefaultText>
-      <div>{children}</div>
+      </Text>
+      {children
+        ? <div>{children}</div>
+        : text
+          ? <Text type={type} color={color}>{text}</Text>
+          : undefined
+      }
     </li>
   );
 }

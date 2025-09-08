@@ -3,14 +3,14 @@
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
 import * as styles from "./PetCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import FemaleIcon from "public/images/subscription/female.svg";
 import MaleIcon from "public/images/subscription/male.svg";
 import EditIcon from "public/images/subscription/pen.svg";
 import { getAgeFromBirth } from "@/utils/getAgeFromBirth";
-import DefaultImage from "public/images/subscription/dog-default-profile.png";
+import DefaultImage from "public/images/icons/default-profile.png";
 import { BreedInfo } from "@/types/pet";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
@@ -64,7 +64,7 @@ export default function PetCard({
         >
           <div className={commonWrapper({ justify: "between" })}>
             <div className={commonWrapper({ justify: "start", gap: 6 })}>
-              <DefaultText type="headline1">{name}</DefaultText>
+              <Text type="headline1">{name}</Text>
               {isSubscribing && (
                 <Chips variant="solid" color="gray900" borderRadius="lg">
                   구독중
@@ -88,13 +88,13 @@ export default function PetCard({
               src={gender === "FEMALE" ? FemaleIcon : MaleIcon}
               size={18}
             />
-            <DefaultText type="body3" color="gray600">
+            <Text type="body3" color="gray600">
               {breedInfo.name}
-            </DefaultText>
+            </Text>
           </div>
-          <DefaultText type="body3" color="gray600">
+          <Text type="body3" color="gray600">
             {age}
-          </DefaultText>
+          </Text>
         </div>
       </div>
       {actionSlot}

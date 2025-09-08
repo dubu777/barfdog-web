@@ -13,13 +13,9 @@ import {
   getSnsCallbackUrl,
   removeSnsCallbackUrl,
 } from "@/utils/auth/snsCallbackUrl";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
-// interface ConnectSnsProps {
-// }
-
-// const ConnectSns = ({}: ConnectSnsProps) => {
-const ConnectSns = () => {
+export default function ConnectSns() {
   const router = useRouter();
   const { loginUserInfo } = useAuthStore.getState();
   const { mutate: connectSns } = useConnectSns();
@@ -51,6 +47,7 @@ const ConnectSns = () => {
       phoneNumber: sanitizedPhone,
       provider: loginUserInfo.provider,
       providerId: loginUserInfo.providerId,
+      // password: 'test',
     };
     console.log("connect sns request body", body);
     // SNS 연동 API 실행
@@ -69,6 +66,8 @@ const ConnectSns = () => {
       },
       onError: (error) => {
         console.error("SNS 연동 실패:", error);
+        // 연동 실패 시 이전 페이지로 이동
+        router.back();
         if (axios.isAxiosError(error)) {
           const errorData = error.response?.data?.errors?.[0];
           if (errorData) {
@@ -83,7 +82,5 @@ const ConnectSns = () => {
       },
     });
   }, [loginUserInfo, connectSns]);
-  return <Loader fullscreen />;
+  return <Spinner fullscreen />;
 };
-
-export default ConnectSns;

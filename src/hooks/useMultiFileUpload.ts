@@ -15,7 +15,7 @@ interface UseMultiFileUploadOptions {
   getExtraFormData?: (file: File) => Record<string, any>;
   uploadApiUrl: string;
   deleteApiUrl?: string;
-  cancelApiUrl: string;
+  cancelApiUrl?: string;
   onUploadSuccess?: (file: UploadedFile) => void;
   onUploadError?: (error: unknown) => void;
   onDeleteSuccess?: (fileId: number) => void;
@@ -57,15 +57,24 @@ export function useMultiFileUpload({
       }
       const res = await uploadAxiosInstance.post(uploadApiUrl, formData);
 
-      if (!res.data.success) {
+      // if (!res.data.success) {
+      if (res.status !== 200 && !res.data) {
         callbacks.onUploadError?.(res.data.message);
         return;
       }
 
-      const uploaded: UploadedFile = res.data.data;
+      const uploaded: UploadedFile = res?.data?.data
+        ? res?.data?.data
+        : {
+          fileId: res.data?.id,
+          displayImageUrl: { url: res?.data.url },
+          fileName: file.name,
+          folder: initialFiles[0]?.folder ?? null,
+          fileStatus: initialFiles[0]?.fileStatus ?? null,
+        };
 
       setUploadedFiles((prev) => [...prev, uploaded]);
-      setAddFileIdList((prev) => [...prev, uploaded.fileId]);
+      setAddFileIdList((prev) => [...prev, uploaded?.fileId]);
       callbacks.onUploadSuccess?.(uploaded);
     } catch (err) {
       callbacks.onUploadError?.(err);
@@ -102,6 +111,8 @@ export function useMultiFileUpload({
   };
 
   const cancelUpload = async (keepalive?: boolean) => {
+    if (!cancelApiUrl) return;
+
     try {
       if (keepalive && typeof window !== "undefined") {
         // 언로드 타이밍: keepalive 유틸 사용

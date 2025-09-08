@@ -10,7 +10,7 @@ import {
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import RateStar from "@/components/common/rateStar/RateStar";
 import Marquee from "react-fast-marquee";
@@ -38,9 +38,9 @@ const ReviewSection = ({ bestReviewList }: ReviewSectionProps) => {
 				viewport={{ once: true }}
 				transition={{ duration: 0.8, delay: 0.2 }}
 			>
-				<DefaultText type='body2' block className={mainReviewDescription}>
+				<Text type='body2' block className={mainReviewDescription}>
 					{description}
-				</DefaultText>
+				</Text>
 			</motion.div>
 			<Marquee speed={100}>
 				{[...bestReviewList, ...bestReviewList].map((review, index) => (
@@ -53,10 +53,10 @@ const ReviewSection = ({ bestReviewList }: ReviewSectionProps) => {
 						<Image src={review.imageUrl} alt={review.username} width={120} height={120} className={mainReviewImage} />
 						<div className={mainReviewCardContent}>
 							<div>
-								<DefaultText type='headline4' style={{ marginBottom: '2px' }}>{review.username.split('@')[0]}</DefaultText>
-								<DefaultText type='caption' className={ellipsis({ lineSize: 'line2' })}>
+								<Text type='headline4' style={{ marginBottom: '2px' }}>{review.username.split('@')[0]}</Text>
+								<Text type='caption' className={ellipsis({ lineSize: 'line2' })}>
 									{review.contents}
-								</DefaultText>
+								</Text>
 							</div>
 							<RateStar rateLength={5} value={5} size={11} />
 						</div>

@@ -20,6 +20,7 @@ export const accountRecommendationCode = style({
 export const accountLink = style({
   display: 'flex',
   alignItems: 'center',
+  gap: '12px',
 })
 
 export const accountImage = style({
@@ -27,22 +28,12 @@ export const accountImage = style({
   objectFit: 'cover',
 })
 
-export const userName = style({
-  marginLeft: '16px',
-  marginRight: '12px',
-})
-
 export const membership = style({
   backgroundColor: themeVars.colors.gray.gray0,
   padding: '18px 20px 12px',
-})
-
-export const membershipInfo = style({
   display: 'flex',
   flexDirection: 'column',
-  borderBottom: `1px solid ${themeVars.colors.gray.gray200}`,
-  paddingBottom: '8px',
-  marginBottom: '8px',
+  gap: '6px',
 })
 
 export const membershipInfoTop = style({
@@ -52,8 +43,7 @@ export const membershipInfoTop = style({
 
 export const userReward = style({
   display: 'flex',
-  gap: '4px',
-  marginTop: '4px',
+  alignItems: 'center',
 })
 
 export const rewardItem = recipe({
@@ -63,7 +53,7 @@ export const rewardItem = recipe({
     gap: '4px',
     width: 'calc(100% / 3)',
     backgroundColor: themeVars.colors.gray.gray0,
-    padding: '8px 20px',
+    padding: '12px 20px',
   },
   variants: {
     isDisabled: {
@@ -85,4 +75,13 @@ export const rewardItem = recipe({
       }
     }
   }
+})
+
+export const userRewardTitle = style({
+  display: 'flex',
+  alignItems: 'center',
+})
+
+export const userRewardLine = style({
+  height: '48px',
 })

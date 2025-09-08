@@ -1,10 +1,10 @@
 import { useGetProbiomePreInfo } from "@/api/healthNote/probiome/queries/useGetProbiomePreInfo";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import { commonWrapper } from "@/styles/common.css";
 import { formatPhoneNumber } from "@/utils";
 
@@ -23,7 +23,7 @@ export default function ProbiomePreInfo({
   const { pet, member } = data || {};
 
   if (isLoading || !pet || !member) {
-    return <Loader />;
+    return <Spinner />;
   }
 
   const petInfoItems = [
@@ -48,14 +48,14 @@ export default function ProbiomePreInfo({
 
   return (
     <>
-      <DefaultText type="title3">
+      <Text type="title3">
         아래의 정보로
         <br />
         사전 문진을 작성할게요
-      </DefaultText>
+      </Text>
       <div className={commonWrapper({ gap: 16, direction: "col" })}>
         <Card shadow="light" gap={12} padding={16} align="start">
-          <DefaultText type="title4">신청인 정보</DefaultText>
+          <Text type="title4">신청인 정보</Text>
           <Divider thickness={2} color="gray900" />
           <div className={commonWrapper({ gap: 6, direction: "col" })}>
             {memberInfoItems.map((item, index) => (
@@ -69,7 +69,7 @@ export default function ProbiomePreInfo({
           </div>
         </Card>
         <Card shadow="light" gap={12} padding={16} align="start">
-          <DefaultText type="title4">반려견 정보</DefaultText>
+          <Text type="title4">반려견 정보</Text>
           <Divider thickness={2} color="gray900" />
           <div className={commonWrapper({ gap: 6, direction: "col" })}>
             {petInfoItems.map((item, index) => (

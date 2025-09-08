@@ -3,7 +3,7 @@ import { pointColor } from "@/styles/common.css";
 import * as styles from './ChangePaymentMethodModal.css';
 import PaymentCard from "@/components/pages/mypage/common/paymentCard/PaymentCard";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import CompletedBox from "@/components/common/completedBox/CompletedBox";
@@ -71,8 +71,8 @@ const ChangePaymentMethodModal = ({
 				<>
 					<div className={styles.changeMethodContainer}>
 						<div className={styles.changeMethodTitle}>
-							<DefaultText type='title3'>변경하실 정기<br/>결제 수단을 선택해 주세요</DefaultText>
-							<DefaultText type='body2' color='red'>변경된 결제 수단은 {subscribeCountByStatus}회차부터 적용돼요</DefaultText>
+							<Text type='title3'>변경하실 정기<br/>결제 수단을 선택해 주세요</Text>
+							<Text type='body2' color='red'>변경된 결제 수단은 {subscribeCountByStatus}회차부터 적용돼요</Text>
 						</div>
 						<div className={styles.changeMethodCheckBox}>
 							{paymentMethods.map(method => (
@@ -84,9 +84,9 @@ const ChangePaymentMethodModal = ({
 									iconType='circle'
 									className={styles.changeMethodLabel}
 								>
-									<DefaultText type="label2">
+									<Text type="label2">
 										{method.label}
-									</DefaultText>
+									</Text>
 								</LabeledCheckbox>
 							))}
 						</div>
@@ -98,22 +98,22 @@ const ChangePaymentMethodModal = ({
 							onToggle={() => onAgreeChangePaymentToggle(true)}
 						>
 							<div className={styles.agreeChangeMethodLabel}>
-								<DefaultText type="label2" color='red'>(필수) </DefaultText>
-								<DefaultText type="body2" style={{ maxWidth: '80%' }}>
+								<Text type="label2" color='red'>(필수) </Text>
+								<Text type="body2" style={{ maxWidth: '80%' }}>
 									위 내용을 확인하였으며, 변경된 결제 수단으로의 정기 결제에 동의합니다.
-								</DefaultText>
+								</Text>
 							</div>
 						</LabeledCheckbox>
 					</div>
 				</>
 				:
 					<CompletedBox>
-						<DefaultText type='title4' align='center'>
+						<Text type='title4' align='center'>
 							<span className={pointColor}>
 								{labelByStatus} 회차({subscribeCountByStatus}회차)부터
 							</span>
 							&nbsp;변경하신<br/>결제 수단으로 정기 결제가 진행돼요
-						</DefaultText>
+						</Text>
 						<div className={styles.paymentMethodImage}>
 							<motion.div
 								initial={{ opacity: 0, y: '100%' }}

@@ -7,9 +7,10 @@ import CloseIcon from "/public/images/header/close.svg";
 import MypageIcon from "/public/images/header/mypage.svg";
 import CartIcon from "/public/images/header/cart.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { useRouter } from "next/navigation";
 import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
+import { button } from "./Header.css";
 
 interface HeaderProps {
   leftElement?: React.ReactNode;
@@ -67,16 +68,17 @@ export default function Header({
             size={24}
             color="gray900"
             onClick={handleBack}
+            className={styles.button}
           />
         )}
         {leftTitle &&
-          <DefaultText type="title4">{leftTitle}</DefaultText>
+          <Text type="title4">{leftTitle}</Text>
         }
         {leftElement}
       </div>
       <div className={styles.centerSlot}>
         {centerElement}
-        <DefaultText type="title4">{centerTitle}</DefaultText>
+        <Text type="title4">{centerTitle}</Text>
       </div>
       <div className={styles.rightSlot}>
         {rightElement}
@@ -99,6 +101,7 @@ export default function Header({
             size={24}
             color="gray900"
             onClick={onClose}
+            className={styles.button}
           />
         )}
       </div>

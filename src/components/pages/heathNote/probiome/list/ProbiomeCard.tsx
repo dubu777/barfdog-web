@@ -1,5 +1,5 @@
 import * as styles from "./ProbiomeList.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
 import Card from "@/components/common/card/Card";
@@ -41,11 +41,11 @@ export default function ProbiomeCard({
             {statusConfig.label}
           </div>
         </Chips>
-        <DefaultText type="body3" color="gray600">
+        <Text type="body3" color="gray600">
           {submitDate}
-        </DefaultText>
+        </Text>
       </div>
-      <DefaultText type="title4">{petName}</DefaultText>
+      <Text type="title4">{petName}</Text>
       <div className={styles.probiomeCardItem}>
         <Button
           variant="outline"

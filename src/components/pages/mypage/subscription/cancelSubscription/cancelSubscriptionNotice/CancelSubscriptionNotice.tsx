@@ -1,11 +1,11 @@
 import * as styles from './CancelSubscriptionNotice.css';
 import { pointColor } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
 import Card from "@/components/common/card/Card";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import InfoIcon from '/public/images/icons/info.svg';
-import InfoText from "@/components/common/infoText/InfoText";
+import InfoText from "@/components/common/typography/infoText/InfoText";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useBackNavigation } from "@/utils";
 import { SubscriptionDetailDto } from "@/types";
@@ -35,7 +35,7 @@ const CancelSubscriptionNotice = ({
 	return (
 		<>
 			<div className={styles.cancelSubscriptionTitle}>
-				<DefaultText type='title2'>
+				<Text type='title2'>
 					{!isAfterProducing
 						? <>정말로 구독을<br/>해지하시겠어요?</>
 						:
@@ -44,8 +44,8 @@ const CancelSubscriptionNotice = ({
 								구독 해지가 적용돼요
 							</>
 					}
-				</DefaultText>
-				<DefaultText type='body2' color='gray600'>
+				</Text>
+				<Text type='body2' color='gray600'>
 					{!isAfterProducing
 						? '지금 해지하시면 우리아이 맞춤 식사가 종료돼요. 정기 할인 혜택과 정기 배송은 더이상 제공되지 않아요.'
 						: <>
@@ -53,7 +53,7 @@ const CancelSubscriptionNotice = ({
 							구독은 다음 회차부터 해지되며, 할인 혜택과 정기 배송도 함께 종료돼요
 						</>
 					}
-				</DefaultText>
+				</Text>
 			</div>
 			<div className={styles.cancelSubscriptionCard}>
 				<SubscriptionCard
@@ -72,7 +72,7 @@ const CancelSubscriptionNotice = ({
 				<Card padding={12} shadow='none' align='start' className={styles.cancelSubscriptionNoticeBox}>
 					<div className={styles.cancelSubscriptionNoticeTitle}>
 						<SvgIcon src={InfoIcon} color='pastelRed' size={24} />
-						<DefaultText type='label4' color='pastelRed'>구독 해지 안내</DefaultText>
+						<Text type='label4' color='pastelRed'>구독 해지 안내</Text>
 					</div>
 					<div className={styles.cancelSubscriptionNoticeList}>
 						{cancellationNotices.map(notice => (

@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
 import { RecommendRecipeRankDto } from "@/types/dietAnalysis";
@@ -19,11 +19,11 @@ export default function RecommendedRecipeList({
       className={commonWrapper({ direction: "col", gap: 20, padding: "0/20" })}
     >
       <div className={commonWrapper({ justify: "between" })}>
-        <DefaultText type="title3">
+        <Text type="title3">
           {dogName}에게 <span className={styles.pointText}>딱 맞는</span>
           <br />
           <span className={styles.pointText}>건강한 식사를</span> 만나보세요
-        </DefaultText>
+        </Text>
         <BowlIcon />
       </div>
       {recommendRecipeList.map((recipe) => (

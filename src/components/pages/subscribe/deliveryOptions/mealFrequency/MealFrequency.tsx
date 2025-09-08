@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { selectOptionWrapper } from "../DeliveryOptions.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { deliveryOptions } from "@/constants";
@@ -11,7 +11,7 @@ export default function MealFrequency() {
 
   return (
     <div className={selectOptionWrapper}>
-      <DefaultText type="title4">식사량</DefaultText>
+      <Text type="title4">식사량</Text>
 
       <Controller
         name="mealPlan"

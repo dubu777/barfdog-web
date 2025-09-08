@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import FindAccount from "@/components/pages/auth/account/findAccount/FindAccount";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default function FindAccountPage() {
   return (
-    <Suspense fallback={<Loader fullscreen />}>
+    <Suspense fallback={<Spinner fullscreen />}>
       <FindAccount />
     </Suspense>
   );

@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import * as styles from "./Dogpedia.css";
 import ArrowRightIcon from "/public/images/icons/chevron-right-blue.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
 import DogpediaDetail from "@/components/pages/heathNote/dogpedia/detail/DogpediaDetail";
 import { Option } from "@/types";
@@ -43,11 +43,11 @@ export default function Dogpedia({ petId }: DogpediaProps) {
     <>
       {selectedBreedId === null || !petInfo ? (
         <section className={styles.searchDogContainer}>
-          <DefaultText type="title3">
+          <Text type="title3">
             궁금한 견종이 있으신가요?
             <br />
             지금 바로 검색해 보세요
-          </DefaultText>
+          </Text>
           <div className={styles.searchableSelector}>
             <SearchableSelector
               placeholder="견종을 검색해 보세요"
@@ -59,11 +59,11 @@ export default function Dogpedia({ petId }: DogpediaProps) {
               rightElement={<SvgIcon src={ArrowRightIcon} />}
               emptyElement={
                 <div className={styles.searchableSelectorEmpty}>
-                  <DefaultText type="label1" color="gray700" align="center">
+                  <Text type="label1" color="gray700" align="center">
                     앗, 현재 등록되지 않은 견종이에요!
                     <br />
                     다른 견종을 검색해 보세요!
-                  </DefaultText>
+                  </Text>
                 </div>
               }
             />

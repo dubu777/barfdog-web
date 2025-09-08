@@ -2,7 +2,7 @@ import * as styles from "./CreateDogCard.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import Card from "@/components/common/card/Card";
 import PhoneImage from "/public/images/healthNote/main/phone1.png";
@@ -20,11 +20,11 @@ const CreateDogCard = ({ buttonLabel }: CreateDogCardProps) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.8, ease: "easeIn" }}
       >
-        <DefaultText type="title1">
+        <Text type="title1">
           우리 아이 추가하고
           <br />
           건강상태 체크하기
-        </DefaultText>
+        </Text>
       </motion.div>
       <motion.div
         className={styles.imageBox}

@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import OrderSummaryRow from "@/components/pages/checkout/common/orderSummary/orderSummaryRow/OrderSummaryRow";
@@ -29,13 +29,13 @@ export default function SubscriptionSummary({
         padding: 32,
       })}
     >
-      <DefaultText type="title4">
-        <DefaultText type="title4" color="red">
+      <Text type="title4">
+        <Text type="title4" color="red">
           {DELIVERY_PLAN_LABEL[deliveryPlan]}
-        </DefaultText>
+        </Text>
         마다 <br />
         정기 결제가 진행돼요
-      </DefaultText>
+      </Text>
       <div
         className={commonWrapper({
           direction: "col",

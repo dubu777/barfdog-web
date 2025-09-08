@@ -1,164 +1,170 @@
-import { recipe } from "@vanilla-extract/recipes";
-import { themeVars } from "@/styles/theme.css";
+import { themeVars } from '@/styles/theme.css';
+import { style } from '@vanilla-extract/css';
 
-export const title = recipe({
-  base: {
-    fontStyle: "normal",
-    fontWeight: themeVars.fontWeight.normal,
-    fontSize: "23px",
-    zIndex: 100,
-    lineHeight: "normal",
-    textAlign: "center",
-  },
-  variants: {
-    size: {
-      md: {
-        fontSize: themeVars.fontSize["text-md"],
-        fontWeight: themeVars.fontWeight.semibold,
-      },
-      lg: {
-        fontSize: themeVars.fontSize["text-lg"],
-        letterSpacing: "-0.05em",
-      },
-      titleMd: {
-        fontSize: themeVars.fontSize["title-md"],
-        fontWeight: themeVars.fontWeight.semibold,
-        letterSpacing: "-0.06em",
-      },
-      titleLg: {
-        fontSize: themeVars.fontSize["title-lg"],
-        letterSpacing: "-0.06em",
-      },
-      titleXl: {
-        fontSize: themeVars.fontSize["title-xl"],
-        letterSpacing: "-0.01em",
-      },
-      titleXXl: {
-        fontSize: themeVars.fontSize["title-xxl"],
-        letterSpacing: "-0.01em",
-      },
-    },
-    color: {
-      white: {
-        color: themeVars.colors.gray.gray0,
-      },
-      red: {
-        color: themeVars.colors.red.red,
-      },
-      grey: {
-        color: `${themeVars.colors.gray.gray700} !important`,
-      },
-    },
-    weight: {
-      light: {
-        fontWeight: themeVars.fontWeight.light,
-      },
-      normal: {
-        fontWeight: themeVars.fontWeight.normal,
-      },
-      semibold: {
-        fontWeight: themeVars.fontWeight.semibold,
-      },
-      bold: {
-        fontWeight: themeVars.fontWeight.bold,
-      },
-    },
-    align: {
-      left: {
-        textAlign: "left",
-      },
-    },
-    isEmpty: {
-      true: {
-        padding: "60px 0",
-      },
-    },
-  },
-  defaultVariants: {
-    size: "titleLg",
-  },
+export const textStyles = {
+  display1: style({
+    fontWeight: themeVars.typography.display.display1.fontWeight,
+    fontSize: themeVars.typography.display.display1.fontSize,
+    lineHeight: themeVars.typography.display.display1.lineHeight,
+    letterSpacing: themeVars.typography.display.display1.letterSpacing,
+  }),
+  display2: style({
+    fontWeight: themeVars.typography.display.display2.fontWeight,
+    fontSize: themeVars.typography.display.display2.fontSize,
+    lineHeight: themeVars.typography.display.display2.lineHeight,
+    letterSpacing: themeVars.typography.display.display2.letterSpacing,
+  }),
+
+  title1: style({
+    fontWeight: themeVars.typography.title.title1.fontWeight,
+    fontSize: themeVars.typography.title.title1.fontSize,
+    lineHeight: themeVars.typography.title.title1.lineHeight,
+    letterSpacing: themeVars.typography.title.title1.letterSpacing,
+  }),
+  title2: style({
+    fontWeight: themeVars.typography.title.title2.fontWeight,
+    fontSize: themeVars.typography.title.title2.fontSize,
+    lineHeight: themeVars.typography.title.title2.lineHeight,
+    letterSpacing: themeVars.typography.title.title2.letterSpacing,
+  }),
+  title3: style({
+    fontWeight: themeVars.typography.title.title3.fontWeight,
+    fontSize: themeVars.typography.title.title3.fontSize,
+    lineHeight: themeVars.typography.title.title3.lineHeight,
+    letterSpacing: themeVars.typography.title.title3.letterSpacing,
+  }),
+  title4: style({
+    fontWeight: themeVars.typography.title.title4.fontWeight,
+    fontSize: themeVars.typography.title.title4.fontSize,
+    lineHeight: themeVars.typography.title.title4.lineHeight,
+    letterSpacing: themeVars.typography.title.title4.letterSpacing,
+  }),
+
+  headline1: style({
+    fontWeight: themeVars.typography.headline.headline1.fontWeight,
+    fontSize: themeVars.typography.headline.headline1.fontSize,
+    lineHeight: themeVars.typography.headline.headline1.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline1.letterSpacing,
+  }),
+  headline2: style({
+    fontWeight: themeVars.typography.headline.headline2.fontWeight,
+    fontSize: themeVars.typography.headline.headline2.fontSize,
+    lineHeight: themeVars.typography.headline.headline2.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline2.letterSpacing,
+  }),
+  headline3: style({
+    fontWeight: themeVars.typography.headline.headline3.fontWeight,
+    fontSize: themeVars.typography.headline.headline3.fontSize,
+    lineHeight: themeVars.typography.headline.headline3.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline3.letterSpacing,
+  }),
+  headline4: style({
+    fontWeight: themeVars.typography.headline.headline4.fontWeight,
+    fontSize: themeVars.typography.headline.headline4.fontSize,
+    lineHeight: themeVars.typography.headline.headline4.lineHeight,
+    letterSpacing: themeVars.typography.headline.headline4.letterSpacing,
+  }),
+
+  label1: style({
+    fontWeight: themeVars.typography.label.label1.fontWeight,
+    fontSize: themeVars.typography.label.label1.fontSize,
+    lineHeight: themeVars.typography.label.label1.lineHeight,
+    letterSpacing: themeVars.typography.label.label1.letterSpacing,
+  }),
+  label2: style({
+    fontWeight: themeVars.typography.label.label2.fontWeight,
+    fontSize: themeVars.typography.label.label2.fontSize,
+    lineHeight: themeVars.typography.label.label2.lineHeight,
+    letterSpacing: themeVars.typography.label.label2.letterSpacing,
+  }),
+  label3: style({
+    fontWeight: themeVars.typography.label.label3.fontWeight,
+    fontSize: themeVars.typography.label.label3.fontSize,
+    lineHeight: themeVars.typography.label.label3.lineHeight,
+    letterSpacing: themeVars.typography.label.label3.letterSpacing,
+  }),
+  label4: style({
+    fontWeight: themeVars.typography.label.label4.fontWeight,
+    fontSize: themeVars.typography.label.label4.fontSize,
+    lineHeight: themeVars.typography.label.label4.lineHeight,
+    letterSpacing: themeVars.typography.label.label4.letterSpacing,
+  }),
+
+  body1: style({
+    fontWeight: themeVars.typography.body.body1.fontWeight,
+    fontSize: themeVars.typography.body.body1.fontSize,
+    lineHeight: themeVars.typography.body.body1.lineHeight,
+    letterSpacing: themeVars.typography.body.body1.letterSpacing,
+  }),
+  body2: style({
+    fontWeight: themeVars.typography.body.body2.fontWeight,
+    fontSize: themeVars.typography.body.body2.fontSize,
+    lineHeight: themeVars.typography.body.body2.lineHeight,
+    letterSpacing: themeVars.typography.body.body2.letterSpacing,
+  }),
+  body3: style({
+    fontWeight: themeVars.typography.body.body3.fontWeight,
+    fontSize: themeVars.typography.body.body3.fontSize,
+    lineHeight: themeVars.typography.body.body3.lineHeight,
+    letterSpacing: themeVars.typography.body.body3.letterSpacing,
+  }),
+  caption: style({
+    fontWeight: themeVars.typography.body.caption.fontWeight,
+    fontSize: themeVars.typography.body.caption.fontSize,
+    lineHeight: themeVars.typography.body.caption.lineHeight,
+    letterSpacing: themeVars.typography.body.caption.letterSpacing,
+  }),
+  caption2: style({
+    fontWeight: themeVars.typography.body.caption2.fontWeight,
+    fontSize: themeVars.typography.body.caption2.fontSize,
+    lineHeight: themeVars.typography.body.caption2.lineHeight,
+    letterSpacing: themeVars.typography.body.caption2.letterSpacing,
+  }),
+};
+
+export const fontColors = {
+  white: style({ color: themeVars.colors.gray.gray0 }),
+  red: style({ color: themeVars.colors.red.red }),
+  pastelRed: style({ color: themeVars.colors.red.pastelRed }),
+  gray900: style({ color: themeVars.colors.gray.gray900 }),
+  gray800: style({ color: themeVars.colors.gray.gray800 }),
+  gray700: style({ color: themeVars.colors.gray.gray700 }),
+  gray600: style({ color: themeVars.colors.gray.gray600 }),
+  gray500: style({ color: themeVars.colors.gray.gray500 }),
+  gray400: style({ color: themeVars.colors.gray.gray400 }),
+  gray300: style({ color: themeVars.colors.gray.gray300 }),
+  gray200: style({ color: themeVars.colors.gray.gray200 }),
+  gray100: style({ color: themeVars.colors.gray.gray100 }),
+  gray0: style({ color: themeVars.colors.gray.gray0 }),
+  blue500: style({ color: themeVars.colors.blue.blue500 }),
+  green500: style({ color: themeVars.colors.green.green500 }),
+  yellow500: style({ color: themeVars.colors.yellow.yellow500 }),
+  blue400: style({ color: themeVars.colors.blue.blue400 }),
+  green400: style({ color: themeVars.colors.green.green400 }),
+  yellow400: style({ color: themeVars.colors.yellow.yellow400 }),
+  blue600: style({ color: themeVars.colors.blue.blue600 }),
+  kakaoFont: style({ color: themeVars.colors.kakao.kakaoFont }),
+  naverFont: style({ color: themeVars.colors.naver.naverFont }),
+};
+
+export const alignStyles = {
+  left: style({ textAlign: 'left' }),
+  center: style({ textAlign: 'center' }),
+  right: style({ textAlign: 'right' }),
+};
+
+export const blockStyles = {
+  true: style({ display: 'block' }),
+}
+
+export const preLineStyles = {
+  true: style({ whiteSpace: 'pre-line' }),
+}
+
+export const underline = style({
+  textDecoration: "underline",
 });
 
-export const description = recipe({
-  base: {
-    fontWeight: themeVars.fontWeight.normal,
-    fontSize: themeVars.fontSize["text-sm"],
-    letterSpacing: "-0.05em",
-    lineHeight: "normal",
-    zIndex: 100,
-    whiteSpace: "pre-line",
-  },
-  variants: {
-    size: {
-      xs: {
-        fontSize: themeVars.fontSize["text-xs"],
-      },
-      sm: {
-        fontSize: themeVars.fontSize["text-sm"],
-        fontWeight: themeVars.fontWeight.light,
-      },
-      md: {
-        fontSize: themeVars.fontSize["text-md"],
-        fontWeight: themeVars.fontWeight.semibold,
-        letterSpacing: "-0.01em",
-      },
-    },
-    color: {
-      grey: {
-        color: `${themeVars.colors.gray.gray700} !important`,
-      },
-      white: {
-        color: themeVars.colors.gray.gray0,
-      },
-      black: {
-        color: themeVars.colors.gray.gray900,
-      },
-      red: {
-        color: themeVars.colors.red.red,
-      },
-    },
-    align: {
-      center: {
-        textAlign: "center",
-      },
-      left: {
-        textAlign: "left",
-      },
-      right: {
-        textAlign: "right",
-      },
-    },
-    weight: {
-      light: {
-        fontWeight: themeVars.fontWeight.light,
-      },
-      normal: {
-        fontWeight: themeVars.fontWeight.normal,
-      },
-      bold: {
-        fontWeight: themeVars.fontWeight.bold,
-      },
-    },
-    pageName: {
-      myPage: {
-        color: themeVars.colors.gray.gray900,
-        lineHeight: 1.5,
-        textAlign: "left",
-      },
-    },
-    lineHeight: {
-      inherit: {
-        lineHeight: "inherit",
-      },
-    },
-    isEmpty: {
-      true: {
-        padding: "60px 0",
-      },
-    },
-  },
-  defaultVariants: {
-    color: "white",
-    align: "center",
-  },
+export const linethrough = style({
+  textDecoration: "line-through",
 });

@@ -4,7 +4,7 @@ import {
 	getSimplifyStatus,
 	getSimplifyStatusColor,
 	getSimplifyStatusLabel,
-} from "@/utils/healthNote/getHealthStatus";
+} from "@/utils/healthNote/common/getHealthStatus";
 
 interface UseScoreStatusProps {
 	current: number;

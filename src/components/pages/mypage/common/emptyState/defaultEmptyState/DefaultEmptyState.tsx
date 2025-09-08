@@ -1,24 +1,22 @@
 import * as styles from './DefaultEmptyState.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface EmptyStateProps {
 	title: string;
 	subTitle?: string;
 }
 
-const DefaultEmptyState = ({ title, subTitle }: EmptyStateProps) => {
+export default function DefaultEmptyState({ title, subTitle }: EmptyStateProps) {
 	return (
 		<div className={styles.emptyStateContainer}>
-			<DefaultText type='label1' color='gray700' align='center'>
+			<Text type='label1' color='gray700' align='center'>
 				{title}
-			</DefaultText>
+			</Text>
 			{subTitle &&
-				<DefaultText type='body3' color='gray600' align='center'>
+				<Text type='body3' color='gray600' align='center'>
 					{subTitle}
-				</DefaultText>
+				</Text>
 			}
 		</div>
 	);
 };
-
-export default DefaultEmptyState;

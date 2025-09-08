@@ -6,6 +6,11 @@ import { useCallback } from "react";
 import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
 import Button from "@/components/common/button/Button";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { imageWrapper } from "@/styles/common.css";
+import Text from "@/components/common/text/Text";
+import { COLORS } from "@/constants/style";
+import { TextColor } from "@/types/typography";
+import { buttonBox } from "./LoginSnsButtons.css";
 
 interface LoginSnsButtonProps {
   provider: SnSProvider;
@@ -15,6 +20,7 @@ interface LoginSnsButtonProps {
   borderRadius?: "sm" | "md";
   defer?: boolean;
   onDeferredLoginClick?: (fn: () => void) => void;
+  showSymbolButton?: boolean;
 }
 
 const LoginSnsButton = ({
@@ -22,6 +28,7 @@ const LoginSnsButton = ({
   callbackUrl,
   defer = false,
   onDeferredLoginClick,
+  showSymbolButton = false,
 }: LoginSnsButtonProps) => {
   const router = useRouter();
 
@@ -52,9 +59,18 @@ const LoginSnsButton = ({
   };
 
   return (
-    <>
+    showSymbolButton ? (
+      <div 
+        onClick={handleClick}
+        className={buttonBox}
+        style={{ backgroundColor: config.color }}
+      >
+        <SvgIcon src={config.symbolIcon} width={16} height={16} />
+        <Text type='headline1' color={config.fontColor as TextColor}>{config.loginText}</Text>
+      </div>
+    ) : (
       <SvgIcon src={config.icon} size={52} onClick={handleClick} />
-    </>
+    ) 
   );
 };
 

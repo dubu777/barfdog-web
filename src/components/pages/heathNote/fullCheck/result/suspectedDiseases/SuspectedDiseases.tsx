@@ -1,10 +1,10 @@
 import * as styles from './SuspectedDiseases.css';
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ResultAccordion from "@/components/pages/heathNote/common/resultAccordion/ResultAccordion";
-import { DiseaseData } from "@/types/healthNote";
 import { BODY_PART_TO_CATEGORY, DISEASE_CATEGORY } from "@/constants";
+import { DiseaseData } from '@/types/healthNote/fullCheck';
 
 interface SuspectedDiseasesProps {
 	petName: string;
@@ -33,11 +33,11 @@ export default function SuspectedDiseases({
 							key={disease.category}
 							accordionButton={(
 								<div className={styles.diseaseAccordionHeader}>
-									<DefaultText type='headline2' color='gray400'>{index+1}</DefaultText>
+									<Text type='headline2' color='gray400'>{index+1}</Text>
 									<SvgIcon src={DISEASE_CATEGORY[disease.category].imageUrl} size={46} className={styles.diseaseCategorySvg} />
 									<div>
-										<DefaultText type='headline2' block>{BODY_PART_TO_CATEGORY[disease.category]}</DefaultText>
-										<DefaultText type='caption2' color='gray700' block>{disease.name}</DefaultText>
+										<Text type='headline2' block>{BODY_PART_TO_CATEGORY[disease.category]}</Text>
+										<Text type='caption2' color='gray700' block>{disease.name}</Text>
 									</div>
 								</div>
 							)}
@@ -45,8 +45,8 @@ export default function SuspectedDiseases({
 							<ul className={styles.diseaseList}>
 								{diseaseItemInfoList.map(item => (
 									<li key={item.key} className={styles.diseaseItem}>
-										<DefaultText type='label3' color='gray800' className={styles.diseaseItemLabel}>{item.label}</DefaultText>
-										<DefaultText type='body3' color='gray700'>{disease[item.key]}</DefaultText>
+										<Text type='label3' color='gray800' className={styles.diseaseItemLabel}>{item.label}</Text>
+										<Text type='body3' color='gray700'>{disease[item.key]}</Text>
 									</li>
 								))}
 							</ul>

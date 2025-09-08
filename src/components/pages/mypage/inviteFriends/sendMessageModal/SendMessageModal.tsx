@@ -1,7 +1,7 @@
-import * as styles from './SendMessageModal.css';
+import { sendMessageCard, sendMessageInput, sendMessageModalContainer } from "../InviteFriends.css";
 import * as yup from "yup";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InputField from "@/components/common/inputField/InputField";
@@ -9,7 +9,7 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { Controller } from "react-hook-form";
 import { useToastStore } from "@/store/useToastStore";
 import { SendMessage } from "@/types";
-import { useSendRecommendCodeMessage } from "@/api/mypage/mutations/useSendRecommendCodeMessage";
+import { useSendRecommendCodeMessage } from '@/api/mypage/inviteFriends/mutations/useSendRecommendCodeMessage';
 
 interface SendMessageModalProps {
 	isOpen: boolean;
@@ -32,12 +32,12 @@ const defaultSendMessageValues: SendMessage = {
 	homePageUrl: process.env.NEXT_PUBLIC_CLIENT_URL_PRODUCT,
 };
 
-const SendMessageModal = ({
+export default function SendMessageModal({
 	isOpen,
 	onClose,
 	username,
 	recommendCode,
-}: SendMessageModalProps) => {
+}: SendMessageModalProps) {
 	const { handleSubmit, control, isValid } = useFormHandler<SendMessage>(sendMessageSchema, defaultSendMessageValues);
 	const { addToast } = useToastStore();
 	const { mutate } = useSendRecommendCodeMessage();
@@ -61,12 +61,14 @@ const SendMessageModal = ({
 		<BottomSheet
 			isOpen={isOpen}
 			onClose={onClose}
-			title='문자 보내기'
+			title='추천코드 문자 보내기'
+			subTitle='친구 이름과 연락처를 입력하면 추천 코드를 보낼 수 있어요'
+			showCloseButton={false}
 		>
-			<div className={styles.sendMessageModalContainer}>
-				<Card shadow='none' padding={16} gap={16} align='start'>
-					<DefaultText type='headline3'>[바프독]</DefaultText>
-					<DefaultText type='body1'>
+			<div className={sendMessageModalContainer}>
+				<Card shadow='none' padding={16} gap={16} align='start' className={sendMessageCard}>
+					<Text type='headline3' color='gray800'>[바프독]</Text>
+					<Text type='body1' color='gray800'>
 						{username} 님이&nbsp;
 						<Controller
 							control={control}
@@ -74,7 +76,7 @@ const SendMessageModal = ({
 							render={({ field }) => (
 								<InputField
 									onChange={field.onChange}
-									className={styles.sendMessageInput({ type: 'name' })}
+									className={sendMessageInput({ type: 'name' })}
 									placeholder='친구이름'
 								/>
 							)}
@@ -85,17 +87,17 @@ const SendMessageModal = ({
 						추천코드 :&nbsp;&nbsp;{recommendCode}<br/>
 						가입하러가기 : <br/>
 						https://www.barfdog.co.kr
-					</DefaultText>
+					</Text>
 				</Card>
 				<div>
-					<DefaultText type='headline4' block>친구 연락처</DefaultText>
+					<Text type='headline4' block>친구 연락처</Text>
 					<Controller
 						control={control}
 						name='phone'
 						render={({ field }) => (
 							<InputField
 								onChange={field.onChange}
-								className={styles.sendMessageInput({ type: 'phoneNumber' })}
+								className={sendMessageInput({ type: 'phoneNumber' })}
 								placeholder='"-"를 제외한 휴대전화번호'
 							/>
 						)}
@@ -110,9 +112,8 @@ const SendMessageModal = ({
 				onSecondaryClick={onClose}
 				isPrimaryDisabled={!isValid}
 				position='sticky'
+				primaryButtonSize='lg'
 			/>
 		</BottomSheet>
 	);
 };
-
-export default SendMessageModal;

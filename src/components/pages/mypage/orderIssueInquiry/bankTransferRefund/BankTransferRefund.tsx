@@ -1,7 +1,7 @@
 import * as styles from './BankTransferRefund.css';
 import * as yup from "yup";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SelectWithInput from "@/components/common/selectWithInput/SelectWithInput";
 import InputField from "@/components/common/inputField/InputField";
 import { Controller } from "react-hook-form";
@@ -63,7 +63,7 @@ const BankTransferRefund = () => {
 	}
 	return (
 		<article className={styles.bankTransferRefundContainer}>
-			<DefaultText type='title4'>환불 계좌 입력</DefaultText>
+			<Text type='title4'>환불 계좌 입력</Text>
 			<form className={styles.bankTransferRefundForm}>
 				<Controller
 					name='bank'

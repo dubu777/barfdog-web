@@ -1,5 +1,5 @@
 import * as styles from '../Information.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface InfoItem {
 	label: string;
@@ -16,14 +16,14 @@ const InfoList = ({ title, items, noBorder = false }: InfoSectionProps) => {
 	return (
 		<div className={styles.infoListBox({ noBorder })}>
 			{title &&
-				<DefaultText type="label3" className={styles.infoListTitle}>{title}</DefaultText>
+				<Text type="label3" className={styles.infoListTitle}>{title}</Text>
 			}
 			<ul className={styles.infoList}>
 				{items?.map((item, index) => (
 					item && (
 						<li key={`${title}-${index}`} className={styles.infoItem}>
-							<DefaultText type="label4">{item?.label}</DefaultText>
-							<DefaultText type="body3">{item?.value}</DefaultText>
+							<Text type="label4">{item?.label}</Text>
+							<Text type="body3">{item?.value}</Text>
 						</li>
 					)
 				))}

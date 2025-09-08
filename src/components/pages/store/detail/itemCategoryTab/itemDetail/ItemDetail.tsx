@@ -1,6 +1,6 @@
 import * as styles from './ItemDetail.css';
 import { sanitizedHTML } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
 
@@ -18,12 +18,12 @@ export default function ItemDetail({
   return (
     <>
       <div className={styles.itemDetail}>
-        <DefaultText className={styles.detailTip} type='body2' color='gray700'>
+        <Text className={styles.detailTip} type='body2' color='gray700'>
           상품 Tip!
-        </DefaultText>
-        <DefaultText type='label2' color='gray700'>
+        </Text>
+        <Text type='label2' color='gray700'>
           {description}
-        </DefaultText>
+        </Text>
       </div>
       <Divider thickness={1} color='gray100' />
       <div 

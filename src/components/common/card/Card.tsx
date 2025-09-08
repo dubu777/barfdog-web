@@ -9,12 +9,12 @@ interface CardProps {
   width?: "full" | "auto";
   height?: "full";
   shadow?: "none" | "light" | "normal" | "strong";
-  padding?: 12 | 16 | 20 | 32 | "20/16";
+  padding?: 12 | 16 | 20 | 32 | "12/20" | "20/16";
   textAlign?: "left" | "center";
   children: ReactNode;
   className?: string;
   backgroundColor?: "gray0" | "gray50" | "gray100" | "transparent";
-  borderRadius?: 8 | 12 | 16;
+  borderRadius?: 0 | 8 | 12 | 16;
   gap?: 4 | 8 | 12 | 16 | 20 | 32 | 40;
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import useModal from "@/hooks/useModal";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import Chips from "@/components/common/chips/Chips";
@@ -28,9 +28,9 @@ export default function DeliveryAddress() {
         className={commonWrapper({ direction: "col", align: "start", gap: 16 })}
       >
         <div className={commonWrapper({ justify: "start", gap: 8 })}>
-          <DefaultText type="headline2">
+          <Text type="headline2">
             {deliveryDto.deliveryName ?? deliveryDto.recipientName}
-          </DefaultText>
+          </Text>
           {deliveryDto.default && (
             <Chips
               variant="outlined"
@@ -50,13 +50,13 @@ export default function DeliveryAddress() {
           })}
         >
           <div className={commonWrapper({ justify: "start", gap: 4 })}>
-            <DefaultText type="body3">{deliveryDto.recipientName}</DefaultText>
-            <DefaultText type="body3">•</DefaultText>
-            <DefaultText type="body3">{deliveryDto.phoneNumber}</DefaultText>
+            <Text type="body3">{deliveryDto.recipientName}</Text>
+            <Text type="body3">•</Text>
+            <Text type="body3">{deliveryDto.phoneNumber}</Text>
           </div>
-          <DefaultText type="body3">
+          <Text type="body3">
             {deliveryDto.street} {deliveryDto.detailAddress}
-          </DefaultText>
+          </Text>
         </div>
       </div>
       <DeliveryModal

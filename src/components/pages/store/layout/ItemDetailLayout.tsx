@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { ReactNode } from "react";
 
@@ -24,7 +24,7 @@ export default function ItemDetailLayout({
       })}
       >
       {title && 
-        <DefaultText type='title4' style={{ padding: hasTitlePadding ? '20px 20px 0' : undefined }}>{title}</DefaultText>
+        <Text type='title4' style={{ padding: hasTitlePadding ? '20px 20px 0' : undefined }}>{title}</Text>
       }
       {children}
     </div>

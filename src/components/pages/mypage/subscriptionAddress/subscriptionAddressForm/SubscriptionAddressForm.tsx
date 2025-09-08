@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { pointColor } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
+import TestText from "@/components/common/testText/TestText";
 import AddressForm from "@/components/common/addressForm/AddressForm";
 import { DefaultObjectType } from "@/types/common";
 import { AddressDto } from "@/types/subscription";
@@ -67,7 +67,7 @@ const SubscriptionAddressForm = ({
         transition={{ duration: 0.5, ease: "easeInOut" }}
         // className={styles.addressForm}
       >
-        <Text
+        <TestText
           type="title"
           size="md"
           weight="normal"
@@ -78,7 +78,7 @@ const SubscriptionAddressForm = ({
           <span className={pointColor}>
             {shippingChangeType?.name} 후 다시 기존 주소로 배송됩니다.
           </span>
-        </Text>
+        </TestText>
         <AddressForm
           control={control}
           watch={watch}

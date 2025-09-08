@@ -1,5 +1,5 @@
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "./RecommendKcalBottomSheet.css";
 import ArrowIcon from "public/images/icons/right-arrow.svg";
@@ -32,20 +32,20 @@ export default function RecommendKcalBottomSheet({
             backgroundColors: "gray0",
           })}
         >
-          <DefaultText type="title4">
+          <Text type="title4">
             한 끼 추천 급여량은 하루 권장
             <br />
             칼로리를 기준으로 계산해 드려요
-          </DefaultText>
-          <DefaultText type="body3" color="gray800">
+          </Text>
+          <Text type="body3" color="gray800">
             ・ {petName}의 하루 권장 칼로리 {oneDayRecommendKcal}kcal를
             기준으로, 각 레시피의 원재료 열량(g당 칼로리)을 반영해서 한 끼 추천
             급여량을 계산했어요.
-          </DefaultText>
-          <DefaultText type="body3" color="gray800">
+          </Text>
+          <Text type="body3" color="gray800">
             ・ 레시피마다 추천 급여량과 가격이 다를 수 있으며, 레시피를 담을 때
             급여량 조절이 가능해요.
-          </DefaultText>
+          </Text>
         </div>
         <div
           className={commonWrapper({
@@ -55,21 +55,21 @@ export default function RecommendKcalBottomSheet({
           })}
         >
           <div className={styles.recommendKcalBox}>
-            <DefaultText type="label2" color="gray700">
+            <Text type="label2" color="gray700">
               하루 권장 칼로리
-            </DefaultText>
-            <DefaultText type="title4" color="red">
+            </Text>
+            <Text type="title4" color="red">
               {oneDayRecommendKcal}kcal
-            </DefaultText>
+            </Text>
           </div>
           <SvgIcon src={ArrowIcon} color="gray900" />
           <div className={styles.recommendKcalBox}>
-            <DefaultText type="label2" color="gray700">
+            <Text type="label2" color="gray700">
               한끼 권장 칼로리
-            </DefaultText>
-            <DefaultText type="title4" color="red">
+            </Text>
+            <Text type="title4" color="red">
               {oneDayRecommendKcal / 2}kcal
-            </DefaultText>
+            </Text>
           </div>
         </div>
       </div>

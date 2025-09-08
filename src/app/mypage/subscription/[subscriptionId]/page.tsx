@@ -2,11 +2,11 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { prefetchSubscriptionAndDogDetail } from "@/api/subscription/queries/usePrefetchSubscriptionAndDogDetail";
-import { prefetchGetPaymentList } from "@/api/mypage/queries/usePrefetchGetPaymentList";
+import { prefetchGetPaymentList } from "@/api/mypage/subscription/queries/prefetchGetPaymentList";
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
-import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
+import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 import SubscriptionDetail from "@/components/pages/mypage/subscription/subscriptionDetail/SubscriptionDetail";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 interface SubscriptionDetailPageProps {
   params: {
@@ -26,7 +26,7 @@ export default async function SubscriptionDetailPage({ params }: SubscriptionDet
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>페이지 접근이 불가합니다.</div>}>
-        <Suspense fallback={<Loader fullscreen />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <SubscriptionDetail subscriptionId={subscriptionId} />
         </Suspense>
       </ErrorBoundary>

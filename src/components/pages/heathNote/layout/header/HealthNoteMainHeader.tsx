@@ -12,7 +12,7 @@ import CheckCircle from "public/images/icons/check_circle.svg";
 import PlusIcon from "/public/images/icons/plus.svg";
 import PetIcon from "/public/images/healthNote/dogIcon.png";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Divider from "@/components/common/divider/Divider";
 import useModal from "@/hooks/useModal";
@@ -22,6 +22,7 @@ import { queryKeys } from "@/constants";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { useUpdateRepresentativePet } from "@/api/pet/mutations/useUpdateRepresentativePet";
 import { Pet } from "@/types/pet";
+import ListDivider from "@/components/common/listDivider/ListDivider";
 
 export default function HealthNoteMainHeader() {
   const router = useRouter();
@@ -85,9 +86,9 @@ export default function HealthNoteMainHeader() {
           className={petImage({ borderRadius: "lg" })}
         />
         <button onClick={handleShowPetList} className={styles.selectButton}>
-          <DefaultText type="headline1">
+          <Text type="headline1">
             {petList.length === 0 ? "반려견 등록" : representativePet?.name}
-          </DefaultText>
+          </Text>
           <SvgIcon src={ChevronDown} style={{ transform: "rotate(180deg)" }} />
         </button>
       </header>
@@ -98,11 +99,11 @@ export default function HealthNoteMainHeader() {
           className={styles.selectBottomSheet}
         >
           <div className={styles.selectBottomSheetHeader}>
-            <DefaultText type="title4">반려견 선택</DefaultText>
+            <Text type="title4">반려견 선택</Text>
             <Link href="/health-note/pets">
-              <DefaultText type="label4" color="gray500">
+              <Text type="label4" color="gray500">
                 전체보기
-              </DefaultText>
+              </Text>
             </Link>
           </div>
           <div className={styles.selectBottomSheetBox}>
@@ -122,15 +123,13 @@ export default function HealthNoteMainHeader() {
                         height={40}
                         className={petImage({ borderRadius: "lg", active })}
                       />
-                      <DefaultText type="headline1">{pet.name}</DefaultText>
+                      <Text type="headline1">{pet.name}</Text>
                     </div>
                     {active && (
                       <SvgIcon src={CheckCircle} size={24} color="red" />
                     )}
                   </button>
-                  {petList.length !== index + 1 && (
-                    <Divider thickness={1} color="gray100" />
-                  )}
+                  <ListDivider listLength={petList.length} index={index} color='gray100' />
                 </Fragment>
               );
             })}
@@ -142,7 +141,7 @@ export default function HealthNoteMainHeader() {
             primaryButtonLabel={
               <div className={commonWrapper({ gap: 6 })}>
                 <SvgIcon src={PlusIcon} />
-                <DefaultText type="headline3">새로운 아이 등록하기</DefaultText>
+                <Text type="headline3">새로운 아이 등록하기</Text>
               </div>
             }
             onPrimaryClick={handleCreatePet}

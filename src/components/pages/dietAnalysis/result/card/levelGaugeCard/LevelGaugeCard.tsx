@@ -1,7 +1,7 @@
 import Card from "@/components/common/card/Card";
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "./LevelGaugeCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 export interface LevelGaugeCardProps {
@@ -37,7 +37,7 @@ export default function LevelGaugeCard({
       gap={12}
     >
       <div className={commonWrapper({ justify: "between" })}>
-        <DefaultText type="headline2">{label}</DefaultText>
+        <Text type="headline2">{label}</Text>
         <SvgIcon src={icon} color={iconColor} />
       </div>
       <div className={styles.gauge}>{bars}</div>

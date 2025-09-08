@@ -4,7 +4,7 @@ import DangerEmogi from '/public/images/healthNote/danger_emogi.svg';
 import SameEmogi from '/public/images/healthNote/same_emoji.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import ComparisonProgressBar
 	from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
@@ -51,7 +51,7 @@ export default function ChangedScore({
 		<article>
 			<ResultCard
 				className={styles.changedScoreContainer}
-				title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${scoreDifference}점 ` : ''}${STATUS_MESSAGE[status].title}`}
+				title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${Math.abs(scoreDifference)}점 ` : ''}${STATUS_MESSAGE[status].title}`}
 			>
 				<Card
 					shadow='none'
@@ -61,9 +61,9 @@ export default function ChangedScore({
 					className={styles.changedScoreNotice}
 				>
 					<SvgIcon src={STATUS_MESSAGE[status].icon} />
-					<DefaultText type='label4' color='gray700'>
+					<Text type='label4' color='gray700'>
 						{STATUS_MESSAGE[status].description}
-					</DefaultText>
+					</Text>
 				</Card>
 				<ComparisonProgressBar
 					prevScore={prevScore}
@@ -82,11 +82,11 @@ export default function ChangedScore({
 
 const ScoreInfo = ({ date, checkupScore, isCurrent = false }: ScoreInfoProps) => (
 	<div className={styles.scoreInfo}>
-		<DefaultText type='body3' color='gray600'>
+		<Text type='body3' color='gray600'>
 			{date}
-		</DefaultText>
-		<DefaultText type='headline2' color={!isCurrent ? 'gray600' : 'gray900'}>
+		</Text>
+		<Text type='headline2' color={!isCurrent ? 'gray600' : 'gray900'}>
 			{checkupScore}점
-		</DefaultText>
+		</Text>
 	</div>
 )

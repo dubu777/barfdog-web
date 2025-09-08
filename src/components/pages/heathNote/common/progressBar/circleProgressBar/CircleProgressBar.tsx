@@ -1,10 +1,10 @@
 import * as styles from './CircleProgressBar.css';
 import { ComponentType, SVGProps } from "react";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import { fontColors } from '@/components/common/defaultText/DefaultText.css';
+import Text from "@/components/common/text/Text";
+import { fontColors } from '@/components/common/text/Text.css';
 import { COLORS } from '@/constants/style';
-import { getSimpleHealthStatus } from "@/utils/healthNote/getHealthStatus";
+import { getSimpleHealthStatus } from "@/utils/healthNote/common/getHealthStatus";
 
 interface CircleProgressBarProps {
 	score: number;
@@ -17,7 +17,11 @@ const displayDegree = 270;
 const radius = 120;
 const stroke = 12;
 
-const CircleProgressBar = ({ score, svgImage, hasFontColor }: CircleProgressBarProps) => {
+export default function CircleProgressBar({
+	score, 
+	svgImage, 
+	hasFontColor
+}: CircleProgressBarProps) {
 	const { label, color } = getSimpleHealthStatus(score, '400');
 
 	const normalizedRadius = radius - stroke / 2;
@@ -55,17 +59,15 @@ const CircleProgressBar = ({ score, svgImage, hasFontColor }: CircleProgressBarP
 					transform="rotate(-135 120 120)"
 				/>
 			</svg>
-			<DefaultText type='label2' color='gray700' className={styles.centerLabel}>{label}</DefaultText>
+			<Text type='label2' color='gray700' className={styles.centerLabel}>{label}</Text>
 			<div className={styles.centerContent}>
-				<DefaultText type='display2' color={hasFontColor ? color as keyof typeof fontColors : 'gray700'}>{score}점</DefaultText>
+				<Text type='display2' color={hasFontColor ? color as keyof typeof fontColors : 'gray700'}>{score}점</Text>
 				{svgImage &&
 					<SvgIcon src={svgImage} size={100} color={color as keyof typeof COLORS} />
 				}
-				<DefaultText type='headline4' color='gray700' className={styles.leftLabel}>0</DefaultText>
-				<DefaultText type='headline4' color='gray700' className={styles.rightLabel}>100</DefaultText>
+				<Text type='headline4' color='gray700' className={styles.leftLabel}>0</Text>
+				<Text type='headline4' color='gray700' className={styles.rightLabel}>100</Text>
 			</div>
 		</div>
 	);
 };
-
-export default CircleProgressBar;

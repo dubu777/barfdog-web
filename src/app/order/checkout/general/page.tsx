@@ -6,7 +6,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
-import { prefetchGetCouponList } from "@/api/mypage/queries/usePrefetchGetCouponList";
+import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 import dynamic from "next/dynamic";
 import Spinner from "@/components/common/spinner/Spinner";
 

@@ -1,5 +1,5 @@
 import * as styles from './BreedDetailInfo.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { BreedCareInfo } from "@/types/healthNote/dogpedia";
 
 interface DetailInfoProps {
@@ -37,17 +37,17 @@ export default function BreedDetailInfo({
 	]
 	return (
 		<section className={styles.breedDetailInfo}>
-			<DefaultText type='title4'>상세정보</DefaultText>
+			<Text type='title4'>상세정보</Text>
 			<ul className={styles.detailInfoList}>
 				{infoList.map(info => (
 					info.value &&
 					<li key={info.label} className={styles.detailInfoItem}>
-						<DefaultText type='headline2' color='gray800'>
+						<Text type='headline2' color='gray800'>
 							{info.label}
-						</DefaultText>
-						<DefaultText type='body3' color='gray700' preLine>
+						</Text>
+						<Text type='body3' color='gray700' preLine>
 							{info.value}
-						</DefaultText>
+						</Text>
 					</li>
 				))}
 			</ul>

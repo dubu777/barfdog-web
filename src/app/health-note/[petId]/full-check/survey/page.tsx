@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import FullCheckSurvey from "@/components/pages/heathNote/fullCheck/survey/FullCheckSurvey";
 import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
 
@@ -20,7 +20,7 @@ export default async function FullCheckSurveyPage({ params }: FullCheckSurveyPag
   return (
     <HydrationBoundary state={dehydratedState}>
       <ErrorBoundary fallback={<div>건강 종합 진단 설문 로딩 실패</div>}>
-        <Suspense fallback={<Loader fullscreen />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <FullCheckSurvey petId={Number(petId)} />
         </Suspense>
       </ErrorBoundary>

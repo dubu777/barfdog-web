@@ -2,7 +2,7 @@ import * as styles from './Footer.css';
 import Image from "next/image";
 import Link from "next/link";
 import Logo from '/public/images/logo/logo-white.png';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 const footerInfo = [
   'CEO: 임경호 | 사업제안 및 문의: info@freshour.co.kr',
@@ -50,29 +50,29 @@ export default function Footer() {
       <div className={styles.menuLinkBox}>
         {menuLink.map(menu => (
           <Link key={menu.value} href={menu.value} className={styles.menuLink}>
-            <DefaultText type='label2' color='gray100'>
+            <Text type='label2' color='gray100'>
               {menu.label}
-            </DefaultText>
+            </Text>
           </Link>
         ))}
       </div>
       <div className={styles.footerInfo}>
         {footerInfo.map(text => (
-          <DefaultText key={text} type='caption2' color='gray100' block>{text}</DefaultText>
+          <Text key={text} type='caption2' color='gray100' block>{text}</Text>
         ))}
       </div>
       <div className={styles.policyMenuLinkBox}>
         {policyMenuLink.map((policy) => (
           <Link key={policy.value} href={policy.value} className={styles.policyMenuLink}>
-            <DefaultText type='caption2' color='gray100'>
+            <Text type='caption2' color='gray100'>
               {policy.label}
-            </DefaultText>
+            </Text>
           </Link>
         ))}
       </div>
-      <DefaultText type='caption2' color='gray100' className={styles.footerInfo}>
+      <Text type='caption2' color='gray100' className={styles.footerInfo}>
         Copyright © 바프독 All Right Reserved.
-      </DefaultText>
+      </Text>
     </footer>
   )
 }

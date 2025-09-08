@@ -1,121 +1,151 @@
 'use client';
-import * as styles from './ReviewList.css';
-import { Suspense } from "react";
+import { commonWrapper } from "@/styles/common.css";
+import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { useInView } from "react-intersection-observer";
 import { useQueryClient } from "@tanstack/react-query";
-import { ErrorBoundary } from "react-error-boundary";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import TabBar from "@/components/common/tabBar/TabBar";
-import Dropdown from "@/components/common/dropdown/Dropdown";
-import EmptyStateReview from "@/components/pages/mypage/common/emptyState/emptyState/EmptyState";
-import ReviewListContainer from "@/components/pages/mypage/review/reviewListContainer/ReviewListContainer";
-import ReviewCard from "@/components/pages/mypage/common/cards/section/ReviewCard";
-import { prefetchGetWrittenReviewList, useGetWrittenReviewList } from "@/api/review/queries/useGetWrittenReviewList";
-import { prefetchGetWritableReviewList, useGetWritableReviewList } from "@/api/review/queries/useGetWritableReviewList";
-import { ReviewItemType, WritableReviewItem, WrittenReviewItem } from '@/types';
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/common/text/Text";
+import Tooltip from "@/components/common/tooltip/Tooltip";
+import ReviewCard from "@/components/pages/mypage/review/common/reviewCard/ReviewCard";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { queryKeys } from "@/constants";
+import { useReviewStore } from "@/store/mypage/useReviewStore";
+import { ReviewListType } from '@/types';
+import { useGetMypageReviewList } from "@/api/mypage/review/queries/useGetMypageReviewList";
 
-const ItemTypeFilterList = {
-  'ALL': { label: '전체보기' },
-  'SUBSCRIBE': { label: '구독상품' },
-  'ITEM': { label: '일반상품' },
-} as const;
-
-const ItemTypeFilterComponent = () => {
+export default function Review () {
   const { pushWithQuery } = useDynamicQueryPush();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const selectedLabel = ItemTypeFilterList[searchParams.get("itemType") as keyof typeof ItemTypeFilterList]?.label || "전체보기";
-
-  return (
-    <Dropdown
-      label={selectedLabel}
-      options={Object.entries(ItemTypeFilterList).map(([value, { label }]) => ({label, value}))}
-      onSelect={(value) => pushWithQuery(pathname, { itemType: value })}
-      className={styles.reviewItemTypeFilter}
-    />
-  )
-}
-
-const Review = () => {
-  const { pushWithQuery } = useDynamicQueryPush();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const reviewItemType = searchParams.get('itemType');
-  const allReviewItems = !reviewItemType || reviewItemType === 'ALL';
+  const type = searchParams.get('type') ?? 'writeable' as ReviewListType;
+  const isWriteableReview = type === 'writeable';
+  const activeIndex = (!type || isWriteableReview) ? 0 : 1;
 
-  const tab = searchParams.get('tab');
-  const checkTabIndex = (!tab || tab === 'writable') ? 0 : 1;
+  const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetMypageReviewList(type as ReviewListType);
+  const reviewList = reviewListData?.pages.flatMap(p => p.reviewList) ?? [];
 
-  const hasOrderHistory = true;
+  const { ref, inView } = useInView();
 
-  const tabs = [
-    {
-      label: '작성 가능한 리뷰',
-      content:
-        <ErrorBoundary fallback={<div>작성 가능한 리뷰가 없습니다.</div>}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <ItemTypeFilterComponent />
-            <ReviewListContainer
-              reviewItemType={reviewItemType as ReviewItemType}
-              allReviewItems={allReviewItems}
-              useGetReviewList={useGetWritableReviewList}
-              listKey='writableReviewList'
-              EmptyStateComponent={() => <EmptyStateReview hasOrderHistory={hasOrderHistory} />}
-              ReviewCardComponent={({ review }) => (
-                <ReviewCard reviewDetail={review as unknown as WritableReviewItem} />
-              )}
-            />
-          </Suspense>
-        </ErrorBoundary>
-      ,
-      onInit: () => handleTabInit('writable'),
-    },
-    {
-      label: '내가 작성한 리뷰',
-      content:
-        <ErrorBoundary fallback={<div>작성한 리뷰가 없습니다.</div>}>
-          <Suspense fallback={<div>Loading...</div>}>
-            <ItemTypeFilterComponent />
-            <ReviewListContainer
-              reviewItemType={reviewItemType as ReviewItemType}
-              allReviewItems={allReviewItems}
-              useGetReviewList={useGetWrittenReviewList}
-              listKey='writtenReviewList'
-              EmptyStateComponent={() => <EmptyStateReview type='writtenReviewList' />}
-              ReviewCardComponent={({ review }) => (
-                <ReviewCard reviewDetail={review as unknown as WrittenReviewItem} />
-              )}
-            />
-          </Suspense>
-        </ErrorBoundary>
-      ,
-      onInit: () => handleTabInit('written'),
-    },
-  ]
+  const { setCreateReview } = useReviewStore();
 
-  const handleTabInit = async (type: 'written' | 'writable') => {
-    pushWithQuery(pathname, { tab: type }, ['itemType']);
-    if (type === 'written') {
-      await prefetchGetWrittenReviewList(queryClient);
-    } else {
-      await prefetchGetWritableReviewList(queryClient);
+  useEffect(() => {
+    setCreateReview(null);
+  }, [])
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
+  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
+
+  const handleTabClick = async (type: ReviewListType) => {
+    pushWithQuery(pathname, { type });
+    await queryClient.invalidateQueries({
+      queryKey: [
+        queryKeys.MYPAGE.BASE,
+        queryKeys.MYPAGE.REVIEW.BASE,
+        queryKeys.MYPAGE.REVIEW.GET_MYPAGE_REVIEW_LIST,
+        type
+      ]
+    });
   }
 
   return (
     <section>
-      <TabBar
-        hasTabContent
-        variant='segmentedButton'
-        tabs={tabs}
-        defaultIndex={checkTabIndex}
-        className={styles.reviewTab}
-      />
+      <Divider thickness={2} color='gray50' />
+      <article
+        className={commonWrapper({
+          padding: 20,
+          backgroundColors: 'gray0',
+          width: 'full'
+        })}
+      >
+        <TabBar
+          tabs={[
+            { label: '작성 가능한 리뷰', onInit: () => handleTabClick('writeable') },
+            { label: '내가 작성한 리뷰', onInit: () => handleTabClick('written') },
+          ]}
+          hasTabContent={false}
+          variant='segmentedButton'
+          defaultIndex={activeIndex}
+          className={commonWrapper({ width: 'full' })}
+        />
+      </article>
+      <article
+        className={commonWrapper({
+          align: 'center',
+          justify: 'start',
+          gap: 4,
+          backgroundColors: 'gray0',
+        })}
+        style={{ padding: '8px 20px' }}
+      >
+        <Text type='label4' applyLineHeight={false}>리뷰</Text>
+        <Text type='label4' applyLineHeight={false}>0</Text>
+        {isWriteableReview &&
+          <Tooltip>
+            <Text type='caption2' color='white'>리뷰는 구매확정 후 30일 이내에만 작성 가능해요</Text>
+          </Tooltip>
+        }
+      </article>
+      <article
+        className={commonWrapper({
+          backgroundColors: 'gray50',
+          paddingBottom: 40,
+          direction: 'col',
+        })}
+      >
+        {reviewList.length > 0 ?
+          <div
+            className={commonWrapper({
+              direction: 'col',
+              gap: 8,
+              backgroundColors: 'gray50'
+            })}
+          >
+            <span />
+            {reviewList?.map((review) => (
+              <ReviewCard
+                key={review.id}
+                isWriteableReview={isWriteableReview}
+                id={review.id}
+                title={review.title}
+                reviewType={review.reviewType}
+                thumbnailUrl={review?.thumbnailUrl}
+                imageUrl={review?.imageUrl}
+                status={review?.status}
+                createdDate={review?.createdDate}
+                star={review?.star}
+                imageCount={review?.imageCount ?? undefined}
+                contents={review?.contents ?? undefined}
+                showDetail
+                handleCreate={() => setCreateReview(review)}
+              />
+            ))}
+            <InfiniteScrollTrigger
+              ref={ref}
+              hasNextPage={hasNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
+          </div>
+          : (
+            <DefaultEmptyState
+              title={`아직 ${isWriteableReview ? '작성 가능한' : '작성한'} 리뷰가 없어요`}
+              subTitle={
+                isWriteableReview
+                  ? '상품을 수령하고 ‘구매확정’하면 리뷰를 남길 수 있어요'
+                  : `리뷰를 작성하면 다른 보호자님에게 도움이 되고\n적립금 혜택도 받을 수 있어요`
+              }
+            />
+          )
+        }
+      </article>
     </section>
   );
 };
-
-export default Review;

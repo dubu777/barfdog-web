@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import InputField from "@/components/common/inputField/InputField";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useWithdrawalUser } from "@/api/auth/mutations/useWithdrawalUser";
 
@@ -36,8 +36,8 @@ const WithdrawalConfirmation = () => {
 	return (
 		<article className={styles.withdrawalContainerBox({ type: 'confirmation' })}>
 			<div className={styles.withdrawalContainerTitle({ type: 'confirmation' })}>
-				<DefaultText type='title3'>개인정보 확인을 위해<br/>비밀번호를 입력해주세요</DefaultText>
-				<DefaultText type='body1' color='gray600'>개인정보 보호를 위해 인증절차가 필요합니다</DefaultText>
+				<Text type='title3'>개인정보 확인을 위해<br/>비밀번호를 입력해주세요</Text>
+				<Text type='body1' color='gray600'>개인정보 보호를 위해 인증절차가 필요합니다</Text>
 			</div>
 			<InputField
 				type='password'

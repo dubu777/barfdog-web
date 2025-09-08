@@ -2,7 +2,7 @@ import * as styles from '../Information.css';
 import { ReactNode, useState } from 'react';
 import Button from "@/components/common/button/Button";
 import InfoList from "@/components/pages/mypage/common/information/layout/InfoList";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import InfoTitleButton from "@/components/pages/mypage/common/information/layout/InfoTitleButton";
 import { InfoLists, InfoListsButtons } from '@/types';
@@ -46,9 +46,9 @@ const InfoSection = ({
 						? <>
 							{subTitle && (
 								<div className={`${styles.infoItem} ${styles.infoSubTitle}`}>
-									<DefaultText type="headline2">{subTitle}</DefaultText>
+									<Text type="headline2">{subTitle}</Text>
 									{subTitleRight &&
-									<DefaultText type="headline2" color="red">{subTitleRight}</DefaultText>
+									<Text type="headline2" color="red">{subTitleRight}</Text>
 									}
 								</div>
 							)}

@@ -24,9 +24,12 @@ export const inputBaseStyle = style({
 export const inputVariants = {
   box: style({
     borderRadius: "8px",
-    border: `1px solid ${themeVars.colors.gray.gray200}`,
+    border: `1px solid ${themeVars.colors.gray.gray300}`,
     backgroundColor: themeVars.colors.gray.gray0,
     selectors: {
+      "&::placeholder": {
+        color: themeVars.colors.gray.gray300,
+      },
       "&.disabled": {
         backgroundColor: themeVars.colors.gray.gray200,
       },
@@ -93,11 +96,4 @@ export const unitStyle = style({
 export const baseButtonStyle = style({
   width: "24px",
   height: "24px",
-});
-
-export const inputStateTextStyle = style({
-  width: "100%",
-  display: "flex",
-  alignItems: "center",
-  marginTop: "8px",
 });

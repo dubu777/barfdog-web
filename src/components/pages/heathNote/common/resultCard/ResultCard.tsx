@@ -1,7 +1,7 @@
 import * as styles from "./ResultCard.css";
 import { ReactNode } from "react";
 import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface ResultCardProps {
   children: ReactNode;
@@ -28,14 +28,14 @@ const ResultCard = ({
     >
       <div className={styles.resultCardHeader}>
         {title && (
-          <DefaultText type="title3" align="center" preLine>
+          <Text type="title3" align="center" preLine>
             {title}
-          </DefaultText>
+          </Text>
         )}
         {subTitle && (
-          <DefaultText type="body3" color="gray600" align="center" preLine>
+          <Text type="body3" color="gray600" align="center" preLine>
             {subTitle}
-          </DefaultText>
+          </Text>
         )}
       </div>
       {children}

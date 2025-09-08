@@ -1,8 +1,8 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import * as styles from "./OrderSection.css";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { fontColors, textStyles } from "@/components/common/defaultText/DefaultText.css";
+import { fontColors, textStyles } from "@/components/common/text/Text.css";
 import { forwardRef } from 'react';
 
 interface OrderSectionProps {
@@ -34,13 +34,13 @@ const OrderSection = forwardRef<HTMLElement, OrderSectionProps>(({
     <section ref={ref} className={styles.OrderSectionContainer} style={combinedStyle}>
       {(title || subTitleParts) && (
         <div className={styles.OrderSectionTitleWrapper}>
-          <DefaultText type="title4">{title}</DefaultText>
+          <Text type="title4">{title}</Text>
           {subTitleParts && (
                 <div className={styles.subTitleWrapper} onClick={onSubtitleClick}>
                   {subTitleParts.map(({ text, color }, idx) => (
-                    <DefaultText key={idx} type={subTitleType} color={color}>
+                    <Text key={idx} type={subTitleType} color={color}>
                       {text}
-                    </DefaultText>
+                    </Text>
                   ))}
                   {showArrowIcon && (
                     <SvgIcon src={ArrowIcon} size={20} color="gray600" />

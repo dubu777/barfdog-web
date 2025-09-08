@@ -4,7 +4,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Button from "@/components/common/button/Button";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
@@ -56,7 +56,7 @@ const FilterBottomSheet = ({ filters }: FilterBottomSheetProps) => {
 		<Dropdown label={filterLabel} isOpen={isOpenFilterOptions} setIsOpen={setIsOpenFilterOptions} className={styles.filterBottomSheetContainer}>
 			<BottomSheet isOpen={isOpenFilterOptions} onClose={() => setIsOpenFilterOptions(false)}>
 				<div className={styles.filterBottomSheet}>
-					<DefaultText type="title4">조회 조건 설정</DefaultText>
+					<Text type="title4">조회 조건 설정</Text>
 					<ul className={styles.filterBottomSheetOptions}>
 						{filters.map((filter) => {
 							const optionsCount = Object.keys(filter.options).length;
@@ -64,7 +64,7 @@ const FilterBottomSheet = ({ filters }: FilterBottomSheetProps) => {
 							const gridStyle = { gridTemplateColumns: `repeat(${optionGridColumns}, 1fr)` };
 							return (
 								<li key={filter.key} className={styles.filterOptionBox}>
-									<DefaultText type="label2">{filter.label}</DefaultText>
+									<Text type="label2">{filter.label}</Text>
 										<div className={styles.filterOption} style={gridStyle}>
 										{Object.entries(filter.options).map(([value, label]) => (
 											<Button

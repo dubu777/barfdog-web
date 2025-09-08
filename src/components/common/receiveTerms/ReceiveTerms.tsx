@@ -1,7 +1,7 @@
 "use client";
 import * as styles from "./ReceiveTerms.css";
 import { useEffect } from "react";
-import Text from "@/components/common/text/Text";
+import TestText from "@/components/common/testText/TestText";
 import DefaultCheckbox from "@/components/common/defaultCheckbox/DefaultCheckbox";
 import {
   Control,
@@ -11,11 +11,11 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { UpdateUserInfo, SignupStepValues } from "@/types";
+import { UserInfoFormValues, SignupStepValues } from "@/types";
 
 type FormValues<T extends boolean> = T extends true
   ? SignupStepValues
-  : UpdateUserInfo;
+  : UserInfoFormValues;
 
 interface ReceiveTermsProps<T extends boolean> {
   isSignUp?: T;
@@ -125,9 +125,9 @@ const ReceiveTerms = <T extends boolean>({
         />
       </div>
       <div className={styles.receiveAgreementInfo}>
-        <Text type="description" size="sm" color="red">
+        <TestText type="description" size="sm" color="red">
           ㄴ 모두 동의 시 적립금 1,000원 적립 (첫 구매확정 후 적용)
-        </Text>
+        </TestText>
       </div>
     </div>
   );

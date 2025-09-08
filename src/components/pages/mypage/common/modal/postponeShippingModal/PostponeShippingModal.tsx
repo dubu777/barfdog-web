@@ -3,7 +3,7 @@ import { useState } from "react";
 import * as styles from './PostponeShippingModal.css';
 import { pointColor } from "@/styles/common.css";
 import { addDays, format } from "date-fns";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
@@ -90,35 +90,35 @@ const PostponeShippingModal = ({
 				<>
 					<div className={styles.userShippingBox}>
 						<div className={styles.userShippingText}>
-							<DefaultText type='title3'>
+							<Text type='title3'>
 								{isPrePayment ? '이번' : '다음'} 회차(<span className={pointColor}>{nextCycle}회차</span>)의<br/>
 								발송 예정일을 변경할 수 있어요
-							</DefaultText>
-							<DefaultText type='body2' color='gray600'>발송 예정일은 최대 8주까지 미룰 수 있습니다</DefaultText>
+							</Text>
+							<Text type='body2' color='gray600'>발송 예정일은 최대 8주까지 미룰 수 있습니다</Text>
 						</div>
 						<div className={styles.userShippingDate}>
 							<div className={styles.dateBox}>
-								<DefaultText type='caption' color='gray500'>
+								<Text type='caption' color='gray500'>
 									기존 발송 예정일
-								</DefaultText>
-								<DefaultText type='label1'>
+								</Text>
+								<Text type='label1'>
 									{defaultNextDeliveryDate} (화)
-								</DefaultText>
+								</Text>
 							</div>
 							<div className={styles.dateBox}>
-								<DefaultText type='caption' color='gray500'>
+								<Text type='caption' color='gray500'>
 									신규 발송 예정일
-								</DefaultText>
-								<DefaultText type='label1' color='red'>
+								</Text>
+								<Text type='label1' color='red'>
 									{newNextDeliveryDate} (화)
-								</DefaultText>
+								</Text>
 							</div>
 						</div>
 					</div>
 					{detail.nextDeliveryDate ?
 						<>
 							<div className={styles.selectShippingBox}>
-								<DefaultText type='headline2' className={styles.selectShippingText}>발송 희망 주차를 선택해주세요</DefaultText>
+								<Text type='headline2' className={styles.selectShippingText}>발송 희망 주차를 선택해주세요</Text>
 								<DelayWeekPicker
 									defaultDate={new Date(detail.nextDeliveryDate)}
 									onChange={(value) => setSelectedDate(value)}
@@ -143,21 +143,21 @@ const PostponeShippingModal = ({
 				</>
 			) : (
 				<CompletedBox>
-					<DefaultText type='title1'>미루기 완료</DefaultText>
-					<DefaultText type='body2' color='gray600' align='center'>
+					<Text type='title1'>미루기 완료</Text>
+					<Text type='body2' color='gray600' align='center'>
 						{detail.dogName}의<br/>
-						<DefaultText type='label2'>정기배송 {nextCycle}회차 도착 예정일</DefaultText>
+						<Text type='label2'>정기배송 {nextCycle}회차 도착 예정일</Text>
 						이 변경되었습니다
-					</DefaultText>
+					</Text>
 					<Card shadow='none' padding='20/16' className={styles.completedBoxDateInfo}>
 						<div className={styles.completedDate}>
-							<DefaultText type='body3' color='gray600'>기존 발송 예정일</DefaultText>
-							<DefaultText type='body2' color='gray700'>{defaultNextDeliveryDate} (화)</DefaultText>
+							<Text type='body3' color='gray600'>기존 발송 예정일</Text>
+							<Text type='body2' color='gray700'>{defaultNextDeliveryDate} (화)</Text>
 						</div>
 						<Divider thickness={2} color='gray200' />
 						<div className={styles.completedDate}>
-							<DefaultText type='body3' color='red'>신규 발송 예정일</DefaultText>
-							<DefaultText type='body2' color='red'>{newNextDeliveryDate} (화)</DefaultText>
+							<Text type='body3' color='red'>신규 발송 예정일</Text>
+							<Text type='body2' color='red'>{newNextDeliveryDate} (화)</Text>
 						</div>
 					</Card>
 				</CompletedBox>

@@ -1,30 +1,40 @@
 'use client';
-import * as styles from '../Account.css';
-import axios from 'axios';
+import { commonWrapper } from '@/styles/common.css';
 import { ChangeEvent, useState } from "react";
-import { Controller } from "react-hook-form";
-import ProfileCircle from '/public/images/mypage/profile_circle.svg';
+import { Controller, useWatch } from "react-hook-form";
+import axios from 'axios';
 import InputField from "@/components/common/inputField/InputField";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import CustomDatePicker from '@/components/common/datePicker/CustomDatePicker';
+import LabeledRadioButtonGroup from '@/components/common/labeledRadioButtonGroup/LabeledRadioButtonGroup';
+import InputLabel from '@/components/common/inputLabel/InputLabel';
 import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
 import useDeviceState from "@/hooks/useDeviceState";
-import DefaultRadio from "@/components/common/defaultRadio/DefaultRadio";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import { GetUserInfo, UpdateUserInfo } from "@/types/auth";
+import { formatDate, formatPhoneNumber } from "@/utils";
+import { useToastStore } from "@/store/useToastStore";
+import { useFormHandler } from "@/hooks/useFormHandler";
+import { UserInfo as UserInfoType, UserInfoFormValues } from "@/types/auth";
+import { defaultUpdateUserInfoValues, updateUserInfoSchema } from "@/utils/validation/authValidation";
 import { useGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
 import { useUpdateUserInfo } from "@/api/auth/mutations/useUpdateUserInfo";
 import { useGetAuthNumber } from "@/api/auth/mutations/useGetAuthNumber";
-import { useToastStore } from "@/store/useToastStore";
-import { useFormHandler } from "@/hooks/useFormHandler";
-import { defaultUpdateUserInfoValues, updateUserInfoSchema } from "@/utils/validation/authValidation";
-import { formatDate, formatPhoneNumber } from "@/utils";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import CustomDatePicker from '@/components/common/datePicker/CustomDatePicker';
 
-const UserInfo = () => {
+export default function UserInfo() {
 	const { data: userInfo } = useGetUserInfo();
 
-	const { handleSubmit, control, getValues, watch, errors, setValue, setError, isValid, clearErrors, dirtyFields } = useFormHandler<UpdateUserInfo>(updateUserInfoSchema, defaultUpdateUserInfoValues(userInfo as GetUserInfo));
+	const { 
+		handleSubmit, 
+		control, 
+		getValues,
+		errors, 
+		setValue, 
+		setError, 
+		isValid, 
+		clearErrors, 
+		dirtyFields
+
+	} = useFormHandler<UserInfoFormValues>(updateUserInfoSchema, defaultUpdateUserInfoValues(userInfo as UserInfoType));
 
 	const [changedPhoneNumber, setChangedPhoneNumber] = useState<boolean>(false);
 	const [authNumber, setAuthNumber] = useState<string>('');
@@ -35,20 +45,26 @@ const UserInfo = () => {
 	const { addToast } = useToastStore();
 	const { isMobileDevice } = useDeviceState();
 
-	console.log('userInfo', userInfo);
+	const phoneNumber = useWatch({ control, name: 'phoneNumber' });
+	const defaultPhoneNumber = useWatch({ control, name: 'defaultPhoneNumber' });
+
+	console.log(userInfo)
+	// console.log('phoneNumber', phoneNumber)
+	// console.log('defaultPhoneNumber', defaultPhoneNumber)
+
 
 	// 연락처 변경 X
-	const keepCurrentPhoneNumber = !changedPhoneNumber || watch('phoneNumber') === watch('defaultPhoneNumber');
+	const keepCurrentPhoneNumber = !changedPhoneNumber || phoneNumber === defaultPhoneNumber;
 	// 연락처 변경 O -> 인증번호 확인 완료 확인을 위한 상태값
-	const hasCheckedAuthNumber = getValues('hasCheckedAuthNumber');
+	const hasCheckedAuthNumber = useWatch({ control, name: 'hasCheckedAuthNumber' });
 	// 최종 form 필수 요소 검증
-	const isValidFormValues = (watch('phoneNumber') !== watch('defaultPhoneNumber') ? hasCheckedAuthNumber : true) && isValid;
+	const isValidFormValues = (phoneNumber !== defaultPhoneNumber ? hasCheckedAuthNumber : true) && isValid;
 
 	// 연락처 input change
 	const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const value = e.target.value;
 		// 연락처 변경시 기존 연락처와 같을 경우 인증번호 입력 요소 제외
-		if (value === getValues('defaultPhoneNumber')) {
+		if (value === defaultPhoneNumber) {
 			setValue('authNumber', '');
 			clearErrors('authNumber');
 			setAuthNumber('');
@@ -123,18 +139,28 @@ const UserInfo = () => {
 		}
 	};
 
-	const onSubmit = (data: UpdateUserInfo) => {
+	const onSubmit = (data: UserInfoFormValues) => {
 		// email 제외, birthday format(2000-01-01 -> 20000101)
-		const body: UpdateUserInfo = {
-			address: data.address,
+		const body: UserInfoFormValues = {
+			address: userInfo?.address ?? {
+				zipcode: '',
+				city: '',
+				street: '',
+				detailAddress: '',
+			},
 			gender: data.gender,
 			name: data.name,
-			password: data.password,
+			password: 'test',
 			phoneNumber: data.phoneNumber,
-			receiveEmail: data.receiveEmail,
-			receiveSms: data.receiveSms,
-			birthday: formatDate(data.birthday, 'onlyDateDot').replace(/-/g, ''), // "-" 제거
+			receiveEmail: userInfo?.receiveEmail ?? false,
+			receiveSms: userInfo?.receiveSms ?? false,
+			birthday: data.birthday.replace(/\./g, ""), // "." 제거
 		};
+
+		console.log('userInfo', userInfo);
+		console.log('data', data);
+		console.log('body', body);
+		
 		mutate(
 			body,
 			{
@@ -157,15 +183,22 @@ const UserInfo = () => {
 		)
 	}
 	return (
-		<section className={`${styles.accountContainer} ${styles.userInfoBox}`}>
-			<DefaultText type='title4'>
-				회원 정보
-			</DefaultText>
-			<div className={styles.uploadProfile}>
-				<SvgIcon src={ProfileCircle} size={89} />
-				<DefaultText type='label4' color='gray600'>프로필 사진</DefaultText>
-			</div>
-			<form className={styles.userInfoForm}>
+		<section
+			className={commonWrapper({
+				direction: 'col',
+				gap: 20,
+				padding: 20,
+				align: 'start',
+			})}
+		>
+			<Text type='title4'>회원 정보</Text>
+			<form 
+				className={commonWrapper({
+					direction: 'col',
+					gap: 20,
+					align: 'start',
+				})}
+			>
 				<Controller
 					name='name'
 					control={control}
@@ -192,10 +225,13 @@ const UserInfo = () => {
 								field.onChange(e);
 								handlePhoneNumberChange(e);
 							}}
+							onReset={() => setValue('phoneNumber', '')}
 							confirmButton
-							confirmButtonText={!keepCurrentPhoneNumber ? '입력' : '번호변경'}
+							confirmButtonText={!keepCurrentPhoneNumber ? authNumber && changedPhoneNumber ? '재전송' : '인증번호' : '번호변경'}
+							confirmButtonDisabled={!phoneNumber}
+							clearButton
 							placeholder='번호만 입력해주세요'
-							label='연락처'
+							label='휴대폰 번호'
 							isRequired
 							disabled={keepCurrentPhoneNumber}
 							error={errors?.phoneNumber?.message}
@@ -214,6 +250,7 @@ const UserInfo = () => {
 								error={errors?.authNumber?.message}
 								confirmButton
 								confirmButtonText='확인'
+								confirmButtonDisabled={!field.value}
 								placeholder='인증번호를 입력해주세요'
 							/>
 						}
@@ -235,18 +272,22 @@ const UserInfo = () => {
 					name='gender'
 					control={control}
 					render={({field}) =>
-						<DefaultRadio
-							id='gender'
-							onChange={field.onChange}
-							value={field.value as string}
-							label='성별정보'
-							isRequired
-							options={[
-								{name: '남자', value: 'MALE'},
-								{name: '여자', value: 'FEMALE'},
-								{name: '선택안함', value: 'NONE'}
-							]}
-						/>
+						<div>
+							<InputLabel
+								label='성별정보'
+								isRequired
+							/>
+							<LabeledRadioButtonGroup
+								optionType="radio"
+								onChange={field.onChange}
+								value={field.value as string}
+								options={[
+									{label: '남자', value: 'MALE'},
+									{label: '여자', value: 'FEMALE'},
+									{label: '선택안함', value: 'NONE'}
+								]}
+							/>
+						</div>
 					}
 				/>
 				<Controller
@@ -283,5 +324,3 @@ const UserInfo = () => {
 		</section>
 	);
 };
-
-export default UserInfo;

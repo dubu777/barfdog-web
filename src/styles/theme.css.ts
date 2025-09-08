@@ -1,3 +1,4 @@
+import { fontColors } from "@/components/common/text/Text.css";
 import { createTheme } from "@vanilla-extract/css";
 
 // 예시 코드 - 추후 수정
@@ -85,8 +86,14 @@ export const [themeClass, themeVars] = createTheme({
       red30: "rgba(190, 26, 33, 0.3)",
       red15: "rgba(190, 26, 33, 0.15)",
     },
-    kakao: "#FDDC3F",
-    naver: "#00C73C",
+    kakao: {
+      kakaoBackground: "#FDDC3F",
+      kakaoFont: "rgba(0, 0, 0, 0.85)"
+    },
+    naver: {
+      naverBackground: "#00C73C",
+      naverFont: "#FFFFFF"
+    }
   },
   // ------------------ colors 디자인 시스템 ------------------
 

@@ -1,7 +1,7 @@
 import * as styles from './PaymentCard.css';
 import CardImage from "/public/images/mypage/card-small.svg";
 import CardChipImage from "/public/images/mypage/card-chip.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { CARD_COLORS, PAYMENT } from "@/constants";
 import { PaymentMethod } from '@/types';
 
@@ -41,12 +41,12 @@ const PaymentCard = ({
 			? (
 				<div className={styles.card} style={{ background: cardColor }}>
 					<div className={styles.cardInfo}>
-						<DefaultText type='headline1' color={cardFontColor}>{paymentCardName}</DefaultText>
+						<Text type='headline1' color={cardFontColor}>{paymentCardName}</Text>
 						<CardChipImage className={styles.cardChip} />
 					</div>
 					<div className={styles.cardBottom}>
-						<DefaultText type='label2' color='gray0'>{paymentCardNumber}</DefaultText>
-						<DefaultText type='body2' color='gray0'>일시불</DefaultText>
+						<Text type='label2' color='gray0'>{paymentCardNumber}</Text>
+						<Text type='body2' color='gray0'>일시불</Text>
 					</div>
 				</div>
 			)
@@ -54,9 +54,9 @@ const PaymentCard = ({
 				<div className={styles.smallCardBox}>
 					<CardImage style={{ color: cardColor }} />
 					<div className={styles.smallCardInfo}>
-						<DefaultText type='headline2'>{paymentCardName}</DefaultText>
-						<DefaultText type='body2'>{paymentCardNumber}</DefaultText>
-						<DefaultText type='body2' color='gray500'>일시불</DefaultText>
+						<Text type='headline2'>{paymentCardName}</Text>
+						<Text type='body2'>{paymentCardNumber}</Text>
+						<Text type='body2' color='gray500'>일시불</Text>
 					</div>
 				</div>
 			)

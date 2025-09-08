@@ -13,7 +13,7 @@ import { cardShadow } from "@/components/common/card/Card.css";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import FadeInInteraction from "@/components/pages/main/common/FadeInInteraction";
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -119,9 +119,9 @@ const ChapterSection = () => {
 			{chapterData.map((chapter, index) => (
 				<MainContainer key={chapter.id} backgroundColor={index === 1 ? 'gray50' : 'pinkWhite'}>
 					<FadeInInteraction>
-						<DefaultText type='title2' color='white' className={mainChapterIndexChips}>
+						<Text type='title2' color='white' className={mainChapterIndexChips}>
 							0{index+1}
-						</DefaultText>
+						</Text>
 						<MainTitle title={chapter.title} subTitle={chapter.subTitle} align='left' />
 					</FadeInInteraction>
 					<ChapterComponent imagesUrl={chapter.imagesUrl} index={index} />

@@ -9,18 +9,19 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useWatch } from "react-hook-form";
 import BackIcon from "/public/images/header/chevron-left.svg";
 import Header from "@/components/layout/header/Header";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Spinner from "@/components/common/spinner/Spinner";
 import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useSurveyFlow } from "@/hooks/healthNote/useSurveyFlow";
 import { DISEASE_CATEGORY_LIST, queryKeys } from "@/constants";
 import { useToastStore } from "@/store/useToastStore";
-import { createCleanedEntries } from "@/utils/healthNote/createCleanedEntries";
-import { sumScores } from "@/utils/healthNote/sumScores";
-import { getTopSuspectedDiseases } from "@/utils/healthNote/getTopSuspectedDiseases";
+import { createCleanedEntries } from "@/utils/healthNote/fullCheck/createCleanedEntries";
+import { sumScores } from "@/utils/healthNote/common/sumScores";
+import { getTopSuspectedDiseases } from "@/utils/healthNote/fullCheck/getTopSuspectedDiseases";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 import { useCreateFullCheckResult } from "@/api/healthNote/fullCheck/mutations/useCreateFullCheckResult";
 import { FullCheckFormValues } from "@/types/healthNote/fullCheck";
@@ -46,7 +47,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
   const { addToast } = useToastStore();
 
   const { data: petInfo } = useGetPetDetail(petId);
-  const { mutate } = useCreateFullCheckResult();
+  const { mutate, isPending } = useCreateFullCheckResult();
 
   const { control, setValue, watch, handleSubmit, formState } = useFormHandler(
     fullCheckSurveySchema,
@@ -65,6 +66,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
   const {
     currentStep,
     currentQuestion,
+    currentValue,
     isFirstStep,
     isLastStep,
     isButtonDisabled,
@@ -77,7 +79,6 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
     watch,
     setValue,
     formState,
-    control,
   });
 
   const title =
@@ -157,6 +158,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
     })
   };
 
+  if (isPending) return <Spinner fullscreen />
   return (
     <NavigationGuard>
       <Header
@@ -170,19 +172,19 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
                 color="gray900"
                 onClick={onPrevStep}
               />
-              <DefaultText type="headline3" color="gray500">
+              <Text type="headline3" color="gray500">
                 이전
-              </DefaultText>
+              </Text>
             </div>
           )
         }
         onClose={() => router.back()}
         showCloseButton
       />
-      <section className={styles.fullCheckSurveyContainer}>
+      <div className={styles.fullCheckSurveyContainer}>
         <article className={styles.fullCheckSurveyTitle}>
           <SvgIcon src={currentQuestion.imageUrl!} size={64} />
-          <DefaultText type="title3">
+          <Text type="title3">
             {currentQuestion?.title ? (
               <>
                 {petInfo ? `${petInfo.name}` : "반려견"}의<br />
@@ -198,7 +200,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
                 증상을 모두 체크해 주세요
               </>
             )}
-          </DefaultText>
+          </Text>
         </article>
         <article
           className={styles.surveyAnswerList({
@@ -240,8 +242,8 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
             )}
           />
         </article>
-      </section>
-      {currentStep >= 4 &&
+      </div>
+      {(currentStep < 4 ? currentValue : true) &&
         <ButtonDocked
           type="full-button"
           primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}

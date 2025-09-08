@@ -2,7 +2,7 @@ import * as styles from './ChangeBottomSheet.css';
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import Button from "@/components/common/button/Button";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { PAYMENT } from "@/constants";
@@ -57,9 +57,9 @@ const ChangeBottomSheet = ({
 							onToggle={onToggle}
 							iconType='circle'
 						>
-							<DefaultText type="label2">
+							<Text type="label2">
 								{method.label}
-							</DefaultText>
+							</Text>
 						</LabeledCheckbox>
 					</Button>
 				))}

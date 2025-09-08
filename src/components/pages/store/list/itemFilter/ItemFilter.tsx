@@ -2,7 +2,7 @@
 import * as styles from './ItemFilter.css';
 import { usePathname, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
@@ -47,9 +47,9 @@ export default function ItemFilter() {
               onClick={() => handleFilterChange('itemType', category.value as ItemType)}
               className={styles.itemType({ active })}
             >
-              <DefaultText type='label1' color={active ? 'red' : 'gray300'}>
+              <Text type='label1' color={active ? 'red' : 'gray300'}>
                 {category.label}
-              </DefaultText>
+              </Text>
             </li>
           )
         })}

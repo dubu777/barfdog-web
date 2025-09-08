@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import HistoryList from "@/components/pages/heathNote/medicalHistory/list/HistoryList";
 import { prefetchGetMedicalHistoryList } from "@/api/healthNote/medicalHistory/queries/prefetchGetMedicalHistoryList";
 
@@ -20,7 +20,7 @@ export default async function MedicalHistoryListPage({ params }: MedicalHistoryL
   return (
     <HydrationBoundary state={dehydratedState}>
       <ErrorBoundary fallback={<div>병원 진료 기록 목록 로딩 실패</div>}>
-        <Suspense fallback={<Loader fullscreen />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <HistoryList petId={Number(petId)} />
         </Suspense>
       </ErrorBoundary>

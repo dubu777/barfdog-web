@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import * as styles from "../Information.css";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePathname } from "next/navigation";
@@ -26,9 +26,9 @@ const OrderItemInfo = ({ data, orderType, type = 'default' }: OrderItemInfoProps
 	return (
 		<article className={styles.infoContainer({ isOpen: true })}>
 			<div className={styles.infoItem}>
-				<DefaultText type='title4'>주문 상품</DefaultText>
+				<Text type='title4'>주문 상품</Text>
 				{type !== 'orderIssue' &&
-					<button onClick={handleShowReceipt}><DefaultText type='label4' color='gray400'>영수증 보기</DefaultText></button>
+					<button onClick={handleShowReceipt}><Text type='label4' color='gray400'>영수증 보기</Text></button>
 				}
 			</div>
 			<div className={styles.infoDetailContainer}>

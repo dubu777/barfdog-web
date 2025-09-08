@@ -1,5 +1,5 @@
 import * as styles from "./AddressContent.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import { formatPhoneNumber } from "@/utils";
 import { AddressResponse } from "@/types/delivery";
@@ -22,15 +22,15 @@ const AddressContent = ({
   return (
     <div className={styles.addressContainer}>
       <div className={styles.addressHeader}>
-        <DefaultText type="title4">배송지</DefaultText>
+        <Text type="title4">배송지</Text>
         {handleEditAddress && (
           <button
             onClick={handleEditAddress}
             className={styles.addressChangeButton}
           >
-            <DefaultText type="label4" color="gray400">
+            <Text type="label4" color="gray400">
               배송지 변경
-            </DefaultText>
+            </Text>
           </button>
         )}
       </div>
@@ -38,24 +38,24 @@ const AddressContent = ({
       {addressData ? (
         <div className={styles.addressContent}>
           <div className={styles.addressInfo}>
-            <DefaultText type="headline2">
+            <Text type="headline2">
               {addressData.deliveryName}
-            </DefaultText>
+            </Text>
             {isDefault && (
               <Chips variant="outlined" borderRadius="lg">
                 기본배송지
               </Chips>
             )}
           </div>
-          <DefaultText type="body3" color="gray800">
+          <Text type="body3" color="gray800">
             {addressData.recipientName} •{" "}
             {addressData.phoneNumber
               ? formatPhoneNumber(addressData.phoneNumber)
               : ""}
-          </DefaultText>
-          <DefaultText type="body3" color="gray800">
+          </Text>
+          <Text type="body3" color="gray800">
             {addressData.street} {addressData.detailAddress}
-          </DefaultText>
+          </Text>
         </div>
       ) : (
         <CreateButton onClick={onToggleDeliveryModal} text="배송지 추가하기" />

@@ -3,7 +3,7 @@ import Link from "next/link";
 import RateStar from "@/components/common/rateStar/RateStar";
 import ImageLoadingSpinner from "@/components/common/imageLoadingSpinner/ImageLoadingSpinner";
 import Chips from "@/components/common/chips/Chips";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { StoreItemListData } from "@/types/store";
 import { getItemViewProps } from "@/utils/store/getItemViewProps";
 import { CHIPS_COLORS } from '@/constants/style';
@@ -46,11 +46,11 @@ export default function Item({
           />
         </div>
         <div className={styles.itemInfoBox}>
-          <DefaultText type='body2' color='gray700'>{item.name}</DefaultText>
+          <Text type='body2' color='gray700'>{item.name}</Text>
           {!isDiscounted
             ? (
               <div className={styles.itemContent}>
-                <DefaultText type='headline1'>{formattedOriginalPrice}</DefaultText>
+                <Text type='headline1'>{formattedOriginalPrice}</Text>
                 {isSoldOut &&
                   <Chips variant='solid' color='gray600'>품절</Chips>
                 }
@@ -59,14 +59,14 @@ export default function Item({
             : (
               <div className={styles.itemDiscount}>
                 <div className={styles.itemSalePriceBox}>
-                  <DefaultText type='caption2' color='red'>할인특가</DefaultText>
-                  <DefaultText type='caption2' color='gray600' className={styles.itemSalePrice}>
+                  <Text type='caption2' color='red'>할인특가</Text>
+                  <Text type='caption2' color='gray600' className={styles.itemSalePrice}>
                     {formattedOriginalPrice}
-                  </DefaultText>
+                  </Text>
                 </div>
                 <div className={styles.itemContent}>
-                  <DefaultText type='headline1' color='red'>{discountRate}%</DefaultText>
-                  <DefaultText type='headline1' color='gray900'>{formattedSalePrice}</DefaultText>
+                  <Text type='headline1' color='red'>{discountRate}%</Text>
+                  <Text type='headline1' color='gray900'>{formattedSalePrice}</Text>
                   {isSoldOut &&
                     <Chips variant='solid' color='gray600'>품절</Chips>
                   }
@@ -76,9 +76,9 @@ export default function Item({
           }
           <div className={styles.itemContent}>
             <RateStar rateLength={1} color='red' align='left' size={16} />
-            <DefaultText type='caption2' color='gray600'>
+            <Text type='caption2' color='gray600'>
               {starRating}
-            </DefaultText>
+            </Text>
           </div>
         </div>
       </Link>

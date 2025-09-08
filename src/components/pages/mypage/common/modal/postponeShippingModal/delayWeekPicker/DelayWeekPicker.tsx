@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import * as styles from '@/components/common/datePicker/mobileDatePicker/MobileDatePicker.css';
 import { pointColor } from "@/styles/common.css";
 import { addDays, addWeeks, format, getDay } from 'date-fns';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Picker from "react-mobile-picker";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
 import { labelStyle } from "@/components/common/inputLabel/InputLabel.css";
@@ -85,9 +85,9 @@ const DelayWeekPicker = ({ defaultDate, onChange, label, isRequired, isFixedOpen
 	return (
 		<div>
 			{label &&
-			<DefaultText type='label4' className={labelStyle}>
+			<Text type='label4' className={labelStyle}>
 				{label} {isRequired && <span className={pointColor}>*</span>}
-			</DefaultText>
+			</Text>
 			}
 			<DatePickerButton 
 				isOpen={isOpen} 

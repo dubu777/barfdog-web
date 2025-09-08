@@ -5,9 +5,9 @@ import {
 } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
+import Spinner from "@/components/common/spinner/Spinner";
 import PetEditForm from "@/components/pages/pet/edit/PetEditForm";
 import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
-import Spinner from "@/components/common/spinner/Spinner";
 
 interface PetEditPageProps {
   params: {

@@ -14,7 +14,7 @@ import {
   SURVEY_NO_AUTO_STEP,
   SURVEY_SECTIONS,
 } from "@/constants";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import { useCallback, useMemo, useState } from "react";
@@ -177,9 +177,9 @@ export default function SurveyPageContainer({
       <Header
         leftElement={
           !isFirstStep && (
-            <DefaultText type="headline3" color="gray700">
+            <Text type="headline3" color="gray700">
               이전
-            </DefaultText>
+            </Text>
           )
         }
         showBackButton={!isFirstStep}

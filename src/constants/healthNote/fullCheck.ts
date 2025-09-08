@@ -14,21 +14,7 @@ import NormalImage from "/public/images/healthNote/full-check/normal.svg";
 import WarningImage from "/public/images/healthNote/full-check/warning.svg";
 import DangerImage from "/public/images/healthNote/full-check/danger.svg";
 
-import SmallSizeIcon from "/public/images/healthNote/full-check/small-size.svg";
-import MiddleSizeIcon from "/public/images/healthNote/full-check/middle-size.svg";
-import LargeSizeIcon from "/public/images/healthNote/full-check/large-size.svg";
-
-const BODY_PART_TO_CATEGORY = {
-  CVD: "심혈관계",
-  URD: "신장",
-  IMD: "면역력",
-  EMD: "갑상선",
-  GID: "위/장",
-  MSD: "뼈/관절",
-  OPH: "눈",
-  ODD: "치아/구강",
-  SKD: "피부",
-} as const;
+import { BODY_PART_TO_CATEGORY } from "@/constants";
 
 const BODY_PART_PRIORITY = [
   "CVD",
@@ -597,97 +583,77 @@ const DISEASE_CATEGORY_LIST = Object.entries(DISEASE_CATEGORY).map(
   })
 );
 
-const BODY_CATEGORY_TAG = {
-  ...BODY_PART_TO_CATEGORY,
-  diet: "체중 조절",
-  senior: "노령견 건강",
-};
+const DEFAULT_RECOMMENDED_ITEM_LIST = [
+  {
+    title: "장트러블을 막는 유산균 케어",
+    description:
+      "발효 채소와 천연 유산균이 장내 유익균을 늘리고 유해균을 억제해요. 건강할 때부터 꾸준히 장을 관리하면 설사나 변비 같은 트러블을 예방할 수 있어요.",
+  },
+  {
+    title: "염증 관리로 면역력과 관절을 함께 보호",
+    description:
+      "유기농 강황의 풍부한 커큐민이 몸 속 염증 반응을 조절해요. 노화가 시작되기 전부터 염증 관리를 시작하면 면역력과 관절 건강을 함께 지킬 수 있어요.",
+  },
+  {
+    title: "자연스러운 음수량 개선 습관",
+    description:
+      "100% 국내산 한우 뼈를 우려 만든 사골 큐브가 음수량 개선에 도움을 줘요. 음수량이 부족하면 생길 수 있는 탈수, 요로계 문제를 미리 막을 수 있어요.",
+  },
+]
 
-const DOG_SIZE_BASED_DISEASES = ["thyroid", "knee", "heart", "kidney"];
-
-const DISEASE_BASED_PRODUCTS = {
-  skin: {
+const RECOMMENDED_ITEM_BY_DISEASE = {
+  SKD: {
     title: "윤기 있고 건강한 모질",
-    itemName: "램앤비프+ 1kg",
     description:
       "양과 소의 질 좋은 단백질에 항산화 채소와 햄프씨드를 더해 건강한 피부 장벽과 윤기 나는 모질을 함께 관리할 수 있어요.",
   },
-  eyes: {
+  OPH: {
     title: "맑고 건강한 눈 컨디션",
-    itemName: "프리미엄 비프 1kg",
     description:
-      "항산화력이 뛰어난 블루베리와 당근, 대구간유를 조합한 식단으로 망막을 보호하고 눈의 노화와 시력 저하 예방에 도움을 줄 수 있어요. ",
+      "항산화력이 뛰어난 블루베리와 당근, 대구간유를 조합한 식단으로 망막을 보호하고 눈의 노화와 시력 저하 예방에 도움을 줄 수 있어요.",
   },
-  teeth: {
+  ODD: {
     title: "튼튼하고 깨끗한 치아 관리",
-    itemName: "바프독 생식 올인원 패키지 1.5kg",
     description:
-      "씹는 과정에서 자연스럽게 치태를 제거하고, 자연식 중심의 식단은 치아와 잇몸을 튼튼하게 유지하는 데 도움을 줘요.",
+      "오래 씹는 동안 치석과 치태를 자연스럽게 제거해주고, 저작활동을 통해 스트레스를 해소하며 치아와 잇몸 건강 유지에 도움을 줘요.",
   },
-  gut: {
+  GID: {
     title: "균형 잡힌 장내 환경",
-    itemName: "바프레드",
     description:
-      "유기농 채소를 자연 발효시켜 만든 천연 유산균이 유익균이 자라기 좋은 환경을 만들어주고 장내 균형 회복에 도움을 줘요. ",
+      "유기농 채소를 자연 발효시켜 만든 천연 유산균이 유익균이 자라기 좋은 환경을 만들어주고 장내 균형 회복에 도움을 줘요.",
   },
-  joint: {
+  EMD: {
+    title: "갑상선 기능을 위한 영양 밸런스",
+    description:
+      "셀레늄과 아연, 비타민 등 다양한 영양소가 갑상선 호르몬의 기능을 원활히 돕고 항산화 작용을 더해 신진대사의 균형과 에너지 순환을 건강하게 유지합니다.",
+  },
+  MSD: {
     title: "유연하고 편안한 관절 움직임",
-    itemName: "터메릭슈퍼큐브",
     description:
       "관절 건강에 좋은 커큐민이 풍부한 유기농 강황으로 만들어진 제품이에요. 염증 완화와 움직임 개선에 도움을 줄 수 있어 꾸준한 관리에 적합해요.",
   },
-  immune: {
+  CVD: {
+    title: "심장과 혈관의 균형 케어",
+    description:
+      "오리고기의 오메가-3가 심장 염증을 완화하고 혈관 건강을 돕고, 양고기의 L-카르니틴이 심장 에너지 대사를 지원해 안정적인 심장 기능 유지를 도와줘요.",
+  },
+  URD: {
+    title: "신장을 위한 부드러운 수분 케어",
+    description:
+      "풍부한 수분이 음수량을 늘려주고 노폐물 배출을 도와 신장과 요로 건강 유지에 도움을 줄 수 있어요. 콜라겐과 글리신이 전반적인 활력과 회복에도 기여해요.",
+  },
+  IMD: {
     title: "컨디션 회복을 돕는 면역 케어",
-    itemName: "치킨스프 200ml × 2",
     description:
       "고단백 닭과 면역 기능에 도움을 주는 버섯, 채소를 함께 고아낸 스프입니다. 영양이 부족하거나 기운이 없을 때 면역력 보충용으로 간편하게 급여할 수 있어요.",
   },
 } as const;
-
-const DISEASE_PRODUCTS_BY_DOG_SIZE = {
-  LARGE: [
-    {
-      tag: "joint",
-      ...DISEASE_BASED_PRODUCTS.joint,
-    },
-    {
-      tag: "diet",
-      title: "체중 부담을 줄이는 식단 관리",
-      itemName: "바프독 생식 올인원 패키지 1.5kg",
-      description:
-        "생식 기반의 저지방・고단백 레시피는 체중 조절이 필요한 반려견에게 필수 영양은 유지하면서 과도한 열량을 줄여줘요. 관절과 장기 부담을 줄이는 데 도움이 돼요.",
-    },
-    {
-      tag: "senior",
-      title: "근육과 관절을 위한 노령견 영양식",
-      itemName: "램앤비프+ 1kg",
-      description:
-        "근육 유지에 도움을 주는 단백질로, 관절과 체력을 함께 관리할 수 있는 균형 잡힌 식단이에요. 에너지 대사와 면역력까지 함께 고려해 노령견 케어에 적합해요.",
-    },
-  ],
-  MIDDLE: [
-    { tag: "skin", ...DISEASE_BASED_PRODUCTS.skin },
-    { tag: "gut", ...DISEASE_BASED_PRODUCTS.gut },
-    { tag: "immune", ...DISEASE_BASED_PRODUCTS.immune },
-  ],
-  SMALL: [
-    { tag: "teeth", ...DISEASE_BASED_PRODUCTS.teeth },
-    { tag: "eyes", ...DISEASE_BASED_PRODUCTS.eyes },
-    { tag: "gut", ...DISEASE_BASED_PRODUCTS.gut },
-  ],
-};
 
 const RESULT_HEALTH_STATUS_ICON_MAP = {
   good: GoodImage,
   normal: NormalImage,
   warning: WarningImage,
   danger: DangerImage,
-};
-
-const RESULT_DOG_SIZE_ICON_MAP = {
-  SMALL: SmallSizeIcon,
-  MIDDLE: MiddleSizeIcon,
-  LARGE: LargeSizeIcon,
 };
 
 export {
@@ -697,11 +663,7 @@ export {
   DISEASE_INFO,
   DISEASE_INFO_LIST,
   BODY_PART_PRIORITY,
-  BODY_PART_TO_CATEGORY,
-  DOG_SIZE_BASED_DISEASES,
-  DISEASE_BASED_PRODUCTS,
-  DISEASE_PRODUCTS_BY_DOG_SIZE,
+  DEFAULT_RECOMMENDED_ITEM_LIST,
+  RECOMMENDED_ITEM_BY_DISEASE,
   RESULT_HEALTH_STATUS_ICON_MAP,
-  RESULT_DOG_SIZE_ICON_MAP,
-  BODY_CATEGORY_TAG,
 };

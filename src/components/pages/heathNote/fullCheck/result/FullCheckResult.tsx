@@ -1,27 +1,29 @@
 "use client";
 import axios from "axios";
 import * as styles from "./FullCheckResult.css";
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import DeleteIcon from "/public/images/icons/trashbag.svg";
-import CalendarIcon from "/public/images/icons/calendar.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
 import Header from "@/components/layout/header/Header";
 import TotalScore from "@/components/pages/heathNote/fullCheck/result/totalScore/TotalScore";
 import ChangedScore from "@/components/pages/heathNote/fullCheck/result/changedScore/ChangedScore";
 import WalkScore from "@/components/pages/heathNote/fullCheck/result/walkScore/WalkScore";
 import SuspectedDiseases from "@/components/pages/heathNote/fullCheck/result/suspectedDiseases/SuspectedDiseases";
 import BodyCheck from "@/components/pages/heathNote/fullCheck/result/bodyCheck/BodyCheck";
-import DietAnalysisSurvey from "@/components/pages/heathNote/fullCheck/result/dietAnalysisSurvey/DietAnalysisSurvey";
+import RecommendedItemList from "@/components/pages/heathNote/common/recommendedItemList/RecommendedItemList";
+import DietAnalysisSurvey from "@/components/pages/heathNote/common/dietAnalysisSurvey/DietAnalysisSurvey";
+import ResultTitle from "@/components/pages/heathNote/common/resultTitle/ResultTitle";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
-import { DISEASE_INFO, queryKeys } from "@/constants";
-import { DiseaseData } from "@/types/healthNote";
+import { DEFAULT_RECOMMENDED_ITEM_LIST, DISEASE_INFO, queryKeys } from "@/constants";
+import { getNameWithSubjectSuffix } from "@/utils";
 import { useGetFullCheckResultDetail } from "@/api/healthNote/fullCheck/queries/useGetFullCheckResultDetail";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 import { useDeleteFullCheckResult } from "@/api/healthNote/fullCheck/mutations/useDeleteFullCheckResult";
+import { DiseaseData } from "@/types/healthNote/fullCheck";
 
 interface FullCheckResultProps {
   diagnosisId: number;
@@ -42,7 +44,7 @@ export default function FullCheckResult({
   const { data: petInfo } = useGetPetDetail(petId);
   const { mutate } = useDeleteFullCheckResult();
 
-  const topSuspectedDiseases = data?.suspectedDiseaseTypeList?.map(v => DISEASE_INFO[v]);
+  const topSuspectedDiseases = useMemo(() => data?.suspectedDiseaseTypeList?.map(v => DISEASE_INFO[v]), [data?.suspectedDiseaseTypeList]);
 
   const handleDelete = () => {
     mutate({
@@ -64,6 +66,19 @@ export default function FullCheckResult({
     })
   }
 
+  const isDefaultItemList = useMemo(() => {
+    return data.recommendedItemList.every(item => item.diseaseCategory === 'ALL')
+  }, [data.recommendedItemList]);
+
+  const defaultItemList = useMemo(() => {
+    return data.recommendedItemList.map((item, index) => ({
+      ...item,
+      ...DEFAULT_RECOMMENDED_ITEM_LIST[index]
+    }))
+  }, [data.recommendedItemList]);
+
+  const itemList = isDefaultItemList ? defaultItemList : data.recommendedItemList;
+
   if (!data) return null;
   return (
     <>
@@ -79,10 +94,7 @@ export default function FullCheckResult({
       />
       <section className={styles.fullCheckResultContainer}>
         <article>
-          <DefaultText type="body3" className={styles.fullCheckResultTitle}>
-            <SvgIcon src={CalendarIcon} size={20} />
-            {data.diagnosisDate} 건강 종합 진단 결과
-          </DefaultText>
+          <ResultTitle title={`${data.diagnosisDate} 건강 종합 진단 결과`} />
           <TotalScore
             petName={petInfo.name}
             checkupScore={data.checkupScore}
@@ -115,12 +127,24 @@ export default function FullCheckResult({
           />
         }
         <div className={styles.fullCheckResultProduct}>
-          {/*<ProductList*/}
-          {/*  dogName={data.name}*/}
-          {/*  recommendProducts={recommendProducts}*/}
-          {/*/>*/}
+          <RecommendedItemList
+            type='fullCheck'
+            petName={petInfo.name}
+            title={
+              !isDefaultItemList
+                ? `${petInfo.name}의 상태에 따라\n맞춤 상품을 추천해 드려요`
+                : `${getNameWithSubjectSuffix(petInfo.name)} 건강해요!\n지금처럼 지켜주세요`
+            }
+            subTitle={
+              !isDefaultItemList
+                ? `건강 관리가 필요한 부위를 기준으로\n도움이 되는 바프독 맞춤 상품을 제안해 드려요`
+                : `좋은 상태를 유지할 수 있도록\n예방 관리 상품을 추천드려요`
+            }
+            recommendedItemList={itemList}
+            isDefaultItemList={isDefaultItemList}
+          />
           <BodyCheck petId={petId} />
-          <DietAnalysisSurvey />
+          <DietAnalysisSurvey title={`우리 아이에게 딱 맞는\n1:1 맞춤 식단을 추천 받아 보세요!`} />
         </div>
       </section>
       {isOpen &&

@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
 import { SignupStepValues } from "@/utils/validation/authValidation";
@@ -56,11 +56,11 @@ export default function SignupStep2() {
 
   return (
     <>
-      <DefaultText type="title2">
+      <Text type="title2">
         사용하실
         <br />
         비밀번호를 입력해 주세요
-      </DefaultText>
+      </Text>
       <Controller
         name="step2.password"
         control={control}
@@ -107,9 +107,9 @@ export default function SignupStep2() {
                 size={18}
                 color={ok ? "blue500" : "gray600"}
               />
-              <DefaultText type="caption" color={ok ? "blue500" : "gray600"}>
+              <Text type="caption" color={ok ? "blue500" : "gray600"}>
                 {label}
-              </DefaultText>
+              </Text>
             </li>
           ))}
         </ul>

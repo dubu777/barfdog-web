@@ -1,6 +1,6 @@
 import Card from "@/components/common/card/Card";
 import Chips from "@/components/common/chips/Chips";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { RecommendRecipeRankDto } from "@/types/dietAnalysis";
 import { resultCardStyle } from "../levelGaugeCard/LevelGaugeCard.css";
@@ -33,9 +33,9 @@ export default function RecommendedRecipeCard({
         <Chips variant="solid" color="red" borderRadius="lg" size="md">
           {recipe.rank}위
         </Chips>
-        <DefaultText type="headline2" color="gray800">
+        <Text type="headline2" color="gray800">
           {recipe.uiNameKorean}
-        </DefaultText>
+        </Text>
       </div>
       <Card
         direction="row"
@@ -65,9 +65,9 @@ export default function RecommendedRecipeCard({
       <div
         className={commonWrapper({ direction: "col", align: "start", gap: 12 })}
       >
-        <DefaultText type="headline2" color="gray800">
+        <Text type="headline2" color="gray800">
           {dogName}의 건강 개선 가이드
-        </DefaultText>
+        </Text>
         {recipe.healthImprovements.map(
           (
             { healthConcernsExplanationTitle, healthConcernsExplanation },
@@ -79,20 +79,16 @@ export default function RecommendedRecipeCard({
                 color="blue300"
                 className={styles.iconGrid}
               />
-              <DefaultText
-                type="label4"
-                color="gray800"
-                className={styles.titleGrid}
-              >
+              <Text type="label4" color="gray800" className={styles.titleGrid}>
                 {healthConcernsExplanationTitle}
-              </DefaultText>
-              <DefaultText
+              </Text>
+              <Text
                 type="body3"
                 color="gray700"
                 className={styles.descriptionGrid}
               >
                 {healthConcernsExplanation}
-              </DefaultText>
+              </Text>
             </div>
           )
         )}
@@ -110,9 +106,9 @@ export default function RecommendedRecipeCard({
               <div className={styles.ingredientIcon}>
                 <SvgIcon src={INGREDIENT_CONFIG[ingredient].icon} size={52} />
               </div>
-              <DefaultText type="caption" color="gray700">
+              <Text type="caption" color="gray700">
                 {INGREDIENT_CONFIG[ingredient].label}
-              </DefaultText>
+              </Text>
             </div>
           </SwiperSlide>
         ))}

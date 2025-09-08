@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
 import ScaleIcon from "public/images/dietAnalysis/scale.svg";
@@ -23,10 +23,10 @@ export default function DailyCalorie({
       className={commonWrapper({ direction: "col", gap: 20, padding: "0/20" })}
     >
       <div className={commonWrapper({ justify: "between" })}>
-        <DefaultText type="title3">
+        <Text type="title3">
           {dogName}의 건강 상태에 <br />
           따른 <span className={styles.pointText}>추천 식사량</span>이에요
-        </DefaultText>
+        </Text>
         <ScaleIcon />
       </div>
       <Card shadow="strong" padding={"20/16"} gap={20}>
@@ -38,14 +38,14 @@ export default function DailyCalorie({
               gap: 2,
             })}
           >
-            <DefaultText type="headline2" applyLineHeight={false}>
+            <Text type="headline2" applyLineHeight={false}>
               <div className={commonWrapper({ justify: "start", gap: 2 })}>
                 <div className={styles.pointTextBox}>{dogName}</div>의
               </div>
-            </DefaultText>
-            <DefaultText type="headline2" applyLineHeight={false}>
+            </Text>
+            <Text type="headline2" applyLineHeight={false}>
               하루 권장 칼로리
-            </DefaultText>
+            </Text>
             <div
               className={commonWrapper({
                 justify: "start",
@@ -53,12 +53,12 @@ export default function DailyCalorie({
                 align: "end",
               })}
             >
-              <DefaultText type="display2" applyLineHeight={false}>
+              <Text type="display2" applyLineHeight={false}>
                 <div className={styles.pointTextBox}>{dailyCalorie}</div>
-              </DefaultText>
-              <DefaultText type="headline2" applyLineHeight={false}>
+              </Text>
+              <Text type="headline2" applyLineHeight={false}>
                 kcal
-              </DefaultText>
+              </Text>
             </div>
           </div>
           <ThumbsIcon />
@@ -75,9 +75,9 @@ export default function DailyCalorie({
               })}
             >
               <SvgIcon src={CheckIcon} size={24} color="gray700" />
-              <DefaultText type="body3" color="gray700">
+              <Text type="body3" color="gray700">
                 {text}
-              </DefaultText>
+              </Text>
             </div>
           ))}
         </div>

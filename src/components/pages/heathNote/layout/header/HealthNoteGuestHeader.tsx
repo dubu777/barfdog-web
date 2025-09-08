@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import * as styles from "./HealthNoteMainHeader.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
 import Image from "next/image";
 import { petImage } from "../../common/HealthNoteCommon.css";
@@ -22,7 +22,7 @@ export default function HealthNoteGuestHeader() {
         onClick={() => router.push("/pet/create?source=health-note")}
         className={styles.selectButton}
       >
-        <DefaultText type="headline1">반려견 등록</DefaultText>
+        <Text type="headline1">반려견 등록</Text>
       </button>
     </header>
   );

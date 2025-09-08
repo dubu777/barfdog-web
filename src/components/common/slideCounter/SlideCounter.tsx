@@ -1,6 +1,6 @@
 import * as styles from "./SlideCounter.css";
 import Chips from "../chips/Chips";
-import DefaultText from "../defaultText/DefaultText";
+import Text from "../text/Text";
 
 interface SlideCounterProps {
   currentSlide: number;
@@ -31,7 +31,7 @@ export default function SlideCounter({
           borderRadius='lg'
           className={className ?? ''}
         >
-          <DefaultText 
+          <Text
             type={chipSize === 'sm' ? 'caption2' : 'headline4'} 
             color='white'
             className={styles.slideCounterText}
@@ -39,29 +39,29 @@ export default function SlideCounter({
             <span>{currentSlide}</span>
             <span>/</span>
             <span>{totalSlides}</span>
-            </DefaultText>
+            </Text>
         </Chips>
       }
       {styleType === 'text' && 
         <div className={`${styles.slideCounterText} ${className ?? ''}`}>
-          <DefaultText 
+          <Text
             type='headline3' 
             color={textColor === 'black' ? 'gray900' : 'gray0'}
           >
             {currentSlide}
-          </DefaultText>
-          <DefaultText 
+          </Text>
+          <Text
             type='headline3' 
             color={textColor === 'black' ? 'gray500' : 'gray200'}
           >
             /
-          </DefaultText>
-          <DefaultText 
+          </Text>
+          <Text
             type='headline3' 
             color={textColor === 'black' ? 'gray500' : 'gray200'}
           >
             {totalSlides}
-          </DefaultText>
+          </Text>
         </div>
       }
     </>

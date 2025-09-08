@@ -1,14 +1,14 @@
 import * as styles from '../Card.css';
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import CardSection from "@/components/pages/mypage/common/cards/layout/CardSection";
 import CardProductInfo from "@/components/pages/mypage/common/cards/layout/CardProductInfo";
-import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage";
+import { ORDER_ISSUE_STATUS, ORDER_ISSUE_TYPE } from "@/constants/mypage/common";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants/membership";
 import { ORDER_TYPE } from "@/constants";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { OrderType } from "@/types";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 
 interface OrderIssueCardProps {
 	// 마이페이지 취소/교환/반품 내역 데이터 타입 정의 및 적용 필요
@@ -19,7 +19,9 @@ interface OrderIssueCardProps {
 }
 
 const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderIssueCardProps) => {
-	const { mypageUserInfo } = usePersistMypageStore();
+	const { data: userInfoData } = useGetMyPageInfo();
+	const userData = userInfoData?.mypageMemberDto;
+
 	const { pushWithQuery } = useDynamicQueryPush();
 	const cardDetail = data;
 	// const status = 'REQUESTED';
@@ -30,7 +32,7 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 
 	const issueStatusLabel = `${issueLabel}${statusLabel}`
 
-	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === mypageUserInfo.grade);
+	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData?.grade);
 	const totalDiscount = (userMembershipTier?.subscriptionDiscount || 0) + 5;
 
 	const handleActions = () => {
@@ -38,12 +40,12 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 	}
 	return (
 		<CardSection>
-			<DefaultText type='label4'>
+			<Text type='label4'>
 				{orderType === ORDER_TYPE.SUBSCRIPTION ? `정기배송 ${cardDetail?.subscribeCount || 0}회차` : '일반배송'} {issueStatusLabel}
-				<DefaultText type='caption' color='gray600'>
+				<Text type='caption' color='gray600'>
 					&nbsp;&nbsp;신청일 {cardDetail?.requestDate || ''}
-				</DefaultText>
-			</DefaultText>
+				</Text>
+			</Text>
 			<CardProductInfo
 				name={cardDetail?.name || cardDetail?.dogName || cardDetail?.itemName}
 				imageUrl={cardDetail?.imageUrl}

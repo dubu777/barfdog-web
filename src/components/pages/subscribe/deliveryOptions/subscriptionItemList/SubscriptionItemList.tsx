@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import RecipeItemCard from "./recipeItemCard/RecipeItemCard";
@@ -31,13 +31,13 @@ export default function SubscriptionItemList({
         padding: 32,
       })}
     >
-      <DefaultText type="title4">
-        <DefaultText type="title4" color="red">
+      <Text type="title4">
+        <Text type="title4" color="red">
           {DELIVERY_PLAN_LABEL[deliveryPlan]}
-        </DefaultText>
+        </Text>
         에 한 번씩 <br />
         아래의 상품이 배송돼요
-      </DefaultText>
+      </Text>
       {recipeList.map((item, idx) => {
         // rawFoodItems에서 해당 recipeId에 맞는 정보 찾기
         const rawFoodItem = rawFoodItems.find(

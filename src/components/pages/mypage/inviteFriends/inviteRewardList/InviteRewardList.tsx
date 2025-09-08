@@ -1,0 +1,166 @@
+import { commonWrapper } from "@/styles/common.css";
+import { codeActionButton, codeActions, recommendationCode, rewardListTopBox } from "../InviteFriends.css";
+import { Fragment, useEffect } from "react";
+import { format } from "date-fns";
+import { useInView } from "react-intersection-observer";
+import MessageIcon from "/public/images/mypage/message.svg";
+import CopyIcon from "/public/images/mypage/copy.svg";
+import Card from "@/components/common/card/Card";
+import Text from "@/components/common/text/Text";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Divider from "@/components/common/divider/Divider";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import DefaultEmptyState from "../../common/emptyState/defaultEmptyState/DefaultEmptyState";
+import SendMessageModal from "../sendMessageModal/SendMessageModal";
+import useModal from "@/hooks/useModal";
+import { useToastStore } from "@/store/useToastStore";
+import { copyToClipboard } from "@/utils";
+import { InviteRewardList as InviteRewardListType } from "@/types";
+
+interface InviteRewardListProps {
+  myRecommendationCode?: string;
+  memberName?: string;
+  rewardListData?: InviteRewardListType;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  fetchNextPage: () => void;
+}
+
+export default function InviteRewardList({ 
+  myRecommendationCode,
+  memberName,
+  rewardListData,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
+}: InviteRewardListProps) {
+  const { addToast } = useToastStore();
+  const { isOpen: isOpenSendMessageModal, onToggle: onToggleSendMessageModal, onClose: onCloseSendMessageModal } = useModal();
+  
+  const rewardList = rewardListData?.rewardList ?? [];
+
+  const rewardCountList = [
+    {
+      label: '가입한 친구',
+      value: rewardListData?.joinedCount.toLocaleString() || 0,
+    },
+    {
+      label: '주문한 친구',
+      value: rewardListData?.orderedCount.toLocaleString() || 0,
+    },
+    {
+      label: '적립 포인트',
+      value: rewardListData?.totalRewards.toLocaleString() || 0,
+    },
+  ]
+  const { ref, inView } = useInView();
+
+  const handleCopyCode = async () => {
+    await copyToClipboard(myRecommendationCode ?? '');
+    addToast('복사가 완료되었습니다!')
+  };
+
+  const rewardActionList = [
+    {
+      label: '문자 보내기',
+      onClick: onToggleSendMessageModal,
+      icon: MessageIcon,
+      iconSize: 16,
+    },
+    {
+      label: '코드 복사',
+      onClick: handleCopyCode,
+      icon: CopyIcon,
+      iconSize: 20,
+    },
+  ]
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
+  return (
+    <>
+      <article className={commonWrapper({ width: 'full', direction: 'col' })}>
+        <div className={commonWrapper({ padding: 20 })}>
+          <Card
+            shadow='light'
+            borderRadius={0}
+            className={recommendationCode}
+          >
+            <div className={commonWrapper({ direction: 'col', gap: 4 })}>
+              <Text type='label4'>나의 추천코드</Text>
+              <Text type='title1'>{myRecommendationCode}</Text>
+            </div>
+            <div className={codeActions}>
+              {rewardActionList.map((action, index) => (
+                <Fragment key={action.label}>
+                  <button
+                    onClick={action.onClick}
+                    className={codeActionButton}
+                  >
+                    <SvgIcon src={action.icon} size={action.iconSize} />
+                    {action.label}
+                  </button>
+                  {index === 0 &&
+                    <div style={{ height: 32 }}>
+                      <Divider thickness={1} color='gray300' direction='vertical' />
+                    </div>
+                  }
+                </Fragment>
+              ))}
+            </div>
+          </Card>
+        </div>
+        <div className={commonWrapper({ align: 'center', gap: 4 })}>
+          {rewardCountList.map(rewardCount => (
+            <div key={rewardCount.label} className={rewardListTopBox}>
+              <Text type='caption' color='gray600'>{rewardCount.label}</Text>
+              <Text type='label2'>{rewardCount.value}</Text>
+            </div>
+          ))}
+        </div>
+        <Divider thickness={4} color='gray50' />
+        {rewardList?.length > 0 ? (
+          <>
+            <ul className={commonWrapper({ direction: 'col', gap: 4 })}>
+              {rewardList.map((reward, index) => (
+                <li
+                  key={index}
+                  className={commonWrapper({
+                    direction: 'col',
+                    gap: 16,
+                    backgroundColors: 'gray0',
+                    padding: '12/20',
+                    align: 'start',
+                  })}
+                >
+                  <Text type='label3'>{format(new Date(reward.createdTime), 'yy.MM.dd')}</Text>
+                  <div className={commonWrapper({ justify: 'between' })}>
+                    <Text type='label4'>{reward.name}</Text>
+                    <Text type='label4' color='red'>+{reward.tradeReward.toLocaleString()}P</Text>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <InfiniteScrollTrigger
+              ref={ref}
+              hasNextPage={hasNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+            />
+          </>
+        ) : <DefaultEmptyState title='친구 초대 적립 내역이 없습니다.' subTitle='친구 코드를 등록해주세요' />
+        }
+      </article>
+      {isOpenSendMessageModal &&
+        <SendMessageModal
+          username={memberName ?? ""}
+          recommendCode={myRecommendationCode ?? ""}
+          isOpen={isOpenSendMessageModal}
+          onClose={onCloseSendMessageModal}
+        />
+      }
+    </>
+  );
+}

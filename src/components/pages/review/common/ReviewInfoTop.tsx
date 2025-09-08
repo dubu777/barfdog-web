@@ -1,5 +1,5 @@
 import * as styles from './ReviewCommonStyle.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import RateStar from "@/components/common/rateStar/RateStar";
 
 interface ReviewInfoTopProps {
@@ -18,10 +18,10 @@ const ReviewInfoTop = ({
 	return (
 		<div className={styles.contentTop} onClick={handleToggleReviewIds || undefined}>
 			<div>
-				<DefaultText type='body3' block className={styles.username}>{username}</DefaultText>
+				<Text type='body3' block className={styles.username}>{username}</Text>
 				<RateStar rateLength={5} value={star} size={24} />
 			</div>
-			<DefaultText type='body3'>{writtenDate}</DefaultText>
+			<Text type='body3'>{writtenDate}</Text>
 		</div>
 	);
 };

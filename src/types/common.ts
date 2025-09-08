@@ -7,6 +7,7 @@ import {
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
 import { TextColor, TextType } from "./typography";
+import { COUPON_TARGET } from "@/constants";
 
 declare global {
   interface Window {
@@ -108,7 +109,7 @@ interface BaseUploadedFile {
   fileId: number;
   fileName: string;
   folder: string;
-  fileStatus: "PENDING_ADD" | "PENDING_DELETE" | "ADDED";
+  fileStatus?: "PENDING_ADD" | "PENDING_DELETE" | "ADDED";
   displayImageUrl?: { url: string };
 }
 
@@ -140,6 +141,9 @@ interface InfoTextType {
 }
 
 type ValueOfTuple<T extends readonly unknown[]> = T[number];
+type DiscountType = "FLAT_RATE" | "FIXED_RATE";
+type DiscountUnitType = "%" | "원";
+type CouponTarget = keyof typeof COUPON_TARGET;
 
 export type {
   SearchParamProps,
@@ -159,4 +163,7 @@ export type {
   FileChangeInfo,
   InfoTextType,
   ValueOfTuple,
+  DiscountType,
+  DiscountUnitType,
+  CouponTarget,
 };

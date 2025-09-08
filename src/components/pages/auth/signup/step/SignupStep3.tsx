@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper, pointColor } from "@/styles/common.css";
 import { SignupStepValues } from "@/utils/validation/authValidation";
@@ -35,11 +35,11 @@ export default function SignupStep3({ handleChange }: SignupStep3Props) {
     });
   return (
     <>
-      <DefaultText type="title2">
+      <Text type="title2">
         기타 회원정보를
         <br />
         입력해 주세요
-      </DefaultText>
+      </Text>
       <Controller
         name="step3.phoneNumber"
         control={control}
@@ -86,9 +86,9 @@ export default function SignupStep3({ handleChange }: SignupStep3Props) {
           align: "start",
         })}
       >
-        <DefaultText type="label4" color="gray600">
+        <Text type="label4" color="gray600">
           성별정보<span className={pointColor}> *</span>
-        </DefaultText>
+        </Text>
         <div className={commonWrapper({ justify: "start", gap: 20 })}>
           {GENDER_CATEGORY.map(({ label, value }) => (
             <LabeledRadioButton
@@ -99,7 +99,7 @@ export default function SignupStep3({ handleChange }: SignupStep3Props) {
               isChecked={isGenderSelected(value)}
               onToggle={() => onGenderToggle(value)}
             >
-              <DefaultText type="label2">{label}</DefaultText>
+              <Text type="label2">{label}</Text>
             </LabeledRadioButton>
           ))}
         </div>

@@ -1,6 +1,6 @@
 import * as styles from '../information/Information.css';
 import Image from "next/image";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import { divider } from "@/components/pages/mypage/common/cards/Card.css";
 import { numberOfPacksPerDay, subscriptionPlanInfo } from "@/constants";
@@ -44,15 +44,15 @@ const RecipeList = ({ data }: RecipeListProps) => {
 						<Image src={recipe.imageUrl} alt={recipe.recipeNames} width={88} height={88} style={{ borderRadius: '8px' }} />
 						<div className={styles.subscriptionCardInfo}>
 							<div>
-								<DefaultText type='headline2'>{recipe.recipeNames}</DefaultText>
-								<DefaultText type='body3' color='gray600' style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+								<Text type='headline2'>{recipe.recipeNames}</Text>
+								<Text type='body3' color='gray600' style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
 									{recipe.oneMealGramsPerRecipe}g <span className={divider}/>
 									{numberOfPacksPerDay[recipe.numberOfPacksPerDay]}<span className={divider}/>
 									{recipe.weeklyPaymentCycle}주<span className={divider}/>
 									{recipe.totalNumberOfPacks}팩
-								</DefaultText>
+								</Text>
 							</div>
-							<DefaultText type='headline2'>{recipe.perPrice.toLocaleString()}원</DefaultText>
+							<Text type='headline2'>{recipe.perPrice.toLocaleString()}원</Text>
 						</div>
 					</li>
 					{index !== recipeList.length - 1 &&

@@ -1,7 +1,7 @@
 import * as styles from "./MobileDatePicker.css";
 import Picker from "react-mobile-picker";
 import React, { useEffect, useState } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { pointColor } from "@/styles/common.css";
 import { format, getDaysInMonth, getMonth, getYear } from "date-fns";
 import DatePickerButton from "@/components/common/datePicker/datePickerButton/DatePickerButton";
@@ -127,9 +127,9 @@ const MobileDatePicker = ({
   return (
     <div className={styles.mobileDatePickerContainer}>
       {label && (
-        <DefaultText type="label4">
+        <Text type="label4" color="gray600">
           {label} {isRequired && <span className={pointColor}>*</span>}
-        </DefaultText>
+        </Text>
       )}
       <DatePickerButton
         isOpen={isOpen}

@@ -1,11 +1,12 @@
 'use client';
-import * as styles from './Account.css';
+import { commonWrapper } from '@/styles/common.css';
+import { Fragment } from 'react';
 import Link from "next/link";
-import AccountCircle from '/public/images/icons/account_circle.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
+import Text from "@/components/common/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import ListDivider from '@/components/common/listDivider/ListDivider';
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
+import { useGetConnectedSns } from '@/api/auth/queries/useGetConnectedSns';
 
 const AccountLinkList = {
 	'user-info': { label: '회원정보 변경' },
@@ -14,39 +15,74 @@ const AccountLinkList = {
 	'notification': { label: '알림 설정' },
 } as const;
 
-// userInfo image 적용 필요
-const Account = () => {
-	const { mypageUserInfo } = usePersistMypageStore();
-	const recommendationCode: string | null = mypageUserInfo?.myRecommendationCode || null;
+export default function Account() {
+	const { data } = useGetMyPageInfo();
+	const { data: snsProvider } = useGetConnectedSns();
+
+	const userData = data?.mypageMemberDto;
+	const recommendationCode = userData?.myRecommendationCode ?? null;
 
 	return (
-		<section className={styles.accountContainer}>
-			<article className={styles.accountInfo}>
-				<div className={styles.accountImage}>
-					<SvgIcon src={AccountCircle} size={80} />
-				</div>
-				<DefaultText type='title1'>{mypageUserInfo?.memberName} 님</DefaultText>
+		<section className={commonWrapper({ direction: 'col', align: 'start' })}>
+			<article className={commonWrapper({ direction: 'col', padding: 20 })}>
+				<Text type='title1'>{userData?.memberName} 님</Text>
 				<RecommendationCode code={recommendationCode as string} />
 			</article>
-			<ul className={styles.accountLinkBox}>
-				{Object.keys(AccountLinkList).map(key => {
+			<ul 
+				className={commonWrapper({ 
+					direction: 'col', 
+					padding: 20, 
+					paddingTop: 0,
+					align: 'start',
+					backgroundColors: 'gray0',
+				})}
+			>
+				{Object.keys(AccountLinkList).map((key, index) => {
 					const typedKey = key as keyof typeof AccountLinkList;
+					if (typedKey === 'change-password' && snsProvider) {
+						return null;
+					}
+					
 					return (
-						<Link href={`/mypage/account/${typedKey}`} key={typedKey}  className={styles.accountLink}>
-							<DefaultText type='label1'>
-								{AccountLinkList[typedKey].label}
-							</DefaultText>
-						</Link>
-				)
+						<Fragment key={typedKey}>
+							<Link 
+								href={`/mypage/account/${typedKey}`} 
+								className={commonWrapper({
+									justify: 'start',
+									padding: '16/0',
+								})}
+							>
+								<Text type='body1'>
+									{AccountLinkList[typedKey].label}
+								</Text>
+							</Link>
+							<ListDivider 
+								listLength={Object.keys(AccountLinkList).length} 
+								index={index}
+							/>
+						</Fragment>
+					)
 				})}
 			</ul>
-			<Link href='/mypage/account/withdrawal-account' className={styles.deleteAccountButton}>
-				<DefaultText type='label4' color='gray700'>
-					회원탈퇴
-				</DefaultText>
-			</Link>
+			<div
+				className={commonWrapper({
+					padding: 20,
+					paddingTop: 12,
+					justify: 'start'
+				})}
+			>
+				<Link 
+					href='/mypage/account/withdrawal-account' 
+					className={commonWrapper({
+						paddingTop: 6,
+						width: 'auto'
+					})}
+				>
+					<Text type='label4' color='gray700'>
+						회원탈퇴
+					</Text>
+				</Link>
+			</div>
 		</section>
 	);
 };
-
-export default Account;

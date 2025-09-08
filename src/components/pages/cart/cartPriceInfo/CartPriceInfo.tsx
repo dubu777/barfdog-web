@@ -1,5 +1,5 @@
 import * as styles from './CartPriceInfo.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import { useCartStore } from "@/store/useCartStore";
@@ -11,35 +11,35 @@ const CartPriceInfo = () => {
   const infoList = [
     {
       label: '총 금액',
-      value: <DefaultText type='headline2'>{productTotalPrice.toLocaleString()}원</DefaultText>,
+      value: <Text type='headline2'>{productTotalPrice.toLocaleString()}원</Text>,
     },
     {
       label: '할인',
-      value: <DefaultText type='body2'>{discount.toLocaleString()}원</DefaultText>,
+      value: <Text type='body2'>{discount.toLocaleString()}원</Text>,
     },
     {
       label: '배송비',
       value: (
-        <DefaultText type='body2' color={deliveryFee === 0 ? 'red' : 'gray900'}>
+        <Text type='body2' color={deliveryFee === 0 ? 'red' : 'gray900'}>
           {deliveryFee === 0 ? '무료' : `${deliveryFee.toLocaleString()}원`}
-        </DefaultText>
+        </Text>
       ),
     },
   ]
 
   return (
     <article className={styles.cartPriceInfoContainer}>
-      <DefaultText type='title4'>결제 예상 금액</DefaultText>
+      <Text type='title4'>결제 예상 금액</Text>
       {infoList.map(info => (
         <div key={info.label} className={styles.priceInfo}>
-          <DefaultText type='label2' color='gray700'>{info.label}</DefaultText>
+          <Text type='label2' color='gray700'>{info.label}</Text>
           {info.value}
         </div>
       ))}
       <Divider thickness={2} color='gray200' />
       <div className={styles.priceInfo}>
-        <DefaultText type='headline2'>결제 금액</DefaultText>
-        <DefaultText type='title2' color='red'>{totalOrderPrice.toLocaleString()}원</DefaultText>
+        <Text type='headline2'>결제 금액</Text>
+        <Text type='title2' color='red'>{totalOrderPrice.toLocaleString()}원</Text>
       </div>
       <InfoBox text='쿠폰•적립금은 결제 화면에서 사용할 수 있어요!' color='gray' />
     </article>

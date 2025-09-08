@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import * as styles from "./AddressCard.css";
 import { ClientDeliveryDto } from "@/types";
 import Chips from "@/components/common/chips/Chips";
@@ -57,7 +57,7 @@ export default function AddressCard({
       key={address.id}
     >
       <div className={styles.addressTitleWrapper}>
-        <DefaultText type="headline2">{address.deliveryName}</DefaultText>
+        <Text type="headline2">{address.deliveryName}</Text>
         {isDefaultAddress && (
           <Chips variant="outlined" size="sm" switchOff borderRadius="lg">
             기본배송지
@@ -65,20 +65,20 @@ export default function AddressCard({
         )}
       </div>
       <div className={styles.addressContentWrapper}>
-        <DefaultText type="body3">
+        <Text type="body3">
           {address.recipientName}•{address.phoneNumber}
-        </DefaultText>
-        <DefaultText type="body3">
+        </Text>
+        <Text type="body3">
           {address.street} {address.detailAddress}
-        </DefaultText>
+        </Text>
       </div>
       <div className={styles.buttonWrapper}>
         <div className={styles.leftButtonContainer}>
           {!isDefaultAddress && (
             <Button type="assistive" variant="text" onClick={handleDeleteModal}>
-              <DefaultText type="label4" color="gray600" underLine>
+              <Text type="label4" color="gray600" underLine>
                 삭제
-              </DefaultText>
+              </Text>
             </Button>
           )}
         </div>

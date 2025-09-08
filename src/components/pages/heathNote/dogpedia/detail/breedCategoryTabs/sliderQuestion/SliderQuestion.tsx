@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import * as styles from "./SliderQuestion.css";
 import CheckCircle from "public/images/icons/check_circle.svg";
 import SliderCircle from "/public/images/healthNote/dogpedia/slider_circle.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
 
@@ -21,7 +21,7 @@ export default function SliderQuestion({
 }: SliderQuestionProps) {
 	return (
 		<div className={styles.sliderContainer}>
-			<DefaultText type='headline2'>{label}</DefaultText>
+			<Text type='headline2'>{label}</Text>
 			<div className={styles.sliderBox}>
 				{[1, 2, 3, 4, 5].map(step => {
 					const active = value === step;
@@ -39,8 +39,8 @@ export default function SliderQuestion({
 				})}
 			</div>
 			<div className={styles.minMaxLevel}>
-				<DefaultText type='caption' color='gray700'>{minLevel}</DefaultText>
-				<DefaultText type='caption' color='gray700'>{maxLevel}</DefaultText>
+				<Text type='caption' color='gray700'>{minLevel}</Text>
+				<Text type='caption' color='gray700'>{maxLevel}</Text>
 			</div>
 		</div>
 	);

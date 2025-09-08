@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import Dogpedia from "@/components/pages/heathNote/dogpedia/Dogpedia";
 import { prefetchGetBreedList } from "@/api/healthNote/dogpidea/queries/prefetchGetBreedList";
 import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
@@ -22,7 +22,7 @@ export default async function DogPediaPage({ params }: DogPediaPageProps) {
 	return (
 		<HydrationBoundary state={dehydratedState}>
 			<ErrorBoundary fallback={<div>Something went wrong.</div>}>
-				<Suspense fallback={<Loader fullscreen />}>
+				<Suspense fallback={<Spinner fullscreen />}>
 					<Dogpedia petId={Number(petId)} />
 				</Suspense>
 			</ErrorBoundary>

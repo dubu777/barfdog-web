@@ -55,6 +55,7 @@ export default function HealthNoteHeader() {
     "body-check": {
       centerTitle: "부위별 진단",
       showBackButton: true,
+      onBack: goBackToMain,
     },
     "medical-history": {
       centerTitle: "병원 진료 기록",

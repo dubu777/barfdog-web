@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Header from "@/components/layout/header/Header";
 import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
 import {
@@ -24,11 +24,11 @@ import { useProbiomeStepElements } from "./steps/StepElements";
 import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useCreateProbiomeResult } from "@/api/healthNote/probiome/mutations/useCreateProbiomeResult";
-import { buildProbiomePayload } from "@/utils/healthNote/buildProbiomePayload";
 import { Gender } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import { buildProbiomePayload } from "@/utils/healthNote/probiome/buildProbiomePayload";
 
 interface ProbiomeSurveyProps {
   petId: number;
@@ -150,9 +150,9 @@ export default function ProbiomeSurvey({
       <Header
         leftElement={
           !isFirstStep && (
-            <DefaultText type="headline3" color="gray700">
+            <Text type="headline3" color="gray700">
               이전
-            </DefaultText>
+            </Text>
           )
         }
         showBackButton={!isFirstStep}

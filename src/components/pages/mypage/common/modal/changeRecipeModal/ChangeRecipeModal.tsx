@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import * as styles from './ChangeRecipeModal.css';
 import { pointColor } from "@/styles/common.css";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
 import Divider from "@/components/common/divider/Divider";
 import Button from "@/components/common/button/Button";
@@ -51,18 +51,18 @@ const ChangeRecipeModal = ({
 		>
 			<div className={styles.changeRecipeContainer}>
 				<div className={styles.changeRecipeTitle}>
-					<DefaultText type='title3'>아래의 정보 확인 후<br/> 식단 변경을 진행해 주세요</DefaultText>
-					<DefaultText type='body3' color='gray500'>
+					<Text type='title3'>아래의 정보 확인 후<br/> 식단 변경을 진행해 주세요</Text>
+					<Text type='body3' color='gray500'>
 						<span className={pointColor}>식단 변경은 {nextCycle}회차부터 변경돼요</span> (현재: {detail.subscribeCount}회차)
-					</DefaultText>
+					</Text>
 				</div>
 				<Card shadow='none' padding={16} gap={16}>
 					{subscriptionInfo.map((info, index) => (
 						<Fragment key={info.value}>
 							<div className={styles.topInfo}>
 								<div>
-									<DefaultText type='label2'>{info.label}</DefaultText>
-									<DefaultText type='headline2' style={{ marginLeft: '8px' }}>{info.value}</DefaultText>
+									<Text type='label2'>{info.label}</Text>
+									<Text type='headline2' style={{ marginLeft: '8px' }}>{info.value}</Text>
 								</div>
 								<Button onClick={info.onClick} variant='outline' type='assistive' size='sm'>수정</Button>
 							</div>
@@ -78,7 +78,7 @@ const ChangeRecipeModal = ({
 					gap={12}
 				>
 					<div className={styles.bottomInfoTitle}>
-						<DefaultText type='headline2'>구독 상품</DefaultText>
+						<Text type='headline2'>구독 상품</Text>
 						<Button variant='outline' type='assistive' size='sm'>수정</Button>
 					</div>
 					<Divider thickness={2} color='gray900' />

@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "./RecipeItemCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Image from "next/image";
 import { DeliveryPlan, MealPlan } from "@/types";
 import { DELIVERY_PLAN_LABEL, MEAL_PLAN_LABEL } from "@/constants";
@@ -42,18 +42,16 @@ export default function RecipeItemCard({
         })}
       >
         <div>
-          <DefaultText type="headline2" block>
+          <Text type="headline2" block>
             {recipeName}
-          </DefaultText>
-          <DefaultText
+          </Text>
+          <Text
             type="body3"
             color="gray600"
             block
-          >{`${packGrams}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</DefaultText>
+          >{`${packGrams}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</Text>
         </div>
-        <DefaultText type="label3">
-          {originPrice.toLocaleString()}원
-        </DefaultText>
+        <Text type="label3">{originPrice.toLocaleString()}원</Text>
       </div>
     </div>
   );

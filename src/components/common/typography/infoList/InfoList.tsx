@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import InfoText from "../infoText/InfoText";
 import TextWithBreaks from "../textWithBreaks/TextWithBreaks";
 import { InfoTextType } from "@/types";
@@ -28,13 +28,13 @@ export default function InfoList({
         return (
           <InfoText key={idx} type={baseType} color={baseColor}>
             {notice.tokens.map((t, i) => (
-              <DefaultText
+              <Text
                 key={i}
                 type={t.type ?? baseType}
                 color={t.color ?? baseColor}
               >
                 <TextWithBreaks text={t.text} />
-              </DefaultText>
+              </Text>
             ))}
           </InfoText>
         );

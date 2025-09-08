@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { commonWrapper } from "@/styles/common.css";
 import AddIcon from "/public/images/icons/add.svg";
@@ -43,10 +43,10 @@ const CreateButton = ({
       fullWidth
       onClick={handleNavigateToCreateDog}
     >
-      <DefaultText type="headline3" className={commonWrapper({ gap: 6 })}>
+      <Text type="headline3" className={commonWrapper({ gap: 6 })}>
         <SvgIcon src={AddIcon} size={24} color="gray900" />
         {text ? text : "새로운 아이 등록하기"}
-      </DefaultText>
+      </Text>
     </Button>
   );
 };

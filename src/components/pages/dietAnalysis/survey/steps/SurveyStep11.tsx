@@ -2,7 +2,7 @@ import React from "react";
 import { useFormContext, useController } from "react-hook-form";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import { commonWrapper } from "@/styles/common.css";
@@ -49,9 +49,9 @@ export default function SurveyStep11({
           gap: 12,
         })}
       >
-        <DefaultText type="label2" color="gray500">
+        <Text type="label2" color="gray500">
           *복수응답가능
-        </DefaultText>
+        </Text>
         {DIET_ANALYSIS_FORM_INFO.dogDietHealth.currentMeals.options.map(
           (option) => (
             <SurveyButton

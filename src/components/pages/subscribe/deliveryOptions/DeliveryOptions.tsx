@@ -5,7 +5,7 @@ import Divider from "@/components/common/divider/Divider";
 import MealFrequency from "./mealFrequency/MealFrequency";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
 import { useFormContext, useWatch } from "react-hook-form";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { RawFoodOrderSheet } from "@/types";
@@ -52,11 +52,11 @@ export default function DeliveryOptions({
   return (
     <section className={styles.deliveryOptionsContainer}>
       <div className={commonWrapper({ justify: "start", padding: 20 })}>
-        <DefaultText type="title2">
+        <Text type="title2">
           마지막으로, 식사량과
           <br />
           배송 주기를 선택해 주세요
-        </DefaultText>
+        </Text>
       </div>
       <Divider />
       <MealFrequency />

@@ -1,6 +1,7 @@
 import StarIcon from '/public/images/icons/star.svg';
 import { themeVars } from "@/styles/theme.css";
 import {
+  rateStarBaseStyle,
   rateStarBoxAlignStyles,
   rateStarBoxInlineBlockStyles,
   rateStarStyles
@@ -17,7 +18,7 @@ interface RateStarProps {
   size?: number;
 }
 
-const RateStar = ({
+export default function RateStar({
   rateLength = 5,
   color = 'red',
   align = 'left',
@@ -25,7 +26,7 @@ const RateStar = ({
   onChange,
   inlineBlock = false,
   size = 24,
-}: RateStarProps) => {
+}: RateStarProps) {
   const grayColor = themeVars.colors.gray.gray300;
   const starColor = color === 'yellow'
     ? themeVars.colors.yellow.yellow500
@@ -41,7 +42,7 @@ const RateStar = ({
     }
   }
   return (
-    <div className={`${rateStarBoxAlignStyles[align]} ${inlineBlock ? rateStarBoxInlineBlockStyles : ''}`}>
+    <div className={`${rateStarBaseStyle} ${rateStarBoxAlignStyles[align]} ${inlineBlock ? rateStarBoxInlineBlockStyles : ''}`}>
       {Array.from({ length: rateLength }, (v, i) => i + 1).map((_, i) => (
         <span
           key={i}
@@ -54,5 +55,3 @@ const RateStar = ({
     </div>
   );
 };
-
-export default RateStar;

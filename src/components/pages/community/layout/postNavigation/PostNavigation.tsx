@@ -3,7 +3,7 @@ import * as styles from './PostNavigation.css';
 import { pointColor } from "@/styles/common.css";
 import Arrow from '/public/images/icons/angle-down.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { CommunityCategory, CommunityListItem } from "@/types";
@@ -38,13 +38,13 @@ const PostNavigation = ({
   return (
     <div className={styles.postNavigationContainer}>
       <div className={styles.postNavigationHeader}>
-        <DefaultText type='headline1'>
+        <Text type='headline1'>
           {categoryLabel} <span className={pointColor}>{categoryPointLabel}</span> 게시글
-        </DefaultText>
+        </Text>
         <button onClick={() => router.push(`/community/${category}`)} className={styles.postNavigationGoBack}>
-          <DefaultText type='headline4' color='gray500'>
+          <Text type='headline4' color='gray500'>
             목록 보기
-          </DefaultText>
+          </Text>
           <SvgIcon src={Arrow} color='gray500' size={16} style={{ transform: 'rotate(-90deg)' }} />
         </button>
       </div>
@@ -53,21 +53,21 @@ const PostNavigation = ({
         <div>
           {prevPost &&
             <button onClick={() => handleNavigate(prevPost.id)} className={styles.postNavigationButton}>
-              <DefaultText type='label3'>
+              <Text type='label3'>
                 {prevPost.title}
-              </DefaultText>
+              </Text>
             </button>
           }
           <button className={`${styles.postNavigationButton} ${styles.currentItem}`} disabled>
-            <DefaultText type='label3'>
+            <Text type='label3'>
               {title}
-            </DefaultText>
+            </Text>
           </button>
           {nextPost &&
             <button onClick={() => handleNavigate(nextPost.id)} className={styles.postNavigationButton}>
-              <DefaultText type='label3'>
+              <Text type='label3'>
                 {nextPost.title}
-              </DefaultText>
+              </Text>
             </button>
           }
         </div>

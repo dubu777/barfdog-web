@@ -2,7 +2,7 @@ import * as styles from "./DogTypeModal.css";
 import { DOG_TYPE } from "@/constants/dog";
 import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { PetBreedList } from "@/types/pet";
 import { Option } from "@/types";
 
@@ -31,10 +31,10 @@ const DogTypeModal = ({
   return (
     <FullModalWrapper isVisible={isOpen} handleClose={onClose}>
       <div className={styles.dogTypeModalContainer}>
-        <DefaultText type="title3">
+        <Text type="title3">
           {dogName}의<br />
           견종은 무엇인가요?
-        </DefaultText>
+        </Text>
         <SearchableSelector
           placeholder="견종을 검색해 보세요"
           options={options}

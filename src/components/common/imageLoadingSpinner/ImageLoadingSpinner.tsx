@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as styles from './ImageLoadingSpinner.css';
 import Image from "next/image";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 
 interface ImageLoadingSpinnerProps {
   src: string;
@@ -20,7 +20,7 @@ const ImageLoadingSpinner = ({ src, alt, fill = false, width, height, objectFit 
   }
   return (
     <div className={styles.imageLoadingSpinner} style={{ height: height }}>
-      {loading && <Loader />}
+      {loading && <Spinner />}
       <Image
         src={src}
         alt={alt}

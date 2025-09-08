@@ -9,7 +9,7 @@ import MoreHorizIcon from "/public/images/icons/more_horiz.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Header from "@/components/layout/header/Header";
 import useModal from "@/hooks/useModal";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import Card from "@/components/common/card/Card";
 import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
@@ -64,8 +64,8 @@ export default function HistoryDetail ({
 				<ul className={styles.defaultInfo}>
 					{defaultInfo.map(info => (
 						<li key={info.label} className={styles.defaultInfoItem}>
-							<DefaultText className={styles.defaultInfoLabel} type='label4'>{info.label}</DefaultText>
-							<DefaultText type='body3' color='gray800' align='right'>{info.value}</DefaultText>
+							<Text className={styles.defaultInfoLabel} type='label4'>{info.label}</Text>
+							<Text type='body3' color='gray800' align='right'>{info.value}</Text>
 						</li>
 					))}
 				</ul>
@@ -82,9 +82,9 @@ export default function HistoryDetail ({
 		{
 			title: '특이사항',
 			content: (
-				<DefaultText type='body2' preLine>
+				<Text type='body2' preLine>
 					{data.diagnosisInfo.note}
-				</DefaultText>
+				</Text>
 			),
 			visible: data.diagnosisInfo.note,
 		},
@@ -133,7 +133,7 @@ export default function HistoryDetail ({
 						borderRadius={16}
 						align='start'
 					>
-						<DefaultText type='headline1'>{info.title}</DefaultText>
+						<Text type='headline1'>{info.title}</Text>
 						<Divider thickness={2} color='gray900' />
 						{info.content}
 					</Card>

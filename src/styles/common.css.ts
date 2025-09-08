@@ -127,6 +127,9 @@ export const commonWrapper = recipe({
       8: {
         gap: "8px",
       },
+      10: {
+        gap: "10px",
+      },
       12: {
         gap: "12px",
       },
@@ -138,6 +141,12 @@ export const commonWrapper = recipe({
       },
       20: {
         gap: "20px",
+      },
+      24: {
+        gap: "24px",
+      },
+      28: {
+        gap: "28px",
       },
       32: {
         gap: "32px",
@@ -159,8 +168,14 @@ export const commonWrapper = recipe({
       32: {
         padding: "32px 20px",
       },
+      "12/20": {
+        padding: "12px 20px",
+      },
       "20/16": {
         padding: "20px 16px",
+      },
+      "40/20": {
+        padding: "40px 20px",
       },
       "32/20": {
         padding: "32px 20px",
@@ -168,8 +183,26 @@ export const commonWrapper = recipe({
       "0/20": {
         padding: "0 20px",
       },
+      "16/0": {
+        padding: "16px 0",
+      },
     },
     paddingBottom: {
+      0: {
+        paddingBottom: "0px",
+      },
+      16: {
+        paddingTop: "16px",
+      },
+      20: {
+        paddingBottom: "20px",
+      },
+      40: {
+        paddingBottom: "40px",
+      },
+      60: {
+        paddingBottom: "60px",
+      },
       85: {
         paddingBottom: "85px",
       },
@@ -178,8 +211,14 @@ export const commonWrapper = recipe({
       },
     },
     paddingTop: {
+      0: {
+        paddingTop: "0px",
+      },
       4: {
         paddingTop: "4px",
+      },
+      6: {
+        paddingTop: "6px",
       },
       12: {
         paddingTop: "12px",
@@ -189,6 +228,12 @@ export const commonWrapper = recipe({
       },
       20: {
         paddingTop: "20px",
+      },
+      40: {
+        paddingTop: "40px",
+      },
+      60: {
+        paddingTop: "60px",
       },
       80: {
         paddingTop: "80px",
@@ -279,6 +324,9 @@ export const commonWrapper = recipe({
       },
     },
     borderRadius: {
+      0: {
+        borderRadius: 0,
+      },
       8: {
         borderRadius: "8px",
       },
@@ -315,7 +363,42 @@ export const commonWrapper = recipe({
   },
 });
 
-export const infiniteTrigger = style({
-  height: "72px",
-  background: themeVars.colors.gray.gray50,
-});
+export const imageWrapper = recipe({
+  base: {
+    width: "100%",
+    height: "auto",
+  },
+  variants: {
+    objectFit: {
+      cover: {
+        objectFit: 'cover',
+      },
+      contain: {
+        objectFit: 'contain',
+      }
+    },
+    borderRadius: {
+      8: {
+        borderRadius: 8,
+      }
+    },
+    width: {
+      72: {
+        width: 72,
+        height: 72,
+      },
+      76: {
+        width: 76,
+        height: 76,
+      },
+      80: {
+        width: 80,
+        height: 80,
+      },
+      100: {
+        width: 100,
+        height: 100,
+      },
+    }
+  }
+})

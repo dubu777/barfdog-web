@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import * as styles from './DatePickerButton.css';
 import ArrowUpIcon from '/public/images/icons/chevron-sort-up.svg';
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
 interface DatePickerButtonProps {
@@ -33,7 +33,7 @@ export default function DatePickerButton({
 				}}
 				className={styles.datePickerButton({ isOpen })}
 			>
-				<DefaultText
+				<Text
 					type='body2'
 					align='left'
 					color={
@@ -45,7 +45,7 @@ export default function DatePickerButton({
 					}
 				>
 					{String(value)}
-				</DefaultText>
+				</Text>
 				<SvgIcon src={ArrowUpIcon}  style={{ transform: !isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'all .35s' }} />
 			</button>
 			{children}

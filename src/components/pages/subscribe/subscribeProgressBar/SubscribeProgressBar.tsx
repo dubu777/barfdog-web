@@ -1,6 +1,6 @@
 import React from "react";
 import * as styles from "./SubscribeProgressBar.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 
 interface ProgressBarProps {
   currentStep: number;
@@ -21,13 +21,13 @@ export default function SubscribeProgressBar({
             <div
               className={styles.step({isActive})}
             >
-              <DefaultText
+              <Text
                 type="label4"
                 color={isActive ? "gray0" : "gray700"}
                 applyLineHeight={false}
               >
                 {step}
-              </DefaultText>
+              </Text>
             </div>
             {step < totalSteps && (
               <div

@@ -1,6 +1,6 @@
 import * as styles from "./PickupForm.css";
 import { useEffect } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import Card from "@/components/common/card/Card";
 import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
@@ -71,10 +71,10 @@ export default function PickupForm({
         </div>
         <Divider thickness={8} color="gray50" />
         <div className={styles.requestFormBox({ gap: 8 })}>
-          <DefaultText type="title4">반려견 대변 사진</DefaultText>
-          <DefaultText type="label4" color="gray700">
+          <Text type="title4">반려견 대변 사진</Text>
+          <Text type="label4" color="gray700">
             사진을 업로드하면 분석 정확도가 올라가요
-          </DefaultText>
+          </Text>
           <MultiFileUploader
             files={uploadedFiles}
             onUpload={uploadFile}
@@ -85,9 +85,9 @@ export default function PickupForm({
         </div>
         <Divider thickness={8} color="gray50" />
         <div className={styles.requestFormBox({ gap: 20 })}>
-          <DefaultText type="title4">
+          <Text type="title4">
             아래의 사항을 꼭 확인해 주세요
-          </DefaultText>
+          </Text>
           <Card
             shadow="none"
             backgroundColor="gray50"
@@ -102,9 +102,9 @@ export default function PickupForm({
             optionType="selection"
             onToggle={() => setIsConfirmed(!isConfirmed)}
           >
-            <DefaultText type="label2" color="gray800">
+            <Text type="label2" color="gray800">
               회수 안내사항을 확인했습니다
-            </DefaultText>
+            </Text>
           </LabeledRadioButton>
         </div>
       </div>

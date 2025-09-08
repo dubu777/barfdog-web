@@ -12,7 +12,7 @@ import {
 import Button from "@/components/common/button/Button";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useRewardStore } from "@/store/order/useRewardStore";
 import { OrderType } from "@/types";
@@ -127,12 +127,12 @@ export default function RewardUsage({
             <div
               className={commonWrapper({ direction: "col", align: "start" })}
             >
-              <DefaultText type="caption" color="gray700">
+              <Text type="caption" color="gray700">
                 {ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_1}
-              </DefaultText>
-              <DefaultText type="caption" color="gray700">
+              </Text>
+              <Text type="caption" color="gray700">
                 {ORDER_MESSAGE.REWARD_AUTO_APPLY_NOTICE_2}
-              </DefaultText>
+              </Text>
             </div>
           </div>
         ) : (
@@ -141,9 +141,9 @@ export default function RewardUsage({
             isChecked={isSelected(true)}
             onToggle={() => onToggle(true)}
           >
-            <DefaultText type="label2">
+            <Text type="label2">
               {ORDER_MESSAGE.REWARD_AUTO_APPLY}
-            </DefaultText>
+            </Text>
           </LabeledCheckbox>
         ))}
     </OrderSection>

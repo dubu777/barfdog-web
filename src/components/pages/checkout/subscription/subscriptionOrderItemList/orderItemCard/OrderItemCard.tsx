@@ -2,7 +2,7 @@ import { TEMP_RECIPE_DTO_DATA } from "@/constants";
 import { OrderType, SubscribeDto } from "@/types";
 import Image from "next/image";
 import * as styles from "./OrderItemCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { formatNumberWithCommas } from "@/utils";
 
 interface OrderItemCardProps {
@@ -47,14 +47,14 @@ export default function OrderItemCard({
       />
       <div className={styles.orderItemContentWrapper}>
         <div className={styles.orderItemInfoWrapper}>
-          <DefaultText type="label2">
+          <Text type="label2">
             {TEMP_RECIPE_DTO_DATA[recipeName].name}
-          </DefaultText>
-          <DefaultText type="body3">{getOrderInfoText()}</DefaultText>
+          </Text>
+          <Text type="body3">{getOrderInfoText()}</Text>
         </div>
-        <DefaultText type="headline2">
+        <Text type="headline2">
           {formatNumberWithCommas(originPrice)}원
-        </DefaultText>
+        </Text>
       </div>
     </div>
   );

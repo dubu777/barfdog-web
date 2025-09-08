@@ -8,7 +8,7 @@ const initialUserInfo = {
   id: 0,
   memberName: '',
   myRecommendationCode: '',
-  reward: '',
+  reward: 0,
 }
 
 const initialState = {

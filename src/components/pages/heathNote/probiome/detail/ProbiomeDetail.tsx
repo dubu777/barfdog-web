@@ -3,10 +3,10 @@
 import { useGetProbiomeDetail } from "@/api/healthNote/probiome/queries/useGetProbiomeDetail";
 import { SectionType } from "@/types/healthNote/probiome";
 import ProbiomeDetailCard from "./ProbiomeDetailCard";
-import { buildProbiomeSectionData } from "@/utils/healthNote/buildProbiomeSectionData";
+import { buildProbiomeSectionData } from "@/utils/healthNote/probiome/buildProbiomeSectionData";
 import { commonWrapper } from "@/styles/common.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import Loader from "@/components/common/loader/Loader";
+import Text from "@/components/common/text/Text";
+import Spinner from "@/components/common/spinner/Spinner";
 import Card from "@/components/common/card/Card";
 import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
 import { formatPhoneNumber } from "@/utils";
@@ -22,7 +22,7 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
   const { data, isLoading } = useGetProbiomeDetail(diagnosisId);
 
   if (isLoading || !data) {
-    return <Loader />;
+    return <Spinner />;
   }
 
   const sectionData = buildProbiomeSectionData(data.survey);
@@ -47,21 +47,21 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
       })}
     >
       <div className={commonWrapper({ justify: "between", paddingTop: 20 })}>
-        <DefaultText type="title3">
+        <Text type="title3">
           {data.diagnosisInfo.petName} 문진 상세
-        </DefaultText>
-        <DefaultText type="body2" color="gray700">
+        </Text>
+        <Text type="body2" color="gray700">
           {data.diagnosisInfo.submitDate}
-        </DefaultText>
+        </Text>
       </div>
 
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         <>
           {data.selectedDeliveryAddress && (
             <Card shadow="light" padding={16} gap={12} align="start">
-              <DefaultText type="title4" color="gray800">
+              <Text type="title4" color="gray800">
                 회수 신청 정보
-              </DefaultText>
+              </Text>
               <Divider thickness={2} color="gray900" />
               <LabelValueItem
                 label="수령인"

@@ -1,23 +1,19 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { prefetchGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
-import { prefetchGetWritableReviewList } from "@/api/review/queries/usePrefetchGetWritableReviewList";
-import { prefetchGetWrittenReviewList } from "@/api/review/queries/usePrefetchGetWrittenReviewList";
+import { prefetchGetMypageReviewList } from "@/api/mypage/review/queries/prefetchGetMypageReviewList";
 import ReviewList from "@/components/pages/mypage/review/ReviewList";
-import EmptyStateReview from "@/components/pages/mypage/common/emptyState/emptyState/EmptyState";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default async function ReviewPage() {
   const queryClient = new QueryClient();
-  await prefetchGetWritableReviewList(queryClient);
-  await prefetchGetWrittenReviewList(queryClient);
-  await prefetchGetStoreItemList(queryClient, 0, 'recent', 'TOPPING', 100);
+  await prefetchGetMypageReviewList('writeable', queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<EmptyStateReview />}>
-        <Suspense fallback={<EmptyStateReview />}>
+      <ErrorBoundary fallback={<div>리뷰 목록 로딩 실패</div>}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <ReviewList />
         </Suspense>
       </ErrorBoundary>

@@ -113,7 +113,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 
 const MEMBERSHIP_TIERS_KR = {
 	'브론즈': 'BRONZE',
-	'다이아': 'DIA',
+	'다이아몬드': 'DIA',
 	'골드': 'GOLD',
 	'플래티넘': 'PLATINUM',
 	'실버': 'SILVER',

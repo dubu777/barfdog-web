@@ -1,4 +1,4 @@
-import { fontColors } from "@/components/common/defaultText/DefaultText.css";
+import { fontColors } from "@/components/common/text/Text.css";
 import { RecipeDto } from "@/types/recipe";
 import { ValueOfTuple } from "./common";
 import { HEALTH_CONCERNS } from "@/constants";

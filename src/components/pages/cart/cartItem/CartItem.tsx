@@ -3,7 +3,7 @@ import Image from "next/image";
 import CloseIcon from "/public/images/header/close.svg";
 import InfoIcon from '/public/images/icons/info-fill.svg';
 import Counter from "@/components/common/counter/Counter";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Card from "@/components/common/card/Card";
 import Chips from "@/components/common/chips/Chips";
@@ -33,18 +33,18 @@ export default function CartItem({
       <div className={styles.cartItem}>
         <Image src={item.thumbnailUrl} alt={item.name} width={88} height={88} className={styles.cartItemImage({ isSoldOut })} />
         <div className={styles.cartItemInfo}>
-          <DefaultText type='label2' color='gray700'>{item.name}</DefaultText>
+          <Text type='label2' color='gray700'>{item.name}</Text>
           {isSoldOut
-            ? <DefaultText type='headline1' color='red'>Sold Out</DefaultText>
+            ? <Text type='headline1' color='red'>Sold Out</Text>
             : (
               <>
-                <DefaultText type='body3' color='gray600' block>구매 수량 | {item.amount}개</DefaultText>
+                <Text type='body3' color='gray600' block>구매 수량 | {item.amount}개</Text>
                 <div className={styles.cartItemInfoControls}>
                   <div className={styles.cartItemPrice}>
                     {item.originalPrice !== item.salePrice &&
-                      <DefaultText type='caption2' color='gray800' lineThrough>{item.originalPrice.toLocaleString()}원</DefaultText>
+                      <Text type='caption2' color='gray800' lineThrough>{item.originalPrice.toLocaleString()}원</Text>
                     }
-                    <DefaultText type='headline2' color='gray800'>{item.salePrice.toLocaleString()}원</DefaultText>
+                    <Text type='headline2' color='gray800'>{item.salePrice.toLocaleString()}원</Text>
                   </div>
                   <Counter
                     min={1}
@@ -99,14 +99,14 @@ export default function CartItem({
                         <SvgIcon src={CloseIcon} size={16} color='gray500' />
                       </button>
                     </div>
-                    <DefaultText type='body3' color='gray700'>{option.name}</DefaultText>
+                    <Text type='body3' color='gray700'>{option.name}</Text>
                   </div>
                   <div className={styles.cartItemOption}>
                     {isOptionSoldOut
-                      ? <DefaultText type='headline1' color='red'>Sold Out</DefaultText>
+                      ? <Text type='headline1' color='red'>Sold Out</Text>
                       : (
                         <>
-                          <DefaultText type='label3' color='gray800'>{option.optionPrice.toLocaleString()}원</DefaultText>
+                          <Text type='label3' color='gray800'>{option.optionPrice.toLocaleString()}원</Text>
                           <Counter
                             min={1}
                             initialCount={option.amount}

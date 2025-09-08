@@ -1,7 +1,7 @@
 import * as styles from './DetailSection.css';
 import { sanitizedHTML } from "@/styles/common.css";
 import { format } from "date-fns";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import PostNavigation from "@/components/pages/community/layout/postNavigation/PostNavigation";
 import useSanitizedHTML from "@/hooks/useSanitizedHTML";
@@ -37,8 +37,8 @@ const DetailSection = ({
 	return (
 		<section className={styles.detailContainer}>
 			<article className={styles.detailHeader}>
-				<DefaultText type='title4'>{title}</DefaultText>
-				<DefaultText type='body3' color='gray600'>{format(new Date(createdDate), 'yyyy-MM-dd')}</DefaultText>
+				<Text type='title4'>{title}</Text>
+				<Text type='body3' color='gray600'>{format(new Date(createdDate), 'yyyy-MM-dd')}</Text>
 			</article>
 			<div className={styles.detailContents}>
 				<div dangerouslySetInnerHTML={{ __html: sanitizedHTMLContents }} className={sanitizedHTML} />

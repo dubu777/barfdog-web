@@ -1,5 +1,5 @@
 import OrderIssueDetail from "@/components/pages/mypage/orderIssueInquiry/orderIssueDetail/OrderIssueDetail";
-import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
+import { ORDER_ISSUE_TYPE } from "@/constants/mypage/common";
 
 interface OrderIssueDetailPageProps {
   params: {

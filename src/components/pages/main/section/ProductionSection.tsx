@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Image from "next/image";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import {
 	mainProductionImage, mainProductionImageBox,
 	mainProductionPoint,
@@ -23,7 +23,7 @@ const ProductionSection = () => {
 					<Fragment key={point.label}>
 						<li className={mainProductionPoint}>
 							<Image src={point.imageUrl} alt={point.label} width={point.width} height={point.height} priority />
-							<DefaultText type='headline4' color='white' preLine align='center'>{point.label}</DefaultText>
+							<Text type='headline4' color='white' preLine align='center'>{point.label}</Text>
 						</li>
 						{index !== topPoints.length-1 &&
 						<li className={mainProductionPointDivider} />

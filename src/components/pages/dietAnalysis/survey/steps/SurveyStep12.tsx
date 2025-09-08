@@ -8,7 +8,7 @@ import { useController, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {
@@ -52,9 +52,9 @@ export default function SurveyStep12({
     <>
       <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step12} />
 
-      <DefaultText type="label2" color="gray500">
+      <Text type="label2" color="gray500">
         *복수응답가능
-      </DefaultText>
+      </Text>
       <div
         className={commonWrapper({
           direction: "col",

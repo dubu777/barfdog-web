@@ -5,7 +5,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/common/spinner/Spinner";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import PetManager from "@/components/pages/heathNote/common/petManager/PetManager";
 import { prefetchGetPetList } from "@/api/pet/queries/usePrefetchGetPetList";
@@ -19,7 +19,7 @@ export default async function HeathNoteDogsPage() {
     <>
       <HydrationBoundary state={dehydrateState}>
         <ErrorBoundary fallback={<div>반려견 전체보기 로딩 실패</div>}>
-          <Suspense fallback={<Loader fullscreen />}>
+          <Suspense fallback={<Spinner fullscreen />}>
             <PetManager />
           </Suspense>
         </ErrorBoundary>

@@ -1,28 +1,39 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import ReviewDetail from "@/components/pages/mypage/review/reviewDetail/ReviewDetail";
-import { prefetchGetReviewDetail } from "@/api/review/queries/useGetReviewDetail";
-import { ReviewItemType } from "@/types";
+import Spinner from "@/components/common/spinner/Spinner";
+import ReviewDetail from "@/components/pages/mypage/review/detail/ReviewDetail";
+import { ReviewItemType, ReviewStatus } from "@/types";
+import { prefetchGetReviewDetail } from "@/api/mypage/review/queries/prefetchGetReviewDetail";
 
 interface ReviewDetailPageProps {
-  params: { reviewId: string };
-  searchParams: { reviewType: string }
+  params: Promise<{
+    reviewId: string;
+  }>
+  searchParams: Promise<{
+    reviewType: string;
+    status: string;
+    source?: string;
+  }>
 }
 
 export default async function ReviewDetailPage({ params, searchParams }: ReviewDetailPageProps) {
-  const reviewId = Number(params.reviewId);
-  const reviewType = searchParams.reviewType;
+  const { reviewId } = await params;
+  const { reviewType, status } = await searchParams;
 
   const queryClient = new QueryClient();
-  await prefetchGetReviewDetail(queryClient, reviewId);
+  await prefetchGetReviewDetail(Number(reviewId), queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>상세 리뷰가 없습니다.</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <ReviewDetail reviewId={reviewId} reviewType={reviewType as ReviewItemType} />
+      <ErrorBoundary fallback={<div>리뷰 상세 로딩 실패</div>}>
+        <Suspense fallback={<Spinner fullscreen />}>
+          <ReviewDetail
+            reviewId={Number(reviewId)}
+            reviewType={reviewType as ReviewItemType}
+            reviewStatus={status as ReviewStatus}
+          />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

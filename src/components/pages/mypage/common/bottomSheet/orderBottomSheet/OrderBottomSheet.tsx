@@ -1,11 +1,10 @@
 import * as styles from './OrderBottomSheet.css';
 import { pointColor } from "@/styles/common.css";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { usePersistReviewStore } from "@/store/usePersistReviewStore";
 import { CardActionsId, NormalizedCardData, OrderType, ReviewItemType } from '@/types';
 import { ORDER_TYPE } from "@/constants";
 
@@ -45,7 +44,7 @@ const OrderBottomSheet = ({
 	const primaryLabel = type === 'orderCancel' ? (isSubscription ? '구독 유지하기' : '주문취소') : '리뷰 작성하기';
 	const secondaryLabel = type === 'orderCancel' ? (isSubscription ? '구독 취소' : '이전') : '이전';
 	
-	const { setReviewFormData } = usePersistReviewStore();
+	// const { setReviewFormData } = usePersistReviewStore();
 	const handlePrimaryClick = () => {
 		// confirm: 리뷰 작성하기
 		// cancel: general - 주문취소, subscription - 뒤로가기
@@ -61,7 +60,7 @@ const OrderBottomSheet = ({
 				thumbnailUrl: data.imageUrl
 			};
 
-			setReviewFormData(reviewData);
+			// setReviewFormData(reviewData);
 			pushWithQuery('/mypage/review/create', {});
 		} else {
 			onClose();
@@ -82,20 +81,20 @@ const OrderBottomSheet = ({
 			<div className={styles.bottomSheetTitle}>
 				<div>
 					{type === 'confirm' && (
-						<DefaultText type="title4" color="red">
+						<Text type="title4" color="red">
 							{isSubscription ? `정기배송 ${data.subscribeCount || 0}회차` : '일반배송상품'}
-						</DefaultText>
+						</Text>
 					)}
-					<DefaultText type="title4">{title}</DefaultText>
+					<Text type="title4">{title}</Text>
 				</div>
-				<DefaultText type="label4" color="gray600">{subtitle}</DefaultText>
+				<Text type="label4" color="gray600">{subtitle}</Text>
 			</div>
 			<div className={styles.bottomSheetItem}>
 				<div className={styles.bottomSheetItemTitle}>
-					<DefaultText type="title4">주문상품</DefaultText>
+					<Text type="title4">주문상품</Text>
 					{!isOrderDetail &&
 						<button onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${orderId}`, { orderType })}>
-							<DefaultText type="headline4" color="gray400">주문상세</DefaultText>
+							<Text type="headline4" color="gray400">주문상세</Text>
 						</button>
 					}
 				</div>

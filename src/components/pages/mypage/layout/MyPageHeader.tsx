@@ -1,9 +1,9 @@
 'use client';
 import { useMemo } from "react";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useBackNavigation } from "@/utils";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { ORDER_ISSUE_TYPE } from "@/constants/mypage";
+import { ORDER_ISSUE_TYPE } from "@/constants/mypage/common";
 import Header from "@/components/layout/header/Header";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
@@ -25,10 +25,13 @@ const MyPageHeader = () => {
   const { pushWithQuery } = useDynamicQueryPush();
   const goBack = useBackNavigation();
   const goBackToMain = useBackNavigation('/');
+  const goBackToMypageMain = useBackNavigation('/mypage');
   const goBackToPreviousPage = useBackNavigation(undefined, true);
   const { isOpen: cancelChangeNoticeOpen, onClose: onCloseCancelChangeNoticeOpen, onToggle: onToggleCancelChangeNoticeOpen } = useModal();
 
   const lastSection = pathname.split('/').pop();
+
+  const router = useRouter();
 
   const headerConfigs: Record<
     string,
@@ -43,16 +46,19 @@ const MyPageHeader = () => {
     }
     > = {
     '/mypage': { leftTitle: '마이페이지', showCartButton: true },
-    '/mypage/coupon': { centerTitle: '쿠폰내역', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/reward': { centerTitle: '적립금내역', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/manage-card': { centerTitle: '카드관리' },
+    '/mypage/promotion': { centerTitle: '프로모션', showBackButton: true },
+    '/mypage/coupon': { centerTitle: '쿠폰내역', showBackButton: true },
+    '/mypage/reward': { centerTitle: '적립금내역', showBackButton: true, onBack: goBack },
     '/mypage/invite-friends': { centerTitle: '친구 초대', showBackButton: true },
+    '/mypage/account': { centerTitle: '계정 정보', showBackButton: true, onBack: goBack },
+    '/mypage/account/connect-sns': { centerTitle: 'SNS 연동정보', showBackButton: true, onBack: goBack },
+    '/mypage/account/user-info': { centerTitle: '회원정보 변경', showBackButton: true, onBack: goBack },
+    '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showBackButton: true, onBack: goBack },
+    '/mypage/account/notification': { centerTitle: '알림 설정', showBackButton: true, onBack: goBack },
+    //
+    '/mypage/manage-card': { centerTitle: '카드관리' },
     '/mypage/subscription': { centerTitle: '구독상품관리', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account': { centerTitle: '계정 정보', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account/user-info': { centerTitle: '회원 정보 변경', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account/notification': { centerTitle: '알림 설정', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/review': { centerTitle: '리뷰작성내역', showCartButton: true, showBackButton: true, onBack: useBackNavigation('/mypage') },
+    '/mypage/review': { centerTitle: '리뷰작성내역',showBackButton: true, onBack: goBackToMypageMain },
     '/mypage/review/create': { centerTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
     '/mypage/order-delivery-inquiry': { centerTitle: '주문 및 배송조회', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/order-issue-inquiry': { centerTitle: '취소/교환/반품 내역', showCartButton: true, showBackButton: true, onBack: goBack },
@@ -72,7 +78,17 @@ const MyPageHeader = () => {
       onBack?: () => void
     }
     > = {
-    '/mypage/review/': () => ({ centerTitle: '리뷰 상세', showBackButton: true, onBack: goBackToPreviousPage }),
+    '/mypage/review/': (_, searchParams) => {
+      const source = searchParams.get('source');
+      return ({ 
+        centerTitle: '리뷰 상세', 
+        showBackButton: true,
+        onBack: source === 'create' 
+          ? () => router.push('/mypage/review?type=written', { scroll: false }) 
+          : goBackToPreviousPage
+        ,
+      })
+    },
     '/mypage/order-delivery-inquiry/': (_, searchParams) => {
       const showReceipt = searchParams.get('showReceipt');
       return {
@@ -93,12 +109,6 @@ const MyPageHeader = () => {
         onBack: goBack,
       }
     },
-    '/mypage/account/connect-sns': (params) => ({
-      centerTitle: params.authentication === 'authentication' ? '회원인증' : 'SNS 연동정보',
-      showCartButton: params.authentication !== 'authentication',
-      showBackButton: true,
-      onBack: goBack,
-    }),
     '/mypage/account/withdrawal-account': (_, searchParams) => {
       const step = searchParams.get('step');
       return {

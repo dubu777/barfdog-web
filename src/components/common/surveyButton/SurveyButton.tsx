@@ -3,7 +3,7 @@ import CheckedBox from "public/images/option/checked_selection.svg";
 import CheckedRadio from "public/images/option/checked_radio.svg";
 import UnCheckedRadio from "public/images/option/unchecked_radio.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import { ReactNode } from "react";
 
@@ -76,17 +76,17 @@ export default function SurveyButton<T>({
             {chipText}
           </Chips>
         )}
-        <DefaultText
+        <Text
           type="headline3"
           color={labelColor}
           applyLineHeight={false}
         >
           {label}
-        </DefaultText>
+        </Text>
         {subLabel && (
-          <DefaultText type="body3" color="gray600" applyLineHeight={false}>
+          <Text type="body3" color="gray600" applyLineHeight={false}>
             {subLabel}
-          </DefaultText>
+          </Text>
         )}
       </div>
       {rightElement && rightElement}
