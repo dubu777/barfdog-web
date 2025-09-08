@@ -11,11 +11,11 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { UpdateUserInfo, SignupStepValues } from "@/types";
+import { UserInfoFormValues, SignupStepValues } from "@/types";
 
 type FormValues<T extends boolean> = T extends true
   ? SignupStepValues
-  : UpdateUserInfo;
+  : UserInfoFormValues;
 
 interface ReceiveTermsProps<T extends boolean> {
   isSignUp?: T;

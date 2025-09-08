@@ -23,9 +23,7 @@ export type Colors =
   | "green400"
   | "green500"
   | "yellow500"
-  | "yellow400"
-  | "kakao"
-  | "naver";
+  | "yellow400";
 
 const COLORS: Record<Colors, string> = {
   white: themeVars.colors.gray.gray0,
@@ -50,8 +48,6 @@ const COLORS: Record<Colors, string> = {
   green500: themeVars.colors.green.green500,
   yellow500: themeVars.colors.yellow.yellow500,
   yellow400: themeVars.colors.yellow.yellow400,
-  kakao: themeVars.colors.kakao,
-  naver: themeVars.colors.naver,
 } as const;
 
 export const CHIPS_COLORS = {

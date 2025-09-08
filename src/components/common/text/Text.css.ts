@@ -143,6 +143,8 @@ export const fontColors = {
   green400: style({ color: themeVars.colors.green.green400 }),
   yellow400: style({ color: themeVars.colors.yellow.yellow400 }),
   blue600: style({ color: themeVars.colors.blue.blue600 }),
+  kakaoFont: style({ color: themeVars.colors.kakao.kakaoFont }),
+  naverFont: style({ color: themeVars.colors.naver.naverFont }),
 };
 
 export const alignStyles = {

@@ -4,7 +4,7 @@ import {
   TemporaryPassword,
   ConnectSnsPassword,
   GenderType,
-  GetUserInfo,
+  UserInfo,
 } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 
@@ -233,7 +233,7 @@ const updateUserInfoSchema = yup.object().shape({
     .required("휴대폰 번호는 필수입니다."),
 });
 
-const defaultUpdateUserInfoValues = (userInfo: GetUserInfo | undefined) => ({
+const defaultUpdateUserInfoValues = (userInfo?: UserInfo) => ({
   name: userInfo?.name || "",
   phoneNumber: userInfo?.phoneNumber || "",
   birthday: formatDate(userInfo?.birthday as string, "onlyDateDot") || "",

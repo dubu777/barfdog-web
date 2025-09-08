@@ -4,7 +4,7 @@ import { pointColor } from "@/styles/common.css";
 
 interface InputLabelProps {
   label: string;
-  labelColor: "gray600" | "gray700" | "gray800" | "gray900";
+  labelColor?: "gray600" | "gray700" | "gray800" | "gray900";
   labelType?: "label4" | "headline4";
   isRequired?: boolean;
 }
@@ -12,7 +12,7 @@ interface InputLabelProps {
 export default function InputLabel ({
   labelType = "label4",
   label,
-  labelColor,
+  labelColor = "gray600",
   isRequired = false,
 }: InputLabelProps) {
   return (

@@ -22,6 +22,7 @@ import { queryKeys } from "@/constants";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { useUpdateRepresentativePet } from "@/api/pet/mutations/useUpdateRepresentativePet";
 import { Pet } from "@/types/pet";
+import ListDivider from "@/components/common/listDivider/ListDivider";
 
 export default function HealthNoteMainHeader() {
   const router = useRouter();
@@ -128,9 +129,7 @@ export default function HealthNoteMainHeader() {
                       <SvgIcon src={CheckCircle} size={24} color="red" />
                     )}
                   </button>
-                  {petList.length !== index + 1 && (
-                    <Divider thickness={1} color="gray100" />
-                  )}
+                  <ListDivider listLength={petList.length} index={index} color='gray100' />
                 </Fragment>
               );
             })}

@@ -4,7 +4,7 @@ export const labeledRadioButtonContainer = recipe({
   base: {
     display: "flex",
     justifyContent: "flex-start",
-    alignItems: "flex-start",
+    alignItems: "center",
 
     gap: "8px",
     cursor: "pointer",

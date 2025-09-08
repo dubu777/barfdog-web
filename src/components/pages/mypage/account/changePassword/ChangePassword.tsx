@@ -1,30 +1,27 @@
 "use client";
-import * as styles from "../Account.css";
 import * as yup from "yup";
 import axios from "axios";
+import { commonWrapper } from "@/styles/common.css";
+import { Controller } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Text from "@/components/common/text/Text";
-import ErrorIcon from "/public/images/icons/close_small.svg";
-import SuccessIcon from "/public/images/icons/check_small.svg";
-import { Controller } from "react-hook-form";
+import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { useChangePassword } from "@/api/auth/mutations/useChangePassword";
 import { useToastStore } from "@/store/useToastStore";
-import { ChangePassword } from "@/types";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { ChangePassword as ChangePasswordType } from "@/types";
+import { useChangePassword } from "@/api/auth/mutations/useChangePassword";
 
 const passwordValidation = [
-  {
-    rule: (password: string) => password.length >= 7,
-    message: "최소 7자리 이상",
-  },
   {
     rule: (password: string) =>
       /[a-zA-Z]/.test(password) &&
       /\d/.test(password) &&
       /[\W_]/.test(password),
     message: "영문/숫자/특수문자 조합",
+  },
+  {
+    rule: (password: string) => password.length >= 8,
+    message: "8자 이상",
   },
   {
     rule: (password: string) =>
@@ -45,13 +42,13 @@ const changePasswordSchema = yup.object().shape({
     .required("비밀번호 확인은 필수입니다"),
 });
 
-const defaultChangePasswordValues: ChangePassword = {
+const defaultChangePasswordValues: ChangePasswordType = {
   password: "",
   newPassword: "",
   newPasswordConfirm: "",
 };
 
-const ChangePasswordComponent = () => {
+export default function ChangePassword() {
   const {
     handleSubmit,
     control,
@@ -64,7 +61,7 @@ const ChangePasswordComponent = () => {
     setValue,
     getValues,
     setError,
-  } = useFormHandler<ChangePassword>(
+  } = useFormHandler<ChangePasswordType>(
     changePasswordSchema,
     defaultChangePasswordValues
   );
@@ -79,7 +76,7 @@ const ChangePasswordComponent = () => {
     );
   };
 
-  const onSubmit = (data: ChangePassword) => {
+  const onSubmit = (data: ChangePasswordType) => {
     mutate(data, {
       onSuccess: (data) => {
         if (data.status === 200) {
@@ -112,15 +109,20 @@ const ChangePasswordComponent = () => {
   };
 
   return (
-    <section className={styles.accountContainer}>
-      <form className={styles.accountForm}>
+    <section>
+      <form className={commonWrapper({
+        direction: 'col',
+        gap: 20,
+        align: 'start',
+        padding: 20,
+      })}>
         <Controller
           name="password"
           control={control}
           render={({ field }) => {
             const passwordError = errors?.password?.message;
             return (
-              <div>
+              <div className={commonWrapper({ width: 'full', direction: 'col', align: 'start', gap: 8 })}>
                 <InputField
                   {...field}
                   type="password"
@@ -131,19 +133,12 @@ const ChangePasswordComponent = () => {
                   {...inputProps}
                 />
                 {passwordError && (
-                  <div
-                    className={styles.accountError}
-                    style={{ marginTop: "8.5px" }}
-                  >
-                    <ErrorIcon />
-                    <Text
-                      type="caption"
-                      color={!passwordError ? "blue500" : "red"}
-                    >
-                      기존 비밀번호가{" "}
-                      {passwordError ? "일치하지 않습니다" : "일치합니다"}
-                    </Text>
-                  </div>
+                  <InputStatusMessage
+                    type={!passwordError ? 'success' : 'error'}
+                    message={
+                      `기존 비밀번호가 ${!passwordError ? '일치합니다' : '일치하지 않습니다'}`
+                    }
+                  />
                 )}
               </div>
             );
@@ -153,7 +148,7 @@ const ChangePasswordComponent = () => {
           name="newPassword"
           control={control}
           render={({ field }) => (
-            <div>
+            <div className={commonWrapper({ width: 'full', direction: 'col', align: 'start', gap: 8 })}>
               <InputField
                 {...field}
                 type="password"
@@ -169,20 +164,14 @@ const ChangePasswordComponent = () => {
                 {...inputProps}
               />
               {dirtyFields?.newPassword && (
-                <div className={styles.accountErrors}>
+                <div className={commonWrapper({ direction: 'col', gap: 4 })}>
                   {passwordValidation.map(({ rule, message }) => {
                     const isValid = rule(field.value);
-                    console.log(isValid);
                     return (
-                      <div key={message} className={styles.accountError}>
-                        {isValid ? <SuccessIcon /> : <ErrorIcon />}
-                        <Text
-                          type="caption"
-                          color={isValid ? "blue500" : "red"}
-                        >
-                          {message}
-                        </Text>
-                      </div>
+                      <InputStatusMessage
+                        key={message} type={isValid ? 'success' : 'error'}
+                        message={message}
+                      />
                     );
                   })}
                 </div>
@@ -196,7 +185,7 @@ const ChangePasswordComponent = () => {
           render={({ field }) => {
             const newPasswordConfirmError = errors?.newPasswordConfirm?.message;
             return (
-              <div>
+              <div className={commonWrapper({ width: 'full', direction: 'col', align: 'start', gap: 8 })}>
                 <InputField
                   {...field}
                   type="password"
@@ -212,25 +201,12 @@ const ChangePasswordComponent = () => {
                   {...inputProps}
                 />
                 {dirtyFields.newPassword && (
-                  <div
-                    className={styles.accountError}
-                    style={{ marginTop: "8.5px" }}
-                  >
-                    <SvgIcon
-                      src={!newPasswordConfirmError ? SuccessIcon : ErrorIcon}
-                      size={18}
-                      color={!newPasswordConfirmError ? "blue500" : "red"}
-                    />
-                    <Text
-                      type="caption"
-                      color={!newPasswordConfirmError ? "blue500" : "red"}
-                    >
-                      비밀번호가{" "}
-                      {newPasswordConfirmError
-                        ? "일치하지 않습니다"
-                        : "일치합니다"}
-                    </Text>
-                  </div>
+                  <InputStatusMessage
+                    type={!newPasswordConfirmError ? 'success' : 'error'}
+                    message={
+                      `비밀번호가 ${!newPasswordConfirmError ? '일치합니다' : '일치하지 않습니다'}`
+                    }
+                  />
                 )}
               </div>
             );
@@ -246,5 +222,3 @@ const ChangePasswordComponent = () => {
     </section>
   );
 };
-
-export default ChangePasswordComponent;

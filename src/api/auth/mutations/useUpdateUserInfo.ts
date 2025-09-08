@@ -1,4 +1,4 @@
-import { UpdateUserInfo, UseMutationCustomOptions } from "@/types";
+import { UserInfoFormValues, UseMutationCustomOptions } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateUserInfo } from "@/api/auth/auth";
 import { queryKeys } from "@/constants";
@@ -8,7 +8,7 @@ export { useUpdateUserInfo };
 function useUpdateUserInfo(mutationOptions?: UseMutationCustomOptions) {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: (body: UpdateUserInfo) => updateUserInfo(body),
+		mutationFn: (body: UserInfoFormValues) => updateUserInfo(body),
 		onSuccess: async (data) => {
 			console.log('mutation success', data);
 			await queryClient.invalidateQueries({

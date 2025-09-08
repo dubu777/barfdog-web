@@ -4,7 +4,7 @@ import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
 
-const DeliveryAddress = () => {
+export default function DeliveryAddress() {
 	const {
 		setDeliveryDto,
 		setBackupDeliveryDto,
@@ -12,17 +12,13 @@ const DeliveryAddress = () => {
 	const { data: addressData } = useGetAddressList();
 	const goBack = useBackNavigation();
 	return (
-		<>
-			<DeliveryModal
-				addressData={addressData}
-				isVisible={true}
-				onClose={goBack}
-				setDeliveryDto={setDeliveryDto}
-				setBackupDeliveryDto={setBackupDeliveryDto}
-				showSelectButton={false}
-			/>
-		</>
+		<DeliveryModal
+			addressData={addressData}
+			isVisible={true}
+			onClose={goBack}
+			setDeliveryDto={setDeliveryDto}
+			setBackupDeliveryDto={setBackupDeliveryDto}
+			showSelectButton={false}
+		/>
 	);
 };
-
-export default DeliveryAddress;

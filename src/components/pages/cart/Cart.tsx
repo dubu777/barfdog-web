@@ -12,6 +12,7 @@ import { useCartStore } from "@/store/useCartStore";
 import { useCart } from "@/hooks/cart/useCart";
 import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
 import { useUpdateCartInfo } from "@/api/cart/mutations/useUpdateCartInfo";
+import ListDivider from "@/components/common/listDivider/ListDivider";
 
 // 옵션 삭제, 품절 기능 적용 필요
 export default function Cart() {
@@ -84,9 +85,7 @@ export default function Cart() {
                   onSelect={() => handleItemSelect(item.itemDto.basketId)}
                 />
               </div>
-              {index + 1 !== cartInfo?.basketDtoList.length &&
-              <Divider thickness={1} color='gray200' />
-              }
+              <ListDivider listLength={cartInfo?.basketDtoList.length} index={index} color='gray200' />
             </Fragment>
           ))}
         </div>
@@ -113,9 +112,7 @@ export default function Cart() {
                         isSoldOut
                       />
                     </div>
-                    {index + 1 !== cartInfo?.basketDtoList.length &&
-                    <Divider thickness={1} color='gray200' />
-                    }
+                    <ListDivider listLength={cartInfo?.basketDtoList.length} index={index} color='gray200' />
                   </Fragment>
                 ))}
               </div>

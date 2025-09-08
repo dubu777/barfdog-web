@@ -49,13 +49,15 @@ const MyPageHeader = () => {
     '/mypage/promotion': { centerTitle: '프로모션', showBackButton: true },
     '/mypage/coupon': { centerTitle: '쿠폰내역', showBackButton: true },
     '/mypage/reward': { centerTitle: '적립금내역', showBackButton: true, onBack: goBack },
-    '/mypage/manage-card': { centerTitle: '카드관리' },
     '/mypage/invite-friends': { centerTitle: '친구 초대', showBackButton: true },
+    '/mypage/account': { centerTitle: '계정 정보', showBackButton: true, onBack: goBack },
+    '/mypage/account/connect-sns': { centerTitle: 'SNS 연동정보', showBackButton: true, onBack: goBack },
+    '/mypage/account/user-info': { centerTitle: '회원정보 변경', showBackButton: true, onBack: goBack },
+    '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showBackButton: true, onBack: goBack },
+    '/mypage/account/notification': { centerTitle: '알림 설정', showBackButton: true, onBack: goBack },
+    //
+    '/mypage/manage-card': { centerTitle: '카드관리' },
     '/mypage/subscription': { centerTitle: '구독상품관리', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account': { centerTitle: '계정 정보', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account/user-info': { centerTitle: '회원 정보 변경', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/account/notification': { centerTitle: '알림 설정', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/review': { centerTitle: '리뷰작성내역',showBackButton: true, onBack: goBackToMypageMain },
     '/mypage/review/create': { centerTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
     '/mypage/order-delivery-inquiry': { centerTitle: '주문 및 배송조회', showCartButton: true, showBackButton: true, onBack: goBack },
@@ -107,12 +109,6 @@ const MyPageHeader = () => {
         onBack: goBack,
       }
     },
-    '/mypage/account/connect-sns': (params) => ({
-      centerTitle: params.authentication === 'authentication' ? '회원인증' : 'SNS 연동정보',
-      showCartButton: params.authentication !== 'authentication',
-      showBackButton: true,
-      onBack: goBack,
-    }),
     '/mypage/account/withdrawal-account': (_, searchParams) => {
       const step = searchParams.get('step');
       return {

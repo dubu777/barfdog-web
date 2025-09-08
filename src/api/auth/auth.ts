@@ -6,8 +6,8 @@ import {
   ConnectSns,
   SetPassword,
   ChangePassword,
-  UpdateUserInfo,
-  GetUserInfo,
+  UserInfoFormValues,
+  UserInfo,
   LoginUserInfo,
   SnSProvider,
   UserType,
@@ -61,7 +61,7 @@ const getAuthNumber = async (body: {
   return data;
 };
 
-const getUserInfo = async (instance: AxiosInstance = axiosInstance): Promise<GetUserInfo | null> => {
+const getUserInfo = async (instance: AxiosInstance = axiosInstance): Promise<UserInfo | null> => {
   try {
     const { data } = await instance.get(`/api/members`);
     console.log(data)
@@ -72,7 +72,7 @@ const getUserInfo = async (instance: AxiosInstance = axiosInstance): Promise<Get
   }
 };
 
-const updateUserInfo = async (body: UpdateUserInfo) => {
+const updateUserInfo = async (body: UserInfoFormValues) => {
   return await axiosInstance.put("/api/members", body);
 };
 

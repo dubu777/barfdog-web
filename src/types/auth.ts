@@ -16,9 +16,8 @@ export type {
   SignUpTermsModal,
   ConnectSnsResponse,
   UserInfoFormFields,
-  UpdateUserInfo,
-  GetUserInfo,
-  IsValidUpdateUserInfo,
+  UserInfoFormValues,
+  IsValidUpdateUserInfo,  
   GetAuthNumber,
   GenderType,
   SignupStepValues,
@@ -145,13 +144,7 @@ interface UserInfoFormFields {
   isSignUp?: boolean;
 }
 
-interface GetUserInfo extends UpdateUserInfo {
-  memberId?: string | null;
-  provider?: string | null;
-  providerId?: number | null;
-}
-
-interface UpdateUserInfo {
+interface UserInfoFormValues {
   address: AddressDto;
   birthday: string;
   gender: GenderType;
@@ -164,6 +157,12 @@ interface UpdateUserInfo {
   authNumber?: string | null;
   defaultPhoneNumber?: string;
   hasCheckedAuthNumber?: boolean;
+}
+
+interface UserInfo extends UserInfoFormValues {
+  memberId?: string | null;
+  provider?: string | null;
+  providerId?: number | null;
 }
 
 interface IsValidUpdateUserInfo {

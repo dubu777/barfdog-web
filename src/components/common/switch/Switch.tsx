@@ -4,13 +4,19 @@ import { switchButton, switchHandle } from "@/components/common/switch/Switch.cs
 interface SwitchProps {
 	isOn: boolean;
 	onChange: () => void;
+	isDisabled?: boolean;
 }
 
-const Switch = ({ isOn, onChange }: SwitchProps) => {
+export default function Switch ({
+	isOn,
+	onChange,
+	isDisabled = false,
+}: SwitchProps) {
 	return (
 		<button
 			className={switchButton({ isOn })}
 			onClick={onChange}
+			disabled={isDisabled}
 		>
 			<motion.div
 				className={switchHandle}
@@ -23,5 +29,3 @@ const Switch = ({ isOn, onChange }: SwitchProps) => {
 		</button>
 	)
 };
-
-export default Switch;

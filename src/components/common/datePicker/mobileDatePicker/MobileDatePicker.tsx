@@ -127,7 +127,7 @@ const MobileDatePicker = ({
   return (
     <div className={styles.mobileDatePickerContainer}>
       {label && (
-        <Text type="label4">
+        <Text type="label4" color="gray600">
           {label} {isRequired && <span className={pointColor}>*</span>}
         </Text>
       )}

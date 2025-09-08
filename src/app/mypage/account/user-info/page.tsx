@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { prefetchGetUserInfo } from "@/api/auth/queries/usePrefetchGetUserInfo";
+import { prefetchGetUserInfo } from "@/api/auth/queries/prefetchGetUserInfo";
 import UserInfo from "@/components/pages/mypage/account/userInfo/UserInfo";
 import Spinner from "@/components/common/spinner/Spinner";
 
