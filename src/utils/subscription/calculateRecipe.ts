@@ -132,7 +132,7 @@ export function calculateRecipePack({
   customPackGrams,
 }: CalculateRecipePackInput): CalculateRecipePackOutput {
   // 서버에서 이미 계산된 추천 급여량 사용
-  let recommendedPackGrams = rawFoodItem.oneMealRecommendGram;
+  const recommendedPackGrams = rawFoodItem.oneMealRecommendGram;
   const pricePerGram = rawFoodItem.pricePerGram;
 
   // 레거시 여부에 따라 pricePerGram 조정

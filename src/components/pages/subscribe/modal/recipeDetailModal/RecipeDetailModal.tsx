@@ -11,7 +11,7 @@ import RecipeBenefits from "./recipeBenefits/RecipeBenefits";
 import RecipeIngredientsList from "./recipeIngredients/RecipeIngredients";
 import { useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
-import { RawFoodOrderItem, RecipeDto } from "@/types";
+import { RawFoodOrderItem } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
 
