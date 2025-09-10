@@ -1,21 +1,27 @@
-import Text from "@/components/common/text/Text";
+"use client";
+import * as styles from "../../FindAccount.css";
+import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
-import { SignupStepValues } from "@/utils/validation/auth/auth";
-import { useMemo, useRef } from "react";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
-import CheckIcon from "public/images/survey/check_small.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { ResetPasswordValues } from "@/utils/validation/auth/resetPassword";
 import {
   getPasswordCriteria,
   isValidPassword,
   PasswordCriteriaItem,
 } from "@/utils/validation/auth/password";
+import { useMemo, useRef } from "react";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import CheckIcon from "public/images/survey/check_small.svg";
+import Text from "@/components/common/text/Text";
 
-export default function SignupStep2() {
-  const { control } = useFormContext<SignupStepValues>();
+interface NewPasswordFormProps {
+  form: UseFormReturn<ResetPasswordValues>;
+}
 
-  const password = useWatch({ control, name: "step2.password" });
+export default function NewPasswordForm({ form }: NewPasswordFormProps) {
+  const { control } = form;
+
+  const password = useWatch({ control, name: "password" });
 
   const criteria: PasswordCriteriaItem[] = useMemo(
     () => getPasswordCriteria(password),
@@ -25,16 +31,10 @@ export default function SignupStep2() {
   const isValid: boolean = useMemo(() => isValidPassword(password), [password]);
 
   const confirmRef = useRef<HTMLInputElement>(null);
-
   return (
     <>
-      <Text type="title2">
-        사용하실
-        <br />
-        비밀번호를 입력해 주세요
-      </Text>
       <Controller
-        name="step2.password"
+        name="password"
         control={control}
         render={({ field }) => (
           <InputField
@@ -44,13 +44,11 @@ export default function SignupStep2() {
             }}
             masking
             maskingButton
-            variants="line"
             placeholder="새 비밀번호"
             label="새 비밀번호"
             isRequired
             labelColor="gray600"
             onKeyUp={(e) => {
-              // Enter 혹은 Tab 키만 체크
               if ((e.key === "Enter" || e.key === "Tab") && isValid) {
                 e.preventDefault();
                 confirmRef.current?.focus();
@@ -82,7 +80,7 @@ export default function SignupStep2() {
         </ul>
       )}
       <Controller
-        name="step2.confirmPassword"
+        name="confirmPassword"
         control={control}
         render={({ field }) => (
           <InputField
@@ -93,7 +91,6 @@ export default function SignupStep2() {
             }}
             masking
             maskingButton
-            variants="line"
             placeholder="새 비밀번호 확인"
             label="새 비밀번호 확인"
             isRequired

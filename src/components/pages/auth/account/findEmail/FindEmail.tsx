@@ -10,7 +10,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import {
   defaultFindUserEmailValues,
   findUserEmailSchema,
-} from "@/utils/validation/authValidation";
+} from "@/utils/validation/auth/auth";
 import { FindUserEmail } from "@/types";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";

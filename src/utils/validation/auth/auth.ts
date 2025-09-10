@@ -1,7 +1,6 @@
 import * as yup from "yup";
 import {
   FindUserEmail,
-  TemporaryPassword,
   ConnectSnsPassword,
   GenderType,
   UserInfo,
@@ -11,8 +10,6 @@ import { formatDate } from "@/utils/dateUtils";
 export {
   findUserEmailSchema,
   defaultFindUserEmailValues,
-  sendTempPwSchema,
-  defaultSendTempPwValues,
   loginSchema,
   defaultLoginValues,
   connectSnsSchema,
@@ -163,27 +160,6 @@ const findUserEmailSchema = yup.object().shape({
 });
 
 const defaultFindUserEmailValues: FindUserEmail = {
-  name: "",
-  phoneNumber: "",
-};
-
-const sendTempPwSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("유효한 이메일 주소를 입력해주세요.")
-    .required("이메일 주소는 필수입니다."),
-  name: yup
-    .string()
-    .min(2, "이름은 최소 2자 이상이어야 합니다.")
-    .required("이름은 필수입니다."),
-  phoneNumber: yup
-    .string()
-    .matches(/^\d{10,11}$/, "휴대폰 번호는 10~11자리 숫자여야 합니다.")
-    .required("휴대폰 번호는 필수입니다."),
-});
-
-const defaultSendTempPwValues: TemporaryPassword = {
-  email: "",
   name: "",
   phoneNumber: "",
 };

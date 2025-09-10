@@ -3,7 +3,7 @@ import {
   signupStepsSchema,
   SignupStepKeys,
   defaultSignupStepValues,
-} from "@/utils/validation/authValidation";
+} from "@/utils/validation/auth/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import yup from "yup";

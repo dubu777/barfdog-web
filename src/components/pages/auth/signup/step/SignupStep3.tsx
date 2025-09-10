@@ -1,7 +1,7 @@
 import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper, pointColor } from "@/styles/common.css";
-import { SignupStepValues } from "@/utils/validation/authValidation";
+import { SignupStepValues } from "@/utils/validation/auth/auth";
 import { Controller, useController, useFormContext } from "react-hook-form";
 import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
 import { format } from "date-fns";

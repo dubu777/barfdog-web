@@ -1,28 +1,5 @@
 import { AddressDto } from "@/types/index";
 
-export type {
-  LoginFormValues,
-  UserType,
-  UserInfo,
-  LoginUserInfo,
-  SnSProvider,
-  FindUserEmail,
-  TemporaryUserEmail,
-  TemporaryPassword,
-  ConnectSnsPassword,
-  ConnectSns,
-  SetPassword,
-  ChangePassword,
-  SignUpTermsModal,
-  ConnectSnsResponse,
-  UserInfoFormFields,
-  UserInfoFormValues,
-  IsValidUpdateUserInfo,  
-  GetAuthNumber,
-  GenderType,
-  SignupStepValues,
-};
-
 // 로그인
 type Role = "USER" | "ADMIN" | "SUBSCRIBER";
 type UserType =
@@ -177,3 +154,48 @@ interface GetAuthNumber {
   msg: null | string;
   authNumber: null | string;
 }
+
+interface RequestPasswordResetCodeResponse {
+  authToken: string;
+  expiryDate: string;
+}
+
+interface ResetPasswordRequest {
+  authToken: string;
+  authCode: string;
+  password: string;
+}
+
+interface VerifyPasswordResetCodeRequest {
+  authToken: string;
+  authCode: string;
+}
+
+type ResetPasswordStep = "request" | "verify" | "reset";
+
+export type {
+  LoginFormValues,
+  UserType,
+  UserInfo,
+  LoginUserInfo,
+  SnSProvider,
+  FindUserEmail,
+  TemporaryUserEmail,
+  TemporaryPassword,
+  ConnectSnsPassword,
+  ConnectSns,
+  SetPassword,
+  ChangePassword,
+  SignUpTermsModal,
+  ConnectSnsResponse,
+  UserInfoFormFields,
+  UserInfoFormValues,
+  IsValidUpdateUserInfo,
+  GetAuthNumber,
+  GenderType,
+  SignupStepValues,
+  RequestPasswordResetCodeResponse,
+  ResetPasswordRequest,
+  VerifyPasswordResetCodeRequest,
+  ResetPasswordStep,
+};

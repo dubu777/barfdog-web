@@ -6,10 +6,7 @@ import LoginForm from "@/components/pages/auth/login/loginForm/LoginForm";
 import { useEmailLogin } from "@/api/auth/mutations/useEmailLogin";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { LoginFormValues } from "@/types";
-import {
-  defaultLoginValues,
-  loginSchema,
-} from "@/utils/validation/authValidation";
+import { defaultLoginValues, loginSchema } from "@/utils/validation/auth/auth";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useEffect, useMemo, useState } from "react";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";

@@ -1,4 +1,4 @@
-import { SignupStepKeys } from "@/utils/validation/authValidation";
+import { SignupStepKeys } from "@/utils/validation/auth/auth";
 
 export {
   AUTH_CONFIG,

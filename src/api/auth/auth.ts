@@ -1,8 +1,7 @@
-import axios, {AxiosInstance} from "axios";
+import axios, { AxiosInstance } from "axios";
 import axiosInstance from "@/api/axiosInstance";
 import {
   TemporaryUserEmail,
-  TemporaryPassword,
   ConnectSns,
   SetPassword,
   ChangePassword,
@@ -13,8 +12,12 @@ import {
   UserType,
   GetAuthNumber,
   ConnectSnsResponse,
+  RequestPasswordResetCodeResponse,
+  ResetPasswordRequest,
+  VerifyPasswordResetCodeRequest,
 } from "@/types";
 import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
+import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
 
 const findUserEmail = async (
   name: string,
@@ -26,9 +29,42 @@ const findUserEmail = async (
   return data;
 };
 
-const sendTemporaryPassword = async (body: TemporaryPassword) => {
-  const { data } = await axiosInstance.put(`/api/temporaryPassword`, body);
-  return data;
+const requestPasswordResetCode = async (
+  body: RequestResetCodeValues
+): Promise<RequestPasswordResetCodeResponse> => {
+  const { data } = await axiosInstance.post(
+    "/api/v2/public/account/password/reset/request-code",
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  throw new Error("유효하지 않은 정보입니다");
+};
+
+const verifyPasswordResetCode = async (
+  body: VerifyPasswordResetCodeRequest
+) => {
+  const { data } = await axiosInstance.post(
+    "/api/v2/public/account/password/reset/verify-code",
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  throw new Error("유효하지 않은 정보입니다");
+};
+
+const resetPassword = async (body: ResetPasswordRequest) => {
+  const { data } = await axiosInstance.post(
+    "/api/v2/public/account/password/reset",
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "유효하지 않은 정보입니다";
+  throw new Error(message);
 };
 
 // body {providerId, provider, phone}
@@ -37,7 +73,9 @@ const connectSns = async (body: ConnectSns): Promise<ConnectSnsResponse> => {
   return data;
 };
 
-const getConnectedSns = async (instance: AxiosInstance = axiosInstance): Promise<SnSProvider | null> => {
+const getConnectedSns = async (
+  instance: AxiosInstance = axiosInstance
+): Promise<SnSProvider | null> => {
   const { data } = await instance.get("/api/members/sns");
   return data?.provider || null;
 };
@@ -61,10 +99,12 @@ const getAuthNumber = async (body: {
   return data;
 };
 
-const getUserInfo = async (instance: AxiosInstance = axiosInstance): Promise<UserInfo | null> => {
+const getUserInfo = async (
+  instance: AxiosInstance = axiosInstance
+): Promise<UserInfo | null> => {
   try {
     const { data } = await instance.get(`/api/members`);
-    console.log(data)
+    console.log(data);
     return data;
   } catch (err) {
     console.log(err);
@@ -141,7 +181,7 @@ export const getAccessTokenByKakao = async (code: string) => {
   return tokenResponse;
 };
 
-// 소셜 로그인 
+// 소셜 로그인
 const snsLogin = async ({
   provider,
   code,
@@ -258,7 +298,6 @@ const CodeMessage: Record<number, string> = {
 
 export {
   findUserEmail,
-  sendTemporaryPassword,
   login,
   getUserInfo,
   connectSns,
@@ -272,4 +311,7 @@ export {
   updateUserInfo,
   withdrawalUser,
   logout,
+  requestPasswordResetCode,
+  verifyPasswordResetCode,
+  resetPassword,
 };

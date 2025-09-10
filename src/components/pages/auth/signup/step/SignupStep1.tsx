@@ -1,6 +1,6 @@
 import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
-import { SignupStepValues } from "@/utils/validation/authValidation";
+import { SignupStepValues } from "@/utils/validation/auth/auth";
 import { useRef } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
