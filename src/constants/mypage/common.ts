@@ -41,7 +41,7 @@ const MENU_LIST: MenuList[] = [
     menus: [
       { label: "ABOUT US", url: "/community/about" },
       { label: "아티클", url: "/community/article" },
-      { label: "전 성분 보기", url: "/ingredients" },
+      { label: "전 성분 보기", url: "/recipes" },
     ],
   },
 ];

@@ -1,9 +1,11 @@
 import axiosInstance from "@/api/axiosInstance";
-import {RecipeDto} from "@/types";
+import { AxiosInstance } from "axios";
+import { RecipeDto } from "@/types";
 
-export { getRecipeList };
-
-const getRecipeList = async (): Promise<RecipeDto[]> => {
-  const { data } = await axiosInstance.get('/api/recipes');
+const getRecipeList = async (instance: AxiosInstance = axiosInstance): Promise<RecipeDto[]> => {
+  const { data } = await instance.get('/api/recipes');
   return data._embedded.recipeListResponseDtoList.sort((a, b) => a.id - b.id);
 }
+export { 
+  getRecipeList
+};

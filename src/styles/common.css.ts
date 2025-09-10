@@ -145,6 +145,9 @@ export const commonWrapper = recipe({
       24: {
         gap: "24px",
       },
+      26: {
+        gap: "26px",
+      },
       28: {
         gap: "28px",
       },
@@ -253,6 +256,9 @@ export const commonWrapper = recipe({
       },
       start: {
         justifyContent: "flex-start",
+      },
+      around: {
+        justifyContent: "space-around",
       },
       between: {
         justifyContent: "space-between",
@@ -399,6 +405,11 @@ export const imageWrapper = recipe({
         width: 100,
         height: 100,
       },
+    },
+    height: {
+      '100%': {
+        height: '100%',
+      }
     }
   }
 })
