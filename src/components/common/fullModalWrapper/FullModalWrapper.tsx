@@ -1,6 +1,6 @@
 import * as styles from "./FullModalWrapper.css";
 import { backgroundColors } from "@/components/layout/header/Header.css";
-import { ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ModalBackground from "@/components/common/modalBackground/ModalBackground";
 import Header from "@/components/layout/header/Header";
@@ -16,16 +16,20 @@ interface FullModalWrapperProps {
   className?: string;
 }
 
-const FullModalWrapper = ({
-  isVisible,
-  handleClose,
-  handleGoBack,
-  children,
-  headerTitle,
-  rightElement,
-  headerBackgroundColor = "gray0",
-  className,
-}: FullModalWrapperProps) => {
+const FullModalWrapper = forwardRef<HTMLDivElement, FullModalWrapperProps>(
+  (
+    {
+      isVisible,
+      handleClose,
+      handleGoBack,
+      children,
+      headerTitle,
+      rightElement,
+      headerBackgroundColor = "gray0",
+      className,
+    },
+    ref
+  ) => {
   return (
     <AnimatePresence>
       {isVisible && (
@@ -36,6 +40,7 @@ const FullModalWrapper = ({
           isDimmed={false}
         >
           <motion.div
+            ref={ref}
             className={`${styles.modalContainer} ${className || ""}`}
             onClick={(e) => e.stopPropagation()}
             initial={{ y: "100%" }}
@@ -58,6 +63,7 @@ const FullModalWrapper = ({
       )}
     </AnimatePresence>
   );
-};
+});
+FullModalWrapper.displayName = 'FullModalWrapper';
 
 export default FullModalWrapper;

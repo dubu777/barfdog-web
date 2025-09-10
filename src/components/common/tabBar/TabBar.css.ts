@@ -5,14 +5,9 @@ export const tabBarContainerBase = style({
   width: "100%",
   display: "flex",
   alignItems: "center",
-  position: "relative",
-  zIndex: 1,
 });
 
-export const tabBarBase = style({
-  position: "relative",
-  zIndex: 1,
-});
+export const tabBarBase = style({});
 
 export const tabBarContainerAlign = {
   center: style({
