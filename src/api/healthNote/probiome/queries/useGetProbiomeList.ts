@@ -1,14 +1,14 @@
 import { queryKeys } from "@/constants/queryKeys";
-import { UseSuspenseQueryCustomOptions } from "@/types";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { UseQueryCustomOptions } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { getProbiomeList } from "../probiome";
 import { ProbiomeList } from "@/types/healthNote/probiome";
 
 export function useGetProbiomeList(
   petId: number,
-  queryOptions?: UseSuspenseQueryCustomOptions<ProbiomeList>
+  queryOptions?: UseQueryCustomOptions<ProbiomeList>
 ) {
-  return useSuspenseQuery({
+  return useQuery({
     queryFn: () => getProbiomeList(petId),
     queryKey: [
       queryKeys.PROBIOME.BASE,

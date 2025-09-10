@@ -4,26 +4,24 @@ import Text from "@/components/common/text/Text";
 import Image from "next/image";
 import { DeliveryPlan, MealPlan } from "@/types";
 import { DELIVERY_PLAN_LABEL, MEAL_PLAN_LABEL } from "@/constants";
+import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface RecipeItemCardProps {
-  packGrams: number;
-  originPrice: number;
-  packCount: number;
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
   displayImageUrl: string;
   recipeName: string;
+  calculatedRecipe: CalculatedRecipe;
 }
 
 export default function RecipeItemCard({
-  packGrams,
-  originPrice,
-  packCount,
   mealPlan,
   deliveryPlan,
   displayImageUrl,
   recipeName,
+  calculatedRecipe,
 }: RecipeItemCardProps) {
+  const { originalPrice, packCount, packGrams } = calculatedRecipe;
   return (
     <div className={styles.itemCardContainer}>
       <Image
@@ -51,7 +49,7 @@ export default function RecipeItemCard({
             block
           >{`${packGrams}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</Text>
         </div>
-        <Text type="label3">{originPrice.toLocaleString()}원</Text>
+        <Text type="label3">{originalPrice.toLocaleString()}원</Text>
       </div>
     </div>
   );

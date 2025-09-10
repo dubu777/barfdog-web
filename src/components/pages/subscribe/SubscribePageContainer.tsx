@@ -1,8 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormProvider, useWatch } from "react-hook-form";
-import { useSubscriptionForm } from "@/hooks/survey/useSubscriptionForm";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import {
   defaultSubscriptionValues,
   subscriptionSchema,
@@ -20,6 +19,9 @@ import * as styles from "./SubscribePageContainer.css";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useGetRawFoodOrderSheet } from "@/api/subscription/queries/useGetRawFoodOrderSheet";
 import RawFoodOptions from "./rawFoodOptions/RawFoodOptions";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSubscription";
+import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface SubscribePageContainerProps {
   reportId: number;
@@ -31,26 +33,39 @@ export default function SubscribePageContainer({
   const router = useRouter();
   const [step, setStep] = useState<SubscriptionStep>("rawFood");
   const { data: rawFoodSheetData } = useGetRawFoodOrderSheet(reportId);
-  console.log(rawFoodSheetData);
+  const { mutate: createSubscription } = useCreateSubscription();
 
   useScrollToTop(step);
 
-  const formMethods = useSubscriptionForm<typeof subscriptionSchema>(
-    subscriptionSchema,
-    defaultSubscriptionValues
-  );
+  const form = useForm<SubscriptionValues>({
+    resolver: yupResolver(subscriptionSchema),
+    defaultValues: defaultSubscriptionValues,
+    mode: "all",
+  });
 
-  const rawFoods =
-    useWatch<SubscriptionValues, "rawFoods">({
-      control: formMethods.control,
+  const savedSelection =
+    useWatch({
+      control: form.control,
       name: "rawFoods",
     }) ?? [];
+  const mealPlan =
+    useWatch({
+      control: form.control,
+      name: "mealPlan",
+    }) || "TWO_MEAL";
+  const deliveryPlan =
+    useWatch({
+      control: form.control,
+      name: "deliveryPlan",
+    }) || "TWO_WEEK";
 
-  const recipeCount = rawFoods.length;
-  const selectedRawFoodIds = rawFoods.map((f) => f.recipeId);
   const currentStep = subscribeStepMap[step] ?? 1;
 
-  console.log("주문서 form", formMethods.watch());
+  const { recipes, totals, recipeCount } = useSubscriptionCalculation({
+    savedSelection,
+    mealPlan,
+    deliveryPlan,
+  });
 
   const handleNext = () => {
     if (step === "rawFood") {
@@ -67,13 +82,32 @@ export default function SubscribePageContainer({
     }
   }, [step, router]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const rawFoodsPayload = recipes.map(
+      ({ recipeId, packGrams, originalPrice, discountedPrice }) => ({
+        recipeId,
+        oneMealGramsPerRecipe: packGrams,
+        originalPrice,
+        discountedPrice,
+      })
+    );
+
+    const body = {
+      deliveryPlan,
+      mealPlan,
+      discountPrice: totals.totalDiscountAmount,
+      paymentExpectedPrice: totals.paymentExpectedPrice,
+      rawFoods: rawFoodsPayload,
+      totalOriginalPrice: totals.totalOriginalPrice,
+    } as const;
+    createSubscription({ reportId, body });
+  };
 
   const primaryLabel = step === "deliveryCycle" ? "결제하러 가기" : "주문하기";
   const primaryAction = step === "deliveryCycle" ? handleSubmit : handleNext;
 
   return (
-    <FormProvider {...formMethods}>
+    <FormProvider {...form}>
       <Header onBack={handleBack} showBackButton />
       <div
         className={styles.subscribePageContainer({
@@ -82,14 +116,19 @@ export default function SubscribePageContainer({
       >
         <SubscribeProgressBar currentStep={currentStep} />
         {step === "rawFood" && (
-          <RawFoodOptions
-            rawFoodSheetData={rawFoodSheetData}
-            selectedIds={selectedRawFoodIds}
-          />
+          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} />
         )}
 
         {step === "deliveryCycle" && (
-          <DeliveryOptions rawFoodSheetData={rawFoodSheetData} />
+          <DeliveryOptions
+            rawFoodSheetData={rawFoodSheetData}
+            calculatedRecipes={recipes}
+            mealPlan={mealPlan}
+            deliveryPlan={deliveryPlan}
+            totalOriginalPrice={totals.totalOriginalPrice}
+            paymentExpectedPrice={totals.paymentExpectedPrice}
+            totalDiscountAmount={totals.totalDiscountAmount}
+          />
         )}
         {recipeCount === 2 && step === "rawFood" && (
           <div className={styles.recipeTailChipWrapper}>

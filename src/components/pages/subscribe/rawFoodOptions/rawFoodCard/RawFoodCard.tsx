@@ -7,12 +7,12 @@ import Chips from "@/components/common/chips/Chips";
 import { RawFoodOrderItem } from "@/types";
 import RecipeDetailModal from "../../modal/recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
-import { useRecipeEntryManager } from "@/hooks/subscription/useRecipeManager";
+import { useRecipeSelection } from "@/hooks/subscription/useRecipeSelection";
 import { useToastStore } from "@/store/useToastStore";
 import { useMemo } from "react";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
-import { CalculateRecipePackOutput } from "@/utils/subscription/calculateRecipe";
+import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import RawFoodBadge from "./rawFoodBadge/RawFoodBadge";
 import { HEALTH_CONCERN_LABEL } from "@/constants/dietAnalysis";
@@ -22,9 +22,7 @@ interface RawFoodCardProps {
   dailyRecommendKcal: number;
   inedibleFoods: string[];
   petName: string;
-  isSelected: boolean;
-  selectedIds: number[];
-  packData: CalculateRecipePackOutput;
+  packData: CalculateRecipePackReturn;
   isUnder20g: boolean;
 }
 
@@ -33,14 +31,12 @@ export default function RawFoodCard({
   dailyRecommendKcal,
   inedibleFoods,
   petName,
-  isSelected,
-  selectedIds,
   packData,
   isUnder20g,
 }: RawFoodCardProps) {
   const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = packData;
 
-  const toast = useToastStore((s) => s.addToast);
+  const addToast = useToastStore((s) => s.addToast);
   const {
     isOpen: isDetailOpen,
     onClose: onDetailClose,
@@ -52,12 +48,16 @@ export default function RawFoodCard({
     onToggle: onAlertToggle,
   } = useModal();
 
-  const { applyLocal, commitEntry, removeEntry } = useRecipeEntryManager(
-    rawFoodItem.recipeId,
-    packData
-  );
+  const {
+    stageSelection,
+    commitSelection,
+    removeSelection,
+    isSelected,
+    canAddSelection,
+    stagedSelection,
+  } = useRecipeSelection(rawFoodItem.recipeId, packData);
 
-  // 못먹는 재료 포함되는지 확인
+  // 못먹는 재료 포함 여부 확인
   const inedibleSet = useMemo(() => new Set(inedibleFoods), [inedibleFoods]);
 
   const inedibleOverlap = rawFoodItem.ingredients.filter((ing) =>
@@ -66,14 +66,14 @@ export default function RawFoodCard({
 
   const handleButtonClick = () => {
     if (isSelected) {
-      removeEntry();
-      toast("레시피 빼기를 완료했어요", "above-button");
+      removeSelection();
+      addToast("레시피 빼기를 완료했어요", "above-button");
     } else {
-      if (selectedIds.length > 1) {
-        onAlertToggle();
+      if (canAddSelection) {
+        onDetailToggle();
         return;
       }
-      onDetailToggle();
+      onAlertToggle();
     }
   };
 
@@ -180,9 +180,11 @@ export default function RawFoodCard({
         onClose={onDetailClose}
         rawFoodItem={rawFoodItem}
         petName={petName}
+        packData={packData}
         dailyRecommendKcal={dailyRecommendKcal}
-        onApplyLocal={applyLocal}
-        onCommit={commitEntry}
+        onStageSelection={stageSelection}
+        onCommitSelection={commitSelection}
+        stagedSelection={stagedSelection}
       />
       <AlertModal
         title="레시피 선택은 최대 2개까지 가능해요"

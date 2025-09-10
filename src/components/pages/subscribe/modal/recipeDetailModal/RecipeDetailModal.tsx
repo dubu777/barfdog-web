@@ -1,7 +1,7 @@
 import Chips from "@/components/common/chips/Chips";
 import Text from "@/components/common/text/Text";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import { recipeDetailTab, RecipeTempData } from "@/constants";
+import { recipeDetailTab } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
 import * as styles from "./RecipeDetailModal.css";
@@ -14,14 +14,20 @@ import { scrollToElement } from "@/utils/scrollToElement";
 import { RawFoodOrderItem } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
+import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
+import {
+  CommitSelectionResult,
+  StagedSelection,
+} from "@/hooks/subscription/useRecipeSelection";
 
 interface RecipeDetailModalProps {
   rawFoodItem: RawFoodOrderItem;
   petName: string;
+  packData: CalculateRecipePackReturn;
   dailyRecommendKcal: number;
-
-  onApplyLocal: (packGrams: number, packPrice: number) => void;
-  onCommit: () => void;
+  stagedSelection: StagedSelection | null;
+  onStageSelection: (packGrams: number, packPrice: number) => void;
+  onCommitSelection: () => CommitSelectionResult;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -29,10 +35,11 @@ interface RecipeDetailModalProps {
 export default function RecipeDetailModal({
   rawFoodItem,
   petName,
+  packData,
   dailyRecommendKcal,
-
-  onApplyLocal,
-  onCommit,
+  stagedSelection,
+  onStageSelection,
+  onCommitSelection,
   isOpen,
   onClose,
 }: RecipeDetailModalProps) {
@@ -50,8 +57,10 @@ export default function RecipeDetailModal({
   }));
 
   const handleCommit = () => {
-    toast("레시피를 담았어요", "above-button");
-    onCommit();
+    const result = onCommitSelection();
+    if (result.success) {
+      toast("레시피를 담았어요", "above-button");
+    }
     onClose();
   };
 
@@ -98,10 +107,11 @@ export default function RecipeDetailModal({
         <MealAmountSelector
           ref={refs.amount}
           rawFoodItem={rawFoodItem}
-          recipeId={rawFoodItem.recipeId}
           petName={petName}
+          packData={packData}
           dailyRecommendKcal={dailyRecommendKcal}
-          onApply={onApplyLocal}
+          onStageSelection={onStageSelection}
+          stagedSelection={stagedSelection}
         />
         <RecipeBenefits ref={refs.benefits} />
         <RecipeIngredientsList ref={refs.ingredients} />

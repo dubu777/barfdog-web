@@ -11,71 +11,48 @@ import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
 import { useFormContext, useWatch } from "react-hook-form";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
-import { RawFoodOrderItem, RecipeDto } from "@/types";
+import { RawFoodOrderItem } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import {
   calculateRecipePack,
-  CalculateRecipePackOutput,
+  CalculateRecipePackReturn,
 } from "@/utils/subscription/calculateRecipe";
 import HelpIcon from "public/images/icons/help-fill.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
 import WarningIcon from "public/images/icons/warning.svg";
+import { StagedSelection } from "@/hooks/subscription/useRecipeSelection";
 
 interface MealAmountSelectorProps {
   rawFoodItem: RawFoodOrderItem;
   petName: string;
-  recipeId: number;
+  packData: CalculateRecipePackReturn;
   dailyRecommendKcal: number;
-  onApply: (packGrams: number, packPrice: number) => void;
+  stagedSelection: StagedSelection | null;
+  onStageSelection: (packGrams: number, packPrice: number) => void;
 }
 
 const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
   function MealAmountSelector(
-    { rawFoodItem, petName, recipeId, dailyRecommendKcal, onApply },
+    {
+      rawFoodItem,
+      petName,
+      dailyRecommendKcal,
+      onStageSelection,
+      packData,
+      stagedSelection,
+    },
     ref
   ) {
-    const { control } = useFormContext<SubscriptionValues>();
     const toast = useToastStore((s) => s.addToast);
-    const recipeList = useWatch({ control, name: "rawFoods" });
+    const displayPackGrams = stagedSelection?.packGrams ?? packData.packGrams;
+    const displayPackPrice = stagedSelection?.packPrice ?? packData.packPrice;
 
-    // form entry if exists
-    const entry = recipeList.find((r) => r.recipeId === recipeId);
-
-    // local input & display state
-    const [inputValue, setInputValue] = useState<string>("0");
-    const [display, setDisplay] = useState<CalculateRecipePackOutput>({
-      recommendedPackGrams: 0,
-      packGrams: 0,
-      packPrice: 0,
-      pricePer10g: 0,
-      under20g: 0,
-    });
-
-    // sync whenever inputs change
-    useEffect(() => {
-      const {
-        recommendedPackGrams,
-        packGrams,
-        packPrice,
-        pricePer10g,
-        under20g,
-      } = calculateRecipePack({
-        rawFoodItem,
-        customPackGrams: entry?.oneMealGramsPerRecipe,
-      });
-
-      setInputValue(packGrams.toString());
-      setDisplay({
-        recommendedPackGrams,
-        packGrams,
-        packPrice,
-        pricePer10g,
-        under20g,
-      });
-    }, [entry, dailyRecommendKcal, recipeId]);
+    const [inputValue, setInputValue] = useState<string>(
+      displayPackGrams.toString()
+    );
 
     const handleInputChange = useCallback(
       (val: string) => {
@@ -93,27 +70,26 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     );
 
     const handleApply = useCallback(() => {
+      console.log("???????");
+
       if (!inputValue.trim()) {
         toast("급여량을 입력해주세요", "above-button");
         return;
       }
-
       const parsed = parseFloat(inputValue);
       const clamped = clamp(parsed, 20, 500);
 
       if (parsed < 20) toast("한 끼 최소 급여량은 20g입니다.", "above-button");
       else if (parsed > 500) toast("최대 급여량은 500g입니다.", "above-button");
 
-      const { recommendedPackGrams, packGrams, packPrice, pricePer10g } =
-        calculateRecipePack({
-          rawFoodItem,
-          customPackGrams: clamped,
-        });
+      const { packPrice } = calculateRecipePack({
+        rawFoodItem,
+        customPackGrams: clamped,
+      });
 
-      setDisplay({ recommendedPackGrams, packGrams, packPrice, pricePer10g });
       setInputValue(clamped.toString());
-      onApply(clamped, packPrice);
-    }, [inputValue, onApply, dailyRecommendKcal, toast]);
+      onStageSelection(clamped, packPrice);
+    }, [inputValue, onStageSelection, dailyRecommendKcal, toast]);
 
     return (
       <section ref={ref} className={recipeDetailSection}>
@@ -150,7 +126,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
                 width: "auto",
               })}
             >
-              {!display.under20g && (
+              {!packData.under20g && (
                 <Text type="label2" color="gray900">
                   한 끼 추천 급여량
                 </Text>
@@ -170,27 +146,27 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
                 align: "end",
               })}
             >
-              {!display.under20g && (
+              {!packData.under20g && (
                 <Text type="label2" color="gray900">
-                  {display.recommendedPackGrams}g
+                  {packData.recommendedPackGrams}g
                 </Text>
               )}
               <Text type="label2" color="red">
-                {display.packGrams}g
+                {displayPackGrams}g
               </Text>
               <Text type="label2" color="red">
-                {display.packPrice.toLocaleString()}원
+                {displayPackPrice.toLocaleString()}원
               </Text>
             </div>
           </div>
-          {display.under20g && (
+          {packData.under20g && (
             <>
               <Divider color="gray800" thickness={1} />
               <div className={commonWrapper({ align: "start", gap: 8 })}>
                 <SvgIcon src={WarningIcon} size={20} />
                 <Text type="body3" color="gray900">
                   <Text type="label3" color="gray900">
-                    추천 급여량 {display.under20g}g
+                    추천 급여량 {packData.under20g}g
                   </Text>
                   구독 급여량은{" "}
                   <Text type="label3" color="gray900">

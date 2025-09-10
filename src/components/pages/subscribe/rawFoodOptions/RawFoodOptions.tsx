@@ -6,62 +6,49 @@ import { RawFoodOrderSheet } from "@/types/subscription";
 import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import useModal from "@/hooks/useModal";
 import RecommendKcalBottomSheet from "../bottomSheet/RecommendKcalBottomSheet";
-import { calculateRecipePack } from "@/utils/subscription/calculateRecipe";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useFormContext, useWatch } from "react-hook-form";
 import RawFoodCard from "./rawFoodCard/RawFoodCard";
+import { useRecipeCalculator } from "@/hooks/subscription/useRecipeCalculator";
 
 interface RawFoodOptionsProps {
   rawFoodSheetData: RawFoodOrderSheet;
-  selectedIds: number[];
 }
 
 export default function RawFoodOptions({
   rawFoodSheetData,
-  selectedIds,
 }: RawFoodOptionsProps) {
   const { isOpen, onClose, onToggle } = useModal();
   const { control } = useFormContext<SubscriptionValues>();
-  const recipeList = useWatch({ control, name: "rawFoods" });
+  const savedRecipes = useWatch({ control, name: "rawFoods" });
 
-  // rawFoodData에서 레시피 리스트 가져오기
-  const allRecipes = useMemo(
-    () => rawFoodSheetData.recipeList,
-    [rawFoodSheetData.recipeList]
-  );
+  // 서버의 원본 레시피 리스트
+  const originalRecipes = rawFoodSheetData.recipeList;
 
-  const packMap = useMemo(() => {
-    const map: Record<number, ReturnType<typeof calculateRecipePack>> = {};
-    allRecipes.forEach((rawFoodItem) => {
-      const entry = recipeList.find((e) => e.recipeId === rawFoodItem.recipeId);
-      map[rawFoodItem.recipeId] = calculateRecipePack({
-        rawFoodItem,
-        customPackGrams: entry?.oneMealGramsPerRecipe,
-      });
-    });
-    return map;
-  }, [allRecipes, recipeList]);
+  // 계산 로직
+  const { packMap } = useRecipeCalculator({
+    originalRecipes,
+    savedRecipes,
+  });
 
   const sections = [
     {
       key: "double",
       title: "더블미트 레시피",
       description: "두 가지 고기가 섞인 복합 단백질",
-      // items: allRecipes.filter((r) => r.meet === "DOUBLE"),
-      items: allRecipes.filter((r) => r.meet === null),
+      items: originalRecipes.filter((r) => r.meet === "DOUBLE"),
     },
     {
       key: "single",
       title: "싱글미트 레시피",
       description: "한 가지 고기로 이루어진 단일 단백질",
-      // items: allRecipes.filter((r) => r.meet === "SINGLE"),
-      items: allRecipes.filter((r) => r.meet === null),
+      items: originalRecipes.filter((r) => r.meet === "SINGLE"),
     },
   ];
 
@@ -79,7 +66,6 @@ export default function RawFoodOptions({
     onInit: () => scrollToElement(refs[tab.value!].current),
   }));
 
-  // dogName이 rawFoodData에 없으므로 임시로 처리 (실제로는 props로 전달받아야 함)
   const petName = "임시"; // 임시값
   const name = getNameWithPossessiveSuffix(petName);
   return (
@@ -125,11 +111,9 @@ export default function RawFoodOptions({
                       rawFoodItem={rowFoodItem}
                       dailyRecommendKcal={rawFoodSheetData.oneDayRecommendKcal}
                       inedibleFoods={rawFoodSheetData.inedibleFoods}
-                      selectedIds={selectedIds}
                       packData={packData}
                       petName={petName}
                       // petName={rawFoodSheetData.petName}
-                      isSelected={selectedIds.includes(rowFoodItem.recipeId)}
                       isUnder20g={packData.under20g !== undefined}
                     />
                   );

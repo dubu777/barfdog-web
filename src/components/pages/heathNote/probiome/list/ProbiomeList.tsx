@@ -8,7 +8,6 @@ import CreateButton from "@/components/common/createButton/CreateButton";
 import Card from "@/components/common/card/Card";
 import useModal from "@/hooks/useModal";
 import KitGuideModal from "@/components/pages/heathNote/probiome/modal/KitGuideModal";
-import { ProbiomeStatus } from "@/types/healthNote/probiome";
 import { useGetProbiomeList } from "@/api/healthNote/probiome/queries/useGetProbiomeList";
 import ProbiomeCard from "./ProbiomeCard";
 import Spinner from "@/components/common/spinner/Spinner";
@@ -26,7 +25,7 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
   } = useModal();
 
   // petId가 있는 경우에만 API 호출
-  const { data: probiomeList } = useGetProbiomeList(petId);
+  const { data: probiomeList, isLoading } = useGetProbiomeList(petId);
 
   const handleDetail = (diagnosisId: number) => {
     router.push(`/health-note/${petId}/probiome/detail/${diagnosisId}`);
@@ -62,7 +61,9 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
           text="사전 문진 작성하기"
         />
         <article className={styles.probiomeList}>
-          {probiomeList.length > 0 ? (
+          {isLoading ? (
+            <Spinner />
+          ) : probiomeList && probiomeList.length > 0 ? (
             probiomeList.map(
               ({ diagnosisId, diagnosisStatus, petName, submitDate }) => (
                 <ProbiomeCard

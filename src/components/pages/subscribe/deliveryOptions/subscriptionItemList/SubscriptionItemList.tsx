@@ -1,26 +1,24 @@
 import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import RecipeItemCard from "./recipeItemCard/RecipeItemCard";
 import React from "react";
 import Divider from "@/components/common/divider/Divider";
 import { DeliveryPlan, MealPlan, RawFoodOrderItem } from "@/types";
 import { DELIVERY_PLAN_LABEL } from "@/constants";
+import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface SubscriptionItemListProps {
-  recipeList: SubscriptionValues["rawFoods"];
   rawFoodItems: RawFoodOrderItem[];
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
-  packCount: number;
+  calculatedRecipes: CalculatedRecipe[];
 }
 
 export default function SubscriptionItemList({
-  recipeList,
   rawFoodItems,
   mealPlan,
   deliveryPlan,
-  packCount,
+  calculatedRecipes,
 }: SubscriptionItemListProps) {
   return (
     <div
@@ -38,8 +36,7 @@ export default function SubscriptionItemList({
         에 한 번씩 <br />
         아래의 상품이 배송돼요
       </Text>
-      {recipeList.map((item, idx) => {
-        // rawFoodItems에서 해당 recipeId에 맞는 정보 찾기
+      {calculatedRecipes.map((item, idx) => {
         const rawFoodItem = rawFoodItems.find(
           (rawItem) => rawItem.recipeId === item.recipeId
         );
@@ -47,15 +44,13 @@ export default function SubscriptionItemList({
         return (
           <React.Fragment key={item.recipeId}>
             <RecipeItemCard
-              packGrams={item.oneMealGramsPerRecipe}
-              originPrice={item.originalPrice ?? 0}
+              calculatedRecipe={item}
               mealPlan={mealPlan}
               deliveryPlan={deliveryPlan}
-              packCount={packCount}
               displayImageUrl={rawFoodItem?.displayImageUrl || ""}
               recipeName={rawFoodItem?.recipeNameKorea || ""}
             />
-            {idx < recipeList.length - 1 && (
+            {idx < calculatedRecipes.length - 1 && (
               <Divider color="gray200" thickness={1} />
             )}
           </React.Fragment>

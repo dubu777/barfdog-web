@@ -1,9 +1,8 @@
 // src/utils/priceUtils.ts
 import { DeliveryPlan, MealPlan } from "@/types/subscription";
 import { roundTo } from "../numberUtils";
-import { SubscriptionValues } from "../validation/subscriptionValidation";
 
-export interface CalculateRecipePackOutput {
+export interface CalculateRecipePackReturn {
   recommendedPackGrams: number; // 추천 급여량
   packGrams: number; // 팩당 그램 수 (추천 or 커스텀)
   packPrice: number; // 팩당 가격
@@ -72,7 +71,7 @@ export function calculateRecipeTotal(
   packPrice: number,
   mealPlan: MealPlan,
   deliveryPlan: DeliveryPlan,
-  recipeCount: 1 | 2
+  recipeCount: 0 | 1 | 2
 ): CalculateRecipeTotalOutput {
   const packsPerCycle = calculateDeliveryCyclePackCount(
     mealPlan,
@@ -87,61 +86,16 @@ export function calculateRecipeTotal(
 
   return { originalPrice, discountAmount, discountedPrice };
 }
-
-export function calculateTotalSubscriptionPrice(
-  rawFoods: SubscriptionValues["rawFoods"],
-  mealPlan: MealPlan,
-  deliveryPlan: DeliveryPlan
-): CalculateTotalPriceOutput {
-  const recipeCount = rawFoods.length as 1 | 2;
-
-  const recipes = rawFoods.map((item) => {
-    const { originalPrice, discountAmount, discountedPrice } =
-      calculateRecipeTotal(
-        item.packPrice ?? 0,
-        mealPlan,
-        deliveryPlan,
-        recipeCount
-      );
-    return {
-      ...item,
-      originalPrice,
-      discountAmount,
-      discountedPrice,
-    };
-  });
-
-  const totalOriginalPrice = recipes.reduce(
-    (s, r) => s + (r.originalPrice ?? 0),
-    0
-  );
-  const paymentExpectedPrice = recipes.reduce(
-    (s, r) => s + (r.discountedPrice ?? 0),
-    0
-  );
-  const totalDiscountAmount = totalOriginalPrice - paymentExpectedPrice;
-
-  return { totalOriginalPrice, paymentExpectedPrice, totalDiscountAmount };
-}
-
 /**
  * 한 팩당 그램 → 팩당 가격 → 10g당 가격 계산
  */
 export function calculateRecipePack({
   rawFoodItem,
   customPackGrams,
-}: CalculateRecipePackInput): CalculateRecipePackOutput {
+}: CalculateRecipePackInput): CalculateRecipePackReturn {
   // 서버에서 이미 계산된 추천 급여량 사용
   const recommendedPackGrams = rawFoodItem.oneMealRecommendGram;
   const pricePerGram = rawFoodItem.pricePerGram;
-
-  // 레거시 여부에 따라 pricePerGram 조정
-  // 기존 구독자 혜택 제거 정책 확정시 주석 된 부분 삭제
-  // const isLegacy = ORIGIN_SUBSCRIBE_ID_SET.has(subscribeId);
-  // const legacyConst = LEGACY_RECIPE_CONSTANTS[rawFoodItem.recipeId];
-  // if (isLegacy && legacyConst) {
-  //   pricePerGram = legacyConst.pricePerGram;
-  // }
 
   // 20g 미만일 때 사용자 안내용 값 반환
   const under20g = recommendedPackGrams < 20 ? recommendedPackGrams : undefined;

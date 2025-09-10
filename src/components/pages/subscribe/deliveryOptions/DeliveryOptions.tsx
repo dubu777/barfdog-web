@@ -4,51 +4,32 @@ import * as styles from "./DeliveryOptions.css";
 import Divider from "@/components/common/divider/Divider";
 import MealFrequency from "./mealFrequency/MealFrequency";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
-import { useFormContext, useWatch } from "react-hook-form";
 import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
-import { RawFoodOrderSheet } from "@/types";
-import {
-  calculateDeliveryCyclePackCount,
-  calculateTotalSubscriptionPrice,
-} from "@/utils/subscription/calculateRecipe";
-import { useMemo } from "react";
+import { DeliveryPlan, MealPlan, RawFoodOrderSheet } from "@/types";
 import SubscriptionItemList from "./subscriptionItemList/SubscriptionItemList";
 import SubscriptionSummary from "./subscriptionSummary/SubscriptionSummary";
+import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface DeliveryOptionsProps {
   rawFoodSheetData: RawFoodOrderSheet;
+  mealPlan: MealPlan;
+  deliveryPlan: DeliveryPlan;
+  paymentExpectedPrice: number;
+  totalOriginalPrice: number;
+  totalDiscountAmount: number;
+  calculatedRecipes: CalculatedRecipe[];
 }
 
 export default function DeliveryOptions({
   rawFoodSheetData,
+  mealPlan,
+  deliveryPlan,
+  paymentExpectedPrice,
+  totalOriginalPrice,
+  totalDiscountAmount,
+  calculatedRecipes,
 }: DeliveryOptionsProps) {
-  const { control } = useFormContext<SubscriptionValues>();
-
-  // 폼 필드 구독
-  const recipeList = useWatch({ control, name: "rawFoods" });
-  const mealPlan =
-    useWatch({
-      control,
-      name: "mealPlan",
-    }) || "TWO_MEAL";
-  const deliveryPlan =
-    useWatch({
-      control,
-      name: "deliveryPlan",
-    }) || "TWO_WEEK";
-  const packCount = calculateDeliveryCyclePackCount(
-    mealPlan,
-    deliveryPlan,
-    recipeList.length
-  );
-
-  const pricing = useMemo(
-    () => calculateTotalSubscriptionPrice(recipeList, mealPlan, deliveryPlan),
-    [recipeList, mealPlan, deliveryPlan]
-  );
-
   return (
     <section className={styles.deliveryOptionsContainer}>
       <div className={commonWrapper({ justify: "start", padding: 20 })}>
@@ -64,17 +45,16 @@ export default function DeliveryOptions({
       <DeliveryCycle />
       <Divider />
       <SubscriptionItemList
-        recipeList={recipeList}
         mealPlan={mealPlan}
         deliveryPlan={deliveryPlan}
-        packCount={packCount}
+        calculatedRecipes={calculatedRecipes}
         rawFoodItems={rawFoodSheetData.recipeList}
       />
       <Divider />
       <SubscriptionSummary
-        paymentExpectedPrice={pricing.paymentExpectedPrice}
-        totalOriginalPrice={pricing.totalOriginalPrice}
-        discountAmount={pricing.totalDiscountAmount}
+        paymentExpectedPrice={paymentExpectedPrice}
+        totalOriginalPrice={totalOriginalPrice}
+        discountAmount={totalDiscountAmount}
         deliveryPlan={deliveryPlan}
       />
     </section>

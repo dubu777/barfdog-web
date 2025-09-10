@@ -9,6 +9,7 @@ import {
   SubscriptionSkipType,
   AddressDto,
   UsingCoupon,
+  CreateSubscriptionRequest,
 } from "@/types";
 import { AxiosInstance } from "axios";
 
@@ -146,6 +147,24 @@ const getRawFoodOrderSheet = async (
   throw new Error(message);
 };
 
+const createSubscription = async ({
+  reportId,
+  body,
+}: {
+  reportId: number;
+  body: CreateSubscriptionRequest;
+}) => {
+  const { data } = await axiosInstance.post(
+    `api/v2/orders/payment/sheet/subscription/${reportId}`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "구독 생성에 실패했습니다";
+  throw new Error(message);
+};
+
 export {
   getPlanDiscount,
   getSubscriptionDetail,
@@ -158,4 +177,5 @@ export {
   cancelUsedCoupon,
   updateUsingCoupon,
   getRawFoodOrderSheet,
+  createSubscription,
 };

@@ -8,13 +8,11 @@ import animationData from "public/animations/loader.json";
 interface LottieLoaderProps {
   fullscreen?: boolean;
   size?: "sm" | "md" | "lg" | "xl";
-  className?: string;
 }
 
 const LottieLoader = ({
   fullscreen = false,
   size = "lg",
-  className,
 }: LottieLoaderProps) => {
   return (
     <div

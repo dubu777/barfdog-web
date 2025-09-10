@@ -214,6 +214,22 @@ interface RawFoodOrderSheet {
   recipeList: RawFoodOrderItem[];
 }
 
+interface RawFoodPayload {
+  oneMealGramsPerRecipe: number;
+  discountedPrice: number;
+  originalPrice: number;
+  recipeId: number;
+}
+
+interface CreateSubscriptionRequest {
+  deliveryPlan: DeliveryPlan;
+  mealPlan: MealPlan;
+  discountPrice: number;
+  paymentExpectedPrice: number;
+  totalOriginalPrice: number;
+  rawFoods: RawFoodPayload[];
+}
+
 type BenefitStatus = "AVAILABLE" | "REQUESTED" | "USED";
 
 type SubscriptionSkipType = "ONCE" | "WEEK";
@@ -260,4 +276,5 @@ export type {
   DeliveryPlan,
   RawFoodOrderItem,
   MealPlan,
+  CreateSubscriptionRequest,
 };
