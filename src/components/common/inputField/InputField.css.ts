@@ -1,7 +1,11 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const inputContainerStyle = style({});
+export const inputContainerStyle = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+});
 
 export const inputBoxStyle = style({
   display: "flex",

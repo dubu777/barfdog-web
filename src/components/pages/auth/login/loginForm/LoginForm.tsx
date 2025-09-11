@@ -69,7 +69,7 @@ const LoginForm = ({
         <Text type="headline4" color="gray500">
           |
         </Text>
-        <Link href="/find-account">
+        <Link href="/find-account?type=email">
           <Text type="headline4" color="gray500">
             아이디 찾기
           </Text>
@@ -77,7 +77,7 @@ const LoginForm = ({
         <Text type="headline4" color="gray500">
           |
         </Text>
-        <Link href="/find-account">
+        <Link href="/find-account?type=password">
           <Text type="headline4" color="gray500">
             비밀번호 찾기
           </Text>

@@ -5,20 +5,20 @@ import FindEmail from "../findEmail/FindEmail";
 import { findAccountTabBarContainer } from "../FindAccount.css";
 import Header from "@/components/layout/header/Header";
 import { useSearchParams } from "next/navigation";
-import FindEmailResult from "../findEmail/FindEmailResult";
 import ResetPassword from "../resetPassword/ResetPassword";
 
 export default function FindAccount() {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
+  const defaultIndex = type === "password" ? 1 : 0;
 
   const tabs: Tab[] = [
     {
       label: "아이디찾기",
-      content: type === "result" ? <FindEmailResult /> : <FindEmail />,
+      content: <FindEmail />,
     },
     {
-      label: "비밀번호 찾기",
+      label: "비밀번호 재설정",
       content: <ResetPassword />,
     },
   ];
@@ -31,6 +31,7 @@ export default function FindAccount() {
         tabs={tabs}
         variant="text"
         className={findAccountTabBarContainer}
+        defaultIndex={defaultIndex}
       />
     </>
   );

@@ -6,42 +6,36 @@ import { Controller } from "react-hook-form";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useFindUserEmail } from "@/api/auth/mutations/useFindAccount";
 import { useToastStore } from "@/store/useToastStore";
-import { useAuthStore } from "@/store/useAuthStore";
-import {
-  defaultFindUserEmailValues,
-  findUserEmailSchema,
-} from "@/utils/validation/auth/auth";
-import { FindUserEmail } from "@/types";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import {
+  defaultFindUserEmailValues,
+  FindEmailValues,
+  findUserEmailSchema,
+} from "@/utils/validation/auth/findEmail";
 
 export default function FindEmail() {
   const router = useRouter();
   const { handleSubmit, control, errors, isValid } =
-    useFormHandler<FindUserEmail>(
+    useFormHandler<FindEmailValues>(
       findUserEmailSchema,
       defaultFindUserEmailValues
     );
   const { mutate } = useFindUserEmail();
   const { addToast } = useToastStore();
-  const { setTempEmailUserInfo } = useAuthStore();
 
-  const onSubmit = (data: FindUserEmail) => {
-    mutate(
-      { name: data.name, phoneNumber: data.phoneNumber },
-      {
-        onSuccess: (data) => {
-          addToast("아이디가 성공적으로 확인되었습니다!", "above-button");
-          setTempEmailUserInfo(data);
-          setTimeout(() => {
-            router.push("/find-account?type=result");
-          }, 500);
-        },
-        onError: () => {
-          addToast("일치하는 정보를 찾을 수 없습니다.", "above-button");
-        },
-      }
-    );
+  const onSubmit = (form: FindEmailValues) => {
+    mutate(form, {
+      onSuccess: () => {
+        addToast("아이디가 성공적으로 확인되었습니다!", "above-button");
+        setTimeout(() => {
+          router.push("/find-account?type=result");
+        }, 500);
+      },
+      onError: () => {
+        addToast("일치하는 정보를 찾을 수 없습니다.", "above-button");
+      },
+    });
   };
   return (
     <section className={styles.findAccountContainer}>

@@ -1,15 +1,8 @@
 import * as yup from "yup";
-import {
-  FindUserEmail,
-  ConnectSnsPassword,
-  GenderType,
-  UserInfo,
-} from "@/types";
+import { ConnectSnsPassword, GenderType, UserInfo } from "@/types";
 import { formatDate } from "@/utils/dateUtils";
 
 export {
-  findUserEmailSchema,
-  defaultFindUserEmailValues,
   loginSchema,
   defaultLoginValues,
   connectSnsSchema,
@@ -146,22 +139,6 @@ const defaultSignupStepValues: SignupStepValues = {
       alliancePolicy: false,
     },
   },
-};
-
-const findUserEmailSchema = yup.object().shape({
-  name: yup
-    .string()
-    .min(2, "이름은 최소 2자 이상이어야 합니다.")
-    .required("이름은 필수입니다."),
-  phoneNumber: yup
-    .string()
-    .matches(/^\d{10,11}$/, "휴대폰 번호는 10~11자리 숫자여야 합니다.")
-    .required("휴대폰 번호는 필수입니다."),
-});
-
-const defaultFindUserEmailValues: FindUserEmail = {
-  name: "",
-  phoneNumber: "",
 };
 
 const loginSchema = yup.object().shape({

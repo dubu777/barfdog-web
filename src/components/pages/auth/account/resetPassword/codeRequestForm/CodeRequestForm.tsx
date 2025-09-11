@@ -8,7 +8,8 @@ import { ResetPasswordStep } from "@/types";
 interface CodeRequestFormProps {
   form: UseFormReturn<RequestResetCodeValues>;
   infoMessage: string;
-  isRequested: boolean;
+  errorMessage: string;
+  step: ResetPasswordStep;
   authCode: string;
   onRequestCode: (form: RequestResetCodeValues) => void;
   onAuthCodeChange: (code: string) => void;
@@ -17,7 +18,8 @@ interface CodeRequestFormProps {
 export default function CodeRequestForm({
   form,
   infoMessage,
-  isRequested,
+  errorMessage,
+  step,
   authCode,
   onRequestCode,
   onAuthCodeChange,
@@ -27,7 +29,7 @@ export default function CodeRequestForm({
     formState: { errors, isValid },
     handleSubmit,
   } = form;
-
+  const isVerified = step === "reset";
   return (
     <>
       <Controller
@@ -38,6 +40,7 @@ export default function CodeRequestForm({
             id="name"
             label="이름"
             isRequired
+            disabled={isVerified}
             placeholder="이름 입력"
             error={errors?.name?.message}
             {...field}
@@ -52,6 +55,7 @@ export default function CodeRequestForm({
             id="email"
             label="이메일(아이디)"
             isRequired
+            disabled={isVerified}
             placeholder="example@gmail.com."
             error={errors?.email?.message}
             {...field}
@@ -67,21 +71,24 @@ export default function CodeRequestForm({
               id="phoneNumber"
               label="휴대폰 번호"
               isRequired
+              disabled={isVerified}
               placeholder="- 제외 숫자만 입력"
               error={errors?.phoneNumber?.message}
               {...field}
               confirmButton
-              confirmButtonDisabled={!isValid}
+              confirmButtonDisabled={!isValid || isVerified}
               confirmButtonText="인증번호"
               onSubmit={handleSubmit(onRequestCode)}
             />
           )}
         />
-        {isRequested && (
+        {step !== "request" && (
           <InputField
             placeholder="인증번호 입력"
-            error={infoMessage}
+            success={infoMessage}
+            error={errorMessage}
             value={authCode}
+            disabled={isVerified}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "");
               onAuthCodeChange(value);

@@ -44,6 +44,7 @@ export default function ResetPassword() {
   const [authToken, setAuthToken] = useState("");
   const [authCode, setAuthCode] = useState("");
   const [infoMessage, setInfoMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const isResetFormValid = resetForm.formState.isValid;
 
@@ -66,6 +67,7 @@ export default function ResetPassword() {
 
   const handleVerifyCode = useCallback(() => {
     setStep("reset");
+    setInfoMessage("휴대폰 번호 인증이 완료됐어요");
     // verifyCode(
     //   { authToken, authCode },
     //   {
@@ -131,8 +133,9 @@ export default function ResetPassword() {
       <CodeRequestForm
         form={requestForm}
         infoMessage={infoMessage}
+        errorMessage={errorMessage}
         onRequestCode={handleRequestCode}
-        isRequested={step !== "request"}
+        step={step}
         authCode={authCode}
         onAuthCodeChange={setAuthCode}
       />
