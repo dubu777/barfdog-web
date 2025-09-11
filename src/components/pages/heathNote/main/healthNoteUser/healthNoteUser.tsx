@@ -8,7 +8,7 @@ import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/Cre
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { useGetFullCheckSummary } from "@/api/healthNote/fullCheck/queries/useGetFullCheckSummary";
-import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants/healthNote/\bcommon";
+import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants/healthNote/common";
 
 const HealthNoteUser = () => {
   const { data: petList = [] } = useGetPetList();

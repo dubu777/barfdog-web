@@ -9,6 +9,7 @@ import RecommendedRecipeList from "./recommendedRecipeList/RecommendedRecipeList
 import DailyCalorie from "./dailyCalorie/DailyCalorie";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useRouter } from "next/navigation";
+import { HealthConcernType } from "@/types";
 
 interface DietAnalysisResultProps {
   reportId: number;
@@ -33,7 +34,7 @@ export default function DietAnalysisResult({
         dogName={dietAnalysisResult.secondResultResponse.dogName}
         firstResponse={dietAnalysisResult.firstResultResponse}
         firstHealthConcerns={
-          dietAnalysisResult.secondResultResponse.firstHealthConcerns
+          dietAnalysisResult.secondResultResponse.firstHealthConcerns as HealthConcernType & "NONE"
         }
       />
       <Divider thickness={8} color="gray100" />
