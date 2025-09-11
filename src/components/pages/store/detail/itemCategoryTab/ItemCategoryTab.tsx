@@ -1,11 +1,14 @@
 import * as styles from "./ItemCategoryTab.css";
-import { useMemo, useRef, useState } from "react";
+import { useMemo } from "react";
+import dynamic from "next/dynamic";
 import Divider from "@/components/common/divider/Divider";
 import TabBar from "@/components/common/tabBar/TabBar";
 import ItemDetailLayout from "../../layout/ItemDetailLayout";
 import ItemReview from "./itemReview/ItemReview";
-import ItemDetail from "./itemDetail/ItemDetail";
 import RefundExchangeGuide from "@/components/pages/store/detail/itemCategoryTab/refundExchangeGuide/RefundExchangeGuide";
+import useStickyTabScroll from "@/hooks/useStickyTabScroll";
+
+const ItemDetail = dynamic(() => import("./itemDetail/ItemDetail"), { ssr: false });
 
 interface ItemCategory {
   itemId: number;
@@ -43,23 +46,11 @@ export default function ItemCategoryTab({
       content: <RefundExchangeGuide />,
     },
   ];
-  const tabContentRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const handleTabClick = (index: number) => {
-  setActiveIndex(index);
-  const target = tabContentRefs.current[index];
-  if (target) {
-    const stickyOffset = 109; // tabBar 높이
-    const targetPosition =
-      target.getBoundingClientRect().top + window.scrollY - stickyOffset;
-
-    window.scrollTo({
-      top: targetPosition,
-      behavior: "smooth",
-    });
-  }
-};
+  
+  const { tabContentRefs, activeIndex, handleTabClick } = useStickyTabScroll({ 
+    stickyOffset: 109,
+    behavior: 'auto'  
+  });
 
   return (
     <div className={styles.itemCategoryContainer}>
@@ -69,28 +60,23 @@ export default function ItemCategoryTab({
         onTabClick={handleTabClick}
         hasTabContent={false}
         variant="text"
-        justifyContent="flexStart"
         className={styles.itemCategoryTab}
       />
-      <div>
-        {tabs.map((tab, index) => (
-          <div 
-            key={index}
-            ref={(el) => {
-              tabContentRefs.current[index] = el;
-            }}
+      {tabs.map((tab, index) => (
+        <div 
+          key={index} 
+          ref={(el) => {tabContentRefs.current[index] = el!}}
+        >
+          <ItemDetailLayout
+            title={tab.title ?? tab.label}
           >
-            <ItemDetailLayout
-              title={tab.label !== '반품/교환' && (tab.title ?? tab.label)}
-            >
-              {tab.content}
-            </ItemDetailLayout>
-            {index !== tabs.length - 1 && 
-              <Divider thickness={8} color='gray100' />
-            }
-          </div>
-        ))}
-      </div>
+            {tab.content}
+          </ItemDetailLayout>
+          {index !== tabs.length - 1 && 
+            <Divider thickness={8} color='gray100' />
+          }
+        </div>
+      ))}
     </div>
   );
 }

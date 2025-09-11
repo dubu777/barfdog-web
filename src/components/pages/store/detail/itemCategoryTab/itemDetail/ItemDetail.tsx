@@ -2,7 +2,9 @@ import * as styles from './ItemDetail.css';
 import { sanitizedHTML } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import useSanitizedHTML from "@/hooks/useSanitizedHTML";
+import DOMPurify from "dompurify";
+import parse from "html-react-parser";
+import { useEffect, useRef } from "react";
 
 interface ItemDetailProps {
   contents: string;
@@ -13,7 +15,19 @@ export default function ItemDetail({
   contents,
   description,
 }: ItemDetailProps) {
-  const itemContents = useSanitizedHTML(contents);
+  const cleanHTML = DOMPurify.sanitize(contents) ?? '';
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // HTML 콘텐츠가 로드된 후 observer 재시작을 위한 이벤트 발생
+  useEffect(() => {
+    if (contentRef.current && cleanHTML) {
+      // DOM이 변경되었음을 알리는 커스텀 이벤트 발생
+      const event = new CustomEvent('contentLoaded', {
+        detail: { element: contentRef.current }
+      });
+      window.dispatchEvent(event);
+    }
+  }, [cleanHTML]);
 
   return (
     <>
@@ -27,9 +41,11 @@ export default function ItemDetail({
       </div>
       <Divider thickness={1} color='gray100' />
       <div 
-        dangerouslySetInnerHTML={{ __html: itemContents }} 
-        className={`${sanitizedHTML} ${styles.detailContents}`} 
-      />
+        ref={contentRef}
+        className={`${sanitizedHTML} ${styles.detailContents}`}
+      >
+        {parse(cleanHTML)}
+      </div>
     </>
   );
 }

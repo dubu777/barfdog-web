@@ -24,7 +24,7 @@ import { HealthConcernType } from "@/types";
 interface ResultSummaryProps {
   dogName: string;
   firstResponse: FirstResultResponse;
-  firstHealthConcerns: HealthConcernType;
+  firstHealthConcerns: HealthConcernType & "NONE";
 }
 
 export default function ResultSummary({
@@ -58,7 +58,8 @@ export default function ResultSummary({
           className={styles.resultSummaryCard}
         >
           {ConcernIcon && (
-            <ConcernIcon className={styles.healthConcernsImageWrapper} />
+            <SvgIcon src={ConcernIcon} className={styles.healthConcernsImageWrapper} />
+            // <ConcernIcon className={styles.healthConcernsImageWrapper} />
           )}
           <div
             className={commonWrapper({

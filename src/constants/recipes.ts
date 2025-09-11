@@ -7,7 +7,7 @@ import DuckIcon from "public/images/recipes/icon/duck.svg";
 import EggPairIcon from "public/images/recipes/icon/eggPair.svg";
 import FlaxSeedIcon from "public/images/recipes/icon/flaxSeed.svg";
 import GreenBananaIcon from "public/images/recipes/icon/greenBanana.svg";
-import GreenBeanIcon from "public/images/recipes/icon/greenBean.svg";
+import GreenBeanIcon from "public/images/recipes/icon/greenbean.svg";
 import HampSeedIcon from "public/images/recipes/icon/hampSeed.svg";
 import KelpIcon from "public/images/recipes/icon/kelp.svg";
 import LambIcon from "public/images/recipes/icon/lamb.svg";

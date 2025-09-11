@@ -10,5 +10,5 @@ export const itemCategoryTab = style({
   boxShadow: themeVars.shadow.light,
   position: 'sticky',
   top: '52px',
-  zIndex: 299,
+  zIndex: 100,
 })

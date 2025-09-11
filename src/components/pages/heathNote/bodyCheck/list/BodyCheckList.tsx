@@ -6,7 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Text from "@/components/common/text/Text";
-import EmptyList from "@/components/pages/heathNote/common/emptyList/EmptyList";
+import EmptyList from "@/components/common/emptyList/EmptyList";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Card from "@/components/common/card/Card";
 import Divider from "@/components/common/divider/Divider";
@@ -118,7 +118,7 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
             </>
           ) : (
             <div className={styles.bodyCheckEmptyList}>
-              <EmptyList />
+              <EmptyList title={`등록된 검사 결과가 없어요\n진단 후 결과를 기록해보세요`} />
             </div>
           )
         }
