@@ -10,7 +10,7 @@ import Chips from "@/components/common/chips/Chips";
 import HorizontalProgressBar from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
 import TextButton from "@/components/common/textButton/TextButton";
 import Button from "@/components/common/button/Button";
-import EmptyList from "@/components/pages/heathNote/common/emptyList/EmptyList";
+import EmptyList from "@/components/common/emptyList/EmptyList";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import { useInView } from "react-intersection-observer";
@@ -106,7 +106,7 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
           </>
         ) : (
           <div className={styles.fullCheckEmptyList}>
-            <EmptyList />
+            <EmptyList title={`등록된 검사 결과가 없어요\n진단 후 결과를 기록해보세요`} />
             <Button variant='solid' buttonColor='gray900' className={styles.createSurveyButton}>
               진단하러 가기
             </Button>

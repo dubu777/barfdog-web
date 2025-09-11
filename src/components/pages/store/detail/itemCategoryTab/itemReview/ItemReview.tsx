@@ -13,6 +13,8 @@ import { usePagination } from "@/hooks/usePagination";
 import { useImageModal } from '@/hooks/useImageModal';
 import { UploadedFile } from '@/types';
 import { prefetchGetStoreItemReviewList, useGetStoreItemReviewList } from "@/api/store/queries/useGetStoreItemReviewList";
+import EmptyList from '@/components/common/emptyList/EmptyList';
+import { commonWrapper } from '@/styles/common.css';
 
 interface ItemReviewProps {
   itemId: number;
@@ -54,48 +56,55 @@ export default function ItemReview({
 
   return (
     <div className={styles.reviewList}>
-      {reviewList.map((review, index) => {
-        const imageList = review.reviewImageDtoList.map(review => ({
-          filename: review.filename, // 추후 삭제 필요
-          url: review.url, // 추후 삭제 필요
-          fileId: review.filename,
-          fileName: review.filename,
-          folder: 'review',
-          fileStatus: 'ADDED',
-          displayImageUrl: { url: review.url },
-        }));
-        return (
-        <Fragment key={review.reviewDto.id}>
-          <div className={styles.reviewItem}>
-            <div className={styles.reviewDefaultInfo}>
-              <div className={styles.reviewUserName}>
+      {reviewList.length > 0 ?
+        reviewList.map((review, index) => {
+          const imageList = review.reviewImageDtoList.map(review => ({
+            filename: review.filename, // 추후 삭제 필요
+            url: review.url, // 추후 삭제 필요
+            fileId: review.filename,
+            fileName: review.filename,
+            folder: 'review',
+            fileStatus: 'ADDED',
+            displayImageUrl: { url: review.url },
+          }));
+          return (
+          <Fragment key={review.reviewDto.id}>
+            <div className={styles.reviewItem}>
+              <div className={styles.reviewDefaultInfo}>
+                <div className={styles.reviewUserName}>
+                  <Text type='body3'>
+                    {maskString(review?.reviewDto?.username ?? '', 1)}
+                  </Text>
+                  <RateStar value={review?.reviewDto?.star} rateLength={5} />
+                </div>
                 <Text type='body3'>
-                  {maskString(review?.reviewDto?.username ?? '', 1)}
+                  {review?.reviewDto?.createdDate}
                 </Text>
-                <RateStar value={review?.reviewDto?.star} rateLength={5} />
               </div>
-              <Text type='body3'>
-                {review?.reviewDto?.createdDate}
-              </Text>
+              <Divider thickness={1} color='gray300' />
+              <div className={styles.reviewContentsInfo}>
+                <ImageCarousel
+                  imageList={imageList}
+                  handleThumbnailClick={(index) => {
+                    handleThumbnailClick(index);
+                    setSelectedImageList(imageList as unknown as UploadedFile[]);
+                  }}
+                />
+                <Text type='body2'>{review.reviewDto.contents}</Text>
+              </div>
             </div>
-            <Divider thickness={1} color='gray300' />
-            <div className={styles.reviewContentsInfo}>
-              <ImageCarousel
-                imageList={imageList}
-                handleThumbnailClick={(index) => {
-                  handleThumbnailClick(index);
-                  setSelectedImageList(imageList as unknown as UploadedFile[]);
-                }}
-              />
-              <Text type='body2'>{review.reviewDto.contents}</Text>
-            </div>
+            {index !== reviewList.length && 
+              <Divider thickness={4} color='gray50' />
+            }
+            <Pagination {...paginationProps} />
+          </Fragment>
+        )
+        })
+        : (
+          <div className={commonWrapper({ paddingBottom: 40 })}>
+            <EmptyList title={`등록된 리뷰가 없어요\n이 상품의 첫 번째 리뷰를 작성해 보세요`} />
           </div>
-          {index !== reviewList.length && 
-            <Divider thickness={4} color='gray50' />
-          }
-        </Fragment>
-      )
-      })}
+        )}
       {isOpen && selectedImageList &&
         <ImagesModal
           isOpen={isOpen}
@@ -104,7 +113,6 @@ export default function ItemReview({
           imageList={selectedImageList}
         />
       }
-      <Pagination {...paginationProps} />
     </div>
   );
 };
