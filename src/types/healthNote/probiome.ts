@@ -1,6 +1,10 @@
 import { FileChangeInfo } from "../common";
 import { DogSize, Gender } from "../survey";
 
+interface FileUrl {
+  url: string;
+}
+
 interface ProbiomeSurvey {
   bodyFit: string; // "NORMAL" 등
   probioticsStatus: string; // "TAKING" 등
@@ -69,15 +73,11 @@ interface ProbiomeDto {
   kitId: number;
   diagnosisStatus: ProbiomeStatus;
   submitDate: string;
-  downloadReportUrl: string | null;
+  downloadReportUrl: FileUrl | null;
   deliveryInfo: DeliveryAddressInfo;
 }
 
 type ProbiomeList = ProbiomeDto[];
-
-interface FileUrl {
-  url: string;
-}
 
 interface ProbiomeDiagnosisInfo {
   diagnosisId: number;

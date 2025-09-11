@@ -1,5 +1,5 @@
 import * as styles from "./PickupForm.css";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import Card from "@/components/common/card/Card";
@@ -13,6 +13,7 @@ import { useDeliveryStore } from "@/store/order/useDeliveryStore";
 import MultiFileUploader from "@/components/common/multiFileUploader/MultiFileUploader";
 import { PICKUP_NOTICE_LIST } from "@/constants/healthNote/probiome";
 import InfoList from "@/components/common/typography/infoList/InfoList";
+import Spinner from "@/components/common/spinner/Spinner";
 
 interface PickupFormProps {
   uploadedFiles: UploadedFile[];
@@ -29,18 +30,35 @@ export default function PickupForm({
   isConfirmed,
   setIsConfirmed,
 }: PickupFormProps) {
-  const { data: addressData } = useGetAddressList();
-  const rawDefaultAddress = addressData.find(
-    (address) => address.default === true
-  );
-
-  const defaultAddress = rawDefaultAddress
-    ? (({ id, ...rest }) => ({ ...rest, deliveryId: id }))(rawDefaultAddress)
-    : null;
-
+  const { data: addressData, isLoading } = useGetAddressList();
   const { deliveryDto, setDeliveryDto, setBackupDeliveryDto } =
     useDeliveryStore();
+
+  const rawDefaultAddress = useMemo(
+    () => addressData?.find((a) => a.default === true),
+    [addressData]
+  );
+
+  const defaultAddress = useMemo(() => {
+    if (!rawDefaultAddress) return null;
+    const { id, ...rest } = rawDefaultAddress;
+    return { ...rest, deliveryId: id }; // ClientDeliveryDto 형태로 변환
+  }, [rawDefaultAddress]);
+
   const hasDefaultAddress = deliveryDto.deliveryId !== 0;
+
+  // 3) 기본 주소 세팅: 데이터가 도착했을 때 1회만
+  useEffect(() => {
+    if (defaultAddress && deliveryDto.deliveryId === 0) {
+      setDeliveryDto(defaultAddress);
+      setBackupDeliveryDto?.(defaultAddress); // 필요 시
+    }
+  }, [
+    defaultAddress,
+    deliveryDto.deliveryId,
+    setDeliveryDto,
+    setBackupDeliveryDto,
+  ]);
 
   const {
     isOpen: isOpenDeliveryModal,
@@ -48,11 +66,9 @@ export default function PickupForm({
     onClose: onCloseDeliveryModal,
   } = useModal();
 
-  useEffect(() => {
-    if (defaultAddress) {
-      setDeliveryDto(defaultAddress);
-    }
-  }, []);
+  if (!addressData || isLoading) {
+    return <Spinner fullscreen />;
+  }
 
   return (
     <>
@@ -85,9 +101,7 @@ export default function PickupForm({
         </div>
         <Divider thickness={8} color="gray50" />
         <div className={styles.requestFormBox({ gap: 20 })}>
-          <Text type="title4">
-            아래의 사항을 꼭 확인해 주세요
-          </Text>
+          <Text type="title4">아래의 사항을 꼭 확인해 주세요</Text>
           <Card
             shadow="none"
             backgroundColor="gray50"

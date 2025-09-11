@@ -79,6 +79,16 @@ const createProbiomePickup = async ({
   throw new Error(data.message);
 };
 
+const downloadProbiomeReportByUrl = async (url: string): Promise<Blob> => {
+  const res = await axiosInstance.get(url, {
+    responseType: "blob",
+    withCredentials: true,
+    timeout: 50000,
+  });
+  console.log(res);
+  return res.data;
+};
+
 export {
   createProbiomeResult,
   getProbiomeDetail,
@@ -86,4 +96,5 @@ export {
   checkProbiomeKit,
   getProbiomePreInfo,
   createProbiomePickup,
+  downloadProbiomeReportByUrl,
 };

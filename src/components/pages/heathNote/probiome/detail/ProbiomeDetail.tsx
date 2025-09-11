@@ -22,7 +22,7 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
   const { data, isLoading } = useGetProbiomeDetail(diagnosisId);
 
   if (isLoading || !data) {
-    return <Spinner />;
+    return <Spinner fullscreen />;
   }
 
   const sectionData = buildProbiomeSectionData(data.survey);
@@ -47,9 +47,7 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
       })}
     >
       <div className={commonWrapper({ justify: "between", paddingTop: 20 })}>
-        <Text type="title3">
-          {data.diagnosisInfo.petName} 문진 상세
-        </Text>
+        <Text type="title3">{data.diagnosisInfo.petName} 문진 상세</Text>
         <Text type="body2" color="gray700">
           {data.diagnosisInfo.submitDate}
         </Text>

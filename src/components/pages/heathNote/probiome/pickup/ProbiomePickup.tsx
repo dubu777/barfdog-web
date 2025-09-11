@@ -1,6 +1,6 @@
 "use client";
 import * as styles from "./ProbiomePickup.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
@@ -49,8 +49,6 @@ export default function ProbiomePickup({
       },
     }),
   });
-
-  console.log(fileChangeInfo);
 
   useCancelUploadOnLeave({
     hasPendingUploads,

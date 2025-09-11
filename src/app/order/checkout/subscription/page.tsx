@@ -7,7 +7,6 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import SubscriptionOrderContainer from "@/components/pages/checkout/subscription/subscriptionOrderContainer/SubscriptionOrderContainer";
-import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 import { prefetchGetSubscriptionOrder } from "@/api/order/queries/usePrefetchGetSubscriptionOrder";
 import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 
@@ -22,7 +21,6 @@ export default async function SubscriptionPage({
 
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionOrder(queryClient, subscribeId);
-  await prefetchGetAddressList(queryClient);
   await prefetchGetCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 

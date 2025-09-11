@@ -14,12 +14,11 @@ interface GeneralOrderItemCardProps {
 export default function GeneralOrderItemCard({
   orderItemData,
 }: GeneralOrderItemCardProps) {
-  const baseImageUrl = process.env.NEXT_PUBLIC_S3_URL;
   return (
     <div className={styles.orderItemCardContainer}>
       <div className={commonWrapper({ gap: 8, justify: "start" })}>
         <Image
-          src={`${baseImageUrl}${orderItemData.itemImageFilename}`}
+          src="/images/recipes/background.jpg"
           alt="임시"
           width={88}
           height={88}
@@ -29,9 +28,7 @@ export default function GeneralOrderItemCard({
         <div className={styles.orderItemContentWrapper}>
           <div className={styles.orderItemInfoWrapper}>
             <Text type="label2">{orderItemData.name}</Text>
-            <Text type="body3">
-              구매수량 | {orderItemData.amount}개
-            </Text>
+            <Text type="body3">구매수량 | {orderItemData.amount}개</Text>
           </div>
           <Text type="headline2">
             {formatNumberWithCommas(orderItemData.itemOriginalPrice)}원

@@ -13,16 +13,20 @@ interface ProbiomeCardProps {
   status: ProbiomeStatus;
   submitDate: string;
   petName: string;
+  downloadReportUrl?: string;
   onDetail: () => void;
   onReturn: () => void;
+  onReportDownload: (url: string, memberName: string) => void;
 }
 
 export default function ProbiomeCard({
   status,
   submitDate,
   petName,
+  downloadReportUrl,
   onDetail,
   onReturn,
+  onReportDownload,
 }: ProbiomeCardProps) {
   const statusConfig = getProbiomeStatusConfig(status);
 
@@ -62,7 +66,12 @@ export default function ProbiomeCard({
           </Button>
         )}
         {status === "REPORT_COMPLETED" && (
-          <Button variant="outline" size="sm" fullWidth>
+          <Button
+            variant="outline"
+            size="sm"
+            fullWidth
+            onClick={() => onReportDownload(downloadReportUrl!, petName)}
+          >
             결과 다운로드
           </Button>
         )}

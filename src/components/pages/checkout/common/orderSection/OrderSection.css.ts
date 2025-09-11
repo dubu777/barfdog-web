@@ -17,13 +17,13 @@ export const OrderSectionTitleWrapper = style({
   justifyContent: "space-between",
   alignItems: "center",
   alignSelf: "stretch",
-})
+});
 export const subTitleWrapper = style({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-})
-
+  cursor: "pointer",
+});
 
 export const OrderSectionSubtitle = recipe({
   base: {

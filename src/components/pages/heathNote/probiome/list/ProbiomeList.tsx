@@ -11,6 +11,9 @@ import KitGuideModal from "@/components/pages/heathNote/probiome/modal/KitGuideM
 import { useGetProbiomeList } from "@/api/healthNote/probiome/queries/useGetProbiomeList";
 import ProbiomeCard from "./ProbiomeCard";
 import Spinner from "@/components/common/spinner/Spinner";
+import { useDownloadProbiomeReport } from "@/api/healthNote/probiome/mutations/useDownloadProbiomeReport";
+import { downloadBlobFile } from "@/utils/downloadBlobFile";
+import { useToastStore } from "@/store/useToastStore";
 
 interface ProbiomeListProps {
   petId: number;
@@ -18,6 +21,8 @@ interface ProbiomeListProps {
 
 export default function ProbiomeList({ petId }: ProbiomeListProps) {
   const router = useRouter();
+  const { addToast } = useToastStore();
+
   const {
     isOpen: isOpenKitGuideModal,
     onClose: onCloseKitGuideModal,
@@ -26,6 +31,7 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
 
   // petId가 있는 경우에만 API 호출
   const { data: probiomeList, isLoading } = useGetProbiomeList(petId);
+  const { mutate: downloadReport } = useDownloadProbiomeReport();
 
   const handleDetail = (diagnosisId: number) => {
     router.push(`/health-note/${petId}/probiome/detail/${diagnosisId}`);
@@ -34,7 +40,19 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
     router.push(`/health-note/${petId}/probiome/pickup/${diagnosisId}`);
   };
 
-  // const tempStatus = "SUBMITTED" as ProbiomeStatus;
+  const handleReportDownload = (url: string, petName: string) => {
+    downloadReport(url, {
+      onSuccess: (blob) => {
+        downloadBlobFile(blob, `Report_${petName}.pdf`);
+        addToast("결과지 다운로드에 성공했습니다.");
+      },
+      onError: (err) => {
+        console.error(err);
+        addToast("결과지 다운로드에 실패했습니다.");
+      },
+    });
+  };
+
   return (
     <>
       <section className={styles.probiomeListContainer}>
@@ -65,12 +83,20 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
             <Spinner />
           ) : probiomeList && probiomeList.length > 0 ? (
             probiomeList.map(
-              ({ diagnosisId, diagnosisStatus, petName, submitDate }) => (
+              ({
+                diagnosisId,
+                diagnosisStatus,
+                petName,
+                submitDate,
+                downloadReportUrl,
+              }) => (
                 <ProbiomeCard
                   key={diagnosisId}
                   status={diagnosisStatus}
                   submitDate={submitDate}
                   petName={petName}
+                  downloadReportUrl={downloadReportUrl?.url}
+                  onReportDownload={handleReportDownload}
                   onDetail={() => handleDetail(diagnosisId)}
                   onReturn={() => handleReturn(diagnosisId)}
                 />

@@ -1,68 +1,80 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
-import { useGetGeneralOrder } from "@/api/order/queries/useGetGeneralOrder";
-import { SaveGeneralOrderRequest } from "@/types";
-import { useUpdateOrderStores } from "@/utils/order/updateOrderStores";
-import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
-import Divider from "@/components/common/divider/Divider";
 
-import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
+// API & Data Fetching
+import { useGetGeneralOrder } from "@/api/order/queries/useGetGeneralOrder";
+
+// Stores (상태 관리)
+import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
 import { useOrderStore } from "@/store/order/useOrderStore";
-import PaymentMethod from "../common/paymentMethod/PaymentMethod";
+import { useRewardStore } from "@/store/order/useRewardStore";
+import { usePaymentStore } from "@/store/order/usePaymentStore";
+import { useToastStore } from "@/store/useToastStore";
+
+// Custom Hooks
+import { useOrderForm } from "@/hooks/order/useOrderForm";
+import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
+import { useUpdateOrderStores } from "@/hooks/order/updateOrderStores";
+
+// Components
+import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
+import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelector";
+import GeneralOrderItemList from "./generalOrderItemList/GenaralOrderItemList";
+import CouponSelector from "../common/couponSelector/CouponSelector";
 import RewardUsage from "../common/reward/RewardUsage";
+import PaymentMethod from "../common/paymentMethod/PaymentMethod";
 import OrderSummary from "../common/orderSummary/OrderSummary";
+import OrderTerms from "../common/orderTerms/OrderTerms";
+import OrderSection from "../common/orderSection/OrderSection";
+import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/common/text/Text";
+import FooterButton from "@/components/common/footerButton/FooterButton";
+
+// Constants & Types
+import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
+import { SaveGeneralOrderRequest } from "@/types";
 import {
   defaultOrderValues,
   getOrderSchema,
   OrderFormValues,
 } from "@/utils/validation/rewardValidation";
-import { useRewardStore } from "@/store/order/useRewardStore";
-import { useOrderForm } from "@/hooks/order/useOrderForm";
-import GeneralOrderItemList from "./generalOrderItemList/GenaralOrderItemList";
-import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelector";
-import CouponSelector from "../common/couponSelector/CouponSelector";
-import OrderTerms from "../common/orderTerms/OrderTerms";
-import OrderSection from "../common/orderSection/OrderSection";
-import Text from "@/components/common/text/Text";
+
+// Utils
 import { formatNumberWithCommas } from "@/utils";
-import FooterButton from "@/components/common/footerButton/FooterButton";
-import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
-import { useToastStore } from "@/store/useToastStore";
-import { usePaymentStore } from "@/store/order/usePaymentStore";
 import { scrollToElement } from "@/utils/scrollToElement";
 
 export default function GeneralOrderContainer() {
-  // 상태관리 -------->
+  // ========== 상태 관리 ==========
+  const [showTermsErrors, setShowTermsErrors] = useState(false);
+  const termsRef = useRef<HTMLDivElement>(null);
+
+  // ========== Store 상태 ==========
+  const { orderItemDtoList } = usePersistOrderStore();
   const maxAvailableReward = useRewardStore(
     (state) => state.maxAvailableReward
   );
   const paymentPrice = usePaymentStore((state) => state.paymentPrice);
   const getRequestBody = useOrderStore((state) => state.getRequestBody);
   const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
-  const { orderItemDtoList } = usePersistOrderStore();
   const addToast = useToastStore((state) => state.addToast);
-  const [showTermsErrors, setShowTermsErrors] = useState(false);
-  const termsRef = useRef<HTMLDivElement>(null);
 
-  const scrollToTerms = () => {
-    scrollToElement(termsRef.current);
-  };
-
-  // <--------- 상태관리
-
-  // 서버 호출 react query -------->
-  const updateOrderStores = useUpdateOrderStores();
+  // ========== 데이터 페칭 ==========
   const { data: generalOrderData } = useGetGeneralOrder({
     orderItemDtoList,
   });
 
+  // ========== 커스텀 훅 ==========
+  const updateOrderStores = useUpdateOrderStores();
   const { control, setValue } = useOrderForm<OrderFormValues>(
     getOrderSchema(maxAvailableReward),
     defaultOrderValues
   );
+  const { processPayment, isProcessing } = useGeneralPayment({
+    generalOrderSheetData: generalOrderData,
+  });
 
+  // ========== 사이드 이펙트 ==========
   // 데이터 로딩 완료시 상태 업데이트
   useEffect(() => {
     if (generalOrderData) {
@@ -70,9 +82,10 @@ export default function GeneralOrderContainer() {
     }
   }, [generalOrderData, updateOrderStores]);
 
-  const { processPayment, isProcessing } = useGeneralPayment({
-    generalOrderSheetData: generalOrderData,
-  });
+  // ========== 이벤트 핸들러 ==========
+  const scrollToTerms = () => {
+    scrollToElement(termsRef.current);
+  };
 
   const handlePaymentSubmit = async () => {
     if (!agreePrivacy) {

@@ -59,13 +59,15 @@ export default function DeliveryAddress() {
           </Text>
         </div>
       </div>
-      <DeliveryModal
-        addressData={addressData}
-        isVisible={isOpen}
-        onClose={onClose}
-        setDeliveryDto={setDeliveryDto}
-        setBackupDeliveryDto={setBackupDeliveryDto}
-      />
+      {addressData && (
+        <DeliveryModal
+          addressData={addressData}
+          isVisible={isOpen}
+          onClose={onClose}
+          setDeliveryDto={setDeliveryDto}
+          setBackupDeliveryDto={setBackupDeliveryDto}
+        />
+      )}
     </OrderSection>
   );
 }
