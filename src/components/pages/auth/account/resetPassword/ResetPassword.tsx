@@ -19,8 +19,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CodeRequestForm from "./codeRequestForm/CodeRequestForm";
 import NewPasswordForm from "./newPasswordForm/NewPasswordForm";
 import { ResetPasswordStep } from "@/types";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import useModal from "@/hooks/useModal";
+import { useRouter } from "next/navigation";
+import Countdown from "./countdown/Countdown";
 
 export default function ResetPassword() {
+  const router = useRouter();
   const { addToast } = useToastStore();
   const { mutate: requestCode } = useRequestPasswordResetCode();
   const { mutate: verifyCode } = useVerifyPasswordResetCode();
@@ -39,47 +44,52 @@ export default function ResetPassword() {
     mode: "all",
   });
 
-  // State 관리
+  // 상태 관리
   const [step, setStep] = useState<ResetPasswordStep>("request");
   const [authToken, setAuthToken] = useState("");
   const [authCode, setAuthCode] = useState("");
+  const [expiryDate, setExpiryDate] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [requestError, setRequestError] = useState("");
+  const [verifyError, setVerifyError] = useState("");
 
   const isResetFormValid = resetForm.formState.isValid;
 
-  // 핸들러 함수들 (useCallback으로 최적화)
+  const { isOpen, onClose, onToggle } = useModal();
+
   const handleRequestCode = useCallback(
     (body: RequestResetCodeValues) => {
-      setStep("verify");
-      // requestCode(body, {
-      //   onSuccess: () => {
-      //     setStep("verify");
-      //     addToast("휴대폰 번호로 인증번호가 발송됐어요", "above-button");
-      //   },
-      //   onError: () => {
-      //     addToast("일치하는 정보를 찾을 수 없습니다", "above-button");
-      //   },
-      // });
+      requestCode(body, {
+        onSuccess: (res) => {
+          setStep("verify");
+          setAuthToken(res.authToken);
+          setExpiryDate(res.expiryDate);
+          setRequestError("");
+          addToast("휴대폰 번호로 인증번호가 발송됐어요", "above-button");
+        },
+        onError: () => {
+          setRequestError("입력하신 정보를 다시 확인해 주세요");
+          addToast("입력하신 정보를 다시 확인해 주세요", "above-button");
+        },
+      });
     },
     [requestCode, addToast]
   );
 
   const handleVerifyCode = useCallback(() => {
-    setStep("reset");
-    setInfoMessage("휴대폰 번호 인증이 완료됐어요");
-    // verifyCode(
-    //   { authToken, authCode },
-    //   {
-    //     onSuccess: () => {
-    //       setStep("reset");
-    //       addToast("인증이 완료되었습니다", "above-button");
-    //     },
-    //     onError: () => {
-    //       addToast("인증번호가 일치하지 않습니다", "above-button");
-    //     },
-    //   }
-    // );
+    verifyCode(
+      { authToken, authCode },
+      {
+        onSuccess: () => {
+          setStep("reset");
+          setInfoMessage("휴대폰 번호 인증이 완료됐어요");
+          setVerifyError("");
+        },
+        onError: () => {
+          setVerifyError("인증번호가 일치하지 않아요");
+        },
+      }
+    );
   }, [verifyCode, authToken, authCode, addToast]);
 
   const handleResetPassword = useCallback(() => {
@@ -87,11 +97,11 @@ export default function ResetPassword() {
       const body = {
         authToken,
         authCode,
-        password: formData.confirmPassword,
+        newPassword: formData.confirmPassword,
       };
       resetPassword(body, {
         onSuccess: () => {
-          addToast("비밀번호가 변경되었습니다", "above-button");
+          onToggle();
         },
         onError: () => {
           addToast("비밀번호 변경에 실패했습니다", "above-button");
@@ -99,6 +109,12 @@ export default function ResetPassword() {
       });
     })();
   }, [resetPassword, resetForm, authToken, authCode, addToast]);
+
+  const handleExpire = useCallback(() => {
+    setVerifyError(
+      "인증 유효시간이 초과됐어요. [재전송]을 눌러 인증번호를 다시 입력해 주세요."
+    );
+  }, []);
 
   const buttonConfig = useMemo(() => {
     const configs = {
@@ -118,7 +134,6 @@ export default function ResetPassword() {
         onClick: handleResetPassword,
       },
     } as const;
-
     return configs[step];
   }, [
     step,
@@ -133,7 +148,8 @@ export default function ResetPassword() {
       <CodeRequestForm
         form={requestForm}
         infoMessage={infoMessage}
-        errorMessage={errorMessage}
+        requestError={requestError}
+        verifyError={verifyError}
         onRequestCode={handleRequestCode}
         step={step}
         authCode={authCode}
@@ -146,6 +162,23 @@ export default function ResetPassword() {
         onPrimaryClick={buttonConfig.onClick}
         primaryButtonSize="lg"
         isPrimaryDisabled={buttonConfig.disabled}
+        topSlot={
+          step !== "request" && expiryDate ? (
+            <Countdown
+              targetDate={expiryDate}
+              sourceTz="utc"
+              onExpiry={handleExpire}
+            />
+          ) : null
+        }
+      />
+      <AlertModal
+        title="비밀번호가 성공적으로 변경됐어요"
+        content="빈경된 비밀번호로 다시 로그인해 주세요"
+        confirmText="확인"
+        onConfirm={() => router.push("/login")}
+        isOpen={isOpen}
+        onClose={onClose}
       />
     </section>
   );

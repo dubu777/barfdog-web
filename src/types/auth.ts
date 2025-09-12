@@ -41,11 +41,6 @@ interface FindUserEmail {
   phoneNumber: string;
 }
 
-interface TemporaryUserEmail {
-  email: string;
-  provider: string | null;
-}
-
 interface TemporaryPassword extends FindUserEmail {
   email: string;
 }
@@ -155,23 +150,30 @@ interface GetAuthNumber {
   authNumber: null | string;
 }
 
-interface RequestPasswordResetCodeResponse {
-  authToken: string;
-  expiryDate: string;
-}
-
 interface ResetPasswordRequest {
   authToken: string;
   authCode: string;
-  password: string;
+  newPassword: string;
 }
 
-interface VerifyPasswordResetCodeRequest {
+interface VerifyFindAccountCodeRequest {
   authToken: string;
   authCode: string;
 }
 
+interface RequestFindAccountCodeResponse {
+  authToken: string;
+  expiryDate: string;
+  notificationType: string;
+}
+
+interface VerifyFindAccountCodeResponse {
+  email: string;
+  snsProvider: string | null;
+}
+
 type ResetPasswordStep = "request" | "verify" | "reset";
+type FindEmailStep = "request" | "verify" | "verified";
 
 export type {
   LoginFormValues,
@@ -180,7 +182,6 @@ export type {
   LoginUserInfo,
   SnSProvider,
   FindUserEmail,
-  TemporaryUserEmail,
   TemporaryPassword,
   ConnectSnsPassword,
   ConnectSns,
@@ -194,8 +195,10 @@ export type {
   GetAuthNumber,
   GenderType,
   SignupStepValues,
-  RequestPasswordResetCodeResponse,
+  RequestFindAccountCodeResponse,
   ResetPasswordRequest,
-  VerifyPasswordResetCodeRequest,
+  VerifyFindAccountCodeRequest,
   ResetPasswordStep,
+  VerifyFindAccountCodeResponse,
+  FindEmailStep,
 };

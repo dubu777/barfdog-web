@@ -21,7 +21,7 @@ interface NewPasswordFormProps {
 export default function NewPasswordForm({ form }: NewPasswordFormProps) {
   const { control } = form;
 
-  const password = useWatch({ control, name: "password" });
+  const password = useWatch({ control, name: "newPassword" });
 
   const criteria: PasswordCriteriaItem[] = useMemo(
     () => getPasswordCriteria(password),
@@ -34,7 +34,7 @@ export default function NewPasswordForm({ form }: NewPasswordFormProps) {
   return (
     <>
       <Controller
-        name="password"
+        name="newPassword"
         control={control}
         render={({ field }) => (
           <InputField

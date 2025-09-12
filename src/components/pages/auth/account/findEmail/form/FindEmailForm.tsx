@@ -1,22 +1,23 @@
 "use client";
+
 import { Controller, UseFormReturn } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
+import { FindEmailValues } from "@/utils/validation/auth/findEmail";
 import { commonWrapper } from "@/styles/common.css";
-import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
-import { ResetPasswordStep } from "@/types";
+import { FindEmailStep } from "@/types";
 
-interface CodeRequestFormProps {
-  form: UseFormReturn<RequestResetCodeValues>;
+interface FindEmailFormProps {
+  form: UseFormReturn<FindEmailValues>;
   infoMessage: string;
   requestError: string;
   verifyError: string;
-  step: ResetPasswordStep;
+  step: FindEmailStep;
   authCode: string;
-  onRequestCode: (form: RequestResetCodeValues) => void;
+  onRequestCode: (form: FindEmailValues) => void;
   onAuthCodeChange: (code: string) => void;
 }
 
-export default function CodeRequestForm({
+export default function FindEmailForm({
   form,
   infoMessage,
   requestError,
@@ -25,15 +26,14 @@ export default function CodeRequestForm({
   authCode,
   onRequestCode,
   onAuthCodeChange,
-}: CodeRequestFormProps) {
+}: FindEmailFormProps) {
   const {
     control,
     formState: { errors, isValid },
     handleSubmit,
   } = form;
-  const isVerified = step === "reset";
+
   const isRequested = step !== "request";
-  console.log(step);
 
   return (
     <>
@@ -45,24 +45,8 @@ export default function CodeRequestForm({
             id="memberName"
             label="이름"
             isRequired
-            disabled={isVerified}
             placeholder="이름 입력"
             error={errors?.memberName?.message}
-            {...field}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="email"
-        render={({ field }) => (
-          <InputField
-            id="email"
-            label="이메일(아이디)"
-            isRequired
-            disabled={isVerified}
-            placeholder="example@gmail.com."
-            error={errors?.email?.message}
             {...field}
           />
         )}
@@ -76,12 +60,11 @@ export default function CodeRequestForm({
               id="phoneNumber"
               label="휴대폰 번호"
               isRequired
-              disabled={isVerified}
               placeholder="- 제외 숫자만 입력"
               error={errors?.phoneNumber?.message ?? requestError}
               {...field}
               confirmButton
-              confirmButtonDisabled={!isValid || isVerified}
+              confirmButtonDisabled={!isValid}
               confirmButtonText={isRequested ? "재전송" : "인증번호"}
               onSubmit={handleSubmit(onRequestCode)}
             />
@@ -93,7 +76,6 @@ export default function CodeRequestForm({
             success={infoMessage}
             error={verifyError}
             value={authCode}
-            disabled={isVerified}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, "");
               onAuthCodeChange(value);

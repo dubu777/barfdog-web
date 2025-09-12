@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 // 휴대폰 인증 번호 요청
 export const requestResetCodeSchema = yup.object().shape({
-  name: yup.string().required("이름은 필수입니다."),
+  memberName: yup.string().required("이름은 필수입니다."),
   email: yup
     .string()
     .email("유효한 이메일 주소를 입력해주세요.")
@@ -19,13 +19,13 @@ export type RequestResetCodeValues = yup.InferType<
 
 export const defaultRequestResetCodeValues: RequestResetCodeValues = {
   email: "",
-  name: "",
+  memberName: "",
   phoneNumber: "",
 };
 
 // 비밀번호 리셋
 export const resetPasswordSchema = yup.object().shape({
-  password: yup
+  newPassword: yup
     .string()
     .required("비밀번호는 필수입니다.")
     .min(8, "비밀번호는 최소 8자 이상이어야 합니다.")
@@ -50,13 +50,13 @@ export const resetPasswordSchema = yup.object().shape({
     ),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("password")], "비밀번호가 일치하지 않습니다.")
+    .oneOf([yup.ref("newPassword")], "비밀번호가 일치하지 않습니다.")
     .required("비밀번호 확인은 필수입니다."),
 });
 
 export type ResetPasswordValues = yup.InferType<typeof resetPasswordSchema>;
 
 export const defaultResetPasswordValues: ResetPasswordValues = {
-  password: "",
+  newPassword: "",
   confirmPassword: "",
 };

@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const findUserEmailSchema = yup.object().shape({
-  name: yup
+  memberName: yup
     .string()
     .min(2, "이름은 최소 2자 이상이어야 합니다.")
     .required("이름은 필수입니다."),
@@ -14,6 +14,6 @@ export const findUserEmailSchema = yup.object().shape({
 export type FindEmailValues = yup.InferType<typeof findUserEmailSchema>;
 
 export const defaultFindUserEmailValues: FindEmailValues = {
-  name: "",
+  memberName: "",
   phoneNumber: "",
 };

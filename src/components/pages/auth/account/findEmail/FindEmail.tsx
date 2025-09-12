@@ -1,82 +1,143 @@
 "use client";
 
 import * as styles from "../FindAccount.css";
-import { useRouter } from "next/navigation";
-import { Controller } from "react-hook-form";
-import { useFormHandler } from "@/hooks/useFormHandler";
-import { useFindUserEmail } from "@/api/auth/mutations/useFindAccount";
+import { useForm } from "react-hook-form";
+import { useRequestFindEmailCode } from "@/api/auth/mutations/useRequestFindEmailCode";
 import { useToastStore } from "@/store/useToastStore";
-import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import {
   defaultFindUserEmailValues,
   FindEmailValues,
   findUserEmailSchema,
 } from "@/utils/validation/auth/findEmail";
+import { useCallback, useMemo, useState } from "react";
+import Countdown from "../resetPassword/countdown/Countdown";
+import { useVerifyFindEmailCode } from "@/api/auth/mutations/useVerifyFindEmailCode";
+import FindEmailForm from "./form/FindEmailForm";
+import { yupResolver } from "@hookform/resolvers/yup";
+import FindEmailResult from "./result/FindEmailResult";
+import { useCompletedMode } from "@/hooks/useCompletedMode";
+import { useRouter } from "next/navigation";
+import { FindEmailStep } from "@/types";
 
 export default function FindEmail() {
-  const router = useRouter();
-  const { handleSubmit, control, errors, isValid } =
-    useFormHandler<FindEmailValues>(
-      findUserEmailSchema,
-      defaultFindUserEmailValues
-    );
-  const { mutate } = useFindUserEmail();
   const { addToast } = useToastStore();
+  const router = useRouter();
+  const { mutate: requestCode } = useRequestFindEmailCode();
+  const { mutate: verifyCode } = useVerifyFindEmailCode();
 
-  const onSubmit = (form: FindEmailValues) => {
-    mutate(form, {
-      onSuccess: () => {
-        addToast("아이디가 성공적으로 확인되었습니다!", "above-button");
-        setTimeout(() => {
-          router.push("/find-account?type=result");
-        }, 500);
+  const { completedMode, toggleCompletedMode } = useCompletedMode();
+
+  const [step, setStep] = useState<FindEmailStep>("request");
+  const [authToken, setAuthToken] = useState("");
+  const [authCode, setAuthCode] = useState("");
+  const [expiryDate, setExpiryDate] = useState<string | null>(null);
+  const [requestError, setRequestError] = useState("");
+  const [verifyError, setVerifyError] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
+  const [email, setEmail] = useState("");
+  const [snsProvider, setSnsProvider] = useState<string | null>(null);
+
+  const requestForm = useForm<FindEmailValues>({
+    resolver: yupResolver(findUserEmailSchema),
+    defaultValues: defaultFindUserEmailValues,
+    mode: "all",
+  });
+
+  const handleRequestCode = useCallback(
+    (form: FindEmailValues) => {
+      requestCode(form, {
+        onSuccess: (res) => {
+          setStep("verify");
+          setAuthToken(res.authToken);
+          setExpiryDate(res.expiryDate);
+          setRequestError("");
+          setInfoMessage("휴대폰 번호로 인증번호가 발송됐어요");
+        },
+        onError: () => {
+          setRequestError("입력하신 정보를 다시 확인해 주세요");
+        },
+      });
+    },
+    [requestCode, addToast]
+  );
+
+  const handleVerifyCode = useCallback(() => {
+    verifyCode(
+      { authToken, authCode },
+      {
+        onSuccess: (res) => {
+          setEmail(res.email);
+          setSnsProvider(res.snsProvider);
+          setStep("verified");
+          setVerifyError("");
+          toggleCompletedMode();
+        },
+        onError: () => {
+          setVerifyError("인증번호가 일치하지 않아요");
+        },
+      }
+    );
+  }, [verifyCode, authToken, authCode, addToast]);
+
+  const handleExpire = useCallback(() => {
+    setVerifyError(
+      "인증 유효시간이 초과됐어요. [재전송]을 눌러 인증번호를 다시 입력해 주세요."
+    );
+  }, []);
+
+  const buttonConfig = useMemo(() => {
+    const configs = {
+      request: {
+        label: "인증확인",
+        disabled: true,
+        onClick: () => {},
       },
-      onError: () => {
-        addToast("일치하는 정보를 찾을 수 없습니다.", "above-button");
+      verify: {
+        label: "인증확인",
+        disabled: authCode.length !== 4,
+        onClick: handleVerifyCode,
       },
-    });
-  };
+      verified: {
+        label: "로그인",
+        disabled: false,
+        onClick: () => router.push("/login"),
+      },
+    } as const;
+    return configs[step];
+  }, [step, authCode.length, handleVerifyCode]);
+
   return (
     <section className={styles.findAccountContainer}>
-      <Controller
-        control={control}
-        name="name"
-        render={({ field }) => (
-          <InputField
-            id="name"
-            label="이름"
-            isRequired
-            placeholder="견주님의 이름을 입력해주세요"
-            error={errors?.name?.message}
-            {...field}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="phoneNumber"
-        render={({ field }) => (
-          <InputField
-            id="phoneNumber"
-            label="휴대폰 번호"
-            isRequired
-            placeholder="번호만 입력해주세요"
-            confirmButton
-            confirmButtonDisabled={false}
-            confirmButtonText="인증번호"
-            onSubmit={() => console.log("인증번호 요청")}
-            error={errors?.phoneNumber?.message}
-            {...field}
-          />
-        )}
-      />
+      {!completedMode ? (
+        <FindEmailForm
+          form={requestForm}
+          infoMessage={infoMessage}
+          requestError={requestError}
+          verifyError={verifyError}
+          onRequestCode={handleRequestCode}
+          step={step}
+          authCode={authCode}
+          onAuthCodeChange={setAuthCode}
+        />
+      ) : (
+        <FindEmailResult email={email} snsProvider={snsProvider} />
+      )}
       <ButtonDocked
         type="full-button"
-        primaryButtonLabel="확인"
-        onPrimaryClick={handleSubmit(onSubmit)}
+        primaryButtonLabel={buttonConfig.label}
+        onPrimaryClick={buttonConfig.onClick}
         primaryButtonSize="lg"
-        isPrimaryDisabled={!isValid}
+        isPrimaryDisabled={buttonConfig.disabled}
+        topSlot={
+          step === "verify" && expiryDate ? (
+            <Countdown
+              targetDate={expiryDate}
+              sourceTz="utc"
+              onExpiry={handleExpire}
+            />
+          ) : null
+        }
       />
     </section>
   );

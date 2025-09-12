@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import axiosInstance from "@/api/axiosInstance";
 import {
-  TemporaryUserEmail,
   ConnectSns,
   SetPassword,
   ChangePassword,
@@ -12,26 +11,44 @@ import {
   UserType,
   GetAuthNumber,
   ConnectSnsResponse,
-  RequestPasswordResetCodeResponse,
+  RequestFindAccountCodeResponse,
   ResetPasswordRequest,
-  VerifyPasswordResetCodeRequest,
+  VerifyFindAccountCodeRequest,
+  VerifyFindAccountCodeResponse,
 } from "@/types";
 import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
 import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
+import { FindEmailValues } from "@/utils/validation/auth/findEmail";
 
-const findUserEmail = async (
-  name: string,
-  phoneNumber: string
-): Promise<TemporaryUserEmail> => {
-  const { data } = await axiosInstance.get(
-    `/api/email?name=${name}&phoneNumber=${phoneNumber}`
+const requestFindEmailCode = async (
+  body: FindEmailValues
+): Promise<RequestFindAccountCodeResponse> => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/public/account/id/lookup/request-code`,
+    body
   );
-  return data;
+  if (data.success) {
+    return data.data;
+  }
+  throw new Error("유효하지 않은 정보입니다");
+};
+
+const verifyFindEmailCode = async (
+  body: VerifyFindAccountCodeRequest
+): Promise<VerifyFindAccountCodeResponse> => {
+  const { data } = await axiosInstance.post(
+    "/api/v2/public/account/id/lookup",
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  throw new Error("유효하지 않은 정보입니다");
 };
 
 const requestPasswordResetCode = async (
   body: RequestResetCodeValues
-): Promise<RequestPasswordResetCodeResponse> => {
+): Promise<RequestFindAccountCodeResponse> => {
   const { data } = await axiosInstance.post(
     "/api/v2/public/account/password/reset/request-code",
     body
@@ -42,9 +59,7 @@ const requestPasswordResetCode = async (
   throw new Error("유효하지 않은 정보입니다");
 };
 
-const verifyPasswordResetCode = async (
-  body: VerifyPasswordResetCodeRequest
-) => {
+const verifyPasswordResetCode = async (body: VerifyFindAccountCodeRequest) => {
   const { data } = await axiosInstance.post(
     "/api/v2/public/account/password/reset/verify-code",
     body
@@ -297,7 +312,7 @@ const CodeMessage: Record<number, string> = {
 } as const;
 
 export {
-  findUserEmail,
+  requestFindEmailCode,
   login,
   getUserInfo,
   connectSns,
@@ -314,4 +329,5 @@ export {
   requestPasswordResetCode,
   verifyPasswordResetCode,
   resetPassword,
+  verifyFindEmailCode,
 };

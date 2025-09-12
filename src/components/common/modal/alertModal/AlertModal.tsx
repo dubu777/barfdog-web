@@ -61,11 +61,12 @@ export default function AlertModal({
 
   return (
     <ModalBackground isVisible={isOpen} onClose={onClose}>
-      <div className={styles.modalContainer} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={styles.modalContainer}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.modalContentWrapper}>
-          {title && 
-            <Text type="title4">{title}</Text>
-          }
+          {title && <Text type="title4">{title}</Text>}
           <Text type="body2">{content}</Text>
         </div>
         <div className={styles.modalButtonWrapper}>
