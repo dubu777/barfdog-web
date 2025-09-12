@@ -571,6 +571,7 @@ const PROBIOME_OPTIONAL_FIELDS: Record<string, string[]> = {
   step2: ["probioticsProduct"],
   step4: ["allergenFoodList"],
   step14: ["supplementProduct", "supplementTypeList"],
+  step17: ["otherComment"],
 };
 
 const PROBIOME_SECTIONS = [

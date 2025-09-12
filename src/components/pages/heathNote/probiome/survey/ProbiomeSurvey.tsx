@@ -55,7 +55,7 @@ export default function ProbiomeSurvey({
         addToast("장내 미생물 설문에 실패했어요", "above-button");
       }
     },
-    onError: (err) => {
+    onError: () => {
       addToast("장내 미생물 설문에 실패했어요", "above-button");
     },
   });
@@ -70,7 +70,7 @@ export default function ProbiomeSurvey({
     trigger,
     getValues,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
   } = methods;
 
@@ -145,6 +145,9 @@ export default function ProbiomeSurvey({
       handleNextStep();
     }
   };
+
+  console.log("isValid>>>>>>>>>>>>", isValid);
+
   return (
     <div>
       <Header

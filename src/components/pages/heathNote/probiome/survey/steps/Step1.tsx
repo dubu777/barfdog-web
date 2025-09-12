@@ -42,6 +42,7 @@ export default function ProbiomeStep1({
           direction: "col",
           align: "start",
           gap: 12,
+          paddingBottom: 85,
         })}
       >
         {PROBIOME_FORM_INFO.healthStatus.bodyFit.options.map((option) => (

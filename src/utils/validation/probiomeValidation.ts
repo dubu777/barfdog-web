@@ -81,11 +81,11 @@ export const probiomeStepSchema = yup.object({
     supplementTypeList: yup
       .array()
       .of(yup.string().required("영양제 종류를 선택해주세요."))
-      .min(1, "영양제 종류를 최소 하나 선택해주세요.")
       .when("supplementsExist", {
         is: "EXIST",
-        then: (schema) => schema.required(),
-        otherwise: (schema) => schema.notRequired(),
+        then: (s) =>
+          s.min(1, "영양제 종류를 최소 하나 선택해주세요.").required(),
+        otherwise: (s) => s.notRequired(),
       }),
     supplementProduct: yup.string().when("supplementsExist", {
       is: "EXIST",
