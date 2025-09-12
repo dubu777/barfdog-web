@@ -15,10 +15,10 @@ import Countdown from "../resetPassword/countdown/Countdown";
 import { useVerifyFindEmailCode } from "@/api/auth/mutations/useVerifyFindEmailCode";
 import FindEmailForm from "./form/FindEmailForm";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FindEmailResult from "./result/FindEmailResult";
 import { useCompletedMode } from "@/hooks/useCompletedMode";
 import { useRouter } from "next/navigation";
 import { FindEmailStep } from "@/types";
+import FindAccountResult from "../findAccount/result/FindAccountResult";
 
 export default function FindEmail() {
   const { addToast } = useToastStore();
@@ -121,7 +121,11 @@ export default function FindEmail() {
           onAuthCodeChange={setAuthCode}
         />
       ) : (
-        <FindEmailResult email={email} snsProvider={snsProvider} />
+        <FindAccountResult
+          type="email"
+          email={email}
+          snsProvider={snsProvider}
+        />
       )}
       <ButtonDocked
         type="full-button"

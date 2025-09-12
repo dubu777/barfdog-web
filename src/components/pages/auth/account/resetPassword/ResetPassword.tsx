@@ -65,11 +65,10 @@ export default function ResetPassword() {
           setAuthToken(res.authToken);
           setExpiryDate(res.expiryDate);
           setRequestError("");
-          addToast("휴대폰 번호로 인증번호가 발송됐어요", "above-button");
+          setInfoMessage("휴대폰 번호로 인증번호가 발송됐어요");
         },
         onError: () => {
           setRequestError("입력하신 정보를 다시 확인해 주세요");
-          addToast("입력하신 정보를 다시 확인해 주세요", "above-button");
         },
       });
     },

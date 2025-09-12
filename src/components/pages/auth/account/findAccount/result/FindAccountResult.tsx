@@ -4,20 +4,22 @@ import Card from "@/components/common/card/Card";
 import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import KakaoIcon from "public/images/logo/auth/kakao-logo.svg";
-import NaverIcon from "public/images/logo/auth/naver-logo.svg";
+import KakaoIcon from "public/images/logo/auth/kakao-logo-square.svg";
+import NaverIcon from "public/images/logo/auth/naver-logo-square.svg";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 
-interface FindEmailResultProps {
+interface FindAccountResultProps {
+  type: "email" | "password";
   email: string;
   snsProvider: string | null;
 }
 
-export default function FindEmailResult({
+export default function FindAccountResult({
+  type,
   email,
   snsProvider,
-}: FindEmailResultProps) {
+}: FindAccountResultProps) {
   const providerValue = (() => {
     switch (snsProvider) {
       case "KAKAO":
@@ -40,10 +42,12 @@ export default function FindEmailResult({
       value: providerValue,
     },
   ];
+  const title = type === "email" ? "아이디 찾기 결과" : "비밀번호 찾기 결과";
+
   return (
     <>
       <Card shadow="light" align="start" padding={16} gap={12}>
-        <Text type="title4">아이디 찾기 결과</Text>
+        <Text type="title4">{title}</Text>
         <Divider thickness={2} color="gray900" />
         <div
           className={commonWrapper({
@@ -68,6 +72,11 @@ export default function FindEmailResult({
             </div>
           ))}
         </div>
+        <InfoBox
+          color="blue"
+          type="info"
+          text="간편 가입으로 가입한 회원이에요. 간편 가입 회원은 비밀번호 찾기를 이용할 수 없어요."
+        />
       </Card>
     </>
   );
