@@ -25,7 +25,7 @@ interface ProbiomeSurvey {
   supplementProduct: string;
   pregnancyStatus: string; // "PREGNANCY_EARLY" 등
   /** 필드명 변경: healthConcernTypeList -> healthConcernList */
-  healthConcernList: string[]; // ["JOINT_CARE", "TEAR_STAIN"] 등
+  healthConcernTypeList: string[]; // ["JOINT_CARE", "TEAR_STAIN"] 등
   acquisitionType: string; // "PURCHASE" 등
   otherComment: string; // "기타 특이사항 내용"
 }

@@ -570,7 +570,8 @@ const PROBIOME_NO_AUTO_STEP = new Set<ProbiomeStepKeys>([
 const PROBIOME_OPTIONAL_FIELDS: Record<string, string[]> = {
   step2: ["probioticsProduct"],
   step4: ["allergenFoodList"],
-  step14: ["supplementProduct", "supplementTypeList"],
+  step7: ["treatingDiseaseList"],
+  step14: ["supplementProduct"],
   step17: ["otherComment"],
 };
 

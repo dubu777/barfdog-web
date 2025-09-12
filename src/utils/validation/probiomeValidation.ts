@@ -43,14 +43,11 @@ export const probiomeStepSchema = yup.object({
       .required("치료중 질병 여부를 선택해주세요."),
     treatingDiseaseList: yup
       .array()
-      .of(yup.string())
+      .of(yup.string().required())
       .when("treatmentDiseasesExist", {
         is: "EXIST",
         then: (schema) =>
-          schema
-            .of(yup.string().required("치료 중인 질병을 선택해주세요."))
-            .min(1, "치료 중인 질병을 선택해주세요.")
-            .required(),
+          schema.min(1, "치료 중인 질병을 선택해주세요.").required(),
         otherwise: (schema) => schema.notRequired(),
       }),
   }),

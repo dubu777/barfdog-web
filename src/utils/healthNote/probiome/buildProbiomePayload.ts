@@ -51,7 +51,7 @@ export function buildProbiomePayload(
       cohabitingPetList: cohabitingPetList ?? [],
       supplementTypeList: supplementTypeList ?? [],
       supplementProduct: supplementProduct ?? "",
-      healthConcernList: healthConcernTypeList ?? [],
+      healthConcernTypeList: healthConcernTypeList ?? [],
       acquisitionType,
       otherComment: otherComment ?? "",
     },

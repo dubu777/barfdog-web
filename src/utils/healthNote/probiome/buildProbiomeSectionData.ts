@@ -30,7 +30,7 @@ export const buildProbiomeSectionData = (survey: ProbiomeSurvey) => {
   };
 
   const additionalInfo: ProbiomeAdditionalInfo = {
-    healthConcernTypeList: survey.healthConcernList,
+    healthConcernTypeList: survey.healthConcernTypeList,
     acquisitionType: survey.acquisitionType,
     otherComment: survey.otherComment,
   };

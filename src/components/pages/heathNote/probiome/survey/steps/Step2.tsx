@@ -81,7 +81,7 @@ export default function ProbiomeStep2({
           render={({ field }) => (
             <InputField
               {...field}
-              label="급여 중 제품명 (선택사항)"
+              label="급여 중 제품명"
               labelType="headline4"
               labelColor="gray800"
               placeholder="유산균 제품명을 입력해주세요"

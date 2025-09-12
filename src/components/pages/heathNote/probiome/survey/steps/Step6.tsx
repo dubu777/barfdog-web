@@ -44,6 +44,7 @@ export default function ProbiomeStep6({
           direction: "col",
           align: "start",
           gap: 12,
+          paddingBottom: 85,
         })}
       >
         {PROBIOME_FORM_INFO.healthStatus.activityLevel.options.map((option) => (

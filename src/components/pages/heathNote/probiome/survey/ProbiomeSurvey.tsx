@@ -1,33 +1,33 @@
 "use client";
 
+import { useCallback, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useCreateProbiomeResult } from "@/api/healthNote/probiome/mutations/useCreateProbiomeResult";
+import { useToastStore } from "@/store/useToastStore";
+import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
+import { SkipCondition, useSurveyStep } from "@/hooks/survey/useSurveyStep";
+import useModal from "@/hooks/useModal";
+import { useProbiomeStepElements } from "./steps/StepElements";
 import Text from "@/components/common/text/Text";
 import Header from "@/components/layout/header/Header";
 import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
+import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import {
   PROBIOME_NO_AUTO_STEP,
   PROBIOME_OPTIONAL_FIELDS,
   PROBIOME_SECTIONS,
 } from "@/constants/healthNote/probiome";
-import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
-import { SkipCondition, useSurveyStep } from "@/hooks/survey/useSurveyStep";
+import { Gender } from "@/types";
 import {
   defaultProbiomeStepValues,
   ProbiomeStepKeys,
   probiomeStepSchema,
 } from "@/utils/validation/probiomeValidation";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { useProbiomeStepElements } from "./steps/StepElements";
-import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import { useCreateProbiomeResult } from "@/api/healthNote/probiome/mutations/useCreateProbiomeResult";
-import { Gender } from "@/types";
-import { useToastStore } from "@/store/useToastStore";
-import useModal from "@/hooks/useModal";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import { buildProbiomePayload } from "@/utils/healthNote/probiome/buildProbiomePayload";
 
 interface ProbiomeSurveyProps {
@@ -45,7 +45,9 @@ export default function ProbiomeSurvey({
 }: ProbiomeSurveyProps) {
   const router = useRouter();
   const { isOpen, onClose, onOpen } = useModal();
+
   const addToast = useToastStore((state) => state.addToast);
+
   const { mutate: submitResult } = useCreateProbiomeResult({
     onSuccess: (res) => {
       if (res.success) {
@@ -66,25 +68,9 @@ export default function ProbiomeSurvey({
     mode: "all",
   });
 
-  const {
-    trigger,
-    getValues,
-    setValue,
-    formState: { errors, isValid },
-    watch,
-  } = methods;
-
-  console.log("watch", watch());
-  console.log("errors", errors);
+  const { trigger, getValues, setValue, clearErrors } = methods;
 
   const stepKeys = Object.keys(defaultProbiomeStepValues) as ProbiomeStepKeys[];
-
-  // gender가 MALE일 때 step5의 pregnancyStatus를 "NONE"으로 설정
-  useEffect(() => {
-    if (gender === "MALE") {
-      setValue("step5.pregnancyStatus", "NONE");
-    }
-  }, [gender, setValue]);
 
   const skipConditions = useMemo<SkipCondition<ProbiomeStepKeys>[]>(
     () => [
@@ -95,6 +81,11 @@ export default function ProbiomeSurvey({
       },
     ],
     [gender]
+  );
+
+  const CLEAR_ERRORS_ON_PREV = useMemo(
+    () => new Set<ProbiomeStepKeys>(["step15"]),
+    []
   );
 
   const {
@@ -124,19 +115,22 @@ export default function ProbiomeSurvey({
     dogName: petName,
   });
 
+  useEffect(() => {
+    if (gender === "MALE") {
+      setValue("step5.pregnancyStatus", "NONE");
+    }
+  }, [gender, setValue]);
+
   const handleSurveySubmit = useCallback(async () => {
     if (!(await trigger())) {
       addToast("유효하지 않은 항목이 있습니다", "above-button");
       return;
     }
-
     const values = getValues();
-
-    // TODO: petId, kitId를 실제 사용자 데이터에서 가져오도록 수정 필요
     const payload = buildProbiomePayload(values, petId, kitId);
 
     submitResult(payload);
-  }, [trigger, getValues, submitResult, addToast]);
+  }, [trigger, getValues, submitResult, addToast, petId, kitId]);
 
   const handleFooterButtonClick = () => {
     if (isLastStep) {
@@ -146,7 +140,12 @@ export default function ProbiomeSurvey({
     }
   };
 
-  console.log("isValid>>>>>>>>>>>>", isValid);
+  const handlePrevStepWithClear = useCallback(() => {
+    if (CLEAR_ERRORS_ON_PREV.has(currentStepKey)) {
+      clearErrors(["step15"]);
+    }
+    handlePrevStep();
+  }, [currentStepKey, clearErrors, handlePrevStep, CLEAR_ERRORS_ON_PREV]);
 
   return (
     <div>
@@ -161,7 +160,7 @@ export default function ProbiomeSurvey({
         showBackButton={!isFirstStep}
         showCloseButton
         onClose={() => router.back()}
-        onBack={handlePrevStep}
+        onBack={handlePrevStepWithClear}
         backgroundColor="gray50"
         leftSlotGap="sm"
       />

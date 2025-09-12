@@ -39,7 +39,12 @@ export default function ProbiomeStep9({
     <>
       <SurveyTitle dogName={dogName} config={PROBIOME_TITLES.step9} />
       <div
-        className={commonWrapper({ direction: "col", align: "start", gap: 12 })}
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 12,
+          paddingBottom: 85,
+        })}
       >
         {PROBIOME_FORM_INFO.lifestyle.foodType.options.map((option) => (
           <SurveyButton
