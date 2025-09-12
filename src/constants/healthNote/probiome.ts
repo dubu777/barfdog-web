@@ -143,7 +143,7 @@ const PROBIOME_FORM_INFO = {
         },
         {
           category: "곡물",
-          options: [{ value: "FLAXSEED", label: "아마 씨" }],
+          options: [{ value: "FLAX_SEED", label: "아마 씨" }],
         },
         {
           category: "기타",
