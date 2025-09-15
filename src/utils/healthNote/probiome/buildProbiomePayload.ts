@@ -21,7 +21,7 @@ export function buildProbiomePayload(
     step12: { snackLevel },
     step13: { cohabitingPetList },
     step14: { supplementTypeList, supplementProduct },
-    step15: { healthConcernTypeList },
+    step15: { healthConcernList },
     step16: { acquisitionType },
     step17: { otherComment },
   } = values;
@@ -51,7 +51,7 @@ export function buildProbiomePayload(
       cohabitingPetList: cohabitingPetList ?? [],
       supplementTypeList: supplementTypeList ?? [],
       supplementProduct: supplementProduct ?? "",
-      healthConcernTypeList: healthConcernTypeList ?? [],
+      healthConcernList: healthConcernList ?? [],
       acquisitionType,
       otherComment: otherComment ?? "",
     },

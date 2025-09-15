@@ -419,8 +419,8 @@ const PROBIOME_FORM_INFO = {
 
   // 3. 추가 정보
   additionalInfo: {
-    // 3-1. 건강 관심사 → healthConcernTypeList (HealthConcernType)
-    healthConcernTypeList: {
+    // 3-1. 건강 관심사 → healthConcernList (HealthConcernType)
+    healthConcernList: {
       key: "그 외 고민사항",
       title: "바푸동은 다음 중 어떤 고민이 있나요?",
       options: [

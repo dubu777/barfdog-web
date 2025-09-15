@@ -24,8 +24,7 @@ interface ProbiomeSurvey {
   supplementTypeList: string[]; // ["IMMUNE", "TEETH"] 등
   supplementProduct: string;
   pregnancyStatus: string; // "PREGNANCY_EARLY" 등
-  /** 필드명 변경: healthConcernTypeList -> healthConcernList */
-  healthConcernTypeList: string[]; // ["JOINT_CARE", "TEAR_STAIN"] 등
+  healthConcernList: string[]; // ["JOINT_CARE", "TEAR_STAIN"] 등
   acquisitionType: string; // "PURCHASE" 등
   otherComment: string; // "기타 특이사항 내용"
 }
@@ -149,7 +148,7 @@ interface ProbiomeLifestyle {
 }
 
 interface ProbiomeAdditionalInfo {
-  healthConcernTypeList: string[];
+  healthConcernList: string[];
   acquisitionType: string;
   otherComment: string;
 }

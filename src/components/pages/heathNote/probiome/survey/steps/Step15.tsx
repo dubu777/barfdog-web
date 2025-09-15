@@ -19,16 +19,16 @@ export default function ProbiomeStep15({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<ProbiomeStepValues>();
-  const { field: healthConcernTypeListField } = useController({
-    name: "step15.healthConcernTypeList",
+  const { field: healthConcernListField } = useController({
+    name: "step15.healthConcernList",
     control,
   });
 
   const { onToggle, isSelected } = useSurveyToggleOption({
-    selectedValue: healthConcernTypeListField.value,
+    selectedValue: healthConcernListField.value,
     mode: "checkbox",
     onChange: (value) => {
-      healthConcernTypeListField.onChange(value);
+      healthConcernListField.onChange(value);
       handleChange();
     },
   });
@@ -37,7 +37,7 @@ export default function ProbiomeStep15({
     <>
       <SurveyTitle dogName={dogName} config={PROBIOME_TITLES.step15} />
       <SurveyGridButtonGroup>
-        {PROBIOME_FORM_INFO.additionalInfo.healthConcernTypeList.options.map(
+        {PROBIOME_FORM_INFO.additionalInfo.healthConcernList.options.map(
           (option) => (
             <ImageButton
               key={option.value}

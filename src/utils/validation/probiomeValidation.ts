@@ -91,7 +91,7 @@ export const probiomeStepSchema = yup.object({
     }),
   }),
   step15: yup.object({
-    healthConcernTypeList: yup
+    healthConcernList: yup
       .array()
       .of(yup.string().required("건강적 특이사항을 선택해주세요."))
       .min(1, "건강적 특이사항을 선택해주세요."),
@@ -140,7 +140,7 @@ export const defaultProbiomeStepValues: ProbiomeStepValues = {
     supplementTypeList: [],
     supplementProduct: "",
   },
-  step15: { healthConcernTypeList: [] },
+  step15: { healthConcernList: [] },
   step16: { acquisitionType: "" },
   step17: { otherComment: "" },
 };
