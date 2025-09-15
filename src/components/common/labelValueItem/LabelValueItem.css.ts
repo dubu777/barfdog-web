@@ -36,6 +36,6 @@ export const labelText = recipe({
 });
 
 export const valueText = style({
-  flex: 1,
-  textAlign: "right",
+  overflowWrap: "anywhere",
+  wordBreak: "break-word",
 });

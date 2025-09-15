@@ -2,10 +2,7 @@
 
 import Text from "@/components/common/text/Text";
 import * as styles from "./LabelValueItem.css";
-import {
-  fontColors,
-  textStyles,
-} from "@/components/common/text/Text.css";
+import { fontColors, textStyles } from "@/components/common/text/Text.css";
 import { ReactNode } from "react";
 
 interface LabelValueItemProps {
@@ -42,7 +39,7 @@ export default function LabelValueItem({
       >
         {label}
       </Text>
-      <Text type={valueType} color={valueColor}>
+      <Text type={valueType} color={valueColor} className={styles.valueText}>
         {displayValue}
       </Text>
     </div>

@@ -1,5 +1,6 @@
-import { themeVars } from '@/styles/theme.css';
-import { style } from '@vanilla-extract/css';
+import { themeVars } from "@/styles/theme.css";
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const textStyles = {
   display1: style({
@@ -147,24 +148,48 @@ export const fontColors = {
   naverFont: style({ color: themeVars.colors.naver.naverFont }),
 };
 
-export const alignStyles = {
-  left: style({ textAlign: 'left' }),
-  center: style({ textAlign: 'center' }),
-  right: style({ textAlign: 'right' }),
+const alignStyles = {
+  left: style({ textAlign: "left" }),
+  center: style({ textAlign: "center" }),
+  right: style({ textAlign: "right" }),
 };
 
-export const blockStyles = {
-  true: style({ display: 'block' }),
-}
-
-export const preLineStyles = {
-  true: style({ whiteSpace: 'pre-line' }),
-}
-
-export const underline = style({
-  textDecoration: "underline",
-});
-
-export const linethrough = style({
-  textDecoration: "line-through",
+export const textRecipe = recipe({
+  base: {},
+  variants: {
+    align: alignStyles,
+    block: {
+      true: {
+        display: "block",
+      },
+    },
+    underLine: {
+      true: {
+        textDecoration: "underline",
+      },
+    },
+    preLine: {
+      true: {
+        whiteSpace: "pre-line",
+      },
+    },
+    applyLineHeight: {
+      false: {
+        lineHeight: "normal",
+      },
+    },
+    noShrink: {
+      true: {
+        flexShrink: 0,
+      },
+    },
+    lineThrough: {
+      true: {
+        textDecoration: "line-through",
+      },
+    },
+  },
+  defaultVariants: {
+    align: "left",
+  },
 });

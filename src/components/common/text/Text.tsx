@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  textStyles,
-  fontColors,
-  alignStyles,
-  blockStyles,
-  underline, preLineStyles, linethrough,
-} from "./Text.css";
+import { textStyles, fontColors, textRecipe } from "./Text.css";
 
 interface TextProps {
   type: keyof typeof textStyles;
@@ -19,6 +13,7 @@ interface TextProps {
   style?: React.CSSProperties;
   preLine?: boolean;
   applyLineHeight?: boolean;
+  noShrink?: boolean;
 }
 
 const tagMap: Record<string, keyof JSX.IntrinsicElements> = {
@@ -55,26 +50,25 @@ export default function Text({
   style,
   preLine,
   applyLineHeight = true,
+  noShrink = false,
 }: TextProps) {
   const textStyle = textStyles[type];
   const colorStyle = fontColors[color];
-  const alignStyle = alignStyles[align];
-  const underlineStyle = underLine ? underline : "";
-  const lineThroughStyle = lineThrough ? linethrough : "";
   const Tag = tagMap[type] || "span";
-  const blockStyle = block ? blockStyles.true : "";
-  const preLineStyle = preLine ? preLineStyles.true : "";
-
-  const overrideLineHeight = applyLineHeight === false ? { lineHeight: "normal" } : {};
 
   // 기존 style과 merge (inline style의 우선순위가 더 높음)
-  const finalStyle = { ...style, ...overrideLineHeight };
   return (
     <Tag
-      className={`${textStyle} ${colorStyle} ${alignStyle} ${underlineStyle} ${lineThroughStyle} ${blockStyle} ${preLineStyle} ${
-        className || ""
-      }`}
-      style={finalStyle}
+      className={`${textStyle} ${colorStyle} ${textRecipe({
+        align,
+        block,
+        underLine,
+        preLine,
+        applyLineHeight,
+        noShrink,
+        lineThrough,
+      })} ${className || ""}`}
+      {...(style && { style })}
     >
       {children}
     </Tag>

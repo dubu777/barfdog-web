@@ -73,6 +73,7 @@ export default function HealthNoteHeader() {
     probiome: {
       centerTitle: "장내 미생물 검사",
       showBackButton: true,
+      onBack: goBackToMain,
     },
     "probiome/create": {
       centerTitle: "",
