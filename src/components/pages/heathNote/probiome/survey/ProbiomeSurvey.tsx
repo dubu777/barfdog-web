@@ -140,6 +140,7 @@ export default function ProbiomeSurvey({
     }
   };
 
+  // 뒤로 가기 시 에러 클리어
   const handlePrevStepWithClear = useCallback(() => {
     if (CLEAR_ERRORS_ON_PREV.has(currentStepKey)) {
       clearErrors(["step15"]);

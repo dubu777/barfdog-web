@@ -1,19 +1,13 @@
 "use client";
 
-import PaymentMethod from "../../common/paymentMethod/PaymentMethod";
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
-import DeliveryAddress from "../../common/deliveryAddress/DeliveryAddress";
 import Divider from "@/components/common/divider/Divider";
 import { useOrderStore } from "@/store/order/useOrderStore";
-import {
-  SaveSubscriptionOrderRequest,
-} from "@/types";
+import { SaveSubscriptionOrderRequest } from "@/types";
 import { useInitializeSubscriptionOrder } from "@/hooks/order/useInitializeSubscriptionOrder";
 import useDeviceState from "@/hooks/useDeviceState";
 import { calculateOriginPrice } from "@/utils/order/calculateOriginPrice";
 import { useGetSubscriptionOrder } from "@/api/order/queries/useGetSubscriptionOrder";
-import OrderSummary from "../../common/orderSummary/OrderSummary";
-import RewardUsage from "../../common/reward/RewardUsage";
 import {
   defaultOrderValues,
   getOrderSchema,
@@ -21,18 +15,22 @@ import {
 } from "@/utils/validation/rewardValidation";
 import { useRewardStore } from "@/store/order/useRewardStore";
 import Text from "@/components/common/text/Text";
-import OrderSection from "../../common/orderSection/OrderSection";
 import { formatNumberWithCommas } from "@/utils";
-import CouponSelector from "../../common/couponSelector/CouponSelector";
-import OrderTerms from "../../common/orderTerms/OrderTerms";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import SubscriptionNotice from "../subscriptionNotice/SubscriptionNotice";
 import { useRef, useState } from "react";
 import { useSubscriptionPayment } from "@/hooks/order/useSubscriptionPayment";
 import { useToastStore } from "@/store/useToastStore";
 import { usePaymentStore } from "@/store/order/usePaymentStore";
-import DeliverySchedule from "../deliverySchedule/DeliverySchedule";
+import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
+import DeliverySchedule from "./deliverySchedule/DeliverySchedule";
+import CouponSelector from "../common/couponSelector/CouponSelector";
+import RewardUsage from "../common/reward/RewardUsage";
+import PaymentMethod from "../common/paymentMethod/PaymentMethod";
+import OrderSummary from "../common/orderSummary/OrderSummary";
+import OrderTerms from "../common/orderTerms/OrderTerms";
+import OrderSection from "../common/orderSection/OrderSection";
+import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;

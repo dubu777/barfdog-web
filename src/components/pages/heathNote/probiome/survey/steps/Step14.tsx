@@ -110,7 +110,7 @@ export default function ProbiomeStep14({
           label="급여 중 제품명 (선택사항)"
           labelType="headline4"
           labelColor="gray800"
-          placeholder="유산균 제품명을 입력해주세요"
+          placeholder="영양제 제품명을 입력해주세요"
           onChange={(e) => {
             supplementProductField.onChange(e);
             console.log("field.name", supplementProductField.name);
