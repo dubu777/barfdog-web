@@ -6,9 +6,9 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import SubscriptionOrderContainer from "@/components/pages/checkout/subscription/subscriptionOrderContainer/SubscriptionOrderContainer";
 import { prefetchGetSubscriptionOrder } from "@/api/order/queries/usePrefetchGetSubscriptionOrder";
 import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
+import SubscriptionOrderContainer from "@/components/pages/checkout/subscription/SubscriptionOrderContainer";
 
 interface SubscriptionPageProps {
   searchParams: Record<string, string | string[] | undefined>;
