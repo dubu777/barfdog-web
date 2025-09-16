@@ -1,8 +1,11 @@
+'use client';
 import * as styles from './Footer.css';
 import Image from "next/image";
 import Link from "next/link";
 import Logo from '/public/images/logo/logo-white.png';
 import Text from "@/components/common/text/Text";
+import { usePathname } from "next/navigation";
+import { saveEntryPoint } from "@/utils/navigationEntry";
 
 const footerInfo = [
   'CEO: 임경호 | 사업제안 및 문의: info@freshour.co.kr',
@@ -15,7 +18,7 @@ const footerInfo = [
 const menuLink = [
   {
     label: '브랜드 소개',
-    value: '/community/about',
+    value: '/about',
   },
   {
     label: '공지사항',
@@ -41,21 +44,44 @@ const policyMenuLink = [
     value: '/policy/terms',
   },
 ]
-export default function Footer() {
+
+interface FooterProps {
+  showMenu?: boolean;
+}
+
+export default function Footer({ showMenu = true }: FooterProps) {
+  const pathname = usePathname();
+
+  // 커뮤니티 링크 클릭 시 진입 경로 저장
+  const handleLinkClick = (url: string) => {
+    saveEntryPoint(
+      url, 
+      pathname,
+      (_, target) => target.startsWith('/community/')
+    );
+  };
+
   return (
     <footer className={styles.footerContainer}>
       <h1 className={styles.logo}>
         <Image src={Logo} alt='logo' width={139} height={24} />
       </h1>
-      <div className={styles.menuLinkBox}>
-        {menuLink.map(menu => (
-          <Link key={menu.value} href={menu.value} className={styles.menuLink}>
-            <Text type='label2' color='gray100'>
-              {menu.label}
-            </Text>
-          </Link>
-        ))}
-      </div>
+      {showMenu && 
+        <div className={styles.menuLinkBox}>
+          {menuLink.map(menu => (
+            <Link 
+              key={menu.value} 
+              href={menu.value} 
+              className={styles.menuLink}
+              onClick={() => handleLinkClick(menu.value)}
+            >
+              <Text type='label2' color='gray100'>
+                {menu.label}
+              </Text>
+            </Link>
+          ))}
+        </div>
+      }
       <div className={styles.footerInfo}>
         {footerInfo.map(text => (
           <Text key={text} type='caption2' color='gray100' block>{text}</Text>
