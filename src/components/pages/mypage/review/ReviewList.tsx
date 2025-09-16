@@ -29,6 +29,7 @@ export default function Review () {
 
   const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetMypageReviewList(type as ReviewListType);
   const reviewList = reviewListData?.pages.flatMap(p => p.reviewList) ?? [];
+  const totalCount = reviewListData?.pages[0].page.totalElements ?? 0;
 
   const { ref, inView } = useInView();
 
@@ -87,7 +88,7 @@ export default function Review () {
         style={{ padding: '8px 20px' }}
       >
         <Text type='label4' applyLineHeight={false}>리뷰</Text>
-        <Text type='label4' applyLineHeight={false}>0</Text>
+        <Text type='label4' applyLineHeight={false}>{totalCount}</Text>
         {isWriteableReview &&
           <Tooltip>
             <Text type='caption2' color='white'>리뷰는 구매확정 후 30일 이내에만 작성 가능해요</Text>

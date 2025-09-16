@@ -82,7 +82,7 @@ export default function ReviewCard({
 					alt={title}
 					width={76}
 					height={76}
-					className={imageWrapper({ objectFit: 'cover', borderRadius: 8 })}
+					className={imageWrapper({ width: 76, objectFit: 'cover', borderRadius: 8 })}
 				/>
 				<div className={commonWrapper({ gap: 4, direction: 'col', align: 'start', width: 'auto' })}>
 					<SubtitleText text={title} type='headline2' />
