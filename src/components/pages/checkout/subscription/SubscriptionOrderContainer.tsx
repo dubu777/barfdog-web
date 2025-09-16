@@ -1,6 +1,6 @@
 "use client";
 
-import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
+import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import Divider from "@/components/common/divider/Divider";
 import { useOrderStore } from "@/store/checkout/useOrderStore";
 import {
@@ -154,8 +154,8 @@ export default function SubscriptionOrderContainer({
     // 성공/실패 라우팅: 일반 결제와 경로가 다르면 여기서 조정 가능
     navigate: (path) => router.push(path),
     routes: {
-      success: "/checkout/completed?type=subscription",
-      fail: "/checkout/failed?type=subscription",
+      success: CHECKOUT_ROUTES.SUBSCRIPTION.success,
+      fail: CHECKOUT_ROUTES.SUBSCRIPTION.fail,
     },
   });
 

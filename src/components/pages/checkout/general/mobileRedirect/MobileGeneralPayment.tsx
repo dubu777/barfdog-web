@@ -9,6 +9,7 @@ import { useFailGeneralPayment } from "@/api/checkout/mutations/general/useFailG
 import { useCancelGeneralPayment } from "@/api/checkout/mutations/general/useCancelGeneralPayment";
 import { parseGeneralParams } from "@/utils/checkout/redirectParams";
 import { mobilePaymentResultContainer } from "@/app/checkout/mobile-payment-redirect/MobilePaymentRedirect.css";
+import { CHECKOUT_ROUTES } from "@/constants";
 
 export default function MobileGeneralPayment() {
   const router = useRouter();
@@ -58,14 +59,14 @@ export default function MobileGeneralPayment() {
             id: orderId,
             body: { impUid, merchantUid, discountReward, memberCouponId },
           });
-          router.push("/checkout/completed?type=subscription");
+          router.push(CHECKOUT_ROUTES.GENERAL.success);
         } else {
           await failPayment(orderId);
-          router.push("/checkout/failed?type=subscription");
+          router.push(CHECKOUT_ROUTES.GENERAL.fail);
         }
       } catch (e) {
         console.error("[MobileGeneralPaymentRedirect] 처리 실패:", e);
-        router.push("/checkout/failed?type=subscription");
+        router.push(CHECKOUT_ROUTES.GENERAL.fail);
       }
     };
 

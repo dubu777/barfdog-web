@@ -36,7 +36,7 @@ import Text from "@/components/common/text/Text";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 
 // Constants & Types
-import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
+import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import {
   GeneralIamportRequest,
   GeneralIamportResponse,
@@ -127,8 +127,8 @@ export default function GeneralOrderContainer() {
     strategy,
     navigate: (path) => router.push(path),
     routes: {
-      success: "/checkout/completed?type=general",
-      fail: "/checkout/failed?type=general",
+      success: CHECKOUT_ROUTES.GENERAL.success,
+      fail: CHECKOUT_ROUTES.GENERAL.fail,
     },
   });
 

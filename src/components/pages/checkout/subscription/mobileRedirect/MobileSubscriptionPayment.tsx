@@ -12,6 +12,7 @@ import { useFailSubscriptionPayment } from "@/api/checkout/mutations/subscriptio
 import { parseSubscriptionParams } from "@/utils/checkout/redirectParams";
 import { mobilePaymentResultContainer } from "@/app/checkout/mobile-payment-redirect/MobilePaymentRedirect.css";
 import { useCancelSubscriptionPayment } from "@/api/checkout/mutations/subscription/useCancelSubscriptionPayment";
+import { CHECKOUT_ROUTES } from "@/constants";
 
 export default function MobileSubscriptionPayment() {
   const router = useRouter();
@@ -95,7 +96,6 @@ export default function MobileSubscriptionPayment() {
           orderId,
           impUid: final.imp_uid,
         });
-        console.log("validateRes", validateRes);
 
         const isValid =
           typeof validateRes === "boolean"
@@ -111,16 +111,16 @@ export default function MobileSubscriptionPayment() {
 
         if (isValid) {
           await successPayment({ orderId, body: finalBody });
-          router.push("/checkout/completed?type=subscription");
+          router.push(CHECKOUT_ROUTES.SUBSCRIPTION.success);
         } else {
           // 재 검증하는 코드
           // await invalidPayment({ orderId, body: finalBody });
           await failPayment(orderId);
-          router.push("/checkout/failed?type=subscription");
+          router.push(CHECKOUT_ROUTES.SUBSCRIPTION.fail);
         }
       } catch (e) {
         console.error("[MobileSubscriptionPaymentRedirect] 처리 실패:", e);
-        router.push("/checkout/failed?type=subscription");
+        router.push(CHECKOUT_ROUTES.SUBSCRIPTION.fail);
       }
     };
 

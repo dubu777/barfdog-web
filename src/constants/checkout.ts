@@ -132,6 +132,17 @@ const PAYMENT_METHOD_INFO: Record<PaymentMethod, PaymentMethodInfo> = {
   },
 };
 
+const CHECKOUT_ROUTES = {
+  GENERAL: {
+    success: "/checkout/completed?type=general",
+    fail: "/checkout/failed?type=general",
+  },
+  SUBSCRIPTION: {
+    success: "/checkout/completed?type=subscription",
+    fail: "/checkout/failed?type=subscription",
+  },
+} as const;
+
 export {
   ORDER_STATUS,
   PAYMENT,
@@ -140,4 +151,5 @@ export {
   ORDER_MESSAGE,
   PAYMENT_METHOD_INFO,
   SUBSCRIPTION_NOTICE,
+  CHECKOUT_ROUTES,
 };
