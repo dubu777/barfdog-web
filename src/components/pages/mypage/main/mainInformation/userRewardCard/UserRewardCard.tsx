@@ -8,11 +8,10 @@ import Divider from "@/components/common/divider/Divider";
 import { MenuLink } from "@/types";
 
 interface MenuListType extends MenuLink {
-	key: 'review' | 'coupon' | 'reward';
+	key: 'coupon' | 'reward';
 }
 
 const MENU_LIST: MenuListType[] = [
-	{ key: 'review', label: '나의 리뷰', url: '/mypage/review' },
 	{ key: 'coupon', label: '쿠폰', url: '/mypage/coupon' },
 	{ key: 'reward', label: '적립금', url: '/mypage/reward' },
 ]
@@ -20,7 +19,6 @@ const MENU_LIST: MenuListType[] = [
 interface UserRewardCardProps {
 	couponCount: number;
 	rewardCount: number;
-	reviewCount: number;
 	isDisabled?: boolean;
 	className?: string;
 }
@@ -30,12 +28,10 @@ export default function UserRewardCard({
 	className,
 	couponCount,
 	rewardCount,
-	reviewCount = 3,
 }: UserRewardCardProps) {
 	const router = useRouter();
 
-	const valueMap: Record<'review' | 'coupon' | 'reward', string | number> = {
-		review: reviewCount.toLocaleString() ?? 0,
+	const valueMap: Record<'coupon' | 'reward', string | number> = {
 		coupon: couponCount.toLocaleString() ?? 0,
 		reward: rewardCount.toLocaleString() ?? 0,
 	};

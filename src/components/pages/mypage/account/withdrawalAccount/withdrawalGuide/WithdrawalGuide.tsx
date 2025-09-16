@@ -27,8 +27,9 @@ export default function WithdrawalGuide() {
   const { pushWithQuery } = useDynamicQueryPush();
 
   const { data } = useGetMyPageInfo();
-  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[data?.mypageMemberDto?.grade ?? "브론즈"]];
-  const username = data?.mypageMemberDto?.memberName;
+  const memberInfo = data?.memberInfo;
+  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[memberInfo?.grade ?? "브론즈"]];
+  const username = memberInfo?.name;
 
   const [confirm, setConfirm] = useState<boolean>(false);
 
@@ -54,8 +55,7 @@ export default function WithdrawalGuide() {
           isDisabled
           className={styles.guideCard}
           couponCount={data?.couponCount ?? 0}
-          reviewCount={3}
-          rewardCount={data?.mypageMemberDto?.reward ?? 0}
+          rewardCount={memberInfo?.reward ?? 0}
         />
       ),
     },

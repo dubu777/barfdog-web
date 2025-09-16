@@ -15,7 +15,7 @@ const MENU_LIST: MenuList[] = [
       { label: "구독 상품 관리", url: "/mypage/subscription" },
       { label: "주문 및 배송조회", url: "/mypage/order-delivery-inquiry" },
       { label: "자동 적립금 관리", url: "/mypage/auto-reward" },
-      { label: "리뷰 작성 내역", url: "/mypage/review" },
+      { label: "나의 리뷰", url: "/mypage/review" },
       { label: "프로모션", url: "/mypage/promotion" },
     ],
   },

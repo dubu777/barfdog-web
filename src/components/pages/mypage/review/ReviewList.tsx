@@ -122,9 +122,12 @@ export default function Review () {
                 imageUrl={review?.imageUrl}
                 status={review?.status}
                 createdDate={review?.createdDate}
+                orderedDate={review?.orderedDate}
                 star={review?.star}
                 imageCount={review?.imageCount ?? undefined}
+                subscribeCount={review?.subscribeCount}
                 contents={review?.contents ?? undefined}
+                returnReason={review?.returnReason}
                 showDetail
                 handleCreate={() => setCreateReview(review)}
               />

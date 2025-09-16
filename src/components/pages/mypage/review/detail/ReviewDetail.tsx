@@ -60,12 +60,9 @@ export default function ReviewDetail({
                 reviewStatus === 'REQUEST'
                   ? '관리자 확인 후 승인되면 적립금이 지급됩니다'
                   : (
-                    <>
-                      반려 사유: 적용 필요<br/>
-                      <Text type='caption2' color='pastelRed'>
-                        반려 사유를 확인하신 후 리뷰를 수정해 보세요. 수정 시 해당 리뷰는 승인대기 상태로 변경되고 승인되면 적립금이 지급됩니다.
-                      </Text>
-                    </>
+                    <Text type='label4' color='pastelRed'>
+                      리뷰가 반려됐어요. 수정 시 해당 리뷰는 승인대기 상태로 변경되고 승인되면 적립금이 지급돼요.
+                    </Text>
                   )
               }
               color={reviewStatus === 'RETURN' ? 'red' : 'gray'}

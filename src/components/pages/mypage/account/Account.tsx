@@ -19,13 +19,13 @@ export default function Account() {
 	const { data } = useGetMyPageInfo();
 	const { data: snsProvider } = useGetConnectedSns();
 
-	const userData = data?.mypageMemberDto;
-	const recommendationCode = userData?.myRecommendationCode ?? null;
+	const memberInfo = data?.memberInfo;
+	const recommendationCode = memberInfo?.myRecommendationCode ?? null;
 
 	return (
 		<section className={commonWrapper({ direction: 'col', align: 'start' })}>
 			<article className={commonWrapper({ direction: 'col', padding: 20 })}>
-				<Text type='title1'>{userData?.memberName} 님</Text>
+				<Text type='title1'>{memberInfo?.name} 님</Text>
 				<RecommendationCode code={recommendationCode as string} />
 			</article>
 			<ul 

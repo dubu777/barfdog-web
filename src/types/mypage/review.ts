@@ -45,6 +45,8 @@ interface DefaultReviewDetail {
   title: string;
   thumbnailUrl?: string;
   imageUrl?: string;
+  orderedDate?: string;
+  writtenDate?: string;
 }
 
 interface BaseReviewFormValues {

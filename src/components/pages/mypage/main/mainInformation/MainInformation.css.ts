@@ -51,7 +51,7 @@ export const rewardItem = recipe({
     display: 'flex',
     flexDirection: 'column',
     gap: '4px',
-    width: 'calc(100% / 3)',
+    width: 'calc(100% / 2)',
     backgroundColor: themeVars.colors.gray.gray0,
     padding: '12px 20px',
   },

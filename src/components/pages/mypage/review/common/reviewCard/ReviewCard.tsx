@@ -9,10 +9,10 @@ import Text from "@/components/common/text/Text";
 import SubtitleText from "@/components/pages/mypage/common/card/typography/SubtitleText";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
 import RateStar from "@/components/common/rateStar/RateStar";
-import DescriptionText from "@/components/pages/mypage/common/card/typography/DescriptionText";
 import Button from "@/components/common/button/Button";
 import { REVIEW_STATUS, REVIEW_STATUS_COLOR_MAP, REVIEW_TYPE } from "@/constants";
 import { ReviewItemType, ReviewStatus } from "@/types";
+import Divider from "@/components/common/divider/Divider";
 
 interface ReviewCardProps {
 	isWriteableReview?: boolean;
@@ -23,9 +23,12 @@ interface ReviewCardProps {
 	imageUrl?: string;
 	status?: ReviewStatus;
 	createdDate?: string;
+	orderedDate?: string;
 	star?: number;
 	imageCount?: number;
+	subscribeCount?: number;
 	contents?: string;
+	returnReason?: string;
 	showDetail?: boolean;
 	handleUpdate?: () => void;
 	handleCreate?: () => void;
@@ -41,9 +44,12 @@ export default function ReviewCard({
 	imageUrl,
 	status,
 	createdDate,
+	orderedDate,
 	star,
 	imageCount = 0,
+	subscribeCount,
 	contents,
+	returnReason,
 	showDetail = false,
 	handleUpdate,
 	handleCreate,
@@ -61,60 +67,52 @@ export default function ReviewCard({
 				gap: 12,
 			})}
 		>
-			<div className={commonWrapper({ align: 'center', justify: 'between' })}>
-				<div className={commonWrapper({ gap: 4, align: 'center', justify: 'start', width: 'auto' })}>
-					{(!isWriteableReview && status) &&
-					<Chips color={REVIEW_STATUS_COLOR_MAP[status]} variant='solid' borderRadius='lg'>
-						{REVIEW_STATUS[status]}
-					</Chips>
+			<div className={commonWrapper({ direction: 'col', gap: 10, align: 'start' })}>
+				<div className={commonWrapper({ align: 'center', justify: 'between' })}>
+					<div className={commonWrapper({ gap: 4, align: 'center', justify: 'start', width: 'auto' })}>
+						{(!isWriteableReview && status) &&
+							<Chips color={REVIEW_STATUS_COLOR_MAP[status]} variant='solid' borderRadius='lg'>
+								{REVIEW_STATUS[status]}
+							</Chips>
+						}
+						<Text type='label4'>{REVIEW_TYPE[reviewType]} {reviewType === 'SUBSCRIBE' && subscribeCount && `${subscribeCount}회차`}</Text>
+					</div>
+					{handleUpdate &&
+						<button onClick={handleUpdate}>
+							<Text type='headline4' color='blue500'>수정</Text>
+						</button>
 					}
-					<Text type='label4'>{REVIEW_TYPE[reviewType]}</Text>
 				</div>
-				{handleUpdate &&
-					<button onClick={handleUpdate}>
-						<Text type='headline4' color='blue500'>수정</Text>
-					</button>
+				{status === 'RETURN' && returnReason &&
+					<Text type='label4' color='pastelRed'>반려사유: {returnReason}</Text>
 				}
-			</div>
-			<div className={commonWrapper({ gap: 12, align: 'start', justify: 'start' })}>
-				<Image
-					src={thumbnailUrl ?? imageUrl ?? ''}
-					alt={title}
-					width={76}
-					height={76}
-					className={imageWrapper({ width: 76, objectFit: 'cover', borderRadius: 8 })}
-				/>
-				<div className={commonWrapper({ gap: 4, direction: 'col', align: 'start', width: 'auto' })}>
-					<SubtitleText text={title} type='headline2' />
-					{reviewType === 'SUBSCRIBE'
-						? (
-							<div>
-								<MetaText
-									textList={[
-										`하루 2끼`,
-										`4주`,
-										`28팩`,
-									]}
-									color='gray600'
-								/>
-								<MetaText textList={['정기구독 레시피1, 정기구독 레시피2']} color='gray600' />
-							</div>
-						) : (
-							<div>
-								<MetaText textList={['2개']} color='gray600' />
-								<MetaText textList={['추가 상품 총 3건']} color='gray600' />
-							</div>
-						)
-					}
+				<div className={commonWrapper({ gap: 12, align: 'start', justify: 'start' })}>
+					<Image
+						src={thumbnailUrl ?? imageUrl ?? ''}
+						alt={title}
+						width={76}
+						height={76}
+						className={imageWrapper({ width: 76, objectFit: 'cover', borderRadius: 8 })}
+					/>
+					<div className={commonWrapper({ gap: 8, direction: 'col', align: 'start', width: 'auto' })}>
+						<div className={commonWrapper({ gap: 4, direction: 'col', align: 'start' })}>
+							<SubtitleText text={title} type='headline2' />
+							<MetaText
+								textList={[
+									orderedDate ? `주문일: ${format(new Date(orderedDate), 'yyyy-MM-dd')}` : '',
+									createdDate ? `작성일: ${format(new Date(createdDate), 'yyyy-MM-dd')}` : '',
+								].filter(Boolean)}
+								color='gray600'
+							/>
+						</div>
+						{!isWriteableReview &&
+							<RateStar onChange={(newRating) => handleStarChange?.(newRating)} rateLength={5} value={star} size={24} color='red' />
+						}
+					</div>
 				</div>
 			</div>
-			{!isWriteableReview &&
-				<div className={commonWrapper({ gap: 8, align: 'center', justify: 'start' })}>
-					<RateStar onChange={(newRating) => handleStarChange?.(newRating)} rateLength={5} value={star} size={24} color='red' />
-					{createdDate &&
-						<DescriptionText text={format(new Date(createdDate), 'yy.MM.dd')} color='gray700' />
-					}
-				</div>
+			{!handleUpdate && !handleStarChange && !isWriteableReview &&
+				<Divider thickness={1} color='gray300' />
 			}
 			{(!isWriteableReview && contents) &&
 				<div className={commonWrapper({ gap: 4, align: 'center', justify: 'start' })}>

@@ -6,8 +6,8 @@ import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 import { useGetInviteRewardList } from "@/api/mypage/inviteFriends/queries/useGetInviteRewardList";
 
 export default function InviteFriends() {
-  const { data: userInfoData } = useGetMyPageInfo();
-  const userData = userInfoData?.mypageMemberDto;
+  const { data: myPageInfoData } = useGetMyPageInfo();
+  const memberInfo = myPageInfoData?.memberInfo;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInviteRewardList();
   const rewardListData = data?.pages?.[0];
@@ -18,8 +18,8 @@ export default function InviteFriends() {
         recommendedCode={rewardListData?.recommend}
       />
       <InviteRewardList
-        myRecommendationCode={userData?.myRecommendationCode}
-        memberName={userData?.memberName}
+        myRecommendationCode={memberInfo?.myRecommendationCode}
+        memberName={memberInfo?.name}
         rewardListData={rewardListData}
         hasNextPage={hasNextPage}
         isFetchingNextPage={isFetchingNextPage}
