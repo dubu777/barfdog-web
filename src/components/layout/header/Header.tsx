@@ -10,7 +10,6 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
 import { useRouter } from "next/navigation";
 import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
-import { button } from "./Header.css";
 
 interface HeaderProps {
   leftElement?: React.ReactNode;
