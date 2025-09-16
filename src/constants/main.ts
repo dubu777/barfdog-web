@@ -159,7 +159,7 @@ export const MAIN_DATA = {
 		action: {
 			label: '브랜드 스토리 보러가기',
 			variant: 'outline',
-			url: '/community/about',
+			url: '/about',
 			fullWidth: true
 		},
 		imageUrl: '/images/main/brandStory.png',

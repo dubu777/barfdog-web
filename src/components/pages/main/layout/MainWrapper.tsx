@@ -1,8 +1,6 @@
 'use client';
-import { useEffect } from "react";
-import Footer from "@/components/layout/footer/Footer";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { mainWrapper } from "@/components/pages/main/common/MainCommon.css";
 import BannerSection from "@/components/pages/main/section/BannerSection";
 import ReviewSection from "@/components/pages/main/section/ReviewSection";
@@ -14,10 +12,11 @@ import BARFSection from "@/components/pages/main/section/BARFSection";
 import ProductionSection from "@/components/pages/main/section/ProductionSection";
 import DeliverySection from "@/components/pages/main/section/DeliverySection";
 import BrandStorySection from "@/components/pages/main/section/BrandStorySection";
+import Footer from "@/components/layout/footer/Footer";
+import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
-import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 
-const MainWrapper = () => {
+export default function MainWrapper() {
   const { pushWithQuery } = useDynamicQueryPush();
   const { data: mainInfoData } = useGetMainInfo();
 
@@ -46,9 +45,6 @@ const MainWrapper = () => {
         <BrandStorySection />
         <Footer />
       </section>
-      <BottomNavBar />
     </>
   );
 };
-
-export default MainWrapper;

@@ -8,10 +8,8 @@ export const aboutContainer = style({
 
 export const sectionBox = recipe({
 	base: {
-		padding: '60px 0 28px',
 		display: 'flex',
 		flexDirection: 'column',
-		gap: '28px',
 		backgroundColor: themeVars.colors.gray.gray0,
 	},
 	variants: {
@@ -23,21 +21,26 @@ export const sectionBox = recipe({
 	}
 })
 
-export const sectionTitle = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '12px',
-	padding: '0 20px',
-})
-
-export const sectionImage = style({
-	width: '100%',
-	height: 'auto',
-	objectFit: 'cover',
+export const sectionTitle = recipe({
+	base: {
+		display: 'flex',
+		flexDirection: 'column',
+		gap: '12px',
+	},
+	variants: {
+		padding: {
+			'60/20/28': {
+				padding: '60px 20px 28px',
+			},
+			'0/20': {
+				padding: '0 20px',
+			}
+		}
+	}
 })
 
 export const sectionContent = style({
-	padding: '0 20px',
+	padding: '60px 20px',
 })
 
 export const signatureBox = style({
@@ -51,7 +54,12 @@ export const ourProcessBox = style({
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '20px',
-	padding: '0 20px',
+})
+
+export const ourProcessTitle = style({
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '12px',
 })
 
 export const sectionDescription = style({
@@ -60,8 +68,27 @@ export const sectionDescription = style({
 	gap: '6px',
 })
 
+export const snsContainer = style({
+	padding: '0 0 28px',
+	position: 'relative',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '28px',
+})
+
+export const snsTopImageText = style({
+	position: 'absolute',
+	top: '60px',
+	left: '50%',
+	transform: 'translateX(-50%)',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '6px',
+	justifyContent: 'center',
+	alignItems: 'center',
+})
+
 export const snsBox = style({
-	padding: '28px 0 60px',
 	display: 'flex',
 	flexDirection: 'column',
 	gap: '40px',
