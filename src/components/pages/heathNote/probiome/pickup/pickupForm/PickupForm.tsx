@@ -9,7 +9,7 @@ import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal
 import useModal from "@/hooks/useModal";
 import { ClientDeliveryDto, UploadedFile } from "@/types";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import MultiFileUploader from "@/components/common/multiFileUploader/MultiFileUploader";
 import { PICKUP_NOTICE_LIST } from "@/constants/healthNote/probiome";
 import InfoList from "@/components/common/typography/infoList/InfoList";

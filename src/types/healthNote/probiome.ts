@@ -71,7 +71,7 @@ interface ProbiomeDto {
   petName: string;
   kitId: number;
   diagnosisStatus: ProbiomeStatus;
-  submitDate: string;
+  surveySubmittedDate: string;
   downloadReportUrl: FileUrl | null;
   deliveryInfo: DeliveryAddressInfo;
 }
@@ -86,7 +86,7 @@ interface ProbiomeDiagnosisInfo {
   petName: string;
   kitId: number;
   diagnosisStatus: ProbiomeStatus;
-  submitDate: string; // e.g. "2025-08-21"
+  surveySubmittedDate: string; // e.g. "2025-08-21"
   /** 기관 검진 결과 pdf 파일 URL (아직 없을 수 있으므로 null 허용) */
   downloadReportUrl: FileUrl | null;
   /** 배송지 정보 (상세 응답 기준 null 가능성 고려) */

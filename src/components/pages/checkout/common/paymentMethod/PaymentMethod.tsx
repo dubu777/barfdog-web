@@ -1,6 +1,6 @@
 "use client";
 
-import { usePaymentStore } from "@/store/order/usePaymentStore";
+import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import * as styles from "./PaymentMethod.css";
 import OrderSection from "../orderSection/OrderSection";
 import Image from "next/image";

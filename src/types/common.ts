@@ -9,18 +9,6 @@ import {
 import { TextColor, TextType } from "./typography";
 import { COUPON_TARGET } from "@/constants";
 
-declare global {
-  interface Window {
-    IMP?: {
-      init: (userCode: string) => void;
-      request_pay: <T = unknown>(
-        data: unknown,
-        callback?: (response: T) => void
-      ) => void;
-    };
-  }
-}
-
 type SearchParamProps = {
   param: { [key: string]: string | number };
   searchParams: { [key: string]: string | string[] | undefined };

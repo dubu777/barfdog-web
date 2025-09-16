@@ -4,7 +4,7 @@ import Text from "@/components/common/text/Text";
 import { BundleDeliveryAddress } from "@/types";
 import BundleDeliveryCard from "./bundleDeliveryCard/BundleDeliveryCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 
 interface BundleDeliveryBottomSheetProps {
@@ -73,12 +73,8 @@ export default function BundleDeliveryBottomSheet({
     >
       <div className={styles.bundleBottomSheetTitleWrapper}>
         <div>
-          <Text type="title4">
-            묶음 배송은 정기 구독 배송지와
-          </Text>
-          <Text type="title4">
-            동일한 배송지로 설정할 수 있어요
-          </Text>
+          <Text type="title4">묶음 배송은 정기 구독 배송지와</Text>
+          <Text type="title4">동일한 배송지로 설정할 수 있어요</Text>
         </div>
         <Text type="body3" color="gray800">
           배송지를 변경하고 묶음배송을 신청하시겠어요?

@@ -49,7 +49,7 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
       <div className={commonWrapper({ justify: "between", paddingTop: 20 })}>
         <Text type="title3">{data.diagnosisInfo.petName} 문진 상세</Text>
         <Text type="body2" color="gray700">
-          {data.diagnosisInfo.submitDate}
+          {data.diagnosisInfo.surveySubmittedDate}
         </Text>
       </div>
 

@@ -10,7 +10,7 @@ import { useCompletedMode } from "@/hooks/useCompletedMode";
 import { useMultiFileUpload } from "@/hooks/useMultiFileUpload";
 import PickupForm from "@/components/pages/heathNote/probiome/pickup/pickupForm/PickupForm";
 import { useCreateProbiomePickup } from "@/api/healthNote/probiome/queries/useCreateProbiomePickup";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { useToastStore } from "@/store/useToastStore";
 import { useCancelUploadOnLeave } from "@/hooks/useCancelUploadOnLeave";
 

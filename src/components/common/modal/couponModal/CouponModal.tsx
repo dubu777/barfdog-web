@@ -6,7 +6,7 @@ import { ORDER_MESSAGE } from "@/constants";
 import { Coupon, OrderType } from "@/types";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useEffect, useState } from "react";
-import { useCouponStore } from "@/store/order/useCouponStore";
+import { useCouponStore } from "@/store/checkout/useCouponStore";
 import {
   calculateCouponDiscount,
   sortCoupons,

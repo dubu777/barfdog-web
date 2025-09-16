@@ -1,5 +1,5 @@
 import * as styles from "./BundleDeliverySelector.css";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { BundleDeliveryAddress, OrderStatus } from "@/types";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { orderSummaryRowContainer } from "../../common/orderSummary/orderSummaryRow/OrderSummaryRow.css";
@@ -28,8 +28,16 @@ export default function BundleDeliverySelector({
     setDeliveryDto,
   } = useDeliveryStore();
 
-  const { isOpen: isBottomSheetOpen, onClose: onBottomSheetClose, onToggle: onBottomSheetToggle } = useModal();
-  const { isOpen: isModalOpen, onClose: onModalClose, onToggle: onModalToggle } = useModal();
+  const {
+    isOpen: isBottomSheetOpen,
+    onClose: onBottomSheetClose,
+    onToggle: onBottomSheetToggle,
+  } = useModal();
+  const {
+    isOpen: isModalOpen,
+    onClose: onModalClose,
+    onToggle: onModalToggle,
+  } = useModal();
   const { onToggle: onCheckBoxToggle, isSelected } = useToggleOption<boolean>(
     isBundleDelivery,
     "checkbox",
@@ -44,19 +52,18 @@ export default function BundleDeliverySelector({
     : ORDER_MESSAGE.BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE;
   const fontColor = isAvailableBundle ? "gray900" : "gray500";
 
-
   // 모달 변경 버튼 클릭 - 묶음 배송 해제
   const handleCancelBundleDelivery = () => {
     setIsBundleDelivery(false);
     setDeliveryDto(backupDeliveryDto);
-    onBottomSheetClose()
-  }
+    onBottomSheetClose();
+  };
 
   // 모달 취소 버튼 클릭 - 묶음 배송 유지
   const handleKeepBundleDelivery = () => {
-    setIsBundleDelivery(true)
-    onModalClose()
-  }
+    setIsBundleDelivery(true);
+    onModalClose();
+  };
 
   // 묶음 배송 체크 박스 토글 함수
   const handleToggleCheckBox = () => {
@@ -67,7 +74,7 @@ export default function BundleDeliverySelector({
     if (newValue) {
       onBottomSheetToggle();
     } else {
-      onModalToggle()
+      onModalToggle();
     }
   };
 

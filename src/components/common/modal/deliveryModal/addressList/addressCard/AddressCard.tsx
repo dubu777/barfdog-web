@@ -7,7 +7,7 @@ import { AddressResponse } from "@/types/delivery";
 import { useDeleteAddress } from "@/api/address/mutations/useDeleteAddress";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 
 interface AddressCardProps {
   address: AddressResponse;
@@ -22,9 +22,9 @@ export default function AddressCard({
   showSelectButton = true,
 }: AddressCardProps) {
   const { isOpen, onClose, onToggle } = useModal();
-  const deliveryDto = useDeliveryStore(state => state.deliveryDto)
+  const deliveryDto = useDeliveryStore((state) => state.deliveryDto);
   const isDefaultAddress = address.default;
-  const isSelectedAddress = deliveryDto.deliveryId === address.id
+  const isSelectedAddress = deliveryDto.deliveryId === address.id;
   const handleSelect = () => {
     onSelectAddress({
       default: address.default,
@@ -91,7 +91,7 @@ export default function AddressCard({
           >
             수정
           </Button>
-          {showSelectButton &&
+          {showSelectButton && (
             <Button
               type="primary"
               variant="solid"
@@ -100,7 +100,7 @@ export default function AddressCard({
             >
               선택
             </Button>
-          }
+          )}
         </div>
       </div>
       <AlertModal

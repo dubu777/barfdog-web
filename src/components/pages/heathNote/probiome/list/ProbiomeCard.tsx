@@ -11,7 +11,7 @@ import { getProbiomeStatusConfig } from "@/config/probiomeStatusConfig";
 
 interface ProbiomeCardProps {
   status: ProbiomeStatus;
-  submitDate: string;
+  surveySubmittedDate: string;
   petName: string;
   downloadReportUrl?: string;
   onDetail: () => void;
@@ -21,7 +21,7 @@ interface ProbiomeCardProps {
 
 export default function ProbiomeCard({
   status,
-  submitDate,
+  surveySubmittedDate,
   petName,
   downloadReportUrl,
   onDetail,
@@ -46,7 +46,7 @@ export default function ProbiomeCard({
           </div>
         </Chips>
         <Text type="body3" color="gray600">
-          {submitDate}
+          {surveySubmittedDate}
         </Text>
       </div>
       <Text type="title4">{petName}</Text>

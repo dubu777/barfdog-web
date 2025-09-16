@@ -5,7 +5,7 @@ import {
   SubscriptionOrderStatus,
 } from "@/types";
 import { formatDate } from "@/utils";
-import { ORDER_TYPE } from "../order";
+import { ORDER_TYPE } from "../checkout";
 import { openChatChannelIO } from "@/utils/channelTalk";
 
 const MENU_LIST: MenuList[] = [

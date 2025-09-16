@@ -1,23 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // API & Data Fetching
-import { useGetGeneralOrder } from "@/api/order/queries/useGetGeneralOrder";
+import { useGetGeneralOrder } from "@/api/checkout/queries/useGetGeneralOrder";
+import { useSaveGeneralOrder } from "@/api/checkout/mutations/general/useSaveGeneralOrder";
+import { useSuccessGeneralPayment } from "@/api/checkout/mutations/general/useSuccessGeneralPayment";
+import { useFailGeneralPayment } from "@/api/checkout/mutations/general/useFailGeneralPayment";
+import { useCancelGeneralPayment } from "@/api/checkout/mutations/general/useCancelGeneralPayment";
+import { useCheckoutFlow } from "@/hooks/checkout/useCheckoutFlow";
 
 // Stores (상태 관리)
-import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
-import { useOrderStore } from "@/store/order/useOrderStore";
-import { useRewardStore } from "@/store/order/useRewardStore";
-import { usePaymentStore } from "@/store/order/usePaymentStore";
+import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
+import { useOrderStore } from "@/store/checkout/useOrderStore";
+import { useRewardStore } from "@/store/checkout/useRewardStore";
+import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import { useToastStore } from "@/store/useToastStore";
 
 // Custom Hooks
-import { useOrderForm } from "@/hooks/order/useOrderForm";
-import { useGeneralPayment } from "@/hooks/order/useGeneralPayment";
-import { useUpdateOrderStores } from "@/hooks/order/updateOrderStores";
+import { useOrderForm } from "@/hooks/checkout/useOrderForm";
 
-// Components
+// UI
 import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
 import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelector";
 import GeneralOrderItemList from "./generalOrderItemList/GenaralOrderItemList";
@@ -33,7 +37,12 @@ import FooterButton from "@/components/common/footerButton/FooterButton";
 
 // Constants & Types
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
-import { SaveGeneralOrderRequest } from "@/types";
+import {
+  GeneralIamportRequest,
+  GeneralIamportResponse,
+  GeneralOrderSheetResponse,
+  SaveGeneralOrderRequest,
+} from "@/types";
 import {
   defaultOrderValues,
   getOrderSchema,
@@ -43,50 +52,90 @@ import {
 // Utils
 import { formatNumberWithCommas } from "@/utils";
 import { scrollToElement } from "@/utils/scrollToElement";
+import useDeviceState from "@/hooks/useDeviceState";
+
+// Strategy & Adapter
+import { createGeneralStrategy } from "@/utils/checkout/strategies/generalStrategy";
+import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
+import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
 
 export default function GeneralOrderContainer() {
-  // ========== 상태 관리 ==========
+  // 상태
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
 
-  // ========== Store 상태 ==========
+  // Store
   const { orderItemDtoList } = usePersistOrderStore();
-  const maxAvailableReward = useRewardStore(
-    (state) => state.maxAvailableReward
-  );
-  const paymentPrice = usePaymentStore((state) => state.paymentPrice);
-  const getRequestBody = useOrderStore((state) => state.getRequestBody);
-  const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
-  const addToast = useToastStore((state) => state.addToast);
+  const maxAvailableReward = useRewardStore((s) => s.maxAvailableReward);
+  const paymentPrice = usePaymentStore((s) => s.paymentPrice);
+  const getRequestBody = useOrderStore((s) => s.getRequestBody);
+  const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
+  const addToast = useToastStore((s) => s.addToast);
 
-  // ========== 데이터 페칭 ==========
-  const { data: generalOrderData } = useGetGeneralOrder({
-    orderItemDtoList,
-  });
+  // 라우터 & 디바이스
+  const router = useRouter();
+  const { isMobileDevice } = useDeviceState();
 
-  // ========== 커스텀 훅 ==========
-  const updateOrderStores = useUpdateOrderStores();
+  // React Query 결제 페이지 데이터 조회
+  const { data: generalOrderData } = useGetGeneralOrder({ orderItemDtoList });
+
+  // Store에 데이터 하이드레이션
+  useHydrateGeneralOrderStores(generalOrderData);
+
+  // 폼
   const { control, setValue } = useOrderForm<OrderFormValues>(
     getOrderSchema(maxAvailableReward),
     defaultOrderValues
   );
-  const { processPayment, isProcessing } = useGeneralPayment({
-    generalOrderSheetData: generalOrderData,
+
+  // React Query mutations
+  const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
+  const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
+  const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
+  const { mutateAsync: cancelGeneralPayment } = useCancelGeneralPayment();
+
+  // 일반 결제 전략 생성(DI)
+  const strategy = useMemo(
+    () =>
+      createGeneralStrategy({
+        successGeneralPayment: (args) => successGeneralPayment(args),
+        cancelGeneralPayment: (id) => cancelGeneralPayment(id),
+        failGeneralPayment: (id) => failGeneralPayment(id),
+      }),
+    [successGeneralPayment, cancelGeneralPayment, failGeneralPayment]
+  );
+
+  // 오케스트레이터 훅
+  const { start, isProcessing } = useCheckoutFlow<
+    SaveGeneralOrderRequest,
+    GeneralOrderSheetResponse,
+    GeneralIamportRequest,
+    GeneralIamportResponse
+  >({
+    sheet: generalOrderData as GeneralOrderSheetResponse,
+    isMobile: isMobileDevice,
+    // saveOrder는 기존 응답을 SaveOrderResult로 변환해서 반환
+    saveOrder: async (req) => {
+      const res = await saveGeneralOrder(req);
+      return {
+        id: res.data.id,
+        merchantUid: res.data.merchantUid,
+        status: res.status,
+      };
+    },
+    paymentAdapter: iamportAdapter,
+    strategy,
+    navigate: (path) => router.push(path),
+    routes: {
+      success: "/checkout/completed?type=general",
+      fail: "/checkout/failed?type=general",
+    },
   });
 
-  // ========== 사이드 이펙트 ==========
-  // 데이터 로딩 완료시 상태 업데이트
-  useEffect(() => {
-    if (generalOrderData) {
-      updateOrderStores(generalOrderData);
-    }
-  }, [generalOrderData, updateOrderStores]);
+  // 스크롤
+  const scrollToTerms = () => scrollToElement(termsRef.current);
 
-  // ========== 이벤트 핸들러 ==========
-  const scrollToTerms = () => {
-    scrollToElement(termsRef.current);
-  };
-
+  // 결제 버튼
   const handlePaymentSubmit = async () => {
     if (!agreePrivacy) {
       setShowTermsErrors(true);
@@ -94,12 +143,10 @@ export default function GeneralOrderContainer() {
       setTimeout(scrollToTerms, 100);
       return;
     }
-
     const requestBody = getRequestBody(
       ORDER_TYPE.GENERAL
     ) as SaveGeneralOrderRequest;
-    console.log("requestBody", requestBody);
-    await processPayment(requestBody);
+    await start(requestBody);
   };
 
   return (

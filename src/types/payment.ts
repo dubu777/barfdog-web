@@ -5,7 +5,7 @@ import {
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
   SubscriptionOrderSheetResponse,
-} from "./order";
+} from "./checkout";
 
 interface IamportSubscribeResponse {
   code: number;

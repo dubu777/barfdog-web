@@ -14,7 +14,7 @@ import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import Text from "@/components/common/text/Text";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import { useRewardStore } from "@/store/order/useRewardStore";
+import { useRewardStore } from "@/store/checkout/useRewardStore";
 import { OrderType } from "@/types";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import { commonWrapper } from "@/styles/common.css";
@@ -141,9 +141,7 @@ export default function RewardUsage({
             isChecked={isSelected(true)}
             onToggle={() => onToggle(true)}
           >
-            <Text type="label2">
-              {ORDER_MESSAGE.REWARD_AUTO_APPLY}
-            </Text>
+            <Text type="label2">{ORDER_MESSAGE.REWARD_AUTO_APPLY}</Text>
           </LabeledCheckbox>
         ))}
     </OrderSection>

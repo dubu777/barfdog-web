@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/common/button/Button";
-import { usePersistOrderStore } from "@/store/order/usePersistOrderStore";
+import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
 import { useRouter } from "next/navigation";
 import * as styles from "./Test.css";
 import { deleteCookie, getCookie } from "@/utils/auth/cookie";
@@ -34,7 +34,7 @@ export default function GeneralShopTest() {
   const generalPaymentTest = () => {
     console.log("일반상점테스트");
     setOrderItemDtoList(orderItemListData);
-    window.location.href = "/order/checkout/general";
+    window.location.href = "/checkout/general";
   };
 
   const handleLogout = () => {

@@ -87,13 +87,13 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
                 diagnosisId,
                 diagnosisStatus,
                 petName,
-                submitDate,
+                surveySubmittedDate,
                 downloadReportUrl,
               }) => (
                 <ProbiomeCard
                   key={diagnosisId}
                   status={diagnosisStatus}
-                  submitDate={submitDate}
+                  surveySubmittedDate={surveySubmittedDate}
                   petName={petName}
                   downloadReportUrl={downloadReportUrl?.url}
                   onReportDownload={handleReportDownload}

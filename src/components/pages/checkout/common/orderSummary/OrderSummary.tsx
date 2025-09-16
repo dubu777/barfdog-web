@@ -1,19 +1,19 @@
 "use client";
 
-import { orderCalculation } from "@/utils/order/orderCalculation";
+import { orderCalculation } from "@/utils/checkout/orderCalculation";
 import * as styles from "../../OrderSheetCommon.css";
 import { ORDER_TYPE } from "@/constants";
 import { GeneralOrderItem, OrderType } from "@/types";
 import { formatNumberWithCommas } from "@/utils";
 import { useEffect, useMemo } from "react";
-import { useRewardStore } from "@/store/order/useRewardStore";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useRewardStore } from "@/store/checkout/useRewardStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import OrderSummaryRow from "./orderSummaryRow/OrderSummaryRow";
 import Divider from "@/components/common/divider/Divider";
-import { useCouponStore } from "@/store/order/useCouponStore";
+import { useCouponStore } from "@/store/checkout/useCouponStore";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import { usePaymentStore } from "@/store/order/usePaymentStore";
+import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import { orderSummaryRowContainer } from "./orderSummaryRow/OrderSummaryRow.css";
 import Text from "@/components/common/text/Text";
 import HelpIcon from "public/images/icons/help.svg";

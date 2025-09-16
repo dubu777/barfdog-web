@@ -2,7 +2,7 @@
 
 import useModal from "@/hooks/useModal";
 import Text from "@/components/common/text/Text";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import Chips from "@/components/common/chips/Chips";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";

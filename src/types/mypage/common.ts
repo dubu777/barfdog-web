@@ -1,7 +1,7 @@
 import { DogData } from "../dogs";
 import { SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage/common";
 import { PlanInfo } from "@/types/subscription";
-import { OrderType } from "@/types/order";
+import { OrderType } from "@/types/checkout";
 import { PAYMENT_METHOD } from "@/constants";
 
 export type {
@@ -73,7 +73,7 @@ interface MyPageBannerData {
 interface OrderProgressInfo {
   label?: string;
   progress: number;
-  statusText: Record<'payment' | 'delivery', string>;
+  statusText: Record<"payment" | "delivery", string>;
 }
 
 interface MenuLink {
@@ -87,7 +87,7 @@ interface MenuList {
   category: string;
   menus: MenuLink[];
 }
-type VariantsType = 'solid' | 'outline'
+type VariantsType = "solid" | "outline";
 
 interface OrderAction extends MenuLink {
   id?: CardActionsId;
@@ -103,22 +103,22 @@ interface IsOpenCardModal {
 }
 
 type CardActionsId =
-  'orderDetail' |
-  'orderCancel' |
-  'deliveryTracking' |
-  'refundExchange' |
-  'confirm' |
-  'review' |
-  'subscriptionDetail' |
-  'subscriptionSchedule' |
-  'itemDetail' |
-  'repurchase' |
-  'changePaymentMethod' |
-  'changeRecipe' |
-  'postponeShipping' |
-  'recipeDetail' |
-  'usingCoupon' |
-  'resubscribe';
+  | "orderDetail"
+  | "orderCancel"
+  | "deliveryTracking"
+  | "refundExchange"
+  | "confirm"
+  | "review"
+  | "subscriptionDetail"
+  | "subscriptionSchedule"
+  | "itemDetail"
+  | "repurchase"
+  | "changePaymentMethod"
+  | "changeRecipe"
+  | "postponeShipping"
+  | "recipeDetail"
+  | "usingCoupon"
+  | "resubscribe";
 
 interface NormalizedCardData {
   id: number;
@@ -140,45 +140,48 @@ interface NormalizedCardData {
   subscribeId?: string | number;
 }
 
-interface NormalizedOrderCardData extends NormalizedCardData{
+interface NormalizedOrderCardData extends NormalizedCardData {
   subscribeId?: number;
 }
 
-interface NormalizedSubscriptionCardData extends NormalizedCardData{
+interface NormalizedSubscriptionCardData extends NormalizedCardData {
   startDate?: string;
   hasPostpone?: boolean;
 }
 
 type SubscriptionOrderStatus = (typeof SUBSCRIPTION_ORDER_STATUSES)[number];
-type OrderDeliveryInquiryStatus = 'REVIEW_SUBMIT' | SubscriptionOrderStatus;
+type OrderDeliveryInquiryStatus = "REVIEW_SUBMIT" | SubscriptionOrderStatus;
 
 type ExcludedStatuses =
-  | 'SUBSCRIBE_PENDING'
-  | 'SUBSCRIBE_WILL_CANCEL'
-  | 'SUBSCRIBE_CANCEL';
+  | "SUBSCRIBE_PENDING"
+  | "SUBSCRIBE_WILL_CANCEL"
+  | "SUBSCRIBE_CANCEL";
 
-type SubscriptionCancelOrderStatus = Exclude<SubscriptionOrderStatus, ExcludedStatuses>;
+type SubscriptionCancelOrderStatus = Exclude<
+  SubscriptionOrderStatus,
+  ExcludedStatuses
+>;
 
 interface InfoListsItem {
-	label: string;
-	value: string | number;
+  label: string;
+  value: string | number;
 }
 
 interface InfoListsButtons {
-	label: string;
-	onClick: () => void;
+  label: string;
+  onClick: () => void;
 }
 
 interface InfoLists {
-	title?: string;
-	items: InfoListsItem[] | undefined;
-	noBorder?: boolean
+  title?: string;
+  items: InfoListsItem[] | undefined;
+  noBorder?: boolean;
 }
 
 interface PaymentSubscriptionCard {
   cardId: number;
-  cardName: string | null,
-  cardNumber: string | null,
+  cardName: string | null;
+  cardNumber: string | null;
   detailAddress: string;
   discountCoupon: number;
   discountGrade: number;
@@ -187,7 +190,7 @@ interface PaymentSubscriptionCard {
   name: string;
   street: string;
   plan: string;
-  nextPaymentDate: string | null,
+  nextPaymentDate: string | null;
   nextPaymentPrice: number;
   phoneNumber: string;
   overDiscount: number;

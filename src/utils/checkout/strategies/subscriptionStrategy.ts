@@ -1,0 +1,127 @@
+// 구독 결제 전략: "결제요청 빌드 → 콜백해석 → (데스크탑) again API → 검증 → 성공/실패 처리"
+import { CheckoutStrategy } from "../checkoutStrategies";
+import type {
+  SaveSubscriptionOrderRequest,
+  SubscriptionOrderSheetResponse,
+  SubscriptionIamportRequest,
+  SubscriptionIamportResponse,
+  CreateIamportSubscriptionPaymentRequest,
+} from "@/types";
+import { buildSubscriptionPaymentRequest } from "@/store/checkout/paymentUtils";
+
+export function createSubscriptionStrategy(deps: {
+  /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
+  sheet: SubscriptionOrderSheetResponse; // 이메일/상품명 등 참조
+  isMobile: boolean;
+
+  // API DI
+  createIamportPayment: (
+    body: CreateIamportSubscriptionPaymentRequest
+  ) => Promise<{
+    code: number;
+    message?: string;
+    response?: { status: string; imp_uid: string; fail_reason?: string };
+  }>;
+  validatePayment: (args: {
+    orderId: number;
+    impUid: string;
+  }) => Promise<boolean>;
+  invalidPayment: (args: { orderId: number; body: any }) => Promise<any>;
+  successPayment: (args: { orderId: number; body: any }) => Promise<any>;
+  failPayment: (orderId: number) => Promise<any>;
+}): CheckoutStrategy<
+  SaveSubscriptionOrderRequest,
+  SubscriptionOrderSheetResponse,
+  SubscriptionIamportRequest,
+  SubscriptionIamportResponse
+> {
+  return {
+    // 1) PG 결제요청 페이로드 구성
+    buildPaymentRequest: ({
+      requestBody,
+      sheet,
+      orderId,
+      merchantUid,
+      isMobile,
+    }) =>
+      buildSubscriptionPaymentRequest({
+        requestBody,
+        subscriptionOrderSheetData: sheet,
+        subscribeId: sheet.subscribeDto.id,
+        isMobileDevice: isMobile,
+        orderId,
+        merchantUid,
+      }),
+
+    // 2) 게이트웨이 콜백 해석
+    //    - 일반적으로 success/fail만 구분 (모바일은 redirect-flow로 콜백이 안 오거나, 와도 즉시 이동)
+    afterGatewayCallback: async ({ response }) => {
+      return response.success ? "success" : "fail";
+    },
+
+    // 3) 성공 후 처리
+    //    - 데스크탑만: again API → validate → success/invalid+fail
+    //    - 모바일: redirect 페이지에서 처리되므로 여기서는 no-op
+    onSuccess: async ({ saveOrder, response, requestBody }) => {
+      if (deps.isMobile) {
+        // 모바일: IMP가 m_redirect_url로 이동하므로 여기서 추가 처리는 하지 않음
+        return;
+      }
+
+      // again 결제에 필요한 바디 구성
+      const orderData: CreateIamportSubscriptionPaymentRequest = {
+        customer_uid: response.customer_uid,
+        merchant_uid: saveOrder.merchantUid,
+        amount: requestBody.paymentPrice,
+        name: deps.sheet.recipeNameList.join(", "),
+        buyer_name: requestBody.deliveryDto.recipientName,
+        buyer_tel: requestBody.deliveryDto.phoneNumber,
+        buyer_email: deps.sheet.email,
+        buyer_addr: `${requestBody.deliveryDto.street}, ${requestBody.deliveryDto.detailAddress}`,
+        buyer_postcode: requestBody.deliveryDto.zipcode,
+      };
+
+      // (1) 포트원 again 호출
+      const iamportResp = await deps.createIamportPayment(orderData);
+      if (iamportResp.code !== 0) {
+        throw new Error(
+          `again 결제 실패: ${iamportResp.message ?? "알 수 없음"}`
+        );
+      }
+
+      const final = iamportResp.response;
+      if (!final || final.status !== "paid") {
+        const reason = final?.fail_reason ?? "알 수 없는 결제 실패";
+        throw new Error(`결제 실패: ${reason}`);
+      }
+
+      // (2) 서버 검증
+      const isValid = await deps.validatePayment({
+        orderId: saveOrder.id,
+        impUid: final.imp_uid,
+      });
+
+      const finalBody = {
+        customerUid: response.customer_uid,
+        discountReward: requestBody.discountReward,
+        impUid: final.imp_uid,
+        merchantUid: saveOrder.merchantUid,
+      };
+
+      // (3) 성공/위변조 처리
+      if (isValid) {
+        await deps.successPayment({ orderId: saveOrder.id, body: finalBody });
+      } else {
+        await deps.invalidPayment({ orderId: saveOrder.id, body: finalBody });
+        await deps.failPayment(saveOrder.id);
+      }
+    },
+
+    // 4) 실패 공통 처리
+    onFail: async ({ saveOrder }) => {
+      if (saveOrder.id > 0) {
+        await deps.failPayment(saveOrder.id).catch(() => {});
+      }
+    },
+  };
+}

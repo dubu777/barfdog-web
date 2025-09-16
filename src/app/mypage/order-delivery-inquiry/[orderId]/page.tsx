@@ -1,11 +1,14 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { prefetchGetOrderDetail } from "@/api/order/queries/usePrefetchGetOrderDetail";
 import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
 import { OrderType } from "@/types";
-import OrderDetail
-  from "@/components/pages/mypage/orderDeliveryInquiry/orderDetail/OrderDetail";
+import OrderDetail from "@/components/pages/mypage/orderDeliveryInquiry/orderDetail/OrderDetail";
 import Spinner from "@/components/common/spinner/Spinner";
 
 interface OrderDetailPageProps {
@@ -14,10 +17,13 @@ interface OrderDetailPageProps {
   };
   searchParams: {
     orderType: OrderType;
-  }
+  };
 }
 
-export default async function OrderDetailPage({ params, searchParams }: OrderDetailPageProps) {
+export default async function OrderDetailPage({
+  params,
+  searchParams,
+}: OrderDetailPageProps) {
   const orderId = Number(params.orderId);
   const { orderType } = searchParams;
 
@@ -30,9 +36,9 @@ export default async function OrderDetailPage({ params, searchParams }: OrderDet
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>주문 데이터가 없습니다.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <OrderDetail orderId={orderId} orderType={orderType}/>
+          <OrderDetail orderId={orderId} orderType={orderType} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }
