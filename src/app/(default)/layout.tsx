@@ -1,6 +1,5 @@
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import { ReactNode } from "react";
-import SideNavBar from "@/components/layout/sideNavBar/SideNavBar";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
 import Header from "@/components/layout/header/Header";
 import Logo from "/public/images/logo/logo-default.png";
@@ -25,7 +24,6 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
           />
         )}
       />
-      <SideNavBar />
       <Wrapper>
         {children}
       </Wrapper>

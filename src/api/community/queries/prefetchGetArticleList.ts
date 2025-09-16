@@ -1,0 +1,22 @@
+import { QueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/constants/queryKeys';
+import { ArticleList, RecommendArticle } from '@/types';
+import { createSSRRequest } from "@/api/withAuthSSR";
+import { getArticleList, getRecommendArticleList } from '../community';
+
+export async function prefetchGetArticleList(queryClient: QueryClient) {
+  const ssrAxios = createSSRRequest();
+  await queryClient.prefetchQuery<ArticleList>({
+    queryKey: [queryKeys.COMMUNITY.ARTICLE.BASE, queryKeys.COMMUNITY.ARTICLE.GET_ARTICLE_LIST, 'ALL', 0],
+    queryFn: () => getArticleList('ALL', 0, 12, ssrAxios),
+  });
+}
+
+
+export async function prefetchGetRecommendArticleList(queryClient: QueryClient) {
+  const ssrAxios = createSSRRequest();
+  await queryClient.prefetchQuery<RecommendArticle[]>({
+    queryKey: [queryKeys.COMMUNITY.ARTICLE.BASE, queryKeys.COMMUNITY.ARTICLE.GET_RECOMMEND_ARTICLE_LIST],
+    queryFn: () => getRecommendArticleList(ssrAxios),
+  });
+}

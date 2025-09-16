@@ -1,11 +1,11 @@
-import * as styles from './DetailSection.css';
-import { sanitizedHTML } from "@/styles/common.css";
+import { commonWrapper, sanitizedHTML } from "@/styles/common.css";
 import { format } from "date-fns";
+import { QueryClient } from "@tanstack/react-query";
+import DOMPurify from "dompurify";
+import parse from "html-react-parser";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import PostNavigation from "@/components/pages/community/layout/postNavigation/PostNavigation";
-import useSanitizedHTML from "@/hooks/useSanitizedHTML";
-import { QueryClient } from "@tanstack/react-query";
+import PostNavigation from "@/components/pages/community/common/detailSection/postNavigation/PostNavigation";
 import { CommunityListItem } from "@/types";
 
 interface DetailSectionProps {
@@ -21,7 +21,7 @@ interface DetailSectionProps {
 	prefetchFn: (queryClient: QueryClient, id: number) => Promise<void>;
 }
 
-const DetailSection = ({
+export default function DetailSection({
 	id,
 	title,
 	createdDate,
@@ -32,16 +32,25 @@ const DetailSection = ({
 	prevPost,
 	nextPost,
 	prefetchFn,
-}: DetailSectionProps) => {
-	const sanitizedHTMLContents = useSanitizedHTML(contents || '')
+}: DetailSectionProps) {
+	const cleanHTML = DOMPurify.sanitize(contents) ?? "";
+
 	return (
-		<section className={styles.detailContainer}>
-			<article className={styles.detailHeader}>
+		<section className={commonWrapper({ backgroundColors: 'gray0', direction: 'col', align: 'start' })}>
+			<article 
+				className={commonWrapper({ 
+					direction: 'col',
+					align: 'start',
+					gap: 12,
+					padding: 20,
+					backgroundColors: 'gray50',
+				})}
+			>
 				<Text type='title4'>{title}</Text>
 				<Text type='body3' color='gray600'>{format(new Date(createdDate), 'yyyy-MM-dd')}</Text>
 			</article>
-			<div className={styles.detailContents}>
-				<div dangerouslySetInnerHTML={{ __html: sanitizedHTMLContents }} className={sanitizedHTML} />
+			<div className={commonWrapper({ padding: 20, paddingBottom: 60, paddingTop: 60 })}>
+				<div className={sanitizedHTML}>{parse(cleanHTML)}</div>
 			</div>
 			<Divider thickness={8} color='gray50' />
 			<PostNavigation
@@ -57,5 +66,3 @@ const DetailSection = ({
 		</section>
 	);
 };
-
-export default DetailSection;

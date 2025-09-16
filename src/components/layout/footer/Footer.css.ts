@@ -7,7 +7,7 @@ export const footerContainer = style({
 })
 
 export const logo = style({
-  padding: '12px 20px',
+  padding: '20px 20px 12px',
 })
 
 export const menuLinkBox = style({

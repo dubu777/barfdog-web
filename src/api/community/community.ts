@@ -9,33 +9,34 @@ import {
   NoticeListResponse, CommunityListItem
 } from "@/types";
 import {ARTICLE_CATEGORY} from "@/constants/community";
+import { AxiosInstance } from "axios";
 
-export { getNoticeList, getNoticeDetail, getRecommendArticleList, getArticleList, getArticleDetail };
-
-const getNoticeList = async ({ pageParam = 0, size = 10 }: { pageParam: number; size: number }): Promise<NoticeListResponse> => {
-  const { data } = await axiosInstance.get(`/api/notices?page=${pageParam}&size=${size}`);
+// 공지사항
+const getNoticeList = async ({ pageParam = 0, size = 10, instance = axiosInstance }: { pageParam: number; size?: number; instance?: AxiosInstance }): Promise<NoticeListResponse> => {
+  const { data } = await instance.get(`/api/notices?page=${pageParam}&size=${size}`);
   return {
     page: data.page,
     noticeList: data._embedded.queryNoticesDtoList,
   };
 };
 
-const getNoticeDetail = async (noticeId: number): Promise<NoticeDetail> => {
-  const { data } = await axiosInstance.get(`/api/notices/${noticeId}`);
+const getNoticeDetail = async (noticeId: number, instance: AxiosInstance = axiosInstance): Promise<NoticeDetail> => {
+  const { data } = await instance.get(`/api/notices/${noticeId}`);
   return data;
 }
 
-const getRecommendArticleList = async (): Promise<RecommendArticle[]> => {
-  const { data } = await axiosInstance.get(`/api/blogs/articles`);
+// 아티클
+const getRecommendArticleList = async (instance: AxiosInstance = axiosInstance): Promise<RecommendArticle[]> => {
+  const { data } = await instance.get(`/api/blogs/articles`);
   return data._embedded.articlesDtoList.sort((a: RecommendArticle, b: RecommendArticle) => a.number - b.number);
 }
 
-const getArticleList = async (category: ArticleCategory, page = 0, size = 12): Promise<ArticleList> => {
+const getArticleList = async (category: ArticleCategory, page = 0, size = 12, instance: AxiosInstance = axiosInstance): Promise<ArticleList> => {
   let data;
   if (category === 'ALL') {
-    data = await axiosInstance.get(`/api/blogs?page=${page}&size=${size}`);
+    data = await instance.get(`/api/blogs?page=${page}&size=${size}`);
   } else {
-    data = await axiosInstance.get(`/api/blogs/category/${category}?page=${page}&size=${size}`);
+    data = await instance.get(`/api/blogs/category/${category}?page=${page}&size=${size}`);
   }
   return {
     page: data.data.page,
@@ -43,10 +44,10 @@ const getArticleList = async (category: ArticleCategory, page = 0, size = 12): P
   }
 }
 
-const getArticleDetail = async (articleId: number): Promise<ArticleDetail> => {
-  const { data } = await axiosInstance.get(`/api/blogs/${articleId}`);
+const getArticleDetail = async (articleId: number, instance: AxiosInstance = axiosInstance): Promise<ArticleDetail> => {
+  const { data } = await instance.get(`/api/blogs/${articleId}`);
 
-  const { data: articleListData } = await axiosInstance.get(`/api/blogs`);
+  const { data: articleListData } = await instance.get(`/api/blogs`);
   const articleList = articleListData._embedded.queryBlogsDtoList;
   const currentIndex = articleList.findIndex((article: CommunityItem) => article.id === articleId);
 
@@ -65,3 +66,11 @@ const getArticleDetail = async (articleId: number): Promise<ArticleDetail> => {
     next: formatTitle(next)
   };
 }
+
+export { 
+  getNoticeList, 
+  getNoticeDetail,
+  getRecommendArticleList,
+  getArticleList, 
+  getArticleDetail,
+};
