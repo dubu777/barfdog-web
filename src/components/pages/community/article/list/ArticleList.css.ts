@@ -1,13 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const articleTitle = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
-  padding: '20px'
-})
-
 export const articleOverlay = style({
   position: "absolute",
   bottom: 0,
@@ -20,8 +13,4 @@ export const articleOverlay = style({
   padding: "20px 12px",
   justifyContent: "flex-end",
   gap: '4px !important',
-})
-
-export const articleImage = style({
-  objectFit: 'cover',
 })

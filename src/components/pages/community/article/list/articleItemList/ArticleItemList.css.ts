@@ -26,7 +26,9 @@ export const articleList = recipe({
 });
 
 export const articleItem = recipe({
-  base: {},
+  base: {
+    width: "100%",
+  },
   variants: {
     mode: {
       gallery: {
@@ -49,13 +51,26 @@ export const articleItemCategory = style({
   minWidth: "34px",
 });
 
-export const articleContents = style({
-  // width: '100%',
+export const articleContents = recipe({
+  base: {
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
-  gap: "16px",
-  padding: "10px",
+    justifyContent: "space-between",
+    gap: "16px",
+    padding: "10px",
+  },
+  variants: {
+    mode: {
+      gallery: {
+        width: "100%",
+
+      },
+      board: {
+        width: "calc(100% - 96px)",
+
+      },
+    },
+  },
 });
 
 export const articleGallery = style({

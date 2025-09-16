@@ -1,13 +1,14 @@
 import * as styles from './RecommendArticle.css';
-import { articleImage, articleOverlay } from "@/components/pages/community/article/articleList/ArticleList.css";
+import { articleOverlay } from "@/components/pages/community/article/list/ArticleList.css";
 import Image from "next/image";
 import Link from "next/link";
 import Text from "@/components/common/text/Text";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useGetRecommendArticleList } from "@/api/community/queries/useGetRecommendArticleList";
+import { imageWrapper } from '@/styles/common.css';
 
-const RecommendArticle = () => {
+export default function RecommendArticle() {
   const { data: recommendArticles } = useGetRecommendArticleList();
   return (
     <article className={styles.recommendArticleContainer}>
@@ -23,9 +24,10 @@ const RecommendArticle = () => {
               <Image
                 src={article.url}
                 alt={article.title}
-                width={335}
+                width={600}
                 height={335}
-                className={`${styles.recommendArticleImage} ${articleImage}`}
+                style={{ aspectRatio: '7 / 4' }}
+                className={imageWrapper({ objectFit: 'cover'})}
               />
               <div className={`${styles.recommendArticleContents} ${articleOverlay}`}>
                 <Text type='headline3' color='white'>{article.category}</Text>
@@ -39,5 +41,3 @@ const RecommendArticle = () => {
     </article>
   );
 };
-
-export default RecommendArticle;

@@ -50,5 +50,6 @@ export const accordionContent = style({
 });
 
 export const accordionMotionDiv = style({
+  width: '100%',
   overflow: 'hidden',
 });

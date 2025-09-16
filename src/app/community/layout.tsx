@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import CommunityHeader from "@/components/pages/community/layout/CommunityHeader";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
 
 interface DefaultLayoutProps {
@@ -7,11 +6,8 @@ interface DefaultLayoutProps {
 }
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
-    <>
-      <CommunityHeader />
-      <Wrapper>
-        {children}
-      </Wrapper>
-    </>
+    <Wrapper>
+      {children}
+    </Wrapper>
   );
 }
