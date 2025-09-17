@@ -42,7 +42,7 @@ export function createGeneralStrategy(deps: {
         generalOrderSheetData: sheet,
         orderId,
         merchantUid,
-        isMobileDevice: isMobile, // 기존 유틸 시그니처에 맞춤
+        isMobileDevice: isMobile,
       }),
 
     afterGatewayCallback: async ({ response }) => {

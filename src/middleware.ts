@@ -7,7 +7,7 @@ import { isAuthenticated } from "./utils/auth/isAuthenticated";
 // renewal 서버에서 로그인이 안돼서 테스트를 위해 /health-note 임시로 제외함
 const protectedPaths = [
   "/mypage",
-  "/order",
+  "/checkout",
   "/diet-analysis",
   "/cart",
   "/health-note",
@@ -67,7 +67,7 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     "/mypage/:path*",
-    "/order/:path*",
+    "/checkout/:path*",
     "/login",
     "/diet-analysis/:path*",
     "/health-note/:path*",

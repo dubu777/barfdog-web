@@ -14,12 +14,8 @@ import { useCheckoutFlow } from "@/hooks/checkout/useCheckoutFlow";
 // Stores (상태 관리)
 import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
 import { useOrderStore } from "@/store/checkout/useOrderStore";
-import { useRewardStore } from "@/store/checkout/useRewardStore";
 import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import { useToastStore } from "@/store/useToastStore";
-
-// Custom Hooks
-import { useOrderForm } from "@/hooks/checkout/useOrderForm";
 
 // UI
 import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
@@ -43,11 +39,6 @@ import {
   GeneralOrderSheetResponse,
   SaveGeneralOrderRequest,
 } from "@/types";
-import {
-  defaultOrderValues,
-  getOrderSchema,
-  OrderFormValues,
-} from "@/utils/validation/rewardValidation";
 
 // Utils
 import { formatNumberWithCommas } from "@/utils";
@@ -60,33 +51,23 @@ import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
 
 export default function GeneralOrderContainer() {
-  // 상태
+  // Local State
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
 
-  // Store
+  // Store State
   const { orderItemDtoList } = usePersistOrderStore();
-  const maxAvailableReward = useRewardStore((s) => s.maxAvailableReward);
   const paymentPrice = usePaymentStore((s) => s.paymentPrice);
   const getRequestBody = useOrderStore((s) => s.getRequestBody);
   const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
   const addToast = useToastStore((s) => s.addToast);
 
-  // 라우터 & 디바이스
+  // Routing & Device
   const router = useRouter();
   const { isMobileDevice } = useDeviceState();
 
-  // React Query 결제 페이지 데이터 조회
+  // React Query Data Fetching
   const { data: generalOrderData } = useGetGeneralOrder({ orderItemDtoList });
-
-  // Store에 데이터 하이드레이션
-  useHydrateGeneralOrderStores(generalOrderData);
-
-  // 폼
-  const { control, setValue } = useOrderForm<OrderFormValues>(
-    getOrderSchema(maxAvailableReward),
-    defaultOrderValues
-  );
 
   // React Query mutations
   const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
@@ -94,7 +75,10 @@ export default function GeneralOrderContainer() {
   const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
   const { mutateAsync: cancelGeneralPayment } = useCancelGeneralPayment();
 
-  // 일반 결제 전략 생성(DI)
+  // Store Hydration
+  useHydrateGeneralOrderStores(generalOrderData);
+
+  // Payment Strategy
   const strategy = useMemo(
     () =>
       createGeneralStrategy({
@@ -105,7 +89,7 @@ export default function GeneralOrderContainer() {
     [successGeneralPayment, cancelGeneralPayment, failGeneralPayment]
   );
 
-  // 오케스트레이터 훅
+  // Checkout Flow
   const { start, isProcessing } = useCheckoutFlow<
     SaveGeneralOrderRequest,
     GeneralOrderSheetResponse,
@@ -114,7 +98,6 @@ export default function GeneralOrderContainer() {
   >({
     sheet: generalOrderData as GeneralOrderSheetResponse,
     isMobile: isMobileDevice,
-    // saveOrder는 기존 응답을 SaveOrderResult로 변환해서 반환
     saveOrder: async (req) => {
       const res = await saveGeneralOrder(req);
       return {
@@ -171,12 +154,7 @@ export default function GeneralOrderContainer() {
         orderPrice={generalOrderData.orderPrice}
       />
       <Divider />
-      <RewardUsage
-        orderType={ORDER_TYPE.GENERAL}
-        control={control}
-        setValue={setValue}
-        maxAvailableReward={maxAvailableReward}
-      />
+      <RewardUsage orderType={ORDER_TYPE.GENERAL} />
       <Divider />
       <PaymentMethod />
       <Divider />

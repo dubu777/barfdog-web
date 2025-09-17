@@ -15,15 +15,45 @@ type Routes = {
   fail: string;
 };
 
-export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(deps: {
+interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
+  // 결제 시트 데이터(서버에서 조회해 화면/전략에 공유할 원천 데이터)
   sheet: Sheet;
+  // 모바일 환경 여부(모바일 리다이렉트/again API 등 분기에 사용)
   isMobile: boolean;
+  /**
+   * 주문 저장 함수
+   * - 서버에 주문을 저장하고 결제에 필요한 id/merchantUid/status 를 반환
+   * - status !== 200 이면 실패로 간주
+   */
   saveOrder: (req: Request) => Promise<SaveOrderResult>;
+  /**
+   * PG 어댑터
+   * - PG SDK 초기화(init) 및 결제 요청(requestPay)을 캡슐화
+   * - 다른 PG로 교체 가능
+   */
   paymentAdapter: PaymentAdapter<PayRes, PayReq>;
+  /**
+   * 결제 전략
+   * - 게이트웨이 콜백 해석(afterGatewayCallback: success/cancel/fail)
+   * - 성공/취소/실패 후처리(onSuccess/onCancel/onFail)
+   */
   strategy: CheckoutStrategy<Request, Sheet, PayReq, PayRes>;
+  // 라우팅 함수
   navigate: (path: string) => void;
+  /**
+   * 라우팅 경로들
+   * - 타입(일반/구독)별로 다르므로 외부에서 주입
+   */
   routes: Routes;
-}) {
+}
+
+/**
+ * 결제 전체 플로우: 저장 → PG요청 → 콜백해석 → 성공/취소/실패 처리 → 라우팅
+ * - deps로 모든 의존을 주입
+ */
+export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
+  deps: CheckoutFlowDeps<Request, Sheet, PayReq, PayRes>
+) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const start = useCallback(

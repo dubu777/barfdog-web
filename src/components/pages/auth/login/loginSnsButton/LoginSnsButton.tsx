@@ -1,14 +1,10 @@
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { SnSProvider } from "@/types";
 import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
 import { useCallback } from "react";
 import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
-import Button from "@/components/common/button/Button";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { imageWrapper } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
-import { COLORS } from "@/constants/style";
 import { TextColor } from "@/types/typography";
 import { buttonBox } from "./LoginSnsButtons.css";
 
@@ -58,19 +54,19 @@ const LoginSnsButton = ({
     }
   };
 
-  return (
-    showSymbolButton ? (
-      <div 
-        onClick={handleClick}
-        className={buttonBox}
-        style={{ backgroundColor: config.color }}
-      >
-        <SvgIcon src={config.symbolIcon} width={16} height={16} />
-        <Text type='headline1' color={config.fontColor as TextColor}>{config.loginText}</Text>
-      </div>
-    ) : (
-      <SvgIcon src={config.icon} size={52} onClick={handleClick} />
-    ) 
+  return showSymbolButton ? (
+    <div
+      onClick={handleClick}
+      className={buttonBox}
+      style={{ backgroundColor: config.color }}
+    >
+      <SvgIcon src={config.symbolIcon} width={16} height={16} />
+      <Text type="headline1" color={config.fontColor as TextColor}>
+        {config.loginText}
+      </Text>
+    </div>
+  ) : (
+    <SvgIcon src={config.icon} size={52} onClick={handleClick} />
   );
 };
 
