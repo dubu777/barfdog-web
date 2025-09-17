@@ -21,7 +21,6 @@ export default async function SubscriptionPage({
   params,
 }: SubscriptionPageProps) {
   const subscribeId = Number(params.subscribeId);
-
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionOrder(queryClient, subscribeId);
   await prefetchGetCouponList(queryClient);

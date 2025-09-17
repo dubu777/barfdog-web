@@ -49,6 +49,7 @@ import useDeviceState from "@/hooks/useDeviceState";
 import { createGeneralStrategy } from "@/utils/checkout/strategies/generalStrategy";
 import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default function GeneralOrderContainer() {
   // Local State
@@ -67,7 +68,9 @@ export default function GeneralOrderContainer() {
   const { isMobileDevice } = useDeviceState();
 
   // React Query Data Fetching
-  const { data: generalOrderData } = useGetGeneralOrder({ orderItemDtoList });
+  const { data: generalOrderData, isPending } = useGetGeneralOrder({
+    orderItemDtoList,
+  });
 
   // React Query mutations
   const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
@@ -131,6 +134,10 @@ export default function GeneralOrderContainer() {
     ) as SaveGeneralOrderRequest;
     await start(requestBody);
   };
+
+  if (isPending || !generalOrderData) {
+    return <Spinner fullscreen />;
+  }
 
   return (
     <>

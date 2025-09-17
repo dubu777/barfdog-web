@@ -10,7 +10,6 @@ import GeneralOrderContainer from "@/components/pages/checkout/general/GeneralOr
 
 export default async function GeneralPage() {
   const queryClient = new QueryClient();
-
   await prefetchGetCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 
