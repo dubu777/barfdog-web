@@ -15,6 +15,7 @@ interface ModalProps {
   onCancel?: () => void;
   isOpen: boolean;
   onClose: () => void;
+  closeOnBackgroundClick?: boolean;
 }
 
 export default function AlertModal({
@@ -28,6 +29,7 @@ export default function AlertModal({
   onCancel,
   isOpen,
   onClose,
+  closeOnBackgroundClick = true,
 }: ModalProps) {
   const handleConfirm = useCallback(() => {
     onConfirm?.();
@@ -60,7 +62,7 @@ export default function AlertModal({
   if (!isOpen) return null;
 
   return (
-    <ModalBackground isVisible={isOpen} onClose={onClose}>
+    <ModalBackground isVisible={isOpen} onClose={onClose} closeOnBackgroundClick={closeOnBackgroundClick}>
       <div
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}

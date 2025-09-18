@@ -19,12 +19,11 @@ interface OrderIssueCardProps {
 }
 
 const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderIssueCardProps) => {
-	const { data: userInfoData } = useGetMyPageInfo();
-	const userData = userInfoData?.mypageMemberDto;
+	const { data: myPageInfoData } = useGetMyPageInfo();
+	const memberInfo = myPageInfoData?.memberInfo;
 
 	const { pushWithQuery } = useDynamicQueryPush();
 	const cardDetail = data;
-	// const status = 'REQUESTED';
 	const status = cardDetail?.orderStatus;
 
 	const issueLabel = ORDER_ISSUE_TYPE[issueType] || '';
@@ -32,7 +31,7 @@ const OrderIssueCard = ({ data, issueType, orderType, isDetail = false }: OrderI
 
 	const issueStatusLabel = `${issueLabel}${statusLabel}`
 
-	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData?.grade);
+	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === memberInfo?.grade);
 	const totalDiscount = (userMembershipTier?.subscriptionDiscount || 0) + 5;
 
 	const handleActions = () => {

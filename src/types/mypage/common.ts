@@ -4,32 +4,6 @@ import { PlanInfo } from "@/types/subscription";
 import { OrderType } from "@/types/checkout";
 import { PAYMENT_METHOD } from "@/constants";
 
-export type {
-  MyPageMemberDto,
-  MyPageRepresentativeDogDto,
-  MyPageInfoData,
-  MyPageBannerData,
-  OrderProgressInfo,
-  MenuLink,
-  MenuList,
-  VariantsType,
-  OrderAction,
-  IsOpenCardModal,
-  NormalizedCardData,
-  NormalizedOrderCardData,
-  NormalizedSubscriptionCardData,
-  CardActionsId,
-  SubscriptionOrderStatus,
-  SubscriptionCancelOrderStatus,
-  OrderDeliveryInquiryStatus,
-  InfoLists,
-  InfoListsButtons,
-  InfoListsItem,
-  PaymentItem,
-  PaymentSubscriptionCard,
-  SendMessage,
-};
-
 interface MyPageMemberDto {
   id: number;
   grade: string;
@@ -46,7 +20,7 @@ interface MyPageRepresentativeDogDto {
   thumbnailUrl?: null | string;
 }
 
-interface MyPageInfoData {
+interface MyPageInfoDataTemp {
   couponCount: number;
   deliveryCount: number;
   mypageDogDtoList?: null | DogData[];
@@ -59,7 +33,7 @@ interface MyPageBannerImageUrl {
   mobile: string;
 }
 
-interface MyPageBannerData {
+interface MyPageBannerDataTemp {
   id: number;
   name: string;
   status: string;
@@ -211,3 +185,70 @@ interface SendMessage {
   phone: string;
   homePageUrl?: string;
 }
+
+// v2
+type MemberGradeType = '브론즈' | '실버' | '골드' | '플래티넘' | '다이아몬드' | '더바프';
+
+interface MemberInfo {
+  id: number;
+  name: string;
+  grade: MemberGradeType;
+  myRecommendationCode: string;
+  reward: number;
+}
+
+interface RepresentativePetInfo {
+  displayThumbnailUrl: string;
+  name: string;
+}
+
+interface MyPageInfoData {
+  couponCount: number;
+  memberInfo: MemberInfo;
+  representativePetInfo: RepresentativePetInfo;
+}
+
+interface MyPageBannerData {
+  id: number;
+  name: string;
+  status: "LEAKED" | "HIDDEN";
+  pcDisplayBannerUrl: {
+    url: string;
+  };
+  mobileDisplayBannerUrl: {
+    url: string;
+  };
+  pcRedirectUrl: string;
+  mobileRedirectUrl: string;
+}
+
+export type {
+  MyPageMemberDto,
+  MyPageRepresentativeDogDto,
+  MyPageInfoDataTemp,
+  MyPageBannerDataTemp,
+  OrderProgressInfo,
+  MenuLink,
+  MenuList,
+  VariantsType,
+  OrderAction,
+  IsOpenCardModal,
+  NormalizedCardData,
+  NormalizedOrderCardData,
+  NormalizedSubscriptionCardData,
+  CardActionsId,
+  SubscriptionOrderStatus,
+  SubscriptionCancelOrderStatus,
+  OrderDeliveryInquiryStatus,
+  InfoLists,
+  InfoListsButtons,
+  InfoListsItem,
+  PaymentItem,
+  PaymentSubscriptionCard,
+  SendMessage,
+  // v2
+  MemberInfo,
+  RepresentativePetInfo,
+  MyPageInfoData,
+  MyPageBannerData,
+};

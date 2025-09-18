@@ -71,15 +71,14 @@ export default function SubscriptionCard({
 	className,
 }: SubscriptionCardProps) {
 	const { pushWithQuery } = useDynamicQueryPush();
-	const { data: userInfoData } = useGetMyPageInfo();
-	const userData = userInfoData?.mypageMemberDto;
+	const { data: myPageInfoData } = useGetMyPageInfo();
+	const memberInfo = myPageInfoData?.memberInfo;
 
-	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === userData?.grade);
+	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === memberInfo?.grade);
 	const totalDiscount = (userMembershipTier?.subscriptionDiscount || 0) + 5;
 
 	const isMyPage = type === 'mypage';
 	const normalizedData = normalizeSubscriptionData(data, isMyPage, subscriptionId);
-	// const isSubscriptionCancel = normalizedData.orderStatus === 'SUBSCRIBE_CANCEL';
 	console.log('data', data)
 
 	const productionDates =

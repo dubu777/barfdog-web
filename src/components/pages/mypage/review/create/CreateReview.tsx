@@ -49,6 +49,7 @@ export default function CreateReview() {
         defaultReviewDetail={{
           title: createReview.title,
           imageUrl: createReview.imageUrl,
+          orderedDate: createReview.orderedDate,
         }}
         reviewFormValues={{
           id: createReview.id,

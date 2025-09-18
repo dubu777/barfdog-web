@@ -11,16 +11,16 @@ import { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR } from "@/constants/membership";
 
 export default function MainInformation() {
   const { data } = useGetMyPageInfo();
-  const userData = data?.mypageMemberDto;
+  const memberInfo = data?.memberInfo;
 
-  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[userData?.grade ?? "브론즈"]];
-  const representativePetImage = data?.mypageRepresentiveDogDto?.thumbnailUrl;
+  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[memberInfo?.grade ?? "브론즈"]];
+  const representativePetImage = data?.representativePetInfo?.displayThumbnailUrl;
 
   return (
     <article className={styles.userInfoContainer}>
       <div className={styles.accountLinkBox}>
         <RecommendationCode
-          code={userData?.myRecommendationCode ?? ""} 
+          code={memberInfo?.myRecommendationCode ?? ""} 
           tailPosition='bottom' 
           className={styles.accountRecommendationCode}
         />
@@ -32,7 +32,7 @@ export default function MainInformation() {
             height={48}
             className={styles.accountImage}
           />
-          <Text type='title1'>{userData?.memberName}</Text>
+          <Text type='title1'>{memberInfo?.name}</Text>
         </div>
       </div>
       <div className={styles.membership}>
@@ -42,12 +42,13 @@ export default function MainInformation() {
             <Text type='headline4' color='gray300'>자세히 보기</Text>
           </Link>
         </div>
-        <Text type='caption' color='red'>{userMembershipTier?.description}</Text>
+        {userMembershipTier?.description && 
+          <Text type='caption' color='red'>{userMembershipTier?.description}</Text>
+        }
       </div>
       <UserRewardCard
         couponCount={data?.couponCount ?? 0}
-        reviewCount={3}
-        rewardCount={userData?.reward ?? 0}
+        rewardCount={memberInfo?.reward ?? 0}
       />
     </article>
   );
