@@ -8,6 +8,7 @@ const queryKeys = {
   AUTH: {
     BASE: "auth",
     GET_USER_INFO: "getUserInfo",
+    VERIFY_PASSWORD: "verifyPassword",
     LOGIN: "login",
   },
   SURVEY: {
