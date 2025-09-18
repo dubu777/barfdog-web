@@ -33,7 +33,7 @@ interface MyPageBannerImageUrl {
   mobile: string;
 }
 
-interface MyPageBannerData {
+interface MyPageBannerDataTemp {
   id: number;
   name: string;
   status: string;
@@ -205,11 +205,25 @@ interface MyPageInfoData {
   representativePetInfo: RepresentativePetInfo;
 }
 
+interface MyPageBannerData {
+  id: number;
+  name: string;
+  status: "LEAKED" | "HIDDEN";
+  pcDisplayBannerUrl: {
+    url: string;
+  };
+  mobileDisplayBannerUrl: {
+    url: string;
+  };
+  pcRedirectUrl: string;
+  mobileRedirectUrl: string;
+}
+
 export type {
   MyPageMemberDto,
   MyPageRepresentativeDogDto,
   MyPageInfoDataTemp,
-  MyPageBannerData,
+  MyPageBannerDataTemp,
   OrderProgressInfo,
   MenuLink,
   MenuList,
@@ -233,4 +247,5 @@ export type {
   MemberInfo,
   RepresentativePetInfo,
   MyPageInfoData,
+  MyPageBannerData,
 };
