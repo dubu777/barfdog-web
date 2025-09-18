@@ -14,8 +14,6 @@ export function useGetInfinitePromotionList() {
 			return data;
 		},
 		getNextPageParam: (lastPage) => {
-			console.log('lastPage', lastPage);
-			
 			if (!lastPage) return undefined;
 
 			const currentPage = lastPage?.page?.page ?? 0;
