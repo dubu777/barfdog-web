@@ -1,24 +1,17 @@
 'use client';
-import { useSearchParams } from "next/navigation";
-import WithdrawalGuide from "@/components/pages/mypage/account/withdrawalAccount/withdrawalGuide/WithdrawalGuide";
-import WithdrawalReasonForm
-	from "@/components/pages/mypage/account/withdrawalAccount/withdrawalReasonForm/WithdrawalReasonForm";
-import WithdrawalConfirmation
-	from "@/components/pages/mypage/account/withdrawalAccount/withdrawalConfirmation/WithdrawalConfirmation";
+import { useState } from "react";
+import WithdrawalNotice from "@/components/pages/mypage/account/withdrawalAccount/withdrawalNotice/WithdrawalNotice";
+import WithdrawalPasswordConfirm from "./withdrawalPasswordConfirm/WithdrawalPasswordConfirm";
 
-type WithdrawalStep = 'guide' | 'reason' | 'confirmation';
+export type WithdrawalStep = 'notice' | 'password';
 
-const WithdrawalAccount = () => {
-	const searchParams = useSearchParams();
-	const step= searchParams.get('step') as WithdrawalStep || 'guide';
+export default function WithdrawalAccount() {
+	const [step, setStep] = useState<WithdrawalStep>("notice");
 
 	return (
 		<section>
-			{step === 'guide' && <WithdrawalGuide />}
-			{step === 'reason' && <WithdrawalReasonForm />}
-			{step === 'confirmation' && <WithdrawalConfirmation />}
+			{step === "notice" && <WithdrawalNotice setStep={setStep} />}
+			{step === "password" && <WithdrawalPasswordConfirm />}
 		</section>
 	);
-};
-
-export default WithdrawalAccount;
+}
