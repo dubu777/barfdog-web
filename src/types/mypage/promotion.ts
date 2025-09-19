@@ -41,8 +41,17 @@ interface CreatePromotion {
 	promotionCode: string;
 }
 
+interface RawPromotionList {
+	memberPromotionList: {
+		promotionDto: PromotionInfo;
+		promotionCouponDto: PromotionCouponInfo;
+	}[];
+	pagination: Pagination;
+}
+
 export type {
 	PromotionListSearchValues,
 	PromotionItem,
 	CreatePromotion,
+	RawPromotionList,
 }

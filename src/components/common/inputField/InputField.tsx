@@ -53,7 +53,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
   label?: string;
-  labelColor?: "gray600" | "gray700" | "gray800";
+  labelColor?: "gray600" | "gray700" | "gray800" | "gray900";
   labelPosition?: "top" | "left";
   labelType?: "label4" | "headline4";
   isRequired?: boolean;
