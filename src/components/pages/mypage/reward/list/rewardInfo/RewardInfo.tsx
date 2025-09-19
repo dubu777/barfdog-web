@@ -6,13 +6,11 @@ import RewardInfoBottomSheet from "@/components/pages/mypage/reward/list/rewardI
 import useModal from "@/hooks/useModal";
 
 interface RewardInfoProps {
-	totalReward: number;
-	discountTotalReward: number;
+	totalRewards: number;
 }
 
 export default function RewardInfo({
-	totalReward,
-	discountTotalReward,
+	totalRewards,
 }: RewardInfoProps) {
 
 	const { onToggle, onClose, isOpen } = useModal();
@@ -35,9 +33,8 @@ export default function RewardInfo({
 			>
 				<Card
 					shadow='light'
-					padding='12/20'
+					padding='16/20'
 					align='start'
-					gap={16}
 				>
 					<div
 						className={commonWrapper({
@@ -47,16 +44,7 @@ export default function RewardInfo({
 						})}
 					>
 						<Text type='label4'>사용 가능 적립금</Text>
-						<Text type='title2'>{totalReward?.toLocaleString()} P</Text>
-					</div>
-					<div
-						className={commonWrapper({
-							align: 'center',
-							justify: 'between',
-						})}
-					>
-						<Text type='label4'>할인받은 총액</Text>
-						<Text type='label4'>{discountTotalReward.toLocaleString()} 원</Text>
+						<Text type='title2'>{totalRewards?.toLocaleString()} P</Text>
 					</div>
 				</Card>
 				<InfoBox text='적립금 안내사항' onClick={onToggle} fullWidth showRightArrowButton />

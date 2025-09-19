@@ -5,7 +5,7 @@ import { getInviteRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
 
 export function useGetInviteRewardList() {
   return useInfiniteQuery<InviteRewardList>({
-    queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST],
+    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.REWARD.BASE, queryKeys.MYPAGE.REWARD.GET_INVITE_REWARD_LIST],
     queryFn: async ({ pageParam = 0 }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
       const data = await getInviteRewardList({ pageParam: pageNumber});

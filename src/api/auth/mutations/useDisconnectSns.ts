@@ -13,7 +13,7 @@ function useDisconnectSns(mutationOptions?: UseMutationCustomOptions) {
 		onSuccess: async (data) => {
 			if(data.status === 200) {
 				await queryClient.invalidateQueries({
-					queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_CONNECTED_SNS]
+					queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_CONNECTED_SNS]
 				});
 			}
 		},

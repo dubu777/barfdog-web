@@ -5,7 +5,7 @@ import { getPaymentList } from "@/api/mypage/subscription/subscription";
 
 export function useGetPaymentList(queryOptions?: UseSuspenseQueryCustomOptions<PaymentItem[]>){
   return useSuspenseQuery<PaymentItem[]>({
-    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_PAYMENT_LIST],
+    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_PAYMENT_LIST],
     queryFn: () => getPaymentList(),
     ...queryOptions,
   })

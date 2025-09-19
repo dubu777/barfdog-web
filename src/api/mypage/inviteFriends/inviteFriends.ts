@@ -1,6 +1,7 @@
 import axiosInstance from "@/api/axiosInstance";
 import { AxiosInstance } from "axios";
 import { InviteRewardList, InviteRewardResponse, SendMessage } from "@/types";
+import { getRewardList } from "../reward/reward";
 
 const getInviteRewardList = async ({
 	pageParam = 0,
@@ -11,12 +12,24 @@ const getInviteRewardList = async ({
 	});
 	const { recommend, joinedCount, orderedCount, totalRewards, pagedModel } = data;
 	console.log('data', data)
+	const defaultRewardList = await getRewardList({
+		pageParam: 0,
+		size: 100,
+	})
+	const rewardList = 
+		[
+			...defaultRewardList.rewardList.filter(reward => reward.name.includes('친구')), 
+			...pagedModel?._embedded?.queryRewardsDtoList || []
+		]
+		.sort((a, b) => {
+			return new Date(b.createdTime).getTime() - new Date(a.createdTime).getTime();
+		});
 	return {
 		recommend,
 		joinedCount,
 		orderedCount,
 		totalRewards,
-		rewardList: pagedModel?._embedded?.queryRewardsDtoList || [],
+		rewardList,
 		page: pagedModel?.page,
 	};
 }

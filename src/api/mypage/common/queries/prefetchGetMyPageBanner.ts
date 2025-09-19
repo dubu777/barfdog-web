@@ -7,7 +7,7 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 export async function prefetchGetMyPageBanner(queryClient: QueryClient) {
 	const ssrAxios = createSSRRequest();
 	await queryClient.prefetchQuery<MyPageBannerData>({
-		queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_MYPAGE_BANNER],
+		queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_MYPAGE_BANNER],
 		queryFn: () => getMyPageBanner(ssrAxios),
 	});
 }

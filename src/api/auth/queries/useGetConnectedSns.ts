@@ -5,7 +5,7 @@ import { queryKeys } from "@/constants";
 
 export function useGetConnectedSns(queryOptions?: UseSuspenseQueryCustomOptions<SnSProvider | null>) {
 	return useSuspenseQuery<SnSProvider | null>({
-		queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_CONNECTED_SNS],
+		queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_CONNECTED_SNS],
 		queryFn: () => getConnectedSns(),
 		...queryOptions,
 	})

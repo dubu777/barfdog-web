@@ -9,7 +9,7 @@ export function useCreateRecommendCode(mutationOptions?: UseMutationCustomOption
     mutationFn: (body: { recommendCode: string }) => createRecommendCode(body),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST],
+        queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.REWARD.BASE, queryKeys.MYPAGE.REWARD.GET_INVITE_REWARD_LIST],
       });
     },
     ...mutationOptions,

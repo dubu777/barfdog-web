@@ -5,7 +5,7 @@ import { MyPageBannerData, UseSuspenseQueryCustomOptions } from "@/types";
 
 export function useGetMyPageBanner(queryOptions?: UseSuspenseQueryCustomOptions<MyPageBannerData>){
   return useSuspenseQuery<MyPageBannerData>({
-    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_MYPAGE_BANNER],
+    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_MYPAGE_BANNER],
     queryFn: () => getMyPageBanner(),
     ...queryOptions,
   });

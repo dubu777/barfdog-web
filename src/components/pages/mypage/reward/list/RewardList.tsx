@@ -7,25 +7,29 @@ import RewardFilter from "@/components/pages/mypage/reward/list/rewardFilter/Rew
 import RewardItem from "@/components/pages/mypage/reward/list/rewardItem/RewardItem";
 import RewardInfo from "@/components/pages/mypage/reward/list/rewardInfo/RewardInfo";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import Divider from "@/components/common/divider/Divider";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
-import { RewardFilterType, RewardListData, RewardListDataWithTotals } from "@/types";
-import { useGetRewardList } from "@/api/mypage/reward/queries/useGetRewardList";
+import { RewardFilterType } from "@/types";
+import { useGetInfiniteRewardList } from "@/api/mypage/reward/queries/useGetInfiniteRewardList";
 
 export default function RewardList() {
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') as RewardFilterType;
 
   const { ref, inView } = useInView();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetRewardList();
-  const rewardList = useMemo(() =>
-    data?.pages?.flatMap((page: RewardListData) =>
-      statusFilter === 'ALL' || !statusFilter
-        ? page.rewardList
-        : page.rewardList.filter(reward => reward.rewardStatus === statusFilter)
-    ) ?? []
-  , [data?.pages, statusFilter]);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteRewardList();
 
-  const totalReward = (data?.pages[0] as RewardListDataWithTotals)?.totalReward ?? 0;
+  const rewardList = useMemo(() => {
+    if (!data?.pages) return [];
+    return data.pages.flatMap((page) => {
+      if (statusFilter === 'ALL' || !statusFilter) {
+        return page.rewardList;
+      }
+      return page.rewardList.filter(reward => reward.rewardStatus === statusFilter);
+    });
+  }, [data?.pages, statusFilter]);
+  
+  const totalRewards = data?.pages?.[0]?.totalRewards ?? 0;
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -36,10 +40,10 @@ export default function RewardList() {
   return (
     <section>
       <RewardInfo
-        totalReward={totalReward}
-        discountTotalReward={1000000}
+        totalRewards={totalRewards}
       />
       <RewardFilter />
+      <Divider thickness={2} color='gray50' />
       <article
         className={commonWrapper({
           backgroundColors: 'gray50',

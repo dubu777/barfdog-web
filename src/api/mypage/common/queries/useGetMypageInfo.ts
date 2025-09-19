@@ -6,7 +6,7 @@ import { UseQueryCustomOptions } from "@/types";
 
 export function useGetMyPageInfo(queryOptions?: UseQueryCustomOptions<MyPageInfoData>){
   return useQuery<MyPageInfoData>({
-    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_MYPAGE_INFO],
+    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_MYPAGE_INFO],
     queryFn: () => getMyPageInfo(),
     ...queryOptions,
   });
