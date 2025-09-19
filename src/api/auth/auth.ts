@@ -7,7 +7,7 @@ import {
   UserInfoFormValues,
   UserInfo,
   LoginUserInfo,
-  SnSProvider,
+  SnsProvider,
   UserType,
   GetAuthNumber,
   ConnectSnsResponse,
@@ -16,7 +16,7 @@ import {
   VerifyFindAccountCodeRequest,
   VerifyFindAccountCodeResponse,
 } from "@/types";
-import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
+import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
 import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
 import { FindEmailValues } from "@/utils/validation/auth/findEmail";
 
@@ -90,7 +90,7 @@ const connectSns = async (body: ConnectSns): Promise<ConnectSnsResponse> => {
 
 const getConnectedSns = async (
   instance: AxiosInstance = axiosInstance
-): Promise<SnSProvider | null> => {
+): Promise<SnsProvider | null> => {
   const { data } = await instance.get("/api/members/sns");
   return data?.provider || null;
 };
@@ -154,14 +154,13 @@ const logout = async () => {
 const getAccessTokenByNaver = async (code: string) => {
   if (!code) throw new Error("인가 코드 없음");
 
-  const { clientId, clientSecret, auth } = SNS_LOGIN_CONFIG.naver;
+  const { clientId, clientSecret, auth } = OAUTH_CLIENT_CONFIG.naver;
 
   const params = new URLSearchParams({
     grant_type: auth.grantType,
     client_id: clientId,
     client_secret: clientSecret,
     code,
-    state: "barfdogNaverLogin",
   });
 
   const { data: tokenResponse } = await axios.post(
@@ -175,7 +174,8 @@ const getAccessTokenByNaver = async (code: string) => {
 export const getAccessTokenByKakao = async (code: string) => {
   if (!code) throw new Error("인가 코드 없음");
 
-  const { clientId, clientSecret, redirectUri, auth } = SNS_LOGIN_CONFIG.kakao;
+  const { clientId, clientSecret, redirectUri, auth } =
+    OAUTH_CLIENT_CONFIG.kakao;
 
   const params = new URLSearchParams({
     grant_type: auth.grantType,
@@ -201,10 +201,10 @@ const snsLogin = async ({
   provider,
   code,
 }: {
-  provider: SnSProvider;
+  provider: SnsProvider;
   code: string;
 }): Promise<LoginUserInfo> => {
-  console.log("loginWithProvider", provider, code);
+  console.log("loginWithSnsProvider", provider, code);
 
   try {
     let body;

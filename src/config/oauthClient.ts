@@ -3,7 +3,7 @@ import NaverIcon from "public/images/logo/auth/naver-logo.svg";
 import KakaoSymbolIcon from "public/images/mypage/kakao-symbol.svg";
 import NaverSymbolIcon from "public/images/mypage/naver-symbol.svg";
 
-import { SnSProvider } from "@/types";
+import { Provider } from "@/types";
 import { themeVars } from "@/styles/theme.css";
 
 interface ProviderOAuthConfig {
@@ -13,7 +13,7 @@ interface ProviderOAuthConfig {
   responseType: string; // 인가 코드 요청 시 response_type 값
 }
 
-interface ProviderConfig {
+export interface OAuthClientConfig {
   clientId: string;
   clientSecret: string;
   redirectUri: string;
@@ -22,12 +22,11 @@ interface ProviderConfig {
   alt: string;
   loginText: string;
   symbolIcon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  color: string;
   fontColor: string;
   name: string;
 }
 
-export const SNS_LOGIN_CONFIG: Record<SnSProvider, ProviderConfig> = {
+export const OAUTH_CLIENT_CONFIG: Record<Provider, OAuthClientConfig> = {
   kakao: {
     clientId: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY || "",
     clientSecret: process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET || "",
@@ -42,8 +41,7 @@ export const SNS_LOGIN_CONFIG: Record<SnSProvider, ProviderConfig> = {
     alt: "카카오 이미지",
     loginText: "카카오로 시작하기",
     symbolIcon: KakaoSymbolIcon,
-    color: themeVars.colors.kakao.kakaoBackground,
-    fontColor: 'kakaoFont',
+    fontColor: "kakaoFont",
     name: "카카오",
   },
   naver: {
@@ -60,8 +58,9 @@ export const SNS_LOGIN_CONFIG: Record<SnSProvider, ProviderConfig> = {
     alt: "네이버 이미지",
     loginText: "네이버로 시작하기",
     symbolIcon: NaverSymbolIcon,
-    color: themeVars.colors.naver.naverBackground,
-    fontColor: 'naverFont',
+    fontColor: "naverFont",
     name: "네이버",
   },
 };
+
+export const PROVIDERS = ["kakao", "naver"] as const;

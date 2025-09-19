@@ -1,4 +1,5 @@
-import { AddressDto } from "@/types/index";
+import { PROVIDERS } from "@/config/oauthClient";
+import { AddressDto, ValueOfTuple } from "@/types/index";
 
 // 로그인
 type Role = "USER" | "ADMIN" | "SUBSCRIBER";
@@ -8,8 +9,8 @@ type UserType =
   | "MEMBER_WITH_SMS_KAKAO"
   | "MEMBER_WITH_SMS_NAVER"
   | "SUCCESS";
-type SnSProvider = "kakao" | "naver";
 type GenderType = "MALE" | "FEMALE" | "NONE" | "M" | "F" | null;
+type SnsProvider = ValueOfTuple<typeof PROVIDERS>;
 
 interface LoginFormValues {
   email: string;
@@ -26,7 +27,7 @@ interface UserInfo {
 }
 
 interface LoginUserInfo {
-  provider: SnSProvider;
+  provider: SnsProvider;
   providerId: string;
   phoneNumber: string;
   message: string;
@@ -51,13 +52,13 @@ interface ConnectSnsPassword {
 
 interface ConnectSns {
   phoneNumber: string;
-  provider: SnSProvider;
+  provider: SnsProvider;
   providerId: string;
 }
 
 interface ConnectSnsResponse {
   email: string;
-  provider: SnSProvider;
+  provider: SnsProvider;
   token: string;
 }
 
@@ -180,7 +181,7 @@ export type {
   UserType,
   UserInfo,
   LoginUserInfo,
-  SnSProvider,
+  SnsProvider,
   FindUserEmail,
   TemporaryPassword,
   ConnectSnsPassword,

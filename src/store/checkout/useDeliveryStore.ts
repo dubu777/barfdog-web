@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { ClientDeliveryDto } from "@/types";
-import { initialDeliveryDto } from "@/config/orderInitialValues";
+import { initialDeliveryDto } from "@/config/checkout";
 
 interface DeliveryState {
   deliveryDto: ClientDeliveryDto; // 서버에 전송할 delivery 값
@@ -25,6 +25,5 @@ export const useDeliveryStore = create<DeliveryState>((set) => ({
   setBackupDeliveryDto: (delivery) => set({ backupDeliveryDto: delivery }),
   setBundleDeliveryDto: (delivery) => set({ bundleDeliveryDto: delivery }),
   setDeliveryId: (id) => set({ deliveryId: id }),
-  setIsBundleDelivery: (isBundleDelivery) =>
-    set({ isBundleDelivery }),
+  setIsBundleDelivery: (isBundleDelivery) => set({ isBundleDelivery }),
 }));

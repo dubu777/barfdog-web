@@ -1,7 +1,6 @@
 "use client";
-import * as styles from "./LoginWrapper.css";
+import * as styles from "./LoginSection.css";
 import { useSearchParams } from "next/navigation";
-import LoginSnsButton from "@/components/pages/auth/login/loginSnsButton/LoginSnsButton";
 import LoginForm from "@/components/pages/auth/login/loginForm/LoginForm";
 import { useEmailLogin } from "@/api/auth/mutations/useEmailLogin";
 import { useFormHandler } from "@/hooks/useFormHandler";
@@ -10,8 +9,10 @@ import { defaultLoginValues, loginSchema } from "@/utils/validation/auth/auth";
 import { useMemo } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
+import SocialLoginButton from "../socialLoginButton/SocialLoginButton";
+import { OAUTH_CLIENT_CONFIG, PROVIDERS } from "@/config/oauthClient";
 
-const LoginWrapper = () => {
+export default function LoginSection() {
   const searchParams = useSearchParams();
   const nextPath = useMemo(
     () => searchParams.get("next") ?? "/",
@@ -74,12 +75,18 @@ const LoginWrapper = () => {
           <em className={styles.line} />
         </span>
         <div className={commonWrapper({ gap: 16 })}>
-          <LoginSnsButton provider="naver" />
-          <LoginSnsButton provider="kakao" />
+          {PROVIDERS.map((provider) => {
+            return (
+              <SocialLoginButton
+                key={provider}
+                provider={provider}
+                config={OAUTH_CLIENT_CONFIG[provider]}
+                showSymbolButton={false}
+              />
+            );
+          })}
         </div>
       </div>
     </div>
   );
-};
-
-export default LoginWrapper;
+}

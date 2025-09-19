@@ -9,14 +9,15 @@ import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import Authentication from "@/components/pages/mypage/account/connectSns/authentication/Authentication";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
-import LoginSnsButton from "@/components/pages/auth/login/loginSnsButton/LoginSnsButton";
+import LoginSnsButton from "@/components/pages/auth/login/socialLoginButton/SocialLoginButton";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
 import { useCompletedMode } from "@/hooks/useCompletedMode";
 import { useGetConnectedSns } from "@/api/auth/queries/useGetConnectedSns";
 import { useDisconnectSns } from "@/api/auth/mutations/useDisconnectSns";
-import { SNS_LOGIN_CONFIG } from "@/config/snsLoginProviderConfig";
+import { OAUTH_CLIENT_CONFIG, PROVIDERS } from "@/config/oauthClient";
+import SocialLoginButton from "@/components/pages/auth/login/socialLoginButton/SocialLoginButton";
 
 export default function ConnectSns() {
   const { data: snsProvider } = useGetConnectedSns();
@@ -26,7 +27,11 @@ export default function ConnectSns() {
   const { addToast } = useToastStore();
   const { completedMode, enableCompletedMode, disableCompletedMode } =
     useCompletedMode();
-  const { isOpen: isOpenDisconnectAlert, onClose: onCloseDisconnectAlert, onToggle: onToggleDisconnectAlert } = useModal();
+  const {
+    isOpen: isOpenDisconnectAlert,
+    onClose: onCloseDisconnectAlert,
+    onToggle: onToggleDisconnectAlert,
+  } = useModal();
 
   const [loginFn, setLoginFn] = useState<(() => void) | null>(null);
 
@@ -61,31 +66,40 @@ export default function ConnectSns() {
 
   return (
     <section>
-      <Divider thickness={2} color='gray50' />
+      <Divider thickness={2} color="gray50" />
       {!completedMode ? (
         <>
           {!snsProvider ? (
             <DefaultEmptyState title="현재 연동된 SNS가 없습니다." />
           ) : (
-            <div className={commonWrapper({ direction: 'col', padding: '0/20', backgroundColors: 'gray0' })}>
-              <div className={commonWrapper({ padding: '16/0', justify: 'between' })}>
+            <div
+              className={commonWrapper({
+                direction: "col",
+                padding: "0/20",
+                backgroundColors: "gray0",
+              })}
+            >
+              <div
+                className={commonWrapper({
+                  padding: "16/0",
+                  justify: "between",
+                })}
+              >
                 <Text type="label1">
-                  {SNS_LOGIN_CONFIG[snsProvider].name}
+                  {OAUTH_CLIENT_CONFIG[snsProvider].name}
                 </Text>
                 {snsProvider === "naver" ? <NaverImage /> : <KakaoImage />}
               </div>
-              <Divider thickness={1} color='gray200' />
+              <Divider thickness={1} color="gray200" />
             </div>
           )}
           <ButtonDocked
             type="full-button"
             onPrimaryClick={snsProvider ? onToggleDisconnectAlert : onToggle}
             primaryButtonVariant={snsProvider ? "outline" : "solid"}
-            primaryButtonLabel={
-              !snsProvider ? "SNS 연동하기" : "연동 해제하기"
-            }
+            primaryButtonLabel={!snsProvider ? "SNS 연동하기" : "연동 해제하기"}
           />
-          {isOpen &&
+          {isOpen && (
             <BottomSheet
               isOpen={isOpen}
               onClose={handleCloseConnectBottomSheet}
@@ -93,48 +107,40 @@ export default function ConnectSns() {
             >
               <div
                 className={commonWrapper({
-                  direction: 'col',
+                  direction: "col",
                   padding: 20,
                   paddingBottom: 40,
-                  gap: 12
+                  gap: 12,
                 })}
               >
-                <LoginSnsButton
-                  size="sm"
-                  borderRadius="sm"
-                  provider="naver"
-                  callbackUrl="/mypage/account/connect-sns"
-                  defer
-                  showSymbolButton
-                  onDeferredLoginClick={(fn) =>
-                    handleEnableAuthenticationMode(fn)
-                  }
-                />
-                <LoginSnsButton
-                  size="sm"
-                  borderRadius="sm"
-                  provider="kakao"
-                  callbackUrl="/mypage/account/connect-sns"
-                  defer
-                  showSymbolButton
-                  onDeferredLoginClick={(fn) =>
-                    handleEnableAuthenticationMode(fn)
-                  }
-                />
+                {PROVIDERS.map((provider) => {
+                  return (
+                    <SocialLoginButton
+                      key={provider}
+                      provider={provider}
+                      callbackUrl="/mypage/account/connect-sns"
+                      config={OAUTH_CLIENT_CONFIG[provider]}
+                      showSymbolButton={false}
+                      onDeferredLoginClick={(fn) =>
+                        handleEnableAuthenticationMode(fn)
+                      }
+                    />
+                  );
+                })}
               </div>
             </BottomSheet>
-          }
-          {snsProvider &&isOpenDisconnectAlert &&
-            <AlertModal 
+          )}
+          {snsProvider && isOpenDisconnectAlert && (
+            <AlertModal
               isOpen={isOpenDisconnectAlert}
               onClose={onCloseDisconnectAlert}
-              title={`${SNS_LOGIN_CONFIG[snsProvider].name} 연동을 해제하시겠어요?`}
+              title={`${OAUTH_CLIENT_CONFIG[snsProvider].name} 연동을 해제하시겠어요?`}
               content="해제하면 더이상 카카오 계정으로 로그인할 수 없어요"
               confirmText="해제"
               cancelText="취소"
               onConfirm={handleDisconnectSns}
             />
-          }
+          )}
         </>
       ) : (
         <Authentication
@@ -144,4 +150,4 @@ export default function ConnectSns() {
       )}
     </section>
   );
-};
+}

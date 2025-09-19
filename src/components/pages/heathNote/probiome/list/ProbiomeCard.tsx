@@ -7,7 +7,7 @@ import { ProbiomeStatus } from "@/types/healthNote/probiome";
 import CheckIcon from "public/images/icons/check_small.svg";
 import { commonWrapper } from "@/styles/common.css";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { getProbiomeStatusConfig } from "@/config/probiomeStatusConfig";
+import { getProbiomeStatusConfig } from "@/config/probiome";
 
 interface ProbiomeCardProps {
   status: ProbiomeStatus;
