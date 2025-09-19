@@ -3,7 +3,7 @@ import NaverIcon from "public/images/logo/auth/naver-logo.svg";
 import KakaoSymbolIcon from "public/images/mypage/kakao-symbol.svg";
 import NaverSymbolIcon from "public/images/mypage/naver-symbol.svg";
 
-import { Provider } from "@/types";
+import { SnsProvider } from "@/types";
 import { themeVars } from "@/styles/theme.css";
 
 interface ProviderOAuthConfig {
@@ -26,7 +26,7 @@ export interface OAuthClientConfig {
   name: string;
 }
 
-export const OAUTH_CLIENT_CONFIG: Record<Provider, OAuthClientConfig> = {
+export const OAUTH_CLIENT_CONFIG: Record<SnsProvider, OAuthClientConfig> = {
   kakao: {
     clientId: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY || "",
     clientSecret: process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET || "",
