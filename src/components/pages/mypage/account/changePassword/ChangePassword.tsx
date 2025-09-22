@@ -10,28 +10,7 @@ import { useFormHandler } from "@/hooks/useFormHandler";
 import { useToastStore } from "@/store/useToastStore";
 import { ChangePassword as ChangePasswordType } from "@/types";
 import { useChangePassword } from "@/api/auth/mutations/useChangePassword";
-
-const passwordValidation = [
-  {
-    rule: (password: string) =>
-      /[a-zA-Z]/.test(password) &&
-      /\d/.test(password) &&
-      /[\W_]/.test(password),
-    message: "영문/숫자/특수문자 조합",
-  },
-  {
-    rule: (password: string) => password.length >= 8,
-    message: "8자 이상",
-  },
-  {
-    rule: (password: string) =>
-      password.length > 3 &&
-      !/(.)\1{2,}/.test(password) && // 동일 문자 3회 이상 반복 금지
-      !/(012|123|234|345|456|567|678|789|890)/.test(password) && // 연속된 숫자 패턴 금지
-      !/([a-zA-Z])\1{2,}/.test(password), // 영문자 동일 문자 3회 이상 반복 금지
-    message: "3회 이상 동일하거나 연속성이 없는 문자",
-  },
-];
+import { getPasswordCriteria, isValidPassword } from "@/utils/validation/auth/password";
 
 const changePasswordSchema = yup.object().shape({
   password: yup.string().required("비밀번호는 필수입니다."),
@@ -53,7 +32,6 @@ export default function ChangePassword() {
     handleSubmit,
     control,
     errors,
-    isValid,
     reset,
     trigger,
     clearErrors,
@@ -68,13 +46,6 @@ export default function ChangePassword() {
 
   const { mutate } = useChangePassword();
   const { addToast } = useToastStore();
-
-  const isValidPasswordForm = (newPassword: string) => {
-    return (
-      passwordValidation.every((validation) => validation.rule(newPassword)) &&
-      isValid
-    );
-  };
 
   const onSubmit = (data: ChangePasswordType) => {
     mutate(data, {
@@ -165,12 +136,11 @@ export default function ChangePassword() {
               />
               {dirtyFields?.newPassword && (
                 <div className={commonWrapper({ direction: 'col', gap: 4 })}>
-                  {passwordValidation.map(({ rule, message }) => {
-                    const isValid = rule(field.value);
+                  {getPasswordCriteria(field.value).map(({ label, ok }) => {
                     return (
                       <InputStatusMessage
-                        key={message} type={isValid ? 'success' : 'error'}
-                        message={message}
+                        key={label} type={ok ? 'success' : 'error'}
+                        message={label}
                       />
                     );
                   })}
@@ -194,7 +164,7 @@ export default function ChangePassword() {
                   label="새 비밀번호 확인"
                   onReset={() => setValue("newPasswordConfirm", "")}
                   onSubmit={
-                    !isValidPasswordForm(getValues("newPassword"))
+                    !isValidPassword(field.value)
                       ? handleSubmit(onSubmit)
                       : undefined
                   }
@@ -217,7 +187,7 @@ export default function ChangePassword() {
         type="full-button"
         primaryButtonLabel="저장하기"
         onPrimaryClick={handleSubmit(onSubmit)}
-        isPrimaryDisabled={!isValidPasswordForm(getValues("newPassword"))}
+        isPrimaryDisabled={!isValidPassword(getValues("newPassword"))}
       />
     </section>
   );

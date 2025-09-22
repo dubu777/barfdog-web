@@ -58,7 +58,7 @@ const MyPageHeader = () => {
     //
     '/mypage/manage-card': { centerTitle: '카드관리' },
     '/mypage/subscription': { centerTitle: '구독상품관리', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/review': { centerTitle: '리뷰작성내역',showBackButton: true, onBack: goBackToMypageMain },
+    '/mypage/review': { centerTitle: '나의 리뷰',showBackButton: true, onBack: goBackToMypageMain },
     '/mypage/review/create': { centerTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
     '/mypage/order-delivery-inquiry': { centerTitle: '주문 및 배송조회', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/order-issue-inquiry': { centerTitle: '취소/교환/반품 내역', showCartButton: true, showBackButton: true, onBack: goBack },

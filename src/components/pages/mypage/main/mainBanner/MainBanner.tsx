@@ -6,11 +6,12 @@ import { useGetMyPageBanner } from "@/api/mypage/common/queries/useGetMypageBann
 
 export default function MainBanner() {
   const { data: banner } = useGetMyPageBanner();
-  const imageUrl = banner?.imageUrl?.mobile.replace('http://', 'https://');
+  // const imageUrl = banner?.mobileDisplayBannerUrl?.url.replace('http://', 'https://');
+  const imageUrl = banner?.mobileDisplayBannerUrl?.url;
   return (
-    banner &&
+    banner && banner.status === 'LEAKED' && (
       <div className={styles.myPageBanner}>
-        <Link href={banner.mobileLinkUrl} className={styles.bannerLink}>
+        <Link href={banner.mobileRedirectUrl} className={styles.bannerLink}>
           <Image
             src={imageUrl}
             alt={banner.name}
@@ -21,5 +22,6 @@ export default function MainBanner() {
           />
         </Link>
       </div>
+    )
   );
 };

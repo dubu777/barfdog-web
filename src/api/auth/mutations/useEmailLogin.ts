@@ -30,7 +30,7 @@ function useEmailLogin(mutationOptions?: UseMutationCustomOptions) {
 				if (!token) {
 					throw new Error("토큰이 제공되지 않았습니다.");
 				}
-				setCookie(ALLIANCE_COOKIE, "cb")
+				// setCookie(ALLIANCE_COOKIE, "cb")
 				setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, token);
 				setUserInfo(data);
 

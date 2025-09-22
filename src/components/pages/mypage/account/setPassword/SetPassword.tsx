@@ -1,21 +1,19 @@
 'use client';
 import * as yup from "yup";
 import { commonWrapper } from "@/styles/common.css";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Controller } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import Text from "@/components/common/text/Text";
 import { useToastStore } from "@/store/useToastStore";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { SetPassword as SetPasswordType } from "@/types";
 import { useSetPassword } from "@/api/auth/mutations/useSetPassword";
+import { getPasswordCriteria, isValidPassword } from "@/utils/validation/auth/password";
+import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
 
 const setPasswordSchema = yup.object().shape({
-	password: yup
-		.string()
-		.min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
-		.matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
-		.required('비밀번호는 필수입니다.'),
+	password: yup.string().required("새 비밀번호를 입력해주세요"),
 	confirmPassword: yup
 		.string()
 		.oneOf([yup.ref('password')], '비밀번호가 일치하지 않습니다.')
@@ -28,15 +26,10 @@ const defaultSetPasswordValues: SetPasswordType = {
 };
 
 export default function SetPassword() {
-	const router = useRouter();
-	const searchParams = useSearchParams();
-	const redirect = searchParams.get('redirect');
-
-	const { handleSubmit, control, errors, isValid } = useFormHandler<SetPasswordType>(setPasswordSchema, defaultSetPasswordValues);
+	const { handleSubmit, control, errors, setValue, trigger, dirtyFields, isValid, getValues } = useFormHandler<SetPasswordType>(setPasswordSchema, defaultSetPasswordValues);
 	const { mutate } = useSetPassword();
 	const { addToast } = useToastStore();
 
-	console.log('/mypage/account/user-info')
 	const onSubmit = (data: SetPasswordType) => {
 		mutate(
 			data,
@@ -44,8 +37,8 @@ export default function SetPassword() {
 				onSuccess: (data) => {
 					if (data.status === 200) {
 						console.log(data)
-						router.refresh();
-						router.push(`/mypage/account/${redirect}`);
+						// router.refresh();
+						window.location.reload();
 						addToast('비밀번호 설정이 완료되었습니다!', 'above-button');
 					} else {
 						return;
@@ -55,52 +48,96 @@ export default function SetPassword() {
 		)
 	}
 	return (
-		<section>
+		<section className={commonWrapper({ direction: 'col', align: 'start', gap: 32, padding: '40/20' })}>
+			<div className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
+				<Text type='title3'>
+					회원정보 수정을 위해<br/>
+					비밀번호를 설정해 주세요
+				</Text>
+				<Text type='body3' color='gray600'>
+					SNS 간편 로그인으로 가입하신 경우에는 회원정보 보호를 위해 처음 1회 비밀번호 설정이 필요해요
+				</Text>
+			</div>
 			<form
 				className={commonWrapper({
 					direction: 'col',
 					align: 'start',
 					gap: 20,
-					padding: 20,
 				})}
 			>
 				<Controller
 					control={control}
 					name='password'
 					render={({ field }) => (
-						<InputField
-							masking
-							label='새 비밀번호'
-							isRequired
-							id='password'
-							placeholder='비밀번호를 입력해주세요.'
-							error={errors?.password?.message}
-							{...field}
-						/>
+						<div className={commonWrapper({ width: 'full', direction: 'col', align: 'start', gap: 8 })}>
+              <InputField
+                {...field}
+								isRequired
+                type="password"
+                variants="box"
+                placeholder="새 비밀번호를 입력해주세요."
+                label="새 비밀번호"
+                error={errors?.password?.message}
+                onReset={() => setValue("password", "")}
+                onChange={(e) => {
+                  field.onChange(e);
+                  trigger("confirmPassword");
+                }}
+              />
+              {dirtyFields?.password && (
+                <div className={commonWrapper({ direction: 'col', gap: 4 })}>
+                  {getPasswordCriteria(field.value).map(({ label, ok }) => {
+                    return (
+                      <InputStatusMessage
+                        key={label} type={ok ? 'success' : 'error'}
+                        message={label}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+            </div>
 					)}
 				/>
 				<Controller
-					control={control}
-					name='confirmPassword'
-					render={({ field }) => (
-						<InputField
-							masking
-							label='새 비밀번호 확인'
-							isRequired
-							id='confirmPassword'
-							placeholder='비밀번호 확인을 입력해주세요.'
-							error={errors?.confirmPassword?.message}
-							onSubmit={isValid ? handleSubmit(onSubmit) : undefined}
-							{...field}
-						/>
-					)}
-				/>
+          name="confirmPassword"
+          control={control}
+          render={({ field }) => {
+            const passwordConfirmError = errors?.confirmPassword?.message;
+            return (
+              <div className={commonWrapper({ width: 'full', direction: 'col', align: 'start', gap: 8 })}>
+                <InputField
+                  {...field}
+									isRequired
+                  type="password"
+                  variants="box"
+                  placeholder="새 비밀번호를 확인을 입력해주세요."
+                  label="새 비밀번호 확인"
+                  onReset={() => setValue("confirmPassword", "")}
+                  onSubmit={
+                    !isValidPassword(field.value)
+                      ? handleSubmit(onSubmit)
+                      : undefined
+                  }
+                />
+                {dirtyFields.confirmPassword && (
+                  <InputStatusMessage
+                    type={!passwordConfirmError ? 'success' : 'error'}
+                    message={
+                      `비밀번호가 ${!passwordConfirmError ? '일치합니다' : '일치하지 않습니다'}`
+                    }
+                  />
+                )}
+              </div>
+            );
+          }}
+        />
 			</form>
 			<ButtonDocked
 				type='full-button'
-				primaryButtonLabel='저장'
+				primaryButtonLabel='저장하기'
 				onPrimaryClick={handleSubmit(onSubmit)}
-				isPrimaryDisabled={!isValid}
+				isPrimaryDisabled={!isValidPassword(getValues("password")) || !isValid}
 			/>
 		</section>
 	);

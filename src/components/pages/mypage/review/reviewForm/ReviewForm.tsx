@@ -47,7 +47,7 @@ export default function ReviewForm({
   reviewImageList,
   onSubmit,
 }: ReviewFormProps) {
-  const { title, thumbnailUrl, imageUrl} = defaultReviewDetail;
+  const { title, thumbnailUrl, imageUrl, orderedDate, writtenDate } = defaultReviewDetail;
   const { id: reviewId, reviewType } = reviewFormValues;
   
   const {
@@ -101,6 +101,8 @@ export default function ReviewForm({
             reviewType={reviewType as ReviewItemType}
             thumbnailUrl={thumbnailUrl}
             imageUrl={imageUrl}
+            orderedDate={orderedDate}
+            createdDate={writtenDate}
             star={star}
             handleStarChange={(newRating) => {
               setValue('star', newRating, { shouldValidate: true });
@@ -125,7 +127,7 @@ export default function ReviewForm({
               <span className={pointColor}>*</span>
               상세 후기
               <Text type='caption' color='pastelRed'>
-                20자 이상 작성시 300원 적립!
+                30자 이상 작성시 300원 적립!
               </Text>
             </Text>
             <Controller
@@ -135,7 +137,7 @@ export default function ReviewForm({
                 <Textarea
                   {...field}
                   id='contents'
-                  placeholder='상품의 리뷰를 작성해 주세요'
+                  placeholder='상품의 리뷰를 작성해 주세요 (최소 10자 이상)'
                   minLength={10}
                   maxLength={1000}
                   error={field.value ? errors.contents?.message : ''}
@@ -148,7 +150,7 @@ export default function ReviewForm({
             <Text type='label4' className={commonWrapper({justify: 'start', align: 'center', gap: 4 })}>
               사진첨부
               <Text type='caption' color='pastelRed'>
-                포토 후기 작성 시 500원 적립!
+                포토 후기 작성 시 500원 추가 적립!
               </Text>
             </Text>
             <MultiFileUploader

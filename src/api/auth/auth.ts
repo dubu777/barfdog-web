@@ -99,6 +99,14 @@ const disconnectSns = async () => {
   return await axiosInstance.delete("/api/members/sns");
 };
 
+const verifyPassword = async () => {
+  const { data } = await axiosInstance.get("/api/members/sns/password");
+  if (data) {
+    return data.needToSetPassword;
+  }
+  throw new Error("유효하지 않은 정보입니다");
+};
+
 const setPassword = async (body: SetPassword) => {
   return await axiosInstance.post("/api/members/sns/password", body);
 };
@@ -131,7 +139,7 @@ const updateUserInfo = async (body: UserInfoFormValues) => {
   return await axiosInstance.put("/api/members", body);
 };
 
-const withdrawalUser = async (body: { password: string }) => {
+const withdrawalAccount = async (body: { password: string }) => {
   return await axiosInstance.delete("/api/members", {
     data: body,
   });
@@ -324,10 +332,11 @@ export {
   disconnectSns,
   getAuthNumber,
   updateUserInfo,
-  withdrawalUser,
+  withdrawalAccount,
   logout,
   requestPasswordResetCode,
   verifyPasswordResetCode,
   resetPassword,
   verifyFindEmailCode,
+  verifyPassword,
 };
