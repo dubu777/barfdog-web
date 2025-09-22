@@ -48,6 +48,7 @@ export default function RawFoodCard({
     onToggle: onAlertToggle,
   } = useModal();
 
+  const recipeSelection = useRecipeSelection(rawFoodItem.recipeId, packData);
   const {
     stageSelection,
     commitSelection,
@@ -55,13 +56,14 @@ export default function RawFoodCard({
     isSelected,
     canAddSelection,
     stagedSelection,
-  } = useRecipeSelection(rawFoodItem.recipeId, packData);
+  } = recipeSelection;
 
   // 못먹는 재료 포함 여부 확인
   const inedibleSet = useMemo(() => new Set(inedibleFoods), [inedibleFoods]);
 
-  const inedibleOverlap = rawFoodItem.ingredients.filter((ing) =>
-    inedibleSet.has(ing)
+  const inedibleOverlap = useMemo(
+    () => rawFoodItem.primaryIngredients.filter((ing) => inedibleSet.has(ing)),
+    [rawFoodItem.primaryIngredients, inedibleSet]
   );
 
   const handleButtonClick = () => {
@@ -112,7 +114,7 @@ export default function RawFoodCard({
       </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image
-          src={rawFoodItem.displayImageUrl}
+          src={rawFoodItem.displayImageUrl.url}
           alt="레시피 이미지"
           width={80}
           height={80}
@@ -175,17 +177,19 @@ export default function RawFoodCard({
           {isSelected ? "빼기" : "담기"}
         </Button>
       </div>
-      <RecipeDetailModal
-        isOpen={isDetailOpen}
-        onClose={onDetailClose}
-        rawFoodItem={rawFoodItem}
-        petName={petName}
-        packData={packData}
-        dailyRecommendKcal={dailyRecommendKcal}
-        onStageSelection={stageSelection}
-        onCommitSelection={commitSelection}
-        stagedSelection={stagedSelection}
-      />
+      {isDetailOpen && (
+        <RecipeDetailModal
+          isOpen={isDetailOpen}
+          onClose={onDetailClose}
+          rawFoodItem={rawFoodItem}
+          petName={petName}
+          packData={packData}
+          dailyRecommendKcal={dailyRecommendKcal}
+          onStageSelection={stageSelection}
+          onCommitSelection={commitSelection}
+          stagedSelection={stagedSelection}
+        />
+      )}
       <AlertModal
         title="레시피 선택은 최대 2개까지 가능해요"
         content="다른 레시피를 담으시려면 기존에 선택한 레시피를 먼저 빼주세요"

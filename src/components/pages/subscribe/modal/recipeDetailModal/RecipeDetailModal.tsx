@@ -9,7 +9,7 @@ import TabBar from "@/components/common/tabBar/TabBar";
 import MealAmountSelector from "./mealAmountSelector/MealAmountSelector";
 import RecipeBenefits from "./recipeBenefits/RecipeBenefits";
 import RecipeIngredientsList from "./recipeIngredients/RecipeIngredients";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { RawFoodOrderItem } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
@@ -19,6 +19,7 @@ import {
   CommitSelectionResult,
   StagedSelection,
 } from "@/hooks/subscription/useRecipeSelection";
+import { useGetRawFoodDetail } from "@/api/subscription/queries/useGetRawFoodDetail";
 
 interface RecipeDetailModalProps {
   rawFoodItem: RawFoodOrderItem;
@@ -44,6 +45,8 @@ export default function RecipeDetailModal({
   onClose,
 }: RecipeDetailModalProps) {
   const toast = useToastStore((s) => s.addToast);
+  const { data } = useGetRawFoodDetail(rawFoodItem.recipeId);
+  console.log(data, "상세");
 
   const refs: Record<string, React.RefObject<HTMLDivElement>> = {
     amount: useRef(null),
@@ -51,10 +54,14 @@ export default function RecipeDetailModal({
     ingredients: useRef(null),
   };
 
-  const tabs = recipeDetailTab.map((tab) => ({
-    ...tab,
-    onInit: () => scrollToElement(refs[tab.value!].current),
-  }));
+  const tabs = useMemo(
+    () =>
+      recipeDetailTab.map((tab) => ({
+        ...tab,
+        onInit: () => scrollToElement(refs[tab.value!].current),
+      })),
+    [refs]
+  );
 
   const handleCommit = () => {
     const result = onCommitSelection();
@@ -72,7 +79,7 @@ export default function RecipeDetailModal({
     >
       <div className={commonWrapper({ direction: "col", gap: 8 })}>
         <Image
-          src={rawFoodItem.displayImageUrl}
+          src={rawFoodItem.displayImageUrl.url}
           width={140}
           height={140}
           alt={rawFoodItem.recipeNameKorea}
@@ -87,7 +94,7 @@ export default function RecipeDetailModal({
           </Text>
         </div>
         <div className={commonWrapper({ direction: "row", gap: 4 })}>
-          {rawFoodItem.ingredients.map((text, idx) => (
+          {rawFoodItem.primaryIngredients.map((text, idx) => (
             <Chips
               key={idx}
               variant="solid"

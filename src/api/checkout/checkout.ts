@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import axiosInstance from "../axiosInstance";
 import {
   SaveGeneralOrderRequest,
@@ -9,7 +10,23 @@ import {
   SuccessGeneralOrderResponse,
   SuccessGeneralPaymentRequest,
   SuccessSubscriptionPaymentRequest,
+  SubscriptionCheckoutSheetResponse,
 } from "@/types";
+
+// 구독 결제 페이지 조회 - v2
+const getSubscriptionCheckoutSheet = async (
+  subscribeId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<SubscriptionCheckoutSheetResponse> => {
+  const { data } = await instance.get(
+    `/api/v2/orders/payment/sheet/subscription/${subscribeId}`
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 정보를 불러오지 못했습니다";
+  throw new Error(message);
+};
 
 // 구독 결제 주문 정보 조회
 const getSubscriptionOrder = async (
@@ -158,4 +175,5 @@ export {
   failSubscriptionPayment,
   cancelGeneralPayment,
   cancelSubscriptionPayment,
+  getSubscriptionCheckoutSheet,
 };

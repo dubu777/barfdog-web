@@ -47,7 +47,7 @@ export default function SubscriptionItemList({
               calculatedRecipe={item}
               mealPlan={mealPlan}
               deliveryPlan={deliveryPlan}
-              displayImageUrl={rawFoodItem?.displayImageUrl || ""}
+              displayImageUrl={rawFoodItem?.displayImageUrl.url || ""}
               recipeName={rawFoodItem?.recipeNameKorea || ""}
             />
             {idx < calculatedRecipes.length - 1 && (

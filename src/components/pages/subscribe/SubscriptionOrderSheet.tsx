@@ -15,7 +15,7 @@ import { useCallback, useState } from "react";
 import { SubscriptionStep } from "@/types";
 import Header from "@/components/layout/header/Header";
 import Chips from "@/components/common/chips/Chips";
-import * as styles from "./SubscribePageContainer.css";
+import * as styles from "./SubscriptionOrderSheet.css";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useGetRawFoodOrderSheet } from "@/api/subscription/queries/useGetRawFoodOrderSheet";
 import RawFoodOptions from "./rawFoodOptions/RawFoodOptions";
@@ -23,17 +23,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSubscription";
 import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
 
-interface SubscribePageContainerProps {
+interface SubscriptionOrderSheetProps {
   reportId: number;
 }
 
-export default function SubscribePageContainer({
+export default function SubscriptionOrderSheet({
   reportId,
-}: SubscribePageContainerProps) {
+}: SubscriptionOrderSheetProps) {
   const router = useRouter();
   const [step, setStep] = useState<SubscriptionStep>("rawFood");
   const { data: rawFoodSheetData } = useGetRawFoodOrderSheet(reportId);
   const { mutate: createSubscription } = useCreateSubscription();
+  console.log(rawFoodSheetData);
 
   useScrollToTop(step);
 
@@ -100,11 +101,18 @@ export default function SubscribePageContainer({
       rawFoods: rawFoodsPayload,
       totalOriginalPrice: totals.totalOriginalPrice,
     } as const;
-    createSubscription({ reportId, body });
+    createSubscription(
+      { reportId, body },
+      {
+        onSuccess: (data) => {
+          router.push(`/checkout/subscription/${data.subscriptionId}`);
+        },
+      }
+    );
   };
 
   const primaryLabel = step === "deliveryCycle" ? "결제하러 가기" : "주문하기";
-  const primaryAction = step === "deliveryCycle" ? handleSubmit : handleNext;
+  const handleAction = step === "deliveryCycle" ? handleSubmit : handleNext;
 
   return (
     <FormProvider {...form}>
@@ -118,7 +126,6 @@ export default function SubscribePageContainer({
         {step === "rawFood" && (
           <RawFoodOptions rawFoodSheetData={rawFoodSheetData} />
         )}
-
         {step === "deliveryCycle" && (
           <DeliveryOptions
             rawFoodSheetData={rawFoodSheetData}
@@ -148,7 +155,7 @@ export default function SubscribePageContainer({
           <ButtonDocked
             type="full-button"
             primaryButtonLabel={primaryLabel}
-            onPrimaryClick={primaryAction}
+            onPrimaryClick={handleAction}
             primaryButtonSize="lg"
             {...(step !== "deliveryCycle" && recipeCount > 0
               ? { primaryCount: recipeCount }

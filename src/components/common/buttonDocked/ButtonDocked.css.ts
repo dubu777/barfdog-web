@@ -9,7 +9,6 @@ export const containerBaseStyle = recipe({
     width: "100%",
     maxWidth: "600px",
     display: "flex",
-    flexDirection: "column",
     justifyContent: "center",
     padding: "20px",
     background: themeVars.colors.gray.gray0,
@@ -23,6 +22,7 @@ export const containerBaseStyle = recipe({
     type: {
       "full-button": {
         alignItems: "center",
+        flexDirection: "column",
       },
       "dual-button": {
         alignItems: "space-between",
@@ -30,6 +30,7 @@ export const containerBaseStyle = recipe({
       },
       "text-button": {
         alignItems: "space-between",
+        flexDirection: "column",
         gap: "16px",
       },
     },

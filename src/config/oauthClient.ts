@@ -4,7 +4,6 @@ import KakaoSymbolIcon from "public/images/mypage/kakao-symbol.svg";
 import NaverSymbolIcon from "public/images/mypage/naver-symbol.svg";
 
 import { SnsProvider } from "@/types";
-import { themeVars } from "@/styles/theme.css";
 
 interface ProviderOAuthConfig {
   codeUrl: string; // 인가 코드 요청 URL

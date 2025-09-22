@@ -6,7 +6,7 @@ import { RawFoodOrderSheet } from "@/types/subscription";
 import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
-import React, { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
@@ -61,13 +61,16 @@ export default function RawFoodOptions({
   ).current;
 
   // 탭 배열에 onInit 붙이기
-  const tabs = recipeTab.map((tab) => ({
-    ...tab,
-    onInit: () => scrollToElement(refs[tab.value!].current),
-  }));
+  const tabs = useMemo(
+    () =>
+      recipeTab.map((tab) => ({
+        ...tab,
+        onInit: () => scrollToElement(refs[tab.value!].current),
+      })),
+    [refs]
+  );
 
-  const petName = "임시"; // 임시값
-  const name = getNameWithPossessiveSuffix(petName);
+  const name = getNameWithPossessiveSuffix(rawFoodSheetData.petName);
   return (
     <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper}>
@@ -112,8 +115,7 @@ export default function RawFoodOptions({
                       dailyRecommendKcal={rawFoodSheetData.oneDayRecommendKcal}
                       inedibleFoods={rawFoodSheetData.inedibleFoods}
                       packData={packData}
-                      petName={petName}
-                      // petName={rawFoodSheetData.petName}
+                      petName={rawFoodSheetData.petName}
                       isUnder20g={packData.under20g !== undefined}
                     />
                   );

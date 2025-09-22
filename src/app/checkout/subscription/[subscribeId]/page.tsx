@@ -6,10 +6,10 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetSubscriptionOrder } from "@/api/checkout/queries/usePrefetchGetSubscriptionOrder";
 import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
-import SubscriptionOrderContainer from "@/components/pages/checkout/subscription/SubscriptionOrderContainer";
 import Spinner from "@/components/common/spinner/Spinner";
+import { prefetchGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/usePrefetchGetSubscriptionCheckoutSheet";
+import SubscriptionCheckout from "@/components/pages/checkout/subscription/SubscriptionCheckout";
 
 interface SubscriptionPageProps {
   params: {
@@ -22,7 +22,7 @@ export default async function SubscriptionPage({
 }: SubscriptionPageProps) {
   const subscribeId = Number(params.subscribeId);
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionOrder(queryClient, subscribeId);
+  await prefetchGetSubscriptionCheckoutSheet(queryClient, subscribeId);
   await prefetchGetCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 
@@ -33,7 +33,7 @@ export default async function SubscriptionPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<Spinner fullscreen />}>
-            <SubscriptionOrderContainer subscribeId={subscribeId} />
+            <SubscriptionCheckout subscribeId={subscribeId} />
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>

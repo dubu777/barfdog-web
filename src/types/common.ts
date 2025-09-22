@@ -128,6 +128,10 @@ interface InfoTextType {
   color?: TextColor; // 항목 기본 색상 (선택)
 }
 
+interface UrlObject {
+  url: string;
+}
+
 type ValueOfTuple<T extends readonly unknown[]> = T[number];
 type DiscountType = "FLAT_RATE" | "FIXED_RATE";
 type DiscountUnitType = "%" | "원";
@@ -154,4 +158,5 @@ export type {
   DiscountType,
   DiscountUnitType,
   CouponTarget,
+  UrlObject,
 };

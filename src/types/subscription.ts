@@ -6,7 +6,7 @@ import {
 } from "@/constants";
 import { RecipeDto } from "./recipe";
 import { HealthConcernType } from "./survey";
-import { ValueOfTuple } from "./common";
+import { UrlObject, ValueOfTuple } from "./common";
 
 interface SubscriptionResponse<T> {
   isDone: boolean;
@@ -195,7 +195,7 @@ interface RawFoodOrderItem {
   gramPerKal: number;
   /** g당 가격 */
   pricePerGram: number;
-  displayImageUrl: string;
+  displayImageUrl: UrlObject;
   healthConcernsChips: HealthConcernType[];
   /** 1회 급여 권장 g */
   oneMealRecommendGram: number;
@@ -203,31 +203,47 @@ interface RawFoodOrderItem {
   meet: MeetType;
   /** 추천 여부 */
   isRecommend: boolean;
-  ingredients: string[];
+  primaryIngredients: string[];
 }
 
 /** 생식 주문서 응답 루트 */
 interface RawFoodOrderSheet {
   petName: string;
+  petId: number;
   oneDayRecommendKcal: number;
   inedibleFoods: string[];
   recipeList: RawFoodOrderItem[];
 }
 
 interface RawFoodPayload {
-  oneMealGramsPerRecipe: number;
-  discountedPrice: number;
-  originalPrice: number;
+  oneMealGramsPerRecipe: number; // 해당 레시피 1팩당 급여량(g)
+  discountedPrice: number; // 할인 적용된 가격
+  originalPrice: number; // 할인 적용 전 가격
   recipeId: number;
 }
 
 interface CreateSubscriptionRequest {
   deliveryPlan: DeliveryPlan;
   mealPlan: MealPlan;
-  discountPrice: number;
-  paymentExpectedPrice: number;
-  totalOriginalPrice: number;
+  discountPrice: number; // 할인 금액
+  paymentExpectedPrice: number; // 할인 적용된 최종 결제 예정 금액
+  totalOriginalPrice: number; // 할인 적용 전 전체 금액
   rawFoods: RawFoodPayload[];
+}
+
+interface CreateSubscriptionResponse {
+  subscriptionId: number;
+}
+
+interface RawFoodDetailResponse {
+  recipeId: number;
+  recipeNameKorea: string;
+  recipeNameEnglish: string;
+  gramPerKal: number;
+  pricePerGram: number;
+  ingredients: string[];
+  primaryIngredients: string[];
+  itemImageUrl: string;
 }
 
 type BenefitStatus = "AVAILABLE" | "REQUESTED" | "USED";
@@ -277,4 +293,6 @@ export type {
   RawFoodOrderItem,
   MealPlan,
   CreateSubscriptionRequest,
+  RawFoodDetailResponse,
+  CreateSubscriptionResponse,
 };

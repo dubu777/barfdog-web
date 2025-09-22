@@ -10,6 +10,7 @@ import {
   AddressDto,
   UsingCoupon,
   CreateSubscriptionRequest,
+  CreateSubscriptionResponse,
 } from "@/types";
 import { AxiosInstance } from "axios";
 
@@ -138,7 +139,7 @@ const getRawFoodOrderSheet = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<any> => {
   const { data } = await instance.get(
-    `api/v2/orders/raw/sheet/subscription/${reportId}`
+    `/api/v2/orders/raw/sheet/subscription/${reportId}`
   );
   if (data.success) {
     return data.data;
@@ -147,13 +148,29 @@ const getRawFoodOrderSheet = async (
   throw new Error(message);
 };
 
+// 구독 주문서 - 생식 상세
+const getRawFoodDetail = async (
+  recipeId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<any> => {
+  const { data } = await instance.get(
+    `/api/v2/orders/sheet/subscription/recipes/${recipeId}`
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "생식 상세 조회에 실패했습니다";
+  throw new Error(message);
+};
+
+// 구독 주문서 - 구독 생성
 const createSubscription = async ({
   reportId,
   body,
 }: {
   reportId: number;
   body: CreateSubscriptionRequest;
-}) => {
+}): Promise<CreateSubscriptionResponse> => {
   const { data } = await axiosInstance.post(
     `api/v2/orders/payment/sheet/subscription/${reportId}`,
     body
@@ -178,4 +195,5 @@ export {
   updateUsingCoupon,
   getRawFoodOrderSheet,
   createSubscription,
+  getRawFoodDetail,
 };

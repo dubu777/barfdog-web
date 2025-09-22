@@ -1,6 +1,6 @@
 import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
 export type CommitSelectionResult =
@@ -37,9 +37,15 @@ export const useRecipeSelection = (
   });
   const rawFoods = useWatch({ control, name: "rawFoods" });
 
-  const selectedIds = rawFoods?.map((f) => f.recipeId) ?? [];
+  const selectedIds = useMemo(
+    () => rawFoods?.map((f) => f.recipeId) ?? [],
+    [rawFoods]
+  );
 
-  const savedSelection = rawFoods.find((f) => f.recipeId === recipeId);
+  const savedSelection = useMemo(
+    () => rawFoods?.find((f) => f.recipeId === recipeId),
+    [rawFoods, recipeId]
+  );
 
   const [stagedSelection, setStagedSelection] =
     useState<StagedSelection | null>(null);
@@ -50,8 +56,10 @@ export const useRecipeSelection = (
     [stagedSelection, savedSelection, recommended]
   );
 
-  const canAddSelection =
-    savedSelection != null ? true : selectedIds.length < MAX_SELECTABLE_ITEMS;
+  const canAddSelection = useMemo(
+    () => (savedSelection != null ? true : selectedIds.length < MAX_SELECTABLE_ITEMS),
+    [savedSelection, selectedIds.length, MAX_SELECTABLE_ITEMS]
+  );
 
   const commitSelection = useCallback((): CommitSelectionResult => {
     const packGrams = resolve("packGrams");
@@ -103,7 +111,10 @@ export const useRecipeSelection = (
     setStagedSelection(null);
   }, [getValues, remove, recipeId]);
 
-  const isSelected = selectedIds.includes(recipeId);
+  const isSelected = useMemo(
+    () => selectedIds.includes(recipeId),
+    [selectedIds, recipeId]
+  );
 
   return {
     stageSelection,

@@ -52,6 +52,7 @@ const queryKeys = {
     GET_SUBSCRIPTION_ADDRESS: "getSubscriptionAddress",
     GET_SUBSCRIPTION_BENEFITS: "getSubscriptionBenefits",
     GET_RAW_ORDER_SHEET: "getRawOrderSheet",
+    GET_RAW_DETAIL: "getRawDetail",
   },
   CART: {
     BASE: "cart",
@@ -71,6 +72,10 @@ const queryKeys = {
     GET_GENERAL_ORDER_LIST: "getGeneralOrderList",
     GET_SUBSCRIPTION_ORDER_LIST: "getSubscriptionOrderList",
     GET_GENERAL_ORDER: "getGeneralOrder",
+  },
+  CHECKOUT: {
+    BASE: "checkout",
+    GET_SUBSCRIPTION_CHECKOUT_SHEET: "getSubscriptionCheckoutSheet",
   },
   MAIN: {
     BASE: "main",
@@ -148,5 +153,5 @@ const queryKeys = {
     GET_LATEST_BODY_CHECK: "getLatestBodyCheck",
     GET_BODY_CHECK_LIST: "getBodyCheckList",
     GET_BODY_CHECK_RESULT_DETAIL: "getBodyCheckResultDetail",
-  }
+  },
 } as const;

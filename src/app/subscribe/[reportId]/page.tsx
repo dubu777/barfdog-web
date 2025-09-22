@@ -1,6 +1,6 @@
 import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/usePrefetchRawFoodOrderSheet";
 import Spinner from "@/components/common/spinner/Spinner";
-import SubscribePageContainer from "@/components/pages/subscribe/SubscribePageContainer";
+import SubscriptionOrderSheet from "@/components/pages/subscribe/SubscriptionOrderSheet";
 import {
   dehydrate,
   HydrationBoundary,
@@ -21,7 +21,7 @@ export default async function SubscribePage({ params }: { params: Params }) {
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <SubscribePageContainer reportId={reportId} />
+          <SubscriptionOrderSheet reportId={reportId} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
