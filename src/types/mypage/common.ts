@@ -180,12 +180,6 @@ interface PaymentItem {
   recipeNameList: string[];
 }
 
-interface SendMessage {
-  name: string;
-  phone: string;
-  homePageUrl?: string;
-}
-
 // v2
 type MemberGradeType = '브론즈' | '실버' | '골드' | '플래티넘' | '다이아몬드' | '더바프';
 
@@ -245,7 +239,6 @@ export type {
   InfoListsItem,
   PaymentItem,
   PaymentSubscriptionCard,
-  SendMessage,
   // v2
   MemberInfo,
   RepresentativePetInfo,

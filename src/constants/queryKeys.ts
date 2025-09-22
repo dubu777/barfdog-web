@@ -49,7 +49,7 @@ const queryKeys = {
     REWARD: {
       BASE: "reward",
       GET_REWARD_LIST: "getRewardList",
-      GET_INVITE_REWARD_LIST: "getInviteRewardList",
+      GET_REFERRAL_REWARD_LIST: "getReferralRewardList",
     },
   },
   SUBSCRIPTION: {

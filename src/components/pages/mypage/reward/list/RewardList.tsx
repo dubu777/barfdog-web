@@ -29,7 +29,7 @@ export default function RewardList() {
     });
   }, [data?.pages, statusFilter]);
   
-  const totalRewards = data?.pages?.[0]?.totalRewards ?? 0;
+  const totalRewardAmount = data?.pages?.[0]?.totalRewardAmount ?? 0;
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -40,7 +40,7 @@ export default function RewardList() {
   return (
     <section>
       <RewardInfo
-        totalRewards={totalRewards}
+        totalRewardAmount={totalRewardAmount}
       />
       <RewardFilter />
       <Divider thickness={2} color='gray50' />

@@ -25,12 +25,12 @@ export default function RewardItem({
 				})}
 			>
 				<Text type='label3'>
-					{formatDate(reward.createdTime, 'onlyDateDot')}
+					{formatDate(reward.createdDate, 'onlyDateDot')}
 				</Text>
 				<div className={commonWrapper({ align: 'start', justify: 'between' })}>
 					<Text type='label4'>{reward.name}</Text>
 					<Text type='label4' color={reward.rewardStatus === 'USED' ? 'gray500' : 'red'}>
-						{reward.rewardStatus === 'USED' ? '-' : '+'}{reward.tradeReward.toLocaleString()} P
+						{reward.rewardStatus === 'USED' ? '-' : '+'}{reward.rewardAmount.toLocaleString()} P
 					</Text>
 				</div>
 			</div>

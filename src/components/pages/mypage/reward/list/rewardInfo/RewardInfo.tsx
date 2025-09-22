@@ -6,11 +6,11 @@ import RewardInfoBottomSheet from "@/components/pages/mypage/reward/list/rewardI
 import useModal from "@/hooks/useModal";
 
 interface RewardInfoProps {
-	totalRewards: number;
+	totalRewardAmount: number;
 }
 
 export default function RewardInfo({
-	totalRewards,
+	totalRewardAmount,
 }: RewardInfoProps) {
 
 	const { onToggle, onClose, isOpen } = useModal();
@@ -44,7 +44,7 @@ export default function RewardInfo({
 						})}
 					>
 						<Text type='label4'>사용 가능 적립금</Text>
-						<Text type='title2'>{totalRewards?.toLocaleString()} P</Text>
+						<Text type='title2'>{totalRewardAmount?.toLocaleString()} P</Text>
 					</div>
 				</Card>
 				<InfoBox text='적립금 안내사항' onClick={onToggle} fullWidth showRightArrowButton />

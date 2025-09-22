@@ -1,7 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
-import { position } from "../tooltip/Tooltip.css";
 
 export const containerBaseStyle = recipe({
   base: {
@@ -9,7 +8,7 @@ export const containerBaseStyle = recipe({
     width: "100%",
     maxWidth: "600px",
     display: "flex",
-    flexDirection: "column",
+    // flexDirection: "column",
     justifyContent: "center",
     padding: "20px",
     background: themeVars.colors.gray.gray0,

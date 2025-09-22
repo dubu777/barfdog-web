@@ -1,4 +1,4 @@
-import { Page, Pagination } from "@/types";
+import { Pagination } from "@/types";
 
 // 적립금
 type RewardFilterType = 'ALL' | 'SAVED' | 'USED';
@@ -6,44 +6,42 @@ type RewardStatus = 'SAVED' | 'USED';
 
 interface RewardInfo {
   name: string;
-  tradeReward: number;
+  rewardAmount: number;
   rewardStatus: RewardStatus;
-  createdTime: string;
+  createdDate: string;
 }
 
 interface RewardList {
   pagination: Pagination;
   rewardList: RewardInfo[];
-  totalRewards: number;
+  totalRewardAmount: number;
 }
 
 // 친구 초대 적립금
-interface InviteRewardList {
-  recommend: string | null;
+interface ReferralRewardInfo {
+  recommend: string;
   joinedCount: number;
   orderedCount: number;
   totalRewards: number;
-  rewardList: RewardInfo[];
-  page: Page;
 }
 
-interface InviteRewardResponse {
-  joinedCount: number;
-  orderedCount: number;
-  recommend: string;
-  totalRewards: number;
-  pagedModel: {
-    _embedded: {
-      queryRewardsDtoList: RewardInfo[]
-    }
-    page: Page;
-  };
+interface ReferralRewardList {
+  referralRewardInfo: ReferralRewardInfo;
+  rewardList: RewardInfo[];
+  pagination: Pagination;
+}
+
+interface SendReferralCode {
+  homePageUrl?: string;
+  refereeName: string;
+  refereePhoneNumber: string;
 }
 
 export type {
   RewardFilterType,
   RewardInfo,
   RewardList,
-  InviteRewardList,
-  InviteRewardResponse,
+  ReferralRewardList,
+  ReferralRewardInfo,
+  SendReferralCode,
 };

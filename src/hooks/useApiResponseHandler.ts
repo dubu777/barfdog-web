@@ -13,8 +13,15 @@ export const useApiResponseHandler = () => {
    * @param error 에러 객체
    * @param defaultMessage 기본 에러 메시지
    */
-  const handleError = (error: unknown, defaultMessage: string = '요청 처리 중 오류가 발생했습니다.') => {
+  const handleError = (
+    error: unknown, 
+    defaultMessage: string = '요청 처리 중 오류가 발생했습니다.', 
+    returnErrorMessage?: boolean
+  ) => {
     const errorMessage = extractErrorMessage(error, defaultMessage);
+    if (returnErrorMessage) {
+      return errorMessage;
+    }
     addToast(errorMessage);
   };
 

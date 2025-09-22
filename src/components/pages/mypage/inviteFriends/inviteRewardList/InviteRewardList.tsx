@@ -15,12 +15,13 @@ import SendMessageModal from "../sendMessageModal/SendMessageModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
 import { copyToClipboard } from "@/utils";
-import { InviteRewardList as InviteRewardListType } from "@/types";
+import { ReferralRewardInfo, RewardInfo } from "@/types";
 
 interface InviteRewardListProps {
   myRecommendationCode?: string;
   memberName?: string;
-  rewardListData?: InviteRewardListType;
+  rewardList?: RewardInfo[];
+  referralRewardInfo?: ReferralRewardInfo;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
   fetchNextPage: () => void;
@@ -29,7 +30,13 @@ interface InviteRewardListProps {
 export default function InviteRewardList({ 
   myRecommendationCode,
   memberName,
-  rewardListData,
+  rewardList = [],
+  referralRewardInfo = {
+    joinedCount: 0,
+    orderedCount: 0,
+    totalRewards: 0,
+    recommend: '',
+  },
   hasNextPage,
   isFetchingNextPage,
   fetchNextPage,
@@ -37,27 +44,25 @@ export default function InviteRewardList({
   const { addToast } = useToastStore();
   const { isOpen: isOpenSendMessageModal, onToggle: onToggleSendMessageModal, onClose: onCloseSendMessageModal } = useModal();
   
-  const rewardList = rewardListData?.rewardList ?? [];
-
   const rewardCountList = [
     {
       label: '가입한 친구',
-      value: rewardListData?.joinedCount.toLocaleString() || 0,
+      value: referralRewardInfo?.joinedCount.toLocaleString() || 0,
     },
     {
       label: '주문한 친구',
-      value: rewardListData?.orderedCount.toLocaleString() || 0,
+      value: referralRewardInfo?.orderedCount.toLocaleString() || 0,
     },
     {
       label: '적립 포인트',
-      value: rewardListData?.totalRewards.toLocaleString() || 0,
+      value: referralRewardInfo?.totalRewards.toLocaleString() || 0,
     },
   ]
   const { ref, inView } = useInView();
 
   const handleCopyCode = async () => {
     await copyToClipboard(myRecommendationCode ?? '');
-    addToast('복사가 완료되었습니다!')
+    addToast('추천코드 복사가 완료됐어요')
   };
 
   const rewardActionList = [
@@ -136,12 +141,12 @@ export default function InviteRewardList({
                     align: 'start',
                   })}
                 >
-                  <Text type='label3'>{format(new Date(reward.createdTime), 'yy.MM.dd')}</Text>
+                  <Text type='label3'>{format(new Date(reward.createdDate), 'yy.MM.dd')}</Text>
                   <div className={commonWrapper({ justify: 'between' })}>
                     <Text type='label4'>{reward.name}</Text>
-                    <Text type='label4' color='red'>+{reward.tradeReward.toLocaleString()}P</Text>
+                    <Text type='label4' color='red'>+{reward.rewardAmount.toLocaleString()}P</Text>
                   </div>
-                </li>
+                </li> 
               ))}
             </ul>
             <InfiniteScrollTrigger
@@ -156,7 +161,7 @@ export default function InviteRewardList({
       {isOpenSendMessageModal &&
         <SendMessageModal
           username={memberName ?? ""}
-          recommendCode={myRecommendationCode ?? ""}
+          myRecommendationCode={myRecommendationCode ?? ""}
           isOpen={isOpenSendMessageModal}
           onClose={onCloseSendMessageModal}
         />
