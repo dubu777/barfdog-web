@@ -10,14 +10,13 @@ import PromotionItem from "@/components/pages/mypage/promotion/list/promotionIte
 import InputField from "@/components/common/inputField/InputField";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { queryKeys } from "@/constants";
-import { useToastStore } from "@/store/useToastStore";
 import { useGetInfinitePromotionList } from "@/api/mypage/promotion/queries/useGetInfinitePromotionList";
 import { useCreatePromotion } from "@/api/mypage/promotion/mutations/useCreatePromotion";
-import { isAxiosError } from "axios";
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 
 export default function PromotionList() {
 	const queryClient = useQueryClient();
-	const { addToast } = useToastStore();
+	const { handleError, handleSuccess } = useApiResponseHandler();
 
 	const {
 		data,
@@ -43,22 +42,13 @@ export default function PromotionList() {
 		}, {
 			onSuccess: async () => {
 				setPromotionCode('');
-				addToast("프로모션 코드가 등록됐습니다");
+				handleSuccess("프로모션 코드가 등록됐습니다");
 				await queryClient.invalidateQueries({
 					queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.PROMOTION.BASE, queryKeys.MYPAGE.PROMOTION.GET_PROMOTION_LIST],
 				})
 			},
 			onError: (error) => {
-				// - 이미 등록이 완료된 코드입니다
-				// - 기간이 만료된 코드입니다
-				// - 유효하지 않은 코드입니다
-				const errorMessage =
-					isAxiosError(error) ? 
-						error?.response?.data?.errors
-							? error?.response?.data?.errors[0]?.defaultMessage
-							: '유효하지 않은 코드입니다'
-						: '유효하지 않은 코드입니다';
-				addToast(errorMessage);
+				handleError(error, '유효하지 않은 코드입니다');
 			}
 		})
 	}

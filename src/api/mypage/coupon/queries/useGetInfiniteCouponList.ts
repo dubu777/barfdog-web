@@ -1,14 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import { getInfinitePromotionList } from "@/api/mypage/promotion/promotion";
+import { getCouponList } from "@/api/mypage/coupon/coupon";
+import { CouponCategory } from "@/types/mypage/coupon";
 
-export function useGetInfinitePromotionList() {
+export function useGetInfiniteCouponList(couponCategory: CouponCategory = "NON_ALLIANCE") {
 	return useInfiniteQuery({
-		queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.PROMOTION.BASE, queryKeys.MYPAGE.PROMOTION.GET_PROMOTION_LIST],
+		queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COUPON.BASE, queryKeys.MYPAGE.COUPON.GET_COUPON_LIST, couponCategory],
 		queryFn: async ({ pageParam = 0 }) => {
 			const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
-			const data = await getInfinitePromotionList({
+			const data = await getCouponList({
 				pageParam: pageNumber,
+				couponCategory,
 			});
 
 			return data;

@@ -1,7 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
-import { position } from "../tooltip/Tooltip.css";
 
 export const containerBaseStyle = recipe({
   base: {

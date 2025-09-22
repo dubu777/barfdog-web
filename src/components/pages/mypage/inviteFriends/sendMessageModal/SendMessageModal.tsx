@@ -8,27 +8,27 @@ import InputField from "@/components/common/inputField/InputField";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { Controller } from "react-hook-form";
 import { useToastStore } from "@/store/useToastStore";
-import { SendMessage } from "@/types";
-import { useSendRecommendCodeMessage } from '@/api/mypage/inviteFriends/mutations/useSendRecommendCodeMessage';
+import { SendReferralCode } from "@/types";
+import { useSendReferralsCodeMessage } from '@/api/mypage/inviteFriends/mutations/useSendReferralsCodeMessage';
 
 interface SendMessageModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 	username: string;
-	recommendCode: string;
+	myRecommendationCode: string;
 }
 const sendMessageSchema = yup.object().shape({
-	name: yup
+	refereeName: yup
 		.string()
 		.required('이름은 필수입니다.'),
-	phone: yup
+	refereePhoneNumber: yup
 		.string()
 		.required('휴대전화번호는 필수입니다.'),
 })
 
-const defaultSendMessageValues: SendMessage = {
-	name: '',
-	phone: '',
+const defaultSendMessageValues: SendReferralCode = {
+	refereeName: '',
+	refereePhoneNumber: '',
 	homePageUrl: process.env.NEXT_PUBLIC_CLIENT_URL_PRODUCT,
 };
 
@@ -36,11 +36,11 @@ export default function SendMessageModal({
 	isOpen,
 	onClose,
 	username,
-	recommendCode,
+	myRecommendationCode,
 }: SendMessageModalProps) {
-	const { handleSubmit, control, isValid } = useFormHandler<SendMessage>(sendMessageSchema, defaultSendMessageValues);
+	const { handleSubmit, control, isValid } = useFormHandler<SendReferralCode>(sendMessageSchema, defaultSendMessageValues);
 	const { addToast } = useToastStore();
-	const { mutate } = useSendRecommendCodeMessage();
+	const { mutate } = useSendReferralsCodeMessage();
 
 	const onSubmit = (data) => {
 		mutate(
@@ -72,7 +72,7 @@ export default function SendMessageModal({
 						{username} 님이&nbsp;
 						<Controller
 							control={control}
-							name='name'
+							name='refereeName'
 							render={({ field }) => (
 								<InputField
 									onChange={field.onChange}
@@ -84,7 +84,7 @@ export default function SendMessageModal({
 						&nbsp;님에게<br/>
 						바프독 적립금을 선물했습니다.<br/>
 						가입 후 마이페이지에서 추천코드를 입력해주세요!<br/>
-						추천코드 :&nbsp;&nbsp;{recommendCode}<br/>
+						추천코드 :&nbsp;&nbsp;{myRecommendationCode}<br/>
 						가입하러가기 : <br/>
 						https://www.barfdog.co.kr
 					</Text>
@@ -93,7 +93,7 @@ export default function SendMessageModal({
 					<Text type='headline4' block>친구 연락처</Text>
 					<Controller
 						control={control}
-						name='phone'
+						name='refereePhoneNumber'
 						render={({ field }) => (
 							<InputField
 								onChange={field.onChange}

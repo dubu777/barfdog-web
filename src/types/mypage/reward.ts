@@ -1,64 +1,47 @@
-import { Page } from "@/types";
+import { Pagination } from "@/types";
 
-type RewardFilterType = 'ALL' | 'SAVED' | 'USED' | 'EXPIRED';
-
+// 적립금
+type RewardFilterType = 'ALL' | 'SAVED' | 'USED';
 type RewardStatus = 'SAVED' | 'USED';
 
-interface RewardData {
+interface RewardInfo {
   name: string;
-  tradeReward: number;
+  rewardAmount: number;
   rewardStatus: RewardStatus;
-  createdTime: string;
+  createdDate: string;
 }
 
-interface RewardListData {
-  page: Page;
-  rewardList: RewardData[];
+interface RewardList {
+  pagination: Pagination;
+  rewardList: RewardInfo[];
+  totalRewardAmount: number;
 }
 
-interface RewardListDataWithTotals extends RewardListData {
-  totalCount: number;
-  totalReward: number;
-}
-
-interface RewardResponse {
-  reward: number;
-  pagedModel: {
-    _embedded: {
-      queryRewardsDtoList: RewardData[]
-    }
-    page: Page;
-  };
-}
-
-interface InviteRewardList {
-  recommend: string | null;
-  joinedCount: number;
-  orderedCount: number;
-  totalRewards: number;
-  rewardList: RewardData[];
-  page: Page;
-}
-
-interface InviteRewardResponse {
-  joinedCount: number;
-  orderedCount: number;
+// 친구 초대 적립금
+interface ReferralRewardInfo {
   recommend: string;
+  joinedCount: number;
+  orderedCount: number;
   totalRewards: number;
-  pagedModel: {
-    _embedded: {
-      queryRewardsDtoList: RewardData[]
-    }
-    page: Page;
-  };
+}
+
+interface ReferralRewardList {
+  referralRewardInfo: ReferralRewardInfo;
+  rewardList: RewardInfo[];
+  pagination: Pagination;
+}
+
+interface SendReferralCode {
+  homePageUrl?: string;
+  refereeName: string;
+  refereePhoneNumber: string;
 }
 
 export type {
   RewardFilterType,
-  RewardData,
-  RewardListData,
-  RewardResponse,
-  RewardListDataWithTotals,
-  InviteRewardList,
-  InviteRewardResponse,
+  RewardInfo,
+  RewardList,
+  ReferralRewardList,
+  ReferralRewardInfo,
+  SendReferralCode,
 };

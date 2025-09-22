@@ -2,11 +2,11 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import InviteFriends from "@/components/pages/mypage/inviteFriends/InviteFriends";
-import { prefetchGetInviteRewardList } from "@/api/mypage/inviteFriends/queries/prefetchGetInviteRewardList";
+import { prefetchGetReferralRewardList } from "@/api/mypage/inviteFriends/queries/prefetchGetInviteRewardList";
 
 export default async function InviteFriendsPage() {
   const queryClient = new QueryClient();
-  await prefetchGetInviteRewardList(queryClient, 0);
+  await prefetchGetReferralRewardList(queryClient);
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>
