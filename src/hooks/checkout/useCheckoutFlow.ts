@@ -94,7 +94,6 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
           deps.navigate(deps.routes?.success);
         } else if (outcome === "cancel") {
           await deps.strategy.onCancel?.({ saveOrder });
-          // 필요 시 상위에서 토스트
         } else {
           await deps.strategy.onFail({ saveOrder, reason: "gateway fail" });
           deps.navigate(deps.routes?.fail);

@@ -40,7 +40,7 @@ import {
   SaveSubscriptionOrderRequest,
   SubscriptionCheckoutSheetResponse,
   SubscriptionIamportRequest,
-  SubscriptionIamportResponse,
+  IamportCallback,
 } from "@/types";
 
 // Utils & Adapters
@@ -83,7 +83,6 @@ export default function SubscriptionCheckout({
   useHydrateSubscriptionOrderStores(checkoutData);
 
   const originPrice = checkoutData.totalOriginPrice;
-  console.log("originPrice", originPrice);
 
   // API Mutations
   const { mutateAsync: saveSubscriptionOrder } = useSaveSubscriptionOrder(); // 결제 요청 전에 주문 정보 저장 - java 서버
@@ -122,13 +121,12 @@ export default function SubscriptionCheckout({
     SaveSubscriptionOrderRequest,
     SubscriptionCheckoutSheetResponse,
     SubscriptionIamportRequest,
-    SubscriptionIamportResponse
+    IamportCallback
   >({
     sheet: checkoutData,
     isMobile: isMobileDevice,
     saveOrder: async (req) => {
       const res = await saveSubscriptionOrder({ subscribeId, body: req });
-      console.log("saveOrder", res);
 
       return {
         id: res.id,
@@ -137,7 +135,7 @@ export default function SubscriptionCheckout({
       };
     },
     paymentAdapter: iamportAdapter as PaymentAdapter<
-      SubscriptionIamportResponse,
+      IamportCallback,
       SubscriptionIamportRequest
     >,
     strategy,

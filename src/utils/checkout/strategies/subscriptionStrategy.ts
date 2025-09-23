@@ -3,11 +3,12 @@ import { CheckoutStrategy } from "../checkoutStrategies";
 import type {
   SaveSubscriptionOrderRequest,
   SubscriptionIamportRequest,
-  SubscriptionIamportResponse,
+  IamportCallback,
   CreateIamportSubscriptionPaymentRequest,
   SubscriptionCheckoutSheetResponse,
 } from "@/types";
 import { buildSubscriptionPaymentRequest } from "@/store/checkout/paymentUtils";
+import { isPortoneUserCancel } from "../isPortoneUserCancel";
 
 export function createSubscriptionStrategy(deps: {
   /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
@@ -33,7 +34,7 @@ export function createSubscriptionStrategy(deps: {
   SaveSubscriptionOrderRequest,
   SubscriptionCheckoutSheetResponse,
   SubscriptionIamportRequest,
-  SubscriptionIamportResponse
+  IamportCallback
 > {
   return {
     // 1) PG 결제요청 페이로드 구성
@@ -56,7 +57,13 @@ export function createSubscriptionStrategy(deps: {
     // 2) 게이트웨이 콜백 해석
     //    - 일반적으로 success/fail만 구분 (모바일은 redirect-flow로 콜백이 안 오거나, 와도 즉시 이동)
     afterGatewayCallback: async ({ response }) => {
-      return response.success ? "success" : "fail";
+      console.log("afterGatewayCallback", response);
+
+      if (response?.success) return "success";
+      // ✅ "사용자가 결제를 취소하였습니다."면 'cancel'로 분기
+      if (isPortoneUserCancel(response)) return "cancel";
+      // 그 외 실패
+      return "fail";
     },
 
     // 3) 성공 후 처리
