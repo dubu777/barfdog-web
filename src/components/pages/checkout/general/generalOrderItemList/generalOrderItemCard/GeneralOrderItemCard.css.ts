@@ -37,4 +37,4 @@ export const orderOptionWrapper = style({
   width: "100%",
   borderRadius: "8px",
   backgroundColor: themeVars.colors.gray.gray100,
-})
+});

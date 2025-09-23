@@ -28,7 +28,7 @@ const getSubscriptionCheckoutSheet = async (
   throw new Error(message);
 };
 
-// 구독 결제 주문 정보 조회
+// 구독 결제 주문 정보 조회 - 레거시
 const getSubscriptionOrder = async (
   subscribeId: number
 ): Promise<SubscriptionOrderSheetResponse> => {
@@ -39,7 +39,7 @@ const getSubscriptionOrder = async (
   return data;
 };
 
-// 구독 결제 주문 정보 저장
+// 구독 결제 주문 정보 저장 - v2
 const saveSubscriptionOrder = async ({
   subscribeId,
   body,
@@ -47,12 +47,34 @@ const saveSubscriptionOrder = async ({
   subscribeId: number;
   body: SaveSubscriptionOrderRequest;
 }): Promise<SaveOrderResponse> => {
-  const data = await axiosInstance.post(
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/subscription/${subscribeId}`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
+  throw new Error(message);
+};
+
+// 구독 결제 주문 정보 저장 - 레거시
+const saveSubscriptionOrder2 = async ({
+  subscribeId,
+  body,
+}: {
+  subscribeId: number;
+  body: SaveSubscriptionOrderRequest;
+}): Promise<SaveOrderResponse> => {
+  const { data } = await axiosInstance.post(
     `/api/orders/subscribe/${subscribeId}`,
     body
   );
-
-  return data;
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
+  throw new Error(message);
 };
 
 // 주문 결제 검증: 요청 결제 금액과 실 결제 금액 비교
@@ -70,8 +92,27 @@ const validateSubscriptionPayment = async ({
   return data.valid;
 };
 
-// 정상 결제 요청: 최종 결제 완료
+// 정상 결제 요청: 최종 결제 완료 - v2
 const successSubscriptionPayment = async ({
+  orderId,
+  body,
+}: {
+  orderId: number;
+  body: SuccessSubscriptionPaymentRequest;
+}) => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${orderId}/subscription/success`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 성공 처리에 실패했습니다";
+  throw new Error(message);
+};
+
+// 정상 결제 요청: 최종 결제 완료 - 레거시
+const successSubscriptionPayment2 = async ({
   orderId,
   body,
 }: {
@@ -100,20 +141,59 @@ const invalidSuccessSubscriptionPayment = async ({
   return data;
 };
 
-// 구독 결제 실패
+// 구독 결제 실패 - v2
 const failSubscriptionPayment = async (orderId: number) => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${orderId}/subscription/fail`
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 실패 처리에 실패했습니다";
+  throw new Error(message);
+};
+
+// 구독 결제 실패 - 레거시
+const failSubscriptionPayment2 = async (orderId: number) => {
   const { data } = await axiosInstance.post(
     `/api/orders/${orderId}/subscribe/fail`
   );
   return data;
 };
 
-// 구독 결제 실패
+// 구독 결제 취소 - v2
 const cancelSubscriptionPayment = async (orderId: number) => {
   const { data } = await axiosInstance.post(
     `/api/orders/${orderId}/subscribe/cancel`
   );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 취소 처리에 실패했습니다";
+  throw new Error(message);
+};
+
+// 구독 결제 취소 - 레거시
+const cancelSubscriptionPayment2 = async (orderId: number) => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${orderId}/subscription/cancel`
+  );
   return data;
+};
+
+// 일반 결제 주문 정보 조회 - v2
+const getGeneralCheckoutSheet = async (
+  body: GeneralOrderSheetRequest
+): Promise<GeneralOrderSheetResponse> => {
+  const { data } = await axiosInstance.post(
+    "/api/v2/orders/sheet/general",
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 페이지 정보 조회에 실패했습니다";
+  throw new Error(message);
 };
 
 // 일반 결제 주문 정보 조회
@@ -125,17 +205,53 @@ const getGeneralOrder = async (
   return data;
 };
 
-// 일반 결제 주문 정보 저장
+// 일반 결제 주문 정보 저장 - v2
 const saveGeneralOrder = async (
   body: SaveGeneralOrderRequest
 ): Promise<SaveOrderResponse> => {
-  const data = await axiosInstance.post("/api/orders/general", body);
+  const { data } = await axiosInstance.post("/api/v2/orders/general", body);
 
-  return data;
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
+  throw new Error(message);
 };
 
-// 일반 결제 주문 성공
+// 일반 결제 주문 정보 저장 - 레거시
+const saveGeneralOrder2 = async (
+  body: SaveGeneralOrderRequest
+): Promise<SaveOrderResponse> => {
+  const { data } = await axiosInstance.post("/api/orders/general", body);
+
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
+  throw new Error(message);
+};
+
+// 일반 결제 주문 성공 - v2
 const successGeneralPayment = async ({
+  id,
+  body,
+}: {
+  id: number;
+  body: SuccessGeneralPaymentRequest;
+}): Promise<SuccessGeneralOrderResponse> => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${id}/general/success`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 성공 처리에 실패했습니다";
+  throw new Error(message);
+};
+
+// 일반 결제 주문 성공 - 레거시
+const successGeneralPayment2 = async ({
   id,
   body,
 }: {
@@ -149,14 +265,33 @@ const successGeneralPayment = async ({
   return data;
 };
 
-// 일반 결제 주문 실패
+// 일반 결제 주문 실패 - v2
 const failGeneralPayment = async (id: number) => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${id}/general/fail`
+  );
+
+  return data;
+};
+
+// 일반 결제 주문 실패 - 레거시
+const failGeneralPayment2 = async (id: number) => {
   const { data } = await axiosInstance.post(`/api/orders/${id}/general/fail`);
 
   return data;
 };
+
 // 일반 결제 주문 취소
 const cancelGeneralPayment = async (id: number) => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${id}/general/cancel`
+  );
+
+  return data;
+};
+
+// 일반 결제 주문 취소
+const cancelGeneralPayment2 = async (id: number) => {
   const { data } = await axiosInstance.post(`/api/orders/${id}/general/cancel`);
 
   return data;
@@ -176,4 +311,6 @@ export {
   cancelGeneralPayment,
   cancelSubscriptionPayment,
   getSubscriptionCheckoutSheet,
+  getGeneralCheckoutSheet,
+  // saveSubscriptionCheckout,
 };

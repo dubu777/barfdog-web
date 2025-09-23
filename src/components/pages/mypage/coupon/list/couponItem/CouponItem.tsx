@@ -5,11 +5,11 @@ import TitleText from "@/components/pages/mypage/common/card/typography/TitleTex
 import SubtitleText from "@/components/pages/mypage/common/card/typography/SubtitleText";
 import DescriptionText from "@/components/pages/mypage/common/card/typography/DescriptionText";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
-import { Coupon } from "@/types/coupon";
 import { COUPON_TARGET, DISCOUNT_UNIT } from "@/constants";
+import { MyPageCoupon } from "@/types/mypage/coupon";
 
 interface CouponItemProps {
-  coupon: Coupon;
+  coupon: MyPageCoupon;
 }
 
 export default function CouponItem({

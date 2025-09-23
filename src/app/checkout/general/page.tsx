@@ -6,7 +6,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
-import GeneralOrderContainer from "@/components/pages/checkout/general/GeneralOrderContainer";
+import GeneralCheckout from "@/components/pages/checkout/general/GeneralCheckout";
 
 export default async function GeneralPage() {
   const queryClient = new QueryClient();
@@ -17,7 +17,7 @@ export default async function GeneralPage() {
     <main className={styles.orderPageContainer}>
       <HydrationBoundary state={dehydrateState}>
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
-          <GeneralOrderContainer />
+          <GeneralCheckout />
         </ErrorBoundary>
       </HydrationBoundary>
     </main>

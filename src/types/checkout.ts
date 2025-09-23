@@ -1,5 +1,6 @@
 import { PAYMENT_METHOD } from "@/constants";
 import { DeliveryPlan, MealPlan, PlanName } from "./subscription";
+import { DiscountType, UrlObject } from "./common";
 
 interface SuccessGeneralPaymentRequest {
   impUid: string;
@@ -21,6 +22,7 @@ interface SuccessGeneralOrderResponse {
 
 interface SaveSubscriptionOrderRequest {
   agreePrivacy: boolean; // 개인정보 제공 동의 여부
+  agreeSubscription: boolean; // 구독 약관 동의 여부
   customerUid: string; // 고유 사용자 ID
   deliveryDto: DeliveryDto; // 배송지 정보
   deliveryPrice: number; // 배송비
@@ -39,12 +41,9 @@ interface SaveSubscriptionOrderRequest {
 
 // 구독, 일반 결제 주문 정보 저장 응답
 interface SaveOrderResponse {
-  data: {
-    id: number;
-    merchantUid: string;
-    status: string; // 'BEFORE_PAYMENT'와 같은 상태
-  };
-  status: number; // HTTP 상태 코드
+  id: number;
+  merchantUid: string;
+  status: string; // 'BEFORE_PAYMENT'와 같은 상태
 }
 
 // 일반 결제 주문 정보 저장 요청
@@ -52,7 +51,7 @@ interface SaveGeneralOrderRequest {
   orderItemDtoList: OrderItemDto[];
   deliveryDto: DeliveryDto;
   deliveryId: number | null;
-  orderPrice: number; // 어드민 상품 할인만 적용된 금액
+  orderPrice: number;
   deliveryPrice: number;
   discountTotal: number;
   discountReward: number;
@@ -60,7 +59,6 @@ interface SaveGeneralOrderRequest {
   paymentPrice: number;
   overDiscount: number;
   memberCouponId: number | null;
-  finalPrice: number;
   paymentMethod: PaymentMethod;
   agreePrivacy: boolean;
 }
@@ -117,16 +115,16 @@ interface OptionDto {
 }
 
 interface GeneralOrderItem {
+  itemId: number;
+  itemSalePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
+  itemOriginalPrice: number; // 상품 원금 + 옵션 가격 총 가격
+  name: string;
+  itemType: string;
+  optionDtoList?: OptionDto[];
   amount: number;
   deliveryFree: boolean;
   discountedItemAndOptionPrice: number;
-  itemId: number;
-  itemImageFilename: string;
-  itemOriginalPrice: number; // 상품 원금 + 옵션 가격 총 가격
-  itemSalePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
-  itemType: string;
-  name: string;
-  optionDtoList?: OptionDto[];
+  itemImageFilename: UrlObject;
 }
 
 interface DefaultAddress {
@@ -159,13 +157,13 @@ type OrderStatus =
 
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
+  orderItemDtoList: GeneralOrderItem[];
   defaultAddress: DefaultAddress;
   deliveryAddress: BundleDeliveryAddress[];
   deliveryPrice: number;
   email: string;
   freeCondition: number;
   nextSubscribeDeliveryDate: string;
-  orderItemDtoList: GeneralOrderItem[];
   orderPrice: number;
   orderStatus: OrderStatus;
   reward: number;
@@ -191,39 +189,46 @@ interface SubscriptionOrderSheetResponse {
   subscribeDto: SubscribeDto;
 }
 
+interface CheckoutCoupon {
+  memberCouponId: number;
+  name: string;
+  discountType: DiscountType;
+  discountDegree: number;
+  availableMaxDiscount: number;
+  availableMinPrice: number;
+  remaining: number;
+  expiredDate: string;
+}
+
 interface SubscriptionCheckoutSheetResponse {
   subscribeVo: {
     subscriptionId: number;
-    /** 구독 식단 플랜 (ex. ONE_MEAL) */
     plan: MealPlan;
-    /** 다음 결제 예정 금액 */
     nextPaymentPrice: number;
-    /** 등급(혹은 프로모션)에 의한 할인 등급 값 */
     discountGrade: number;
   };
   /** 회원 등급명 (예: "더바프") */
   grade: string;
   /** 등급 할인율(%) */
   gradeDiscountPercent: number;
-  /** 주문자 이메일 */
   email: string;
   /** 기본 배송지 */
   defaultAddress: DefaultAddress;
-  /** 현재 결제 화면에서 선택(또는 고정)된 식단/배송 플랜 */
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
   /** 이번 배송일 (YYYY-MM-DD) */
   deliveryDate: string;
   /** 다음 배송일 (YYYY-MM-DD) */
   nextDeliveryDate: string;
-  /** 보유 리워드 포인트 */
   reward: number;
   /** 신규 구독 여부 */
   newSubscribe: boolean;
   /** 리워드 자동 사용 여부 */
   autoUseReward: boolean;
-  /** 적용 가능한 일반 쿠폰 목록 (스펙 미정 → 느슨한 타입) */
+  coupons: CheckoutCoupon[];
+  allianceCoupons: CheckoutCoupon[];
   rawFoodList: RawFoodItemSummary[];
+  totalOriginPrice: number; // 구독 할인 전 총 원금
 }
 
 interface RawFoodItemSummary {
@@ -234,6 +239,7 @@ interface RawFoodItemSummary {
   name: string;
   /** 레시피별 1끼 권장 급여량(g) */
   oneMealGramsPerRecipe: number;
+  originalPrice: number; // 구독 할인 전 원금
   /** g당 가격 */
   pricePerGram: number;
 }
@@ -449,4 +455,5 @@ export type {
   PaymentValidationData,
   SubscribeDto,
   SubscriptionCheckoutSheetResponse,
+  RawFoodItemSummary,
 };

@@ -2,16 +2,17 @@
 import { CheckoutStrategy } from "../checkoutStrategies";
 import type {
   SaveSubscriptionOrderRequest,
-  SubscriptionOrderSheetResponse,
   SubscriptionIamportRequest,
-  SubscriptionIamportResponse,
+  IamportCallback,
   CreateIamportSubscriptionPaymentRequest,
+  SubscriptionCheckoutSheetResponse,
 } from "@/types";
 import { buildSubscriptionPaymentRequest } from "@/store/checkout/paymentUtils";
+import { isPortoneUserCancel } from "../isPortoneUserCancel";
 
 export function createSubscriptionStrategy(deps: {
   /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
-  sheet: SubscriptionOrderSheetResponse; // 이메일/상품명 등 참조
+  sheet: SubscriptionCheckoutSheetResponse; // 이메일/상품명 등 참조
   isMobile: boolean;
 
   // API DI
@@ -31,9 +32,9 @@ export function createSubscriptionStrategy(deps: {
   failPayment: (orderId: number) => Promise<any>;
 }): CheckoutStrategy<
   SaveSubscriptionOrderRequest,
-  SubscriptionOrderSheetResponse,
+  SubscriptionCheckoutSheetResponse,
   SubscriptionIamportRequest,
-  SubscriptionIamportResponse
+  IamportCallback
 > {
   return {
     // 1) PG 결제요청 페이로드 구성
@@ -47,7 +48,7 @@ export function createSubscriptionStrategy(deps: {
       buildSubscriptionPaymentRequest({
         requestBody,
         subscriptionOrderSheetData: sheet,
-        subscribeId: sheet.subscribeDto.id,
+        subscribeId: sheet.subscribeVo.subscriptionId,
         isMobileDevice: isMobile,
         orderId,
         merchantUid,
@@ -56,7 +57,13 @@ export function createSubscriptionStrategy(deps: {
     // 2) 게이트웨이 콜백 해석
     //    - 일반적으로 success/fail만 구분 (모바일은 redirect-flow로 콜백이 안 오거나, 와도 즉시 이동)
     afterGatewayCallback: async ({ response }) => {
-      return response.success ? "success" : "fail";
+      console.log("afterGatewayCallback", response);
+
+      if (response?.success) return "success";
+      // ✅ "사용자가 결제를 취소하였습니다."면 'cancel'로 분기
+      if (isPortoneUserCancel(response)) return "cancel";
+      // 그 외 실패
+      return "fail";
     },
 
     // 3) 성공 후 처리
@@ -73,7 +80,7 @@ export function createSubscriptionStrategy(deps: {
         customer_uid: response.customer_uid,
         merchant_uid: saveOrder.merchantUid,
         amount: requestBody.paymentPrice,
-        name: deps.sheet.recipeNameList.join(", "),
+        name: deps.sheet.rawFoodList.map((raw) => raw.name).join(", "),
         buyer_name: requestBody.deliveryDto.recipientName,
         buyer_tel: requestBody.deliveryDto.phoneNumber,
         buyer_email: deps.sheet.email,

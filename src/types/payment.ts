@@ -4,6 +4,7 @@ import {
   OrderType,
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
+  SubscriptionCheckoutSheetResponse,
   SubscriptionOrderSheetResponse,
 } from "./checkout";
 
@@ -103,8 +104,8 @@ interface GeneralIamportResponse {
   merchant_uid: string | null; // 상점 거래 고유 ID
 }
 
-// SubscriptionIamportResponse 정의
-interface SubscriptionIamportResponse extends GeneralIamportResponse {
+// IamportCallback 정의
+interface IamportCallback extends GeneralIamportResponse {
   customer_uid: string; // 상점 거래 고유 ID
 }
 
@@ -112,7 +113,7 @@ interface SubscriptionIamportResponse extends GeneralIamportResponse {
 type IamportResponseMap = {
   [K in OrderType]: K extends "GENERAL"
     ? GeneralIamportResponse
-    : SubscriptionIamportResponse;
+    : IamportCallback;
 };
 
 // 결제 요청 타입 매핑
@@ -152,7 +153,7 @@ interface GeneralPaymentDataParams {
 
 interface SubscriptionPaymentDataParams {
   requestBody: SaveSubscriptionOrderRequest;
-  subscriptionOrderSheetData: SubscriptionOrderSheetResponse;
+  subscriptionOrderSheetData: SubscriptionCheckoutSheetResponse;
   isMobileDevice: boolean;
   orderId: number;
   merchantUid: string;
@@ -171,7 +172,7 @@ type PaymentMethodType = "card" | "naverpay" | "kakaopay";
 export type {
   PaymentMethodType,
   GeneralIamportResponse,
-  SubscriptionIamportResponse,
+  IamportCallback,
   NaverPayGeneralParamInput,
   NaverPayGeneralParamOutput,
   NaverPayGeneralProducts,

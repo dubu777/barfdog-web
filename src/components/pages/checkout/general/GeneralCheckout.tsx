@@ -50,8 +50,9 @@ import { createGeneralStrategy } from "@/utils/checkout/strategies/generalStrate
 import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
 import Spinner from "@/components/common/spinner/Spinner";
+import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
 
-export default function GeneralOrderContainer() {
+export default function GeneralCheckout() {
   // Local State
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
@@ -63,14 +64,18 @@ export default function GeneralOrderContainer() {
   const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
   const addToast = useToastStore((s) => s.addToast);
 
+  console.log("orderItemDtoList", orderItemDtoList);
+
   // Routing & Device
   const router = useRouter();
   const { isMobileDevice } = useDeviceState();
 
   // React Query Data Fetching
-  const { data: generalOrderData, isPending } = useGetGeneralOrder({
+  const { data: generalOrderData, isPending } = useGetGeneralCheckoutSheet({
     orderItemDtoList,
   });
+
+  console.log("generalOrderData", generalOrderData);
 
   // React Query mutations
   const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
@@ -104,8 +109,8 @@ export default function GeneralOrderContainer() {
     saveOrder: async (req) => {
       const res = await saveGeneralOrder(req);
       return {
-        id: res.data.id,
-        merchantUid: res.data.merchantUid,
+        id: res.id,
+        merchantUid: res.merchantUid,
         status: res.status,
       };
     },

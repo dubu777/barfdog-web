@@ -1,13 +1,28 @@
 import { QueryClient } from "@tanstack/react-query";
-import { InviteRewardList } from "@/types";
 import { queryKeys } from "@/constants";
 import { createSSRRequest } from "@/api/withAuthSSR";
-import { getInviteRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
+import { getReferralRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
 
-export async function prefetchGetInviteRewardList(queryClient: QueryClient, page: number) {
-	const ssrAxios = createSSRRequest();
-	return queryClient.prefetchQuery<InviteRewardList>({
-		queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST, page],
-		queryFn: () => getInviteRewardList({ pageParam: page, instance: ssrAxios	 }),
-	})
+export async function prefetchGetReferralRewardList(
+  queryClient: QueryClient
+) {
+  const ssrAxios = createSSRRequest();
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: [
+    queryKeys.MYPAGE.BASE, 
+      queryKeys.MYPAGE.REWARD.BASE, 
+      queryKeys.MYPAGE.REWARD.GET_REFERRAL_REWARD_LIST
+    ],
+    queryFn: async ({ pageParam = 0 }) =>
+      await getReferralRewardList({
+        pageParam,
+        instance: ssrAxios
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      const currentPage = lastPage.page.page ?? 0;
+      const totalPages = lastPage.page.totalPages ?? 0;
+      return currentPage + 1 < totalPages ? currentPage + 1 : undefined;
+    },
+  });
 }

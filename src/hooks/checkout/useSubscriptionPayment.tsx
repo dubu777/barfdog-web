@@ -4,7 +4,7 @@ import { usePayment } from "./usePayment";
 import {
   SaveSubscriptionOrderRequest,
   SubscriptionOrderSheetResponse,
-  SubscriptionIamportResponse,
+  IamportCallback,
   PaymentRequestParams,
   CreateIamportSubscriptionPaymentRequest,
   OrderType,
@@ -45,7 +45,7 @@ export function useSubscriptionPayment({
   // 데스크탑에서만 사용될 최종 결제 처리 로직
   const handlePaymentResponse = useCallback(
     async (
-      response: SubscriptionIamportResponse, // 포트원 결제 요청의 Response
+      response: IamportCallback, // 포트원 결제 요청의 Response
       saveOrderResponse: { data: { merchantUid: string; id: number } }, // 구독 결제 정보 저장 요청의 Response
       paymentData: CreateIamportSubscriptionPaymentRequest,
       requestBody: SaveSubscriptionOrderRequest // 구독 결제 정보 저장 요청의 Request
@@ -158,8 +158,7 @@ export function useSubscriptionPayment({
           callback: (response) => {
             if (!isMobileDevice) {
               // 데스크탑인 경우에만: 콜백에서 바로 최종 처리 진행, 모바일은 리다리엑트 경로에서 처리
-              const subscriptionResponse =
-                response as SubscriptionIamportResponse;
+              const subscriptionResponse = response as IamportCallback;
               handlePaymentResponse(
                 subscriptionResponse,
                 saveOrderResponse,

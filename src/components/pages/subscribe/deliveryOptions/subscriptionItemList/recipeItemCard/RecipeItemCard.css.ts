@@ -7,4 +7,10 @@ export const itemCardContainer = style({
   height: "76px",
   backgroundColor: themeVars.colors.gray.gray0,
   gap: "12px",
-})
+});
+
+export const itemCardImage = style({
+  width: "76px",
+  height: "76px",
+  borderRadius: "8px",
+});

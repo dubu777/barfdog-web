@@ -1,24 +1,28 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import { InviteRewardList } from "@/types";
-import { getInviteRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
+import { getReferralRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
 
-export function useGetInviteRewardList() {
-  return useInfiniteQuery<InviteRewardList>({
-    queryKey: [queryKeys.REWARD.BASE, queryKeys.REWARD.GET_INVITE_REWARD_LIST],
+export function useGetReferralRewardList() {
+  return useInfiniteQuery({
+    queryKey: [
+      queryKeys.MYPAGE.BASE, 
+      queryKeys.MYPAGE.REWARD.BASE, 
+      queryKeys.MYPAGE.REWARD.GET_REFERRAL_REWARD_LIST
+    ],
     queryFn: async ({ pageParam = 0 }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
-      const data = await getInviteRewardList({ pageParam: pageNumber});
+      const data = await getReferralRewardList({ pageParam: pageNumber});
       return data;
     },
     getNextPageParam: (lastPage) => {
-      if (!lastPage || !lastPage.page) return undefined;
+			if (!lastPage) return undefined;
 
-      const nextPage = lastPage.page.number + 1;
-      const totalPages = lastPage.page.totalPages;
+			const currentPage = lastPage?.page?.page ?? 0;
+			const totalPages = lastPage?.page?.totalPages ?? 0;
 
-      return nextPage < totalPages ? nextPage : undefined;
-    },
+			const nextPage = currentPage + 1;
+			return nextPage < totalPages ? nextPage : undefined;
+		},
     initialPageParam: 0,
   })
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { SubscriptionOrderSheetResponse } from "@/types";
+import { SubscriptionCheckoutSheetResponse } from "@/types";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { useRewardStore } from "@/store/checkout/useRewardStore";
 import { usePaymentStore } from "@/store/checkout/usePaymentStore";
@@ -15,7 +15,7 @@ import { calculateNextDeliveryDate } from "@/utils/subscription/calculateNextDel
  * - 중복 실행 방지: hydratedRef 사용
  */
 export function useHydrateSubscriptionOrderStores(
-  data: SubscriptionOrderSheetResponse | undefined
+  data: SubscriptionCheckoutSheetResponse | undefined
 ) {
   const setDeliveryDto = useDeliveryStore((s) => s.setDeliveryDto);
   const setUserTotalReward = useRewardStore((s) => s.setUserTotalReward);
@@ -29,7 +29,7 @@ export function useHydrateSubscriptionOrderStores(
   useEffect(() => {
     if (!data || hydratedRef.current) return;
 
-    const { defaultAddress, reward, subscribeDto } = data;
+    const { defaultAddress, reward, subscribeVo } = data;
 
     // 렌더 단계가 아닌 이펙트에서만 상태 세팅
     setDeliveryDto({
@@ -45,8 +45,8 @@ export function useHydrateSubscriptionOrderStores(
     });
 
     setUserTotalReward(reward);
-    setDiscountGrade(subscribeDto.discountGrade);
-    setOrderPrice(subscribeDto.nextPaymentPrice);
+    setDiscountGrade(subscribeVo.discountGrade);
+    setOrderPrice(subscribeVo.nextPaymentPrice);
 
     // 동적으로 생성되는 값도 이펙트 내부에서 계산/세팅
     setCustomerUid(generateCustomerUid());

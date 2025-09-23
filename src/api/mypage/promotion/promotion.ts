@@ -1,21 +1,19 @@
 import axiosInstance from "@/api/axiosInstance";
-import { CreatePromotion, PromotionListSearchValues } from "@/types/mypage/promotion";
+import { CreatePromotion, RawPromotionList, PromotionListSearchValues } from "@/types/mypage/promotion";
+import { ApiResponse } from "@/types/common";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const getInfinitePromotionList = async ({
 	pageParam = 0,
 	instance = axiosInstance
 }: PromotionListSearchValues) => {
-	const errorMessage = "프로모션 목록 조회에 실패했습니다.";
-
-	const { data } = await instance.get(`/api/promotions`, {
+	const { data }: { data: ApiResponse<RawPromotionList> } = await instance.get(`/api/v2/promotion-coupons/my-page`, {
 		params: { page: pageParam, size: 20 },
 	});
 
-	if (!data) {
-		throw new Error(errorMessage);
-	}
+	const responseData = validateApiResponse(data, "프로모션 목록 조회에 실패했습니다.");
 
-	const promotionList = data?._embedded?.queryPromotionsDtoList
+	const promotionList = responseData.memberPromotionList
 		.map(
 			promotion => ({
 				promotionInfo: promotion.promotionDto,
@@ -34,28 +32,18 @@ const getInfinitePromotionList = async ({
 			);
 		})
 	?? [];
-	const { number, ...rest } = data?.page;
-	const page = {
-		...rest,
-		page: number,
-	};
 
 	return {
 		promotionList,
-		page,
+		page: responseData.pagination,
 	}
 };
 
+
 const createPromotion = async (body: CreatePromotion) => {
-	try {
-		const { data } = await axiosInstance.post(`/api/promotions/code`, body);
-		if (!data || data.errors) {
-			throw new Error(data);
-		}
-		return data;
-	} catch (error) {
-		throw error;
-	}
+	const { data } = await axiosInstance.post(`/api/v2/promotion-coupons/my-page/redeem`, body);
+	
+	return validateApiResponse(data, "프로모션 코드 등록에 실패했습니다.");
 }
 
 export {

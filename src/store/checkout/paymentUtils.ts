@@ -74,9 +74,9 @@ export function buildSubscriptionPaymentRequest({
   merchantUid,
 }: SubscriptionPaymentDataParams): SubscriptionIamportRequest {
   const { paymentMethod, paymentPrice, deliveryDto, customerUid } = requestBody;
-  const { email, subscribeDto, recipeNameList } = subscriptionOrderSheetData;
+  const { email, subscribeVo, rawFoodList } = subscriptionOrderSheetData;
 
-  const itemName = recipeNameList.join(", ");
+  const itemName = rawFoodList.map((raw) => raw.name).join(", ");
   const baseData = {
     channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentMethod],
     pay_method: PAYMENT_METHOD["CREDIT_CARD"],
@@ -111,7 +111,7 @@ export function buildSubscriptionPaymentRequest({
   };
   if (paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({
-      subscribeId: subscribeDto.id,
+      subscribeId: subscribeVo.subscriptionId,
       isMobile: isMobileDevice,
     });
 

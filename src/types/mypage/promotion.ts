@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { CouponTarget, DiscountType } from "@/types";
+import { CouponTarget, DiscountType, Pagination } from "@/types";
 
 interface PromotionListSearchValues {
 	pageParam?: number;
@@ -41,8 +41,17 @@ interface CreatePromotion {
 	promotionCode: string;
 }
 
+interface RawPromotionList {
+	memberPromotionList: {
+		promotionDto: PromotionInfo;
+		promotionCouponDto: PromotionCouponInfo;
+	}[];
+	pagination: Pagination;
+}
+
 export type {
 	PromotionListSearchValues,
 	PromotionItem,
 	CreatePromotion,
+	RawPromotionList,
 }

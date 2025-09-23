@@ -1,32 +1,24 @@
 import axiosInstance from "@/api/axiosInstance";
 import { AxiosInstance } from "axios";
-import { RewardListData, RewardListDataWithTotals, RewardResponse } from "@/types";
+import { ApiResponse, RewardList } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const getRewardList = async ({
 	pageParam = 0,
-	size = 20,
+	size = 200,
 	instance = axiosInstance
-}: { pageParam: number; size?: number; instance?: AxiosInstance }): Promise<RewardListData | RewardListDataWithTotals> => {
-	const { data } = await instance.get<RewardResponse>(`/api/rewards`, {
+}: { pageParam: number; size?: number; instance?: AxiosInstance }) => {
+	const { data }: { data: ApiResponse<RewardList> } = await instance.get(`/api/v2/rewards/my-page`, {
 		params: { page: pageParam, size },
 	});
 
-	const rewardList = data?.pagedModel?._embedded?.queryRewardsDtoList || [];
-	const totalReward = data?.reward || 0;
-	const totalCount = data?.pagedModel?.page?.totalElements || 0;
-	const page = data?.pagedModel?.page || { number: 0, totalPages: 1 };
+	const responseData = validateApiResponse(data, "적립금 목록 조회에 실패했습니다.");
+	const rewardList = responseData.rewardList ?? [];
 
-	if(pageParam === 0) {
-		return {
-			totalReward,
-			rewardList,
-			totalCount,
-			page,
-		}
-	}
 	return {
 		rewardList,
-		page,
+		totalRewardAmount: responseData.totalRewardAmount,
+		page: responseData.pagination,
 	}
 };
 

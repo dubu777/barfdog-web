@@ -1,6 +1,6 @@
 import { GeneralOrderItem } from "@/types";
 import Image from "next/image";
-import * as styles from "../../../subscription/subscriptionOrderItemList/orderItemCard/OrderItemCard.css";
+import * as styles from "./GeneralOrderItemCard.css";
 import Text from "@/components/common/text/Text";
 import { formatNumberWithCommas } from "@/utils";
 import Chips from "@/components/common/chips/Chips";
@@ -18,7 +18,7 @@ export default function GeneralOrderItemCard({
     <div className={styles.orderItemCardContainer}>
       <div className={commonWrapper({ gap: 8, justify: "start" })}>
         <Image
-          src="/images/recipes/background.jpg"
+          src={orderItemData.itemImageFilename.url}
           alt="임시"
           width={88}
           height={88}

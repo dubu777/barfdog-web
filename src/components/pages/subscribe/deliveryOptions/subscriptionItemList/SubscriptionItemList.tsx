@@ -44,9 +44,11 @@ export default function SubscriptionItemList({
         return (
           <React.Fragment key={item.recipeId}>
             <RecipeItemCard
-              calculatedRecipe={item}
               mealPlan={mealPlan}
               deliveryPlan={deliveryPlan}
+              originalPrice={item.originalPrice}
+              packCount={item.packCount}
+              packGrams={item.packGrams}
               displayImageUrl={rawFoodItem?.displayImageUrl.url || ""}
               recipeName={rawFoodItem?.recipeNameKorea || ""}
             />

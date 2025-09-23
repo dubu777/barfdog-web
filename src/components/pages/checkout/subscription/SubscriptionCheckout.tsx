@@ -4,8 +4,6 @@ import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // API & Data Fetching
-import { useGetSubscriptionOrder } from "@/api/checkout/queries/useGetSubscriptionOrder";
-import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
 import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
 import { useValidateSubscriptionPayment } from "@/api/checkout/mutations/subscription/useValidateSubscriptionPayment";
 import { useInvalidSubscriptionPayment } from "@/api/checkout/mutations/subscription/useInvalidSubscriptionPayment";
@@ -40,19 +38,20 @@ import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
 import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import {
   SaveSubscriptionOrderRequest,
+  SubscriptionCheckoutSheetResponse,
   SubscriptionIamportRequest,
-  SubscriptionIamportResponse,
-  SubscriptionOrderSheetResponse,
+  IamportCallback,
 } from "@/types";
 
 // Utils & Adapters
 import { formatNumberWithCommas } from "@/utils";
 import { scrollToElement } from "@/utils/scrollToElement";
-import { calculateOriginPrice } from "@/utils/checkout/calculateOriginPrice";
 import { createSubscriptionStrategy } from "@/utils/checkout/strategies/subscriptionStrategy";
 import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { useGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/useGetSubscriptionCheckoutSheet";
+import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
+import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -77,152 +76,143 @@ export default function SubscriptionCheckout({
   const addToast = useToastStore((state) => state.addToast);
 
   // Data Fetching
-  const { data: subscriptionOrderSheetData } =
-    useGetSubscriptionOrder(subscribeId);
-  const { data: subscriptionOrderSheetData2 } =
-    useGetSubscriptionCheckoutSheet(subscribeId);
-  console.log("v2", subscriptionOrderSheetData2);
-  console.log("v1", subscriptionOrderSheetData);
+  const { data: checkoutData } = useGetSubscriptionCheckoutSheet(subscribeId);
+  console.log("v2", checkoutData);
 
-  return <div>구독 결제 v2 준비중...</div>;
+  // Store Hydration
+  useHydrateSubscriptionOrderStores(checkoutData);
+
+  const originPrice = checkoutData.totalOriginPrice;
+
+  // API Mutations
+  const { mutateAsync: saveSubscriptionOrder } = useSaveSubscriptionOrder(); // 결제 요청 전에 주문 정보 저장 - java 서버
+  const { mutateAsync: createIamportPayment } =
+    useCreateIamportSubscriptionPayment(); // 아임포트 구독 결제 생성 - next.js 서버
+  const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
+  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
+  const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
+  const { mutateAsync: failPayment } = useFailSubscriptionPayment();
+
+  // Payment Strategy
+  const strategy = useMemo(
+    () =>
+      createSubscriptionStrategy({
+        sheet: checkoutData,
+        isMobile: isMobileDevice,
+        createIamportPayment: (body) => createIamportPayment(body),
+        validatePayment: (args) => validatePayment(args),
+        invalidPayment: (args) => invalidPayment(args),
+        successPayment: (args) => successPayment(args),
+        failPayment: (orderId) => failPayment(orderId),
+      }),
+    [
+      checkoutData,
+      isMobileDevice,
+      createIamportPayment,
+      validatePayment,
+      invalidPayment,
+      successPayment,
+      failPayment,
+    ]
+  );
+
+  // Checkout Flow
+  const { start, isProcessing } = useCheckoutFlow<
+    SaveSubscriptionOrderRequest,
+    SubscriptionCheckoutSheetResponse,
+    SubscriptionIamportRequest,
+    IamportCallback
+  >({
+    sheet: checkoutData,
+    isMobile: isMobileDevice,
+    saveOrder: async (req) => {
+      const res = await saveSubscriptionOrder({ subscribeId, body: req });
+
+      return {
+        id: res.id,
+        merchantUid: res.merchantUid,
+        status: res.status,
+      };
+    },
+    paymentAdapter: iamportAdapter as PaymentAdapter<
+      IamportCallback,
+      SubscriptionIamportRequest
+    >,
+    strategy,
+    navigate: (path) => router.push(path),
+    routes: {
+      success: CHECKOUT_ROUTES.SUBSCRIPTION.success,
+      fail: CHECKOUT_ROUTES.SUBSCRIPTION.fail,
+    },
+  });
+
+  // Event Handlers
+  const scrollToTerms = () => scrollToElement(termsRef.current);
+
+  const handlePaymentSubmit = async () => {
+    if (!agreePrivacy || !agreeSubscription) {
+      setShowTermsErrors(true);
+      addToast("결제 필수 사항에 동의해 주세요", "above-button");
+      setTimeout(scrollToTerms, 100);
+      return;
+    }
+    const requestBody = getRequestBody(
+      ORDER_TYPE.SUBSCRIPTION
+    ) as SaveSubscriptionOrderRequest;
+    await start(requestBody);
+  };
+
+  return (
+    <>
+      <DeliveryAddress />
+      <Divider />
+      <SubscriptionOrderItemList
+        rawFoodList={checkoutData.rawFoodList}
+        deliveryPlan={checkoutData.deliveryPlan}
+        mealPlan={checkoutData.mealPlan}
+      />
+      <Divider />
+      <DeliverySchedule
+        deliveryDate={checkoutData.deliveryDate}
+        nextDeliveryDate={checkoutData.nextDeliveryDate}
+      />
+      <Divider />
+      <CouponSelector
+        orderType={ORDER_TYPE.SUBSCRIPTION}
+        orderPrice={checkoutData.subscribeVo.nextPaymentPrice}
+      />
+      <Divider />
+      <RewardUsage
+        orderType={ORDER_TYPE.SUBSCRIPTION}
+        isAutoUseReward={checkoutData.autoUseReward}
+      />
+      <Divider />
+      <PaymentMethod />
+      <Divider />
+      <OrderSummary
+        orderType={ORDER_TYPE.SUBSCRIPTION}
+        originPrice={originPrice}
+        appliedDefaultDiscountPrice={checkoutData.subscribeVo.nextPaymentPrice}
+        discountGrade={checkoutData.subscribeVo.discountGrade}
+        plan={checkoutData.subscribeVo.plan}
+      />
+      <Divider />
+      <OrderTerms
+        orderType={ORDER_TYPE.SUBSCRIPTION}
+        showErrors={showTermsErrors}
+        ref={termsRef}
+      />
+      <Divider />
+      <OrderSection padding="20px">
+        <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
+      </OrderSection>
+      <Divider />
+      <SubscriptionNotice />
+      <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>
+        {isProcessing
+          ? "결제 처리 중..."
+          : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
+      </FooterButton>
+    </>
+  );
 }
-//   // Store Hydration
-//   useHydrateSubscriptionOrderStores(subscriptionOrderSheetData);
-
-//   // Computed Values
-//   const originPrice = calculateOriginPrice(
-//     subscriptionOrderSheetData.subscribeDto.nextPaymentPrice,
-//     subscriptionOrderSheetData.subscribeDto.plan
-//   );
-
-//   // API Mutations
-//   const { mutateAsync: saveSubscriptionOrder } = useSaveSubscriptionOrder();
-//   const { mutateAsync: createIamportPayment } =
-//     useCreateIamportSubscriptionPayment();
-//   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
-//   const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
-//   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
-//   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
-
-//   // Payment Strategy
-//   const strategy = useMemo(
-//     () =>
-//       createSubscriptionStrategy({
-//         sheet: subscriptionOrderSheetData,
-//         isMobile: isMobileDevice,
-//         createIamportPayment: (body) => createIamportPayment(body),
-//         validatePayment: (args) => validatePayment(args),
-//         invalidPayment: (args) => invalidPayment(args),
-//         successPayment: (args) => successPayment(args),
-//         failPayment: (orderId) => failPayment(orderId),
-//       }),
-//     [
-//       subscriptionOrderSheetData,
-//       isMobileDevice,
-//       createIamportPayment,
-//       validatePayment,
-//       invalidPayment,
-//       successPayment,
-//       failPayment,
-//     ]
-//   );
-
-//   // Checkout Flow
-//   const { start, isProcessing } = useCheckoutFlow<
-//     SaveSubscriptionOrderRequest,
-//     SubscriptionOrderSheetResponse,
-//     SubscriptionIamportRequest,
-//     SubscriptionIamportResponse
-//   >({
-//     sheet: subscriptionOrderSheetData,
-//     isMobile: isMobileDevice,
-//     saveOrder: async (req) => {
-//       const res = await saveSubscriptionOrder({ subscribeId, body: req });
-//       return {
-//         id: res.data.id,
-//         merchantUid: res.data.merchantUid,
-//         status: res.status,
-//       };
-//     },
-//     paymentAdapter: iamportAdapter as PaymentAdapter<
-//       SubscriptionIamportResponse,
-//       SubscriptionIamportRequest
-//     >,
-//     strategy,
-//     navigate: (path) => router.push(path),
-//     routes: {
-//       success: CHECKOUT_ROUTES.SUBSCRIPTION.success,
-//       fail: CHECKOUT_ROUTES.SUBSCRIPTION.fail,
-//     },
-//   });
-
-//   // Event Handlers
-//   const scrollToTerms = () => scrollToElement(termsRef.current);
-
-//   const handlePaymentSubmit = async () => {
-//     if (!agreePrivacy || !agreeSubscription) {
-//       setShowTermsErrors(true);
-//       addToast("결제 필수 사항에 동의해 주세요", "above-button");
-//       setTimeout(scrollToTerms, 100);
-//       return;
-//     }
-//     const requestBody = getRequestBody(
-//       ORDER_TYPE.SUBSCRIPTION
-//     ) as SaveSubscriptionOrderRequest;
-//     await start(requestBody);
-//   };
-
-//   return (
-//     <>
-//       <DeliveryAddress />
-//       <Divider />
-//       {/* <SubscriptionOrderItemList
-//         subscriptionOrderSheetData={subscriptionOrderSheetData}
-//       /> */}
-//       <Divider />
-//       <DeliverySchedule
-//         deliveryDate={subscriptionOrderSheetData.deliveryDate}
-//         nextDeliveryDate={subscriptionOrderSheetData.nextDeliveryDate}
-//       />
-//       <Divider />
-//       <CouponSelector
-//         orderType={ORDER_TYPE.SUBSCRIPTION}
-//         orderPrice={subscriptionOrderSheetData.subscribeDto.nextPaymentPrice}
-//       />
-//       <Divider />
-//       <RewardUsage
-//         orderType={ORDER_TYPE.SUBSCRIPTION}
-//         isAutoUseReward={subscriptionOrderSheetData.autoUseReward}
-//       />
-//       <Divider />
-//       <PaymentMethod />
-//       <Divider />
-//       <OrderSummary
-//         orderType={ORDER_TYPE.SUBSCRIPTION}
-//         originPrice={originPrice}
-//         appliedDefaultDiscountPrice={
-//           subscriptionOrderSheetData.subscribeDto.nextPaymentPrice
-//         }
-//         discountGrade={subscriptionOrderSheetData.subscribeDto.discountGrade}
-//         plan={subscriptionOrderSheetData.subscribeDto.plan}
-//       />
-//       <Divider />
-//       <OrderTerms
-//         orderType={ORDER_TYPE.SUBSCRIPTION}
-//         showErrors={showTermsErrors}
-//         ref={termsRef}
-//       />
-//       <Divider />
-//       <OrderSection padding="20px">
-//         <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
-//       </OrderSection>
-//       <Divider />
-//       <SubscriptionNotice />
-//       <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>
-//         {isProcessing
-//           ? "결제 처리 중..."
-//           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
-//       </FooterButton>
-//     </>
-//   );
-// }

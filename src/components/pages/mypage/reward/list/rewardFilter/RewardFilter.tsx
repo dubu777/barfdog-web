@@ -7,7 +7,6 @@ export default function RewardFilter() {
     { label: '전체', value: 'ALL' },
     { label: '적립', value: 'SAVED' },
     { label: '사용', value: 'USED' },
-    { label: '소멸', value: 'EXPIRED' },
   ]
 
   const { defaultTabIndex, handleFilterChange } = useFilterTabs({
