@@ -38,7 +38,8 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   nextDeliveryDate: "",
 
   getRequestBody: (orderType) => {
-    const { agreePrivacy, customerUid, nextDeliveryDate } = get();
+    const { agreePrivacy, agreeSubscription, customerUid, nextDeliveryDate } =
+      get();
 
     // 필요한 데이터들을 각각의 store에서 가져옴
     const { deliveryDto, deliveryId, isBundleDelivery } =
@@ -94,6 +95,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       customerUid,
       nextDeliveryDate,
       discountGrade,
+      agreeSubscription,
       discountSubscribeAlliance,
       overDiscount: 0,
       autoUseReward,

@@ -22,6 +22,7 @@ interface SuccessGeneralOrderResponse {
 
 interface SaveSubscriptionOrderRequest {
   agreePrivacy: boolean; // 개인정보 제공 동의 여부
+  agreeSubscription: boolean; // 구독 약관 동의 여부
   customerUid: string; // 고유 사용자 ID
   deliveryDto: DeliveryDto; // 배송지 정보
   deliveryPrice: number; // 배송비
