@@ -72,6 +72,7 @@ export function buildSubscriptionPaymentRequest({
   subscriptionOrderSheetData,
   isMobileDevice,
   merchantUid,
+  petId,
 }: SubscriptionPaymentDataParams): SubscriptionIamportRequest {
   const { paymentMethod, paymentPrice, deliveryDto, customerUid } = requestBody;
   const { email, subscribeVo, rawFoodList } = subscriptionOrderSheetData;
@@ -95,6 +96,7 @@ export function buildSubscriptionPaymentRequest({
     m_redirect_url:
       `${window.location.origin}/order/checkout/mobile-payment-redirect/subscription?` +
       `order_id=${encodeURIComponent(orderId)}&` +
+      `pet_id=${encodeURIComponent(petId)}&` +
       `customer_uid=${encodeURIComponent(customerUid)}&` +
       `merchantUid=${encodeURIComponent(merchantUid)}&` +
       `amount=${encodeURIComponent(paymentPrice)}&` +

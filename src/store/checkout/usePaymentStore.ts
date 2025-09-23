@@ -11,6 +11,7 @@ interface PaymentStore {
   orderPrice: number;
   discountSubscribeAlliance: number;
   discountGrade: number;
+  orderId: number | null;
 
   setPaymentMethod: (method: PaymentMethod) => void;
   setDiscountTotal: (amount: number) => void;
@@ -21,6 +22,7 @@ interface PaymentStore {
   setOrderPrice: (amount: number) => void;
   setDiscountSubscribeAlliance: (amount: number) => void;
   setDiscountGrade: (amount: number) => void;
+  setOrderId: (id: number) => void;
 }
 
 export const usePaymentStore = create<PaymentStore>((set) => ({
@@ -33,6 +35,7 @@ export const usePaymentStore = create<PaymentStore>((set) => ({
   orderPrice: 0,
   discountSubscribeAlliance: 0,
   discountGrade: 0,
+  orderId: null,
 
   setPaymentMethod: (method) => set({ paymentMethod: method }),
   setDiscountTotal: (amount) => set({ discountTotal: Number(amount) }),
@@ -44,4 +47,5 @@ export const usePaymentStore = create<PaymentStore>((set) => ({
   setDiscountSubscribeAlliance: (amount) =>
     set({ discountSubscribeAlliance: Number(amount) }),
   setDiscountGrade: (amount) => set({ discountGrade: Number(amount) }),
+  setOrderId: (id) => set({ orderId: id }),
 }));

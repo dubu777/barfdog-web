@@ -37,6 +37,7 @@ interface SaveSubscriptionOrderRequest {
   overDiscount: number; // 초과 할인 금액
   paymentMethod: PaymentMethod; // 결제 방식
   paymentPrice: number; // 실제 결제 금액
+  orderId: number; // 이번 결제 건 주문 ID
 }
 
 // 구독, 일반 결제 주문 정보 저장 응답
@@ -229,6 +230,8 @@ interface SubscriptionCheckoutSheetResponse {
   allianceCoupons: CheckoutCoupon[];
   rawFoodList: RawFoodItemSummary[];
   totalOriginPrice: number; // 구독 할인 전 총 원금
+  orderId: number; // 이번 결제 건 주문 ID
+  petId: number;
 }
 
 interface RawFoodItemSummary {

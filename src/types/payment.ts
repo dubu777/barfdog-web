@@ -57,6 +57,7 @@ interface SuccessSubscriptionPaymentRequest {
   discountReward: number;
   impUid: string;
   merchantUid: string;
+  petId: number;
 }
 
 interface ValidateSubscriptionPaymentResponse {
@@ -158,6 +159,7 @@ interface SubscriptionPaymentDataParams {
   orderId: number;
   merchantUid: string;
   subscribeId: number;
+  petId: number;
 }
 
 // 네이버페이 카테고리 타입 및 ID 정의

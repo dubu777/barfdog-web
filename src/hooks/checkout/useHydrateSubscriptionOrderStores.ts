@@ -21,6 +21,7 @@ export function useHydrateSubscriptionOrderStores(
   const setUserTotalReward = useRewardStore((s) => s.setUserTotalReward);
   const setOrderPrice = usePaymentStore((s) => s.setOrderPrice);
   const setDiscountGrade = usePaymentStore((s) => s.setDiscountGrade);
+  const setOrderId = usePaymentStore((s) => s.setOrderId);
   const setCustomerUid = useOrderStore((s) => s.setCustomerUid);
   const setNextDeliveryDate = useOrderStore((s) => s.setNextDeliveryDate);
 
@@ -51,7 +52,7 @@ export function useHydrateSubscriptionOrderStores(
     // 동적으로 생성되는 값도 이펙트 내부에서 계산/세팅
     setCustomerUid(generateCustomerUid());
     setNextDeliveryDate(calculateNextDeliveryDate());
-
+    setOrderId(data.orderId);
     hydratedRef.current = true;
   }, [
     data,

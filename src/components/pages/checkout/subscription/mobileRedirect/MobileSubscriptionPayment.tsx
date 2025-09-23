@@ -58,6 +58,7 @@ export default function MobileSubscriptionPayment() {
           buyer_email,
           buyer_addr,
           buyer_postcode,
+          petId,
         } = params;
 
         // 취소
@@ -107,6 +108,7 @@ export default function MobileSubscriptionPayment() {
           discountReward,
           impUid: final.imp_uid,
           merchantUid,
+          petId,
         };
 
         if (isValid) {
