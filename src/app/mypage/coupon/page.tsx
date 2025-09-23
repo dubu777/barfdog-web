@@ -2,17 +2,18 @@ import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import CouponList from "@/components/pages/mypage/coupon/list/CouponList";
-import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
+import { prefetchGetInfiniteCouponList } from "@/api/mypage/coupon/queries/prefetchGetInfiniteCouponList";
+import Spinner from "@/components/common/spinner/Spinner";
 
 export default async function CouponPage() {
   const queryClient = new QueryClient();
-  await prefetchGetCouponList(queryClient);
+  await prefetchGetInfiniteCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>사용 가능한 쿠폰이 없습니다.</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <CouponList />
         </Suspense>
       </ErrorBoundary>

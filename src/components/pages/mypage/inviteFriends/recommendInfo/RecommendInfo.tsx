@@ -1,7 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import { myRecommendationCode } from "@/components/pages/mypage/inviteFriends/InviteFriends.css";
 import { useState } from "react";
-import { isAxiosError } from "axios";
 import Text from "@/components/common/text/Text";
 import Chips from "@/components/common/chips/Chips";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -11,7 +10,8 @@ import InputField from "@/components/common/inputField/InputField";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
-import { useCreateRecommendCode } from "@/api/mypage/inviteFriends/mutations/useCreateRecommendCode";
+import { useCreateReferralCode } from "@/api/mypage/inviteFriends/mutations/useCreateReferralCode";
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 
 interface RecommendInfoProps {
 	recommendedCode?: string | null;
@@ -25,24 +25,26 @@ export default function RecommendInfo({
     '친구가 첫 구독주문 하면 /친구에게 3,000 포인트, 나에게 20,000 포인트/를 드립니다!',
   ]
 
-	const [recommendCode, setRecommendCode] = useState<string>('');
-  const { mutate } = useCreateRecommendCode();
-
+	const [referralCode, setReferralCode] = useState<string>('');
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { mutate } = useCreateReferralCode();
+	const { handleError } = useApiResponseHandler();
 	const { addToast } = useToastStore();
 	const { isOpen: isOpenErrorModal, onToggle: onToggleErrorModal, onClose: onCloseErrorModal } = useModal();
 
   const handleSubmit = () => {
     mutate(
-      { recommendCode },
+      { referralCode },
       {
         onSuccess: () => {
           addToast('친구 등록이 완료되었습니다');
         },
         onError: (err) => {
-          if (isAxiosError(err)) {
-            onToggleErrorModal();
-            setRecommendCode('');
-          }
+					const errorMessage = handleError(err, '추천코드를 입력하는데 실패했습니다', true) ?? '';
+					setErrorMessage(errorMessage);
+
+					onToggleErrorModal();
+					setReferralCode('');
         }
       }
     )
@@ -88,17 +90,22 @@ export default function RecommendInfo({
 					align: 'start'
 				})}
 			>
-				<Text type='label4'>추천코드 입력</Text>
 				<InputField
-					name='recommendCode'
-					value={recommendCode}
-					onChange={(e) => setRecommendCode(e.target.value)}
+					label='추천코드 입력'
+					labelColor='gray900'
+					name='referralCode'
+					value={referralCode}
+					onChange={(e) => {
+						setReferralCode(e.target.value);
+						setErrorMessage(null);
+					}}
 					placeholder='친구 코드를 입력해주세요'
 					confirmButtonText='등록'
 					confirmButton
 					confirmButtonVariant='solid'
-					confirmButtonDisabled={!recommendCode}
+					confirmButtonDisabled={!referralCode}
 					onSubmit={handleSubmit}
+					error={errorMessage ?? undefined}
 				/>
 				<Text type='caption' color='gray600'>* 친구 코드 입력은 계정 당 1회 입력할 수 있어요</Text>
 			</article>
@@ -111,6 +118,7 @@ export default function RecommendInfo({
           content='정확한 추천코드를 다시 입력해 주세요'
           onConfirm={onCloseErrorModal}
           confirmText='확인'
+					buttonPosition='right'
         />
       }
 		</>

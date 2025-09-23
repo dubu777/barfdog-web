@@ -3,7 +3,7 @@ import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
 import { deletePaymentMethod } from "@/api/mypage/subscription/subscription";
 
-const getPaymentListQueryKey = [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.GET_PAYMENT_LIST];
+const getPaymentListQueryKey = [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_PAYMENT_LIST];
 
 export function useDeletePaymentMethod(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();

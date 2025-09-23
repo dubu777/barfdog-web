@@ -1,21 +1,18 @@
 import { QueryClient } from "@tanstack/react-query";
-import { queryKeys } from "@/constants";
 import { createSSRRequest } from "@/api/withAuthSSR";
-import { getReferralRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
+import { queryKeys } from "@/constants";
+import { getCouponList } from "@/api/mypage/coupon/coupon";
 
-export async function prefetchGetReferralRewardList(
+export async function prefetchGetInfiniteCouponList(
   queryClient: QueryClient
 ) {
   const ssrAxios = createSSRRequest();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: [
-    queryKeys.MYPAGE.BASE, 
-      queryKeys.MYPAGE.REWARD.BASE, 
-      queryKeys.MYPAGE.REWARD.GET_REFERRAL_REWARD_LIST
-    ],
+    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COUPON.BASE, queryKeys.MYPAGE.COUPON.GET_COUPON_LIST, 'NON_ALLIANCE'],
     queryFn: async ({ pageParam = 0 }) =>
-      await getReferralRewardList({
+      await getCouponList({
         pageParam,
+        couponCategory: 'NON_ALLIANCE',
         instance: ssrAxios
       }),
     initialPageParam: 0,
