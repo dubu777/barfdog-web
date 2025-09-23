@@ -1,8 +1,4 @@
-export interface SaveOrderResult {
-  id: number;
-  merchantUid: string;
-  status: number;
-}
+import { SaveOrderResponse } from "@/types";
 
 export interface CheckoutStrategy<Request, Sheet, PayReq, PayRes> {
   buildPaymentRequest(args: {
@@ -16,16 +12,19 @@ export interface CheckoutStrategy<Request, Sheet, PayReq, PayRes> {
   afterGatewayCallback(args: {
     response: PayRes;
     requestBody: Request;
-    saveOrder: SaveOrderResult;
+    saveOrder: SaveOrderResponse;
   }): Promise<"success" | "fail" | "cancel">;
 
   onSuccess(args: {
-    saveOrder: SaveOrderResult;
+    saveOrder: SaveOrderResponse;
     response: PayRes;
     requestBody: Request;
   }): Promise<void>;
 
-  onFail(args: { saveOrder: SaveOrderResult; reason?: string }): Promise<void>;
+  onFail(args: {
+    saveOrder: SaveOrderResponse;
+    reason?: string;
+  }): Promise<void>;
 
-  onCancel?(args: { saveOrder: SaveOrderResult }): Promise<void>;
+  onCancel?(args: { saveOrder: SaveOrderResponse }): Promise<void>;
 }

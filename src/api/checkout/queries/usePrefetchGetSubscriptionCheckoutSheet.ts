@@ -13,6 +13,7 @@ export async function prefetchGetSubscriptionCheckoutSheet(
     queryKey: [
       queryKeys.CHECKOUT.BASE,
       queryKeys.CHECKOUT.GET_SUBSCRIPTION_CHECKOUT_SHEET,
+      subscribeId,
     ],
     queryFn: () => getSubscriptionCheckoutSheet(subscribeId, ssrAxios),
   });

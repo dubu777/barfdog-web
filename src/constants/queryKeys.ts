@@ -77,6 +77,7 @@ const queryKeys = {
   CHECKOUT: {
     BASE: "checkout",
     GET_SUBSCRIPTION_CHECKOUT_SHEET: "getSubscriptionCheckoutSheet",
+    GET_GENERAL_CHECKOUT_SHEET: "getGeneralCheckoutSheet",
   },
   MAIN: {
     BASE: "main",

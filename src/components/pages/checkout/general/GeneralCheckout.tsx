@@ -50,8 +50,9 @@ import { createGeneralStrategy } from "@/utils/checkout/strategies/generalStrate
 import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
 import Spinner from "@/components/common/spinner/Spinner";
+import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
 
-export default function GeneralOrderContainer() {
+export default function GeneralCheckout() {
   // Local State
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
@@ -71,6 +72,13 @@ export default function GeneralOrderContainer() {
   const { data: generalOrderData, isPending } = useGetGeneralOrder({
     orderItemDtoList,
   });
+  // React Query Data Fetching
+  const { data: checkoutData, isPending: isCheckoutPending } =
+    useGetGeneralCheckoutSheet({
+      orderItemDtoList,
+    });
+
+  console.log("checkoutData", checkoutData);
 
   // React Query mutations
   const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();

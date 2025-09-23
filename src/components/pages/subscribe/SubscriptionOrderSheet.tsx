@@ -85,11 +85,10 @@ export default function SubscriptionOrderSheet({
 
   const handleSubmit = () => {
     const rawFoodsPayload = recipes.map(
-      ({ recipeId, packGrams, originalPrice, discountedPrice }) => ({
+      ({ recipeId, packGrams, originalPrice }) => ({
         recipeId,
         oneMealGramsPerRecipe: packGrams,
         originalPrice,
-        discountedPrice,
       })
     );
 
@@ -99,7 +98,7 @@ export default function SubscriptionOrderSheet({
       discountPrice: totals.totalDiscountAmount,
       paymentExpectedPrice: totals.paymentExpectedPrice,
       rawFoods: rawFoodsPayload,
-      totalOriginalPrice: totals.totalOriginalPrice,
+      originPrice: totals.totalOriginalPrice,
     } as const;
     createSubscription(
       { reportId, body },

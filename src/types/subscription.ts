@@ -217,7 +217,6 @@ interface RawFoodOrderSheet {
 
 interface RawFoodPayload {
   oneMealGramsPerRecipe: number; // 해당 레시피 1팩당 급여량(g)
-  discountedPrice: number; // 할인 적용된 가격
   originalPrice: number; // 할인 적용 전 가격
   recipeId: number;
 }
@@ -227,7 +226,7 @@ interface CreateSubscriptionRequest {
   mealPlan: MealPlan;
   discountPrice: number; // 할인 금액
   paymentExpectedPrice: number; // 할인 적용된 최종 결제 예정 금액
-  totalOriginalPrice: number; // 할인 적용 전 전체 금액
+  originPrice: number; // 할인 적용 전 전체 금액
   rawFoods: RawFoodPayload[];
 }
 

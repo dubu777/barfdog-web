@@ -1,6 +1,6 @@
 import { GeneralOrderItem } from "@/types";
 import Image from "next/image";
-import * as styles from "../../../subscription/subscriptionOrderItemList/orderItemCard/OrderItemCard.css";
+import * as styles from "./GeneralOrderItemCard.css";
 import Text from "@/components/common/text/Text";
 import { formatNumberWithCommas } from "@/utils";
 import Chips from "@/components/common/chips/Chips";

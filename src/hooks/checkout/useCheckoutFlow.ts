@@ -1,8 +1,6 @@
+import { SaveOrderResponse } from "@/types";
 import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
-import {
-  CheckoutStrategy,
-  SaveOrderResult,
-} from "@/utils/checkout/checkoutStrategies";
+import { CheckoutStrategy } from "@/utils/checkout/checkoutStrategies";
 import { useCallback, useState } from "react";
 
 /**
@@ -25,7 +23,7 @@ interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
    * - 서버에 주문을 저장하고 결제에 필요한 id/merchantUid/status 를 반환
    * - status !== 200 이면 실패로 간주
    */
-  saveOrder: (req: Request) => Promise<SaveOrderResult>;
+  saveOrder: (req: Request) => Promise<SaveOrderResponse>;
   /**
    * PG 어댑터
    * - PG SDK 초기화(init) 및 결제 요청(requestPay)을 캡슐화
@@ -63,9 +61,6 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
       try {
         // 1) 주문 저장
         const saveOrder = await deps.saveOrder(requestBody);
-        if (saveOrder.status !== 200) {
-          throw new Error("save order failed");
-        }
 
         // 2) PG 초기화
         await deps.paymentAdapter.init();
@@ -107,7 +102,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
       } catch (e) {
         // 공통 예외 처리
         await deps.strategy.onFail({
-          saveOrder: { id: -1, merchantUid: "", status: 500 },
+          saveOrder: { id: -1, merchantUid: "", status: "" },
           reason: (e as Error)?.message,
         });
         deps.navigate(deps.routes?.fail);

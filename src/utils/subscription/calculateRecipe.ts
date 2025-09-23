@@ -48,7 +48,6 @@ export function calculateDeliveryCyclePackCount(
   else if (mealPlan === "TWO_MEAL") {
     if (deliveryPlan === "TWO_WEEK") basePacks = 28;
     else if (deliveryPlan === "FOUR_WEEK") basePacks = 56;
-    else if (deliveryPlan === "ONE_WEEK") basePacks = 14;
     else throw new Error("유효하지 않은 deliveryPlan 값입니다.");
   } else {
     throw new Error("유효하지 않은 mealPlan 값입니다.");

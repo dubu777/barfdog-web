@@ -11,14 +11,18 @@ export {
 
 // 주소 리스트 조회
 const getAddressList = async (): Promise<AddressResponse[]> => {
-  const { data } = await axiosInstance.get("/api/address");
+  const { data } = await axiosInstance.get("/api/v2/address");
 
-  return data?._embedded?.addressResponseDtoList || [];
+  if (data.success) {
+    return data.data.content;
+  }
+  const message = data.detailMessage ?? "주소 정보를 불러오지 못했습니다";
+  throw new Error(message);
 };
 
 // 주소 등록
 const createAddress = async (body: AddressRequest) => {
-  const { data } = await axiosInstance.post("/api/address/save", body);
+  const { data } = await axiosInstance.post("/api/v2/address", body);
 
   return data;
 };
@@ -32,7 +36,7 @@ const updateAddress = async ({
   body: AddressRequest;
 }) => {
   const { data } = await axiosInstance.put(
-    `/api/address/update/${deliveryId}`,
+    `/api/v2/address/update/${deliveryId}`,
     body
   );
 
@@ -42,7 +46,7 @@ const updateAddress = async ({
 // 주소 삭제
 const deleteAddress = async (deliveryId: number) => {
   const { data } = await axiosInstance.delete(
-    `/api/address/delete/${deliveryId}`
+    `/api/v2/address/delete/${deliveryId}`
   );
 
   return data;
@@ -51,7 +55,7 @@ const deleteAddress = async (deliveryId: number) => {
 // 기본 배송지 등록
 const applyDefaultAddress = async (deliveryId: number) => {
   const { data } = await axiosInstance.post(
-    `/api/address/default/${deliveryId}`
+    `/api/v2/address/default/${deliveryId}`
   );
 
   return data;

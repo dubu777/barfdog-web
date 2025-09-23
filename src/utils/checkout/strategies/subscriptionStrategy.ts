@@ -2,16 +2,16 @@
 import { CheckoutStrategy } from "../checkoutStrategies";
 import type {
   SaveSubscriptionOrderRequest,
-  SubscriptionOrderSheetResponse,
   SubscriptionIamportRequest,
   SubscriptionIamportResponse,
   CreateIamportSubscriptionPaymentRequest,
+  SubscriptionCheckoutSheetResponse,
 } from "@/types";
 import { buildSubscriptionPaymentRequest } from "@/store/checkout/paymentUtils";
 
 export function createSubscriptionStrategy(deps: {
   /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
-  sheet: SubscriptionOrderSheetResponse; // 이메일/상품명 등 참조
+  sheet: SubscriptionCheckoutSheetResponse; // 이메일/상품명 등 참조
   isMobile: boolean;
 
   // API DI
@@ -31,7 +31,7 @@ export function createSubscriptionStrategy(deps: {
   failPayment: (orderId: number) => Promise<any>;
 }): CheckoutStrategy<
   SaveSubscriptionOrderRequest,
-  SubscriptionOrderSheetResponse,
+  SubscriptionCheckoutSheetResponse,
   SubscriptionIamportRequest,
   SubscriptionIamportResponse
 > {
@@ -47,7 +47,7 @@ export function createSubscriptionStrategy(deps: {
       buildSubscriptionPaymentRequest({
         requestBody,
         subscriptionOrderSheetData: sheet,
-        subscribeId: sheet.subscribeDto.id,
+        subscribeId: sheet.subscribeVo.subscriptionId,
         isMobileDevice: isMobile,
         orderId,
         merchantUid,
@@ -73,7 +73,7 @@ export function createSubscriptionStrategy(deps: {
         customer_uid: response.customer_uid,
         merchant_uid: saveOrder.merchantUid,
         amount: requestBody.paymentPrice,
-        name: deps.sheet.recipeNameList.join(", "),
+        name: deps.sheet.rawFoodList.map((raw) => raw.name).join(", "),
         buyer_name: requestBody.deliveryDto.recipientName,
         buyer_tel: requestBody.deliveryDto.phoneNumber,
         buyer_email: deps.sheet.email,

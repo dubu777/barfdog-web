@@ -2,7 +2,6 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import {
   SubscriptionCheckoutSheetResponse,
-  SubscriptionOrderSheetResponse,
   UseSuspenseQueryCustomOptions,
 } from "@/types";
 import { getSubscriptionCheckoutSheet } from "../checkout";
