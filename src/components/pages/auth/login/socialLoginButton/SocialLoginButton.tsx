@@ -17,6 +17,7 @@ interface SocialLoginButtonProps {
   onDeferredLoginClick?: (fn: () => void) => void;
   showSymbolButton?: boolean;
   config: OAuthClientConfig;
+  nextPath?: string;
 }
 
 export default function SocialLoginButton({
@@ -26,6 +27,7 @@ export default function SocialLoginButton({
   onDeferredLoginClick,
   config,
   showSymbolButton = false,
+  nextPath = "/",
 }: SocialLoginButtonProps) {
   const { handleClick } = useSocialLogin(provider, {
     callbackUrl,

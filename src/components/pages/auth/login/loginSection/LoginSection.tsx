@@ -80,6 +80,7 @@ export default function LoginSection() {
               <SocialLoginButton
                 key={provider}
                 provider={provider}
+                nextPath={nextPath}
                 config={OAUTH_CLIENT_CONFIG[provider]}
                 showSymbolButton={false}
               />

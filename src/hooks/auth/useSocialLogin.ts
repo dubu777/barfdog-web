@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
 
 import { SnsProvider } from "@/types";
@@ -19,13 +19,14 @@ export function useSocialLogin(
   options?: UseSocialLoginOptions
 ) {
   const router = useRouter();
-  const config = OAUTH_CLIENT_CONFIG[provider];
+  const searchParams = useSearchParams();
 
   const start = useCallback(() => {
     if (options?.callbackUrl) setSnsCallbackUrl(options.callbackUrl);
+    const config = OAUTH_CLIENT_CONFIG[provider];
     const url = buildOAuthCodeUrl(config);
     router.push(url);
-  }, [config, options?.callbackUrl, router]);
+  }, [provider, options?.callbackUrl, router]);
 
   const handleClick = useCallback(() => {
     if (options?.defer && options?.onDeferredLoginClick) {
