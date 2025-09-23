@@ -18,7 +18,7 @@ export default function GeneralOrderItemCard({
     <div className={styles.orderItemCardContainer}>
       <div className={commonWrapper({ gap: 8, justify: "start" })}>
         <Image
-          src="/images/recipes/background.jpg"
+          src={orderItemData.itemImageFilename.url}
           alt="임시"
           width={88}
           height={88}

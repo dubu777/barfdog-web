@@ -50,7 +50,6 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       paymentPrice,
       paymentMethod,
       orderPrice,
-      finalPrice,
       discountSubscribeAlliance,
       discountGrade,
     } = usePaymentStore.getState();
@@ -84,7 +83,6 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     if (orderType === ORDER_TYPE.GENERAL) {
       return {
         ...commonBody,
-        finalPrice,
         orderItemDtoList,
         deliveryId: isBundleDelivery ? deliveryId : null,
       } as SaveGeneralOrderRequest;

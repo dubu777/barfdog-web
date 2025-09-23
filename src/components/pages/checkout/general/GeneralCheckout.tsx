@@ -64,21 +64,18 @@ export default function GeneralCheckout() {
   const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
   const addToast = useToastStore((s) => s.addToast);
 
+  console.log("orderItemDtoList", orderItemDtoList);
+
   // Routing & Device
   const router = useRouter();
   const { isMobileDevice } = useDeviceState();
 
   // React Query Data Fetching
-  const { data: generalOrderData, isPending } = useGetGeneralOrder({
+  const { data: generalOrderData, isPending } = useGetGeneralCheckoutSheet({
     orderItemDtoList,
   });
-  // React Query Data Fetching
-  const { data: checkoutData, isPending: isCheckoutPending } =
-    useGetGeneralCheckoutSheet({
-      orderItemDtoList,
-    });
 
-  console.log("checkoutData", checkoutData);
+  console.log("generalOrderData", generalOrderData);
 
   // React Query mutations
   const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
@@ -112,8 +109,8 @@ export default function GeneralCheckout() {
     saveOrder: async (req) => {
       const res = await saveGeneralOrder(req);
       return {
-        id: res.data.id,
-        merchantUid: res.data.merchantUid,
+        id: res.id,
+        merchantUid: res.merchantUid,
         status: res.status,
       };
     },

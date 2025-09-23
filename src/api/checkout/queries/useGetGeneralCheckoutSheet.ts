@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getGeneralOrder } from "../checkout";
+import { getGeneralCheckoutSheet, getGeneralOrder } from "../checkout";
 import {
   GeneralOrderSheetRequest,
   GeneralOrderSheetResponse,
@@ -17,7 +17,7 @@ export function useGetGeneralCheckoutSheet(
       queryKeys.CHECKOUT.GET_GENERAL_CHECKOUT_SHEET,
       body,
     ],
-    queryFn: () => getGeneralOrder(body),
+    queryFn: () => getGeneralCheckoutSheet(body),
     ...queryOptions,
   });
 }

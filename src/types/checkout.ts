@@ -1,6 +1,6 @@
 import { PAYMENT_METHOD } from "@/constants";
 import { DeliveryPlan, MealPlan, PlanName } from "./subscription";
-import { DiscountType } from "./common";
+import { DiscountType, UrlObject } from "./common";
 
 interface SuccessGeneralPaymentRequest {
   impUid: string;
@@ -51,7 +51,7 @@ interface SaveGeneralOrderRequest {
   orderItemDtoList: OrderItemDto[];
   deliveryDto: DeliveryDto;
   deliveryId: number | null;
-  orderPrice: number; // 어드민 상품 할인만 적용된 금액
+  orderPrice: number;
   deliveryPrice: number;
   discountTotal: number;
   discountReward: number;
@@ -59,7 +59,6 @@ interface SaveGeneralOrderRequest {
   paymentPrice: number;
   overDiscount: number;
   memberCouponId: number | null;
-  finalPrice: number;
   paymentMethod: PaymentMethod;
   agreePrivacy: boolean;
 }
@@ -116,16 +115,16 @@ interface OptionDto {
 }
 
 interface GeneralOrderItem {
+  itemId: number;
+  itemSalePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
+  itemOriginalPrice: number; // 상품 원금 + 옵션 가격 총 가격
+  name: string;
+  itemType: string;
+  optionDtoList?: OptionDto[];
   amount: number;
   deliveryFree: boolean;
   discountedItemAndOptionPrice: number;
-  itemId: number;
-  itemImageFilename: string;
-  itemOriginalPrice: number; // 상품 원금 + 옵션 가격 총 가격
-  itemSalePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
-  itemType: string;
-  name: string;
-  optionDtoList?: OptionDto[];
+  itemImageFilename: UrlObject;
 }
 
 interface DefaultAddress {
@@ -158,13 +157,13 @@ type OrderStatus =
 
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
+  orderItemDtoList: GeneralOrderItem[];
   defaultAddress: DefaultAddress;
   deliveryAddress: BundleDeliveryAddress[];
   deliveryPrice: number;
   email: string;
   freeCondition: number;
   nextSubscribeDeliveryDate: string;
-  orderItemDtoList: GeneralOrderItem[];
   orderPrice: number;
   orderStatus: OrderStatus;
   reward: number;

@@ -189,8 +189,11 @@ const getGeneralCheckoutSheet = async (
     "/api/v2/orders/sheet/general",
     body
   );
-
-  return data;
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 페이지 정보 조회에 실패했습니다";
+  throw new Error(message);
 };
 
 // 일반 결제 주문 정보 조회
@@ -202,8 +205,21 @@ const getGeneralOrder = async (
   return data;
 };
 
-// 일반 결제 주문 정보 저장
+// 일반 결제 주문 정보 저장 - v2
 const saveGeneralOrder = async (
+  body: SaveGeneralOrderRequest
+): Promise<SaveOrderResponse> => {
+  const { data } = await axiosInstance.post("/api/v2/orders/general", body);
+
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
+  throw new Error(message);
+};
+
+// 일반 결제 주문 정보 저장 - 레거시
+const saveGeneralOrder2 = async (
   body: SaveGeneralOrderRequest
 ): Promise<SaveOrderResponse> => {
   const { data } = await axiosInstance.post("/api/orders/general", body);
@@ -214,8 +230,28 @@ const saveGeneralOrder = async (
   const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
   throw new Error(message);
 };
-// 일반 결제 주문 성공
+
+// 일반 결제 주문 성공 - v2
 const successGeneralPayment = async ({
+  id,
+  body,
+}: {
+  id: number;
+  body: SuccessGeneralPaymentRequest;
+}): Promise<SuccessGeneralOrderResponse> => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${id}/general/success`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "결제 성공 처리에 실패했습니다";
+  throw new Error(message);
+};
+
+// 일반 결제 주문 성공 - 레거시
+const successGeneralPayment2 = async ({
   id,
   body,
 }: {
@@ -229,14 +265,33 @@ const successGeneralPayment = async ({
   return data;
 };
 
-// 일반 결제 주문 실패
+// 일반 결제 주문 실패 - v2
 const failGeneralPayment = async (id: number) => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${id}/general/fail`
+  );
+
+  return data;
+};
+
+// 일반 결제 주문 실패 - 레거시
+const failGeneralPayment2 = async (id: number) => {
   const { data } = await axiosInstance.post(`/api/orders/${id}/general/fail`);
 
   return data;
 };
+
 // 일반 결제 주문 취소
 const cancelGeneralPayment = async (id: number) => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/orders/${id}/general/cancel`
+  );
+
+  return data;
+};
+
+// 일반 결제 주문 취소
+const cancelGeneralPayment2 = async (id: number) => {
   const { data } = await axiosInstance.post(`/api/orders/${id}/general/cancel`);
 
   return data;
