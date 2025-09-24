@@ -7,35 +7,42 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useGetRecommendArticleList } from "@/api/community/queries/useGetRecommendArticleList";
 import { imageWrapper } from '@/styles/common.css';
+import { ARTICLE_CATEGORY } from '@/constants/community';
 
 export default function RecommendArticle() {
   const { data: recommendArticles } = useGetRecommendArticleList();
+
   return (
     <article className={styles.recommendArticleContainer}>
       <div className={styles.recommendArticleList}>
         <Text type='headline3' color='white' block className={styles.recommendArticleTitle}>추천 아티클</Text>
         <Swiper slidesPerView='auto'>
-        {recommendArticles.map(article => (
-          <SwiperSlide key={article.id}>
-            <Link
-              href={`/community/article/${article.id}`}
-              className={styles.recommendArticle}
-            >
-              <Image
-                src={article.url}
-                alt={article.title}
-                width={600}
-                height={335}
-                style={{ aspectRatio: '7 / 4' }}
-                className={imageWrapper({ objectFit: 'cover'})}
-              />
-              <div className={`${styles.recommendArticleContents} ${articleOverlay}`}>
-                <Text type='headline3' color='white'>{article.category}</Text>
-                <Text type='headline1' color='white'>{article.title}</Text>
-              </div>
-            </Link>
-          </SwiperSlide>
-        ))}
+        {recommendArticles.map(article => {
+          const { articleInfo } = article;
+          return (
+            <SwiperSlide key={article.id}>
+              <Link
+                href={`/community/article/${articleInfo.id}?category=${articleInfo.category}`}
+                className={styles.recommendArticle}
+              >
+                {articleInfo?.displayThumbnailUrl?.url && 
+                  <Image
+                    src={articleInfo.displayThumbnailUrl?.url}
+                    alt={articleInfo.title}
+                    width={600}
+                    height={335}
+                    style={{ aspectRatio: '7 / 4' }}
+                    className={imageWrapper({ objectFit: 'cover'})}
+                  />
+                }
+                <div className={`${styles.recommendArticleContents} ${articleOverlay}`}>
+                  <Text type='headline3' color='white'>{ARTICLE_CATEGORY[articleInfo.category].label}</Text>
+                  <Text type='headline1' color='white'>{articleInfo.title}</Text>
+                </div>
+              </Link>
+            </SwiperSlide>
+          )
+        })}
         </Swiper>
       </div>
     </article>

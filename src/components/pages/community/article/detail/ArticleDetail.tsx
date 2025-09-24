@@ -1,20 +1,30 @@
 'use client';
-import { useRouter, useSearchParams } from "next/navigation";
-import { prefetchGetArticleDetail, useGetArticleDetail } from "@/api/community/queries/useGetArticleDetail";
-import { ARTICLE_CATEGORY } from "@/constants/community";
-import DetailSection from "@/components/pages/community/common/detailSection/DetailSection";
+import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
+import dynamic from "next/dynamic";
+import { ArticleCategory, CommunityListItem } from "@/types";
+import { ARTICLE_CATEGORY } from "@/constants/community";
+import { prefetchGetArticleDetail, useGetArticleDetail } from "@/api/community/queries/useGetArticleDetail";
 
-export default function ArticleDetail({ articleId }: { articleId: number }) {
+const DetailSection = dynamic(() => import("@/components/pages/community/common/detailSection/DetailSection"), { ssr: false });
+
+export default function ArticleDetail({ articleId, category }: { articleId: number, category: string }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const category = searchParams.get('category') || 'ALL';
-  const categoryLabel = ARTICLE_CATEGORY[category].label;
-
+  
   const { data } = useGetArticleDetail(articleId);
   const articleDetail = data.articleDetail;
 
-  const title = `[${categoryLabel}] ${articleDetail.title}`;
+  const title = `[${ARTICLE_CATEGORY[category].label}] ${articleDetail?.title}`;
+
+  // 이전/다음 포스트 제목 포맷팅 헬퍼 함수
+  const formatPostTitle = (post: CommunityListItem | null) => {
+    if (!post) return null;
+    const postCategoryLabel = ARTICLE_CATEGORY[post.category as ArticleCategory]?.label ?? '';
+    return {
+      ...post,
+      title: `[${postCategoryLabel}] ${post.title ?? ''}`,
+    };
+  };
 
   return (
     <>
@@ -30,9 +40,9 @@ export default function ArticleDetail({ articleId }: { articleId: number }) {
         contents={articleDetail.contents}
         category='article'
         categoryLabel='아티클'
-        categoryPointLabel={ARTICLE_CATEGORY[category].label}
-        prevPost={data?.previous || null}
-        nextPost={data?.next || null}
+        categoryPointLabel={ARTICLE_CATEGORY['ALL'].label}
+        prevPost={formatPostTitle(data?.previous)}
+        nextPost={formatPostTitle(data?.next)}
         prefetchFn={prefetchGetArticleDetail}
       />
     </>

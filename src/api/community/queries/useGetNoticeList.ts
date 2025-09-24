@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { NoticeListResponse } from "@/types";
+import { NoticeList } from "@/types";
 import { queryKeys } from "@/constants";
 import { getNoticeList } from "@/api/community/community";
 
 export function useGetNoticeList() {
-  return useInfiniteQuery<NoticeListResponse>({
+  return useInfiniteQuery<NoticeList>({
     queryKey: [queryKeys.COMMUNITY.NOTICE.BASE, queryKeys.COMMUNITY.NOTICE.GET_NOTICE_LIST],
     queryFn: async ({ pageParam = 0 }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
@@ -12,13 +12,14 @@ export function useGetNoticeList() {
       return data;
     },
     getNextPageParam: (lastPage) => {
-      if (!lastPage || !lastPage.page) return undefined;
+			if (!lastPage) return undefined;
 
-      const nextPage = lastPage.page.number + 1;
-      const totalPages = lastPage.page.totalPages;
+			const currentPage = lastPage?.pagination?.page ?? 0;
+			const totalPages = lastPage?.pagination?.totalPages ?? 0;
 
-      return nextPage < totalPages ? nextPage : undefined;
-    },
+			const nextPage = currentPage + 1;
+			return nextPage < totalPages ? nextPage : undefined;
+		},
     initialPageParam: 0,
   })
 }

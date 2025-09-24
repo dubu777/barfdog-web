@@ -3,7 +3,7 @@ import * as styles from './ArticleItemList.css';
 import { ellipsis } from '@/styles/common.css';
 import { articleOverlay } from "@/components/pages/community/article/list/ArticleList.css";
 import { Fragment, useEffect, useMemo } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
 import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import useFilterTabs from '@/hooks/useFilterTabs';
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
 import { prefetchGetArticleList, useGetArticleList } from "@/api/community/queries/useGetArticleList";
@@ -27,10 +28,8 @@ function getRowHeight(index: number): number {
 }
 
 export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' }) {
-  const pathname = usePathname();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
-
-  const isGallery = mode === 'gallery';
 
   const category = searchParams.get('category') as ArticleCategory || 'ALL';
   const { pushWithQuery } = useDynamicQueryPush();
@@ -46,21 +45,27 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
     onPageChange,
   }), [currentPage, totalPages, onPageChange]);
   
-  const queryClient = useQueryClient();
   const { data } = useGetArticleList(category, currentPage);
   const articleList = data?.articleList || [];
+  const isGallery = mode === 'gallery';
 
   const articleCategoryList = Object.entries(ARTICLE_CATEGORY).map(([value, { label }]) => ({label, value}));
 
+  const { defaultTabIndex, handleFilterChange } = useFilterTabs({
+    filterKey: 'category',
+    defaultValue: 'ALL',
+    tabs: articleCategoryList,
+  })
+
   useEffect(() => {
     if (data.page) {
-      setPaginationData(data.page);
+      setPaginationData({ ...data.page });
     }
   }, [data.page, setPaginationData]);
 
   const handleCategoryFilter = (category: ArticleCategory) => {
-    pushWithQuery(pathname, { category, page: 1 });
-    setPaginationData({...data.page, number: 0});
+    handleFilterChange(category, { page: 1 })
+    setPaginationData({ ...data.page });
   }
 
   return (
@@ -74,7 +79,7 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
               handleCategoryFilter(tab.value as ArticleCategory);
             }
           }))}
-          defaultIndex={0}
+          defaultIndex={defaultTabIndex}
           width={68}
           justifyContent='flexStart'
         />
@@ -89,21 +94,23 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
                 return (
                   <Fragment key={index}>
                     <Link
-                      href={`/community/article/${article.id}?category=${article.category}`}
+                      href={`/community/article/${article.id}?category=${category}`}
                       style={{ gridRowEnd: `span ${Math.ceil(rowHeight / 10)}` }}
                       className={styles.articleItem({ mode })}
                     >
-                      <Image
-                        src={article.url}
-                        alt={article.title}
-                        width={600}
-                        height={isGallery ? 300 : 96}
-                        style={{
-                          objectFit: "cover",
-                          height: isGallery ? "100%" : "96px",
-                          width: isGallery ? 300 : 96,
-                        }}
-                      />
+                      {article?.displayImageUrl?.url && 
+                        <Image
+                          src={article.displayImageUrl?.url}
+                          alt={article.title}
+                          width={600}
+                          height={isGallery ? 300 : 96}
+                          style={{
+                            objectFit: "cover",
+                            height: isGallery ? "100%" : "96px",
+                            width: isGallery ? 300 : 96,
+                          }}
+                        />
+                      }
                       <div className={`${styles.articleContents({ mode })} ${isGallery ? articleOverlay : ''}`}>
                         {isGallery
                           ? <>

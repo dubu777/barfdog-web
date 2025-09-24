@@ -9,7 +9,7 @@ const DetailSection = dynamic(() => import("@/components/pages/community/common/
 export default function NoticeDetail({ noticeId }: { noticeId: number }) {
   const router = useRouter();
   const { data } = useGetNoticeDetail(noticeId);
-  const noticeDetail = data?.noticeDto;
+  const noticeDetail = data?.currentNotice;
 
   return (
     <>
@@ -26,8 +26,8 @@ export default function NoticeDetail({ noticeId }: { noticeId: number }) {
         category='notice'
         categoryLabel='공지사항'
         categoryPointLabel='전체'
-        prevPost={data?.previous || null}
-        nextPost={data?.next || null}
+        prevPost={data?.previousNotice || null}
+        nextPost={data?.nextNotice || null}
         prefetchFn={prefetchGetNoticeDetail}
       />
     </>

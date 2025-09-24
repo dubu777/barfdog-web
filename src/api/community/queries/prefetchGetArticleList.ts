@@ -8,10 +8,15 @@ export async function prefetchGetArticleList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
   await queryClient.prefetchQuery<ArticleList>({
     queryKey: [queryKeys.COMMUNITY.ARTICLE.BASE, queryKeys.COMMUNITY.ARTICLE.GET_ARTICLE_LIST, 'ALL', 0],
-    queryFn: () => getArticleList('ALL', 0, 12, ssrAxios),
+    queryFn: () => getArticleList(
+      {
+        category: 'ALL',
+        page: 0,
+        instance: ssrAxios
+      }
+    ),
   });
 }
-
 
 export async function prefetchGetRecommendArticleList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();

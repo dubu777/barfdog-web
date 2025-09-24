@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { commonWrapper, pointColor } from "@/styles/common.css";
 import Arrow from '/public/images/icons/angle-down.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -29,10 +29,12 @@ export default function PostNavigation({
 }: PostNavigationProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category');
 
   const handleNavigate = async (id: number) => {
     await prefetchFn(queryClient, id);
-    router.push(`/community/${category}/${id}`);
+    router.push(`/community/${category}/${id}${categoryParam ? `?category=${categoryParam}` : ''}`);
   }
   return (
     <div className={commonWrapper({ paddingBottom: 20, direction: 'col', align: 'start' })}>

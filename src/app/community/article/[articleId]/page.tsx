@@ -9,9 +9,14 @@ interface ArticleDetailPageProps {
   params: Promise<{
     articleId: string;
   }>;
+  searchParams: Promise<{
+    category: string;
+  }>;
 }
-export default async function ArticleDetailPage({ params }: ArticleDetailPageProps) {
+
+export default async function ArticleDetailPage({ params, searchParams }: ArticleDetailPageProps) {
   const { articleId } = await params;
+  const { category } = await searchParams;
   const queryClient = new QueryClient();
   await prefetchGetArticleDetail(queryClient, Number(articleId));
   const dehydrateState = dehydrate(queryClient);
@@ -19,7 +24,7 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>상세 아티클이 없습니다.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <ArticleDetail articleId={Number(articleId)} />
+          <ArticleDetail articleId={Number(articleId)} category={category} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

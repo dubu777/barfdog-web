@@ -19,8 +19,8 @@ export default function useFilterTabs({
 
 	const filterValue = searchParams.get(filterKey) ?? defaultValue;
 
-	const handleFilterChange = (value: string, removeQueries?: string[]) => {
-		pushWithQuery(pathname, { [filterKey]: value }, removeQueries);
+	const handleFilterChange = (value: string, extraQueries?: Record<string, string | number>, removeQueries?: string[]) => {
+		pushWithQuery(pathname, { [filterKey]: value, ...extraQueries }, removeQueries);
 	};
 
 	const defaultTabIndex = tabs.findIndex(tab => tab.value === filterValue);

@@ -13,19 +13,21 @@ import Divider from '@/components/common/divider/Divider';
 import Header from '@/components/layout/header/Header';
 import { useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
 import { NOTICE_CATEGORY } from "@/constants/community";
-import { NoticeCategory, NoticeListResponse } from "@/types";
+import { NoticeCategory } from "@/types";
 import { getEntryPoint, navigateToEntryPoint } from '@/utils/navigationEntry';
 
+
 export default function NoticeList() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetNoticeList();
-  const { ref, inView } = useInView();
   const router = useRouter();
   const searchParams = useSearchParams();
   const noticeTypeFilter = searchParams.get('noticeType') as NoticeCategory || 'ALL';
   const noticeCategoryFilter = Object.entries(NOTICE_CATEGORY).map(([value, { label }]) => ({label, value}));
+  
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetNoticeList();
+  const { ref, inView } = useInView();
 
   const filteredNoticeList = data?.pages
-    ?.flatMap((page: NoticeListResponse) =>
+    ?.flatMap((page) =>
       noticeTypeFilter === "ALL"
         ? page.noticeList
         : page.noticeList.filter(notice => notice.title.includes(NOTICE_CATEGORY[noticeTypeFilter].label))
@@ -99,7 +101,9 @@ export default function NoticeList() {
                 })}
               >
                 <Text type='label3'>{notice.title}</Text>
-                <Text type='label4'>{format(new Date(notice.createdDate), 'yyyy-MM-dd')}</Text>
+                {notice.createdDate && (
+                  <Text type='label4'>{format(new Date(notice.createdDate), 'yyyy-MM-dd')}</Text>
+                )}
               </Link>
               <Divider color='gray50' thickness={2} />
             </Fragment>

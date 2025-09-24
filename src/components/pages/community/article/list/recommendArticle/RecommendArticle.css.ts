@@ -18,7 +18,6 @@ export const recommendArticleTitle = style({
 export const recommendArticle = style({
   position: 'relative',
   width: '100%',
-  // height: '392px',
   aspectRatio: '7 / 4'
 })
 

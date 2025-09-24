@@ -50,7 +50,7 @@ export default function ItemReview({
 
   useEffect(() => {
     if (data?.page) {
-      setPaginationData(data.page)
+      setPaginationData({ totalPages: data.page.totalPages, page: data.page.number });
     }
   }, [data?.page, setPaginationData]);
 

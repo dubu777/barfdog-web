@@ -90,7 +90,7 @@ export const sanitizedHTML = style({});
 
 globalStyle(`${sanitizedHTML} *`, {
   textAlign: "unset",
-  font: "auto",
+  font: "inherit",
 });
 
 globalStyle(`${sanitizedHTML} img`, {
@@ -101,12 +101,21 @@ globalStyle(`${sanitizedHTML} img`, {
   margin: "0 auto",
 });
 
+globalStyle(`${sanitizedHTML} h1`, {
+  fontSize: themeVars.fontSize["title-lg"],
+  fontWeight: themeVars.fontWeight.bold,
+});
+
 globalStyle(`${sanitizedHTML} h2`, {
   fontSize: themeVars.fontSize["title-md"],
 });
 
 globalStyle(`${sanitizedHTML} b, strong`, {
   fontWeight: themeVars.fontWeight.bold,
+});
+
+globalStyle(`${sanitizedHTML} p`, {
+  margin: '10px 0',
 });
 
 export const commonWrapper = recipe({
