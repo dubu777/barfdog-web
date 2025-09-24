@@ -40,8 +40,8 @@ export function useOAuthCallbackLogin() {
       });
 
       // 4) 분기(next 우선)
-      const next = vars.next ?? sessionStorage.getItem("oauth.next") ?? "/";
-      console.log(data.userType, "유저타입");
+      const next = vars.next ?? "/";
+      console.log(data, "social login success");
 
       switch (data.userType) {
         case "NON_MEMBER":

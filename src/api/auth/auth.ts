@@ -214,6 +214,7 @@ export async function exchangeProviderToken(
     code,
     state,
   });
+
   if (!data?.access_token) throw new Error("토큰 교환 실패");
   return data as { access_token: string };
 }
