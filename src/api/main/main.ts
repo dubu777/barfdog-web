@@ -1,5 +1,4 @@
 import axiosInstance from "@/api/axiosInstance";
-import { RecipeDto } from "@/types";
 import { MainInfoData } from "@/types/main";
 
 export { getMainInfo, getMainDeadlineBanner };
@@ -11,7 +10,7 @@ const getMainInfo = async (): Promise<MainInfoData> => {
     popupBannerList: data.popupBannerDtoList,
     bestReviewList: data.queryBestReviewsDtoList,
     topBanner: data.topBannerDto,
-    recipeList: data.recipeDtoList.sort((a: RecipeDto, b: RecipeDto) => a.id - b.id)
+    recipeList: data.recipeDtoList.sort((a, b) => a.id - b.id)
   };
 }
 

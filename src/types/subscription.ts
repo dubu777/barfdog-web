@@ -5,9 +5,9 @@ import {
   subscriptionPlanInfo,
   subscriptionStatus,
 } from "@/constants";
-import { RecipeDto } from "./recipe";
 import { HealthConcernType } from "./survey";
 import { UrlObject, ValueOfTuple } from "./common";
+import { RecipeDto } from "./recipes";
 
 interface SubscriptionResponse<T> {
   isDone: boolean;

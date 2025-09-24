@@ -7,7 +7,7 @@ export * from "./checkout";
 export * from "./auth";
 export * from "./mypage/reward";
 export * from "./coupon";
-export * from "./recipe";
+export * from "./recipes";
 export * from "./main";
 export * from "./payment";
 export * from "./community";

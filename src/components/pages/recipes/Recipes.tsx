@@ -1,10 +1,10 @@
 'use client';
 
-import { commonWrapper } from "@/styles/common.css";
-import { themeVars } from "@/styles/theme.css";
+import { commonWrapper, imageWrapper } from "@/styles/common.css";
 import { recipesBackground, recipesBackgroundContent } from "./Recipes.css";
 import { Fragment, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Card from "@/components/common/card/Card";
 import Divider from "@/components/common/divider/Divider";
@@ -17,13 +17,14 @@ import useModal from "@/hooks/useModal";
 import useStickyTabScroll from "@/hooks/useStickyTabScroll";
 import { RECIPES_INFO } from "@/constants/recipes";
 import { useGetRecipeList } from "@/api/recipes/queries/useGetRecipeList";
+import { RecipeItem } from "@/types";
 
 export default function Recipes() {
   const router = useRouter();
   const { data } = useGetRecipeList();
 
   const { tabContentRefs, activeIndex, handleTabClick } = useStickyTabScroll({ stickyOffset: 52 });
-  const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<RecipeItem | null>(null);
   
   const { isOpen = true, onToggle, onClose } = useModal();
 
@@ -49,11 +50,12 @@ export default function Recipes() {
 			onBack={() => router.back()}
 		/>
     <section>
-      {selectedRecipeId && isOpen && (
+      {selectedRecipe && isOpen && (
         <RecipeDetailModal
           isOpen={isOpen}
           onClose={onClose}
-          recipeId={selectedRecipeId}
+          recipeId={selectedRecipe.id}
+          displayImageUrl={selectedRecipe.displayImageUrl.url}
         />
       )}
       <article 
@@ -101,7 +103,7 @@ export default function Recipes() {
                   key={recipe.id}
                   className={commonWrapper({ width: 'full' })}
                   onClick={() => {
-                    setSelectedRecipeId(recipe.id);
+                    setSelectedRecipe(recipe);
                     onToggle();
                   }}
                 >
@@ -112,7 +114,13 @@ export default function Recipes() {
                     gap={16}
                     justify='start'
                   >
-                    <div style={{ width: 80, height: 80, backgroundColor: themeVars.colors.gray.gray100 }} />
+                    <Image 
+                      src={recipe.displayImageUrl.url} 
+                      alt={recipe.name} 
+                      width={80} 
+                      height={80} 
+                      className={imageWrapper({ borderRadius: 6, width: 80 })}
+                      />
                     <div>
                       <Text type="headline1" color='red' block>{recipe.name}</Text>
                       <Text type="label2" block>{RECIPES_INFO[recipe.id].name}</Text>
