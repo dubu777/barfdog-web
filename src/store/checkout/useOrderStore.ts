@@ -52,6 +52,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       orderPrice,
       discountSubscribeAlliance,
       discountGrade,
+      orderId,
     } = usePaymentStore.getState();
     const { appliedReward, autoUseReward } = useRewardStore.getState();
     const { appliedCoupon } = useCouponStore.getState();
@@ -97,6 +98,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       discountSubscribeAlliance,
       overDiscount: 0,
       autoUseReward,
+      orderId,
     } as SaveSubscriptionOrderRequest;
   },
 

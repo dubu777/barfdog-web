@@ -10,6 +10,7 @@ import DailyCalorie from "./dailyCalorie/DailyCalorie";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useRouter } from "next/navigation";
 import { HealthConcernType } from "@/types";
+import { EDITABLE_SUBSCRIPTION_STATUSES } from "@/constants";
 
 interface DietAnalysisResultProps {
   reportId: number;
@@ -20,6 +21,15 @@ export default function DietAnalysisResult({
   const router = useRouter();
   const { data: dietAnalysisResult } = useGetDietAnalysisResult(reportId);
   console.log("dietAnalysisResult", dietAnalysisResult);
+  const handleNavigate = () => {
+    if (
+      EDITABLE_SUBSCRIPTION_STATUSES.has(dietAnalysisResult.subscribeStatus)
+    ) {
+      router.push("/subscribe/edit");
+    } else {
+      router.push(`/subscribe/${reportId}`);
+    }
+  };
 
   return (
     <div
@@ -34,7 +44,8 @@ export default function DietAnalysisResult({
         dogName={dietAnalysisResult.secondResultResponse.dogName}
         firstResponse={dietAnalysisResult.firstResultResponse}
         firstHealthConcerns={
-          dietAnalysisResult.secondResultResponse.firstHealthConcerns as HealthConcernType & "NONE"
+          dietAnalysisResult.secondResultResponse
+            .firstHealthConcerns as HealthConcernType & "NONE"
         }
       />
       <Divider thickness={8} color="gray100" />
@@ -56,7 +67,7 @@ export default function DietAnalysisResult({
       <ButtonDocked
         type="full-button"
         primaryButtonLabel="레시피 주문하기"
-        onPrimaryClick={() => router.push(`/subscribe/${reportId}`)}
+        onPrimaryClick={handleNavigate}
       />
     </div>
   );

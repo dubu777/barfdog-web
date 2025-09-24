@@ -61,7 +61,6 @@ export type SubscriptionRedirectParams = {
   customerUid: string;
   amount: number;
   discountReward: number;
-
   name: string;
   buyer_name: string;
   buyer_tel: string;

@@ -82,8 +82,6 @@ export default function SubscriptionCheckout({
   // Store Hydration
   useHydrateSubscriptionOrderStores(checkoutData);
 
-  const originPrice = checkoutData.totalOriginPrice;
-
   // API Mutations
   const { mutateAsync: saveSubscriptionOrder } = useSaveSubscriptionOrder(); // 결제 요청 전에 주문 정보 저장 - java 서버
   const { mutateAsync: createIamportPayment } =
@@ -191,7 +189,7 @@ export default function SubscriptionCheckout({
       <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
-        originPrice={originPrice}
+        originPrice={checkoutData.totalOriginPrice}
         appliedDefaultDiscountPrice={checkoutData.subscribeVo.nextPaymentPrice}
         discountGrade={checkoutData.subscribeVo.discountGrade}
         plan={checkoutData.subscribeVo.plan}
