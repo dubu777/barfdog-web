@@ -52,7 +52,6 @@ export function createSubscriptionStrategy(deps: {
         isMobileDevice: isMobile,
         orderId,
         merchantUid,
-        petId: sheet.petId,
       }),
 
     // 2) 게이트웨이 콜백 해석
@@ -114,7 +113,6 @@ export function createSubscriptionStrategy(deps: {
         discountReward: requestBody.discountReward,
         impUid: final.imp_uid,
         merchantUid: saveOrder.merchantUid,
-        petId: deps.sheet.petId,
       };
 
       // (3) 성공/위변조 처리

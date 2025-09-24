@@ -231,7 +231,6 @@ interface SubscriptionCheckoutSheetResponse {
   rawFoodList: RawFoodItemSummary[];
   totalOriginPrice: number; // 구독 할인 전 총 원금
   orderId: number; // 이번 결제 건 주문 ID
-  petId: number;
 }
 
 interface RawFoodItemSummary {

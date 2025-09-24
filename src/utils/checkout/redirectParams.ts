@@ -61,7 +61,6 @@ export type SubscriptionRedirectParams = {
   customerUid: string;
   amount: number;
   discountReward: number;
-  petId: number;
   name: string;
   buyer_name: string;
   buyer_tel: string;
@@ -83,7 +82,6 @@ export function parseSubscriptionParams(
   const customerUid = sp.get("customer_uid");
   const amountStr = sp.get("amount");
   const discountRewardStr = sp.get("discount_reward");
-  const petIdStr = sp.get("pet_id");
 
   const name = sp.get("name") ?? "";
   const buyer_name = sp.get("buyer_name") ?? "";
@@ -102,21 +100,18 @@ export function parseSubscriptionParams(
     !orderIdStr ||
     !customerUid ||
     !amountStr ||
-    !petIdStr ||
     !discountRewardStr
   ) {
     return null;
   }
 
   const orderId = Number(orderIdStr);
-  const petId = Number(petIdStr);
   const amount = Number(amountStr);
   const discountReward = Number(discountRewardStr);
 
   if (
     Number.isNaN(orderId) ||
     Number.isNaN(amount) ||
-    Number.isNaN(petId) ||
     Number.isNaN(discountReward)
   )
     return null;
@@ -128,7 +123,6 @@ export function parseSubscriptionParams(
     orderId,
     customerUid,
     amount,
-    petId,
     discountReward,
     name,
     buyer_name,
