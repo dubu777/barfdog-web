@@ -17,8 +17,14 @@ const REVIEW_TYPE = {
   SUBSCRIBE: '정기구독',
 } as const;
 
+const REVIEW_LIST_KEY = {
+  writeable: 'reviewableList',
+  written: 'reviewList',
+} as const;
+
 export {
   REVIEW_STATUS_COLOR_MAP,
   REVIEW_STATUS,
   REVIEW_TYPE,
+  REVIEW_LIST_KEY,
 };

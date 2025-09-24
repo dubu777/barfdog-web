@@ -9,24 +9,23 @@ import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
 import UpdateReviewModal from "@/components/pages/mypage/review/update/UpdateReviewModal";
 import useModal from "@/hooks/useModal";
 import { useImageModal } from "@/hooks/useImageModal";
-import { ReviewItemType, ReviewStatus } from "@/types";
+import { ReviewItemType } from "@/types";
 import { useGetReviewDetail } from "@/api/mypage/review/queries/useGetReviewDetail";
 
 interface ReviewDetailProps {
   reviewId: number;
   reviewType: ReviewItemType;
-  reviewStatus: ReviewStatus;
 }
 
 export default function ReviewDetail({
   reviewId,
   reviewType,
-  reviewStatus,
 }: ReviewDetailProps) {
-  const { data } = useGetReviewDetail(reviewId);
+  const { data } = useGetReviewDetail(reviewId, reviewType);
 
   const reviewInfo = data.reviewInfo;
   const reviewImageList = data.reviewImageList;
+  const reviewStatus = data.reviewInfo.status;
 
   const {
     isOpen: isOpenReviewImageModal,
@@ -75,9 +74,9 @@ export default function ReviewDetail({
         id={reviewId}
         title={reviewInfo.title}
         reviewType={reviewType}
-        thumbnailUrl={reviewInfo?.thumbnailUrl}
+        displayItemThumbnailUrl={reviewInfo?.displayItemThumbnailUrl?.url}
         status={reviewStatus}
-        createdDate={reviewInfo?.writtenDate}
+        writtenDate={reviewInfo?.writtenDate}
         star={reviewInfo?.star}
         handleUpdate={onToggleUpdateModal}
       />

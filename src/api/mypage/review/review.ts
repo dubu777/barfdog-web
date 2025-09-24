@@ -1,10 +1,14 @@
 import axiosInstance from "@/api/axiosInstance";
+import { REVIEW_LIST_KEY } from "@/constants";
+import { ApiResponse } from "@/types";
 import {
   CreateReview,
-  ReviewDetail,
+  ReviewItemType,
+  MyPageReviewList,
   ReviewListType,
   UpdateReview,
 } from "@/types/mypage/review";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 import { AxiosInstance } from "axios";
 
 const getMypageReviewList = async ({
@@ -14,59 +18,52 @@ const getMypageReviewList = async ({
 }: { type: ReviewListType; pageParam: number; instance?: AxiosInstance; }) => {
   const isWriteable = type === 'writeable';
 
-  const { data } = await instance.get(`/api/reviews${isWriteable ? '/writeable' : ''}`, {
+  const { data }: { data: ApiResponse<MyPageReviewList> } = await instance.get(`/api/v2/reviews/my-page${isWriteable ? '/writeable' : ''}`, {
     params: { page: pageParam, size: 20 }
   });
+	
+	const errorMessage = isWriteable
+		? "작성 가능한 리뷰 목록 조회에 실패했습니다."
+		: "리뷰 목록 조회에 실패했습니다.";
 
-  const key = isWriteable ? 'queryWriteableReviewsDtoList' : 'queryReviewsDtoList';
-  const reviewList = data?._embedded?.[key] ?? [];
-  const page = data?.page || { number: 0, totalPages: 1 };
+  const responseData = validateApiResponse(data, errorMessage);
 
   return {
-    reviewList,
-    page
-  }
+    reviewList: responseData[REVIEW_LIST_KEY[type]],
+    page: responseData.pagination,
+  };
 };
 
-const getReviewDetail = async (reviewId: number, instance: AxiosInstance = axiosInstance): Promise<ReviewDetail> => {
-  const { data } = await instance.get(`/api/reviews/${reviewId}`);
-  return {
-    reviewInfo: data.reviewDto,
-    reviewImageList: data.reviewImageDtoList.map(image => ({
-      fileId: image.id,
-      fileName: image.filename,
-      folder: 'review',
-      fileStatus: null,
-      displayImageUrl: { url: image.url },
-    }))
-  };
-}
-
-const getReviewDetailImages = async (reviewId: number) => {
-  const { data } = await axiosInstance.get(`/api/reviews/${reviewId}/images`);
-  return data._embedded.queryReviewImagesDtoList || [];
+const getReviewDetail = async ({
+  reviewId, 
+  reviewType,
+  instance = axiosInstance,
+}: { 
+  reviewId: number;
+  reviewType: ReviewItemType;
+  instance?: AxiosInstance;
+}) => {
+  const { data } = await instance.get(`/api/v2/reviews/my-page/${reviewId}?reviewType=${reviewType}`);
+  return validateApiResponse(data, '리뷰 상세 조회에 실패했습니다.');
 }
 
 const updateReview = async (reviewId: number, body: UpdateReview) => {
-  const { data } = await axiosInstance.put(`/api/reviews/${reviewId}`, body);
+  const { data } = await axiosInstance.put(`/api/v2/reviews/my-page/${reviewId}`, body);
+  const responseData = validateApiResponse(data, '리뷰 수정에 실패했습니다.');
   return {
-    ...data,
+    responseData,
     reviewId,
   };
 }
 
 const createReview = async (body: CreateReview) => {
-  const { data } = await axiosInstance.post(`/api/reviews`, body);
-  return {
-    ...data,
-    reviewId: body.id,
-  };
+  const { data } = await axiosInstance.post(`/api/v2/reviews/my-page`, body);
+  return validateApiResponse(data, '리뷰 등록에 실패했습니다.');
 }
 
 export {
   getMypageReviewList,
   getReviewDetail,
-  getReviewDetailImages,
   updateReview,
   createReview,
 };

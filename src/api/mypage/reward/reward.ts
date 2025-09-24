@@ -5,7 +5,7 @@ import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const getRewardList = async ({
 	pageParam = 0,
-	size = 200,
+	size = 20,
 	instance = axiosInstance
 }: { pageParam: number; size?: number; instance?: AxiosInstance }) => {
 	const { data }: { data: ApiResponse<RewardList> } = await instance.get(`/api/v2/rewards/my-page`, {

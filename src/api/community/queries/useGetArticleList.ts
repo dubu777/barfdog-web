@@ -3,20 +3,23 @@ import { ArticleCategory, ArticleList, UseSuspenseQueryCustomOptions} from "@/ty
 import { queryKeys } from "@/constants";
 import { getArticleList } from "@/api/community/community";
 
-export { useGetArticleList, prefetchGetArticleList };
-
-function useGetArticleList(category: ArticleCategory, page: number, queryOptions?: UseSuspenseQueryCustomOptions<ArticleList>) {
+export function useGetArticleList(category: ArticleCategory, page: number, queryOptions?: UseSuspenseQueryCustomOptions<ArticleList>) {
   return useSuspenseQuery<ArticleList>({
     queryKey: [queryKeys.COMMUNITY.ARTICLE.BASE, queryKeys.COMMUNITY.ARTICLE.GET_ARTICLE_LIST, category, page],
-    queryFn: () => getArticleList(category, page),
-    keepPreviousData: true,
+    queryFn: () => getArticleList({
+      category,
+      page,
+    }),
     ...queryOptions,
   })
 }
 
-async function prefetchGetArticleList(queryClient: QueryClient, category: ArticleCategory, page: number) {
+export async function prefetchGetArticleList(queryClient: QueryClient, category: ArticleCategory, page: number) {
   return queryClient.prefetchQuery<ArticleList>({
     queryKey: [queryKeys.COMMUNITY.ARTICLE.BASE, queryKeys.COMMUNITY.ARTICLE.GET_ARTICLE_LIST, category, page],
-    queryFn: () => getArticleList(category, page),
+    queryFn: () => getArticleList({
+      category,
+      page,
+    }),
   })
 }

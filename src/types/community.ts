@@ -1,15 +1,15 @@
-import { Page } from "@/types";
+import { Pagination } from "@/types";
 
 interface CommunityListItem {
   id : number;
   title: string;
-  createdDate: string;
+  createdDate?: string;
   category?: ArticleCategory;
 }
 
-interface NoticeListResponse {
+interface NoticeList {
   noticeList: CommunityListItem[];
-  page: Page
+  pagination: Pagination;
 }
 
 interface CommunityItem extends CommunityListItem {
@@ -17,36 +17,58 @@ interface CommunityItem extends CommunityListItem {
 }
 
 interface NoticeDetail {
-  noticeDto: CommunityItem;
-  previous: CommunityListItem | null,
-  next: CommunityListItem | null,
+  currentNotice: CommunityItem;
+  previousNotice: CommunityListItem | null,
+  nextNotice: CommunityListItem | null,
 }
 
 interface BaseArticle {
   id: number;
   category: string;
   title: string;
-  url: string;
   createdDate: string;
+  displayThumbnailUrl?: {
+    url: string;
+  };
+  displayImageUrl?: {
+    url: string;
+  };
 }
 
-interface RecommendArticle extends BaseArticle{
+interface RecommendArticle {
+  id: number;
   number: number;
+  articleInfo: BaseArticle;
 }
 
-interface ArticleListItem extends BaseArticle{
+type RawRecommendArticle = Omit<RecommendArticle, 'articleInfo'> & {
+  blogInfo: BaseArticle;
+};
+
+interface ArticleListItem extends BaseArticle {
   contents: string;
+}
+
+interface RawArticleList {
+  blogList: ArticleListItem[];
+  pagination: Pagination;
 }
 
 interface ArticleList {
   articleList: ArticleListItem[];
-  page: Page
+  page: Pagination;
+}
+
+interface RawArticleDetail {
+  currentBlog: CommunityItem;
+  previousBlog: CommunityListItem;
+  nextBlog: CommunityListItem;
 }
 
 interface ArticleDetail {
   articleDetail: CommunityItem;
-  previous: CommunityListItem | null;
-  next: CommunityListItem | null;
+  previous: CommunityListItem;
+  next: CommunityListItem;
 }
 
 type ArticleCategory = 'ALL' | 'NUTRITION' | 'HEALTH' | 'LIFE';
@@ -55,7 +77,18 @@ type NoticeCategory = 'ALL' | 'NOTICE' | 'EVENT' | 'POLICY';
 type CommunityCategory = 'notice' | 'article';
 
 export type {
-  CommunityListItem, CommunityItem, CommunityCategory,
-  ArticleCategory, RecommendArticle, ArticleListItem, ArticleList, ArticleDetail,
-  NoticeListResponse, NoticeCategory, NoticeDetail,
+  CommunityListItem,
+  CommunityItem,
+  CommunityCategory,
+  ArticleCategory, 
+  RecommendArticle, 
+  RawRecommendArticle, 
+  ArticleListItem, 
+  ArticleList,
+  ArticleDetail, 
+  RawArticleList,
+  RawArticleDetail,
+  NoticeList,
+  NoticeCategory, 
+  NoticeDetail,
 };

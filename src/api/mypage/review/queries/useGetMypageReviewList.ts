@@ -21,13 +21,14 @@ export function useGetMypageReviewList(type: ReviewListType) {
       });
     },
     getNextPageParam: (lastPage) => {
-      if (!lastPage || !lastPage.page) return undefined;
+			if (!lastPage) return undefined;
 
-      const nextPage = lastPage.page.number + 1;
-      const totalPages = lastPage.page.totalPages;
+			const currentPage = lastPage?.page?.page ?? 0;
+			const totalPages = lastPage?.page?.totalPages ?? 0;
 
-      return nextPage < totalPages ? nextPage : undefined;
-    },
-    initialPageParam: 0,
+			const nextPage = currentPage + 1;
+			return nextPage < totalPages ? nextPage : undefined;
+		},
+		initialPageParam: 0,
   })
 }

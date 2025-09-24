@@ -29,7 +29,7 @@ export function usePagination({ prefetchFn, pushWithQuery, preserveScroll = true
     },[totalPages, prefetchFn, pushWithQuery]
   );
 
-  const setPaginationData = useCallback((page: { totalPages: number; number: number; }) => {
+  const setPaginationData = useCallback((page: { totalPages: number; page: number; }) => {
     setTotalPages(page.totalPages);
   }, []);
 

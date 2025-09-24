@@ -11,7 +11,7 @@ import { CommunityListItem } from "@/types";
 interface DetailSectionProps {
 	id: number;
 	title: string;
-	createdDate: string;
+	createdDate?: string;
 	contents: string;
 	category: 'notice' | 'article';
 	categoryLabel: string;
@@ -47,7 +47,9 @@ export default function DetailSection({
 				})}
 			>
 				<Text type='title4'>{title}</Text>
-				<Text type='body3' color='gray600'>{format(new Date(createdDate), 'yyyy-MM-dd')}</Text>
+				{createdDate && 
+					<Text type='body3' color='gray600'>{format(new Date(createdDate), 'yyyy-MM-dd')}</Text>
+				}
 			</article>
 			<div className={commonWrapper({ padding: 20, paddingBottom: 60, paddingTop: 60 })}>
 				<div className={sanitizedHTML}>{parse(cleanHTML)}</div>

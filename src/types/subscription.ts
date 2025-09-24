@@ -1,6 +1,7 @@
 import {
   DELIVERY_PLAN,
   MEAL_PLAN,
+  SUBSCRIPTION_STATUSES,
   subscriptionPlanInfo,
   subscriptionStatus,
 } from "@/constants";
@@ -261,6 +262,7 @@ type DeliveryPlan = ValueOfTuple<typeof DELIVERY_PLAN>;
 
 type MealPlan = ValueOfTuple<typeof MEAL_PLAN>;
 
+type SubscriptionStatus = ValueOfTuple<typeof SUBSCRIPTION_STATUSES>;
 export type {
   PlanDiscountResponse,
   RecipeMeal,
@@ -294,4 +296,5 @@ export type {
   CreateSubscriptionRequest,
   RawFoodDetailResponse,
   CreateSubscriptionResponse,
+  SubscriptionStatus,
 };

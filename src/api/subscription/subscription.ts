@@ -148,6 +148,21 @@ const getRawFoodOrderSheet = async (
   throw new Error(message);
 };
 
+const getSubscriptionDetailV2 = async (
+  reportId: number,
+  orderId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<any> => {
+  const { data } = await instance.get(
+    `/api/v2/orders/subscription/${reportId}/order/${orderId}`
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "구독 상세 조회에 실패했습니다";
+  throw new Error(message);
+};
+
 // 구독 주문서 - 생식 상세
 const getRawFoodDetail = async (
   recipeId: number,
@@ -196,4 +211,5 @@ export {
   getRawFoodOrderSheet,
   createSubscription,
   getRawFoodDetail,
+  getSubscriptionDetailV2,
 };
