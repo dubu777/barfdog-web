@@ -1,5 +1,6 @@
-import { commonWrapper } from "@/styles/common.css";
+import { commonWrapper, imageWrapper } from "@/styles/common.css";
 import { recipeDetailModalTabBar } from "./RecipeDetailModal.css";
+import Image from "next/image";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import Chips from "@/components/common/chips/Chips";
 import Text from "@/components/common/text/Text";
@@ -14,11 +15,13 @@ interface RecipeDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   recipeId: number;
+  displayImageUrl: string;
 }
 export default function RecipeDetailModal({
   isOpen,
   onClose,
   recipeId,
+  displayImageUrl,
 }: RecipeDetailModalProps) {
   const { name, key, mainIngredients } = RECIPES_INFO[recipeId];
   const { tabContentRefs, activeIndex, handleTabClick, scrollContainerRef } = useStickyTabScroll({ stickyOffset: 109 });
@@ -55,7 +58,13 @@ export default function RecipeDetailModal({
             paddingBottom: 40
           })}
         >
-          <span style={{ width: 100, height: 100, border: '1px solid #ccc' }} />
+          <Image 
+            src={displayImageUrl} 
+            alt={name} 
+            width={100} 
+            height={100} 
+            className={imageWrapper({ borderRadius: 8, width: 100 })}
+          />
           <div>
             <Text type="title4" block>{name}</Text>
             <Text type="headline4" color="gray500" block>{key}</Text>

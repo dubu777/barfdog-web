@@ -10,10 +10,40 @@ type DryMatterType = keyof typeof DRY_MATTER_MAP;
 
 type DryMatterValues = Record<DryMatterType, number>;
 
+interface RecipeDto {
+  id: number;
+  name: string;
+  description: string;
+  pricePerGram: number;
+  gramPerKcal: number;
+  imgUrl: string;
+  inStock: boolean,
+  ingredients?: string;
+  leaked?: string;
+  modifiedDate?: string;
+}
+
+interface RecipeItem {
+  id: number;
+  name: string;
+  displayImageUrl: {
+      url: string;
+  };
+  description: string;
+  pricePerGram: number;
+  gramPerKcal: number;
+  ingredients: IngredientType[];
+  leaked: string;
+  inStock: boolean;
+  modifiedDate: string;
+}
+
 export type {
   IngredientType,
   NutrientType,
   NutrientValues,
   DryMatterType,
   DryMatterValues,
+  RecipeDto,
+  RecipeItem,
 };

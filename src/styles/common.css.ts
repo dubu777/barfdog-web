@@ -403,6 +403,9 @@ export const imageWrapper = recipe({
       }
     },
     borderRadius: {
+      6: {
+        borderRadius: 6,
+      },
       8: {
         borderRadius: 8,
       }
