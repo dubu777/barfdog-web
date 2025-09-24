@@ -1,20 +1,21 @@
 "use client";
 import Spinner from "@/components/common/spinner/Spinner";
-import { useSnsLogin } from "@/api/auth/mutations/useSnsLogin";
 import { useEffect, useRef } from "react";
 import { SnsProvider } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { useRouter } from "next/navigation";
+import { useOAuthCallbackLogin } from "@/api/auth/mutations/useOAuthCallbackLogin";
 
 interface LoginRedirectProps {
   searchParams: {
     provider: SnsProvider;
     code: string;
+    state?: string;
   };
 }
 const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
-  const { provider, code } = searchParams;
-  const { mutate: snsLogin } = useSnsLogin();
+  const { provider, code, state } = searchParams;
+  const { mutate: socialLogin } = useOAuthCallbackLogin();
   const { addToast } = useToastStore();
   const router = useRouter();
 
@@ -29,8 +30,26 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
       return;
     }
 
-    snsLogin({ provider, code });
-  }, [code, provider, snsLogin]);
+    // state 검증(네이버 필수)
+    const expected = sessionStorage.getItem(`oauth.state.${provider}`);
+    if (provider === "naver" && (!state || state !== expected)) {
+      addToast("유효하지 않은 요청입니다.(state 검증 실패)");
+      router.replace("/login");
+      return;
+    }
+
+    const nextPath = sessionStorage.getItem("oauth.next") ?? "/";
+
+    socialLogin(
+      { provider, code, state, next: nextPath },
+      {
+        onSettled: () => {
+          sessionStorage.removeItem(`oauth.state.${provider}`);
+          sessionStorage.removeItem("oauth.next");
+        },
+      }
+    );
+  }, [code, provider, socialLogin]);
 
   return <Spinner fullscreen />;
 };

@@ -1,8 +1,5 @@
-import { useRouter } from "next/navigation";
 import { SnsProvider } from "@/types";
-import { OAUTH_CLIENT_CONFIG, OAuthClientConfig } from "@/config/oauthClient";
-import { useCallback } from "react";
-import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
+import { OAuthClientConfig } from "@/config/oauthClient";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
 import { TextColor } from "@/types/typography";
@@ -33,6 +30,7 @@ export default function SocialLoginButton({
     callbackUrl,
     defer,
     onDeferredLoginClick,
+    nextPath,
   });
 
   return showSymbolButton ? (

@@ -1,17 +1,19 @@
 "use client";
 
 import { useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
 
 import { SnsProvider } from "@/types";
 import { buildOAuthCodeUrl } from "@/utils/auth/buildOAuthUrl";
 import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
+import { generateState } from "@/utils/auth/state";
 
 type UseSocialLoginOptions = {
   callbackUrl?: string;
   defer?: boolean;
   onDeferredLoginClick?: (start: () => void) => void;
+  nextPath?: string;
 };
 
 export function useSocialLogin(
@@ -19,12 +21,18 @@ export function useSocialLogin(
   options?: UseSocialLoginOptions
 ) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const start = useCallback(() => {
     if (options?.callbackUrl) setSnsCallbackUrl(options.callbackUrl);
     const config = OAUTH_CLIENT_CONFIG[provider];
-    const url = buildOAuthCodeUrl(config);
+    const state = generateState();
+    sessionStorage.setItem(`oauth.state.${provider}`, state);
+
+    if (options?.nextPath) {
+      sessionStorage.setItem("oauth.next", options.nextPath);
+    }
+
+    const url = buildOAuthCodeUrl(config, state);
     router.push(url);
   }, [provider, options?.callbackUrl, router]);
 

@@ -1,9 +1,7 @@
 import { OAuthClientConfig } from "@/config/oauthClient";
-import { generateState } from "./state";
 
-export function buildOAuthCodeUrl(config: OAuthClientConfig) {
+export function buildOAuthCodeUrl(config: OAuthClientConfig, state: string) {
   const { clientId, redirectUri, auth } = config;
-  const state = generateState();
   const params = new URLSearchParams({
     response_type: auth.responseType,
     client_id: clientId,

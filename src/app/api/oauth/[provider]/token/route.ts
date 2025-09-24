@@ -1,4 +1,3 @@
-// src/app/api/oauth/[provider]/token/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import "server-only";
 import { OAUTH_SERVER_CONFIG } from "@/config/oauthServer";
