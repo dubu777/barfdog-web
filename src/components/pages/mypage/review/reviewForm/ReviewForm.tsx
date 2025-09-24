@@ -64,15 +64,16 @@ export default function ReviewForm({
     uploadedFiles,
     uploadFile,
     removeFile,
-    fileChangeInfo
+    fileChangeInfo,
   } = useMultiFileUpload({
-    fileKey: 'file',
-    uploadApiUrl: '/api/reviews/upload',
+    fileKey: 'imageFile',
+    idKey: 'reviewId',
+    uploadApiUrl: '/api/v2/reviews/my-page/files',
     initialFiles: reviewImageList,
   })
   
   const { isOpen: isOpenReviewNotice, onClose: onCloseReviewNotice, onToggle: onToggleReviewNotice } = useModal();
-  
+
   return (
     <>
       <section
@@ -99,10 +100,10 @@ export default function ReviewForm({
             id={reviewId as number}
             title={title}
             reviewType={reviewType as ReviewItemType}
-            thumbnailUrl={thumbnailUrl}
-            imageUrl={imageUrl}
+            displayItemThumbnailUrl={thumbnailUrl}
+            displayImageUrl={imageUrl}
             orderedDate={orderedDate}
-            createdDate={writtenDate}
+            writtenDate={writtenDate}
             star={star}
             handleStarChange={(newRating) => {
               setValue('star', newRating, { shouldValidate: true });

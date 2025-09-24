@@ -1,5 +1,5 @@
 import axiosInstance from "@/api/axiosInstance";
-import { BestReviewDetail, ReviewList } from "@/types";
+import { ReviewList, BestReviewDetail } from "@/types/review";
 import { AxiosInstance } from "axios";
 
 const getReviewList = async (page = 0, instance: AxiosInstance = axiosInstance): Promise<ReviewList> => {

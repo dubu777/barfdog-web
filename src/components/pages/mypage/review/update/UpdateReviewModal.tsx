@@ -10,7 +10,6 @@ import {
 import { useToastStore } from '@/store/useToastStore';
 import { queryKeys } from "@/constants";
 import { useUpdateReview } from "@/api/mypage/review/mutations/useUpdateReview";
-import { useRouter } from "next/navigation";
 
 interface ReviewDetailProps {
   data: ReviewDetail;
@@ -29,7 +28,6 @@ export default function UpdateReviewModal({
   const { addToast } = useToastStore();
 
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   const reviewInfo = data?.reviewInfo;
   const reviewImageList = data?.reviewImageList;
@@ -62,7 +60,6 @@ export default function UpdateReviewModal({
         });
         addToast('리뷰가 수정됐어요');
         onClose();
-        router.back();
       },
       onError: (error) => {
         console.log('error', error)
@@ -80,8 +77,8 @@ export default function UpdateReviewModal({
         type="update"
         defaultReviewDetail={{
           title: reviewInfo.title,
-          thumbnailUrl: reviewInfo.thumbnailUrl,
-          writtenDate: reviewInfo.writtenDate,
+          thumbnailUrl: reviewInfo?.displayItemThumbnailUrl?.url,
+          writtenDate: reviewInfo?.writtenDate,
         }}
         reviewFormValues={{
           id: reviewId,

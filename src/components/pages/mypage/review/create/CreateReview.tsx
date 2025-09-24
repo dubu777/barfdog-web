@@ -23,12 +23,10 @@ export default function CreateReview() {
       targetId: createReview.targetId,
       reviewType: createReview.reviewType,
     }
+
     mutate(
       { body }, {
-      onSuccess: (data) => {
-        console.log('data', data)
-        // 상세 적용 필요
-        // router.push(`/mypage/review/${data.reviewId}?reviewType=${createReview.reviewType}&status=REQUEST?source=create`);
+      onSuccess: () => {
         router.push(`/mypage/review?type=written`);
         addToast('리뷰가 등록되었습니다');
       },
@@ -48,7 +46,7 @@ export default function CreateReview() {
         type="create"
         defaultReviewDetail={{
           title: createReview.title,
-          imageUrl: createReview.imageUrl,
+          imageUrl: createReview.displayImageUrl?.url,
           orderedDate: createReview.orderedDate,
         }}
         reviewFormValues={{
