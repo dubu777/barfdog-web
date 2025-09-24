@@ -1,5 +1,5 @@
 import { ComponentType, SVGProps } from "react";
-import { SubscribeStatus } from "./subscription";
+import { SubscribeStatus, SubscriptionStatus } from "./subscription";
 import {
   BodyFit,
   DogSize,
@@ -50,7 +50,7 @@ interface DietAnalysisFormValues {
 interface DietAnalysisResult {
   surveyReportId: number;
   subscribeId: number;
-  subscribeStatus: SubscribeStatus;
+  subscribeStatus: SubscriptionStatus;
   recommendRecipeExist: boolean;
   firstResultResponse: FirstResultResponse;
   secondResultResponse: SecondResultResponse;

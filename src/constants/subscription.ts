@@ -1,4 +1,4 @@
-import { PlanInfo, PlanKey } from "@/types";
+import { PlanInfo, PlanKey, SubscriptionStatus } from "@/types";
 
 const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
   FULL: {
@@ -150,6 +150,32 @@ const MEAL_PLAN_LABEL = {
   TWO_MEAL: "두 끼",
 };
 
+const SUBSCRIPTION_STATUSES = [
+  "SURVEY_COMPLETED",
+  "BEFORE_PAYMENT",
+  "SUBSCRIBING",
+  "SUBSCRIBE_PENDING",
+  "SUBSCRIBE_WILL_CANCEL",
+  "SUBSCRIBE_CANCEL",
+  "ADMIN",
+] as const;
+
+const SUBSCRIPTION_STATUS_LABEL: Record<SubscriptionStatus, string> = {
+  SURVEY_COMPLETED: "설문완료",
+  BEFORE_PAYMENT: "구독전(결제전)",
+  SUBSCRIBING: "구독중",
+  SUBSCRIBE_PENDING: "구독보류",
+  SUBSCRIBE_WILL_CANCEL: "구독취소예정",
+  SUBSCRIBE_CANCEL: "구독취소",
+  ADMIN: "관리자구독",
+};
+
+const EDITABLE_SUBSCRIPTION_STATUSES = new Set<SubscriptionStatus>([
+  "SUBSCRIBING",
+  "SUBSCRIBE_PENDING",
+  "SUBSCRIBE_WILL_CANCEL",
+]);
+
 export {
   subscriptionStatus,
   DEFAULT_MEALS_PER_DAY,
@@ -166,4 +192,7 @@ export {
   MEAL_PLAN,
   DELIVERY_PLAN_LABEL,
   MEAL_PLAN_LABEL,
+  SUBSCRIPTION_STATUSES,
+  SUBSCRIPTION_STATUS_LABEL,
+  EDITABLE_SUBSCRIPTION_STATUSES,
 };
