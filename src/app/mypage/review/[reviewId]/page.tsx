@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import Spinner from "@/components/common/spinner/Spinner";
 import ReviewDetail from "@/components/pages/mypage/review/detail/ReviewDetail";
-import { ReviewItemType, ReviewStatus } from "@/types";
+import { ReviewItemType } from "@/types";
 import { prefetchGetReviewDetail } from "@/api/mypage/review/queries/prefetchGetReviewDetail";
 
 interface ReviewDetailPageProps {
@@ -12,17 +12,16 @@ interface ReviewDetailPageProps {
   }>
   searchParams: Promise<{
     reviewType: string;
-    status: string;
     source?: string;
   }>
 }
 
 export default async function ReviewDetailPage({ params, searchParams }: ReviewDetailPageProps) {
   const { reviewId } = await params;
-  const { reviewType, status } = await searchParams;
+  const { reviewType } = await searchParams;
 
   const queryClient = new QueryClient();
-  await prefetchGetReviewDetail(Number(reviewId), queryClient);
+  await prefetchGetReviewDetail(Number(reviewId), reviewType as ReviewItemType, queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (
@@ -32,7 +31,6 @@ export default async function ReviewDetailPage({ params, searchParams }: ReviewD
           <ReviewDetail
             reviewId={Number(reviewId)}
             reviewType={reviewType as ReviewItemType}
-            reviewStatus={status as ReviewStatus}
           />
         </Suspense>
       </ErrorBoundary>

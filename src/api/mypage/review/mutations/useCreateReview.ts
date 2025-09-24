@@ -8,25 +8,15 @@ export function useCreateReview(mutationOptions?: UseMutationCustomOptions) {
 
   return useMutation({
     mutationFn: ({ body }: { body: CreateReview }) => createReview(body), 
-    onSuccess: async (data) => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: [
-            queryKeys.MYPAGE.BASE,
-            queryKeys.MYPAGE.REVIEW.BASE,
-            queryKeys.MYPAGE.REVIEW.GET_REVIEW_DETAIL,
-            (data as { reviewId: number }).reviewId
-          ],
-        }),
-        queryClient.invalidateQueries({
-          queryKey: [
-            queryKeys.MYPAGE.BASE,
-            queryKeys.MYPAGE.REVIEW.BASE,
-            queryKeys.MYPAGE.REVIEW.GET_MYPAGE_REVIEW_LIST,
-            'written',
-          ],
-        }),
-      ]);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [
+          queryKeys.MYPAGE.BASE,
+          queryKeys.MYPAGE.REVIEW.BASE,
+          queryKeys.MYPAGE.REVIEW.GET_MYPAGE_REVIEW_LIST,
+          'written',
+        ],
+      })
     },
     ...mutationOptions,
   })

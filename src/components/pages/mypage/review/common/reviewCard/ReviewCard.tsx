@@ -10,25 +10,25 @@ import SubtitleText from "@/components/pages/mypage/common/card/typography/Subti
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
 import RateStar from "@/components/common/rateStar/RateStar";
 import Button from "@/components/common/button/Button";
+import Divider from "@/components/common/divider/Divider";
 import { REVIEW_STATUS, REVIEW_STATUS_COLOR_MAP, REVIEW_TYPE } from "@/constants";
 import { ReviewItemType, ReviewStatus } from "@/types";
-import Divider from "@/components/common/divider/Divider";
 
 interface ReviewCardProps {
 	isWriteableReview?: boolean;
 	id: number;
 	title: string;
 	reviewType: ReviewItemType;
-	thumbnailUrl?: string;
-	imageUrl?: string;
+	displayItemThumbnailUrl?: string;
+	displayImageUrl?: string;
 	status?: ReviewStatus;
-	createdDate?: string;
+	writtenDate?: string;
 	orderedDate?: string;
 	star?: number;
-	imageCount?: number;
+	reviewImageCount?: number;
 	subscribeCount?: number;
 	contents?: string;
-	returnReason?: string;
+	returnReason?: string | null;
 	showDetail?: boolean;
 	handleUpdate?: () => void;
 	handleCreate?: () => void;
@@ -40,13 +40,13 @@ export default function ReviewCard({
 	id,
 	title,
 	reviewType,
-	thumbnailUrl,
-	imageUrl,
+	displayItemThumbnailUrl,
+	displayImageUrl,
 	status,
-	createdDate,
+	writtenDate,
 	orderedDate,
 	star,
-	imageCount = 0,
+	reviewImageCount = 0,
 	subscribeCount,
 	contents,
 	returnReason,
@@ -87,20 +87,22 @@ export default function ReviewCard({
 					<Text type='label4' color='pastelRed'>반려사유: {returnReason}</Text>
 				}
 				<div className={commonWrapper({ gap: 12, align: 'start', justify: 'start' })}>
-					<Image
-						src={thumbnailUrl ?? imageUrl ?? ''}
-						alt={title}
-						width={76}
-						height={76}
-						className={imageWrapper({ width: 76, objectFit: 'cover', borderRadius: 8 })}
-					/>
+					{(displayItemThumbnailUrl || displayImageUrl) &&
+						<Image
+							src={displayItemThumbnailUrl ?? displayImageUrl ?? ''}
+							alt={title}
+							width={76}
+							height={76}
+							className={imageWrapper({ width: 76, objectFit: 'cover', borderRadius: 8 })}
+						/>
+					}
 					<div className={commonWrapper({ gap: 8, direction: 'col', align: 'start', width: 'auto' })}>
 						<div className={commonWrapper({ gap: 4, direction: 'col', align: 'start' })}>
 							<SubtitleText text={title} type='headline2' />
 							<MetaText
 								textList={[
 									orderedDate ? `주문일: ${format(new Date(orderedDate), 'yyyy-MM-dd')}` : '',
-									createdDate ? `작성일: ${format(new Date(createdDate), 'yyyy-MM-dd')}` : '',
+									writtenDate ? `작성일: ${format(new Date(writtenDate), 'yyyy-MM-dd')}` : '',
 								].filter(Boolean)}
 								color='gray600'
 							/>
@@ -116,7 +118,7 @@ export default function ReviewCard({
 			}
 			{(!isWriteableReview && contents) &&
 				<div className={commonWrapper({ gap: 4, align: 'center', justify: 'start' })}>
-					{imageCount > 0 &&
+					{reviewImageCount > 0 &&
 						<SvgIcon src={PictureIcon} size={24} />
 					}
 					<Text type='body2' className={ellipsis({ lineSize: 'line1' })}>
@@ -137,7 +139,7 @@ export default function ReviewCard({
 						router.push(
 							isWriteableReview
 								? '/mypage/review/create'
-								: `/mypage/review/${id}?reviewType=${reviewType}&status=${status}`
+								: `/mypage/review/${id}?reviewType=${reviewType}`
 						)}
 					}
 				>

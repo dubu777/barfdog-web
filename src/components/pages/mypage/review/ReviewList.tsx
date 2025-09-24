@@ -14,7 +14,7 @@ import ReviewCard from "@/components/pages/mypage/review/common/reviewCard/Revie
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { queryKeys } from "@/constants";
 import { useReviewStore } from "@/store/mypage/useReviewStore";
-import { ReviewListType } from '@/types';
+import { CreateReviewDetail, ReviewListType } from '@/types';
 import { useGetMypageReviewList } from "@/api/mypage/review/queries/useGetMypageReviewList";
 
 export default function Review () {
@@ -29,7 +29,7 @@ export default function Review () {
 
   const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetMypageReviewList(type as ReviewListType);
   const reviewList = reviewListData?.pages.flatMap(p => p.reviewList) ?? [];
-  const totalCount = reviewListData?.pages[0].page.totalElements ?? 0;
+  const totalCount = reviewListData?.pages[0].page.totalCount ?? 0;
 
   const { ref, inView } = useInView();
 
@@ -56,7 +56,7 @@ export default function Review () {
       ]
     });
   }
-
+  
   return (
     <section>
       <Divider thickness={2} color='gray50' />
@@ -118,18 +118,18 @@ export default function Review () {
                 id={review.id}
                 title={review.title}
                 reviewType={review.reviewType}
-                thumbnailUrl={review?.thumbnailUrl}
-                imageUrl={review?.imageUrl}
+                displayItemThumbnailUrl={review?.displayItemThumbnailUrl?.url}
+                displayImageUrl={review?.displayImageUrl?.url}
                 status={review?.status}
-                createdDate={review?.createdDate}
+                writtenDate={review?.writtenDate}
                 orderedDate={review?.orderedDate}
                 star={review?.star}
-                imageCount={review?.imageCount ?? undefined}
+                reviewImageCount={review?.reviewImageCount ?? undefined}
                 subscribeCount={review?.subscribeCount}
                 contents={review?.contents ?? undefined}
                 returnReason={review?.returnReason}
                 showDetail
-                handleCreate={() => setCreateReview(review)}
+                handleCreate={() => setCreateReview(review as CreateReviewDetail)}
               />
             ))}
             <InfiniteScrollTrigger

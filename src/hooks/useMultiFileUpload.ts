@@ -11,6 +11,7 @@ export interface FileChangeInfo {
 
 interface UseMultiFileUploadOptions {
   fileKey: string;
+  idKey?: string;
   initialFiles?: UploadedFile[];
   getExtraFormData?: (file: File) => Record<string, any>;
   uploadApiUrl: string;
@@ -25,6 +26,7 @@ interface UseMultiFileUploadOptions {
 
 export function useMultiFileUpload({
   fileKey = "file",
+  idKey = "id",
   initialFiles = [],
   getExtraFormData,
   uploadApiUrl,
@@ -66,15 +68,15 @@ export function useMultiFileUpload({
       const uploaded: UploadedFile = res?.data?.data
         ? res?.data?.data
         : {
-          fileId: res.data?.id,
-          displayImageUrl: { url: res?.data.url },
+          fileId: res.data?.[idKey],
+          displayImageUrl: { url: res?.data.displayImageUrl.url },
           fileName: file.name,
           folder: initialFiles[0]?.folder ?? null,
           fileStatus: initialFiles[0]?.fileStatus ?? null,
         };
 
       setUploadedFiles((prev) => [...prev, uploaded]);
-      setAddFileIdList((prev) => [...prev, uploaded?.fileId]);
+      setAddFileIdList((prev) => [...prev, uploaded?.[idKey] ?? uploaded.fileId]);
       callbacks.onUploadSuccess?.(uploaded);
     } catch (err) {
       callbacks.onUploadError?.(err);
