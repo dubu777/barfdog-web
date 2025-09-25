@@ -131,7 +131,6 @@ export default function AddressForm({
           maxLength={40}
           error={errors.recipientName?.message}
           {...register("recipientName")}
-          onBlur={() => trigger("recipientName")}
         />
 
         <InputField
