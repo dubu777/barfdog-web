@@ -1,8 +1,6 @@
 import * as styles from "./LoginForm.css";
 import Link from "next/link";
 import {
-  Control,
-  Controller,
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
@@ -20,12 +18,11 @@ interface LoginFormProps {
   isValid: boolean;
 }
 
-const LoginForm = ({
+export default function LoginForm({
   register,
   handleSubmit,
   handleLogin,
-  isValid,
-}: LoginFormProps) => {
+}: LoginFormProps) {
   return (
     <form className={commonWrapper({ direction: "col", padding: "0/20" })}>
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
@@ -74,6 +71,4 @@ const LoginForm = ({
       </div>
     </form>
   );
-};
-
-export default LoginForm;
+}

@@ -17,6 +17,7 @@ import useModal from "@/hooks/useModal";
 import { useUpdateAddress } from "@/api/address/mutations/useUpdateAddress";
 import { useCreateAddress } from "@/api/address/mutations/useCreateAddress";
 import { useWatch } from "react-hook-form";
+import { useEnterFocus } from "@/hooks/common/useEnterFocus";
 
 interface AddressFormProps {
   mode: "edit" | "add";
@@ -50,8 +51,24 @@ export default function AddressForm({
     isValid,
     trigger,
     register,
+    setFocus,
+    getFieldState,
   } = useFormHandler<AddressRequest>(addressSchema, initialValues, "all");
   console.log("watch", watch());
+
+  const { bind } = useEnterFocus<AddressRequest>({
+    fieldNames: [
+      "deliveryName",
+      "recipientName",
+      "phoneNumber",
+      "detailAddress",
+      "request",
+    ],
+    setFocus,
+    getFieldState,
+    trigger,
+    submitCurrentForm: () => onSubmit(),
+  });
 
   // 수정 모드일 경우 기존 배송지 id와 기본 배송지 id 비교, 추가 모드면 기본 배송지 선택 false
   const isDefaultAddress = mode === "edit" && address ? address.default : false;
@@ -108,12 +125,6 @@ export default function AddressForm({
       <form
         className={styles.deliveryAddressWithFooterWrapper}
         onSubmit={onSubmit}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-          }
-        }}
-        style={{ gap: "20px" }}
       >
         <InputField
           label="배송지명"
@@ -122,6 +133,7 @@ export default function AddressForm({
           maxLength={20}
           error={errors?.deliveryName?.message}
           {...register("deliveryName")}
+          onKeyUp={bind("deliveryName")}
         />
 
         <InputField
@@ -131,6 +143,7 @@ export default function AddressForm({
           maxLength={40}
           error={errors.recipientName?.message}
           {...register("recipientName")}
+          onKeyUp={bind("recipientName")}
         />
 
         <InputField
@@ -147,6 +160,7 @@ export default function AddressForm({
               setValue("phoneNumber", onlyDigits);
             },
           })}
+          onKeyUp={bind("phoneNumber")}
         />
 
         <div className={styles.searchAddressWrapper}>
@@ -187,6 +201,7 @@ export default function AddressForm({
             maxLength={50}
             error={errors.detailAddress?.message}
             {...register("detailAddress")}
+            onKeyUp={bind("detailAddress")}
           />
         </div>
 
@@ -196,6 +211,7 @@ export default function AddressForm({
           maxLength={50}
           error={errors.request?.message}
           {...register("request")}
+          onKeyUp={bind("request")}
         />
 
         {!isDefaultAddress && (

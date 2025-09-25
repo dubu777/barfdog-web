@@ -150,11 +150,10 @@ const getRawFoodOrderSheet = async (
 
 const getSubscriptionDetailV2 = async (
   reportId: number,
-  orderId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<any> => {
   const { data } = await instance.get(
-    `/api/v2/orders/subscription/${reportId}/order/${orderId}`
+    `/api/v2/orders/subscription/${reportId}`
   );
   if (data.success) {
     return data.data;
