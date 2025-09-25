@@ -1,8 +1,5 @@
-import { useRouter } from "next/navigation";
 import { SnsProvider } from "@/types";
-import { OAUTH_CLIENT_CONFIG, OAuthClientConfig } from "@/config/oauthClient";
-import { useCallback } from "react";
-import { setSnsCallbackUrl } from "@/utils/auth/snsCallbackUrl";
+import { OAuthClientConfig } from "@/config/oauthClient";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
 import { TextColor } from "@/types/typography";
@@ -17,6 +14,7 @@ interface SocialLoginButtonProps {
   onDeferredLoginClick?: (fn: () => void) => void;
   showSymbolButton?: boolean;
   config: OAuthClientConfig;
+  nextPath?: string;
 }
 
 export default function SocialLoginButton({
@@ -26,11 +24,13 @@ export default function SocialLoginButton({
   onDeferredLoginClick,
   config,
   showSymbolButton = false,
+  nextPath = "/",
 }: SocialLoginButtonProps) {
   const { handleClick } = useSocialLogin(provider, {
     callbackUrl,
     defer,
     onDeferredLoginClick,
+    nextPath,
   });
 
   return showSymbolButton ? (
