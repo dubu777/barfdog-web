@@ -158,174 +158,250 @@ const logout = async () => {
   return response;
 };
 
-// 네이버 토큰 발급
-const getAccessTokenByNaver = async (code: string) => {
-  if (!code) throw new Error("인가 코드 없음");
+// // 네이버 토큰 발급
+// const getAccessTokenByNaver = async (code: string) => {
+//   if (!code) throw new Error("인가 코드 없음");
 
-  const { clientId, clientSecret, auth } = OAUTH_CLIENT_CONFIG.naver;
+//   const { clientId, clientSecret, auth } = OAUTH_CLIENT_CONFIG.naver;
 
-  const params = new URLSearchParams({
-    grant_type: auth.grantType,
-    client_id: clientId,
-    client_secret: clientSecret,
+//   const params = new URLSearchParams({
+//     grant_type: auth.grantType,
+//     client_id: clientId,
+//     client_secret: clientSecret,
+//     code,
+//   });
+
+//   const { data: tokenResponse } = await axios.post(
+//     `${auth.tokenUrl}?${params.toString()}`
+//   );
+//   if (!tokenResponse.access_token) throw new Error("네이버 토큰 발급 실패");
+//   return tokenResponse;
+// };
+
+// // 카카오톡 토큰 발급
+// export const getAccessTokenByKakao = async (code: string) => {
+//   if (!code) throw new Error("인가 코드 없음");
+
+//   const { clientId, clientSecret, redirectUri, auth } =
+//     OAUTH_CLIENT_CONFIG.kakao;
+
+//   const params = new URLSearchParams({
+//     grant_type: auth.grantType,
+//     client_id: clientId,
+//     redirect_uri: redirectUri,
+//     code,
+//   });
+
+//   // clientSecret이 존재하면 추가 (옵션)
+//   if (clientSecret) {
+//     params.append("client_secret", clientSecret);
+//   }
+
+//   const url = `${auth.tokenUrl}?${params.toString()}`;
+//   const { data: tokenResponse } = await axios.post(url, {});
+//   if (!tokenResponse.access_token) throw new Error("카카오 토큰 발급 실패");
+
+//   return tokenResponse;
+// };
+
+export async function exchangeProviderToken(
+  provider: SnsProvider,
+  code: string,
+  state?: string
+) {
+  const baseUrl = window.location.origin;
+  const { data } = await axios.post(`${baseUrl}/api/oauth/${provider}/token`, {
     code,
+    state,
   });
 
-  const { data: tokenResponse } = await axios.post(
-    `${auth.tokenUrl}?${params.toString()}`
+  if (!data?.access_token) throw new Error("토큰 교환 실패");
+  return data as { access_token: string };
+}
+
+export async function loginWithAccessToken(
+  provider: SnsProvider,
+  accessToken: string
+) {
+  const res = await axiosInstance.post(`/api/login/${provider}`, {
+    accessToken,
+  });
+  return {
+    body: res.data,
+    headers: res.headers as Record<string, string | undefined>,
+  };
+}
+
+export function deriveUserType(code?: number): UserType {
+  switch (code) {
+    case 251:
+      return "NON_MEMBER";
+    case 252:
+      return "MEMBER";
+    case 253:
+      return "MEMBER_WITH_SMS_KAKAO";
+    case 254:
+      return "MEMBER_WITH_SMS_NAVER";
+    case 200:
+      return "SUCCESS";
+    default:
+      return "NON_MEMBER";
+  }
+}
+
+async function oauthCallbackLogin(
+  provider: SnsProvider,
+  code: string,
+  state?: string
+): Promise<LoginUserInfo & { userType: UserType }> {
+  const { access_token } = await exchangeProviderToken(provider, code, state);
+  const { body, headers } = await loginWithAccessToken(provider, access_token);
+
+  const resultCode = Number(body.resultCode ?? body.resultcode);
+  const userType = deriveUserType(
+    Number.isNaN(resultCode) ? undefined : resultCode
   );
-  if (!tokenResponse.access_token) throw new Error("네이버 토큰 발급 실패");
-  return tokenResponse;
-};
 
-// 카카오톡 토큰 발급
-export const getAccessTokenByKakao = async (code: string) => {
-  if (!code) throw new Error("인가 코드 없음");
+  const tokenFromHeader =
+    (headers?.authorization as string | undefined) ?? null;
+  const tokenFromBody = (body?.token as string | undefined) ?? null;
+  const token = tokenFromHeader || tokenFromBody || null;
 
-  const { clientId, clientSecret, redirectUri, auth } =
-    OAUTH_CLIENT_CONFIG.kakao;
+  return {
+    provider,
+    providerId: code, // 요구사항: 콜백 code 그대로
+    phoneNumber:
+      provider === "kakao"
+        ? body?.kakao_account?.phone_number
+        : body?.response?.mobile,
+    message: body?.message,
+    resultCode: body?.resultCode ?? body?.resultcode,
+    userType,
+    token,
+  };
+}
 
-  const params = new URLSearchParams({
-    grant_type: auth.grantType,
-    client_id: clientId,
-    redirect_uri: redirectUri,
-    code,
-  });
+// // 소셜 로그인 - 레거시
+// const snsLogin = async ({
+//   provider,
+//   code,
+// }: {
+//   provider: SnsProvider;
+//   code: string;
+// }): Promise<LoginUserInfo> => {
+//   console.log("loginWithSnsProvider", provider, code);
 
-  // clientSecret이 존재하면 추가 (옵션)
-  if (clientSecret) {
-    params.append("client_secret", clientSecret);
-  }
+//   try {
+//     let body;
+//     if (provider === "naver") {
+//       const { access_token } = await getAccessTokenByNaver(code);
 
-  const url = `${auth.tokenUrl}?${params.toString()}`;
-  const { data: tokenResponse } = await axios.post(url, {});
-  if (!tokenResponse.access_token) throw new Error("카카오 토큰 발급 실패");
+//       body = {
+//         accessToken: access_token,
+//       };
+//     } else if (provider === "kakao") {
+//       const { access_token } = await getAccessTokenByKakao(code);
 
-  return tokenResponse;
-};
+//       console.log("카카오 토큰", access_token);
+//       body = {
+//         accessToken: access_token,
+//       };
+//     }
 
-// 소셜 로그인
-const snsLogin = async ({
-  provider,
-  code,
-}: {
-  provider: SnsProvider;
-  code: string;
-}): Promise<LoginUserInfo> => {
-  console.log("loginWithSnsProvider", provider, code);
+//     const { data: loginResponse, headers } = await axiosInstance.post(
+//       `/api/login/${provider}`,
+//       body
+//     );
+//     console.log(`${provider} 소셜 로그인 response`, loginResponse);
 
-  try {
-    let body;
-    if (provider === "naver") {
-      const { access_token } = await getAccessTokenByNaver(code);
+//     if (!loginResponse) {
+//       throw new Error("응답이 없습니다.");
+//     }
 
-      body = {
-        accessToken: access_token,
-      };
-    } else if (provider === "kakao") {
-      const { access_token } = await getAccessTokenByKakao(code);
+//     let userType: UserType = "NON_MEMBER";
+//     let token: string | null = null;
+//     const resultCode = Number(loginResponse.resultcode);
+//     const message =
+//       CodeMessage[resultCode as keyof typeof CodeMessage] ||
+//       loginResponse.message;
 
-      console.log("카카오 토큰", access_token);
-      body = {
-        accessToken: access_token,
-      };
-    }
+//     switch (resultCode) {
+//       case 251: // 비회원(첫 로그인)
+//         userType = "NON_MEMBER";
+//         break;
+//       case 252: // 기존 이메일 회원
+//         userType = "MEMBER";
+//         break;
+//       case 253: // 카카오 멤버
+//         userType = "MEMBER_WITH_SMS_KAKAO";
+//         token = provider === "kakao" ? headers.authorization : null;
+//         break;
+//       case 254: // 네이버 멤버
+//         userType = "MEMBER_WITH_SMS_NAVER";
+//         token = provider === "naver" ? headers.authorization : null;
+//         break;
+//       case 200:
+//         userType = "SUCCESS";
+//         token = headers.authorization;
+//         break;
+//       default:
+//         // 하단 에러 코드에 대한 default 처리 필요
+//         // throw new Error(`알 수 없는 응답 코드: ${resultCode}`);
+//         break;
+//     }
 
-    const { data: loginResponse, headers } = await axiosInstance.post(
-      `/api/login/${provider}`,
-      body
-    );
-    console.log(`${provider} 소셜 로그인 response`, loginResponse);
+//     return {
+//       provider,
+//       providerId: code,
+//       phoneNumber:
+//         provider === "kakao"
+//           ? loginResponse.kakao_account.phone_number
+//           : loginResponse.response.mobile,
+//       message,
+//       resultCode: loginResponse.resultcode,
+//       userType,
+//       token,
+//     };
+//   } catch (error) {
+//     console.error("SNS 로그인 오류", error);
 
-    if (!loginResponse) {
-      throw new Error("응답이 없습니다.");
-    }
+//     // Axios 에러 처리
+//     if (axios.isAxiosError(error)) {
+//       throw new Error(
+//         error.response?.data?.message || "로그인 요청 중 오류 발생"
+//       );
+//     }
 
-    let userType: UserType = "NON_MEMBER";
-    let token: string | null = null;
-    const resultCode = Number(loginResponse.resultcode);
-    const message =
-      CodeMessage[resultCode as keyof typeof CodeMessage] ||
-      loginResponse.message;
+//     // 일반 오류 처리
+//     throw new Error(
+//       error instanceof Error ? error.message : "알 수 없는 오류 발생"
+//     );
+//   }
+// };
 
-    switch (resultCode) {
-      case 251: // 비회원(첫 로그인)
-        userType = "NON_MEMBER";
-        break;
-      case 252: // 기존 이메일 회원
-        userType = "MEMBER";
-        break;
-      case 253: // 카카오 멤버
-        userType = "MEMBER_WITH_SMS_KAKAO";
-        token = provider === "kakao" ? headers.authorization : null;
-        break;
-      case 254: // 네이버 멤버
-        userType = "MEMBER_WITH_SMS_NAVER";
-        token = provider === "naver" ? headers.authorization : null;
-        break;
-      case 200:
-        userType = "SUCCESS";
-        token = headers.authorization;
-        break;
-      default:
-        // 하단 에러 코드에 대한 default 처리 필요
-        // throw new Error(`알 수 없는 응답 코드: ${resultCode}`);
-        break;
-    }
-
-    return {
-      provider,
-      providerId: code,
-      phoneNumber:
-        provider === "kakao"
-          ? loginResponse.kakao_account.phone_number
-          : loginResponse.response.mobile,
-      message,
-      resultCode: loginResponse.resultcode,
-      userType,
-      token,
-    };
-  } catch (error) {
-    console.error("SNS 로그인 오류", error);
-
-    // Axios 에러 처리
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data?.message || "로그인 요청 중 오류 발생"
-      );
-    }
-
-    // 일반 오류 처리
-    throw new Error(
-      error instanceof Error ? error.message : "알 수 없는 오류 발생"
-    );
-  }
-};
-
-const CodeMessage: Record<number, string> = {
-  101: "카카오 연결에 실패했습니다.",
-  102: "이미 카카오로 연결된 계정입니다.",
-  103: "존재하지 않는 계정입니다.",
-  406: "회원의 나이가 14세 미만입니다.",
-  24: "인증에 실패했습니다.",
-  28: "OAuth 인증 헤더가 없습니다.",
-  251: "회원가입이 필요합니다.",
-  252: "SNS 연동이 필요합니다.",
-  253: "카카오 간편로그인이 연동된 계정입니다. 카카오로 로그인해주세요.",
-  254: "네이버 간편로그인이 연동된 계정입니다. 네이버로 로그인해주세요.",
-  200: "간편 로그인에 성공했습니다.",
-  500: "일시적인 서버 오류입니다. 관리자에게 문의해주세요.",
-  403: "호출 권한이 없습니다.",
-  404: "해당 데이터가 없습니다.",
-} as const;
+// const CodeMessage: Record<number, string> = {
+//   101: "카카오 연결에 실패했습니다.",
+//   102: "이미 카카오로 연결된 계정입니다.",
+//   103: "존재하지 않는 계정입니다.",
+//   406: "회원의 나이가 14세 미만입니다.",
+//   24: "인증에 실패했습니다.",
+//   28: "OAuth 인증 헤더가 없습니다.",
+//   251: "회원가입이 필요합니다.",
+//   252: "SNS 연동이 필요합니다.",
+//   253: "카카오 간편로그인이 연동된 계정입니다. 카카오로 로그인해주세요.",
+//   254: "네이버 간편로그인이 연동된 계정입니다. 네이버로 로그인해주세요.",
+//   200: "간편 로그인에 성공했습니다.",
+//   500: "일시적인 서버 오류입니다. 관리자에게 문의해주세요.",
+//   403: "호출 권한이 없습니다.",
+//   404: "해당 데이터가 없습니다.",
+// } as const;
 
 export {
   requestFindEmailCode,
   login,
   getUserInfo,
   connectSns,
-  getAccessTokenByNaver,
-  snsLogin,
+  // snsLogin,
   setPassword,
   changePassword,
   getConnectedSns,
@@ -339,4 +415,5 @@ export {
   resetPassword,
   verifyFindEmailCode,
   verifyPassword,
+  oauthCallbackLogin,
 };

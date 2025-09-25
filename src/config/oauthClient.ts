@@ -14,7 +14,6 @@ interface ProviderOAuthConfig {
 
 export interface OAuthClientConfig {
   clientId: string;
-  clientSecret: string;
   redirectUri: string;
   auth: ProviderOAuthConfig;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -28,7 +27,6 @@ export interface OAuthClientConfig {
 export const OAUTH_CLIENT_CONFIG: Record<SnsProvider, OAuthClientConfig> = {
   kakao: {
     clientId: process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY || "",
-    clientSecret: process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET || "",
     redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI || "",
     auth: {
       codeUrl: "https://kauth.kakao.com/oauth/authorize",
@@ -45,7 +43,6 @@ export const OAUTH_CLIENT_CONFIG: Record<SnsProvider, OAuthClientConfig> = {
   },
   naver: {
     clientId: process.env.NEXT_PUBLIC_NAVER_CLIENT_ID || "",
-    clientSecret: process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET || "",
     redirectUri: process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI || "",
     auth: {
       codeUrl: "https://nid.naver.com/oauth2.0/authorize",
