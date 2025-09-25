@@ -1,10 +1,4 @@
-import {
-  Coupon,
-  CouponUsabilityResult,
-  OrderType,
-  Reason,
-} from "@/types";
-
+import { Coupon, CouponUsabilityResult, OrderType, Reason } from "@/types";
 
 /**
  * 쿠폰 사용 가능 여부 판단 함수
@@ -15,17 +9,17 @@ export function isCouponUsable(
   orderType: string
 ): CouponUsabilityResult {
   const reasons: Reason[] = [];
-  
+
   // 주문 금액이 최소 주문 금액 미달이면 "minPrice" 추가
   if (orderPrice <= coupon.availableMinPrice) {
     reasons.push("minPrice");
   }
-  
+
   // 주문 타입이 일치하지 않으면 "orderType" 추가
   if (coupon.couponTarget !== "ALL" && coupon.couponTarget !== orderType) {
     reasons.push("orderType");
   }
-  
+
   return {
     usable: reasons.length === 0,
     reasons,
@@ -38,9 +32,17 @@ export function isCouponUsable(
  * @param orderType - 일반, 구독 결제 여부
  * @returns 사용 가능한 쿠폰 배열
  */
-export function getAvailableCoupons(coupons: Coupon[], orderPrice: number, orderType: OrderType): Coupon[] {
-  return coupons.filter(coupon => isCouponUsable(coupon, orderPrice, orderType).usable);
+export function getAvailableCoupons(
+  coupons: Coupon[],
+  orderPrice: number,
+  orderType: OrderType
+): Coupon[] {
+  return coupons.filter(
+    (coupon) => isCouponUsable(coupon, orderPrice, orderType).usable
+  );
 }
+
+const toWonInt = (amount: number) => Math.max(0, Math.floor(amount));
 
 /**
  * 쿠폰 할인 금액 계산 함수
@@ -72,10 +74,20 @@ export function calculateCouponDiscount(
   }
 
   // 쿠폰에 설정된 최대 할인 금액 제한만 적용한 할인 금액 계산
-  const discountBasedOnCoupon = Math.min(calculatedDiscount, coupon.availableMaxDiscount);
-  
+  const cappedByCoupon = Math.min(
+    calculatedDiscount,
+    coupon.availableMaxDiscount
+  );
+
   // 쿠폰 제한과 전역 최대 할인 금액 제한을 모두 적용한 할인 금액 계산
-  const discountBasedOnCouponAndGlobal = Math.min(discountBasedOnCoupon, maxAvailableCouponDiscount);
+  const cappedByCouponAndGlobal = Math.min(
+    cappedByCoupon,
+    maxAvailableCouponDiscount
+  );
+
+  // ▶ 원 단위 정수 반환 (내림)
+  const discountBasedOnCoupon = toWonInt(cappedByCoupon);
+  const discountBasedOnCouponAndGlobal = toWonInt(cappedByCouponAndGlobal);
 
   return { discountBasedOnCoupon, discountBasedOnCouponAndGlobal };
 }
@@ -103,7 +115,11 @@ export function sortCoupons(
   const computedCoupons = coupons.map((coupon) => ({
     coupon,
     usable: isCouponUsable(coupon, orderPrice, orderType).usable,
-    discount: calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount).discountBasedOnCoupon,
+    discount: calculateCouponDiscount(
+      orderPrice,
+      coupon,
+      maxAvailableCouponDiscount
+    ).discountBasedOnCoupon,
     expiry: new Date(coupon.expiredDate).getTime(),
   }));
 
@@ -136,3 +152,10 @@ export function getCouponTargetText(couponTarget: string): string {
       return "";
   }
 }
+
+export const validateCouponCode = (code: string) => {
+  if (!code) return "코드를 입력해 주세요.";
+  if (code.length > 20) return "20자 이하 입력 가능합니다.";
+  // 필요 시: /^[A-Za-z0-9-_]+$/.test(code) 등 패턴 검증
+  return null;
+};
