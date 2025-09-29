@@ -212,7 +212,7 @@ async function oauthCallbackLogin(
   const { access_token } = await exchangeProviderToken(provider, code, state);
   const { body, headers } = await loginWithAccessToken(provider, access_token);
 
-  const resultCode = Number(body.resultCode ?? body.resultcode);
+  const resultCode = Number(body.resultcode);
   const userType = deriveUserType(
     Number.isNaN(resultCode) ? undefined : resultCode
   );
@@ -230,7 +230,7 @@ async function oauthCallbackLogin(
         ? body?.kakao_account?.phone_number
         : body?.response?.mobile,
     message: body?.message,
-    resultCode: body?.resultCode ?? body?.resultcode,
+    resultCode: body?.resultcode,
     userType,
     token,
   };
