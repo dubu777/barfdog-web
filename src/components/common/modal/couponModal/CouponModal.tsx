@@ -5,19 +5,14 @@ import Button from "@/components/common/button/Button";
 import { ORDER_MESSAGE } from "@/constants";
 import { Coupon, OrderType } from "@/types";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCouponStore } from "@/store/checkout/useCouponStore";
 import {
   calculateCouponDiscount,
   sortCoupons,
+  validateCouponCode,
 } from "@/utils/coupon/couponUtils";
 import { formatNumberWithCommas } from "@/utils";
-import { useFormHandler } from "@/hooks/useFormHandler";
-import { Controller } from "react-hook-form";
-import {
-  couponDefaultValues,
-  couponSchema,
-} from "@/utils/validation/couponValidation";
 import CouponCard from "./couponCard/CouponCard";
 import { useToastStore } from "@/store/useToastStore";
 import useModal from "@/hooks/useModal";
@@ -51,6 +46,9 @@ export default function CouponModal({
   const [discountOnCoupon, setDiscountOnCoupon] = useState<number>(0);
   const [discountOnCouponAndGlobal, setDiscountOnCouponAndGlobal] =
     useState<number>(0);
+  const [code, setCode] = useState("");
+  const [codeError, setCodeError] = useState<string | null>(null);
+
   const { addToast } = useToastStore();
   const {
     selectedCoupon,
@@ -71,13 +69,6 @@ export default function CouponModal({
     onToggle: onErrorModalToggle,
     isOpen: isErrorModalOpen,
   } = useModal();
-
-  // 쿠폰 등록 input field 관리
-  const { control, handleSubmit, reset } = useFormHandler(
-    couponSchema,
-    couponDefaultValues,
-    "onBlur"
-  );
 
   // 토글 관리 훅 (couponId를 기준으로)
   const { onToggle, isSelected } = useToggleOption<number>(
@@ -114,21 +105,26 @@ export default function CouponModal({
     maxAvailableCouponDiscount
   );
 
-  // 쿠폰 등록 함수
-  const onCouponFormSubmit = handleSubmit((data) => {
+  // 쿠폰 등록
+  const handleRegisterCoupon = useCallback(() => {
+    const err = validateCouponCode(code.trim());
+    setCodeError(err);
+    if (err) return;
+
     createCouponMutate(
-      { code: data.code },
+      { code: code.trim() },
       {
         onSuccess: () => {
           addToast("쿠폰이 등록되었습니다", "above-button");
+          setCode("");
+          setCodeError(null);
         },
         onError: () => {
           addToast("등록되지 않은 코드입니다", "above-button");
         },
       }
     );
-    reset();
-  });
+  }, [code, createCouponMutate, addToast]);
 
   // 마이페이지 쿠폰 적용 함수 및 초기화 (selectedCoupon, maxAvailableCouponDiscount)
   const handleUseCoupon = (discountAmount: number) => {
@@ -144,14 +140,16 @@ export default function CouponModal({
   };
 
   const handleModalClose = () => {
-    reset();
     setSelectedCoupon(null);
+    setCode("");
+    setCodeError(null);
     onClose();
   };
 
+  // 주문 금액 보다 쿠폰 할인 금액이 더 클 경우: 쿠폰 사용 확인 모달
   const handleConfirmCoupon = () => {
     if (onUseCoupon) {
-      // 주문 금액 보다 쿠폰 할인 금액이 더 클 경우 - discountOnCouponAndGlobal 적용 (일부 금액)
+      // discountOnCouponAndGlobal 적용 (일부 금액)
       handleUseCoupon(discountOnCouponAndGlobal);
       return;
     }
@@ -179,10 +177,8 @@ export default function CouponModal({
 
     if (!selectedCoupon) {
       if (appliedCoupon) {
-        reset();
         cancelAppliedCoupon();
       }
-      reset();
       onClose();
       return;
     }
@@ -191,7 +187,6 @@ export default function CouponModal({
       onErrorModalToggle();
       return;
     }
-    reset();
     onClose();
   };
 
@@ -215,23 +210,20 @@ export default function CouponModal({
         <div className={styles.couponModalContentWrapper}>
           <Text type="label4">쿠폰 등록</Text>
           <div className={styles.couponApplyWrapper}>
-            <Controller
-              name="code"
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <InputField
-                  {...field}
-                  placeholder={ORDER_MESSAGE.COUPON_PLACEHOLDER}
-                  error={error?.message}
-                />
-              )}
+            <InputField
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              onBlur={() => setCodeError(validateCouponCode(code))}
+              placeholder={ORDER_MESSAGE.COUPON_PLACEHOLDER}
+              error={codeError ?? undefined}
+              maxLength={20}
             />
             <Button
               type="primary"
               variant="solid"
               size="inputButton"
               buttonColor="gray800"
-              onClick={onCouponFormSubmit}
+              onClick={handleRegisterCoupon}
             >
               등록
             </Button>

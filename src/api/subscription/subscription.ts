@@ -148,18 +148,37 @@ const getRawFoodOrderSheet = async (
   throw new Error(message);
 };
 
+// 구독 정보 변경 - 구독 상세 조회 v2
 const getSubscriptionDetailV2 = async (
   reportId: number,
-  orderId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<any> => {
   const { data } = await instance.get(
-    `/api/v2/orders/subscription/${reportId}/order/${orderId}`
+    `/api/v2/orders/subscription/${reportId}`
   );
   if (data.success) {
     return data.data;
   }
   const message = data.detailMessage ?? "구독 상세 조회에 실패했습니다";
+  throw new Error(message);
+};
+
+// 구독 정보 변경 요청
+const updateSubscriptionV2 = async ({
+  orderId,
+  body,
+}: {
+  orderId: number;
+  body: CreateSubscriptionRequest;
+}): Promise<CreateSubscriptionResponse> => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/subscription/order/${orderId}`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "구독 정보 변경에 실패했습니다";
   throw new Error(message);
 };
 
@@ -212,4 +231,5 @@ export {
   createSubscription,
   getRawFoodDetail,
   getSubscriptionDetailV2,
+  updateSubscriptionV2,
 };

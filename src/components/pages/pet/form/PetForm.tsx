@@ -41,8 +41,10 @@ export default function PetForm({
   } = form;
   const { data: breedList } = useGetPetBreedList();
 
-  const nameVerified = useWatch({ control, name: "nameVerified" });
-  const petName = useWatch({ control, name: "name" });
+  const [nameVerified, petName] = useWatch({
+    control,
+    name: ["nameVerified", "name"],
+  });
 
   const [fileChanged, setFileChanged] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | undefined>(

@@ -95,7 +95,6 @@ export default function SubscriptionOrderSheet({
     const body = {
       deliveryPlan,
       mealPlan,
-      discountPrice: totals.totalDiscountAmount,
       paymentExpectedPrice: totals.paymentExpectedPrice,
       rawFoods: rawFoodsPayload,
       originPrice: totals.totalOriginalPrice,

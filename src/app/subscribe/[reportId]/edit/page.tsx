@@ -9,7 +9,7 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-type Params = { reportId: string; orderId: string };
+type Params = { reportId: string };
 
 export default async function SubscriptionEditPage({
   params,
@@ -17,16 +17,15 @@ export default async function SubscriptionEditPage({
   params: Params;
 }) {
   const reportId = Number(params.reportId);
-  const orderId = Number(params.orderId);
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionDetailV2(queryClient, reportId, orderId);
+  await prefetchGetSubscriptionDetailV2(queryClient, reportId);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <SubscriptionEdit reportId={reportId} orderId={orderId} />
+          <SubscriptionEdit reportId={reportId} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

@@ -5,8 +5,7 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetSubscriptionDetailV2(
   queryClient: QueryClient,
-  reportId: number,
-  orderId: number
+  reportId: number
 ) {
   const ssrAxios = createSSRRequest();
   await queryClient.prefetchQuery({
@@ -14,8 +13,7 @@ export async function prefetchGetSubscriptionDetailV2(
       queryKeys.SUBSCRIPTION.BASE,
       queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL,
       reportId,
-      orderId,
     ],
-    queryFn: () => getSubscriptionDetailV2(reportId, orderId, ssrAxios),
+    queryFn: () => getSubscriptionDetailV2(reportId, ssrAxios),
   });
 }

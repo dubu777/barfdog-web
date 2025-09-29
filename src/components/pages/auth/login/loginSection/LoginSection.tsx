@@ -21,10 +21,8 @@ export default function LoginSection() {
 
   const { mutate: emailLogin } = useEmailLogin();
 
-  const { handleSubmit, control, isValid } = useFormHandler<LoginFormValues>(
-    loginSchema,
-    defaultLoginValues(null)
-  );
+  const { handleSubmit, control, isValid, register } =
+    useFormHandler<LoginFormValues>(loginSchema, defaultLoginValues(null));
 
   const handleLogin = (data: LoginFormValues) => {
     const formData = {
@@ -62,7 +60,7 @@ export default function LoginSection() {
           </Text>
         </div>
         <LoginForm
-          control={control}
+          register={register}
           handleSubmit={handleSubmit}
           handleLogin={handleLogin}
           isValid={isValid}

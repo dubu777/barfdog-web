@@ -31,13 +31,15 @@ export default function DeliveryModal({
   const [selectedAddress, setSelectedAddress] =
     useState<AddressResponse | null>(null);
 
-  // 배송지 추가 모드로 전환
+  // 배송지 등록으로 전환
   const goToAddAddress = () => setViewMode("add");
-  // 배송지 수정 모드로 전환
+
+  // 배송지 수정으로 전환
   const goToEditAddress = (address: AddressResponse) => {
     setViewMode("edit");
     setSelectedAddress(address);
   };
+
   // 배송지 목록으로 돌아가기
   const goToList = () => {
     setViewMode("list");

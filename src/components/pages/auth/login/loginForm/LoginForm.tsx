@@ -1,10 +1,9 @@
 import * as styles from "./LoginForm.css";
 import Link from "next/link";
 import {
-  Control,
-  Controller,
   SubmitHandler,
   UseFormHandleSubmit,
+  UseFormRegister,
 } from "react-hook-form";
 import { LoginFormValues } from "@/types";
 import InputField from "@/components/common/inputField/InputField";
@@ -13,46 +12,33 @@ import Button from "@/components/common/button/Button";
 import Text from "@/components/common/text/Text";
 
 interface LoginFormProps {
-  control: Control<LoginFormValues>;
+  register: UseFormRegister<LoginFormValues>;
   handleSubmit: UseFormHandleSubmit<LoginFormValues>;
   handleLogin: SubmitHandler<LoginFormValues>;
   isValid: boolean;
 }
 
-const LoginForm = ({
-  control,
+export default function LoginForm({
+  register,
   handleSubmit,
   handleLogin,
-  isValid,
-}: LoginFormProps) => {
+}: LoginFormProps) {
   return (
     <form className={commonWrapper({ direction: "col", padding: "0/20" })}>
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
-        <Controller
-          control={control}
-          name="email"
-          render={({ field }) => (
-            <InputField
-              id="email"
-              placeholder="이메일을 입력해주세요"
-              {...field}
-            />
-          )}
+        <InputField
+          id="email"
+          placeholder="이메일을 입력해주세요"
+          {...register("email")}
         />
-        <Controller
-          control={control}
-          name="password"
-          render={({ field }) => (
-            <InputField
-              masking
-              id="password"
-              placeholder="비밀번호를 입력해주세요"
-              onSubmit={isValid ? handleSubmit(handleLogin) : undefined}
-              {...field}
-            />
-          )}
+        <InputField
+          masking
+          id="password"
+          placeholder="비밀번호를 입력해주세요"
+          {...register("password")}
         />
         <Button
+          buttonType="submit"
           onClick={handleSubmit(handleLogin)}
           fullWidth
           className={styles.loginButton}
@@ -85,6 +71,4 @@ const LoginForm = ({
       </div>
     </form>
   );
-};
-
-export default LoginForm;
+}
