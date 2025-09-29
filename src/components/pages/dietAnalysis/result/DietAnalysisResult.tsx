@@ -25,9 +25,9 @@ export default function DietAnalysisResult({
     if (
       EDITABLE_SUBSCRIPTION_STATUSES.has(dietAnalysisResult.subscribeStatus)
     ) {
-      router.push("/subscribe/edit");
+      router.push(`/subscribe/${reportId}/edit`);
     } else {
-      router.push(`/subscribe/${reportId}`);
+      router.push(`/subscribe/${reportId}/order-sheet`);
     }
   };
 

@@ -47,7 +47,7 @@ export default function ConnectSns() {
       phoneNumber: sanitizedPhone,
       provider: loginUserInfo.provider,
       providerId: loginUserInfo.providerId,
-      password: "test", // 임시 비밀번호 하드코딩 - 테스트용 백엔드 로직 수정되면 제거 필요
+      // password: "test", // 임시 비밀번호 하드코딩 - 테스트용 백엔드 로직 수정되면 제거 필요
     };
     console.log("connect sns request body", body);
     // SNS 연동 API 실행

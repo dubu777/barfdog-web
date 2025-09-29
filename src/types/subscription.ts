@@ -225,7 +225,6 @@ interface RawFoodPayload {
 interface CreateSubscriptionRequest {
   deliveryPlan: DeliveryPlan;
   mealPlan: MealPlan;
-  discountPrice: number; // 할인 금액
   paymentExpectedPrice: number; // 할인 적용된 최종 결제 예정 금액
   originPrice: number; // 할인 적용 전 전체 금액
   rawFoods: RawFoodPayload[];
@@ -244,6 +243,17 @@ interface RawFoodDetailResponse {
   ingredients: string[];
   primaryIngredients: string[];
   itemImageUrl: string;
+}
+
+interface UpdateSubscriptionRequest {
+  isNext: boolean; // 다음 배송부터 변경할지 여부 - false면 이번 배송부터 변경
+  deliveryPlan: DeliveryPlan;
+  isAgreeSubscription: boolean; // 구독 약관 동의 여부
+  mealPlan: MealPlan;
+  discountPrice: number; // 할인 금액
+  paymentExpectedPrice: number; // 할인 적용된 최종 결제 예정 금액
+  updatePrice: number; // 할인 적용 전 전체 금액
+  rawFoods: RawFoodPayload[];
 }
 
 type BenefitStatus = "AVAILABLE" | "REQUESTED" | "USED";
@@ -297,4 +307,5 @@ export type {
   RawFoodDetailResponse,
   CreateSubscriptionResponse,
   SubscriptionStatus,
+  UpdateSubscriptionRequest,
 };
