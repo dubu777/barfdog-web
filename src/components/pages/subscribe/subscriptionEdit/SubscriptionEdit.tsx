@@ -114,13 +114,7 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
           <RawFoodOptions rawFoodSheetData={rawFoodSheetData} />
         )}
         {step === "confirm" && <SubscriptionEditConfirm />}
-        {isOpen && (
-          <PlanBottomSheet
-            isOpen={isOpen}
-            onClose={onClose}
-            onCommit={() => {}}
-          />
-        )}
+        {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}
         <ButtonDocked
           primaryButtonLabel="식단 변경하기"
           onPrimaryClick={handleAction}

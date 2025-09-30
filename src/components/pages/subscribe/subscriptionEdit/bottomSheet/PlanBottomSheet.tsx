@@ -4,23 +4,17 @@ import Text from "@/components/common/text/Text";
 import DeliveryCycle from "../../deliveryOptions/deliveryCycle/DeliveryCycle";
 import MealFrequency from "../../deliveryOptions/mealFrequency/MealFrequency";
 import { planBottomSheetContainer } from "./PlanBottomSheet.css";
-import { commonWrapper, paddingStyles } from "@/styles/common.css";
+import { commonWrapper } from "@/styles/common.css";
 
 interface PlanBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  onCommit: () => void;
 }
 
 export default function PlanBottomSheet({
   isOpen,
   onClose,
-  onCommit,
 }: PlanBottomSheetProps) {
-  const handleSubmit = () => {
-    onCommit();
-    onClose();
-  };
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={planBottomSheetContainer}>
@@ -35,7 +29,7 @@ export default function PlanBottomSheet({
         <ButtonDocked
           type="full-button"
           primaryButtonLabel="완료"
-          onPrimaryClick={handleSubmit}
+          onPrimaryClick={onClose}
           primaryButtonSize="lg"
         />
       </div>
