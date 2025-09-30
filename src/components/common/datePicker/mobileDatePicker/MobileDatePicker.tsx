@@ -60,6 +60,7 @@ interface MobileDatePickerProps {
   onChange: (date: Date | string) => void;
   label?: string;
   isRequired?: boolean;
+  isDisabled?: boolean;
   minDate?: Date;
   maxDate?: Date;
 }
@@ -69,6 +70,7 @@ const MobileDatePicker = ({
   onChange,
   label,
   isRequired,
+  isDisabled,
   minDate,
   maxDate = new Date(),
 }: MobileDatePickerProps) => {
@@ -133,6 +135,7 @@ const MobileDatePicker = ({
       )}
       <DatePickerButton
         isOpen={isOpen}
+        isDisabled={isDisabled}
         onToggle={handleOpenPicker}
         value={displayValue}
         isMobile

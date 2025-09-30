@@ -16,21 +16,22 @@ export const useApiResponseHandler = () => {
   const handleError = (
     error: unknown, 
     defaultMessage: string = '요청 처리 중 오류가 발생했습니다.', 
-    returnErrorMessage?: boolean
+    returnErrorMessage?: boolean,
+    toastPosition: "above-button" | "bottom" = 'bottom'
   ) => {
     const errorMessage = extractErrorMessage(error, defaultMessage);
     if (returnErrorMessage) {
       return errorMessage;
     }
-    addToast(errorMessage);
+    addToast(errorMessage, toastPosition);
   };
 
   /**
    * 성공 메시지를 토스트로 표시하는 함수
    * @param message 성공 메시지
    */
-  const handleSuccess = (message: string) => {
-    addToast(message);
+  const handleSuccess = (message: string, toastPosition: "above-button" | "bottom" = 'bottom') => {
+    addToast(message, toastPosition);
   };
 
   return {

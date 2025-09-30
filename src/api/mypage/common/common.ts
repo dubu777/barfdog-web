@@ -1,12 +1,18 @@
 import { AxiosInstance } from "axios";
 import axiosInstance from "@/api/axiosInstance";
-import { MyPageBannerData, MyPageInfoDataTemp, MyPageInfoData, ApiResponse, MyPageBannerDataTemp } from "@/types";
+import { MyPageBannerData, MyPageInfoData, ApiResponse } from "@/types";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const getMyPageInfo = async (instance: AxiosInstance = axiosInstance): Promise<MyPageInfoData> => {
 	const { data }: { data: ApiResponse<MyPageInfoData> } = await instance.get('/api/v2/home/my-page');
 	
-	return validateApiResponse(data, "마이페이지 정보 조회에 실패했습니다.");
+	const responseData = validateApiResponse(data, "마이페이지 정보 조회에 실패했습니다.");
+	
+	if (!responseData) {
+		throw new Error("마이페이지 정보 조회에 실패했습니다.");
+	}
+
+	return responseData;
 }
 
 const getMyPageBanner = async (instance: AxiosInstance = axiosInstance): Promise<MyPageBannerData> => {
