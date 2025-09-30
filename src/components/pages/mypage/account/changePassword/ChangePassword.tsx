@@ -1,30 +1,29 @@
 "use client";
 import * as yup from "yup";
-import axios from "axios";
 import { commonWrapper } from "@/styles/common.css";
 import { Controller } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { useToastStore } from "@/store/useToastStore";
-import { ChangePassword as ChangePasswordType } from "@/types";
-import { useChangePassword } from "@/api/auth/mutations/useChangePassword";
 import { getPasswordCriteria, isValidPassword } from "@/utils/validation/auth/password";
+import { useChangePassword } from "@/api/mypage/account/mutations/useChangePassword";
+import { ChangePassword as ChangePasswordType } from "@/types/mypage/account";
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 
 const changePasswordSchema = yup.object().shape({
-  password: yup.string().required("비밀번호는 필수입니다."),
+  oldPassword: yup.string().required("비밀번호는 필수입니다."),
   newPassword: yup.string().required("새 비밀번호를 입력해주세요"),
-  newPasswordConfirm: yup
+  confirmNewPassword: yup
     .string()
     .oneOf([yup.ref("newPassword")], "비밀번호가 일치하지 않습니다")
     .required("비밀번호 확인은 필수입니다"),
 });
 
 const defaultChangePasswordValues: ChangePasswordType = {
-  password: "",
+  oldPassword: "",
   newPassword: "",
-  newPasswordConfirm: "",
+  confirmNewPassword: "",
 };
 
 export default function ChangePassword() {
@@ -37,38 +36,32 @@ export default function ChangePassword() {
     clearErrors,
     dirtyFields,
     setValue,
-    getValues,
     setError,
+    isValid,
   } = useFormHandler<ChangePasswordType>(
     changePasswordSchema,
     defaultChangePasswordValues
   );
-
+  
   const { mutate } = useChangePassword();
-  const { addToast } = useToastStore();
+  const { handleSuccess, handleError } = useApiResponseHandler();
 
   const onSubmit = (data: ChangePasswordType) => {
     mutate(data, {
-      onSuccess: (data) => {
-        if (data.status === 200) {
-          addToast("비밀번호 변경이 완료되었습니다!", "above-button");
-          setTimeout(() => {
-            if (window.document.activeElement instanceof HTMLElement) {
-              window.document.activeElement.blur();
-              clearErrors();
-              reset(undefined, { keepErrors: false, keepDirty: false });
-            }
-          }, 0);
-        }
+      onSuccess: () => {
+        handleSuccess('비밀번호 변경이 완료됐습니다', "above-button");
+        setTimeout(() => {
+          if (window.document.activeElement instanceof HTMLElement) {
+            window.document.activeElement.blur();
+            clearErrors();
+            reset(undefined, { keepErrors: false, keepDirty: false });
+          }
+        }, 0);
       },
       onError: (error) => {
-        console.log("error", error);
-        if (axios.isAxiosError(error)) {
-          // const errorMessage = error?.response?.data?.errors[0].defaultMessage || '비밀번호 변경에 실패했습니다.';
-          const errorMessage = "기존 비밀번호가 일치하지 않습니다.";
-          setError("password", { message: errorMessage });
-          addToast(errorMessage, "above-button");
-        }
+        const errorMessage = handleError(error, "비밀번호 변경에 실패했습니다.", true);
+        
+        setError("oldPassword", { message: errorMessage });
       },
     });
   };
@@ -88,10 +81,10 @@ export default function ChangePassword() {
         padding: 20,
       })}>
         <Controller
-          name="password"
+          name="oldPassword"
           control={control}
           render={({ field }) => {
-            const passwordError = errors?.password?.message;
+            const passwordError = errors?.oldPassword?.message;
             return (
               <div className={commonWrapper({ width: 'full', direction: 'col', align: 'start', gap: 8 })}>
                 <InputField
@@ -100,7 +93,7 @@ export default function ChangePassword() {
                   variants="box"
                   placeholder="기존 비밀번호를 입력해주세요."
                   label="기존 비밀번호"
-                  onReset={() => setValue("password", "")}
+                  onReset={() => setValue("oldPassword", "")}
                   {...inputProps}
                 />
                 {passwordError && (
@@ -127,10 +120,10 @@ export default function ChangePassword() {
                 placeholder="새 비밀번호를 입력해주세요."
                 label="새 비밀번호"
                 error={errors?.newPassword?.message}
-                onReset={() => setValue("newPassword", "")}
+                onReset={() => setValue("newPassword", "", { shouldValidate: true })}
                 onChange={(e) => {
                   field.onChange(e);
-                  trigger("newPasswordConfirm");
+                  trigger("confirmNewPassword");
                 }}
                 {...inputProps}
               />
@@ -150,10 +143,10 @@ export default function ChangePassword() {
           )}
         />
         <Controller
-          name="newPasswordConfirm"
+          name="confirmNewPassword"
           control={control}
           render={({ field }) => {
-            const newPasswordConfirmError = errors?.newPasswordConfirm?.message;
+            const newPasswordConfirmError = errors?.confirmNewPassword?.message;
             return (
               <div className={commonWrapper({ width: 'full', direction: 'col', align: 'start', gap: 8 })}>
                 <InputField
@@ -162,7 +155,7 @@ export default function ChangePassword() {
                   variants="box"
                   placeholder="새 비밀번호를 확인을 입력해주세요."
                   label="새 비밀번호 확인"
-                  onReset={() => setValue("newPasswordConfirm", "")}
+                  onReset={() => setValue("confirmNewPassword", "", { shouldValidate: true })}
                   onSubmit={
                     !isValidPassword(field.value)
                       ? handleSubmit(onSubmit)
@@ -187,7 +180,7 @@ export default function ChangePassword() {
         type="full-button"
         primaryButtonLabel="저장하기"
         onPrimaryClick={handleSubmit(onSubmit)}
-        isPrimaryDisabled={!isValidPassword(getValues("newPassword"))}
+        isPrimaryDisabled={!isValid}
       />
     </section>
   );
