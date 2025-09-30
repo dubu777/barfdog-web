@@ -7,9 +7,8 @@ const queryKeys = {
   },
   AUTH: {
     BASE: "auth",
-    GET_USER_INFO: "getUserInfo",
-    VERIFY_PASSWORD: "verifyPassword",
     LOGIN: "login",
+    GET_USER_INFO: "getUserInfo",
   },
   SURVEY: {
     BASE: "survey",
@@ -30,8 +29,12 @@ const queryKeys = {
       BASE: "common",
       GET_MYPAGE_INFO: "getMyPageInfo",
       GET_MYPAGE_BANNER: "getMyPageBanner",
-      GET_CONNECTED_SNS: "getConnectedSns",
       GET_PAYMENT_LIST: "getPaymentList",
+    },
+    ACCOUNT: {
+      BASE: "account",
+      GET_USER_INFO: "getUserInfo",
+      VERIFY_PASSWORD: "verifyPassword",
     },
     COUPON: {
       BASE: "coupon",

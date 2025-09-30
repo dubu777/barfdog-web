@@ -26,7 +26,7 @@ export default function SubscriptionItemList({
         direction: "col",
         gap: 20,
         align: "start",
-        padding: 32,
+        padding: '32/20',
       })}
     >
       <Text type="title4">

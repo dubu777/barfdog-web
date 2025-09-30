@@ -62,17 +62,6 @@ interface ConnectSnsResponse {
   token: string;
 }
 
-interface SetPassword {
-  password: string;
-  confirmPassword: string;
-}
-
-interface ChangePassword {
-  password: string;
-  newPassword: string;
-  newPasswordConfirm: string;
-}
-
 // 회원가임
 type SignUpTermsModal = "servicePolicy" | "privacyPolicy" | "alliancePolicy";
 
@@ -104,51 +93,6 @@ interface SignupStepValues {
   providerId?: string;
   defaultPhoneNumber?: string;
   hasCheckedAuthNumber?: boolean;
-}
-
-// 마이페이지 회원 정보 수정
-interface UserInfoFormFields {
-  id: string;
-  label: string;
-  inputType: "text" | "password" | "address" | "birthday" | "radio";
-  validationButtonText?: string;
-  isRequired: boolean;
-  placeholder?: string;
-  isSignUp?: boolean;
-}
-
-interface UserInfoFormValues {
-  address: AddressDto;
-  birthday: string;
-  gender: GenderType;
-  name: string;
-  password: string | null;
-  phoneNumber: string;
-  receiveEmail: boolean;
-  receiveSms: boolean;
-  email?: string;
-  authNumber?: string | null;
-  defaultPhoneNumber?: string;
-  hasCheckedAuthNumber?: boolean;
-}
-
-interface UserInfo extends UserInfoFormValues {
-  memberId?: string | null;
-  provider?: string | null;
-  providerId?: number | null;
-}
-
-interface IsValidUpdateUserInfo {
-  changedPhoneNumber: boolean;
-  authNumber: string | null;
-  checkedAuthNumber: boolean;
-}
-
-interface GetAuthNumber {
-  responseCode: number;
-  status: number;
-  msg: null | string;
-  authNumber: null | string;
 }
 
 interface ResetPasswordRequest {
@@ -186,14 +130,8 @@ export type {
   TemporaryPassword,
   ConnectSnsPassword,
   ConnectSns,
-  SetPassword,
-  ChangePassword,
   SignUpTermsModal,
   ConnectSnsResponse,
-  UserInfoFormFields,
-  UserInfoFormValues,
-  IsValidUpdateUserInfo,
-  GetAuthNumber,
   GenderType,
   SignupStepValues,
   RequestFindAccountCodeResponse,

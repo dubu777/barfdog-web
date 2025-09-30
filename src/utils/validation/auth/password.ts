@@ -35,6 +35,7 @@ export function hasLetterNumberSpecial(password: string): boolean {
 /** 3) 3회 이상 동일 문자 또는 (엄격)연속 문자 금지: abc, 123, cba, 321 등 */
 export function noInvalidRepetitionOrSequence(password: string): boolean {
   const s: string = password ?? "";
+  if (s.length === 0) return false;
   if (s.length < 3) return true;
 
   for (let i = 0; i <= s.length - 3; i += 1) {

@@ -1,32 +1,29 @@
 'use client';
 import { commonWrapper } from '@/styles/common.css';
-import { Fragment } from 'react';
+import { Fragment, useMemo } from 'react';
 import Link from "next/link";
 import Text from "@/components/common/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import ListDivider from '@/components/common/listDivider/ListDivider';
-import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
-import { useGetConnectedSns } from '@/api/auth/queries/useGetConnectedSns';
-import { useVerifyPassword } from '@/api/auth/queries/useVerifyPassword';
 import SetPassword from './setPassword/SetPassword';
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
+import { useVerifyPassword } from '@/api/mypage/account/queries/useVerifyPassword';
 
 const AccountLinkList = {
 	'user-info': { label: '회원정보 변경' },
 	'change-password': { label: '비밀번호 변경' },
-	'connect-sns': { label: 'SNS 연동정보' },
-	'notification': { label: '알림 설정' },
+	'connected-sns': { label: 'SNS 연동정보' },
 } as const;
 
 export default function Account() {
 	const { data } = useGetMyPageInfo();
-	const { data: snsProvider } = useGetConnectedSns();
-	const { data: setPassword } = useVerifyPassword();
+	const { data: needToInitialize } = useVerifyPassword();
 
-	const memberInfo = data?.memberInfo;
-	const recommendationCode = memberInfo?.myRecommendationCode ?? null;
+	const memberInfo = useMemo(() => data?.memberInfo, [data]);
+	const recommendationCode = useMemo(() => memberInfo?.myRecommendationCode ?? null, [memberInfo]);
 
 	return (
-		setPassword 
+		needToInitialize 
 		? <SetPassword />
 		: (
 			<section className={commonWrapper({ direction: 'col', align: 'start' })}>
@@ -45,9 +42,6 @@ export default function Account() {
 				>
 					{Object.keys(AccountLinkList).map((key, index) => {
 						const typedKey = key as keyof typeof AccountLinkList;
-						if (typedKey === 'change-password' && snsProvider) {
-							return null;
-						}
 						
 						return (
 							<Fragment key={typedKey}>

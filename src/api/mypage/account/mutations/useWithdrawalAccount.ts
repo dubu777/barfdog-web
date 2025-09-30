@@ -1,10 +1,10 @@
 import { UseMutationCustomOptions } from "@/types";
 import { useMutation } from "@tanstack/react-query";
-import { withdrawalAccount } from "@/api/auth/auth";
+import { withdrawalAccount } from "../account";
 
 export function useWithdrawalAccount(mutationOptions?: UseMutationCustomOptions) {
 	return useMutation({
-		mutationFn: (body: { password: string }) => withdrawalAccount(body),
+		mutationFn: () => withdrawalAccount(),
 		...mutationOptions,
 	})
 }
