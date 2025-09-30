@@ -2,14 +2,9 @@ import axios, { AxiosInstance } from "axios";
 import axiosInstance from "@/api/axiosInstance";
 import {
   ConnectSns,
-  SetPassword,
-  ChangePassword,
-  UserInfoFormValues,
-  UserInfo,
   LoginUserInfo,
   SnsProvider,
   UserType,
-  GetAuthNumber,
   ConnectSnsResponse,
   RequestFindAccountCodeResponse,
   ResetPasswordRequest,
@@ -85,63 +80,6 @@ const resetPassword = async (body: ResetPasswordRequest) => {
 const connectSns = async (body: ConnectSns): Promise<ConnectSnsResponse> => {
   const { data } = await axiosInstance.post(`/api/connectSns`, body);
   return data;
-};
-
-const getConnectedSns = async (
-  instance: AxiosInstance = axiosInstance
-): Promise<SnsProvider | null> => {
-  const { data } = await instance.get("/api/members/sns");
-  return data?.provider || null;
-};
-
-const disconnectSns = async () => {
-  return await axiosInstance.delete("/api/members/sns");
-};
-
-const verifyPassword = async () => {
-  const { data } = await axiosInstance.get("/api/members/sns/password");
-  if (data) {
-    return data.needToSetPassword;
-  }
-  throw new Error("유효하지 않은 정보입니다");
-};
-
-const setPassword = async (body: SetPassword) => {
-  return await axiosInstance.post("/api/members/sns/password", body);
-};
-
-const changePassword = async (body: ChangePassword) => {
-  return await axiosInstance.put("/api/members/password", body);
-};
-
-const getAuthNumber = async (body: {
-  phoneNumber: string;
-}): Promise<GetAuthNumber> => {
-  const { data } = await axiosInstance.post("/api/join/phoneAuth", body);
-  return data;
-};
-
-const getUserInfo = async (
-  instance: AxiosInstance = axiosInstance
-): Promise<UserInfo | null> => {
-  try {
-    const { data } = await instance.get(`/api/members`);
-    console.log(data);
-    return data;
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
-};
-
-const updateUserInfo = async (body: UserInfoFormValues) => {
-  return await axiosInstance.put("/api/members", body);
-};
-
-const withdrawalAccount = async (body: { password: string }) => {
-  return await axiosInstance.delete("/api/members", {
-    data: body,
-  });
 };
 
 const login = async (formData: { email: string; password: string }) => {
@@ -238,20 +176,11 @@ async function oauthCallbackLogin(
 export {
   requestFindEmailCode,
   login,
-  getUserInfo,
   connectSns,
-  setPassword,
-  changePassword,
-  getConnectedSns,
-  disconnectSns,
-  getAuthNumber,
-  updateUserInfo,
-  withdrawalAccount,
   logout,
   requestPasswordResetCode,
   verifyPasswordResetCode,
   resetPassword,
   verifyFindEmailCode,
-  verifyPassword,
   oauthCallbackLogin,
 };

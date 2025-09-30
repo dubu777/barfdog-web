@@ -1,7 +1,7 @@
 'use client';
 import { ReactNode, useEffect, useMemo } from "react";
 import { bootChannelIO, BootSettings, shutdownChannelIO } from "@/utils/channelTalk";
-import { useGetUserInfo } from "@/api/auth/queries/useGetUserInfo";
+import { useGetUserInfo } from "@/api/mypage/account/queries/useGetUserInfo";
 
 const ChannelTalkProvider = ({ children }: { children: ReactNode }) => {
 	const { data: userInfo } = useGetUserInfo();

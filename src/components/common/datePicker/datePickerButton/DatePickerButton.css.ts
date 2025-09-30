@@ -20,7 +20,7 @@ export const datePickerButtonBox = recipe({
 		},
 		isDisabled: {
 			true: {
-				border: `1px solid ${themeVars.colors.gray.gray500}`,
+				border: `1px solid ${themeVars.colors.gray.gray300}`,
 				backgroundColor: themeVars.colors.gray.gray200,
 
 			}

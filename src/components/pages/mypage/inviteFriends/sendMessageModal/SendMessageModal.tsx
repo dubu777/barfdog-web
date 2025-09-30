@@ -10,6 +10,7 @@ import { Controller } from "react-hook-form";
 import { useToastStore } from "@/store/useToastStore";
 import { SendReferralCode } from "@/types";
 import { useSendReferralsCodeMessage } from '@/api/mypage/inviteFriends/mutations/useSendReferralsCodeMessage';
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 
 interface SendMessageModalProps {
 	isOpen: boolean;
@@ -41,14 +42,13 @@ export default function SendMessageModal({
 	const { handleSubmit, control, isValid } = useFormHandler<SendReferralCode>(sendMessageSchema, defaultSendMessageValues);
 	const { addToast } = useToastStore();
 	const { mutate } = useSendReferralsCodeMessage();
-
+	const { handleSuccess } = useApiResponseHandler();
 	const onSubmit = (data) => {
 		mutate(
 			data,
 			{
-				onSuccess: (message) => {
-					console.log(message)
-					addToast(message as string);
+				onSuccess: () => {
+					handleSuccess('친구에게 문자로 추천 코드를 보냈어요');
 					onClose();
 				},
 				onError: (err) => {

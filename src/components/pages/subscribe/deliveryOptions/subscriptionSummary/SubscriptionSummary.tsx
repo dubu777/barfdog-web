@@ -26,7 +26,7 @@ export default function SubscriptionSummary({
         justify: "start",
         align: "start",
         gap: 16,
-        padding: 32,
+        padding: '32/20',
       })}
     >
       <Text type="title4">
