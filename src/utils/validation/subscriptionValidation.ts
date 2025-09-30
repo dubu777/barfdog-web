@@ -25,8 +25,18 @@ export const subscriptionSchema = yup.object().shape({
 export type SubscriptionValues = yup.InferType<typeof subscriptionSchema>;
 export type SubscriptionKeys = keyof SubscriptionValues;
 
-export const defaultSubscriptionValues: SubscriptionValues = {
+export const BASE_DEFAULT_SUBSCRIPTION_VALUES: SubscriptionValues = {
   mealPlan: "TWO_MEAL" as MealPlan,
   deliveryPlan: "TWO_WEEK" as DeliveryPlan,
   rawFoods: [],
 };
+
+export function defaultSubscriptionValues(
+  initial?: Partial<SubscriptionValues>
+): SubscriptionValues {
+  return {
+    ...BASE_DEFAULT_SUBSCRIPTION_VALUES,
+    ...initial,
+    rawFoods: initial?.rawFoods ?? BASE_DEFAULT_SUBSCRIPTION_VALUES.rawFoods,
+  };
+}

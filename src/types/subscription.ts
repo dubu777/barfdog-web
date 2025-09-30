@@ -249,6 +249,7 @@ interface RawFood {
   recipeId: number;
   name: string;
   oneMealGramsPerRecipe: number;
+  pricePerGram: number;
   originalPrice: number;
   displayImageUrl: UrlObject;
 }
@@ -286,6 +287,8 @@ type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";
 type PlanName = keyof typeof subscriptionPlanInfo;
 
 type SubscriptionStep = "rawFood" | "deliveryCycle";
+
+type SubscriptionEditStep = "summary" | "edit" | "confirm";
 
 type DeliveryPlan = ValueOfTuple<typeof DELIVERY_PLAN>;
 
@@ -329,4 +332,5 @@ export type {
   UpdateSubscriptionRequest,
   SubscriptionDetail,
   RawFood,
+  SubscriptionEditStep,
 };

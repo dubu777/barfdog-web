@@ -40,7 +40,7 @@ export default function SubscriptionOrderSheet({
 
   const form = useForm<SubscriptionValues>({
     resolver: yupResolver(subscriptionSchema),
-    defaultValues: defaultSubscriptionValues,
+    defaultValues: defaultSubscriptionValues(),
     mode: "all",
   });
 

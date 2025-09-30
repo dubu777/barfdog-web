@@ -81,7 +81,8 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
       else if (parsed > 500) toast("최대 급여량은 500g입니다.", "above-button");
 
       const { packPrice } = calculateRecipePack({
-        rawFoodItem,
+        recommendedPackGrams: rawFoodItem.oneMealRecommendGram,
+        pricePerGram: rawFoodItem.pricePerGram,
         customPackGrams: clamped,
       });
 

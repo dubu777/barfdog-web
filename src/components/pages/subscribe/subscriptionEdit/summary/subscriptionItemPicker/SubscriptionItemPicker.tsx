@@ -6,7 +6,7 @@ import Divider from "@/components/common/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 import { DeliveryPlan, MealPlan, RawFood } from "@/types";
 import React from "react";
-import RecipeItemCard from "../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
+import RecipeItemCard from "../../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import Text from "@/components/common/text/Text";
 
 interface SubscriptionItemPickerProps {

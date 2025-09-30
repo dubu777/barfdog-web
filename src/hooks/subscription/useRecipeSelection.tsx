@@ -35,8 +35,8 @@ export const useRecipeSelection = (
     control,
     name: "rawFoods",
   });
-  const rawFoods = useWatch({ control, name: "rawFoods" });
 
+  const rawFoods = useWatch({ control, name: "rawFoods" });
   const selectedIds = useMemo(
     () => rawFoods?.map((f) => f.recipeId) ?? [],
     [rawFoods]
@@ -57,7 +57,8 @@ export const useRecipeSelection = (
   );
 
   const canAddSelection = useMemo(
-    () => (savedSelection != null ? true : selectedIds.length < MAX_SELECTABLE_ITEMS),
+    () =>
+      savedSelection != null ? true : selectedIds.length < MAX_SELECTABLE_ITEMS,
     [savedSelection, selectedIds.length, MAX_SELECTABLE_ITEMS]
   );
 

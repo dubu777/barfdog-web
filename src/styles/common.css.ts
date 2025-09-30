@@ -480,6 +480,7 @@ export const paddingStyles = recipe({
       4: { paddingBottom: "4px" },
       6: { paddingBottom: "6px" },
       8: { paddingBottom: "8px" },
+      85: { paddingBottom: "85px" },
     },
   },
 });

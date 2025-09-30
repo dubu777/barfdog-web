@@ -1,11 +1,8 @@
 "use client";
 
 import { useGetSubscriptionDetailV2 } from "@/api/subscription/queries/useGetSubscriptionDetailV2";
-import Text from "@/components/common/text/Text";
-import { commonWrapper, marginStyles } from "@/styles/common.css";
-import PlanPicker from "./planPicker/PlanPicker";
+import { paddingStyles } from "@/styles/common.css";
 import { calculateDeliveryCyclePackCount } from "@/utils/subscription/calculateRecipe";
-import SubscriptionItemPicker from "./subscriptionItemPicker/SubscriptionItemPicker";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import PlanBottomSheet from "./bottomSheet/PlanBottomSheet";
@@ -16,78 +13,107 @@ import {
   SubscriptionValues,
 } from "@/utils/validation/subscriptionValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import SubscriptionEditSummary from "./summary/SubscriptionEditSummary";
+import { useEffect, useMemo, useState } from "react";
+import { SubscriptionEditStep } from "@/types";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { useRouter } from "next/navigation";
+import Header from "@/components/layout/header/Header";
+import RawFoodOptions from "../rawFoodOptions/RawFoodOptions";
+import { useGetRawFoodOrderSheet } from "@/api/subscription/queries/useGetRawFoodOrderSheet";
+import SubscriptionEditConfirm from "./confirm/SubscriptionEditConfirm";
+import { buildInitialSubscriptionForm } from "@/utils/subscription/buildInitialSubscriptionForm";
 
 interface SubscriptionEditProps {
   reportId: number;
 }
 
 export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
-  const { data: detailData } = useGetSubscriptionDetailV2(reportId);
-  console.log(detailData, "detailData");
-
+  // Router and state
+  const router = useRouter();
+  const [step, setStep] = useState<SubscriptionEditStep>("summary");
   const { isOpen, onClose, onToggle } = useModal();
 
+  // API queries
+  const { data: detailData } = useGetSubscriptionDetailV2(reportId);
+  const { data: rawFoodSheetData } = useGetRawFoodOrderSheet(reportId);
+
+  // Form setup
+  const stableDefaultValues = useMemo(() => defaultSubscriptionValues(), []);
   const form = useForm<SubscriptionValues>({
     resolver: yupResolver(subscriptionSchema),
-    defaultValues: defaultSubscriptionValues,
+    defaultValues: stableDefaultValues,
     mode: "all",
   });
 
-  // 변경 가능 회차
-  const editableSeq = detailData.next
+  // Form initialization with subscription data
+  useEffect(() => {
+    if (!detailData) return;
+    const initialValues = buildInitialSubscriptionForm(detailData);
+    form.reset(initialValues);
+  }, [detailData, form]);
+
+  useScrollToTop(step);
+
+  // Computed values
+  const editableSeq = detailData?.next
     ? detailData.subscriptionCount + 1
-    : detailData.subscriptionCount;
+    : detailData?.subscriptionCount;
 
-  const packCount = calculateDeliveryCyclePackCount(
-    detailData.mealPlan,
-    detailData.deliveryPlan,
-    detailData.rawFoods.length
-  );
+  const packCount = detailData
+    ? calculateDeliveryCyclePackCount(
+        detailData.mealPlan,
+        detailData.deliveryPlan,
+        detailData.rawFoods.length
+      )
+    : 0;
 
-  const handleOpenPlanSheet = () => {
-    onToggle();
+  // Event handlers
+  const handleNext = () => {
+    if (step === "summary") {
+      setStep("edit");
+    } else if (step === "edit") {
+      setStep("confirm");
+    }
   };
-  const handleGoToRawFoodOptions = () => {
-    console.log("go to raw food options");
+
+  const handleBack = () => {
+    if (step === "summary") {
+      router.back();
+    } else if (step === "edit") {
+      setStep("summary");
+    } else if (step === "confirm") {
+      setStep("edit");
+    }
   };
+
+  const handleSubmit = () => {
+    console.log("submit");
+  };
+
+  const handleOpenPlanSheet = () => onToggle();
+  const handleGoToEdit = () => setStep("edit");
+  const handleAction = step === "confirm" ? handleSubmit : handleNext;
 
   return (
-    <div
-      className={commonWrapper({
-        direction: "col",
-        gap: 20,
-        padding: "40/20",
-        align: "start",
-      })}
-    >
-      <div>
-        <Text type="title3" className={marginStyles({ bottom: 4 })}>
-          아래의 정보 확인 후<br />
-          식단 변경을 진행해 주세요
-        </Text>
-        <Text type="body2" color="red">
-          식단 변경은 {editableSeq}회차부터 적용됩니다.
-        </Text>
-      </div>
-      <FormProvider {...form}>
-        <PlanPicker
-          mealPlan={detailData.mealPlan}
-          deliveryPlan={detailData.deliveryPlan}
-          onClick={handleOpenPlanSheet}
-        />
-        <SubscriptionItemPicker
-          mealPlan={detailData.mealPlan}
-          deliveryPlan={detailData.deliveryPlan}
-          rawFoods={detailData.rawFoods}
-          packCount={packCount}
-          onClick={handleGoToRawFoodOptions}
-        />
-        <ButtonDocked
-          primaryButtonLabel="식단 변경하기"
-          onPrimaryClick={() => {}}
-          type="full-button"
-          isPrimaryDisabled={true}
-        />
+    <FormProvider {...form}>
+      <div className={paddingStyles({ bottom: 85 })}>
+        <Header onBack={handleBack} showBackButton centerTitle="식단 변경" />
+        {step === "summary" && (
+          <SubscriptionEditSummary
+            mealPlan={detailData.mealPlan}
+            deliveryPlan={detailData.deliveryPlan}
+            packCount={packCount}
+            editableSeq={editableSeq}
+            rawFoods={detailData.rawFoods}
+            onOpenPlanSheet={handleOpenPlanSheet}
+            onGoToEdit={handleGoToEdit}
+          />
+        )}
+        {step === "edit" && rawFoodSheetData && (
+          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} />
+        )}
+        {step === "confirm" && <SubscriptionEditConfirm />}
         {isOpen && (
           <PlanBottomSheet
             isOpen={isOpen}
@@ -95,7 +121,13 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
             onCommit={() => {}}
           />
         )}
-      </FormProvider>
-    </div>
+        <ButtonDocked
+          primaryButtonLabel="식단 변경하기"
+          onPrimaryClick={handleAction}
+          type="full-button"
+          isPrimaryDisabled={true}
+        />
+      </div>
+    </FormProvider>
   );
 }

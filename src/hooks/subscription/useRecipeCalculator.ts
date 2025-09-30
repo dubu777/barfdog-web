@@ -26,7 +26,8 @@ export const useRecipeCalculator = ({
     for (const rawFoodItem of originalRecipes) {
       const custom = gramsMap.get(rawFoodItem.recipeId);
       map[rawFoodItem.recipeId] = calculateRecipePack({
-        rawFoodItem,
+        recommendedPackGrams: rawFoodItem.oneMealRecommendGram,
+        pricePerGram: rawFoodItem.pricePerGram,
         customPackGrams: custom,
       });
     }

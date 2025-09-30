@@ -11,12 +11,8 @@ export interface CalculateRecipePackReturn {
 }
 
 export interface CalculateRecipePackInput {
-  rawFoodItem: {
-    recipeId: number;
-    gramPerKal: number;
-    pricePerGram: number;
-    oneMealRecommendGram: number; // 서버에서 계산된 추천 급여량
-  }; // rawFood 데이터
+  recommendedPackGrams: number; // 추천 급여량
+  pricePerGram: number; // 1g당 가격
   customPackGrams?: number; // 사용자 지정 팩당 그램 (없으면 추천 그램 사용)
 }
 
@@ -89,13 +85,10 @@ export function calculateRecipeTotal(
  * 한 팩당 그램 → 팩당 가격 → 10g당 가격 계산
  */
 export function calculateRecipePack({
-  rawFoodItem,
+  recommendedPackGrams,
+  pricePerGram,
   customPackGrams,
 }: CalculateRecipePackInput): CalculateRecipePackReturn {
-  // 서버에서 이미 계산된 추천 급여량 사용
-  const recommendedPackGrams = rawFoodItem.oneMealRecommendGram;
-  const pricePerGram = rawFoodItem.pricePerGram;
-
   // 20g 미만일 때 사용자 안내용 값 반환
   const under20g = recommendedPackGrams < 20 ? recommendedPackGrams : undefined;
 

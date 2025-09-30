@@ -26,7 +26,10 @@ export default function RawFoodOptions({
 }: RawFoodOptionsProps) {
   const { isOpen, onClose, onToggle } = useModal();
   const { control } = useFormContext<SubscriptionValues>();
-  const savedRecipes = useWatch({ control, name: "rawFoods" });
+  const savedRecipes = useWatch({
+    control,
+    name: "rawFoods",
+  });
 
   // 서버의 원본 레시피 리스트
   const originalRecipes = rawFoodSheetData.recipeList;

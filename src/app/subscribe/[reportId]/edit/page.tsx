@@ -1,6 +1,6 @@
 import { prefetchGetSubscriptionDetailV2 } from "@/api/subscription/queries/usePrefetchGetSubscriptionDetailV2";
+import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/usePrefetchRawFoodOrderSheet";
 import Spinner from "@/components/common/spinner/Spinner";
-import Header from "@/components/layout/header/Header";
 import SubscriptionEdit from "@/components/pages/subscribe/subscriptionEdit/SubscriptionEdit";
 import {
   dehydrate,
@@ -20,13 +20,13 @@ export default async function SubscriptionEditPage({
   const reportId = Number(params.reportId);
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionDetailV2(queryClient, reportId);
+  await prefetchGetRawFoodOrderSheet(queryClient, reportId);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <Header centerTitle="식단 변경" showBackButton />
           <SubscriptionEdit reportId={reportId} />
         </Suspense>
       </ErrorBoundary>
