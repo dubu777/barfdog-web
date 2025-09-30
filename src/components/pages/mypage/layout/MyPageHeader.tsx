@@ -51,7 +51,7 @@ const MyPageHeader = () => {
     '/mypage/reward': { centerTitle: '적립금내역', showBackButton: true, onBack: goBack },
     '/mypage/invite-friends': { centerTitle: '친구 초대', showBackButton: true },
     '/mypage/account': { centerTitle: '계정 정보', showBackButton: true, onBack: goBack },
-    '/mypage/account/connect-sns': { centerTitle: 'SNS 연동정보', showBackButton: true, onBack: goBack },
+    '/mypage/account/connected-sns': { centerTitle: 'SNS 연동정보', showBackButton: true, onBack: goBack },
     '/mypage/account/user-info': { centerTitle: '회원정보 변경', showBackButton: true, onBack: goBack },
     '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showBackButton: true, onBack: goBack },
     '/mypage/account/notification': { centerTitle: '알림 설정', showBackButton: true, onBack: goBack },
