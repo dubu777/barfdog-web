@@ -6,13 +6,16 @@ import { commonWrapper } from "@/styles/common.css";
 import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { Controller, useFormContext } from "react-hook-form";
 
-export default function MealFrequency() {
+interface MealFrequencyProps {
+  source?: "edit" | "order";
+}
+
+export default function MealFrequency({ source }: MealFrequencyProps) {
   const { control } = useFormContext<SubscriptionValues>();
 
   return (
-    <div className={selectOptionWrapper}>
+    <div className={selectOptionWrapper({ source })}>
       <Text type="title4">식사량</Text>
-
       <Controller
         name="mealPlan"
         control={control}

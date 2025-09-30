@@ -16,7 +16,6 @@ import {
   VerifyFindAccountCodeRequest,
   VerifyFindAccountCodeResponse,
 } from "@/types";
-import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
 import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
 import { FindEmailValues } from "@/utils/validation/auth/findEmail";
 

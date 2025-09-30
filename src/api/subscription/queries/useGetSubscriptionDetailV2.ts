@@ -1,14 +1,14 @@
 import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { getSubscriptionDetailV2 } from "../subscription";
-import { SubscriptionDetailDto } from "@/types/subscription";
+import { SubscriptionDetail } from "@/types/subscription";
 import { UseSuspenseQueryCustomOptions } from "@/types";
 
 export function useGetSubscriptionDetailV2(
   reportId: number,
-  queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionDetailDto>
+  queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionDetail>
 ) {
-  return useSuspenseQuery<SubscriptionDetailDto>({
+  return useSuspenseQuery<SubscriptionDetail>({
     queryKey: [
       queryKeys.SUBSCRIPTION.BASE,
       queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL,

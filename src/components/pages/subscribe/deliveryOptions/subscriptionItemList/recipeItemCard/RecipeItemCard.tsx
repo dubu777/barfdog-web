@@ -1,4 +1,4 @@
-import { commonWrapper } from "@/styles/common.css";
+import { commonWrapper, marginStyles } from "@/styles/common.css";
 import * as styles from "./RecipeItemCard.css";
 import Text from "@/components/common/text/Text";
 import Image from "next/image";
@@ -37,19 +37,19 @@ export default function RecipeItemCard({
       <div
         className={commonWrapper({
           direction: "col",
-          gap: 6,
-          justify: "start",
+          justify: "between",
           align: "start",
         })}
       >
         <div>
-          <Text type="headline2" block>
+          <Text type="headline2" block className={marginStyles({ bottom: 4 })}>
             {recipeName}
           </Text>
           <Text
             type="body3"
             color="gray600"
             block
+            className={marginStyles({ bottom: 6 })}
           >{`${packGrams}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</Text>
         </div>
         <Text type="label3">{originalPrice.toLocaleString()}원</Text>

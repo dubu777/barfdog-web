@@ -1,5 +1,6 @@
 import { prefetchGetSubscriptionDetailV2 } from "@/api/subscription/queries/usePrefetchGetSubscriptionDetailV2";
 import Spinner from "@/components/common/spinner/Spinner";
+import Header from "@/components/layout/header/Header";
 import SubscriptionEdit from "@/components/pages/subscribe/subscriptionEdit/SubscriptionEdit";
 import {
   dehydrate,
@@ -25,6 +26,7 @@ export default async function SubscriptionEditPage({
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
+          <Header centerTitle="식단 변경" showBackButton />
           <SubscriptionEdit reportId={reportId} />
         </Suspense>
       </ErrorBoundary>

@@ -11,6 +11,7 @@ import {
   UsingCoupon,
   CreateSubscriptionRequest,
   CreateSubscriptionResponse,
+  SubscriptionDetail,
 } from "@/types";
 import { AxiosInstance } from "axios";
 
@@ -152,7 +153,7 @@ const getRawFoodOrderSheet = async (
 const getSubscriptionDetailV2 = async (
   reportId: number,
   instance: AxiosInstance = axiosInstance
-): Promise<any> => {
+): Promise<SubscriptionDetail> => {
   const { data } = await instance.get(
     `/api/v2/orders/subscription/${reportId}`
   );

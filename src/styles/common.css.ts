@@ -1,6 +1,7 @@
 import { themeVars } from "./theme.css";
 import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
+import { all } from "axios";
 
 export const commonLayoutContainer = style({
   display: "flex",
@@ -115,7 +116,7 @@ globalStyle(`${sanitizedHTML} b, strong`, {
 });
 
 globalStyle(`${sanitizedHTML} p`, {
-  margin: '10px 0',
+  margin: "10px 0",
 });
 
 export const commonWrapper = recipe({
@@ -203,8 +204,8 @@ export const commonWrapper = recipe({
       },
     },
     paddingBottom: {
-      0: {
-        paddingBottom: "0px",
+      4: {
+        paddingBottom: "4px",
       },
       12: {
         paddingBottom: "12px",
@@ -391,16 +392,16 @@ export const imageWrapper = recipe({
   variants: {
     objectFit: {
       cover: {
-        objectFit: 'cover',
+        objectFit: "cover",
       },
       contain: {
-        objectFit: 'contain',
-      }
+        objectFit: "contain",
+      },
     },
     objectPosition: {
       bottom: {
-        objectPosition: 'bottom',
-      }
+        objectPosition: "bottom",
+      },
     },
     borderRadius: {
       6: {
@@ -408,7 +409,7 @@ export const imageWrapper = recipe({
       },
       8: {
         borderRadius: 8,
-      }
+      },
     },
     width: {
       72: {
@@ -433,12 +434,49 @@ export const imageWrapper = recipe({
       },
     },
     height: {
-      '100%': {
-        height: '100%',
+      "100%": {
+        height: "100%",
       },
-      'auto': {
-        height: 'auto',
-      }
-    }
+      auto: {
+        height: "auto",
+      },
+    },
   },
-})
+});
+
+export const marginStyles = recipe({
+  base: {},
+  variants: {
+    top: {
+      4: { marginTop: "4px" },
+      6: { marginTop: "6px" },
+      8: { marginTop: "8px" },
+    },
+    bottom: {
+      4: { marginBottom: "4px" },
+      6: { marginBottom: "6px" },
+      8: { marginBottom: "8px" },
+    },
+  },
+});
+
+export const paddingStyles = recipe({
+  base: {},
+  variants: {
+    all: {
+      20: {
+        padding: "20px",
+      },
+    },
+    top: {
+      4: { paddingTop: "4px" },
+      6: { paddingTop: "6px" },
+      8: { paddingTop: "8px" },
+    },
+    bottom: {
+      4: { paddingBottom: "4px" },
+      6: { paddingBottom: "6px" },
+      8: { paddingBottom: "8px" },
+    },
+  },
+});

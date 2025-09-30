@@ -245,6 +245,25 @@ interface RawFoodDetailResponse {
   itemImageUrl: string;
 }
 
+interface RawFood {
+  recipeId: number;
+  name: string;
+  oneMealGramsPerRecipe: number;
+  originalPrice: number;
+  displayImageUrl: UrlObject;
+}
+
+interface SubscriptionDetail {
+  deliveryPlan: DeliveryPlan;
+  mealPlan: MealPlan;
+  next: boolean; // false면 이번 배송부터 변경가능
+  orderId: number;
+  paymentPrice: number; // 결제한 금액
+  rawFoods: RawFood[];
+  subscriptionCount: number; // 현재 구독 회차
+  subscriptionId: number;
+}
+
 interface UpdateSubscriptionRequest {
   isNext: boolean; // 다음 배송부터 변경할지 여부 - false면 이번 배송부터 변경
   deliveryPlan: DeliveryPlan;
@@ -308,4 +327,6 @@ export type {
   CreateSubscriptionResponse,
   SubscriptionStatus,
   UpdateSubscriptionRequest,
+  SubscriptionDetail,
+  RawFood,
 };

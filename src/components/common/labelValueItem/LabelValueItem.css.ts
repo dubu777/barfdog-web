@@ -7,13 +7,16 @@ export const labelValueItemContainer = recipe({
     justifyContent: "flex-start",
     alignItems: "center",
     alignSelf: "stretch",
-    gap: "6px",
   },
   variants: {
     align: {
       start: { alignItems: "flex-start" },
       center: { alignItems: "center" },
       end: { alignItems: "flex-end" },
+    },
+    gap: {
+      6: { gap: "6px" },
+      12: { gap: "12px" },
     },
   },
   defaultVariants: { align: "center" },
@@ -25,6 +28,7 @@ export const labelText = recipe({
   },
   variants: {
     width: {
+      60: { width: "60px" },
       80: { width: "80px" },
       100: { width: "100px" },
       120: { width: "120px" },

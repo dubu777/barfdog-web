@@ -9,11 +9,12 @@ interface LabelValueItemProps {
   label: string;
   labelType?: keyof typeof textStyles;
   labelColor?: keyof typeof fontColors;
-  labelWidth?: 80 | 100 | 120;
+  labelWidth?: 60 | 80 | 100 | 120;
   value?: ReactNode;
   valueColor?: keyof typeof fontColors;
   valueType?: keyof typeof textStyles;
   align?: "start" | "center" | "end";
+  gap?: 6 | 12;
 }
 
 export default function LabelValueItem({
@@ -25,13 +26,14 @@ export default function LabelValueItem({
   valueColor = "gray700",
   valueType = "body2",
   align = "center",
+  gap = 6,
 }: LabelValueItemProps) {
   const isNullish = value === null || value === undefined;
   const isEmptyString = typeof value === "string" && value.trim() === "";
 
   const displayValue = isNullish || isEmptyString ? "-" : value;
   return (
-    <div className={styles.labelValueItemContainer({ align })}>
+    <div className={styles.labelValueItemContainer({ align, gap })}>
       <Text
         type={labelType}
         color={labelColor}

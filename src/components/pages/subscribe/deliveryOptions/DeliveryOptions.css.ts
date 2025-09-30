@@ -1,8 +1,9 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const deliveryOptionsContainer = style({
-  position: 'relative',
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
@@ -10,19 +11,29 @@ export const deliveryOptionsContainer = style({
   backgroundColor: themeVars.colors.gray.gray0,
 });
 
-
-
-
-export const selectOptionWrapper = style({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  width: "100%",
-  padding: '28px 20px',
-  gap: "16px",
+export const selectOptionWrapper = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%",
+    gap: "16px",
+  },
+  variants: {
+    source: {
+      edit: {
+        padding: "20px",
+      },
+      order: {
+        padding: "28px 20px",
+      },
+    },
+  },
+  defaultVariants: {
+    source: "order",
+  },
 });
-
 
 export const mealFrequencyButtonWrapper = style({
   width: "276px",
-})
+});
