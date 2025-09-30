@@ -5,12 +5,12 @@ import { Controller } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Text from "@/components/common/text/Text";
-import { useToastStore } from "@/store/useToastStore";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { SetPassword as SetPasswordType } from "@/types";
-import { useSetPassword } from "@/api/auth/mutations/useSetPassword";
+import { SetPassword as SetPasswordType } from "@/types/mypage/account";
 import { getPasswordCriteria, isValidPassword } from "@/utils/validation/auth/password";
 import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
+import { useSetPassword } from "@/api/mypage/account/mutations/useSetPassword";
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 
 const setPasswordSchema = yup.object().shape({
 	password: yup.string().required("새 비밀번호를 입력해주세요"),
@@ -26,23 +26,25 @@ const defaultSetPasswordValues: SetPasswordType = {
 };
 
 export default function SetPassword() {
-	const { handleSubmit, control, errors, setValue, trigger, dirtyFields, isValid, getValues } = useFormHandler<SetPasswordType>(setPasswordSchema, defaultSetPasswordValues);
+	const { 
+		handleSubmit, 
+		control, 
+		errors, 
+		setValue, 
+		trigger, 
+		dirtyFields,
+		getValues,
+		isValid,
+	} = useFormHandler<SetPasswordType>(setPasswordSchema, defaultSetPasswordValues);
 	const { mutate } = useSetPassword();
-	const { addToast } = useToastStore();
+	const { handleSuccess } = useApiResponseHandler();
 
 	const onSubmit = (data: SetPasswordType) => {
 		mutate(
 			data,
 			{
-				onSuccess: (data) => {
-					if (data.status === 200) {
-						console.log(data)
-						// router.refresh();
-						window.location.reload();
-						addToast('비밀번호 설정이 완료되었습니다!', 'above-button');
-					} else {
-						return;
-					}
+				onSuccess: () => {
+					handleSuccess('비밀번호 설정이 완료됐습니다');
 				}
 			}
 		)
