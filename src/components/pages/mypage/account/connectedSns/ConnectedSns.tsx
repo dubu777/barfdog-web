@@ -77,7 +77,7 @@ export default function ConnectedSns() {
           isOpen={isOpenDisconnectAlert}
           onClose={onCloseDisconnectAlert}
           title={`${OAUTH_CLIENT_CONFIG[snsProvider].name} 연동을 해제하시겠어요?`}
-          content="해제하면 더이상 카카오 계정으로 로그인할 수 없어요"
+          content={`연동을 해제하면 ${OAUTH_CLIENT_CONFIG[snsProvider].name} 로그인은 중단돼요. 원하실 때 다시 연결하실 수 있어요.`}
           confirmText="해제"
           cancelText="취소"
           onConfirm={handleDisconnectSns}

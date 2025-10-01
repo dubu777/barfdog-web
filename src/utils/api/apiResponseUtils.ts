@@ -41,3 +41,24 @@ export const extractErrorMessage = (
   
   return defaultMessage;
 };
+
+/**
+ * Error 객체에서 에러 코드만 추출하는 함수
+ * API에서 던진 에러 메시지에서 에러 코드만 반환
+ * @param error Error 객체
+ * @param defaultCode 기본 에러 코드
+ * @returns 에러 코드
+ */
+export const extractErrorCode = (
+  error: unknown,
+  defaultCode: string = 'UNKNOWN_ERROR'
+): string => {
+  if (error instanceof Error) {
+    // API에서 던진 에러 메시지에서 에러 코드만 추출
+    // 형식: "ERROR_CODE: 사용자 메시지" 또는 "사용자 메시지"
+    const errorParts = error.message.split(': ');
+    return errorParts.length > 1 ? errorParts[0] : defaultCode;
+  }
+  
+  return defaultCode;
+};
