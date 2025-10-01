@@ -1,4 +1,4 @@
-import { GenderType } from "../auth";
+import { GenderType, SnsProvider } from "../auth";
 import { AddressDto } from "../subscription";
 
 interface SetPassword {
@@ -32,7 +32,7 @@ interface UpdateUserInfo extends BaseUserInfo {
 
 interface UserInfo extends BaseUserInfo {
   memberId: number;
-  provider: string | null;
+  provider: SnsProvider;
   providerId: number | null;
 }
 

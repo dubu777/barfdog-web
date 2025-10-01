@@ -11,6 +11,8 @@ import Divider from "@/components/common/divider/Divider";
 import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Text from "@/components/common/text/Text";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import useModal from "@/hooks/useModal";
 import useDeviceState from "@/hooks/useDeviceState";
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 import { deleteCookie } from "@/utils/auth/cookie";
@@ -18,6 +20,7 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 import { useWithdrawalAccount } from "@/api/mypage/account/mutations/useWithdrawalAccount";
 import { useLogout } from "@/api/auth/mutations/useLogout";
+import { extractErrorCode } from "@/utils/api/apiResponseUtils";
 
 export type WithdrawalStep = 'notice' | 'password';
 
@@ -53,6 +56,7 @@ export default function WithdrawalAccount() {
 	const { mutate: withdrawalAccount } = useWithdrawalAccount();
   const { mutate: logout } = useLogout();
   const { handleError } = useApiResponseHandler();
+  const { isOpen: isOpenErrorAlert, onClose: onCloseErrorAlert, onToggle: onToggleErrorAlert } = useModal();
 
   const onSubmit = () => {
     withdrawalAccount(undefined, 
@@ -68,13 +72,15 @@ export default function WithdrawalAccount() {
               router.push("/");
               router.refresh();
             },
-            onError: (error) => {
-              console.error("Logout error", error);
-            },
           });
         },
         onError: (error) => {
-          handleError(error, '회원 탈퇴를 진행할 수 없습니다. 관리자에게 문의해주세요.', undefined, 'above-button');
+          const errorCode = extractErrorCode(error);
+          if (errorCode === 'NOT_DELETABLE_RESOURCE') {
+            onToggleErrorAlert();
+          } else {
+            handleError(error, '회원 탈퇴를 진행할 수 없습니다. 관리자에게 문의해주세요.', undefined, 'above-button');
+          }
         }
       }
     );
@@ -150,6 +156,18 @@ export default function WithdrawalAccount() {
         onPrimaryClick={onSubmit}
         isPrimaryDisabled={!confirm}
       />
+      {isOpenErrorAlert && 
+        <AlertModal
+          isOpen={isOpenErrorAlert}
+          onConfirm={onCloseErrorAlert}
+          onClose={onCloseErrorAlert}
+          title='회원 탈퇴를 진행할 수 없습니다'
+          content='현재 구독 중이거나 완료되지 않은 주문이 있어 탈퇴할 수 없습니다. 구독 해지 및 주문 완료 후 다시 시도해 주세요.'
+          confirmText='확인'
+          buttonPosition='right'
+          closeOnBackgroundClick={false}
+        />
+      }
 		</section>
 	);
 }

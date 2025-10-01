@@ -1,5 +1,5 @@
 import axiosInstance from "@/api/axiosInstance";
-import { ApiResponse } from "@/types";
+import { ApiResponse, SnsProvider } from "@/types";
 import { ChangePassword, RequestPhoneChangeAuthToken, SetPassword, UpdateUserInfo, UserInfo, VerifyPhoneChangeCode } from "@/types/mypage/account";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 import { AxiosInstance } from "axios";
@@ -9,7 +9,12 @@ const getUserInfo = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<UserInfo | null> => {
   const { data } : { data: ApiResponse<UserInfo> } = await instance.get(`/api/v2/accounts/my-page/me`);
-  return validateApiResponse(data, "회원 정보 조회에 실패했습니다.");
+  const responseData = validateApiResponse(data, "회원 정보 조회에 실패했습니다.");
+  const { provider, ...rest } = responseData;
+  return {
+    ...rest,
+    provider: provider.toLocaleLowerCase() as SnsProvider,
+  }
 };
 
 // 비밀번호 설정 확인
