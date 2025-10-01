@@ -73,7 +73,6 @@ export default function UserInfo() {
       authToken: data.authToken,
       gender: data.gender,
       name: data.name,
-      password: data.password,
       phoneNumber: data.phoneNumber,
       receiveEmail: data?.receiveEmail ?? false,
       receiveSms: data?.receiveSms ?? false,
@@ -83,11 +82,9 @@ export default function UserInfo() {
     mutate(body, {
       onSuccess: () => {
         handleSuccess("회원 정보가 수정됐습니다", "above-button");
-        setValue("password", "");
       },
       onError: (error) => {
         handleError(error, "회원 정보 수정에 실패했습니다.", undefined, "above-button");
-        setValue("password", "");
       },
     });
   };
@@ -124,22 +121,6 @@ export default function UserInfo() {
                 placeholder="이름을 입력해주세요."
                 label="이름"
                 error={errors?.name?.message}
-                isRequired
-              />
-            )}
-          />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <InputField
-                value={field.value ?? ""}
-                onChange={(e) => field.onChange(e)}
-                variants="box"
-                placeholder="기존 비밀번호를 입력해주세요."
-                label="비밀번호"
-                error={errors?.password?.message}
-                type="password"
                 isRequired
               />
             )}

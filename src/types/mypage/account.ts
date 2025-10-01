@@ -26,7 +26,6 @@ interface BaseUserInfo {
 interface UpdateUserInfo extends BaseUserInfo {
   authCode: string;
   authToken: string;
-  password: string;
   hasCheckedAuthNumber?: boolean;
   defaultPhoneNumber?: string;
 }
