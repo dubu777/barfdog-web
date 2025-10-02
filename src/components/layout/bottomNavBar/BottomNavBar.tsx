@@ -52,12 +52,12 @@ export default function BottomNavBar({
       url: "/",
     },
     {
-      icon: pathname === "/store" ? <StoreActive /> : <Store />,
+      icon: pathname.startsWith("/store") ? <StoreActive /> : <Store />,
       label: "스토어",
       url: "/store",
     },
     {
-      icon: pathname === "/diet-analysis" ? <AiActive /> : <Ai />,
+      icon: pathname.startsWith("/diet-analysis") ? <AiActive /> : <Ai />,
       label: "Ai추천식단",
       url: dietAnalysisHref,
     },
@@ -81,9 +81,12 @@ export default function BottomNavBar({
           {menu.icon}
           <Text
             type="caption"
-            color={pathname === menu.url ? "red" : "gray600"}
+            color={
+              menu.url === "/"
+                ? pathname === "/" ? "red" : "gray600"
+                : pathname.startsWith(menu.url) ? "red" : "gray600"
+            }
             block
-            // className={styles.navLabel}
           >
             {menu.label}
           </Text>

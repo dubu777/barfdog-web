@@ -6,45 +6,48 @@ import { commonWrapper } from "@/styles/common.css";
 import DogIcon from "public/images/dietAnalysis/first-dog.svg";
 import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
+import Card from "@/components/common/card/Card";
 
 export default function DietAnalysisGuest() {
   const router = useRouter();
-
-  const handleGotoSurvey = () => {
-    window.location.href = "/diet-analysis/survey"; // 펫 등록 api 완성 되면 펫 등록 쪽으로 이동
-  };
-  const handleGotoSheet = () => {
-    router.push("/diet-analysis/subscribe?reportId=3752");
-  };
-
   return (
-    <div className={commonWrapper({ direction: "col", padding: 20, gap: 32 })}>
-      <div className={commonWrapper({ gap: 12, direction: "col" })}>
+    <div
+      className={commonWrapper({
+        direction: "col",
+        padding: 20,
+        backgroundColors: "gray50",
+        justify: "start",
+        height: "fullWithHeader",
+      })}
+    >
+      <Card shadow="light" gap={40} padding={16}>
         <div>
-          <Text type="title2">바프독 AI가 추천하는</Text>
-          <Text type="title2">우리 아이 맞춤 건강 식단</Text>
+          <Text type="title2" align="center">
+            로그인하고
+            <br />
+            1:1 식단을 추천받아 보세요
+          </Text>
+          <Text type="body2" color="gray700" align="center">
+            우리 아이 상태에 딱 맞는 식단을 알려드려요!
+          </Text>
+          <div
+            style={{
+              width: "300px",
+              height: "300px",
+              backgroundColor: "gray",
+              marginTop: "20px",
+            }}
+          />
         </div>
-        <Text type="body3" color="gray800">
-          우리 아이 상태에 딱 맞는 식단을 알려드려요!
-        </Text>
-      </div>
-      <SvgIcon src={DogIcon} width={175} height={140} />
-      <Button
-        buttonColor="gray900"
-        size="lg"
-        fullWidth
-        onClick={handleGotoSurvey}
-      >
-        식단 추천받기
-      </Button>
-      <Button
-        buttonColor="gray900"
-        size="lg"
-        fullWidth
-        onClick={handleGotoSheet}
-      >
-        주문서 이동
-      </Button>
+        {/* 이미지 작업 미완료로 임시 div */}
+        <Button
+          size="lg"
+          fullWidth
+          onClick={() => router.push("/diet-analysis")}
+        >
+          로그인하고 식단 추천받기
+        </Button>
+      </Card>
     </div>
   );
 }

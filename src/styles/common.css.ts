@@ -261,6 +261,11 @@ export const commonWrapper = recipe({
         paddingTop: "80px",
       },
     },
+    marginBottom: {
+      85: {
+        marginBottom: "85px",
+      },
+    },
     direction: {
       col: {
         flexDirection: "column",
