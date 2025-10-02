@@ -10,13 +10,7 @@ interface EmptyPetListProps {
 
 export default function EmptyPetList({ onCreate }: EmptyPetListProps) {
   return (
-    <div
-      className={commonWrapper({
-        direction: "col",
-        backgroundColors: "gray50",
-        minHeight: "fullWithHeader",
-      })}
-    >
+    <div className={styles.emptyPetContainer}>
       <EmptyIcon />
       <Text className={styles.emptyTitle} type="title2">
         멍...

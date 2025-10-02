@@ -81,56 +81,33 @@ export default function SurveyStep9({
       />
 
       <div className={commonWrapper({ align: "start", gap: 8 })}>
-        {PROBIOME_FORM_INFO.healthStatus.allergyStatus.options.map((option) => (
-          <SurveyButton
-            key={option.label}
-            label={option.label}
-            value={option.value}
-            isChecked={isStatusSelected(option.value)}
-            onToggle={onStatusToggle}
-          />
-        ))}
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.allergyStatus.options.map(
+          (option) => (
+            <SurveyButton
+              key={option.label}
+              label={option.label}
+              value={option.value}
+              isChecked={isStatusSelected(option.value)}
+              onToggle={onStatusToggle}
+            />
+          )
+        )}
       </div>
       {inedibleFoodStatus === "HAS_ALLERGY" && (
-        <>
-          <Text type="label2" color="gray500">
-            *아래 해당되는 사항을 모두 선택해주세요
-          </Text>
-          <div
-            className={commonWrapper({
-              direction: "col",
-              gap: 32,
-              paddingBottom: 85,
-            })}
-          >
-            {PROBIOME_FORM_INFO.healthStatus.allergenFoodList.groups.map(
-              (group) => (
-                <SurveyButtonGroup
-                  key={group.category}
-                  title={group.category}
-                  isWrap
-                >
-                  {group.options.map((opt) => {
-                    return (
-                      <Chips
-                        key={opt.value}
-                        variant="solid"
-                        color={isFoodSelected(opt.value) ? "red" : "gray800"}
-                        size="lg"
-                        borderRadius="lg"
-                        switchOff={!isFoodSelected(opt.value)}
-                        showCheckIcon
-                        onClick={() => onFoodToggle(opt.value)}
-                      >
-                        {opt.label}
-                      </Chips>
-                    );
-                  })}
-                </SurveyButtonGroup>
-              )
-            )}
-          </div>
-        </>
+        <SurveyButtonGroup direction="col" isMultiple>
+          {DIET_ANALYSIS_FORM_INFO.lifestyle.allergenFoodList.options.map(
+            (option) => (
+              <SurveyButton
+                key={option.label}
+                label={option.label}
+                value={option.value}
+                inputType="checkbox"
+                isChecked={isFoodSelected(option.value)}
+                onToggle={() => onFoodToggle(option.value)}
+              />
+            )
+          )}
+        </SurveyButtonGroup>
       )}
       <InedibleBottomSheet isOpen={isOpen} onClose={onClose} />
     </>

@@ -17,13 +17,11 @@ export default function SurveyStep10({
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
 
-  // healthConcerns field controller
   const { field: concernsField } = useController({
     name: "step10.healthConcerns",
     control,
   });
 
-  // useSurveyRankOption must be called at top level
   const selected = (concernsField.value as string[]) ?? [];
   const { onToggle, isDisabled, getRank, onReselect } =
     useSurveyRankOption<string>(

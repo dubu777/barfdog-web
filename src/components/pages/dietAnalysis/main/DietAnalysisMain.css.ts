@@ -1,3 +1,4 @@
+import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const emptyTitle = style({
@@ -15,4 +16,14 @@ export const renewalNoticeButtonWrapper = style({
   gap: "20px",
   alignItems: "center",
   width: "100%",
+});
+
+export const emptyPetContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: themeVars.colors.gray.gray50,
+  height: "calc(100vh - 52px)",
+  marginTop: "-40px",
 });

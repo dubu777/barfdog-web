@@ -204,6 +204,32 @@ const DIET_ANALYSIS_FORM_INFO = {
         { value: "VERY_LOW", label: "매우 적어요" },
       ],
     },
+    // 알러지 여부
+    allergyStatus: {
+      key: "알러지 여부",
+      title: "알러지가 있나요?",
+      options: [
+        { value: "HAS_ALLERGY", label: "있어요" },
+        { value: "NO_ALLERGY", label: "없어요" },
+      ],
+    },
+    allergenFoodList: {
+      key: "알러지원",
+
+      options: [
+        { value: "CHICKEN", label: "닭" },
+        { value: "TURKEY", label: "칠면조" },
+        { value: "DUCK", label: "오리" },
+        { value: "LAMB", label: "양" },
+        { value: "BEEF", label: "소" },
+        { value: "RABBIT", label: "토끼" },
+        { value: "GOAT", label: "염소" },
+        { value: "QUAIL", label: "메추라기" },
+        { value: "PORK", label: "돼지" },
+        { value: "OSTRICH", label: "타조" },
+      ],
+    },
+
     snackCountLevel: {
       options: [
         {
