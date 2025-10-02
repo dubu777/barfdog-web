@@ -8,7 +8,6 @@ const updateUserInfoSchema = yup.object().shape({
     .string()
     .min(2, "이름은 최소 2자 이상이어야 합니다.")
     .required("이름은 필수입니다."),
-  password: yup.string().required("비밀번호는 필수입니다."),
   birthday: yup.string().required("생년월일은 필수입니다."),
   gender: yup.string().required("성별은 필수입니다."),
   phoneNumber: yup
@@ -19,7 +18,6 @@ const updateUserInfoSchema = yup.object().shape({
 
 const defaultUpdateUserInfoValues = (userInfo?: UserInfo) => ({
   name: userInfo?.name || "",
-  password: "",
   phoneNumber: userInfo?.phoneNumber || "",
   birthday: formatDate(userInfo?.birthday as string, "onlyDateDot") || "",
   gender: (userInfo?.gender as GenderType) || "MALE",
