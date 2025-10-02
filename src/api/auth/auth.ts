@@ -1,15 +1,14 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 import axiosInstance from "@/api/axiosInstance";
 import {
   ConnectSns,
-  LoginUserInfo,
   SnsProvider,
-  UserType,
   ConnectSnsResponse,
   RequestFindAccountCodeResponse,
   ResetPasswordRequest,
   VerifyFindAccountCodeRequest,
   VerifyFindAccountCodeResponse,
+  OAuthLoginResponse,
 } from "@/types";
 import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
 import { FindEmailValues } from "@/utils/validation/auth/findEmail";
@@ -95,12 +94,12 @@ const logout = async () => {
   return response;
 };
 
-// Next JS 서버 - OAuth 토큰 요청
-export async function exchangeProviderToken(
+// 1) OAuth 토큰 요청 - Next 서버
+const exchangeProviderToken = async (
   provider: SnsProvider,
   code: string,
   state?: string
-) {
+) => {
   const baseUrl = window.location.origin;
   const { data } = await axios.post(`${baseUrl}/api/oauth/${provider}/token`, {
     code,
@@ -109,69 +108,48 @@ export async function exchangeProviderToken(
 
   if (!data?.access_token) throw new Error("토큰 교환 실패");
   return data as { access_token: string };
-}
+};
 
-export async function loginWithAccessToken(
+// 2) OAuth 토큰 전달하여 인증 요청 - Java 서버
+const loginWithOAuthToken = async (
   provider: SnsProvider,
   accessToken: string
-) {
+) => {
   const res = await axiosInstance.post(`/api/login/${provider}`, {
     accessToken,
   });
+
   return {
-    body: res.data,
+    response: res.data,
     headers: res.headers as Record<string, string | undefined>,
   };
-}
+};
 
-export function deriveUserType(code?: number): UserType {
-  switch (code) {
-    case 251:
-      return "NON_MEMBER";
-    case 252:
-      return "MEMBER";
-    case 253:
-      return "MEMBER_WITH_SMS_KAKAO";
-    case 254:
-      return "MEMBER_WITH_SMS_NAVER";
-    case 200:
-      return "SUCCESS";
-    default:
-      return "NON_MEMBER";
-  }
-}
-
-async function oauthCallbackLogin(
+/**
+ * 3) exchangeProviderToken로 OAuth AccessToken 받아와서
+ *    loginWithOAuthToken로 전달 하여 로그인
+ * */
+const oauthCallbackLogin = async (
   provider: SnsProvider,
   code: string,
   state?: string
-): Promise<LoginUserInfo & { userType: UserType }> {
+): Promise<OAuthLoginResponse> => {
   const { access_token } = await exchangeProviderToken(provider, code, state);
-  const { body, headers } = await loginWithAccessToken(provider, access_token);
-
-  const resultCode = Number(body.resultcode);
-  const userType = deriveUserType(
-    Number.isNaN(resultCode) ? undefined : resultCode
+  const { response, headers } = await loginWithOAuthToken(
+    provider,
+    access_token
   );
 
   const tokenFromHeader =
     (headers?.authorization as string | undefined) ?? null;
-  const tokenFromBody = (body?.token as string | undefined) ?? null;
-  const token = tokenFromHeader || tokenFromBody || null;
+  const token = tokenFromHeader || null;
 
   return {
     provider,
-    providerId: code,
-    phoneNumber:
-      provider === "kakao"
-        ? body?.kakao_account?.phone_number
-        : body?.response?.mobile,
-    message: body?.message,
-    resultCode: body?.resultcode,
-    userType,
     token,
+    response,
   };
-}
+};
 
 export {
   requestFindEmailCode,

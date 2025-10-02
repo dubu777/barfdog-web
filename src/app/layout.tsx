@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import Toast from "@/components/common/toast/Toast";
 import SnackBar from "@/components/common/snackBar/SnackBar";
+import GlobalAlertModal from "@/components/common/modal/globalAlertModal/GlobalAlertModal";
 // import ChannelTalkProvider from "@/providers/ChannelTalkProvider";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
           <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
             {children}
           </div>
+          <GlobalAlertModal />
           <SnackBar />
           <Toast />
           <div id="modal-root" />

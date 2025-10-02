@@ -58,5 +58,3 @@ export const OAUTH_CLIENT_CONFIG: Record<SnsProvider, OAuthClientConfig> = {
     name: "네이버",
   },
 };
-
-export const PROVIDERS = ["kakao", "naver"] as const;

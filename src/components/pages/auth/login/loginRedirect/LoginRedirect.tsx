@@ -13,7 +13,7 @@ interface LoginRedirectProps {
     state?: string;
   };
 }
-const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
+export default function LoginRedirect({ searchParams }: LoginRedirectProps) {
   const { provider, code, state } = searchParams;
   const { mutate: socialLogin } = useOAuthCallbackLogin();
   const { addToast } = useToastStore();
@@ -52,6 +52,4 @@ const LoginRedirect = ({ searchParams }: LoginRedirectProps) => {
   }, [code, provider, socialLogin]);
 
   return <Spinner fullscreen />;
-};
-
-export default LoginRedirect;
+}

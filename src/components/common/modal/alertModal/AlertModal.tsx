@@ -24,7 +24,7 @@ export default function AlertModal({
   buttonType = "default",
   confirmText,
   cancelText,
-  buttonPosition = "center",
+  buttonPosition = "right",
   onConfirm,
   onCancel,
   isOpen,
@@ -62,7 +62,11 @@ export default function AlertModal({
   if (!isOpen) return null;
 
   return (
-    <ModalBackground isVisible={isOpen} onClose={onClose} closeOnBackgroundClick={closeOnBackgroundClick}>
+    <ModalBackground
+      isVisible={isOpen}
+      onClose={onClose}
+      closeOnBackgroundClick={closeOnBackgroundClick}
+    >
       <div
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}
