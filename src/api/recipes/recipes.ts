@@ -4,7 +4,7 @@ import { ApiResponse, RecipeItem } from "@/types";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const getRecipeList = async (instance: AxiosInstance = axiosInstance): Promise<RecipeItem[]> => {
-  const { data }: { data: ApiResponse<Record<string, RecipeItem[]>> } = await instance.get('/api/v2/recipes/public');
+  const { data }: { data: ApiResponse<Record<string, RecipeItem[]>> } = await instance.get('/api/v2/public/recipes');
   const responseData = validateApiResponse(data, '레시피 목록 조회에 실패했습니다.');
   return responseData.recipeList;
 }

@@ -112,7 +112,9 @@ export default function CouponModal({
     if (err) return;
 
     createCouponMutate(
-      { code: code.trim() },
+      // TODO: 쿠폰 카테고리 추가 필요 (일반, 제휴)
+      // { code: code.trim(), },
+      { code: code.trim(), couponCategory: "NON_ALLIANCE" },
       {
         onSuccess: () => {
           addToast("쿠폰이 등록되었습니다", "above-button");
