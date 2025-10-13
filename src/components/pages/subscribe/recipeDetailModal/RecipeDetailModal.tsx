@@ -15,11 +15,11 @@ import { RawFoodOrderItem } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
 import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
+import { useGetRawFoodDetail } from "@/api/subscription/queries/useGetRawFoodDetail";
 import {
   CommitSelectionResult,
   StagedSelection,
-} from "@/hooks/subscription/useRecipeSelection";
-import { useGetRawFoodDetail } from "@/api/subscription/queries/useGetRawFoodDetail";
+} from "@/hooks/subscription/useRecipeSelections";
 
 interface RecipeDetailModalProps {
   rawFoodItem: RawFoodOrderItem;
@@ -28,7 +28,9 @@ interface RecipeDetailModalProps {
   dailyRecommendKcal: number;
   stagedSelection: StagedSelection | null;
   onStageSelection: (packGrams: number, packPrice: number) => void;
-  onCommitSelection: () => CommitSelectionResult;
+  onCommitSelection: (
+    resolvePack: () => { packGrams: number; packPrice: number }
+  ) => CommitSelectionResult;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -64,10 +66,17 @@ export default function RecipeDetailModal({
   );
 
   const handleCommit = () => {
-    const result = onCommitSelection();
+    const result = onCommitSelection(() => ({
+      packGrams: stagedSelection?.packGrams ?? packData.packGrams,
+      packPrice: stagedSelection?.packPrice ?? packData.packPrice,
+    }));
     if (result.success) {
       toast("레시피를 담았어요", "above-button");
     }
+    onClose();
+  };
+
+  const handleClose = () => {
     onClose();
   };
 
@@ -128,7 +137,7 @@ export default function RecipeDetailModal({
         primaryButtonLabel="레시피 담기"
         secondaryButtonLabel="이전"
         onPrimaryClick={handleCommit}
-        onSecondaryClick={onClose}
+        onSecondaryClick={handleClose}
         primaryButtonSize="lg"
       />
     </FullModalWrapper>

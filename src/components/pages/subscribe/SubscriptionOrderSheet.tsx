@@ -5,14 +5,13 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import {
   defaultSubscriptionValues,
   subscriptionSchema,
-  SubscriptionValues,
 } from "@/utils/validation/subscriptionValidation";
 import DeliveryOptions from "./deliveryOptions/DeliveryOptions";
 import SubscribeProgressBar from "./subscribeProgressBar/SubscribeProgressBar";
 import { subscribeStepMap } from "@/constants";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useCallback, useState } from "react";
-import { SubscriptionStep } from "@/types";
+import { SubscriptionStep, SubscriptionValues } from "@/types";
 import Header from "@/components/layout/header/Header";
 import Chips from "@/components/common/chips/Chips";
 import * as styles from "./SubscriptionOrderSheet.css";
@@ -44,21 +43,18 @@ export default function SubscriptionOrderSheet({
     mode: "all",
   });
 
-  const savedSelection =
-    useWatch({
-      control: form.control,
-      name: "rawFoods",
-    }) ?? [];
-  const mealPlan =
-    useWatch({
-      control: form.control,
-      name: "mealPlan",
-    }) || "TWO_MEAL";
-  const deliveryPlan =
-    useWatch({
-      control: form.control,
-      name: "deliveryPlan",
-    }) || "TWO_WEEK";
+  const savedSelection = useWatch({
+    control: form.control,
+    name: "rawFoods",
+  });
+  const mealPlan = useWatch({
+    control: form.control,
+    name: "mealPlan",
+  });
+  const deliveryPlan = useWatch({
+    control: form.control,
+    name: "deliveryPlan",
+  });
 
   const currentStep = subscribeStepMap[step] ?? 1;
 

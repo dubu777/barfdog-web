@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import { forwardRef, useCallback, useEffect, useState } from "react";
+import { forwardRef, useCallback, useState } from "react";
 import {
   mealSelectorBox,
   mealSelectorHelpIcon,
@@ -21,7 +21,7 @@ import HelpIcon from "public/images/icons/help-fill.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
 import WarningIcon from "public/images/icons/warning.svg";
-import { StagedSelection } from "@/hooks/subscription/useRecipeSelection";
+import { StagedSelection } from "@/hooks/subscription/useRecipeSelections";
 
 interface MealAmountSelectorProps {
   rawFoodItem: RawFoodOrderItem;
@@ -68,8 +68,6 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     );
 
     const handleApply = useCallback(() => {
-      console.log("???????");
-
       if (!inputValue.trim()) {
         toast("급여량을 입력해주세요", "above-button");
         return;
@@ -181,10 +179,14 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
         <Text type="label2">급여량 수정</Text>
         <div className={commonWrapper({ gap: 8 })}>
           <InputField
-            type="number"
             placeholder="0"
             value={inputValue}
             onChange={(e) => handleInputChange(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                handleApply();
+              }
+            }}
           />
           <Button
             type="primary"

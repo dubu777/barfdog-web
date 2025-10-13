@@ -10,12 +10,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import {
   defaultSubscriptionValues,
   subscriptionSchema,
-  SubscriptionValues,
 } from "@/utils/validation/subscriptionValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SubscriptionEditSummary from "./summary/SubscriptionEditSummary";
 import { useEffect, useMemo, useState } from "react";
-import { SubscriptionEditStep } from "@/types";
+import { SubscriptionEditStep, SubscriptionValues } from "@/types";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
