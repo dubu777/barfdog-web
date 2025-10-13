@@ -1,3 +1,5 @@
+"use client";
+
 import { commonWrapper } from "@/styles/common.css";
 import { forwardRef, useCallback, useState } from "react";
 import {
@@ -46,12 +48,14 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     },
     ref
   ) {
-    if (source === "recipe") return null;
-    if (!packData || !petName || !onStageSelection) return null;
+    const inactive =
+      source === "recipe" || !packData || !petName || !onStageSelection;
 
     const toast = useToastStore((s) => s.addToast);
-    const displayPackGrams = stagedSelection?.packGrams ?? packData.packGrams;
-    const displayPackPrice = stagedSelection?.packPrice ?? packData.packPrice;
+    const displayPackGrams =
+      stagedSelection?.packGrams ?? packData?.packGrams ?? 0;
+    const displayPackPrice =
+      stagedSelection?.packPrice ?? packData?.packPrice ?? 0;
 
     const [inputValue, setInputValue] = useState<string>(
       displayPackGrams.toString()
@@ -59,6 +63,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
 
     const handleInputChange = useCallback(
       (val: string) => {
+        if (inactive) return;
         const allowed = /^\d*(\.\d{0,1})?$/;
         const excess = /^\d*\.\d{2,}/;
         if (allowed.test(val)) {
@@ -73,6 +78,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     );
 
     const handleApply = useCallback(() => {
+      if (inactive) return;
       if (!inputValue.trim()) {
         toast("급여량을 입력해주세요", "above-button");
         return;
@@ -93,6 +99,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
       onStageSelection(clamped, packPrice);
     }, [inputValue, onStageSelection, dailyRecommendKcal, toast]);
 
+    if (inactive) return null;
     return (
       <section ref={ref} className={recipeDetailSection}>
         <div className={commonWrapper({ direction: "col", align: "start" })}>
