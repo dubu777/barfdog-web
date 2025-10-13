@@ -10,6 +10,7 @@ import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCo
 import Spinner from "@/components/common/spinner/Spinner";
 import { prefetchGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/usePrefetchGetSubscriptionCheckoutSheet";
 import SubscriptionCheckout from "@/components/pages/checkout/subscription/SubscriptionCheckout";
+import Header from "@/components/layout/header/Header";
 
 interface SubscriptionPageProps {
   params: {
@@ -33,6 +34,7 @@ export default async function SubscriptionPage({
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
           {/* 로딩 컴포넌트 개발 예정 */}
           <Suspense fallback={<Spinner fullscreen />}>
+            <Header centerTitle="결제" showBackButton />
             <SubscriptionCheckout subscribeId={subscribeId} />
           </Suspense>
         </ErrorBoundary>

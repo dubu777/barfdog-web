@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 import GeneralCheckout from "@/components/pages/checkout/general/GeneralCheckout";
+import Header from "@/components/layout/header/Header";
 
 export default async function GeneralPage() {
   const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ export default async function GeneralPage() {
     <main className={styles.orderPageContainer}>
       <HydrationBoundary state={dehydrateState}>
         <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+          <Header centerTitle="결제" showBackButton />
           <GeneralCheckout />
         </ErrorBoundary>
       </HydrationBoundary>
