@@ -7,28 +7,30 @@ import Image from "next/image";
 import * as styles from "./RecipeDetailModal.css";
 import TabBar from "@/components/common/tabBar/TabBar";
 import MealAmountSelector from "./mealAmountSelector/MealAmountSelector";
-import RecipeBenefits from "./recipeBenefits/RecipeBenefits";
-import RecipeIngredientsList from "./recipeIngredients/RecipeIngredients";
 import { useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
-import { RawFoodOrderItem } from "@/types";
+import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
 import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
-import { useGetRawFoodDetail } from "@/api/subscription/queries/useGetRawFoodDetail";
 import {
   CommitSelectionResult,
   StagedSelection,
 } from "@/hooks/subscription/useRecipeSelections";
+import RecipeEfficacy from "@/components/common/recipe/recipeEfficacy/RecipeEfficacy";
+import RecipeIngredients from "@/components/common/recipe/recipeIngredients/RecipeIngredients";
+import Divider from "@/components/common/divider/Divider";
+import { INGREDIENTS_MAP } from "@/constants/recipes";
 
 interface RecipeDetailModalProps {
+  source: RecipeDetailSource;
   rawFoodItem: RawFoodOrderItem;
-  petName: string;
-  packData: CalculateRecipePackReturn;
-  dailyRecommendKcal: number;
-  stagedSelection: StagedSelection | null;
-  onStageSelection: (packGrams: number, packPrice: number) => void;
-  onCommitSelection: (
+  petName?: string;
+  packData?: CalculateRecipePackReturn;
+  dailyRecommendKcal?: number;
+  stagedSelection?: StagedSelection | null;
+  onStageSelection?: (packGrams: number, packPrice: number) => void;
+  onCommitSelection?: (
     resolvePack: () => { packGrams: number; packPrice: number }
   ) => CommitSelectionResult;
   isOpen: boolean;
@@ -36,6 +38,7 @@ interface RecipeDetailModalProps {
 }
 
 export default function RecipeDetailModal({
+  source,
   rawFoodItem,
   petName,
   packData,
@@ -47,8 +50,6 @@ export default function RecipeDetailModal({
   onClose,
 }: RecipeDetailModalProps) {
   const toast = useToastStore((s) => s.addToast);
-  const { data } = useGetRawFoodDetail(rawFoodItem.recipeId);
-  console.log(data, "상세");
 
   const refs: Record<string, React.RefObject<HTMLDivElement>> = {
     amount: useRef(null),
@@ -56,16 +57,25 @@ export default function RecipeDetailModal({
     ingredients: useRef(null),
   };
 
+  const isRecipeSource = source === "recipe";
+
   const tabs = useMemo(
     () =>
-      recipeDetailTab.map((tab) => ({
-        ...tab,
-        onInit: () => scrollToElement(refs[tab.value!].current),
-      })),
-    [refs]
+      recipeDetailTab
+        .filter((tab) => (isRecipeSource ? tab.value !== "amount" : true))
+        .map((tab) => ({
+          ...tab,
+          onInit: () => {
+            scrollToElement(refs[tab.value]?.current);
+          },
+        })),
+    [isRecipeSource]
   );
 
   const handleCommit = () => {
+    if (!onCommitSelection || !packData) {
+      return;
+    }
     const result = onCommitSelection(() => ({
       packGrams: stagedSelection?.packGrams ?? packData.packGrams,
       packPrice: stagedSelection?.packPrice ?? packData.packPrice,
@@ -84,9 +94,16 @@ export default function RecipeDetailModal({
     <FullModalWrapper
       isVisible={isOpen}
       handleClose={onClose}
-      headerBackgroundColor="gray50"
+      headerBackgroundColor="gray0"
     >
-      <div className={commonWrapper({ direction: "col", gap: 8 })}>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          gap: 8,
+          paddingTop: 20,
+          paddingBottom: 30,
+        })}
+      >
         <Image
           src={rawFoodItem.displayImageUrl.url}
           width={140}
@@ -102,8 +119,8 @@ export default function RecipeDetailModal({
             {rawFoodItem.recipeNameEnglish}
           </Text>
         </div>
-        <div className={commonWrapper({ direction: "row", gap: 4 })}>
-          {rawFoodItem.primaryIngredients.map((text, idx) => (
+        <div className={commonWrapper({ gap: 4 })}>
+          {rawFoodItem.primaryIngredients.map((ingredient, idx) => (
             <Chips
               key={idx}
               variant="solid"
@@ -111,7 +128,7 @@ export default function RecipeDetailModal({
               size="sm"
               borderRadius="sm"
             >
-              {text}
+              {INGREDIENTS_MAP[ingredient].label}
             </Chips>
           ))}
         </div>
@@ -120,26 +137,39 @@ export default function RecipeDetailModal({
         <div className={styles.recipeDetailTabBarWrapper}>
           <TabBar variant="text" tabs={tabs} />
         </div>
-        <MealAmountSelector
-          ref={refs.amount}
-          rawFoodItem={rawFoodItem}
-          petName={petName}
-          packData={packData}
-          dailyRecommendKcal={dailyRecommendKcal}
-          onStageSelection={onStageSelection}
-          stagedSelection={stagedSelection}
+        {!isRecipeSource && (
+          <>
+            <MealAmountSelector
+              source={source}
+              ref={refs.amount}
+              rawFoodItem={rawFoodItem}
+              petName={petName}
+              packData={packData}
+              dailyRecommendKcal={dailyRecommendKcal}
+              onStageSelection={onStageSelection}
+              stagedSelection={stagedSelection}
+            />
+            <Divider thickness={8} color="gray50" />
+          </>
+        )}
+        <RecipeEfficacy ref={refs.benefits} recipeId={rawFoodItem.recipeId} />
+        <Divider thickness={8} color="gray50" />
+        <RecipeIngredients
+          ref={refs.ingredients}
+          recipeId={rawFoodItem.recipeId}
+          ingredients={rawFoodItem.primaryIngredients}
         />
-        <RecipeBenefits ref={refs.benefits} />
-        <RecipeIngredientsList ref={refs.ingredients} />
       </div>
-      <ButtonDocked
-        type="dual-button"
-        primaryButtonLabel="레시피 담기"
-        secondaryButtonLabel="이전"
-        onPrimaryClick={handleCommit}
-        onSecondaryClick={handleClose}
-        primaryButtonSize="lg"
-      />
+      {!isRecipeSource && (
+        <ButtonDocked
+          type="dual-button"
+          primaryButtonLabel="레시피 담기"
+          secondaryButtonLabel="이전"
+          onPrimaryClick={handleCommit}
+          onSecondaryClick={handleClose}
+          primaryButtonSize="lg"
+        />
+      )}
     </FullModalWrapper>
   );
 }

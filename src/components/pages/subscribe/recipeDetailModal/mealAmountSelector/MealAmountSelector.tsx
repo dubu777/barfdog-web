@@ -9,7 +9,7 @@ import Text from "@/components/common/text/Text";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
-import { RawFoodOrderItem } from "@/types";
+import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
@@ -24,17 +24,19 @@ import WarningIcon from "public/images/icons/warning.svg";
 import { StagedSelection } from "@/hooks/subscription/useRecipeSelections";
 
 interface MealAmountSelectorProps {
+  source: RecipeDetailSource;
   rawFoodItem: RawFoodOrderItem;
-  petName: string;
-  packData: CalculateRecipePackReturn;
-  dailyRecommendKcal: number;
-  stagedSelection: StagedSelection | null;
-  onStageSelection: (packGrams: number, packPrice: number) => void;
+  petName?: string;
+  packData?: CalculateRecipePackReturn;
+  dailyRecommendKcal?: number;
+  stagedSelection?: StagedSelection | null;
+  onStageSelection?: (packGrams: number, packPrice: number) => void;
 }
 
 const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
   function MealAmountSelector(
     {
+      source,
       rawFoodItem,
       petName,
       dailyRecommendKcal,
@@ -44,6 +46,9 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     },
     ref
   ) {
+    if (source === "recipe") return null;
+    if (!packData || !petName || !onStageSelection) return null;
+
     const toast = useToastStore((s) => s.addToast);
     const displayPackGrams = stagedSelection?.packGrams ?? packData.packGrams;
     const displayPackPrice = stagedSelection?.packPrice ?? packData.packPrice;

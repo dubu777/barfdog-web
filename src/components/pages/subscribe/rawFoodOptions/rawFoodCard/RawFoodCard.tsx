@@ -186,6 +186,7 @@ export default function RawFoodCard({
       </div>
       {isDetailOpen && (
         <RecipeDetailModal
+          source="subscribe"
           isOpen={isDetailOpen}
           onClose={onDetailClose}
           rawFoodItem={rawFoodItem}
