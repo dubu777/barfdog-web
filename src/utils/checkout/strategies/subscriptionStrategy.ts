@@ -57,8 +57,6 @@ export function createSubscriptionStrategy(deps: {
     // 2) 게이트웨이 콜백 해석
     //    - 일반적으로 success/fail만 구분 (모바일은 redirect-flow로 콜백이 안 오거나, 와도 즉시 이동)
     afterGatewayCallback: async ({ response }) => {
-      console.log("afterGatewayCallback", response);
-
       if (response?.success) return "success";
       // ✅ "사용자가 결제를 취소하였습니다."면 'cancel'로 분기
       if (isPortoneUserCancel(response)) return "cancel";

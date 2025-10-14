@@ -39,7 +39,7 @@ export function buildGeneralPaymentRequest({
     buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
     buyer_postcode: deliveryDto.zipcode ?? "",
     m_redirect_url:
-      `${window.location.origin}/order/checkout/mobile-payment-redirect/general?` +
+      `${window.location.origin}/checkout/mobile-payment-redirect/general?` +
       `order_id=${encodeURIComponent(orderId)}&` +
       `merchantUid=${encodeURIComponent(merchantUid)}&` +
       `discount_reward=${encodeURIComponent(requestBody.discountReward)}&` +
@@ -93,7 +93,7 @@ export function buildSubscriptionPaymentRequest({
     buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
     buyer_postcode: deliveryDto.zipcode,
     m_redirect_url:
-      `${window.location.origin}/order/checkout/mobile-payment-redirect/subscription?` +
+      `${window.location.origin}/checkout/mobile-payment-redirect/subscription?` +
       `order_id=${encodeURIComponent(orderId)}&` +
       `customer_uid=${encodeURIComponent(customerUid)}&` +
       `merchantUid=${encodeURIComponent(merchantUid)}&` +
