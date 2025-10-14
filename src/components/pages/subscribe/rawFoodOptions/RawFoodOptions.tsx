@@ -42,13 +42,8 @@ export default function RawFoodOptions({
     savedRecipes,
   });
 
-  const {
-    getSelection,
-    stageSelection,
-    commitSelection,
-    removeSelection,
-    isSelected,
-  } = useRecipeSelections();
+  const { getSelection, stageSelection, commitSelection, removeSelection } =
+    useRecipeSelections();
 
   const buildHandlers = useCallback(
     (recipeId: number) => {
@@ -137,9 +132,6 @@ export default function RawFoodOptions({
                   const { recipeId } = rawFoodItem;
                   const packData = packMap[recipeId];
                   const sel = getSelection(recipeId);
-                  console.log("get", recipeId, sel.isSelected);
-                  console.log("is", recipeId, isSelected(recipeId));
-
                   const handlers = buildHandlers(recipeId);
                   return (
                     <RawFoodCard
