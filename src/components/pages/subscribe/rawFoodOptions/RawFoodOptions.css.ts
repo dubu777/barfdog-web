@@ -1,5 +1,6 @@
 import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const subscribeOptionContainer = style({
   position: "relative",
@@ -11,14 +12,23 @@ export const subscribeOptionContainer = style({
   backgroundColor: themeVars.colors.gray.gray50,
 });
 
-export const recipeSelectTitleWrapper = style({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  width: "100%",
-  gap: "20px",
-  padding: "0 20px 10px 20px",
-  backgroundColor: themeVars.colors.gray.gray0,
+export const recipeSelectTitleWrapper = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%",
+    gap: "20px",
+    padding: "0 20px 10px 20px",
+    backgroundColor: themeVars.colors.gray.gray0,
+  },
+  variants: {
+    isEdit: {
+      true: {
+        paddingTop: "40px",
+      },
+    },
+  },
 });
 
 export const recipeTabBarWrapper = style({

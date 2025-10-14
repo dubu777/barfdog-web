@@ -201,10 +201,6 @@ export default function SubscriptionCheckout({
         ref={termsRef}
       />
       <Divider />
-      <OrderSection padding="20px">
-        <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
-      </OrderSection>
-      <Divider />
       <SubscriptionNotice />
       <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>
         {isProcessing

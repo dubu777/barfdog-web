@@ -23,9 +23,11 @@ export function useRecipeSelections() {
     defaultValue: [] as RawFoodFormItem[],
   });
 
+  console.log("save", savedRecipes);
+
   // - 현재 RHF에 저장된 선택 결과(rawFoods)를 recipeId -> RawFoodFormItem 형태의 Map으로 가공.
   // - 카드에서 isSelected, savedSelection 조회를 O(1)에 가깝게 하기 위한 최적화.
-  const savedById = useMemo(() => {
+  const savedByIdMap = useMemo(() => {
     const map = new Map<number, RawFoodFormItem>();
     savedRecipes.forEach((recipe) => map.set(recipe.recipeId, recipe));
     return map;
@@ -69,17 +71,17 @@ export function useRecipeSelections() {
   // - 이미 담긴 레시피는 true, 신규 추가는 현재 개수가 제한 미만일 때만 true.
   const canOpenDetailModal = useCallback(
     (recipeId: number) => {
-      const already = savedById.get(recipeId); // 현재 저장된 선택 맵에서 조회
+      const already = savedByIdMap.get(recipeId); // 현재 저장된 선택 맵에서 조회
       if (already) return true; // 이미 담겨있다면 허용
       return (savedRecipes?.length ?? 0) < MAX_SELECTABLE_ITEMS; // 미담김이면 개수 제한(2개 미만) 검사
     },
-    [savedRecipes?.length, savedById]
+    [savedRecipes?.length, savedByIdMap]
   );
 
   // - 해당 레시피가 현재 선택되어(RHF에 저장되어) 있는지 여부 반환.
   const isSelected = useCallback(
-    (recipeId: number) => savedById.has(recipeId),
-    [savedById]
+    (recipeId: number) => savedByIdMap.has(recipeId),
+    [savedByIdMap]
   );
 
   // - 모달에서 '레시피 담기'(확정)을 눌렀을 때 호출되는 커밋 함수.
@@ -137,7 +139,7 @@ export function useRecipeSelections() {
   // - 프리젠테이션 레이어가 비즈니스 로직을 몰라도 쉽게 상태를 소비하게 돕는다.
   const getSelection = useCallback(
     (recipeId: number) => {
-      const saved = savedById.get(recipeId);
+      const saved = savedByIdMap.get(recipeId);
       const staged = stagedById[recipeId] ?? null;
       return {
         savedSelection: saved ?? null,
@@ -146,7 +148,7 @@ export function useRecipeSelections() {
         canOpenDetailModal: canOpenDetailModal(recipeId), // 신규 추가 가능 여부(이미 선택이면 true)
       };
     },
-    [savedById, stagedById, canOpenDetailModal] // 관련 상태가 변할 때만 재생성
+    [savedByIdMap, stagedById, canOpenDetailModal] // 관련 상태가 변할 때만 재생성
   );
 
   // 훅이 외부에 제공하는 API

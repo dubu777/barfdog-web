@@ -53,6 +53,7 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
   }, [detailData, form]);
 
   useScrollToTop(step);
+  console.log(form.watch());
 
   // Computed values
   const editableSeq = detailData?.next
@@ -110,7 +111,7 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
           />
         )}
         {step === "edit" && rawFoodSheetData && (
-          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} />
+          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} isEdit />
         )}
         {step === "confirm" && <SubscriptionEditConfirm />}
         {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}

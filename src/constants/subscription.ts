@@ -132,8 +132,8 @@ const deliveryOptions = {
 };
 
 const subscribeStepMap: Record<string, number> = {
-  "raw-food": 1,
-  "delivery-cycle": 2,
+  rawFood: 1,
+  deliveryCycle: 2,
 };
 
 const DELIVERY_PLAN = ["TWO_WEEK", "FOUR_WEEK"] as const;
