@@ -30,34 +30,75 @@ const isProtectedPath = (pathname: string): boolean => {
   });
 };
 
+// 액세스 토큰 추출(Authorization 헤더)
+function extractAccessToken(res: Response): string | null {
+  const header =
+    res.headers.get("authorization") || res.headers.get("Authorization");
+  return header && header.startsWith("Bearer ") ? header.slice(7) : null;
+}
+
+// 서버(미들웨어)에서 리프레시 시도
+async function tryServerRefresh(req: NextRequest): Promise<string | null> {
+  const url = new URL("/api/refresh", req.nextUrl.origin);
+  const cookieHeader = req.headers.get("cookie") ?? "";
+
+  const res = await fetch(url.toString(), {
+    method: "GET",
+    headers: { cookie: cookieHeader },
+  });
+
+  if (!res.ok) return null;
+  return extractAccessToken(res);
+}
+
+function redirectToLoginAndClear(req: NextRequest) {
+  const { pathname, search } = new URL(req.url);
+  const loginUrl = new URL("/login", req.nextUrl.origin);
+  loginUrl.searchParams.set("next", pathname + search);
+
+  const res = NextResponse.redirect(loginUrl);
+  [AUTH_CONFIG.ACCESS_TOKEN_COOKIE, AUTH_CONFIG.REFRESH_TOKEN_COOKIE].forEach(
+    (cookie) => {
+      res.cookies.set(cookie, "", { path: "/", maxAge: 0 });
+    }
+  );
+  return res;
+}
+
 export async function middleware(req: NextRequest) {
-  console.log("요청된 URL:", req.url);
+  const { pathname } = new URL(req.url);
+
+  // refresh 자체는 통과
+  if (pathname.startsWith("/api/refresh")) return NextResponse.next();
 
   const token = req.cookies.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
-  const isAuth = isAuthenticated(token);
-  const { pathname, search } = new URL(req.url);
+  const isAuthed = isAuthenticated(token);
 
-  const logoutWithDeleteCookies = () => {
-    const loginUrl = new URL("/login", req.nextUrl.origin);
-    loginUrl.searchParams.set("next", pathname + search);
+  // 보호된 경로 접근인데 액세스 토큰이 유효하지 않으면 서버에서 먼저 리프레시 시도
+  if (isProtectedPath(pathname) && !isAuthed) {
+    const refreshedToken = await tryServerRefresh(req);
 
-    const res = NextResponse.redirect(loginUrl);
-    [AUTH_CONFIG.ACCESS_TOKEN_COOKIE, AUTH_CONFIG.REFRESH_TOKEN_COOKIE].forEach(
-      (cookie) => {
-        res.cookies.set(cookie, "", { path: "/", maxAge: 0 });
-      }
-    );
-    return res;
-  };
+    if (refreshedToken) {
+      // 새 토큰을 응답 쿠키에 세팅 후 통과
+      const res = NextResponse.next();
 
-  // 보호된 경로에 대한 접근 체크
-  if (isProtectedPath(pathname) && !isAuth) {
-    return logoutWithDeleteCookies();
+      // 여기 설정은 프로젝트의 쿠키 정책과 일치시킬 것
+      // (js에서 읽어 Authorization 헤더에 주입한다면 httpOnly: false 필요)
+      res.cookies.set(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, refreshedToken, {
+        path: "/",
+        sameSite: "none",
+        secure: true,
+      });
+
+      return res;
+    }
+
+    // 리프레시 실패 → 로그인으로
+    return redirectToLoginAndClear(req);
   }
 
-  // 로그인한 사용자가 '/login'에 직접 접근한 경우 메인 페이지로 리디렉트
-  // 단, '/login/redirect'와 같은 경로는 예외로 허용 (마이페이지 SNS 연동시 필요)
-  if (!pathname.includes("/redirect") && pathname === "/login" && isAuth) {
+  // 로그인한 사용자가 '/login'에 접근하면 루트로
+  if (!pathname.includes("/redirect") && pathname === "/login" && isAuthed) {
     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
   }
 
