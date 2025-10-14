@@ -12,6 +12,7 @@ const protectedPaths = [
   "/cart",
   "/health-note",
   "/pet",
+  "/subscribe",
 ];
 
 // 예외 경로
@@ -113,6 +114,7 @@ export const config = {
     "/diet-analysis/:path*",
     "/health-note/:path*",
     "/cart",
+    "/subscribe/:path*",
     "/pet/:path*",
   ],
 };
