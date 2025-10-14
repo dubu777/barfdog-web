@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo } from "react";
 import Divider from "@/components/common/divider/Divider";
-import OrderSection from "../../common/orderSection/OrderSection";
 
 import { GeneralOrderItem } from "@/types";
-import * as styles from "../../subscription/subscriptionOrderItemList/SubscriptionOrderItemList.css";
-import GeneralOrderItemCard from "./generalOrderItemCard/GeneralOrderItemCard";
 import { usePaymentStore } from "@/store/checkout/usePaymentStore";
+import { commonWrapper } from "@/styles/common.css";
+import GeneralOrderItemCard from "../../../general/generalOrderItemList/generalOrderItemCard/GeneralOrderItemCard";
+import Card from "@/components/common/card/Card";
+import Text from "@/components/common/text/Text";
 
 interface GeneralOrderItemListProps {
   orderItemDtoList: GeneralOrderItem[];
@@ -28,8 +29,10 @@ export default function GeneralOrderItemList({
   }, [finalPrice, setFinalPrice]);
 
   return (
-    <OrderSection title="주문 상품" gap={20}>
-      <div className={styles.orderItemListContainer}>
+    <Card gap={12} padding={12}>
+      <Text type="headline2">주문 상품</Text>
+      <Divider thickness={2} color="gray900" />
+      <div className={commonWrapper({ direction: "col", gap: 16 })}>
         {orderItemDtoList.map((item, index, array) => (
           <React.Fragment key={item.itemId}>
             <GeneralOrderItemCard orderItemData={item} />
@@ -37,6 +40,6 @@ export default function GeneralOrderItemList({
           </React.Fragment>
         ))}
       </div>
-    </OrderSection>
+    </Card>
   );
 }

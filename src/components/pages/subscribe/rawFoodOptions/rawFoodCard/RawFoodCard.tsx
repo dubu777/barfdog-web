@@ -35,6 +35,7 @@ interface RawFoodCardProps {
     resolvePack: () => { packGrams: number; packPrice: number }
   ) => CommitSelectionResult;
   onRemoveSelection: () => void;
+  onClearStage: () => void;
 }
 
 export default function RawFoodCard({
@@ -50,6 +51,7 @@ export default function RawFoodCard({
   onStageSelection,
   onCommitSelection,
   onRemoveSelection,
+  onClearStage,
 }: RawFoodCardProps) {
   const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = packData;
 
@@ -84,6 +86,11 @@ export default function RawFoodCard({
       }
       onAlertToggle();
     }
+  };
+
+  const handleDetailClose = () => {
+    onClearStage();
+    onDetailClose();
   };
 
   return (
@@ -188,7 +195,7 @@ export default function RawFoodCard({
         <RecipeDetailModal
           source="subscribe"
           isOpen={isDetailOpen}
-          onClose={onDetailClose}
+          onClose={handleDetailClose}
           rawFoodItem={rawFoodItem}
           petName={petName}
           packData={packData}

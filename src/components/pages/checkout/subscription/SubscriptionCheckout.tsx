@@ -22,7 +22,6 @@ import useDeviceState from "@/hooks/useDeviceState";
 
 // Components
 import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
 import FooterButton from "@/components/common/footerButton/FooterButton";
 import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
 import DeliverySchedule from "./deliverySchedule/DeliverySchedule";
@@ -31,11 +30,10 @@ import RewardUsage from "../common/reward/RewardUsage";
 import PaymentMethod from "../common/paymentMethod/PaymentMethod";
 import OrderSummary from "../common/orderSummary/OrderSummary";
 import OrderTerms from "../common/orderTerms/OrderTerms";
-import OrderSection from "../common/orderSection/OrderSection";
 import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
 
 // Constants & Types
-import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
+import { CHECKOUT_ROUTES, ORDER_TYPE } from "@/constants";
 import {
   SaveSubscriptionOrderRequest,
   SubscriptionCheckoutSheetResponse,

@@ -33,7 +33,7 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
       isSelected: isSubscriptionSelected,
     } = useToggleOption(agreeSubscription, "checkbox", setAgreeSubscription);
     return (
-      <OrderSection padding="20px" ref={ref}>
+      <OrderSection padding={20} ref={ref}>
         <div className={styles.orderTermWrapper}>
           <div className={orderSheetContentBox}>
             <LabeledCheckbox

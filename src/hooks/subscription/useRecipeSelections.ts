@@ -163,6 +163,7 @@ export function useRecipeSelections() {
     removeSelection, // 카드에서 '빼기' 시 삭제
 
     // (쿼리) 유틸
+    clearStage,
     isSelected, // 선택 여부 빠른 조회
     canOpenDetailModal, // 모달 Open 가능 여부 조회
   };

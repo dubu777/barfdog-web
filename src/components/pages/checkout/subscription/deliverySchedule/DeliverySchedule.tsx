@@ -10,8 +10,11 @@ interface DeliveryScheduleProps {
   nextDeliveryDate: string;
 }
 
-export default function DeliverySchedule({deliveryDate, nextDeliveryDate}: DeliveryScheduleProps) {
-  const {isOpen, onClose, onToggle} = useModal();
+export default function DeliverySchedule({
+  deliveryDate,
+  nextDeliveryDate,
+}: DeliveryScheduleProps) {
+  const { isOpen, onClose, onToggle } = useModal();
   return (
     <OrderSection
       title="배송 일정"
@@ -25,7 +28,7 @@ export default function DeliverySchedule({deliveryDate, nextDeliveryDate}: Deliv
             배송 예정일
           </Text>
           <Text type="label2" color="gray900">
-          {format(deliveryDate, "yy.MM.dd")}
+            {format(deliveryDate, "yy.MM.dd")}
           </Text>
         </div>
         <div className={styles.deliveryScheduleContentWrapper}>
@@ -33,11 +36,15 @@ export default function DeliverySchedule({deliveryDate, nextDeliveryDate}: Deliv
             다음 배송 예정일
           </Text>
           <Text type="label2" color="gray900">
-          {format(nextDeliveryDate, "yy.MM.dd")}
+            {format(nextDeliveryDate, "yy.MM.dd")}
           </Text>
         </div>
       </div>
-      <DeliveryScheduleBottomSheet isOpen={isOpen} onClose={onClose} deliveryDate={deliveryDate} nextDeliveryDate={nextDeliveryDate} />
+      <DeliveryScheduleBottomSheet
+        isOpen={isOpen}
+        onClose={onClose}
+        deliveryDate={deliveryDate}
+      />
     </OrderSection>
   );
 }

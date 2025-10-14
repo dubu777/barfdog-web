@@ -183,7 +183,7 @@ export default function GeneralCheckout() {
         showErrors={showTermsErrors}
         ref={termsRef}
       />
-      <OrderSection padding="20px">
+      <OrderSection padding={20}>
         <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
       </OrderSection>
       <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>

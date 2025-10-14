@@ -20,18 +20,12 @@ const ORDER_STATUS = {
   CANCEL_DONE_SELLER: "취소됨",
   CANCEL_DONE_BUYER: "취소됨",
   CANCEL_PAYMENT: "취소됨",
-  // HOLD: '구독 보류',
-  // FAILED: '실패함',
-  // RETURN_REQUEST: '',
-  // RETURN_DONE: '',
-  // EXCHANGE_REQUEST: '',
-  // EXCHANGE_DONE: '',
   CONFIRM: "배송완료",
   FAILED: "취소됨",
   REVIEW_SUBMIT: "리뷰완료",
 };
 
-const PAYMENT: Record<PaymentMethod, string> = {
+const PAYMENT_LABEL: Record<PaymentMethod, string> = {
   CREDIT_CARD: "체크/신용카드",
   NAVER_PAY: "네이버페이",
   KAKAO_PAY: "카카오페이",
@@ -145,7 +139,7 @@ const CHECKOUT_ROUTES = {
 
 export {
   ORDER_STATUS,
-  PAYMENT,
+  PAYMENT_LABEL,
   ORDER_TYPE,
   TEMP_RECIPE_DTO_DATA,
   ORDER_MESSAGE,
