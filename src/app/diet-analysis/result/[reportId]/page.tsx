@@ -27,7 +27,7 @@ export default async function ResultPage({ params }: { params: Params }) {
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<Spinner fullscreen />}>
-          <Header showBackButton />
+          <Header showBackButton backHref="/diet-analysis" />
           <DietAnalysisResult reportId={reportId} />
         </Suspense>
       </ErrorBoundary>
