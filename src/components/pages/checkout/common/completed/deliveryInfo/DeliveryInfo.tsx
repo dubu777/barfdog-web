@@ -10,7 +10,7 @@ interface DeliveryInfoProps {
 
 export default function DeliveryInfo({ deliveryDto }: DeliveryInfoProps) {
   return (
-    <Card shadow="light" padding={12} gap={12}>
+    <Card shadow="light" padding={12} gap={12} align="start">
       <Text type="headline2">배송 정보</Text>
       <Divider thickness={2} color="gray900" />
       <DeliveryContent deliveryDto={deliveryDto} />

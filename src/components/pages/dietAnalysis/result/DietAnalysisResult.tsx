@@ -21,10 +21,11 @@ export default function DietAnalysisResult({
   const router = useRouter();
   const { data: dietAnalysisResult } = useGetDietAnalysisResult(reportId);
   console.log("dietAnalysisResult", dietAnalysisResult);
+  const isEdit = EDITABLE_SUBSCRIPTION_STATUSES.has(
+    dietAnalysisResult.subscribeStatus
+  );
   const handleNavigate = () => {
-    if (
-      EDITABLE_SUBSCRIPTION_STATUSES.has(dietAnalysisResult.subscribeStatus)
-    ) {
+    if (isEdit) {
       router.push(`/subscribe/${reportId}/edit`);
     } else {
       router.push(`/subscribe/${reportId}/order-sheet`);
@@ -66,7 +67,7 @@ export default function DietAnalysisResult({
       />
       <ButtonDocked
         type="full-button"
-        primaryButtonLabel="레시피 주문하기"
+        primaryButtonLabel={isEdit ? "레시피 변경하기" : "레시피 주문하기"}
         onPrimaryClick={handleNavigate}
       />
     </div>

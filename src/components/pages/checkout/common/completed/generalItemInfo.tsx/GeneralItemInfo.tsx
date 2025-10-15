@@ -8,13 +8,13 @@ import GeneralOrderItemCard from "../../../general/generalOrderItemList/generalO
 import Card from "@/components/common/card/Card";
 import Text from "@/components/common/text/Text";
 
-interface GeneralOrderItemListProps {
+interface GeneralItemInfoProps {
   orderItemDtoList: GeneralOrderItem[];
 }
 
-export default function GeneralOrderItemList({
+export default function GeneralItemInfo({
   orderItemDtoList,
-}: GeneralOrderItemListProps) {
+}: GeneralItemInfoProps) {
   const setFinalPrice = usePaymentStore((state) => state.setFinalPrice);
 
   const finalPrice = useMemo(() => {
@@ -29,7 +29,7 @@ export default function GeneralOrderItemList({
   }, [finalPrice, setFinalPrice]);
 
   return (
-    <Card gap={12} padding={12}>
+    <Card gap={12} padding={12} align="start">
       <Text type="headline2">주문 상품</Text>
       <Divider thickness={2} color="gray900" />
       <div className={commonWrapper({ direction: "col", gap: 16 })}>
