@@ -78,10 +78,9 @@ export default function SurveyTitle({
           </div>
           {onReselect && (
             <Button
-              type="assistive"
+              intent="assistive"
               variant="outline"
               size="sm"
-              buttonColor="white"
               onClick={onReselect}
             >
               다시선택

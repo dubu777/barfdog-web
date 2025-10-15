@@ -24,9 +24,8 @@ export default function PlanPicker({
         <Text type="title4">구독 주기</Text>
         <Button
           variant="outline"
+          intent="assistive"
           size="sm"
-          borderColor="gray300"
-          textColor="gray900"
           onClick={onClick}
         >
           수정

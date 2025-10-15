@@ -201,9 +201,9 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
             }}
           />
           <Button
-            type="primary"
+            variant="solid"
+            intent="primary"
             size="inputButton"
-            buttonColor="gray900"
             onClick={handleApply}
           >
             적용

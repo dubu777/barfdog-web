@@ -25,10 +25,8 @@ export default function PetCardButton({
   return (
     <div className={commonWrapper({ gap: 8 })}>
       <Button
-        type="assistive"
+        intent="primary"
         variant="outline"
-        textColor="red"
-        borderColor="red"
         size="sm"
         fullWidth
         onClick={onSurvey}
@@ -39,10 +37,8 @@ export default function PetCardButton({
       <Button
         {...(isSubscribing
           ? {
-              type: "assistive",
+              intent: "assistive",
               variant: "outline",
-              textColor: "gray900",
-              borderColor: "gray300",
             }
           : {})}
         size="sm"
