@@ -13,7 +13,7 @@ import { useGetReviewImageList } from "@/api/review/queries/useGetReviewImageLis
 
 interface ReviewItemProps {
 	reviewId: number;
-	username: string;
+	reviewer: string;
 	contents: string;
 	star: number;
 	writtenDate: string;
@@ -25,7 +25,7 @@ interface ReviewItemProps {
 
 export default function ReviewItem({
 	reviewId,
-	username,
+	reviewer,
 	contents,
 	star,
 	writtenDate,
@@ -58,7 +58,7 @@ export default function ReviewItem({
 		<>
 			<div className={styles.contentBox({ background: backgroundColor, isExpanded })}>
 				<ReviewInfoTop
-					username={username}
+					reviewer={reviewer}
 					star={star}
 					writtenDate={writtenDate}
 					onToggle={onToggle}

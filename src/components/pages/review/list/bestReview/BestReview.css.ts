@@ -18,6 +18,7 @@ export const bestReviewSlide = style({
 export const bestReviewCard = style({
   display: 'flex',
   gap: '12px',
+  cursor: 'pointer',
 })
 
 export const bestReviewImage = style({

@@ -1,0 +1,60 @@
+'use client';
+import { useEffect, useState } from "react";
+import ReviewItem from "@/components/pages/review/common/reviewItem/ReviewItem";
+import Divider from "@/components/common/divider/Divider";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useInView } from "react-intersection-observer";
+import { useGetInfiniteReviewList } from "@/api/review/queries/useGetInfiniteReviewList";
+
+export default function ReviewList () {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteReviewList();
+  const reviewList = data?.pages.flatMap(page => page.itemReviewList) || [];
+  
+  const { ref, inView } = useInView();
+
+  const [openReviewIds, setOpenReviewIds] = useState<number[]>([]);
+
+  const handleToggleReviewIds = (isOpen: boolean, reviewId: number) => {
+    if(isOpen) {
+      setOpenReviewIds(openReviewIds.filter(id => id !== reviewId))
+    } else {
+      setOpenReviewIds([...openReviewIds, reviewId])
+    }
+  }
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
+
+  return (
+    <article>
+      {reviewList?.map(review => {
+        const reviewId = review.reviewId;
+        const isOpen = openReviewIds.includes(reviewId);
+        return (
+          <div key={reviewId}>
+            <ReviewItem
+              reviewId={reviewId}
+              reviewer={review.reviewer}
+              contents={review.contents}
+              star={review.star}
+              writtenDate={review.writtenDate}
+              isExpanded={isOpen}
+              hasReviewImages={review.hasReviewImages}
+              backgroundColor={isOpen ? 'gray50' : 'white'}
+              onToggle={() => handleToggleReviewIds(isOpen, reviewId)}
+            />
+            <Divider thickness={1} color='gray50' />
+          </div>
+        )
+      })}
+      <InfiniteScrollTrigger
+        ref={ref}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+      />
+    </article>
+  );
+};

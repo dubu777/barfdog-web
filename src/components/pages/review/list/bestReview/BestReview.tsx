@@ -1,23 +1,22 @@
-import { useState } from "react";
 import * as styles from './BestReview.css';
 import { ellipsis } from "@/styles/common.css";
-import Image from "next/image";
+import { useState } from "react";
+import { motion, Transition } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
-import BestReviewModal from "@/components/pages/review/modal/bestReviewModal/BestReviewModal";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
-import useModal from "@/hooks/useModal";
-import { useQueryClient } from "@tanstack/react-query";
-import { prefetchGetBestReviewDetail } from "@/api/review/queries/useGetBestReviewDetail";
-import { useGetBestReviewList } from "@/api/review/queries/useGetBestReviewList";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import UserIcon from '/public/images/mypage/user-profile.svg';
 import CameraIcon from '/public/images/icons/camera.svg';
 import BannerStarIcon from '/public/images/icons/banner_star.svg';
+import Image from "next/image";
+import Text from "@/components/common/text/Text";
+import Card from "@/components/common/card/Card";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import RateStar from "@/components/common/rateStar/RateStar";
-import { motion, Transition } from 'framer-motion';
+import BestReviewModal from "@/components/pages/review/list/bestReview/bestReviewModal/BestReviewModal";
+import useModal from "@/hooks/useModal";
+import { BestReviewItem } from "@/types";
+import { useGetBestReviewList } from "@/api/review/queries/useGetBestReviewList";
 
 const motionTransition = {
   duration: 2,
@@ -26,23 +25,20 @@ const motionTransition = {
   ease: 'easeInOut',
 } as Transition;
 
-const BestReview = () => {
-  const [reviewId, setReviewId] = useState<number | null>(null);
+export default function BestReview() {
+  const [selectedReview, setSelectedReview] = useState<BestReviewItem | null>(null);
   const { data: bestReviewList } = useGetBestReviewList();
 
   const [isHover, setIsHover] = useState<boolean>(false);
   const { onToggle, onClose, isOpen } = useModal();
 
-  const queryClient = useQueryClient();
-
-  const handleSelectReview = async (reviewId: number) => {
-    await prefetchGetBestReviewDetail(queryClient, reviewId)
-    setReviewId(reviewId);
+  const handleSelectReview = async (review: BestReviewItem) => {
+    setSelectedReview(review);
     onToggle();
   }
 
   const handleCloseReview = () => {
-    setReviewId(null);
+    setSelectedReview(null);
     onClose();
   }
   return (
@@ -59,14 +55,14 @@ const BestReview = () => {
       >
         {bestReviewList.map(review => (
           <SwiperSlide
-            key={review.id}
+            key={review.reviewId}
             className={styles.bestReviewSlide}
           >
             <Card shadow='normal' padding={12}>
-              <div onClick={() => handleSelectReview(review.id)} className={styles.bestReviewCard}>
+              <div onClick={() => handleSelectReview(review)} className={styles.bestReviewCard}>
                 <Image
-                  src={review.imageUrl}
-                  alt={(review.titleByAdmin ? review.titleByAdmin : review.username) || ''}
+                  src={review.reviewImageList[0].displayImageUrl.url}
+                  alt={(review.titleByAdmin ? review.titleByAdmin : review.reviewer) || ''}
                   width={200}
                   height={200}
                   className={styles.bestReviewImage}
@@ -76,7 +72,7 @@ const BestReview = () => {
                     <div className={styles.bestReviewUsername}>
                       <SvgIcon src={UserIcon} size={19} />
                       <Text type='caption' color='gray900'>
-                        {review.username ? review.username.split('@')[0] : ''}
+                        {review.reviewer ? review.reviewer.split('@')[0] : ''}
                       </Text>
                     </div>
                     <RateStar rateLength={5} value={5} size={12.8} />
@@ -119,11 +115,9 @@ const BestReview = () => {
           리뷰 작성하고 BEST 리뷰가 되어보세요!
         </Text>
       </div>
-      {reviewId &&
-        <BestReviewModal isOpen={isOpen} onClose={handleCloseReview} reviewId={reviewId} />
+      {selectedReview &&
+        <BestReviewModal isOpen={isOpen} onClose={handleCloseReview} reviewItem={selectedReview} />
       }
     </article>
   );
 };
-
-export default BestReview;

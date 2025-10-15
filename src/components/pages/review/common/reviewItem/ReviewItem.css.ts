@@ -2,12 +2,16 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
+export const bestReviewModalContainer = style({
+	paddingBottom: '85px',
+})
+
 export const contentBox = recipe({
 	base: {
 		padding: '20px',
 		display: 'flex',
 		flexDirection: 'column',
-		gap: '20px',
+		gap: '16px',
 		transition: 'all .35s',
 	},
 	variants: {
@@ -44,7 +48,7 @@ export const contentTop = recipe({
 	}
 })
 
-export const username = style({
+export const reviewer = style({
 	marginBottom: '6px',
 })
 

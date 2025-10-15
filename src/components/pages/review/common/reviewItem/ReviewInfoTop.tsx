@@ -1,9 +1,10 @@
 import * as styles from './ReviewItem.css';
 import Text from "@/components/common/text/Text";
 import RateStar from "@/components/common/rateStar/RateStar";
+import { maskString } from "@/utils/maskString";
 
 interface ReviewInfoTopProps {
-	username: string;
+	reviewer: string;
 	star: number;
 	writtenDate: string;
 	onToggle?: () => void;
@@ -11,7 +12,7 @@ interface ReviewInfoTopProps {
 }
 
 export default function ReviewInfoTop({
-	username,
+	reviewer,
 	star,
 	writtenDate,
 	onToggle,
@@ -20,7 +21,7 @@ export default function ReviewInfoTop({
 	return (
 		<div className={styles.contentTop({ isExpanded })} onClick={onToggle || undefined}>
 			<div>
-				<Text type='body3' block className={styles.username}>{username}</Text>
+				<Text type='body3' block className={styles.reviewer}>{maskString(reviewer, 1, 1)}</Text>
 				<RateStar rateLength={5} value={star} size={24} />
 			</div>
 			<Text type='body3'>{writtenDate}</Text>

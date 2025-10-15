@@ -8,7 +8,7 @@ import EmptyList from '@/components/common/emptyList/EmptyList';
 import ReviewItem from '@/components/pages/review/common/reviewItem/ReviewItem';
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
-import { prefetchGetStoreItemReviewList, useGetStoreItemReviewList } from "@/api/review/queries/useGetStoreItemReviewList";
+import { prefetchGetReviewList, useGetReviewList } from "@/api/review/queries/useGetReviewList";
 
 interface ItemReviewProps {
   itemId: number;
@@ -21,7 +21,7 @@ export default function ItemReview({
   const { pushWithQuery } = useDynamicQueryPush();
 
   const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
-    prefetchFn: (page: number) => prefetchGetStoreItemReviewList(queryClient, itemId, page),
+    prefetchFn: (page: number) => prefetchGetReviewList(queryClient, page,itemId),
     pushWithQuery,
     preserveScroll: true,
   });
@@ -30,7 +30,7 @@ export default function ItemReview({
     currentPage, totalPages, onPageChange
   }), [currentPage, totalPages, onPageChange]);
 
-  const { data } = useGetStoreItemReviewList(itemId, currentPage)
+  const { data } = useGetReviewList(currentPage, itemId)
   const reviewList = data?.itemReviewList || [];
 
   console.log(data);
@@ -68,7 +68,7 @@ export default function ItemReview({
               <div key={reviewId}>
                 <ReviewItem
                   reviewId={reviewId}
-                  username={review.reviewer}
+                  reviewer={review.reviewer}
                   contents={review.contents}
                   star={review.star}
                   writtenDate={review.writtenDate}
