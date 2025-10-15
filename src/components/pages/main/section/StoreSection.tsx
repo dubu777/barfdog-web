@@ -10,15 +10,17 @@ import Text from "@/components/common/text/Text";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { MAIN_DATA } from "@/constants/main";
-import { useGetStoreItemList } from "@/api/store/queries/useGetStoreItemList";
+import { useGetInfiniteStoreItemList } from "@/api/store/queries/useGetInfiniteStoreItemList";
 
-const StoreSection = () => {
-	const { data } = useGetStoreItemList(0, 'recent', 'ALL', 6);
+export default function StoreSection() {
 	const router = useRouter();
+
+	const { data } = useGetInfiniteStoreItemList('recent', 'RAW');
+	const storeItemList = data?.pages?.flatMap((page) => page.itemList).filter(item => !!item.inStock) ?? [];
+
 	const title = MAIN_DATA.STORE.title;
 	const subTitle = MAIN_DATA.STORE.subTitle;
 	const action = MAIN_DATA.STORE.action;
-	const storeItemList = data.itemList.filter(item => !!item.inStock);
 
 	return (
 		<MainContainer>
@@ -34,7 +36,7 @@ const StoreSection = () => {
 							key={item.id}
 							className={mainStoreItem}
 						>
-							<Image src={item.thumbnailUrl} alt={item.name} width={120} height={120} style={{ borderRadius: '8px' }} className={cardShadow.normal} />
+							<Image src={item.displayThumbnailUrl.url} alt={item.name} width={120} height={120} style={{ borderRadius: '8px' }} className={cardShadow.normal} />
 							<div>
 								<Text type='label4' className={ellipsis({ lineSize: 'line1' })}>{item.name}</Text>
 								<Text type='headline2'>{item.originalPrice.toLocaleString()}원</Text>
@@ -51,5 +53,3 @@ const StoreSection = () => {
 		</MainContainer>
 	);
 };
-
-export default StoreSection;

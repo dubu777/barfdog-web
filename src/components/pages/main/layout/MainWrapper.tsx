@@ -45,7 +45,7 @@ export default function MainWrapper() {
         {mainInfoData &&
           <>
           <BannerSection mainBannerList={mainInfoData.mainBannerList} />
-          <ReviewSection bestReviewList={mainInfoData.bestReviewList}  />
+          <ReviewSection />
           </>
         }
         <StoreSection />

@@ -4,12 +4,10 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const chipsVariants = {
   solid: style({
-    position: "relative",
     zIndex: 0,
   }),
   outlined: style({
     border: `1px solid ${themeVars.colors.red.red}`,
-    position: "relative",
     zIndex: 0,
   }),
 };
@@ -187,6 +185,21 @@ export const chipsSize = recipe({
     size: "sm",
     showCheckIcon: false,
     switchOff: false,
+  },
+});
+
+export const chipsTailVisible = recipe({
+  base: {},
+  variants: {
+    tailVisible: {
+      true: {
+        position: "relative",
+      },
+      false: {},
+    },
+  },
+  defaultVariants: {
+    tailVisible: false,
   },
 });
 

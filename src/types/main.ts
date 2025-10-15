@@ -3,7 +3,6 @@ import { StaticImageData } from "next/image";
 export type {
   MainData,
   MainBanner,
-  MainBestReviewList,
   MainRecipe,
   MainTopBanner,
   MainPopupBanner,
@@ -53,16 +52,6 @@ interface MainBanner {
   mobileLinkUrl: string;
 }
 
-interface MainBestReviewList {
-  id: number;
-  imageUrl: string;
-  leakedOrder: number;
-  titleByAdmin: null | string,
-  contents: string;
-  username: string;
-  orderType: string;
-}
-
 interface MainRecipe {
   id: number;
   name: string;
@@ -99,7 +88,6 @@ interface MainTopBanner {
 interface MainInfoData {
   mainBannerList: MainBanner[];
   popupBannerList: MainPopupBanner[];
-  bestReviewList: MainBestReviewList[];
   recipeList: MainRecipe[];
   topBanner: MainTopBanner;
 }

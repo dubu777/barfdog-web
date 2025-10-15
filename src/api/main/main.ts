@@ -8,7 +8,6 @@ const getMainInfo = async (): Promise<MainInfoData> => {
   return {
     mainBannerList: data.mainBannerDtoList,
     popupBannerList: data.popupBannerDtoList,
-    bestReviewList: data.queryBestReviewsDtoList,
     topBanner: data.topBannerDto,
     recipeList: data.recipeDtoList.sort((a, b) => a.id - b.id)
   };
