@@ -189,10 +189,17 @@ export const buttonClass = recipe({
       },
     },
     {
-      variants: { variant: "text", intent: "assistive" },
+      variants: { variant: "text", intent: "secondary" },
       style: {
         backgroundColor: "transparent",
         color: themeVars.colors.gray.gray600,
+      },
+    },
+    {
+      variants: { variant: "text", intent: "assistive" },
+      style: {
+        backgroundColor: "transparent",
+        color: themeVars.colors.gray.gray0,
       },
     },
 

@@ -76,7 +76,7 @@ export default function AddressCard({
         <div className={styles.leftButtonContainer}>
           {!isDefaultAddress && (
             <Button
-              intent="assistive"
+              intent="secondary"
               variant="text"
               onClick={handleDeleteModal}
             >

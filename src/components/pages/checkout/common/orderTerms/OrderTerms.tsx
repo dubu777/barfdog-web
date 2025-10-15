@@ -46,7 +46,7 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
                 {ORDER_MESSAGE.AGREE_PRIVACY}
               </Text>
             </LabeledCheckbox>
-            <Button intent="assistive" variant="text" size="sm">
+            <Button intent="secondary" variant="text" size="sm">
               <Text type="label2" color="red" underLine>
                 내용보기
               </Text>

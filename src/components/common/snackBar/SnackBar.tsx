@@ -17,7 +17,6 @@ interface SnackBarItemProps {
   onClose: () => void;
 }
 
-
 function SnackBarItem({
   id,
   title,
@@ -36,8 +35,14 @@ function SnackBarItem({
       className={styles.snackBarItem}
     >
       <div className={styles.snackBarContent}>
-        <Text type="label3" color="gray0">{title}</Text>
-        {caption && <Text type="caption" color="gray200">{caption}</Text>}
+        <Text type="label3" color="gray0">
+          {title}
+        </Text>
+        {caption && (
+          <Text type="caption" color="gray200">
+            {caption}
+          </Text>
+        )}
       </div>
 
       {actionLabel && (
@@ -46,9 +51,8 @@ function SnackBarItem({
             onActionClick?.();
             onClose();
           }}
-          type="assistive"
+          intent="assistive"
           variant="text"
-          textColor="gray0"
           size="lg"
         >
           {actionLabel}
@@ -68,7 +72,9 @@ export default function SnackBar() {
     }
   }, [currentSnackBar]);
   return (
-    <div className={`${styles.snackBarContainer} ${styles.snackBarPosition[position]}`}>
+    <div
+      className={`${styles.snackBarContainer} ${styles.snackBarPosition[position]}`}
+    >
       <AnimatePresence>
         {currentSnackBar && (
           <SnackBarItem
