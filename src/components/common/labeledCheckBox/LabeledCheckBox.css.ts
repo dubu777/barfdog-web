@@ -5,7 +5,6 @@ export const labelCheckedBoxContainer = recipe({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    alignSelf: "stretch",
     gap: "8px",
     cursor: "pointer",
     width: "100%",
@@ -13,11 +12,11 @@ export const labelCheckedBoxContainer = recipe({
   variants: {
     direction: {
       row: {
-        flexDirection: 'row',
+        flexDirection: "row",
       },
       col: {
-        flexDirection: 'column',
-      }
-    }
-  }
+        flexDirection: "column",
+      },
+    },
+  },
 });

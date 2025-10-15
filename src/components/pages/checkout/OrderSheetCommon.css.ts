@@ -36,7 +36,6 @@ export const orderSheetContentBox = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  alignSelf: "stretch",
 });
 
 export const inputButtonWrapper = style({
@@ -52,4 +51,9 @@ export const completedContainer = style({
   padding: "60px 20px 125px 20px",
   minHeight: "100vh",
   backgroundColor: themeVars.colors.gray.gray50,
+});
+
+export const checkoutPageContainer = style({
+  width: "100%",
+  marginBottom: "85px",
 });

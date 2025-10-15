@@ -1,4 +1,3 @@
-import * as styles from "../../order/Order.css";
 import { ErrorBoundary } from "react-error-boundary";
 import {
   dehydrate,
@@ -15,13 +14,11 @@ export default async function GeneralPage() {
   const dehydrateState = dehydrate(queryClient);
 
   return (
-    <main className={styles.orderPageContainer}>
-      <HydrationBoundary state={dehydrateState}>
-        <ErrorBoundary fallback={<div>Something went wrong.</div>}>
-          <Header centerTitle="결제" showBackButton />
-          <GeneralCheckout />
-        </ErrorBoundary>
-      </HydrationBoundary>
-    </main>
+    <HydrationBoundary state={dehydrateState}>
+      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+        <Header centerTitle="결제" showBackButton />
+        <GeneralCheckout />
+      </ErrorBoundary>
+    </HydrationBoundary>
   );
 }

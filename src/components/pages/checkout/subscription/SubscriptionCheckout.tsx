@@ -50,6 +50,8 @@ import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { useGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/useGetSubscriptionCheckoutSheet";
 import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
 import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
+import { commonWrapper } from "@/styles/common.css";
+import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -159,7 +161,7 @@ export default function SubscriptionCheckout({
   };
 
   return (
-    <>
+    <div className={checkoutPageContainer}>
       <DeliveryAddress />
       <Divider />
       <SubscriptionOrderItemList
@@ -205,6 +207,6 @@ export default function SubscriptionCheckout({
           ? "결제 처리 중..."
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
-    </>
+    </div>
   );
 }
