@@ -1,4 +1,4 @@
-import { Page } from "./common";
+import { Page, Pagination } from "./common";
 
 interface BaseReviewItem {
   id: number;
@@ -27,13 +27,34 @@ interface BestReviewDetail {
 }
 
 interface ReviewImage {
-  url: string;
-  filename: string;
+  reviewId: number;
+  displayImageUrl: {
+    url: string;
+  };
 }
 
 interface ReviewList {
   reviewList: BestReviewDetail[];
   page: Page;
+}
+
+interface ReviewImageList {
+  reviewImageList: ReviewImage[];
+}
+
+interface StoreItemDetailReview {
+  reviewId: number;
+  star: number;
+  titleByAdmin: null | string;
+  reviewer: string;
+  contents: string;
+  writtenDate: string;
+  hasReviewImages: boolean;
+}
+
+interface StoreItemDetailReviewList {
+  pagination: Pagination;
+  itemReviewList: StoreItemDetailReview[];
 }
 
 export type {
@@ -43,4 +64,6 @@ export type {
   BestReviewDetail,
   ReviewImage,
   ReviewList,
+  ReviewImageList,
+  StoreItemDetailReviewList,
 };

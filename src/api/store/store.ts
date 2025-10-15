@@ -1,72 +1,49 @@
 import axiosInstance from "@/api/axiosInstance";
 import { AxiosInstance } from "axios";
 import {
+  ItemType,
+  SortByType,
   StoreItemDetail,
-  StoreItemDetailReviewList,
   StoreItemList,
-  StoreItemListSearchValues,
 } from "@/types/store";
+import { ApiResponse } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
-const getStoreItemList = async (page = 0, size = 10, sortBy = 'recent', itemType = 'ALL', instance: AxiosInstance = axiosInstance): Promise<StoreItemList> => {
-  const { data } = await instance.get(`/api/items?page=${page}&size=${size}&sortBy=${sortBy}&itemType=${itemType.toUpperCase()}`);
-
-  return {
-    page: {
-      size: data.size,
-      totalElements: data.totalElements,
-      totalPages: data.totalPages,
-      number: data.number,
-    },
-    itemList: data?.content ?? [],
-  };
-  // return {
-  //   page: data.page,
-  //   itemList: data?._embedded?.queryItemsDtoList || [],
-  // };
-};
-
-const getInfiniteStoreItemList = async ({
-  pageParam = 0,
-  size = 20,
+const getInfiniteStoreItemList = async ({ 
+  pageParam = 0, 
+  size = 20, 
   sortBy = 'recent',
   itemType = 'ALL',
   instance = axiosInstance
-}: StoreItemListSearchValues) => {
-  const { data } = await instance.get(`/api/items`, {
-    params: { page: pageParam, size, sortBy, itemType },
+}: { 
+  pageParam: number; 
+  size?: number; 
+  sortBy?: SortByType;
+  itemType?: ItemType;
+  instance?: AxiosInstance;
+}) => {
+  const { data }: { data: ApiResponse<StoreItemList> } = await instance.get(`/api/v2/public/items`, {
+    params: { 
+      page: pageParam,
+      size,
+      sortBy,
+      itemType: itemType.toUpperCase(),
+    },
   });
 
+  const responseData = validateApiResponse(data, "상품 목록 조회에 실패했습니다.");
   return {
-    page: {
-      size: data.size,
-      totalElements: data.totalElements,
-      totalPages: data.totalPages,
-      number: data.number,
-    },
-    itemList: data?.content ?? [],
+    pagination: responseData.pagination,
+    itemList: responseData.shopItemList,
   };
-  // return {
-  //   itemList: data?._embedded?.queryItemsDtoList || [],
-  //   page: data?.page || { number: 0, totalPages: 1 },
-  // }
 };
 
 const getStoreItemDetail = async (itemId: number, instance: AxiosInstance = axiosInstance): Promise<StoreItemDetail> => {
-  const { data } = await instance.get(`/api/items/${itemId}`);
-  return data;
-};
-
-const getStoreItemReviewList = async (itemId: number, page = 0, size = 5): Promise<StoreItemDetailReviewList> => {
-  const { data } = await axiosInstance.get(`/api/items/${itemId}/reviews?page=${page}&size=${size}`);
-  return {
-    page: data?.page,
-    reviewList: data._embedded.itemReviewsDtoList || [],
-  };
+  const { data }: { data: ApiResponse<StoreItemDetail> } = await instance.get(`/api/v2/public/items/${itemId}`);
+  return validateApiResponse(data, "상품 상세 조회에 실패했습니다.");
 }
 
 export { 
-  getStoreItemList,
   getInfiniteStoreItemList,
   getStoreItemDetail,
-  getStoreItemReviewList,
 };

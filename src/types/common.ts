@@ -94,9 +94,9 @@ interface SelectOption<T extends string | number | boolean | null> {
 }
 
 interface BaseUploadedFile {
-  fileId: number;
-  fileName: string;
-  folder: string;
+  fileId?: number;
+  fileName?: string;
+  folder?: string;
   fileStatus?: "PENDING_ADD" | "PENDING_DELETE" | "ADDED";
   displayImageUrl?: { url: string };
 }

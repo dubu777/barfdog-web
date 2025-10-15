@@ -8,7 +8,7 @@ export const contentBox = recipe({
 		display: 'flex',
 		flexDirection: 'column',
 		gap: '20px',
-		transition: 'all .35s'
+		transition: 'all .35s',
 	},
 	variants: {
 		background: {
@@ -18,14 +18,30 @@ export const contentBox = recipe({
 			white: {
 				background: themeVars.colors.gray.gray0,
 			}
+		},
+		isExpanded: {
+			true: {
+			},
+			false: {
+				cursor: 'pointer',
+			}
 		}
 	}
 })
 
-export const contentTop = style({
-	display: 'flex',
-	justifyContent: 'space-between',
-	alignItems: 'flex-end',
+export const contentTop = recipe({
+	base: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'flex-end',
+	},
+	variants: {
+		isExpanded: {
+			true: {
+				cursor: 'pointer',
+			}
+		}
+	}
 })
 
 export const username = style({

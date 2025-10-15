@@ -1,6 +1,6 @@
 'use client';
 import * as styles from './ItemList.css';
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import StoreItem from "@/components/pages/store/list/Item/Item";
@@ -29,18 +29,23 @@ export default function ItemList() {
       fetchNextPage();
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
+
   return (
     <article className={styles.storeItemListContainer}>
-      <ul className={styles.storeItemList}>
+      <div className={styles.storeItemList}>
         {itemList.map(item => (
-          <StoreItem key={item.id} item={item} />
+          <Fragment key={item.id}>
+            <StoreItem item={item} />
+          </Fragment>
         ))}
-      </ul>
-      <InfiniteScrollTrigger
-        ref={ref}
-        hasNextPage={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-      />
+      </div>
+      {itemList.length > 0 && (
+        <InfiniteScrollTrigger
+          ref={ref}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      )}
     </article>
   );
 };

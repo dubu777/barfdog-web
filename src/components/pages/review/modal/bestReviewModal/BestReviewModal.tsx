@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { contentBox } from "@/components/pages/review/common/ReviewCommonStyle.css";
+import { contentBox } from "@/components/pages/review/common/reviewItem/ReviewItem.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -11,7 +11,7 @@ import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
 import ImageSlide from "@/components/common/imageSlide/ImageSlide";
 import useModal from "@/hooks/useModal";
 import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
-import ReviewInfoTop from "@/components/pages/review/common/ReviewInfoTop";
+import ReviewInfoTop from "@/components/pages/review/common/reviewItem/ReviewInfoTop";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
 

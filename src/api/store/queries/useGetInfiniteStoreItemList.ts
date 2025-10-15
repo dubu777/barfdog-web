@@ -4,26 +4,26 @@ import { queryKeys } from "@/constants";
 import { getInfiniteStoreItemList } from "@/api/store/store";
 
 export function useGetInfiniteStoreItemList(sortBy: SortByType, itemType: ItemType) {
-	return useInfiniteQuery<StoreItemList, Error>({
+	return useInfiniteQuery({
 		queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST, sortBy, itemType],
 		queryFn: async ({ pageParam = 0 }) => {
 			const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
 			const data = await getInfiniteStoreItemList({
 				pageParam: pageNumber,
-				size: 20,
 				sortBy,
 				itemType
 			});
 			return data;
 		},
 		getNextPageParam: (lastPage) => {
-			if (!lastPage || !lastPage.page) return undefined;
+			if (!lastPage) return undefined;
 
-			const nextPage = lastPage.page.number + 1;
-			const totalPages = lastPage.page.totalPages;
+			const currentPage = lastPage?.pagination?.page ?? 0;
+			const totalPages = lastPage?.pagination?.totalPages ?? 0;
 
+			const nextPage = currentPage + 1;
 			return nextPage < totalPages ? nextPage : undefined;
 		},
-		initialPageParam: 0,
+    initialPageParam: 0,
 	});
 }

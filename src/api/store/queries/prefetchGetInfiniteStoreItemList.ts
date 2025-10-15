@@ -1,12 +1,9 @@
 import { queryKeys } from "@/constants/queryKeys";
 import { QueryClient } from "@tanstack/react-query";
 import { createSSRRequest } from "@/api/withAuthSSR";
-import { ItemType, SortByType } from "@/types";
 import { getInfiniteStoreItemList } from "@/api/store/store";
 
 export async function prefetchGetInfiniteStoreItemList(
-  sortBy: SortByType,
-  itemType: ItemType,
   queryClient: QueryClient
 ) {
   const ssrAxios = createSSRRequest();
@@ -14,15 +11,14 @@ export async function prefetchGetInfiniteStoreItemList(
     queryKey: [
       queryKeys.STORE.BASE,
       queryKeys.STORE.GET_STORE_ITEM_LIST,
-      sortBy,
-      itemType
+      'recent',
+      'ALL'
     ],
     queryFn: async ({ pageParam = 0 }) =>
       await getInfiniteStoreItemList({
         pageParam,
-        size: 20,
-        sortBy,
-        itemType,
+        sortBy: 'recent',
+        itemType: 'ALL',
         instance: ssrAxios
       }),
     initialPageParam: 0,

@@ -10,36 +10,35 @@ import useStickyTabScroll from "@/hooks/useStickyTabScroll";
 
 const ItemDetail = dynamic(() => import("./itemDetail/ItemDetail"), { ssr: false });
 
-interface ItemCategory {
+interface ItemCategoryTabProps {
   itemId: number;
   reviewCount: number;
   contents: string;
   description: string;
 }
 
-interface ItemCategoryTabProps {
-  data: ItemCategory;
-}
-
 export default function ItemCategoryTab({
-  data,
+  itemId,
+  reviewCount,
+  contents,
+  description,
 }: ItemCategoryTabProps) {
 
-  const reviewCount = useMemo(() =>
-    data.reviewCount > 0
-      ? `(${data.reviewCount}${data.reviewCount > 999 ? '+' : ''})`
+  const reviewCountLabel = useMemo(() =>
+    reviewCount > 0
+      ? `(${reviewCount}${reviewCount > 999 ? '+' : ''})`
       : ''
-    ,[data.reviewCount])
+    ,[reviewCount])
 
   const tabs = [
     { 
       label: "상세정보", 
-      content: <ItemDetail contents={data.contents} description={data.description} />
+      content: <ItemDetail contents={contents} description={description} />
     },
     { 
-      label: `리뷰 ${reviewCount}`,
-      title: `구매 리뷰 ${reviewCount}`,
-      content: <ItemReview itemId={data.itemId} /> 
+      label: `리뷰 ${reviewCountLabel}`,
+      title: `구매 리뷰 ${reviewCountLabel}`,
+      content: <ItemReview itemId={itemId} /> 
     },
     { 
       label: "반품/교환", 

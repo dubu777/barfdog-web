@@ -26,7 +26,7 @@ export default function Item({
   } = getItemViewProps(item);
 
   return (
-    <li key={item.id} className={styles.storeItem}>
+    <div className={styles.storeItem}>
       <Link href={`/store/${item.id}`} className={styles.storeLink}>
         <div className={styles.itemImageBox}>
           {tagList.length > 0 &&
@@ -39,7 +39,7 @@ export default function Item({
             </div>
           }
           <ImageLoadingSpinner
-            src={item.thumbnailUrl}
+            src={item.displayThumbnailUrl.url}
             alt={item.name}
             fill
             className={styles.itemImage}
@@ -82,6 +82,6 @@ export default function Item({
           </div>
         </div>
       </Link>
-    </li>
+    </div>
   );
 };
