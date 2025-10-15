@@ -1,20 +1,20 @@
-import { UseSuspenseQueryCustomOptions } from "@/types";
-import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { ReviewList, UseQueryCustomOptions } from "@/types";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import { ReviewList } from "@/types/review";
 import { getReviewList } from "@/api/review/review";
 
-export function useGetReviewList(page: number, queryOptions?: UseSuspenseQueryCustomOptions<ReviewList>) {
-  return useSuspenseQuery<ReviewList>({
-    queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_REVIEW_LIST, page],
-    queryFn: () => getReviewList(page),
+export function useGetReviewList(page: number, itemId?: number, queryOptions?: UseQueryCustomOptions<ReviewList>) {
+  return useQuery<ReviewList>({
+    queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_REVIEW_LIST, page, itemId],
+    queryFn: () => getReviewList({ page, itemId }),
+    keepPreviousData: true,
     ...queryOptions,
   })
 }
 
-export async function prefetchGetReviewList(queryClient: QueryClient, page: number) {
+export async function prefetchGetReviewList(queryClient: QueryClient, page: number, itemId?: number) {
   return queryClient.prefetchQuery<ReviewList>({
-    queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_REVIEW_LIST, page],
-    queryFn: () => getReviewList(page),
+    queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_REVIEW_LIST, page, itemId],
+    queryFn: () => getReviewList({ page, itemId }),
   })
 }

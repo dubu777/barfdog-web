@@ -120,7 +120,6 @@ const queryKeys = {
     GET_BEST_REVIEW_DETAIL: "getBestReviewDetail",
     GET_REVIEW_LIST: "getReviewList",
     GET_REVIEW_IMAGE_LIST: "getReviewImageList",
-    GET_STORE_ITEM_REVIEW_LIST: "getStoreItemReviewList",
   },
   STORE: {
     BASE: "store",

@@ -1,29 +1,12 @@
-import { Page, Pagination } from "./common";
+import { Pagination } from "./common";
 
+// 공통
 interface BaseReviewItem {
-  id: number;
-  thumbnailUrl?: string;
-  star: number;
-  titleByAdmin?: null | string;
+  reviewId: number;
+  titleByAdmin: null | string;
   contents: string;
-  username?: string;
-}
-
-interface BestReviewItem extends BaseReviewItem {
-  imageUrl: string;
-  leakedOrder: number;
-  orderType: string;
-}
-
-interface ReviewListItem extends BaseReviewItem{
-  username: string;
+  reviewer: string;
   writtenDate: string;
-  orderType?: string;
-}
-
-interface BestReviewDetail {
-  reviewDto: ReviewListItem;
-  reviewImageDtoList: ReviewImage[];
 }
 
 interface ReviewImage {
@@ -33,37 +16,35 @@ interface ReviewImage {
   };
 }
 
-interface ReviewList {
-  reviewList: BestReviewDetail[];
-  page: Page;
-}
-
 interface ReviewImageList {
   reviewImageList: ReviewImage[];
 }
 
-interface StoreItemDetailReview {
-  reviewId: number;
+// 베스트 리뷰
+interface BestReviewItem extends BaseReviewItem, ReviewImageList {
+  leakedOrder: number;
+}
+
+interface BestReviewList {
+  bestReviewList: BestReviewItem[];
+}
+
+// 리뷰 목록
+interface ReviewListItem extends BaseReviewItem {
   star: number;
-  titleByAdmin: null | string;
-  reviewer: string;
-  contents: string;
-  writtenDate: string;
   hasReviewImages: boolean;
 }
 
-interface StoreItemDetailReviewList {
+interface ReviewList {
   pagination: Pagination;
-  itemReviewList: StoreItemDetailReview[];
+  itemReviewList: ReviewListItem[];
 }
 
 export type {
-  BaseReviewItem,
-  BestReviewItem,
-  ReviewListItem,
-  BestReviewDetail,
   ReviewImage,
-  ReviewList,
   ReviewImageList,
-  StoreItemDetailReviewList,
+  BestReviewItem,
+  BestReviewList,
+  ReviewListItem,
+  ReviewList,
 };
