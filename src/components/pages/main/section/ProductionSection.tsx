@@ -11,7 +11,7 @@ import {
 } from "@/components/pages/main/common/MainCommon.css";
 import { MAIN_DATA } from "@/constants/main";
 
-const ProductionSection = () => {
+export default function ProductionSection() {
 	const title = MAIN_DATA.PRODUCTION.title;
 	const subTitle = MAIN_DATA.PRODUCTION.subTitle;
 	const topPoints = MAIN_DATA.PRODUCTION.descriptions;
@@ -35,15 +35,21 @@ const ProductionSection = () => {
 				<MainTitle title={title} subTitle={subTitle} />
 				<div className={mainProductionImageBox}>
 					{imageList.map((image, index) => (
-						<Image key={image} src={image} alt={`인증서 ${index+1}`} width={100} height={140} className={mainProductionImage} />
+						<Image key={image} src={image} alt={`인증서 ${index+1}`} width={300} height={300} className={mainProductionImage} />
 					))}
 				</div>
-				<video preload='none' muted autoPlay loop className={mainProductionVideo}>
+				<video 
+					preload='none' 
+					muted 
+					autoPlay 
+					loop 
+					playsInline
+					webkit-playsinline="true"
+					className={mainProductionVideo}
+				>
 					<source src='/videos/main_video.mp4' type='video/mp4'/>
 				</video>
 			</MainContainer>
 		</>
 	);
 };
-
-export default ProductionSection;

@@ -41,6 +41,8 @@ export default function BestReview() {
     setSelectedReview(null);
     onClose();
   }
+
+  if (!bestReviewList) return null;
   return (
     <article>
       <div className={styles.bestReviewTitle}>

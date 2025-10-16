@@ -8,16 +8,18 @@ interface MainTitleProps {
 	subTitle: string | ReactNode;
 	align?: 'center' | 'left';
 	hasInteraction?: boolean;
+	noPaddingTop?: boolean;
 }
 
-const MainTitle = ({
+export default function MainTitle({
 	title,
 	subTitle,
 	align = 'center',
 	hasInteraction = false,
-}: MainTitleProps) => {
+	noPaddingTop = false,
+}: MainTitleProps) {
 	const ContentElement = () => (
-		<div className={mainTitle({ align })}>
+		<div className={mainTitle({ align, noPaddingTop })}>
 			<Text type='title2' align={align} preLine>{title}</Text>
 			<Text type='body2' align={align} preLine>{subTitle}</Text>
 		</div>
@@ -31,6 +33,4 @@ const MainTitle = ({
 		: <ContentElement />
 
 	);
-};
-
-export default MainTitle;
+}

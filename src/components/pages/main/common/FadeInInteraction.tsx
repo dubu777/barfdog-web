@@ -6,10 +6,10 @@ interface FadeInInteractionProps {
 	viewportOnce?: boolean;
 }
 
-const FadeInInteraction = ({
+export default function FadeInInteraction({
 	children,
 	viewportOnce = true,
-}: FadeInInteractionProps) => {
+}: FadeInInteractionProps) {
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -20,6 +20,4 @@ const FadeInInteraction = ({
 			{children}
 		</motion.div>
 	);
-};
-
-export default FadeInInteraction;
+}

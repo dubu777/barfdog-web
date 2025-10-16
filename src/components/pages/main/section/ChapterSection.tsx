@@ -5,8 +5,11 @@ import {
 	mainChapter1Image,
 	mainChapter1ImageList,
 	mainChapter2Image,
+	mainChapter2ImageBox,
 	mainChapter2ImageList,
 	mainChapter3Image,
+	mainChapter3ImageList,
+	mainChapter3ImageSlide,
 	mainChapterIndexChips,
 } from "@/components/pages/main/common/MainCommon.css";
 import { cardShadow } from "@/components/common/card/Card.css";
@@ -20,19 +23,27 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 import 'swiper/css/free-mode';
 import 'swiper/css';
+import useDeviceState from "@/hooks/useDeviceState";
 import { MAIN_DATA } from "@/constants/main";
 
 const getPosition = (index: number) => {
 	if (index === 0) return { x: 0, y: -40 };
-	if (index === 1) return { x: 40, y: 0 };
+	if (index === 1) return { x: 0, y: 0 };
 	if (index === 2) return { x: 0, y: 40 };
 	return { x: 0, y: 0 };
 };
 
-const getWidth = (index: number) => (index === 2 ? '100%' : 'calc(50% - 4px)');
+const getGridArea = (index: number) => {
+	if (index === 0) return '1 / 1 / 2 / 2'; // 첫 번째 행, 첫 번째 열
+	if (index === 1) return '1 / 2 / 2 / 3'; // 첫 번째 행, 두 번째 열
+	if (index === 2) return '2 / 1 / 3 / 3'; // 두 번째 행, 전체 너비
+	return '';
+};
 
-const ChapterSection = () => {
+export default function ChapterSection() {
 	const router = useRouter();
+	const { isMobileWidth } = useDeviceState();
+
 	const chapterData = MAIN_DATA.CHAPTER;
 
 	const ChapterComponent = ({ index, imagesUrl }: { index: number, imagesUrl: readonly string[] }) => {
@@ -61,7 +72,7 @@ const ChapterSection = () => {
 				);
 			case 1:
 				return (
-					<div className={mainChapter2ImageList}>
+					<div className={mainChapter2ImageList({ isMobileWidth: isMobileWidth })}>
 						{imagesUrl?.map((image, i) => (
 							<motion.div
 								key={i}
@@ -75,18 +86,17 @@ const ChapterSection = () => {
 									stiffness: 64.02,
 									type: 'spring',
 								}}
-								viewport={{ once: true, amount: 'all' }}
+								viewport={{ once: true,}}
 								style={{
-									width: getWidth(i),
-									borderRadius: '8px',
+									gridArea: getGridArea(i),
 								}}
-								className={cardShadow.strong}
+								className={mainChapter2ImageBox}
 							>
 								<Image
 									src={image}
 									alt={`chapter${i} image`}
-									width={334}
-									height={250}
+									width={276}
+									height={370}
 									className={mainChapter2Image}
 								/>
 							</motion.div>
@@ -100,14 +110,20 @@ const ChapterSection = () => {
 						slidesPerView='auto'
 						freeMode
 						modules={[ FreeMode ]}
-						className={mainBox}
+						className={mainChapter3ImageList}
 					>
 						{imagesUrl.map((image, i) => (
 							<SwiperSlide
 								key={i}
-								className={mainChapter3Image}
+								className={mainChapter3ImageSlide}
 							>
-								<Image src={image} alt={`chapter${i} image`} width={247} height={280} />
+								<Image 
+									src={image} 
+									alt={`chapter${i} image`} 
+									width={1200} 
+									height={1200} 
+									className={mainChapter3Image} 
+								/>
 							</SwiperSlide>
 						))}
 					</Swiper>
@@ -115,25 +131,26 @@ const ChapterSection = () => {
 		}
 	}
 	return (
-		<>
-			{chapterData.map((chapter, index) => (
-				<MainContainer key={chapter.id} backgroundColor={index === 1 ? 'gray50' : 'pinkWhite'}>
-					<FadeInInteraction>
-						<Text type='title2' color='white' className={mainChapterIndexChips}>
-							0{index+1}
-						</Text>
-						<MainTitle title={chapter.title} subTitle={chapter.subTitle} align='left' />
-					</FadeInInteraction>
-					<ChapterComponent imagesUrl={chapter.imagesUrl} index={index} />
-					<div className={mainBox}>
-						<Button onClick={() => router.push(chapter.action.url)} variant={chapter.action.variant} fullWidth={chapter.action.fullWidth}>
-							{chapter.action.label}
-						</Button>
-					</div>
-				</MainContainer>
-			))}
-		</>
+		chapterData.map((chapter, index) => (
+			<MainContainer key={chapter.id} backgroundColor={index === 1 ? 'gray50' : 'pinkWhite'}>
+				<FadeInInteraction>
+					<Text type='title2' color='white' className={mainChapterIndexChips}>
+						0{index+1}
+					</Text>
+					<MainTitle 
+						title={chapter.title} 
+						subTitle={chapter.subTitle} 
+						align='left'
+						noPaddingTop
+					/>
+				</FadeInInteraction>
+				<ChapterComponent imagesUrl={chapter.imagesUrl} index={index} />
+				<div className={mainBox}>
+					<Button onClick={() => router.push(chapter.action.url)} variant={chapter.action.variant} fullWidth={chapter.action.fullWidth}>
+						{chapter.action.label}
+					</Button>
+				</div>
+			</MainContainer>
+		))
 	);
 };
-
-export default ChapterSection;

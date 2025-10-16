@@ -28,6 +28,7 @@ export default function ReviewSection() {
 	const description = MAIN_DATA.REVIEW.description;
 	const action = MAIN_DATA.REVIEW.action;
 
+	if (!bestReviewList) return null;
 	return (
 		<MainContainer backgroundColor='pinkWhite'>
 			<MainTitle title={title} subTitle={subTitle} hasInteraction />

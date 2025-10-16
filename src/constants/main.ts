@@ -35,6 +35,10 @@ export const MAIN_DATA = {
 			fullWidth: true,
 		}
 	},
+	RECIPE: {
+		title: '빅데이터 기반의\n과학적 맞춤 레시피',
+		subTitle: '같은 견종이어도 다 같은 강아지가 아니기에\n진단부터 제조까지 우리 아이 맞춤형 서비스',
+	},
 	CHAPTER: [
 		{
 			id: 'survey',
@@ -63,9 +67,9 @@ export const MAIN_DATA = {
 				fullWidth: true,
 			},
 			imagesUrl: [
-				'/images/main/chapter_chart1.png',
-				'/images/main/chapter_chart2.png',
-				'/images/main/chapter_chart3.png',
+				'/images/main/chapter_chart1.svg',
+				'/images/main/chapter_chart2.svg',
+				'/images/main/chapter_chart3.svg',
 			],
 		},
 		{
@@ -166,6 +170,14 @@ export const MAIN_DATA = {
 		imagesUrl: [
 			'/images/main/companyLogo1.png',
 			'/images/main/companyLogo2.png',
+			'/images/main/companyLogo3.png',
+			'/images/main/companyLogo4.png',
+			'/images/main/companyLogo5.png',
+			'/images/main/companyLogo6.png',
+			'/images/main/companyLogo7.png',
+			'/images/main/companyLogo8.png',
+			'/images/main/companyLogo9.png',
+			'/images/main/companyLogo10.png',
 		],
 	}
 } as const;

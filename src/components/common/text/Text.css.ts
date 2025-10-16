@@ -136,6 +136,7 @@ export const fontColors = {
   gray300: style({ color: themeVars.colors.gray.gray300 }),
   gray200: style({ color: themeVars.colors.gray.gray200 }),
   gray100: style({ color: themeVars.colors.gray.gray100 }),
+  gray50: style({ color: themeVars.colors.gray.gray50 }),
   gray0: style({ color: themeVars.colors.gray.gray0 }),
   blue500: style({ color: themeVars.colors.blue.blue500 }),
   green500: style({ color: themeVars.colors.green.green500 }),

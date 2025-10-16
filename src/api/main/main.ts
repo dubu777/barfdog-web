@@ -1,24 +1,14 @@
 import axiosInstance from "@/api/axiosInstance";
-import { MainInfoData } from "@/types/main";
+import { ApiResponse } from "@/types";
+import { MainBannerInfo } from "@/types/main";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
+import { AxiosInstance } from "axios";
 
-export { getMainInfo, getMainDeadlineBanner };
-
-const getMainInfo = async (): Promise<MainInfoData> => {
-  const { data } = await axiosInstance.get('/api/home');
-  return {
-    mainBannerList: data.mainBannerDtoList,
-    popupBannerList: data.popupBannerDtoList,
-    topBanner: data.topBannerDto,
-    recipeList: data.recipeDtoList.sort((a, b) => a.id - b.id)
-  };
+const getMainBannerInfo = async (instance: AxiosInstance = axiosInstance): Promise<MainBannerInfo> => {
+  const { data }: { data: ApiResponse<MainBannerInfo> } = await instance.get(`/api/v2/public/banners/main`);
+  return validateApiResponse(data, "메인 배너 정보 조회에 실패했습니다.");
 }
-
-// const getMainBanner = async (): Promise<MainInfoData> => {
-//   const { data } = await axiosInstance.get('/api/banners/main');
-//   return data?._embedded?.mainBannerListResponseDtoList || [];
-// }
-
-const getMainDeadlineBanner = async (): Promise<string> => {
-  const { data } = await axiosInstance.get('/api/banners/deadline');
-  return data.orderDeadline;
-}
+  
+export { 
+  getMainBannerInfo,
+};

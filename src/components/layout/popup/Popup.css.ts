@@ -1,26 +1,27 @@
-import {recipe} from "@vanilla-extract/recipes";
-import {style} from "@vanilla-extract/css";
-import {themeVars} from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
+import { style } from "@vanilla-extract/css";
+import { themeVars } from "@/styles/theme.css";
 
 const defaultOffset = 20;
 
 export const popup = recipe({
   base: {
-    width: '400px',
+    width: '320px',
     position: 'fixed',
-    top: '50%',
     zIndex: 999,
-    transform: 'translateY(-50%)',
     borderRadius: '10px',
     overflow: 'hidden',
-    boxShadow: '0 0 1.25rem rgba(0, 0, 0, 0.15)',
+    boxShadow: themeVars.shadow.light,
+    border: `1px solid ${themeVars.colors.gray.gray300}`,
+    display: 'flex',
+    flexDirection: 'column',
   },
   variants: {
     position: {
       LEFT: {
         left: `${defaultOffset}px`,
       },
-      CENTER: {
+      MID: {
         left: '50%',
         transform: 'translateX(-50%)',
       },
@@ -32,19 +33,24 @@ export const popup = recipe({
 })
 
 export const popupImage = style({
-  display: 'block',
-  height: '398px',
+  width: '320px',
+  height: '320px',
+  aspectRatio: '1 / 1',
 })
 
 export const popupButton = style({
-  width: '50%',
-  height: '45px',
-  background: themeVars.colors.gray.gray0,
-  fontSize: themeVars.fontSize["text-sm"],
+  width: '64px',
   cursor: 'pointer',
-  selectors: {
-    '&:first-child': {
-      borderRight: '1px solid #eee'
-    }
-  }
+})
+
+export const popupCheckbox = style({
+  padding: '4px 6px'
+})
+
+export const popupAction = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '8px 12px',
+  background: themeVars.colors.gray.gray0,
 })

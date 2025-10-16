@@ -91,8 +91,7 @@ const queryKeys = {
   },
   MAIN: {
     BASE: "main",
-    GET_MAIN_INFO: "getMainInfo",
-    GET_MAIN_DEADLINE_BANNER: "getMainDeadlineBanner",
+    GET_MAIN_BANNER_INFO: "getMainBannerInfo",
   },
   RECIPE: {
     BASE: "recipe",
