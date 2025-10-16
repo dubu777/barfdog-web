@@ -15,7 +15,7 @@ interface CardProps {
   className?: string;
   backgroundColor?: "gray0" | "gray50" | "gray100" | "transparent";
   borderRadius?: 0 | 8 | 12 | 16;
-  gap?: 4 | 8 | 12 | 16 | 20 | 32 | 40;
+  gap?: 4 | 8 | 12 | 16 | 20 | 26 | 32 | 40;
 }
 
 const Card = ({
