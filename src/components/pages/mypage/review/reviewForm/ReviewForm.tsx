@@ -68,7 +68,7 @@ export default function ReviewForm({
   } = useMultiFileUpload({
     fileKey: 'imageFile',
     idKey: 'reviewId',
-    uploadApiUrl: '/api/v2/reviews/my-page/files',
+    uploadApiUrl: '/api/v2/user/reviews/images',
     initialFiles: reviewImageList,
   })
   

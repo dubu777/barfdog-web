@@ -25,7 +25,7 @@ interface ReviewListItem {
   writtenDate?: string;
   reviewImageCount?: number;
 
-  // writeable
+  // writable
   targetId?: number;
   displayImageUrl?: null | {
     url: string;

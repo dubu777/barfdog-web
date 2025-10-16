@@ -18,7 +18,7 @@ const REVIEW_TYPE = {
 } as const;
 
 const REVIEW_LIST_KEY = {
-  writeable: 'reviewableList',
+  writable: 'reviewableList',
   written: 'reviewList',
 } as const;
 

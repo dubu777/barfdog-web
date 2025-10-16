@@ -19,7 +19,7 @@ const getNoticeList = async ({
   size = 20, 
   instance = axiosInstance
 }: { pageParam: number; size?: number; instance?: AxiosInstance }) => {
-  const { data }: { data: ApiResponse<NoticeList> } = await instance.get(`/api/v2/notices/public`, {
+  const { data }: { data: ApiResponse<NoticeList> } = await instance.get(`/api/v2/public/notices`, {
     params: { page: pageParam, size },
   });
 
@@ -27,13 +27,13 @@ const getNoticeList = async ({
 };
 
 const getNoticeDetail = async (noticeId: number, instance: AxiosInstance = axiosInstance): Promise<NoticeDetail> => {
-  const { data }: { data: ApiResponse<NoticeDetail> } = await instance.get(`/api/v2/notices/public/${noticeId}`);
+  const { data }: { data: ApiResponse<NoticeDetail> } = await instance.get(`/api/v2/public/notices/${noticeId}`);
   return validateApiResponse(data, "공지사항 상세 조회에 실패했습니다.");
 }
 
 // 아티클
 const getRecommendArticleList = async (instance: AxiosInstance = axiosInstance) => {
-  const { data }: { data: ApiResponse<Record<string, RawRecommendArticle[]>> } = await instance.get(`/api/v2/blogs/public/articles`);
+  const { data }: { data: ApiResponse<Record<string, RawRecommendArticle[]>> } = await instance.get(`/api/v2/public/blogs/articles`);
   const responseData = validateApiResponse(data, "추천 아티클 조회에 실패했습니다.");
   return responseData.articleList
     .map(article => ({
@@ -56,7 +56,7 @@ const getArticleList = async ({
   instance?: AxiosInstance
 }) => {
   const params = category === 'ALL' ? { page, size } : { category, page, size };
-  const { data }: { data: ApiResponse<RawArticleList> } = await instance.get(`/api/v2/blogs/public`, {
+  const { data }: { data: ApiResponse<RawArticleList> } = await instance.get(`/api/v2/public/blogs`, {
     params,
   });
 
@@ -71,7 +71,7 @@ const getArticleList = async ({
 }
 
 const getArticleDetail = async (articleId: number, instance: AxiosInstance = axiosInstance): Promise<ArticleDetail> => {
-  const { data }: { data: ApiResponse<RawArticleDetail> } = await instance.get(`/api/v2/blogs/public/${articleId}`);
+  const { data }: { data: ApiResponse<RawArticleDetail> } = await instance.get(`/api/v2/public/blogs/${articleId}`);
 
   const responseData = validateApiResponse(data, "아티클 상세 조회에 실패했습니다.");
 
