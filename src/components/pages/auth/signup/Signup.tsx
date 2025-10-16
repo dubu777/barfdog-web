@@ -7,10 +7,9 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import yup from "yup";
-import SignupStep1 from "./step/SignupStep1";
-import SignupStep2 from "./step/SignupStep2";
-import SignupStep3 from "./step/SignupStep3";
-import { commonWrapper } from "@/styles/common.css";
+import SignupStep1 from "./steps/SignupStep1";
+import SignupStep2 from "./steps/SignupStep2";
+import SignupStep3 from "./steps/SignupStep3";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useSurveyStep } from "@/hooks/survey/useSurveyStep";
 import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
@@ -19,6 +18,8 @@ import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
 import useModal from "@/hooks/useModal";
 import TermsBottomSheet from "./termsBottomSheet/TermsBottomSheet";
+import { signupContainer } from "./steps/SignupStep.css";
+import Text from "@/components/common/text/Text";
 
 export default function Signup() {
   const router = useRouter();
@@ -76,20 +77,17 @@ export default function Signup() {
         onClose={() => router.back()}
         onBack={handlePrevStep}
         showCloseButton
+        leftElement={
+          !isFirstStep && (
+            <Text type="headline3" color="gray700">
+              이전
+            </Text>
+          )
+        }
+        leftSlotGap="sm"
         backgroundColor="gray50"
       />
-
-      <div
-        className={commonWrapper({
-          direction: "col",
-          align: "start",
-          gap: 20,
-          padding: 20,
-          height: "full",
-          backgroundColors: "gray50",
-          justify: "start",
-        })}
-      >
+      <div className={signupContainer}>
         <FormProvider {...methods}>
           {currentStep === 1 && <SignupStep1 />}
           {currentStep === 2 && <SignupStep2 />}
@@ -103,7 +101,13 @@ export default function Signup() {
           isPrimaryDisabled={!isCanNextStep()}
         />
       </div>
-      <TermsBottomSheet isOpen={isOpen} onClose={onClose} onSubmit={onSubmit} />
+      {isOpen && (
+        <TermsBottomSheet
+          isOpen={isOpen}
+          onClose={onClose}
+          onSubmit={onSubmit}
+        />
+      )}
     </>
   );
 }

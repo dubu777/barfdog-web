@@ -315,6 +315,9 @@ export const commonWrapper = recipe({
       full: {
         height: "100vh",
       },
+      "100%": {
+        height: "100%",
+      },
       fullWithHeader: {
         height: "calc(100vh - 52px)",
       },

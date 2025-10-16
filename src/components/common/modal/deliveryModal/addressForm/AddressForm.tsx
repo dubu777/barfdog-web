@@ -127,26 +127,32 @@ export default function AddressForm({
         onSubmit={onSubmit}
       >
         <InputField
+          {...register("deliveryName")}
           label="배송지명"
           isRequired
           placeholder="집, 회사 등"
           maxLength={20}
           error={errors?.deliveryName?.message}
-          {...register("deliveryName")}
           onKeyUp={bind("deliveryName")}
         />
 
         <InputField
+          {...register("recipientName")}
           label="받는 분"
           isRequired
           placeholder="받는 분 성함"
           maxLength={40}
           error={errors.recipientName?.message}
-          {...register("recipientName")}
           onKeyUp={bind("recipientName")}
         />
 
         <InputField
+          {...register("phoneNumber", {
+            onChange: (e) => {
+              const onlyDigits = e.target.value.replace(/\D/g, "");
+              setValue("phoneNumber", onlyDigits);
+            },
+          })}
           type="tel"
           label="연락처"
           isRequired
@@ -154,12 +160,6 @@ export default function AddressForm({
           maxLength={11}
           inputMode="numeric"
           error={errors.phoneNumber?.message}
-          {...register("phoneNumber", {
-            onChange: (e) => {
-              const onlyDigits = e.target.value.replace(/\D/g, "");
-              setValue("phoneNumber", onlyDigits);
-            },
-          })}
           onKeyUp={bind("phoneNumber")}
         />
 
@@ -186,30 +186,30 @@ export default function AddressForm({
           </div>
 
           <InputField
+            {...register("zipcode")}
             isRequired
             placeholder="우편번호"
             error={errors.zipcode?.message}
-            {...register("zipcode")}
             readOnly
             disabled
           />
 
           <InputField
+            {...register("detailAddress")}
             isRequired
             placeholder="상세주소 (최대 50자)"
             maxLength={50}
             error={errors.detailAddress?.message}
-            {...register("detailAddress")}
             onKeyUp={bind("detailAddress")}
           />
         </div>
 
         <InputField
+          {...register("request")}
           label="배송 요청사항"
           placeholder="공동현관 비밀번호, 수령 장소 등"
           maxLength={50}
           error={errors.request?.message}
-          {...register("request")}
           onKeyUp={bind("request")}
         />
 

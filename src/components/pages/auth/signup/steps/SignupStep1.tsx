@@ -2,13 +2,23 @@ import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { SignupStepValues } from "@/utils/validation/auth/auth";
 import { useFormContext } from "react-hook-form";
+import { useEnterFocus } from "@/hooks/common/useEnterFocus";
 
 export default function SignupStep1() {
   const {
     register,
     setFocus,
+    getFieldState,
+    trigger,
     formState: { errors },
   } = useFormContext<SignupStepValues>();
+
+  const { bind } = useEnterFocus({
+    fieldNames: ["step1.name", "step1.email"],
+    setFocus,
+    getFieldState,
+    trigger,
+  });
 
   return (
     <>
@@ -26,14 +36,7 @@ export default function SignupStep1() {
         clearButton
         labelColor="gray600"
         error={errors.step1?.name?.message}
-        onKeyUp={(e) => {
-          const hasValue = !!(e.currentTarget.value ?? "").trim();
-          const hasError = !!errors.step1?.name;
-          if (e.key === "Enter" && hasValue && !hasError) {
-            e.preventDefault();
-            setFocus("step1.email");
-          }
-        }}
+        onKeyUp={bind("step1.name")}
       />
       <InputField
         {...register("step1.email")}

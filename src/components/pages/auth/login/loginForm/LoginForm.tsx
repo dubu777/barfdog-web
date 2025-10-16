@@ -27,15 +27,15 @@ export default function LoginForm({
     <form className={commonWrapper({ direction: "col", padding: "0/20" })}>
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         <InputField
+          {...register("email")}
           id="email"
           placeholder="이메일을 입력해주세요"
-          {...register("email")}
         />
         <InputField
+          {...register("password")}
           masking
           id="password"
           placeholder="비밀번호를 입력해주세요"
-          {...register("password")}
         />
         <Button
           buttonType="submit"

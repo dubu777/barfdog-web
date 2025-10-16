@@ -17,22 +17,21 @@ interface SignupStep3Props {
 }
 
 export default function SignupStep3({ handleChange }: SignupStep3Props) {
-  const { control } = useFormContext<SignupStepValues>();
+  const { control, register } = useFormContext<SignupStepValues>();
   const { isMobileDevice } = useDeviceState();
 
   const { field: genderField } = useController({
     name: "step3.gender",
     control,
   });
-  const { onToggle: onGenderToggle, isSelected: isGenderSelected } =
-    useSurveyToggleOption<string>({
-      selectedValue: genderField.value ?? null,
-      mode: "radio",
-      onChange: (value) => {
-        genderField.onChange(value);
-        handleChange();
-      },
-    });
+  const { onToggle, isSelected } = useSurveyToggleOption<string>({
+    selectedValue: genderField.value ?? null,
+    mode: "radio",
+    onChange: (value) => {
+      genderField.onChange(value);
+      handleChange();
+    },
+  });
   return (
     <>
       <Text type="title2">
@@ -40,43 +39,27 @@ export default function SignupStep3({ handleChange }: SignupStep3Props) {
         <br />
         입력해 주세요
       </Text>
-      <Controller
-        name="step3.phoneNumber"
-        control={control}
-        render={({ field }) => (
-          <InputField
-            {...field}
-            onChange={(e) => {
-              field.onChange(e);
-            }}
-            variants="line"
-            placeholder="번호만 입력해주세요"
-            label="연락처"
-            isRequired
-            labelColor="gray600"
-            confirmButton
-            confirmButtonDisabled
-            confirmButtonText="입력"
-          />
-        )}
+
+      <InputField
+        {...register("step3.phoneNumber")}
+        variants="line"
+        placeholder="번호만 입력해주세요"
+        label="연락처"
+        isRequired
+        labelColor="gray600"
+        confirmButton
+        confirmButtonDisabled
+        confirmButtonText="입력"
       />
-      <Controller
-        name="step3.authNumber"
-        control={control}
-        render={({ field }) => (
-          <InputField
-            {...field}
-            onChange={(e) => {
-              field.onChange(e);
-            }}
-            variants="line"
-            placeholder="인증번호를 입력해주세요"
-            labelColor="gray600"
-            confirmButton
-            confirmButtonDisabled
-            confirmButtonText="확인"
-          />
-        )}
+
+      <InputField
+        {...register("step3.authNumber")}
+        variants="line"
+        placeholder="인증번호를 입력해주세요"
+        labelColor="gray600"
+        confirmButton
+        confirmButtonDisabled
+        confirmButtonText="확인"
       />
 
       <div
@@ -96,8 +79,8 @@ export default function SignupStep3({ handleChange }: SignupStep3Props) {
               value={value}
               fullWidth={false}
               optionType="radio"
-              isChecked={isGenderSelected(value)}
-              onToggle={() => onGenderToggle(value)}
+              isChecked={isSelected(value)}
+              onToggle={() => onToggle(value)}
             >
               <Text type="label2">{label}</Text>
             </LabeledRadioButton>
@@ -143,21 +126,12 @@ export default function SignupStep3({ handleChange }: SignupStep3Props) {
           </>
         )}
       />
-      <Controller
-        name="step3.recommendCode"
-        control={control}
-        render={({ field }) => (
-          <InputField
-            {...field}
-            onChange={(e) => {
-              field.onChange(e);
-            }}
-            variants="line"
-            placeholder="추천인 코드를 입력하세요(계정 당 1회 입력)"
-            label="추천코드"
-            labelColor="gray600"
-          />
-        )}
+      <InputField
+        {...register("step3.recommendCode")}
+        variants="line"
+        placeholder="추천인 코드를 입력하세요(계정 당 1회 입력)"
+        label="추천코드"
+        labelColor="gray600"
       />
     </>
   );

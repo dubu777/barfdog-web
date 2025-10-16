@@ -87,7 +87,6 @@ export default function ProbiomeStep2({
               placeholder="유산균 제품명을 입력해주세요"
               onChange={(e) => {
                 field.onChange(e);
-                console.log("field.name", field.name);
               }}
               onKeyDown={(e) => handleKeyDown(e, field.name)}
               onBlur={() => handleBlur(field.name)}

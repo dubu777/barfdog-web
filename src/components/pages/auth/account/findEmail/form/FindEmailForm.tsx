@@ -29,6 +29,7 @@ export default function FindEmailForm({
 }: FindEmailFormProps) {
   const {
     control,
+    register,
     formState: { errors, isValid },
     handleSubmit,
   } = form;
@@ -37,39 +38,28 @@ export default function FindEmailForm({
 
   return (
     <>
-      <Controller
-        control={control}
-        name="memberName"
-        render={({ field }) => (
-          <InputField
-            id="memberName"
-            label="이름"
-            isRequired
-            placeholder="이름 입력"
-            error={errors?.memberName?.message}
-            {...field}
-          />
-        )}
+      <InputField
+        {...register("memberName")}
+        id="memberName"
+        label="이름"
+        isRequired
+        placeholder="이름 입력"
+        error={errors?.memberName?.message}
       />
       <div className={commonWrapper({ direction: "col", gap: 8 })}>
-        <Controller
-          control={control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <InputField
-              id="phoneNumber"
-              label="휴대폰 번호"
-              isRequired
-              placeholder="- 제외 숫자만 입력"
-              error={errors?.phoneNumber?.message ?? requestError}
-              {...field}
-              confirmButton
-              confirmButtonDisabled={!isValid}
-              confirmButtonText={isRequested ? "재전송" : "인증번호"}
-              onSubmit={handleSubmit(onRequestCode)}
-            />
-          )}
+        <InputField
+          {...register("phoneNumber")}
+          id="phoneNumber"
+          label="휴대폰 번호"
+          isRequired
+          placeholder="- 제외 숫자만 입력"
+          error={errors?.phoneNumber?.message ?? requestError}
+          confirmButton
+          confirmButtonDisabled={!isValid}
+          confirmButtonText={isRequested ? "재전송" : "인증번호"}
+          onSubmit={handleSubmit(onRequestCode)}
         />
+
         {isRequested && (
           <InputField
             placeholder="인증번호 입력"

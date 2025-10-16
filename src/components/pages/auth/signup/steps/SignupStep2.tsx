@@ -1,54 +1,52 @@
-"use client";
-import { UseFormReturn, useWatch } from "react-hook-form";
+import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
-import { ResetPasswordValues } from "@/utils/validation/auth/resetPassword";
+import { SignupStepValues } from "@/utils/validation/auth/auth";
+import { useMemo } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
+import CheckIcon from "public/images/survey/check_small.svg";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import {
   getPasswordCriteria,
-  isValidPassword,
   PasswordCriteriaItem,
 } from "@/utils/validation/auth/password";
-import { useMemo, useRef } from "react";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import CheckIcon from "public/images/survey/check_small.svg";
-import Text from "@/components/common/text/Text";
 import { useEnterFocus } from "@/hooks/common/useEnterFocus";
 
-interface NewPasswordFormProps {
-  form: UseFormReturn<ResetPasswordValues>;
-}
-
-export default function NewPasswordForm({ form }: NewPasswordFormProps) {
-  const { control, register, setFocus, getFieldState, trigger } = form;
-
-  const password = useWatch({ control, name: "newPassword" });
+export default function SignupStep2() {
+  const { control, register, setFocus, getFieldState, trigger } =
+    useFormContext<SignupStepValues>();
 
   const { bind } = useEnterFocus({
-    fieldNames: ["newPassword", "confirmPassword"],
+    fieldNames: ["step2.password", "step2.confirmPassword"],
     setFocus,
     getFieldState,
     trigger,
   });
+
+  const password = useWatch({ control, name: "step2.password" });
 
   const criteria: PasswordCriteriaItem[] = useMemo(
     () => getPasswordCriteria(password),
     [password]
   );
 
-  const isValid: boolean = useMemo(() => isValidPassword(password), [password]);
-
-  const confirmRef = useRef<HTMLInputElement>(null);
   return (
     <>
+      <Text type="title2">
+        사용하실
+        <br />
+        비밀번호를 입력해 주세요
+      </Text>
       <InputField
-        {...register("newPassword")}
+        {...register("step2.password")}
         masking
         maskingButton
+        variants="line"
         placeholder="새 비밀번호"
         label="새 비밀번호"
         isRequired
         labelColor="gray600"
-        onKeyUp={bind("newPassword")}
+        onKeyUp={bind("step2.password")}
       />
       {password.length > 0 && (
         <ul
@@ -72,11 +70,11 @@ export default function NewPasswordForm({ form }: NewPasswordFormProps) {
           ))}
         </ul>
       )}
-
       <InputField
-        {...register("confirmPassword")}
+        {...register("step2.confirmPassword")}
         masking
         maskingButton
+        variants="line"
         placeholder="새 비밀번호 확인"
         label="새 비밀번호 확인"
         isRequired

@@ -28,6 +28,7 @@ export default function CodeRequestForm({
 }: CodeRequestFormProps) {
   const {
     control,
+    register,
     formState: { errors, isValid },
     handleSubmit,
   } = form;
@@ -37,55 +38,37 @@ export default function CodeRequestForm({
 
   return (
     <>
-      <Controller
-        control={control}
-        name="memberName"
-        render={({ field }) => (
-          <InputField
-            id="memberName"
-            label="이름"
-            isRequired
-            disabled={isVerified}
-            placeholder="이름 입력"
-            error={errors?.memberName?.message}
-            {...field}
-          />
-        )}
+      <InputField
+        {...register("memberName")}
+        id="memberName"
+        label="이름"
+        isRequired
+        disabled={isVerified}
+        placeholder="이름 입력"
+        error={errors?.memberName?.message}
       />
-      <Controller
-        control={control}
-        name="email"
-        render={({ field }) => (
-          <InputField
-            id="email"
-            label="이메일(아이디)"
-            isRequired
-            disabled={isVerified}
-            placeholder="example@gmail.com."
-            error={errors?.email?.message}
-            {...field}
-          />
-        )}
+      <InputField
+        {...register("email")}
+        id="email"
+        label="이메일(아이디)"
+        isRequired
+        disabled={isVerified}
+        placeholder="example@gmail.com."
+        error={errors?.email?.message}
       />
       <div className={commonWrapper({ direction: "col", gap: 8 })}>
-        <Controller
-          control={control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <InputField
-              id="phoneNumber"
-              label="휴대폰 번호"
-              isRequired
-              disabled={isVerified}
-              placeholder="- 제외 숫자만 입력"
-              error={errors?.phoneNumber?.message ?? requestError}
-              {...field}
-              confirmButton
-              confirmButtonDisabled={!isValid || isVerified}
-              confirmButtonText={isRequested ? "재전송" : "인증번호"}
-              onSubmit={handleSubmit(onRequestCode)}
-            />
-          )}
+        <InputField
+          {...register("phoneNumber")}
+          id="phoneNumber"
+          label="휴대폰 번호"
+          isRequired
+          disabled={isVerified}
+          placeholder="- 제외 숫자만 입력"
+          error={errors?.phoneNumber?.message ?? requestError}
+          confirmButton
+          confirmButtonDisabled={!isValid || isVerified}
+          confirmButtonText={isRequested ? "재전송" : "인증번호"}
+          onSubmit={handleSubmit(onRequestCode)}
         />
         {isRequested && (
           <InputField

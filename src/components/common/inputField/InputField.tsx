@@ -182,11 +182,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               onKeyDown={handleInternalKeyDown}
             />
             {unit && (
-              <Text
-                type="headline3"
-                color="gray900"
-                className={unitStyle}
-              >
+              <Text type="headline3" color="gray900" className={unitStyle}>
                 {unit}
               </Text>
             )}
@@ -196,6 +192,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
                 <button
                   onClick={handleToggleMasking}
                   className={baseButtonStyle}
+                  type="button"
+                  tabIndex={-1}
                 >
                   <SvgIcon
                     src={isMasked ? VisibilityOffIcon : VisibilityIcon}
@@ -205,7 +203,12 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               )}
               {/* value 리셋 기능 */}
               {clearButton && (
-                <button onClick={handleReset} className={baseButtonStyle}>
+                <button
+                  onClick={handleReset}
+                  className={baseButtonStyle}
+                  type="button"
+                  tabIndex={-1}
+                >
                   <SvgIcon src={InputClearIcon} size={24} />
                 </button>
               )}
@@ -224,12 +227,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             </Button>
           )}
         </div>
-        {error && (
-          <InputStatusMessage type='error' message={error} />
-        )}
-        {success && (
-          <InputStatusMessage type='success' message={success} />
-        )}
+        {error && <InputStatusMessage type="error" message={error} />}
+        {success && <InputStatusMessage type="success" message={success} />}
       </div>
     );
   }
