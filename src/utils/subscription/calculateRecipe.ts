@@ -1,4 +1,3 @@
-// src/utils/priceUtils.ts
 import { DeliveryPlan, MealPlan } from "@/types/subscription";
 import { roundTo } from "../numberUtils";
 

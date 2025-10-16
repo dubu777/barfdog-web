@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-import { DeliveryPlan, MealPlan } from "@/types";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
+import { DeliveryPlan, MealPlan, SubscriptionValues } from "@/types";
 import {
   calculateDeliveryCyclePackCount,
   calculateRecipeTotal,

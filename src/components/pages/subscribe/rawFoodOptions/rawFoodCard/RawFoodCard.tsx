@@ -5,9 +5,8 @@ import Button from "@/components/common/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
 import { RawFoodOrderItem } from "@/types";
-import RecipeDetailModal from "../../modal/recipeDetailModal/RecipeDetailModal";
+import RecipeDetailModal from "../../recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
-import { useRecipeSelection } from "@/hooks/subscription/useRecipeSelection";
 import { useToastStore } from "@/store/useToastStore";
 import { useMemo } from "react";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -16,6 +15,10 @@ import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe"
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import RawFoodBadge from "./rawFoodBadge/RawFoodBadge";
 import { HEALTH_CONCERN_LABEL } from "@/constants/dietAnalysis";
+import {
+  CommitSelectionResult,
+  StagedSelection,
+} from "@/hooks/subscription/useRecipeSelections";
 
 interface RawFoodCardProps {
   rawFoodItem: RawFoodOrderItem;
@@ -24,6 +27,15 @@ interface RawFoodCardProps {
   petName: string;
   packData: CalculateRecipePackReturn;
   isUnder20g: boolean;
+  isSelected: boolean;
+  canOpenDetailModal: boolean;
+  stagedSelection: StagedSelection | null;
+  onStageSelection: (packGrams: number, packPrice: number) => void;
+  onCommitSelection: (
+    resolvePack: () => { packGrams: number; packPrice: number }
+  ) => CommitSelectionResult;
+  onRemoveSelection: () => void;
+  onClearStage: () => void;
 }
 
 export default function RawFoodCard({
@@ -33,6 +45,13 @@ export default function RawFoodCard({
   petName,
   packData,
   isUnder20g,
+  isSelected,
+  canOpenDetailModal,
+  stagedSelection,
+  onStageSelection,
+  onCommitSelection,
+  onRemoveSelection,
+  onClearStage,
 }: RawFoodCardProps) {
   const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = packData;
 
@@ -48,16 +67,6 @@ export default function RawFoodCard({
     onToggle: onAlertToggle,
   } = useModal();
 
-  const recipeSelection = useRecipeSelection(rawFoodItem.recipeId, packData);
-  const {
-    stageSelection,
-    commitSelection,
-    removeSelection,
-    isSelected,
-    canAddSelection,
-    stagedSelection,
-  } = recipeSelection;
-
   // 못먹는 재료 포함 여부 확인
   const inedibleSet = useMemo(() => new Set(inedibleFoods), [inedibleFoods]);
 
@@ -68,15 +77,20 @@ export default function RawFoodCard({
 
   const handleButtonClick = () => {
     if (isSelected) {
-      removeSelection();
+      onRemoveSelection();
       addToast("레시피 빼기를 완료했어요", "above-button");
     } else {
-      if (canAddSelection) {
+      if (canOpenDetailModal) {
         onDetailToggle();
         return;
       }
       onAlertToggle();
     }
+  };
+
+  const handleDetailClose = () => {
+    onClearStage();
+    onDetailClose();
   };
 
   return (
@@ -167,11 +181,9 @@ export default function RawFoodCard({
           </div>
         )}
         <Button
-          type="primary"
-          variant="outline"
+          intent={isSelected ? "assistive" : "primary"}
+          variant={"outline"}
           size="sm"
-          textColor={isSelected ? "gray900" : "red"}
-          borderColor={isSelected ? "gray300" : "red"}
           onClick={handleButtonClick}
         >
           {isSelected ? "빼기" : "담기"}
@@ -179,14 +191,15 @@ export default function RawFoodCard({
       </div>
       {isDetailOpen && (
         <RecipeDetailModal
+          source="subscribe"
           isOpen={isDetailOpen}
-          onClose={onDetailClose}
+          onClose={handleDetailClose}
           rawFoodItem={rawFoodItem}
           petName={petName}
           packData={packData}
           dailyRecommendKcal={dailyRecommendKcal}
-          onStageSelection={stageSelection}
-          onCommitSelection={commitSelection}
+          onStageSelection={onStageSelection}
+          onCommitSelection={onCommitSelection}
           stagedSelection={stagedSelection}
         />
       )}

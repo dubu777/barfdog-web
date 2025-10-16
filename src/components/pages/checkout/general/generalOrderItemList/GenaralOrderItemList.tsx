@@ -28,7 +28,7 @@ export default function GeneralOrderItemList({
   }, [finalPrice, setFinalPrice]);
 
   return (
-    <OrderSection title="주문 상품" style={{ gap: "20px" }}>
+    <OrderSection title="주문 상품" gap={20}>
       <div className={styles.orderItemListContainer}>
         {orderItemDtoList.map((item, index, array) => (
           <React.Fragment key={item.itemId}>

@@ -33,7 +33,7 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
       isSelected: isSubscriptionSelected,
     } = useToggleOption(agreeSubscription, "checkbox", setAgreeSubscription);
     return (
-      <OrderSection padding="20px" ref={ref}>
+      <OrderSection padding={20} ref={ref}>
         <div className={styles.orderTermWrapper}>
           <div className={orderSheetContentBox}>
             <LabeledCheckbox
@@ -46,7 +46,7 @@ const OrderTerms = forwardRef<HTMLDivElement, OrderTermsProps>(
                 {ORDER_MESSAGE.AGREE_PRIVACY}
               </Text>
             </LabeledCheckbox>
-            <Button type="assistive" variant="text" size="sm">
+            <Button intent="secondary" variant="text" size="sm">
               <Text type="label2" color="red" underLine>
                 내용보기
               </Text>

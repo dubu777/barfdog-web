@@ -1,115 +1,72 @@
-import { MouseEvent } from "react";
-import {
-  buttonSizes,
-  buttonVariants,
-  disabledVariants,
-  iconContainer,
-  baseStyle,
-  textStyle, boxShadowStyle,
-} from "./Button.css";
+import { ComponentType, MouseEvent, SVGProps } from "react";
+import { labelStyle, buttonClass, contentStyle } from "./Button.css";
 import SvgIcon from "../svgIcon/SvgIcon";
 import { COLORS } from "@/constants/style";
 
+type Variant = "solid" | "outline" | "text";
+type Intent = "primary" | "secondary" | "assistive";
+type Size = "sm" | "md" | "lg" | "inputButton";
+type IconPosition = "left" | "right";
+
 interface ButtonProps {
-  variant?: keyof typeof buttonVariants;
-  type?: "primary" | "secondary" | "assistive";
-  size?: "sm" | "md" | "lg" | "inputButton";
+  variant?: Variant;
+  intent?: Intent;
+  size?: Size;
   disabled?: boolean;
-  iconSrc?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  iconPosition?: "left" | "right";
-  iconColor?: keyof typeof COLORS;
+  fullWidth?: boolean;
+  shadow?: boolean;
   onClick?: (() => void) | ((e: MouseEvent<HTMLButtonElement>) => void);
   children: React.ReactNode;
-  fullWidth?: boolean;
-  buttonColor?: keyof typeof COLORS;
-  textColor?: keyof typeof COLORS;
-  borderColor?: keyof typeof COLORS;
   buttonType?: "submit" | "button" | "reset";
-  style?: React.CSSProperties;
+  fill?: boolean;
+  icon?: ComponentType<SVGProps<SVGSVGElement>>;
+  iconPosition?: IconPosition; // 기본 왼쪽
+  iconSize?: number;
+  iconColor?: keyof typeof COLORS;
   className?: string;
-  showBoxShadow?: boolean;
 }
 
 export default function Button({
   variant = "solid",
-  type = "primary",
+  intent = "primary",
   size = "md",
   disabled = false,
-  iconSrc,
-  iconPosition = "left",
-  iconColor = 'gray900',
+  fullWidth = false,
+  shadow = false,
   onClick,
   children,
-  fullWidth = false,
-  buttonColor,
-  textColor,
-  borderColor,
   buttonType = "button",
-  style,
+  fill = true,
+  icon,
+  iconPosition = "left",
+  iconSize = 20,
+  iconColor = "gray900",
   className,
-  showBoxShadow = false,
 }: ButtonProps) {
-  // type as keyof typeof buttonVariants[typeof variant] => type 이 buttonVariants[variant] 객체의 키임을 명시
-  const variantStyle =
-    buttonVariants[variant][
-      type as keyof (typeof buttonVariants)[typeof variant]
-    ];
-  const sizeStyle = variant !== "text" ? buttonSizes[size] : "";
-  const disabledStyle = disabled
-    ? disabledVariants[variant][
-        type as keyof (typeof disabledVariants)[typeof variant]
-      ]
-    : "";
-
-  const shadowStyle = showBoxShadow ? boxShadowStyle : "";
-
-  const isIconLeft = iconPosition === "left";
-
-  const iconSize = size === "sm" ? 20 : 24;
-
-  // buttonColor와 textColor가 있을 경우 오버라이드 스타일 적용
-  const overrideStyles: React.CSSProperties = {
-    ...(buttonColor && {
-      backgroundColor: COLORS[buttonColor],
-    }),
-    ...(textColor && {
-      color: COLORS[textColor],
-      ...(variant === "outline" && borderColor && {
-        border: `1px solid ${COLORS[borderColor]}`,
-      }),
-    }),
-  };
-
-  const computedStyle: React.CSSProperties = {
-    ...(fullWidth ? { width: "100%" } : {}),
-    ...style,
-    ...overrideStyles,
-  };
-
   return (
     <button
       type={buttonType}
-      className={`${baseStyle} ${variantStyle} ${sizeStyle} ${disabledStyle} ${shadowStyle} ${
-        className || ""
-      }`}
+      className={`${buttonClass({
+        variant,
+        intent,
+        size,
+        fullWidth,
+        shadow,
+        fill,
+        disabled,
+      })} ${className || ""}`}
       onClick={onClick}
-      style={computedStyle}
       disabled={disabled}
     >
-      {iconSrc ? (
-        <div className={iconContainer}>
-          {isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} color={iconColor || 'gray900'} />}
-          <span className={textStyle}>{children}</span>
-          {!isIconLeft && iconSrc && <SvgIcon src={iconSrc} size={iconSize} color={iconColor || 'gray900'} />}
-        </div>
-      ) : (
-        <span
-          className={textStyle}
-          style={textColor ? { color: COLORS[textColor] } : undefined}
-        >
-          {children}
-        </span>
-      )}
+      <span className={contentStyle}>
+        {icon && iconPosition === "left" && (
+          <SvgIcon src={icon} size={iconSize} color={iconColor} aria-hidden />
+        )}
+        <span className={labelStyle}>{children}</span>
+        {icon && iconPosition === "right" && (
+          <SvgIcon src={icon} size={iconSize} color={iconColor} aria-hidden />
+        )}
+      </span>
     </button>
   );
 }

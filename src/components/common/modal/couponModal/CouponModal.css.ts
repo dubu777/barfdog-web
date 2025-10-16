@@ -11,10 +11,8 @@ export const couponModalContainer = style({
 export const couponModalWrapper = style({
   display: "flex",
   flexDirection: "column",
-  justifyContent: "flex-start",
-  alignItems: "flex-start",
   width: "100%",
-  height: "100%",
+  height: "calc(100vh - 52px)",
   overflowY: "auto",
 
   selectors: {
@@ -30,9 +28,9 @@ export const couponModalWrapper = style({
       borderRadius: "4px",
     },
     "&::-webkit-scrollbar-thumb:hover": {
-      background: themeVars.colors.gray.gray400, 
+      background: themeVars.colors.gray.gray400,
     },
-  }
+  },
 });
 
 export const couponModalContentWrapper = style({

@@ -1,6 +1,5 @@
-import { SubscriptionDetail } from "@/types";
+import { SubscriptionDetail, SubscriptionValues } from "@/types";
 import { calculateRecipePack } from "./calculateRecipe";
-import { SubscriptionValues } from "../validation/subscriptionValidation";
 
 export function buildInitialSubscriptionForm(
   detail: SubscriptionDetail

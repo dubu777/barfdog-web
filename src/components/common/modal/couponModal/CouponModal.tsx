@@ -221,10 +221,9 @@ export default function CouponModal({
               maxLength={20}
             />
             <Button
-              type="primary"
               variant="solid"
+              intent="secondary"
               size="inputButton"
-              buttonColor="gray800"
               onClick={handleRegisterCoupon}
             >
               등록

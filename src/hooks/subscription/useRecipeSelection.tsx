@@ -1,5 +1,5 @@
+import { SubscriptionValues } from "@/types";
 import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useCallback, useMemo, useState } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
@@ -18,8 +18,6 @@ interface UseRecipeSelectionReturn {
   removeSelection: () => void;
   /** 해당 recipeId가 선택되어 있는지 여부 */
   isSelected: boolean;
-  /** 현재 선택된 recipeId 목록 */
-  selectedIds: number[];
   /** RHF의 rawFoods 원본 값 */
   canAddSelection: boolean;
   stagedSelection: StagedSelection | null;
@@ -122,7 +120,6 @@ export const useRecipeSelection = (
     commitSelection,
     removeSelection,
     isSelected,
-    selectedIds,
     canAddSelection,
     stagedSelection,
   };

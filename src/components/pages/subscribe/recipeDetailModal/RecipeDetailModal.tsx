@@ -1,0 +1,175 @@
+import Chips from "@/components/common/chips/Chips";
+import Text from "@/components/common/text/Text";
+import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
+import { recipeDetailTab } from "@/constants";
+import { commonWrapper } from "@/styles/common.css";
+import Image from "next/image";
+import * as styles from "./RecipeDetailModal.css";
+import TabBar from "@/components/common/tabBar/TabBar";
+import MealAmountSelector from "./mealAmountSelector/MealAmountSelector";
+import { useMemo, useRef } from "react";
+import { scrollToElement } from "@/utils/scrollToElement";
+import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import { useToastStore } from "@/store/useToastStore";
+import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
+import {
+  CommitSelectionResult,
+  StagedSelection,
+} from "@/hooks/subscription/useRecipeSelections";
+import RecipeEfficacy from "@/components/common/recipe/recipeEfficacy/RecipeEfficacy";
+import RecipeIngredients from "@/components/common/recipe/recipeIngredients/RecipeIngredients";
+import Divider from "@/components/common/divider/Divider";
+import { INGREDIENTS_MAP } from "@/constants/recipes";
+
+interface RecipeDetailModalProps {
+  source: RecipeDetailSource;
+  rawFoodItem: RawFoodOrderItem;
+  petName?: string;
+  packData?: CalculateRecipePackReturn;
+  dailyRecommendKcal?: number;
+  stagedSelection?: StagedSelection | null;
+  onStageSelection?: (packGrams: number, packPrice: number) => void;
+  onCommitSelection?: (
+    resolvePack: () => { packGrams: number; packPrice: number }
+  ) => CommitSelectionResult;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function RecipeDetailModal({
+  source,
+  rawFoodItem,
+  petName,
+  packData,
+  dailyRecommendKcal,
+  stagedSelection,
+  onStageSelection,
+  onCommitSelection,
+  isOpen,
+  onClose,
+}: RecipeDetailModalProps) {
+  const toast = useToastStore((s) => s.addToast);
+
+  const refs: Record<string, React.RefObject<HTMLDivElement>> = {
+    amount: useRef(null),
+    benefits: useRef(null),
+    ingredients: useRef(null),
+  };
+
+  const isRecipeSource = source === "recipe";
+
+  const tabs = useMemo(
+    () =>
+      recipeDetailTab
+        .filter((tab) => (isRecipeSource ? tab.value !== "amount" : true))
+        .map((tab) => ({
+          ...tab,
+          onInit: () => {
+            scrollToElement(refs[tab.value]?.current);
+          },
+        })),
+    [isRecipeSource]
+  );
+
+  const handleCommit = () => {
+    if (!onCommitSelection || !packData) {
+      return;
+    }
+    const result = onCommitSelection(() => ({
+      packGrams: stagedSelection?.packGrams ?? packData.packGrams,
+      packPrice: stagedSelection?.packPrice ?? packData.packPrice,
+    }));
+    if (result.success) {
+      toast("레시피를 담았어요", "above-button");
+    }
+    onClose();
+  };
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  return (
+    <FullModalWrapper
+      isVisible={isOpen}
+      handleClose={onClose}
+      headerBackgroundColor="gray0"
+    >
+      <div
+        className={commonWrapper({
+          direction: "col",
+          gap: 8,
+          paddingTop: 20,
+          paddingBottom: 30,
+        })}
+      >
+        <Image
+          src={rawFoodItem.displayImageUrl.url}
+          width={140}
+          height={140}
+          alt={rawFoodItem.recipeNameKorea}
+          priority
+        />
+        <div>
+          <Text type="title4" block>
+            {rawFoodItem.recipeNameKorea}
+          </Text>
+          <Text type="headline4" color="gray500" block>
+            {rawFoodItem.recipeNameEnglish}
+          </Text>
+        </div>
+        <div className={commonWrapper({ gap: 4 })}>
+          {rawFoodItem.primaryIngredients.map((ingredient, idx) => (
+            <Chips
+              key={idx}
+              variant="solid"
+              color="gray200"
+              size="sm"
+              borderRadius="sm"
+            >
+              {INGREDIENTS_MAP[ingredient].label}
+            </Chips>
+          ))}
+        </div>
+      </div>
+      <div className={styles.recipeDetailContentWrapper}>
+        <div className={styles.recipeDetailTabBarWrapper}>
+          <TabBar variant="text" tabs={tabs} />
+        </div>
+        {!isRecipeSource && (
+          <>
+            <MealAmountSelector
+              source={source}
+              ref={refs.amount}
+              rawFoodItem={rawFoodItem}
+              petName={petName}
+              packData={packData}
+              dailyRecommendKcal={dailyRecommendKcal}
+              onStageSelection={onStageSelection}
+              stagedSelection={stagedSelection}
+            />
+            <Divider thickness={8} color="gray50" />
+          </>
+        )}
+        <RecipeEfficacy ref={refs.benefits} recipeId={rawFoodItem.recipeId} />
+        <Divider thickness={8} color="gray50" />
+        <RecipeIngredients
+          ref={refs.ingredients}
+          recipeId={rawFoodItem.recipeId}
+          ingredients={rawFoodItem.primaryIngredients}
+        />
+      </div>
+      {!isRecipeSource && (
+        <ButtonDocked
+          type="dual-button"
+          primaryButtonLabel="레시피 담기"
+          secondaryButtonLabel="이전"
+          onPrimaryClick={handleCommit}
+          onSecondaryClick={handleClose}
+          primaryButtonSize="lg"
+        />
+      )}
+    </FullModalWrapper>
+  );
+}

@@ -10,9 +10,15 @@ import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/usePre
 import DietAnalysisResult from "@/components/pages/dietAnalysis/result/DietAnalysisResult";
 import Spinner from "@/components/common/spinner/Spinner";
 
-type Params = { reportId: string };
+interface DietAnalysisResultPageProps {
+  params: {
+    reportId: string;
+  };
+}
 
-export default async function ResultPage({ params }: { params: Params }) {
+export default async function DietAnalysisResultPage({
+  params,
+}: DietAnalysisResultPageProps) {
   const reportId = Number(params.reportId);
   const queryClient = new QueryClient();
 
@@ -27,7 +33,7 @@ export default async function ResultPage({ params }: { params: Params }) {
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<Spinner fullscreen />}>
-          <Header showBackButton />
+          <Header showBackButton backHref="/diet-analysis" />
           <DietAnalysisResult reportId={reportId} />
         </Suspense>
       </ErrorBoundary>

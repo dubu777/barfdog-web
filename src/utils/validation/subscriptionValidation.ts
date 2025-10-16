@@ -1,10 +1,16 @@
 import { DELIVERY_PLAN, MEAL_PLAN } from "@/constants";
-import { DeliveryPlan, MealPlan } from "@/types";
+import { DeliveryPlan, MealPlan, SubscriptionValues } from "@/types";
 import * as yup from "yup";
 
 export const subscriptionSchema = yup.object().shape({
-  deliveryPlan: yup.string().oneOf(DELIVERY_PLAN, "배송주기를 선택해주세요"),
-  mealPlan: yup.string().oneOf(MEAL_PLAN, "식사 횟수를 선택해주세요"),
+  deliveryPlan: yup
+    .string()
+    .oneOf(DELIVERY_PLAN, "배송주기를 선택해주세요")
+    .required("배송주기를 선택해주세요"),
+  mealPlan: yup
+    .string()
+    .oneOf(MEAL_PLAN, "식사 횟수를 선택해주세요")
+    .required("식사 횟수를 선택해주세요"),
   rawFoods: yup
     .array()
     .of(
@@ -15,15 +21,12 @@ export const subscriptionSchema = yup.object().shape({
           .min(20, "최소 20g 이상이어야 합니다.")
           .max(500, "최대 500g 이하이어야 합니다.")
           .required("급여량은 필수입니다."),
-        packPrice: yup.number(),
+        packPrice: yup.number().required("팩 가격은 필수입니다."),
       })
     )
     .min(1, "레시피를 선택해주세요.")
     .required(),
 });
-
-export type SubscriptionValues = yup.InferType<typeof subscriptionSchema>;
-export type SubscriptionKeys = keyof SubscriptionValues;
 
 export const BASE_DEFAULT_SUBSCRIPTION_VALUES: SubscriptionValues = {
   mealPlan: "TWO_MEAL" as MealPlan,

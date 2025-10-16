@@ -1,28 +1,32 @@
+import { forwardRef } from "react";
 import Divider from "@/components/common/divider/Divider";
-import { commonWrapper } from "@/styles/common.css";
-import { IngredientType } from "@/types/recipes";
 import MainIngredients from "./mainIngredients/MainIngredients";
 import AllIngredients from "./allIngredients/AllIngredients";
 import GuaranteedAnalysis from "./guaranteedAnalysis/GuaranteedAnalysis";
+import { recipeIngredientsWrapper } from "../Recipe.css";
 
 interface RecipeIngredientsProps {
-  recipeId: number;
-  ingredients?: IngredientType[]
+  recipeId: number; // useGetRawFoodOrderSheet 데이터 바인딩 후 제거
+  ingredients?: string[]; // useGetRawFoodOrderSheet 데이터 바인딩 후 필수값 으로 변경
   totalIngredients?: string;
 }
 
-export default function RecipeIngredients({
-  recipeId,
-  ingredients,
-  totalIngredients,
-}: RecipeIngredientsProps) {
-  return (
-    <div className={commonWrapper({ direction: 'col', padding: '40/20', gap: 40 })}>
-      <MainIngredients recipeId={recipeId} ingredients={ingredients} />
-      <Divider thickness={1} color="gray200" />
-      <AllIngredients recipeId={recipeId} totalIngredients={totalIngredients} />
-      <Divider thickness={1} color="gray200" />
-      <GuaranteedAnalysis recipeId={recipeId} />
-    </div>
-  );
-}
+const RecipeIngredients = forwardRef<HTMLDivElement, RecipeIngredientsProps>(
+  function RecipeIngredients({ recipeId, ingredients, totalIngredients }, ref) {
+    return (
+      <section ref={ref} className={recipeIngredientsWrapper}>
+        <MainIngredients recipeId={recipeId} ingredients={ingredients} />
+        <Divider thickness={1} color="gray200" />
+        <AllIngredients
+          recipeId={recipeId}
+          totalIngredients={totalIngredients}
+        />
+        <Divider thickness={1} color="gray200" />
+        <GuaranteedAnalysis recipeId={recipeId} />
+      </section>
+    );
+  }
+);
+RecipeIngredients.displayName = "RecipeIngredients";
+
+export default RecipeIngredients;

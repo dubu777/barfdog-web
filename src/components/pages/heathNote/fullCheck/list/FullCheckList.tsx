@@ -21,16 +21,17 @@ interface FullCheckListProps {
   petId: number;
 }
 
-export default function FullCheckList ({ petId }: FullCheckListProps) {
+export default function FullCheckList({ petId }: FullCheckListProps) {
   const { data: petInfo } = useGetPetDetail(petId);
   const {
     data: infiniteData,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage
+    isFetchingNextPage,
   } = useGetInfiniteFullCheckList(petId);
 
-  const checkupDiagnosisList = infiniteData?.pages?.flatMap((page) => page.checkupDiagnosisList) ?? [];
+  const checkupDiagnosisList =
+    infiniteData?.pages?.flatMap((page) => page.checkupDiagnosisList) ?? [];
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -45,74 +46,82 @@ export default function FullCheckList ({ petId }: FullCheckListProps) {
 
   return (
     <section>
-      {checkupDiagnosisList.length > 0
-        ? (
-          <>
-            <div className={styles.fullCheckSurvey}>
-              <Card
-                shadow="light"
-                align='start'
-                direction='row'
-                justify='between'
-              >
-                <div className={styles.fullCheckSurveyCardContent}>
-                  <Text type="headline2">
-                    우리 아이 건강,
-                    <br />
-                    한번 더 살펴볼까요?
-                  </Text>
-                  <Text type="caption2" color="gray600">
-                    건강 종합 진단으로 건강 변화를 쉽게 기록할 수 있어요
-                  </Text>
-                  <TextButton text='진단하러 가기' onClick={handleGoToSurvey} />
-                </div>
-                <Image src={DogImage} alt="Dog Image" width={120} height={146} />
-              </Card>
-            </div>
-            <article className={styles.fullCheckResultList}>
-              {checkupDiagnosisList.map((result, index) => (
-                <Link
-                  key={index}
-                  href={`/health-note/${petId}/full-check/result/${result.diagnosisId}`}
-                >
-                  <Card
-                    shadow="light"
-                    padding={16}
-                    direction='col'
-                    width='full'
-                    align='start'
-                  >
-                    <Text type="label4" color="gray600">
-                      {result.diagnosisDate}
-                    </Text>
-                    <div className={styles.resultTopRank}>
-                      <Text type="headline2">
-                        {getNameWithPossessiveSuffix(petInfo?.name)}의 검사결과
-                      </Text>
-                      <Chips variant="solid" borderRadius="lg" color="gray200">
-                        상위{result.snapshot.totalCheckupScorePercentile}%
-                      </Chips>
-                    </div>
-                    <HorizontalProgressBar score={result.checkupScore} showLabel showIcon />
-                  </Card>
-                </Link>
-              ))}
-            </article>
-            <InfiniteScrollTrigger
-              ref={ref}
-              hasNextPage={hasNextPage}
-              isFetchingNextPage={isFetchingNextPage}
-            />
-          </>
-        ) : (
-          <div className={styles.fullCheckEmptyList}>
-            <EmptyList title={`등록된 검사 결과가 없어요\n진단 후 결과를 기록해보세요`} />
-            <Button variant='solid' buttonColor='gray900' className={styles.createSurveyButton}>
-              진단하러 가기
-            </Button>
+      {checkupDiagnosisList.length > 0 ? (
+        <>
+          <div className={styles.fullCheckSurvey}>
+            <Card
+              shadow="light"
+              align="start"
+              direction="row"
+              justify="between"
+            >
+              <div className={styles.fullCheckSurveyCardContent}>
+                <Text type="headline2">
+                  우리 아이 건강,
+                  <br />
+                  한번 더 살펴볼까요?
+                </Text>
+                <Text type="caption2" color="gray600">
+                  건강 종합 진단으로 건강 변화를 쉽게 기록할 수 있어요
+                </Text>
+                <TextButton text="진단하러 가기" onClick={handleGoToSurvey} />
+              </div>
+              <Image src={DogImage} alt="Dog Image" width={120} height={146} />
+            </Card>
           </div>
-        )
-      }
+          <article className={styles.fullCheckResultList}>
+            {checkupDiagnosisList.map((result, index) => (
+              <Link
+                key={index}
+                href={`/health-note/${petId}/full-check/result/${result.diagnosisId}`}
+              >
+                <Card
+                  shadow="light"
+                  padding={16}
+                  direction="col"
+                  width="full"
+                  align="start"
+                >
+                  <Text type="label4" color="gray600">
+                    {result.diagnosisDate}
+                  </Text>
+                  <div className={styles.resultTopRank}>
+                    <Text type="headline2">
+                      {getNameWithPossessiveSuffix(petInfo?.name)}의 검사결과
+                    </Text>
+                    <Chips variant="solid" borderRadius="lg" color="gray200">
+                      상위{result.snapshot.totalCheckupScorePercentile}%
+                    </Chips>
+                  </div>
+                  <HorizontalProgressBar
+                    score={result.checkupScore}
+                    showLabel
+                    showIcon
+                  />
+                </Card>
+              </Link>
+            ))}
+          </article>
+          <InfiniteScrollTrigger
+            ref={ref}
+            hasNextPage={hasNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+          />
+        </>
+      ) : (
+        <div className={styles.fullCheckEmptyList}>
+          <EmptyList
+            title={`등록된 검사 결과가 없어요\n진단 후 결과를 기록해보세요`}
+          />
+          <Button
+            variant="solid"
+            intent="secondary"
+            className={styles.createSurveyButton}
+          >
+            진단하러 가기
+          </Button>
+        </div>
+      )}
     </section>
   );
-};
+}

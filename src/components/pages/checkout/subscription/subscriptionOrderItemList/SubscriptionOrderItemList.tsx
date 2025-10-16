@@ -2,9 +2,9 @@ import React from "react";
 import Divider from "@/components/common/divider/Divider";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { DeliveryPlan, MealPlan, RawFoodItemSummary } from "@/types";
-import * as styles from "./SubscriptionOrderItemList.css";
 import RecipeItemCard from "@/components/pages/subscribe/deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import { calculateDeliveryCyclePackCount } from "@/utils/subscription/calculateRecipe";
+import { commonWrapper } from "@/styles/common.css";
 
 interface SubscriptionOrderItemListProps {
   rawFoodList: RawFoodItemSummary[];
@@ -23,8 +23,8 @@ export default function SubscriptionOrderItemList({
     rawFoodList.length
   );
   return (
-    <OrderSection title="구독 상품" style={{ gap: "20px" }}>
-      <div className={styles.orderItemListContainer}>
+    <OrderSection title="구독 상품" gap={20}>
+      <div className={commonWrapper({ direction: "col", gap: 16 })}>
         {rawFoodList.map((item, index, array) => (
           <React.Fragment key={item.recipeId}>
             <RecipeItemCard
@@ -36,9 +36,7 @@ export default function SubscriptionOrderItemList({
               displayImageUrl={item?.displayImageUrl.url || ""}
               recipeName={item?.name || ""}
             />
-            {index < array.length - 1 && (
-              <Divider thickness={1} style={{ margin: "16px 0" }} />
-            )}
+            {index < array.length - 1 && <Divider thickness={1} />}
           </React.Fragment>
         ))}
       </div>

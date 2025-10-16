@@ -14,7 +14,6 @@ export function createSubscriptionStrategy(deps: {
   /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
   sheet: SubscriptionCheckoutSheetResponse; // 이메일/상품명 등 참조
   isMobile: boolean;
-
   // API DI
   createIamportPayment: (
     body: CreateIamportSubscriptionPaymentRequest
@@ -57,8 +56,6 @@ export function createSubscriptionStrategy(deps: {
     // 2) 게이트웨이 콜백 해석
     //    - 일반적으로 success/fail만 구분 (모바일은 redirect-flow로 콜백이 안 오거나, 와도 즉시 이동)
     afterGatewayCallback: async ({ response }) => {
-      console.log("afterGatewayCallback", response);
-
       if (response?.success) return "success";
       // ✅ "사용자가 결제를 취소하였습니다."면 'cancel'로 분기
       if (isPortoneUserCancel(response)) return "cancel";

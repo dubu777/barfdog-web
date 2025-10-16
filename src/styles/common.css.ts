@@ -219,6 +219,9 @@ export const commonWrapper = recipe({
       20: {
         paddingBottom: "20px",
       },
+      30: {
+        paddingBottom: "30px",
+      },
       40: {
         paddingBottom: "40px",
       },
@@ -250,6 +253,9 @@ export const commonWrapper = recipe({
       },
       20: {
         paddingTop: "20px",
+      },
+      30: {
+        paddingTop: "30px",
       },
       40: {
         paddingTop: "40px",
@@ -459,6 +465,7 @@ export const marginStyles = recipe({
       4: { marginTop: "4px" },
       6: { marginTop: "6px" },
       8: { marginTop: "8px" },
+      12: { marginTop: "12px" },
     },
     bottom: {
       4: { marginBottom: "4px" },
@@ -480,6 +487,7 @@ export const paddingStyles = recipe({
       4: { paddingTop: "4px" },
       6: { paddingTop: "6px" },
       8: { paddingTop: "8px" },
+      12: { paddingTop: "12px" },
     },
     bottom: {
       4: { paddingBottom: "4px" },

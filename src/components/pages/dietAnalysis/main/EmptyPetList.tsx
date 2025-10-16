@@ -25,7 +25,7 @@ export default function EmptyPetList({ onCreate }: EmptyPetListProps) {
         <br />
         반려견을 등록해보세요
       </Text>
-      <Button buttonColor="gray900" size="md" onClick={onCreate}>
+      <Button variant="solid" intent="secondary" size="md" onClick={onCreate}>
         반려견 등록하기
       </Button>
     </div>

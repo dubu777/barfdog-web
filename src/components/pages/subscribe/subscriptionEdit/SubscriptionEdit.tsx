@@ -10,12 +10,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import {
   defaultSubscriptionValues,
   subscriptionSchema,
-  SubscriptionValues,
 } from "@/utils/validation/subscriptionValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SubscriptionEditSummary from "./summary/SubscriptionEditSummary";
 import { useEffect, useMemo, useState } from "react";
-import { SubscriptionEditStep } from "@/types";
+import { SubscriptionEditStep, SubscriptionValues } from "@/types";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
@@ -54,6 +53,7 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
   }, [detailData, form]);
 
   useScrollToTop(step);
+  console.log(form.watch());
 
   // Computed values
   const editableSeq = detailData?.next
@@ -111,7 +111,7 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
           />
         )}
         {step === "edit" && rawFoodSheetData && (
-          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} />
+          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} isEdit />
         )}
         {step === "confirm" && <SubscriptionEditConfirm />}
         {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}

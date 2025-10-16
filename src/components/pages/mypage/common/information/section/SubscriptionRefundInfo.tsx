@@ -1,5 +1,5 @@
 import InfoSection from "@/components/pages/mypage/common/information/layout/InfoSection";
-import { PAYMENT } from "@/constants";
+import { PAYMENT_LABEL } from "@/constants";
 import { InfoListsItem, PlanKey } from "@/types";
 import { calculateOriginPrice } from "@/utils/checkout/calculateOriginPrice";
 
@@ -20,7 +20,7 @@ const SubscriptionRefundInfo = ({ data }: SubscriptionRefundInfoProps) => {
   const salePrice = `-${(originPrice - data?.orderPrice).toLocaleString()}원`;
 
   const paymentInfo = [
-    { label: "결제수단", value: PAYMENT[data?.paymentMethod] },
+    { label: "결제수단", value: PAYMENT_LABEL[data?.paymentMethod] },
     { label: "총 금액", value: `${originPrice.toLocaleString()}원` },
     data?.salePrice !== 0
       ? { label: "할인 혜택", value: salePrice }

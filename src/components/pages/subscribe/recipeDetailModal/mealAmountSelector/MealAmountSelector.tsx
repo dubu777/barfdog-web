@@ -1,5 +1,7 @@
+"use client";
+
 import { commonWrapper } from "@/styles/common.css";
-import { forwardRef, useCallback, useEffect, useState } from "react";
+import { forwardRef, useCallback, useState } from "react";
 import {
   mealSelectorBox,
   mealSelectorHelpIcon,
@@ -9,7 +11,7 @@ import Text from "@/components/common/text/Text";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "@/components/common/button/Button";
-import { RawFoodOrderItem } from "@/types";
+import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
@@ -21,20 +23,22 @@ import HelpIcon from "public/images/icons/help-fill.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
 import WarningIcon from "public/images/icons/warning.svg";
-import { StagedSelection } from "@/hooks/subscription/useRecipeSelection";
+import { StagedSelection } from "@/hooks/subscription/useRecipeSelections";
 
 interface MealAmountSelectorProps {
+  source: RecipeDetailSource;
   rawFoodItem: RawFoodOrderItem;
-  petName: string;
-  packData: CalculateRecipePackReturn;
-  dailyRecommendKcal: number;
-  stagedSelection: StagedSelection | null;
-  onStageSelection: (packGrams: number, packPrice: number) => void;
+  petName?: string;
+  packData?: CalculateRecipePackReturn;
+  dailyRecommendKcal?: number;
+  stagedSelection?: StagedSelection | null;
+  onStageSelection?: (packGrams: number, packPrice: number) => void;
 }
 
 const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
   function MealAmountSelector(
     {
+      source,
       rawFoodItem,
       petName,
       dailyRecommendKcal,
@@ -44,9 +48,14 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     },
     ref
   ) {
+    const inactive =
+      source === "recipe" || !packData || !petName || !onStageSelection;
+
     const toast = useToastStore((s) => s.addToast);
-    const displayPackGrams = stagedSelection?.packGrams ?? packData.packGrams;
-    const displayPackPrice = stagedSelection?.packPrice ?? packData.packPrice;
+    const displayPackGrams =
+      stagedSelection?.packGrams ?? packData?.packGrams ?? 0;
+    const displayPackPrice =
+      stagedSelection?.packPrice ?? packData?.packPrice ?? 0;
 
     const [inputValue, setInputValue] = useState<string>(
       displayPackGrams.toString()
@@ -54,6 +63,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
 
     const handleInputChange = useCallback(
       (val: string) => {
+        if (inactive) return;
         const allowed = /^\d*(\.\d{0,1})?$/;
         const excess = /^\d*\.\d{2,}/;
         if (allowed.test(val)) {
@@ -68,8 +78,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
     );
 
     const handleApply = useCallback(() => {
-      console.log("???????");
-
+      if (inactive) return;
       if (!inputValue.trim()) {
         toast("급여량을 입력해주세요", "above-button");
         return;
@@ -90,6 +99,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
       onStageSelection(clamped, packPrice);
     }, [inputValue, onStageSelection, dailyRecommendKcal, toast]);
 
+    if (inactive) return null;
     return (
       <section ref={ref} className={recipeDetailSection}>
         <div className={commonWrapper({ direction: "col", align: "start" })}>
@@ -181,15 +191,19 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
         <Text type="label2">급여량 수정</Text>
         <div className={commonWrapper({ gap: 8 })}>
           <InputField
-            type="number"
             placeholder="0"
             value={inputValue}
             onChange={(e) => handleInputChange(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                handleApply();
+              }
+            }}
           />
           <Button
-            type="primary"
+            variant="solid"
+            intent="primary"
             size="inputButton"
-            buttonColor="gray900"
             onClick={handleApply}
           >
             적용

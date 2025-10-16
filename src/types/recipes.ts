@@ -1,4 +1,8 @@
-import { DRY_MATTER_MAP, INGREDIENTS_MAP, NUTRIENT_MAP } from "@/constants/recipes";
+import {
+  DRY_MATTER_MAP,
+  INGREDIENTS_MAP,
+  NUTRIENT_MAP,
+} from "@/constants/recipes";
 
 type IngredientType = keyof typeof INGREDIENTS_MAP;
 
@@ -17,7 +21,7 @@ interface RecipeDto {
   pricePerGram: number;
   gramPerKcal: number;
   imgUrl: string;
-  inStock: boolean,
+  inStock: boolean;
   ingredients?: string;
   leaked?: string;
   modifiedDate?: string;
@@ -27,7 +31,7 @@ interface RecipeItem {
   id: number;
   name: string;
   displayImageUrl: {
-      url: string;
+    url: string;
   };
   description: string;
   pricePerGram: number;
@@ -38,6 +42,8 @@ interface RecipeItem {
   modifiedDate: string;
 }
 
+type RecipeDetailSource = "subscribe" | "recipe";
+
 export type {
   IngredientType,
   NutrientType,
@@ -46,4 +52,5 @@ export type {
   DryMatterValues,
   RecipeDto,
   RecipeItem,
+  RecipeDetailSource,
 };

@@ -53,7 +53,7 @@ export default function ProbiomeCard({
       <div className={styles.probiomeCardItem}>
         <Button
           variant="outline"
-          type="assistive"
+          intent="assistive"
           size="sm"
           fullWidth
           onClick={onDetail}

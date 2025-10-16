@@ -3,8 +3,8 @@ import { selectOptionWrapper } from "../DeliveryOptions.css";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { deliveryOptions } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { Controller, useFormContext } from "react-hook-form";
+import { SubscriptionValues } from "@/types";
 
 interface MealFrequencyProps {
   source?: "edit" | "order";

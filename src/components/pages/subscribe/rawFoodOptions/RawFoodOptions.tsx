@@ -2,26 +2,28 @@
 
 import * as styles from "./RawFoodOptions.css";
 import { recipeTab } from "@/constants";
-import { RawFoodOrderSheet } from "@/types/subscription";
+import { RawFoodOrderSheet, SubscriptionValues } from "@/types/subscription";
 import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
-import React, { useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import useModal from "@/hooks/useModal";
 import RecommendKcalBottomSheet from "../bottomSheet/RecommendKcalBottomSheet";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { useFormContext, useWatch } from "react-hook-form";
 import RawFoodCard from "./rawFoodCard/RawFoodCard";
 import { useRecipeCalculator } from "@/hooks/subscription/useRecipeCalculator";
+import { useRecipeSelections } from "@/hooks/subscription/useRecipeSelections";
 
 interface RawFoodOptionsProps {
+  isEdit?: boolean;
   rawFoodSheetData: RawFoodOrderSheet;
 }
 
 export default function RawFoodOptions({
+  isEdit = false,
   rawFoodSheetData,
 }: RawFoodOptionsProps) {
   const { isOpen, onClose, onToggle } = useModal();
@@ -39,6 +41,29 @@ export default function RawFoodOptions({
     originalRecipes,
     savedRecipes,
   });
+
+  const {
+    getSelection,
+    stageSelection,
+    commitSelection,
+    removeSelection,
+    clearStage,
+  } = useRecipeSelections();
+
+  const buildHandlers = useCallback(
+    (recipeId: number) => {
+      return {
+        onStageSelection: (packGrams: number, packPrice: number) =>
+          stageSelection(recipeId, packGrams, packPrice),
+        onCommitSelection: (
+          resolvePack: () => { packGrams: number; packPrice: number }
+        ) => commitSelection(recipeId, resolvePack),
+        onRemoveSelection: () => removeSelection(recipeId),
+        onClearStage: () => clearStage(recipeId),
+      };
+    },
+    [stageSelection, commitSelection, removeSelection]
+  );
 
   const sections = [
     {
@@ -76,7 +101,7 @@ export default function RawFoodOptions({
   const name = getNameWithPossessiveSuffix(rawFoodSheetData.petName);
   return (
     <section className={styles.subscribeOptionContainer}>
-      <div className={styles.recipeSelectTitleWrapper}>
+      <div className={styles.recipeSelectTitleWrapper({ isEdit })}>
         <div>
           <Text type="title2">
             {name}의 구독 레시피를
@@ -109,17 +134,24 @@ export default function RawFoodOptions({
                 </Text>
               </div>
               <div className={styles.recipeCardWrapper}>
-                {items.map((rowFoodItem) => {
-                  const packData = packMap[rowFoodItem.recipeId];
+                {items.map((rawFoodItem) => {
+                  const { recipeId } = rawFoodItem;
+                  const packData = packMap[recipeId];
+                  const sel = getSelection(recipeId);
+                  const handlers = buildHandlers(recipeId);
                   return (
                     <RawFoodCard
-                      key={rowFoodItem.recipeId}
-                      rawFoodItem={rowFoodItem}
+                      key={rawFoodItem.recipeId}
+                      rawFoodItem={rawFoodItem}
                       dailyRecommendKcal={rawFoodSheetData.oneDayRecommendKcal}
                       inedibleFoods={rawFoodSheetData.inedibleFoods}
                       packData={packData}
                       petName={rawFoodSheetData.petName}
                       isUnder20g={packData.under20g !== undefined}
+                      isSelected={sel.isSelected}
+                      canOpenDetailModal={sel.canOpenDetailModal}
+                      stagedSelection={sel.stagedSelection}
+                      {...handlers}
                     />
                   );
                 })}

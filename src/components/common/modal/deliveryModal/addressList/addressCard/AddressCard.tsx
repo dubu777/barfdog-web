@@ -75,7 +75,11 @@ export default function AddressCard({
       <div className={styles.buttonWrapper}>
         <div className={styles.leftButtonContainer}>
           {!isDefaultAddress && (
-            <Button type="assistive" variant="text" onClick={handleDeleteModal}>
+            <Button
+              intent="secondary"
+              variant="text"
+              onClick={handleDeleteModal}
+            >
               <Text type="label4" color="gray600" underLine>
                 삭제
               </Text>
@@ -84,7 +88,7 @@ export default function AddressCard({
         </div>
         <div className={styles.rightButtonWrapper}>
           <Button
-            type="assistive"
+            intent="assistive"
             variant="outline"
             size="sm"
             onClick={() => goToEditAddress(address)}
@@ -92,12 +96,7 @@ export default function AddressCard({
             수정
           </Button>
           {showSelectButton && (
-            <Button
-              type="primary"
-              variant="solid"
-              size="sm"
-              onClick={handleSelect}
-            >
+            <Button size="sm" onClick={handleSelect}>
               선택
             </Button>
           )}

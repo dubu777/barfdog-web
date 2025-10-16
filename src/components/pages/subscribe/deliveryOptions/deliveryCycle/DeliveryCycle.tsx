@@ -4,11 +4,11 @@ import {
   selectOptionWrapper,
 } from "../DeliveryOptions.css";
 import { useController, useFormContext, useWatch } from "react-hook-form";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { commonWrapper } from "@/styles/common.css";
 import { deliveryOptions } from "@/constants";
 import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useEffect } from "react";
+import { SubscriptionValues } from "@/types";
 
 interface DeliveryCycleProps {
   source?: "edit" | "order";

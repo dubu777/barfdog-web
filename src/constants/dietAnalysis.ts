@@ -17,27 +17,6 @@ import GrowthIcon from "public/images/dietAnalysis/concerns/growth.svg";
 import AgingIcon from "public/images/dietAnalysis/concerns/aging.svg";
 import { GeneralLevel, HealthConcernType, SnackCountLevel } from "@/types";
 
-// 재료 아이콘 imports
-import ChickenIcon from "public/images/dietAnalysis/ingredients/icon-Chicken.svg";
-import TurkeyIcon from "public/images/dietAnalysis/ingredients/icon-Turkey.svg";
-import CauliflowerIcon from "public/images/dietAnalysis/ingredients/icon-Cauliflower.svg";
-import MushroomShiitakeIcon from "public/images/dietAnalysis/ingredients/icon-MushroomShiitake.svg";
-import BlueberryIcon from "public/images/dietAnalysis/ingredients/icon-Blueberry.svg";
-import CowIcon from "public/images/dietAnalysis/ingredients/icon-Cow.svg";
-import AppleIcon from "public/images/dietAnalysis/ingredients/icon-Apple.svg";
-import ChiaSeedIcon from "public/images/dietAnalysis/ingredients/icon-ChiaSeed.svg";
-import LambIcon from "public/images/dietAnalysis/ingredients/icon-Lamb.svg";
-import DuckIcon from "public/images/dietAnalysis/ingredients/icon-Duck.svg";
-import KelpIcon from "public/images/dietAnalysis/ingredients/icon-Kelp.svg";
-import CoconutOilIcon from "public/images/dietAnalysis/ingredients/icon-CoconutOil.svg";
-import TurmericIcon from "public/images/dietAnalysis/ingredients/icon-Turmeric.svg";
-import KaleIcon from "public/images/dietAnalysis/ingredients/icon-Kale.svg";
-import HempSeedIcon from "public/images/dietAnalysis/ingredients/icon-HempSeed.svg";
-import BananaIcon from "public/images/dietAnalysis/ingredients/icon-Banana.svg";
-import StrawberryIcon from "public/images/dietAnalysis/ingredients/icon-Strawberry.svg";
-import CarrotIcon from "public/images/dietAnalysis/ingredients/icon-Carrot.svg";
-import EggHalfIcon from "public/images/dietAnalysis/ingredients/icon-EggHalf.svg";
-
 const ACTIVITY_LEVEL_MAP = {
   VERY_HIGH: 5,
   HIGH: 4,
@@ -131,28 +110,6 @@ const DAILY_CALORIE_TEXT = [
   "또한, 안내된 칼로리는 '하루' 권장량이오니 반려견의 끼니 수에 맞춰 나눠 급여해주세요 :)",
 ];
 
-const INGREDIENT_CONFIG = {
-  CHICKEN: { icon: ChickenIcon, label: "닭고기" },
-  TURKEY: { icon: TurkeyIcon, label: "칠면조" },
-  CAULIFLOWER: { icon: CauliflowerIcon, label: "콜리플라워" },
-  SHIITAKE: { icon: MushroomShiitakeIcon, label: "표고버섯" },
-  BLUEBERRY: { icon: BlueberryIcon, label: "블루베리" },
-  BEEF: { icon: CowIcon, label: "소고기" },
-  APPLE: { icon: AppleIcon, label: "사과" },
-  CHIA_SEED: { icon: ChiaSeedIcon, label: "치아씨드" },
-  LAMB: { icon: LambIcon, label: "양고기" },
-  DUCK: { icon: DuckIcon, label: "오리고기" },
-  KELP: { icon: KelpIcon, label: "켈프" },
-  COCONUT: { icon: CoconutOilIcon, label: "코코넛 오일" },
-  TURMERIC: { icon: TurmericIcon, label: "강황" },
-  KALE: { icon: KaleIcon, label: "케일" },
-  HEMP_SEED: { icon: HempSeedIcon, label: "햄프씨드" },
-  GREEN_BANANA: { icon: BananaIcon, label: "풋바나나" },
-  STRAWBERRY: { icon: StrawberryIcon, label: "딸기" },
-  EGG_YOLK: { icon: EggHalfIcon, label: "달걀 노른자" },
-  CARROT: { icon: CarrotIcon, label: "당근" },
-};
-
 export {
   ACTIVITY_LEVEL_MAP,
   SNACK_COUNT_LEVEL_MAP,
@@ -161,5 +118,4 @@ export {
   HEALTH_CONCERNS,
   HEALTH_CONCERN_LABEL,
   DAILY_CALORIE_TEXT,
-  INGREDIENT_CONFIG,
 };

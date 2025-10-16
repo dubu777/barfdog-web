@@ -276,6 +276,18 @@ interface UpdateSubscriptionRequest {
   rawFoods: RawFoodPayload[];
 }
 
+type RawFoodFormItem = {
+  recipeId: number;
+  packGrams: number;
+  packPrice: number;
+};
+
+interface SubscriptionValues {
+  mealPlan: MealPlan;
+  deliveryPlan: DeliveryPlan;
+  rawFoods: RawFoodFormItem[] | [];
+}
+
 type BenefitStatus = "AVAILABLE" | "REQUESTED" | "USED";
 
 type SubscriptionSkipType = "ONCE" | "WEEK";
@@ -333,4 +345,6 @@ export type {
   SubscriptionDetail,
   RawFood,
   SubscriptionEditStep,
+  SubscriptionValues,
+  RawFoodFormItem,
 };

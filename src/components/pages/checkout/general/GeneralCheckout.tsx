@@ -28,7 +28,6 @@ import OrderTerms from "../common/orderTerms/OrderTerms";
 import OrderSection from "../common/orderSection/OrderSection";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
-import FooterButton from "@/components/common/footerButton/FooterButton";
 
 // Constants & Types
 import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
@@ -50,6 +49,9 @@ import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
 import Spinner from "@/components/common/spinner/Spinner";
 import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
+import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import { commonWrapper } from "@/styles/common.css";
+import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 export default function GeneralCheckout() {
   // Local State
@@ -144,7 +146,7 @@ export default function GeneralCheckout() {
   }
 
   return (
-    <>
+    <div className={checkoutPageContainer}>
       <DeliveryAddress />
       <Divider />
       {generalOrderData.orderStatus !== "UNSUBSCRIBE_ORDER" && (
@@ -183,14 +185,20 @@ export default function GeneralCheckout() {
         showErrors={showTermsErrors}
         ref={termsRef}
       />
-      <OrderSection padding="20px">
+      <Divider />
+      <OrderSection padding={20}>
         <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
       </OrderSection>
-      <FooterButton isDisabled={isProcessing} onClick={handlePaymentSubmit}>
-        {isProcessing
-          ? "결제 처리 중..."
-          : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
-      </FooterButton>
-    </>
+      <ButtonDocked
+        type="full-button"
+        isPrimaryDisabled={isProcessing}
+        onPrimaryClick={handlePaymentSubmit}
+        primaryButtonLabel={
+          isProcessing
+            ? "결제 처리 중..."
+            : `${formatNumberWithCommas(paymentPrice)}원 결제하기`
+        }
+      />
+    </div>
   );
 }
