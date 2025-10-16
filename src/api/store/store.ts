@@ -9,7 +9,7 @@ import {
 import { ApiResponse } from "@/types";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
-const getInfiniteStoreItemList = async ({ 
+const getStoreItemList = async ({ 
   pageParam = 0, 
   size = 20, 
   sortBy = 'recent',
@@ -44,6 +44,6 @@ const getStoreItemDetail = async (itemId: number, instance: AxiosInstance = axio
 }
 
 export { 
-  getInfiniteStoreItemList,
+  getStoreItemList,
   getStoreItemDetail,
 };
