@@ -30,11 +30,11 @@ export default function AddressList({
   return (
     <div className={styles.deliveryModalWrapper}>
       <Button
-        type="assistive"
+        intent="assistive"
         variant="outline"
         size="lg"
         fullWidth
-        iconSrc={AddIcon}
+        icon={AddIcon}
         onClick={goToAddAddress}
       >
         배송지 추가하기

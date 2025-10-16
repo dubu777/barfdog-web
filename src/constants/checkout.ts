@@ -128,12 +128,11 @@ const PAYMENT_METHOD_INFO: Record<PaymentMethod, PaymentMethodInfo> = {
 
 const CHECKOUT_ROUTES = {
   GENERAL: {
-    success: "/checkout/completed?type=general",
-    fail: "/checkout/failed?type=general",
+    success: "/checkout/general/completed",
+    fail: "/checkout/failed",
   },
   SUBSCRIPTION: {
-    success: "/checkout/completed?type=subscription",
-    fail: "/checkout/failed?type=subscription",
+    fail: "/checkout/failed",
   },
 } as const;
 

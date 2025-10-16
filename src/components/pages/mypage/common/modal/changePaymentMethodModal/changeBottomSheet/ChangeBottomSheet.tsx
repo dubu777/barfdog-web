@@ -48,7 +48,7 @@ const ChangeBottomSheet = ({
             <Button
               key={method.value}
               variant="outline"
-              type="assistive"
+              intent="assistive"
               fullWidth
               buttonType="button"
               onClick={(e) => e.preventDefault()}

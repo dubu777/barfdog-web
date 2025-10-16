@@ -465,6 +465,7 @@ export const marginStyles = recipe({
       4: { marginTop: "4px" },
       6: { marginTop: "6px" },
       8: { marginTop: "8px" },
+      12: { marginTop: "12px" },
     },
     bottom: {
       4: { marginBottom: "4px" },
@@ -486,6 +487,7 @@ export const paddingStyles = recipe({
       4: { paddingTop: "4px" },
       6: { paddingTop: "6px" },
       8: { paddingTop: "8px" },
+      12: { paddingTop: "12px" },
     },
     bottom: {
       4: { paddingBottom: "4px" },

@@ -44,7 +44,7 @@ export default function RenewalNoticeBottomSheet({
         <Button onClick={onSurvey} fullWidth>
           식단 다시 추천받기
         </Button>
-        <Button onClick={onClose} variant="text" textColor="gray500" fullWidth>
+        <Button onClick={onClose} variant="text" intent="secondary" fullWidth>
           나중에
         </Button>
       </div>

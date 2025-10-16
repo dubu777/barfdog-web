@@ -29,12 +29,8 @@ const SearchAddress = ({
   return (
     <div className={`${styles.searchAddressContainer({ flexDirection })}`}>
       <Button
-        type="primary"
+        intent="secondary"
         variant="solid"
-        style={{
-          backgroundColor: themeVars.colors.gray.gray800,
-          color: themeVars.colors.gray.gray0,
-        }}
         onClick={() => setOpenAddressModal(true)}
       >
         주소검색

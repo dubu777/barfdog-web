@@ -111,7 +111,7 @@ export default function MobileSubscriptionPayment() {
 
         if (isValid) {
           await successPayment({ orderId, body: finalBody });
-          router.push(CHECKOUT_ROUTES.SUBSCRIPTION.success);
+          router.push(`/checkout/subscription/${subscribeId}/completed`);
         } else {
           // 재 검증하는 코드
           // await invalidPayment({ orderId, body: finalBody });

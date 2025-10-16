@@ -62,12 +62,11 @@ export default function ProbiomeList({ petId }: ProbiomeListProps) {
             사전 문진을 작성해 주세요
           </Text>
           <Button
-            iconSrc={InfoIcon}
+            icon={InfoIcon}
             size="sm"
             iconColor="gray700"
-            iconPosition="left"
             variant="outline"
-            type="assistive"
+            intent="assistive"
             className={styles.kitGuideButton}
             onClick={onToggleKitGuideModal}
           >

@@ -10,9 +10,15 @@ import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/usePre
 import DietAnalysisResult from "@/components/pages/dietAnalysis/result/DietAnalysisResult";
 import Spinner from "@/components/common/spinner/Spinner";
 
-type Params = { reportId: string };
+interface DietAnalysisResultPageProps {
+  params: {
+    reportId: string;
+  };
+}
 
-export default async function ResultPage({ params }: { params: Params }) {
+export default async function DietAnalysisResultPage({
+  params,
+}: DietAnalysisResultPageProps) {
   const reportId = Number(params.reportId);
   const queryClient = new QueryClient();
 

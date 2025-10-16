@@ -24,7 +24,7 @@ export default function SubscriptionItemInfo({
     rawFoodList.length
   );
   return (
-    <Card shadow="light" padding={12} gap={12}>
+    <Card shadow="light" padding={12} gap={12} align="start">
       <Text type="headline2">구독 상품</Text>
       <Divider thickness={2} color="gray900" />
       <div className={commonWrapper({ direction: "col", gap: 16 })}>

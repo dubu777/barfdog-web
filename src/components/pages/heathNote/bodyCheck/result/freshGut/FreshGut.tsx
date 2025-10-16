@@ -5,7 +5,10 @@ import {
   freshGutImageBox,
   freshGutInfo,
   freshGutInfoBox,
-  freshGutLogoImage, freshGutSubText, freshGutText, freshGutTextBox
+  freshGutLogoImage,
+  freshGutSubText,
+  freshGutText,
+  freshGutTextBox,
 } from "../BodyCheckResult.css";
 import Microbe from "public/images/healthNote/body-check/microbe.svg";
 import ProbiomeImage from "public/images/healthNote/body-check/probiome.jpg";
@@ -16,7 +19,7 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
 import Image from "next/image";
 import Button from "@/components/common/button/Button";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface FreshGutProps {
   petId: number;
@@ -42,19 +45,36 @@ export default function FreshGut({ petId }: FreshGutProps) {
         </Text>
       </div>
       <div className={freshGutImageBox}>
-        <Image src={ProbiomeImage} alt='kit' width={600} height={360} className={freshGutImage} />
+        <Image
+          src={ProbiomeImage}
+          alt="kit"
+          width={600}
+          height={360}
+          className={freshGutImage}
+        />
         <div className={freshGutInfo}>
-          <Image src={LogoImage} alt='kit' width={200} height={16} className={freshGutLogoImage} />
+          <Image
+            src={LogoImage}
+            alt="kit"
+            width={200}
+            height={16}
+            className={freshGutLogoImage}
+          />
           <div className={freshGutTextBox}>
             <SvgIcon src={FreshGutImage} width={184} height={35} />
-            <Text type='label4' color='white' className={freshGutText}>
+            <Text type="label4" color="white" className={freshGutText}>
               반려견 맞춤 건강 관리 장내 미생물 분석 키트
             </Text>
-            <Text type='caption2' color='white' className={freshGutSubText}>
+            <Text type="caption2" color="white" className={freshGutSubText}>
               마이크로바이옴 진단 + 맞춤 식이 솔루션
             </Text>
           </div>
-          <Button onClick={() => router.push(`/health-note/${petId}/probiome`)} variant='outline' type='primary' className={freshGutButton}>
+          <Button
+            onClick={() => router.push(`/health-note/${petId}/probiome`)}
+            variant="outline"
+            intent="primary"
+            className={freshGutButton}
+          >
             진단 키트 보러가기
           </Button>
         </div>

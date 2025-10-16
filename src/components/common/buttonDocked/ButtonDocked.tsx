@@ -57,7 +57,7 @@ export default function ButtonDocked({
       {type === "dual-button" && secondaryButtonLabel && (
         <Button
           onClick={onSecondaryClick}
-          type={secondaryButtonType}
+          intent={secondaryButtonType}
           variant="outline"
           className={secondaryButtonStyle}
         >
@@ -67,7 +67,7 @@ export default function ButtonDocked({
       <Button
         onClick={onPrimaryClick}
         fullWidth={type === "full-button"}
-        type={primaryButtonType}
+        intent={primaryButtonType}
         variant={primaryButtonVariant}
         disabled={isPrimaryDisabled}
         className={primaryButtonStyle || ""}

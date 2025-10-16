@@ -17,7 +17,7 @@ const requestFindEmailCode = async (
   body: FindEmailValues
 ): Promise<RequestFindAccountCodeResponse> => {
   const { data } = await axiosInstance.post(
-    `/api/v2/public/account/id/lookup/request-code`,
+    `/api/v2/public/accounts/id/lookup/request-code`,
     body
   );
   if (data.success) {
@@ -30,7 +30,7 @@ const verifyFindEmailCode = async (
   body: VerifyFindAccountCodeRequest
 ): Promise<VerifyFindAccountCodeResponse> => {
   const { data } = await axiosInstance.post(
-    "/api/v2/public/account/id/lookup",
+    "/api/v2/public/accounts/id/lookup",
     body
   );
   if (data.success) {
@@ -43,7 +43,7 @@ const requestPasswordResetCode = async (
   body: RequestResetCodeValues
 ): Promise<RequestFindAccountCodeResponse> => {
   const { data } = await axiosInstance.post(
-    "/api/v2/public/account/password/reset/request-code",
+    "/api/v2/public/accounts/password/reset/request-code",
     body
   );
   if (data.success) {
@@ -54,7 +54,7 @@ const requestPasswordResetCode = async (
 
 const verifyPasswordResetCode = async (body: VerifyFindAccountCodeRequest) => {
   const { data } = await axiosInstance.post(
-    "/api/v2/public/account/password/reset/verify-code",
+    "/api/v2/public/accounts/password/reset/verify-code",
     body
   );
   if (data.success) {
@@ -65,7 +65,7 @@ const verifyPasswordResetCode = async (body: VerifyFindAccountCodeRequest) => {
 
 const resetPassword = async (body: ResetPasswordRequest) => {
   const { data } = await axiosInstance.post(
-    "/api/v2/public/account/password/reset",
+    "/api/v2/public/accounts/password/reset",
     body
   );
   if (data.success) {

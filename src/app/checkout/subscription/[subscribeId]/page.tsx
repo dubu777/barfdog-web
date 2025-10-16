@@ -1,4 +1,3 @@
-import * as styles from "../../../order/Order.css";
 import {
   dehydrate,
   HydrationBoundary,
@@ -28,17 +27,15 @@ export default async function SubscriptionPage({
   const dehydrateState = dehydrate(queryClient);
 
   return (
-    <div className={styles.orderPageContainer}>
-      <HydrationBoundary state={dehydrateState}>
-        {/* 재시도 버튼 개발 예정 */}
-        <ErrorBoundary fallback={<div>Something went wrong.</div>}>
-          {/* 로딩 컴포넌트 개발 예정 */}
-          <Suspense fallback={<Spinner fullscreen />}>
-            <Header centerTitle="결제" showBackButton />
-            <SubscriptionCheckout subscribeId={subscribeId} />
-          </Suspense>
-        </ErrorBoundary>
-      </HydrationBoundary>
-    </div>
+    <HydrationBoundary state={dehydrateState}>
+      {/* 재시도 버튼 개발 예정 */}
+      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+        {/* 로딩 컴포넌트 개발 예정 */}
+        <Suspense fallback={<Spinner fullscreen />}>
+          <Header centerTitle="결제" showBackButton />
+          <SubscriptionCheckout subscribeId={subscribeId} />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrationBoundary>
   );
 }

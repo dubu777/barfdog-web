@@ -181,11 +181,9 @@ export default function RawFoodCard({
           </div>
         )}
         <Button
-          type="primary"
-          variant="outline"
+          intent={isSelected ? "assistive" : "primary"}
+          variant={"outline"}
           size="sm"
-          textColor={isSelected ? "gray900" : "red"}
-          borderColor={isSelected ? "gray300" : "red"}
           onClick={handleButtonClick}
         >
           {isSelected ? "빼기" : "담기"}

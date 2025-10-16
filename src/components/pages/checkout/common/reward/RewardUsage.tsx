@@ -70,12 +70,7 @@ export default function RewardUsage({
           onChange={handleChange}
         />
 
-        <Button
-          type="primary"
-          variant="solid"
-          size="inputButton"
-          onClick={handleMaxReward}
-        >
+        <Button size="inputButton" onClick={handleMaxReward}>
           전액사용
         </Button>
       </div>

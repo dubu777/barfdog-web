@@ -50,6 +50,8 @@ import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { useGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/useGetSubscriptionCheckoutSheet";
 import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
 import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
+import { commonWrapper } from "@/styles/common.css";
+import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -85,7 +87,7 @@ export default function SubscriptionCheckout({
   const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment(); // 아임포트 구독 결제 생성 - next.js 서버
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
-  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
+  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment(); // 논의후 삭제 고려, validatePayment에서 검증 실패한 경우 호출하여 재 검증 후 성공시 검증 실패를 취소하고 성공 처리하는 로직, 정상적으로 동작하는지 테스트도 필요함. 필요성을 모르겠음
   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
 
@@ -137,7 +139,7 @@ export default function SubscriptionCheckout({
     strategy,
     navigate: (path) => router.push(path),
     routes: {
-      success: CHECKOUT_ROUTES.SUBSCRIPTION.success,
+      success: `/checkout/subscription/${subscribeId}/completed`,
       fail: CHECKOUT_ROUTES.SUBSCRIPTION.fail,
     },
   });
@@ -159,7 +161,7 @@ export default function SubscriptionCheckout({
   };
 
   return (
-    <>
+    <div className={checkoutPageContainer}>
       <DeliveryAddress />
       <Divider />
       <SubscriptionOrderItemList
@@ -205,6 +207,6 @@ export default function SubscriptionCheckout({
           ? "결제 처리 중..."
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
-    </>
+    </div>
   );
 }

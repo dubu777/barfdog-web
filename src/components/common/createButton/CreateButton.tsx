@@ -38,7 +38,7 @@ const CreateButton = ({
   return (
     <Button
       variant="outline"
-      type="assistive"
+      intent="assistive"
       size="lg"
       fullWidth
       onClick={handleNavigateToCreateDog}

@@ -78,7 +78,7 @@ export default function AlertModal({
         <div className={styles.modalButtonWrapper}>
           {cancelText && (
             <Button
-              type={cancelType}
+              intent={cancelType}
               variant={cancelVariant}
               size="sm"
               onClick={handleCancel}
@@ -89,7 +89,7 @@ export default function AlertModal({
           )}
           {confirmText && (
             <Button
-              type={confirmType}
+              intent={confirmType}
               variant={confirmVariant}
               size="sm"
               onClick={handleConfirm}

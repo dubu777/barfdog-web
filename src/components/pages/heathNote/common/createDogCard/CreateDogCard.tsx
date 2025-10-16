@@ -48,7 +48,6 @@ const CreateDogCard = ({ buttonLabel }: CreateDogCardProps) => {
         />
       </motion.div>
       <Button
-        buttonColor="red"
         fullWidth
         onClick={() => router.push("/pet/create?source=health-note")}
       >

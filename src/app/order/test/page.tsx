@@ -9,8 +9,6 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
-import DotSpinner from "@/components/common/spinner/DotSpinner";
-import Spinner from "@/components/common/spinner/Spinner";
 
 export default function GeneralShopTest() {
   const router = useRouter();

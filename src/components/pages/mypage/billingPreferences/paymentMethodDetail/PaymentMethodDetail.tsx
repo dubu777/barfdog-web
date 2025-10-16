@@ -111,7 +111,7 @@ const PaymentMethodDetail = ({
             className={styles.detailSubscriptionCard}
           />
           {cancelSubscription && (
-            <Button type="assistive" variant="outline" size="lg" fullWidth>
+            <Button intent="assistive" variant="outline" size="lg" fullWidth>
               식단 재구독
             </Button>
           )}
@@ -137,7 +137,7 @@ const PaymentMethodDetail = ({
               <Button
                 key={method.value}
                 variant="outline"
-                type="assistive"
+                intent="assistive"
                 fullWidth
                 buttonType="button"
                 onClick={(e) => e.preventDefault()}

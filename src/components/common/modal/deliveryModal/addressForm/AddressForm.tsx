@@ -176,9 +176,8 @@ export default function AddressForm({
               disabled
             />
             <Button
-              type="primary"
+              intent="secondary"
               variant="solid"
-              buttonColor="gray800"
               size="lg"
               onClick={toggleAddressModal}
             >

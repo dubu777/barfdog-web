@@ -14,7 +14,6 @@ export function createSubscriptionStrategy(deps: {
   /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
   sheet: SubscriptionCheckoutSheetResponse; // 이메일/상품명 등 참조
   isMobile: boolean;
-
   // API DI
   createIamportPayment: (
     body: CreateIamportSubscriptionPaymentRequest
