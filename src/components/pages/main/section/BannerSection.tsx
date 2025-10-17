@@ -11,15 +11,13 @@ import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import useDeviceState from "@/hooks/useDeviceState";
-import { MainBanner } from "@/types";
+import { useGetMainBannerInfo } from "@/api/main/queries/useGetMainBannerInfo";
 
-interface BannerSectionProps {
-	mainBannerList: MainBanner[];
-}
+export default function BannerSection() {
+	const { isMobileWidth } = useDeviceState();
+	const { data: mainBannerInfo } = useGetMainBannerInfo();
 
-const BannerSection = ({ mainBannerList }: BannerSectionProps) => {
-	const { isMobileDevice } = useDeviceState();
-
+	if (!mainBannerInfo) return null;
 	return (
 		<article className={mainBannerContainer}>
 			<Swiper
@@ -30,16 +28,15 @@ const BannerSection = ({ mainBannerList }: BannerSectionProps) => {
 				slidesPerView='auto'
 				className={mainBannerSlider}
 			>
-			{mainBannerList.map(banner => {
-				const linkUrl = isMobileDevice ? banner.mobileLinkUrl : banner.pcLinkUrl;
-				// const imageUrl = isMobileDevice ? banner.mobileImageUrl : banner.pcImageUrl;
+			{mainBannerInfo?.mainBannerList.map(banner => {
+				const linkUrl = isMobileWidth ? banner.mobileRedirectUrl : banner.pcRedirectUrl;
 				return (
 					<SwiperSlide
 						key={banner.id}
 						style={{ height: 'auto' }}
 					>
 						<Link href={linkUrl} className={mainBannerLink}>
-							<Image src={banner.mobileImageUrl} alt={banner.name} width={600} height={600} className={mainBannerImage} />
+							<Image src={banner.mobileDisplayBannerUrl.url} alt={banner.name} width={1200} height={1200} className={mainBannerImage} />
 						</Link>
 					</SwiperSlide>
 				)
@@ -48,5 +45,3 @@ const BannerSection = ({ mainBannerList }: BannerSectionProps) => {
 		</article>
 	);
 };
-
-export default BannerSection;

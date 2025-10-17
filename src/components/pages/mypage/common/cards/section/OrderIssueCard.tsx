@@ -40,7 +40,7 @@ const OrderIssueCard = ({
   const issueStatusLabel = `${issueLabel}${statusLabel}`;
 
   const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(
-    (tier) => tier.tierKR === memberInfo?.grade
+    (tier) => tier.tier === memberInfo?.grade
   );
   const totalDiscount = (userMembershipTier?.subscriptionDiscount || 0) + 5;
 

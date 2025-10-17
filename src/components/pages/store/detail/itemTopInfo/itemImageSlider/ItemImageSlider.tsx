@@ -2,13 +2,14 @@ import * as styles from './ItemImageSlider.css';
 import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { DetailItemImage } from "@/types";
+import { ItemImage } from "@/types";
 import SlideCounter from '@/components/common/slideCounter/SlideCounter';
 import { useState } from 'react';
 
 export default function ItemImageSlider({ 
-  itemImageList
-}: { itemImageList: DetailItemImage[] }) {
+  itemImageList,
+  itemName,
+}: { itemImageList: ItemImage[], itemName: string }) {
     const [currentSlide, setCurrentSlide] = useState(1);
   return (
     <Swiper
@@ -27,8 +28,8 @@ export default function ItemImageSlider({
           className={styles.imageSlideBox}
         >
           <Image
-            src={image.url}
-            alt={image.filename}
+            src={image.displayImageUrl.url}
+            alt={itemName}
             width={560}
             height={560}
             className={styles.imageSlide}

@@ -37,12 +37,12 @@ export default function UpdateReviewModal({
     const deleteIds = fileChangeInfo.deleteFileIdList;
     const deleteImageIdList = reviewImageList
       .map(file => file.fileId)
-      .filter(fileId => deleteIds.includes(fileId));
+      .filter(fileId => deleteIds.includes(fileId as number));
 
     const body = {
       ...data,
       addImageIdList: fileChangeInfo.addFileIdList,
-      deleteImageIdList: deleteImageIdList,
+      deleteImageIdList: deleteImageIdList as number[],
     }
 
     mutate({

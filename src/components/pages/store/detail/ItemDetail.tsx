@@ -19,7 +19,7 @@ export default function ItemDetail({
 }: ItemDetailProps) {
   const { setItemPrice, setDiscountRate, discountRate } = useStoreItemStore();
   const { data } = useGetStoreItemDetail(itemId);
-  const itemInfo = data?.itemDto;
+  const itemInfo = data?.itemInfo;
   const { originalPrice, salePrice, inStock, itemIcons } = itemInfo ?? {};
 
   const { isOpen, onClose, onToggle } = useModal();
@@ -29,33 +29,27 @@ export default function ItemDetail({
     setDiscountRate(originalPrice, salePrice);
   }, [originalPrice, salePrice, setItemPrice, setDiscountRate]);
 
-  console.log(data);
-  
   if(!data) return null;
+
   return (
     <section>
-      <ItemTopInfo 
-        data={{
-          name: itemInfo.name,
-          originalPrice: itemInfo.originalPrice,
-          salePrice: itemInfo.salePrice,
-          discountType: itemInfo.discountType,
-          deliveryFree: itemInfo.deliveryFree,
-          imageList: data.itemImageDtoList,
-          reviewInfo: data.reviewDto,
-          deliveryInfo: data.deliveryCondDto,
-          discountRate: discountRate,
-          tagList: parseItemTags(itemIcons),
-        }}
+      <ItemTopInfo
+        name={itemInfo.name}
+        originalPrice={itemInfo.originalPrice}
+        salePrice={itemInfo.salePrice}
+        deliveryFree={itemInfo.deliveryFree}
+        imageList={data.itemImageList}
+        reviewInfo={data.reviewSummary}
+        deliveryInfo={data.freeDeliveryCondition}
+        discountRate={discountRate}
+        tagList={parseItemTags(itemIcons)}
       />
       <Divider thickness={8} color='gray100' />
       <ItemCategoryTab
-        data={{
-          itemId: data.itemDto.id,
-          contents: data.itemDto.contents,
-          description: data.itemDto.description,
-          reviewCount: data.reviewDto.count,
-        }}
+        itemId={itemInfo.id}
+        reviewCount={data.reviewSummary.count}
+        contents={itemInfo.contents}
+        description={itemInfo.description}
       />
       <ButtonDocked 
         type='full-button' 
@@ -66,13 +60,11 @@ export default function ItemDetail({
       />
       {isOpen && 
         <ItemPurchaseBottomSheet
-          data={{
-            id: data.itemDto.id,
-            name: data.itemDto.name,
-            salePrice: data.itemDto.salePrice,
-            originalPrice: data.itemDto.originalPrice,
-            itemOptionList: data.itemOptionDtoList,
-          }}
+          id={itemInfo.id}
+          name={itemInfo.name}
+          salePrice={itemInfo.salePrice}
+          originalPrice={itemInfo.originalPrice}
+          itemOptionList={data.itemOptionList}
           isOpen={isOpen}
           onClose={onClose}
         />

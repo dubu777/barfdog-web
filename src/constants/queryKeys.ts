@@ -92,8 +92,7 @@ const queryKeys = {
   },
   MAIN: {
     BASE: "main",
-    GET_MAIN_INFO: "getMainInfo",
-    GET_MAIN_DEADLINE_BANNER: "getMainDeadlineBanner",
+    GET_MAIN_BANNER_INFO: "getMainBannerInfo",
   },
   RECIPE: {
     BASE: "recipe",
@@ -120,12 +119,12 @@ const queryKeys = {
     GET_BEST_REVIEW_LIST: "getBestReviewList",
     GET_BEST_REVIEW_DETAIL: "getBestReviewDetail",
     GET_REVIEW_LIST: "getReviewList",
+    GET_REVIEW_IMAGE_LIST: "getReviewImageList",
   },
   STORE: {
     BASE: "store",
     GET_STORE_ITEM_LIST: "getStoreItemList",
     GET_STORE_ITEM_DETAIL: "getStoreItemDetail",
-    GET_STORE_ITEM_REVIEW_LIST: "getStoreItemReviewList",
   },
   DELIVERY: {
     BASE: "delivery",

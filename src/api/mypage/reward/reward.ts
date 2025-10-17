@@ -8,7 +8,7 @@ const getRewardList = async ({
 	size = 20,
 	instance = axiosInstance
 }: { pageParam: number; size?: number; instance?: AxiosInstance }) => {
-	const { data }: { data: ApiResponse<RewardList> } = await instance.get(`/api/v2/rewards/my-page`, {
+	const { data }: { data: ApiResponse<RewardList> } = await instance.get(`/api/v2/user/rewards`, {
 		params: { page: pageParam, size },
 	});
 

@@ -6,6 +6,9 @@ import Logo from '/public/images/logo/logo-white.png';
 import Text from "@/components/common/text/Text";
 import { usePathname } from "next/navigation";
 import { saveEntryPoint } from "@/utils/navigationEntry";
+import useModal from '@/hooks/useModal';
+import PrivacyPolicyModal from '@/components/layout/footer/termsModal/PrivacyPolicyModal';
+import ServicePolicyModal from '@/components/layout/footer/termsModal/ServicePolicyModal';
 
 const footerInfo = [
   'CEO: 임경호 | 사업제안 및 문의: info@freshour.co.kr',
@@ -37,11 +40,11 @@ const menuLink = [
 const policyMenuLink = [
   {
     label: 'Privacy policy',
-    value: '/policy/privacy',
+    value: 'privacy',
   },
   {
     label: 'Terms&Conditions',
-    value: '/policy/terms',
+    value: 'service',
   },
 ]
 
@@ -52,6 +55,9 @@ interface FooterProps {
 export default function Footer({ showMenu = true }: FooterProps) {
   const pathname = usePathname();
 
+  const { isOpen: isPrivacyModalOpen, onToggle: onPrivacyModalToggle, onClose: onPrivacyModalClose } = useModal();
+  const { isOpen: isServicePolicyModalOpen, onToggle: onServicePolicyModalToggle, onClose: onServicePolicyModalClose } = useModal();
+
   // 커뮤니티 링크 클릭 시 진입 경로 저장
   const handleLinkClick = (url: string) => {
     saveEntryPoint(
@@ -61,44 +67,67 @@ export default function Footer({ showMenu = true }: FooterProps) {
     );
   };
 
+  const handlePolicyModalToggle = (type: 'privacy' | 'service') => {
+
+    console.log(type);
+    if (type === 'privacy') {
+      onPrivacyModalToggle();
+    } else {
+      onServicePolicyModalToggle();
+    }
+  };
+
+  console.log('isPrivacyModalOpen', isPrivacyModalOpen);
+  console.log('isServicePolicyModalOpen', isServicePolicyModalOpen);
+  
+
   return (
-    <footer className={styles.footerContainer}>
-      <h1 className={styles.logo}>
-        <Image src={Logo} alt='logo' width={139} height={24} />
-      </h1>
-      {showMenu && 
-        <div className={styles.menuLinkBox}>
-          {menuLink.map(menu => (
-            <Link 
-              key={menu.value} 
-              href={menu.value} 
-              className={styles.menuLink}
-              onClick={() => handleLinkClick(menu.value)}
-            >
-              <Text type='label2' color='gray100'>
-                {menu.label}
-              </Text>
-            </Link>
+    <>
+      <footer className={styles.footerContainer}>
+        <h1 className={styles.logo}>
+          <Image src={Logo} alt='logo' width={139} height={24} />
+        </h1>
+        {showMenu && 
+          <div className={styles.menuLinkBox}>
+            {menuLink.map(menu => (
+              <Link 
+                key={menu.value} 
+                href={menu.value} 
+                className={styles.menuLink}
+                onClick={() => handleLinkClick(menu.value)}
+              >
+                <Text type='headline3' color='gray0'>
+                  {menu.label}
+                </Text>
+              </Link>
+            ))}
+          </div>
+        }
+        <div className={styles.footerInfo}>
+          {footerInfo.map(text => (
+            <Text key={text} type='caption2' color='gray50' block>{text}</Text>
           ))}
         </div>
-      }
-      <div className={styles.footerInfo}>
-        {footerInfo.map(text => (
-          <Text key={text} type='caption2' color='gray100' block>{text}</Text>
-        ))}
-      </div>
-      <div className={styles.policyMenuLinkBox}>
-        {policyMenuLink.map((policy) => (
-          <Link key={policy.value} href={policy.value} className={styles.policyMenuLink}>
-            <Text type='caption2' color='gray100'>
-              {policy.label}
-            </Text>
-          </Link>
-        ))}
-      </div>
-      <Text type='caption2' color='gray100' className={styles.footerInfo}>
-        Copyright © 바프독 All Right Reserved.
-      </Text>
-    </footer>
+        <div className={styles.policyMenuLinkBox}>
+          {policyMenuLink.map((policy) => (
+            <button 
+              key={policy.value} 
+              className={styles.policyMenuLink}
+              onClick={() => handlePolicyModalToggle(policy.value as 'privacy' | 'service')}
+            >
+              <Text type='caption2' color='gray0'>
+                {policy.label}
+              </Text>
+            </button>
+          ))}
+        </div>
+        <Text type='caption2' color='gray50' className={styles.footerInfo}>
+          Copyright © 바프독 All Right Reserved.
+        </Text>
+      </footer>
+      {isPrivacyModalOpen && <PrivacyPolicyModal isOpen={isPrivacyModalOpen} onClose={onPrivacyModalClose} />}
+      {isServicePolicyModalOpen && <ServicePolicyModal isOpen={isServicePolicyModalOpen} onClose={onServicePolicyModalClose} />}
+    </>
   )
 }
+

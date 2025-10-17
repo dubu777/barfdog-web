@@ -3,11 +3,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import StoreList from "@/components/pages/store/list/StoreList";
 import Spinner from "@/components/common/spinner/Spinner";
-import { prefetchGetInfiniteStoreItemList } from "@/api/store/queries/prefetchGetInfiniteBodyCheckList";
+import { prefetchGetInfiniteStoreItemList } from "@/api/store/queries/prefetchGetInfiniteStoreItemList";
 
 export default async function StorePage() {
   const queryClient = new QueryClient();
-  await prefetchGetInfiniteStoreItemList('recent', 'ALL', queryClient);
+  await prefetchGetInfiniteStoreItemList(queryClient);
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>

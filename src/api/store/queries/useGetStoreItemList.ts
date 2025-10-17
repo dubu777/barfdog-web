@@ -1,23 +1,11 @@
-import { UseSuspenseQueryCustomOptions } from "@/types";
-import { QueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { ItemType, SortByType, StoreItemList, UseQueryCustomOptions } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import { ItemType, SortByType, StoreItemList } from "@/types";
 import { getStoreItemList } from "@/api/store/store";
 
-export { useGetStoreItemList, prefetchGetStoreItemList };
-
-function useGetStoreItemList(page: number, sortBy: SortByType, itemType: ItemType, size: number = 6, queryOptions?: UseSuspenseQueryCustomOptions<StoreItemList>) {
-  return useSuspenseQuery<StoreItemList>({
-    queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST, page, sortBy, itemType],
-    queryFn: () => getStoreItemList(page, size, sortBy, itemType),
-    keepPreviousData: true,
-    ...queryOptions,
-  })
-}
-
-async function prefetchGetStoreItemList(queryClient: QueryClient, page: number, sortBy: SortByType, itemType: ItemType, size: number = 6) {
-  return queryClient.prefetchQuery<StoreItemList>({
-    queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST, page, sortBy, itemType],
-    queryFn: () => getStoreItemList(page, size, sortBy, itemType),
+export function useGetStoreItemList(sortBy: SortByType, itemType: ItemType) {
+  return useQuery({
+    queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST],
+    queryFn: () => getStoreItemList({ pageParam: 0, sortBy, itemType }),
   })
 }

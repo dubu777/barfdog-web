@@ -16,19 +16,19 @@ import RateStar from "@/components/common/rateStar/RateStar";
 import Marquee from "react-fast-marquee";
 import { motion } from 'framer-motion';
 import { MAIN_DATA } from "@/constants/main";
-import { MainBestReviewList } from "@/types";
+import { useGetBestReviewList } from "@/api/review/queries/useGetBestReviewList";
 
-interface ReviewSectionProps {
-	bestReviewList: MainBestReviewList[];
-}
-
-const ReviewSection = ({ bestReviewList }: ReviewSectionProps) => {
+export default function ReviewSection() {
 	const router = useRouter();
+
+	const { data: bestReviewList } = useGetBestReviewList();
+
 	const title = MAIN_DATA.REVIEW.title;
 	const subTitle = MAIN_DATA.REVIEW.subTitle;
 	const description = MAIN_DATA.REVIEW.description;
 	const action = MAIN_DATA.REVIEW.action;
 
+	if (!bestReviewList) return null;
 	return (
 		<MainContainer backgroundColor='pinkWhite'>
 			<MainTitle title={title} subTitle={subTitle} hasInteraction />
@@ -45,15 +45,15 @@ const ReviewSection = ({ bestReviewList }: ReviewSectionProps) => {
 			<Marquee speed={100}>
 				{[...bestReviewList, ...bestReviewList].map((review, index) => (
 					<Card
-						key={`${review.id}-${index}`}
-						shadow='none'
+						key={`${review.reviewId}-${index}`}
+						shadow='light'
 						align='start'
 						className={mainReviewCard}
 					>
-						<Image src={review.imageUrl} alt={review.username} width={120} height={120} className={mainReviewImage} />
+						<Image src={review.reviewImageList[0].displayImageUrl.url} alt={review.reviewer} width={120} height={120} className={mainReviewImage} />
 						<div className={mainReviewCardContent}>
 							<div>
-								<Text type='headline4' style={{ marginBottom: '2px' }}>{review.username.split('@')[0]}</Text>
+								<Text type='headline4' style={{ marginBottom: '2px' }}>{review.reviewer.split('@')[0]}</Text>
 								<Text type='caption' className={ellipsis({ lineSize: 'line2' })}>
 									{review.contents}
 								</Text>
@@ -71,5 +71,3 @@ const ReviewSection = ({ bestReviewList }: ReviewSectionProps) => {
 		</MainContainer>
 	);
 };
-
-export default ReviewSection;

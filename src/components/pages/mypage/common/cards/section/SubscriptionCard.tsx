@@ -74,7 +74,7 @@ export default function SubscriptionCard({
 	const { data: myPageInfoData } = useGetMyPageInfo();
 	const memberInfo = myPageInfoData?.memberInfo;
 
-	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tierKR === memberInfo?.grade);
+	const userMembershipTier = MEMBERSHIP_TIERS_LIST.find(tier => tier.tier === memberInfo?.grade);
 	const totalDiscount = (userMembershipTier?.subscriptionDiscount || 0) + 5;
 
 	const isMyPage = type === 'mypage';

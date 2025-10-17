@@ -7,7 +7,7 @@ import Spinner from "@/components/common/spinner/Spinner";
 
 export default async function ReviewPage() {
   const queryClient = new QueryClient();
-  await prefetchGetMypageReviewList('writeable', queryClient);
+  await prefetchGetMypageReviewList('writable', queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (

@@ -1,46 +1,50 @@
-import { Page } from "./common";
+import { Pagination } from "./common";
 
+// 공통
 interface BaseReviewItem {
-  id: number;
-  thumbnailUrl?: string;
-  star: number;
-  titleByAdmin?: null | string;
+  reviewId: number;
+  titleByAdmin: null | string;
   contents: string;
-  username?: string;
-}
-
-interface BestReviewItem extends BaseReviewItem {
-  imageUrl: string;
-  leakedOrder: number;
-  orderType: string;
-}
-
-interface ReviewListItem extends BaseReviewItem{
-  username: string;
+  reviewer: string;
   writtenDate: string;
-  orderType?: string;
-}
-
-interface BestReviewDetail {
-  reviewDto: ReviewListItem;
-  reviewImageDtoList: ReviewImage[];
 }
 
 interface ReviewImage {
-  url: string;
-  filename: string;
+  reviewId: number;
+  displayImageUrl: {
+    url: string;
+  };
+}
+
+interface ReviewImageList {
+  reviewImageList: ReviewImage[];
+}
+
+// 베스트 리뷰
+interface BestReviewItem extends BaseReviewItem, ReviewImageList {
+  leakedOrder: number;
+}
+
+interface BestReviewList {
+  bestReviewList: BestReviewItem[];
+}
+
+// 리뷰 목록
+interface ReviewListItem extends BaseReviewItem {
+  star: number;
+  hasReviewImages: boolean;
 }
 
 interface ReviewList {
-  reviewList: BestReviewDetail[];
-  page: Page;
+  pagination: Pagination;
+  itemReviewList: ReviewListItem[];
 }
 
 export type {
-  BaseReviewItem,
-  BestReviewItem,
-  ReviewListItem,
-  BestReviewDetail,
   ReviewImage,
+  ReviewImageList,
+  BestReviewItem,
+  BestReviewList,
+  ReviewListItem,
   ReviewList,
 };

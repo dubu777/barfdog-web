@@ -1,20 +1,14 @@
 import * as styles from './ItemReview.css';
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { commonWrapper } from '@/styles/common.css';
+import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import RateStar from "@/components/common/rateStar/RateStar";
 import Pagination from "@/components/common/pagination/Pagination";
 import Divider from '@/components/common/divider/Divider';
-import Text from "@/components/common/text/Text";
-import ImageCarousel from '@/components/common/imageCarousel/ImageCarousel';
-import ImagesModal from '@/components/common/modal/imagesModal/ImagesModal';
-import { maskString } from "@/utils/maskString";
+import EmptyList from '@/components/common/emptyList/EmptyList';
+import ReviewItem from '@/components/pages/review/common/reviewItem/ReviewItem';
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
-import { useImageModal } from '@/hooks/useImageModal';
-import { UploadedFile } from '@/types';
-import { prefetchGetStoreItemReviewList, useGetStoreItemReviewList } from "@/api/store/queries/useGetStoreItemReviewList";
-import EmptyList from '@/components/common/emptyList/EmptyList';
-import { commonWrapper } from '@/styles/common.css';
+import { prefetchGetReviewList, useGetReviewList } from "@/api/review/queries/useGetReviewList";
 
 interface ItemReviewProps {
   itemId: number;
@@ -25,8 +19,9 @@ export default function ItemReview({
 }: ItemReviewProps) {
   const queryClient = useQueryClient();
   const { pushWithQuery } = useDynamicQueryPush();
+
   const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
-    prefetchFn: (page: number) => prefetchGetStoreItemReviewList(queryClient, itemId, page),
+    prefetchFn: (page: number) => prefetchGetReviewList(queryClient, page,itemId),
     pushWithQuery,
     preserveScroll: true,
   });
@@ -35,83 +30,59 @@ export default function ItemReview({
     currentPage, totalPages, onPageChange
   }), [currentPage, totalPages, onPageChange]);
 
-  const { data } = useGetStoreItemReviewList(itemId, currentPage)
-  const reviewList = data?.reviewList || [];
+  const { data } = useGetReviewList(currentPage, itemId)
+  const reviewList = data?.itemReviewList || [];
 
-  const [selectedImageList, setSelectedImageList] = useState<UploadedFile[]>([]);
+  console.log(data);
 
-  const {
-    isOpen,
-    onClose,
-    handleThumbnailClick,
-    defaultImageIndex,
-  } = useImageModal();
-
+  // 리뷰 아코디언 토글 상태
+  const [openReviewIds, setOpenReviewIds] = useState<number[]>([]);
 
   useEffect(() => {
-    if (data?.page) {
-      setPaginationData({ totalPages: data.page.totalPages, page: data.page.number });
+    if (data?.pagination) {
+      setPaginationData({ totalPages: data.pagination.totalPages, page: data.pagination.page });
     }
-  }, [data?.page, setPaginationData]);
+  }, [data?.pagination, setPaginationData]);
+
+  const handleToggleReviewIds = (isOpen: boolean, reviewId: number) => {
+    if(isOpen) {
+      setOpenReviewIds(openReviewIds.filter(id => id !== reviewId))
+    } else {
+      setOpenReviewIds([...openReviewIds, reviewId])
+    }
+  }
 
   return (
     <div className={styles.reviewList}>
-      {reviewList.length > 0 ?
-        reviewList.map((review, index) => {
-          const imageList = review.reviewImageDtoList.map(review => ({
-            filename: review.filename, // 추후 삭제 필요
-            url: review.url, // 추후 삭제 필요
-            fileId: review.filename,
-            fileName: review.filename,
-            folder: 'review',
-            fileStatus: 'ADDED',
-            displayImageUrl: { url: review.url },
-          }));
-          return (
-          <Fragment key={review.reviewDto.id}>
-            <div className={styles.reviewItem}>
-              <div className={styles.reviewDefaultInfo}>
-                <div className={styles.reviewUserName}>
-                  <Text type='body3'>
-                    {maskString(review?.reviewDto?.username ?? '', 1)}
-                  </Text>
-                  <RateStar value={review?.reviewDto?.star} rateLength={5} />
-                </div>
-                <Text type='body3'>
-                  {review?.reviewDto?.createdDate}
-                </Text>
-              </div>
-              <Divider thickness={1} color='gray300' />
-              <div className={styles.reviewContentsInfo}>
-                <ImageCarousel
-                  imageList={imageList}
-                  handleThumbnailClick={(index) => {
-                    handleThumbnailClick(index);
-                    setSelectedImageList(imageList as unknown as UploadedFile[]);
-                  }}
+      {!reviewList.length && 
+        <div className={commonWrapper({ paddingBottom: 40 })}>
+          <EmptyList title={`등록된 리뷰가 없어요\n이 상품의 첫 번째 리뷰를 작성해 보세요`} />
+        </div>
+      }
+      {reviewList.length > 0 &&
+        <>
+          {reviewList?.map(review => {
+            const reviewId = review.reviewId;
+            const isOpen = openReviewIds.includes(reviewId);
+            return (
+              <div key={reviewId}>
+                <ReviewItem
+                  reviewId={reviewId}
+                  reviewer={review.reviewer}
+                  contents={review.contents}
+                  star={review.star}
+                  writtenDate={review.writtenDate}
+                  isExpanded={isOpen}
+                  hasReviewImages={review.hasReviewImages}
+                  backgroundColor={isOpen ? 'gray50' : 'white'}
+                  onToggle={() => handleToggleReviewIds(isOpen, reviewId)}
                 />
-                <Text type='body2'>{review.reviewDto.contents}</Text>
+                <Divider thickness={1} color='gray50' />
               </div>
-            </div>
-            {index !== reviewList.length && 
-              <Divider thickness={4} color='gray50' />
-            }
-            <Pagination {...paginationProps} />
-          </Fragment>
-        )
-        })
-        : (
-          <div className={commonWrapper({ paddingBottom: 40 })}>
-            <EmptyList title={`등록된 리뷰가 없어요\n이 상품의 첫 번째 리뷰를 작성해 보세요`} />
-          </div>
-        )}
-      {isOpen && selectedImageList &&
-        <ImagesModal
-          isOpen={isOpen}
-          onClose={onClose}
-          defaultImageIndex={defaultImageIndex}
-          imageList={selectedImageList}
-        />
+            )
+          })}
+          <Pagination {...paginationProps} />
+        </>
       }
     </div>
   );

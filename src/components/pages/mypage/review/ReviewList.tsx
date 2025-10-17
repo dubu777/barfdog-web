@@ -23,8 +23,8 @@ export default function Review () {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const type = searchParams.get('type') ?? 'writeable' as ReviewListType;
-  const isWriteableReview = type === 'writeable';
+  const type = searchParams.get('type') ?? 'writable' as ReviewListType;
+  const isWriteableReview = type === 'writable';
   const activeIndex = (!type || isWriteableReview) ? 0 : 1;
 
   const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetMypageReviewList(type as ReviewListType);
@@ -69,7 +69,7 @@ export default function Review () {
       >
         <TabBar
           tabs={[
-            { label: '작성 가능한 리뷰', onInit: () => handleTabClick('writeable') },
+            { label: '작성 가능한 리뷰', onInit: () => handleTabClick('writable') },
             { label: '내가 작성한 리뷰', onInit: () => handleTabClick('written') },
           ]}
           hasTabContent={false}

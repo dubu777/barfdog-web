@@ -10,25 +10,22 @@ interface MainContainerProps {
 	noPaddingBottom?: boolean;
 }
 
-const MainContainer = ({
+export default function MainContainer({
 	children,
 	className,
 	backgroundColor = 'gray50',
 	backgroundImage,
 	noPaddingBottom = false,
-}: MainContainerProps) => {
+}: MainContainerProps) {
 	const background = mainContainerBackgroundColor[backgroundColor];
 	return (
 		<article
-			className={`${mainContainer} ${background} ${className || ''}`}
+			className={`${mainContainer({ noPaddingBottom })} ${background} ${className || ''}`}
 			style={{
-				padding: `60px 0 ${noPaddingBottom ? '0': ''}`,
 				background: backgroundImage ? `url(${backgroundImage}) no-repeat bottom center / cover` : undefined,
 			}}
 		>
 			{children}
 		</article>
 	);
-};
-
-export default MainContainer;
+}

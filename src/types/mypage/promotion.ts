@@ -42,10 +42,7 @@ interface CreatePromotion {
 }
 
 interface RawPromotionList {
-	memberPromotionList: {
-		promotionDto: PromotionInfo;
-		promotionCouponDto: PromotionCouponInfo;
-	}[];
+	promotionCouponDetailList: PromotionItem[];
 	pagination: Pagination;
 }
 

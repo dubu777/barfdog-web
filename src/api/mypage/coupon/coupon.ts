@@ -19,8 +19,8 @@ const getCouponList = async ({
 	instance?: AxiosInstance;
 }) => {
 	const endpoint = couponCategory === "ALLIANCE" 
-		? `/api/v2/alliance-coupons/my-page`
-		: `/api/v2/coupons/my-page`;
+		? `/api/v2/user/coupons/alliance`
+		: `/api/v2/user/coupons/internal`;
 	
 	const errorMessage = couponCategory === "ALLIANCE" 
 		? "제휴사 쿠폰 목록 조회에 실패했습니다."
@@ -46,8 +46,11 @@ const getCouponList = async ({
 	}
 };
 
-const createCoupon = async (code: string) => {
-	const { data } = await axiosInstance.put('/api/v2/coupons/redeem', { code });
+const createCoupon = async (code: string, couponCategory: CouponCategory) => {
+	const endpoint = couponCategory === "ALLIANCE" 
+		? `/api/v2/user/coupons/alliance/redeem`
+		: `/api/v2/user/coupons/internal/redeem`;
+	const { data } = await axiosInstance.post(endpoint, { code });
 	return validateApiResponse(data, "쿠폰 코드 등록에 실패했습니다.");
 }
 

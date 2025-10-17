@@ -21,13 +21,13 @@ export default function CreateCoupon({ couponCategory, couponCode, setCouponCode
 
   const handleSubmit = () => {
     mutate(
-      { code: couponCode },
+      { code: couponCode, couponCategory },
       {
         onSuccess: async () => {
           setCouponCode('');
           handleSuccess('쿠폰이 등록됐습니다');
           await queryClient.invalidateQueries({
-            queryKey: [queryKeys.COUPON.BASE, queryKeys.COUPON.GET_COUPON_LIST, couponCategory],
+            queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COUPON.BASE, queryKeys.MYPAGE.COUPON.GET_COUPON_LIST, couponCategory],
           })
         },
         onError: (error) => {

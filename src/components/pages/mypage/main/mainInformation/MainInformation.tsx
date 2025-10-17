@@ -7,14 +7,16 @@ import Text from "@/components/common/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
-import { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR } from "@/constants/membership";
+import { MEMBERSHIP_TIERS } from "@/constants/membership";
 
 export default function MainInformation() {
   const { data } = useGetMyPageInfo();
   const memberInfo = data?.memberInfo;
 
-  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[memberInfo?.grade ?? "브론즈"]];
+  const userMembershipTier = MEMBERSHIP_TIERS[memberInfo?.grade ?? 'BRONZE'];
   const representativePetImage = data?.representativePetInfo?.displayThumbnailUrl;
+  
+  if (!memberInfo) return null;
 
   return (
     <article className={styles.userInfoContainer}>

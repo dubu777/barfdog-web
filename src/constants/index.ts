@@ -1,7 +1,6 @@
 export * from "./common";
 export * from "./survey";
 export * from "./decimalPrecision";
-export * from "./mainData";
 export * from "./message";
 export * from "./motion";
 export * from "./numbers";

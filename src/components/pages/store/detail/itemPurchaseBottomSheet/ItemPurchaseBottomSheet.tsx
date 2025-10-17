@@ -14,25 +14,25 @@ import { useStoreItemStore } from "@/store/useStoreItemStore";
 import { getCookie } from "@/utils/auth/cookie";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { AUTH_CONFIG } from "@/constants/auth";
-import { CartOption, DetailItemOption, UpdateCartInfo } from "@/types";
+import { CartOption, ItemOption, UpdateCartInfo } from "@/types";
 import { useUpdateCartInfo } from "@/api/cart/mutations/useUpdateCartInfo";
 
-interface ItemPurchase {
+interface ItemPurchaseBottomSheetProps {
   id: number;
   name: string;
   salePrice: number;
   originalPrice: number;
-  itemOptionList: DetailItemOption[];
-}
-
-interface ItemPurchaseBottomSheetProps {
-  data: ItemPurchase;
+  itemOptionList: ItemOption[];
   isOpen: boolean;
   onClose: () => void;
 }
 
 export default function ItemPurchaseBottomSheet({ 
-  data,
+  id,
+  name,
+  salePrice,
+  originalPrice,
+  itemOptionList,
   isOpen,
   onClose,
 }: ItemPurchaseBottomSheetProps) {
@@ -45,8 +45,8 @@ export default function ItemPurchaseBottomSheet({
   const bottomSheetRef = useRef<HTMLDivElement>(null);
 
   const { selectedOptions, addOption, totalPrice, itemAmount, updateItemAmount, resetStore } = useStoreItemStore();
-  const itemOptionList = useMemo(() => {
-    return data.itemOptionList.map(option => ({
+  const formattedOptions = useMemo(() => {
+    return itemOptionList.map(option => ({
       value: option.id,
       label: (
         <div className={commonWrapper({ justify: 'between' })}>
@@ -59,7 +59,7 @@ export default function ItemPurchaseBottomSheet({
       remaining: option.remaining,
       count: 0,
     }))
-  }, [data.itemOptionList]);
+  }, [itemOptionList]);
 
   // option 선택시 bottomSheet 높이값 제어
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function ItemPurchaseBottomSheet({
       const height = bottomSheetRef.current.clientHeight;
       setBottomSheetHeight(height);
     }
-  }, [isOpen, itemOptionList]);
+  }, [isOpen, formattedOptions]);
 
   const handleSelect = (option) => {
     addOption(option);
@@ -80,7 +80,7 @@ export default function ItemPurchaseBottomSheet({
 
     const optionDtoList: CartOption[] = selectedOptions.map(option => ({ optionId: option.value, optionAmount: option.count }));
     const cartItem: UpdateCartInfo = {
-      itemId: data.id,
+      itemId: id,
       itemAmount,
       optionDtoList
     };
@@ -123,12 +123,12 @@ export default function ItemPurchaseBottomSheet({
       <div className={styles.itemPurchaseContainer}>
         <div className={styles.itemPurchaseBox}>
           <div>
-            <Text type='label1'>{data.name}</Text>
+            <Text type='label1'>{name}</Text>
             <div className={styles.itemPurchaseTitle}>
               <div className={styles.itemPurchasePrice}>
-                <Text type='title2'>{data.salePrice.toLocaleString()}원</Text>
-                {data.salePrice !== data.originalPrice &&
-                <Text type='body3' color='gray600' lineThrough>{data.originalPrice.toLocaleString()}원</Text>
+                <Text type='title2'>{salePrice.toLocaleString()}원</Text>
+                {salePrice !== originalPrice &&
+                <Text type='body3' color='gray600' lineThrough>{originalPrice.toLocaleString()}원</Text>
                 }
               </div>
               <Counter
@@ -140,10 +140,10 @@ export default function ItemPurchaseBottomSheet({
               />
             </div>
           </div>
-          {itemOptionList.length > 0 &&
+          {formattedOptions.length > 0 &&
             <ProductOptionSelector
               id="additional-products"
-              options={itemOptionList}
+              options={formattedOptions}
               placeholder="추가상품(선택)"
               onSelect={handleSelect}
               selectedValues={selectedOptions.map(o => o.value)}

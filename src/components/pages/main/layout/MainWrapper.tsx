@@ -1,5 +1,4 @@
 'use client';
-import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { mainWrapper } from "@/components/pages/main/common/MainCommon.css";
 import BannerSection from "@/components/pages/main/section/BannerSection";
@@ -15,20 +14,9 @@ import BrandStorySection from "@/components/pages/main/section/BrandStorySection
 import Footer from "@/components/layout/footer/Footer";
 import useModal from "@/hooks/useModal";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { useGetMainInfo } from "@/api/main/queries/useGetMainInfo";
 
 export default function MainWrapper() {
-  const { pushWithQuery } = useDynamicQueryPush();
-  const { data: mainInfoData } = useGetMainInfo();
-
   const { isOpen, onClose, onToggle } = useModal();
-
-  useEffect(() => {
-    if (Cookies.get('alliance')) {
-      pushWithQuery('/', {}, ['alliance']);
-    }
-  }, [pushWithQuery]);
 
   useEffect(() => {
     // 탈퇴 직후 성공 모달
@@ -42,12 +30,8 @@ export default function MainWrapper() {
   return (
     <>
       <section className={mainWrapper}>
-        {mainInfoData &&
-          <>
-          <BannerSection mainBannerList={mainInfoData.mainBannerList} />
-          <ReviewSection bestReviewList={mainInfoData.bestReviewList}  />
-          </>
-        }
+        <BannerSection />
+        <ReviewSection />
         <StoreSection />
         <FAQSection />
         <RecipeSection />

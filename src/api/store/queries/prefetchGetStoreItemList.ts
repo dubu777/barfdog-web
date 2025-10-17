@@ -1,19 +1,12 @@
+import { queryKeys } from "@/constants/queryKeys";
 import { QueryClient } from "@tanstack/react-query";
 import { createSSRRequest } from "@/api/withAuthSSR";
-import { ItemType, SortByType, StoreItemList } from "@/types";
-import { queryKeys } from "@/constants";
-import { getStoreItemList } from "@/api/store/store";
+import { getStoreItemList } from "../store";
 
-export async function prefetchGetStoreItemList(
-	queryClient: QueryClient,
-	page: number,
-	sortBy: SortByType,
-	itemType: ItemType,
-	size: number = 6
-) {
-	const ssrAxios = createSSRRequest();
-	await queryClient.prefetchQuery<StoreItemList>({
-		queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST, page, sortBy, itemType],
-		queryFn: () => getStoreItemList(page, size, sortBy, itemType, ssrAxios),
-	});
+export async function prefetchGetStoreItemList(queryClient: QueryClient) {
+  const ssrAxios = createSSRRequest();
+  await queryClient.prefetchQuery({
+    queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_LIST],
+    queryFn: () => getStoreItemList({ pageParam: 0, sortBy: 'recent', itemType: 'RAW', instance: ssrAxios }),
+  });
 }

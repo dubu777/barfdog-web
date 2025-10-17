@@ -7,19 +7,13 @@ const getInfinitePromotionList = async ({
 	pageParam = 0,
 	instance = axiosInstance
 }: PromotionListSearchValues) => {
-	const { data }: { data: ApiResponse<RawPromotionList> } = await instance.get(`/api/v2/promotion-coupons/my-page`, {
+	const { data }: { data: ApiResponse<RawPromotionList> } = await instance.get(`/api/v2/user/coupons/promotion`, {
 		params: { page: pageParam, size: 20 },
 	});
 
 	const responseData = validateApiResponse(data, "프로모션 목록 조회에 실패했습니다.");
 
-	const promotionList = responseData.memberPromotionList
-		.map(
-			promotion => ({
-				promotionInfo: promotion.promotionDto,
-				promotionCouponInfo: promotion.promotionCouponDto,
-			})
-		)
+	const promotionList = responseData.promotionCouponDetailList
 		.sort((a, b) => {
 			// 1. ACTIVE
 			if (a.promotionInfo.status === "ACTIVE" && b.promotionInfo.status !== "ACTIVE") return -1;
@@ -41,7 +35,7 @@ const getInfinitePromotionList = async ({
 
 
 const createPromotion = async (body: CreatePromotion) => {
-	const { data } = await axiosInstance.post(`/api/v2/promotion-coupons/my-page/redeem`, body);
+	const { data } = await axiosInstance.post(`/api/v2/user/coupons/promotion/redeem`, body);
 	
 	return validateApiResponse(data, "프로모션 코드 등록에 실패했습니다.");
 }

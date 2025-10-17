@@ -58,15 +58,15 @@ export default function ImagesModal ({
 					onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
 					className={styles.imageSliderWrapper}
 				>
-					{imageList?.map(image => (
+					{imageList?.map((image, index) => (
 						<SwiperSlide
 							key={image.fileName}
 							className={styles.imageSlider}
 						>
 							<Image
 								src={image.displayImageUrl?.url ?? ''}
-								alt={image.fileName}
-								sizes="600px"
+								alt={image.fileName ?? `image-${index}`}
+								sizes="1200px"
 								fill
 								style={{ objectFit: 'contain' }}
 								className={styles.image}

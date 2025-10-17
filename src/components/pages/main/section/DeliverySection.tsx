@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
 import {
+	mainDeliveryImage,
 	mainDeliveryMarquee,
 	mainDeliveryMarqueeBox,
 	mainDeliveryMarqueeContainer
@@ -10,7 +11,7 @@ import MainTitle from "@/components/pages/main/common/MainTitle";
 import Text from "@/components/common/text/Text";
 import { MAIN_DATA } from "@/constants/main";
 
-const DeliverySection = () => {
+export default function DeliverySection() {
 	const title = MAIN_DATA.DELIVERY.title;
 	const subTitle = MAIN_DATA.DELIVERY.subTitle;
 	const imageUrl = MAIN_DATA.DELIVERY.imageUrl;
@@ -20,7 +21,13 @@ const DeliverySection = () => {
 		<>
 			<MainContainer>
 				<MainTitle title={title} subTitle={subTitle} />
-				<Image src={imageUrl} alt='delivery image' width={500} height={500} style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />
+				<Image
+					src={imageUrl} 
+					alt='delivery image' 
+					width={1200} 
+					height={1200} 
+					className={mainDeliveryImage}
+				/>
 				<Text type='body2' align='center' block preLine>{description}</Text>
 			</MainContainer>
 			<Marquee speed={50} className={mainDeliveryMarqueeContainer}>
@@ -36,5 +43,3 @@ const DeliverySection = () => {
 		</>
 	);
 };
-
-export default DeliverySection;

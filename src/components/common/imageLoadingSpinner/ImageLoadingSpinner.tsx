@@ -13,7 +13,7 @@ interface ImageLoadingSpinnerProps {
   className?: string;
 }
 
-const ImageLoadingSpinner = ({ src, alt, fill = false, width, height, objectFit = 'cover', className }: ImageLoadingSpinnerProps) => {
+export default function ImageLoadingSpinner({ src, alt, fill = false, width, height, objectFit = 'cover', className }: ImageLoadingSpinnerProps) {
   const [loading, setLoading] = useState(true);
   const handleLoadingComplete = () => {
     setLoading(false);
@@ -29,11 +29,9 @@ const ImageLoadingSpinner = ({ src, alt, fill = false, width, height, objectFit 
         width={!fill ? width : undefined}
         height={!fill ? height : undefined}
         objectFit={objectFit}
-        onLoadingComplete={() => handleLoadingComplete}
+        onLoadingComplete={handleLoadingComplete}
         className={className || ''}
       />
     </div>
   );
 };
-
-export default ImageLoadingSpinner;

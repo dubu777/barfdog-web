@@ -10,6 +10,7 @@ import {
   chipsTailColor,
   chipsTailSize,
   chipsTailFixedFont,
+  chipsTailVisible,
 } from "./Chips.css";
 import { CHIPS_COLORS } from "@/constants/style";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
@@ -60,6 +61,7 @@ export default function Chips({
       ${colorStyle}
       ${className || ""}
       ${tailVisible ? chipsTailFixedFont : ""}
+      ${chipsTailVisible({ tailVisible })}
     `}
       style={style}
       onClick={onClick}

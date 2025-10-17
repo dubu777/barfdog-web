@@ -31,3 +31,9 @@ export const reviewContentsInfo = style({
   flexDirection: 'column',
   gap: '20px',
 });
+
+export const reviewContents = style({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '4px',
+});
