@@ -4,9 +4,32 @@ import * as yup from "yup";
 export const step1 = yup.object({
   name: yup
     .string()
-    .trim()
-    .min(2, "이름은 최소 2자 이상이어야 합니다.")
-    .required("이름은 필수입니다."),
+    .required("이름은 필수입니다.")
+    .min(2, "이름은 2자 이상으로 입력해주세요")
+    .test("max-length", "이름은 12자 이하로 입력해주세요.", (value) => {
+      return !value || value.length <= 12;
+    })
+    .test("no-spaces", "공백을 사용할 수 없어요", (value) => {
+      return !value || !/\s/.test(value);
+    })
+    .test(
+      "no-incomplete-hangul",
+      "자음 또는 모음만 입력할 수 없어요",
+      (value) => {
+        return !value || !/[ㄱ-ㅎㅏ-ㅣ]/.test(value);
+      }
+    )
+    .test("no-emoji", "특수문자나 이모지는 사용할 수 없어요", (value) => {
+      if (!value) return true;
+      const emojiRegex =
+        /[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu;
+      return !emojiRegex.test(value);
+    })
+    .test("allowed-chars", "특수문자나 이모지는 사용할 수 없어요", (value) => {
+      if (!value) return true;
+      const allowedCharsRegex = /^[가-힣a-zA-Z0-9]+$/;
+      return allowedCharsRegex.test(value);
+    }),
   email: yup
     .string()
     .email("유효한 이메일 주소를 입력해주세요.")
