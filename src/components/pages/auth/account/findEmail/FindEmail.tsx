@@ -17,7 +17,7 @@ import FindEmailForm from "./form/FindEmailForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCompletedMode } from "@/hooks/useCompletedMode";
 import { useRouter } from "next/navigation";
-import { FindEmailStep } from "@/types";
+import { VerificationStep } from "@/types";
 import FindAccountResult from "../findAccount/result/FindAccountResult";
 
 export default function FindEmail() {
@@ -28,7 +28,7 @@ export default function FindEmail() {
 
   const { completedMode, toggleCompletedMode } = useCompletedMode();
 
-  const [step, setStep] = useState<FindEmailStep>("request");
+  const [step, setStep] = useState<VerificationStep>("request");
   const [authToken, setAuthToken] = useState("");
   const [authCode, setAuthCode] = useState("");
   const [expiryDate, setExpiryDate] = useState<string | null>(null);

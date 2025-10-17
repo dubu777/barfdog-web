@@ -10,3 +10,9 @@ export const signupContainer = style({
   backgroundColor: themeVars.colors.gray.gray50,
   overflowY: "auto",
 });
+
+export const signupTermsContent = style({
+  padding: "10px",
+  overflowY: "auto",
+  height: "300px",
+});

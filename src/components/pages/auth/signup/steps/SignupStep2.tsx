@@ -12,7 +12,11 @@ import {
 } from "@/utils/validation/auth/password";
 import { useEnterFocus } from "@/hooks/common/useEnterFocus";
 
-export default function SignupStep2() {
+interface SignupStepProps {
+  handleNextStep: () => void;
+}
+
+export default function SignupStep2({ handleNextStep }: SignupStepProps) {
   const { control, register, setFocus, getFieldState, trigger } =
     useFormContext<SignupStepValues>();
 
@@ -21,6 +25,7 @@ export default function SignupStep2() {
     setFocus,
     getFieldState,
     trigger,
+    submitCurrentForm: () => handleNextStep(),
   });
 
   const password = useWatch({ control, name: "step2.password" });
@@ -40,6 +45,7 @@ export default function SignupStep2() {
       <InputField
         {...register("step2.password")}
         masking
+        autoFocus
         maskingButton
         variants="line"
         placeholder="새 비밀번호"
@@ -79,6 +85,7 @@ export default function SignupStep2() {
         label="새 비밀번호 확인"
         isRequired
         labelColor="gray600"
+        onKeyUp={bind("step2.confirmPassword")}
       />
     </>
   );

@@ -21,7 +21,10 @@ const step1 = yup.object({
     .string()
     .email("유효한 이메일 주소를 입력해주세요.")
     .required("이메일 주소는 필수입니다."),
-  confirmEmail: yup.boolean().oneOf([true], "이메일 중복체크를 해주세요."),
+  confirmEmail: yup
+    .boolean()
+    .oneOf([true], "이메일 중복체크를 해주세요.")
+    .required(),
 });
 
 // --- STEP 2: 비밀번호 검증 ---------------------------------------------------
@@ -71,35 +74,20 @@ const step3 = yup.object({
 
 // --- STEP 4: 약관 동의 · 제휴 정보 ---------------------------------------------
 const step4 = yup.object({
-  agreement: yup
-    .object({
-      servicePolicy: yup.boolean().oneOf([true], "이용약관에 동의해주세요."),
-      privacyPolicy: yup
-        .boolean()
-        .oneOf([true], "개인정보 처리방침에 동의해주세요."),
-      over14YearsOld: yup
-        .boolean()
-        .oneOf([true], "만 14세 이상 동의는 필수입니다."),
-      receiveSms: yup.boolean(),
-      receiveEmail: yup.boolean(),
-    })
+  servicePolicy: yup
+    .boolean()
+    .oneOf([true], "이용약관에 동의해주세요.")
     .required(),
-  allianceInfo: yup
-    .object({
-      alliance: yup.string().nullable(),
-      alliancePolicy: yup
-        .boolean()
-        .when("alliance", (allianceValue, schema) =>
-          allianceValue != null
-            ? schema.oneOf(
-                [true],
-                "제휴 코드를 입력하셨으면 제휴 약관에 동의하셔야 합니다."
-              )
-            : schema
-        )
-        .required(),
-    })
+  privacyPolicy: yup
+    .boolean()
+    .oneOf([true], "개인정보 처리방침에 동의해주세요.")
     .required(),
+  over14YearsOld: yup
+    .boolean()
+    .oneOf([true], "만 14세 이상 동의는 필수입니다.")
+    .required(),
+  receiveSms: yup.boolean().required(),
+  receiveEmail: yup.boolean().required(),
 });
 
 // --- 전체 STEP 스키마 & 타입 & 기본값 -----------------------------------------
@@ -114,27 +102,21 @@ export type SignupStepValues = yup.InferType<typeof signupStepsSchema>;
 export type SignupStepKeys = keyof SignupStepValues;
 
 const defaultSignupStepValues: SignupStepValues = {
-  step1: { name: "", email: "", confirmEmail: true }, // 임시로 true
+  step1: { name: "", email: "", confirmEmail: false }, // 임시로 true
   step2: { password: "", confirmPassword: "" },
   step3: {
     phoneNumber: "",
     authNumber: "",
     birthday: "",
-    gender: "", // "" 또는 "NONE" 등 초기 옵션
+    gender: "",
     recommendCode: "",
   },
   step4: {
-    agreement: {
-      servicePolicy: false,
-      privacyPolicy: false,
-      over14YearsOld: false,
-      receiveSms: false,
-      receiveEmail: false,
-    },
-    allianceInfo: {
-      alliance: null,
-      alliancePolicy: false,
-    },
+    servicePolicy: false,
+    privacyPolicy: false,
+    over14YearsOld: false,
+    receiveSms: false,
+    receiveEmail: false,
   },
 };
 

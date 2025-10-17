@@ -5,4 +5,5 @@ export const termsBottomSheetContainer = style({
   flexDirection: "column",
   gap: "20px",
   padding: "20px 20px 105px 20px",
+  width: "100%",
 });

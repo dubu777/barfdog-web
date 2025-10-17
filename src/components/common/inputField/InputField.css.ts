@@ -46,6 +46,11 @@ export const inputVariants = {
     border: "none",
     padding: "12px 4px",
     borderBottom: `1px solid ${themeVars.colors.gray.gray500}`,
+    selectors: {
+      "&.disabled": {
+        borderBottomColor: themeVars.colors.gray.gray400,
+      },
+    },
   }),
 };
 

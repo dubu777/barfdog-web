@@ -6,11 +6,6 @@ const AUTH_CONFIG = {
   REFRESH_TOKEN_COOKIE: "refreshToken",
 };
 
-const PROVIDER_LABEL: Record<string, string> = {
-  kakao: "카카오",
-  naver: "네이버",
-};
-
 const SIGNUP_NO_AUTO_STEP = new Set<SignupStepKeys>([
   "step1",
   "step2",

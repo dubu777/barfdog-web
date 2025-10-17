@@ -4,14 +4,14 @@ import { Controller, UseFormReturn } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import { FindEmailValues } from "@/utils/validation/auth/findEmail";
 import { commonWrapper } from "@/styles/common.css";
-import { FindEmailStep } from "@/types";
+import { VerificationStep } from "@/types";
 
 interface FindEmailFormProps {
   form: UseFormReturn<FindEmailValues>;
   infoMessage: string;
   requestError: string;
   verifyError: string;
-  step: FindEmailStep;
+  step: VerificationStep;
   authCode: string;
   onRequestCode: (form: FindEmailValues) => void;
   onAuthCodeChange: (code: string) => void;
@@ -59,7 +59,6 @@ export default function FindEmailForm({
           confirmButtonText={isRequested ? "재전송" : "인증번호"}
           onSubmit={handleSubmit(onRequestCode)}
         />
-
         {isRequested && (
           <InputField
             placeholder="인증번호 입력"

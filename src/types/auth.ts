@@ -72,17 +72,14 @@ interface ConnectSnsResponse {
 // 회원가임
 type SignUpTermsModal = "servicePolicy" | "privacyPolicy" | "alliancePolicy";
 
-// 사용 안하는중 지울예정
-interface SignupStepValues {
+interface SignupRequest {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
   phoneNumber: string;
-  authNumber: string;
-  address: AddressDto;
-  birthday: string | Date | null;
-  gender: GenderType;
+  birthday: string;
+  gender: string;
   recommendCode?: string;
   agreement: {
     servicePolicy: boolean;
@@ -92,14 +89,6 @@ interface SignupStepValues {
     over14YearsOld: boolean;
     thirdPolicy?: boolean;
   };
-  allianceInfo?: {
-    alliance: "cb" | null;
-    alliancePolicy: boolean;
-  };
-  provider?: string;
-  providerId?: string;
-  defaultPhoneNumber?: string;
-  hasCheckedAuthNumber?: boolean;
 }
 
 interface ResetPasswordRequest {
@@ -147,7 +136,7 @@ type SnsLoginResultCode =
   | "PROFILE_PARSE_FAILED";
 
 type ResetPasswordStep = "request" | "verify" | "reset";
-type FindEmailStep = "request" | "verify" | "verified";
+type VerificationStep = "request" | "verify" | "verified";
 
 export type {
   LoginFormValues,
@@ -162,13 +151,13 @@ export type {
   SignUpTermsModal,
   ConnectSnsResponse,
   GenderType,
-  SignupStepValues,
+  SignupRequest,
   RequestFindAccountCodeResponse,
   ResetPasswordRequest,
   VerifyFindAccountCodeRequest,
   ResetPasswordStep,
   VerifyFindAccountCodeResponse,
-  FindEmailStep,
+  VerificationStep,
   OAuthLoginResponse,
   LoginWithOAuthTokenData,
   UpperSnsProvider,
