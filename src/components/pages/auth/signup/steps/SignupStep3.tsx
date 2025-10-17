@@ -22,9 +22,7 @@ import { useCallback, useState } from "react";
 import { VerificationStep } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 
-interface SignupStep3Props {}
-
-export default function SignupStep3({}: SignupStep3Props) {
+export default function SignupStep3() {
   const { addToast } = useToastStore();
   const {
     control,
