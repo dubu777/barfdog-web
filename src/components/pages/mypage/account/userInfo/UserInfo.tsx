@@ -23,7 +23,7 @@ import { useUpdateUserInfo } from "@/api/mypage/account/mutations/useUpdateUserI
 
 export default function UserInfo() {
   const { data: userInfo } = useGetUserInfo();
-
+  
   const {
     handleSubmit,
     control,
@@ -76,7 +76,7 @@ export default function UserInfo() {
       phoneNumber: data.phoneNumber,
       receiveEmail: data?.receiveEmail ?? false,
       receiveSms: data?.receiveSms ?? false,
-      birthday: format(new Date(data.birthday), "yyyyMMdd"),
+      birthday: format(new Date(data.birthday), "yyyy-MM-dd"),
     };
 
     mutate(body, {

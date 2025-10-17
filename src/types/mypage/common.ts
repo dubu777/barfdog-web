@@ -2,7 +2,7 @@ import { DogData } from "../dogs";
 import { SUBSCRIPTION_ORDER_STATUSES } from "@/constants/mypage/common";
 import { PlanInfo } from "@/types/subscription";
 import { OrderType } from "@/types/checkout";
-import { PAYMENT_METHOD } from "@/constants";
+import { MEMBERSHIP_TIERS, PAYMENT_METHOD } from "@/constants";
 
 interface MyPageMemberDto {
   id: number;
@@ -181,7 +181,7 @@ interface PaymentItem {
 }
 
 // v2
-type MemberGradeType = '브론즈' | '실버' | '골드' | '플래티넘' | '다이아몬드' | '더바프';
+type MemberGradeType = keyof typeof MEMBERSHIP_TIERS;
 
 interface MemberInfo {
   id: number;
