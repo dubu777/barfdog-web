@@ -1,20 +1,22 @@
 import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
-import CardWrapper from "../../card/common/CardWrapper";
-import InfoItem from "../../card/common/InfoItem";
+import CardWrapper from "../../../common/card/CardWrapper";
+import InfoItem from "../../../common/card/InfoItem";
 import { DeliveryCompanyCode } from "@/types/mypage/orders";
 import { DELIVERY_COMPANY_CODE } from "@/constants/mypage/orders";
 
 interface DeliveryInfoProps {
   deliveryNumber: string;
   deliveryCode: DeliveryCompanyCode;
+  onDeliveryTracking: () => void;
 }
 
 export default function DeliveryInfo({
   deliveryNumber,
   deliveryCode,
+  onDeliveryTracking,
 }: DeliveryInfoProps) {
-  // TODO: 배송조회 기능 추가
+  
   return (
     <CardWrapper>
       <div className={commonWrapper({ direction: 'col', gap: 2, justify: 'start' })}>
@@ -40,6 +42,7 @@ export default function DeliveryInfo({
         size="sm" 
         fullWidth 
         intent='assistive'
+        onClick={onDeliveryTracking}
       >
         배송조회
       </Button>

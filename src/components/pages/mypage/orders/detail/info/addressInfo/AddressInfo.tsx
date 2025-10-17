@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/common/chips/Chips";
 import Text from "@/components/common/text/Text";
-import CardWrapper from "../../card/common/CardWrapper";
+import CardWrapper from "../../../common/card/CardWrapper";
 import { formatPhoneNumber } from "@/utils";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 
@@ -21,6 +21,7 @@ export default function AddressInfo({
   const { data: addressList } = useGetAddressList();
   const address = addressList?.find((address) => address.street === street && address.detailAddress === detailAddress);
   
+  if (!addressList) return null;
   return (
     <CardWrapper>
       <div className={commonWrapper({ gap: 8, justify: 'start', align: 'start' })}>

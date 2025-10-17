@@ -30,7 +30,7 @@ export default async function OrderDetailPage({
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>주문 데이터가 없습니다.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <OrderDetail orderId={orderId} orderType={orderType.toUpperCase() as OrderType} />
+          <OrderDetail orderId={Number(orderId)} orderType={orderType.toUpperCase() as OrderType} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

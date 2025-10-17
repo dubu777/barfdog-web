@@ -33,7 +33,8 @@ export const isOrderStatusStepBelow = (
   currentStatus: VisibleOrderStatus, 
   targetStatus: VisibleOrderStatus
 ): boolean => {
-  return getOrderStatusStep(currentStatus) <= getOrderStatusStep(targetStatus);
+  return getOrderStatusStep(currentStatus) > 0 && 
+    getOrderStatusStep(currentStatus) <= getOrderStatusStep(targetStatus);
 };
 
 /**

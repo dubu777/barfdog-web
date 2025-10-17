@@ -4,8 +4,8 @@ import { format } from "date-fns";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
-import InfoItem from "../../card/common/InfoItem";
-import CardWrapper from "../../card/common/CardWrapper";
+import InfoItem from "../../../common/card/InfoItem";
+import CardWrapper from "../../../common/card/CardWrapper";
 import { PaymentMethod } from "@/types";
 import { PAYMENT_LABEL } from "@/constants";
 

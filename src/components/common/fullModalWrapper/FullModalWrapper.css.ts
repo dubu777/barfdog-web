@@ -9,7 +9,6 @@ export const modalContainer = style({
 	maxWidth: "600px",
 	width: '100%',
 	height: "100vh",
-	backgroundColor: themeVars.colors.gray.gray0,
 	overflowY: 'auto'
 })
 

@@ -7,7 +7,7 @@ import { OrderDetail } from "@/types/mypage/orders";
 
 export function useGetOrderDetail(orderId: number, type: OrderType, queryOptions?: UseSuspenseQueryCustomOptions<OrderDetail>) {
   return useSuspenseQuery<OrderDetail>({
-    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.ORDERS.BASE, queryKeys.MYPAGE.ORDERS.GET_ORDER_DETAIL, orderId],
+    queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.ORDERS.BASE, queryKeys.MYPAGE.ORDERS.GET_ORDER_DETAIL, orderId, type],
     queryFn: () => getOrderDetail(orderId, type),
     ...queryOptions,
   })

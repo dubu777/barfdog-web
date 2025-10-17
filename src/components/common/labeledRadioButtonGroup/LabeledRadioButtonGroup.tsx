@@ -9,6 +9,7 @@ interface LabeledRadioButtonGroupProps<T extends string | number | boolean> {
   optionType?: "radio" | "selection";
   iconSize?: number;
   className?: string;
+  direction?: "row" | "col";
 }
 
 export default function LabeledRadioButtonGroup<
@@ -20,12 +21,13 @@ export default function LabeledRadioButtonGroup<
   optionType = "radio",
   iconSize = 24,
   className = "",
+  direction = "row",
 }: LabeledRadioButtonGroupProps<T>) {
   return (
     <div
       className={`${className} ${commonWrapper({
-        direction: "row",
-        align: "center",
+        direction: direction,
+        align: direction === "row" ? "center" : "start",
         justify: "start",
         gap: 20,
         wrap: "wrap",

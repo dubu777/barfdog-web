@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import Divider from "@/components/common/divider/Divider";
-import CardWrapper from "../../card/common/CardWrapper";
-import InfoItem from "../../card/common/InfoItem";
+import CardWrapper from "../../../common/card/CardWrapper";
+import InfoItem from "../../../common/card/InfoItem";
 import { PaymentMethod } from "@/types";
 import { PAYMENT_LABEL } from "@/constants";
 
