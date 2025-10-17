@@ -1,15 +1,16 @@
 import { commonWrapper } from '@/styles/common.css';
+import { termsCard } from './termsModal.css';
 import FullModalWrapper from '@/components/common/fullModalWrapper/FullModalWrapper';
 import Text from '@/components/common/text/Text';
 import ButtonDocked from '@/components/common/buttonDocked/ButtonDocked';
-import ServicePolicyCard from '@/components/common/terms/ServicePolicyCard';
+import ServicePolicy from '@/components/common/terms/ServicePolicy';
 
-interface ServicePolicyProps {
+interface ServicePolicyModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export default function ServicePolicy({ isOpen, onClose }: ServicePolicyProps) {
+export default function ServicePolicyModal({ isOpen, onClose }: ServicePolicyModalProps) {
 	return (
 		<FullModalWrapper 
 			isVisible={isOpen}
@@ -28,7 +29,10 @@ export default function ServicePolicy({ isOpen, onClose }: ServicePolicyProps) {
 				})}
 			>
 				<Text type='label2'>개인정보 수집 및 이용약관</Text>
-				<ServicePolicyCard />
+				<ServicePolicy 
+					backgroundColor='gray50'
+					className={termsCard}
+				/>
 			</div>
 			<ButtonDocked
 				type='full-button'

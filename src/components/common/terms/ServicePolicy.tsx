@@ -1,10 +1,17 @@
 import { commonWrapper } from "@/styles/common.css";
-import { termsCard } from "./Terms.css";
 import Card from "../card/Card";
 import Text from "../text/Text";
 import { SERVICE_POLICY_INFO } from "@/constants/terms";
 
-export default function ServicePolicyCard() {
+interface ServicePolicyProps {
+  className?: string;
+  backgroundColor?: "gray0" | "gray50";
+}
+
+export default function ServicePolicy({ 
+  className,
+  backgroundColor = 'gray0',
+}: ServicePolicyProps) {
   return (
     <Card
       shadow='none'
@@ -13,9 +20,9 @@ export default function ServicePolicyCard() {
       justify='start'
       padding={20}
       gap={26}
-      backgroundColor='gray50'
+      backgroundColor={backgroundColor}
       borderRadius={8}
-      className={termsCard}
+      className={className}
     >
       {SERVICE_POLICY_INFO.map((info, index) => (
         <div 

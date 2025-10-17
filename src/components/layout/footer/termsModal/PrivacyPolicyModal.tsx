@@ -1,15 +1,16 @@
 import { commonWrapper } from '@/styles/common.css';
+import { termsCard } from './termsModal.css';
 import Text from '@/components/common/text/Text';
 import ButtonDocked from '@/components/common/buttonDocked/ButtonDocked';
 import FullModalWrapper from '@/components/common/fullModalWrapper/FullModalWrapper';
-import PrivacyPolicyCard from '@/components/common/terms/PrivacyPolicyCard';
+import PrivacyPolicy from '@/components/common/terms/PrivacyPolicy';
 
-interface PrivacyPolicyProps {
+interface PrivacyPolicyModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-export default function PrivacyPolicy({ isOpen, onClose }: PrivacyPolicyProps) {
+export default function PrivacyPolicyModal({ isOpen, onClose }: PrivacyPolicyModalProps) {
 	return (
 		<FullModalWrapper 
 			isVisible={isOpen}
@@ -28,7 +29,10 @@ export default function PrivacyPolicy({ isOpen, onClose }: PrivacyPolicyProps) {
 				})}
 			>
 				<Text type='label2'>바프독 개인정보 처리방침 안내</Text>
-				<PrivacyPolicyCard />
+				<PrivacyPolicy 
+					backgroundColor='gray50' 
+					className={termsCard}
+				/>
 			</div>
 			<ButtonDocked
 				type='full-button'

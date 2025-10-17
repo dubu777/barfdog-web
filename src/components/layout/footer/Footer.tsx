@@ -7,8 +7,8 @@ import Text from "@/components/common/text/Text";
 import { usePathname } from "next/navigation";
 import { saveEntryPoint } from "@/utils/navigationEntry";
 import useModal from '@/hooks/useModal';
-import PrivacyPolicy from '@/components/layout/footer/termsModal/PrivacyPolicy';
-import ServicePolicy from '@/components/layout/footer/termsModal/ServicePolicy';
+import PrivacyPolicyModal from '@/components/layout/footer/termsModal/PrivacyPolicyModal';
+import ServicePolicyModal from '@/components/layout/footer/termsModal/ServicePolicyModal';
 
 const footerInfo = [
   'CEO: 임경호 | 사업제안 및 문의: info@freshour.co.kr',
@@ -125,8 +125,8 @@ export default function Footer({ showMenu = true }: FooterProps) {
           Copyright © 바프독 All Right Reserved.
         </Text>
       </footer>
-      {isPrivacyModalOpen && <PrivacyPolicy isOpen={isPrivacyModalOpen} onClose={onPrivacyModalClose} />}
-      {isServicePolicyModalOpen && <ServicePolicy isOpen={isServicePolicyModalOpen} onClose={onServicePolicyModalClose} />}
+      {isPrivacyModalOpen && <PrivacyPolicyModal isOpen={isPrivacyModalOpen} onClose={onPrivacyModalClose} />}
+      {isServicePolicyModalOpen && <ServicePolicyModal isOpen={isServicePolicyModalOpen} onClose={onServicePolicyModalClose} />}
     </>
   )
 }
