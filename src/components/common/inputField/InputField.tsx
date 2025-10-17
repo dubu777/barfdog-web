@@ -53,7 +53,6 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
   /** 기타 */
   className?: string;
-  icon?: ReactNode; // 여유 슬롯(필요 시)
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
