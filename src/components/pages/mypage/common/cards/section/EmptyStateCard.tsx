@@ -12,7 +12,7 @@ const EmptyStateCard = ({ type = 'default' }: EmptyStateCardProps) => {
 	const router = useRouter();
 	const handleClick = () => {
 		if (type === 'review') {
-			router.push('/mypage/order-delivery-inquiry');
+			router.push('/mypage/orders');
 		} else {
 			router.push('/survey');
 		}

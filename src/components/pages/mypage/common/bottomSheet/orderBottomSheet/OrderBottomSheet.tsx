@@ -93,7 +93,7 @@ const OrderBottomSheet = ({
 				<div className={styles.bottomSheetItemTitle}>
 					<Text type="title4">주문상품</Text>
 					{!isOrderDetail &&
-						<button onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${orderId}`, { orderType })}>
+						<button onClick={() => pushWithQuery(`/mypage/orders/${orderId}`, { orderType })}>
 							<Text type="headline4" color="gray400">주문상세</Text>
 						</button>
 					}

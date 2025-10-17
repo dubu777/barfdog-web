@@ -73,8 +73,6 @@ const getOrderListByOrderType = async ({
     }
   );
   
-  // const responseData = validateApiResponse(data, errorMessage);
-  
   const rawOrders = data._embedded?.[key] || [];
 
   // 주문 타입에 따라 적절한 변환 함수를 사용하여 통합된 타입으로 변환

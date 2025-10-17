@@ -169,6 +169,9 @@ export const commonWrapper = recipe({
       },
     },
     padding: {
+      8: {
+        padding: "8px",
+      },
       12: {
         padding: "12px",
       },
@@ -184,6 +187,9 @@ export const commonWrapper = recipe({
       "12/20": {
         padding: "12px 20px",
       },
+      "16/12": {
+        padding: "16px 12px",
+      },
       "16/20": {
         padding: "16px 20px",
       },
@@ -195,6 +201,9 @@ export const commonWrapper = recipe({
       },
       "32/20": {
         padding: "32px 20px",
+      },
+      "0/12": {
+        padding: "0 12px",
       },
       "0/20": {
         padding: "0 20px",

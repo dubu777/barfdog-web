@@ -1,9 +1,20 @@
 export function decodeImageFilenameFromUrl(imageUrl: string) {
 	try {
-		const url = new URL(imageUrl);
+		// URL에 공백이 포함된 경우 먼저 정리
+		// "filename = value" 형태를 "filename=value"로 변환
+		const cleanedUrl = imageUrl
+			.replace(/\s*=\s*/g, '=')  // "= " 또는 " =" 를 "="로 변환
+			.replace(/\s+/g, ' ')      // 연속된 공백을 하나로 변환
+			.trim();                   // 앞뒤 공백 제거
+		
+		
+		const url = new URL(cleanedUrl);
 		const filename = url.searchParams.get('filename');
 
-		if (!filename) return imageUrl;
+		if (!filename) {
+			console.warn('No filename parameter found in URL:', imageUrl);
+			return imageUrl;
+		}
 
 		// 한 번 디코딩 (일반적인 인코딩 대응)
 		const onceDecoded = decodeURIComponent(filename);
@@ -15,7 +26,9 @@ export function decodeImageFilenameFromUrl(imageUrl: string) {
 
 		// 디코딩된 파일명을 다시 URL 파라미터로 설정
 		url.searchParams.set('filename', finalFilename);
-		return url.toString();
+		const result = url.toString();
+		
+		return result;
 	} catch (e) {
 		console.warn('Invalid image URL:', imageUrl, e);
 		return imageUrl;

@@ -20,6 +20,7 @@ const InfiniteScrollTrigger = forwardRef<HTMLDivElement, InfiniteScrollTriggerPr
       setShowSpinner(true);
 
       // 최소 표시 시간 후에만 hide
+    } else if (!isFetchingNextPage && showSpinner) {
       timer = setTimeout(() => {
         setShowSpinner(false);
       }, minDisplayTime);

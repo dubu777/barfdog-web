@@ -80,7 +80,7 @@ const OrderCard = ({ data, type, hasBottomSheet = false }: OrderCardProps) => {
 				break;
 			}
 			case 'orderDetail': {
-				pushWithQuery(`/mypage/order-delivery-inquiry/${normalizedData.id}`, { orderType: orderType });
+				pushWithQuery(`/mypage/ordersy/${normalizedData.id}`, { orderType: orderType });
 				break;
 			}
 			case 'deliveryTracking': {
@@ -114,7 +114,7 @@ const OrderCard = ({ data, type, hasBottomSheet = false }: OrderCardProps) => {
 					{type === 'orderDeliveryInquiry' && !hasBottomSheet &&
 					<button
 						className={styles.orderCardDetailButton}
-						onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${normalizedData.id}`, { orderType: orderType })}
+						onClick={() => pushWithQuery(`/mypage/orders/${normalizedData.id}`, { orderType: orderType })}
 					>
 						<Text type='headline4' color='red'>주문 상세</Text>
 						<SvgIcon src={ArrowIcon} size={20} style={{ transform: 'rotate(90deg)', color: themeVars.colors.red.red }} />

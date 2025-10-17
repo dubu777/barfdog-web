@@ -5,38 +5,32 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { prefetchGetOrderDetail } from "@/api/order/queries/usePrefetchGetOrderDetail";
-import { prefetchGetAddressList } from "@/api/address/queries/usePrefetchGetAddressList";
-import { OrderType } from "@/types";
-import OrderDetail from "@/components/pages/mypage/orderDeliveryInquiry/orderDetail/OrderDetail";
+import OrderDetail from "@/components/pages/mypage/orders/detail/OrderDetail";
 import Spinner from "@/components/common/spinner/Spinner";
+import { OrderType } from "@/types/mypage/orders";
+import { prefetchGetOrderDetail } from "@/api/mypage/orders/queries/prefetchGetOrderDetail";
 
 interface OrderDetailPageProps {
-  params: {
+  params: Promise<{
     orderId: number;
-  };
-  searchParams: {
-    orderType: OrderType;
-  };
+    orderType: string;
+  }>;
 }
 
 export default async function OrderDetailPage({
   params,
-  searchParams,
 }: OrderDetailPageProps) {
-  const orderId = Number(params.orderId);
-  const { orderType } = searchParams;
+  const { orderId, orderType } = await params;
 
   const queryClient = new QueryClient();
-  await prefetchGetOrderDetail(queryClient, orderId, orderType);
-  await prefetchGetAddressList(queryClient);
+  await prefetchGetOrderDetail(queryClient, Number(orderId), orderType.toUpperCase() as OrderType);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>주문 데이터가 없습니다.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <OrderDetail orderId={orderId} orderType={orderType} />
+          <OrderDetail orderId={orderId} orderType={orderType.toUpperCase() as OrderType} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
