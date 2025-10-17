@@ -26,6 +26,13 @@ const queryKeys = {
   },
   MYPAGE: {
     BASE: "mypage",
+    ORDERS: {
+      BASE: "orders",
+      GET_ORDER_LIST: "getOrderList",
+      GET_SUBSCRIPTION_ORDER_LIST: "getSubscriptionOrderList",
+      GET_GENERAL_ORDER_LIST: "getGeneralOrderList",
+      GET_ORDER_DETAIL: "getOrderDetail",
+    },
     COMMON: {
       BASE: "common",
       GET_MYPAGE_INFO: "getMyPageInfo",

@@ -5,7 +5,7 @@ import KakaoImage from "public/images/mypage/kakao.svg";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
@@ -41,7 +41,7 @@ export default function ConnectedSns() {
     <section>
       <Divider thickness={2} color="gray50" />
       {!snsProvider ? (
-        <DefaultEmptyState title="현재 연동된 SNS가 없습니다." />
+        <EmptyState title="현재 연동된 SNS가 없습니다." />
       ) : (
         <div
           className={commonWrapper({

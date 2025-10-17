@@ -3,7 +3,6 @@ import { pointColor } from "@/styles/common.css";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { CardActionsId, NormalizedCardData, OrderType, ReviewItemType } from '@/types';
 import { ORDER_TYPE } from "@/constants";
@@ -93,12 +92,12 @@ const OrderBottomSheet = ({
 				<div className={styles.bottomSheetItemTitle}>
 					<Text type="title4">주문상품</Text>
 					{!isOrderDetail &&
-						<button onClick={() => pushWithQuery(`/mypage/order-delivery-inquiry/${orderId}`, { orderType })}>
+						<button onClick={() => pushWithQuery(`/mypage/orders/${orderId}`, { orderType })}>
 							<Text type="headline4" color="gray400">주문상세</Text>
 						</button>
 					}
 				</div>
-				<OrderCard data={data} type="orderDetail" hasBottomSheet />
+				{/* <OrderCard data={data} type="orderDetail" hasBottomSheet /> */}
 			</div>
 			<ButtonDocked
 				type="dual-button"

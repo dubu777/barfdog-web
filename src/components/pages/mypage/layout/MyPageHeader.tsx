@@ -60,7 +60,7 @@ const MyPageHeader = () => {
     '/mypage/subscription': { centerTitle: '구독상품관리', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/review': { centerTitle: '나의 리뷰',showBackButton: true, onBack: goBackToMypageMain },
     '/mypage/review/create': { centerTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
-    '/mypage/order-delivery-inquiry': { centerTitle: '주문 및 배송조회', showCartButton: true, showBackButton: true, onBack: goBack },
+    '/mypage/orders': { centerTitle: '주문 및 배송조회', showBackButton: true, onBack: goBack },
     '/mypage/order-issue-inquiry': { centerTitle: '취소/교환/반품 내역', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/billing-preferences': { centerTitle: '결제 수단/자동 적립금', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/auto-reward': { centerTitle: '자동 적립금 사용 관리', showCartButton: true, showBackButton: true, onBack: goBack },
@@ -89,14 +89,11 @@ const MyPageHeader = () => {
         ,
       })
     },
-    '/mypage/order-delivery-inquiry/': (_, searchParams) => {
-      const showReceipt = searchParams.get('showReceipt');
+    '/mypage/orders/': () => {
       return {
-        centerTitle: !showReceipt ? '주문 상세' : '카드영수증',
-        showBackButton: !showReceipt,
+        centerTitle: '주문 상세',
+        showBackButton: true,
         onBack: goBackToPreviousPage,
-        showCloseButton: !!showReceipt,
-        onClose: () => pushWithQuery(pathname, {}, ['showReceipt']),
       }
     },
     '/mypage/order-issue-inquiry/': (_, searchParams) => {

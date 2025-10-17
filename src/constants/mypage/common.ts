@@ -13,7 +13,7 @@ const MENU_LIST: MenuList[] = [
     category: "나의 쇼핑정보",
     menus: [
       { label: "구독 상품 관리", url: "/mypage/subscription" },
-      { label: "주문 및 배송조회", url: "/mypage/order-delivery-inquiry" },
+      { label: "주문 및 배송조회", url: "/mypage/orders" },
       { label: "자동 적립금 관리", url: "/mypage/auto-reward" },
       { label: "나의 리뷰", url: "/mypage/review" },
       { label: "프로모션", url: "/mypage/promotion" },
@@ -205,7 +205,7 @@ const COMMON_ACTIONS: Record<string, Omit<OrderAction, "label">> = {
   orderCancel: { id: "orderCancel", variants: "outline" },
   orderDetail: {
     id: "orderDetail",
-    url: "/order-delivery-inquiry",
+    url: "/orders",
     variants: "outline",
   },
   itemDetail: { id: "itemDetail", variants: "outline" },

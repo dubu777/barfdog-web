@@ -10,7 +10,7 @@ import Text from "@/components/common/text/Text";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Divider from "@/components/common/divider/Divider";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
-import DefaultEmptyState from "../../common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "../../common/emptyState/EmptyState";
 import SendMessageModal from "../sendMessageModal/SendMessageModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
@@ -155,7 +155,7 @@ export default function InviteRewardList({
               isFetchingNextPage={isFetchingNextPage}
             />
           </>
-        ) : <DefaultEmptyState title='친구 초대 적립 내역이 없습니다.' subTitle='친구 코드를 등록해주세요' />
+        ) : <EmptyState title='친구 초대 적립 내역이 없습니다.' subTitle='친구 코드를 등록해주세요' />
         }
       </article>
       {isOpenSendMessageModal &&

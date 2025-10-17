@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import PromotionItem from "@/components/pages/mypage/promotion/list/promotionItem/PromotionItem";
 import InputField from "@/components/common/inputField/InputField";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
@@ -102,7 +102,7 @@ export default function PromotionList() {
 						</div>
 					)
 					: (
-						<DefaultEmptyState
+						<EmptyState
 							title='참여한 프로모션 내역이 없어요'
 							subTitle='진행 중이거나 종료된 프로모션이 있으면 이곳에 표시돼요'
 						/>

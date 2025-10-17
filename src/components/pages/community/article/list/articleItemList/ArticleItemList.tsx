@@ -11,7 +11,7 @@ import Pagination from "@/components/common/pagination/Pagination";
 import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import useFilterTabs from '@/hooks/useFilterTabs';
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
@@ -86,7 +86,7 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
       </article>
       <div className={styles.articleList({ isEmpty: articleList.length === 0 })}>
         {articleList.length === 0 ?
-          <DefaultEmptyState title='등록된 블로그가 없습니다.' />
+          <EmptyState title='등록된 블로그가 없습니다.' />
           : <>
             <div className={isGallery? styles.articleGallery : ''}>
               {articleList.map((article, index) => {
