@@ -18,6 +18,14 @@ import StrawberryIcon from "public/images/recipes/icon/icon-Strawberry.svg";
 import CarrotIcon from "public/images/recipes/icon/icon-Carrot.svg";
 import EggHalfIcon from "public/images/recipes/icon/icon-EggHalf.svg";
 
+import CheeseIcon from "public/images/recipes/icon/icon-CottageCheese.svg";
+import FlaxSeedIcon from "public/images/recipes/icon/icon-FlaxSeed.svg";
+import GreenBeanIcon from "public/images/recipes/icon/icon-Greenbean.svg";
+import PsylliumHuskIcon from "public/images/recipes/icon/icon-PsylliumHusk.svg";
+import SpirulinaIcon from "public/images/recipes/icon/icon-Spirulina.svg";
+import PumpkinIcon from "public/images/recipes/icon/icon-SweetPumpkin.svg";
+import ZucchiniIcon from "public/images/recipes/icon/icon-Zucchini.svg";
+
 const INGREDIENTS_MAP = {
   CHICKEN: { icon: ChickenIcon, label: "닭고기" },
   TURKEY: { icon: TurkeyIcon, label: "칠면조" },
@@ -38,6 +46,15 @@ const INGREDIENTS_MAP = {
   STRAWBERRY: { icon: StrawberryIcon, label: "딸기" },
   EGG_YOLK: { icon: EggHalfIcon, label: "달걀 노른자" },
   CARROT: { icon: CarrotIcon, label: "당근" },
+  
+  CHEESE: { icon: CheeseIcon, label: "치즈" },
+  FLAX_SEED: { icon: FlaxSeedIcon, label: "아마씨드" },
+  GREEN_BEAN: { icon: GreenBeanIcon, label: "녹색콩" },
+  PSYLLIUM_HUSK: { icon: PsylliumHuskIcon, label: "실리엄 허스크" },
+  SPIRULINA: { icon: SpirulinaIcon, label: "스피루리나" },
+  PUMPKIN: { icon: PumpkinIcon, label: "단호박" },
+  ZUCCHINI: { icon: ZucchiniIcon, label: "애호박" },
+
 } as const;
 
 const NUTRIENT_CONDITION = {
