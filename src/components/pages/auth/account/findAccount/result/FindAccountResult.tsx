@@ -72,11 +72,13 @@ export default function FindAccountResult({
             </div>
           ))}
         </div>
-        <InfoBox
-          color="blue"
-          type="info"
-          text="간편 가입으로 가입한 회원이에요. 간편 가입 회원은 비밀번호 찾기를 이용할 수 없어요."
-        />
+        {snsProvider && (
+          <InfoBox
+            color="blue"
+            type="info"
+            text="간편 가입으로 가입한 회원이에요. 간편 가입 회원은 비밀번호 찾기를 이용할 수 없어요."
+          />
+        )}
       </Card>
     </>
   );

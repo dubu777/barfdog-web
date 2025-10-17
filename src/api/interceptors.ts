@@ -14,7 +14,6 @@ export function attachAuthInterceptors(
   const injectToken = (config: InternalAxiosRequestConfig) => {
     const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
     if (token) {
-      console.log("SERVER REQUEST", config.url);
       config.headers = config.headers ?? {};
       config.headers.Authorization = token.startsWith("Bearer ")
         ? token

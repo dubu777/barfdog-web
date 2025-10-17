@@ -1,12 +1,13 @@
 "use client";
 
 import {
-  signupStepsSchema,
   SignupStepKeys,
+  SignupStepValues,
   defaultSignupStepValues,
-} from "@/utils/validation/auth/auth";
+  signupStepsSchema,
+} from "@/utils/validation/auth/signup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import yup from "yup";
 import SignupStep1 from "./steps/SignupStep1";
 import SignupStep2 from "./steps/SignupStep2";
@@ -23,22 +24,29 @@ import { signupContainer } from "./steps/SignupStep.css";
 import Text from "@/components/common/text/Text";
 import { buildSignupRequest } from "@/utils/auth/buildSignupRequest";
 import { useSignup } from "@/api/auth/mutations/useSignup";
+import { useSignin } from "@/api/auth/mutations/useSignin";
+import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 export default function Signup() {
   const router = useRouter();
-  const { isOpen, onClose, onToggle } = useModal();
+  const {
+    isOpen: isTermsOpen,
+    onClose: onTermsClose,
+    onToggle: onTermsToggle,
+  } = useModal();
+  const {
+    isOpen: isModalOpen,
+    onClose: onModalClose,
+    onToggle: onModalToggle,
+  } = useModal();
   const { mutate: signup } = useSignup();
+  const { mutate: signin } = useSignin();
 
   const methods = useForm<yup.InferType<typeof signupStepsSchema>>({
     resolver: yupResolver(signupStepsSchema),
     defaultValues: defaultSignupStepValues,
     mode: "all",
   });
-
-  const {
-    formState: { errors },
-  } = methods;
-  console.log("errors", errors);
 
   const stepKeys = Object.keys(defaultSignupStepValues) as SignupStepKeys[];
 
@@ -58,19 +66,24 @@ export default function Signup() {
     optionalField: SIGNUP_OPTIONAL_FIELDS,
   });
 
-  const onSubmit = () => {
-    const formValues = methods.getValues();
-    const signupRequest = buildSignupRequest(formValues);
-
-    signup(signupRequest, {
-      onSuccess: () => console.log("회원가입 성공"),
-      onError: () => console.log("회원가입 실패"),
+  const handleSignup = (data: SignupStepValues) => {
+    const body = buildSignupRequest(data);
+    signup(body, {
+      onSuccess: () => {
+        onModalToggle();
+      },
     });
+  };
+  const handleSignin = () => {
+    const email = methods.getValues("step1.email");
+    const password = methods.getValues("step2.password");
+    signin({ email, password });
+    window.location.href = "/";
   };
 
   const handleConfirmClick = () => {
     if (currentStepKey === "step3") {
-      onToggle();
+      onTermsToggle();
     } else {
       handleNextStep();
     }
@@ -106,11 +119,22 @@ export default function Signup() {
             isPrimaryDisabled={!isCanNextStep()}
           />
         </div>
-        {isOpen && (
+        {isTermsOpen && (
           <TermsBottomSheet
             isOpen={true}
-            onClose={onClose}
-            onSubmit={onSubmit}
+            onClose={onTermsClose}
+            onSignup={handleSignup}
+          />
+        )}
+        {isModalOpen && (
+          <AlertModal
+            isOpen={isModalOpen}
+            onClose={onModalClose}
+            title="회원 가입이 완료됐어요!🎉"
+            content="우리 아이의 일상이 더 건강해질 수 있도록 도와드릴게요."
+            confirmText="확인"
+            onConfirm={handleSignin}
+            buttonPosition="right"
           />
         )}
       </FormProvider>

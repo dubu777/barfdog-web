@@ -13,12 +13,6 @@ type GenderType = "MALE" | "FEMALE" | "NONE" | "M" | "F" | null;
 type SnsProvider = ValueOfTuple<typeof PROVIDERS>;
 type UpperSnsProvider = Uppercase<SnsProvider>;
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-  autoLogin: boolean;
-}
-
 interface UserInfo {
   email: string;
   expiresAt: string;
@@ -51,22 +45,6 @@ interface FindUserEmail {
 
 interface TemporaryPassword extends FindUserEmail {
   email: string;
-}
-
-interface ConnectSnsPassword {
-  password: string;
-}
-
-interface ConnectSns {
-  phoneNumber: string;
-  provider: SnsProvider;
-  providerId: string;
-}
-
-interface ConnectSnsResponse {
-  email: string;
-  provider: SnsProvider;
-  token: string;
 }
 
 // 회원가임
@@ -139,17 +117,13 @@ type ResetPasswordStep = "request" | "verify" | "reset";
 type VerificationStep = "request" | "verify" | "verified";
 
 export type {
-  LoginFormValues,
   UserType,
   UserInfo,
   LoginUserInfo,
   SnsProvider,
   FindUserEmail,
   TemporaryPassword,
-  ConnectSnsPassword,
-  ConnectSns,
   SignUpTermsModal,
-  ConnectSnsResponse,
   GenderType,
   SignupRequest,
   RequestFindAccountCodeResponse,

@@ -2,7 +2,7 @@
 
 import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
-import { SignupStepValues } from "@/utils/validation/auth/auth";
+import { SignupStepValues } from "@/utils/validation/auth/signup";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useEnterFocus } from "@/hooks/common/useEnterFocus";
 import { useCallback, useState } from "react";

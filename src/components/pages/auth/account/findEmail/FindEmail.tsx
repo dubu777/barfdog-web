@@ -19,13 +19,13 @@ import { useCompletedMode } from "@/hooks/useCompletedMode";
 import { useRouter } from "next/navigation";
 import { VerificationStep } from "@/types";
 import FindAccountResult from "../findAccount/result/FindAccountResult";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function FindEmail() {
   const { addToast } = useToastStore();
   const router = useRouter();
   const { mutate: requestCode } = useRequestFindEmailCode();
   const { mutate: verifyCode } = useVerifyFindEmailCode();
-
   const { completedMode, toggleCompletedMode } = useCompletedMode();
 
   const [step, setStep] = useState<VerificationStep>("request");

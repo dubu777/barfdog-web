@@ -2,41 +2,49 @@
 import * as styles from "./LoginSection.css";
 import { useSearchParams } from "next/navigation";
 import LoginForm from "@/components/pages/auth/login/loginForm/LoginForm";
-import { useEmailLogin } from "@/api/auth/mutations/useEmailLogin";
 import { useFormHandler } from "@/hooks/useFormHandler";
-import { LoginFormValues } from "@/types";
-import { defaultLoginValues, loginSchema } from "@/utils/validation/auth/auth";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
 import SocialLoginButton from "../socialLoginButton/SocialLoginButton";
 import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
 import { PROVIDERS } from "@/constants/auth";
+import { useSignin } from "@/api/auth/mutations/useSignin";
+import {
+  defaultLoginValues,
+  LoginFormValues,
+  loginSchema,
+} from "@/utils/validation/auth/signin";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function LoginSection() {
   const searchParams = useSearchParams();
+  const { signinEmail } = useAuthStore();
+  const [isFailed, setIsFailed] = useState<boolean>(false);
   const nextPath = useMemo(
     () => searchParams.get("next") ?? "/",
     [searchParams]
   );
 
-  const { mutate: emailLogin } = useEmailLogin();
+  const { mutate: signin } = useSignin();
 
   const { handleSubmit, isValid, register } = useFormHandler<LoginFormValues>(
     loginSchema,
-    defaultLoginValues(null)
+    defaultLoginValues(signinEmail)
   );
 
-  const handleLogin = (data: LoginFormValues) => {
-    const formData = {
+  const handleSignin = (data: LoginFormValues) => {
+    const body = {
       email: data.email,
       password: data.password,
     };
-    // 로그인 호출, 성공 시 nextPath로 풀 리로드
-    emailLogin(formData, {
+    signin(body, {
       onSuccess: () => {
         // 풀 리로드로 쿠키 적용 보장하면서 원래 경로로 이동
         window.location.href = nextPath;
+      },
+      onError: () => {
+        setIsFailed(true);
       },
     });
   };
@@ -65,8 +73,10 @@ export default function LoginSection() {
         <LoginForm
           register={register}
           handleSubmit={handleSubmit}
-          handleLogin={handleLogin}
+          handleSignin={handleSignin}
+          isFailed={isFailed}
           isValid={isValid}
+          onInvalid={() => setIsFailed(true)}
         />
         <span className={styles.lineBox}>
           <em className={styles.line} />

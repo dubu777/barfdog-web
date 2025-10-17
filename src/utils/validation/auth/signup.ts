@@ -1,17 +1,7 @@
 import * as yup from "yup";
-import { ConnectSnsPassword } from "@/types";
-
-export {
-  loginSchema,
-  defaultLoginValues,
-  connectSnsSchema,
-  defaultConnectSnsValue,
-  defaultSignupStepValues,
-  signupStepsSchema,
-};
 
 // --- STEP 1: 이름 · 이메일 검증 ------------------------------------------------
-const step1 = yup.object({
+export const step1 = yup.object({
   name: yup
     .string()
     .trim()
@@ -91,7 +81,7 @@ const step4 = yup.object({
 });
 
 // --- 전체 STEP 스키마 & 타입 & 기본값 -----------------------------------------
-const signupStepsSchema = yup.object({
+export const signupStepsSchema = yup.object({
   step1,
   step2,
   step3,
@@ -101,7 +91,7 @@ const signupStepsSchema = yup.object({
 export type SignupStepValues = yup.InferType<typeof signupStepsSchema>;
 export type SignupStepKeys = keyof SignupStepValues;
 
-const defaultSignupStepValues: SignupStepValues = {
+export const defaultSignupStepValues: SignupStepValues = {
   step1: { name: "", email: "", confirmEmail: false }, // 임시로 true
   step2: { password: "", confirmPassword: "" },
   step3: {
@@ -118,36 +108,4 @@ const defaultSignupStepValues: SignupStepValues = {
     receiveSms: false,
     receiveEmail: false,
   },
-};
-
-const loginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email("유효한 이메일 주소를 입력해주세요.")
-    .required("이메일 주소는 필수입니다."),
-  password: yup
-    .string()
-    // .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
-    // .matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
-    .required("비밀번호는 필수입니다."),
-});
-
-const defaultLoginValues = (initialUserEmail: string | null) => {
-  return {
-    email: initialUserEmail || "",
-    password: "",
-    autoLogin: false,
-  };
-};
-
-const connectSnsSchema = yup.object().shape({
-  password: yup
-    .string()
-    // .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
-    // .matches(/^(?=.*[a-zA-Z])(?=.*\d)/, '비밀번호는 문자와 숫자를 포함해야 합니다.')
-    .required("비밀번호는 필수입니다."),
-});
-
-const defaultConnectSnsValue: ConnectSnsPassword = {
-  password: "",
 };

@@ -1,5 +1,5 @@
 import { SignupRequest, GenderType } from "@/types/auth";
-import { SignupStepValues } from "@/utils/validation/auth/auth";
+import { SignupStepValues } from "@/utils/validation/auth/signup";
 
 /**
  * React Hook Form의 SignupStepValues를 서버 API의 SignupRequest로 변환합니다.

@@ -1,7 +1,7 @@
 import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
-import { SignupStepValues } from "@/utils/validation/auth/auth";
+import { SignupStepValues } from "@/utils/validation/auth/signup";
 import { useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import CheckIcon from "public/images/survey/check_small.svg";

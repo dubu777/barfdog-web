@@ -8,16 +8,16 @@ interface PrivacyPolicyProps {
   backgroundColor?: "gray0" | "gray50";
 }
 
-export default function PrivacyPolicy({ 
+export default function PrivacyPolicy({
   className,
-  backgroundColor = 'gray50',
+  backgroundColor = "gray50",
 }: PrivacyPolicyProps) {
   return (
     <Card
-      shadow='none'
-      direction='col'
-      align='start'
-      justify='start'
+      shadow="none"
+      direction="col"
+      align="start"
+      justify="start"
       padding={20}
       gap={26}
       backgroundColor={backgroundColor}
@@ -25,21 +25,21 @@ export default function PrivacyPolicy({
       className={className}
     >
       {PRIVACY_POLICY_INFO.map((info, index) => (
-        <div 
-          key={index} 
+        <div
+          key={index}
           className={commonWrapper({
-            direction: 'col',
-            align: 'start',
-            justify: 'start',
+            direction: "col",
+            align: "start",
+            justify: "start",
             gap: 8,
           })}
         >
-          {info.title && 
-            <Text type='label4'>{info.title}</Text>
-          }
-          <Text type='caption' preLine>{info.description}</Text>
+          {info.title && <Text type="label4">{info.title}</Text>}
+          <Text type="caption" preLine>
+            {info.description}
+          </Text>
         </div>
       ))}
-    </Card>	
+    </Card>
   );
 }

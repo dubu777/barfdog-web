@@ -1,18 +1,18 @@
 import axios from "axios";
 import axiosInstance from "@/api/axiosInstance";
 import {
-  ConnectSns,
   SnsProvider,
-  ConnectSnsResponse,
   RequestFindAccountCodeResponse,
   ResetPasswordRequest,
   VerifyFindAccountCodeRequest,
   VerifyFindAccountCodeResponse,
   OAuthLoginResponse,
   SignupRequest,
+  ApiResponse,
 } from "@/types";
 import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
 import { FindEmailValues } from "@/utils/validation/auth/findEmail";
+import { LoginFormValues } from "@/utils/validation/auth/signin";
 
 const requestFindEmailCode = async (
   body: FindEmailValues
@@ -74,12 +74,6 @@ const resetPassword = async (body: ResetPasswordRequest) => {
   }
   const message = data.detailMessage ?? "유효하지 않은 정보입니다";
   throw new Error(message);
-};
-
-// body {providerId, provider, phone}
-const connectSns = async (body: ConnectSns): Promise<ConnectSnsResponse> => {
-  const { data } = await axiosInstance.post(`/api/connectSns`, body);
-  return data;
 };
 
 // 1) OAuth 토큰 요청 - Next 서버
@@ -152,13 +146,26 @@ const logout = async () => {
 
 const signup = async (body: SignupRequest) => {
   const { data } = await axiosInstance.post(
-    "/api/v2/public/accounts/signup ",
+    "/api/v2/public/accounts/signup",
     body
   );
   if (data.success) {
     return data.data;
   }
   throw new Error("회원 가입 실패");
+};
+
+const signin = async (body: LoginFormValues) => {
+  const response = await axiosInstance.post(
+    "/api/v2/public/accounts/signin",
+    body
+  );
+
+  if (response.data.success) {
+    return response;
+  }
+
+  throw new Error("로그인 실패");
 };
 
 const checkDuplicateEmail = async (email: string) => {
@@ -171,15 +178,12 @@ const checkDuplicateEmail = async (email: string) => {
 
 const requestPhoneVerificationCode = async (
   phoneNumber: string
-): Promise<RequestFindAccountCodeResponse> => {
+): Promise<ApiResponse<RequestFindAccountCodeResponse>> => {
   const { data } = await axiosInstance.post(
     "/api/v2/public/accounts/signup/request-code",
     { phoneNumber }
   );
-  if (data.success) {
-    return data.data;
-  }
-  throw new Error("유효하지 않은 정보입니다");
+  return data;
 };
 
 const verifyPhoneCode = async (
@@ -198,7 +202,6 @@ const verifyPhoneCode = async (
 export {
   requestFindEmailCode,
   login,
-  connectSns,
   logout,
   requestPasswordResetCode,
   verifyPasswordResetCode,
@@ -209,4 +212,5 @@ export {
   checkDuplicateEmail,
   requestPhoneVerificationCode,
   verifyPhoneCode,
+  signin,
 };

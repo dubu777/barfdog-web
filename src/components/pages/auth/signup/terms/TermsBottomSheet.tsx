@@ -5,30 +5,37 @@ import * as styles from "./TermsBottomSheet.css";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Text from "@/components/common/text/Text";
 import { commonWrapper, pointColor } from "@/styles/common.css";
-import { SignupStepValues } from "@/utils/validation/auth/auth";
-import { useController, useFormContext, useWatch } from "react-hook-form";
+import { SignupStepValues } from "@/utils/validation/auth/signup";
+import {
+  SubmitHandler,
+  useController,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import PrivacyPolicy from "./PrivacyPolicy";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
-import ServicePolicy from "./ServicePolicy";
 import { useMemo, useState } from "react";
+import PrivacyPolicy from "@/components/common/terms/PrivacyPolicy";
+import ServicePolicy from "@/components/common/terms/ServicePolicy";
+import Header from "@/components/layout/header/Header";
 
 type Panel = "list" | "service" | "privacy";
 
 interface TermsBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSignup: SubmitHandler<SignupStepValues>;
 }
 
 export default function TermsBottomSheet({
   isOpen,
   onClose,
-  onSubmit,
+  onSignup,
 }: TermsBottomSheetProps) {
-  const { control, setValue } = useFormContext<SignupStepValues>();
+  const { control, setValue, handleSubmit } =
+    useFormContext<SignupStepValues>();
   const [openPanel, setOpenPanel] = useState<Panel>("list");
   const openService = () => setOpenPanel("service");
   const openPrivacy = () => setOpenPanel("privacy");
@@ -114,17 +121,32 @@ export default function TermsBottomSheet({
     setValue("step4.receiveSms", isChecked, { shouldDirty: true });
   };
 
-  const handleSubmit = () => {
-    onSubmit();
+  const handleSignup = (values) => {
+    onSignup(values);
     onClose();
   };
 
+  const headerConfig = {
+    list: {
+      leftTitle: "이용약관 동의",
+    },
+    service: {
+      centerTitle: "이용약관 안내",
+      showCloseButton: true,
+      onClose: openList,
+    },
+    privacy: {
+      centerTitle: "개인정보처리 방침",
+      showCloseButton: true,
+      onClose: openList,
+    },
+  };
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.termsBottomSheetContainer}>
+        <Header {...headerConfig[openPanel]} />
         {openPanel === "list" && (
           <>
-            <Text type="title4">이용약관 동의</Text>
             <div
               className={commonWrapper({
                 direction: "col",
@@ -256,13 +278,23 @@ export default function TermsBottomSheet({
             </div>
           </>
         )}
-        {openPanel === "privacy" && <PrivacyPolicy openList={openList} />}
-        {openPanel === "service" && <ServicePolicy openList={openList} />}
+        {openPanel === "privacy" && (
+          <PrivacyPolicy
+            className={styles.termsWrapper}
+            backgroundColor="gray0"
+          />
+        )}
+        {openPanel === "service" && (
+          <ServicePolicy
+            className={styles.termsWrapper}
+            backgroundColor="gray0"
+          />
+        )}
       </div>
       <ButtonDocked
         type="full-button"
         primaryButtonLabel="회원가입 완료"
-        onPrimaryClick={handleSubmit}
+        onPrimaryClick={handleSubmit(handleSignup)}
         primaryButtonSize="lg"
       />
     </BottomSheet>

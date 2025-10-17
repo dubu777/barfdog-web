@@ -23,10 +23,13 @@ import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 import Countdown from "./countdown/Countdown";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function ResetPassword() {
   const router = useRouter();
   const { addToast } = useToastStore();
+  const setSigninEmail = useAuthStore((s) => s.setSigninEmail);
+
   const { mutate: requestCode } = useRequestPasswordResetCode();
   const { mutate: verifyCode } = useVerifyPasswordResetCode();
   const { mutate: resetPassword } = useResetPassword();
@@ -83,6 +86,7 @@ export default function ResetPassword() {
           setStep("reset");
           setInfoMessage("휴대폰 번호 인증이 완료됐어요");
           setVerifyError("");
+          setSigninEmail(requestForm.getValues("email"));
         },
         onError: () => {
           setVerifyError("인증번호가 일치하지 않아요");

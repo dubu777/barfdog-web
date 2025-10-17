@@ -1,7 +1,7 @@
 import Text from "@/components/common/text/Text";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper, pointColor } from "@/styles/common.css";
-import { SignupStepValues } from "@/utils/validation/auth/auth";
+import { SignupStepValues } from "@/utils/validation/auth/signup";
 import {
   Controller,
   useController,
@@ -51,13 +51,22 @@ export default function SignupStep3() {
     const phoneNumber = getValues("step3.phoneNumber");
     requestCode(phoneNumber, {
       onSuccess: (res) => {
-        setStep("verify");
-        setAuthToken(res.authToken);
-        setExpiryDate(res.expiryDate);
-        setRequestError("");
-        setInfoMessage("휴대폰 번호로 인증번호가 발송됐어요");
+        if (res.success) {
+          setStep("verify");
+          setAuthToken(res.data?.authToken ?? "");
+          setExpiryDate(res.data?.expiryDate ?? "");
+          setRequestError("");
+          setInfoMessage("휴대폰 번호로 인증번호가 발송됐어요");
+          return;
+        }
+        if (res.detailMessage === "이미 사용 중인 전화번호입니다.") {
+          setStep("request");
+          setInfoMessage("");
+          setRequestError("이미 가입된 휴대폰 번호예요");
+        }
       },
       onError: () => {
+        setInfoMessage("");
         setRequestError("입력하신 정보를 다시 확인해 주세요");
       },
     });
@@ -68,7 +77,7 @@ export default function SignupStep3() {
     verifyCode(
       { authToken, authCode },
       {
-        onSuccess: (res) => {
+        onSuccess: () => {
           setStep("verified");
           setInfoMessage("휴대폰 번호로 인증이 완료됐어요");
           setVerifyError("");

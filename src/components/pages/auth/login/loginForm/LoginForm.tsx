@@ -1,27 +1,33 @@
 import * as styles from "./LoginForm.css";
 import Link from "next/link";
 import {
+  SubmitErrorHandler,
   SubmitHandler,
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
-import { LoginFormValues } from "@/types";
 import InputField from "@/components/common/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
 import Text from "@/components/common/text/Text";
+import InfoBox from "@/components/common/infoBox/InfoBox";
+import { LoginFormValues } from "@/utils/validation/auth/signin";
 
 interface LoginFormProps {
   register: UseFormRegister<LoginFormValues>;
   handleSubmit: UseFormHandleSubmit<LoginFormValues>;
-  handleLogin: SubmitHandler<LoginFormValues>;
+  handleSignin: SubmitHandler<LoginFormValues>;
+  isFailed: boolean;
   isValid: boolean;
+  onInvalid?: SubmitErrorHandler<LoginFormValues>;
 }
 
 export default function LoginForm({
   register,
   handleSubmit,
-  handleLogin,
+  handleSignin,
+  isFailed,
+  onInvalid,
 }: LoginFormProps) {
   return (
     <form className={commonWrapper({ direction: "col", padding: "0/20" })}>
@@ -37,9 +43,16 @@ export default function LoginForm({
           id="password"
           placeholder="비밀번호를 입력해주세요"
         />
+        {isFailed && (
+          <InfoBox
+            type="info"
+            color="red"
+            text="이메일 또는 비밀번호가 일치하지 않아요. 입력하신 정보를 다시 확인해 주세요"
+          />
+        )}
         <Button
           buttonType="submit"
-          onClick={handleSubmit(handleLogin)}
+          onClick={handleSubmit(handleSignin, onInvalid)}
           fullWidth
           className={styles.loginButton}
         >

@@ -1,5 +1,5 @@
 import { SnsProvider } from "@/types";
-import { SignupStepKeys } from "@/utils/validation/auth/auth";
+import { SignupStepKeys } from "@/utils/validation/auth/signup";
 
 const AUTH_CONFIG = {
   ACCESS_TOKEN_COOKIE: "access_token",

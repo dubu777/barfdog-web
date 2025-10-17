@@ -71,6 +71,7 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/api/refresh")) return NextResponse.next();
 
   const token = req.cookies.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
+
   const isAuthed = isAuthenticated(token);
 
   // 보호된 경로 접근인데 액세스 토큰이 유효하지 않으면 서버에서 먼저 리프레시 시도
