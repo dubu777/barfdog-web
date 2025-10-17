@@ -11,7 +11,7 @@ import Pagination from "@/components/common/pagination/Pagination";
 import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import useFilterTabs from '@/hooks/useFilterTabs';
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";

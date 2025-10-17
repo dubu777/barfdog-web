@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import Text from "@/components/common/text/Text";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import CouponItem from "@/components/pages/mypage/coupon/list/couponItem/CouponItem";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import Divider from "@/components/common/divider/Divider";
 import CouponCategoryTabs from "./couponCategoryTabs/CouponCategoryTabs";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";

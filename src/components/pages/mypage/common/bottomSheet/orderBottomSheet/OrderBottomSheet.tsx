@@ -3,7 +3,6 @@ import { pointColor } from "@/styles/common.css";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import OrderCard from "@/components/pages/mypage/common/cards/section/OrderCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { CardActionsId, NormalizedCardData, OrderType, ReviewItemType } from '@/types';
 import { ORDER_TYPE } from "@/constants";
@@ -98,7 +97,7 @@ const OrderBottomSheet = ({
 						</button>
 					}
 				</div>
-				<OrderCard data={data} type="orderDetail" hasBottomSheet />
+				{/* <OrderCard data={data} type="orderDetail" hasBottomSheet /> */}
 			</div>
 			<ButtonDocked
 				type="dual-button"

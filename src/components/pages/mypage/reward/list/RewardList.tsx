@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import RewardFilter from "@/components/pages/mypage/reward/list/rewardFilter/RewardFilter";
 import RewardItem from "@/components/pages/mypage/reward/list/rewardItem/RewardItem";
 import RewardInfo from "@/components/pages/mypage/reward/list/rewardInfo/RewardInfo";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import Divider from "@/components/common/divider/Divider";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { RewardFilterType } from "@/types";
@@ -66,7 +66,7 @@ export default function RewardList() {
               isFetchingNextPage={isFetchingNextPage}
             />
           </>
-          : <DefaultEmptyState title='적립금 내역이 없어요' subTitle='상품 구매하고 적립금 혜택 받아보세요!' />
+          : <EmptyState title='적립금 내역이 없어요' subTitle='상품 구매하고 적립금 혜택 받아보세요!' />
         }
       </article>
     </section>

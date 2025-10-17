@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import { useQueryClient } from "@tanstack/react-query";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import TabBar from "@/components/common/tabBar/TabBar";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
 import Tooltip from "@/components/common/tooltip/Tooltip";
@@ -139,7 +139,7 @@ export default function Review () {
             />
           </div>
           : (
-            <DefaultEmptyState
+            <EmptyState
               title={`아직 ${isWriteableReview ? '작성 가능한' : '작성한'} 리뷰가 없어요`}
               subTitle={
                 isWriteableReview

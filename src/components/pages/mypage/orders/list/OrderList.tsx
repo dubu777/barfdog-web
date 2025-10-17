@@ -12,7 +12,7 @@ import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultEmptyState from "../../common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "../../common/emptyState/EmptyState";
 import CardWrapper from "../card/common/CardWrapper";
 import OrderStatus from "../card/common/OrderStatus";
 import OrderImage from "../card/common/OrderImage";
@@ -127,9 +127,8 @@ export default function OrderList () {
               isFetchingNextPage={isFetchingNextPage}
             />
           </>
-        : <DefaultEmptyState title='주문 내역이 없습니다.' />}
+        : <EmptyState title='주문 내역이 없습니다.' />}
       </article>
     </section>
   );
 }
-

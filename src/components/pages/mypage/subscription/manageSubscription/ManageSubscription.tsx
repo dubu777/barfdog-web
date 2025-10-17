@@ -6,7 +6,7 @@ import TabBar from "@/components/common/tabBar/TabBar";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import FilterBottomSheet from "@/components/pages/mypage/common/bottomSheet/filterBottomSheet/FilterBottomSheet";
 import SubscriptionCard from "@/components/pages/mypage/common/cards/section/SubscriptionCard";
-import DefaultEmptyState from "@/components/pages/mypage/common/emptyState/defaultEmptyState/DefaultEmptyState";
+import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import EmptyStateCard from "@/components/pages/mypage/common/cards/section/EmptyStateCard";
 import { MYPAGE_DATE_FILTERS, MYPAGE_SORT_FILTERS } from "@/constants/mypage/common";
 
@@ -69,7 +69,7 @@ const ManageSubscription = () => {
       <article className={styles.manageSubscriptionList}>
         {emptyState ?
           defaultTabIndex === 2
-            ? <DefaultEmptyState title='해지 내역이 존재하지 않아요' subTitle='더 행복한 반려견 라이프를 위한 선택, 바프독' />
+            ? <EmptyState title='해지 내역이 존재하지 않아요' subTitle='더 행복한 반려견 라이프를 위한 선택, 바프독' />
             : <EmptyStateCard type='default'/>
           : subscriptionList.map(subscriptionDetail => (
             <SubscriptionCard
