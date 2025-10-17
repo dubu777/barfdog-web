@@ -9,20 +9,7 @@ import React, {
 } from "react";
 import { mergeRefs } from "@/utils";
 import Text from "../text/Text";
-import {
-  inputContainerStyle,
-  baseButtonStyle,
-  confirmButtonStyle,
-  inputBaseStyle,
-  inputBoxStyle,
-  inputError,
-  inputStyle,
-  inputVariants,
-  inputWrapStyle,
-  rightButtonsStyle,
-  searchButtonStyle,
-  unitStyle,
-} from "./InputField.css";
+import * as styles from "./InputField.css";
 import SearchIcon from "/public/images/icons/search.svg";
 import InputClearIcon from "/public/images/icons/input_clear.svg";
 import VisibilityIcon from "/public/images/icons/visibility.svg";
@@ -33,11 +20,14 @@ import InputLabel from "@/components/common/inputLabel/InputLabel";
 import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** 스타일/상태 */
   disabled?: boolean;
   error?: string;
-  icon?: ReactNode;
-  variants?: keyof typeof inputVariants;
-  width?: number;
+  success?: string;
+  variants?: "box" | "line";
+  fullWidth?: boolean;
+
+  /** UI 옵션 */
   masking?: boolean;
   maskingButton?: boolean;
   confirmButton?: boolean;
@@ -46,19 +36,24 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   confirmButtonDisabled?: boolean;
   clearButton?: boolean;
   searchButton?: boolean;
+  unit?: string;
+
+  /** 라벨 */
+  label?: string;
+  labelColor?: "gray600" | "gray700" | "gray800" | "gray900";
+  labelType?: "label4" | "headline4";
+  isRequired?: boolean;
+
+  /** 이벤트 */
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: ChangeEvent) => void;
   onReset?: () => void;
   onSubmit?: () => void;
   onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+
+  /** 기타 */
   className?: string;
-  label?: string;
-  labelColor?: "gray600" | "gray700" | "gray800" | "gray900";
-  labelPosition?: "top" | "left";
-  labelType?: "label4" | "headline4";
-  isRequired?: boolean;
-  unit?: string;
-  success?: string;
+  icon?: ReactNode; // 여유 슬롯(필요 시)
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
@@ -66,10 +61,12 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     {
       disabled = false,
       error,
+      success,
       onChange,
       onBlur,
       variants = "box",
-      width,
+      fullWidth = true,
+
       masking = false,
       maskingButton = false,
       confirmButton = false,
@@ -81,14 +78,15 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       onReset,
       onSubmit,
       onKeyDown,
-      // icon = null,
+
       className,
       label,
       isRequired,
       labelType = "label4",
       labelColor = "gray600",
       unit,
-      success,
+
+      type,
       ...props
     },
     ref
@@ -121,6 +119,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         onSubmit();
       }
     };
+
     const handleReset = (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       if (onReset) {
@@ -137,8 +136,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     return (
       <div
         onClick={handlePressInput}
-        className={`${inputContainerStyle} ${className || ""}`}
-        style={{ width: width || "100%" }}
+        className={`${styles.container({ fullWidth })} ${className || ""}`}
       >
         {/* label 유무에 따라 상단 노출 */}
         {label && (
@@ -149,55 +147,55 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             isRequired={isRequired}
           />
         )}
-        <div className={inputBoxStyle} style={{ width: width || "100%" }}>
+        <div className={styles.wrapper({ fullWidth })}>
           <div
-            className={`${inputWrapStyle} ${inputBaseStyle} ${
-              inputVariants[variants]
-            } ${error ? inputError[variants] : ""} ${
-              disabled ? "disabled" : ""
-            }`}
-            style={{ flex: confirmButton ? "1 0 0" : "unset" }}
+            className={styles.field({
+              variant: variants,
+              disabled,
+              error: Boolean(error),
+              hasConfirm: confirmButton,
+            })}
           >
             {/* 검색 기능 추가 필요 */}
             {searchButton && (
-              <button className={searchButtonStyle}>
-                <SvgIcon src={SearchIcon} size={24} />
+              <button
+                className={styles.prefixButton}
+                type="button"
+                tabIndex={-1}
+              >
+                <SvgIcon src={SearchIcon} size={24} aria-hidden />
               </button>
             )}
             <input
               {...props}
               ref={ref ? mergeRefs(innerRef, ref) : innerRef}
               disabled={disabled}
-              className={inputStyle}
-              type={isMasked ? "password" : props.type}
-              value={props.value}
+              className={styles.input}
+              type={isMasked ? "password" : type}
               onChange={(e) => {
                 onChange?.(e);
               }}
-              onBlur={(e) => {
-                if (onBlur) {
-                  onBlur?.(e);
-                }
-              }}
+              onBlur={(e) => onBlur?.(e)}
               onKeyDown={handleInternalKeyDown}
             />
             {unit && (
-              <Text type="headline3" color="gray900" className={unitStyle}>
+              <Text type="headline3" color="gray900" className={styles.unit}>
                 {unit}
               </Text>
             )}
-            <div className={rightButtonsStyle}>
+            <div className={styles.suffixGroup}>
               {/* 비밀번호 숨김 토글 기능 */}
               {masking && maskingButton && (
                 <button
                   onClick={handleToggleMasking}
-                  className={baseButtonStyle}
+                  className={styles.suffixButton}
                   type="button"
                   tabIndex={-1}
                 >
                   <SvgIcon
                     src={isMasked ? VisibilityOffIcon : VisibilityIcon}
                     size={24}
+                    aria-hidden
                   />
                 </button>
               )}
@@ -205,11 +203,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
               {clearButton && (
                 <button
                   onClick={handleReset}
-                  className={baseButtonStyle}
+                  className={styles.suffixButton}
                   type="button"
                   tabIndex={-1}
                 >
-                  <SvgIcon src={InputClearIcon} size={24} />
+                  <SvgIcon src={InputClearIcon} size={24} aria-hidden />
                 </button>
               )}
             </div>
@@ -219,8 +217,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
             <Button
               variant={confirmButtonVariant}
               onClick={handleSubmit}
-              size="lg"
-              className={confirmButtonStyle}
+              size="inputButton"
               disabled={confirmButtonDisabled}
             >
               {confirmButtonText}
