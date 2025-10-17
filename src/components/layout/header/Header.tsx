@@ -10,6 +10,9 @@ import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
 import { useRouter } from "next/navigation";
 import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
+import { getCookie } from "@/utils/auth/cookie";
+import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import { AUTH_CONFIG } from "@/constants/auth";
 
 interface HeaderProps {
   leftElement?: React.ReactNode;
@@ -47,7 +50,13 @@ export default function Header({
   leftSlotGap = "lg",
 }: HeaderProps) {
   const router = useRouter();
-  const { data: cartInfo } = useGetCartInfo();
+
+  const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+  const isLogin = isAuthenticated(token);
+  
+  const { data: cartInfo } = useGetCartInfo({
+    enabled: isLogin,
+  });
   const count = cartInfo?.basketDtoList?.length || 0;
 
   const handleBack = () => {
