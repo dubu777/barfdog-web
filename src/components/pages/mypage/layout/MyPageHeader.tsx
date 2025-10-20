@@ -2,8 +2,6 @@
 import { useMemo } from "react";
 import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useBackNavigation } from "@/utils";
-import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
-import { ORDER_ISSUE_TYPE } from "@/constants/mypage/common";
 import Header from "@/components/layout/header/Header";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
@@ -22,7 +20,6 @@ const MyPageHeader = () => {
 		Object.entries(rawParams).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value])
 	) as Record<string, string>;
   const searchParams = useSearchParams();
-  const { pushWithQuery } = useDynamicQueryPush();
   const goBack = useBackNavigation();
   const goBackToMain = useBackNavigation('/');
   const goBackToMypageMain = useBackNavigation('/mypage');
@@ -94,16 +91,6 @@ const MyPageHeader = () => {
         centerTitle: '주문 상세',
         showBackButton: true,
         onBack: goBackToPreviousPage,
-      }
-    },
-    '/mypage/order-issue-inquiry/': (_, searchParams) => {
-      const issueType = searchParams.get('issueType');
-      const issueTypeName = ORDER_ISSUE_TYPE[issueType as keyof typeof ORDER_ISSUE_TYPE];
-
-      return {
-        centerTitle: `${issueTypeName} 상세보기`,
-        showBackButton: true,
-        onBack: goBack,
       }
     },
     '/mypage/account/withdrawal-account': (_, searchParams) => {

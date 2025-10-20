@@ -1,5 +1,5 @@
 import { ComponentType, SVGProps } from "react";
-import { SubscribeStatus, SubscriptionStatus } from "./subscription";
+import { SubscriptionStatus } from "./subscription";
 import {
   BodyFit,
   DogSize,

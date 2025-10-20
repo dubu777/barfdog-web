@@ -6,7 +6,6 @@ import PictureIcon from "/public/images/icons/picture.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Chips from "@/components/common/chips/Chips";
 import Text from "@/components/common/text/Text";
-import SubtitleText from "@/components/pages/mypage/common/card/typography/SubtitleText";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
 import RateStar from "@/components/common/rateStar/RateStar";
 import Button from "@/components/common/button/Button";
@@ -147,7 +146,7 @@ export default function ReviewCard({
                 align: "start",
               })}
             >
-              <SubtitleText text={title} type="headline2" />
+              <Text type='headline2'>{title}</Text>
               <MetaText
                 textList={[
                   orderedDate

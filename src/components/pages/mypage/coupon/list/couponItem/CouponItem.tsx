@@ -1,12 +1,10 @@
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
 import Card from "@/components/common/card/Card";
-import TitleText from "@/components/pages/mypage/common/card/typography/TitleText";
-import SubtitleText from "@/components/pages/mypage/common/card/typography/SubtitleText";
-import DescriptionText from "@/components/pages/mypage/common/card/typography/DescriptionText";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
 import { COUPON_TARGET, DISCOUNT_UNIT } from "@/constants";
 import { MyPageCoupon } from "@/types/mypage/coupon";
+import Text from "@/components/common/text/Text";
 
 interface CouponItemProps {
   coupon: MyPageCoupon;
@@ -25,14 +23,14 @@ export default function CouponItem({
       align='start'
     >
       <div className={commonWrapper({ direction: 'col', gap: 4, align: 'start' })}>
-        <TitleText color='red'>
+        <Text type='title1' color='red'>
           {coupon.discountDegree.toLocaleString()}
           {DISCOUNT_UNIT[coupon.discountType]}
-        </TitleText>
+        </Text>
         <div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>
-          <SubtitleText text={coupon.name} />
+          <Text type='label1'>{coupon.name}</Text>
           {percentType &&
-            <DescriptionText text={`(최대 ${coupon.availableMaxDiscount.toLocaleString()}원 할인)`} />
+            <Text type='body3'>(최대 ${coupon.availableMaxDiscount.toLocaleString()}원 할인)</Text>
           }
         </div>
       </div>
