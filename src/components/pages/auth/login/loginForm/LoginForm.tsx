@@ -11,7 +11,7 @@ import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
 import Text from "@/components/common/text/Text";
 import InfoBox from "@/components/common/infoBox/InfoBox";
-import { LoginFormValues } from "@/utils/validation/auth/signin";
+import { LoginFormValues } from "@/utils/validation/auth/login";
 
 interface LoginFormProps {
   register: UseFormRegister<LoginFormValues>;

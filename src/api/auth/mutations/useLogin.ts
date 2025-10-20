@@ -1,16 +1,16 @@
 import { UseMutationCustomOptions } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signin } from "@/api/auth/auth";
+import { login } from "@/api/auth/auth";
 
 import { queryKeys } from "@/constants";
 import { setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 
-export function useSignin(mutationOptions?: UseMutationCustomOptions) {
+export function useLogin(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: signin,
+    mutationFn: login,
     onSuccess: async (res: any) => {
       const token = res?.headers?.authorization;
 

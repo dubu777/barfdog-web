@@ -20,7 +20,6 @@ interface HeaderProps {
   rightElement?: React.ReactNode;
   leftTitle?: string;
   centerTitle?: string;
-  style?: React.CSSProperties;
   onClose?: () => void;
   onBack?: () => void;
   backHref?: string;
@@ -38,7 +37,6 @@ export default function Header({
   rightElement,
   leftTitle,
   centerTitle,
-  style,
   onClose,
   onBack,
   backHref,
@@ -52,10 +50,11 @@ export default function Header({
   const router = useRouter();
 
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-  const isLogin = isAuthenticated(token);
-  
+  const isAuthed = isAuthenticated(token);
+  const enabled = Boolean(isAuthed && showCartButton);
+
   const { data: cartInfo } = useGetCartInfo({
-    enabled: isLogin,
+    enabled,
   });
   const count = cartInfo?.basketDtoList?.length || 0;
 
@@ -69,7 +68,7 @@ export default function Header({
   const leftSlotStyle = styles.leftSlotVariants[leftSlotGap];
 
   return (
-    <header className={styles.headerContainer} style={style}>
+    <header className={styles.headerContainer}>
       <div className={`${styles.headerContent} ${colorStyle}`}>
         <div className={`${styles.leftSlot} ${leftSlotStyle}`}>
           {showBackButton && (
