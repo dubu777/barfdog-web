@@ -4,8 +4,9 @@ import { format } from "date-fns";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
 import Card from "@/components/common/card/Card";
-import InfoItem from "../../../common/card/InfoItem";
-import CardWrapper from "../../../common/card/CardWrapper";
+import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
+import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
+import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import { PaymentMethod } from "@/types";
 import { PAYMENT_LABEL } from "@/constants";
 
@@ -47,50 +48,52 @@ export default function RefundInfo({
   paymentPrice,
 }: RefundInfoProps) {
   return (
-    <CardWrapper 
-      padding={false} 
-      gap={16}
-      className={commonWrapper({ padding: '16/0' })}
-    >
-      <div className={commonWrapper({
-        direction: 'col',
-        padding: '0/12',
-        gap: 6,
-      })}>
-        <InfoItem
-          label="취소 요청일자"
-          value={format(requestDate, 'yyyy.MM.dd HH:mm')}
-        />
-        <InfoItem
-          label="취소 처리일자"
-          value={format(confirmDate, 'yyyy.MM.dd HH:mm')}
-        />
-      </div>
-      <Divider thickness={1} color="gray100" />
-      <div className={commonWrapper({
-        direction: 'col',
-        padding: '0/12',
-        gap: 16,
-      })}>
-        <div className={commonWrapper({ direction: 'col', gap: 12, align: 'start' })}>
-          <RefundReasonBox label="환불 사유" value={reason} />
-          <RefundReasonBox label="환불 상세 사유" value={detailReason} />
-        </div>
-        <Divider thickness={1} color="gray300" />
-        <div className={commonWrapper({ direction: 'col', gap: 6 })}>
+    <InfoWrapper title="환불 정보" titleType="title4" padding={false}>
+      <CardWrapper
+        padding={false} 
+        gap={16}
+        className={commonWrapper({ direction: 'col', padding: '16/0' })}
+      >
+        <div className={commonWrapper({
+          direction: 'col',
+          padding: '0/12',
+          gap: 6,
+        })}>
           <InfoItem
-            label="총 환불 금액"
-            value={`${paymentPrice.toLocaleString()}원`}
-            labelType="headline2"
-            valueType="headline2"
-            valueColor="red"
+            label="취소 요청일자"
+            value={format(requestDate, 'yyyy.MM.dd HH:mm')}
           />
           <InfoItem
-            label="환불 수단"
-            value={PAYMENT_LABEL[paymentMethod]}
+            label="취소 처리일자"
+            value={format(confirmDate, 'yyyy.MM.dd HH:mm')}
           />
         </div>
-      </div>
-    </CardWrapper>
+        <Divider thickness={1} color="gray100" />
+        <div className={commonWrapper({
+          direction: 'col',
+          padding: '0/12',
+          gap: 16,
+        })}>
+          <div className={commonWrapper({ direction: 'col', gap: 12, align: 'start' })}>
+            <RefundReasonBox label="환불 사유" value={reason} />
+            <RefundReasonBox label="환불 상세 사유" value={detailReason} />
+          </div>
+          <Divider thickness={1} color="gray300" />
+          <div className={commonWrapper({ direction: 'col', gap: 6 })}>
+            <InfoItem
+              label="총 환불 금액"
+              value={`${paymentPrice.toLocaleString()}원`}
+              labelType="headline2"
+              valueType="headline2"
+              valueColor="red"
+            />
+            <InfoItem
+              label="환불 수단"
+              value={PAYMENT_LABEL[paymentMethod]}
+            />
+          </div>
+        </div>
+      </CardWrapper>
+    </InfoWrapper>
   );
 }

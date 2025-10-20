@@ -2,9 +2,7 @@ import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
 import Card from "@/components/common/card/Card";
 import Chips from "@/components/common/chips/Chips";
-import TitleText from "@/components/pages/mypage/common/card/typography/TitleText";
-import SubtitleText from "@/components/pages/mypage/common/card/typography/SubtitleText";
-import DescriptionText from "@/components/pages/mypage/common/card/typography/DescriptionText";
+import Text from "@/components/common/text/Text";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
 import { COUPON_TARGET, DISCOUNT_UNIT } from "@/constants";
 import { PromotionItem as PromotionItemType } from "@/types/mypage/promotion";
@@ -37,13 +35,13 @@ export default function PromotionItem({
 				style={{ opacity: isActive ? 1 : .5 }}
 			>
 				<div className={commonWrapper({ direction: 'col', gap: 4, align: 'start' })}>
-					<TitleText color={isActive ? 'red' : 'gray900'}>
+					<Text type='title1' color={isActive ? 'red' : 'gray900'}>
 						{promotionCouponInfo.discountDegree.toLocaleString()}
 						{DISCOUNT_UNIT[promotionCouponInfo.discountType]}
-					</TitleText>
+					</Text>
 					<div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>
-						<SubtitleText text={promotionInfo.name} />
-						<DescriptionText text={`(최대 ${promotionCouponInfo.availableMaxDiscount.toLocaleString()}원 할인)`} color={isActive ? 'gray900' : 'gray700'} />
+						<Text type='label1'>{promotionInfo.name}</Text>
+						<Text type='body3' color={isActive ? 'gray900' : 'gray700'}>(최대 ${promotionCouponInfo.availableMaxDiscount.toLocaleString()}원 할인)</Text>
 					</div>
 				</div>
 				<div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>

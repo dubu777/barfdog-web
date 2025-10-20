@@ -3,7 +3,6 @@ import {
   MEAL_PLAN,
   SUBSCRIPTION_STATUSES,
   subscriptionPlanInfo,
-  subscriptionStatus,
 } from "@/constants";
 import { HealthConcernType } from "./survey";
 import { UrlObject, ValueOfTuple } from "./common";
@@ -92,51 +91,6 @@ interface calculateOneMealGramsWithVolumeInput {
   selectedVolume?: string | null;
 }
 
-interface DefaultSubscriptionDto {
-  plan: string;
-  dogName: string;
-  countSkipOneTime: number;
-  countSkipOneWeek: number;
-  nextPaymentDate: string;
-  nextPaymentPrice: number;
-  discountCoupon: number;
-  discountGrade: number;
-  overDiscount: number;
-  subscriptionMonth: number;
-  nextDeliveryDate: string | null;
-}
-
-interface SubscriptionDetailDto extends DefaultSubscriptionDto {
-  id: number;
-  subscribeStatus: SubscribeStatus;
-  dogId: number;
-  dogName: string;
-  cancelReason?: null | string;
-  subscribeCount: number;
-  plan: PlanKey;
-  oneMealGramsPerRecipe: string;
-  oneDayRecommendKcal: number;
-  usingMemberCouponId?: null | number;
-  couponName?: null | string;
-  previousOrderConfirmDate?: null | string;
-}
-
-interface SubscriptionDto extends DefaultSubscriptionDto {
-  subscribeId: number;
-  pictureUrl?: null | string;
-  status: SubscribeStatus;
-  startDate: string;
-  packagePrice: number;
-  packageOriginalPrice: number;
-  shippingLeft: number;
-}
-
-interface SubscriptionAddressData {
-  currentAddress: AddressDto;
-  nextAddress: AddressDto;
-  nextDeliveryDate: string;
-}
-
 interface AddressDto {
   deliveryName?: string;
   recipientName?: string;
@@ -146,23 +100,6 @@ interface AddressDto {
   city: string;
   detailAddress: string;
   request?: string;
-}
-
-interface SubscriptionListData {
-  itemNames: string;
-  recipeNames: string;
-  subscribeDto: SubscriptionDto;
-}
-
-interface BenefitDto {
-  benefitExpiredDate: string;
-  benefitId: number;
-  benefitName: string;
-  benefitRequestDate?: null | string | Date;
-  benefitStatus: string;
-  benefitUsedDate?: null | string | Date;
-  benefitValue: number;
-  subscribeId: number;
 }
 
 interface PlanInfo {
@@ -288,12 +225,6 @@ interface SubscriptionValues {
   rawFoods: RawFoodFormItem[] | [];
 }
 
-type BenefitStatus = "AVAILABLE" | "REQUESTED" | "USED";
-
-type SubscriptionSkipType = "ONCE" | "WEEK";
-
-type SubscribeStatus = keyof typeof subscriptionStatus;
-
 type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";
 
 type PlanName = keyof typeof subscriptionPlanInfo;
@@ -316,18 +247,10 @@ export type {
   calculateOneMealGramsInput,
   calculateOneMealGramsOutput,
   calculateOneMealGramsWithVolumeInput,
-  SubscriptionDetailDto,
-  SubscriptionDto,
-  SubscriptionAddressData,
   AddressDto,
-  SubscriptionListData,
-  BenefitDto,
   PaymentBody,
   SubscriptionResponse,
   SubscriptionData,
-  BenefitStatus,
-  SubscriptionSkipType,
-  SubscribeStatus,
   PlanKey,
   PlanName,
   PlanInfo,

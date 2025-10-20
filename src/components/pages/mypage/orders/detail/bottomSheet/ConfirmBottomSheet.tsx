@@ -6,7 +6,7 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import ListDivider from "@/components/common/listDivider/ListDivider";
 import Text from "@/components/common/text/Text";
-import OrderItem from "../../detail/general/orderItem/OrderItem";
+import GeneralItem from "../card/general/GeneralItem";
 import { useMultiSelect } from "@/hooks/useMultiSelect";
 import { OrderItem as OrderItemType } from "@/types/mypage/orders";
 
@@ -84,7 +84,7 @@ export default function ConfirmBottomSheet({
               isChecked={isSelected(orderItem.itemId)}
               onToggle={() => toggleItem(orderItem.itemId)}
             >
-              <OrderItem
+              <GeneralItem
                 orderItem={orderItem}
                 showPrice={false}
               />

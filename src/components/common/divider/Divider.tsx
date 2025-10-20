@@ -1,11 +1,12 @@
 import React from 'react';
 import * as styles from './Divider.css';
 import { COLORS } from '@/constants/style';
+import { TextColor } from '@/types/typography';
 
 
 interface DividerProps {
   thickness?: 1 | 2 | 4 | 6 | 8 | 12;
-  color?: keyof typeof COLORS;
+  color?: TextColor;
   direction?: 'horizontal' | 'vertical';
   style?: React.CSSProperties;
 }

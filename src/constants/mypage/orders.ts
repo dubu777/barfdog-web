@@ -27,14 +27,14 @@ const ORDER_TYPE_LABEL = {
 const ORDER_TYPE_LIST = toLabelValueList(ORDER_TYPE);
 
 // 유틸리티 함수들
-export const getServerParam = (orderType: keyof typeof ORDER_TYPE) => 
+const getServerParam = (orderType: keyof typeof ORDER_TYPE) => 
   ORDER_TYPE_TO_SERVER_PARAM[orderType];
 
-export const getOrderTypeFromServerParam = (serverParam: keyof typeof SERVER_PARAM_TO_ORDER_TYPE) => 
+const getOrderTypeFromServerParam = (serverParam: keyof typeof SERVER_PARAM_TO_ORDER_TYPE) => 
   SERVER_PARAM_TO_ORDER_TYPE[serverParam];
 
 // 미노출 주문 상태
-export const HIDDEN_ORDER_STATUS = {
+const HIDDEN_ORDER_STATUS = {
   BEFORE_PAYMENT: '결제 전', 
   CANCEL_PAYMENT: '결제 취소', 
   CANCEL_RESERVED_PAYMENT: '예약결제 취소', 
@@ -45,7 +45,7 @@ export const HIDDEN_ORDER_STATUS = {
 } as const;
 
 // 노출 주문 상태
-export const VISIBLE_ORDER_STATUS = {
+const VISIBLE_ORDER_STATUS = {
   PAYMENT_DONE: '결제완료',
   DELIVERY_BEFORE_COLLECTION: '배송 예정',
   PRODUCING: '생산 중',
@@ -118,7 +118,11 @@ export {
   SERVER_PARAM_TO_ORDER_TYPE,
   ORDER_TYPE_LIST,
   ORDER_TYPE_LABEL,
+  HIDDEN_ORDER_STATUS,
+  VISIBLE_ORDER_STATUS,
   HIDDEN_STATUS_LIST,
   VISIBLE_STATUS_LIST,
   DELIVERY_COMPANY_CODE,
+  getServerParam,
+  getOrderTypeFromServerParam,
 };
