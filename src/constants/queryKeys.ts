@@ -26,6 +26,11 @@ const queryKeys = {
   },
   MYPAGE: {
     BASE: "mypage",
+    SUBSCRIPTION: {
+      BASE: "subscription",
+      GET_SUBSCRIPTION_LIST: "getSubscriptionList",
+      GET_SUBSCRIPTION_DETAIL: "getSubscriptionDetail",
+    },
     ORDERS: {
       BASE: "orders",
       GET_ORDER_LIST: "getOrderList",
@@ -37,7 +42,6 @@ const queryKeys = {
       BASE: "common",
       GET_MYPAGE_INFO: "getMyPageInfo",
       GET_MYPAGE_BANNER: "getMyPageBanner",
-      GET_PAYMENT_LIST: "getPaymentList",
     },
     ACCOUNT: {
       BASE: "account",
