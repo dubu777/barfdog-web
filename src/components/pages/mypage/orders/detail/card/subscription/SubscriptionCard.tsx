@@ -1,16 +1,16 @@
 import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/common/button/Button";
-import CardWrapper from "../../common/card/CardWrapper";
-import OrderStatus from "../../common/card/OrderStatus";
-import OrderImage from "../../common/card/OrderImage";
-import OrderPrice from "../../common/card/OrderPrice";
-import OrderName from "../../common/card/OrderName";
-import OrderCancelRequestModal from "../modal/OrderCancelRequestModal";
-import OrderCancelAlertModal from "../modal/OrderCancelAlertModal";
+import Text from "@/components/common/text/Text";
+import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
+import CardImage from "@/components/pages/mypage/common/card/image/CardImage";
+import OrderStatus from "../../../common/card/OrderStatus";
+import OrderPrice from "../../../common/card/OrderPrice";
+import OrderCancelRequestModal from "../../modal/OrderCancelRequestModal";
+import OrderCancelAlertModal from "../../modal/OrderCancelAlertModal";
 import RecipesDetail from "./RecipesDetail";
 import useModal from "@/hooks/useModal";
-import { OrderInfo, RecipeInfo, VisibleOrderStatus } from "@/types/mypage/orders";
 import { PlanKey } from "@/types";
+import { OrderInfo, RecipeInfo, VisibleOrderStatus } from "@/types/mypage/orders";
 import { isOrderStatusStepBelow, isOrderStatusStepEqual } from "@/utils/mypage/orders/orderStatusStep";
 
 interface SubscriptionCardProps {
@@ -31,19 +31,18 @@ export default function SubscriptionCard({
 
   return (
     <>
-    
       <CardWrapper>
         <OrderStatus
           orderStatus={orderInfo.orderStatus}
           plan={orderInfo.plan as PlanKey}
         />
         <div className={commonWrapper({ gap: 12, justify: 'start', align: 'start' })}>
-          <OrderImage
-            thumbnailUrl={recipeInfo.thumbnailUrl}
-            itemName={recipeInfo.recipeName}
+          <CardImage 
+            imageUrl={recipeInfo.thumbnailUrl} 
+            name={recipeInfo.recipeName}       
           />
           <div className={commonWrapper({ direction: 'col', gap: 4, justify: 'start', align: 'start' })}>
-            <OrderName name={orderInfo.dogName ?? ''} />
+            <Text type="headline3">{orderInfo.dogName ?? ''}</Text>
             <RecipesDetail 
               recipeInfo={recipeInfo}
               orderInfo={orderInfo}

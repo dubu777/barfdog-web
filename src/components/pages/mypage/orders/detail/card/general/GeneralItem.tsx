@@ -2,28 +2,27 @@ import { Fragment } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import OrderImage from "../../../common/card/OrderImage";
-import OrderName from "../../../common/card/OrderName";
+import CardImage from "@/components/pages/mypage/common/card/image/CardImage";
 import OrderPrice from "../../../common/card/OrderPrice";
 import { OrderItem as OrderItemType } from "@/types/mypage/orders";
 
-interface OrderItemProps {
+interface GeneralItemProps {
   orderItem: OrderItemType;
   showPrice?: boolean;
 }
 
-export default function OrderItem({ 
+export default function GeneralItem({ 
   orderItem,
   showPrice = true,
-}: OrderItemProps) {
+}: GeneralItemProps) {
   return (
     <div className={commonWrapper({ gap: 12, justify: 'start', align: 'start' })}>
-      <OrderImage
-        thumbnailUrl={orderItem.thumbnailUrl}
-        itemName={orderItem.itemName}
+      <CardImage 
+        imageUrl={orderItem.thumbnailUrl ?? ''} 
+        name={orderItem.itemName ?? ''} 
       />
       <div className={commonWrapper({ direction: 'col', gap: 4, justify: 'start', align: 'start' })}>
-        <OrderName name={orderItem.itemName} />
+        <Text type="headline3">{orderItem.itemName}</Text>
         <Text type="body3" color="gray700">{orderItem.amount}개</Text>
         {orderItem.selectOptionList.length > 0 && orderItem.selectOptionList.map((option) => (
           <Fragment key={option.optionName}>

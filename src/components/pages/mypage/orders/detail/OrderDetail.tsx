@@ -1,9 +1,9 @@
 "use client";
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
-import SubscriptionCard from "./subscription/SubscriptionCard";
-import GeneralCard from "./general/GeneralCard";
+import SubscriptionCard from "./card/subscription/SubscriptionCard";
+import GeneralCard from "./card/general/GeneralCard";
 import InfoText from "@/components/common/typography/infoText/InfoText";
+import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import BasicInfo from "./info/basicInfo/BasicInfo";
 import AddressInfo from "./info/addressInfo/AddressInfo";
 import PaymentInfo from "./info/paymentInfo/PaymentInfo";
@@ -23,18 +23,16 @@ export default function OrderDetail({ orderId, orderType }: OrderDeliveryDetailP
   const { orderInfo, recipeInfo, orderItemInfoList } = data;
   const orderStatus = orderInfo.orderStatus;
 
+  // TODO: 하단 기능 로직 구현 필요
   const handleCancelOrder = () => {
-    // TODO: 주문취소 기능 추가
     console.log('주문취소');
   };
 
   const handleConfirm = (selectedItems: OrderItemType[]) => {
-    // TODO: 구매확정 기능 추가
     console.log('구매확정', selectedItems);
   };
 
   const handleDeliveryTracking = () => {
-    // TODO: 배송조회 기능 추가
     console.log('배송조회');
   };
   
@@ -56,9 +54,7 @@ export default function OrderDetail({ orderId, orderType }: OrderDeliveryDetailP
         isPackage={orderInfo.package}
         merchantUid={orderInfo.merchantUid}
       />
-
-      <article className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
-        <Text type="title4">주문 상품</Text>
+      <InfoWrapper title="주문 상품" titleType="title4" padding={false}>
         {orderType === 'SUBSCRIPTION' && recipeInfo && (
           <SubscriptionCard
             orderInfo={orderInfo}
@@ -88,51 +84,39 @@ export default function OrderDetail({ orderId, orderType }: OrderDeliveryDetailP
             />
           </div>
         )}
-      </article>
+      </InfoWrapper>
       {canShowDeliveryInfo(orderStatus as VisibleOrderStatus) && 
         (orderInfo.deliveryNumber && orderInfo.deliveryCode) && (
-          <article className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
-            <Text type="title4">배송 조회</Text>
-            <DeliveryInfo 
-              deliveryNumber={orderInfo.deliveryNumber}
-              deliveryCode={orderInfo.deliveryCode}
-              onDeliveryTracking={handleDeliveryTracking}
-            />
-          </article>
+          <DeliveryInfo 
+            deliveryNumber={orderInfo.deliveryNumber}
+            deliveryCode={orderInfo.deliveryCode}
+            onDeliveryTracking={handleDeliveryTracking}
+          />
       )}
-      <article className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
-        <Text type="title4">배송 정보</Text>
-          <AddressInfo
-            userName={orderInfo.name}
-            phoneNumber={orderInfo.phone}
-            detailAddress={orderInfo.detailAddress}
-            street={orderInfo.street}
-          />
-      </article>
-      <article className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
-        <Text type="title4">결제 정보</Text>
-        <PaymentInfo
-          orderPrice={orderInfo.orderPrice}
-          paymentPrice={orderInfo.paymentPrice}
-          deliveryPrice={orderInfo.deliveryPrice}
-          discountCoupon={orderInfo.discountCoupon}
-          discountReward={orderInfo.discountReward}
-          discountGrade={orderInfo.discountGrade ?? 0}
-          paymentMethod={orderInfo.paymentMethod}
-        />
-      </article>
+      <AddressInfo
+        userName={orderInfo.name}
+        phoneNumber={orderInfo.phone}
+        detailAddress={orderInfo.detailAddress}
+        street={orderInfo.street}
+      />
+      <PaymentInfo
+        orderPrice={orderInfo.orderPrice}
+        paymentPrice={orderInfo.paymentPrice}
+        deliveryPrice={orderInfo.deliveryPrice}
+        discountCoupon={orderInfo.discountCoupon}
+        discountReward={orderInfo.discountReward}
+        discountGrade={orderInfo.discountGrade ?? 0}
+        paymentMethod={orderInfo.paymentMethod}
+      />
       {canShowRefundInfo(orderStatus as VisibleOrderStatus) && (
-        <article className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
-          <Text type="title4">환불 정보</Text>
-          <RefundInfo 
-            requestDate={orderInfo.cancelRequestDate}
-            confirmDate={orderInfo.cancelConfirmDate}
-            reason={orderInfo.cancelReason}
-            detailReason={orderInfo.cancelDetailReason}
-            paymentMethod={orderInfo.paymentMethod}
-            paymentPrice={orderInfo.paymentPrice}
-          />
-        </article>
+        <RefundInfo 
+          requestDate={orderInfo.cancelRequestDate}
+          confirmDate={orderInfo.cancelConfirmDate}
+          reason={orderInfo.cancelReason}
+          detailReason={orderInfo.cancelDetailReason}
+          paymentMethod={orderInfo.paymentMethod}
+          paymentPrice={orderInfo.paymentPrice}
+        />
       )}
     </section>
   );

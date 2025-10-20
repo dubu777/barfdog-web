@@ -64,7 +64,7 @@ interface UnifiedOrderInfo {
   merchantUid: string;
   orderDate: string;
   paymentPrice: number;
-  orderStatus: string;
+  orderStatus: OrderStatus;
   
   // 구독
   subscribeId?: number;
@@ -231,6 +231,7 @@ export type {
   OrderItem,
   OrderInfo,
   RecipeInfo,
+  ItemNameList,
   OrderDetail,
   RawGeneralOrderDetail,
   RawSubscriptionOrderDetail,

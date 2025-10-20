@@ -1,17 +1,17 @@
 import { Fragment } from "react";
 import { commonWrapper } from "@/styles/common.css";
-import useModal from "@/hooks/useModal";
 import ListDivider from "@/components/common/listDivider/ListDivider";
 import Button from "@/components/common/button/Button";
-import CardWrapper from "../../common/card/CardWrapper";
-import OrderStatus from "../../common/card/OrderStatus";
-import OrderCancelRequestModal from "../modal/OrderCancelRequestModal";
-import ExchangeReturnGuideBottomSheet from "../bottomSheet/ExchangeReturnGuideBottomSheet";
-import ConfirmBottomSheet from "../bottomSheet/ConfirmBottomSheet";
-import OrderCancelAlertModal from "../modal/OrderCancelAlertModal";
-import OrderItem from "./orderItem/OrderItem";
-import { OrderInfo, OrderItem as OrderItemType, VisibleOrderStatus } from "@/types/mypage/orders";
+import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
+import OrderStatus from "../../../common/card/OrderStatus";
+import OrderCancelRequestModal from "../../modal/OrderCancelRequestModal";
+import OrderCancelAlertModal from "../../modal/OrderCancelAlertModal";
+import ExchangeReturnGuideBottomSheet from "../../bottomSheet/ExchangeReturnGuideBottomSheet";
+import ConfirmBottomSheet from "../../bottomSheet/ConfirmBottomSheet";
+import GeneralItem from "./GeneralItem";
+import useModal from "@/hooks/useModal";
 import { isOrderStatusStepBelow, isOrderStatusStepEqual } from "@/utils/mypage/orders/orderStatusStep";
+import { OrderInfo, OrderItem as OrderItemType, VisibleOrderStatus } from "@/types/mypage/orders";
 
 interface GeneralCardProps {
   orderInfo: OrderInfo;
@@ -44,7 +44,7 @@ export default function GeneralCard({
                 <OrderStatus
                   orderStatus={orderItem.status}
                 />
-                <OrderItem 
+                <GeneralItem 
                   orderItem={orderItem}
                 />
                 {isItemDeliveryDone && 
