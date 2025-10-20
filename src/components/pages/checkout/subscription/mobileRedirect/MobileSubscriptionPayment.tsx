@@ -6,7 +6,6 @@ import Spinner from "@/components/common/spinner/Spinner";
 import { useToastStore } from "@/store/useToastStore";
 import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
 import { useValidateSubscriptionPayment } from "@/api/checkout/mutations/subscription/useValidateSubscriptionPayment";
-import { useInvalidSubscriptionPayment } from "@/api/checkout/mutations/subscription/useInvalidSubscriptionPayment";
 import { useSuccessSubscriptionPayment } from "@/api/checkout/mutations/subscription/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/checkout/mutations/subscription/useFailSubscriptionPayment";
 import { parseSubscriptionParams } from "@/utils/checkout/redirectParams";
@@ -22,7 +21,6 @@ export default function MobileSubscriptionPayment() {
   const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment();
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
-  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment();
   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
   const { mutateAsync: cancelPayment } = useCancelSubscriptionPayment();
@@ -114,7 +112,6 @@ export default function MobileSubscriptionPayment() {
           router.push(`/checkout/subscription/${subscribeId}/completed`);
         } else {
           // 재 검증하는 코드
-          // await invalidPayment({ orderId, body: finalBody });
           await failPayment(orderId);
           router.push(CHECKOUT_ROUTES.SUBSCRIPTION.fail);
         }
@@ -131,7 +128,6 @@ export default function MobileSubscriptionPayment() {
     addToast,
     createIamportPayment,
     validatePayment,
-    invalidPayment,
     successPayment,
     failPayment,
   ]);

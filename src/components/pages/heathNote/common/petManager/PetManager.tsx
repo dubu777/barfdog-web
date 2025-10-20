@@ -10,7 +10,6 @@ import { useToastStore } from "@/store/useToastStore";
 import { useMemo } from "react";
 
 export default function PetManager() {
-  const router = useRouter();
   const { data } = useGetPetList();
   const { mutate: updateRepresentative } = useUpdateRepresentativePet();
   const { addToast } = useToastStore();
@@ -25,10 +24,6 @@ export default function PetManager() {
     const others = visibleDogs.filter((p) => !p.isRepresentative);
     return [...reps, ...others];
   }, [visibleDogs]);
-
-  const handleCreatePet = () => {
-    router.push("/pet/create?source=health-note");
-  };
 
   const handleRepresentative = (petId: number) => {
     updateRepresentative(petId, {
@@ -46,7 +41,6 @@ export default function PetManager() {
       pets={sortedVisibleDogs}
       totalCount={data.length}
       loadMoreRef={loadMoreRef}
-      onCreate={handleCreatePet}
       source="health-note"
       renderCardActions={(pet) => {
         if (pet.isRepresentative) return null;

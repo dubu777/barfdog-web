@@ -38,9 +38,7 @@ const AddressContent = ({
       {addressData ? (
         <div className={styles.addressContent}>
           <div className={styles.addressInfo}>
-            <Text type="headline2">
-              {addressData.deliveryName}
-            </Text>
+            <Text type="headline2">{addressData.deliveryName}</Text>
             {isDefault && (
               <Chips variant="outlined" borderRadius="lg">
                 기본배송지

@@ -5,30 +5,24 @@ import AddIcon from "/public/images/icons/add.svg";
 interface CreateButtonProps {
   text?: string;
   url?: string;
-  routeType?: "router" | "location";
   onClick?: () => void;
 }
 
-const CreateButton = ({
+export default function CreateButton({
   text = "새로운 아이 등록하기",
   url,
-  routeType = "router",
   onClick,
-}: CreateButtonProps) => {
+}: CreateButtonProps) {
   const router = useRouter();
 
-  const handleNavigateToCreateDog = () => {
+  const handleClick = () => {
     if (onClick) {
       onClick();
       return;
     }
 
     if (url) {
-      if (routeType === "router") {
-        window.location.href = url;
-      } else {
-        router.push(url);
-      }
+      router.push(url);
     }
   };
 
@@ -40,11 +34,9 @@ const CreateButton = ({
       fullWidth
       icon={AddIcon}
       iconSize={24}
-      onClick={handleNavigateToCreateDog}
+      onClick={handleClick}
     >
       {text}
     </Button>
   );
-};
-
-export default CreateButton;
+}

@@ -26,7 +26,6 @@ export function createSubscriptionStrategy(deps: {
     orderId: number;
     impUid: string;
   }) => Promise<boolean>;
-  invalidPayment: (args: { orderId: number; body: any }) => Promise<any>;
   successPayment: (args: { orderId: number; body: any }) => Promise<any>;
   failPayment: (orderId: number) => Promise<any>;
 }): CheckoutStrategy<
@@ -116,7 +115,6 @@ export function createSubscriptionStrategy(deps: {
       if (isValid) {
         await deps.successPayment({ orderId: saveOrder.id, body: finalBody });
       } else {
-        await deps.invalidPayment({ orderId: saveOrder.id, body: finalBody });
         await deps.failPayment(saveOrder.id);
       }
     },

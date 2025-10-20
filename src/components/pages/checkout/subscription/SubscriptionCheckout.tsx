@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 // API & Data Fetching
 import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
 import { useValidateSubscriptionPayment } from "@/api/checkout/mutations/subscription/useValidateSubscriptionPayment";
-import { useInvalidSubscriptionPayment } from "@/api/checkout/mutations/subscription/useInvalidSubscriptionPayment";
 import { useSuccessSubscriptionPayment } from "@/api/checkout/mutations/subscription/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/checkout/mutations/subscription/useFailSubscriptionPayment";
 
@@ -50,7 +49,6 @@ import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { useGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/useGetSubscriptionCheckoutSheet";
 import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
 import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
-import { commonWrapper } from "@/styles/common.css";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 interface SubscriptionOrderContainerProps {
@@ -87,7 +85,6 @@ export default function SubscriptionCheckout({
   const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment(); // 아임포트 구독 결제 생성 - next.js 서버
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
-  const { mutateAsync: invalidPayment } = useInvalidSubscriptionPayment(); // 논의후 삭제 고려, validatePayment에서 검증 실패한 경우 호출하여 재 검증 후 성공시 검증 실패를 취소하고 성공 처리하는 로직, 정상적으로 동작하는지 테스트도 필요함. 필요성을 모르겠음
   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
 
@@ -99,7 +96,6 @@ export default function SubscriptionCheckout({
         isMobile: isMobileDevice,
         createIamportPayment: (body) => createIamportPayment(body),
         validatePayment: (args) => validatePayment(args),
-        invalidPayment: (args) => invalidPayment(args),
         successPayment: (args) => successPayment(args),
         failPayment: (orderId) => failPayment(orderId),
       }),
@@ -108,7 +104,6 @@ export default function SubscriptionCheckout({
       isMobileDevice,
       createIamportPayment,
       validatePayment,
-      invalidPayment,
       successPayment,
       failPayment,
     ]

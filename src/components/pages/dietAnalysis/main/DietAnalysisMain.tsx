@@ -22,10 +22,6 @@ export default function DietAnalysisMain() {
     rootMargin: "50px",
   });
 
-  const handleCreatePet = () => {
-    router.push("/pet/create?source=diet-analysis");
-  };
-
   const goSurvey = (pet: Pet) => {
     window.location.href = `/diet-analysis/survey?petName=${encodeURIComponent(
       pet.name
@@ -38,7 +34,7 @@ export default function DietAnalysisMain() {
   };
 
   if (data.length === 0) {
-    return <EmptyPetList onCreate={handleCreatePet} />;
+    return <EmptyPetList url={"/pet/create?source=diet-analysis"} />;
   }
 
   return (
@@ -47,7 +43,6 @@ export default function DietAnalysisMain() {
         pets={visibleDogs}
         totalCount={data.length}
         loadMoreRef={loadMoreRef}
-        onCreate={handleCreatePet}
         source="diet-analysis"
         renderCardActions={(pet) => {
           const isRenewalSurvey = pet.recipeSurveyId != null;

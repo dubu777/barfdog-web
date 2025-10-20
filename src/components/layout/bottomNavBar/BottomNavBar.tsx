@@ -83,8 +83,12 @@ export default function BottomNavBar({
             type="caption"
             color={
               menu.url === "/"
-                ? pathname === "/" ? "red" : "gray600"
-                : pathname.startsWith(menu.url) ? "red" : "gray600"
+                ? pathname === "/"
+                  ? "red"
+                  : "gray600"
+                : pathname.startsWith(menu.url)
+                ? "red"
+                : "gray600"
             }
             block
           >

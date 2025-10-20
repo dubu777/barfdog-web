@@ -3,12 +3,13 @@ import { commonWrapper } from "@/styles/common.css";
 import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
 import Button from "@/components/common/button/Button";
 import * as styles from "./DietAnalysisMain.css";
+import Link from "next/link";
 
 interface EmptyPetListProps {
-  onCreate: () => void;
+  url: string;
 }
 
-export default function EmptyPetList({ onCreate }: EmptyPetListProps) {
+export default function EmptyPetList({ url }: EmptyPetListProps) {
   return (
     <div className={styles.emptyPetContainer}>
       <EmptyIcon />
@@ -25,9 +26,11 @@ export default function EmptyPetList({ onCreate }: EmptyPetListProps) {
         <br />
         반려견을 등록해보세요
       </Text>
-      <Button variant="solid" intent="secondary" size="md" onClick={onCreate}>
-        반려견 등록하기
-      </Button>
+      <Link href={url}>
+        <Button variant="solid" intent="secondary" size="md">
+          반려견 등록하기
+        </Button>
+      </Link>
     </div>
   );
 }

@@ -58,25 +58,6 @@ const saveSubscriptionOrder = async ({
   throw new Error(message);
 };
 
-// 구독 결제 주문 정보 저장 - 레거시
-const saveSubscriptionOrder2 = async ({
-  subscribeId,
-  body,
-}: {
-  subscribeId: number;
-  body: SaveSubscriptionOrderRequest;
-}): Promise<SaveOrderResponse> => {
-  const { data } = await axiosInstance.post(
-    `/api/orders/subscribe/${subscribeId}`,
-    body
-  );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
-  throw new Error(message);
-};
-
 // 주문 결제 검증: 요청 결제 금액과 실 결제 금액 비교
 const validateSubscriptionPayment = async ({
   orderId,
@@ -111,36 +92,6 @@ const successSubscriptionPayment = async ({
   throw new Error(message);
 };
 
-// 정상 결제 요청: 최종 결제 완료 - 레거시
-const successSubscriptionPayment2 = async ({
-  orderId,
-  body,
-}: {
-  orderId: number;
-  body: SuccessSubscriptionPaymentRequest;
-}) => {
-  const { data } = await axiosInstance.post(
-    `/api/orders/${orderId}/subscribe/success`,
-    body
-  );
-  return data;
-};
-
-// 주문 결제 검증에 실패 하였을때 재검증 하는 로직.
-const invalidSuccessSubscriptionPayment = async ({
-  orderId,
-  body,
-}: {
-  orderId: number;
-  body: SuccessSubscriptionPaymentRequest; // 결제 취소 시에도 동일한 데이터 구조 사용 (추가 error_msg, error_code 포함)
-}) => {
-  const { data } = await axiosInstance.post(
-    `/api/orders/${orderId}/subscribe/success/invalidPayment`,
-    body
-  );
-  return data;
-};
-
 // 구독 결제 실패 - v2
 const failSubscriptionPayment = async (orderId: number) => {
   const { data } = await axiosInstance.post(
@@ -153,14 +104,6 @@ const failSubscriptionPayment = async (orderId: number) => {
   throw new Error(message);
 };
 
-// 구독 결제 실패 - 레거시
-const failSubscriptionPayment2 = async (orderId: number) => {
-  const { data } = await axiosInstance.post(
-    `/api/orders/${orderId}/subscribe/fail`
-  );
-  return data;
-};
-
 // 구독 결제 취소 - v2
 const cancelSubscriptionPayment = async (orderId: number) => {
   const { data } = await axiosInstance.post(
@@ -171,14 +114,6 @@ const cancelSubscriptionPayment = async (orderId: number) => {
   }
   const message = data.detailMessage ?? "결제 취소 처리에 실패했습니다";
   throw new Error(message);
-};
-
-// 구독 결제 취소 - 레거시
-const cancelSubscriptionPayment2 = async (orderId: number) => {
-  const { data } = await axiosInstance.post(
-    `/api/v2/orders/${orderId}/subscription/cancel`
-  );
-  return data;
 };
 
 // 일반 결제 주문 정보 조회 - v2
@@ -218,19 +153,6 @@ const saveGeneralOrder = async (
   throw new Error(message);
 };
 
-// 일반 결제 주문 정보 저장 - 레거시
-const saveGeneralOrder2 = async (
-  body: SaveGeneralOrderRequest
-): Promise<SaveOrderResponse> => {
-  const { data } = await axiosInstance.post("/api/orders/general", body);
-
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
-  throw new Error(message);
-};
-
 // 일반 결제 주문 성공 - v2
 const successGeneralPayment = async ({
   id,
@@ -250,33 +172,11 @@ const successGeneralPayment = async ({
   throw new Error(message);
 };
 
-// 일반 결제 주문 성공 - 레거시
-const successGeneralPayment2 = async ({
-  id,
-  body,
-}: {
-  id: number;
-  body: SuccessGeneralPaymentRequest;
-}): Promise<SuccessGeneralOrderResponse> => {
-  const { data } = await axiosInstance.post(
-    `/api/orders/${id}/general/success`,
-    body
-  );
-  return data;
-};
-
 // 일반 결제 주문 실패 - v2
 const failGeneralPayment = async (id: number) => {
   const { data } = await axiosInstance.post(
     `/api/v2/orders/${id}/general/fail`
   );
-
-  return data;
-};
-
-// 일반 결제 주문 실패 - 레거시
-const failGeneralPayment2 = async (id: number) => {
-  const { data } = await axiosInstance.post(`/api/orders/${id}/general/fail`);
 
   return data;
 };
@@ -290,13 +190,6 @@ const cancelGeneralPayment = async (id: number) => {
   return data;
 };
 
-// 일반 결제 주문 취소
-const cancelGeneralPayment2 = async (id: number) => {
-  const { data } = await axiosInstance.post(`/api/orders/${id}/general/cancel`);
-
-  return data;
-};
-
 export {
   getSubscriptionOrder,
   getGeneralOrder,
@@ -306,11 +199,9 @@ export {
   saveSubscriptionOrder,
   validateSubscriptionPayment,
   successSubscriptionPayment,
-  invalidSuccessSubscriptionPayment,
   failSubscriptionPayment,
   cancelGeneralPayment,
   cancelSubscriptionPayment,
   getSubscriptionCheckoutSheet,
   getGeneralCheckoutSheet,
-  // saveSubscriptionCheckout,
 };

@@ -15,7 +15,6 @@ export interface PetListProps {
   /** 스크롤 끝 감지용 ref */
   loadMoreRef: RefObject<HTMLDivElement>;
   /** 등록 모달 토글 핸들러 */
-  onCreate: () => void;
   renderCardActions?: (pet: Pet) => ReactNode;
   source: "health-note" | "diet-analysis";
 }
@@ -24,7 +23,6 @@ export default function PetList({
   pets,
   totalCount,
   loadMoreRef,
-  onCreate,
   renderCardActions,
   source,
 }: PetListProps) {
@@ -39,7 +37,10 @@ export default function PetList({
         minHeight: "fullWithHeader",
       })}
     >
-      <CreateButton text="새로운 아이 등록하기" onClick={onCreate} />
+      <CreateButton
+        text="새로운 아이 등록하기"
+        url={`/pet/create?source=${source}`}
+      />
       <div
         className={commonWrapper({
           direction: "col",
@@ -47,20 +48,20 @@ export default function PetList({
           paddingBottom: 85,
         })}
       >
-        {pets.map((item) => {
+        {pets.map((pet) => {
           return (
             <PetCard
-              key={item.id}
-              petId={item.id}
-              profileImageUrl={item.displayImageUrl?.url ?? null}
-              name={item.name}
-              breedInfo={item.breedInfo}
-              gender={item.gender}
-              birthDay={item.birthInfo.birthDay}
-              isSubscribing={item.isSubscribing}
-              isRepresentative={item.isRepresentative}
+              key={pet.id}
+              petId={pet.id}
+              profileImageUrl={pet.displayImageUrl?.url ?? null}
+              name={pet.name}
+              breedInfo={pet.breedInfo}
+              gender={pet.gender}
+              birthDay={pet.birthInfo.birthDay}
+              isSubscribing={pet.isSubscribing}
+              isRepresentative={pet.isRepresentative}
               source={source}
-              actionSlot={renderCardActions ? renderCardActions(item) : null}
+              actionSlot={renderCardActions ? renderCardActions(pet) : null}
             />
           );
         })}
