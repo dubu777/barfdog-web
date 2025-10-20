@@ -4,10 +4,11 @@ import MainInformation from "@/components/pages/mypage/main/mainInformation/Main
 import MainBanner from "@/components/pages/mypage/main/mainBanner/MainBanner";
 import MainMenus from "@/components/pages/mypage/main/mainMenus/MainMenus";
 import Spinner from "@/components/common/spinner/Spinner";
+import { marginStyles } from "@/styles/common.css";
 
 export default function MyPageMain() {
   return (
-    <section style={{ marginBottom: '60px' }}>
+    <section className={marginStyles({ bottom: 60 })}>
       <ErrorBoundary fallback={<div>회원 정보 로딩 실패</div>}>
         <Suspense fallback={<Spinner />}>
           <MainInformation />
@@ -21,4 +22,4 @@ export default function MyPageMain() {
       <MainMenus />
     </section>
   );
-};
+}

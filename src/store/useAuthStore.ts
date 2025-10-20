@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 interface AuthStore {
-  signinEmail: string | null;
+  loginEmail: string | null;
   setSigninEmail: (email: string) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  signinEmail: null,
-  setSigninEmail: (signinEmail) => set({ signinEmail }),
+  loginEmail: null,
+  setSigninEmail: (loginEmail) => set({ loginEmail }),
 }));

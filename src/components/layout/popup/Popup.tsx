@@ -1,14 +1,19 @@
-'use client';
-import {useEffect, useMemo} from "react";
+"use client";
+import { useLayoutEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import * as styles from './Popup.css';
+import * as styles from "./Popup.css";
 import { useGetMainBannerInfo } from "@/api/main/queries/useGetMainBannerInfo";
 import { PopupBanner, PopupPosition } from "@/types";
 import { useMainStore } from "@/store/useMainStore";
 import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
 import Text from "@/components/common/text/Text";
 import useDeviceState from "@/hooks/useDeviceState";
+
+interface PopupProps {
+  /** 서버에서 주입되는 초기 숨김 ID 목록 */
+  initialHiddenPopupIds: number[];
+}
 
 const positionStyle = (
   popup: PopupBanner,
@@ -20,7 +25,7 @@ const positionStyle = (
   const verticalGap = 30;
   const scaleStep = 0.075;
   const baseScale = 1;
-  
+
   // 공통 계산값
   const verticalOffset = samePositionIndex * verticalGap;
   const scale = baseScale - samePositionIndex * scaleStep;
@@ -30,7 +35,7 @@ const positionStyle = (
   if (isMobileWidth) {
     return {
       top: `calc(50% - ${verticalOffset}px)`,
-      left: '50%',
+      left: "50%",
       transform: `translate(-50%, -50%) scale(${scale})`,
     };
   }
@@ -52,7 +57,7 @@ const positionStyle = (
     },
     MID: {
       top: `calc(45% - ${verticalOffset}px)`,
-      left: '50%',
+      left: "50%",
       transform: `translate(-50%, -50%) scale(${scale})`,
     },
   };
@@ -60,9 +65,8 @@ const positionStyle = (
   return positionStyles[popup.position];
 };
 
-export default function Popup() {
+export default function Popup({ initialHiddenPopupIds }: PopupProps) {
   const { isMobileWidth } = useDeviceState();
-
 
   const { data: mainInfoData, isLoading, isError } = useGetMainBannerInfo();
   const {
@@ -74,14 +78,18 @@ export default function Popup() {
   } = useMainStore();
 
   // 숨겨진 팝업 초기화 (최초 한 번만 실행되도록 설정)
-  useEffect(() => {
-    initializeHiddenPopups();
-  }, [initializeHiddenPopups]);
+  useLayoutEffect(() => {
+    initializeHiddenPopups(initialHiddenPopupIds);
+  }, [initializeHiddenPopups, initialHiddenPopupIds]);
+
+  const effectiveHiddenIds = hiddenPopupIds.length
+    ? hiddenPopupIds
+    : initialHiddenPopupIds;
 
   // 숨겨진 팝업 및 닫은 팝업 ID
-    const allClosedIds = useMemo(() => {
-    return new Set([...hiddenPopupIds, ...closedPopups]);
-  }, [hiddenPopupIds, closedPopups]);
+  const allClosedIds = useMemo(() => {
+    return new Set([...effectiveHiddenIds, ...closedPopups]);
+  }, [effectiveHiddenIds, closedPopups]);
 
   // visiblePopupList 를 position별로 그룹화하고 같은 position 내에서 leakedOrder 기준으로 정렬
   const visiblePopupList = useMemo(() => {
@@ -89,7 +97,7 @@ export default function Popup() {
     const filteredPopups = popupBannerList
       .filter((popup) => !allClosedIds.has(popup.id))
       .sort((a, b) => a.leakedOrder - b.leakedOrder);
-    
+
     // position별로 그룹화
     const groupedByPosition = filteredPopups.reduce((acc, popup) => {
       if (!acc[popup.position]) {
@@ -98,43 +106,53 @@ export default function Popup() {
       acc[popup.position].push(popup);
       return acc;
     }, {} as Record<PopupPosition, PopupBanner[]>);
-    
+
     // 각 position 내에서 순서대로 인덱스 추가
-    return Object.values(groupedByPosition).flat().map((popup, index) => ({
-      ...popup,
-      samePositionIndex: groupedByPosition[popup.position].indexOf(popup)
-    }));
+    return Object.values(groupedByPosition)
+      .flat()
+      .map((popup, index) => ({
+        ...popup,
+        samePositionIndex: groupedByPosition[popup.position].indexOf(popup),
+      }));
   }, [mainInfoData?.popupBannerList, allClosedIds]);
-  
+
   if (isLoading || isError || !mainInfoData) return null;
 
-    return (
-      visiblePopupList.map((popup) => (
-      <div
-        key={popup.id}
-        className={styles.popup({ position: popup.position })}
-        style={{
-          zIndex: 1000 - popup.leakedOrder,
-          ...positionStyle(popup, popup.samePositionIndex, isMobileWidth),
-        }}
-      >
-        <Link href={popup.pcRedirectUrl} className={styles.popupImage}>
-          <Image src={popup.pcDisplayBannerUrl.url} alt={popup.name} width={320} height={320} />
-        </Link>
-        <div className={styles.popupAction}>
-          <LabeledCheckbox 
-            value={popup.id} 
-            isChecked={allClosedIds.has(popup.id)} 
-            onToggle={() => hidePopupForDay(popup.id)}
-            className={styles.popupCheckbox}
-          >
-            <Text type="headline3" color="gray500">오늘 하루 보지 않기</Text>
-          </LabeledCheckbox>
-          <button onClick={() => closePopup(popup.id)} className={styles.popupButton}>
-            <Text type="headline3">닫기</Text>
-          </button>
-        </div>
+  return visiblePopupList.map((popup) => (
+    <div
+      key={popup.id}
+      className={styles.popup({ position: popup.position })}
+      style={{
+        zIndex: 1000 - popup.leakedOrder,
+        ...positionStyle(popup, popup.samePositionIndex, isMobileWidth),
+      }}
+    >
+      <Link href={popup.pcRedirectUrl} className={styles.popupImage}>
+        <Image
+          src={popup.pcDisplayBannerUrl.url}
+          alt={popup.name}
+          width={320}
+          height={320}
+        />
+      </Link>
+      <div className={styles.popupAction}>
+        <LabeledCheckbox
+          value={popup.id}
+          isChecked={allClosedIds.has(popup.id)}
+          onToggle={() => hidePopupForDay(popup.id)}
+          className={styles.popupCheckbox}
+        >
+          <Text type="headline3" color="gray500">
+            오늘 하루 보지 않기
+          </Text>
+        </LabeledCheckbox>
+        <button
+          onClick={() => closePopup(popup.id)}
+          className={styles.popupButton}
+        >
+          <Text type="headline3">닫기</Text>
+        </button>
       </div>
-    ))
-  );
-};
+    </div>
+  ));
+}

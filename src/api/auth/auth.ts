@@ -12,7 +12,7 @@ import {
 } from "@/types";
 import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
 import { FindEmailValues } from "@/utils/validation/auth/findEmail";
-import { LoginFormValues } from "@/utils/validation/auth/signin";
+import { LoginFormValues } from "@/utils/validation/auth/login";
 
 const requestFindEmailCode = async (
   body: FindEmailValues
@@ -133,17 +133,6 @@ const oauthCallbackLogin = async (
   };
 };
 
-const login = async (formData: { email: string; password: string }) => {
-  const response = await axiosInstance.post("/api/login", formData);
-  return response;
-};
-
-const logout = async () => {
-  const response = await axiosInstance.get("/api/logout");
-
-  return response;
-};
-
 const signup = async (body: SignupRequest) => {
   const { data } = await axiosInstance.post(
     "/api/v2/public/accounts/signup",
@@ -155,7 +144,7 @@ const signup = async (body: SignupRequest) => {
   throw new Error("회원 가입 실패");
 };
 
-const signin = async (body: LoginFormValues) => {
+const login = async (body: LoginFormValues) => {
   const response = await axiosInstance.post(
     "/api/v2/public/accounts/signin",
     body
@@ -166,6 +155,16 @@ const signin = async (body: LoginFormValues) => {
   }
 
   throw new Error("로그인 실패");
+};
+
+const logout = async () => {
+  const { data } = await axiosInstance.post("/api/v2/user/accounts/signout");
+
+  if (data.success) {
+    return data;
+  }
+
+  throw new Error("로그아웃 실패");
 };
 
 const checkDuplicateEmail = async (email: string) => {
@@ -201,8 +200,6 @@ const verifyPhoneCode = async (
 
 export {
   requestFindEmailCode,
-  login,
-  logout,
   requestPasswordResetCode,
   verifyPasswordResetCode,
   resetPassword,
@@ -212,5 +209,6 @@ export {
   checkDuplicateEmail,
   requestPhoneVerificationCode,
   verifyPhoneCode,
-  signin,
+  login,
+  logout,
 };

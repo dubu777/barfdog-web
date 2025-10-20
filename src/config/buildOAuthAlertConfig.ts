@@ -12,7 +12,7 @@ export type OAuthAlertConfig = {
 
 export function buildOAuthAlertConfig(
   response: LoginWithOAuthTokenResponse,
-  opts: { next: string } // 훅에서 넘겨줄 next
+  next: string // 훅에서 넘겨줄 next
 ): OAuthAlertConfig | null {
   const result = response.data?.result;
 
@@ -25,7 +25,7 @@ export function buildOAuthAlertConfig(
         title: "SNS 연동이 완료됐어요",
         content: "이제부터 연동된 SNS 계정으로 간편 로그인할 수 있어요",
         confirmText: "확인",
-        route: opts.next, // 성공 계열은 next 로
+        route: next, // 성공 계열은 next 로
       };
 
     case "NEW_ACCOUNT_AND_LINKED":
@@ -33,7 +33,7 @@ export function buildOAuthAlertConfig(
         title: "회원 가입이 완료됐어요! 🎉",
         content: "우리 아이의 일상이 더 건강해질 수 있도록 도와드릴게요.",
         confirmText: "확인",
-        route: opts.next,
+        route: next,
       };
 
     case "LINK_PROVIDER_CONFLICT": {

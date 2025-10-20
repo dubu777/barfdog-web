@@ -30,17 +30,17 @@ export function useOAuthCallbackLogin() {
 
     onSuccess: async (data, vars) => {
       const { response, token } = data;
-      // 1) 토큰 쿠키 저장
 
+      // 1) 토큰 쿠키 저장
       if (token) setCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE, token);
 
       // 3) 사용자 캐시 무효화
       await queryClient.invalidateQueries({
         queryKey: [queryKeys.AUTH.BASE, queryKeys.AUTH.GET_USER_INFO],
       });
-      // 4) 분기(next 우선)
+      // 4) 분기(next 우선) - result 에 따른 Alert Modal or 리다이렉트 처리
       const next = vars.next ?? "/";
-      const config = buildOAuthAlertConfig(response, { next });
+      const config = buildOAuthAlertConfig(response, next);
 
       // Alert Modal이 필요한 경우
       if (config) {

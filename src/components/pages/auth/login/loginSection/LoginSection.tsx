@@ -9,28 +9,28 @@ import Text from "@/components/common/text/Text";
 import SocialLoginButton from "../socialLoginButton/SocialLoginButton";
 import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
 import { PROVIDERS } from "@/constants/auth";
-import { useSignin } from "@/api/auth/mutations/useSignin";
+import { useLogin } from "@/api/auth/mutations/useLogin";
 import {
   defaultLoginValues,
   LoginFormValues,
   loginSchema,
-} from "@/utils/validation/auth/signin";
+} from "@/utils/validation/auth/login";
 import { useAuthStore } from "@/store/useAuthStore";
 
 export default function LoginSection() {
   const searchParams = useSearchParams();
-  const { signinEmail } = useAuthStore();
+  const { loginEmail } = useAuthStore();
   const [isFailed, setIsFailed] = useState<boolean>(false);
   const nextPath = useMemo(
     () => searchParams.get("next") ?? "/",
     [searchParams]
   );
 
-  const { mutate: signin } = useSignin();
+  const { mutate: login } = useLogin();
 
   const { handleSubmit, isValid, register } = useFormHandler<LoginFormValues>(
     loginSchema,
-    defaultLoginValues(signinEmail)
+    defaultLoginValues(loginEmail)
   );
 
   const handleSignin = (data: LoginFormValues) => {
@@ -38,7 +38,7 @@ export default function LoginSection() {
       email: data.email,
       password: data.password,
     };
-    signin(body, {
+    login(body, {
       onSuccess: () => {
         // 풀 리로드로 쿠키 적용 보장하면서 원래 경로로 이동
         window.location.href = nextPath;

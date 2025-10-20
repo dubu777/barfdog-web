@@ -24,7 +24,7 @@ import { signupContainer } from "./steps/SignupStep.css";
 import Text from "@/components/common/text/Text";
 import { buildSignupRequest } from "@/utils/auth/buildSignupRequest";
 import { useSignup } from "@/api/auth/mutations/useSignup";
-import { useSignin } from "@/api/auth/mutations/useSignin";
+import { useLogin } from "@/api/auth/mutations/useLogin";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 
 export default function Signup() {
@@ -40,7 +40,7 @@ export default function Signup() {
     onToggle: onModalToggle,
   } = useModal();
   const { mutate: signup } = useSignup();
-  const { mutate: signin } = useSignin();
+  const { mutate: login } = useLogin();
 
   const methods = useForm<yup.InferType<typeof signupStepsSchema>>({
     resolver: yupResolver(signupStepsSchema),
@@ -77,7 +77,7 @@ export default function Signup() {
   const handleSignin = () => {
     const email = methods.getValues("step1.email");
     const password = methods.getValues("step2.password");
-    signin({ email, password });
+    login({ email, password });
     window.location.href = "/";
   };
 

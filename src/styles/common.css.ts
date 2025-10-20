@@ -483,6 +483,7 @@ export const marginStyles = recipe({
       4: { marginBottom: "4px" },
       6: { marginBottom: "6px" },
       8: { marginBottom: "8px" },
+      60: { marginBottom: "60px" },
     },
   },
 });
