@@ -28,7 +28,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 export default function ResetPassword() {
   const router = useRouter();
   const { addToast } = useToastStore();
-  const setSigninEmail = useAuthStore((s) => s.setSigninEmail);
+  const setLoginEmail = useAuthStore((s) => s.setLoginEmail);
 
   const { mutate: requestCode } = useRequestPasswordResetCode();
   const { mutate: verifyCode } = useVerifyPasswordResetCode();
@@ -86,7 +86,7 @@ export default function ResetPassword() {
           setStep("reset");
           setInfoMessage("휴대폰 번호 인증이 완료됐어요");
           setVerifyError("");
-          setSigninEmail(requestForm.getValues("email"));
+          setLoginEmail(requestForm.getValues("email"));
         },
         onError: () => {
           setVerifyError("인증번호가 일치하지 않아요");

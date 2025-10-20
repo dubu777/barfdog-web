@@ -28,7 +28,6 @@ export default function FindEmailForm({
   onAuthCodeChange,
 }: FindEmailFormProps) {
   const {
-    control,
     register,
     formState: { errors, isValid },
     handleSubmit,

@@ -5,7 +5,7 @@ import DietAnalysisGuest from "@/components/pages/dietAnalysis/guest/DietAnalysi
 export default function DietAnalysisGuestPage() {
   return (
     <>
-      <Header leftTitle="AI 추천식단" showCartButton />
+      <Header leftTitle="AI 추천식단" />
       <DietAnalysisGuest />
       <BottomNavBar />
     </>
