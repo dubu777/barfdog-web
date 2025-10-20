@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import { TextColor, TextType } from "@/types/typography";
-import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
+import ListDivider from "@/components/common/listDivider/ListDivider";
 
 interface MetaTextProps {
 	type?: TextType;
@@ -24,11 +24,15 @@ export default function MetaText({
 			{textList?.map((text, index) => (
 				<Fragment key={text}>
 					{text}
-					{textList?.length !== index + 1 &&
-						<div style={{ height: '10px' }}>
-							<Divider thickness={1} direction='vertical' color={color === 'gray500' ? 'gray500' : 'gray700'} />
-						</div>
-					}
+					<div style={{ height: '12px' }}>
+						<ListDivider 
+							listLength={textList?.length ?? 0}
+							index={index}
+							color='gray200'
+							thickness={1}
+							direction='vertical'
+						/>
+					</div>
 				</Fragment>
 			))}
 		</Text>

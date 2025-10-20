@@ -1,10 +1,10 @@
 import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/common/text/Text";
-import VerticalDivider from "./VerticalDivider";
 import { PlanKey } from "@/types";
 import { OrderType } from "@/types/mypage/orders";
 import { subscriptionPlanInfo } from "@/constants";
 import { ORDER_STATUS, ORDER_TYPE_LABEL } from "@/constants/mypage/orders";
+import VerticalDivider from "../../../common/card/verticalDivider/VerticalDivider";
 
 interface OrderStatusProps {
   orderStatus: string;
