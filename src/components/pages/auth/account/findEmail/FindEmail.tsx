@@ -52,6 +52,7 @@ export default function FindEmail() {
           setAuthToken(res.authToken);
           setExpiryDate(res.expiryDate);
           setRequestError("");
+          setVerifyError("");
           setInfoMessage("휴대폰 번호로 인증번호가 발송됐어요");
         },
         onError: () => {
@@ -81,6 +82,7 @@ export default function FindEmail() {
   }, [verifyCode, authToken, authCode, addToast]);
 
   const handleExpire = useCallback(() => {
+    setInfoMessage("");
     setVerifyError(
       "인증 유효시간이 초과됐어요. [재전송]을 눌러 인증번호를 다시 입력해 주세요."
     );
@@ -137,7 +139,7 @@ export default function FindEmail() {
           step === "verify" && expiryDate ? (
             <Countdown
               targetDate={expiryDate}
-              sourceTz="utc"
+              sourceTz="local"
               onExpiry={handleExpire}
             />
           ) : null

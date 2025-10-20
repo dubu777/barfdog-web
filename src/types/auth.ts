@@ -84,6 +84,7 @@ interface RequestFindAccountCodeResponse {
   authToken: string;
   expiryDate: string;
   notificationType: string;
+  snsProvider: SnsProvider | null;
 }
 
 interface VerifyFindAccountCodeResponse {

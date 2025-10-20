@@ -21,6 +21,8 @@ import { useVerifyPhoneCode } from "@/api/auth/mutations/useVerifyPhoneCode";
 import { useCallback, useState } from "react";
 import { VerificationStep } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
+import { parseYmdHms } from "@/utils/datetime/parseYmdHms";
+import { useCountdown } from "@/hooks/useCountdown";
 
 export default function SignupStep3() {
   const { addToast } = useToastStore();
@@ -56,6 +58,7 @@ export default function SignupStep3() {
           setAuthToken(res.data?.authToken ?? "");
           setExpiryDate(res.data?.expiryDate ?? "");
           setRequestError("");
+          setVerifyError("");
           setInfoMessage("휴대폰 번호로 인증번호가 발송됐어요");
           return;
         }
@@ -91,6 +94,7 @@ export default function SignupStep3() {
   }, [verifyCode, authToken, addToast]);
 
   const handleExpire = useCallback(() => {
+    setInfoMessage("");
     setVerifyError(
       "인증 유효시간이 초과됐어요. [재전송]을 눌러 인증번호를 다시 입력해 주세요."
     );
@@ -106,6 +110,12 @@ export default function SignupStep3() {
     onChange: (value) => {
       genderField.onChange(value);
     },
+  });
+
+  const targetMs = parseYmdHms(expiryDate, "local");
+  const { isExpired } = useCountdown(targetMs, {
+    onExpire: handleExpire,
+    stopOnExpire: true,
   });
 
   const isVerified = step === "verified";
@@ -142,8 +152,8 @@ export default function SignupStep3() {
           confirmButton
           maxLength={11}
           confirmButtonDisabled={isVerified || (authNumber?.length ?? 0) !== 4}
-          confirmButtonText="확인"
-          disabled={isVerified}
+          confirmButtonText={isExpired ? "만료됨" : "확인"}
+          disabled={isVerified || isExpired}
           success={infoMessage}
           error={verifyError}
           onSubmit={handleVerifyCode}

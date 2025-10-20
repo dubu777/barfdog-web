@@ -1,6 +1,6 @@
 "use client";
 import * as styles from "../FindAccount.css";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useToastStore } from "@/store/useToastStore";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import { useState, useMemo, useCallback } from "react";
@@ -18,12 +18,13 @@ import { useResetPassword } from "@/api/auth/mutations/useResetPassword";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CodeRequestForm from "./codeRequestForm/CodeRequestForm";
 import NewPasswordForm from "./newPasswordForm/NewPasswordForm";
-import { ResetPasswordStep } from "@/types";
+import { ResetPasswordStep, SnsProvider } from "@/types";
 import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 import Countdown from "./countdown/Countdown";
 import { useAuthStore } from "@/store/useAuthStore";
+import FindAccountResult from "../findAccount/result/FindAccountResult";
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -51,13 +52,17 @@ export default function ResetPassword() {
   const [step, setStep] = useState<ResetPasswordStep>("request");
   const [authToken, setAuthToken] = useState("");
   const [authCode, setAuthCode] = useState("");
+  const [snsProvider, setSnsProvider] = useState<SnsProvider | null>(null);
   const [expiryDate, setExpiryDate] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState("");
   const [requestError, setRequestError] = useState("");
   const [verifyError, setVerifyError] = useState("");
 
   const isResetFormValid = resetForm.formState.isValid;
-
+  const email = useWatch({
+    control: requestForm.control,
+    name: "email",
+  });
   const { isOpen, onClose, onToggle } = useModal();
 
   const handleRequestCode = useCallback(
@@ -67,7 +72,9 @@ export default function ResetPassword() {
           setStep("verify");
           setAuthToken(res.authToken);
           setExpiryDate(res.expiryDate);
+          setSnsProvider(res.snsProvider);
           setRequestError("");
+          setVerifyError("");
           setInfoMessage("휴대폰 번호로 인증번호가 발송됐어요");
         },
         onError: () => {
@@ -84,9 +91,9 @@ export default function ResetPassword() {
       {
         onSuccess: () => {
           setStep("reset");
-          setInfoMessage("휴대폰 번호 인증이 완료됐어요");
           setVerifyError("");
-          setLoginEmail(requestForm.getValues("email"));
+          setInfoMessage("휴대폰 번호 인증이 완료됐어요");
+          setLoginEmail(email);
         },
         onError: () => {
           setVerifyError("인증번호가 일치하지 않아요");
@@ -114,6 +121,7 @@ export default function ResetPassword() {
   }, [resetPassword, resetForm, authToken, authCode, addToast]);
 
   const handleExpire = useCallback(() => {
+    setInfoMessage("");
     setVerifyError(
       "인증 유효시간이 초과됐어요. [재전송]을 눌러 인증번호를 다시 입력해 주세요."
     );
@@ -148,33 +156,45 @@ export default function ResetPassword() {
 
   return (
     <section className={styles.findAccountContainer}>
-      <CodeRequestForm
-        form={requestForm}
-        infoMessage={infoMessage}
-        requestError={requestError}
-        verifyError={verifyError}
-        onRequestCode={handleRequestCode}
-        step={step}
-        authCode={authCode}
-        onAuthCodeChange={setAuthCode}
-      />
-      {step === "reset" && <NewPasswordForm form={resetForm} />}
-      <ButtonDocked
-        type="full-button"
-        primaryButtonLabel={buttonConfig.label}
-        onPrimaryClick={buttonConfig.onClick}
-        primaryButtonSize="lg"
-        isPrimaryDisabled={buttonConfig.disabled}
-        topSlot={
-          step !== "request" && expiryDate ? (
-            <Countdown
-              targetDate={expiryDate}
-              sourceTz="utc"
-              onExpiry={handleExpire}
-            />
-          ) : null
-        }
-      />
+      {snsProvider ? (
+        <FindAccountResult
+          type="password"
+          snsProvider={snsProvider}
+          email={email}
+        />
+      ) : (
+        <>
+          <CodeRequestForm
+            form={requestForm}
+            infoMessage={infoMessage}
+            requestError={requestError}
+            verifyError={verifyError}
+            onRequestCode={handleRequestCode}
+            step={step}
+            authCode={authCode}
+            onAuthCodeChange={setAuthCode}
+          />
+          {step === "reset" && <NewPasswordForm form={resetForm} />}
+
+          <ButtonDocked
+            type="full-button"
+            primaryButtonLabel={buttonConfig.label}
+            onPrimaryClick={buttonConfig.onClick}
+            primaryButtonSize="lg"
+            isPrimaryDisabled={buttonConfig.disabled}
+            topSlot={
+              step !== "request" && expiryDate ? (
+                <Countdown
+                  targetDate={expiryDate}
+                  sourceTz="local"
+                  onExpiry={handleExpire}
+                />
+              ) : null
+            }
+          />
+        </>
+      )}
+
       <AlertModal
         title="비밀번호가 성공적으로 변경됐어요"
         content="빈경된 비밀번호로 다시 로그인해 주세요"
