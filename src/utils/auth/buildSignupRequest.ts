@@ -1,4 +1,4 @@
-import { SignupRequest, GenderType } from "@/types/auth";
+import { SignupRequest } from "@/types/auth";
 import { SignupStepValues } from "@/utils/validation/auth/signup";
 
 /**

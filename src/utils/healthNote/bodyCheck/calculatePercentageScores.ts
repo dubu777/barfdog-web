@@ -1,5 +1,5 @@
 import { BODY_CHECK_DISEASE_INFO } from "@/constants/healthNote/bodyCheck/common";
-import { SurveyOption } from "@/types/healthNote";
+import { SurveyOption } from "@/types/healthNote/common";
 
 
 type SurveyItem = {

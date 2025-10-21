@@ -47,7 +47,7 @@ export function getBodyCheckScoreStatus(
   const percentage =
     maxScore > 0 ? Math.min(Math.max((rawScore / maxScore) * 100, 0), 100) : 0;
 
-  // THRESHOLD_LIST에서 percentage >= minPercentage인 첫 번째 항목을 찾는다.
+  // THRESHOLD_LIST에서 percentage >= minPercentage인 첫 번째 항목을 찾음
   const matched = THRESHOLD_LIST.find(
     (item) => percentage >= item.minPercentage
   )!;

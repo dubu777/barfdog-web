@@ -1,7 +1,7 @@
 import * as yup from "yup";
-import { formatDate } from "../dateUtils";
 import { UserInfo } from "@/types/mypage/account";
 import { GenderType } from "@/types/auth";
+import { format } from "date-fns";
 
 const updateUserInfoSchema = yup.object().shape({
   name: yup
@@ -19,7 +19,7 @@ const updateUserInfoSchema = yup.object().shape({
 const defaultUpdateUserInfoValues = (userInfo?: UserInfo) => ({
   name: userInfo?.name || "",
   phoneNumber: userInfo?.phoneNumber || "",
-  birthday: formatDate(userInfo?.birthday as string, "onlyDateDot") || "",
+  birthday: format(new Date(userInfo?.birthday as string), 'yyyy.MM.dd') || "",
   gender: (userInfo?.gender as GenderType) || "MALE",
   receiveEmail: userInfo?.receiveEmail || false,
   receiveSms: userInfo?.receiveSms || false,

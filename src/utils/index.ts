@@ -2,7 +2,6 @@ export * from "./coupon/couponUtils";
 export * from "./checkout/orderCalculation";
 export * from "./subscription/calculateDeliveryDates";
 export * from "./copyToClipboard";
-export * from "./dateUtils";
 export * from "./deadlineBannerTimestamp";
 export * from "./formatDateToKorean";
 export * from "./formatNumberWithCommas";
