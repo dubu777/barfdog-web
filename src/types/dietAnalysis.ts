@@ -3,7 +3,6 @@ import { SubscriptionStatus } from "./subscription";
 import {
   BodyFit,
   DogSize,
-  Gender,
   GeneralLevel,
   HealthConcernType,
   LactationStatus,

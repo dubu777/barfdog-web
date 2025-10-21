@@ -1,12 +1,5 @@
 import { CouponTarget, DiscountType } from "./common";
 
-export type {
-  Coupon,
-  Reason,
-  CouponUsabilityResult,
-  UsingCoupon,
-};
-
 interface Coupon {
   availableMaxDiscount: number;
   availableMinPrice: number; // 최소 사용 금액
@@ -29,9 +22,8 @@ interface CouponUsabilityResult {
   reasons: Reason[];
 }
 
-interface UsingCoupon {
-  memberCouponId: number | null;
-  discount: number;
-  overDiscount?: number;
-  couponName?: string | null;
-}
+export type {
+  Coupon,
+  Reason,
+  CouponUsabilityResult,
+};

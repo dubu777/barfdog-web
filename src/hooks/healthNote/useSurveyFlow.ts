@@ -7,7 +7,7 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { SurveyOption, SurveyQuestion } from "@/types/healthNote";
+import { SurveyOption, SurveyQuestion } from "@/types/healthNote/common";
 import { POSITIVE_KEY } from "@/constants";
 
 interface UseSurveyFlowProps<TFormValues extends FieldValues> {

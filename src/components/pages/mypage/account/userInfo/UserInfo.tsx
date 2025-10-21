@@ -13,7 +13,6 @@ import Divider from "@/components/common/divider/Divider";
 import AuthPhoneNumber from "./authPhoneNumber/AuthPhoneNumber";
 import Notification from "./notification/Notification";
 import useDeviceState from "@/hooks/useDeviceState";
-import { formatDate } from "@/utils";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 import { updateUserInfoSchema, defaultUpdateUserInfoValues } from "@/utils/validation/accountValidation";
@@ -171,14 +170,14 @@ export default function UserInfo() {
                 <InputLabel label="생년월일" isRequired />
                 {isMobileDevice ? (
                   <MobileDatePicker
-                    value={formatDate(field.value, "onlyDateDot")}
+                    value={format(new Date(field.value), "yyyy.MM.dd")}
                     onChange={(date) => field.onChange(date)}
                     isDisabled
                   />
                 ) : (
                   <CustomDatePicker
                     name="birthday"
-                    value={formatDate(field.value, "onlyDateDot")}
+                    value={format(new Date(field.value), "yyyy.MM.dd")}
                     isDisabled
                     onChange={(date) => field.onChange(date)}
                     marginBottom={false}

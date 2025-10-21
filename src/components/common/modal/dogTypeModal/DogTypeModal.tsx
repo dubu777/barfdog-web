@@ -1,5 +1,4 @@
 import * as styles from "./DogTypeModal.css";
-import { DOG_TYPE } from "@/constants/dog";
 import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import Text from "@/components/common/text/Text";

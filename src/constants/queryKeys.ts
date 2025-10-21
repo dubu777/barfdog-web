@@ -1,10 +1,6 @@
 export { queryKeys };
 
 const queryKeys = {
-  COMMON: {
-    BASE: "common",
-    UPLOAD_IMAGE: "uploadImage",
-  },
   AUTH: {
     BASE: "auth",
     LOGIN: "login",
@@ -34,8 +30,6 @@ const queryKeys = {
     ORDERS: {
       BASE: "orders",
       GET_ORDER_LIST: "getOrderList",
-      GET_SUBSCRIPTION_ORDER_LIST: "getSubscriptionOrderList",
-      GET_GENERAL_ORDER_LIST: "getGeneralOrderList",
       GET_ORDER_DETAIL: "getOrderDetail",
     },
     COMMON: {
@@ -70,10 +64,7 @@ const queryKeys = {
   SUBSCRIPTION: {
     BASE: "subscription",
     GET_PLAN_DISCOUNT: "getPlanDiscount",
-    GET_SUBSCRIPTION_LIST: "getSubscriptionList",
     GET_SUBSCRIPTION_DETAIL: "getSubscriptionDetail",
-    GET_SUBSCRIPTION_ADDRESS: "getSubscriptionAddress",
-    GET_SUBSCRIPTION_BENEFITS: "getSubscriptionBenefits",
     GET_RAW_ORDER_SHEET: "getRawOrderSheet",
     GET_RAW_DETAIL: "getRawDetail",
   },
@@ -81,19 +72,9 @@ const queryKeys = {
     BASE: "cart",
     GET_CART_INFO: "getCartInfo",
   },
-  DOG: {
-    BASE: "dog",
-    GET_DOG_LIST: "getDogList",
-    GET_DOG_DETAIL: "getDogDetail",
-    GET_FULL_DOG_LIST: "getFullDogList",
-    CHECK_DUPLICATE_DOG_NAME: "checkDuplicateDogName",
-  },
   ORDER: {
     BASE: "order",
     GET_SUBSCRIPTION_ORDER: "getSubscriptionOrder",
-    GET_ORDER_DETAIL: "getOrderDetail",
-    GET_GENERAL_ORDER_LIST: "getGeneralOrderList",
-    GET_SUBSCRIPTION_ORDER_LIST: "getSubscriptionOrderList",
     GET_GENERAL_ORDER: "getGeneralOrder",
   },
   CHECKOUT: {
@@ -128,7 +109,6 @@ const queryKeys = {
   REVIEW: {
     BASE: "review",
     GET_BEST_REVIEW_LIST: "getBestReviewList",
-    GET_BEST_REVIEW_DETAIL: "getBestReviewDetail",
     GET_REVIEW_LIST: "getReviewList",
     GET_REVIEW_IMAGE_LIST: "getReviewImageList",
   },

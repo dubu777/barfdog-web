@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import {
   QueryKey,
   UseInfiniteQueryOptions,
@@ -8,24 +7,6 @@ import {
 } from "@tanstack/react-query";
 import { TextColor, TextType } from "./typography";
 import { COUPON_TARGET } from "@/constants";
-
-type SearchParamProps = {
-  param: { [key: string]: string | number };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-interface DefaultObjectType {
-  id: string | number;
-  name: string | ReactNode;
-  value: string | number | ReactNode;
-  visible?: boolean;
-  child?: {
-    id: string | number;
-    name: string;
-    value: string;
-    visible?: boolean;
-  }[];
-}
 
 type UseMutationCustomOptions<
   TData = unknown,
@@ -138,8 +119,6 @@ type DiscountUnitType = "%" | "원";
 type CouponTarget = keyof typeof COUPON_TARGET;
 
 export type {
-  SearchParamProps,
-  DefaultObjectType,
   UseMutationCustomOptions,
   UseQueryCustomOptions,
   UseSuspenseQueryCustomOptions,

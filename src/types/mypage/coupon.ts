@@ -2,7 +2,6 @@ import { COUPON_TARGET } from "@/constants";
 import { DiscountType, Pagination } from "../common";
 
 type CouponCategory = "ALLIANCE" | "NON_ALLIANCE";
-type CouponCategoryKey = "allianceCouponList" | "nonAllianceCouponList";
 
 type CouponStatus = "ACTIVE" | "INACTIVE";
 type CouponTarget = keyof typeof COUPON_TARGET;
@@ -30,7 +29,6 @@ interface MyPageCoupon {
 
 export type {
   CouponCategory,
-  CouponCategoryKey,
   RawCouponList,
   MyPageCoupon,
 };
