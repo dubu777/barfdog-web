@@ -1,5 +1,5 @@
-import { prefetchGetSubscriptionDetailV2 } from "@/api/subscription/queries/usePrefetchGetSubscriptionDetailV2";
-import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/usePrefetchRawFoodOrderSheet";
+import { prefetchGetSubscriptionDetailV2 } from "@/api/subscription/queries/prefetchGetSubscriptionDetailV2";
+import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/prefetchRawFoodOrderSheet";
 import Spinner from "@/components/common/spinner/Spinner";
 import SubscriptionEdit from "@/components/pages/subscribe/subscriptionEdit/SubscriptionEdit";
 import {

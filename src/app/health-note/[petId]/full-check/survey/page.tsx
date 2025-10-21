@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Spinner from "@/components/common/spinner/Spinner";
 import FullCheckSurvey from "@/components/pages/heathNote/fullCheck/survey/FullCheckSurvey";
-import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
+import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 
 interface FullCheckSurveyPageProps {
   params: Promise<{

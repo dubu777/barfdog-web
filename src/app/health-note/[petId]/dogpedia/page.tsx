@@ -4,7 +4,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import Spinner from "@/components/common/spinner/Spinner";
 import Dogpedia from "@/components/pages/heathNote/dogpedia/Dogpedia";
 import { prefetchGetBreedList } from "@/api/healthNote/dogpidea/queries/prefetchGetBreedList";
-import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
+import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 
 interface DogPediaPageProps {
 	params: Promise<{

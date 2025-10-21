@@ -1,4 +1,4 @@
-import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/usePrefetchRawFoodOrderSheet";
+import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/prefetchRawFoodOrderSheet";
 import Spinner from "@/components/common/spinner/Spinner";
 import SubscriptionOrderSheet from "@/components/pages/subscribe/SubscriptionOrderSheet";
 import {
