@@ -38,11 +38,11 @@ function extractAccessToken(res: Response): string | null {
 
 // 서버(미들웨어)에서 리프레시 시도
 async function tryServerRefresh(req: NextRequest): Promise<string | null> {
-  const url = new URL("/api/refresh", req.nextUrl.origin);
+  const url = new URL("/api/v2/public/accounts/refresh", req.nextUrl.origin);
   const cookieHeader = req.headers.get("cookie") ?? "";
 
   const res = await fetch(url.toString(), {
-    method: "GET",
+    method: "POST",
     headers: { cookie: cookieHeader },
   });
 
@@ -68,7 +68,8 @@ export async function middleware(req: NextRequest) {
   const { pathname } = new URL(req.url);
 
   // refresh 자체는 통과
-  if (pathname.startsWith("/api/refresh")) return NextResponse.next();
+  if (pathname.startsWith("/api/v2/public/accounts/refresh"))
+    return NextResponse.next();
 
   const token = req.cookies.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
 

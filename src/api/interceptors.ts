@@ -51,7 +51,7 @@ export function attachAuthInterceptors(
 
       isRefreshing = true;
       return authAxios
-        .get("/api/refresh")
+        .post("/api/v2/public/accounts/refresh")
         .then(({ data, headers }) => {
           const headerToken = headers?.authorization || headers?.Authorization;
           const token =

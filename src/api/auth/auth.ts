@@ -97,9 +97,12 @@ const loginWithOAuthToken = async (
   provider: SnsProvider,
   accessToken: string
 ) => {
-  const res = await axiosInstance.post(`/api/login/${provider}`, {
-    accessToken,
-  });
+  const res = await axiosInstance.post(
+    `/api/v2/public/accounts/signin/${provider}`,
+    {
+      accessToken,
+    }
+  );
 
   return {
     response: res.data,

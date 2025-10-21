@@ -8,6 +8,7 @@ import { deleteCookie, getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { ALLIANCE_COOKIE } from "@/constants/cookie";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import { authAxios } from "@/api/axiosInstance";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -37,10 +38,16 @@ export default function GeneralShopTest() {
     router.push("/diet-analysis/subscribe?reportId=3769");
   };
 
+  const handleRefresh = () => {
+    authAxios.post("/api/v2/public/accounts/refresh").then((res) => {
+      console.log("refresh res", res);
+    });
+  };
   return (
     <div className={styles.testContainer}>
       <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
       <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
+      <Button onClick={handleRefresh}>리프레시 버튼</Button>
     </div>
   );
 }
