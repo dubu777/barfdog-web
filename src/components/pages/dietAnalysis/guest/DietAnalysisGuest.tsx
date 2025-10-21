@@ -1,9 +1,7 @@
 "use client";
 
 import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import { commonWrapper } from "@/styles/common.css";
-import DogIcon from "public/images/dietAnalysis/first-dog.svg";
 import Button from "@/components/common/button/Button";
 import { useRouter } from "next/navigation";
 import Card from "@/components/common/card/Card";

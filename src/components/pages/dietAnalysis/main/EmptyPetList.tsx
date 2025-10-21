@@ -1,5 +1,4 @@
 import Text from "@/components/common/text/Text";
-import { commonWrapper } from "@/styles/common.css";
 import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
 import Button from "@/components/common/button/Button";
 import * as styles from "./DietAnalysisMain.css";

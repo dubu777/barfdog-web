@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getGeneralCheckoutSheet, getGeneralOrder } from "../checkout";
+import { getGeneralCheckoutSheet } from "../checkout";
 import {
   GeneralOrderSheetRequest,
   GeneralOrderSheetResponse,

@@ -7,7 +7,6 @@ import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import InputField from "@/components/common/inputField/InputField";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { Controller } from "react-hook-form";
-import { useToastStore } from "@/store/useToastStore";
 import { SendReferralCode } from "@/types";
 import { useSendReferralsCodeMessage } from '@/api/mypage/inviteFriends/mutations/useSendReferralsCodeMessage';
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
@@ -40,9 +39,9 @@ export default function SendMessageModal({
 	myRecommendationCode,
 }: SendMessageModalProps) {
 	const { handleSubmit, control, isValid } = useFormHandler<SendReferralCode>(sendMessageSchema, defaultSendMessageValues);
-	const { addToast } = useToastStore();
 	const { mutate } = useSendReferralsCodeMessage();
 	const { handleSuccess } = useApiResponseHandler();
+
 	const onSubmit = (data) => {
 		mutate(
 			data,

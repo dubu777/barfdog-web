@@ -50,7 +50,6 @@ import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { useGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/useGetSubscriptionCheckoutSheet";
 import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
 import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
-import { commonWrapper } from "@/styles/common.css";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 interface SubscriptionOrderContainerProps {
