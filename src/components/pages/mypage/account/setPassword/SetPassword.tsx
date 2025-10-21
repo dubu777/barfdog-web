@@ -5,10 +5,10 @@ import { Controller } from "react-hook-form";
 import InputField from "@/components/common/inputField/InputField";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Text from "@/components/common/text/Text";
+import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { SetPassword as SetPasswordType } from "@/types/mypage/account";
 import { getPasswordCriteria, isValidPassword } from "@/utils/validation/auth/password";
-import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
 import { useSetPassword } from "@/api/mypage/account/mutations/useSetPassword";
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 

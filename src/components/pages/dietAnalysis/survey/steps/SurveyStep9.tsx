@@ -1,5 +1,4 @@
 import {
-  NONE_VALUE,
   DIET_ANALYSIS_FORM_INFO,
   SURVEY_TITLES,
 } from "@/constants";
@@ -10,11 +9,8 @@ import SurveyButton from "@/components/common/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import useModal from "@/hooks/useModal";
 import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";
-import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import { PROBIOME_FORM_INFO } from "@/constants/healthNote/probiome";
 import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
-import Chips from "@/components/common/chips/Chips";
 
 interface SurveyStepProps {
   handleChange: () => void;

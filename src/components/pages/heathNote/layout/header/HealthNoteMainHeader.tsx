@@ -14,7 +14,6 @@ import PetIcon from "/public/images/healthNote/dogIcon.png";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Divider from "@/components/common/divider/Divider";
 import useModal from "@/hooks/useModal";
 import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
 import { useToastStore } from "@/store/useToastStore";

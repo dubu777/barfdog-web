@@ -4,7 +4,7 @@ import Divider from "@/components/common/divider/Divider";
 import InfoBox from "@/components/common/infoBox/InfoBox";
 import { useCartStore } from "@/store/useCartStore";
 
-const CartPriceInfo = () => {
+export default function CartPriceInfo() {
   const { calculatedPrices } = useCartStore();
   const { productTotalPrice, discount, deliveryFee, totalOrderPrice }  = calculatedPrices;
   
@@ -45,5 +45,3 @@ const CartPriceInfo = () => {
     </article>
   );
 };
-
-export default CartPriceInfo;

@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
+import { format } from "date-fns";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import { formatDate } from "@/utils";
 import { RewardInfo } from "@/types";
 
 interface RewardItemProps {
@@ -25,7 +25,7 @@ export default function RewardItem({
 				})}
 			>
 				<Text type='label3'>
-					{formatDate(reward.createdDate, 'onlyDateDot')}
+					{format(new Date(reward.createdDate), 'yyyy.MM.dd')}
 				</Text>
 				<div className={commonWrapper({ align: 'start', justify: 'between' })}>
 					<Text type='label4'>{reward.name}</Text>

@@ -4,11 +4,11 @@ import CheckIcon from "public/images/survey/check_small.svg";
 import SvgIcon from '@/components/common/svgIcon/SvgIcon';
 import Text from "@/components/common/text/Text";
 import Divider from '@/components/common/divider/Divider';
+import Chips from '@/components/common/chips/Chips';
 import RateStar from '@/components/common/rateStar/RateStar';
 import ItemImageSlider from "@/components/pages/store/detail/itemTopInfo/itemImageSlider/ItemImageSlider";
-import { DeliveryConditionInfo, ItemImage, ItemReview, DiscountType, ItemTag } from "@/types";
+import { DeliveryConditionInfo, ItemImage, ItemReview, ItemTag } from "@/types";
 import { DISCOUNT_UNIT } from '@/constants';
-import Chips from '@/components/common/chips/Chips';
 import { CHIPS_COLORS } from '@/constants/style';
 
 interface ItemTopInfoProps {

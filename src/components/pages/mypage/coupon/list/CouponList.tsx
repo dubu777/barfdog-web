@@ -28,11 +28,12 @@ export default function CouponList () {
   const [couponCode, setCouponCode] = useState<string>('');
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteCouponList(couponCategory);
-  const infiniteCouponList = data?.pages?.flatMap((page) => page.couponList) ?? [];
-
+  
   const { ref, inView } = useInView();
-
+  
   const sortedCouponList = useMemo(() => {
+    const infiniteCouponList = data?.pages?.flatMap((page) => page.couponList) ?? [];
+    
     return sortBy === 'discountDegree' ?
       infiniteCouponList.sort((a, b) => {
         // 1. FIXED_RATE가 먼저 오도록 정렬
@@ -43,7 +44,7 @@ export default function CouponList () {
         return b.discountDegree - a.discountDegree;
       })
       : infiniteCouponList;
-  }, [infiniteCouponList, sortBy])
+  }, [data?.pages, sortBy])
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {

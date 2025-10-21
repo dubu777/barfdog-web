@@ -6,13 +6,13 @@ import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import Spinner from "@/components/common/spinner/Spinner";
+import ListDivider from "@/components/common/listDivider/ListDivider";
 import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";
 import { useCart } from "@/hooks/cart/useCart";
 import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
 import { useUpdateCartInfo } from "@/api/cart/mutations/useUpdateCartInfo";
-import ListDivider from "@/components/common/listDivider/ListDivider";
 
 // 옵션 삭제, 품절 기능 적용 필요
 export default function Cart() {

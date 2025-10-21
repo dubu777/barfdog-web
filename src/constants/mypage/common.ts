@@ -1,9 +1,6 @@
-import {
-  MenuList,
-} from "@/types";
 import { openChatChannelIO } from "@/utils/channelTalk";
 
-const MENU_LIST: MenuList[] = [
+const MENU_LIST = [
   {
     category: "나의 쇼핑정보",
     menus: [

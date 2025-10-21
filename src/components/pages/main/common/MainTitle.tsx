@@ -31,6 +31,5 @@ export default function MainTitle({
 				<ContentElement />
 			</FadeInInteraction>
 		: <ContentElement />
-
 	);
 }

@@ -5,7 +5,6 @@ import { Control, Controller } from "react-hook-form";
 import { Address } from "react-daum-postcode";
 import InputField from "@/components/common/inputField/InputField";
 import Button from "../button/Button";
-import { themeVars } from "@/styles/theme.css";
 
 interface SearchAddressProps {
   addressValues: AddressDto;

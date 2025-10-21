@@ -1,10 +1,10 @@
 import * as styles from './ItemDetail.css';
 import { sanitizedHTML } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import { useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
-import { useEffect, useRef } from "react";
+import Text from "@/components/common/text/Text";
+import Divider from "@/components/common/divider/Divider";
 
 interface ItemDetailProps {
   contents: string;

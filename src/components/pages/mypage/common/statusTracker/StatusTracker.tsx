@@ -15,7 +15,7 @@ interface StatusTrackerProps {
 	steps: StatusStep[];
 }
 
-const StatusTracker = ({ statusTitle, steps }: StatusTrackerProps) => {
+export default function StatusTracker({ statusTitle, steps }: StatusTrackerProps) {
 	const lastActiveIndex = steps?.findIndex(step => step.isActive);
 	const updatedSteps = steps?.map((step, index) => ({
 		...step,
@@ -47,5 +47,3 @@ const StatusTracker = ({ statusTitle, steps }: StatusTrackerProps) => {
 		</article>
 	);
 };
-
-export default StatusTracker;

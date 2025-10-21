@@ -5,7 +5,6 @@ import {
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
   SubscriptionCheckoutSheetResponse,
-  SubscriptionOrderSheetResponse,
 } from "./checkout";
 
 interface IamportSubscribeResponse {

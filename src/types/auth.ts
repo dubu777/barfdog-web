@@ -1,8 +1,7 @@
 import { PROVIDERS } from "@/constants/auth";
-import { AddressDto, ValueOfTuple } from "@/types/index";
+import { ValueOfTuple } from "@/types/index";
 
 // 로그인
-type Role = "USER" | "ADMIN" | "SUBSCRIBER";
 type UserType =
   | "NON_MEMBER"
   | "MEMBER"
@@ -13,42 +12,11 @@ type GenderType = "MALE" | "FEMALE" | "NONE" | "M" | "F" | null;
 type SnsProvider = ValueOfTuple<typeof PROVIDERS>;
 type UpperSnsProvider = Uppercase<SnsProvider>;
 
-interface UserInfo {
-  email: string;
-  expiresAt: string;
-  name: string;
-  roleList: Role[];
-  temporaryPassword: boolean;
-}
-
-interface LoginUserInfo {
-  provider: SnsProvider;
-  providerId: string;
-  phoneNumber: string;
-  message: string;
-  resultCode: string;
-  userType: UserType;
-  token: null | string;
-}
-
 interface OAuthLoginResponse {
   provider: SnsProvider;
   token: string | null;
   response: LoginWithOAuthTokenResponse;
 }
-
-// 아이디 찾기, 임시 비밀번호 발급, SNS 연동
-interface FindUserEmail {
-  name: string;
-  phoneNumber: string;
-}
-
-interface TemporaryPassword extends FindUserEmail {
-  email: string;
-}
-
-// 회원가임
-type SignUpTermsModal = "servicePolicy" | "privacyPolicy" | "alliancePolicy";
 
 interface SignupRequest {
   name: string;
@@ -119,12 +87,7 @@ type VerificationStep = "request" | "verify" | "verified";
 
 export type {
   UserType,
-  UserInfo,
-  LoginUserInfo,
   SnsProvider,
-  FindUserEmail,
-  TemporaryPassword,
-  SignUpTermsModal,
   GenderType,
   SignupRequest,
   RequestFindAccountCodeResponse,

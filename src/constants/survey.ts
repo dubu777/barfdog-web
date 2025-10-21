@@ -1,4 +1,4 @@
-import { HealthConcernType, SurveyTitleConfig } from "@/types";
+import { SurveyTitleConfig } from "@/types";
 import { SurveyStepKeys } from "@/utils/validation/surveyValidation";
 import Born from "public/images/survey/Icon-Born.svg";
 import Bowel from "public/images/survey/Icon-Bowel.svg";
@@ -35,7 +35,7 @@ import FillPancreas from "public/images/survey/IconFill-pancreas.svg";
 import FillPuppy from "public/images/survey/IconFill-Puppy.svg";
 import FillSkin from "public/images/survey/IconFill-Skin.svg";
 import FillSkincare from "public/images/survey/IconFill-Skincare.svg";
-import { DOG_TYPE } from "@/constants/dog";
+import { PET_TYPE } from "@/constants/pet";
 
 const SURVEY_SECTIONS = [
   { key: "dogBasicInfo", label: "기본 정보", steps: 5 },
@@ -141,7 +141,7 @@ const DIET_ANALYSIS_FORM_INFO = {
     },
     dogType: {
       placeholder: "견종을 검색해 보세요",
-      options: DOG_TYPE,
+      options: PET_TYPE,
     },
     pregnancy: {
       options: [

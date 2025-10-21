@@ -5,13 +5,8 @@ import ArrowIcon from '/public/images/mypage/chevron-s.svg';
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 import Text from "@/components/common/text/Text";
 import Divider from "@/components/common/divider/Divider";
-import { MenuLink } from "@/types";
 
-interface MenuListType extends MenuLink {
-	key: 'coupon' | 'reward';
-}
-
-const MENU_LIST: MenuListType[] = [
+const MENU_LIST = [
 	{ key: 'coupon', label: '쿠폰', url: '/mypage/coupon' },
 	{ key: 'reward', label: '적립금', url: '/mypage/reward' },
 ]

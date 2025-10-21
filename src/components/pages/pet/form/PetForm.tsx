@@ -13,7 +13,7 @@ import FileUpload from "@/components/common/fileUpload/FileUpload";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
 import DogTypeModal from "@/components/common/modal/dogTypeModal/DogTypeModal";
 import useModal from "@/hooks/useModal";
-import { DOG_GENDER } from "@/constants/dog";
+import { PET_GENDER } from "@/constants/pet";
 import { useCheckDuplicatePetName } from "@/api/pet/queries/useCheckDuplicatePetName";
 import { PetFormValues } from "@/utils/validation/petValidation";
 import { useGetPetBreedList } from "@/api/pet/queries/useGetPetBreedList";
@@ -154,13 +154,13 @@ export default function PetForm({
                 <InputLabel label="성별" labelColor="gray800" isRequired />
                 <div className={styles.buttonBox}>
                   <SurveyButton
-                    label={DOG_GENDER["MALE"]}
+                    label={PET_GENDER["MALE"]}
                     value="MALE"
                     isChecked={field.value === "MALE"}
                     onToggle={field.onChange}
                   />
                   <SurveyButton
-                    label={DOG_GENDER["FEMALE"]}
+                    label={PET_GENDER["FEMALE"]}
                     value="FEMALE"
                     isChecked={field.value === "FEMALE"}
                     onToggle={field.onChange}

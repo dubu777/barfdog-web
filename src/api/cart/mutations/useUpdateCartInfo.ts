@@ -3,9 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCartInfo } from "@/api/cart/cart";
 import { queryKeys } from "@/constants";
 
-export { useUpdateCartInfo };
-
-function useUpdateCartInfo(mutationOptions?: UseMutationCustomOptions) {
+export function useUpdateCartInfo(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ body }: { body: UpdateCartInfo }) => updateCartInfo(body),

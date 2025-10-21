@@ -1,13 +1,13 @@
 'use client';
 import { commonWrapper } from '@/styles/common.css';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Accordion from "@/components/common/accordion/Accordion";
 import Text from "@/components/common/text/Text";
 import InfoText from '@/components/common/typography/infoText/InfoText';
-import Link from 'next/link';
 import Divider from '@/components/common/divider/Divider';
-import { FAQ_LIST } from "@/constants/community";
 import Header from '@/components/layout/header/Header';
+import { FAQ_LIST } from "@/constants/community";
 
 export default function Faq() {
 	const router = useRouter();

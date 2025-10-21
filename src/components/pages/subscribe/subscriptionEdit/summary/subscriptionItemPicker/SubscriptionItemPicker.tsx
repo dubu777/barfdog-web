@@ -1,6 +1,4 @@
 import Card from "@/components/common/card/Card";
-import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
-import { DELIVERY_PLAN_LABEL, MEAL_PLAN_LABEL } from "@/constants";
 import Button from "@/components/common/button/Button";
 import Divider from "@/components/common/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";

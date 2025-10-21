@@ -1,4 +1,4 @@
-import {DiscountType} from "@/types";
+import { DiscountType } from "@/types";
 
 // 할인율 계산
 export function calculateDiscountDegree(
