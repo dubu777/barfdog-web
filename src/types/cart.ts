@@ -1,14 +1,3 @@
-export type {
-  CartItemDto,
-  CartItemOptionDto,
-  BasketDto,
-  DeliveryConstant,
-  CartSummary,
-  CartInfo,
-  CartOption,
-  UpdateCartInfo,
-};
-
 interface CartItemDto {
   amount: number;
   basketId: number;
@@ -62,3 +51,14 @@ interface UpdateCartInfo {
   itemAmount: number;
   optionDtoList: CartOption[];
 }
+
+export type {
+  CartItemDto,
+  CartItemOptionDto,
+  BasketDto,
+  DeliveryConstant,
+  CartSummary,
+  CartInfo,
+  CartOption,
+  UpdateCartInfo,
+};

@@ -13,5 +13,4 @@ export * from "./payment";
 export * from "./community";
 export * from "./mypage/review";
 export * from "./store";
-export * from "./dogs";
 export * from "./review";

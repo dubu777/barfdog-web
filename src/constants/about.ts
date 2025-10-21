@@ -1,4 +1,3 @@
-
 import YoutubeIcon from '/public/images/about/youtube.svg';
 import BloggerIcon from '/public/images/about/blogger.svg';
 import InstagramIcon from '/public/images/about/instagram.svg';

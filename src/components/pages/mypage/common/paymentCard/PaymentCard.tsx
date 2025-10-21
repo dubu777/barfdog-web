@@ -22,12 +22,12 @@ interface PaymentCardProps {
   cardName?: string;
 }
 
-const PaymentCard = ({
+export default function PaymentCard({
   paymentMethod,
   cardNumber,
   cardName,
   cardSize = "lg",
-}: PaymentCardProps) => {
+}: PaymentCardProps) {
   const paymentCardNumber =
     paymentMethod !== "NAVER_PAY" && cardNumber
       ? `신용 • ${cardNumber?.slice(0, 6)}`
@@ -74,5 +74,3 @@ const PaymentCard = ({
     </div>
   );
 };
-
-export default PaymentCard;

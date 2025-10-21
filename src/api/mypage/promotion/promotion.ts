@@ -1,12 +1,12 @@
 import axiosInstance from "@/api/axiosInstance";
-import { CreatePromotion, RawPromotionList, PromotionListSearchValues } from "@/types/mypage/promotion";
+import { CreatePromotion, RawPromotionList } from "@/types/mypage/promotion";
 import { ApiResponse } from "@/types/common";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const getInfinitePromotionList = async ({
 	pageParam = 0,
 	instance = axiosInstance
-}: PromotionListSearchValues) => {
+}) => {
 	const { data }: { data: ApiResponse<RawPromotionList> } = await instance.get(`/api/v2/user/coupons/promotion`, {
 		params: { page: pageParam, size: 20 },
 	});

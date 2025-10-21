@@ -22,8 +22,6 @@ import { useWithdrawalAccount } from "@/api/mypage/account/mutations/useWithdraw
 import { extractErrorCode } from "@/utils/api/apiResponseUtils";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 
-export type WithdrawalStep = "notice" | "password";
-
 const guideSteps = [
   {
     title: "멤버십 혜택이 사라집니다",

@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { ItemType, SortByType, StoreItemList } from "@/types";
+import { ItemType, SortByType } from "@/types";
 import { queryKeys } from "@/constants";
 import { getStoreItemList } from "@/api/store/store";
 

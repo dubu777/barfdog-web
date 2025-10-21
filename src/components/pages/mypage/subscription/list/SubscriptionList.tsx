@@ -1,11 +1,11 @@
 'use client';
-import { useGetInfiniteSubscriptionList } from "@/api/mypage/subscription/queries/useGetInfiniteSubscriptionList";
+import { commonWrapper } from "@/styles/common.css";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import EmptyState from "../../common/emptyState/EmptyState";
-import { commonWrapper } from "@/styles/common.css";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import SubscriptionCard from "../common/card/SubscriptionCard";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useGetInfiniteSubscriptionList } from "@/api/mypage/subscription/queries/useGetInfiniteSubscriptionList";
 
 export default function SubscriptionList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteSubscriptionList();
@@ -18,8 +18,6 @@ export default function SubscriptionList() {
       fetchNextPage();
     }
   }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
-
-  console.log(subscriptionList);
 
   return (
     <section className={commonWrapper({ 

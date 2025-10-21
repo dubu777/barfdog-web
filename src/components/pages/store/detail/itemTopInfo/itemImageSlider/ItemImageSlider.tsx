@@ -1,10 +1,10 @@
 import * as styles from './ItemImageSlider.css';
 import Image from "next/image";
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { ItemImage } from "@/types";
 import SlideCounter from '@/components/common/slideCounter/SlideCounter';
-import { useState } from 'react';
+import { ItemImage } from "@/types";
 
 export default function ItemImageSlider({ 
   itemImageList,

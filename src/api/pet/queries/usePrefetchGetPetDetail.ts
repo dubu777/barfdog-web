@@ -1,5 +1,4 @@
 import { QueryClient } from "@tanstack/react-query";
-import { DogDetailData } from "@/types";
 import { queryKeys } from "@/constants";
 import { createSSRRequest } from "@/api/withAuthSSR";
 import { getPetDetail } from "../pet";

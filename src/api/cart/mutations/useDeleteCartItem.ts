@@ -3,17 +3,13 @@ import { deleteCartItemById, deleteCartItemByIds } from "@/api/cart/cart";
 import { queryKeys } from "@/constants";
 import { UseMutationCustomOptions } from "@/types";
 
-export { useDeleteCartItemById, useDeleteCartItemByIds };
-
-const getCartInfoQueryKey = [queryKeys.CART.BASE, queryKeys.CART.GET_CART_INFO];
-
 const updateNewCartInfo = async (queryClient: QueryClient) => {
 	await queryClient.invalidateQueries({
-		queryKey: getCartInfoQueryKey,
+		queryKey: [queryKeys.CART.BASE, queryKeys.CART.GET_CART_INFO],
 	});
 }
 
-function useDeleteCartItemById(mutationOptions?: UseMutationCustomOptions) {
+export function useDeleteCartItemById(mutationOptions?: UseMutationCustomOptions) {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: ({ itemId }: { itemId: number }) => deleteCartItemById(itemId),
@@ -22,7 +18,7 @@ function useDeleteCartItemById(mutationOptions?: UseMutationCustomOptions) {
 	})
 }
 
-function useDeleteCartItemByIds(mutationOptions?: UseMutationCustomOptions) {
+export function useDeleteCartItemByIds(mutationOptions?: UseMutationCustomOptions) {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: ({ deleteBasketIdList } : { deleteBasketIdList: number[] }) => deleteCartItemByIds(deleteBasketIdList),

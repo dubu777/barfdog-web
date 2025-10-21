@@ -4,9 +4,8 @@ import Button from "@/components/common/button/Button";
 import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
 import { useRouter } from "next/navigation";
 import * as styles from "./Test.css";
-import { deleteCookie, getCookie } from "@/utils/auth/cookie";
+import { getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
-import { ALLIANCE_COOKIE } from "@/constants/cookie";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 
 export default function GeneralShopTest() {

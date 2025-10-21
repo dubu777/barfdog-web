@@ -1,18 +1,5 @@
 import { MEMBERSHIP_TIERS } from "@/constants";
 
-interface MenuLink {
-  key?: string;
-  label: string;
-  url?: string;
-  action?: () => void;
-}
-
-interface MenuList {
-  category: string;
-  menus: MenuLink[];
-}
-
-// v2
 type MemberGradeType = keyof typeof MEMBERSHIP_TIERS;
 
 interface MemberInfo {
@@ -49,9 +36,6 @@ interface MyPageBannerData {
 }
 
 export type {
-  MenuLink,
-  MenuList,
-  // v2
   MemberInfo,
   RepresentativePetInfo,
   MyPageInfoData,

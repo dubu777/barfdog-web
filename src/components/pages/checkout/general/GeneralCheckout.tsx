@@ -50,7 +50,6 @@ import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneral
 import Spinner from "@/components/common/spinner/Spinner";
 import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import { commonWrapper } from "@/styles/common.css";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 export default function GeneralCheckout() {

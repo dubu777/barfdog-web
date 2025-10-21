@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetCartInfo } from "@/api/cart/queries/usePrefetchGetCartInfo";
+import { prefetchGetCartInfo } from "@/api/cart/queries/prefetchGetCartInfo";
 import Cart from "@/components/pages/cart/Cart";
 
 export default async function CartPage() {

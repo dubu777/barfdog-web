@@ -13,7 +13,7 @@ type MypageParams = {
   authentication?: string;
 };
 
-const MyPageHeader = () => {
+export default function MyPageHeader() {
   const pathname = usePathname();
   const rawParams = useParams();
   const params = Object.fromEntries(
@@ -52,15 +52,10 @@ const MyPageHeader = () => {
     '/mypage/account/user-info': { centerTitle: '회원정보 변경', showBackButton: true, onBack: goBack },
     '/mypage/account/change-password': { centerTitle: '비밀번호 변경', showBackButton: true, onBack: goBack },
     '/mypage/account/notification': { centerTitle: '알림 설정', showBackButton: true, onBack: goBack },
-    //
-    '/mypage/manage-card': { centerTitle: '카드관리' },
     '/mypage/subscription': { centerTitle: '구독상품관리', showCartButton: true, showBackButton: true, onBack: goBack },
     '/mypage/review': { centerTitle: '나의 리뷰',showBackButton: true, onBack: goBackToMypageMain },
     '/mypage/review/create': { centerTitle: '리뷰 작성', showBackButton: true, onBack: goBack },
     '/mypage/orders': { centerTitle: '주문 및 배송조회', showBackButton: true, onBack: goBack },
-    '/mypage/order-issue-inquiry': { centerTitle: '취소/교환/반품 내역', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/billing-preferences': { centerTitle: '결제 수단/자동 적립금', showCartButton: true, showBackButton: true, onBack: goBack },
-    '/mypage/auto-reward': { centerTitle: '자동 적립금 사용 관리', showCartButton: true, showBackButton: true, onBack: goBack },
   };
 
   const dynamicHeaderConfigs: Record<
@@ -138,5 +133,3 @@ const MyPageHeader = () => {
     </>
   );
 };
-
-export default MyPageHeader;

@@ -110,7 +110,7 @@ export default function Popup({ initialHiddenPopupIds }: PopupProps) {
     // 각 position 내에서 순서대로 인덱스 추가
     return Object.values(groupedByPosition)
       .flat()
-      .map((popup, index) => ({
+      .map((popup) => ({
         ...popup,
         samePositionIndex: groupedByPosition[popup.position].indexOf(popup),
       }));

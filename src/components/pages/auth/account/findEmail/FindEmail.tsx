@@ -19,7 +19,6 @@ import { useCompletedMode } from "@/hooks/useCompletedMode";
 import { useRouter } from "next/navigation";
 import { VerificationStep } from "@/types";
 import FindAccountResult from "../findAccount/result/FindAccountResult";
-import { useAuthStore } from "@/store/useAuthStore";
 
 export default function FindEmail() {
   const { addToast } = useToastStore();
