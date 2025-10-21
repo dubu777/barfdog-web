@@ -60,12 +60,9 @@ const getArticleList = async ({
     params,
   });
 
-  console.log('data', data);
-  
-
   const responseData = validateApiResponse(data, "아티클 목록 조회에 실패했습니다.");
   return {
-    page: responseData.pagination,
+    pagination: responseData.pagination,
     articleList: responseData.blogList,
   }
 }

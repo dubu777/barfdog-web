@@ -10,13 +10,8 @@ const getReferralRewardList = async ({
 	const { data }: { data: ApiResponse<ReferralRewardList> } = await instance.get(`/api/v2/user/rewards/referral`, {
 		params: { page: pageParam, size: 20 },
 	});
-	const { referralRewardInfo, rewardList, pagination } = validateApiResponse(data, "적립금 목록 조회에 실패했습니다.");
 
-	return {
-		referralRewardInfo,
-		rewardList,
-		page: pagination,
-	}
+	return validateApiResponse(data, "적립금 목록 조회에 실패했습니다.");
 }
 
 const createReferralCode = async (body: { referralCode: string }) => {

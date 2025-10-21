@@ -34,7 +34,7 @@ const getInfiniteFullCheckList = async ({
   }
 
   const checkupDiagnosisList = data?.data?.checkupDiagnosisList ?? [];
-  const page = data?.data?.pagination ?? { 
+  const pagination = data?.data?.pagination ?? { 
     page: 0, 
     size: 10,
     totalPages: 1,
@@ -45,7 +45,7 @@ const getInfiniteFullCheckList = async ({
 
   return {
     checkupDiagnosisList,
-    page,
+    pagination,
   }
 };
 

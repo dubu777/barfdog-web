@@ -27,7 +27,7 @@ const getSubscriptionList = async (
     .filter(item => isVisibleSubscribeStatus(item.status)) ?? [];
   return {
     subscriptionList,
-    page: data.page,
+    pagination: data.page,
   } ;
 };
 

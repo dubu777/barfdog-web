@@ -18,7 +18,7 @@ const getRewardList = async ({
 	return {
 		rewardList,
 		totalRewardAmount: responseData.totalRewardAmount,
-		page: responseData.pagination,
+		pagination: responseData.pagination,
 	}
 };
 

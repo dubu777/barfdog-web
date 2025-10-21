@@ -9,7 +9,7 @@ import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
 import Spinner from "@/components/common/spinner/Spinner";
 import DietAnalysisMain from "@/components/pages/dietAnalysis/main/DietAnalysisMain";
-import { prefetchGetPetList } from "@/api/pet/queries/usePrefetchGetPetList";
+import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 
 export default async function DietAnalysisPage() {
   const queryClient = new QueryClient();

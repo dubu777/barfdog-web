@@ -6,7 +6,7 @@ import { getMyPageInfo } from "@/api/mypage/common/common";
 
 export async function prefetchGetMyPageInfo(queryClient: QueryClient) {
 	const ssrAxios = createSSRRequest();
-	await queryClient.prefetchQuery<MyPageInfoData>({
+	return await queryClient.prefetchQuery<MyPageInfoData>({
 		queryKey: [queryKeys.MYPAGE.BASE, queryKeys.MYPAGE.COMMON.BASE, queryKeys.MYPAGE.COMMON.GET_MYPAGE_INFO],
 		queryFn: () => getMyPageInfo(ssrAxios),
 	});

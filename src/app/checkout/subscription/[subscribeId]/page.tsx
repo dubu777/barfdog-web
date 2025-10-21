@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 import Spinner from "@/components/common/spinner/Spinner";
-import { prefetchGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/usePrefetchGetSubscriptionCheckoutSheet";
+import { prefetchGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/prefetchGetSubscriptionCheckoutSheet";
 import SubscriptionCheckout from "@/components/pages/checkout/subscription/SubscriptionCheckout";
 import Header from "@/components/layout/header/Header";
 

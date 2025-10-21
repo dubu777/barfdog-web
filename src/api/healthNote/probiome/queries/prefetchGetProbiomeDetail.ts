@@ -8,7 +8,7 @@ export async function prefetchGetProbiomeDetail(
   id: number
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getProbiomeDetail(Number(id), ssrAxios),
     queryKey: [
       queryKeys.PROBIOME.BASE,

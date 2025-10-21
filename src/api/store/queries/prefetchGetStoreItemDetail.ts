@@ -9,7 +9,7 @@ export async function prefetchGetStoreItemDetail(
 	itemId: number,
 ) {
 	const ssrAxios = createSSRRequest();
-	await queryClient.prefetchQuery<StoreItemDetail>({
+	return await queryClient.prefetchQuery<StoreItemDetail>({
 		queryKey: [queryKeys.STORE.BASE, queryKeys.STORE.GET_STORE_ITEM_DETAIL, itemId],
 		queryFn: () => getStoreItemDetail(itemId, ssrAxios),
 	});

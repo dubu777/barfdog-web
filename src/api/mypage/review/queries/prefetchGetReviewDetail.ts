@@ -10,7 +10,7 @@ export async function prefetchGetReviewDetail(
   queryClient: QueryClient
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getReviewDetail({ reviewId, reviewType, instance: ssrAxios }),
     queryKey: [
       queryKeys.MYPAGE.BASE,

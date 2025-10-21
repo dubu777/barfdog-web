@@ -5,7 +5,7 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetMedicalHistoryDetail(diagnosisId: number, queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getMedicalHistoryDetail(diagnosisId, ssrAxios),
     queryKey: [
       queryKeys.MEDICAL_HISTORY.BASE,

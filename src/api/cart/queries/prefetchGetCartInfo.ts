@@ -6,7 +6,7 @@ import { queryKeys } from "@/constants";
 
 export async function prefetchGetCartInfo(queryClient: QueryClient) {
 	const ssrAxios = createSSRRequest();
-	await queryClient.prefetchQuery<CartInfo>({
+	return await queryClient.prefetchQuery<CartInfo>({
 		queryKey: [queryKeys.CART.BASE, queryKeys.CART.GET_CART_INFO],
 		queryFn: () => getCartInfo(ssrAxios),
 	})

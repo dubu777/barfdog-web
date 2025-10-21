@@ -5,7 +5,7 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetFullCheckSummary(petId: number, queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getFullCheckSummary(petId, ssrAxios),
     queryKey: [
       queryKeys.FULL_CHECK.BASE,

@@ -1,19 +1,19 @@
 import { QueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
-import { getRawFoodOrderSheet } from "@/api/subscription/subscription";
+import { getSubscriptionDetailV2 } from "@/api/subscription/subscription";
 import { createSSRRequest } from "@/api/withAuthSSR";
 
-export async function prefetchGetRawFoodOrderSheet(
+export async function prefetchGetSubscriptionDetailV2(
   queryClient: QueryClient,
   reportId: number
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryKey: [
       queryKeys.SUBSCRIPTION.BASE,
-      queryKeys.SUBSCRIPTION.GET_RAW_ORDER_SHEET,
+      queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL,
       reportId,
     ],
-    queryFn: () => getRawFoodOrderSheet(reportId, ssrAxios),
+    queryFn: () => getSubscriptionDetailV2(reportId, ssrAxios),
   });
 }

@@ -5,7 +5,7 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetBreedList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getBreedList(ssrAxios),
     queryKey: [
       queryKeys.DOGPEDIA.BASE,

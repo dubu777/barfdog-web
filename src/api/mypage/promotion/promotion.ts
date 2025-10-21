@@ -3,7 +3,7 @@ import { CreatePromotion, RawPromotionList } from "@/types/mypage/promotion";
 import { ApiResponse } from "@/types/common";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
-const getInfinitePromotionList = async ({
+const getPromotionList = async ({
 	pageParam = 0,
 	instance = axiosInstance
 }) => {
@@ -29,7 +29,7 @@ const getInfinitePromotionList = async ({
 
 	return {
 		promotionList,
-		page: responseData.pagination,
+		pagination: responseData.pagination,
 	}
 };
 
@@ -41,6 +41,6 @@ const createPromotion = async (body: CreatePromotion) => {
 }
 
 export {
-	getInfinitePromotionList,
+	getPromotionList,
 	createPromotion,
 }

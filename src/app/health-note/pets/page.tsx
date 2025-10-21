@@ -8,7 +8,7 @@ import {
 import Spinner from "@/components/common/spinner/Spinner";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import PetManager from "@/components/pages/heathNote/common/petManager/PetManager";
-import { prefetchGetPetList } from "@/api/pet/queries/usePrefetchGetPetList";
+import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 
 export default async function HeathNoteDogsPage() {
   const queryClient = new QueryClient();

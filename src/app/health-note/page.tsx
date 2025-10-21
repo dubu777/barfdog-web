@@ -5,7 +5,7 @@ import { HydrationBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import HealthNoteMainHeader from "@/components/pages/heathNote/layout/header/HealthNoteMainHeader";
 import { Suspense } from "react";
-import { prefetchGetPetList } from "@/api/pet/queries/usePrefetchGetPetList";
+import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 
 export default async function HeathNotePage() {
   const queryClient = new QueryClient();

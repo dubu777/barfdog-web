@@ -2,27 +2,22 @@ import { QueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/constants";
 import { createSSRRequest } from "@/api/withAuthSSR";
 import { getReferralRewardList } from "@/api/mypage/inviteFriends/inviteFriends";
+import { prefetchInfiniteQuery } from "@/utils/api/infiniteQueryConfig";
 
 export async function prefetchGetReferralRewardList(
   queryClient: QueryClient
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchInfiniteQuery({
+  return await prefetchInfiniteQuery(queryClient, {
     queryKey: [
-    queryKeys.MYPAGE.BASE, 
+      queryKeys.MYPAGE.BASE, 
       queryKeys.MYPAGE.REWARD.BASE, 
       queryKeys.MYPAGE.REWARD.GET_REFERRAL_REWARD_LIST
     ],
-    queryFn: async ({ pageParam = 0 }) =>
+    queryFn: async ({ pageParam, instance }) =>
       await getReferralRewardList({
         pageParam,
-        instance: ssrAxios
+        instance
       }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      const currentPage = lastPage.page.page ?? 0;
-      const totalPages = lastPage.page.totalPages ?? 0;
-      return currentPage + 1 < totalPages ? currentPage + 1 : undefined;
-    },
-  });
+  }, ssrAxios);
 }

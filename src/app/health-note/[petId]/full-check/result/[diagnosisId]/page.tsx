@@ -4,7 +4,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import Spinner from "@/components/common/spinner/Spinner";
 import FullCheckResult from "@/components/pages/heathNote/fullCheck/result/FullCheckResult";
 import { prefetchGetFullCheckResultDetail } from "@/api/healthNote/fullCheck/queries/prefetchGetFullCheckResultDetail";
-import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
+import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 
 interface FullCheckResultPageProps {
   params: Promise<{

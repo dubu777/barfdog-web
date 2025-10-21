@@ -10,7 +10,7 @@ export async function prefetchGetBodyCheckResultDetail(
   queryClient: QueryClient
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getBodyCheckResultDetail(part, diagnosisId, ssrAxios),
     queryKey: [
       queryKeys.BODY_CHECK.BASE,

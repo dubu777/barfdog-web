@@ -87,7 +87,7 @@ const getOrderListByOrderType = async ({
 
   return {
     orders,
-    page: data.page,
+    pagination: data.page,
   };
 };
 

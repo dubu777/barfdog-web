@@ -6,7 +6,7 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import Header from "@/components/layout/header/Header";
-import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/usePrefetchGetDietAnalysisResult";
+import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/prefetchGetDietAnalysisResult";
 import DietAnalysisResult from "@/components/pages/dietAnalysis/result/DietAnalysisResult";
 import Spinner from "@/components/common/spinner/Spinner";
 

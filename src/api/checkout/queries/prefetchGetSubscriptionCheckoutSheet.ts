@@ -9,7 +9,7 @@ export async function prefetchGetSubscriptionCheckoutSheet(
   subscribeId: number
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery<SubscriptionCheckoutSheetResponse>({
+  return await queryClient.prefetchQuery<SubscriptionCheckoutSheetResponse>({
     queryKey: [
       queryKeys.CHECKOUT.BASE,
       queryKeys.CHECKOUT.GET_SUBSCRIPTION_CHECKOUT_SHEET,

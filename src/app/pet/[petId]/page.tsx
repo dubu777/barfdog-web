@@ -7,7 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import Spinner from "@/components/common/spinner/Spinner";
 import PetEditForm from "@/components/pages/pet/edit/PetEditForm";
-import { prefetchGetPetDetail } from "@/api/pet/queries/usePrefetchGetPetDetail";
+import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 
 interface PetEditPageProps {
   params: {

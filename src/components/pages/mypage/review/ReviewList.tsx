@@ -15,7 +15,7 @@ import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { queryKeys } from "@/constants";
 import { useReviewStore } from "@/store/mypage/useReviewStore";
 import { CreateReviewDetail, ReviewListType } from '@/types';
-import { useGetMypageReviewList } from "@/api/mypage/review/queries/useGetMypageReviewList";
+import { useGetInfiniteMypageReviewList } from "@/api/mypage/review/queries/useGetInfiniteMypageReviewList";
 
 export default function Review () {
   const { pushWithQuery } = useDynamicQueryPush();
@@ -27,9 +27,9 @@ export default function Review () {
   const isWriteableReview = type === 'writable';
   const activeIndex = (!type || isWriteableReview) ? 0 : 1;
 
-  const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetMypageReviewList(type as ReviewListType);
+  const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetInfiniteMypageReviewList(type as ReviewListType);
   const reviewList = reviewListData?.pages.flatMap(p => p.reviewList) ?? [];
-  const totalCount = reviewListData?.pages[0].page.totalCount ?? 0;
+  const totalCount = reviewListData?.pages[0].pagination.totalCount ?? 0;
 
   const { ref, inView } = useInView();
 

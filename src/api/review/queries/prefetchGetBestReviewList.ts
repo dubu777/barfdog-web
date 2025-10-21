@@ -5,7 +5,7 @@ import { getBestReviewList } from "../review";
 
 export async function prefetchGetBestReviewList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryKey: [queryKeys.REVIEW.BASE, queryKeys.REVIEW.GET_BEST_REVIEW_LIST],
     queryFn: () => getBestReviewList(ssrAxios),
   });
