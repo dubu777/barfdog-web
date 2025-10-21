@@ -6,7 +6,7 @@ import { getArticleList, getRecommendArticleList } from '../community';
 
 export async function prefetchGetArticleList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery<ArticleList>({
+  return await queryClient.prefetchQuery<ArticleList>({
     queryKey: [queryKeys.COMMUNITY.ARTICLE.BASE, queryKeys.COMMUNITY.ARTICLE.GET_ARTICLE_LIST, 'ALL', 0],
     queryFn: () => getArticleList(
       {
@@ -20,7 +20,7 @@ export async function prefetchGetArticleList(queryClient: QueryClient) {
 
 export async function prefetchGetRecommendArticleList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery<RecommendArticle[]>({
+  return await queryClient.prefetchQuery<RecommendArticle[]>({
     queryKey: [queryKeys.COMMUNITY.ARTICLE.BASE, queryKeys.COMMUNITY.ARTICLE.GET_RECOMMEND_ARTICLE_LIST],
     queryFn: () => getRecommendArticleList(ssrAxios),
   });

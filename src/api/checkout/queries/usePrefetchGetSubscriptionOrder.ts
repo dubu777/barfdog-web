@@ -10,7 +10,7 @@ export async function prefetchGetSubscriptionOrder(queryClient: QueryClient, sub
   const cookieStore = cookies();
   const token = cookieStore.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
 
-  await queryClient.prefetchQuery<SubscriptionOrderSheetResponse>({
+  return await queryClient.prefetchQuery<SubscriptionOrderSheetResponse>({
     queryKey: [queryKeys.ORDER.BASE, queryKeys.ORDER.GET_SUBSCRIPTION_ORDER, subscribeId],
     queryFn: async () => {
       const { data } = await axiosInstance.get(`/api/orders/sheet/subscribe/${subscribeId}`, {

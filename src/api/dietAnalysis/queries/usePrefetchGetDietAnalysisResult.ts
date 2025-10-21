@@ -8,7 +8,7 @@ export async function prefetchGetDietAnalysisResult(
   id: number
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getDietAnalysisResult(Number(id), ssrAxios),
     queryKey: [
       queryKeys.DIET_ANALYSIS.BASE,

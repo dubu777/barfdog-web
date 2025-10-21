@@ -6,7 +6,7 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetRecipeList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery<RecipeItem[]>({
+  return await queryClient.prefetchQuery<RecipeItem[]>({
     queryKey: [queryKeys.RECIPE.BASE, queryKeys.RECIPE.GET_RECIPE_LIST],
     queryFn: () => getRecipeList(ssrAxios),
   });

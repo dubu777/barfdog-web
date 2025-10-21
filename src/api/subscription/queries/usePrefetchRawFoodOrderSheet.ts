@@ -8,7 +8,7 @@ export async function prefetchGetRawFoodOrderSheet(
   reportId: number
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryKey: [
       queryKeys.SUBSCRIPTION.BASE,
       queryKeys.SUBSCRIPTION.GET_RAW_ORDER_SHEET,

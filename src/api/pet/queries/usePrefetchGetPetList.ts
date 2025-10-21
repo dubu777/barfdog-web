@@ -6,7 +6,7 @@ import { getPetList } from "../pet";
 
 export async function prefetchGetPetList(queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery<PetListResponse>({
+  return await queryClient.prefetchQuery<PetListResponse>({
     queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_LIST],
     queryFn: async () => getPetList(ssrAxios),
   });

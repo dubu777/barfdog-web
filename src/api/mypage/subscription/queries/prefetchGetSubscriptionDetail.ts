@@ -5,7 +5,7 @@ import { queryKeys } from "@/constants";
 
 export async function prefetchGetSubscriptionDetail(queryClient: QueryClient, subscriptionId: number) {
 	const ssrAxios = createSSRRequest();
-	await queryClient.prefetchQuery({
+	return await queryClient.prefetchQuery({
 		queryKey: [
       queryKeys.MYPAGE.BASE, 
       queryKeys.MYPAGE.SUBSCRIPTION.BASE, 

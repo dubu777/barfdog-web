@@ -9,7 +9,7 @@ export async function prefetchGetPetDetail(
   petId: number
 ) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery<Pet>({
+  return await queryClient.prefetchQuery<Pet>({
     queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_DETAIL, petId],
     queryFn: () => getPetDetail(petId, ssrAxios),
   });

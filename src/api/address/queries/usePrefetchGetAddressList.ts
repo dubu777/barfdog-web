@@ -8,7 +8,7 @@ export async function prefetchGetAddressList(queryClient: QueryClient) {
   const cookieStore = cookies();
   const token = cookieStore.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
   
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryKey: [queryKeys.DELIVERY.BASE, queryKeys.DELIVERY.GET_ADDRESS_LIST],
     queryFn: async () => {
       const { data } = await axiosInstance.get('/api/address', {

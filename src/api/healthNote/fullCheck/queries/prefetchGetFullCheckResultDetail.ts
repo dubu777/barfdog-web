@@ -5,7 +5,7 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetFullCheckResultDetail(diagnosisId: number, queryClient: QueryClient) {
   const ssrAxios = createSSRRequest();
-  await queryClient.prefetchQuery({
+  return await queryClient.prefetchQuery({
     queryFn: () => getFullCheckResultDetail(diagnosisId, ssrAxios),
     queryKey: [
       queryKeys.FULL_CHECK.BASE,
