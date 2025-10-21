@@ -42,7 +42,7 @@ const getCouponList = async ({
 	
 	return {
 		couponList,
-		page: responseData.pagination,
+		pagination: responseData.pagination,
 	}
 };
 

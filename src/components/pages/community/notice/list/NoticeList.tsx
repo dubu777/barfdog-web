@@ -11,7 +11,7 @@ import TabBar from "@/components/common/tabBar/TabBar";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import Divider from '@/components/common/divider/Divider';
 import Header from '@/components/layout/header/Header';
-import { useGetNoticeList } from "@/api/community/queries/useGetNoticeList";
+import { useGetInfiniteNoticeList } from "@/api/community/queries/useGetInfiniteNoticeList";
 import { NOTICE_CATEGORY } from "@/constants/community";
 import { NoticeCategory } from "@/types";
 import { getEntryPoint, navigateToEntryPoint } from '@/utils/navigationEntry';
@@ -22,7 +22,7 @@ export default function NoticeList() {
   const noticeTypeFilter = searchParams.get('noticeType') as NoticeCategory || 'ALL';
   const noticeCategoryFilter = Object.entries(NOTICE_CATEGORY).map(([value, { label }]) => ({label, value}));
   
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetNoticeList();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteNoticeList();
   const { ref, inView } = useInView();
 
   const filteredNoticeList = data?.pages

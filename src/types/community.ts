@@ -56,7 +56,7 @@ interface RawArticleList {
 
 interface ArticleList {
   articleList: ArticleListItem[];
-  page: Pagination;
+  pagination: Pagination;
 }
 
 interface RawArticleDetail {

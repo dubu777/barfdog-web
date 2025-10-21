@@ -58,14 +58,14 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
   })
 
   useEffect(() => {
-    if (data.page) {
-      setPaginationData({ ...data.page });
+    if (data.pagination) {
+      setPaginationData({ ...data.pagination });
     }
-  }, [data.page, setPaginationData]);
+  }, [data.pagination, setPaginationData]);
 
   const handleCategoryFilter = (category: ArticleCategory) => {
     handleFilterChange(category, { page: 1 })
-    setPaginationData({ ...data.page });
+    setPaginationData({ ...data.pagination });
   }
 
   return (

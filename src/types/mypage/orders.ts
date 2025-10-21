@@ -94,7 +94,7 @@ interface UnifiedOrderData {
 // 페이지네이션과 함께 주문 목록을 반환
 interface UnifiedOrderListResponse {
   orders: UnifiedOrderData[];
-  page: Page & {
+  pagination: Page & {
     hasMoreData?: boolean; // 필터링으로 인해 더 많은 데이터가 필요한지 표시
   };
 }

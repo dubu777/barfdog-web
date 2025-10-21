@@ -30,7 +30,7 @@ const getMypageReviewList = async ({
 
   return {
     reviewList: responseData[REVIEW_LIST_KEY[type]] ?? [],
-    page: responseData.pagination,
+    pagination: responseData.pagination,
   };
 };
 

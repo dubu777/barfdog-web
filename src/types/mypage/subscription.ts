@@ -25,7 +25,7 @@ interface SubscriptionItem {
 
 interface SubscriptionList {
   subscriptionList: SubscriptionItem[];
-  page: Page;
+  pagination: Page;
 }
 
 interface SubscriptionInfo {

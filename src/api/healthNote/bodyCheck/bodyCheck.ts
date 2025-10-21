@@ -45,7 +45,7 @@ const getInfiniteBodyCheckList = async (
 
   return {
     diagnosisList: data.data.bodyPartDiagnosisList ?? [],
-    page: data.data.pagination ?? {
+    pagination: data.data.pagination ?? {
       page: 0,
       size,
       totalPages: 1,
