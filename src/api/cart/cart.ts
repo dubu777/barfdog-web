@@ -2,15 +2,6 @@ import { CartInfo, UpdateCartInfo } from "@/types";
 import axiosInstance from "@/api/axiosInstance";
 import { AxiosInstance } from "axios";
 
-export {
-	getCartInfo,
-	updateCartInfo,
-	increaseCartItem,
-	decreaseCartItem,
-	deleteCartItemById,
-	deleteCartItemByIds,
-};
-
 const getCartInfo = async (instance: AxiosInstance = axiosInstance): Promise<CartInfo> => {
 	const { data } = await instance.get('/api/baskets');
 	return data;
@@ -44,3 +35,12 @@ const deleteCartItemByIds = async (deleteBasketIdList: number[]) => {
 	});
 	return data;
 }
+
+export {
+	getCartInfo,
+	updateCartInfo,
+	increaseCartItem,
+	decreaseCartItem,
+	deleteCartItemById,
+	deleteCartItemByIds,
+};

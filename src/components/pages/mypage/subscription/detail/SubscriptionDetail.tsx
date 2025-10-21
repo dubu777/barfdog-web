@@ -1,12 +1,12 @@
 'use client';
 
-import { useGetSubscriptionDetail } from "@/api/mypage/subscription/queries/useGetSubscriptionDetail";
-import Divider from "@/components/common/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
+import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/common/text/Text";
 import BasicInfo from "./info/basicInfo/BasicInfo";
 import PaymentInfo from "./info/paymentInfo/PaymentInfo";
 import SubscriptionInfo from "./info/subscriptionInfo/SubscriptionInfo";
-import Text from "@/components/common/text/Text";
+import { useGetSubscriptionDetail } from "@/api/mypage/subscription/queries/useGetSubscriptionDetail";
 
 interface SubscriptionDetailProps {
   subscriptionId: number;

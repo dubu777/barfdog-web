@@ -1,9 +1,9 @@
 import { subscriptionPlanInfo } from "@/constants";
 import { pointColor } from "@/styles/common.css";
-import { PlanKey } from "@/types";
-import { SubscriptionStatus as SubscriptionStatusType } from "@/types/mypage/subscription";
 import SubscriptionCard from "../../../common/card/SubscriptionCard";
 import InfoWrapper from "../../../../common/wrapper/InfoWrapper";
+import { PlanKey } from "@/types";
+import { SubscriptionStatus as SubscriptionStatusType } from "@/types/mypage/subscription";
 
 interface BasicInfoProps {
   plan: PlanKey;

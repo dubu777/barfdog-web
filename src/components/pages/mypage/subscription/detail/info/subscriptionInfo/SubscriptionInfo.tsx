@@ -1,15 +1,15 @@
-import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
-import CardWrapper from "../../../../common/wrapper/CardWrapper";
-import InfoWrapper from "../../../../common/wrapper/InfoWrapper";
-import { PlanKey } from "@/types";
-import { subscriptionPlanInfo } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
+import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
 import Divider from "@/components/common/divider/Divider";
-import { RecipeInfo } from "@/types/mypage/subscription";
 import CardImage from "@/components/pages/mypage/common/card/image/CardImage";
-import ListDivider from "@/components/common/listDivider/ListDivider";
 import Button from "@/components/common/button/Button";
 import Text from "@/components/common/text/Text";
+import ListDivider from "@/components/common/listDivider/ListDivider";
+import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
+import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
+import { PlanKey } from "@/types";
+import { RecipeInfo } from "@/types/mypage/subscription";
+import { subscriptionPlanInfo } from "@/constants";
 
 interface SubscriptionInfoProps {
   plan: PlanKey;

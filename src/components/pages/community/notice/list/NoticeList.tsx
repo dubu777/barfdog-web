@@ -16,7 +16,6 @@ import { NOTICE_CATEGORY } from "@/constants/community";
 import { NoticeCategory } from "@/types";
 import { getEntryPoint, navigateToEntryPoint } from '@/utils/navigationEntry';
 
-
 export default function NoticeList() {
   const router = useRouter();
   const searchParams = useSearchParams();

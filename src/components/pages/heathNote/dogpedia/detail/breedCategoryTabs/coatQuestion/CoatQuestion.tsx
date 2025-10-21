@@ -14,11 +14,11 @@ interface CoatQuestionProps {
 	furType: FurType;
 	furLength: FurLength;
 }
-const CoatQuestion = ({
+export default function CoatQuestion({
 	label,
 	furType,
 	furLength,
-}: CoatQuestionProps) => {
+}: CoatQuestionProps) {
 	const FurTypeIcon = furType === 'DOUBLE_COAT' ? DoubleCoatIcon : SingleCoatIcon;
 	const FurLengthIcon =
 		furLength === 'SHORT'
@@ -57,5 +57,3 @@ const CoatQuestion = ({
 		</div>
 	);
 };
-
-export default CoatQuestion;

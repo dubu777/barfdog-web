@@ -8,7 +8,7 @@ interface ProgressBarProps {
 	label?: string;
 	className?: string;
 }
-const ProgressBar = ({ progress, label, className }: ProgressBarProps) => {
+export default function ProgressBar({ progress, label, className }: ProgressBarProps) {
 	return (
 		<div className={`${styles.progressBarContainer} ${className || ''}`}>
 			<div
@@ -31,5 +31,3 @@ const ProgressBar = ({ progress, label, className }: ProgressBarProps) => {
 		</div>
 	);
 };
-
-export default ProgressBar;

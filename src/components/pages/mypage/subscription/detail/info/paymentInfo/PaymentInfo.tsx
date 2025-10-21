@@ -1,10 +1,10 @@
-import Chips from "@/components/common/chips/Chips";
-import CardWrapper from "../../../../common/wrapper/CardWrapper";
-import InfoWrapper from "../../../../common/wrapper/InfoWrapper";
-import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
-import { format } from "date-fns";
 import { commonWrapper } from "@/styles/common.css";
+import { format } from "date-fns";
+import Chips from "@/components/common/chips/Chips";
 import Button from "@/components/common/button/Button";
+import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
+import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
+import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 
 interface PaymentInfoProps {
   nextPaymentPrice: number;
