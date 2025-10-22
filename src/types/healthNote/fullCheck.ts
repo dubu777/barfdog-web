@@ -1,6 +1,7 @@
 import { BODY_PART_TO_CATEGORY, DISEASE_INFO } from "@/constants";
 import { AxiosInstance } from "axios";
 import { ComponentType, SVGProps } from "react";
+import { Pagination } from "../common";
 
 type SuspectedDiseaseCategory = keyof typeof BODY_PART_TO_CATEGORY;
 type SuspectedDiseaseType = keyof typeof DISEASE_INFO;
@@ -74,6 +75,11 @@ interface FullCheckFormValues {
 	suspectedDiseaseTypeList: SuspectedDiseaseType[];
 }
 
+interface FullCheckList {
+	checkupDiagnosisList: CheckupDiagnosis[];
+	pagination: Pagination;
+}
+
 type DiseaseCategoryKey = keyof typeof BODY_PART_TO_CATEGORY;
 
 type DiseaseCategory = (typeof BODY_PART_TO_CATEGORY)[DiseaseCategoryKey];
@@ -105,6 +111,7 @@ export type {
 	CheckupDiagnosis,
 	FullCheckListSearchValues,
 	FullCheckFormValues,
+	FullCheckList,
 	RecommendedItem,
 	DiseaseData,
 }

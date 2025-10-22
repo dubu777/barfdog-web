@@ -12,7 +12,9 @@ import { BreedPhysicalSpec } from "@/types/healthNote/dogpedia";
 interface BreedDefaultInfo extends BreedPhysicalSpec {
 	name: string;
 	temperament: string;
-	imageUrl?: string;
+	imageUrl?: {
+		url: string;
+	};
 }
 
 interface DefaultInfoProps {
@@ -54,7 +56,7 @@ export default function BreedDefaultInfo({
 			<Text type='title2'>{data.name}에 대해<br/>알아볼까요?</Text>
 			{data.imageUrl &&
 				<Image
-					src={data.imageUrl}
+					src={data.imageUrl.url}
 					alt={data.name}
 					width={600}
 					height={300}

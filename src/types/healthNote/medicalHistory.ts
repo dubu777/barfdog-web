@@ -21,6 +21,10 @@ interface MedicalHistoryData {
   diagnosisItemList: DiagnosisItem[];
 }
 
+interface MedicalHistoryList {
+  medicalDiagnosisList: MedicalHistoryData[];
+}
+
 interface DiagnosisFileList extends UploadedFile {
   diagnosisId: number;
 }
@@ -42,6 +46,7 @@ export type {
   DiagnosisItem,
   MedicalHistoryFormValue,
   MedicalHistoryData,
+  MedicalHistoryList,
   MedicalHistoryDetail,
   DiagnosisFileList,
   CreateMedicalHistoryResponse,

@@ -1,11 +1,13 @@
-import {BREED_CHARACTERISTICS_CATEGORY, FUR_LENGTH, FUR_TYPE} from "@/constants/healthNote/dogpedia";
+import { BREED_CHARACTERISTICS_CATEGORY, FUR_LENGTH, FUR_TYPE } from "@/constants/healthNote/dogpedia";
 
 interface Breed {
 	breedId: number;
 	breedName: string;
 }
 
-type BreedList = Breed[];
+interface BreedList {
+	petBreedList: Breed[];
+}
 
 interface BreedPhysicalSpec {
 	minHeightCm: number;
@@ -56,7 +58,9 @@ interface BreedCareInfo {
 interface BreedDetail {
 	id: number;
 	name: string;
-	imageUrl: string;
+	imageUrl: {
+		url: string;
+	};
 	physicalSpec: BreedPhysicalSpec;
 	characteristics: BreedCharacteristics;
 	fur: BreedFur;
@@ -64,6 +68,7 @@ interface BreedDetail {
 }
 
 export type {
+	Breed,
 	BreedList,
 	BreedDetail,
 	BreedPhysicalSpec,

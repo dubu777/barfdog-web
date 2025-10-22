@@ -2,9 +2,9 @@ import { queryKeys } from "@/constants/queryKeys";
 import { UseSuspenseQueryCustomOptions } from "@/types";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getBreedList } from "../dogpidea";
-import { BreedList } from "@/types/healthNote/dogpedia";
+import { Breed } from "@/types/healthNote/dogpedia";
 
-export function useGetBreedList(queryOptions?: UseSuspenseQueryCustomOptions<BreedList>) {
+export function useGetBreedList(queryOptions?: UseSuspenseQueryCustomOptions<Breed[]>) {
   return useSuspenseQuery({
     queryFn: () => getBreedList(),
     queryKey: [

@@ -4,25 +4,30 @@ import {
   BodyCheckDetailMap,
   BodyPartMap,
   BodyPartType,
+  GastroDiagnosisData,
   LatestBodyCheck,
+  ObesityDiagnosisData,
+  SkinDiagnosisData,
 } from "@/types/healthNote/bodyCheck";
+import { ApiResponse, Pagination } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const getLatestBodyCheck = async (petId: number, instance: AxiosInstance = axiosInstance): Promise<LatestBodyCheck> => {
-  const errorMessage = "부위별 진단 최신 요약 조회에 실패했습니다.";
-  try {
-    const { data } = await instance.get(`/api/v2/health-book/body-part-diagnoses/latest?petId=${petId}`);
+  const { data }: { 
+    data: ApiResponse<{ 
+      gastroDiagnosis: GastroDiagnosisData; 
+      obesityDiagnosis: ObesityDiagnosisData; 
+      skinDiagnosis: SkinDiagnosisData 
+  }> } = await instance.get(
+    `/api/v2/health-book/body-part-diagnoses/latest?petId=${petId}`
+  );
 
-    if(data.success) {
-      return {
-        gastro: data.data.gastroDiagnosis,
-        obesity: data.data.obesityDiagnosis,
-        skin: data.data.skinDiagnosis,
-      };
-    }
-    throw new Error(errorMessage);
-  } catch (error) {
-    console.error(error);
-    throw new Error(errorMessage);
+  const responseData = validateApiResponse(data, '부위별 진단 최신 요약 조회에 실패했습니다.');
+
+  return {
+    gastro: responseData.gastroDiagnosis,
+    obesity: responseData.obesityDiagnosis,
+    skin: responseData.skinDiagnosis,
   }
 }
 
@@ -33,26 +38,26 @@ const getInfiniteBodyCheckList = async (
   size = 10,
   instance = axiosInstance
 ) => {
-  const errorMessage = "건강 종합 진단 조회에 실패했습니다.";
+  const { data }: { 
+    data: ApiResponse<{ 
+      bodyPartDiagnosisList: BodyCheckDetailMap[BodyPartType]; 
+      pagination: Pagination 
+  }> } = await instance.get(
+    `/api/v2/health-book/body-part-diagnoses/${part}`, 
+    { 
+      params: { 
+        petId, 
+        pageNum: pageParam, 
+        pageSize: size 
+      },
+    }
+  );
 
-  const { data } = await instance.get(`/api/v2/health-book/body-part-diagnoses/${part}`, {
-    params: { petId, pageNum: pageParam, pageSize: size },
-  });
-
-  if (!data.success) {
-    throw new Error(errorMessage);
-  }
+  const responseData = validateApiResponse(data, '부위별 진단 목록 조회에 실패했습니다.');
 
   return {
-    diagnosisList: data.data.bodyPartDiagnosisList ?? [],
-    pagination: data.data.pagination ?? {
-      page: 0,
-      size,
-      totalPages: 1,
-      totalCount: 0,
-      isFirstPage: true,
-      isLastPage: true,
-    },
+    diagnosisList: responseData.bodyPartDiagnosisList,
+    pagination: responseData.pagination,
   };
 };
 
@@ -60,9 +65,14 @@ const createBodyCheckResult = async <P extends BodyPartType>(
   part: P,
   body: BodyPartMap[P]["form"]
 ): Promise<BodyPartMap[P]["response"]> => {
-  const { data } = await axiosInstance.post(`/api/v2/health-book/body-part-diagnoses/${part}`, body);
-  if (data.success) return data.data;
-  throw new Error(data.message);
+  const { data }: { 
+    data: ApiResponse<BodyPartMap[P]["response"]> 
+  } = await axiosInstance.post(
+    `/api/v2/health-book/body-part-diagnoses/${part}`
+    , body
+  );
+
+  return validateApiResponse(data, '부위별 진단 결과 생성에 실패했습니다.');
 }
 
 function mapScores<T extends object>(obj: T): { name: keyof T; score: number }[] {
@@ -77,37 +87,33 @@ const getBodyCheckResultDetail = async <P extends BodyPartType>(
   diagnosisId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<BodyCheckDetailMap[P]> => {
-  const errorMessage = "건강 종합 진단 상세 조회에 실패했습니다.";
-  try {
-    const { data } = await instance.get(`/api/v2/health-book/body-part-diagnoses/${part}/${diagnosisId}`);
+  const { data }: { 
+    data: ApiResponse<BodyCheckDetailMap[P]> 
+  } = await instance.get(
+    `/api/v2/health-book/body-part-diagnoses/${part}/${diagnosisId}`
+  );
 
-    if(data.success) {
-      const {
-        diagnosisId,
-        simpleTotalScore,
-        bodyPartTotalScore,
-        bodyPartType,
-        diagnosisDate,
-        recommendedItemList,
-        ...rest
-      } = data.data;
-      const scores = mapScores(rest as BodyCheckDetailMap[P]);
+  const responseData = validateApiResponse(data, '부위별 진단 상세 조회에 실패했습니다.');
+  const {
+    diagnosisId: diagnosisIdResponse,
+    simpleTotalScore,
+    bodyPartTotalScore,
+    bodyPartType,
+    diagnosisDate,
+    recommendedItemList,
+    ...rest
+  } = responseData;
+  const scores = mapScores(rest as BodyCheckDetailMap[P]);
+  return {
+    diagnosisId: diagnosisIdResponse,
+    simpleTotalScore,
+    bodyPartTotalScore,
+    bodyPartType,
+    diagnosisDate,
+    recommendedItemList,
+    scores,
+  } as BodyCheckDetailMap[P];
 
-      return {
-        diagnosisId,
-        simpleTotalScore,
-        bodyPartTotalScore,
-        bodyPartType,
-        diagnosisDate,
-        recommendedItemList,
-        scores,
-      } as BodyCheckDetailMap[P];
-    }
-    throw new Error(errorMessage);
-  } catch (error) {
-    console.error(error);
-    throw new Error(errorMessage);
-  }
 }
 
 export {
