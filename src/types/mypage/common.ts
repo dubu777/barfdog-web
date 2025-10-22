@@ -11,7 +11,9 @@ interface MemberInfo {
 }
 
 interface RepresentativePetInfo {
-  displayThumbnailUrl: string;
+  displayThumbnailUrl: {
+    url: string;
+  };
   name: string;
 }
 

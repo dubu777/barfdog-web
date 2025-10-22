@@ -13,7 +13,7 @@ interface ChangePassword {
 }
 
 interface BaseUserInfo {
-  address: AddressDto;
+  address?: AddressDto;
   birthday: string;
   gender: GenderType;
   name: string;
@@ -23,7 +23,7 @@ interface BaseUserInfo {
   email?: string;
 }
 
-interface UpdateUserInfo extends BaseUserInfo {
+interface UpdateUserInfo extends Omit<BaseUserInfo, 'address'> {
   authCode: string;
   authToken: string;
   hasCheckedAuthNumber?: boolean;
