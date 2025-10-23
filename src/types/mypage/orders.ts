@@ -163,9 +163,9 @@ interface OrderInfo extends OrderCancel {
   orderStatus: OrderStatus;
   name: string;
   phone: string;
+  orderId: number;
 
   // 일반
-  orderId?: number;
   paymentDate?: null;
   transUniqueCd?: null | string;
   arrivalDate?: null | string;
@@ -199,7 +199,7 @@ interface RawGeneralOrderDetail {
 }
 
 interface RawSubscriptionOrderDetail {
-  orderDto: OrderInfo;
+  orderDto: Omit<OrderInfo, 'orderId'>;
   recipeDto: RecipeInfo;
   recipeNames: string;
 }
@@ -214,6 +214,23 @@ interface OrderDetail {
 
   // 구독
   recipeInfo?: RecipeInfo;
+}
+
+interface CancelRequestBody {
+  reason: string;
+  detailReason: string;
+}
+
+interface ConfirmGeneralOrderBody {
+  orderId: number;
+  orderItemIdList: number[];
+}
+
+interface RequestCancelOrderProps {
+  reason: string;
+  detailReason: string;
+  openCancelRequestSuccessModal: () => void;
+  onClose: () => void;
 }
 
 export type {
@@ -236,4 +253,7 @@ export type {
   RawGeneralOrderDetail,
   RawSubscriptionOrderDetail,
   DeliveryCompanyCode,
+  CancelRequestBody,
+  ConfirmGeneralOrderBody,
+  RequestCancelOrderProps,
 };

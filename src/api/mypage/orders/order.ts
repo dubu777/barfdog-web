@@ -10,6 +10,8 @@ import {
   RawGeneralOrderDetail,
   RawSubscriptionOrderDetail,
   OrderDetail,
+  CancelRequestBody,
+  ConfirmGeneralOrderBody,
 } from "@/types/mypage/orders";
 import { decodeImageFilenameFromUrl } from "@/utils/decodeImageFilenameFromUrl";
 import { filterVisibleOrders } from "@/utils/mypage/orders/orderStatusFilter";
@@ -110,12 +112,13 @@ const toUnifiedGeneralDetail = (order: RawGeneralOrderDetail) => {
 };
 
 // 구독 주문 상세
-const toUnifiedSubscriptionDetail = (order: RawSubscriptionOrderDetail) => {
+const toUnifiedSubscriptionDetail = (order: RawSubscriptionOrderDetail, orderId: number) => {
   const { orderDto, recipeDto, recipeNames } = order;
   const { recipientName, recipientPhone, ...commonOrderFields } = orderDto;
   
   return {
     orderInfo: {
+      orderId,
       ...commonOrderFields,
       name: recipientName,
       phone: recipientPhone,
@@ -140,11 +143,31 @@ const getOrderDetail = async (
   );
 
   return type === 'SUBSCRIPTION' 
-    ? toUnifiedSubscriptionDetail(data) as OrderDetail
+    ? toUnifiedSubscriptionDetail(data, orderId) as OrderDetail
     : toUnifiedGeneralDetail(data) as OrderDetail;
+};
+
+// 주문 취소 신청 
+const cancelRequestOrder = async (
+  orderId: number,
+  orderType: OrderType,
+  body: CancelRequestBody
+): Promise<{ data: void, orderId: number }> => {
+  const { data } = await axiosInstance.post( `/api/orders/${orderId}/${getServerParam(orderType)}/cancelRequest`, body);
+  return data;
+};
+
+// 일반 주문 구매확정
+const confirmGeneralOrder = async (
+  body: ConfirmGeneralOrderBody
+): Promise<{ data: void, orderId: number }> => {
+  const { data } = await axiosInstance.post( `/api/orders/general/confirm`, body);
+  return data;
 };
 
 export { 
   getOrderListByOrderType,
   getOrderDetail, 
+  cancelRequestOrder, 
+  confirmGeneralOrder, 
 };

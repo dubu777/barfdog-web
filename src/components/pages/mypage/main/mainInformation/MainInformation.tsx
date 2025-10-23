@@ -14,7 +14,7 @@ export default function MainInformation() {
   const memberInfo = data?.memberInfo;
 
   const userMembershipTier = MEMBERSHIP_TIERS[memberInfo?.grade ?? 'BRONZE'];
-  const representativePetImage = data?.representativePetInfo?.displayThumbnailUrl.url;
+  const representativePetImage = data?.representativePetInfo?.displayThumbnailUrl?.url;
 
   if (!memberInfo) return null;
 

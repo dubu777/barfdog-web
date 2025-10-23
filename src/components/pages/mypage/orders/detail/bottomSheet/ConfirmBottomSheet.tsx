@@ -14,16 +14,15 @@ interface ConfirmBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   orderItemInfoList: OrderItemType[];
-  onConfirm?: (selectedItems: OrderItemType[]) => void;
+  onConfirmOrder: (selectedItems: OrderItemType[]) => void;
 }
 
 export default function ConfirmBottomSheet({ 
   isOpen, 
   onClose,
   orderItemInfoList,
-  onConfirm,
+  onConfirmOrder,
 }: ConfirmBottomSheetProps) {
-
   const {
     isAllSelected,
     selectedItems,
@@ -37,8 +36,8 @@ export default function ConfirmBottomSheet({
   });
 
   const handleConfirm = () => {
-    if (onConfirm && selectedItems.length > 0) {
-      onConfirm(selectedItems);
+    if (selectedItems.length > 0) {
+      onConfirmOrder(selectedItems);
     }
     onClose();
   };
@@ -100,6 +99,7 @@ export default function ConfirmBottomSheet({
         onSecondaryClick={onClose}
         secondaryButtonLabel="취소"
         primaryButtonSize="lg"
+        isPrimaryDisabled={selectedItems.length === 0}
         position="sticky"
       />
     </BottomSheet>
