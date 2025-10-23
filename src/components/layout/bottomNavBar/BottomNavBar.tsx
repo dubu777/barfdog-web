@@ -72,6 +72,15 @@ export default function BottomNavBar({
       url: "/mypage",
     },
   ];
+
+  // 리액트 네이티브 웹뷰에서 바텀네비게이션 숨김 - TEST
+  const inApp =
+    typeof window !== "undefined" &&
+    (/BarfdogApp/i.test(navigator.userAgent) ||
+      new URLSearchParams(location.search).get("inapp") === "1");
+
+  if (inApp) return null;
+
   return (
     <nav
       className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]} ${styles.bottomNavBarPosition[position]}`}
