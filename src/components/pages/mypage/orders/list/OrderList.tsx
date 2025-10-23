@@ -1,18 +1,18 @@
 "use client";
 import { commonWrapper } from "@/styles/common.css";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useInView } from "react-intersection-observer";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import OrderItem from "./orderItem/OrderItem";
+import EmptyList from "@/components/common/emptyList/EmptyList";
+import Button from "@/components/common/button/Button";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import useFilterTabs from "@/hooks/useFilterTabs";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { OrderType } from "@/types/mypage/orders";
 import { ORDER_TYPE_LIST } from "@/constants/mypage/orders";
 import { useGetInfiniteOrderList } from "@/api/mypage/orders/queries/useGetInfiniteOrderList";
-import EmptyList from "@/components/common/emptyList/EmptyList";
-import Button from "@/components/common/button/Button";
 
 export default function OrderList () {
   const router = useRouter();
@@ -22,13 +22,7 @@ export default function OrderList () {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteOrderList(orderType);
   const orderList = data?.pages?.flatMap((page) => page.orders) ?? [];
 
-  const { ref, inView } = useInView();
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const { defaultTabIndex, handleFilterChange } = useFilterTabs({
     filterKey: 'orderType',

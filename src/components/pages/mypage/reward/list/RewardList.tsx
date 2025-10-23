@@ -1,14 +1,14 @@
 'use client';
 import { commonWrapper } from "@/styles/common.css";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import { useInView } from "react-intersection-observer";
 import RewardFilter from "@/components/pages/mypage/reward/list/rewardFilter/RewardFilter";
 import RewardItem from "@/components/pages/mypage/reward/list/rewardItem/RewardItem";
 import RewardInfo from "@/components/pages/mypage/reward/list/rewardInfo/RewardInfo";
 import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import Divider from "@/components/common/divider/Divider";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { RewardFilterType } from "@/types";
 import { useGetInfiniteRewardList } from "@/api/mypage/reward/queries/useGetInfiniteRewardList";
 
@@ -16,8 +16,8 @@ export default function RewardList() {
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get('status') as RewardFilterType;
 
-  const { ref, inView } = useInView();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteRewardList();
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const rewardList = useMemo(() => {
     if (!data?.pages) return [];
@@ -30,12 +30,6 @@ export default function RewardList() {
   }, [data?.pages, statusFilter]);
   
   const totalRewardAmount = data?.pages?.[0]?.totalRewardAmount ?? 0;
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
 
   return (
     <section>

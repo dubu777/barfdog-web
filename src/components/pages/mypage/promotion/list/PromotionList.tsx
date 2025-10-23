@@ -1,14 +1,14 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import { useQueryClient } from "@tanstack/react-query";
-import { useInView } from "react-intersection-observer";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";
 import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import PromotionItem from "@/components/pages/mypage/promotion/list/promotionItem/PromotionItem";
 import InputField from "@/components/common/inputField/InputField";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { queryKeys } from "@/constants";
 import { useGetInfinitePromotionList } from "@/api/mypage/promotion/queries/useGetInfinitePromotionList";
 import { useCreatePromotion } from "@/api/mypage/promotion/mutations/useCreatePromotion";
@@ -25,16 +25,11 @@ export default function PromotionList() {
 		isFetchingNextPage
 	} = useGetInfinitePromotionList();
 	const promotionList = data?.pages?.flatMap((page) => page.promotionList) ?? [];
-	const { ref, inView } = useInView();
+
+	const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
 	const [promotionCode, setPromotionCode] = useState<string>('');
 	const { mutate } = useCreatePromotion();
-
-	useEffect(() => {
-		if (inView && hasNextPage && !isFetchingNextPage) {
-			fetchNextPage();
-		}
-	}, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
 	const handleSubmit = () => {
 		mutate({

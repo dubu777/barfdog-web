@@ -1,8 +1,7 @@
 'use client';
 import { commonWrapper } from "@/styles/common.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useInView } from "react-intersection-observer";
 import Text from "@/components/common/text/Text";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 import CouponItem from "@/components/pages/mypage/coupon/list/couponItem/CouponItem";
@@ -13,6 +12,7 @@ import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/Inf
 import CreateCoupon from "./createCoupon/CreateCoupon";
 import { useGetInfiniteCouponList } from "@/api/mypage/coupon/queries/useGetInfiniteCouponList";
 import { CouponCategory } from "@/types/mypage/coupon";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
 const ItemSortByFilterList = {
   'recent': { label: '최신순' },
@@ -29,7 +29,7 @@ export default function CouponList () {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteCouponList(couponCategory);
   
-  const { ref, inView } = useInView();
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
   
   const sortedCouponList = useMemo(() => {
     const infiniteCouponList = data?.pages?.flatMap((page) => page.couponList) ?? [];
@@ -45,12 +45,6 @@ export default function CouponList () {
       })
       : infiniteCouponList;
   }, [data?.pages, sortBy])
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
 
   return (
     <section>

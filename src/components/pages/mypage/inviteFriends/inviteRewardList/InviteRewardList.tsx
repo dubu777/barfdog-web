@@ -1,8 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import { codeActionButton, codeActions, recommendationCode, rewardListTopBox } from "../InviteFriends.css";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { format } from "date-fns";
-import { useInView } from "react-intersection-observer";
 import MessageIcon from "/public/images/mypage/message.svg";
 import CopyIcon from "/public/images/mypage/copy.svg";
 import Card from "@/components/common/card/Card";
@@ -13,6 +12,7 @@ import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/Inf
 import EmptyState from "../../common/emptyState/EmptyState";
 import SendMessageModal from "../sendMessageModal/SendMessageModal";
 import useModal from "@/hooks/useModal";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useToastStore } from "@/store/useToastStore";
 import { copyToClipboard } from "@/utils";
 import { ReferralRewardInfo, RewardInfo } from "@/types";
@@ -58,7 +58,7 @@ export default function InviteRewardList({
       value: referralRewardInfo?.totalRewards.toLocaleString() || 0,
     },
   ]
-  const { ref, inView } = useInView();
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const handleCopyCode = async () => {
     await copyToClipboard(myRecommendationCode ?? '');
@@ -80,11 +80,6 @@ export default function InviteRewardList({
     },
   ]
 
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
   return (
     <>
       <article className={commonWrapper({ width: 'full', direction: 'col' })}>

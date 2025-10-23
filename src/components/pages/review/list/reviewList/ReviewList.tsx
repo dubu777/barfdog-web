@@ -1,16 +1,16 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReviewItem from "@/components/pages/review/common/reviewItem/ReviewItem";
 import Divider from "@/components/common/divider/Divider";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
-import { useInView } from "react-intersection-observer";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useGetInfiniteReviewList } from "@/api/review/queries/useGetInfiniteReviewList";
 
 export default function ReviewList () {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteReviewList();
   const reviewList = data?.pages.flatMap(page => page.itemReviewList) || [];
   
-  const { ref, inView } = useInView();
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const [openReviewIds, setOpenReviewIds] = useState<number[]>([]);
 
@@ -21,12 +21,6 @@ export default function ReviewList () {
       setOpenReviewIds([...openReviewIds, reviewId])
     }
   }
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
 
   return (
     <article>

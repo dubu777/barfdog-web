@@ -1,20 +1,20 @@
 'use client';
 import { commonWrapper } from '@/styles/common.css';
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { format } from "date-fns";
-import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import Text from "@/components/common/text/Text";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import TabBar from "@/components/common/tabBar/TabBar";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import Divider from '@/components/common/divider/Divider';
 import Header from '@/components/layout/header/Header';
-import { useGetInfiniteNoticeList } from "@/api/community/queries/useGetInfiniteNoticeList";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { NOTICE_CATEGORY } from "@/constants/community";
 import { NoticeCategory } from "@/types";
 import { getEntryPoint, navigateToEntryPoint } from '@/utils/navigationEntry';
+import { useGetInfiniteNoticeList } from "@/api/community/queries/useGetInfiniteNoticeList";
 
 export default function NoticeList() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function NoticeList() {
   const noticeCategoryFilter = Object.entries(NOTICE_CATEGORY).map(([value, { label }]) => ({label, value}));
   
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteNoticeList();
-  const { ref, inView } = useInView();
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const filteredNoticeList = data?.pages
     ?.flatMap((page) =>
@@ -37,12 +37,6 @@ export default function NoticeList() {
     defaultValue: 'ALL',
     tabs: noticeCategoryFilter,
   })
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
 
   return (
     <>

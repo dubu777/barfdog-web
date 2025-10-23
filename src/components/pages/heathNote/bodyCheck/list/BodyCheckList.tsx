@@ -1,10 +1,9 @@
 'use client';
 import * as styles from "./BodyCheckList.css";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useInView } from "react-intersection-observer";
 import Text from "@/components/common/text/Text";
 import EmptyList from "@/components/common/emptyList/EmptyList";
 import TabBar from "@/components/common/tabBar/TabBar";
@@ -15,6 +14,7 @@ import HorizontalProgressBar
   from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
 import LatestBodyCheck from "@/components/pages/heathNote/bodyCheck/list/latestBodyCheck/LatestBodyCheck";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { queryKeys } from "@/constants";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { BodyPartType } from "@/types/healthNote/bodyCheck";
@@ -37,14 +37,8 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
   const { data: bodyCheckData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetInfiniteBodyCheckList(petId, part);
   const diagnosisList = bodyCheckData?.pages.flatMap(p => p.diagnosisList) ?? [];
 
-  const { ref, inView } = useInView();
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
   const { pushWithQuery } = useDynamicQueryPush();
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   const handleTabClick = async (tabPart: BodyPartType) => {
     pushWithQuery(pathname, { part: tabPart });
