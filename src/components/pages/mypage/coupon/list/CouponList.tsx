@@ -1,6 +1,6 @@
 'use client';
 import { commonWrapper } from "@/styles/common.css";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Text from "@/components/common/text/Text";
 import Dropdown from "@/components/common/dropdown/Dropdown";
@@ -10,9 +10,10 @@ import Divider from "@/components/common/divider/Divider";
 import CouponCategoryTabs from "./couponCategoryTabs/CouponCategoryTabs";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import CreateCoupon from "./createCoupon/CreateCoupon";
-import { useGetInfiniteCouponList } from "@/api/mypage/coupon/queries/useGetInfiniteCouponList";
-import { CouponCategory } from "@/types/mypage/coupon";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
+import { CouponCategory, MyPageCoupon } from "@/types/mypage/coupon";
+import { useGetInfiniteCouponList } from "@/api/mypage/coupon/queries/useGetInfiniteCouponList";
 
 const ItemSortByFilterList = {
   'recent': { label: '최신순' },
@@ -31,20 +32,19 @@ export default function CouponList () {
   
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
   
-  const sortedCouponList = useMemo(() => {
-    const infiniteCouponList = data?.pages?.flatMap((page) => page.couponList) ?? [];
-    
-    return sortBy === 'discountDegree' ?
-      infiniteCouponList.sort((a, b) => {
-        // 1. FIXED_RATE가 먼저 오도록 정렬
-        if (a.discountType === "FIXED_RATE" && b.discountType === "FLAT_RATE") return -1;
-        if (a.discountType === "FLAT_RATE" && b.discountType === "FIXED_RATE") return 1;
+  const sortedCouponList = useFlattenedInfiniteData(data, 'couponList', {
+    sort: (a: MyPageCoupon, b: MyPageCoupon) => {
+      if(sortBy !== 'discountDegree') {
+        return 0;
+      }
+      // 1. FIXED_RATE가 먼저 오도록 정렬
+      if (a.discountType === "FIXED_RATE" && b.discountType === "FLAT_RATE") return -1;
+      if (a.discountType === "FLAT_RATE" && b.discountType === "FIXED_RATE") return 1;
 
-        // 2. 같은 타입 내에서 discountDegree 가 높은 순으로 정렬
-        return b.discountDegree - a.discountDegree;
-      })
-      : infiniteCouponList;
-  }, [data?.pages, sortBy])
+      // 2. 같은 타입 내에서 discountDegree 가 높은 순으로 정렬
+      return b.discountDegree - a.discountDegree;
+    },
+  });
 
   return (
     <section>

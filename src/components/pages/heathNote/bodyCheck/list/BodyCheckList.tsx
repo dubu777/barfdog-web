@@ -15,6 +15,7 @@ import HorizontalProgressBar
 import LatestBodyCheck from "@/components/pages/heathNote/bodyCheck/list/latestBodyCheck/LatestBodyCheck";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { queryKeys } from "@/constants";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { BodyPartType } from "@/types/healthNote/bodyCheck";
@@ -35,7 +36,8 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
   const activeIndex = tabKeys.indexOf(part);
 
   const { data: bodyCheckData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetInfiniteBodyCheckList(petId, part);
-  const diagnosisList = bodyCheckData?.pages.flatMap(p => p.diagnosisList) ?? [];
+
+  const diagnosisList = useFlattenedInfiniteData(bodyCheckData, 'diagnosisList');
 
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
   const { pushWithQuery } = useDynamicQueryPush();

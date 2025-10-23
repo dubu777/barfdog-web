@@ -4,11 +4,12 @@ import EmptyState from "../../common/emptyState/EmptyState";
 import SubscriptionCard from "../common/card/SubscriptionCard";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { useGetInfiniteSubscriptionList } from "@/api/mypage/subscription/queries/useGetInfiniteSubscriptionList";
 
 export default function SubscriptionList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteSubscriptionList();
-  const subscriptionList = data?.pages?.flatMap((page) => page.subscriptionList) ?? [];
+  const subscriptionList = useFlattenedInfiniteData(data, 'subscriptionList');
 
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 

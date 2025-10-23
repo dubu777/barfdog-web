@@ -11,6 +11,7 @@ import Divider from '@/components/common/divider/Divider';
 import Header from '@/components/layout/header/Header';
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { useFlattenedInfiniteData } from '@/hooks/useFlattenedInfiniteData';
 import { NOTICE_CATEGORY } from "@/constants/community";
 import { NoticeCategory } from "@/types";
 import { getEntryPoint, navigateToEntryPoint } from '@/utils/navigationEntry';
@@ -25,12 +26,12 @@ export default function NoticeList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteNoticeList();
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
-  const filteredNoticeList = data?.pages
-    ?.flatMap((page) =>
+  const noticeList = useFlattenedInfiniteData(data, 'noticeList', {
+    filter: (notice) => 
       noticeTypeFilter === "ALL"
-        ? page.noticeList
-        : page.noticeList.filter(notice => notice.title.includes(NOTICE_CATEGORY[noticeTypeFilter].label))
-    );
+        ? true
+        : notice.title.includes(NOTICE_CATEGORY[noticeTypeFilter].label),
+  });
 
   const { defaultTabIndex, handleFilterChange } = useFilterTabs({
     filterKey: 'noticeType',
@@ -82,7 +83,7 @@ export default function NoticeList() {
         </article>
         <Divider thickness={1} color='gray50' />
         <ul className={commonWrapper({ direction: 'col' })}>
-          {filteredNoticeList?.map((notice) => (
+          {noticeList?.map((notice) => (
             <Fragment key={notice.id}>
               <Link 
                 href={`/community/notice/${notice.id}`} 

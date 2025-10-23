@@ -10,6 +10,7 @@ import Button from "@/components/common/button/Button";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { OrderType } from "@/types/mypage/orders";
 import { ORDER_TYPE_LIST } from "@/constants/mypage/orders";
 import { useGetInfiniteOrderList } from "@/api/mypage/orders/queries/useGetInfiniteOrderList";
@@ -20,7 +21,7 @@ export default function OrderList () {
   const orderType = searchParams.get("orderType") as OrderType ?? "SUBSCRIPTION";
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteOrderList(orderType);
-  const orderList = data?.pages?.flatMap((page) => page.orders) ?? [];
+  const orderList = useFlattenedInfiniteData(data, 'orders');
 
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 

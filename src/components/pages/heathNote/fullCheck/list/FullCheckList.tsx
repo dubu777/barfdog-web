@@ -12,6 +12,7 @@ import Button from "@/components/common/button/Button";
 import EmptyList from "@/components/common/emptyList/EmptyList";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import { useGetInfiniteFullCheckList } from "@/api/healthNote/fullCheck/queries/useGetInfiniteFullCheckList";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
@@ -23,14 +24,13 @@ interface FullCheckListProps {
 export default function FullCheckList({ petId }: FullCheckListProps) {
   const { data: petInfo } = useGetPetDetail(petId);
   const {
-    data: infiniteData,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   } = useGetInfiniteFullCheckList(petId);
 
-  const checkupDiagnosisList =
-    infiniteData?.pages?.flatMap((page) => page.checkupDiagnosisList) ?? [];
+  const checkupDiagnosisList = useFlattenedInfiniteData(data, 'checkupDiagnosisList');
 
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 

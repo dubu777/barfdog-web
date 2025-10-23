@@ -2,6 +2,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import RecommendInfo from "./recommendInfo/RecommendInfo";
 import InviteRewardList from "./inviteRewardList/InviteRewardList";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 import { useGetReferralRewardList } from "@/api/mypage/inviteFriends/queries/useGetInviteRewardList";
 
@@ -11,7 +12,8 @@ export default function InviteFriends() {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetReferralRewardList();
   const referralRewardInfo = data?.pages?.[0]?.referralRewardInfo;
-  const rewardList = data?.pages?.flatMap((page) => page.rewardList) ?? [];
+
+  const rewardList = useFlattenedInfiniteData(data, 'rewardList');
 
   return (
     <section className={commonWrapper({ paddingTop: 40, paddingBottom: 40, gap: 40, direction: 'col' })}>

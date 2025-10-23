@@ -6,6 +6,7 @@ import StoreItem from "@/components/pages/store/list/Item/Item";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { ItemType, SortByType } from "@/types";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from '@/hooks/useFlattenedInfiniteData';
 import { useGetInfiniteStoreItemList } from "@/api/store/queries/useGetInfiniteStoreItemList";
 
 export default function ItemList() {
@@ -20,7 +21,7 @@ export default function ItemList() {
     hasNextPage,
     isFetchingNextPage
   } = useGetInfiniteStoreItemList(sortBy, itemType);
-  const itemList = infiniteData?.pages?.flatMap((page) => page.itemList) ?? [];
+  const itemList = useFlattenedInfiniteData(infiniteData, 'itemList');
 
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
