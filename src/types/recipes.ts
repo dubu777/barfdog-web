@@ -37,6 +37,7 @@ interface RecipeItem {
   pricePerGram: number;
   gramPerKcal: number;
   ingredients: IngredientType[];
+  subIngredients: IngredientType[];
   leaked: string;
   inStock: boolean;
   modifiedDate: string;
