@@ -1,4 +1,3 @@
-import { fontColors } from "@/components/common/text/Text.css";
 import { createTheme } from "@vanilla-extract/css";
 
 // 예시 코드 - 추후 수정

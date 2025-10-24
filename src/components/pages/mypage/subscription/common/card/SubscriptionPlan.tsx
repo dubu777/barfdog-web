@@ -1,6 +1,6 @@
-import { subscriptionPlanInfo } from "@/constants";
 import MetaText from "../../../common/card/typography/MetaText";
 import { PlanKey } from "@/types";
+import { subscriptionPlanInfo } from "@/constants";
 
 interface SubscriptionPlanProps {
   plan: PlanKey;

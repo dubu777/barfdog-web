@@ -1,4 +1,3 @@
-import * as styles from './ItemPurchaseBottomSheet.css';
 import { commonWrapper } from "@/styles/common.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -120,12 +119,17 @@ export default function ItemPurchaseBottomSheet({
         onClose();
       }}
     >
-      <div className={styles.itemPurchaseContainer}>
-        <div className={styles.itemPurchaseBox}>
-          <div>
+      <div className={commonWrapper({ direction: 'col', align: 'start' })}>
+        <div className={commonWrapper({ 
+          direction: 'col', 
+          align: 'start', 
+          gap: 12, 
+          padding: 20 
+        })}>
+          <div className={commonWrapper({ direction: 'col', align: 'start', gap: 6 })}>
             <Text type='label1'>{name}</Text>
-            <div className={styles.itemPurchaseTitle}>
-              <div className={styles.itemPurchasePrice}>
+            <div className={commonWrapper({ justify: 'between' })}>
+              <div className={commonWrapper({ gap: 6, justify: 'start' })}>
                 <Text type='title2'>{salePrice.toLocaleString()}원</Text>
                 {salePrice !== originalPrice &&
                 <Text type='body3' color='gray600' lineThrough>{originalPrice.toLocaleString()}원</Text>
@@ -155,7 +159,7 @@ export default function ItemPurchaseBottomSheet({
         {selectedOptions.length > 0 &&
         <ProductOptions/>
         }
-        <div className={styles.itemPurchaseTotalPrice}>
+        <div className={commonWrapper({ justify: 'between', padding: 20 })}>
           <Text type='headline2'>총 주문 금액</Text>
           <Text type='title2' color='red'>{totalPrice.toLocaleString()}원</Text>
         </div>

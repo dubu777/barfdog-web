@@ -1,4 +1,4 @@
-import * as styles from "./ResultCard.css";
+import { commonWrapper } from "@/styles/common.css";
 import { ReactNode } from "react";
 import Card from "@/components/common/card/Card";
 import Text from "@/components/common/text/Text";
@@ -26,7 +26,7 @@ const ResultCard = ({
       gap={gap !== "none" ? gap : undefined}
       className={`${className || ""}`}
     >
-      <div className={styles.resultCardHeader}>
+      <div className={commonWrapper({ direction: 'col', gap: 4 })}>
         {title && (
           <Text type="title3" align="center" preLine>
             {title}

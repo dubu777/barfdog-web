@@ -8,10 +8,10 @@ interface ResultAccordionProps {
   children: ReactNode;
 }
 
-const ResultAccordion = ({
+export default function ResultAccordion({
   accordionButton,
   children,
-}: ResultAccordionProps) => {
+}: ResultAccordionProps) {
   return (
     <Card shadow="none">
       <Accordion
@@ -24,6 +24,4 @@ const ResultAccordion = ({
       </Accordion>
     </Card>
   );
-};
-
-export default ResultAccordion;
+}

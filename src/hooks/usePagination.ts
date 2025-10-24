@@ -26,7 +26,7 @@ export function usePagination({ prefetchFn, pushWithQuery, preserveScroll = true
         callback();
       }
 
-    },[totalPages, prefetchFn, pushWithQuery]
+    },[preserveScroll, totalPages, prefetchFn, pushWithQuery, callback]
   );
 
   const setPaginationData = useCallback((page: { totalPages: number; page: number; }) => {

@@ -54,9 +54,12 @@ export default function BodyCheckResult({
         centerTitle="결과 상세"
         onBack={() => router.push(`/health-note/${petId}/body-check?part=${part}`)}
       />
-      <section
-        className={commonWrapper({ direction: "col", gap: 20, padding: 20, backgroundColors: 'gray0' })}
-      >
+      <section className={commonWrapper({ 
+        direction: "col", 
+        gap: 20, 
+        padding: 20, 
+        backgroundColors: 'gray0' 
+      })}>
         <div className={commonWrapper({ direction: 'col' })}>
           <ResultTitle title={`${data.diagnosisDate} ${BODY_PART[part].name} 정밀 진단 결과`} />
           <BodyCheckTotalScore
@@ -66,7 +69,11 @@ export default function BodyCheckResult({
             totalScore={data.simpleTotalScore}
           />
         </div>
-        {minScoreItem && (part === "obesity" ? minScoreItem.name === "weightBalanceScore" : true) &&
+        {minScoreItem && (
+          part === "obesity" 
+            ? minScoreItem.name === "weightBalanceScore" 
+            : true
+          ) &&
           <DiseasePhase diseaseName={minScoreItem.name} />
         }
         <RecommendedItemList

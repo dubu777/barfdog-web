@@ -1,8 +1,7 @@
 "use client";
 import axios from "axios";
-import * as styles from "./FullCheckSurvey.css";
 import * as yup from "yup";
-import { pointColor } from "@/styles/common.css";
+import { commonWrapper, pointColor } from "@/styles/common.css";
 import { AnySchema } from "yup";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -165,7 +164,7 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
         backgroundColor='gray50'
         leftElement={
           !isFirstStep && (
-            <div className={styles.fullCheckSurveyHeader}>
+            <div className={commonWrapper({ gap: 6 })}>
               <SvgIcon
                 src={BackIcon}
                 size={24}
@@ -181,8 +180,19 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
         onClose={() => router.back()}
         showCloseButton
       />
-      <div className={styles.fullCheckSurveyContainer}>
-        <article className={styles.fullCheckSurveyTitle}>
+      <div className={commonWrapper({ 
+        minHeight: 'fullWithHeader', 
+        direction: 'col', 
+        align: 'start', 
+        justify: 'start' 
+      })}>
+        <article className={commonWrapper({
+          padding: 20,
+          paddingTop: 40,
+          direction: 'col',
+          gap: 12,
+          align: 'start',
+        })}>
           <SvgIcon src={currentQuestion.imageUrl!} size={64} />
           <Text type="title3">
             {currentQuestion?.title ? (
@@ -203,8 +213,12 @@ export default function FullCheckSurvey ({ petId }: { petId: number }) {
           </Text>
         </article>
         <article
-          className={styles.surveyAnswerList({
-            flexWrap: currentQuestion?.flexWrap || false,
+          className={commonWrapper({
+            padding: 20,
+            direction: currentQuestion?.flexWrap ? 'row' : 'col',
+            gap: 12,
+            align: 'start',
+            wrap: currentQuestion?.flexWrap ? 'wrap' : 'unset',
           })}
         >
           <Controller

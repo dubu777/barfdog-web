@@ -85,9 +85,11 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
 
   const onSubmit = (data) => {
     const surveyItems = 
-      part === "gastro" ? GASTRO_SURVEY_ITEMS : 
-      part === "obesity" ? OBESITY_SURVEY_ITEMS : 
-      SKIN_SURVEY_ITEMS;
+      part === "gastro" 
+        ? GASTRO_SURVEY_ITEMS 
+        : part === "obesity" 
+          ? OBESITY_SURVEY_ITEMS 
+          : SKIN_SURVEY_ITEMS;
 
     const simpleTotalScore = sumScores(data);
     const percentageScores = calculatePercentageScores(data, BODY_CHECK_DISEASE_INFO, surveyItems);

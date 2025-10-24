@@ -1,5 +1,4 @@
 'use client';
-
 import { commonWrapper } from "@/styles/common.css";
 import Divider from "@/components/common/divider/Divider";
 import Text from "@/components/common/text/Text";

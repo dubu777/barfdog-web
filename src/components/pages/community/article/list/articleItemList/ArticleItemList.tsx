@@ -86,7 +86,7 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
       </article>
       <div className={styles.articleList({ isEmpty: articleList.length === 0 })}>
         {articleList.length === 0 ?
-          <EmptyState title='등록된 블로그가 없습니다.' />
+          <EmptyState title='등록된 아티클이 없습니다.' />
           : <>
             <div className={isGallery? styles.articleGallery : ''}>
               {articleList.map((article, index) => {

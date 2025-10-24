@@ -1,6 +1,5 @@
 'use client';
 import { commonWrapper } from '@/styles/common.css';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Accordion from "@/components/common/accordion/Accordion";
 import Text from "@/components/common/text/Text";
@@ -10,13 +9,12 @@ import Header from '@/components/layout/header/Header';
 import { FAQ_LIST } from "@/constants/community";
 
 export default function Faq() {
-	const router = useRouter();
 	return (
 		<>
 			<Header
 				showBackButton
+				showCartButton
 				centerTitle='자주 묻는 질문'
-				onBack={() => router.back()}
 			/>
 			<section 
 				className={commonWrapper({

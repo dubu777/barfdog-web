@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import ReviewForm from "../reviewForm/ReviewForm";
+import ReviewForm from "../form/ReviewForm";
 import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
 import {
   FileChangeInfo,

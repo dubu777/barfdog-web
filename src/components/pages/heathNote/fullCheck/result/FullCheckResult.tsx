@@ -93,7 +93,7 @@ export default function FullCheckResult({
         }
       />
       <section className={styles.fullCheckResultContainer}>
-        <article>
+        <article className={styles.fullCheckResultTitle}>
           <ResultTitle title={`${data.diagnosisDate} 건강 종합 진단 결과`} />
           <TotalScore
             petName={petInfo.name}

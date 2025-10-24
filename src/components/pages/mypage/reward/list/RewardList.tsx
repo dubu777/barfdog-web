@@ -1,6 +1,5 @@
 'use client';
 import { commonWrapper } from "@/styles/common.css";
-import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import RewardFilter from "@/components/pages/mypage/reward/list/rewardFilter/RewardFilter";
 import RewardItem from "@/components/pages/mypage/reward/list/rewardItem/RewardItem";

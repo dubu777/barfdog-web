@@ -48,7 +48,7 @@ export default function Cart() {
     if(cartData) {
       setCartInfo(cartData);
     }
-  }, [cartData])
+  }, [cartData, setCartInfo])
 
   const handleSubmit = () => {
     console.log('주문하기')
