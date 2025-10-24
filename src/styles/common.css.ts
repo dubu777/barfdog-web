@@ -1,7 +1,6 @@
 import { themeVars } from "./theme.css";
 import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { all } from "axios";
 
 export const commonLayoutContainer = style({
   display: "flex",

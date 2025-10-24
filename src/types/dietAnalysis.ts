@@ -87,7 +87,8 @@ interface RecommendRecipeRankDto {
   healthImprovements: HealthImprovements[];
   recommendRecipeImgUrl: string;
   foodAllergies: string[];
-  primaryIngredients: string[];
+  ingredients: string[];
+  subIngredients: string[];
   healthConcernsList: HealthConcernType[];
   uiNameKorean: string;
   uiNameEnglish: string;

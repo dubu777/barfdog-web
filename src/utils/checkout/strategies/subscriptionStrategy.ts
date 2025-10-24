@@ -62,8 +62,8 @@ export function createSubscriptionStrategy(deps: {
       return "fail";
     },
 
-    // 3) 성공 후 처리
-    //    - 데스크탑만: again API → validate → success/invalid+fail
+    // 3) 성공 후 처리 - IMP.request_pay로 빌링키 발급 성공시
+    //    - 데스크탑만: again API → validate → success/fail
     //    - 모바일: redirect 페이지에서 처리되므로 여기서는 no-op
     onSuccess: async ({ saveOrder, response, requestBody }) => {
       if (deps.isMobile) {
