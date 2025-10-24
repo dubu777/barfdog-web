@@ -7,7 +7,7 @@ import { recipeIngredientsWrapper } from "../Recipe.css";
 
 interface RecipeIngredientsProps {
   recipeId: number; // useGetRawFoodOrderSheet 데이터 바인딩 후 제거
-  ingredients?: string[]; // useGetRawFoodOrderSheet 데이터 바인딩 후 필수값 으로 변경
+  ingredients: string[]; // useGetRawFoodOrderSheet 데이터 바인딩 후 필수값 으로 변경
   totalIngredients?: string;
 }
 

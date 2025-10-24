@@ -10,20 +10,25 @@ import RecipeEfficacy from "@/components/common/recipe/recipeEfficacy/RecipeEffi
 import RecipeIngredients from "@/components/common/recipe/recipeIngredients/RecipeIngredients";
 import useStickyTabScroll from "@/hooks/useStickyTabScroll";
 import { INGREDIENTS_MAP, RECIPES_INFO } from "@/constants/recipes";
+import { IngredientType } from "@/types";
 
 interface RecipeDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   recipeId: number;
   displayImageUrl: string;
+  ingredients: IngredientType[];
+  subIngredients: IngredientType[];
 }
 export default function RecipeDetailModal({
   isOpen,
   onClose,
   recipeId,
   displayImageUrl,
+  ingredients,
+  subIngredients,
 }: RecipeDetailModalProps) {
-  const { name, key, mainIngredients } = RECIPES_INFO[recipeId];
+  const { name, key } = RECIPES_INFO[recipeId];
   const { tabContentRefs, activeIndex, handleTabClick, scrollContainerRef } = useStickyTabScroll({ stickyOffset: 109 });
 
   const tabs = [
@@ -33,7 +38,7 @@ export default function RecipeDetailModal({
     },
     { 
       label: "성분", 
-      content: <RecipeIngredients recipeId={recipeId} />,
+      content: <RecipeIngredients recipeId={recipeId} ingredients={[ ...ingredients, ...subIngredients]} />,
     },
   ];
   return (
@@ -70,7 +75,7 @@ export default function RecipeDetailModal({
             <Text type="headline4" color="gray500" block>{key}</Text>
           </div>
           <div className={commonWrapper({ direction: 'row', gap: 4 })}>
-            {mainIngredients.map((ingredient) => (
+            {ingredients.map((ingredient) => (
               <div key={ingredient}>
                 <Chips variant="solid" color="gray200" size="sm" borderRadius="sm">{INGREDIENTS_MAP[ingredient].label}</Chips>
               </div>

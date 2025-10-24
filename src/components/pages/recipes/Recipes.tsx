@@ -47,7 +47,7 @@ export default function Recipes() {
 
   return (
     <>
-      <Header showBackButton onBack={() => router.back()} />
+      <Header showBackButton />
       <section>
         {selectedRecipe && isOpen && (
           <RecipeDetailModal
@@ -55,6 +55,8 @@ export default function Recipes() {
             onClose={onClose}
             recipeId={selectedRecipe.id}
             displayImageUrl={selectedRecipe.displayImageUrl.url}
+            ingredients={selectedRecipe.ingredients}
+            subIngredients={selectedRecipe.subIngredients}
           />
         )}
         <article

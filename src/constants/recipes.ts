@@ -27,34 +27,33 @@ import PumpkinIcon from "public/images/recipes/icon/icon-SweetPumpkin.svg";
 import ZucchiniIcon from "public/images/recipes/icon/icon-Zucchini.svg";
 
 const INGREDIENTS_MAP = {
-  CHICKEN: { icon: ChickenIcon, label: "닭고기" },
+  CHICKEN: { icon: ChickenIcon, label: "닭" },
   TURKEY: { icon: TurkeyIcon, label: "칠면조" },
   CAULIFLOWER: { icon: CauliflowerIcon, label: "콜리플라워" },
   SHIITAKE: { icon: MushroomShiitakeIcon, label: "표고버섯" },
   BLUEBERRY: { icon: BlueberryIcon, label: "블루베리" },
-  BEEF: { icon: CowIcon, label: "소고기" },
+  BEEF: { icon: CowIcon, label: "소" },
   APPLE: { icon: AppleIcon, label: "사과" },
   CHIA_SEED: { icon: ChiaSeedIcon, label: "치아씨드" },
-  LAMB: { icon: LambIcon, label: "양고기" },
-  DUCK: { icon: DuckIcon, label: "오리고기" },
+  LAMB: { icon: LambIcon, label: "양" },
+  DUCK: { icon: DuckIcon, label: "오리" },
   KELP: { icon: KelpIcon, label: "켈프" },
   COCONUT: { icon: CoconutOilIcon, label: "코코넛 오일" },
   TURMERIC: { icon: TurmericIcon, label: "강황" },
   KALE: { icon: KaleIcon, label: "케일" },
   HEMP_SEED: { icon: HempSeedIcon, label: "햄프씨드" },
-  GREEN_BANANA: { icon: BananaIcon, label: "풋바나나" },
+  GREEN_BANANA: { icon: BananaIcon, label: "녹색바나나" },
   STRAWBERRY: { icon: StrawberryIcon, label: "딸기" },
-  EGG_YOLK: { icon: EggHalfIcon, label: "달걀 노른자" },
+  EGG_YOLK: { icon: EggHalfIcon, label: "계란 노른자" },
   CARROT: { icon: CarrotIcon, label: "당근" },
   
-  CHEESE: { icon: CheeseIcon, label: "치즈" },
+  COTTAGE_CHEESE: { icon: CheeseIcon, label: "커티지 치즈" },
   FLAX_SEED: { icon: FlaxSeedIcon, label: "아마씨드" },
-  GREEN_BEAN: { icon: GreenBeanIcon, label: "녹색콩" },
-  PSYLLIUM_HUSK: { icon: PsylliumHuskIcon, label: "실리엄 허스크" },
+  GREEN_BEAN: { icon: GreenBeanIcon, label: "완두콩" },
+  PSYLIUMHUSK: { icon: PsylliumHuskIcon, label: "실리엄 허스크" },
   SPIRULINA: { icon: SpirulinaIcon, label: "스피루리나" },
-  PUMPKIN: { icon: PumpkinIcon, label: "단호박" },
+  SWEET_PUMPKIN: { icon: PumpkinIcon, label: "단호박" },
   ZUCCHINI: { icon: ZucchiniIcon, label: "애호박" },
-
 } as const;
 
 const NUTRIENT_CONDITION = {
@@ -129,8 +128,6 @@ const RECIPES_INFO = {
     id: 5,
     key: "STARTER PREMIUM +",
     name: "스타터프리미엄+",
-    mainIngredients: ["CHICKEN", "TURKEY"],
-    ingredients: ["CHICKEN", "TURKEY", "GREEN_BANANA", "PUMPKIN", "HEMP_SEED"],
     totalIngredientsInfo:
       "통닭(국내산 무항생제), 칠면조 가슴살(칠레산), 닭가슴살(국내산 무항생제), 닭안심(국내산 무항생제), 닭간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 커티지치즈(국내산), 저염멸치(국내산), 밀싹(국내산), 벌꿀(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
     kcalPerGrams: 139,
@@ -194,8 +191,6 @@ const RECIPES_INFO = {
     id: 6,
     key: "TURKEY&BEEF +",
     name: "터키앤비프+",
-    mainIngredients: ["TURKEY", "BEEF"],
-    ingredients: ["TURKEY", "BEEF", "CHEESE", "EGG_YOLK", "FLAX_SEED"],
     totalIngredientsInfo:
       "칠면조 가슴살(칠레산), 칠면조 정육(칠레산), 소보섭살(풀먹은 호주 방목 유기농), 소사태살(풀먹은 호주 방목 유기농), 칠면조 목뼈(칠레산), 소간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 커티지치즈(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(USDA 유기농 인증 미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
     kcalPerGrams: 147,
@@ -259,8 +254,6 @@ const RECIPES_INFO = {
     id: 7,
     key: "DUCK&LAMB +",
     name: "덕앤램+",
-    mainIngredients: ["DUCK", "LAMB"],
-    ingredients: ["DUCK", "LAMB", "TURMERIC", "SPIRULINA", "GREEN_BANANA"],
     totalIngredientsInfo:
       "오리 정육(국내산 무항생제), 오리 근위(국내산 무항생제), 닭간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 브로콜리(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 강황(USDA 유기농 인증 미국산/인도산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산), 후추(USDA 유기농 인증 미국산)",
     kcalPerGrams: 146,
@@ -323,8 +316,6 @@ const RECIPES_INFO = {
     id: 8,
     key: "LAMB&BEEF +",
     name: "램앤비프+",
-    mainIngredients: ["LAMB", "BEEF"],
-    ingredients: ["LAMB", "BEEF", "GREEN_BEAN", "STRAWBERRY", "PSYLLIUM_HUSK"],
     totalIngredientsInfo:
       "양어깨살(뉴질랜드산 방목 유기농 LAMB), 소보섭살(풀먹은 호주산 방목 유기농), 소사태살(풀먹은 호주산 방목 유기농), 양목뼈(호주산 무항생제/뉴질랜드산 방목 유기농 LAMB), 소간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
     kcalPerGrams: 159,
@@ -388,14 +379,6 @@ const RECIPES_INFO = {
     id: 9,
     key: "Premium CHICKEN",
     name: "프리미엄 치킨",
-    mainIngredients: ["CHICKEN"],
-    ingredients: [
-      "CHICKEN",
-      "GREEN_BANANA",
-      "FLAX_SEED",
-      "TURMERIC",
-      "HEMP_SEED",
-    ],
     totalIngredientsInfo:
       "통닭(국내산 무항생제), 닭가슴살(국내산 무항생제), 닭근위(국내산), 닭심장(국내산), 닭안심(국내산), 닭간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 커티지치즈(국내산), 딸기(국내산), 블루베리(미국산), 저염멸치(국내산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 강황(USDA 유기농 인증 미국산/인도산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산), 후추(USDA 유기농 인증 미국산)",
     kcalPerGrams: 138,
@@ -464,14 +447,6 @@ const RECIPES_INFO = {
     id: 10,
     key: "Premium TURKEY",
     name: "프리미엄 터키",
-    mainIngredients: ["TURKEY"],
-    ingredients: [
-      "TURKEY",
-      "GREEN_BANANA",
-      "EGG_YOLK",
-      "CHEESE",
-      "PSYLLIUM_HUSK",
-    ],
     totalIngredientsInfo:
       "칠면조 가슴살(칠레산), 칠면조 정육(칠레산), 칠면조 목뼈(칠레산), 닭간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 커티지치즈(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
     kcalPerGrams: 130,
@@ -535,8 +510,6 @@ const RECIPES_INFO = {
     id: 11,
     name: "프리미엄 램",
     key: "Premium LAMB",
-    mainIngredients: ["LAMB"],
-    ingredients: ["LAMB", "BLUEBERRY", "STRAWBERRY", "HEMP_SEED", "SPIRULINA"],
     totalIngredientsInfo:
       "양어깨살(뉴질랜드산 방목 유기농 LAMB), 양심장(뉴질랜드산 방목 유기농 LAMB), 양목뼈(뉴질랜드산 방목 유기농 LAMB), 소간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
     kcalPerGrams: 150,
@@ -600,8 +573,6 @@ const RECIPES_INFO = {
     id: 12,
     name: "프리미엄 비프",
     key: "Premium BEEF",
-    mainIngredients: ["BEEF"],
-    ingredients: ["BEEF", "ZUCCHINI", "PUMPKIN", "KELP", "CHIA_SEED"],
     totalIngredientsInfo:
       "소보섭살(풀먹은 호주산 방목 유기농), 소사태살(풀먹은 호주산 방목 유기농), 소심장(풀먹은 호주산 방목 유기농), 송아지 목뼈(풀먹은 호주산 방목 유기농), 소간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(USDA 유기농 인증 미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
     kcalPerGrams: 121,
