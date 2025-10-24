@@ -110,6 +110,31 @@ const DELIVERY_COMPANY_CODE = {
   EPOST: "우체국",
 } as const;
 
+const CANCEL_REASON_LIST = [
+  '구매의사 취소 (구매자 귀책)',
+  '다른 상품 잘못 주문 (구매자 귀책)',
+  '택배사의 귀책으로 상품이 훼손됐을 때 (판매자 귀책)',
+  '고객이 주문한 제품과 다른 제품이 배송됐을 때 (판매자 귀책)',
+  '상품이 파손되었을 때 (판매자 귀책)',
+];
+
+const DEFAULT_CANCEL_REASONS = {
+  GENERAL: {
+    reason: '[일반결제] 구매자에 의한 결제 취소',
+    detailReason: '주문확인 전, 구매자에 의한 모든 일반상품 즉시 결제취소',
+  },
+  SUBSCRIPTION: {
+    reason: '[정기결제] 구매자에 의한 결제 취소',
+    detailReason: '주문확인 전, 구매자에 의한 모든 구독상품 즉시 결제취소',
+  },
+
+  UNSUBSCRIBE_NAVER_PAY_BY_ADMIN: {
+    reason: '[정기결제] 관리자에 의한 네이버페이 정기결제 해지 (결제 실패)',
+  },
+  UNSUBSCRIBE_NAVER_PAY_BY_BUYER: {
+    reason: '[정기결제] 구매자에 의한 네이버페이 정기결제 해지 (결제 실패)',
+  },
+} as const;
 
 export { 
   ORDER_STATUS, 
@@ -125,4 +150,6 @@ export {
   DELIVERY_COMPANY_CODE,
   getServerParam,
   getOrderTypeFromServerParam,
+  CANCEL_REASON_LIST,
+  DEFAULT_CANCEL_REASONS,
 };

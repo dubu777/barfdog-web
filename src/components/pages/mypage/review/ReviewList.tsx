@@ -2,7 +2,6 @@
 import { commonWrapper } from "@/styles/common.css";
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useInView } from "react-intersection-observer";
 import { useQueryClient } from "@tanstack/react-query";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import TabBar from "@/components/common/tabBar/TabBar";
@@ -12,6 +11,8 @@ import Text from "@/components/common/text/Text";
 import Tooltip from "@/components/common/tooltip/Tooltip";
 import ReviewCard from "@/components/pages/mypage/review/common/reviewCard/ReviewCard";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { queryKeys } from "@/constants";
 import { useReviewStore } from "@/store/mypage/useReviewStore";
 import { CreateReviewDetail, ReviewListType } from '@/types';
@@ -28,22 +29,16 @@ export default function Review () {
   const activeIndex = (!type || isWriteableReview) ? 0 : 1;
 
   const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetInfiniteMypageReviewList(type as ReviewListType);
-  const reviewList = reviewListData?.pages.flatMap(p => p.reviewList) ?? [];
+  const reviewList = useFlattenedInfiniteData(reviewListData, 'reviewList');
   const totalCount = reviewListData?.pages[0].pagination.totalCount ?? 0;
 
-  const { ref, inView } = useInView();
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const { setCreateReview } = useReviewStore();
 
   useEffect(() => {
     setCreateReview(null);
   }, [])
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
 
   const handleTabClick = async (type: ReviewListType) => {
     pushWithQuery(pathname, { type });

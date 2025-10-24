@@ -40,7 +40,7 @@ const getInfiniteBodyCheckList = async (
 ) => {
   const { data }: { 
     data: ApiResponse<{ 
-      bodyPartDiagnosisList: BodyCheckDetailMap[BodyPartType]; 
+      bodyPartDiagnosisList: BodyCheckDetailMap[BodyPartType][]; 
       pagination: Pagination 
   }> } = await instance.get(
     `/api/v2/health-book/body-part-diagnoses/${part}`, 

@@ -2,19 +2,19 @@ import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import Text from "@/components/common/text/Text";
 import { OrderType } from "@/types/mypage/orders";
 
-interface OrderCancelAlertModalProps {
+interface OrderCancelModalProps {
+  orderType: OrderType;
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  orderType: OrderType;
 }
 
-export default function OrderCancelAlertModal({
+export default function OrderCancelModal({
+  orderType,
   isOpen,
   onClose,
   onSubmit,
-  orderType,
-}: OrderCancelAlertModalProps) {
+}: OrderCancelModalProps) {
   return (
     orderType === 'SUBSCRIPTION' ? (
       <AlertModal

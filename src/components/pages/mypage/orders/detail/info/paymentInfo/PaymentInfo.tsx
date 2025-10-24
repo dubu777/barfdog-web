@@ -5,6 +5,7 @@ import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import { PaymentMethod } from "@/types";
 import { PAYMENT_LABEL } from "@/constants";
+import { OrderType } from "@/types/mypage/orders";
 
 interface PaymentInfoProps {
   paymentPrice: number;
@@ -14,6 +15,7 @@ interface PaymentInfoProps {
   discountGrade: number;
   orderPrice: number;
   paymentMethod: PaymentMethod;
+  orderType: OrderType;
 }
 
 export default function PaymentInfo({
@@ -24,7 +26,11 @@ export default function PaymentInfo({
   discountReward,
   discountGrade,
   paymentMethod,
+  orderType,
 }: PaymentInfoProps) {
+  const priceValue = (price: number) => {
+    return price === 0 ? '0원' : `-${price.toLocaleString()}원`;
+  }
   return (
     <InfoWrapper title="결제 정보" titleType="title4" padding={false}>
       <CardWrapper>
@@ -39,24 +45,20 @@ export default function PaymentInfo({
               label="배송비"
               value={deliveryPrice === 0 ? '무료' : `${deliveryPrice.toLocaleString()}원`}
             />
-            {discountGrade !== 0 && (
+            {orderType === 'SUBSCRIPTION' && (
               <InfoItem
                 label="등급 할인"
-                value={`-${discountGrade.toLocaleString()}원`}
+                value={priceValue(discountGrade)}
               />
             )}
-            {discountCoupon !== 0 && (
-              <InfoItem
-                label="쿠폰 사용"
-                value={`-${discountCoupon.toLocaleString()}원`}
-              />
-            )}
-            {discountReward !== 0 && (
-              <InfoItem
-                label="적립금 사용"
-                value={`-${discountReward.toLocaleString()}원`}
-              />
-            )}
+            <InfoItem
+              label="쿠폰 사용"
+              value={priceValue(discountCoupon)}
+            />
+            <InfoItem
+              label="적립금 사용"
+              value={priceValue(discountReward)}
+            />
           </div>
           <Divider thickness={1} color="gray300" />
           <div className={commonWrapper({ gap: 6, direction: 'col' })}>

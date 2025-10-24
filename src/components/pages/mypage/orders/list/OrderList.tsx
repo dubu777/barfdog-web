@@ -1,32 +1,29 @@
 "use client";
 import { commonWrapper } from "@/styles/common.css";
-import { Fragment, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
-import { useInView } from "react-intersection-observer";
+import { Fragment } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
-import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import OrderItem from "./orderItem/OrderItem";
+import EmptyList from "@/components/common/emptyList/EmptyList";
+import Button from "@/components/common/button/Button";
+import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
 import useFilterTabs from "@/hooks/useFilterTabs";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { OrderType } from "@/types/mypage/orders";
 import { ORDER_TYPE_LIST } from "@/constants/mypage/orders";
 import { useGetInfiniteOrderList } from "@/api/mypage/orders/queries/useGetInfiniteOrderList";
 
 export default function OrderList () {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const orderType = searchParams.get("orderType") as OrderType ?? "SUBSCRIPTION";
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteOrderList(orderType);
-  const orderList = data?.pages?.flatMap((page) => page.orders) ?? [];
+  const orderList = useFlattenedInfiniteData(data, 'orders');
 
-  const { ref, inView } = useInView();
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const { defaultTabIndex, handleFilterChange } = useFilterTabs({
     filterKey: 'orderType',
@@ -36,6 +33,7 @@ export default function OrderList () {
 
   return (
     <section>
+      <Divider thickness={2} color="gray50" />
       <TabBar 
         variant="text"
         defaultIndex={defaultTabIndex}
@@ -75,7 +73,31 @@ export default function OrderList () {
               isFetchingNextPage={isFetchingNextPage}
             />
           </>
-        : <EmptyState title='주문 내역이 없습니다.' />}
+        : (
+          <div className={commonWrapper({ direction: 'col', gap: 20, paddingTop: 60, paddingBottom: 60 })}>
+            <EmptyList 
+              title={
+                orderType === 'SUBSCRIPTION' 
+                  ? `구독 중인 상품 내역이 없어요\n정기구독을 먼저 시작해주세요` 
+                  : `주문하신 상품 내역이 없어요\n상품을 먼저 주문해주세요`
+              } 
+            />
+            <Button 
+              variant="solid" 
+              intent="secondary" 
+              size="lg"
+              onClick={() => {
+                if (orderType === 'SUBSCRIPTION') {
+                  router.push('/diet-analysis');
+                } else {
+                  router.push('/store');
+                }
+              }}
+            >
+              {orderType === 'SUBSCRIPTION' ? '정기구독 시작하기' : '상품 담기'}
+            </Button>
+          </div>
+        )}
       </article>
     </section>
   );

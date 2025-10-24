@@ -1,23 +1,17 @@
 'use client';
 import { commonWrapper } from "@/styles/common.css";
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import EmptyState from "../../common/emptyState/EmptyState";
 import SubscriptionCard from "../common/card/SubscriptionCard";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { useGetInfiniteSubscriptionList } from "@/api/mypage/subscription/queries/useGetInfiniteSubscriptionList";
 
 export default function SubscriptionList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteSubscriptionList();
-  const subscriptionList = data?.pages?.flatMap((page) => page.subscriptionList) ?? [];
+  const subscriptionList = useFlattenedInfiniteData(data, 'subscriptionList');
 
-  const { ref, inView } = useInView();
-
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage])
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
     <section className={commonWrapper({ 

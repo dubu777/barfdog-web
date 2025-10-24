@@ -1,6 +1,5 @@
 "use client";
 import * as styles from "./FullCheckList.css";
-import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DogImage from "/public/images/healthNote/full-check/list-dog.png";
@@ -12,8 +11,9 @@ import TextButton from "@/components/common/textButton/TextButton";
 import Button from "@/components/common/button/Button";
 import EmptyList from "@/components/common/emptyList/EmptyList";
 import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { getNameWithPossessiveSuffix } from "@/utils";
-import { useInView } from "react-intersection-observer";
 import { useGetInfiniteFullCheckList } from "@/api/healthNote/fullCheck/queries/useGetInfiniteFullCheckList";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 
@@ -24,21 +24,15 @@ interface FullCheckListProps {
 export default function FullCheckList({ petId }: FullCheckListProps) {
   const { data: petInfo } = useGetPetDetail(petId);
   const {
-    data: infiniteData,
+    data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   } = useGetInfiniteFullCheckList(petId);
 
-  const checkupDiagnosisList =
-    infiniteData?.pages?.flatMap((page) => page.checkupDiagnosisList) ?? [];
-  const { ref, inView } = useInView();
+  const checkupDiagnosisList = useFlattenedInfiniteData(data, 'checkupDiagnosisList');
 
-  useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, isFetchingNextPage, hasNextPage, fetchNextPage]);
+  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   const handleGoToSurvey = () => {
     window.location.href = `/health-note/${petId}/full-check/survey`;

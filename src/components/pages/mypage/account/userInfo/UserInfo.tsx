@@ -22,7 +22,7 @@ import { useUpdateUserInfo } from "@/api/mypage/account/mutations/useUpdateUserI
 
 export default function UserInfo() {
   const { data: userInfo } = useGetUserInfo();
-  
+
   const {
     handleSubmit,
     control,
@@ -62,12 +62,6 @@ export default function UserInfo() {
 
   const onSubmit = (data: UpdateUserInfo) => {
     const body: UpdateUserInfo = {
-      address: userInfo?.address ?? {
-        zipcode: "",
-        city: "",
-        street: "",
-        detailAddress: "",
-      },
       authCode: data.authCode,
       authToken: data.authToken,
       gender: data.gender,
