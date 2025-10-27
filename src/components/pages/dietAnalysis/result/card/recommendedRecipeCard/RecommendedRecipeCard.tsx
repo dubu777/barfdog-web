@@ -98,18 +98,20 @@ export default function RecommendedRecipeCard({
         freeMode={true}
         className={styles.ingredientSwiper}
       >
-        {recipe.primaryIngredients.map((ingredient, index) => (
-          <SwiperSlide key={index} className={styles.ingredientSlide}>
-            <div className={styles.ingredientItem}>
-              <div className={styles.ingredientIcon}>
-                <SvgIcon src={INGREDIENTS_MAP[ingredient].icon} size={52} />
+        {[...recipe.ingredients, ...recipe.subIngredients].map(
+          (ingredient, index) => (
+            <SwiperSlide key={index} className={styles.ingredientSlide}>
+              <div className={styles.ingredientItem}>
+                <div className={styles.ingredientIcon}>
+                  <SvgIcon src={INGREDIENTS_MAP[ingredient].icon} size={52} />
+                </div>
+                <Text type="caption" color="gray700">
+                  {INGREDIENTS_MAP[ingredient].label}
+                </Text>
               </div>
-              <Text type="caption" color="gray700">
-                {INGREDIENTS_MAP[ingredient].label}
-              </Text>
-            </div>
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          )
+        )}
       </Swiper>
     </Card>
   );

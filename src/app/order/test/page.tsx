@@ -8,13 +8,16 @@ import { getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { authAxios } from "@/api/axiosInstance";
+import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 
 export default function GeneralShopTest() {
   const router = useRouter();
   const { setOrderItemDtoList } = usePersistOrderStore();
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+  const { data } = useGetAddressList();
   const isLogin = isAuthenticated(token);
   console.log("isLogin", isLogin);
+  console.log("address data", data);
 
   const orderItemListData = [
     {

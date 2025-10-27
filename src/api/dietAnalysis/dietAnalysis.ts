@@ -9,7 +9,10 @@ import { AxiosInstance } from "axios";
 const createDietAnalysisResult = async (
   body: DietAnalysisPayload
 ): Promise<CreateDietAnalysisResultResponse> => {
-  const { data } = await axiosInstance.post("/api/v2/recipeSurvey", body);
+  const { data } = await axiosInstance.post(
+    "/api/v2/user/recipes/survey",
+    body
+  );
 
   return data;
 };
@@ -19,7 +22,7 @@ const getDietAnalysisResult = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<DietAnalysisResult> => {
   const { data } = await instance.get(
-    `/api/v2/recipeSurvey/${reportId}/result`
+    `/api/v2/user/recipes/survey/${reportId}/analysis`
   );
 
   return data.data;
