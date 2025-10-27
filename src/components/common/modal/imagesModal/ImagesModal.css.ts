@@ -4,10 +4,11 @@ import { themeVars } from "@/styles/theme.css";
 export const imagesModalContainer = style({
 	maxWidth: '600px',
 	width: '100%',
-	height: '100vh',
+	height: '100dvh',
 	backgroundColor: `${themeVars.colors.gray.gray900} !important`,
 	alignItems: 'center',
 	justifyContent: 'center',
+	margin: '0 auto',
 })
 
 export const imageModalHeader = style({

@@ -41,7 +41,7 @@ export default function BestReviewModal({ isOpen, onClose, reviewItem }: BestRev
 
   return (
     <>
-    `  <FullModalWrapper
+      <FullModalWrapper
         isVisible={isOpen}
         handleClose={onClose}
         headerTitle='리뷰상세'
@@ -81,7 +81,7 @@ export default function BestReviewModal({ isOpen, onClose, reviewItem }: BestRev
           onPrimaryClick={onClose}
           primaryButtonVariant='outline'
         />
-      </FullModalWrapper>`
+      </FullModalWrapper>
       {isOpenImageDetail &&
         <ImagesModal
           isOpen={isOpenImageDetail}

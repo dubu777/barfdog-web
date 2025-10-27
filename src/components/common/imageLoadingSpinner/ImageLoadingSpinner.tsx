@@ -28,9 +28,10 @@ export default function ImageLoadingSpinner({ src, alt, fill = false, width, hei
         sizes={fill ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' : undefined}
         width={!fill ? width : undefined}
         height={!fill ? height : undefined}
-        objectFit={objectFit}
-        onLoadingComplete={handleLoadingComplete}
+        style={{ objectFit }}
+        onLoad={handleLoadingComplete}
         className={className || ''}
+        priority
       />
     </div>
   );

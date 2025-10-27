@@ -5,5 +5,6 @@ export const imageLoadingSpinner = style({
   height: '100%',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
+  alignItems: 'center',
+  position: 'relative',
 })

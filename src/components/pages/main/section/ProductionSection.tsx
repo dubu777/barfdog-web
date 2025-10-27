@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Image from "next/image";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
@@ -16,6 +16,38 @@ export default function ProductionSection() {
 	const subTitle = MAIN_DATA.PRODUCTION.subTitle;
 	const topPoints = MAIN_DATA.PRODUCTION.descriptions;
 	const imageList = MAIN_DATA.PRODUCTION.imagesUrl;
+
+	const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+		// 모바일: chrome 안정화를 위한 비디오 자동재생 적용
+    const video = videoRef.current;
+    if (!video) return;
+
+    // 필수 속성
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+
+    // DOM 렌더링 후 play 시도
+    const tryPlay = async () => {
+      await video.play().catch(() => {
+        console.log('Autoplay blocked, will retry on user interaction');
+      });
+    };
+
+    // 사용자 터치 이벤트 발생시 play 시도
+    const handleTouch = () => {
+      tryPlay();
+      window.removeEventListener('touchstart', handleTouch);
+    };
+    window.addEventListener('touchstart', handleTouch);
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouch);
+    };
+  }, []);
+
 	return (
 		<>
 			<ul className={mainProductionPointsBox}>
@@ -38,13 +70,12 @@ export default function ProductionSection() {
 						<Image key={image} src={image} alt={`인증서 ${index+1}`} width={300} height={300} className={mainProductionImage} />
 					))}
 				</div>
-				<video 
-					preload='none' 
-					muted 
-					autoPlay 
-					loop 
+				<video
+					ref={videoRef}
+					muted
+					autoPlay
+					loop
 					playsInline
-					webkit-playsinline="true"
 					className={mainProductionVideo}
 				>
 					<source src='/videos/main_video.mp4' type='video/mp4'/>

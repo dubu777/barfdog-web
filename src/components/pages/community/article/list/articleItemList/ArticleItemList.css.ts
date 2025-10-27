@@ -49,12 +49,13 @@ export const articleItemTitle = style({
 
 export const articleItemCategory = style({
   minWidth: "34px",
+  whiteSpace: "nowrap",
 });
 
 export const articleContents = recipe({
   base: {
-  display: "flex",
-  flexDirection: "column",
+    display: "flex",
+    flexDirection: "column",
     justifyContent: "space-between",
     gap: "16px",
     padding: "10px",
@@ -75,7 +76,7 @@ export const articleContents = recipe({
 
 export const articleGallery = style({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+  gridTemplateColumns: "repeat(2, 1fr)", // 무조건 2개 컬럼으로 고정
   gridAutoRows: "10px",
   gap: "4px",
 });

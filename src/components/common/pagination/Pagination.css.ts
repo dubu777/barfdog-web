@@ -3,6 +3,7 @@ import { themeVars } from "@/styles/theme.css";
 
 export const paginationContainer = recipe({
   base: {
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

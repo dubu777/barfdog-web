@@ -70,6 +70,7 @@ export const mainTitle = recipe({
 })
 
 export const mainBox = style({
+	width: '100%',
 	padding: '20px !important',
 })
 
@@ -144,8 +145,12 @@ export const mainReviewButton = style({
 })
 
 export const mainStoreItem = style({
-	width: '120px !important',
-	display: 'flex !important',
+	width: 'fit-content !important',
+	height: 'auto',
+})
+
+export const mainStoreItemLink = style({
+	display: 'flex',
 	flexDirection: 'column',
 	gap: '6px',
 })
@@ -266,15 +271,16 @@ export const mainChapter3ImageList = style({
 })
 
 export const mainChapter3ImageSlide = style({
-	width: '247px !important',
+	width: 'fit-content !important',
 	height: '280px !important',
+	borderRadius: '8px',
+	overflow: 'hidden',
 })
 
 export const mainChapter3Image = style({
 	width: '100%',
 	height: '100%',
-	aspectRatio: '247 / 280',
-	objectFit: 'contain',
+	objectFit: 'cover',
 })
 
 export const mainBarfContentBox = style({

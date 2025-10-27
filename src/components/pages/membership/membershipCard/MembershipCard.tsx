@@ -27,11 +27,11 @@ export default function MembershipCard({ tier, className }: MembershipCardProps)
 			</div>
 			<Divider thickness={1} color='gray200' />
 			<div className={commonWrapper({ gap: 12, align: 'start', justify: 'start' })}>
-				<Text type='headline2' style={{ minWidth: '27px' }}>기준</Text>
+				<Text type='headline2' noShrink>기준</Text>
 				<Text type='body2' color='gray700'>{tier.condition}</Text>
 			</div>
 			<div className={commonWrapper({ gap: 12, align: 'start', justify: 'start' })}>
-				<Text type='headline2' style={{ minWidth: '27px' }}>혜택</Text>
+				<Text type='headline2' noShrink>혜택</Text>
 				<div className={commonWrapper({ direction: 'col', gap: 6, align: 'start' })}>
 					{tier.benefits.map((benefit, index) => (
 						<Text key={benefit} type='body2' color='gray700'>
