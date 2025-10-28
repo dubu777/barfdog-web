@@ -41,7 +41,7 @@ export default function ResultSummary({
     <div className={commonWrapper({ direction: "col" })}>
       <div className={styles.resultSummaryTop}>
         <Text type="body3" color="gray0">
-          {date}
+          {firstResponse.surveyReportModifiedDate}
         </Text>
         <Text type="title3" color="gray0">
           보호자님의 응답을 바탕으로
@@ -58,8 +58,10 @@ export default function ResultSummary({
           className={styles.resultSummaryCard}
         >
           {ConcernIcon && (
-            <SvgIcon src={ConcernIcon} className={styles.healthConcernsImageWrapper} />
-            // <ConcernIcon className={styles.healthConcernsImageWrapper} />
+            <SvgIcon
+              src={ConcernIcon}
+              className={styles.healthConcernsImageWrapper}
+            />
           )}
           <div
             className={commonWrapper({
@@ -87,11 +89,7 @@ export default function ResultSummary({
                   })}
                 >
                   <SvgIcon src={DotIcon} size={24} />
-                  <Text
-                    type="body2"
-                    color="gray800"
-                    applyLineHeight={false}
-                  >
+                  <Text type="body2" color="gray800" applyLineHeight={false}>
                     {symptom}
                   </Text>
                 </div>

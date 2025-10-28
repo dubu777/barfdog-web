@@ -141,7 +141,8 @@ interface RawFoodOrderItem {
   meet: MeetType;
   /** 추천 여부 */
   isRecommend: boolean;
-  primaryIngredients: string[];
+  subIngredients: string[];
+  ingredients: string[];
 }
 
 /** 생식 주문서 응답 루트 */
