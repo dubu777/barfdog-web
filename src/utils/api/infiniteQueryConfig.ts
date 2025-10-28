@@ -16,6 +16,7 @@ export function createInfiniteQueryConfig<TData>(
     queryKey: config.queryKey,
     queryFn: async ({ pageParam = 0 }: { pageParam: number }) => {
       const pageNumber = typeof pageParam === 'number' ? pageParam : 0;
+      
       return await config.queryFn({ 
         pageParam: pageNumber
       });
@@ -57,9 +58,17 @@ export async function prefetchInfiniteQuery<TData>(
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => {
-      const currentPage = lastPage.page.page ?? 0;
-      const totalPages = lastPage.page.totalPages ?? 0;
-      return currentPage + 1 < totalPages ? currentPage + 1 : undefined;
+      const currentPage = lastPage?.pagination 
+        ? lastPage?.pagination?.page 
+        : lastPage?.page?.number 
+          ?? 0;
+      const totalPages = lastPage?.pagination 
+        ? lastPage?.pagination?.totalPages 
+        : lastPage?.page?.totalPages 
+          ?? 0;
+
+			const nextPage = currentPage + 1;
+			return nextPage < totalPages ? nextPage : undefined;
     },
   });
 }

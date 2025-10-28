@@ -1,4 +1,4 @@
-import * as styles from './DogpediaDetail.css';
+import { commonWrapper } from '@/styles/common.css';
 import { useMemo } from "react";
 import InputField from "@/components/common/inputField/InputField";
 import Divider from "@/components/common/divider/Divider";
@@ -39,8 +39,14 @@ export default function DogpediaDetail({
 
 	if(!data) return null;
 	return (
-		<>
-			<section className={styles.dogpediaContainer}>
+		<section className={commonWrapper({ direction: 'col', paddingBottom: 40 })}>
+			<article className={commonWrapper({
+				direction: 'col',
+				padding: 20,
+				paddingTop: 16,
+				paddingBottom: 32,
+				gap: 28,
+			})}>
 				<InputField
 					value='다른 견종도 궁금하지 않으신가요?'
 					searchButton
@@ -48,10 +54,10 @@ export default function DogpediaDetail({
 					onClick={() => setSelectedBreedId(null)}
 				/>
 				<BreedDefaultInfo data={breedDefaultInfo} />
-			</section>
+			</article>
 			<BreedCategoryTabs data={breedCategoryTabData}/>
 			<Divider thickness={4} color='gray100' />
 			<BreedDetailInfo data={data.careInfo} />
-		</>
+		</section>
 	);
 };

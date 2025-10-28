@@ -1,4 +1,4 @@
-import * as styles from './BreedDetailInfo.css';
+import { commonWrapper } from '@/styles/common.css';
 import Text from "@/components/common/text/Text";
 import { BreedCareInfo } from "@/types/healthNote/dogpedia";
 
@@ -36,12 +36,20 @@ export default function BreedDetailInfo({
 		},
 	]
 	return (
-		<section className={styles.breedDetailInfo}>
+		<article className={commonWrapper({
+			padding: 20,
+			paddingBottom: 40,
+			direction: 'col',
+			align: 'start',
+			gap: 20,
+			backgroundColors: 'gray0',
+			width: 'full',
+		})}>
 			<Text type='title4'>상세정보</Text>
-			<ul className={styles.detailInfoList}>
+			<ul className={commonWrapper({ direction: 'col', gap: 28, align: 'start' })}>
 				{infoList.map(info => (
 					info.value &&
-					<li key={info.label} className={styles.detailInfoItem}>
+					<li key={info.label} className={commonWrapper({ direction: 'col', gap: 4, align: 'start' })}>
 						<Text type='headline2' color='gray800'>
 							{info.label}
 						</Text>
@@ -51,6 +59,6 @@ export default function BreedDetailInfo({
 					</li>
 				))}
 			</ul>
-		</section>
+		</article>
 	);
 };

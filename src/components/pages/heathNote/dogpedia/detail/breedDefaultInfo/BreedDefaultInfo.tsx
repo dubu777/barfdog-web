@@ -52,7 +52,7 @@ export default function BreedDefaultInfo({
 	]
 	
 	return (
-		<div className={styles.breedDefaultInfo}>
+		<article className={styles.breedDefaultInfo}>
 			<Text type='title2'>{data.name}에 대해<br/>알아볼까요?</Text>
 			{data.imageUrl &&
 				<Image
@@ -72,7 +72,6 @@ export default function BreedDefaultInfo({
 				<ul className={styles.defaultInfoList}>
 					{defaultInfo.map(info => {
 						const valueLabel = info.key === 'weight' ? 'kg' : info.key === 'height' && 'cm';
-
 						const WeightHeightComponent = () => (
 							<div className={styles.infoCardValue}>
 								<div className={styles.infoValue}>
@@ -132,6 +131,6 @@ export default function BreedDefaultInfo({
 					})}
 				</ul>
 			</div>
-		</div>
+		</article>
 	);
 };

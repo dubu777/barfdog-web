@@ -70,9 +70,7 @@ export default function ReviewCard({
         gap: 12,
       })}
     >
-      <div
-        className={commonWrapper({ direction: "col", gap: 10, align: "start" })}
-      >
+      <div className={commonWrapper({ direction: "col", gap: 10, align: "start" })}>
         <div className={commonWrapper({ align: "center", justify: "between" })}>
           <div
             className={commonWrapper({

@@ -19,10 +19,8 @@ export const fullCheckResultContainer = style({
 
 export const fullCheckResultTitle = style({
 	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'center',
-	gap: '5px',
-	marginBottom: '12px',
+	flexDirection: 'column',
+	gap: '12px',
 })
 
 export const fullCheckResultProduct = style({

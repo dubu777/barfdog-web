@@ -5,7 +5,7 @@ const ARTICLE_CATEGORY: Record<ArticleCategory, { label: string }> = {
 	NUTRITION: { label: '영양' },
 	HEALTH: { label: '건강' },
 	LIFE: { label: '생애' },
-}
+} as const;
 
 
 const NOTICE_CATEGORY: Record<NoticeCategory, { label: string }> = {
@@ -13,7 +13,7 @@ const NOTICE_CATEGORY: Record<NoticeCategory, { label: string }> = {
 	NOTICE: { label: '공지' },
 	EVENT: { label: '이벤트' },
 	POLICY: { label: '정책' },
-}
+} as const;
 
 const FAQ_LIST = [
 	{

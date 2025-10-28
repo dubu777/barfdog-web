@@ -77,6 +77,7 @@ export const snsContainer = style({
 })
 
 export const snsTopImageText = style({
+	width: '100%',
 	position: 'absolute',
 	top: '60px',
 	left: '50%',

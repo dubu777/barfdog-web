@@ -11,7 +11,7 @@ interface CreateDogCardProps {
   buttonLabel: string;
 }
 
-const CreateDogCard = ({ buttonLabel }: CreateDogCardProps) => {
+export default function CreateDogCard({ buttonLabel }: CreateDogCardProps) {
   const router = useRouter();
   return (
     <Card shadow="none" padding={16} gap={40}>
@@ -55,6 +55,4 @@ const CreateDogCard = ({ buttonLabel }: CreateDogCardProps) => {
       </Button>
     </Card>
   );
-};
-
-export default CreateDogCard;
+}

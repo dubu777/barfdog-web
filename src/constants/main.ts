@@ -47,7 +47,7 @@ export const MAIN_DATA = {
 			action: {
 				label: '우리 아이 Ai 추천 식단 시작하기',
 				variant: 'solid',
-				url: '/survey',
+				url: '/diet-analysis',
 				fullWidth: true,
 			},
 			imagesUrl: [
@@ -79,7 +79,7 @@ export const MAIN_DATA = {
 			action: {
 				label: '우리 아이 건강 챙기러 가기',
 				variant: 'solid',
-				url: '/survey',
+				url: '/diet-analysis',
 				fullWidth: true,
 			},
 			imagesUrl: [

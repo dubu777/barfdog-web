@@ -1,4 +1,3 @@
-import * as styles from './ItemReview.css';
 import { commonWrapper } from '@/styles/common.css';
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -33,8 +32,6 @@ export default function ItemReview({
   const { data } = useGetReviewList(currentPage, itemId)
   const reviewList = data?.itemReviewList || [];
 
-  console.log(data);
-
   // 리뷰 아코디언 토글 상태
   const [openReviewIds, setOpenReviewIds] = useState<number[]>([]);
 
@@ -53,7 +50,7 @@ export default function ItemReview({
   }
 
   return (
-    <div className={styles.reviewList}>
+    <div className={commonWrapper({ direction: 'col', align: 'start' })}>
       {!reviewList.length && 
         <div className={commonWrapper({ paddingBottom: 40 })}>
           <EmptyList title={`등록된 리뷰가 없어요\n이 상품의 첫 번째 리뷰를 작성해 보세요`} />
@@ -65,7 +62,7 @@ export default function ItemReview({
             const reviewId = review.reviewId;
             const isOpen = openReviewIds.includes(reviewId);
             return (
-              <div key={reviewId}>
+              <div key={reviewId} className={commonWrapper({ direction: 'col', align: 'start' })}>
                 <ReviewItem
                   reviewId={reviewId}
                   reviewer={review.reviewer}

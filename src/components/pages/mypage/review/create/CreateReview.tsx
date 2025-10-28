@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from "next/navigation";
-import ReviewForm from "@/components/pages/mypage/review/reviewForm/ReviewForm";
+import ReviewForm from "@/components/pages/mypage/review/form/ReviewForm";
 import { useToastStore } from "@/store/useToastStore";
 import { useReviewStore } from "@/store/mypage/useReviewStore";
 import { FileChangeInfo, ReviewFormValues } from "@/types";

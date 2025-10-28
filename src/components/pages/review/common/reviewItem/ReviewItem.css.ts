@@ -8,6 +8,7 @@ export const bestReviewModalContainer = style({
 
 export const contentBox = recipe({
 	base: {
+		width: '100%',
 		padding: '20px',
 		display: 'flex',
 		flexDirection: 'column',

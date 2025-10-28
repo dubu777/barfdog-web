@@ -90,7 +90,6 @@ export const sanitizedHTML = style({});
 
 globalStyle(`${sanitizedHTML} *`, {
   textAlign: "unset",
-  font: "inherit",
 });
 
 globalStyle(`${sanitizedHTML} img`, {
@@ -228,6 +227,9 @@ export const commonWrapper = recipe({
         paddingBottom: "20px",
       },
       30: {
+        paddingBottom: "30px",
+      },
+      32: {
         paddingBottom: "30px",
       },
       40: {
@@ -400,6 +402,9 @@ export const commonWrapper = recipe({
       wrap: {
         flexWrap: "wrap",
       },
+      unset: {
+        flexWrap: "unset",
+      }
     },
   },
   defaultVariants: {
@@ -434,6 +439,9 @@ export const imageWrapper = recipe({
       },
       8: {
         borderRadius: 8,
+      },
+      16: {
+        borderRadius: 16,
       },
     },
     width: {

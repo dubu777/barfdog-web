@@ -40,117 +40,185 @@ const getGridArea = (index: number) => {
 	return '';
 };
 
+const parentVariants0 = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.25,
+    },
+  },
+};
+
+const childVariants0 = {
+  hidden: { opacity: 0, rotateY: -180 },
+  visible: {
+    opacity: 1,
+    rotateY: 0,
+    transition: { duration: 1, delay: 0.5 },
+  },
+};
+
+const parentVariants1 = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.25,
+    },
+  },
+};
+
+const childVariants1 = (i: number) => ({
+  hidden: { opacity: 0, ...getPosition(i) },
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    transition: {
+      duration: 1,
+      type: "spring",
+      damping: 12,
+			mass: 1,
+      stiffness: 64.02,
+      delay: i * 0.1,
+    },
+  },
+});
+
+
 export default function ChapterSection() {
 	const router = useRouter();
 	const { isMobileWidth } = useDeviceState();
 
 	const chapterData = MAIN_DATA.CHAPTER;
-
-	const ChapterComponent = ({ index, imagesUrl }: { index: number, imagesUrl: readonly string[] }) => {
-		switch (index) {
-			case 0:
-				return (
-					<div className={mainChapter1ImageList}>
-						{imagesUrl?.map((image, i) => (
-							<motion.div
-								key={i}
-								initial={{ opacity: 0, transform: 'rotateY(-180deg)' }}
-								whileInView={{ opacity: 1, transform: 'rotateX(0)' }}
-								viewport={{ once: true }}
-								transition={{ duration: 1, delay: .5 }}
-							>
-								<Image
-									src={image}
-									alt={`chapter${i} image`}
-									width={159}
-									height={344}
-									className={`${cardShadow.strong} ${mainChapter1Image}`}
-								/>
-							</motion.div>
-						))}
-					</div>
-				);
-			case 1:
-				return (
-					<div className={mainChapter2ImageList({ isMobileWidth: isMobileWidth })}>
-						{imagesUrl?.map((image, i) => (
-							<motion.div
-								key={i}
-								initial={{ opacity: 0, ...getPosition(i) }}
-								whileInView={{ opacity: 1, x: 0, y: 0 }}
-								transition={{
-									duration: 1,
-									delay: i * 0.1,
-									damping: 12,
-									mass: 1,
-									stiffness: 64.02,
-									type: 'spring',
-								}}
-								viewport={{ once: true,}}
-								style={{
-									gridArea: getGridArea(i),
-								}}
-								className={mainChapter2ImageBox}
-							>
-								<Image
-									src={image}
-									alt={`chapter${i} image`}
-									width={276}
-									height={370}
-									className={mainChapter2Image}
-								/>
-							</motion.div>
-						))}
-					</div>
-				)
-			case 2:
-				return (
-					<Swiper
-						spaceBetween={16}
-						slidesPerView='auto'
-						freeMode
-						modules={[ FreeMode ]}
-						className={mainChapter3ImageList}
-					>
-						{imagesUrl.map((image, i) => (
-							<SwiperSlide
-								key={i}
-								className={mainChapter3ImageSlide}
-							>
-								<Image 
-									src={image} 
-									alt={`chapter${i} image`} 
-									width={1200} 
-									height={1200} 
-									className={mainChapter3Image} 
-								/>
-							</SwiperSlide>
-						))}
-					</Swiper>
-				)
-		}
-	}
 	return (
-		chapterData.map((chapter, index) => (
-			<MainContainer key={chapter.id} backgroundColor={index === 1 ? 'gray50' : 'pinkWhite'}>
+		<>
+			<MainContainer key={chapterData[0].id} backgroundColor='pinkWhite'>
 				<FadeInInteraction>
 					<Text type='title2' color='white' className={mainChapterIndexChips}>
-						0{index+1}
+						01
 					</Text>
 					<MainTitle 
-						title={chapter.title} 
-						subTitle={chapter.subTitle} 
+						title={chapterData[0].title} 
+						subTitle={chapterData[0].subTitle} 
 						align='left'
 						noPaddingTop
 					/>
 				</FadeInInteraction>
-				<ChapterComponent imagesUrl={chapter.imagesUrl} index={index} />
+				<motion.div
+					variants={parentVariants0}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, amount: 0.2 }}
+					className={mainChapter1ImageList}
+				>
+					{chapterData[0].imagesUrl?.map((image, i) => (
+						<motion.div key={i} variants={childVariants0}>
+							<Image
+								src={image}
+								alt={`chapter0 image`}
+								width={159}
+								height={344}
+								className={`${cardShadow.strong} ${mainChapter1Image}`}
+							/>
+						</motion.div>
+					))}
+				</motion.div>
 				<div className={mainBox}>
-					<Button onClick={() => router.push(chapter.action.url)} variant={chapter.action.variant} fullWidth={chapter.action.fullWidth}>
-						{chapter.action.label}
+					<Button
+						onClick={() => router.push(chapterData[0].action.url)} 
+						variant={chapterData[0].action.variant} 
+						fullWidth={chapterData[0].action.fullWidth}
+					>
+						{chapterData[0].action.label}
 					</Button>
 				</div>
 			</MainContainer>
-		))
+			<MainContainer key={chapterData[1].id} backgroundColor='gray50'>
+				<FadeInInteraction>
+					<Text type='title2' color='white' className={mainChapterIndexChips}>
+						02
+					</Text>
+					<MainTitle 
+						title={chapterData[1].title} 
+						subTitle={chapterData[1].subTitle} 
+						align='left'
+						noPaddingTop
+					/>
+				</FadeInInteraction>
+				<motion.div
+					variants={parentVariants1}
+					initial="hidden"
+					whileInView="visible"
+					viewport={{ once: true, amount: 0.2 }}
+					className={mainChapter2ImageList({ isMobileWidth })}
+				>
+					{chapterData[1].imagesUrl?.map((image, i) => (
+						<motion.div
+							key={i}
+							variants={childVariants1(i)}
+							style={{ gridArea: getGridArea(i) }}
+							className={mainChapter2ImageBox}
+						>
+							<Image
+								src={image}
+								alt={`chapter1 image`}
+								width={276}
+								height={370}
+								className={mainChapter2Image}
+							/>
+						</motion.div>
+					))}
+				</motion.div>
+				<div className={mainBox}>
+					<Button 
+						onClick={() => router.push(chapterData[1].action.url)} 
+						variant={chapterData[1].action.variant} 
+						fullWidth={chapterData[1].action.fullWidth}
+					>
+						{chapterData[0].action.label}
+					</Button>
+				</div>
+			</MainContainer>
+			<MainContainer key={chapterData[2].id} backgroundColor='pinkWhite'>
+				<FadeInInteraction>
+					<Text type='title2' color='white' className={mainChapterIndexChips}>
+						03
+					</Text>
+					<MainTitle 
+						title={chapterData[2].title} 
+						subTitle={chapterData[2].subTitle} 
+						align='left'
+						noPaddingTop
+					/>
+				</FadeInInteraction>
+				<Swiper
+					slidesPerView='auto'
+					spaceBetween={16}
+					freeMode
+					modules={[ FreeMode ]}
+					className={mainChapter3ImageList}
+				>
+					{chapterData[2].imagesUrl?.map((image, i) => (
+						<SwiperSlide 
+							key={image} 
+							className={mainChapter3ImageSlide}
+						>
+							<Image 
+								src={image} 
+								alt={`chapter2 image`} 
+								width={1200} 
+								height={1200} 
+								className={mainChapter3Image} 
+							/>
+						</SwiperSlide>
+					))}
+				</Swiper>
+				<div className={mainBox}>
+					<Button onClick={() => router.push(chapterData[2].action.url)} variant={chapterData[2].action.variant} fullWidth={chapterData[2].action.fullWidth}>
+						{chapterData[2].action.label}
+					</Button>
+				</div>
+			</MainContainer>
+		</>
 	);
 };

@@ -1,4 +1,4 @@
-import * as styles from './EmptyState.css';
+import { commonWrapper } from '@/styles/common.css';
 import Text from "@/components/common/text/Text";
 
 interface EmptyStateProps {
@@ -8,7 +8,12 @@ interface EmptyStateProps {
 
 export default function EmptyState({ title, subTitle }: EmptyStateProps) {
 	return (
-		<div className={styles.emptyStateContainer}>
+		<div className={commonWrapper({
+			gap: 4,
+			align: 'start',
+			paddingTop: 60,
+			paddingBottom: 60,
+		})}>
 			<Text type='label1' color='gray700' align='center'>
 				{title}
 			</Text>

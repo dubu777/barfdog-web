@@ -1,4 +1,4 @@
-import * as styles from './RecommendedItemList.css';
+import { commonWrapper, imageWrapper } from '@/styles/common.css';
 import Image from "next/image";
 import Link from "next/link";
 import AccordionIcon from '/public/images/icons/chevron-right-blue.svg';
@@ -81,11 +81,12 @@ export default function RecommendedItemList({
 		<ResultCard
 			title={title}
 			subTitle={subTitle}
+			gap={20}
 		>
-			<div className={styles.itemList}>
+			<div className={commonWrapper({ direction: 'col', gap: 20 })}>
 				{recommendedItemList.map((item, index) => (
-					<div key={`${item.productId}-${index}`}>
-						<div className={styles.itemHeader}>
+					<div key={`${item.productId}-${index}`} className={commonWrapper({ direction: 'col', gap: 12 })}>
+						<div className={commonWrapper({ justify: 'start', gap: 8 })}>
 							<Chips variant='solid' color='red' size='sm' borderRadius='lg'>
 								{index + 1}
 							</Chips>
@@ -98,9 +99,15 @@ export default function RecommendedItemList({
 							padding={12}
 							gap={12}
 						>
-							<div className={styles.itemInfoBox}>
-								<div className={styles.itemInfo}>
-									<Image src={item.displayProductUrl.url} alt={item.productName} width={72} height={72} className={styles.itemImage} />
+							<div className={commonWrapper({ justify: 'between' })}>
+								<div className={commonWrapper({ gap: 12, justify: 'start' })}>
+									<Image 
+										src={item.displayProductUrl.url} 
+										alt={item.productName} 
+										width={72} 
+										height={72} 
+										className={imageWrapper({ width: 72, objectFit: 'cover', borderRadius: 8 })} 
+									/>
 									<div>
 										<Text type='label4' color='gray800' block>{item.productName}</Text>
 										<Text type='headline2' block>{item.productPrice.toLocaleString() ?? ''}원</Text>
@@ -111,7 +118,7 @@ export default function RecommendedItemList({
 								</Link>
 							</div>
 							<Divider thickness={1} color='gray100' />
-							<div className={styles.itemContent}>
+							<div className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
 								{getTagChip(item)}
 								<Text type='body3' color='gray700'>
 									{getDescription(item)}

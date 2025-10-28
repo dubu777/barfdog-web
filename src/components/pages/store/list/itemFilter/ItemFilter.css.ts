@@ -14,6 +14,7 @@ export const itemType = recipe({
     padding: '20px 16px 10px',
     position: 'relative',
     cursor: 'pointer',
+    whiteSpace: 'nowrap',
   },
   variants: {
     active: {

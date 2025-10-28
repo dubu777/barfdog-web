@@ -9,17 +9,15 @@ export default function DeliveryAddress() {
   const { data: addressData } = useGetAddressList();
   const goBack = useBackNavigation();
   return (
-    <>
-      {addressData && (
-        <DeliveryModal
-          addressData={addressData}
-          isVisible={true}
-          onClose={goBack}
-          setDeliveryDto={setDeliveryDto}
-          setBackupDeliveryDto={setBackupDeliveryDto}
-          showSelectButton={false}
-        />
-      )}
-    </>
+    addressData && (
+      <DeliveryModal
+        addressData={addressData}
+        isVisible={true}
+        onClose={goBack}
+        setDeliveryDto={setDeliveryDto}
+        setBackupDeliveryDto={setBackupDeliveryDto}
+        showSelectButton={false}
+      />
+    )
   );
 }

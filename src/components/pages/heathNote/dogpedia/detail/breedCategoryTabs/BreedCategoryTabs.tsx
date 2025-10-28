@@ -1,4 +1,4 @@
-import * as styles from './BreedCategoryTabs.css';
+import { commonWrapper } from '@/styles/common.css';
 import { useState } from "react";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Text from "@/components/common/text/Text";
@@ -29,9 +29,13 @@ export default function BreedCategoryTabs({
 	}>;
 
 	return (
-		<section className={styles.breedCategoryTabs}>
+		<article className={commonWrapper({
+			backgroundColors: 'gray0',
+			direction: 'col',
+			align: 'start',
+		})}>
 			<TabBar
-				className={styles.tabsHeader}
+				className={commonWrapper({ shadow: 'light' })}
 				tabs={categoryTabs.map(tab => ({
 					...tab,
 					onInit: async () => {
@@ -40,7 +44,13 @@ export default function BreedCategoryTabs({
 				}))}
 				variant='text'
 			/>
-			<article className={styles.tabContent}>
+			<article className={commonWrapper({
+				direction: 'col',
+				gap: 16,
+				padding: 20,
+				paddingBottom: 40,
+				align: 'start',
+			})}>
 				<Text type='title4'>
 					{BREED_CHARACTERISTICS_CATEGORY[tab]} {String(tab).includes('_') ? String(tab).split('_').join(' ') : tab}
 				</Text>
@@ -48,7 +58,7 @@ export default function BreedCategoryTabs({
 					shadow='light'
 					backgroundColor='gray50'
 					padding={16}
-					className={styles.sliderQuestion}
+					gap={28}
 				>
 					{Object.entries(categoryQuestionData).map(([key, meta]) => {
 						if (key === 'coat') {
@@ -74,6 +84,6 @@ export default function BreedCategoryTabs({
 					})}
 				</Card>
 			</article>
-		</section>
+		</article>
 	);
 };
