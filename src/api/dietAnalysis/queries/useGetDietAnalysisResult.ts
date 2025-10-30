@@ -5,15 +5,15 @@ import { DietAnalysisResult } from "@/types/dietAnalysis";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export function useGetDietAnalysisResult(
-  reportId: number,
+  surveyId: number,
   queryOptions?: UseSuspenseQueryCustomOptions<DietAnalysisResult>
 ) {
   return useSuspenseQuery({
-    queryFn: () => getDietAnalysisResult(reportId),
+    queryFn: () => getDietAnalysisResult(surveyId),
     queryKey: [
       queryKeys.DIET_ANALYSIS.BASE,
       queryKeys.DIET_ANALYSIS.GET_DIET_ANALYSIS_RESULT,
-      reportId,
+      surveyId,
     ],
     ...queryOptions,
   });

@@ -65,6 +65,8 @@ const queryKeys = {
     BASE: "subscription",
     GET_PLAN_DISCOUNT: "getPlanDiscount",
     GET_SUBSCRIPTION_DETAIL: "getSubscriptionDetail",
+    GET_SUBSCRIPTION_INFO: "getSubscriptionInfo",
+    GET_SUBSCRIPTION_ORDER_SHEET: "getSubscriptionOrderSheet",
     GET_RAW_ORDER_SHEET: "getRawOrderSheet",
     GET_RAW_DETAIL: "getRawDetail",
   },

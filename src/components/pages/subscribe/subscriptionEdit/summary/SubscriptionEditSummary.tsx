@@ -10,7 +10,7 @@ interface SubscriptionEditProps {
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
   packCount: number;
-  editableSeq: number;
+  subscriptionCount: number;
   rawFoods: RawFood[];
   onOpenPlanSheet: () => void;
   onGoToEdit: () => void;
@@ -20,7 +20,7 @@ export default function SubscriptionEditSummary({
   mealPlan,
   deliveryPlan,
   packCount,
-  editableSeq,
+  subscriptionCount,
   rawFoods,
   onOpenPlanSheet,
   onGoToEdit,
@@ -40,7 +40,7 @@ export default function SubscriptionEditSummary({
           식단 변경을 진행해 주세요
         </Text>
         <Text type="body2" color="red">
-          식단 변경은 {editableSeq}회차부터 적용됩니다.
+          식단 변경은 {subscriptionCount}회차부터 적용됩니다.
         </Text>
       </div>
       <PlanPicker

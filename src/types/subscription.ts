@@ -1,6 +1,7 @@
 import {
   DELIVERY_PLAN,
   MEAL_PLAN,
+  PLAN,
   SUBSCRIPTION_STATUSES,
   subscriptionPlanInfo,
 } from "@/constants";
@@ -226,9 +227,76 @@ interface SubscriptionValues {
   rawFoods: RawFoodFormItem[] | [];
 }
 
+interface CurrentPlanInfo {
+  /** 예: "HALF" */
+  name: Plan | string;
+  /** 구독 주기(주) */
+  weeks: DeliveryPlan;
+  /** 구독 주기(일) */
+  days: number;
+  /** 1일 급여 횟수 */
+  mealCount: MealPlan;
+}
+
+interface CurrentRecipeItem {
+  displayImageUrl: UrlObject;
+  recipeId: number;
+  /** 예: "DUCK&LAMB +" */
+  name: string;
+  /** 이 레시피의 1끼 급여량(g) */
+  oneMealGramsPerRecipe: number;
+  /** g당 가격(원) */
+  pricePerGram: number;
+  /** 정가(원) */
+  originalPrice: number;
+}
+
+interface SubscriptionInfoResponse {
+  subscriptionId: number;
+  /** 구독 횟수(회차) */
+  subscriptionCount: number;
+  planInfo: CurrentPlanInfo;
+  recipeList: CurrentRecipeItem[];
+  /** 결제 금액(원) */
+  paymentPrice: number;
+}
+
+/** 생식 레시피 아이템 */
+interface RawFoodOrderItem {
+  recipeId: number;
+  rank: number;
+  recipeNameKorea: string;
+  recipeNameEnglish: string;
+  /** g/kcal (서버 키 그대로: gramPerKal) */
+  gramPerKal: number;
+  /** g당 가격 */
+  pricePerGram: number;
+  displayImageUrl: UrlObject;
+  healthConcernsChips: HealthConcernType[];
+  /** 1회 급여 권장 g */
+  oneMealRecommendGram: number;
+  /** 단일/복수 단백질 구성 */
+  meet: MeetType;
+  /** 추천 여부 */
+  isRecommend: boolean;
+  subIngredients: string[];
+  ingredients: string[];
+}
+
+/** 생식 주문서 응답 루트 */
+interface SubscriptionOrderSheet {
+  petName: string;
+  petId: number;
+  oneDayRecommendKcal: number;
+  inedibleFoods: string[];
+  recipeList: RawFoodOrderItem[];
+}
+
 type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";
 
 type PlanName = keyof typeof subscriptionPlanInfo;
+
+type Plan = ValueOfTuple<typeof PLAN>;
 
 type SubscriptionStep = "rawFood" | "deliveryCycle";
 
@@ -271,4 +339,8 @@ export type {
   SubscriptionEditStep,
   SubscriptionValues,
   RawFoodFormItem,
+  SubscriptionInfoResponse,
+  CurrentPlanInfo,
+  CurrentRecipeItem,
+  SubscriptionOrderSheet,
 };

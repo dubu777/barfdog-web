@@ -16,7 +16,7 @@ interface DeliveryCycleProps {
 
 export default function DeliveryCycle({ source }: DeliveryCycleProps) {
   const { control } = useFormContext<SubscriptionValues>();
-  const mealPlan = useWatch({ control, name: "mealPlan" }) || "TWO_MEAL";
+  const mealPlan = useWatch({ control, name: "mealPlan" }) || 2;
 
   // deliveryCycle 필드 컨트롤러
   const { field: cycleField } = useController({
@@ -26,15 +26,15 @@ export default function DeliveryCycle({ source }: DeliveryCycleProps) {
 
   // mealFrequency가 1인 경우 자동으로 4 선택
   useEffect(() => {
-    if (mealPlan === "ONE_MEAL") {
-      cycleField.onChange("FOUR_WEEK");
+    if (mealPlan === 1) {
+      cycleField.onChange(4);
     }
   }, [mealPlan]);
 
   // 선택 가능한 주기 결정
   const availableCycles =
-    mealPlan === "ONE_MEAL"
-      ? deliveryOptions.deliveryPlan.filter((opt) => opt.value === "FOUR_WEEK")
+    mealPlan === 1
+      ? deliveryOptions.deliveryPlan.filter((opt) => opt.value === 4)
       : deliveryOptions.deliveryPlan;
 
   return (

@@ -36,13 +36,13 @@ export function calculateDeliveryCyclePackCount(
   let basePacks: number;
 
   // 하루 1끼면 항상 28팩 (한 끼면 배송주기 4주만 선택 가능하기 때문)
-  if (mealPlan === "ONE_MEAL") {
+  if (mealPlan === 1) {
     basePacks = 28;
   }
   // 하루 2끼면 주기에 따라
-  else if (mealPlan === "TWO_MEAL") {
-    if (deliveryPlan === "TWO_WEEK") basePacks = 28;
-    else if (deliveryPlan === "FOUR_WEEK") basePacks = 56;
+  else if (mealPlan === 2) {
+    if (deliveryPlan === 2) basePacks = 28;
+    else if (deliveryPlan === 4) basePacks = 56;
     else throw new Error("유효하지 않은 deliveryPlan 값입니다.");
   } else {
     throw new Error("유효하지 않은 mealPlan 값입니다.");
@@ -54,7 +54,7 @@ export function calculateDeliveryCyclePackCount(
 
 /** 할인율 결정 */
 export function calculateMealDiscountRate(mealPlan: MealPlan): number {
-  return mealPlan === "ONE_MEAL" ? 0.03 : 0.05;
+  return mealPlan === 1 ? 0.03 : 0.05;
 }
 
 /**

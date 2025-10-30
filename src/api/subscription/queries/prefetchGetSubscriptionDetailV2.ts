@@ -5,15 +5,15 @@ import { createSSRRequest } from "@/api/withAuthSSR";
 
 export async function prefetchGetSubscriptionDetailV2(
   queryClient: QueryClient,
-  reportId: number
+  surveyId: number
 ) {
   const ssrAxios = createSSRRequest();
   return await queryClient.prefetchQuery({
     queryKey: [
       queryKeys.SUBSCRIPTION.BASE,
       queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL,
-      reportId,
+      surveyId,
     ],
-    queryFn: () => getSubscriptionDetailV2(reportId, ssrAxios),
+    queryFn: () => getSubscriptionDetailV2(surveyId, ssrAxios),
   });
 }

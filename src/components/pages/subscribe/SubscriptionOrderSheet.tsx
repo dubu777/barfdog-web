@@ -21,19 +21,20 @@ import RawFoodOptions from "./rawFoodOptions/RawFoodOptions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSubscription";
 import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
+import { useGetSubscriptionOrderSheet } from "@/api/subscription/queries/useGetSubscriptionOrderSheet";
 
 interface SubscriptionOrderSheetProps {
-  reportId: number;
+  surveyId: number;
 }
 
 export default function SubscriptionOrderSheet({
-  reportId,
+  surveyId,
 }: SubscriptionOrderSheetProps) {
   const router = useRouter();
   const [step, setStep] = useState<SubscriptionStep>("rawFood");
-  const { data: rawFoodSheetData } = useGetRawFoodOrderSheet(reportId);
+  const { data: orderSheetData } = useGetSubscriptionOrderSheet(surveyId);
   const { mutate: createSubscription } = useCreateSubscription();
-  console.log(rawFoodSheetData);
+  console.log(orderSheetData);
 
   useScrollToTop(step);
 
@@ -96,7 +97,7 @@ export default function SubscriptionOrderSheet({
       originPrice: totals.totalOriginalPrice,
     } as const;
     createSubscription(
-      { reportId, body },
+      { surveyId, body },
       {
         onSuccess: (data) => {
           router.push(`/checkout/subscription/${data.subscriptionId}`);
@@ -118,11 +119,11 @@ export default function SubscriptionOrderSheet({
       >
         <SubscribeProgressBar currentStep={currentStep} />
         {step === "rawFood" && (
-          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} />
+          <RawFoodOptions orderSheetData={orderSheetData} />
         )}
         {step === "deliveryCycle" && (
           <DeliveryOptions
-            rawFoodSheetData={rawFoodSheetData}
+            orderSheetData={orderSheetData}
             calculatedRecipes={recipes}
             mealPlan={mealPlan}
             deliveryPlan={deliveryPlan}

@@ -1,13 +1,17 @@
-import { SubscriptionDetail, SubscriptionValues } from "@/types";
+import {
+  SubscriptionDetail,
+  SubscriptionInfoResponse,
+  SubscriptionValues,
+} from "@/types";
 import { calculateRecipePack } from "./calculateRecipe";
 
 export function buildInitialSubscriptionForm(
-  detail: SubscriptionDetail
+  data: SubscriptionInfoResponse
 ): SubscriptionValues {
   return {
-    mealPlan: detail.mealPlan,
-    deliveryPlan: detail.deliveryPlan,
-    rawFoods: detail.rawFoods.map((rawFood) => {
+    mealPlan: data.planInfo.mealCount,
+    deliveryPlan: data.planInfo.weeks,
+    rawFoods: data.recipeList.map((rawFood) => {
       const { packGrams, packPrice } = calculateRecipePack({
         recommendedPackGrams: rawFood.oneMealGramsPerRecipe,
         pricePerGram: rawFood.pricePerGram,

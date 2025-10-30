@@ -5,7 +5,7 @@ import Button from "@/components/common/button/Button";
 import { ORDER_MESSAGE } from "@/constants";
 import { Coupon, OrderType } from "@/types";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useCouponStore } from "@/store/checkout/useCouponStore";
 import {
   calculateCouponDiscount,
@@ -42,7 +42,6 @@ export default function CouponModal({
   onUseCoupon,
 }: CouponModalProps) {
   // 상태 관리 -------->
-  // discountBasedOnCoupon 상태값 저장
   const [discountOnCoupon, setDiscountOnCoupon] = useState<number>(0);
   const [discountOnCouponAndGlobal, setDiscountOnCouponAndGlobal] =
     useState<number>(0);
@@ -70,6 +69,16 @@ export default function CouponModal({
     isOpen: isErrorModalOpen,
   } = useModal();
 
+  // 모든 쿠폰의 할인 금액 사전 계산
+  const couponDiscountMap = useMemo(() => {
+    return new Map(
+      coupons.map((coupon) => [
+        coupon.id,
+        calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount),
+      ])
+    );
+  }, [coupons, orderPrice, maxAvailableCouponDiscount]);
+
   // 토글 관리 훅 (couponId를 기준으로)
   const { onToggle, isSelected } = useToggleOption<number>(
     selectedCoupon ? selectedCoupon.couponId : null,
@@ -78,14 +87,11 @@ export default function CouponModal({
       if (newCouponId === null) {
         setSelectedCoupon(null);
       } else {
-        const coupon = coupons.find((coupon) => coupon.id === newCouponId);
-        if (coupon) {
+        // 사전 계산된 Map에서 할인 금액 가져오기 (성능 개선)
+        const discount = couponDiscountMap.get(newCouponId);
+        if (discount) {
           const { discountBasedOnCoupon, discountBasedOnCouponAndGlobal } =
-            calculateCouponDiscount(
-              orderPrice,
-              coupon,
-              maxAvailableCouponDiscount
-            );
+            discount;
           setDiscountOnCoupon(discountBasedOnCoupon);
           setDiscountOnCouponAndGlobal(discountBasedOnCouponAndGlobal);
           setSelectedCoupon({
@@ -98,12 +104,7 @@ export default function CouponModal({
   );
 
   // 쿠폰 정렬 유틸 함수
-  const sortedCoupons = sortCoupons(
-    coupons,
-    orderPrice,
-    orderType,
-    maxAvailableCouponDiscount
-  );
+  const sortedCoupons = sortCoupons(coupons, orderPrice, orderType);
 
   // 쿠폰 등록
   const handleRegisterCoupon = useCallback(() => {
@@ -113,7 +114,6 @@ export default function CouponModal({
 
     createCouponMutate(
       // TODO: 쿠폰 카테고리 추가 필요 (일반, 제휴)
-      // { code: code.trim(), },
       { code: code.trim(), couponCategory: "NON_ALLIANCE" },
       {
         onSuccess: () => {
@@ -148,7 +148,7 @@ export default function CouponModal({
     onClose();
   };
 
-  // 주문 금액 보다 쿠폰 할인 금액이 더 클 경우: 쿠폰 사용 확인 모달
+  // alert modal 확인 시
   const handleConfirmCoupon = () => {
     if (onUseCoupon) {
       // discountOnCouponAndGlobal 적용 (일부 금액)
@@ -159,6 +159,7 @@ export default function CouponModal({
     onClose();
   };
 
+  // alert modal 취소 시
   const handleCancelCoupon = () => {
     setAppliedCoupon(null);
     onErrorModalClose();
@@ -231,17 +232,22 @@ export default function CouponModal({
           </div>
         </div>
         <div className={styles.couponCardWrapper}>
-          {sortedCoupons.map((coupon) => (
-            <CouponCard
-              key={coupon.id}
-              orderType={orderType}
-              coupon={coupon}
-              orderPrice={orderPrice}
-              onToggle={onToggle}
-              isSelected={isSelected(coupon.id)}
-              maxAvailableCouponDiscount={maxAvailableCouponDiscount}
-            />
-          ))}
+          {sortedCoupons.map((coupon) => {
+            const discountInfo = couponDiscountMap.get(coupon.id);
+            if (!discountInfo) return null;
+
+            return (
+              <CouponCard
+                key={coupon.id}
+                orderType={orderType}
+                coupon={coupon}
+                orderPrice={orderPrice}
+                discountInfo={discountInfo}
+                onToggle={onToggle}
+                isSelected={isSelected(coupon.id)}
+              />
+            );
+          })}
         </div>
       </div>
       <AlertModal

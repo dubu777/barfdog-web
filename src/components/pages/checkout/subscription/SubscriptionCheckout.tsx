@@ -161,8 +161,8 @@ export default function SubscriptionCheckout({
       <Divider />
       <SubscriptionOrderItemList
         rawFoodList={checkoutData.rawFoodList}
-        deliveryPlan={checkoutData.deliveryPlan}
-        mealPlan={checkoutData.mealPlan}
+        deliveryPlan={checkoutData.deliveryPlan === "TWO_WEEK" ? 2 : 4} // Todo: API 수정 후 DeliveryPlan 으로 변경
+        mealPlan={checkoutData.mealPlan === "ONE_MEAL" ? 1 : 2}
       />
       <Divider />
       <DeliverySchedule

@@ -55,8 +55,8 @@ export default function SubscriptionCompleted({
       <PaymentInfo paymentPrice={13000} paymentMethod="NAVER_PAY" />
       <SubscriptionItemInfo
         rawFoodList={rawFoodList}
-        mealPlan="ONE_MEAL"
-        deliveryPlan="FOUR_WEEK"
+        mealPlan={1}
+        deliveryPlan={4}
       />
       <ButtonDocked
         type="dual-button"

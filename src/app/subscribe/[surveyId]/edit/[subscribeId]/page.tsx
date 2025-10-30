@@ -1,5 +1,7 @@
 import { prefetchGetSubscriptionDetailV2 } from "@/api/subscription/queries/prefetchGetSubscriptionDetailV2";
 import { prefetchGetRawFoodOrderSheet } from "@/api/subscription/queries/prefetchRawFoodOrderSheet";
+import { prefetchSubscriptionInfo } from "@/api/subscription/queries/prefetchSubscriptionInfo";
+import { prefetchSubscriptionOrderSheet } from "@/api/subscription/queries/prefetchSubscriptionOrderSheet";
 import Spinner from "@/components/common/spinner/Spinner";
 import SubscriptionEdit from "@/components/pages/subscribe/subscriptionEdit/SubscriptionEdit";
 import {
@@ -10,24 +12,25 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-type Params = { reportId: string };
+type Params = { subscribeId: string; surveyId: string };
 
 export default async function SubscriptionEditPage({
   params,
 }: {
   params: Params;
 }) {
-  const reportId = Number(params.reportId);
+  const subscribeId = Number(params.subscribeId);
+  const surveyId = Number(params.surveyId);
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionDetailV2(queryClient, reportId);
-  await prefetchGetRawFoodOrderSheet(queryClient, reportId);
+  await prefetchSubscriptionOrderSheet(queryClient, surveyId);
+  await prefetchSubscriptionInfo(queryClient, subscribeId);
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>Something went wrong.</div>}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <SubscriptionEdit reportId={reportId} />
+          <SubscriptionEdit subscribeId={subscribeId} surveyId={surveyId} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
