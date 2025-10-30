@@ -2,13 +2,11 @@ import * as styles from "./PaymentCard.css";
 import CardImage from "/public/images/mypage/card-small.svg";
 import CardChipImage from "/public/images/mypage/card-chip.svg";
 import Text from "@/components/common/text/Text";
-import { CARD_COLORS, PAYMENT_LABEL } from "@/constants";
+import { PAYMENT_LABEL } from "@/constants";
+import { CARD_COLORS } from "@/constants/mypage/subscription";
 import { PaymentMethod } from "@/types";
 
 const getCardColor = (paymentCardName: string): string => {
-  if (paymentCardName.includes("네이버페이"))
-    return CARD_COLORS["네이버페이 머니"];
-  if (paymentCardName.includes("카카오")) return CARD_COLORS["카카오페이 머니"];
   const foundKey = Object.keys(CARD_COLORS).find((key) =>
     paymentCardName.includes(key)
   );
@@ -30,18 +28,18 @@ export default function PaymentCard({
 }: PaymentCardProps) {
   const paymentCardNumber =
     paymentMethod !== "NAVER_PAY" && cardNumber
-      ? `신용 • ${cardNumber?.slice(0, 6)}`
+      ? `${cardNumber?.slice(0, 6)}`
       : "-";
   const paymentCardName =
     paymentMethod === "CREDIT_CARD"
       ? cardName
       : cardName
       ? `${PAYMENT_LABEL[paymentMethod]} ${cardName}`
-      : `${PAYMENT_LABEL[paymentMethod]} 머니`;
+      : `${PAYMENT_LABEL[paymentMethod]}`;
   const cardColor = getCardColor(paymentCardName as string);
   const cardFontColor =
-    cardColor === CARD_COLORS["네이버페이 머니"] ||
-    cardColor === CARD_COLORS["카카오페이 머니"]
+    cardColor === CARD_COLORS["네이버페이"] ||
+    cardColor === CARD_COLORS["카카오페이"]
       ? "gray900"
       : "gray0";
   return cardSize === "lg" ? (
@@ -56,9 +54,6 @@ export default function PaymentCard({
         <Text type="label2" color="gray0">
           {paymentCardNumber}
         </Text>
-        <Text type="body2" color="gray0">
-          일시불
-        </Text>
       </div>
     </div>
   ) : (
@@ -67,9 +62,6 @@ export default function PaymentCard({
       <div className={styles.smallCardInfo}>
         <Text type="headline2">{paymentCardName}</Text>
         <Text type="body2">{paymentCardNumber}</Text>
-        <Text type="body2" color="gray500">
-          일시불
-        </Text>
       </div>
     </div>
   );

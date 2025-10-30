@@ -9,15 +9,15 @@ import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 interface PaymentInfoProps {
   nextPaymentPrice: number;
   nextPaymentDate: string;
-  subscriptionCount: number;
-  onApplyCoupon: () => void;
+  nextDeliveryDate: string;
+  openApplyCouponModal?: () => void;
 }
 
 export default function PaymentInfo({
   nextPaymentPrice,
   nextPaymentDate,
-  subscriptionCount,
-  onApplyCoupon,
+  nextDeliveryDate,
+  openApplyCouponModal,
 }: PaymentInfoProps) {
   return (
     <InfoWrapper title="결제 정보">
@@ -32,29 +32,38 @@ export default function PaymentInfo({
             다음회차
           </Chips>
           <InfoItem
-            label={`${subscriptionCount+1}회차 결제일`}
+            label="다음 발송예정일"
+            labelType="body3"
+            labelColor="gray600"
+            value={format(nextDeliveryDate, 'yy.MM.dd')}
+            valueType="headline2"
+          />
+          <InfoItem
+            label="다음 결제일"
             labelType="body3"
             labelColor="gray600"
             value={format(nextPaymentDate, 'yy.MM.dd')}
             valueType="headline2"
           />
           <InfoItem
-            label={`${subscriptionCount+1}회차 결제 금액`}
+            label="다음 결제 금액"
             labelType="body3"
             labelColor="gray600"
             value={`${nextPaymentPrice.toLocaleString()}원`}
             valueType="headline2"
           />
         </div>
-        <Button 
-          variant="outline"
-          intent="primary"
-          size="sm"
-          fullWidth
-          onClick={onApplyCoupon}
-        >
-          다음 회차에 쿠폰 적용
-        </Button>
+        {openApplyCouponModal && 
+          <Button 
+            variant="outline"
+            intent="primary"
+            size="sm"
+            fullWidth
+            onClick={openApplyCouponModal}
+          >
+            다음 회차에 쿠폰 적용
+          </Button>
+        }
       </CardWrapper>
     </InfoWrapper>
   );

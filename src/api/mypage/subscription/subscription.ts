@@ -49,7 +49,14 @@ const getSubscriptionDetail = async (
   };
 };
 
+// DELETE 예정
+const getPaymentList = async (instance: AxiosInstance = axiosInstance): Promise<any[]> => {
+  const { data } = await instance.get('/api/cards');
+  return data._embedded?.querySubscribeCardsDtoList || [];
+}
+
 export {
   getSubscriptionList,
   getSubscriptionDetail,
+  getPaymentList,
 }

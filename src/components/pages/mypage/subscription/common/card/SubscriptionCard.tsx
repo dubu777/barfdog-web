@@ -1,27 +1,29 @@
-import { commonWrapper } from "@/styles/common.css";
-import { useRouter } from "next/navigation";
-import Card from "@/components/common/card/Card";
+import { ReactNode, useMemo } from "react";
 import Button from "@/components/common/button/Button";
-import SubscriptionStatus from "./SubscriptionStatus";
-import SubscriptionPlan from "./SubscriptionPlan";
-import Text from "@/components/common/text/Text";
-import CardImage from "../../../common/card/image/CardImage";
+import CardWrapper from "../../../common/wrapper/CardWrapper";
+import SubscriptionContents from "./SubscriptionContents";
 import { PlanKey } from "@/types";
+import { SubscriptionStatus as SubscriptionStatusType } from "@/types/mypage/subscription";
 import { VISIBLE_SUBSCRIPTION_STATUS_ACTIONS } from "@/constants/mypage/subscription";
 
 interface SubscriptionCardProps {
-  subscribeId?: number;
-  status: string;
-  pictureUrl: string | null;
+  subscriptionId: number;
+  status: SubscriptionStatusType;
+  pictureUrl?: string | null;
   recipeNames: string;
   dogName: string;
   plan: PlanKey;
   showActions?: boolean;
   shadow?: 'none' | 'light' | 'normal' | 'strong';
+  children?: ReactNode;
+  onGoToDetail?: () => void;
+  onRetryPayment?: () => void;
+  openKeepSubscriptionModal?: () => void;
+  setSelectedSubscriptionId?: (subscriptionId: number) => void;
 }
 
 export default function SubscriptionCard({ 
-  subscribeId, 
+  subscriptionId,
   status,
   pictureUrl,
   recipeNames,
@@ -29,39 +31,54 @@ export default function SubscriptionCard({
   plan,
   showActions = true,
   shadow = 'light',
+  children,
+  onGoToDetail,
+  onRetryPayment,
+  openKeepSubscriptionModal,
+  setSelectedSubscriptionId,
 }: SubscriptionCardProps) {
-  const router = useRouter();
+
+  const subscriptionActions = useMemo(() =>  {
+    return {
+      SUBSCRIBING: onGoToDetail,
+      SUBSCRIBE_PENDING: [onGoToDetail, onRetryPayment],
+      SUBSCRIBE_WILL_CANCEL: () => {
+        openKeepSubscriptionModal?.();
+        setSelectedSubscriptionId?.(subscriptionId);
+      },  
+      SUBSCRIBE_CANCEL: onRetryPayment,
+    };
+  }, [onGoToDetail, onRetryPayment, openKeepSubscriptionModal]);
+
   return (
-    <Card
-      direction='col'
-      align='start'
+    <CardWrapper
       gap={10}
       padding={12}
       shadow={shadow}
     >
-      <SubscriptionStatus status={status} />
-      <div className={commonWrapper({ gap: 12, align: 'start' })}>
-        <CardImage imageUrl={pictureUrl} name={recipeNames} />
-        <div className={commonWrapper({ direction: 'col', gap: 4, align: 'start' })}>
-          <Text type='headline2'>{dogName}</Text>
-          <SubscriptionPlan 
-            plan={plan} 
-            recipeNames={recipeNames} 
-          />
-        </div>
-      </div>
-      {showActions && VISIBLE_SUBSCRIPTION_STATUS_ACTIONS[status]?.actions?.map((action) => (
+      <SubscriptionContents 
+        status={status}
+        pictureUrl={pictureUrl}
+        recipeNames={recipeNames}
+        dogName={dogName}
+        plan={plan}
+      />
+      {showActions && VISIBLE_SUBSCRIPTION_STATUS_ACTIONS[status]?.actions?.map((action, index) => (
         <Button 
           key={action.label} 
           variant={action.variants}
           intent={action.intent} 
           fullWidth
           size="sm"
-          onClick={() => action.onClick(router, subscribeId)}
+          onClick={() => Array.isArray(subscriptionActions[status]) 
+            ? subscriptionActions[status][index]()
+            : subscriptionActions[status]()
+          }
         >
           {action.label}
         </Button>
       ))}
-    </Card>
+      {children && children}
+    </CardWrapper>
   );
 }

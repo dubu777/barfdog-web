@@ -1,24 +1,29 @@
 import { pointColor } from "@/styles/common.css";
+import Button from "@/components/common/button/Button";
+import InfoBox from "@/components/common/infoBox/InfoBox";
 import SubscriptionCard from "../../../common/card/SubscriptionCard";
 import InfoWrapper from "../../../../common/wrapper/InfoWrapper";
 import { PlanKey } from "@/types";
-import { SubscriptionStatus as SubscriptionStatusType } from "@/types/mypage/subscription";
+import { SubscriptionStatus as SubscriptionStatusType, VisibleSubscribeStatus } from "@/types/mypage/subscription";
+import { isSubscriptionPendingStatus } from "@/utils/mypage/subscription/subscriptionStatusStep";
 import { subscriptionPlanInfo } from "@/constants";
 
 interface BasicInfoProps {
+  subscriptionId: number;
   plan: PlanKey;
   dogName: string;
   recipeNames: string;
   status: SubscriptionStatusType;
-  pictureUrl: string | null;
+  onRetryPayment?: () => void;
 }
 
 export default function BasicInfo({ 
+  subscriptionId,
   plan,
   dogName,
   recipeNames,
   status,
-  pictureUrl,
+  onRetryPayment,
 }: BasicInfoProps) {
   return (
     <InfoWrapper
@@ -31,15 +36,31 @@ export default function BasicInfo({
         </>
       )}
     >
-      <SubscriptionCard 
+      <SubscriptionCard
+        subscriptionId={subscriptionId}
         status={status}
-        pictureUrl={pictureUrl}
         recipeNames={recipeNames}
         dogName={dogName}
         plan={plan}
         showActions={false}
         shadow="strong"
-      />
+      >
+        {isSubscriptionPendingStatus(status as VisibleSubscribeStatus) && 
+          <>
+            <InfoBox
+              color='red'
+              text='결제 오류로 이번 회차 구독이 진행되지 않았습니다. 배송과 구독 유지를 위해 결제 수단을 확인해주세요.'
+            />
+            <Button
+              fullWidth
+              size="sm"
+              onClick={onRetryPayment}
+            >
+              결제 수단 변경/재시도
+            </Button>
+          </>
+        }
+      </SubscriptionCard>
     </InfoWrapper>
   );
 }

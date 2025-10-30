@@ -77,6 +77,15 @@ interface SubscriptionDetail {
   memberCouponInfo: MemberCouponInfo[];
 }
 
+interface ChangePaymentMethodProps {
+  onSuccess: () => void;
+  onError: () => void;
+}
+
+interface CancelSubscriptionProps {
+  reasonList: string[];
+}
+
 export type { 
   SubscriptionStatus,
   VisibleSubscribeStatus,
@@ -84,4 +93,6 @@ export type {
   SubscriptionList,
   RecipeInfo,
   SubscriptionDetail,
+  ChangePaymentMethodProps,
+  CancelSubscriptionProps,
 };
