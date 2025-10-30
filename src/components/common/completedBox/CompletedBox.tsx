@@ -3,13 +3,19 @@ import * as styles from "./CompletedBox.css";
 import CheckCircle from "public/images/icons/check_circle.svg";
 import SvgIcon from "@/components/common/svgIcon/SvgIcon";
 
-const CompletedBox = ({ children }: { children: ReactNode }) => {
+interface CompletedBoxProps {
+  children: ReactNode;
+  padding?: 0 | '60/20';
+}
+
+export default function CompletedBox({ 
+  children,
+  padding = '60/20',
+}: CompletedBoxProps) {
   return (
-    <div className={styles.completedBox}>
+    <div className={styles.completedBox({ padding })}>
       <SvgIcon src={CheckCircle} size={48} color="red" />
       <div className={styles.completedBoxInfo}>{children}</div>
     </div>
   );
 };
-
-export default CompletedBox;

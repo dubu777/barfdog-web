@@ -9,8 +9,8 @@ interface EmptyStateProps {
 export default function EmptyState({ title, subTitle }: EmptyStateProps) {
 	return (
 		<div className={commonWrapper({
+			direction: 'col',
 			gap: 4,
-			align: 'start',
 			paddingTop: 60,
 			paddingBottom: 60,
 		})}>

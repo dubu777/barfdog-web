@@ -70,7 +70,7 @@ const VISIBLE_ORDER_STATUS = {
 } as const;
 
 // 주문 상태 단계 정의 (숫자가 높을수록 진행된 단계)
-export const ORDER_STATUS_STEPS = {
+const ORDER_STATUS_STEPS = {
   PAYMENT_DONE: 1,                    // 결제완료
   PRODUCING: 2,                       // 생산 중
   DELIVERY_BEFORE_COLLECTION: 3,      // 배송 예정
@@ -152,4 +152,5 @@ export {
   getOrderTypeFromServerParam,
   CANCEL_REASON_LIST,
   DEFAULT_CANCEL_REASONS,
+  ORDER_STATUS_STEPS,
 };

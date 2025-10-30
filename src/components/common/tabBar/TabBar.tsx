@@ -3,6 +3,7 @@ import {
   tabBarActiveVariants,
   tabBarBase,
   tabBarBaseVariants,
+  tabBarChipsActiveVariants,
   tabBarContainerAlign,
   tabBarContainerBase,
   tabBarContainerVariants,
@@ -31,6 +32,7 @@ interface TabBarProps {
   className?: string;
   isScrollable?: boolean;
   onTabClick?: (index: number) => void;
+  chipsActiveColor?: "gray800" | "red";
 }
 
 export default function TabBar({
@@ -43,6 +45,7 @@ export default function TabBar({
   className,
   isScrollable = false,
   onTabClick,
+  chipsActiveColor = "red",
 }: TabBarProps) {
   const textType = variant === "text" ? "label1" : "headline3";
   const textColor = variant === "chips" ? "gray600" : "gray300";
@@ -73,7 +76,7 @@ export default function TabBar({
       }}
       className={`${tabBarBaseVariants} ${tabBarVariants[variant]} ${
         activeIndex === index ? tabBarActiveVariants[variant] : ""
-      }`}
+      } ${variant === "chips" && activeIndex === index ? tabBarChipsActiveVariants({ color: chipsActiveColor }) : ""}`}
       onClick={() => handleTabChange(index)}
     >
       <Text

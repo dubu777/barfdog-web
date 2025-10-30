@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const tabBarContainerBase = style({
   width: "100%",
@@ -90,6 +91,22 @@ export const tabBarActiveVariants = {
     background: themeVars.colors.red.red,
   }),
 };
+
+export const tabBarChipsActiveVariants = recipe({
+  base: {},
+  variants: {
+    color: {
+      gray800: {
+        background: themeVars.colors.gray.gray800,
+        color: themeVars.colors.gray.gray0,
+      },
+      red: {
+        background: themeVars.colors.red.red,
+        color: themeVars.colors.gray.gray0,
+      },
+    }
+  }
+});
 
 export const tabBarSlider = style({
   padding: "20px !important",

@@ -32,6 +32,7 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   confirmButton?: boolean;
   confirmButtonText?: string;
   confirmButtonVariant?: "solid" | "outline";
+  confirmButtonIntent?: "primary" | "secondary" | "assistive";
   confirmButtonDisabled?: boolean;
   clearButton?: boolean;
   searchButton?: boolean;
@@ -70,6 +71,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
       confirmButton = false,
       confirmButtonText = "입력",
       confirmButtonVariant = "outline",
+      confirmButtonIntent = "primary",
       confirmButtonDisabled = false,
       clearButton = false,
       searchButton = false,
@@ -214,6 +216,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           {confirmButton && (
             <Button
               variant={confirmButtonVariant}
+              intent={confirmButtonIntent}
               onClick={handleSubmit}
               size="inputButton"
               disabled={confirmButtonDisabled}

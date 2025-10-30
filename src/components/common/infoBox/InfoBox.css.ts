@@ -39,7 +39,7 @@ export const infoBoxColor = {
 		border: `1px solid ${themeVars.colors.red.pastelPink}`,
 	}),
 	blue: style({
-		backgroundColor: themeVars.colors.gray.gray50,
+		backgroundColor: themeVars.colors.blue.blue50,
 		border: `1px solid ${themeVars.colors.blue.blue500}`,
 	}),
 	gray: style({
