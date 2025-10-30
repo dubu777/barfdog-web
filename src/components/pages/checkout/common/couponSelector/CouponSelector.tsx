@@ -1,15 +1,17 @@
-import OrderSection from "../orderSection/OrderSection";
-import { getAvailableCoupons } from "@/utils/coupon/couponUtils";
-import Text from "@/components/common/text/Text";
-import { ORDER_MESSAGE } from "@/constants";
 import * as styles from "./CouponSelector.css";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import { useState } from "react";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
+import Text from "@/components/common/text/Text";
+import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import OrderSection from "../orderSection/OrderSection";
+import CouponModal from "@/components/domain/coupon/couponModal/CouponModal";
 import useModal from "@/hooks/useModal";
-import { OrderType } from "@/types";
-import CouponModal from "@/components/common/modal/couponModal/CouponModal";
+import { ORDER_MESSAGE } from "@/constants";
+import { CouponCategory, OrderType } from "@/types";
+import { getAvailableCoupons } from "@/utils/coupon/couponUtils";
 import { useCouponStore } from "@/store/checkout/useCouponStore";
-import { useGetCouponList } from "@/api/mypage/coupon/queries/useGetCouponList";
+import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
+import { useGetInfiniteCouponList } from "@/api/coupon/queries/useGetInfiniteCouponList";
 
 interface CouponSelectorProps {
   orderPrice: number;
@@ -20,7 +22,11 @@ export default function CouponSelector({
   orderPrice,
   orderType,
 }: CouponSelectorProps) {
-  const { data: coupons } = useGetCouponList();
+  const [couponCategory, setCouponCategory] = useState<CouponCategory>('NON_ALLIANCE');
+
+  const { data } = useGetInfiniteCouponList(couponCategory);
+  const coupons = useFlattenedInfiniteData(data, 'couponList');
+
   const appliedCoupon = useCouponStore((state) => state.appliedCoupon);
   const { isOpen, onClose, onToggle } = useModal();
 
@@ -78,6 +84,8 @@ export default function CouponSelector({
         isOpen={isOpen}
         onClose={onClose}
         orderPrice={orderPrice}
+        couponCategory={couponCategory}
+        setCouponCategory={setCouponCategory}
       />
     </OrderSection>
   );

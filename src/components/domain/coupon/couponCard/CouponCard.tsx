@@ -1,7 +1,7 @@
 import { Coupon, OrderType } from "@/types";
 import * as styles from "./CouponCard.css";
 import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
-import CouponContent from "@/components/common/modal/couponModal/couponContent/CouponContent";
+import CouponContent from "@/components/domain/coupon/couponCard/couponContent/CouponContent";
 import { isCouponUsable } from "@/utils/coupon/couponUtils";
 
 interface CouponCardProps {
@@ -10,10 +10,7 @@ interface CouponCardProps {
   isSelected: boolean;
   orderPrice: number;
   onToggle: (value: number) => void;
-  discountInfo: {
-    discountBasedOnCoupon: number;
-    discountBasedOnCouponAndGlobal: number;
-  };
+  discountBasedOnCoupon: number;
 }
 
 export default function CouponCard({
@@ -22,7 +19,7 @@ export default function CouponCard({
   isSelected,
   orderPrice,
   onToggle,
-  discountInfo,
+  discountBasedOnCoupon,
 }: CouponCardProps) {
   const {
     id,
@@ -34,7 +31,6 @@ export default function CouponCard({
   } = coupon;
 
   // 사전 계산된 할인 금액 사용 (성능 개선)
-  const { discountBasedOnCoupon } = discountInfo;
   const { usable, reasons } = isCouponUsable(coupon, orderPrice, orderType);
 
   return (

@@ -1,4 +1,8 @@
-import { CancelSubscriptionProps, ChangePaymentMethodProps } from "@/types/mypage/subscription";
+import { useApplyNextPaymentCoupon } from "@/api/mypage/subscription/mutations/useApplyNextPaymentCoupon";
+import { queryKeys } from "@/constants";
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
+import { ApplyNextPaymentCouponProps, CancelSubscriptionProps, ChangePaymentMethodProps } from "@/types/mypage/subscription";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
@@ -7,7 +11,7 @@ import { useCallback } from "react";
  * @returns {Object} 구독 관련 액션 함수들
  * 
  * SUBSCRIBING 상태일 때
- * @returns {Function} onApplyCoupon - 다음 회차 쿠폰 적용
+ * @returns {Function} onApplyNextPaymentCoupon - 다음 회차 쿠폰 적용
  * @returns {Function} onEditSubscription - 식단 변경
  * @returns {Function} onSkipSubscription - 구독 건너뛰기
  * @returns {Function} onChangePaymentMethod - 결제 수단 변경
@@ -25,10 +29,34 @@ import { useCallback } from "react";
 
 export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: number }) {
   const router = useRouter(); 
+  const queryClient = useQueryClient();
+
+  const { mutate: applyNextPaymentCouponMutate } = useApplyNextPaymentCoupon();
+  const { handleSuccess, handleError } = useApiResponseHandler();
 
  // ------------------- 상세 ------------------- 
-  const onApplyCoupon = useCallback(() => {
-    console.log('다음 회차 쿠폰 적용');
+  const onApplyNextPaymentCoupon = useCallback((body: ApplyNextPaymentCouponProps) => {
+    if (!subscriptionId) return;
+
+    console.log('다음 회차 쿠폰 적용', body);
+    applyNextPaymentCouponMutate({
+      subscribeId: subscriptionId,
+      body,
+    }, {
+      onSuccess: () => {
+        handleSuccess('쿠폰 적용이 완료됐어요', 'above-button');
+        queryClient.invalidateQueries({
+          queryKey: [
+            queryKeys.MYPAGE.BASE, 
+            queryKeys.MYPAGE.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, 
+            subscriptionId
+          ],
+        });
+      },
+      onError: (error) => {
+        handleError(error, '쿠폰 적용에 실패했어요. 잠시 후 다시 시도해 주세요.', undefined, 'above-button');
+      },
+    });
   }, []);
   const onEditSubscription = useCallback(() => {
     console.log('식단 변경');
@@ -77,7 +105,7 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
   }, []);
 
   return {
-    onApplyCoupon,
+    onApplyNextPaymentCoupon,
     onEditSubscription,
     onSkipSubscription,
     onCancelSubscription,

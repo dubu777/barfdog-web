@@ -7,7 +7,7 @@ export function useSubscriptionModalControl() {
     changePaymentMethodError: false,
     cancelSubscription: false,
     cancelSubscriptionConfirm: false,
-    applyCoupon: false,
+    applyNextPaymentCoupon: false,
   });
 
   const openModal = (modalName: keyof typeof modals) => {
@@ -27,6 +27,6 @@ export function useSubscriptionModalControl() {
     openChangePaymentMethodErrorModal: () => openModal('changePaymentMethodError'),
     openCancelSubscriptionModal: () => openModal('cancelSubscription'),
     openCancelSubscriptionConfirmModal: () => openModal('cancelSubscriptionConfirm'),
-    openApplyCouponModal: () => openModal('applyCoupon'),
+    openApplyNextPaymentCouponModal: () => openModal('applyNextPaymentCoupon'),
   };
 }

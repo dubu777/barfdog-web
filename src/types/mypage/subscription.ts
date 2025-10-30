@@ -86,6 +86,12 @@ interface CancelSubscriptionProps {
   reasonList: string[];
 }
 
+interface ApplyNextPaymentCouponProps {
+  discount: number;
+  memberCouponId: number;
+  overDiscount: number;
+}
+
 export type { 
   SubscriptionStatus,
   VisibleSubscribeStatus,
@@ -95,4 +101,5 @@ export type {
   SubscriptionDetail,
   ChangePaymentMethodProps,
   CancelSubscriptionProps,
+  ApplyNextPaymentCouponProps,
 };

@@ -1,13 +1,8 @@
 import { AxiosInstance } from "axios";
 import axiosInstance from "@/api/axiosInstance";
-import { ApiResponse, Coupon } from "@/types";
+import { ApiResponse, Coupon, CouponCategory, Pagination } from "@/types";
+import { RawCouponList } from "@/types";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
-import { CouponCategory, RawCouponList } from "@/types/mypage/coupon";
-
-const getCouponListTemp = async (instance: AxiosInstance = axiosInstance): Promise<Coupon[]> => {
-	const { data } = await instance.get('/api/coupons');
-	return data.couponsPageDto?._embedded?.queryCouponsDtoList || [];
-}
 
 const getCouponList = async ({
 	pageParam = 0,
@@ -17,7 +12,7 @@ const getCouponList = async ({
 	pageParam: number;
 	couponCategory?: CouponCategory;
 	instance?: AxiosInstance;
-}) => {
+}): Promise<{ couponList: Coupon[]; pagination: Pagination }> => {
 	const endpoint = couponCategory === "ALLIANCE" 
 		? `/api/v2/user/coupons/alliance`
 		: `/api/v2/user/coupons/internal`;
@@ -55,7 +50,6 @@ const createCoupon = async (code: string, couponCategory: CouponCategory) => {
 }
 
 export {
-	getCouponListTemp,
 	getCouponList,
 	createCoupon,
 }

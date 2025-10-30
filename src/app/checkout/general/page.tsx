@@ -4,13 +4,13 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
 import GeneralCheckout from "@/components/pages/checkout/general/GeneralCheckout";
 import Header from "@/components/layout/header/Header";
+import { prefetchGetInfiniteCouponList } from "@/api/coupon/queries/prefetchGetInfiniteCouponList";
 
 export default async function GeneralPage() {
   const queryClient = new QueryClient();
-  await prefetchGetCouponList(queryClient);
+  await prefetchGetInfiniteCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (
