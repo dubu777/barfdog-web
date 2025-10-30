@@ -1,10 +1,10 @@
 import * as styles from './ProductOptions.css';
 import CloseIcon from "/public/images/header/close.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Card from "@/components/common/card/Card";
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
-import Counter from "@/components/common/counter/Counter";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Card from "@/components/ui/card/Card";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
+import Counter from "@/components/ui/counter/Counter";
 import { useStoreItemStore } from "@/store/useStoreItemStore";
 
 export default function ProductOptions() {

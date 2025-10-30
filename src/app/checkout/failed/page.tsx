@@ -1,4 +1,4 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 
 export default function OrderFailed () {
   return (

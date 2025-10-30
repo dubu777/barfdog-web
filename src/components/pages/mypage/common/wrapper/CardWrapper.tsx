@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 
 interface CardWrapperProps {
   children: ReactNode;

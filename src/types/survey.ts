@@ -1,4 +1,4 @@
-import { fontColors } from "@/components/common/text/Text.css";
+import { fontColors } from "@/components/ui/text/Text.css";
 import { ValueOfTuple } from "./common";
 import { HEALTH_CONCERNS } from "@/constants";
 import { RecipeDto } from "./recipes";

@@ -1,8 +1,8 @@
 "use client";
 import * as styles from "./CreateProbiome.css";
 import { useCallback, useState } from "react";
-import Text from "@/components/common/text/Text";
-import InputField from "@/components/common/inputField/InputField";
+import Text from "@/components/ui/text/Text";
+import InputField from "@/components/ui/inputField/InputField";
 import { useCheckProbiomeKit } from "@/api/healthNote/probiome/queries/useCheckProbiomeKit";
 import ProbiomePreInfo from "./ProbiomePreInfo";
 import { PROBIOME_ERROR_MESSAGES } from "@/constants/healthNote/probiome";

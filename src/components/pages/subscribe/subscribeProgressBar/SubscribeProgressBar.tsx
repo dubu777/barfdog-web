@@ -1,6 +1,6 @@
 import React from "react";
 import * as styles from "./SubscribeProgressBar.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 
 interface ProgressBarProps {
   currentStep: number;

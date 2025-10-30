@@ -3,13 +3,13 @@ import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { BundleDeliveryAddress, OrderStatus } from "@/types";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { orderSummaryRowContainer } from "../../common/orderSummary/orderSummaryRow/OrderSummaryRow.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { ORDER_MESSAGE } from "@/constants";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import BundleDeliveryBottomSheet from "../../common/bottomSheet/bundleDeliveryBottomSheet/BundleDeliveryBottomSheet";
 import useModal from "@/hooks/useModal";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 
 interface BundleDeliverySelectorProps {
   bundleDeliveryAddress: BundleDeliveryAddress[];

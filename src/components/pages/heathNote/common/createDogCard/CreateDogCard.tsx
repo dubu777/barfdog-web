@@ -2,9 +2,9 @@ import * as styles from "./CreateDogCard.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Text from "@/components/common/text/Text";
-import Button from "@/components/common/button/Button";
-import Card from "@/components/common/card/Card";
+import Text from "@/components/ui/text/Text";
+import Button from "@/components/ui/button/Button";
+import Card from "@/components/ui/card/Card";
 import PhoneImage from "/public/images/healthNote/main/phone1.png";
 
 interface CreateDogCardProps {

@@ -1,10 +1,10 @@
 import { useGetProbiomePreInfo } from "@/api/healthNote/probiome/queries/useGetProbiomePreInfo";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
-import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
-import Spinner from "@/components/common/spinner/Spinner";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { commonWrapper } from "@/styles/common.css";
 import { formatPhoneNumber } from "@/utils";
 

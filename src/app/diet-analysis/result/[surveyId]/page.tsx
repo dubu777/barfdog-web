@@ -8,7 +8,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import Header from "@/components/layout/header/Header";
 import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/prefetchGetDietAnalysisResult";
 import DietAnalysisResult from "@/components/pages/dietAnalysis/result/DietAnalysisResult";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 interface DietAnalysisResultPageProps {
   params: {

@@ -3,7 +3,7 @@ import { commonWrapper } from "@/styles/common.css";
 import { bodyCheckDiseaseList } from "@/components/pages/heathNote/bodyCheck/result/BodyCheckResult.css";
 import ResultCard from "../../../common/resultCard/ResultCard";
 import CircleProgressBar from "../../../common/progressBar/circleProgressBar/CircleProgressBar";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import BodyCheckDiseaseCard from "./bodyCheckDiseaseCard/BodyCheckDiseaseCard";
 import { BodyPartType, DiseaseCategoryKey } from "@/types/healthNote/bodyCheck";
 import { BODY_PART } from "@/constants/healthNote/bodyCheck/common";

@@ -2,7 +2,7 @@
 import * as styles from "../FindAccount.css";
 import { useForm, useWatch } from "react-hook-form";
 import { useToastStore } from "@/store/useToastStore";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useState, useMemo, useCallback } from "react";
 import {
   defaultRequestResetCodeValues,
@@ -19,7 +19,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CodeRequestForm from "./codeRequestForm/CodeRequestForm";
 import NewPasswordForm from "./newPasswordForm/NewPasswordForm";
 import { ResetPasswordStep, SnsProvider } from "@/types";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 import Countdown from "./countdown/Countdown";

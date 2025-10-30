@@ -1,9 +1,9 @@
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 import ImageButton from "../imageButton/ImageButton";
-import SurveyGridButtonGroup from "../../../../common/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
+import SurveyGridButtonGroup from "../../../../domain/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
 import { useSurveyRankOption } from "@/hooks/survey/useSurveyRankOption";
 
 interface SurveyStepProps {

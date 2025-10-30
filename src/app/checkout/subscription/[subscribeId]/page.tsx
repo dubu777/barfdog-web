@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/prefetchGetSubscriptionCheckoutSheet";
 import { prefetchGetInfiniteCouponList } from "@/api/coupon/queries/prefetchGetInfiniteCouponList";
 import SubscriptionCheckout from "@/components/pages/checkout/subscription/SubscriptionCheckout";

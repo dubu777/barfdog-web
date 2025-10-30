@@ -2,7 +2,7 @@ import * as styles from './RecommendArticle.css';
 import { articleOverlay } from "@/components/pages/community/article/list/ArticleList.css";
 import Image from "next/image";
 import Link from "next/link";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useGetRecommendArticleList } from "@/api/community/queries/useGetRecommendArticleList";

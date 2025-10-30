@@ -3,7 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import MainInformation from "@/components/pages/mypage/main/mainInformation/MainInformation";
 import MainBanner from "@/components/pages/mypage/main/mainBanner/MainBanner";
 import MainMenus from "@/components/pages/mypage/main/mainMenus/MainMenus";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { marginStyles } from "@/styles/common.css";
 
 export default function MyPageMain() {

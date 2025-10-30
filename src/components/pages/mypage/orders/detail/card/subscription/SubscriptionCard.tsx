@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import CardImage from "@/components/pages/mypage/common/card/image/CardImage";
 import OrderStatus from "../../../common/card/OrderStatus";

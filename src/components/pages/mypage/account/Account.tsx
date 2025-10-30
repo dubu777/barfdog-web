@@ -2,9 +2,9 @@
 import { commonWrapper } from '@/styles/common.css';
 import { Fragment, useMemo } from 'react';
 import Link from "next/link";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
-import ListDivider from '@/components/common/listDivider/ListDivider';
+import ListDivider from '@/components/ui/listDivider/ListDivider';
 import SetPassword from './setPassword/SetPassword';
 import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 import { useVerifyPassword } from '@/api/mypage/account/queries/useVerifyPassword';

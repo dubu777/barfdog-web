@@ -1,5 +1,5 @@
 import React from "react";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { DeliveryPlan, MealPlan, RawFoodItemSummary } from "@/types";
 import RecipeItemCard from "@/components/pages/subscribe/deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";

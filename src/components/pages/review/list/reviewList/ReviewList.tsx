@@ -1,8 +1,8 @@
 'use client';
 import { useState } from "react";
-import ReviewItem from "@/components/pages/review/common/reviewItem/ReviewItem";
-import Divider from "@/components/common/divider/Divider";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import ReviewItem from "@/components/domain/review/reviewItem/ReviewItem";
+import Divider from "@/components/ui/divider/Divider";
+import InfiniteScrollTrigger from "@/components/ui/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { useGetInfiniteReviewList } from "@/api/review/queries/useGetInfiniteReviewList";

@@ -1,12 +1,12 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
 import ScaleIcon from "public/images/dietAnalysis/scale.svg";
 import CheckIcon from "public/images/icons/check_small.svg";
 import ThumbsIcon from "public/images/dietAnalysis/thumbs-up.svg";
-import Card from "@/components/common/card/Card";
-import Divider from "@/components/common/divider/Divider";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Card from "@/components/ui/card/Card";
+import Divider from "@/components/ui/divider/Divider";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import { DAILY_CALORIE_TEXT } from "@/constants/dietAnalysis";
 
 interface DailyCalorieProps {

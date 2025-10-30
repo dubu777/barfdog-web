@@ -1,9 +1,9 @@
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 import * as styles from "./DeliveryScheduleBottomSheet.css";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Text from "@/components/common/text/Text";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
 import ScheduleImage from "public/images/subscription/delivery-schedule.svg";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import { formatDateToKorean } from "@/utils";
 
 interface DeliveryScheduleBottomSheetProps {

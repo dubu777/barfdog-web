@@ -1,6 +1,6 @@
 import * as styles from './ProgressBar.css';
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Indicator from '/public/images/mypage/progress-indicator.svg';
 
 interface ProgressBarProps {

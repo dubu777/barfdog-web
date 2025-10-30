@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
-import Chips from "@/components/common/chips/Chips";
-import Button from "@/components/common/button/Button";
+import Chips from "@/components/ui/chips/Chips";
+import Button from "@/components/ui/button/Button";
 import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";

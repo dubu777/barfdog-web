@@ -3,10 +3,10 @@ import Image from "next/image";
 import WeightIcon from '/public/images/healthNote/dogpedia/weight.svg';
 import HeightIcon from '/public/images/healthNote/dogpedia/hight.svg';
 import LifeIcon from '/public/images/healthNote/dogpedia/life_expectancy.svg';
-import Text from "@/components/common/text/Text";
-import Chips from "@/components/common/chips/Chips";
-import Card from "@/components/common/card/Card";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import Card from "@/components/ui/card/Card";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import { BreedPhysicalSpec } from "@/types/healthNote/dogpedia";
 
 interface BreedDefaultInfo extends BreedPhysicalSpec {

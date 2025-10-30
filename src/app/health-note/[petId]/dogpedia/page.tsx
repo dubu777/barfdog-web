@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import Dogpedia from "@/components/pages/heathNote/dogpedia/Dogpedia";
 import { prefetchGetBreedList } from "@/api/healthNote/dogpidea/queries/prefetchGetBreedList";
 import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";

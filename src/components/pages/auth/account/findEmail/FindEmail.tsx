@@ -4,7 +4,7 @@ import * as styles from "../FindAccount.css";
 import { useForm } from "react-hook-form";
 import { useRequestFindEmailCode } from "@/api/auth/mutations/useRequestFindEmailCode";
 import { useToastStore } from "@/store/useToastStore";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import {
   defaultFindUserEmailValues,
   FindEmailValues,

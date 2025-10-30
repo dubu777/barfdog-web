@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import InfoText from "@/components/common/typography/infoText/InfoText";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import InfoText from "@/components/ui/typography/infoText/InfoText";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 
 interface RewardInfoModalProps {
   isOpen: boolean;

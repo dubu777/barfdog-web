@@ -2,7 +2,7 @@
 import { useBackNavigation } from "@/utils";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
-import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
+import DeliveryModal from "@/components/domain/delivery/deliveryModal/DeliveryModal";
 
 export default function DeliveryAddress() {
   const { setDeliveryDto, setBackupDeliveryDto } = useDeliveryStore();

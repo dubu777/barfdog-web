@@ -6,9 +6,9 @@ import {
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import Text from "@/components/common/text/Text";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {

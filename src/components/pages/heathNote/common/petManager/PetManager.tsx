@@ -2,7 +2,7 @@
 
 import { useInfiniteList } from "@/hooks/useInfiniteList";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import PetList from "@/components/pages/dietAnalysis/main/PetList";
 import { useUpdateRepresentativePet } from "@/api/pet/mutations/useUpdateRepresentativePet";
 import { useToastStore } from "@/store/useToastStore";

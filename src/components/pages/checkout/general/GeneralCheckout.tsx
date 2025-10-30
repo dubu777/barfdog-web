@@ -26,8 +26,8 @@ import PaymentMethod from "../common/paymentMethod/PaymentMethod";
 import OrderSummary from "../common/orderSummary/OrderSummary";
 import OrderTerms from "../common/orderTerms/OrderTerms";
 import OrderSection from "../common/orderSection/OrderSection";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
 
 // Constants & Types
 import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
@@ -47,9 +47,9 @@ import useDeviceState from "@/hooks/useDeviceState";
 import { createGeneralStrategy } from "@/utils/checkout/strategies/generalStrategy";
 import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 export default function GeneralCheckout() {

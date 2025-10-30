@@ -3,13 +3,13 @@
 import DeliveryInfo from "../../common/completed/deliveryInfo/DeliveryInfo";
 import PaymentInfo from "../../common/completed/paymentInfo/PaymentInfo";
 import { completedContainer } from "../../OrderSheetCommon.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper, pointColor } from "@/styles/common.css";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useRouter } from "next/navigation";
 import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
 import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import GeneralItemInfo from "../../common/completed/generalItemInfo.tsx/GeneralItemInfo";
 
 export default function GeneralOrderCompleted({}) {

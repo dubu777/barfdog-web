@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import { formatPhoneNumber } from "@/utils";

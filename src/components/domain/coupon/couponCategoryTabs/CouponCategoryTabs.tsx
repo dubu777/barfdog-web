@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import TabBar from "@/components/common/tabBar/TabBar";
+import TabBar from "@/components/ui/tabBar/TabBar";
 import { CouponCategory } from "@/types";
 import { COUPON_CATEGORY_FILTER } from "@/constants/coupon";
 

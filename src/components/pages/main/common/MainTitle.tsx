@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { mainTitle } from "@/components/pages/main/common/MainCommon.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import FadeInInteraction from "@/components/pages/main/common/FadeInInteraction";
 
 interface MainTitleProps {

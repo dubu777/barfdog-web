@@ -1,7 +1,7 @@
 import * as styles from './SuspectedDiseases.css';
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import ResultAccordion from "@/components/pages/heathNote/common/resultAccordion/ResultAccordion";
 import { BODY_PART_TO_CATEGORY, DISEASE_CATEGORY } from "@/constants";
 import { DiseaseData } from '@/types/healthNote/fullCheck';

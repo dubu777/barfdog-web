@@ -1,8 +1,8 @@
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
-import Card from "@/components/common/card/Card";
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
 import { COUPON_TARGET, DISCOUNT_UNIT } from "@/constants";
 import { PromotionItem as PromotionItemType } from "@/types/mypage/promotion";

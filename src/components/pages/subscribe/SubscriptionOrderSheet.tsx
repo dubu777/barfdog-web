@@ -9,11 +9,11 @@ import {
 import DeliveryOptions from "./deliveryOptions/DeliveryOptions";
 import SubscribeProgressBar from "./subscribeProgressBar/SubscribeProgressBar";
 import { subscribeStepMap } from "@/constants";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useCallback, useState } from "react";
 import { SubscriptionStep, SubscriptionValues } from "@/types";
 import Header from "@/components/layout/header/Header";
-import Chips from "@/components/common/chips/Chips";
+import Chips from "@/components/ui/chips/Chips";
 import * as styles from "./SubscriptionOrderSheet.css";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useGetRawFoodOrderSheet } from "@/api/subscription/queries/useGetRawFoodOrderSheet";

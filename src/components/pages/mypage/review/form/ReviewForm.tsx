@@ -1,13 +1,13 @@
 import { commonWrapper, pointColor } from "@/styles/common.css";
 import * as yup from "yup";
 import { Controller, useWatch } from "react-hook-form";
-import InfoBox from "@/components/common/infoBox/InfoBox";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 import ReviewCard from "@/components/pages/mypage/review/common/reviewCard/ReviewCard";
-import Textarea from "@/components/common/textarea/Textarea";
-import MultiFileUploader from "@/components/common/multiFileUploader/MultiFileUploader";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import Textarea from "@/components/ui/textarea/Textarea";
+import MultiFileUploader from "@/components/ui/multiFileUploader/MultiFileUploader";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import ReviewNoticeBottomSheet
   from "@/components/pages/mypage/review/common/reviewNoticeBottomSheet/ReviewNoticeBottomSheet";
   import useModal from "@/hooks/useModal";

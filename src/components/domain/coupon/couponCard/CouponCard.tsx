@@ -1,6 +1,6 @@
 import { Coupon, OrderType } from "@/types";
 import * as styles from "./CouponCard.css";
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 import CouponContent from "@/components/domain/coupon/couponCard/couponContent/CouponContent";
 import { isCouponUsable } from "@/utils/coupon/couponUtils";
 

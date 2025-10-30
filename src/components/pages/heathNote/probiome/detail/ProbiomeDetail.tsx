@@ -5,14 +5,14 @@ import { SectionType } from "@/types/healthNote/probiome";
 import ProbiomeDetailCard from "./ProbiomeDetailCard";
 import { buildProbiomeSectionData } from "@/utils/healthNote/probiome/buildProbiomeSectionData";
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
-import Spinner from "@/components/common/spinner/Spinner";
-import Card from "@/components/common/card/Card";
-import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
+import Text from "@/components/ui/text/Text";
+import Spinner from "@/components/ui/spinner/Spinner";
+import Card from "@/components/ui/card/Card";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 import { formatPhoneNumber } from "@/utils";
 import Image from "next/image";
 import * as styles from "./ProbiomeDetailCard.css";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 
 interface ProbiomeDetailProps {
   diagnosisId: number;

@@ -1,9 +1,9 @@
 import { commonWrapper } from '@/styles/common.css';
 import { termsCard } from './termsModal.css';
-import FullModalWrapper from '@/components/common/fullModalWrapper/FullModalWrapper';
-import Text from '@/components/common/text/Text';
-import ButtonDocked from '@/components/common/buttonDocked/ButtonDocked';
-import ServicePolicy from '@/components/common/terms/ServicePolicy';
+import FullModalWrapper from '@/components/ui/fullModalWrapper/FullModalWrapper';
+import Text from '@/components/ui/text/Text';
+import ButtonDocked from '@/components/ui/buttonDocked/ButtonDocked';
+import ServicePolicy from '@/components/domain/terms/ServicePolicy';
 
 interface ServicePolicyModalProps {
 	isOpen: boolean;

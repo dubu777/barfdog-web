@@ -1,12 +1,12 @@
 'use client';
 import { commonWrapper } from "@/styles/common.css";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
 import BasicInfo from "./info/basicInfo/BasicInfo";
 import PaymentInfo from "./info/paymentInfo/PaymentInfo";
 import SubscriptionInfo from "./info/subscriptionInfo/SubscriptionInfo";
 import PaymentMethodInfo from "./info/paymentMethodInfo/PaymentMethodInfo";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import ChangePaymentMethodModal from "./modal/ChangePaymentMethodModal";
 import CancelSubscriptionModal from "./modal/CancelSubscriptionModal";
 import NextPaymentCouponModal from "./modal/NextPaymentCouponModal";

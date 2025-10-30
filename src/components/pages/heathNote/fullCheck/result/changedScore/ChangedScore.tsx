@@ -2,10 +2,10 @@ import * as styles from './ChangedScore.css';
 import GoodEmogi from '/public/images/healthNote/good_emoji.svg';
 import DangerEmogi from '/public/images/healthNote/danger_emogi.svg';
 import SameEmogi from '/public/images/healthNote/same_emoji.svg';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
 import ComparisonProgressBar
 	from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";

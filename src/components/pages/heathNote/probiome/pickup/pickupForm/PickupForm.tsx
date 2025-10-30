@@ -1,19 +1,19 @@
 import * as styles from "./PickupForm.css";
 import { useEffect, useMemo } from "react";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
-import Card from "@/components/common/card/Card";
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
-import AddressContent from "@/components/common/addressContent/AddressContent";
-import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import Card from "@/components/ui/card/Card";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
+import AddressContent from "@/components/domain/address/addressContent/AddressContent";
+import DeliveryModal from "@/components/domain/delivery/deliveryModal/DeliveryModal";
 import useModal from "@/hooks/useModal";
 import { ClientDeliveryDto, UploadedFile } from "@/types";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
-import MultiFileUploader from "@/components/common/multiFileUploader/MultiFileUploader";
+import MultiFileUploader from "@/components/ui/multiFileUploader/MultiFileUploader";
 import { PICKUP_NOTICE_LIST } from "@/constants/healthNote/probiome";
-import InfoList from "@/components/common/typography/infoList/InfoList";
-import Spinner from "@/components/common/spinner/Spinner";
+import InfoList from "@/components/ui/typography/infoList/InfoList";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 interface PickupFormProps {
   uploadedFiles: UploadedFile[];

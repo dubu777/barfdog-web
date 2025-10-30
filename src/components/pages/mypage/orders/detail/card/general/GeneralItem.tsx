@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 import CardImage from "@/components/pages/mypage/common/card/image/CardImage";
 import OrderPrice from "../../../common/card/OrderPrice";
 import { OrderItem as OrderItemType } from "@/types/mypage/orders";

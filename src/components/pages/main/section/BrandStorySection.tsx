@@ -9,7 +9,7 @@ import {
 import Marquee from "react-fast-marquee";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import { MAIN_DATA } from "@/constants/main";
 
 export default function BrandStorySection() {

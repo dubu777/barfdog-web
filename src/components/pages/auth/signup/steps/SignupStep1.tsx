@@ -1,7 +1,7 @@
 "use client";
 
-import Text from "@/components/common/text/Text";
-import InputField from "@/components/common/inputField/InputField";
+import Text from "@/components/ui/text/Text";
+import InputField from "@/components/ui/inputField/InputField";
 import { SignupStepValues } from "@/utils/validation/auth/signup";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useEnterFocus } from "@/hooks/common/useEnterFocus";

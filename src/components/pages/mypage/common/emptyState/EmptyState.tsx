@@ -1,5 +1,5 @@
 import { commonWrapper } from '@/styles/common.css';
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 
 interface EmptyStateProps {
 	title: string;

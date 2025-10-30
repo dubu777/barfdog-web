@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from "react";
-import Divider from "@/components/common/divider/Divider";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import Divider from "@/components/ui/divider/Divider";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import ItemTopInfo from "@/components/pages/store/detail/itemTopInfo/ItemTopInfo";
 import ItemCategoryTab from "./itemCategoryTab/ItemCategoryTab";
 import ItemPurchaseBottomSheet from "./itemPurchaseBottomSheet/ItemPurchaseBottomSheet";

@@ -1,5 +1,5 @@
-import Text from "@/components/common/text/Text";
-import InputField from "@/components/common/inputField/InputField";
+import Text from "@/components/ui/text/Text";
+import InputField from "@/components/ui/inputField/InputField";
 import { commonWrapper, pointColor } from "@/styles/common.css";
 import { SignupStepValues } from "@/utils/validation/auth/signup";
 import {
@@ -8,14 +8,14 @@ import {
   useFormContext,
   useWatch,
 } from "react-hook-form";
-import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
+import CustomDatePicker from "@/components/ui/datePicker/CustomDatePicker";
 import { format } from "date-fns";
-import MobileDatePicker from "@/components/common/datePicker/mobileDatePicker/MobileDatePicker";
+import MobileDatePicker from "@/components/ui/datePicker/mobileDatePicker/MobileDatePicker";
 import useDeviceState from "@/hooks/useDeviceState";
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 import { GENDER_CATEGORY } from "@/constants/auth";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import InputLabel from "@/components/common/inputLabel/InputLabel";
+import InputLabel from "@/components/ui/inputLabel/InputLabel";
 import { useRequestPhoneVerificationCode } from "@/api/auth/mutations/useRequestPhoneVerificationCode";
 import { useVerifyPhoneCode } from "@/api/auth/mutations/useVerifyPhoneCode";
 import { useCallback, useState } from "react";

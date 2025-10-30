@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import InputField from "@/components/common/inputField/InputField";
+import InputField from "@/components/ui/inputField/InputField";
 import { validateCouponCode } from "@/utils";
 import { CouponCategory } from "@/types";
 

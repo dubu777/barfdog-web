@@ -2,9 +2,9 @@ import * as styles from './LatestBodyCheck.css';
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
 import ArrowIcon from "/public/images/icons/chevron-right.svg";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import HorizontalProgressBar
 	from "@/components/pages/heathNote/common/progressBar/horizontalProgressBar/HorizontalProgressBar";
 import { BODY_PART } from '@/constants/healthNote/bodyCheck/common';

@@ -1,5 +1,5 @@
 import * as styles from "@/components/domain/coupon/couponCard/CouponCard.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { formatDateToKorean, formatNumberWithCommas, getCouponTargetText } from "@/utils";
 import { Coupon, DiscountType } from "@/types";
 

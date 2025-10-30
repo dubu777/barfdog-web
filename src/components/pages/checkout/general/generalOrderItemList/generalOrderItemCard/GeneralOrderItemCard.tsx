@@ -1,10 +1,10 @@
 import { GeneralOrderItem } from "@/types";
 import Image from "next/image";
 import * as styles from "./GeneralOrderItemCard.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { formatNumberWithCommas } from "@/utils";
-import Chips from "@/components/common/chips/Chips";
-import Divider from "@/components/common/divider/Divider";
+import Chips from "@/components/ui/chips/Chips";
+import Divider from "@/components/ui/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 
 interface GeneralOrderItemCardProps {

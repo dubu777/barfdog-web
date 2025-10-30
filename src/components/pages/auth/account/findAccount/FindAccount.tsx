@@ -1,6 +1,6 @@
 "use client";
 
-import TabBar, { Tab } from "@/components/common/tabBar/TabBar";
+import TabBar, { Tab } from "@/components/ui/tabBar/TabBar";
 import FindEmail from "../findEmail/FindEmail";
 import { findAccountTabBarContainer } from "../FindAccount.css";
 import Header from "@/components/layout/header/Header";

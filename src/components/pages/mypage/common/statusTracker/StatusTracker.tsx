@@ -1,6 +1,6 @@
 import * as styles from './StatusTracker.css';
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 
 interface StatusStep {

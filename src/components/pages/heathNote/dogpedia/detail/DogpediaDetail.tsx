@@ -1,7 +1,7 @@
 import { commonWrapper } from '@/styles/common.css';
 import { useMemo } from "react";
-import InputField from "@/components/common/inputField/InputField";
-import Divider from "@/components/common/divider/Divider";
+import InputField from "@/components/ui/inputField/InputField";
+import Divider from "@/components/ui/divider/Divider";
 import BreedDefaultInfo from "@/components/pages/heathNote/dogpedia/detail/breedDefaultInfo/BreedDefaultInfo";
 import BreedCategoryTabs from "@/components/pages/heathNote/dogpedia/detail/breedCategoryTabs/BreedCategoryTabs";
 import BreedDetailInfo from "@/components/pages/heathNote/dogpedia/detail/breedDetailInfo/BreedDetailInfo";

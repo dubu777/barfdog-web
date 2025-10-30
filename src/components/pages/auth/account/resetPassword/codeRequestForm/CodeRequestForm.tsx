@@ -1,6 +1,6 @@
 "use client";
 import { Controller, UseFormReturn } from "react-hook-form";
-import InputField from "@/components/common/inputField/InputField";
+import InputField from "@/components/ui/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
 import { RequestResetCodeValues } from "@/utils/validation/auth/resetPassword";
 import { ResetPasswordStep } from "@/types";

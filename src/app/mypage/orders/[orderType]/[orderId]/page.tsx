@@ -6,7 +6,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import OrderDetail from "@/components/pages/mypage/orders/detail/OrderDetail";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { OrderType } from "@/types/mypage/orders";
 import { prefetchGetOrderDetail } from "@/api/mypage/orders/queries/prefetchGetOrderDetail";
 

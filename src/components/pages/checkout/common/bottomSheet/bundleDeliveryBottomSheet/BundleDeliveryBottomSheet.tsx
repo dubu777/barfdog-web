@@ -1,11 +1,11 @@
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 import * as styles from "./BundleDeliveryBottomSheet.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { BundleDeliveryAddress } from "@/types";
 import BundleDeliveryCard from "./bundleDeliveryCard/BundleDeliveryCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 
 interface BundleDeliveryBottomSheetProps {
   bundleDeliveryAddress: BundleDeliveryAddress[];

@@ -1,7 +1,7 @@
 import { commonWrapper } from '@/styles/common.css';
 import CalendarIcon from "/public/images/icons/calendar.svg";
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 
 interface ResultTitleProps {
 	title: string;

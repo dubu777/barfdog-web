@@ -13,7 +13,7 @@ import DeliverySection from "@/components/pages/main/section/DeliverySection";
 import BrandStorySection from "@/components/pages/main/section/BrandStorySection";
 import Footer from "@/components/layout/footer/Footer";
 import useModal from "@/hooks/useModal";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 
 export default function MainWrapper() {
   const { isOpen, onClose, onToggle } = useModal();

@@ -1,6 +1,6 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import EmptyIcon from "public/images/dietAnalysis/empty-pet.svg";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import * as styles from "./DietAnalysisMain.css";
 import Link from "next/link";
 

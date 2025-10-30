@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from "react";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 
 import { GeneralOrderItem } from "@/types";
 import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import { commonWrapper } from "@/styles/common.css";
 import GeneralOrderItemCard from "../../../general/generalOrderItemList/generalOrderItemCard/GeneralOrderItemCard";
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
 
 interface GeneralItemInfoProps {
   orderItemDtoList: GeneralOrderItem[];

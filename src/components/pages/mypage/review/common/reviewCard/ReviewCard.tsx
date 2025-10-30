@@ -3,13 +3,13 @@ import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import Image from "next/image";
 import PictureIcon from "/public/images/icons/picture.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
-import RateStar from "@/components/common/rateStar/RateStar";
-import Button from "@/components/common/button/Button";
-import Divider from "@/components/common/divider/Divider";
+import RateStar from "@/components/ui/rateStar/RateStar";
+import Button from "@/components/ui/button/Button";
+import Divider from "@/components/ui/divider/Divider";
 import {
   REVIEW_STATUS,
   REVIEW_STATUS_COLOR_MAP,

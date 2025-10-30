@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import ReviewDetail from "@/components/pages/mypage/review/detail/ReviewDetail";
 import { ReviewItemType } from "@/types";
 import { prefetchGetReviewDetail } from "@/api/mypage/review/queries/prefetchGetReviewDetail";

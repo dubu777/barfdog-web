@@ -1,5 +1,5 @@
 import * as styles from './RecommendationCode.css';
-import Chips from "@/components/common/chips/Chips";
+import Chips from "@/components/ui/chips/Chips";
 import { useToastStore } from "@/store/useToastStore";
 import { copyToClipboard } from "@/utils";
 

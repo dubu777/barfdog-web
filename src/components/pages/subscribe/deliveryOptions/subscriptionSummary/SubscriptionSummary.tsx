@@ -1,6 +1,6 @@
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import OrderSummaryRow from "@/components/pages/checkout/common/orderSummary/orderSummaryRow/OrderSummaryRow";
 import { DELIVERY_PLAN_LABEL } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";

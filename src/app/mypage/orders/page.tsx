@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import OrderList from "@/components/pages/mypage/orders/list/OrderList";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetInfiniteOrderList } from "@/api/mypage/orders/queries/prefetchGetInfiniteOrderList";
 
 export default async function OrderListPage() {

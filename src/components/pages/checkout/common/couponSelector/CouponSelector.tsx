@@ -1,8 +1,8 @@
 import * as styles from "./CouponSelector.css";
 import { useState } from "react";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import OrderSection from "../orderSection/OrderSection";
 import CouponModal from "@/components/domain/coupon/couponModal/CouponModal";
 import useModal from "@/hooks/useModal";

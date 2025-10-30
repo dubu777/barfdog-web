@@ -9,10 +9,10 @@ import {
 } from "@/components/pages/main/common/MainCommon.css";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
-import RateStar from "@/components/common/rateStar/RateStar";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
+import RateStar from "@/components/ui/rateStar/RateStar";
 import Marquee from "react-fast-marquee";
 import { motion } from 'framer-motion';
 import { MAIN_DATA } from "@/constants/main";

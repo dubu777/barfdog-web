@@ -1,6 +1,6 @@
 import { pointColor } from "@/styles/common.css";
-import Button from "@/components/common/button/Button";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import Button from "@/components/ui/button/Button";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import SubscriptionCard from "../../../common/card/SubscriptionCard";
 import InfoWrapper from "../../../../common/wrapper/InfoWrapper";
 import { PlanKey } from "@/types";

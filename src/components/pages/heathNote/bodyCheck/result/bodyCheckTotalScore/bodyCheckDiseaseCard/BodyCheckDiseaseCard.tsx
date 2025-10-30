@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
 import { getBodyCheckScoreStatus } from "@/utils/healthNote/bodyCheck/bodyCheckScore";
 import { DiseaseCategoryKey } from "@/types/healthNote/bodyCheck";
 import { BODY_CHECK_DISEASE_INFO } from "@/constants/healthNote/bodyCheck/common";

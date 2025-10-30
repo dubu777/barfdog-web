@@ -2,12 +2,12 @@ import * as styles from './CartItem.css';
 import Image from "next/image";
 import CloseIcon from "/public/images/header/close.svg";
 import InfoIcon from '/public/images/icons/info-fill.svg';
-import Counter from "@/components/common/counter/Counter";
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Card from "@/components/common/card/Card";
-import Chips from "@/components/common/chips/Chips";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
+import Counter from "@/components/ui/counter/Counter";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Card from "@/components/ui/card/Card";
+import Chips from "@/components/ui/chips/Chips";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { CartItemDto, CartItemOptionDto } from "@/types/cart";
 import { useCart } from "@/hooks/cart/useCart";
 

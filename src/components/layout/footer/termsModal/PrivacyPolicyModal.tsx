@@ -1,9 +1,9 @@
 import { commonWrapper } from '@/styles/common.css';
 import { termsCard } from './termsModal.css';
-import Text from '@/components/common/text/Text';
-import ButtonDocked from '@/components/common/buttonDocked/ButtonDocked';
-import FullModalWrapper from '@/components/common/fullModalWrapper/FullModalWrapper';
-import PrivacyPolicy from '@/components/common/terms/PrivacyPolicy';
+import Text from '@/components/ui/text/Text';
+import ButtonDocked from '@/components/ui/buttonDocked/ButtonDocked';
+import FullModalWrapper from '@/components/ui/fullModalWrapper/FullModalWrapper';
+import PrivacyPolicy from '@/components/domain/terms/PrivacyPolicy';
 
 interface PrivacyPolicyModalProps {
 	isOpen: boolean;

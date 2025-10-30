@@ -1,9 +1,9 @@
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
-import Divider from "@/components/common/divider/Divider";
-import InfoText from "@/components/common/typography/infoText/InfoText";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
+import Divider from "@/components/ui/divider/Divider";
+import InfoText from "@/components/ui/typography/infoText/InfoText";
 import { MembershipTier } from "@/types/membership";
 
 interface MembershipCardProps {

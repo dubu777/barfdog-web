@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import HistoryForm from "@/components/pages/heathNote/medicalHistory/form/HistoryForm";
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
+import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
 import { useToastStore } from "@/store/useToastStore";
 import { queryKeys } from "@/constants";
 import { useFormHandler } from "@/hooks/useFormHandler";

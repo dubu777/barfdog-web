@@ -1,10 +1,10 @@
 'use client';
 import { commonWrapper } from '@/styles/common.css';
 import Link from 'next/link';
-import Accordion from "@/components/common/accordion/Accordion";
-import Text from "@/components/common/text/Text";
-import InfoText from '@/components/common/typography/infoText/InfoText';
-import Divider from '@/components/common/divider/Divider';
+import Accordion from "@/components/ui/accordion/Accordion";
+import Text from "@/components/ui/text/Text";
+import InfoText from '@/components/ui/typography/infoText/InfoText';
+import Divider from '@/components/ui/divider/Divider';
 import Header from '@/components/layout/header/Header';
 import { FAQ_LIST } from "@/constants/community";
 

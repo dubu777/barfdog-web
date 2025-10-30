@@ -8,14 +8,14 @@ import {
   surveyStepsSchema,
 } from "@/utils/validation/surveyValidation";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
-import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
+import SurveyProgressBar from "@/components/domain/survey/surveyProgressBar/SurveyProgressBar";
 import {
   CRITICAL_DISEASES,
   SURVEY_NO_AUTO_STEP,
   SURVEY_SECTIONS,
 } from "@/constants";
-import Text from "@/components/common/text/Text";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import { useCallback, useMemo, useState } from "react";
 import SurveyResultLoading from "../resultLoading/SurveyResultLoading";
@@ -26,7 +26,7 @@ import { useCreateDietAnalysisResult } from "@/api/dietAnalysis/mutations/useCre
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SkipCondition, useSurveyStep } from "@/hooks/survey/useSurveyStep";
-import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
+import SurveyStepViewport from "@/components/domain/survey/surveyStepViewport/SurveyStepViewport";
 import { getSurveySteps } from "../steps/StepsElements";
 import CriticalDiseaseAlertBottomSheet from "../bottomSheet/CriticalDiseaseAlertBottomSheet";
 import { DietAnalysisFormValues } from "@/types/dietAnalysis";

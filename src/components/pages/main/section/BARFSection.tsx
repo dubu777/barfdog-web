@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { mainBarfImage, mainBarfContentBox } from "@/components/pages/main/common/MainCommon.css";
 import Image from "next/image";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
 import FadeInInteraction from "@/components/pages/main/common/FadeInInteraction";

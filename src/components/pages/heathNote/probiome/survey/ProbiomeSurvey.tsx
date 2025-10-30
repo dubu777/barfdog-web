@@ -11,12 +11,12 @@ import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
 import { SkipCondition, useSurveyStep } from "@/hooks/survey/useSurveyStep";
 import useModal from "@/hooks/useModal";
 import { useProbiomeStepElements } from "./steps/StepElements";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import Header from "@/components/layout/header/Header";
-import SurveyProgressBar from "@/components/common/survey/surveyProgressBar/SurveyProgressBar";
-import SurveyStepViewport from "@/components/common/survey/surveyStepViewport/SurveyStepViewport";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import SurveyProgressBar from "@/components/domain/survey/surveyProgressBar/SurveyProgressBar";
+import SurveyStepViewport from "@/components/domain/survey/surveyStepViewport/SurveyStepViewport";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import {
   PROBIOME_NO_AUTO_STEP,
   PROBIOME_OPTIONAL_FIELDS,

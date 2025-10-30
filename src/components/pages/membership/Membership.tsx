@@ -2,9 +2,9 @@
 import { commonWrapper } from "@/styles/common.css";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import MembershipCard from "@/components/pages/membership/membershipCard/MembershipCard";
-import InfoText from "@/components/common/typography/infoText/InfoText";
+import InfoText from "@/components/ui/typography/infoText/InfoText";
 import { MEMBERSHIP_TIERS_LIST } from "@/constants";
 
 export default function Membership() {

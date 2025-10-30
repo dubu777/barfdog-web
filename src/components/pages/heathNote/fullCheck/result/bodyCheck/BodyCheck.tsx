@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import BodyCheckImage from '/public/images/healthNote/full-check/body-check.png';
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 
 interface BodyCheckProps {
 	petId: number;

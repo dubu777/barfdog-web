@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from "react";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import CardWrapper from "../../../common/wrapper/CardWrapper";
 import SubscriptionContents from "./SubscriptionContents";
 import { PlanKey } from "@/types";

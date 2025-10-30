@@ -1,11 +1,11 @@
 import { commonWrapper } from "@/styles/common.css";
 import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import CardImage from "@/components/pages/mypage/common/card/image/CardImage";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
-import InfoBox from "@/components/common/infoBox/InfoBox";
-import ListDivider from "@/components/common/listDivider/ListDivider";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
+import ListDivider from "@/components/ui/listDivider/ListDivider";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import { PlanKey } from "@/types";

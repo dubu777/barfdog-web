@@ -4,13 +4,13 @@ import {
 } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext, useWatch } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import useModal from "@/hooks/useModal";
 import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";
 import { commonWrapper } from "@/styles/common.css";
-import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
+import SurveyButtonGroup from "@/components/domain/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;

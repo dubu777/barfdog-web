@@ -1,8 +1,8 @@
 'use client';
 import * as styles from './ItemFilter.css';
 import { usePathname, useSearchParams } from "next/navigation";
-import Text from "@/components/common/text/Text";
-import Dropdown from "@/components/common/dropdown/Dropdown";
+import Text from "@/components/ui/text/Text";
+import Dropdown from "@/components/ui/dropdown/Dropdown";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
 import { QueryParams } from '@/types';

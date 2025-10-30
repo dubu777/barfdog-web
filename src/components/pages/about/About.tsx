@@ -2,9 +2,9 @@
 import * as styles from './About.css';
 import Image from "next/image";
 import Link from "next/link";
-import Text from "@/components/common/text/Text";
-import Button from "@/components/common/button/Button";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Button from "@/components/ui/button/Button";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Header from '@/components/layout/header/Header';
 import Footer from '@/components/layout/footer/Footer';
 import { ABOUT_INFO } from '@/constants/about';

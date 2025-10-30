@@ -1,11 +1,11 @@
 import { Fragment } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import { bottomSheetContainer, bottomSheetStickyHeader } from "./BottomSheet.css";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import ListDivider from "@/components/common/listDivider/ListDivider";
-import Text from "@/components/common/text/Text";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
+import ListDivider from "@/components/ui/listDivider/ListDivider";
+import Text from "@/components/ui/text/Text";
 import GeneralItem from "../card/general/GeneralItem";
 import { useMultiSelect } from "@/hooks/useMultiSelect";
 import { OrderItem as OrderItemType } from "@/types/mypage/orders";

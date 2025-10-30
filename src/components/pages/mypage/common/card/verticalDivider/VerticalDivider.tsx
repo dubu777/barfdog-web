@@ -1,4 +1,4 @@
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 
 export default function VerticalDivider() {
   return (

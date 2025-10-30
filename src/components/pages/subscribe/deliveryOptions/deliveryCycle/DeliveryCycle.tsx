@@ -1,4 +1,4 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import {
   mealFrequencyButtonWrapper,
   selectOptionWrapper,
@@ -6,7 +6,7 @@ import {
 import { useController, useFormContext, useWatch } from "react-hook-form";
 import { commonWrapper } from "@/styles/common.css";
 import { deliveryOptions } from "@/constants";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { useEffect } from "react";
 import { SubscriptionValues } from "@/types";
 

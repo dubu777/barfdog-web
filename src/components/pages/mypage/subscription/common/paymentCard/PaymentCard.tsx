@@ -1,7 +1,7 @@
 import * as styles from "./PaymentCard.css";
 import CardImage from "/public/images/mypage/card-small.svg";
 import CardChipImage from "/public/images/mypage/card-chip.svg";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { PAYMENT_LABEL } from "@/constants";
 import { CARD_COLORS } from "@/constants/mypage/subscription";
 import { PaymentMethod } from "@/types";

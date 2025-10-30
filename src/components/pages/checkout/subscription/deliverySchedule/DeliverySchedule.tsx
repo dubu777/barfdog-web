@@ -1,4 +1,4 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import OrderSection from "../../common/orderSection/OrderSection";
 import * as styles from "./DeliverySchedule.css";
 import DeliveryScheduleBottomSheet from "../../common/bottomSheet/deliveryScheduleBottomSheet/DeliveryScheduleBottomSheet";

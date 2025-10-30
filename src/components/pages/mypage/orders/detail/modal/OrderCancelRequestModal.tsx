@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { commonWrapper } from "@/styles/common.css";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import LabeledRadioButtonGroup from "@/components/common/labeledRadioButtonGroup/LabeledRadioButtonGroup";
-import Text from "@/components/common/text/Text";
-import Textarea from "@/components/common/textarea/Textarea";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
+import LabeledRadioButtonGroup from "@/components/ui/labeledRadioButtonGroup/LabeledRadioButtonGroup";
+import Text from "@/components/ui/text/Text";
+import Textarea from "@/components/ui/textarea/Textarea";
 import { CANCEL_REASON_LIST } from "@/constants/mypage/orders";
 import { RequestCancelOrderProps } from "@/types/mypage/orders";
 

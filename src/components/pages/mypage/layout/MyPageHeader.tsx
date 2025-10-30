@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import {useParams, usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useBackNavigation } from "@/utils";
 import Header from "@/components/layout/header/Header";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { getHeaderProps } from "@/utils/getHeaderProps";
 

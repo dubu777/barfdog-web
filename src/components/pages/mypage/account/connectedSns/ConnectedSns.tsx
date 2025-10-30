@@ -2,11 +2,11 @@
 import { commonWrapper } from "@/styles/common.css";
 import NaverImage from "public/images/mypage/naver.svg";
 import KakaoImage from "public/images/mypage/kakao.svg";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";

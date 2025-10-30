@@ -12,11 +12,11 @@ import { formatNumberWithCommas } from "@/utils";
 import CouponCard from "../couponCard/CouponCard";
 
 import useModal from "@/hooks/useModal";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
 import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
-import Divider from "../../../common/divider/Divider";
+import Divider from "../../../ui/divider/Divider";
 import CouponCategoryTabs from "../couponCategoryTabs/CouponCategoryTabs";
 import CreateCoupon from "../createCoupon/CreateCoupon";
 import { useCreateCoupon } from "@/api/coupon/mutations/useCreateCoupon";

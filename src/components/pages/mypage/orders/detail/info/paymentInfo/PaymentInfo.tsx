@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";

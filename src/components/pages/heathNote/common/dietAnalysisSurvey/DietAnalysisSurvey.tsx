@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import AccordionIcon from '/public/images/icons/chevron-right-blue.svg';
 import SurveyImage from '/public/images/healthNote/full-check/diet-analysis-survey.png'
-import Text from "@/components/common/text/Text";
-import Button from "@/components/common/button/Button";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Button from "@/components/ui/button/Button";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 
 interface DietAnalysisSurveyProps {
 	title: string;

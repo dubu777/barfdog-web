@@ -1,16 +1,16 @@
 import { useFormContext, useWatch, useController } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 import {
   PROBIOME_FORM_INFO,
   PROBIOME_TITLES,
 } from "@/constants/healthNote/probiome";
 import { ProbiomeStepValues } from "@/utils/validation/probiomeValidation";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import Text from "@/components/common/text/Text";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import Chips from "@/components/common/chips/Chips";
-import SurveyButtonGroup from "@/components/common/survey/surveyButtonGroup/SurveyButtonGroup";
+import Chips from "@/components/ui/chips/Chips";
+import SurveyButtonGroup from "@/components/domain/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;

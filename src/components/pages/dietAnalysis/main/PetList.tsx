@@ -1,8 +1,8 @@
 "use client";
 
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import CreateButton from "@/components/common/createButton/CreateButton";
+import CreateButton from "@/components/ui/createButton/CreateButton";
 import PetCard from "./petCard/PetCard";
 import { Pet } from "@/types/pet";
 import React, { ReactNode, RefObject } from "react";

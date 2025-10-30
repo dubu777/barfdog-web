@@ -1,8 +1,8 @@
 import * as styles from "./ItemCategoryTab.css";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
-import Divider from "@/components/common/divider/Divider";
-import TabBar from "@/components/common/tabBar/TabBar";
+import Divider from "@/components/ui/divider/Divider";
+import TabBar from "@/components/ui/tabBar/TabBar";
 import ItemDetailLayout from "../../layout/ItemDetailLayout";
 import ItemReview from "./itemReview/ItemReview";
 import RefundExchangeGuide from "@/components/pages/store/detail/itemCategoryTab/refundExchangeGuide/RefundExchangeGuide";

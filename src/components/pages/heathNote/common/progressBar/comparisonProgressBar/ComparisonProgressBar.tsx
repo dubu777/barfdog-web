@@ -1,7 +1,7 @@
 import * as styles from './ComparisonProgressBar.css';
 import { ReactNode } from "react";
-import Text from "@/components/common/text/Text";
-import Chips from "@/components/common/chips/Chips";
+import Text from "@/components/ui/text/Text";
+import Chips from "@/components/ui/chips/Chips";
 import { getScoreChangeStatus }  from "@/utils/healthNote/common/getHealthStatus";
 
 interface ComparisonProgressBarProps {

@@ -2,10 +2,10 @@
 import * as yup from "yup";
 import { commonWrapper } from "@/styles/common.css";
 import { Controller } from "react-hook-form";
-import InputField from "@/components/common/inputField/InputField";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Text from "@/components/common/text/Text";
-import InputStatusMessage from "@/components/common/inputStatusMessage/InputStatusMessage";
+import InputField from "@/components/ui/inputField/InputField";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
+import InputStatusMessage from "@/components/ui/inputStatusMessage/InputStatusMessage";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { SetPassword as SetPasswordType } from "@/types/mypage/account";
 import { getPasswordCriteria, isValidPassword } from "@/utils/validation/auth/password";

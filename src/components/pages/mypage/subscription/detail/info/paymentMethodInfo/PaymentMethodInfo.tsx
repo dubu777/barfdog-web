@@ -1,4 +1,4 @@
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import PaymentCard from "@/components/pages/mypage/subscription/common/paymentCard/PaymentCard";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";

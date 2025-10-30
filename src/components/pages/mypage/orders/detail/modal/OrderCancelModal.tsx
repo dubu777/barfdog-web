@@ -1,5 +1,5 @@
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
-import Text from "@/components/common/text/Text";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
+import Text from "@/components/ui/text/Text";
 import { OrderType } from "@/types/mypage/orders";
 
 interface OrderCancelModalProps {

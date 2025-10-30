@@ -1,6 +1,6 @@
 import * as styles from "./ImageButton.css";
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Image from "next/image";
 import CheckedBox from "public/images/option/checked_selection.svg";
 import UnCheckedBox from "public/images/option/unchecked_radio.svg";

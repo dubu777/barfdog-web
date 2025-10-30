@@ -1,9 +1,9 @@
 import * as styles from "./TotalScore.css";
 import CrownIcon from "/public/images/healthNote/full-check/crown.svg";
 import CohortIcon from "/public/images/healthNote/full-check/cohort.svg";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import CircleProgressBar from "@/components/pages/heathNote/common/progressBar/circleProgressBar/CircleProgressBar";
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
 import InfoBox from "@/components/pages/heathNote/common/infoBox/InfoBox";
 import { RESULT_HEALTH_STATUS_ICON_MAP } from "@/constants";

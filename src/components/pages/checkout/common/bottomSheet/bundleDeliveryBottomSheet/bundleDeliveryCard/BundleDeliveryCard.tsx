@@ -1,6 +1,6 @@
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 import * as styles from "./BundleDeliveryCard.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { BundleDeliveryAddress } from "@/types";
 import { commonWrapper } from "@/styles/common.css";
 

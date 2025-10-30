@@ -1,7 +1,7 @@
 import { SnsProvider } from "@/types";
 import { OAuthClientConfig } from "@/config/oauthClient";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
 import { TextColor } from "@/types/typography";
 import { snsButtonBox } from "./SocialLoginButton.css";
 import { useSocialLogin } from "@/hooks/auth/useSocialLogin";

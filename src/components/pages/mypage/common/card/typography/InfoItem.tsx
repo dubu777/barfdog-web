@@ -1,6 +1,6 @@
 import { commonWrapper } from "@/styles/common.css";
-import { fontColors, textStyles } from "@/components/common/text/Text.css";
-import Text from "@/components/common/text/Text";
+import { fontColors, textStyles } from "@/components/ui/text/Text.css";
+import Text from "@/components/ui/text/Text";
 
 interface InfoItemProps {
   label: string;

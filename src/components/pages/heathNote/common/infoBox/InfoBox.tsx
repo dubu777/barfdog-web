@@ -1,7 +1,7 @@
 import { ComponentType, ReactNode, SVGProps } from "react";
 import * as styles from './InfoBox.css';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
 
 interface DualInfoBoxProps {
 	label: string;

@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import CardImage from "../../../common/card/image/CardImage";
 import SubscriptionPlan from "./SubscriptionPlan";
 import SubscriptionStatus from "./SubscriptionStatus";

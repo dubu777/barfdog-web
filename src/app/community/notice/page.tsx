@@ -3,7 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import { prefetchGetInfiniteNoticeList } from "@/api/community/queries/prefetchGetInfiniteNoticeList";
 import NoticeList from "@/components/pages/community/notice/list/NoticeList";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 export default async function NoticePage() {
   const queryClient = new QueryClient();

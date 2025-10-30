@@ -3,8 +3,8 @@ import { sanitizedHTML } from "@/styles/common.css";
 import { useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 
 interface ItemDetailProps {
   contents: string;

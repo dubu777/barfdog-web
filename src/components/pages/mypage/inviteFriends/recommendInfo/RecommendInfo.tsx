@@ -1,13 +1,13 @@
 import { commonWrapper } from "@/styles/common.css";
 import { myRecommendationCode } from "@/components/pages/mypage/inviteFriends/InviteFriends.css";
 import { useState } from "react";
-import Text from "@/components/common/text/Text";
-import Chips from "@/components/common/chips/Chips";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import InviteFriendsImage from "/public/images/mypage/inviteFriends.svg";
 import InviteFriendsIcon from "/public/images/mypage/inviteFriendsIcon.svg";
-import InputField from "@/components/common/inputField/InputField";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import InputField from "@/components/ui/inputField/InputField";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
 import { useCreateReferralCode } from "@/api/mypage/inviteFriends/mutations/useCreateReferralCode";

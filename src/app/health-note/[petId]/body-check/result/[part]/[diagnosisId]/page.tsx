@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import BodyCheckResult from "@/components/pages/heathNote/bodyCheck/result/BodyCheckResult";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { BODY_PART } from "@/constants/healthNote/bodyCheck/common";
 import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 import { prefetchGetBodyCheckResultDetail } from "@/api/healthNote/bodyCheck/queries/prefetchGetBodyCheckResultDetail";

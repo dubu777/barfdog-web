@@ -2,9 +2,9 @@ import * as styles from '../MainInformation.css';
 import { Fragment } from "react";
 import { useRouter } from "next/navigation";
 import ArrowIcon from '/public/images/mypage/chevron-s.svg';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 
 const MENU_LIST = [
 	{ key: 'coupon', label: '쿠폰', url: '/mypage/coupon' },

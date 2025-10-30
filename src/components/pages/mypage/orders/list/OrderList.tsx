@@ -2,12 +2,12 @@
 import { commonWrapper } from "@/styles/common.css";
 import { Fragment } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import TabBar from "@/components/common/tabBar/TabBar";
-import Divider from "@/components/common/divider/Divider";
+import TabBar from "@/components/ui/tabBar/TabBar";
+import Divider from "@/components/ui/divider/Divider";
 import OrderItem from "./orderItem/OrderItem";
-import EmptyList from "@/components/common/emptyList/EmptyList";
-import Button from "@/components/common/button/Button";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import EmptyList from "@/components/ui/emptyList/EmptyList";
+import Button from "@/components/ui/button/Button";
+import InfiniteScrollTrigger from "@/components/ui/infiniteScrollTrigger/InfiniteScrollTrigger";
 import useFilterTabs from "@/hooks/useFilterTabs";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";

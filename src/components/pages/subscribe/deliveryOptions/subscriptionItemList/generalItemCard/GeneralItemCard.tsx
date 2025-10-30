@@ -2,7 +2,7 @@ import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../recipeItemCard/RecipeItemCard.css";
 import Image from "next/image";
 import { SubscribeGeneralItem } from "@/types";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 
 interface GeneralItemCardProps {
   amount: number;

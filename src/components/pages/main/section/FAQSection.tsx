@@ -4,8 +4,8 @@ import Image from "next/image";
 import FaqAvatar from '/public/images/main/faqAvatar.png';
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
 import {
 	mainFAQButton,
 	mainFAQButtonAvatar,
