@@ -204,7 +204,7 @@ interface CheckoutCoupon {
 interface SubscriptionCheckoutSheetResponse {
   subscribeVo: {
     subscriptionId: number;
-    plan: MealPlan;
+    plan: string; // Todo: API 수정 후 MealPlan 으로 변경
     nextPaymentPrice: number;
     discountGrade: number;
   };
@@ -215,8 +215,8 @@ interface SubscriptionCheckoutSheetResponse {
   email: string;
   /** 기본 배송지 */
   defaultAddress: DefaultAddress;
-  mealPlan: MealPlan;
-  deliveryPlan: DeliveryPlan;
+  mealPlan: string; // Todo: API 수정 후 MealPlan 으로 변경
+  deliveryPlan: string; // Todo: API 수정 후 DeliveryPlan 으로 변경
   /** 이번 배송일 (YYYY-MM-DD) */
   deliveryDate: string;
   /** 다음 배송일 (YYYY-MM-DD) */

@@ -53,10 +53,10 @@ export default function SurveyPageContainer({
       setIsLoading(true);
     },
     onSuccess: (response) => {
-      const reportId = response.data;
+      const surveyId = response.data;
       // 로딩 화면 2초 렌더링 후에 결과 페이지로 이동
       setTimeout(() => {
-        router.push(`/diet-analysis/result/${reportId}`);
+        router.push(`/diet-analysis/result/${surveyId}`);
       }, 2000);
     },
     onError: (err) => {

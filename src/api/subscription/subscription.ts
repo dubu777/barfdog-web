@@ -5,7 +5,10 @@ import {
   CreateSubscriptionRequest,
   CreateSubscriptionResponse,
   SubscriptionDetail,
+  SubscriptionInfoResponse,
+  SubscriptionOrderSheet,
 } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 import { AxiosInstance } from "axios";
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse[]> => {
@@ -20,11 +23,11 @@ export interface RequestCreateSubscription {
 }
 
 const getRawFoodOrderSheet = async (
-  reportId: number,
+  surveyId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<any> => {
   const { data } = await instance.get(
-    `/api/v2/orders/raw/sheet/subscription/${reportId}`
+    `/api/v2/orders/raw/sheet/subscription/${surveyId}`
   );
   if (data.success) {
     return data.data;
@@ -35,11 +38,11 @@ const getRawFoodOrderSheet = async (
 
 // 구독 정보 변경 - 구독 상세 조회 v2
 const getSubscriptionDetailV2 = async (
-  reportId: number,
+  surveyId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<SubscriptionDetail> => {
   const { data } = await instance.get(
-    `/api/v2/orders/subscription/${reportId}`
+    `/api/v2/orders/subscription/${surveyId}`
   );
   if (data.success) {
     return data.data;
@@ -84,14 +87,14 @@ const getRawFoodDetail = async (
 
 // 구독 주문서 - 구독 생성
 const createSubscription = async ({
-  reportId,
+  surveyId,
   body,
 }: {
-  reportId: number;
+  surveyId: number;
   body: CreateSubscriptionRequest;
 }): Promise<CreateSubscriptionResponse> => {
   const { data } = await axiosInstance.post(
-    `api/v2/orders/payment/sheet/subscription/${reportId}`,
+    `api/v2/orders/payment/sheet/subscription/${surveyId}`,
     body
   );
   if (data.success) {
@@ -101,6 +104,24 @@ const createSubscription = async ({
   throw new Error(message);
 };
 
+const getSubscriptionInfo = async (
+  subscribeId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<SubscriptionInfoResponse> => {
+  const { data } = await instance.get(`/api/v2/user/subscribes/${subscribeId}`);
+  return validateApiResponse(data, "구독 정보 조회에 실패했습니다.");
+};
+
+const getSubscriptionOrderSheet = async (
+  surveyId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<SubscriptionOrderSheet> => {
+  const { data } = await instance.get(
+    `/api/v2/user/recipes/with-recommendation?recipeSurveyId=${surveyId}`
+  );
+  return validateApiResponse(data, "구독 주문서 조회에 실패했습니다.");
+};
+
 export {
   getPlanDiscount,
   getRawFoodOrderSheet,
@@ -108,4 +129,6 @@ export {
   getRawFoodDetail,
   getSubscriptionDetailV2,
   updateSubscriptionV2,
+  getSubscriptionInfo,
+  getSubscriptionOrderSheet,
 };

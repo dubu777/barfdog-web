@@ -6,13 +6,13 @@ import MealFrequency from "./mealFrequency/MealFrequency";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
 import Text from "@/components/common/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import { DeliveryPlan, MealPlan, RawFoodOrderSheet } from "@/types";
+import { DeliveryPlan, MealPlan, SubscriptionOrderSheet } from "@/types";
 import SubscriptionItemList from "./subscriptionItemList/SubscriptionItemList";
 import SubscriptionSummary from "./subscriptionSummary/SubscriptionSummary";
 import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface DeliveryOptionsProps {
-  rawFoodSheetData: RawFoodOrderSheet;
+  orderSheetData: SubscriptionOrderSheet;
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
   paymentExpectedPrice: number;
@@ -22,7 +22,7 @@ interface DeliveryOptionsProps {
 }
 
 export default function DeliveryOptions({
-  rawFoodSheetData,
+  orderSheetData,
   mealPlan,
   deliveryPlan,
   paymentExpectedPrice,
@@ -48,7 +48,7 @@ export default function DeliveryOptions({
         mealPlan={mealPlan}
         deliveryPlan={deliveryPlan}
         calculatedRecipes={calculatedRecipes}
-        rawFoodItems={rawFoodSheetData.recipeList}
+        rawFoodItems={orderSheetData.recipeList}
       />
       <Divider />
       <SubscriptionSummary

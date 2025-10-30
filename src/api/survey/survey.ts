@@ -1,8 +1,8 @@
 import { ResultData } from "@/types/survey";
 import axiosInstance from "../axiosInstance";
 
-const getSurveyResult = async (reportId: number): Promise<ResultData> => {
-  const { data } = await axiosInstance.get(`/api/surveyReports/${reportId}`);
+const getSurveyResult = async (surveyId: number): Promise<ResultData> => {
+  const { data } = await axiosInstance.get(`/api/surveyReports/${surveyId}`);
 
   return data;
 };

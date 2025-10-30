@@ -87,12 +87,12 @@ export const [themeClass, themeVars] = createTheme({
     },
     kakao: {
       kakaoBackground: "#FDDC3F",
-      kakaoFont: "rgba(0, 0, 0, 0.85)"
+      kakaoFont: "rgba(0, 0, 0, 0.85)",
     },
     naver: {
       naverBackground: "#00C73C",
-      naverFont: "#FFFFFF"
-    }
+      naverFont: "#FFFFFF",
+    },
   },
   // ------------------ colors 디자인 시스템 ------------------
 

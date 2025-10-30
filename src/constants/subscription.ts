@@ -122,12 +122,12 @@ const recipeDetailTab = [
 
 const deliveryOptions = {
   mealPlan: [
-    { label: "하루 한 끼", value: "ONE_MEAL", discountRate: "3%" },
-    { label: "하루 두 끼", value: "TWO_MEAL", discountRate: "5%" },
+    { label: "하루 한 끼", value: 1, discountRate: "3%" },
+    { label: "하루 두 끼", value: 2, discountRate: "5%" },
   ],
   deliveryPlan: [
-    { label: "2주", value: "TWO_WEEK" },
-    { label: "4주", value: "FOUR_WEEK" },
+    { label: "2주", value: 2 },
+    { label: "4주", value: 4 },
   ],
 };
 
@@ -136,18 +136,26 @@ const subscribeStepMap: Record<string, number> = {
   deliveryCycle: 2,
 };
 
-const DELIVERY_PLAN = ["TWO_WEEK", "FOUR_WEEK"] as const;
+const DELIVERY_PLAN = [2, 4] as const;
 
-const MEAL_PLAN = ["ONE_MEAL", "TWO_MEAL"] as const;
+const MEAL_PLAN = [1, 2] as const;
 
 const DELIVERY_PLAN_LABEL = {
-  TWO_WEEK: "2주",
-  FOUR_WEEK: "4주",
+  2: "2주",
+  4: "4주",
 };
 
 const MEAL_PLAN_LABEL = {
-  ONE_MEAL: "한 끼",
-  TWO_MEAL: "두 끼",
+  1: "한 끼",
+  2: "두 끼",
+};
+
+const PLAN = ["FULL", "HALF", "FOUR_WEEKS_TWO_MEAL"] as const;
+
+const PLAN_LABEL = {
+  FULL: "풀 플랜",
+  HALF: "하프 플랜",
+  FOUR_WEEKS_TWO_MEAL: "4주 두 끼 플랜",
 };
 
 const SUBSCRIPTION_STATUSES = [
@@ -195,4 +203,6 @@ export {
   SUBSCRIPTION_STATUSES,
   SUBSCRIPTION_STATUS_LABEL,
   EDITABLE_SUBSCRIPTION_STATUSES,
+  PLAN,
+  PLAN_LABEL,
 };

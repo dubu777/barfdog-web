@@ -18,11 +18,11 @@ const createDietAnalysisResult = async (
 };
 
 const getDietAnalysisResult = async (
-  reportId: number,
+  surveyId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<DietAnalysisResult> => {
   const { data } = await instance.get(
-    `/api/v2/user/recipes/survey/${reportId}/analysis`
+    `/api/v2/user/recipes/survey/${surveyId}/analysis`
   );
 
   return data.data;

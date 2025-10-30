@@ -12,18 +12,18 @@ import Spinner from "@/components/common/spinner/Spinner";
 
 interface DietAnalysisResultPageProps {
   params: {
-    reportId: string;
+    surveyId: string;
   };
 }
 
 export default async function DietAnalysisResultPage({
   params,
 }: DietAnalysisResultPageProps) {
-  const reportId = Number(params.reportId);
+  const surveyId = Number(params.surveyId);
   const queryClient = new QueryClient();
 
   // 서버에서 데이터 prefetching
-  await prefetchGetDietAnalysisResult(queryClient, reportId);
+  await prefetchGetDietAnalysisResult(queryClient, surveyId);
   // 데이터 직렬화해서 클라이언트에 전달
   const dehydrateState = dehydrate(queryClient);
 
@@ -34,7 +34,7 @@ export default async function DietAnalysisResultPage({
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<Spinner fullscreen />}>
           <Header showBackButton backHref="/diet-analysis" />
-          <DietAnalysisResult reportId={reportId} />
+          <DietAnalysisResult surveyId={surveyId} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

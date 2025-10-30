@@ -4,16 +4,16 @@ import { RawFoodOrderSheet, UseSuspenseQueryCustomOptions } from "@/types";
 import { getRawFoodOrderSheet } from "../subscription";
 
 export function useGetRawFoodOrderSheet(
-  reportId: number,
+  surveyId: number,
   queryOptions?: UseSuspenseQueryCustomOptions<RawFoodOrderSheet>
 ) {
   return useSuspenseQuery<RawFoodOrderSheet>({
     queryKey: [
       queryKeys.SUBSCRIPTION.BASE,
       queryKeys.SUBSCRIPTION.GET_RAW_ORDER_SHEET,
-      reportId,
+      surveyId,
     ],
-    queryFn: () => getRawFoodOrderSheet(reportId),
+    queryFn: () => getRawFoodOrderSheet(surveyId),
     ...queryOptions,
   });
 }

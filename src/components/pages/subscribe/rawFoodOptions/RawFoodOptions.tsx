@@ -2,7 +2,10 @@
 
 import * as styles from "./RawFoodOptions.css";
 import { recipeTab } from "@/constants";
-import { RawFoodOrderSheet, SubscriptionValues } from "@/types/subscription";
+import {
+  SubscriptionOrderSheet,
+  SubscriptionValues,
+} from "@/types/subscription";
 import Text from "@/components/common/text/Text";
 import TabBar from "@/components/common/tabBar/TabBar";
 import Divider from "@/components/common/divider/Divider";
@@ -19,12 +22,12 @@ import { useRecipeSelections } from "@/hooks/subscription/useRecipeSelections";
 
 interface RawFoodOptionsProps {
   isEdit?: boolean;
-  rawFoodSheetData: RawFoodOrderSheet;
+  orderSheetData: SubscriptionOrderSheet;
 }
 
 export default function RawFoodOptions({
   isEdit = false,
-  rawFoodSheetData,
+  orderSheetData,
 }: RawFoodOptionsProps) {
   const { isOpen, onClose, onToggle } = useModal();
   const { control } = useFormContext<SubscriptionValues>();
@@ -34,7 +37,7 @@ export default function RawFoodOptions({
   });
 
   // 서버의 원본 레시피 리스트
-  const originalRecipes = rawFoodSheetData.recipeList;
+  const originalRecipes = orderSheetData.recipeList;
 
   // 계산 로직
   const { packMap } = useRecipeCalculator({
@@ -98,7 +101,7 @@ export default function RawFoodOptions({
     [refs]
   );
 
-  const name = getNameWithPossessiveSuffix(rawFoodSheetData.petName);
+  const name = getNameWithPossessiveSuffix(orderSheetData.petName);
   return (
     <section className={styles.subscribeOptionContainer}>
       <div className={styles.recipeSelectTitleWrapper({ isEdit })}>
@@ -143,10 +146,10 @@ export default function RawFoodOptions({
                     <RawFoodCard
                       key={rawFoodItem.recipeId}
                       rawFoodItem={rawFoodItem}
-                      dailyRecommendKcal={rawFoodSheetData.oneDayRecommendKcal}
-                      inedibleFoods={rawFoodSheetData.inedibleFoods}
+                      dailyRecommendKcal={orderSheetData.oneDayRecommendKcal}
+                      inedibleFoods={orderSheetData.inedibleFoods}
                       packData={packData}
-                      petName={rawFoodSheetData.petName}
+                      petName={orderSheetData.petName}
                       isUnder20g={packData.under20g !== undefined}
                       isSelected={sel.isSelected}
                       canOpenDetailModal={sel.canOpenDetailModal}
@@ -164,8 +167,8 @@ export default function RawFoodOptions({
       <RecommendKcalBottomSheet
         isOpen={isOpen}
         onClose={onClose}
-        petName={rawFoodSheetData.petName}
-        oneDayRecommendKcal={rawFoodSheetData.oneDayRecommendKcal}
+        petName={orderSheetData.petName}
+        oneDayRecommendKcal={orderSheetData.oneDayRecommendKcal}
       />
     </section>
   );

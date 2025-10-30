@@ -5,16 +5,16 @@ import { SubscriptionDetail } from "@/types/subscription";
 import { UseSuspenseQueryCustomOptions } from "@/types";
 
 export function useGetSubscriptionDetailV2(
-  reportId: number,
+  surveyId: number,
   queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionDetail>
 ) {
   return useSuspenseQuery<SubscriptionDetail>({
     queryKey: [
       queryKeys.SUBSCRIPTION.BASE,
       queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL,
-      reportId,
+      surveyId,
     ],
-    queryFn: () => getSubscriptionDetailV2(reportId),
+    queryFn: () => getSubscriptionDetailV2(surveyId),
     ...queryOptions,
   });
 }

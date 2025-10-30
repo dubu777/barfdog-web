@@ -120,7 +120,7 @@ export default function RecipeDetailModal({
           </Text>
         </div>
         <div className={commonWrapper({ gap: 4 })}>
-          {rawFoodItem.primaryIngredients.map((ingredient, idx) => (
+          {rawFoodItem.ingredients.map((ingredient, idx) => (
             <Chips
               key={idx}
               variant="solid"
@@ -157,7 +157,10 @@ export default function RecipeDetailModal({
         <RecipeIngredients
           ref={refs.ingredients}
           recipeId={rawFoodItem.recipeId}
-          ingredients={rawFoodItem.primaryIngredients}
+          ingredients={[
+            ...rawFoodItem.ingredients,
+            ...rawFoodItem.subIngredients,
+          ]}
         />
       </div>
       {!isRecipeSource && (

@@ -19,23 +19,29 @@ import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
 import RawFoodOptions from "../rawFoodOptions/RawFoodOptions";
-import { useGetRawFoodOrderSheet } from "@/api/subscription/queries/useGetRawFoodOrderSheet";
 import SubscriptionEditConfirm from "./confirm/SubscriptionEditConfirm";
 import { buildInitialSubscriptionForm } from "@/utils/subscription/buildInitialSubscriptionForm";
+import { useGetSubscriptionInfo } from "@/api/subscription/queries/useGetSubscriptionInfo";
+import { useGetSubscriptionOrderSheet } from "@/api/subscription/queries/useGetSubscriptionOrderSheet";
 
 interface SubscriptionEditProps {
-  reportId: number;
+  subscribeId: number;
+  surveyId: number;
 }
 
-export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
+export default function SubscriptionEdit({
+  subscribeId,
+  surveyId,
+}: SubscriptionEditProps) {
   // Router and state
   const router = useRouter();
   const [step, setStep] = useState<SubscriptionEditStep>("summary");
   const { isOpen, onClose, onToggle } = useModal();
 
   // API queries
-  const { data: detailData } = useGetSubscriptionDetailV2(reportId);
-  const { data: rawFoodSheetData } = useGetRawFoodOrderSheet(reportId);
+  const { data: subscriptionInfo } = useGetSubscriptionInfo(subscribeId);
+  const { data: orderSheetData } = useGetSubscriptionOrderSheet(surveyId);
+  console.log("subscriptionInfo:", subscriptionInfo);
 
   // Form setup
   const stableDefaultValues = useMemo(() => defaultSubscriptionValues(), []);
@@ -47,24 +53,19 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
 
   // Form initialization with subscription data
   useEffect(() => {
-    if (!detailData) return;
-    const initialValues = buildInitialSubscriptionForm(detailData);
+    if (!subscriptionInfo) return;
+    const initialValues = buildInitialSubscriptionForm(subscriptionInfo);
     form.reset(initialValues);
-  }, [detailData, form]);
+  }, [subscriptionInfo, form]);
 
   useScrollToTop(step);
   console.log(form.watch());
 
-  // Computed values
-  const editableSeq = detailData?.next
-    ? detailData.subscriptionCount + 1
-    : detailData?.subscriptionCount;
-
-  const packCount = detailData
+  const packCount = subscriptionInfo
     ? calculateDeliveryCyclePackCount(
-        detailData.mealPlan,
-        detailData.deliveryPlan,
-        detailData.rawFoods.length
+        subscriptionInfo.planInfo.mealCount,
+        subscriptionInfo.planInfo.weeks,
+        subscriptionInfo.recipeList.length
       )
     : 0;
 
@@ -101,17 +102,17 @@ export default function SubscriptionEdit({ reportId }: SubscriptionEditProps) {
         <Header onBack={handleBack} showBackButton centerTitle="식단 변경" />
         {step === "summary" && (
           <SubscriptionEditSummary
-            mealPlan={detailData.mealPlan}
-            deliveryPlan={detailData.deliveryPlan}
+            mealPlan={subscriptionInfo.planInfo.mealCount}
+            deliveryPlan={subscriptionInfo.planInfo.weeks}
+            subscriptionCount={subscriptionInfo.subscriptionCount}
             packCount={packCount}
-            editableSeq={editableSeq}
-            rawFoods={detailData.rawFoods}
+            rawFoods={subscriptionInfo.recipeList}
             onOpenPlanSheet={handleOpenPlanSheet}
             onGoToEdit={handleGoToEdit}
           />
         )}
-        {step === "edit" && rawFoodSheetData && (
-          <RawFoodOptions rawFoodSheetData={rawFoodSheetData} isEdit />
+        {step === "edit" && orderSheetData && (
+          <RawFoodOptions orderSheetData={orderSheetData} isEdit />
         )}
         {step === "confirm" && <SubscriptionEditConfirm />}
         {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}

@@ -13,22 +13,24 @@ import { HealthConcernType } from "@/types";
 import { EDITABLE_SUBSCRIPTION_STATUSES } from "@/constants";
 
 interface DietAnalysisResultProps {
-  reportId: number;
+  surveyId: number;
 }
 export default function DietAnalysisResult({
-  reportId,
+  surveyId,
 }: DietAnalysisResultProps) {
   const router = useRouter();
-  const { data: dietAnalysisResult } = useGetDietAnalysisResult(reportId);
+  const { data: dietAnalysisResult } = useGetDietAnalysisResult(surveyId);
   console.log("dietAnalysisResult", dietAnalysisResult);
   const isEdit = EDITABLE_SUBSCRIPTION_STATUSES.has(
     dietAnalysisResult.subscribeStatus
   );
   const handleNavigate = () => {
     if (isEdit) {
-      router.push(`/subscribe/${reportId}/edit`);
+      router.push(
+        `/subscribe/${surveyId}/edit/${dietAnalysisResult.subscribeId}`
+      );
     } else {
-      router.push(`/subscribe/${reportId}/order-sheet`);
+      router.push(`/subscribe/${surveyId}/order-sheet`);
     }
   };
 

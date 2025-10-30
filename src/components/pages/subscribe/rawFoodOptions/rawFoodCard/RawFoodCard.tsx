@@ -71,8 +71,8 @@ export default function RawFoodCard({
   const inedibleSet = useMemo(() => new Set(inedibleFoods), [inedibleFoods]);
 
   const inedibleOverlap = useMemo(
-    () => rawFoodItem.primaryIngredients.filter((ing) => inedibleSet.has(ing)),
-    [rawFoodItem.primaryIngredients, inedibleSet]
+    () => rawFoodItem.ingredients.filter((ing) => inedibleSet.has(ing)),
+    [rawFoodItem.ingredients, inedibleSet]
   );
 
   const handleButtonClick = () => {
