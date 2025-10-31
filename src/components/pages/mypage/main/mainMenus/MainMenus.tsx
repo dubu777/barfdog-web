@@ -27,89 +27,94 @@ export default function MainMenus() {
     );
   };
   const handleLogout = () => {
-    logout(undefined, {
-      onSuccess: () => {
-        deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-        deleteCookie(AUTH_CONFIG.REFRESH_TOKEN_COOKIE);
-        queryClient.clear();
-        router.push("/");
-        router.refresh();
-      },
-      onError: (error) => {
-        console.error("Logout error", error);
-      },
-    });
+    logout(undefined);
   };
   return (
     <article>
-      <div className={commonWrapper({
-        padding: 20,
-        direction: 'col',
-        gap: 16,
-        align: 'start',
-        backgroundColors: 'gray0',
-      })}>
+      <div
+        className={commonWrapper({
+          padding: 20,
+          direction: "col",
+          gap: 16,
+          align: "start",
+          backgroundColors: "gray0",
+        })}
+      >
         {MENU_LIST.map(({ category, menus }) => (
-          <div 
-            key={category} 
+          <div
+            key={category}
             className={commonWrapper({
-              direction: 'col',
-              align: 'start',
+              direction: "col",
+              align: "start",
             })}
           >
-            <Text 
-              type="headline1" 
+            <Text
+              type="headline1"
               className={commonWrapper({
                 paddingTop: 20,
                 paddingBottom: 16,
-                justify: 'start',
-            })}
+                justify: "start",
+              })}
             >
               {category}
             </Text>
             <Divider thickness={2} color="gray900" />
-            <ul className={commonWrapper({ direction: 'col' })}>
+            <ul className={commonWrapper({ direction: "col" })}>
               {menus.map(({ label, url, action }, index) => (
                 <Fragment key={label}>
-                  <li className={commonWrapper({
-                    padding: '16/0',
-                  })}>
+                  <li
+                    className={commonWrapper({
+                      padding: "16/0",
+                    })}
+                  >
                     {url ? (
                       <Link
                         href={url ?? "/mypage"}
-                        className={commonWrapper({ justify: 'start' })}
-                        onClick={() => handleCommunityLinkClick(url ?? "/mypage")}
+                        className={commonWrapper({ justify: "start" })}
+                        onClick={() =>
+                          handleCommunityLinkClick(url ?? "/mypage")
+                        }
                       >
                         <Text type="body1">{label}</Text>
                       </Link>
                     ) : (
                       action && (
-                        <button 
-                          onClick={action} 
-                          className={commonWrapper({ justify: 'start' })}
+                        <button
+                          onClick={action}
+                          className={commonWrapper({ justify: "start" })}
                         >
                           <Text type="body1">{label}</Text>
                         </button>
                       )
                     )}
                   </li>
-                  <ListDivider listLength={menus.length} index={index} color="gray200" />
+                  <ListDivider
+                    listLength={menus.length}
+                    index={index}
+                    color="gray200"
+                  />
                 </Fragment>
               ))}
             </ul>
           </div>
         ))}
       </div>
-      <div className={commonWrapper({
-        padding: 20,
-        paddingTop: 16,
-        paddingBottom: 60,
-        backgroundColors: 'gray50',
-        justify: 'start',
-      })}>
-        <button 
+      <div
+        className={commonWrapper({
+          padding: 20,
+          paddingTop: 16,
+          paddingBottom: 60,
+          backgroundColors: "gray50",
+          justify: "start",
+        })}
+      >
+        <button
           onClick={handleLogout}
-          className={commonWrapper({ paddingTop: 4, paddingBottom: 4, justify: 'start' })} 
+          className={commonWrapper({
+            paddingTop: 4,
+            paddingBottom: 4,
+            justify: "start",
+          })}
         >
           <Text type="body2">로그아웃</Text>
         </button>

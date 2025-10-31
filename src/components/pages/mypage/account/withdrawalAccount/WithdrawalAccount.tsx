@@ -15,8 +15,6 @@ import AlertModal from "@/components/common/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import useDeviceState from "@/hooks/useDeviceState";
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
-import { deleteCookie } from "@/utils/auth/cookie";
-import { AUTH_CONFIG } from "@/constants/auth";
 import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
 import { useWithdrawalAccount } from "@/api/mypage/account/mutations/useWithdrawalAccount";
 import { extractErrorCode } from "@/utils/api/apiResponseUtils";
@@ -44,7 +42,6 @@ const guideSteps = [
 ];
 export default function WithdrawalAccount() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { isMobileWidth } = useDeviceState();
   const [confirm, setConfirm] = useState<boolean>(false);
 
@@ -66,15 +63,7 @@ export default function WithdrawalAccount() {
       onSuccess: () => {
         router.push("/");
         sessionStorage.setItem("withdrawalSuccess", "true");
-        logout(undefined, {
-          onSuccess: () => {
-            deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-            deleteCookie(AUTH_CONFIG.REFRESH_TOKEN_COOKIE);
-            queryClient.clear();
-            router.push("/");
-            router.refresh();
-          },
-        });
+        logout(undefined);
       },
       onError: (error) => {
         const errorCode = extractErrorCode(error);
