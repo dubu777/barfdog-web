@@ -7,6 +7,6 @@ interface PetCreatePageProps {
 }
 
 export default function PetCreatePage({ searchParams }: PetCreatePageProps) {
-  const source = searchParams.source;
+  const source = searchParams?.source ?? "diet-analysis";
   return <PetCreateForm source={source} />;
 }

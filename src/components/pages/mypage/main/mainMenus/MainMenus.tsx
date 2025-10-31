@@ -14,9 +14,7 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 
 export default function MainMenus() {
-  const router = useRouter();
   const pathname = usePathname();
-  const queryClient = useQueryClient();
 
   const { mutate: logout } = useLogout();
 
