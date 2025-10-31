@@ -127,7 +127,7 @@ export default function CouponModal({
         },
       }
     );
-  }, [code, createCouponMutate, handleSuccess, handleError]);
+  }, [code, couponCategory, createCouponMutate, handleSuccess, handleError]);
 
   const handleModalClose = () => {
     setSelectedCoupon(null);

@@ -51,7 +51,7 @@ const getSubscriptionDetail = async (
 };
 
 // DELETE 예정
-const getPaymentList = async (instance: AxiosInstance = axiosInstance): Promise<any[]> => {
+const getPaymentList = async (instance: AxiosInstance = axiosInstance)=> {
   const { data } = await instance.get('/api/cards');
   return data._embedded?.querySubscribeCardsDtoList || [];
 }
@@ -61,9 +61,15 @@ const applyNextPaymentCoupon = async (subscribeId: number, body: ApplyNextPaymen
   return validateApiResponse(data, '다음 회차 쿠폰 적용에 실패했습니다.');
 }
 
+const cancelAppliedNextPaymentCoupon = async (subscribeId: number, body: ApplyNextPaymentCouponProps) => {
+  const { data } = await axiosInstance.put(`/api/subscribes/${subscribeId}/coupon/cancel`, body);
+  return validateApiResponse(data, '다음 회차 쿠폰 적용 취소에 실패했습니다.');
+}
+
 export {
   getSubscriptionList,
   getSubscriptionDetail,
   getPaymentList,
   applyNextPaymentCoupon,
+  cancelAppliedNextPaymentCoupon,
 }

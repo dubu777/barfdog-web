@@ -10,6 +10,18 @@ export function useSubscriptionModalControl() {
     applyNextPaymentCoupon: false,
   });
 
+  const [bottomSheets, setBottomSheets] = useState({
+    cancelNextPaymentCoupon: false,
+  });
+
+  const openBottomSheet = (bottomSheetName: keyof typeof bottomSheets) => {
+    setBottomSheets(prev => ({ ...prev, [bottomSheetName]: true }));
+  };
+
+  const closeBottomSheet = (bottomSheetName: keyof typeof bottomSheets) => {
+    setBottomSheets(prev => ({ ...prev, [bottomSheetName]: false }));
+  };
+
   const openModal = (modalName: keyof typeof modals) => {
     setModals(prev => ({ ...prev, [modalName]: true }));
   };
@@ -28,5 +40,9 @@ export function useSubscriptionModalControl() {
     openCancelSubscriptionModal: () => openModal('cancelSubscription'),
     openCancelSubscriptionConfirmModal: () => openModal('cancelSubscriptionConfirm'),
     openApplyNextPaymentCouponModal: () => openModal('applyNextPaymentCoupon'),
+    bottomSheets,
+    openBottomSheet,
+    closeBottomSheet,
+    openCancelNextPaymentCouponBottomSheet: () => openBottomSheet('cancelNextPaymentCoupon'),
   };
 }

@@ -14,6 +14,7 @@ interface PaymentInfoProps {
   nextPaymentDate: string;
   nextDeliveryDate: string;
   openApplyNextPaymentCouponModal?: () => void;
+  openCancelNextPaymentCouponBottomSheet?: () => void;
 }
 
 export default function PaymentInfo({
@@ -22,8 +23,8 @@ export default function PaymentInfo({
   nextPaymentDate,
   nextDeliveryDate,
   openApplyNextPaymentCouponModal,
+  openCancelNextPaymentCouponBottomSheet,
 }: PaymentInfoProps) {
-
   const setMaxAvailableCouponDiscount = useCouponStore(s => s.setMaxAvailableCouponDiscount);
 
   return (
@@ -60,7 +61,7 @@ export default function PaymentInfo({
             valueType="headline2"
           />
         </div>
-        {openApplyNextPaymentCouponModal && 
+        {(openApplyNextPaymentCouponModal || openCancelNextPaymentCouponBottomSheet) && 
           <Button 
             variant="outline"
             intent="primary"
@@ -68,9 +69,10 @@ export default function PaymentInfo({
             fullWidth
             onClick={() => {
               if (usingMemberCouponId) {
+                openCancelNextPaymentCouponBottomSheet?.();
                 return;
               } else {
-                openApplyNextPaymentCouponModal();
+                openApplyNextPaymentCouponModal?.();
                 setMaxAvailableCouponDiscount(nextPaymentPrice - IAMPORT_MIN_PAYMENT_PRICE);
               }
             }}

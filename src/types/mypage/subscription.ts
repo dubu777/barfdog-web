@@ -87,7 +87,7 @@ interface CancelSubscriptionProps {
 }
 
 interface ApplyNextPaymentCouponProps {
-  discount: number;
+  discount: number | string;
   memberCouponId: number;
   overDiscount: number;
 }

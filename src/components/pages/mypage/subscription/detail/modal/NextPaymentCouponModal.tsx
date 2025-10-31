@@ -26,14 +26,15 @@ export default function NextPaymentCouponModal({
   const couponList = useFlattenedInfiniteData(data, 'couponList');
   const cancelAppliedCoupon = useCouponStore(s => s.cancelAppliedCoupon);
 
-  console.log('nextPaymentPrice', nextPaymentPrice);
-
   return (
     <CouponModal
       orderType={ORDER_TYPE.SUBSCRIPTION}
       coupons={couponList}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={() => {
+        onClose();
+        cancelAppliedCoupon();
+      }}
       orderPrice={nextPaymentPrice}
       couponCategory={couponCategory}
       setCouponCategory={setCouponCategory}

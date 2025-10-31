@@ -1,10 +1,15 @@
-import { useApplyNextPaymentCoupon } from "@/api/mypage/subscription/mutations/useApplyNextPaymentCoupon";
-import { queryKeys } from "@/constants";
-import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
-import { ApplyNextPaymentCouponProps, CancelSubscriptionProps, ChangePaymentMethodProps } from "@/types/mypage/subscription";
-import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/constants";
+import { 
+  ApplyNextPaymentCouponProps, 
+  CancelSubscriptionProps, 
+  ChangePaymentMethodProps,
+} from "@/types/mypage/subscription";
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
+import { useApplyNextPaymentCoupon } from "@/api/mypage/subscription/mutations/useApplyNextPaymentCoupon";
+import { useCancelAppliedNextPaymentCoupon } from "@/api/mypage/subscription/mutations/useCancelAppliedNextPaymentCoupon";
 
 /**
  * 주문 관련 액션 훅
@@ -32,6 +37,7 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
   const queryClient = useQueryClient();
 
   const { mutate: applyNextPaymentCouponMutate } = useApplyNextPaymentCoupon();
+  const { mutate: cancelAppliedNextPaymentCouponMutate } = useCancelAppliedNextPaymentCoupon();
   const { handleSuccess, handleError } = useApiResponseHandler();
 
  // ------------------- 상세 ------------------- 
@@ -57,10 +63,33 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
         handleError(error, '쿠폰 적용에 실패했어요. 잠시 후 다시 시도해 주세요.', undefined, 'above-button');
       },
     });
-  }, []);
+  }, [subscriptionId, queryClient, applyNextPaymentCouponMutate, handleSuccess, handleError]);
+
+  const onCancelAppliedNextPaymentCoupon = useCallback((
+    body: ApplyNextPaymentCouponProps, 
+    onSuccess: () => void, 
+    onError: (error) => void,
+  ) => {
+    if (!subscriptionId) return;
+
+    console.log('다음 회차 쿠폰 적용 취소', body);
+    cancelAppliedNextPaymentCouponMutate({
+      subscribeId: subscriptionId,
+      body,
+    }, {
+      onSuccess: () => {
+        onSuccess();
+      },
+      onError: (error) => {
+        onError(error);
+      },
+    });
+  }, [subscriptionId, cancelAppliedNextPaymentCouponMutate]);
+
   const onEditSubscription = useCallback(() => {
     console.log('식단 변경');
   }, []);
+
   const onSkipSubscription = useCallback(() => {
     console.log('구독 건너뛰기');
   }, []);
@@ -74,7 +103,6 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
     if (isSuccess) {  
       onSuccess();
     } else {
-      // error
       onError();
     }
   }, [])
@@ -82,7 +110,7 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
   const onCancelSubscription = useCallback((body: CancelSubscriptionProps) => {
     console.log('구독 해지', body);
     router.push(`/mypage/subscription/`);
-  }, []);
+  }, [router]);
 
   // ------------------- 리스트 ------------------- 
   const onGoToDetail = useCallback((id: number) => {
@@ -90,7 +118,7 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
     if (!id) return;
 
     router.push(`/mypage/subscription/${id}`);
-  }, []);
+  }, [router]);
 
 
   const onRetryPayment = useCallback((id: number) => {
@@ -113,5 +141,6 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
     onKeepSubscription,
     onChangePaymentMethod,
     onGoToDetail,
+    onCancelAppliedNextPaymentCoupon,
   };
 }

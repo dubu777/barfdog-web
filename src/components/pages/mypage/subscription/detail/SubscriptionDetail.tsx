@@ -10,6 +10,7 @@ import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import ChangePaymentMethodModal from "./modal/ChangePaymentMethodModal";
 import CancelSubscriptionModal from "./modal/CancelSubscriptionModal";
 import NextPaymentCouponModal from "./modal/NextPaymentCouponModal";
+import CancelNextPaymentCouponBottomSheet from "./bottomSheet/CancelNextPaymentCouponBottomSheet";
 import { useGetSubscriptionDetail } from "@/api/mypage/subscription/queries/useGetSubscriptionDetail";
 import { useGetPaymentList } from "@/api/mypage/subscription/queries/useGetPaymentList";
 import { isSubscribingStatus } from "@/utils/mypage/subscription/subscriptionStatusStep";
@@ -29,21 +30,23 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
   const { data: paymentList } = useGetPaymentList();
   const paymentInfo = (paymentList as any[]).find((payment) => payment.subscribeCardDto.subscribeId === subscriptionId);
 
-  console.log(data, 'data');
-  
   const {
     modals,
     closeModal,
+    bottomSheets,
+    closeBottomSheet,
     openChangePaymentMethodModal,
     openChangePaymentMethodErrorModal,
     openCancelSubscriptionModal,
     openCancelSubscriptionConfirmModal,
     openApplyNextPaymentCouponModal,
+    openCancelNextPaymentCouponBottomSheet,
   } = useSubscriptionModalControl();
 
   // TODO: 하단 기능 로직 구현 필요
   const { 
     onApplyNextPaymentCoupon, 
+    onCancelAppliedNextPaymentCoupon,
     onEditSubscription, 
     onSkipSubscription, 
     onChangePaymentMethod,
@@ -76,7 +79,16 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
           nextPaymentPrice={subscriptionInfo.nextPaymentPrice}
           nextPaymentDate={subscriptionInfo.nextPaymentDate}
           nextDeliveryDate={subscriptionInfo.nextDeliveryDate}
-          openApplyNextPaymentCouponModal={isSubscribingStatus(subscribeStatus) ? openApplyNextPaymentCouponModal : undefined}
+          openApplyNextPaymentCouponModal={
+            isSubscribingStatus(subscribeStatus) 
+            ? openApplyNextPaymentCouponModal 
+            : undefined
+          }
+          openCancelNextPaymentCouponBottomSheet={
+            isSubscribingStatus(subscribeStatus) 
+            ? openCancelNextPaymentCouponBottomSheet 
+            : undefined
+          }
         />
         <Divider thickness={8} color="gray100" />
         <SubscriptionInfo
@@ -150,6 +162,21 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
           onClose={() => closeModal('applyNextPaymentCoupon')}
           nextPaymentPrice={subscriptionInfo.nextPaymentPrice}
           onApplyNextPaymentCoupon={onApplyNextPaymentCoupon}
+        />
+      )}
+      {bottomSheets.cancelNextPaymentCoupon &&
+      subscriptionInfo.usingMemberCouponId && (
+        <CancelNextPaymentCouponBottomSheet
+          isOpen={bottomSheets.cancelNextPaymentCoupon}
+          onClose={() => closeBottomSheet('cancelNextPaymentCoupon')}
+          onCancelAppliedNextPaymentCoupon={onCancelAppliedNextPaymentCoupon}
+          openApplyNextPaymentCouponModal={openApplyNextPaymentCouponModal}
+          couponInfo={{
+            discount: subscriptionInfo.discountCoupon ?? 0,
+            memberCouponId: subscriptionInfo.usingMemberCouponId ?? 0,
+            overDiscount: subscriptionInfo.overDiscount ?? 0,
+            couponName: subscriptionInfo.couponName ?? '',
+          }}
         />
       )}
     </>
