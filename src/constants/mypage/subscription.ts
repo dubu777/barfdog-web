@@ -105,6 +105,17 @@ const CARD_COLORS: Record<string, string> = {
   default: "#7C7C7C",
 };
 
+const SKIP_SUBSCRIPTION_TYPE = {
+  WEEK: {
+    title: '1주',
+    description: '기존 발송 예정일의 1주일 뒤에 받아볼게요',
+  },
+  ONCE: {
+    title: '1회',
+    description: '이번 회차를 건너뛰고 다음 회차 발송 예정일에 받아볼게요',
+  },
+} as const;
+
 export { 
   VISIBLE_SUBSCRIPTION_STATUS, 
   HIDDEN_SUBSCRIPTION_STATUS,
@@ -115,4 +126,5 @@ export {
   FEEDBACK_REASON_MAP,
   FEEDBACK_REASON_LIST,
   CARD_COLORS,
+  SKIP_SUBSCRIPTION_TYPE,
 };

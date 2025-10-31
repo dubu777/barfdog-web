@@ -1,13 +1,18 @@
+import { SubscriptionModalControl } from '@/types/mypage/subscription';
 import { useState } from 'react';
 
 export function useSubscriptionModalControl() {
-  const [modals, setModals] = useState({
+  const [modals, setModals] = useState<SubscriptionModalControl>({
     keepSubscription: false,
     changePaymentMethod: false,
     changePaymentMethodError: false,
     cancelSubscription: false,
     cancelSubscriptionConfirm: false,
     applyNextPaymentCoupon: false,
+    cancelRequestSuccess: false,
+    skipSubscription: false,
+    skipSubscriptionError: false,
+    skipSubscriptionConfirm: false,
   });
 
   const [bottomSheets, setBottomSheets] = useState({
@@ -40,6 +45,9 @@ export function useSubscriptionModalControl() {
     openCancelSubscriptionModal: () => openModal('cancelSubscription'),
     openCancelSubscriptionConfirmModal: () => openModal('cancelSubscriptionConfirm'),
     openApplyNextPaymentCouponModal: () => openModal('applyNextPaymentCoupon'),
+    openSkipSubscriptionModal: () => openModal('skipSubscription'),
+    openSkipSubscriptionErrorModal: () => openModal('skipSubscriptionError'),
+    openSkipSubscriptionConfirmModal: () => openModal('skipSubscriptionConfirm'),
     bottomSheets,
     openBottomSheet,
     closeBottomSheet,

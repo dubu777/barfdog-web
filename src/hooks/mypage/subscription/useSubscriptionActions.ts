@@ -32,6 +32,7 @@ import { useCancelAppliedNextPaymentCoupon } from "@/api/mypage/subscription/mut
  * @returns {Function} onKeepSubscription - 구독 유지하기
  */
 
+
 export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: number }) {
   const router = useRouter(); 
   const queryClient = useQueryClient();
@@ -39,6 +40,18 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
   const { mutate: applyNextPaymentCouponMutate } = useApplyNextPaymentCoupon();
   const { mutate: cancelAppliedNextPaymentCouponMutate } = useCancelAppliedNextPaymentCoupon();
   const { handleSuccess, handleError } = useApiResponseHandler();
+
+  const invalidateSubscriptionDetail = useCallback((message: string, toastPosition: 'above-button' | 'bottom' = 'bottom') => {
+    handleSuccess(message, toastPosition);
+    queryClient.invalidateQueries({
+      queryKey: [
+        queryKeys.MYPAGE.BASE,
+        queryKeys.MYPAGE.SUBSCRIPTION.BASE,
+        queryKeys.MYPAGE.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL,
+        subscriptionId,
+      ],
+    });
+  }, [subscriptionId, queryClient, handleSuccess]);
 
  // ------------------- 상세 ------------------- 
   const onApplyNextPaymentCoupon = useCallback((body: ApplyNextPaymentCouponProps) => {
@@ -50,20 +63,13 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
       body,
     }, {
       onSuccess: () => {
-        handleSuccess('쿠폰 적용이 완료됐어요', 'above-button');
-        queryClient.invalidateQueries({
-          queryKey: [
-            queryKeys.MYPAGE.BASE, 
-            queryKeys.MYPAGE.SUBSCRIPTION.GET_SUBSCRIPTION_DETAIL, 
-            subscriptionId
-          ],
-        });
+        invalidateSubscriptionDetail('쿠폰 적용이 완료됐어요', 'above-button');
       },
       onError: (error) => {
         handleError(error, '쿠폰 적용에 실패했어요. 잠시 후 다시 시도해 주세요.', undefined, 'above-button');
       },
     });
-  }, [subscriptionId, queryClient, applyNextPaymentCouponMutate, handleSuccess, handleError]);
+  }, [subscriptionId, applyNextPaymentCouponMutate, invalidateSubscriptionDetail, handleError]);
 
   const onCancelAppliedNextPaymentCoupon = useCallback((
     body: ApplyNextPaymentCouponProps, 
@@ -91,6 +97,7 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
   }, []);
 
   const onSkipSubscription = useCallback(() => {
+    invalidateSubscriptionDetail('건너뛰기 적용이 완료됐어요');
     console.log('구독 건너뛰기');
   }, []);
 

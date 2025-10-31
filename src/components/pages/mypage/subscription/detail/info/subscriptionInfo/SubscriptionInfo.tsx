@@ -14,6 +14,7 @@ import { numberOfPacksPerDay, subscriptionPlanInfo } from "@/constants";
 
 interface SubscriptionInfoProps {
   plan: PlanKey;
+  canSkipSubscription: boolean;
   subscriptionRecipeInfo: RecipeInfo[];
   oneMealGramsPerRecipe: string[];
   subscriptionActions?: {

@@ -1,4 +1,4 @@
-import { VISIBLE_SUBSCRIPTION_STATUS } from "@/constants/mypage/subscription";
+import { SKIP_SUBSCRIPTION_TYPE, VISIBLE_SUBSCRIPTION_STATUS } from "@/constants/mypage/subscription";
 import { PlanKey } from "../subscription";
 import { subscriptionStatus } from "@/constants";
 import { DiscountType, Page } from "../common";
@@ -92,14 +92,32 @@ interface ApplyNextPaymentCouponProps {
   overDiscount: number;
 }
 
+type SkipType = keyof typeof SKIP_SUBSCRIPTION_TYPE;
+
+interface SubscriptionModalControl {
+  keepSubscription?: boolean;
+  changePaymentMethod?: boolean;
+  changePaymentMethodError?: boolean;
+  cancelSubscription?: boolean;
+  cancelSubscriptionConfirm?: boolean;
+  applyNextPaymentCoupon?: boolean;
+  cancelRequestSuccess?: boolean;
+  skipSubscription?: boolean;
+  skipSubscriptionError?: boolean;
+  skipSubscriptionConfirm?: boolean;
+  cancelNextPaymentCoupon?: boolean;
+}
 export type { 
   SubscriptionStatus,
   VisibleSubscribeStatus,
   SubscriptionItem,
   SubscriptionList,
+  SubscriptionInfo,
   RecipeInfo,
   SubscriptionDetail,
   ChangePaymentMethodProps,
   CancelSubscriptionProps,
   ApplyNextPaymentCouponProps,
+  SkipType,
+  SubscriptionModalControl,
 };
