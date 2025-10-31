@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { commonLayoutContainer } from "@/styles/common.css";
 import localFont from "next/font/local";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import WebViewBridgeProvide from "@/providers/WebViewBridgeProvider";
 import Toast from "@/components/common/toast/Toast";
 import SnackBar from "@/components/common/snackBar/SnackBar";
 import GlobalAlertModal from "@/components/common/modal/globalAlertModal/GlobalAlertModal";
@@ -30,15 +31,17 @@ export default function RootLayout({
     <html lang="ko" className={themeClass}>
       <body className={pretendard.className}>
         <ReactQueryProvider>
-          {/* <ChannelTalkProvider> */}
-          <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
-            {children}
-          </div>
-          <GlobalAlertModal />
-          <SnackBar />
-          <Toast />
-          <div id="modal-root" />
-          {/* </ChannelTalkProvider> */}
+          <WebViewBridgeProvide>
+            {/* <ChannelTalkProvider> */}
+            <div className={`${commonLayoutContainer} ${pretendard.variable}`}>
+              {children}
+            </div>
+            <GlobalAlertModal />
+            <SnackBar />
+            <Toast />
+            <div id="modal-root" />
+            {/* </ChannelTalkProvider> */}
+          </WebViewBridgeProvide>
         </ReactQueryProvider>
       </body>
     </html>
