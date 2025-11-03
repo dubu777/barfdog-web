@@ -25,8 +25,11 @@ import { useCancelAppliedNextPaymentCoupon } from "@/api/mypage/subscription/mut
  * SUBSCRIBING, SUBSCRIBE_PENDING 상태일 때
  * @returns {Function} onGoToDetail - 구독 상세 정보 확인/변경
  * 
- * SUBSCRIBE_PENDING, SUBSCRIBE_CANCEL 상태일 때
+ * SUBSCRIBE_PENDING 상태일 때
  * @returns {Function} onRetryPayment - 결제 수단 변경/재시도
+ * 
+ * SUBSCRIBE_CANCEL 상태일 때
+ * @returns {Function} onResubscribe - 재구독하기
  * 
  * SUBSCRIBE_WILL_CANCEL 상태일 때
  * @returns {Function} onKeepSubscription - 구독 유지하기
@@ -92,9 +95,12 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
     });
   }, [subscriptionId, cancelAppliedNextPaymentCouponMutate]);
 
-  const onEditSubscription = useCallback(() => {
+  const onEditSubscription = useCallback((surveyId: number) => {
     console.log('식단 변경');
-  }, []);
+    if (!surveyId) return;
+    
+    router.push(`/subscribe/${surveyId}/edit/${subscriptionId}`);
+  }, [router, subscriptionId]);
 
   const onSkipSubscription = useCallback(() => {
     invalidateSubscriptionDetail('건너뛰기 적용이 완료됐어요');
@@ -127,16 +133,18 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
     router.push(`/mypage/subscription/${id}`);
   }, [router]);
 
-
   const onRetryPayment = useCallback((id: number) => {
     console.log('결제 수단 변경/재시도', id);
   }, []);
-
+  
+  const onResubscribe = useCallback((id: number) => {
+    console.log('재구독하기', id);
+    router.push(`/checkout/subscription/${id}`);
+  }, [router]);
 
   // TODO: 구독 리스트 id값 인자로 받아서 처리 필요, 리스트 무효화 필요
   const onKeepSubscription = useCallback((id: number) => {
     console.log('구독 유지하기', id);
-
   }, []);
 
   return {
@@ -145,6 +153,7 @@ export function useSubscriptionActions({ subscriptionId }: { subscriptionId?: nu
     onSkipSubscription,
     onCancelSubscription,
     onRetryPayment,
+    onResubscribe,
     onKeepSubscription,
     onChangePaymentMethod,
     onGoToDetail,

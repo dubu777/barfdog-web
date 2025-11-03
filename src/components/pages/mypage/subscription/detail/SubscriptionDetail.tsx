@@ -19,6 +19,7 @@ import { VisibleSubscribeStatus } from "@/types/mypage/subscription";
 import { useSubscriptionActions } from "@/hooks/mypage/subscription/useSubscriptionActions";
 import { useSubscriptionModalControl } from "@/hooks/mypage/subscription/useSubscriptionModalControl";
 import { canSkipSubscription } from "@/utils/mypage/subscription/subscriptionSkip";
+import { CurrentPlanInfo, DeliveryPlan, MealPlan, RawFood } from "@/types";
 
 interface SubscriptionDetailProps {
   subscriptionId: number;
@@ -59,6 +60,33 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
     onRetryPayment,
   } = useSubscriptionActions({ subscriptionId });
 
+  // TODO: 임시 적용 추후 수정 필요
+  const temp = {
+    subscriptionId: 3757,
+    subscriptionCount: 2,
+    planInfo: {
+      name: "FULL",
+      weeks: 2,
+      days: 14,
+      mealCount: 2
+    },
+    recipeList: [
+      {
+        displayImageUrl: {
+            url: "http://localhost:8080/display/recipes?filename=82467d35-d70e-4295-b769-cd3253d3e9f1.jpg"
+        },
+        recipeId: 7,
+        name: "DUCK&LAMB +",
+        oneMealGramsPerRecipe: 59.09,
+        pricePerGram: 59.5,
+        originalPrice: 75600
+      }
+    ],
+    paymentPrice: 93530,
+    surveyId: 1,
+  }
+  
+
   if (!data) return null;
   return (
     <>
@@ -71,8 +99,8 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
         })}
       >
         <BasicInfo 
+          planInfo={temp.planInfo as CurrentPlanInfo}
           subscriptionId={subscriptionId}
-          plan={subscriptionInfo.plan}
           dogName={subscriptionInfo.dogName}
           recipeNames={subscriptionRecipeInfo.map((recipe) => recipe.name).join(', ')}
           status={subscriptionInfo.subscribeStatus}
@@ -97,14 +125,14 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
         />
         <Divider thickness={8} color="gray100" />
         <SubscriptionInfo
-          plan={subscriptionInfo.plan}
-          canSkipSubscription={canSkipSubscription(subscriptionInfo.nextPaymentDate)}
-          subscriptionRecipeInfo={subscriptionRecipeInfo}
-          oneMealGramsPerRecipe={subscriptionInfo.oneMealGramsPerRecipe.split(',')}
+          mealCount={temp.planInfo.mealCount as MealPlan}
+          weeks={temp.planInfo.weeks as DeliveryPlan}
+          recipeList={temp.recipeList as RawFood[]}
           subscriptionActions={
             isSubscribingStatus(subscribeStatus)
               ? {
-                  onEditSubscription: onEditSubscription,
+                  // TODO: 임시 적용 추후 수정 필요
+                  onEditSubscription: () => onEditSubscription(temp.surveyId),
                   onSkipSubscription: () => {
                     if (canSkipSubscription(subscriptionInfo.nextPaymentDate)) {
                       openSkipSubscriptionModal();
@@ -222,7 +250,6 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
           buttonPosition="center"
         />
       )}
-
     </>
   );
 }
