@@ -4,11 +4,11 @@ import { format } from "date-fns";
 import Divider from "@/components/ui/divider/Divider";
 import Text from "@/components/ui/text/Text";
 import Card from "@/components/ui/card/Card";
-import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import { PaymentMethod } from "@/types";
 import { PAYMENT_LABEL } from "@/constants";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 
 interface RefundInfoProps {
   requestDate: string;
@@ -59,13 +59,23 @@ export default function RefundInfo({
           padding: '0/12',
           gap: 6,
         })}>
-          <InfoItem
+          <LabelValueItem
             label="취소 요청일자"
             value={format(requestDate, 'yyyy.MM.dd HH:mm')}
+            labelType="label4"
+            labelColor='gray700'
+            valueType="body3"
+            valueColor='gray900'
+            justify='between'
           />
-          <InfoItem
+          <LabelValueItem
             label="취소 처리일자"
             value={format(confirmDate, 'yyyy.MM.dd HH:mm')}
+            labelType="label4"
+            labelColor='gray700'
+            valueType="body3"
+            valueColor='gray900'
+            justify='between'
           />
         </div>
         <Divider thickness={1} color="gray100" />
@@ -80,16 +90,23 @@ export default function RefundInfo({
           </div>
           <Divider thickness={1} color="gray300" />
           <div className={commonWrapper({ direction: 'col', gap: 6 })}>
-            <InfoItem
+            <LabelValueItem
               label="총 환불 금액"
               value={`${paymentPrice.toLocaleString()}원`}
               labelType="headline2"
+              labelColor='gray700'
               valueType="headline2"
               valueColor="red"
+              justify='between'
             />
-            <InfoItem
+            <LabelValueItem
               label="환불 수단"
               value={PAYMENT_LABEL[paymentMethod]}
+              labelType="label4"
+              labelColor='gray700'
+              valueType="body3"
+              valueColor='gray900'
+              justify='between'
             />
           </div>
         </div>
