@@ -6,12 +6,12 @@ import {
 } from "@/utils/subscription/calculateRecipe";
 
 interface UseSubscriptionCalculationProps {
-  savedSelection: SubscriptionValues["rawFoods"];
+  savedSelection: SubscriptionValues["recipeList"];
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
 }
 
-export type CalculatedRecipe = SubscriptionValues["rawFoods"][0] & {
+export type CalculatedRecipe = SubscriptionValues["recipeList"][0] & {
   originalPrice: number;
   discountedPrice: number;
   packCount: number;

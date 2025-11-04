@@ -155,18 +155,19 @@ interface RawFoodOrderSheet {
   recipeList: RawFoodOrderItem[];
 }
 
-interface RawFoodPayload {
+interface RecipeListType {
   oneMealGramsPerRecipe: number; // 해당 레시피 1팩당 급여량(g)
   originalPrice: number; // 할인 적용 전 가격
   recipeId: number;
 }
 
 interface CreateSubscriptionRequest {
-  deliveryPlan: DeliveryPlan;
-  mealPlan: MealPlan;
-  paymentExpectedPrice: number; // 할인 적용된 최종 결제 예정 금액
-  originPrice: number; // 할인 적용 전 전체 금액
-  rawFoods: RawFoodPayload[];
+  plan: Plan;
+  recipeList: RecipeListType[];
+}
+
+interface UpdateSubscriptionRequest extends CreateSubscriptionRequest {
+  isAgreeSubscription: boolean;
 }
 
 interface CreateSubscriptionResponse {
@@ -204,18 +205,7 @@ interface SubscriptionDetail {
   subscriptionId: number;
 }
 
-interface UpdateSubscriptionRequest {
-  isNext: boolean; // 다음 배송부터 변경할지 여부 - false면 이번 배송부터 변경
-  deliveryPlan: DeliveryPlan;
-  isAgreeSubscription: boolean; // 구독 약관 동의 여부
-  mealPlan: MealPlan;
-  discountPrice: number; // 할인 금액
-  paymentExpectedPrice: number; // 할인 적용된 최종 결제 예정 금액
-  updatePrice: number; // 할인 적용 전 전체 금액
-  rawFoods: RawFoodPayload[];
-}
-
-type RawFoodFormItem = {
+type RecipeFormItem = {
   recipeId: number;
   packGrams: number;
   packPrice: number;
@@ -224,7 +214,8 @@ type RawFoodFormItem = {
 interface SubscriptionValues {
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
-  rawFoods: RawFoodFormItem[] | [];
+  recipeList: RecipeFormItem[] | [];
+  isAgreeSubscription?: boolean;
 }
 
 interface CurrentPlanInfo {
@@ -338,9 +329,10 @@ export type {
   RawFood,
   SubscriptionEditStep,
   SubscriptionValues,
-  RawFoodFormItem,
+  RecipeFormItem,
   SubscriptionInfoResponse,
   CurrentPlanInfo,
   CurrentRecipeItem,
   SubscriptionOrderSheet,
+  Plan,
 };

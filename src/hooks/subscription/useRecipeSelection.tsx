@@ -18,7 +18,7 @@ interface UseRecipeSelectionReturn {
   removeSelection: () => void;
   /** 해당 recipeId가 선택되어 있는지 여부 */
   isSelected: boolean;
-  /** RHF의 rawFoods 원본 값 */
+  /** RHF의 recipeList 원본 값 */
   canAddSelection: boolean;
   stagedSelection: StagedSelection | null;
 }
@@ -31,18 +31,18 @@ export const useRecipeSelection = (
   const { control, getValues } = useFormContext<SubscriptionValues>();
   const { append, update, remove } = useFieldArray({
     control,
-    name: "rawFoods",
+    name: "recipeList",
   });
 
-  const rawFoods = useWatch({ control, name: "rawFoods" });
+  const recipeList = useWatch({ control, name: "recipeList" });
   const selectedIds = useMemo(
-    () => rawFoods?.map((f) => f.recipeId) ?? [],
-    [rawFoods]
+    () => recipeList?.map((f) => f.recipeId) ?? [],
+    [recipeList]
   );
 
   const savedSelection = useMemo(
-    () => rawFoods?.find((f) => f.recipeId === recipeId),
-    [rawFoods, recipeId]
+    () => recipeList?.find((f) => f.recipeId === recipeId),
+    [recipeList, recipeId]
   );
 
   const [stagedSelection, setStagedSelection] =
@@ -74,7 +74,7 @@ export const useRecipeSelection = (
     }
 
     // 신규 추가인데 제한 초과면 거절
-    const current = getValues("rawFoods") ?? [];
+    const current = getValues("recipeList") ?? [];
     const exists = current.some((f) => f.recipeId === recipeId);
     if (!exists && current.length >= MAX_SELECTABLE_ITEMS) {
       return { success: false, reason: "LIMIT" };
@@ -104,7 +104,7 @@ export const useRecipeSelection = (
   }, []);
 
   const removeSelection = useCallback(() => {
-    const current = getValues("rawFoods") ?? [];
+    const current = getValues("recipeList") ?? [];
     const idx = current.findIndex((f) => f.recipeId === recipeId);
     if (idx > -1) remove(idx);
     setStagedSelection(null);

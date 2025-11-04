@@ -4,9 +4,9 @@ import {
   PlanDiscountResponse,
   CreateSubscriptionRequest,
   CreateSubscriptionResponse,
-  SubscriptionDetail,
   SubscriptionInfoResponse,
   SubscriptionOrderSheet,
+  UpdateSubscriptionRequest,
 } from "@/types";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 import { AxiosInstance } from "axios";
@@ -33,55 +33,6 @@ const getRawFoodOrderSheet = async (
     return data.data;
   }
   const message = data.detailMessage ?? "생식 주문서 조회에 실패했습니다";
-  throw new Error(message);
-};
-
-// 구독 정보 변경 - 구독 상세 조회 v2
-const getSubscriptionDetailV2 = async (
-  surveyId: number,
-  instance: AxiosInstance = axiosInstance
-): Promise<SubscriptionDetail> => {
-  const { data } = await instance.get(
-    `/api/v2/orders/subscription/${surveyId}`
-  );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "구독 상세 조회에 실패했습니다";
-  throw new Error(message);
-};
-
-// 구독 정보 변경 요청
-const updateSubscriptionV2 = async ({
-  orderId,
-  body,
-}: {
-  orderId: number;
-  body: CreateSubscriptionRequest;
-}): Promise<CreateSubscriptionResponse> => {
-  const { data } = await axiosInstance.post(
-    `/api/v2/subscription/order/${orderId}`,
-    body
-  );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "구독 정보 변경에 실패했습니다";
-  throw new Error(message);
-};
-
-// 구독 주문서 - 생식 상세
-const getRawFoodDetail = async (
-  recipeId: number,
-  instance: AxiosInstance = axiosInstance
-): Promise<any> => {
-  const { data } = await instance.get(
-    `/api/v2/orders/sheet/subscription/recipes/${recipeId}`
-  );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "생식 상세 조회에 실패했습니다";
   throw new Error(message);
 };
 
@@ -122,13 +73,26 @@ const getSubscriptionOrderSheet = async (
   return validateApiResponse(data, "구독 주문서 조회에 실패했습니다.");
 };
 
+// 구독 정보 변경 요청
+const updateSubscription = async ({
+  subscribeId,
+  body,
+}: {
+  subscribeId: number;
+  body: UpdateSubscriptionRequest;
+}): Promise<CreateSubscriptionResponse> => {
+  const { data } = await axiosInstance.post(
+    `/api/v2/user/subscribes/${subscribeId}`,
+    body
+  );
+  return validateApiResponse(data, "구독 정보 변경에 실패했습니다.");
+};
+
 export {
   getPlanDiscount,
   getRawFoodOrderSheet,
   createSubscription,
-  getRawFoodDetail,
-  getSubscriptionDetailV2,
-  updateSubscriptionV2,
+  updateSubscription,
   getSubscriptionInfo,
   getSubscriptionOrderSheet,
 };

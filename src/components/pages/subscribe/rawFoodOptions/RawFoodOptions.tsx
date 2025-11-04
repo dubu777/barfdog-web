@@ -33,7 +33,7 @@ export default function RawFoodOptions({
   const { control } = useFormContext<SubscriptionValues>();
   const savedRecipes = useWatch({
     control,
-    name: "rawFoods",
+    name: "recipeList",
   });
 
   // 서버의 원본 레시피 리스트

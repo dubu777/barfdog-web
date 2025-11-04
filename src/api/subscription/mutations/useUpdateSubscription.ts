@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { UseMutationCustomOptions } from "@/types";
-import { updateSubscriptionV2 } from "../subscription";
+import { updateSubscription } from "../subscription";
 
-export function useUpdateSubscriptionV2(
+export function useUpdateSubscription(
   mutationOptions?: UseMutationCustomOptions
 ) {
   return useMutation({
-    mutationFn: updateSubscriptionV2,
+    mutationFn: updateSubscription,
     ...mutationOptions,
   });
 }

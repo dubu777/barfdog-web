@@ -7,7 +7,7 @@ import { RawFoodOrderItem, SubscriptionValues } from "@/types";
 
 interface UseRecipeCalculatorProps {
   originalRecipes: RawFoodOrderItem[];
-  savedRecipes: SubscriptionValues["rawFoods"];
+  savedRecipes: SubscriptionValues["recipeList"];
 }
 
 export const useRecipeCalculator = ({

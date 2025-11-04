@@ -11,7 +11,7 @@ export function buildInitialSubscriptionForm(
   return {
     mealPlan: data.planInfo.mealCount,
     deliveryPlan: data.planInfo.weeks,
-    rawFoods: data.recipeList.map((rawFood) => {
+    recipeList: data.recipeList.map((rawFood) => {
       const { packGrams, packPrice } = calculateRecipePack({
         recommendedPackGrams: rawFood.oneMealGramsPerRecipe,
         pricePerGram: rawFood.pricePerGram,

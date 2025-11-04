@@ -1,5 +1,6 @@
 import { DELIVERY_PLAN, MEAL_PLAN } from "@/constants";
 import { DeliveryPlan, MealPlan, SubscriptionValues } from "@/types";
+import { is } from "date-fns/locale";
 import * as yup from "yup";
 
 export const subscriptionSchema: yup.ObjectSchema<SubscriptionValues> = yup
@@ -13,7 +14,7 @@ export const subscriptionSchema: yup.ObjectSchema<SubscriptionValues> = yup
       .mixed<MealPlan>()
       .oneOf([...MEAL_PLAN], "식사 횟수를 선택해주세요")
       .required("식사 횟수를 선택해주세요"),
-    rawFoods: yup
+    recipeList: yup
       .array()
       .of(
         yup.object({
@@ -28,12 +29,17 @@ export const subscriptionSchema: yup.ObjectSchema<SubscriptionValues> = yup
       )
       .min(1, "레시피를 선택해주세요.")
       .required(),
+    isAgreeSubscription: yup
+      .boolean()
+      .oneOf([true], "구독 약관에 동의하셔야 합니다.")
+      .required("구독 약관에 동의하셔야 합니다."),
   });
 
 export const BASE_DEFAULT_SUBSCRIPTION_VALUES: SubscriptionValues = {
   mealPlan: 2 as MealPlan,
   deliveryPlan: 2 as DeliveryPlan,
-  rawFoods: [],
+  recipeList: [],
+  isAgreeSubscription: false,
 };
 
 export function defaultSubscriptionValues(
@@ -42,6 +48,7 @@ export function defaultSubscriptionValues(
   return {
     ...BASE_DEFAULT_SUBSCRIPTION_VALUES,
     ...initial,
-    rawFoods: initial?.rawFoods ?? BASE_DEFAULT_SUBSCRIPTION_VALUES.rawFoods,
+    recipeList:
+      initial?.recipeList ?? BASE_DEFAULT_SUBSCRIPTION_VALUES.recipeList,
   };
 }

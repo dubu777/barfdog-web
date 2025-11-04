@@ -2,29 +2,30 @@
 
 import Text from "@/components/common/text/Text";
 import { commonWrapper, marginStyles } from "@/styles/common.css";
-import { DeliveryPlan, MealPlan, RawFood } from "@/types";
+import {
+  DeliveryPlan,
+  MealPlan,
+  RawFood,
+  SubscriptionInfoResponse,
+} from "@/types";
 import PlanPicker from "./planPicker/PlanPicker";
 import SubscriptionItemPicker from "./subscriptionItemPicker/SubscriptionItemPicker";
 
 interface SubscriptionEditProps {
-  mealPlan: MealPlan;
-  deliveryPlan: DeliveryPlan;
   packCount: number;
-  subscriptionCount: number;
-  rawFoods: RawFood[];
+  currentSubscriptionInfo: SubscriptionInfoResponse;
   onOpenPlanSheet: () => void;
   onGoToEdit: () => void;
 }
 
 export default function SubscriptionEditSummary({
-  mealPlan,
-  deliveryPlan,
+  currentSubscriptionInfo,
   packCount,
-  subscriptionCount,
-  rawFoods,
   onOpenPlanSheet,
   onGoToEdit,
 }: SubscriptionEditProps) {
+  const { mealCount, weeks } = currentSubscriptionInfo.planInfo;
+  const { recipeList, subscriptionCount } = currentSubscriptionInfo;
   return (
     <div
       className={commonWrapper({
@@ -40,18 +41,18 @@ export default function SubscriptionEditSummary({
           식단 변경을 진행해 주세요
         </Text>
         <Text type="body2" color="red">
-          식단 변경은 {subscriptionCount}회차부터 적용됩니다.
+          식단 변경은 {subscriptionCount + 1}회차부터 적용됩니다.
         </Text>
       </div>
       <PlanPicker
-        mealPlan={mealPlan}
-        deliveryPlan={deliveryPlan}
+        mealPlan={mealCount}
+        deliveryPlan={weeks}
         onClick={onOpenPlanSheet}
       />
       <SubscriptionItemPicker
-        mealPlan={mealPlan}
-        deliveryPlan={deliveryPlan}
-        rawFoods={rawFoods}
+        mealPlan={mealCount}
+        deliveryPlan={weeks}
+        recipeList={recipeList}
         packCount={packCount}
         onClick={onGoToEdit}
       />

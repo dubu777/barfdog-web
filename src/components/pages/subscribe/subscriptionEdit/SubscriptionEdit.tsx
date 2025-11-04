@@ -1,6 +1,5 @@
 "use client";
 
-import { useGetSubscriptionDetailV2 } from "@/api/subscription/queries/useGetSubscriptionDetailV2";
 import { paddingStyles } from "@/styles/common.css";
 import { calculateDeliveryCyclePackCount } from "@/utils/subscription/calculateRecipe";
 import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
@@ -23,6 +22,8 @@ import SubscriptionEditConfirm from "./confirm/SubscriptionEditConfirm";
 import { buildInitialSubscriptionForm } from "@/utils/subscription/buildInitialSubscriptionForm";
 import { useGetSubscriptionInfo } from "@/api/subscription/queries/useGetSubscriptionInfo";
 import { useGetSubscriptionOrderSheet } from "@/api/subscription/queries/useGetSubscriptionOrderSheet";
+import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
+import { getPlanFromMealAndDelivery } from "@/utils/subscription/getPlanFromMealAndDelivery";
 
 interface SubscriptionEditProps {
   subscribeId: number;
@@ -41,7 +42,9 @@ export default function SubscriptionEdit({
   // API queries
   const { data: subscriptionInfo } = useGetSubscriptionInfo(subscribeId);
   const { data: orderSheetData } = useGetSubscriptionOrderSheet(surveyId);
-  console.log("subscriptionInfo:", subscriptionInfo);
+  const { mutate: updateSubscription } = useUpdateSubscription();
+
+  console.log(subscriptionInfo);
 
   // Form setup
   const stableDefaultValues = useMemo(() => defaultSubscriptionValues(), []);
@@ -51,15 +54,22 @@ export default function SubscriptionEdit({
     mode: "all",
   });
 
+  const {
+    watch,
+    reset,
+    handleSubmit,
+    formState: { isDirty },
+  } = form;
+
   // Form initialization with subscription data
   useEffect(() => {
     if (!subscriptionInfo) return;
     const initialValues = buildInitialSubscriptionForm(subscriptionInfo);
-    form.reset(initialValues);
-  }, [subscriptionInfo, form]);
+    reset(initialValues);
+  }, [subscriptionInfo, reset]);
 
   useScrollToTop(step);
-  console.log(form.watch());
+  console.log(watch());
 
   const packCount = subscriptionInfo
     ? calculateDeliveryCyclePackCount(
@@ -72,9 +82,9 @@ export default function SubscriptionEdit({
   // Event handlers
   const handleNext = () => {
     if (step === "summary") {
-      setStep("edit");
-    } else if (step === "edit") {
       setStep("confirm");
+    } else if (step === "edit") {
+      setStep("summary");
     }
   };
 
@@ -84,17 +94,39 @@ export default function SubscriptionEdit({
     } else if (step === "edit") {
       setStep("summary");
     } else if (step === "confirm") {
-      setStep("edit");
+      setStep("summary");
     }
   };
 
-  const handleSubmit = () => {
-    console.log("submit");
+  const onSubmit = (data: SubscriptionValues) => {
+    const plan = getPlanFromMealAndDelivery(data.mealPlan, data.deliveryPlan);
+
+    const updateBody = {
+      subscribeId,
+      body: {
+        plan,
+        recipeList: data.recipeList.map((recipe) => ({
+          recipeId: recipe.recipeId,
+          oneMealGramsPerRecipe: recipe.packGrams,
+          originalPrice: recipe.packPrice,
+        })),
+        isAgreeSubscription: data.isAgreeSubscription || false,
+      },
+    };
+
+    updateSubscription(updateBody, {
+      onSuccess: () => {
+        router.push("/diet-analysis"); // 구독 상세 페이지 완료되면 수정
+      },
+      onError: (error) => {
+        console.error("구독 변경 실패:", error);
+      },
+    });
   };
 
   const handleOpenPlanSheet = () => onToggle();
   const handleGoToEdit = () => setStep("edit");
-  const handleAction = step === "confirm" ? handleSubmit : handleNext;
+  const handleAction = step === "confirm" ? handleSubmit(onSubmit) : handleNext;
 
   return (
     <FormProvider {...form}>
@@ -102,11 +134,8 @@ export default function SubscriptionEdit({
         <Header onBack={handleBack} showBackButton centerTitle="식단 변경" />
         {step === "summary" && (
           <SubscriptionEditSummary
-            mealPlan={subscriptionInfo.planInfo.mealCount}
-            deliveryPlan={subscriptionInfo.planInfo.weeks}
-            subscriptionCount={subscriptionInfo.subscriptionCount}
+            currentSubscriptionInfo={subscriptionInfo}
             packCount={packCount}
-            rawFoods={subscriptionInfo.recipeList}
             onOpenPlanSheet={handleOpenPlanSheet}
             onGoToEdit={handleGoToEdit}
           />
@@ -114,13 +143,18 @@ export default function SubscriptionEdit({
         {step === "edit" && orderSheetData && (
           <RawFoodOptions orderSheetData={orderSheetData} isEdit />
         )}
-        {step === "confirm" && <SubscriptionEditConfirm />}
+        {step === "confirm" && (
+          <SubscriptionEditConfirm
+            currentSubscriptionInfo={subscriptionInfo}
+            packCount={packCount}
+          />
+        )}
         {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}
         <ButtonDocked
           primaryButtonLabel="식단 변경하기"
           onPrimaryClick={handleAction}
           type="full-button"
-          isPrimaryDisabled={true}
+          isPrimaryDisabled={!isDirty}
         />
       </div>
     </FormProvider>

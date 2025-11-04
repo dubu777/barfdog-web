@@ -1,4 +1,4 @@
-import { RawFoodFormItem, SubscriptionValues } from "@/types";
+import { RecipeFormItem, SubscriptionValues } from "@/types";
 import { useCallback, useMemo, useState } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 
@@ -15,20 +15,20 @@ export function useRecipeSelections() {
   const { control, getValues } = useFormContext<SubscriptionValues>();
   const { append, update, remove } = useFieldArray({
     control,
-    name: "rawFoods",
+    name: "recipeList",
   });
   const savedRecipes = useWatch({
     control,
-    name: "rawFoods",
-    defaultValue: [] as RawFoodFormItem[],
+    name: "recipeList",
+    defaultValue: [] as RecipeFormItem[],
   });
 
   console.log("save", savedRecipes);
 
-  // - 현재 RHF에 저장된 선택 결과(rawFoods)를 recipeId -> RawFoodFormItem 형태의 Map으로 가공.
+  // - 현재 RHF에 저장된 선택 결과(recipeList)를 recipeId -> RecipeFormItem 형태의 Map으로 가공.
   // - 카드에서 isSelected, savedSelection 조회를 O(1)에 가깝게 하기 위한 최적화.
   const savedByIdMap = useMemo(() => {
-    const map = new Map<number, RawFoodFormItem>();
+    const map = new Map<number, RecipeFormItem>();
     savedRecipes.forEach((recipe) => map.set(recipe.recipeId, recipe));
     return map;
   }, [savedRecipes]);
@@ -95,7 +95,7 @@ export function useRecipeSelections() {
     ): CommitSelectionResult => {
       const { packGrams, packPrice } = resolvePack(); // 최종 반영할 g/가격을 상위에서 계산해 가져옴
 
-      const current = getValues("rawFoods");
+      const current = getValues("recipeList");
       const idx = current.findIndex((f) => f.recipeId === recipeId); // 동일 recipeId가 이미 있는지 확인
       const exists = idx > -1; // 존재 여부 플래그
 
@@ -123,11 +123,11 @@ export function useRecipeSelections() {
     [append, update, getValues, clearStage]
   );
 
-  // - 해당 레시피를 RHF 배열(rawFoods)에서 제거.
+  // - 해당 레시피를 RHF 배열(recipeList)에서 제거.
   // - 삭제 후 스테이징도 정리하여 UI 표시값 일관성 유지.
   const removeSelection = useCallback(
     (recipeId: number) => {
-      const current = getValues("rawFoods");
+      const current = getValues("recipeList");
       const idx = current.findIndex((f) => f.recipeId === recipeId);
       if (idx > -1) remove(idx); // 있으면 remove 실행
       clearStage(recipeId); // 스테이징도 제거
