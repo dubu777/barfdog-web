@@ -1,6 +1,6 @@
 import { prefetchGetPetBreedList } from "@/api/pet/queries/prefetchGetPetBreedList";
 import PetCreateForm from "@/components/pages/pet/create/PetCreateForm";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import {
   dehydrate,
   HydrationBoundary,
