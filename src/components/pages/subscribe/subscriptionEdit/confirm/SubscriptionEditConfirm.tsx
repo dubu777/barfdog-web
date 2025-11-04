@@ -1,11 +1,11 @@
 "use client";
 
-import Text from "@/components/common/text/Text";
 import { commonWrapper, marginStyles } from "@/styles/common.css";
 import { SubscriptionInfoResponse } from "@/types";
 import React from "react";
 import RecipeItemCard from "../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
-import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 
 interface SubscriptionEditProps {
   currentSubscriptionInfo: SubscriptionInfoResponse;

@@ -2,12 +2,7 @@
 
 import Text from "@/components/ui/text/Text";
 import { commonWrapper, marginStyles } from "@/styles/common.css";
-import {
-  DeliveryPlan,
-  MealPlan,
-  RawFood,
-  SubscriptionInfoResponse,
-} from "@/types";
+import { SubscriptionInfoResponse } from "@/types";
 import PlanPicker from "./planPicker/PlanPicker";
 import SubscriptionItemPicker from "./subscriptionItemPicker/SubscriptionItemPicker";
 
