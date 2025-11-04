@@ -1,26 +1,41 @@
 "use client";
 
 import { commonWrapper, marginStyles } from "@/styles/common.css";
-import { SubscriptionInfoResponse } from "@/types";
+import { RecipeFormItem, SubscriptionInfoResponse } from "@/types";
 import React from "react";
 import RecipeItemCard from "../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import Text from "@/components/ui/text/Text";
 import Divider from "@/components/ui/divider/Divider";
 import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
+import { RecipeCatalogMap } from "@/utils/subscription/buildRecipeCatalog";
 
 interface SubscriptionEditProps {
   currentSubscriptionInfo: SubscriptionInfoResponse;
   packCount: number;
+  recipeCatalog: RecipeCatalogMap;
 }
 
 export default function SubscriptionEditConfirm({
   currentSubscriptionInfo,
   packCount,
+  recipeCatalog,
 }: SubscriptionEditProps) {
   const { mealCount, weeks } = currentSubscriptionInfo.planInfo;
-  const { recipeList, subscriptionCount } = currentSubscriptionInfo;
+  const { subscriptionCount } = currentSubscriptionInfo;
+
   const { control } = useFormContext();
+  const mealPlan = useWatch({ control, name: "mealPlan" });
+  const deliveryPlan = useWatch({ control, name: "deliveryPlan" });
+  const recipeList =
+    useWatch({ control, name: "recipeList" }) ?? ([] as RecipeFormItem[]);
+
+  const { recipes, totals, recipeCount } = useSubscriptionCalculation({
+    savedSelection: recipeList,
+    mealPlan,
+    deliveryPlan,
+  });
   return (
     <div
       className={commonWrapper({
@@ -67,8 +82,10 @@ export default function SubscriptionEditConfirm({
             originalPrice={recipe.originalPrice}
             packCount={packCount}
             packGrams={recipe.oneMealGramsPerRecipe}
-            displayImageUrl={recipe?.displayImageUrl.url || ""}
-            recipeName={recipe?.name || ""}
+            displayImageUrl={
+              recipeCatalog[recipe.recipeId]?.displayImageUrl.url || ""
+            }
+            recipeName={recipeCatalog[recipe.recipeId]?.name || ""}
           />
           {idx < recipeList.length - 1 && (
             <Divider color="gray200" thickness={1} />

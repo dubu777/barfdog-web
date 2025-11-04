@@ -24,6 +24,7 @@ import { useGetSubscriptionInfo } from "@/api/subscription/queries/useGetSubscri
 import { useGetSubscriptionOrderSheet } from "@/api/subscription/queries/useGetSubscriptionOrderSheet";
 import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
 import { getPlanFromMealAndDelivery } from "@/utils/subscription/getPlanFromMealAndDelivery";
+import { buildRecipeCatalog } from "@/utils/subscription/buildRecipeCatalog";
 
 interface SubscriptionEditProps {
   subscribeId: number;
@@ -43,6 +44,11 @@ export default function SubscriptionEdit({
   const { data: subscriptionInfo } = useGetSubscriptionInfo(subscribeId);
   const { data: orderSheetData } = useGetSubscriptionOrderSheet(surveyId);
   const { mutate: updateSubscription } = useUpdateSubscription();
+
+  const recipeCatalog = useMemo(
+    () => buildRecipeCatalog(orderSheetData),
+    [orderSheetData]
+  );
 
   console.log(subscriptionInfo);
 
@@ -147,6 +153,7 @@ export default function SubscriptionEdit({
           <SubscriptionEditConfirm
             currentSubscriptionInfo={subscriptionInfo}
             packCount={packCount}
+            recipeCatalog={recipeCatalog}
           />
         )}
         {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}
