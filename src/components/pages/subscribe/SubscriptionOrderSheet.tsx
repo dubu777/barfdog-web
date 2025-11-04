@@ -16,12 +16,12 @@ import Header from "@/components/layout/header/Header";
 import Chips from "@/components/ui/chips/Chips";
 import * as styles from "./SubscriptionOrderSheet.css";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
-import { useGetRawFoodOrderSheet } from "@/api/subscription/queries/useGetRawFoodOrderSheet";
 import RawFoodOptions from "./rawFoodOptions/RawFoodOptions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSubscription";
 import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
 import { useGetSubscriptionOrderSheet } from "@/api/subscription/queries/useGetSubscriptionOrderSheet";
+import { getPlanFromMealAndDelivery } from "@/utils/subscription/getPlanFromMealAndDelivery";
 
 interface SubscriptionOrderSheetProps {
   surveyId: number;
@@ -43,10 +43,10 @@ export default function SubscriptionOrderSheet({
     defaultValues: defaultSubscriptionValues(),
     mode: "all",
   });
-
+  const { control, handleSubmit } = form;
   const savedSelection = useWatch({
     control: form.control,
-    name: "rawFoods",
+    name: "recipeList",
   });
   const mealPlan = useWatch({
     control: form.control,
@@ -80,34 +80,30 @@ export default function SubscriptionOrderSheet({
     }
   }, [step, router]);
 
-  const handleSubmit = () => {
-    const rawFoodsPayload = recipes.map(
-      ({ recipeId, packGrams, originalPrice }) => ({
-        recipeId,
-        oneMealGramsPerRecipe: packGrams,
-        originalPrice,
-      })
-    );
+  const onSubmit = (data: SubscriptionValues) => {
+    const plan = getPlanFromMealAndDelivery(data.mealPlan, data.deliveryPlan);
 
-    const body = {
-      deliveryPlan,
-      mealPlan,
-      paymentExpectedPrice: totals.paymentExpectedPrice,
-      rawFoods: rawFoodsPayload,
-      originPrice: totals.totalOriginalPrice,
-    } as const;
-    createSubscription(
-      { surveyId, body },
-      {
-        onSuccess: (data) => {
-          router.push(`/checkout/subscription/${data.subscriptionId}`);
-        },
-      }
-    );
+    const createBody = {
+      surveyId,
+      body: {
+        plan,
+        recipeList: data.recipeList.map((recipe) => ({
+          recipeId: recipe.recipeId,
+          oneMealGramsPerRecipe: recipe.packGrams,
+          originalPrice: recipe.packPrice,
+        })),
+      },
+    };
+    createSubscription(createBody, {
+      onSuccess: (data) => {
+        router.push(`/checkout/subscription/${data.subscriptionId}`);
+      },
+    });
   };
 
   const primaryLabel = step === "deliveryCycle" ? "결제하러 가기" : "주문하기";
-  const handleAction = step === "deliveryCycle" ? handleSubmit : handleNext;
+  const handleAction =
+    step === "deliveryCycle" ? handleSubmit(onSubmit) : handleNext;
 
   return (
     <FormProvider {...form}>

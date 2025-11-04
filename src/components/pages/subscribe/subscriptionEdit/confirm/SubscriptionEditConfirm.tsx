@@ -6,6 +6,8 @@ import React from "react";
 import RecipeItemCard from "../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import Text from "@/components/ui/text/Text";
 import Divider from "@/components/ui/divider/Divider";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
+import { useFormContext } from "react-hook-form";
 
 interface SubscriptionEditProps {
   currentSubscriptionInfo: SubscriptionInfoResponse;
@@ -18,6 +20,7 @@ export default function SubscriptionEditConfirm({
 }: SubscriptionEditProps) {
   const { mealCount, weeks } = currentSubscriptionInfo.planInfo;
   const { recipeList, subscriptionCount } = currentSubscriptionInfo;
+  const { control } = useFormContext();
   return (
     <div
       className={commonWrapper({
@@ -46,6 +49,14 @@ export default function SubscriptionEditConfirm({
         })}
       >
         <Text type="title4">결제 정보</Text>
+        <LabelValueItem
+          label="기존 결제 금액"
+          value={currentSubscriptionInfo.paymentPrice}
+        />
+        <LabelValueItem
+          label="변경 결제 금액"
+          value={currentSubscriptionInfo.paymentPrice}
+        />
         <Divider color="gray900" thickness={2} />
       </div>
       {recipeList.map((recipe, idx) => (
