@@ -1,8 +1,8 @@
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "./LevelGaugeCard.css";
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 
 export interface LevelGaugeCardProps {
   segments: 3 | 5;

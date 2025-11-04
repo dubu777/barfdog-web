@@ -1,9 +1,9 @@
 import React from "react";
 import { useFormContext, useController } from "react-hook-form";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import Text from "@/components/common/text/Text";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
+import Text from "@/components/ui/text/Text";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import { commonWrapper } from "@/styles/common.css";
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";

@@ -3,8 +3,8 @@ import { format } from "date-fns";
 import { QueryClient } from "@tanstack/react-query";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 import PostNavigation from "@/components/pages/community/common/detailSection/postNavigation/PostNavigation";
 import { CommunityListItem } from "@/types";
 

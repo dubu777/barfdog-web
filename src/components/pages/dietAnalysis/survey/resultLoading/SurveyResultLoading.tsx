@@ -1,10 +1,10 @@
 import Spinner from "public/images/survey/dots-bounce-spinner.svg";
 import Dog from "public/images/survey/result-dog.svg";
 import * as styles from "./SurveyResultLoading.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import { commonWrapper } from "@/styles/common.css";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 
 interface SurveyResultLoadingProps {
   petName: string;

@@ -6,9 +6,10 @@ import { commonLayoutContainer } from "@/styles/common.css";
 import localFont from "next/font/local";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import WebViewBridgeProvide from "@/providers/WebViewBridgeProvider";
-import Toast from "@/components/common/toast/Toast";
-import SnackBar from "@/components/common/snackBar/SnackBar";
-import GlobalAlertModal from "@/components/common/modal/globalAlertModal/GlobalAlertModal";
+import Toast from "@/components/ui/toast/Toast";
+import SnackBar from "@/components/ui/snackBar/SnackBar";
+import GlobalAlertModal from "@/components/ui/modal/globalAlertModal/GlobalAlertModal";
+
 // import ChannelTalkProvider from "@/providers/ChannelTalkProvider";
 
 export const metadata: Metadata = {

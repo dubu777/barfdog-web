@@ -1,6 +1,6 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { selectOptionWrapper } from "../DeliveryOptions.css";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { deliveryOptions } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
 import { Controller, useFormContext } from "react-hook-form";

@@ -4,9 +4,9 @@ import React from "react";
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useFormContext, useController } from "react-hook-form";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {

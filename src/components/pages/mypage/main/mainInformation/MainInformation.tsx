@@ -3,7 +3,7 @@ import * as styles from "./MainInformation.css";
 import Link from "next/link";
 import Image from "next/image";
 import DefaultImage from "public/images/icons/default-profile.png";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
 import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";

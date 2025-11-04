@@ -1,12 +1,12 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { cardShadow } from "@/components/common/card/Card.css";
+import { cardShadow } from "@/components/ui/card/Card.css";
 import { commonWrapper, ellipsis, pointColor } from "@/styles/common.css";
 import { mainBox, mainStoreItem, mainStoreItemLink } from "@/components/pages/main/common/MainCommon.css";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 import 'swiper/css';

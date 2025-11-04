@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import SlideCounter from '@/components/common/slideCounter/SlideCounter';
+import SlideCounter from '@/components/ui/slideCounter/SlideCounter';
 import { ItemImage } from "@/types";
 
 export default function ItemImageSlider({ 

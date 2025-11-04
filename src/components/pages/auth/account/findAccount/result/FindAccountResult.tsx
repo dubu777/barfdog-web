@@ -1,13 +1,13 @@
 "use client";
 import * as styles from "../../FindAccount.css";
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import KakaoIcon from "public/images/logo/auth/kakao-logo-square.svg";
 import NaverIcon from "public/images/logo/auth/naver-logo-square.svg";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 
 interface FindAccountResultProps {
   type: "email" | "password";

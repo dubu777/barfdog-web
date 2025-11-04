@@ -20,8 +20,8 @@ import { useHydrateSubscriptionOrderStores } from "@/hooks/checkout/useHydrateSu
 import useDeviceState from "@/hooks/useDeviceState";
 
 // Components
-import Divider from "@/components/common/divider/Divider";
-import FooterButton from "@/components/common/footerButton/FooterButton";
+import Divider from "@/components/ui/divider/Divider";
+import FooterButton from "@/components/ui/footerButton/FooterButton";
 import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
 import DeliverySchedule from "./deliverySchedule/DeliverySchedule";
 import CouponSelector from "../common/couponSelector/CouponSelector";

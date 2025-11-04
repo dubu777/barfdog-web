@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { commonWrapper } from "@/styles/common.css";
-import ListDivider from "@/components/common/listDivider/ListDivider";
-import Button from "@/components/common/button/Button";
+import ListDivider from "@/components/ui/listDivider/ListDivider";
+import Button from "@/components/ui/button/Button";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import OrderStatus from "../../../common/card/OrderStatus";
 import GeneralItem from "./GeneralItem";

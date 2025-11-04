@@ -8,9 +8,9 @@ import {
 } from "react-hook-form";
 import ImageButton from "../imageButton/ImageButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyButtonGroup from "../../../../common/survey/surveyButtonGroup/SurveyButtonGroup";
-import InputField from "@/components/common/inputField/InputField";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyButtonGroup from "../../../../domain/survey/surveyButtonGroup/SurveyButtonGroup";
+import InputField from "@/components/ui/inputField/InputField";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 
 interface SurveyStepProps {
   dogName: string;

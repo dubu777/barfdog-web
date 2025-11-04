@@ -1,6 +1,6 @@
 import { prefetchSubscriptionInfo } from "@/api/subscription/queries/prefetchSubscriptionInfo";
 import { prefetchSubscriptionOrderSheet } from "@/api/subscription/queries/prefetchSubscriptionOrderSheet";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import SubscriptionEdit from "@/components/pages/subscribe/subscriptionEdit/SubscriptionEdit";
 import {
   dehydrate,

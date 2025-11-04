@@ -1,11 +1,11 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import * as styles from "../DietAnalysisResult.css";
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 import { commonWrapper } from "@/styles/common.css";
 import { SecondResultResponse } from "@/types/dietAnalysis";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import CheckIcon from "public/images/survey/check_small.svg";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import { RECIPE_EFFICACY_DATA_MAP } from "@/constants/dietAnalysis";
 import StethoscopeIcon from "public/images/dietAnalysis/stethoscope.svg";
 interface DietReasonProps {

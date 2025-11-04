@@ -1,5 +1,5 @@
 import { Control, Controller, FieldErrors, UseFormClearErrors, UseFormSetError, UseFormSetValue } from "react-hook-form";
-import InputField from "@/components/common/inputField/InputField";
+import InputField from "@/components/ui/inputField/InputField";
 import { formatPhoneNumber } from "@/utils";
 import { UpdateUserInfo } from "@/types/mypage/account";
 import { usePhoneAuth } from "@/hooks/usePhoneAuth";

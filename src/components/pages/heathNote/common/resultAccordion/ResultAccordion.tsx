@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import * as styles from "./ResultAccordion.css";
-import Accordion from "@/components/common/accordion/Accordion";
-import Card from "@/components/common/card/Card";
+import Accordion from "@/components/ui/accordion/Accordion";
+import Card from "@/components/ui/card/Card";
 
 interface ResultAccordionProps {
   accordionButton: ReactNode;

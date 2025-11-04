@@ -1,12 +1,12 @@
 'use client';
 import * as styles from './Cart.css';
 import { Fragment, useEffect, useRef } from "react";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Spinner from "@/components/common/spinner/Spinner";
-import ListDivider from "@/components/common/listDivider/ListDivider";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Spinner from "@/components/ui/spinner/Spinner";
+import ListDivider from "@/components/ui/listDivider/ListDivider";
 import CartItem from "@/components/pages/cart/cartItem/CartItem";
 import CartPriceInfo from "@/components/pages/cart/cartPriceInfo/CartPriceInfo";
 import { useCartStore } from "@/store/useCartStore";

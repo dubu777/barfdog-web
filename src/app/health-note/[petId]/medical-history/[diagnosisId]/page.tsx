@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import HistoryDetail from "@/components/pages/heathNote/medicalHistory/detail/HistoryDetail";
 import { prefetchGetMedicalHistoryDetail } from "@/api/healthNote/medicalHistory/queries/prefetchGetMedicalHistoryDetail";
 

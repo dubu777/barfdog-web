@@ -1,6 +1,6 @@
 import { commonWrapper, marginStyles } from "@/styles/common.css";
 import * as styles from "./RecipeItemCard.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import Image from "next/image";
 import { DeliveryPlan, MealPlan } from "@/types";
 import { DELIVERY_PLAN_LABEL, MEAL_PLAN_LABEL } from "@/constants";

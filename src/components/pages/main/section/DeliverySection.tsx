@@ -8,7 +8,7 @@ import {
 } from "@/components/pages/main/common/MainCommon.css";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { MAIN_DATA } from "@/constants/main";
 
 export default function DeliverySection() {

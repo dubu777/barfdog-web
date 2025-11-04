@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 import { RewardInfo } from "@/types";
 
 interface RewardItemProps {

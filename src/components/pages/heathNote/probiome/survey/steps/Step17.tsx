@@ -1,8 +1,8 @@
 import { Path, useFormContext, useController } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 import { PROBIOME_TITLES } from "@/constants/healthNote/probiome";
 import { ProbiomeStepValues } from "@/utils/validation/probiomeValidation";
-import InputField from "@/components/common/inputField/InputField";
+import InputField from "@/components/ui/inputField/InputField";
 
 interface SurveyStepProps {
   handleBlur: (fieldName: Path<ProbiomeStepValues>) => Promise<void>;

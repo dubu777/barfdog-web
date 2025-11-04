@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef } from "react";
 import Image from "next/image";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import {
 	mainProductionImage, mainProductionImageBox,
 	mainProductionPoint,

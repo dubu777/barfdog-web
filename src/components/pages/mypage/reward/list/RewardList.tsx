@@ -5,8 +5,8 @@ import RewardFilter from "@/components/pages/mypage/reward/list/rewardFilter/Rew
 import RewardItem from "@/components/pages/mypage/reward/list/rewardItem/RewardItem";
 import RewardInfo from "@/components/pages/mypage/reward/list/rewardInfo/RewardInfo";
 import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
-import Divider from "@/components/common/divider/Divider";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import Divider from "@/components/ui/divider/Divider";
+import InfiniteScrollTrigger from "@/components/ui/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { RewardFilterType } from "@/types";

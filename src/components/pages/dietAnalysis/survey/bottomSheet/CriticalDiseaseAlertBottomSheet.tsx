@@ -1,8 +1,8 @@
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Text from "@/components/common/text/Text";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
 import * as styles from "./SurveyBottomSheet.css";
-import Chips from "@/components/common/chips/Chips";
+import Chips from "@/components/ui/chips/Chips";
 import { CRITICAL_DISEASES } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
 

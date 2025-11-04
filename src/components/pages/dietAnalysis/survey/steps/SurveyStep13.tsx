@@ -5,9 +5,9 @@ import {
 } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyGridButtonGroup from "../../../../common/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
+import SurveyGridButtonGroup from "../../../../domain/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
 import ImageButton from "../imageButton/ImageButton";
 
 interface SurveyStepProps {

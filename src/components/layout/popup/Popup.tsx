@@ -6,8 +6,8 @@ import * as styles from "./Popup.css";
 import { useGetMainBannerInfo } from "@/api/main/queries/useGetMainBannerInfo";
 import { PopupBanner, PopupPosition } from "@/types";
 import { useMainStore } from "@/store/useMainStore";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import Text from "@/components/common/text/Text";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
+import Text from "@/components/ui/text/Text";
 import useDeviceState from "@/hooks/useDeviceState";
 
 interface PopupProps {

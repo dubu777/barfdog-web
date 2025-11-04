@@ -2,9 +2,9 @@
 import { useMemo, useState } from "react";
 import * as styles from "./Dogpedia.css";
 import ArrowRightIcon from "/public/images/icons/chevron-right-blue.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
-import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SearchableSelector from "@/components/domain/pet/searchableSelector/SearchableSelector";
 import DogpediaDetail from "@/components/pages/heathNote/dogpedia/detail/DogpediaDetail";
 import { Option } from "@/types";
 import { useGetBreedList } from "@/api/healthNote/dogpidea/queries/useGetBreedList";

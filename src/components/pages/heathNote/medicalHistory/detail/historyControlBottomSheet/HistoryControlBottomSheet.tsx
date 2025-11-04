@@ -2,9 +2,9 @@ import * as styles from "./HistoryControlBottomSheet.css";
 import { pointColor } from "@/styles/common.css";
 import EditIcon from "/public/images/icons/pen.svg";
 import DeleteIcon from "/public/images/icons/trashbag.svg";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 
 interface HistoryControlBottomSheetProps {
   isOpen: boolean;

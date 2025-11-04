@@ -4,8 +4,8 @@ import SingleCoatIcon from '/public/images/healthNote/dogpedia/single_coat.svg';
 import ShortCoatIcon from '/public/images/healthNote/dogpedia/short_coat.svg';
 import MiddleCoatIcon from '/public/images/healthNote/dogpedia/middle_coat.svg';
 import LongCoatIcon from '/public/images/healthNote/dogpedia/long_coat.svg';
-import Text from "@/components/common/text/Text";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import { FUR_LENGTH, FUR_TYPE } from "@/constants/healthNote/dogpedia";
 import { FurLength, FurType } from "@/types/healthNote/dogpedia";
 

@@ -12,7 +12,7 @@ import yup from "yup";
 import SignupStep1 from "./steps/SignupStep1";
 import SignupStep2 from "./steps/SignupStep2";
 import SignupStep3 from "./steps/SignupStep3";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useSurveyStep } from "@/hooks/survey/useSurveyStep";
 import { useSurveyNavigator } from "@/hooks/survey/useSurveyNavigator";
 import { SIGNUP_NO_AUTO_STEP, SIGNUP_OPTIONAL_FIELDS } from "@/constants/auth";
@@ -21,11 +21,11 @@ import { useRouter } from "next/navigation";
 import useModal from "@/hooks/useModal";
 import TermsBottomSheet from "./terms/TermsBottomSheet";
 import { signupContainer } from "./steps/SignupStep.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { buildSignupRequest } from "@/utils/auth/buildSignupRequest";
 import { useSignup } from "@/api/auth/mutations/useSignup";
 import { useLogin } from "@/api/auth/mutations/useLogin";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 
 export default function Signup() {
   const router = useRouter();

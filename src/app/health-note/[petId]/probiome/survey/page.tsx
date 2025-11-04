@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import ProbiomeSurvey from "@/components/pages/heathNote/probiome/survey/ProbiomeSurvey";
-import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
+import NavigationGuard from "@/components/ui/navigationGuard/NavigationGuard";
 import { Gender } from "@/types";
 
 interface ProbiomeSurveyPageProps {

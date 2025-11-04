@@ -3,7 +3,7 @@ import * as styles from "./Footer.css";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "/public/images/logo/logo-white.png";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { usePathname } from "next/navigation";
 import { saveEntryPoint } from "@/utils/navigationEntry";
 import useModal from "@/hooks/useModal";

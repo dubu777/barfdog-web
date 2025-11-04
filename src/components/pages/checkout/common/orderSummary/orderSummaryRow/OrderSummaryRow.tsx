@@ -1,8 +1,8 @@
 "use client";
 
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import * as styles from "./OrderSummaryRow.css";
-import { fontColors, textStyles } from "@/components/common/text/Text.css";
+import { fontColors, textStyles } from "@/components/ui/text/Text.css";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 
 

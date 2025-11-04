@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import RewardInfoBottomSheet from "@/components/pages/mypage/reward/list/rewardInfo/rewardInfoBottomSheet/RewardInfoBottomSheet";
 import useModal from "@/hooks/useModal";
 

@@ -6,13 +6,13 @@ import {
   SubscriptionOrderSheet,
   SubscriptionValues,
 } from "@/types/subscription";
-import Text from "@/components/common/text/Text";
-import TabBar from "@/components/common/tabBar/TabBar";
-import Divider from "@/components/common/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import TabBar from "@/components/ui/tabBar/TabBar";
+import Divider from "@/components/ui/divider/Divider";
 import React, { useCallback, useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { getNameWithPossessiveSuffix } from "@/utils";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import useModal from "@/hooks/useModal";
 import RecommendKcalBottomSheet from "../bottomSheet/RecommendKcalBottomSheet";
 import { useFormContext, useWatch } from "react-hook-form";

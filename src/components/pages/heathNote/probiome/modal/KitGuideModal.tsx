@@ -1,12 +1,12 @@
 import * as styles from "./KitGuideModal.css";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
-import TextButton from "@/components/common/textButton/TextButton";
-import InfoText from "@/components/common/typography/infoText/InfoText";
+import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
+import TextButton from "@/components/ui/textButton/TextButton";
+import InfoText from "@/components/ui/typography/infoText/InfoText";
 import KitGuidImage from "/public/images/healthNote/probiome/kit-guide1.png";
 import KitGuidStep1 from "/public/images/healthNote/probiome/kit-guide-step1.svg";
 import KitGuidStep2 from "/public/images/healthNote/probiome/kit-guide-step2.svg";

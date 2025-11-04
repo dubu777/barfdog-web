@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import { TextColor, TextType } from "@/types/typography";
-import Text from "@/components/common/text/Text";
-import ListDivider from "@/components/common/listDivider/ListDivider";
+import Text from "@/components/ui/text/Text";
+import ListDivider from "@/components/ui/listDivider/ListDivider";
 
 interface MetaTextProps {
 	type?: TextType;

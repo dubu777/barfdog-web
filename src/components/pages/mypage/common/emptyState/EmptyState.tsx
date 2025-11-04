@@ -1,5 +1,5 @@
 import { commonWrapper } from '@/styles/common.css';
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 
 interface EmptyStateProps {
 	title: string;
@@ -9,8 +9,8 @@ interface EmptyStateProps {
 export default function EmptyState({ title, subTitle }: EmptyStateProps) {
 	return (
 		<div className={commonWrapper({
+			direction: 'col',
 			gap: 4,
-			align: 'start',
 			paddingTop: 60,
 			paddingBottom: 60,
 		})}>

@@ -1,8 +1,8 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import RecipeItemCard from "./recipeItemCard/RecipeItemCard";
 import React from "react";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import { DeliveryPlan, MealPlan, RawFoodOrderItem } from "@/types";
 import { DELIVERY_PLAN_LABEL } from "@/constants";
 import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";

@@ -1,12 +1,12 @@
 import * as styles from "./ProbiomeList.css";
-import Text from "@/components/common/text/Text";
-import Chips from "@/components/common/chips/Chips";
-import Button from "@/components/common/button/Button";
-import Card from "@/components/common/card/Card";
+import Text from "@/components/ui/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import Button from "@/components/ui/button/Button";
+import Card from "@/components/ui/card/Card";
 import { ProbiomeStatus } from "@/types/healthNote/probiome";
 import CheckIcon from "public/images/icons/check_small.svg";
 import { commonWrapper } from "@/styles/common.css";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import { getProbiomeStatusConfig } from "@/config/probiome";
 
 interface ProbiomeCardProps {

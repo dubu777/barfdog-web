@@ -15,10 +15,10 @@ import ProbiomeImage from "public/images/healthNote/body-check/probiome.jpg";
 import FreshGutImage from "public/images/healthNote/body-check/freshGut.svg";
 import LogoImage from "public/images/logo/logo-default.png";
 import ResultCard from "../../../common/resultCard/ResultCard";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
 import Image from "next/image";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
 
 interface FreshGutProps {

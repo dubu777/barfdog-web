@@ -2,14 +2,14 @@
 import { commonWrapper } from "@/styles/common.css";
 import SubscriptionCard from "./card/subscription/SubscriptionCard";
 import GeneralCard from "./card/general/GeneralCard";
-import InfoText from "@/components/common/typography/infoText/InfoText";
+import InfoText from "@/components/ui/typography/infoText/InfoText";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import BasicInfo from "./info/basicInfo/BasicInfo";
 import AddressInfo from "./info/addressInfo/AddressInfo";
 import PaymentInfo from "./info/paymentInfo/PaymentInfo";
 import DeliveryInfo from "./info/deliveryInfo/DeliveryInfo";
 import RefundInfo from "./info/refundInfo/RefundInfo";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import OrderCancelRequestModal from "./modal/OrderCancelRequestModal";
 import OrderCancelModal from "./modal/OrderCancelModal";
 import ConfirmBottomSheet from "./bottomSheet/ConfirmBottomSheet";

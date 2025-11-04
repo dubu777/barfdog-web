@@ -1,9 +1,9 @@
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import Text from "@/components/common/text/Text";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import NoticeIcon from "public/images/dietAnalysis/renewal-notice.svg";
 import { renewalNoticeButtonWrapper } from "./DietAnalysisMain.css";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 
 interface RenewalNoticeBottomSheetProps {
   onSurvey: () => void;

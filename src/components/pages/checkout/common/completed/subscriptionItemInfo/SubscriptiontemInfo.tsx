@@ -1,6 +1,6 @@
-import Card from "@/components/common/card/Card";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
 import RecipeItemCard from "@/components/pages/subscribe/deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import { commonWrapper } from "@/styles/common.css";
 import { DeliveryPlan, MealPlan, RawFoodItemSummary } from "@/types";

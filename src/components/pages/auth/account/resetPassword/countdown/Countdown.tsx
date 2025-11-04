@@ -1,4 +1,4 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { useCountdown } from "@/hooks/useCountdown";
 import { pointColor } from "@/styles/common.css";
 import { parseYmdHms } from "@/utils/datetime/parseYmdHms";

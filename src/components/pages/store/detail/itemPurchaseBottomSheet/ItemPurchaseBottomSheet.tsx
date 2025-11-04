@@ -1,10 +1,10 @@
 import { commonWrapper } from "@/styles/common.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import ButtonDocked from '@/components/common/buttonDocked/ButtonDocked';
-import Text from "@/components/common/text/Text";
-import Counter from '@/components/common/counter/Counter';
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import ButtonDocked from '@/components/ui/buttonDocked/ButtonDocked';
+import Text from "@/components/ui/text/Text";
+import Counter from '@/components/ui/counter/Counter';
 import ProductOptionSelector
   from "@/components/pages/store/detail/itemPurchaseBottomSheet/productOptionSelector/ProductOptionSelector";
 import ProductOptions from "@/components/pages/store/detail/itemPurchaseBottomSheet/productOptions/ProductOptions";

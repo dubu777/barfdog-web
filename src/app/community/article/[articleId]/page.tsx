@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import ArticleDetail from "@/components/pages/community/article/detail/ArticleDetail";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetArticleDetail } from "@/api/community/queries/prefetchGetArticleDetail";
 
 interface ArticleDetailPageProps {

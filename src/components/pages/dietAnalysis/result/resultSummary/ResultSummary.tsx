@@ -1,11 +1,11 @@
 import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../DietAnalysisResult.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { FirstResultResponse } from "@/types/dietAnalysis";
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 import DotIcon from "public/images/dietAnalysis/square-dot.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Chips from "@/components/common/chips/Chips";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Chips from "@/components/ui/chips/Chips";
 import LevelGaugeCard from "../card/levelGaugeCard/LevelGaugeCard";
 import SnackIcon from "public/images/healthNote/body-check/snack.svg";
 import FootIcon from "public/images/dietAnalysis/footprint.svg";

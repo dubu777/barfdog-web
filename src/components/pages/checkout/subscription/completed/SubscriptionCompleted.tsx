@@ -4,9 +4,9 @@ import DeliveryInfo from "../../common/completed/deliveryInfo/DeliveryInfo";
 import PaymentInfo from "../../common/completed/paymentInfo/PaymentInfo";
 import SubscriptionItemInfo from "../../common/completed/subscriptionItemInfo/SubscriptiontemInfo";
 import { completedContainer } from "../../OrderSheetCommon.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper, pointColor } from "@/styles/common.css";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useRouter } from "next/navigation";
 
 interface SubscriptionCompletedProps {

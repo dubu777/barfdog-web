@@ -1,9 +1,9 @@
 import * as styles from './Item.css';
 import Link from "next/link";
-import RateStar from "@/components/common/rateStar/RateStar";
-import ImageLoadingSpinner from "@/components/common/imageLoadingSpinner/ImageLoadingSpinner";
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
+import RateStar from "@/components/ui/rateStar/RateStar";
+import ImageLoadingSpinner from "@/components/ui/imageLoadingSpinner/ImageLoadingSpinner";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
 import { StoreItemListData } from "@/types/store";
 import { getItemViewProps } from "@/utils/store/getItemViewProps";
 import { CHIPS_COLORS } from '@/constants/style';

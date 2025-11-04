@@ -4,10 +4,10 @@ import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import * as styles from "./PaymentMethod.css";
 import OrderSection from "../orderSection/OrderSection";
 import Image from "next/image";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { PAYMENT_METHOD_INFO } from "@/constants";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 
 export default function PaymentMethod() {
   const { paymentMethod, setPaymentMethod } = usePaymentStore();

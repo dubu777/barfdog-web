@@ -1,9 +1,9 @@
 import { refundReasonBox } from "./RefundInfo.css";
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
 import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";

@@ -12,11 +12,11 @@ import {
 	mainChapter3ImageSlide,
 	mainChapterIndexChips,
 } from "@/components/pages/main/common/MainCommon.css";
-import { cardShadow } from "@/components/common/card/Card.css";
+import { cardShadow } from "@/components/ui/card/Card.css";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
 import FadeInInteraction from "@/components/pages/main/common/FadeInInteraction";
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';

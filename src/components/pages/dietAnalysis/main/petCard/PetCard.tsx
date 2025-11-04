@@ -3,9 +3,9 @@
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
 import * as styles from "./PetCard.css";
-import Text from "@/components/common/text/Text";
-import Chips from "@/components/common/chips/Chips";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import FemaleIcon from "public/images/subscription/female.svg";
 import MaleIcon from "public/images/subscription/male.svg";
 import EditIcon from "public/images/subscription/pen.svg";

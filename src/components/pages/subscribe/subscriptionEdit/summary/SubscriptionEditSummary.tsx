@@ -1,6 +1,6 @@
 "use client";
 
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper, marginStyles } from "@/styles/common.css";
 import {
   DeliveryPlan,

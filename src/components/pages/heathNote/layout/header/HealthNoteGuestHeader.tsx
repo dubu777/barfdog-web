@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import * as styles from "./HealthNoteMainHeader.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import DogIcon from "/public/images/healthNote/dogIcon.png";
 import Image from "next/image";
 import { petImage } from "../../common/HealthNoteCommon.css";

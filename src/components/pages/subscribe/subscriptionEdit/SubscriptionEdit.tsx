@@ -2,7 +2,7 @@
 
 import { paddingStyles } from "@/styles/common.css";
 import { calculateDeliveryCyclePackCount } from "@/utils/subscription/calculateRecipe";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import PlanBottomSheet from "./bottomSheet/PlanBottomSheet";
 import { FormProvider, useForm } from "react-hook-form";

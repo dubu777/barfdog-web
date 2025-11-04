@@ -12,7 +12,7 @@ import AiActive from "/public/images/icons/bottomNavBar/ai-active.svg";
 import StoreActive from "/public/images/icons/bottomNavBar/store-active.svg";
 import NoteActive from "/public/images/icons/bottomNavBar/note-active.svg";
 import MyPageActive from "/public/images/icons/bottomNavBar/mypage-active.svg";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import useDeviceState from "@/hooks/useDeviceState";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { getCookie } from "@/utils/auth/cookie";

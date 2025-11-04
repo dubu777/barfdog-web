@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import Header from "@/components/layout/header/Header";
 import LogoIcon from "public/images/logo/logo.svg";
 import LoginSection from "@/components/pages/auth/login/loginSection/LoginSection";

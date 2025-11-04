@@ -1,6 +1,6 @@
 import * as styles from './AverageBar.css';
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
 
 function getBarHeightByHour(hour: number, maxValue: number): number {
 	const MIN_HEIGHT = 11;

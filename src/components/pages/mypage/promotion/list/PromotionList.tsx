@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { commonWrapper } from "@/styles/common.css";
 import { useQueryClient } from "@tanstack/react-query";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
 import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
 import PromotionItem from "@/components/pages/mypage/promotion/list/promotionItem/PromotionItem";
-import InputField from "@/components/common/inputField/InputField";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import InputField from "@/components/ui/inputField/InputField";
+import InfiniteScrollTrigger from "@/components/ui/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { queryKeys } from "@/constants";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";

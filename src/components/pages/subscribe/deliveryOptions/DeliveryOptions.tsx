@@ -1,10 +1,10 @@
 "use client";
 
 import * as styles from "./DeliveryOptions.css";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import MealFrequency from "./mealFrequency/MealFrequency";
 import DeliveryCycle from "./deliveryCycle/DeliveryCycle";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { DeliveryPlan, MealPlan, SubscriptionOrderSheet } from "@/types";
 import SubscriptionItemList from "./subscriptionItemList/SubscriptionItemList";

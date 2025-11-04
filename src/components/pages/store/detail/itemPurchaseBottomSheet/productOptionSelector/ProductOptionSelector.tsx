@@ -2,8 +2,8 @@ import * as styles from './ProductOptionSelector.css';
 import { useState, useRef, Fragment } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ArrowIcon from 'public/images/icons/chevron-up.svg';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Divider from "@/components/common/divider/Divider";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Divider from "@/components/ui/divider/Divider";
 import { useToastStore } from "@/store/useToastStore";
 
 interface ProductOptionSelectorProps<T extends { label: string; value: number }> {

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import PromotionList from "@/components/pages/mypage/promotion/list/PromotionList";
 import { prefetchGetInfinitePromotionList } from "@/api/mypage/promotion/queries/prefetchGetInfinitePromotionList";
 

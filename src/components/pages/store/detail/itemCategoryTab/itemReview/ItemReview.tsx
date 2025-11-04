@@ -1,10 +1,10 @@
 import { commonWrapper } from '@/styles/common.css';
 import { useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import Pagination from "@/components/common/pagination/Pagination";
-import Divider from '@/components/common/divider/Divider';
-import EmptyList from '@/components/common/emptyList/EmptyList';
-import ReviewItem from '@/components/pages/review/common/reviewItem/ReviewItem';
+import Pagination from "@/components/ui/pagination/Pagination";
+import Divider from '@/components/ui/divider/Divider';
+import EmptyList from '@/components/ui/emptyList/EmptyList';
+import ReviewItem from '@/components/domain/review/reviewItem/ReviewItem';
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { usePagination } from "@/hooks/usePagination";
 import { prefetchGetReviewList, useGetReviewList } from "@/api/review/queries/useGetReviewList";

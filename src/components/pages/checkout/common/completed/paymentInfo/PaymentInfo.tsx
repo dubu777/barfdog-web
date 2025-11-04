@@ -1,8 +1,8 @@
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
 import { orderSummaryRowContainer } from "../../orderSummary/orderSummaryRow/OrderSummaryRow.css";
 import { PaymentMethod } from "@/types";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import { PAYMENT_LABEL } from "@/constants";
 
 interface PaymentInfoProps {

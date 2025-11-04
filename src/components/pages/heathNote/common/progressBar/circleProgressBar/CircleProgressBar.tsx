@@ -1,8 +1,8 @@
 import * as styles from './CircleProgressBar.css';
 import { ComponentType, SVGProps } from "react";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
-import { fontColors } from '@/components/common/text/Text.css';
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import { fontColors } from '@/components/ui/text/Text.css';
 import { COLORS } from '@/constants/style';
 import { getSimpleHealthStatus } from "@/utils/healthNote/common/getHealthStatus";
 

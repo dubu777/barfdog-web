@@ -4,8 +4,8 @@ import useModal from "@/hooks/useModal";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
-import DeliveryModal from "@/components/common/modal/deliveryModal/DeliveryModal";
-import DeliveryContent from "@/components/common/deliveryContent/DeliveryContent";
+import DeliveryModal from "@/components/domain/delivery/deliveryModal/DeliveryModal";
+import DeliveryContent from "@/components/domain/delivery/deliveryContent/DeliveryContent";
 
 export default function DeliveryAddress() {
   const { isOpen, onToggle, onClose } = useModal();

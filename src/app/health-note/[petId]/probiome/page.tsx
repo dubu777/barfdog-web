@@ -1,4 +1,4 @@
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import ProbiomeList from "@/components/pages/heathNote/probiome/list/ProbiomeList";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";

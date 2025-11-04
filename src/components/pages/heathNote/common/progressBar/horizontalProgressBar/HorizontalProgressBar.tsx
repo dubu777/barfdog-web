@@ -1,6 +1,6 @@
 import * as styles from './HorizontalProgressBar.css';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
 import { getFullHealthStatus } from "@/utils/healthNote/common/getHealthStatus";
 
 interface HealthProgressBarProps {

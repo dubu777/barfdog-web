@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import DeleteIcon from "/public/images/icons/trashbag.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Header from "@/components/layout/header/Header";
 import TotalScore from "@/components/pages/heathNote/fullCheck/result/totalScore/TotalScore";
 import ChangedScore from "@/components/pages/heathNote/fullCheck/result/changedScore/ChangedScore";
@@ -15,7 +15,7 @@ import BodyCheck from "@/components/pages/heathNote/fullCheck/result/bodyCheck/B
 import RecommendedItemList from "@/components/pages/heathNote/common/recommendedItemList/RecommendedItemList";
 import DietAnalysisSurvey from "@/components/pages/heathNote/common/dietAnalysisSurvey/DietAnalysisSurvey";
 import ResultTitle from "@/components/pages/heathNote/common/resultTitle/ResultTitle";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
 import { DEFAULT_RECOMMENDED_ITEM_LIST, DISEASE_INFO, queryKeys } from "@/constants";

@@ -1,8 +1,8 @@
 "use client";
 
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
-import LabelValueItem from "@/components/common/labelValueItem/LabelValueItem";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 import {
   ProbiomeDetailCardData,
   SectionType,
@@ -14,7 +14,7 @@ import {
 } from "@/utils/healthNote/probiome/probiomeDetailUtils";
 import { useMemo } from "react";
 import { commonWrapper } from "@/styles/common.css";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 
 interface ProbiomeDetailCardProps {
   title: string;

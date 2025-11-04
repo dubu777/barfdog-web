@@ -6,11 +6,11 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
-import InputField from "@/components/common/inputField/InputField";
+import InputField from "@/components/ui/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
-import Button from "@/components/common/button/Button";
-import Text from "@/components/common/text/Text";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import { LoginFormValues } from "@/utils/validation/auth/login";
 
 interface LoginFormProps {

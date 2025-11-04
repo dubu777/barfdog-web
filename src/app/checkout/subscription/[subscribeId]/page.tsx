@@ -5,9 +5,9 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetCouponList } from "@/api/mypage/coupon/queries/prefetchGetCouponList";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/prefetchGetSubscriptionCheckoutSheet";
+import { prefetchGetInfiniteCouponList } from "@/api/coupon/queries/prefetchGetInfiniteCouponList";
 import SubscriptionCheckout from "@/components/pages/checkout/subscription/SubscriptionCheckout";
 import Header from "@/components/layout/header/Header";
 
@@ -23,7 +23,7 @@ export default async function SubscriptionPage({
   const subscribeId = Number(params.subscribeId);
   const queryClient = new QueryClient();
   await prefetchGetSubscriptionCheckoutSheet(queryClient, subscribeId);
-  await prefetchGetCouponList(queryClient);
+  await prefetchGetInfiniteCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (

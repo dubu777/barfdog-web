@@ -1,10 +1,10 @@
 import { sendMessageCard, sendMessageInput, sendMessageModalContainer } from "../InviteFriends.css";
 import * as yup from "yup";
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import InputField from "@/components/common/inputField/InputField";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import InputField from "@/components/ui/inputField/InputField";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { Controller } from "react-hook-form";
 import { SendReferralCode } from "@/types";

@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import { ReactNode } from "react";
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
 
 interface ResultCardProps {
   children: ReactNode;

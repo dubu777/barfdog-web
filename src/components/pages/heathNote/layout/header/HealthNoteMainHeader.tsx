@@ -11,17 +11,17 @@ import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
 import CheckCircle from "public/images/icons/check_circle.svg";
 import PlusIcon from "/public/images/icons/plus.svg";
 import PetIcon from "/public/images/healthNote/dogIcon.png";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 import { useToastStore } from "@/store/useToastStore";
 import { queryKeys } from "@/constants";
 import { useGetPetList } from "@/api/pet/queries/useGetPetList";
 import { useUpdateRepresentativePet } from "@/api/pet/mutations/useUpdateRepresentativePet";
 import { Pet } from "@/types/pet";
-import ListDivider from "@/components/common/listDivider/ListDivider";
+import ListDivider from "@/components/ui/listDivider/ListDivider";
 
 export default function HealthNoteMainHeader() {
   const router = useRouter();

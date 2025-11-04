@@ -7,21 +7,21 @@ import {
   mealSelectorHelpIcon,
   recipeDetailSection,
 } from "../RecipeDetailModal.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { getNameWithPossessiveSuffix } from "@/utils";
-import InputField from "@/components/common/inputField/InputField";
-import Button from "@/components/common/button/Button";
+import InputField from "@/components/ui/inputField/InputField";
+import Button from "@/components/ui/button/Button";
 import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import {
   calculateRecipePack,
   CalculateRecipePackReturn,
 } from "@/utils/subscription/calculateRecipe";
 import HelpIcon from "public/images/icons/help-fill.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Divider from "@/components/common/divider/Divider";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Divider from "@/components/ui/divider/Divider";
 import WarningIcon from "public/images/icons/warning.svg";
 import { StagedSelection } from "@/hooks/subscription/useRecipeSelections";
 

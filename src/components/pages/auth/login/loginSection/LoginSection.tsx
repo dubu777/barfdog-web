@@ -5,7 +5,7 @@ import LoginForm from "@/components/pages/auth/login/loginForm/LoginForm";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useMemo, useState } from "react";
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import SocialLoginButton from "../socialLoginButton/SocialLoginButton";
 import { OAUTH_CLIENT_CONFIG } from "@/config/oauthClient";
 import { PROVIDERS } from "@/constants/auth";

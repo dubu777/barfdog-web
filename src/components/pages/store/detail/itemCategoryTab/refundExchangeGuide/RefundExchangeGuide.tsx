@@ -1,10 +1,10 @@
 import * as styles from './RefundExchangeGuide.css';
 import { commonWrapper } from '@/styles/common.css';
 import ItemDetailLayout from '../../../layout/ItemDetailLayout';
-import Text from "@/components/common/text/Text";
-import InfoBox from '@/components/common/infoBox/InfoBox';
-import Divider from '@/components/common/divider/Divider';
-import InfoText from "@/components/common/typography/infoText/InfoText";
+import Text from "@/components/ui/text/Text";
+import InfoBox from '@/components/ui/infoBox/InfoBox';
+import Divider from '@/components/ui/divider/Divider';
+import InfoText from "@/components/ui/typography/infoText/InfoText";
 
 export default function RefundExchangeGuide() {
   const defaultInfo = [

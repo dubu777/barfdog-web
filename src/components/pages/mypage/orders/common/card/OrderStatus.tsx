@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { PlanKey } from "@/types";
 import { OrderType } from "@/types/mypage/orders";
 import { subscriptionPlanInfo } from "@/constants";

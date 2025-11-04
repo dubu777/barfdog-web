@@ -1,4 +1,4 @@
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 
 interface PetCardButtonProps {

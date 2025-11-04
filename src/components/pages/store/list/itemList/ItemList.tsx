@@ -3,7 +3,7 @@ import * as styles from './ItemList.css';
 import { Fragment } from "react";
 import { useSearchParams } from "next/navigation";    
 import StoreItem from "@/components/pages/store/list/Item/Item";
-import InfiniteScrollTrigger from "@/components/common/infiniteScrollTrigger/InfiniteScrollTrigger";
+import InfiniteScrollTrigger from "@/components/ui/infiniteScrollTrigger/InfiniteScrollTrigger";
 import { ItemType, SortByType } from "@/types";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useFlattenedInfiniteData } from '@/hooks/useFlattenedInfiniteData';

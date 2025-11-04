@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
 import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";

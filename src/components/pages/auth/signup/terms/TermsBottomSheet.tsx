@@ -1,9 +1,9 @@
 "use client";
 
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 import * as styles from "./TermsBottomSheet.css";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Text from "@/components/common/text/Text";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper, pointColor } from "@/styles/common.css";
 import { SignupStepValues } from "@/utils/validation/auth/signup";
 import {
@@ -13,13 +13,13 @@ import {
   useWatch,
 } from "react-hook-form";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
 import { useMemo, useState } from "react";
-import PrivacyPolicy from "@/components/common/terms/PrivacyPolicy";
-import ServicePolicy from "@/components/common/terms/ServicePolicy";
 import Header from "@/components/layout/header/Header";
+import PrivacyPolicy from "@/components/domain/terms/PrivacyPolicy";
+import ServicePolicy from "@/components/domain/terms/ServicePolicy";
 
 type Panel = "list" | "service" | "privacy";
 

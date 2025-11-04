@@ -1,13 +1,13 @@
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 import MetaText from "@/components/pages/mypage/common/card/typography/MetaText";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { COUPON_TARGET, DISCOUNT_UNIT } from "@/constants";
-import { MyPageCoupon } from "@/types/mypage/coupon";
+import { Coupon } from "@/types";
 
 interface CouponItemProps {
-  coupon: MyPageCoupon;
+  coupon: Coupon;
 }
 
 export default function CouponItem({

@@ -1,25 +1,25 @@
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
+import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
 import { recipeDetailTab } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
 import Image from "next/image";
 import * as styles from "./RecipeDetailModal.css";
-import TabBar from "@/components/common/tabBar/TabBar";
+import TabBar from "@/components/ui/tabBar/TabBar";
 import MealAmountSelector from "./mealAmountSelector/MealAmountSelector";
 import { useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
 import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
 import {
   CommitSelectionResult,
   StagedSelection,
 } from "@/hooks/subscription/useRecipeSelections";
-import RecipeEfficacy from "@/components/common/recipe/recipeEfficacy/RecipeEfficacy";
-import RecipeIngredients from "@/components/common/recipe/recipeIngredients/RecipeIngredients";
-import Divider from "@/components/common/divider/Divider";
+import RecipeEfficacy from "@/components/domain/recipe/recipeEfficacy/RecipeEfficacy";
+import RecipeIngredients from "@/components/domain/recipe/recipeIngredients/RecipeIngredients";
+import Divider from "@/components/ui/divider/Divider";
 import { INGREDIENTS_MAP } from "@/constants/recipes";
 
 interface RecipeDetailModalProps {

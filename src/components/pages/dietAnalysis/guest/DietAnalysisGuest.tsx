@@ -1,10 +1,10 @@
 "use client";
 
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
-import Card from "@/components/common/card/Card";
+import Card from "@/components/ui/card/Card";
 
 export default function DietAnalysisGuest() {
   const router = useRouter();

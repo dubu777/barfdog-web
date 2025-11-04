@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
 import { ORDER_TYPE_LABEL } from "@/constants/mypage/orders";
 import { OrderType } from "@/types/mypage/orders";
 

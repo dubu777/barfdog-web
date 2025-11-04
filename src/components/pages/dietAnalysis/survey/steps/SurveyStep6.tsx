@@ -1,10 +1,10 @@
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import { commonWrapper } from "@/styles/common.css";
-import SurveyOptionCard from "@/components/common/survey/surveyOptionCard/SurveyOptionCard";
+import SurveyOptionCard from "@/components/domain/survey/surveyOptionCard/SurveyOptionCard";
 
 interface SurveyStepProps {
   handleChange: () => void;

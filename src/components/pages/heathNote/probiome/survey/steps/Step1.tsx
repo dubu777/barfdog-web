@@ -1,13 +1,13 @@
 import React from "react";
 import { useFormContext, useController } from "react-hook-form";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 import {
   PROBIOME_FORM_INFO,
   PROBIOME_TITLES,
 } from "@/constants/healthNote/probiome";
 import { ProbiomeStepValues } from "@/utils/validation/probiomeValidation";
-import SurveyOptionCard from "@/components/common/survey/surveyOptionCard/SurveyOptionCard";
+import SurveyOptionCard from "@/components/domain/survey/surveyOptionCard/SurveyOptionCard";
 import { commonWrapper } from "@/styles/common.css";
 
 interface SurveyStepProps {

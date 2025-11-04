@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { AUTH_CONFIG } from "@/constants/auth";
 import Link from "next/link";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import LogoIcon from "public/images/logo/logo.svg";
 
 interface DefaultLayoutProps {

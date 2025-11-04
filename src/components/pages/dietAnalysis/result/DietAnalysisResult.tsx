@@ -3,11 +3,11 @@
 import { useGetDietAnalysisResult } from "@/api/dietAnalysis/queries/useGetDietAnalysisResult";
 import ResultSummary from "./resultSummary/ResultSummary";
 import DietReason from "./dietReason/DietReason";
-import Divider from "@/components/common/divider/Divider";
+import Divider from "@/components/ui/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 import RecommendedRecipeList from "./recommendedRecipeList/RecommendedRecipeList";
 import DailyCalorie from "./dailyCalorie/DailyCalorie";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useRouter } from "next/navigation";
 import { HealthConcernType } from "@/types";
 import { EDITABLE_SUBSCRIPTION_STATUSES } from "@/constants";

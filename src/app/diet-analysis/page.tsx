@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import DietAnalysisMain from "@/components/pages/dietAnalysis/main/DietAnalysisMain";
 import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 

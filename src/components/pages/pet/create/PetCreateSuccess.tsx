@@ -1,8 +1,8 @@
 import * as styles from "../PetModal.css";
 import CheckIcon from "public/images/icons/check_circle.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 
 interface PetCreateSuccessProps {
   handleGoToSurvey: () => void;

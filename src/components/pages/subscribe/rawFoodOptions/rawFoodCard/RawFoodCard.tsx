@@ -1,18 +1,18 @@
 import Image from "next/image";
 import * as styles from "./RawFoodCard.css";
-import Text from "@/components/common/text/Text";
-import Button from "@/components/common/button/Button";
+import Text from "@/components/ui/text/Text";
+import Button from "@/components/ui/button/Button";
 import { commonWrapper } from "@/styles/common.css";
-import Chips from "@/components/common/chips/Chips";
+import Chips from "@/components/ui/chips/Chips";
 import { RawFoodOrderItem } from "@/types";
 import RecipeDetailModal from "../../recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
 import { useMemo } from "react";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import PenIcon from "public/images/subscription/pen.svg";
 import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import RawFoodBadge from "./rawFoodBadge/RawFoodBadge";
 import { HEALTH_CONCERN_LABEL } from "@/constants/dietAnalysis";
 import {

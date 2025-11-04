@@ -1,6 +1,6 @@
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import Text from "@/components/common/text/Text";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { openChatChannelIO } from "@/utils/channelTalk";
 

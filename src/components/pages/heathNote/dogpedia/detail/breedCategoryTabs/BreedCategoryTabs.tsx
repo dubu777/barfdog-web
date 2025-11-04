@@ -1,8 +1,8 @@
 import { commonWrapper } from '@/styles/common.css';
 import { useState } from "react";
-import TabBar from "@/components/common/tabBar/TabBar";
-import Text from "@/components/common/text/Text";
-import Card from "@/components/common/card/Card";
+import TabBar from "@/components/ui/tabBar/TabBar";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
 import SliderQuestion
 	from "@/components/pages/heathNote/dogpedia/detail/breedCategoryTabs/sliderQuestion/SliderQuestion";
 import CoatQuestion from "@/components/pages/heathNote/dogpedia/detail/breedCategoryTabs/coatQuestion/CoatQuestion";

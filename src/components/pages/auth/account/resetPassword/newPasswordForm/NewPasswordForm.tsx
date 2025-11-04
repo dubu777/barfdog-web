@@ -1,6 +1,6 @@
 "use client";
 import { UseFormReturn, useWatch } from "react-hook-form";
-import InputField from "@/components/common/inputField/InputField";
+import InputField from "@/components/ui/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
 import { ResetPasswordValues } from "@/utils/validation/auth/resetPassword";
 import {
@@ -9,9 +9,9 @@ import {
   PasswordCriteriaItem,
 } from "@/utils/validation/auth/password";
 import { useMemo, useRef } from "react";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import CheckIcon from "public/images/survey/check_small.svg";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import { useEnterFocus } from "@/hooks/common/useEnterFocus";
 
 interface NewPasswordFormProps {

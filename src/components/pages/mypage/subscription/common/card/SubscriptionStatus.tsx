@@ -1,4 +1,4 @@
-import Chips from "@/components/common/chips/Chips";
+import Chips from "@/components/ui/chips/Chips";
 import { VISIBLE_SUBSCRIPTION_STATUS, VISIBLE_SUBSCRIPTION_STATUS_CHIPS_COLOR } from "@/constants/mypage/subscription";
 import { SubscriptionStatus as SubscriptionStatusType, VisibleSubscribeStatus } from "@/types/mypage/subscription";
 

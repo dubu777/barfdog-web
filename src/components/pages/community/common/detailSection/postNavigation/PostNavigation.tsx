@@ -1,9 +1,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { commonWrapper, pointColor } from "@/styles/common.css";
 import Arrow from '/public/images/icons/angle-down.svg';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import Text from "@/components/common/text/Text";
-import Divider from "@/components/common/divider/Divider";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { CommunityCategory, CommunityListItem } from "@/types";
 

@@ -1,11 +1,11 @@
-import Card from "@/components/common/card/Card";
-import Button from "@/components/common/button/Button";
-import Divider from "@/components/common/divider/Divider";
+import Card from "@/components/ui/card/Card";
+import Button from "@/components/ui/button/Button";
+import Divider from "@/components/ui/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 import { CurrentRecipeItem, DeliveryPlan, MealPlan, RawFood } from "@/types";
 import React from "react";
 import RecipeItemCard from "../../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 
 interface SubscriptionItemPickerProps {
   mealPlan: MealPlan;

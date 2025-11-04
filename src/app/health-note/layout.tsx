@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from "react";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
 import HealthNoteHeader from "@/components/pages/heathNote/layout/header/HealthNoteHeader";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 interface DefaultLayoutProps {
   children: ReactNode;

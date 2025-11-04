@@ -3,7 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import { prefetchGetNoticeDetail } from "@/api/community/queries/prefetchGetNoticeDetail";
 import NoticeDetail from "@/components/pages/community/notice/detail/NoticeDetail";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 interface NoticeDetailPageProps {
   params: Promise<{

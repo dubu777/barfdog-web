@@ -4,14 +4,14 @@ import * as styles from "./PetForm.css";
 import { useCallback, useMemo, useState } from "react";
 import { format } from "date-fns";
 import { Controller, UseFormReturn, useWatch } from "react-hook-form";
-import InputField from "@/components/common/inputField/InputField";
-import InputLabel from "@/components/common/inputLabel/InputLabel";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
-import Text from "@/components/common/text/Text";
-import CustomDatePicker from "@/components/common/datePicker/CustomDatePicker";
-import FileUpload from "@/components/common/fileUpload/FileUpload";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DogTypeModal from "@/components/common/modal/dogTypeModal/DogTypeModal";
+import InputField from "@/components/ui/inputField/InputField";
+import InputLabel from "@/components/ui/inputLabel/InputLabel";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
+import Text from "@/components/ui/text/Text";
+import CustomDatePicker from "@/components/ui/datePicker/CustomDatePicker";
+import FileUpload from "@/components/ui/fileUpload/FileUpload";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import PetTypeModal from "@/components/domain/pet/petTypeModal/PetTypeModal";
 import useModal from "@/hooks/useModal";
 import { PET_GENDER } from "@/constants/pet";
 import { useCheckDuplicatePetName } from "@/api/pet/queries/useCheckDuplicatePetName";
@@ -207,7 +207,7 @@ export default function PetForm({
                   label="견종"
                   onClick={onToggleDogTypeModal}
                 />
-                <DogTypeModal
+                <PetTypeModal
                   dogName={petName}
                   breedList={breedList ?? []}
                   value={field.value}

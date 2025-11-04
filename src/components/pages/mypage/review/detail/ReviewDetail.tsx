@@ -1,11 +1,11 @@
 'use client';
 import { commonWrapper } from "@/styles/common.css";
-import Text from "@/components/common/text/Text";
-import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
-import Divider from "@/components/common/divider/Divider";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import Text from "@/components/ui/text/Text";
+import ImageCarousel from "@/components/ui/imageCarousel/ImageCarousel";
+import Divider from "@/components/ui/divider/Divider";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import ReviewCard from "@/components/pages/mypage/review/common/reviewCard/ReviewCard";
-import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
+import ImagesModal from "@/components/ui/modal/imagesModal/ImagesModal";
 import UpdateReviewModal from "@/components/pages/mypage/review/update/UpdateReviewModal";
 import useModal from "@/hooks/useModal";
 import { useImageModal } from "@/hooks/useImageModal";

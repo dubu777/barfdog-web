@@ -1,8 +1,8 @@
 "use client";
 import * as styles from "./HealthNoteUser.css";
 import Image from "next/image";
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
 import ComparisonProgressBar from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
 import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";

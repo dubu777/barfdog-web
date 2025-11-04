@@ -11,7 +11,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import PetForm from "../form/PetForm";
 import { buildPetUpdateRequest } from "@/utils/pet/buildPetUpdateRequest";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import TrashIcon from "public/images/icons/trashbag.svg";
 import { useDeletePet } from "@/api/pet/mutations/useDeletePet";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";

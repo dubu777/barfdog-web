@@ -1,5 +1,5 @@
 import { prefetchSubscriptionOrderSheet } from "@/api/subscription/queries/prefetchSubscriptionOrderSheet";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import SubscriptionOrderSheet from "@/components/pages/subscribe/SubscriptionOrderSheet";
 import {
   dehydrate,

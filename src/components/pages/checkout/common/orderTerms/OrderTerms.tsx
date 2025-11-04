@@ -1,15 +1,15 @@
-import Text from "@/components/common/text/Text";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
+import Text from "@/components/ui/text/Text";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
 import { COLORS } from "@/constants/style";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import OrderSection from "../orderSection/OrderSection";
 import { useOrderStore } from "@/store/checkout/useOrderStore";
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import { orderSheetContentBox } from "../../OrderSheetCommon.css";
 import { OrderType } from "@/types";
 import { forwardRef } from "react";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import InfoIcon from "public/images/icons/info-red.svg";
 import * as styles from "./OrderTerms.css";
 

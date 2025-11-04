@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/common/button/Button";
+import Button from "@/components/ui/button/Button";
 import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
 import { useRouter } from "next/navigation";
 import * as styles from "./Test.css";

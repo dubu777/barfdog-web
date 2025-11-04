@@ -6,11 +6,11 @@ import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import EmptyGif from '/public/images/healthNote/health-check/empty.gif';
-import Text from "@/components/common/text/Text";
-import Button from "@/components/common/button/Button";
-import CreateButton from "@/components/common/createButton/CreateButton";
-import Card from "@/components/common/card/Card";
-import Chips from "@/components/common/chips/Chips";
+import Text from "@/components/ui/text/Text";
+import Button from "@/components/ui/button/Button";
+import CreateButton from "@/components/ui/createButton/CreateButton";
+import Card from "@/components/ui/card/Card";
+import Chips from "@/components/ui/chips/Chips";
 import { DIAGNOSIS_ITEM } from "@/constants";
 import { useGetMedicalHistoryList } from "@/api/healthNote/medicalHistory/queries/useGetMedicalHistoryList";
 

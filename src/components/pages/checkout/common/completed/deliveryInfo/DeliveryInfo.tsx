@@ -1,7 +1,7 @@
-import Card from "@/components/common/card/Card";
-import DeliveryContent from "@/components/common/deliveryContent/DeliveryContent";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import DeliveryContent from "@/components/domain/delivery/deliveryContent/DeliveryContent";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
 import { ClientDeliveryDto } from "@/types";
 
 interface DeliveryInfoProps {

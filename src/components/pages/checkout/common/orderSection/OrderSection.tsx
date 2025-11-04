@@ -1,8 +1,8 @@
-import Text from "@/components/common/text/Text";
+import Text from "@/components/ui/text/Text";
 import * as styles from "./OrderSection.css";
 import ArrowIcon from "/public/images/header/chevron-right.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import { fontColors, textStyles } from "@/components/common/text/Text.css";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import { fontColors, textStyles } from "@/components/ui/text/Text.css";
 import { forwardRef } from "react";
 import { commonWrapper } from "@/styles/common.css";
 

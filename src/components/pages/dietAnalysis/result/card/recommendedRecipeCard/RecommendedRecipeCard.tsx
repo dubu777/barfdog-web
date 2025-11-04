@@ -1,11 +1,11 @@
-import Card from "@/components/common/card/Card";
-import Chips from "@/components/common/chips/Chips";
-import Text from "@/components/common/text/Text";
+import Card from "@/components/ui/card/Card";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { RecommendRecipeRankDto } from "@/types/dietAnalysis";
 import { resultCardStyle } from "../levelGaugeCard/LevelGaugeCard.css";
 import Image from "next/image";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import ArrowIcon from "public/images/header/chevron-right.svg";
 import CheckIcon from "public/images/healthNote/body-check/notice-check.svg";
 import * as styles from "./RecommendedRecipeCard.css";

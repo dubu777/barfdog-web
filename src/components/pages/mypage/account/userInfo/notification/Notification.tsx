@@ -2,10 +2,10 @@ import { commonWrapper } from "@/styles/common.css";
 import { notification } from "./Notification.css";
 import { useMemo, useCallback } from "react";
 import { Controller, Control, UseFormSetValue } from "react-hook-form";
-import Card from "@/components/common/card/Card";
-import Text from "@/components/common/text/Text";
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
-import Divider from "@/components/common/divider/Divider";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
+import Divider from "@/components/ui/divider/Divider";
 import { UpdateUserInfo } from "@/types/mypage/account";
 
 interface NotificationProps {

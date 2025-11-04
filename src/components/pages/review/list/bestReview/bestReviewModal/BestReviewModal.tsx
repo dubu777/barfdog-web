@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { bestReviewModalContainer, contentBox } from "@/components/pages/review/common/reviewItem/ReviewItem.css";
+import { bestReviewModalContainer, contentBox } from "@/components/domain/review/reviewItem/ReviewItem.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import type { Swiper as SwiperType } from 'swiper/types';
-import FullModalWrapper from "@/components/common/fullModalWrapper/FullModalWrapper";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import ImageCarousel from "@/components/common/imageCarousel/ImageCarousel";
+import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import ImageCarousel from "@/components/ui/imageCarousel/ImageCarousel";
 import ImageSlide from "@/components/pages/review/list/bestReview/bestReviewModal/imageSlide/ImageSlide";
 import useModal from "@/hooks/useModal";
-import ImagesModal from "@/components/common/modal/imagesModal/ImagesModal";
-import ReviewInfoTop from "@/components/pages/review/common/reviewItem/ReviewInfoTop";
-import Divider from "@/components/common/divider/Divider";
-import Text from "@/components/common/text/Text";
+import ImagesModal from "@/components/ui/modal/imagesModal/ImagesModal";
+import ReviewInfoTop from "@/components/domain/review/reviewItem/ReviewInfoTop";
+import Divider from "@/components/ui/divider/Divider";
+import Text from "@/components/ui/text/Text";
 import { BestReviewItem } from "@/types";
 
 interface BestReviewModalProps {

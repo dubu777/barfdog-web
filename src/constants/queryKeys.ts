@@ -36,15 +36,13 @@ const queryKeys = {
       BASE: "common",
       GET_MYPAGE_INFO: "getMyPageInfo",
       GET_MYPAGE_BANNER: "getMyPageBanner",
+      // DELETE 예정
+      GET_PAYMENT_LIST: "getPaymentList",
     },
     ACCOUNT: {
       BASE: "account",
       GET_USER_INFO: "getUserInfo",
       VERIFY_PASSWORD: "verifyPassword",
-    },
-    COUPON: {
-      BASE: "coupon",
-      GET_COUPON_LIST: "getCouponList",
     },
     PROMOTION: {
       BASE: "promotion",

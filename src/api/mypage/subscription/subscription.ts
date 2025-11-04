@@ -2,7 +2,8 @@ import { AxiosInstance } from "axios";
 import axiosInstance from "@/api/axiosInstance";
 import { VISIBLE_SUBSCRIPTION_STATUS_LIST } from "@/constants/mypage/subscription";
 import { SubscriptionStatus } from "@/types";
-import { SubscriptionDetail, SubscriptionList } from "@/types/mypage/subscription";
+import { ApplyNextPaymentCouponProps, SubscriptionDetail, SubscriptionList } from "@/types/mypage/subscription";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 const isVisibleSubscribeStatus = (status: SubscriptionStatus): boolean => {
   return VISIBLE_SUBSCRIPTION_STATUS_LIST.includes(status);
@@ -49,7 +50,26 @@ const getSubscriptionDetail = async (
   };
 };
 
+// DELETE 예정
+const getPaymentList = async (instance: AxiosInstance = axiosInstance)=> {
+  const { data } = await instance.get('/api/cards');
+  return data._embedded?.querySubscribeCardsDtoList || [];
+}
+
+const applyNextPaymentCoupon = async (subscribeId: number, body: ApplyNextPaymentCouponProps) => {
+  const { data } = await axiosInstance.post(`/api/subscribes/${subscribeId}/coupon`, body);
+  return validateApiResponse(data, '다음 회차 쿠폰 적용에 실패했습니다.');
+}
+
+const cancelAppliedNextPaymentCoupon = async (subscribeId: number, body: ApplyNextPaymentCouponProps) => {
+  const { data } = await axiosInstance.put(`/api/subscribes/${subscribeId}/coupon/cancel`, body);
+  return validateApiResponse(data, '다음 회차 쿠폰 적용 취소에 실패했습니다.');
+}
+
 export {
   getSubscriptionList,
   getSubscriptionDetail,
+  getPaymentList,
+  applyNextPaymentCoupon,
+  cancelAppliedNextPaymentCoupon,
 }

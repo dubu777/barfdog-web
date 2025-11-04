@@ -1,5 +1,5 @@
 "use client";
-import Spinner from "@/components/common/spinner/Spinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { useEffect, useRef } from "react";
 import { SnsProvider } from "@/types";
 import { useToastStore } from "@/store/useToastStore";

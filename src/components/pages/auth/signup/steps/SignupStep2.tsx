@@ -1,11 +1,11 @@
-import Text from "@/components/common/text/Text";
-import InputField from "@/components/common/inputField/InputField";
+import Text from "@/components/ui/text/Text";
+import InputField from "@/components/ui/inputField/InputField";
 import { commonWrapper } from "@/styles/common.css";
 import { SignupStepValues } from "@/utils/validation/auth/signup";
 import { useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import CheckIcon from "public/images/survey/check_small.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import {
   getPasswordCriteria,
   PasswordCriteriaItem,
