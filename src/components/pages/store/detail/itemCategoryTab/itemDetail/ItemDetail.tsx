@@ -1,5 +1,4 @@
-import * as styles from './ItemDetail.css';
-import { sanitizedHTML } from "@/styles/common.css";
+import { commonWrapper, sanitizedHTML } from "@/styles/common.css";
 import { useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
 import parse from "html-react-parser";
@@ -31,18 +30,23 @@ export default function ItemDetail({
 
   return (
     <>
-      <div className={styles.itemDetail}>
-        <Text className={styles.detailTip} type='body2' color='gray700'>
+      <div className={commonWrapper({
+        align: 'start',
+        justify: 'start',
+        gap: 32,
+        padding: 20,
+      })}>
+        <Text type='body3' color='gray700' noShrink>
           상품 Tip!
         </Text>
-        <Text type='label2' color='gray700'>
+        <Text type='label2' color='gray800'>
           {description}
         </Text>
       </div>
       <Divider thickness={1} color='gray100' />
       <div 
         ref={contentRef}
-        className={`${sanitizedHTML} ${styles.detailContents}`}
+        className={`${sanitizedHTML} ${commonWrapper({ padding: 20, direction: 'col', align: 'start' })}`}
       >
         {parse(cleanHTML)}
       </div>

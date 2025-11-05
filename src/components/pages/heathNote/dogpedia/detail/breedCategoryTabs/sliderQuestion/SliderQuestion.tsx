@@ -1,10 +1,10 @@
 import { Fragment } from "react";
-import * as styles from "./SliderQuestion.css";
 import CheckCircle from "public/images/icons/check_circle.svg";
 import SliderCircle from "/public/images/healthNote/dogpedia/slider_circle.svg";
 import Text from "@/components/ui/text/Text";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Divider from "@/components/ui/divider/Divider";
+import { commonWrapper } from "@/styles/common.css";
 
 interface SliderQuestionProps {
   label: string;
@@ -20,9 +20,14 @@ export default function SliderQuestion({
   value,
 }: SliderQuestionProps) {
 	return (
-		<div className={styles.sliderContainer}>
+		<div className={commonWrapper({ direction: 'col', align: 'start' })}>
 			<Text type='headline2'>{label}</Text>
-			<div className={styles.sliderBox}>
+			<div className={commonWrapper({
+				justify: 'between',
+				gap: 2,
+				paddingTop: 16,
+				paddingBottom: 8,
+			})}>
 				{[1, 2, 3, 4, 5].map(step => {
 					const active = value === step;
 					return (
@@ -38,7 +43,7 @@ export default function SliderQuestion({
 					)
 				})}
 			</div>
-			<div className={styles.minMaxLevel}>
+			<div className={commonWrapper({ justify: 'between' })}>
 				<Text type='caption' color='gray700'>{minLevel}</Text>
 				<Text type='caption' color='gray700'>{maxLevel}</Text>
 			</div>

@@ -43,7 +43,6 @@ export default function NoticeList() {
     <>
       <Header
         showBackButton
-        showCartButton
         centerTitle='공지사항'
     		// 목록 페이지에서 뒤로가기 시 진입 경로로 이동
         onBack={() => navigateToEntryPoint(router, getEntryPoint() ?? '/')}

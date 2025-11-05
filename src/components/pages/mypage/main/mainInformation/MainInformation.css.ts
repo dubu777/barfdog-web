@@ -2,48 +2,11 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const userInfoContainer = style({
-  backgroundColor: themeVars.colors.gray.gray50,
-})
-
-export const accountLinkBox = style({
-  padding: '20px',
-})
-
 export const accountRecommendationCode = style({
   textAlign: 'left',
   marginLeft: '43.5px',
   marginBottom: '6px',
   marginTop: 'unset !important',
-})
-
-export const accountLink = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
-})
-
-export const accountImage = style({
-  borderRadius: '50%',
-  objectFit: 'cover',
-})
-
-export const membership = style({
-  backgroundColor: themeVars.colors.gray.gray0,
-  padding: '18px 20px 12px',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '6px',
-})
-
-export const membershipInfoTop = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-})
-
-export const userReward = style({
-  display: 'flex',
-  alignItems: 'center',
 })
 
 export const rewardItem = recipe({
@@ -75,11 +38,6 @@ export const rewardItem = recipe({
       }
     }
   }
-})
-
-export const userRewardTitle = style({
-  display: 'flex',
-  alignItems: 'center',
 })
 
 export const userRewardLine = style({

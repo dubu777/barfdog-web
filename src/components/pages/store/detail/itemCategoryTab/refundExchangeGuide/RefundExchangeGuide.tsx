@@ -1,5 +1,5 @@
-import * as styles from './RefundExchangeGuide.css';
 import { commonWrapper } from '@/styles/common.css';
+import { infoSectionLabel } from './RefundExchangeGuide.css';
 import ItemDetailLayout from '../../../layout/ItemDetailLayout';
 import Text from "@/components/ui/text/Text";
 import InfoBox from '@/components/ui/infoBox/InfoBox';
@@ -92,15 +92,27 @@ export default function RefundExchangeGuide() {
     },
   ]
   return (
-    <div className={styles.infoContainer}>
+    <div className={commonWrapper({
+      direction: 'col',
+      align: 'start',
+      gap: 18,
+      padding: 20,
+      paddingBottom: 40,
+    })}>
       <ItemDetailLayout
         title='반품/교환 안내'
         hasTitlePadding={false}
       >
-        <div className={styles.infoSection}>
+        <div className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 8,
+        })}>
           {defaultInfo.map((info, index) => (
-            <div key={index} className={styles.infoSectionItem}>
-              <Text className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</Text>
+            <div key={index} className={commonWrapper({ justify: 'start', gap: 4 })}>
+              <Text type='body3' color='gray700' className={infoSectionLabel}>
+                {info.label}
+              </Text>
               <Text type='label2' color='gray800'>{info.value}</Text>
             </div>
           ))}
@@ -111,11 +123,17 @@ export default function RefundExchangeGuide() {
         title='반품/교환 요청 가능 기간'
         hasTitlePadding={false}
       >
-        <div className={styles.infoSection}>
+        <div className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 8,
+        })}>
         {periodInfo.map((info, index) => (
-          <div key={index} className={styles.infoSectionItem}>
+          <div key={index} className={commonWrapper({ justify: 'start', gap: 4 })}>
             {info.label && 
-              <Text className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</Text>
+              <Text type='body3' color='gray700' className={infoSectionLabel}>
+                {info.label}
+              </Text>
             }
             {typeof info.value === 'string'
               ? <Text type='label2' color='gray800'>{info.value}</Text>
@@ -130,11 +148,18 @@ export default function RefundExchangeGuide() {
         title='반품/교환 불가능 사유'
         hasTitlePadding={false}
       >
-        <div className={styles.infoSection}>
+        <div className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 8,
+        })}>
           {reasonOfImpossibilityInfo.map((reason, index) => (
-            <div key={index} className={styles.infoSectionItem}>
-              <InfoText type='label2' color='gray800' text={reason} />
-            </div>
+            <InfoText 
+              key={index} 
+              type='label2' 
+              color='gray800' 
+              text={reason} 
+            />
           ))}
         </div>
       </ItemDetailLayout>
@@ -143,10 +168,14 @@ export default function RefundExchangeGuide() {
         title='판매자 정보'
         hasTitlePadding={false}
       >
-        <div className={styles.infoSection}>
+        <div className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 8,
+        })}>
           {sellerInfo.map((info, index) => (
-            <div key={index} className={styles.infoSectionItem}>
-              <Text className={styles.infoSectionLabel} type='body3' color='gray700'>{info.label}</Text>
+            <div key={index} className={commonWrapper({ justify: 'start', gap: 4 })}>
+              <Text type='body3' color='gray700' className={infoSectionLabel}>{info.label}</Text>
               <Text type='label2' color='gray800'>{info.value}</Text>
             </div>
           ))}

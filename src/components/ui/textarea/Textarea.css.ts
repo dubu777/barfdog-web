@@ -29,7 +29,7 @@ export const textareaStyle = recipe({
     minHeight: '160px',
     height: '100%',
     padding: '12px',
-    border: `1px solid ${themeVars.colors.gray.gray300}`,
+    border: `1px solid ${themeVars.colors.gray.gray200}`,
     background: themeVars.colors.gray.gray0,
     borderRadius: '8px',
     transition: 'all .35s',

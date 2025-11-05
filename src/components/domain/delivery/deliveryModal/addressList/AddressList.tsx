@@ -1,5 +1,5 @@
+import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/ui/button/Button";
-import * as styles from "./AddressList.css";
 import { ClientDeliveryDto } from "@/types";
 import AddIcon from "/public/images/icons/add.svg";
 import { useMemo } from "react";
@@ -28,7 +28,12 @@ export default function AddressList({
   }, [addressData]);
 
   return (
-    <div className={styles.deliveryModalWrapper}>
+    <div className={commonWrapper({
+      direction: 'col',
+      padding: 20,
+      paddingBottom: 40,
+      gap: 20,
+    })}>
       <Button
         intent="assistive"
         variant="outline"
@@ -39,7 +44,10 @@ export default function AddressList({
       >
         배송지 추가하기
       </Button>
-      <div className={styles.addressCardWrapper}>
+      <div className={commonWrapper({
+        direction: 'col',
+        gap: 8,
+      })}>
         {sortedAddresses.map((address) => (
           <AddressCard
             key={address.id}

@@ -1,5 +1,6 @@
 'use client';
-import * as styles from './HistoryDetail.css';
+import { moreButton } from './HistoryDetail.css';
+import { commonWrapper } from '@/styles/common.css';
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -61,10 +62,14 @@ export default function HistoryDetail ({
 		{
 			title: '건강검진 정보',
 			content: (
-				<ul className={styles.defaultInfo}>
+				<ul className={commonWrapper({
+					direction: 'col',
+					gap: 12,
+					align: 'start',
+				})}>
 					{defaultInfo.map(info => (
-						<li key={info.label} className={styles.defaultInfoItem}>
-							<Text className={styles.defaultInfoLabel} type='label4'>{info.label}</Text>
+						<li key={info.label} className={commonWrapper({ justify: 'between', align: 'start', gap: 20 })}>
+							<Text type='label4' noShrink>{info.label}</Text>
 							<Text type='body3' color='gray800' align='right'>{info.value}</Text>
 						</li>
 					))}
@@ -117,12 +122,21 @@ export default function HistoryDetail ({
 				showBackButton
 				onBack={() => router.push(`/health-note/${petId}/medical-history`)}
 				rightElement={(
-					<button className={styles.moreButton} onClick={onToggleControlBottomSheet}>
+					<button 
+						className={moreButton} 
+						onClick={onToggleControlBottomSheet}
+					>
 						<SvgIcon src={MoreHorizIcon} style={{ transform: 'rotate(90deg)' }} size={24} />
 					</button>
 				)}
 			/>
-			<section className={styles.historyDetailContainer}>
+			<section className={commonWrapper({
+				minHeight: 'fullWithHeader',
+				direction: 'col',
+				gap: 16,
+				padding: 20,
+				justify: 'start',
+			})}>
 				{infoList.map(info => (
 					info.visible &&
 					<Card

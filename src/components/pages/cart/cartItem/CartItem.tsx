@@ -1,4 +1,5 @@
-import * as styles from './CartItem.css';
+import { commonWrapper } from '@/styles/common.css';
+import { cartItemBox, cartItemImage, cartItemOptionBox, deleteButton } from './CartItem.css';
 import Image from "next/image";
 import CloseIcon from "/public/images/header/close.svg";
 import InfoIcon from '/public/images/icons/info-fill.svg';
@@ -30,19 +31,29 @@ export default function CartItem({
 
   const ItemContent = () => {
     return (
-      <div className={styles.cartItem}>
-        <Image src={item.thumbnailUrl} alt={item.name} width={88} height={88} className={styles.cartItemImage({ isSoldOut })} />
-        <div className={styles.cartItemInfo}>
-          <Text type='label2' color='gray700'>{item.name}</Text>
+      <div className={commonWrapper({ justify: 'start', align: 'start', gap: 8 })}>
+        <Image 
+          src={item.thumbnailUrl} 
+          alt={item.name} 
+          width={88} 
+          height={88} 
+          className={cartItemImage({ isSoldOut })} 
+        />
+        <div className={commonWrapper({ direction: 'col', align: 'start', gap: 4 })}>
+          <Text type='label2' color='gray700'>
+            {item.name}
+          </Text>
           {isSoldOut
             ? <Text type='headline1' color='red'>Sold Out</Text>
             : (
               <>
                 <Text type='body3' color='gray600' block>구매 수량 | {item.amount}개</Text>
-                <div className={styles.cartItemInfoControls}>
-                  <div className={styles.cartItemPrice}>
+                <div className={commonWrapper({ justify: 'between', align: 'end' })}>
+                  <div className={commonWrapper({ direction: 'col', align: 'start',  gap: 2 })}>
                     {item.originalPrice !== item.salePrice &&
-                      <Text type='caption2' color='gray800' lineThrough>{item.originalPrice.toLocaleString()}원</Text>
+                      <Text type='caption2' color='gray800' lineThrough>
+                        {item.originalPrice.toLocaleString()}원
+                      </Text>
                     }
                     <Text type='headline2' color='gray800'>{item.salePrice.toLocaleString()}원</Text>
                   </div>
@@ -68,17 +79,21 @@ export default function CartItem({
         onToggle={onSelect}
         iconClick
         direction='col'
-        className={styles.cartItemBox}
+        className={cartItemBox}
       >
         <button
           onClick={() => handleDeleteItemById(item.basketId)}
-          className={styles.deleteButton}
+          className={deleteButton}
         >
           <SvgIcon src={CloseIcon} size={20} color='gray500' />
         </button>
         <ItemContent />
         {options.length > 0 &&
-          <div className={styles.cartItemOptionList}>
+          <div className={commonWrapper({
+            direction: 'col',
+            align: 'start',
+            gap: 12
+          })}>
             {options.map(option => {
               const isOptionSoldOut = false;
               return (
@@ -92,8 +107,8 @@ export default function CartItem({
                   align='start'
                   justify='start'
                 >
-                  <div className={styles.cartItemOptionBox({ isOptionSoldOut })}>
-                    <div className={styles.cartItemOption}>
+                  <div className={cartItemOptionBox({ isOptionSoldOut })}>
+                    <div className={commonWrapper({ justify: 'between' })}>
                       <Chips variant='outlined' color='gray700'>{isOptionSoldOut ? '품절' : '추가'}상품</Chips>
                       <button>
                         <SvgIcon src={CloseIcon} size={16} color='gray500' />
@@ -101,7 +116,7 @@ export default function CartItem({
                     </div>
                     <Text type='body3' color='gray700'>{option.name}</Text>
                   </div>
-                  <div className={styles.cartItemOption}>
+                  <div className={commonWrapper({ justify: 'between' })}>
                     {isOptionSoldOut
                       ? <Text type='headline1' color='red'>Sold Out</Text>
                       : (
@@ -123,8 +138,8 @@ export default function CartItem({
         }
       </LabeledCheckbox>
     ) : (
-      <div className={styles.cartItemBox}>
-        <div className={styles.cartItemOption}>
+      <div className={cartItemBox}>
+        <div className={commonWrapper({ justify: 'between' })}>
           <SvgIcon src={InfoIcon} size={18} color='gray700' />
           <button onClick={() => handleDeleteItemById(item.basketId)}>
             <SvgIcon src={CloseIcon} size={20} color='gray500' />

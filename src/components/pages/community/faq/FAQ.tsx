@@ -13,7 +13,6 @@ export default function Faq() {
 		<>
 			<Header
 				showBackButton
-				showCartButton
 				centerTitle='자주 묻는 질문'
 			/>
 			<section 

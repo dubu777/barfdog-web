@@ -1,6 +1,7 @@
 "use client";
+import { commonWrapper } from "@/styles/common.css";
+import { searchableSelectorButton } from "./Dogpedia.css";
 import { useMemo, useState } from "react";
-import * as styles from "./Dogpedia.css";
 import ArrowRightIcon from "/public/images/icons/chevron-right-blue.svg";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Text from "@/components/ui/text/Text";
@@ -42,23 +43,28 @@ export default function Dogpedia({ petId }: DogpediaProps) {
   return (
     <>
       {selectedBreedId === null || !petInfo ? (
-        <section className={styles.searchDogContainer}>
+        <section className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 32,
+          padding: 20,
+          paddingTop: 40,
+        })}>
           <Text type="title3">
-            궁금한 견종이 있으신가요?
-            <br />
+            궁금한 견종이 있으신가요?<br />
             지금 바로 검색해 보세요
           </Text>
-          <div className={styles.searchableSelector}>
+          <div className={commonWrapper({ direction: 'col', gap: 20, align: 'start' })}>
             <SearchableSelector
               placeholder="견종을 검색해 보세요"
               onChange={handleSelect}
               options={DOGPEDIA_OPTIONS}
               selectedValue={selectedBreedId}
-              className={styles.searchableSelectorButton}
+              className={searchableSelectorButton}
               type="button"
               rightElement={<SvgIcon src={ArrowRightIcon} />}
               emptyElement={
-                <div className={styles.searchableSelectorEmpty}>
+                <div className={commonWrapper({ paddingTop: 20 })}>
                   <Text type="label1" color="gray700" align="center">
                     앗, 현재 등록되지 않은 견종이에요!
                     <br />

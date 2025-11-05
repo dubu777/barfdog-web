@@ -1,38 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const walkScoreContainer = style({
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	gap: '12px',
-})
-
-export const walkScoreContentBox = style({
-	width: '100%',
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	gap: '8px',
-})
-
-export const walkScoreTop = style({
-	width: '100%',
-	display: 'flex',
-	justifyContent: 'space-between',
-	padding: '12px 12px 0'
-})
-
-export const walkScoreInfoTitle = style({
-	width: '100%',
-	padding: '12px 12px 0',
-})
-
-export const walkScoreInfo = style({
-	width: '100%',
-	display: 'flex',
-})
-
 export const averageGraph = style({
 	width: '100%',
 	padding: '16px',

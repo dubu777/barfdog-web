@@ -1,5 +1,4 @@
 import { commonWrapper } from "@/styles/common.css";
-import { skipSubscriptionCard } from "./SubscriptionModal.css";
 import { useState } from "react";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -11,12 +10,12 @@ import InfoText from "@/components/ui/typography/infoText/InfoText";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 import { PlanKey } from "@/types";
 import { SkipType } from "@/types/mypage/subscription";
 import { subscriptionPlanInfo } from "@/constants";
 import { SKIP_SUBSCRIPTION_TYPE } from "@/constants/mypage/subscription";
 import { calcChangedSubscribeDeliveryDate } from "@/utils/mypage/subscription/subscriptionSkip";
-import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 
 interface SkipSubscriptionModalProps {
   isOpen: boolean;
@@ -77,7 +76,7 @@ export default function SkipSubscriptionModal({
             gap={8}
             align='start'
             shadow='none'
-            className={skipSubscriptionCard}
+            border='gray300'
           >
             <LabelValueItem
               label="기존 발송 예정일"
@@ -156,7 +155,7 @@ export default function SkipSubscriptionModal({
             gap={8}
             align='start'
             shadow='none'
-            className={skipSubscriptionCard}
+            border='gray300'
           >
             <span>
               <Text type='headline4'>주문 후 배송 완료까지 </Text>

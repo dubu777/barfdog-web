@@ -5,7 +5,7 @@ import { useVerifyPhoneChangeCode } from "@/api/mypage/account/mutations/useVeri
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
 
 interface UsePhoneAuthProps {
-  setValue: (name: keyof UpdateUserInfo, value: any) => void;
+  setValue: (name: keyof UpdateUserInfo, value: UpdateUserInfo[keyof UpdateUserInfo]) => void;
   setError: (name: keyof UpdateUserInfo, error: { message: string }) => void;
   clearErrors: (name: keyof UpdateUserInfo) => void;
   phoneNumber: string;

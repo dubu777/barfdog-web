@@ -60,7 +60,7 @@ export default function BodyCheckResult({
         padding: 20, 
         backgroundColors: 'gray0' 
       })}>
-        <div className={commonWrapper({ direction: 'col' })}>
+        <div className={commonWrapper({ direction: 'col', gap: 12 })}>
           <ResultTitle title={`${data.diagnosisDate} ${BODY_PART[part].name} 정밀 진단 결과`} />
           <BodyCheckTotalScore
             petName={petInfo.name}

@@ -1,4 +1,4 @@
-import * as styles from "./AddressContent.css";
+import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/ui/text/Text";
 import Chips from "@/components/ui/chips/Chips";
 import { formatPhoneNumber } from "@/utils";
@@ -20,14 +20,15 @@ const AddressContent = ({
   onToggleDeliveryModal,
 }: AddressContentProps) => {
   return (
-    <div className={styles.addressContainer}>
-      <div className={styles.addressHeader}>
+    <div className={commonWrapper({
+      direction: 'col',
+      align: 'start',
+      gap: 16,
+    })}>
+      <div className={commonWrapper({ justify: 'between' })}>
         <Text type="title4">배송지</Text>
         {handleEditAddress && (
-          <button
-            onClick={handleEditAddress}
-            className={styles.addressChangeButton}
-          >
+          <button onClick={handleEditAddress}>
             <Text type="label4" color="gray400">
               배송지 변경
             </Text>
@@ -36,21 +37,26 @@ const AddressContent = ({
       </div>
 
       {addressData ? (
-        <div className={styles.addressContent}>
-          <div className={styles.addressInfo}>
-            <Text type="headline2">{addressData.deliveryName}</Text>
-            {isDefault && (
-              <Chips variant="outlined" borderRadius="lg">
-                기본배송지
-              </Chips>
-            )}
+        <div className={commonWrapper({ direction: 'col', align: 'start' })}>
+          <div className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
+            <div className={commonWrapper({
+              justify: 'start',
+              gap: 8,
+            })}>
+              <Text type="headline2">{addressData.deliveryName}</Text>
+              {isDefault && (
+                <Chips variant="outlined" borderRadius="lg">
+                  기본배송지
+                </Chips>
+              )}
+            </div>
+            <Text type="body3" color="gray800">
+              {addressData.recipientName} •{" "}
+              {addressData.phoneNumber
+                ? formatPhoneNumber(addressData.phoneNumber)
+                : ""}
+            </Text>
           </div>
-          <Text type="body3" color="gray800">
-            {addressData.recipientName} •{" "}
-            {addressData.phoneNumber
-              ? formatPhoneNumber(addressData.phoneNumber)
-              : ""}
-          </Text>
           <Text type="body3" color="gray800">
             {addressData.street} {addressData.detailAddress}
           </Text>

@@ -1,5 +1,5 @@
-import * as styles from './LatestBodyCheck.css';
 import { commonWrapper } from "@/styles/common.css";
+import { bodyCheckButton } from './LatestBodyCheck.css';
 import { format } from "date-fns";
 import ArrowIcon from "/public/images/icons/chevron-right.svg";
 import Text from "@/components/ui/text/Text";
@@ -33,7 +33,13 @@ export default function LatestBodyCheck({
 	};
 
 	return (
-		<article className={styles.bodyCheckTopCard}>
+		<article className={commonWrapper({
+			direction: 'col',
+			align: 'start',
+			gap: 20,
+			padding: '40/20',
+			backgroundColors: 'gray50',
+		})}>
 			<Text type="title3">
 				몇 가지 질문으로
 				<br />
@@ -52,7 +58,7 @@ export default function LatestBodyCheck({
 								e.preventDefault();
 								handleCardClick(result?.key as BodyPartType);
 							}}
-							className={styles.bodyCheckButton}
+							className={bodyCheckButton}
 						>
 							<Card
 								direction='col'
@@ -61,7 +67,7 @@ export default function LatestBodyCheck({
 								backgroundColor='gray0'
 								borderRadius={12}
 								width='full'
-								className={styles.bodyCheckCard}
+								className={commonWrapper({ height: '100%', direction: 'col', align: 'start' })}
 							>
 								<div className={commonWrapper({ justify: "between" })}>
 									<Text type="headline2">{name}</Text>

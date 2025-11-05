@@ -2,10 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
-export const bestReviewTitle = style({
-  padding: '40px 20px 20px',
-})
-
 export const bestReviewBox = style({
   padding: '20px 0 !important',
   background: themeVars.colors.gray.gray50,
@@ -19,26 +15,6 @@ export const bestReviewCard = style({
   display: 'flex',
   gap: '12px',
   cursor: 'pointer',
-})
-
-export const bestReviewImage = style({
-  width: '107px',
-  height: '107px',
-  objectFit: 'cover',
-  borderRadius: '8px',
-})
-
-export const bestReviewContentTop = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: '8px',
-})
-
-export const bestReviewUsername = style({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '4px',
 })
 
 export const bestReviewBanner = style({

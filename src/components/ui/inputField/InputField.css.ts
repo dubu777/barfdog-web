@@ -53,7 +53,7 @@ export const field = recipe({
         padding: "12px 20px",
         color: themeVars.colors.gray.gray900,
         borderRadius: "8px",
-        border: `1px solid ${themeVars.colors.gray.gray300}`,
+        border: `1px solid ${themeVars.colors.gray.gray200}`,
         backgroundColor: themeVars.colors.gray.gray0,
         selectors: {
           "&::placeholder": { color: themeVars.colors.gray.gray300 },

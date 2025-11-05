@@ -1,4 +1,4 @@
-import * as styles from './CoatQuestion.css';
+import { commonWrapper } from '@/styles/common.css';
 import DoubleCoatIcon from '/public/images/healthNote/dogpedia/double_coat.svg';
 import SingleCoatIcon from '/public/images/healthNote/dogpedia/single_coat.svg';
 import ShortCoatIcon from '/public/images/healthNote/dogpedia/short_coat.svg';
@@ -41,16 +41,29 @@ export default function CoatQuestion({
 	]
 
 	return (
-		<div className={styles.coatQuestionContainer}>
+		<div className={commonWrapper({ direction: 'col', gap: 16, align: 'start' })}>
 			<Text type='headline2'>{label}</Text>
-			<div className={styles.coatQuestionBox}>
+			<div className={commonWrapper({ justify: 'start', gap: 12 })}>
 				{coatInfoList.map(info => (
-					<div key={info.label} className={styles.coatQuestion}>
-						<Text type='headline4'>{info.label}</Text>
-						<Text type='body3' color='gray700'>
-							{info.value}
-						</Text>
-						<SvgIcon src={info.icon} size={40} className={styles.coatIcon} />
+					<div key={info.label} className={commonWrapper({
+						direction: 'col',
+						align: 'end',
+						justify: 'between',
+						gap: 2,
+						padding: 8,
+						paddingTop: 12,
+						paddingBottom: 12,
+						backgroundColors: 'gray0',
+						borderRadius: 8,
+						border: 'gray300',
+					})}>
+						<div className={commonWrapper({ direction: 'col', gap: 2, align: 'start' })}>
+							<Text type='headline4'>{info.label}</Text>
+							<Text type='body3' color='gray700'>
+								{info.value}
+							</Text>
+						</div>
+						<SvgIcon src={info.icon} size={40} />
 					</div>
 				))}
 			</div>

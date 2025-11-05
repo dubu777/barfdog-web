@@ -1,5 +1,4 @@
-import * as styles from "./HistoryControlBottomSheet.css";
-import { pointColor } from "@/styles/common.css";
+import { commonWrapper, pointColor } from "@/styles/common.css";
 import EditIcon from "/public/images/icons/pen.svg";
 import DeleteIcon from "/public/images/icons/trashbag.svg";
 import Button from "@/components/ui/button/Button";
@@ -23,12 +22,22 @@ export default function HistoryControlBottomSheet({
     <BottomSheet
       isOpen={isOpen}
       onClose={onClose}
-      className={styles.controlBottomSheet}
     >
-      <Text type="title4" className={styles.controlBottomSheetTitle}>
+      <Text type="title4" className={commonWrapper({
+        padding: 20,
+        paddingBottom: 8,
+        justify: 'start'
+      })}>
         병원 진료 기록
       </Text>
-      <div className={styles.controlBottomSheetActions}>
+      <div className={commonWrapper({
+        padding: 20,
+        paddingTop: 12,
+        paddingBottom: 40,
+        direction: 'col',
+        align: 'start',
+        gap: 12,
+      })}>
         <Button
           onClick={() => {
             onClose();

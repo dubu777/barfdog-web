@@ -4,13 +4,13 @@ import Card from "@/components/ui/card/Card";
 import Text from "@/components/ui/text/Text";
 
 interface ServicePolicyProps {
-  className?: string;
   backgroundColor?: "gray0" | "gray50";
+  className?: string;
 }
 
 export default function ServicePolicy({ 
-  className,
   backgroundColor = 'gray0',
+  className,
 }: ServicePolicyProps) {
   return (
     <Card
@@ -22,6 +22,7 @@ export default function ServicePolicy({
       gap={26}
       backgroundColor={backgroundColor}
       borderRadius={8}
+      border='gray200'
       className={className}
     >
       {SERVICE_POLICY_INFO.map((info, index) => (

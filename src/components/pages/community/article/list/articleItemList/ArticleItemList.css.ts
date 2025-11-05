@@ -1,21 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { themeVars } from "@/styles/theme.css";
 
-export const articleListContainer = style({
-  backgroundColor: themeVars.colors.gray.gray0,
-});
-
-export const categoryFilter = style({
-  padding: "20px",
-  display: "flex",
-  justifyContent: "space-between",
-});
-
-export const articleList = recipe({
-  base: {
-    borderTop: `1px solid ${themeVars.colors.gray.gray100}`,
-  },
+export const articleListBox = recipe({
+  base: { width: '100%' },
   variants: {
     isEmpty: {
       true: {
@@ -26,9 +13,7 @@ export const articleList = recipe({
 });
 
 export const articleItem = recipe({
-  base: {
-    width: "100%",
-  },
+  base: { width: "100%" },
   variants: {
     mode: {
       gallery: {
@@ -40,16 +25,6 @@ export const articleItem = recipe({
       },
     },
   },
-});
-
-export const articleItemTitle = style({
-  display: "flex",
-  gap: "4px",
-});
-
-export const articleItemCategory = style({
-  minWidth: "34px",
-  whiteSpace: "nowrap",
 });
 
 export const articleContents = recipe({

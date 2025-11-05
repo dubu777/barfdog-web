@@ -41,7 +41,7 @@ const BREED_CHARACTERISTICS_QUESTION = {
 		droolingLevel: {
 			label: '침을 많이 흘리나요?',
 			minLevel: '침을 거의 안흘려요',
-			maxLevel: '치므 조그 마니 흐려요...',
+			maxLevel: '침을 조금 많이 흘려요',
 		},
 		coat: {
 			label: '털은 이런 느낌이에요!'

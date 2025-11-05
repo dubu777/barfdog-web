@@ -1,4 +1,4 @@
-import * as styles from './ChangedScore.css';
+import { commonWrapper } from '@/styles/common.css';
 import GoodEmogi from '/public/images/healthNote/good_emoji.svg';
 import DangerEmogi from '/public/images/healthNote/danger_emogi.svg';
 import SameEmogi from '/public/images/healthNote/same_emoji.svg';
@@ -48,17 +48,17 @@ export default function ChangedScore({
 }: ChangedScoreProps) {
 	const { prev: prevScore, status } = useScoreStatus({ current: checkupScore, scoreDifference: scoreDifference });
 	return (
-		<article>
-			<ResultCard
-				className={styles.changedScoreContainer}
-				title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${Math.abs(scoreDifference)}점 ` : ''}${STATUS_MESSAGE[status].title}`}
-			>
+		<ResultCard
+			className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}
+			title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${Math.abs(scoreDifference)}점 ` : ''}${STATUS_MESSAGE[status].title}`}
+		>
+			<div className={commonWrapper({ direction: 'col', align: 'start', gap: 6 })}>
 				<Card
 					shadow='none'
 					direction='row'
 					padding={12}
 					gap={12}
-					className={styles.changedScoreNotice}
+					border='gray200'
 				>
 					<SvgIcon src={STATUS_MESSAGE[status].icon} />
 					<Text type='label4' color='gray700'>
@@ -66,6 +66,7 @@ export default function ChangedScore({
 					</Text>
 				</Card>
 				<ComparisonProgressBar
+					align='center'
 					prevScore={prevScore}
 					currentScore={checkupScore}
 					prevBottomChildren={(
@@ -75,13 +76,13 @@ export default function ChangedScore({
 						<ScoreInfo date={diagnosisDate} checkupScore={checkupScore} />
 					}
 				/>
-			</ResultCard>
-		</article>
+			</div>
+		</ResultCard>
 	);
 };
 
 const ScoreInfo = ({ date, checkupScore, isCurrent = false }: ScoreInfoProps) => (
-	<div className={styles.scoreInfo}>
+	<div className={commonWrapper({ direction: 'col' })}>
 		<Text type='body3' color='gray600'>
 			{date}
 		</Text>

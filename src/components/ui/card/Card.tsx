@@ -16,6 +16,7 @@ interface CardProps {
   backgroundColor?: "gray0" | "gray50" | "gray100" | "transparent";
   borderRadius?: 0 | 8 | 12 | 16;
   gap?: 4 | 8 | 10 | 12 | 16 | 20 | 26 | 28 | 32 | 40;
+  border?: "none" | "gray100" | "gray200" | "gray300" | "red";
 }
 
 const Card = ({
@@ -32,6 +33,7 @@ const Card = ({
   borderRadius = 8,
   gap,
   className,
+  border = "none",
 }: CardProps) => {
   return (
     <div
@@ -48,6 +50,7 @@ const Card = ({
           width,
           height,
           borderRadius,
+          border,
         })}
 				${className || ""}
 			`}

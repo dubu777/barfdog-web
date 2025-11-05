@@ -1,5 +1,6 @@
 "use client";
-import * as styles from "./FullCheckList.css";
+import { commonWrapper } from "@/styles/common.css";
+import { createSurveyButton } from "./FullCheckList.css";
 import Image from "next/image";
 import Link from "next/link";
 import DogImage from "/public/images/healthNote/full-check/list-dog.png";
@@ -42,14 +43,19 @@ export default function FullCheckList({ petId }: FullCheckListProps) {
     <section>
       {checkupDiagnosisList.length > 0 ? (
         <>
-          <div className={styles.fullCheckSurvey}>
+          <div className={commonWrapper({ padding: 20, paddingBottom: 16 })}>
             <Card
               shadow="light"
               align="start"
               direction="row"
               justify="between"
             >
-              <div className={styles.fullCheckSurveyCardContent}>
+              <div className={commonWrapper({ 
+                direction: 'col',
+                align: 'start',
+                gap: 4,
+                padding: 12,
+              })}>
                 <Text type="headline2">
                   우리 아이 건강,
                   <br />
@@ -63,11 +69,18 @@ export default function FullCheckList({ petId }: FullCheckListProps) {
               <Image src={DogImage} alt="Dog Image" width={120} height={146} />
             </Card>
           </div>
-          <article className={styles.fullCheckResultList}>
+          <article className={commonWrapper({
+            direction: 'col',
+            gap: 8,
+            padding: 20,
+            paddingTop: 0,
+            paddingBottom: 40,
+          })}>
             {checkupDiagnosisList.map((result, index) => (
               <Link
                 key={index}
                 href={`/health-note/${petId}/full-check/result/${result.diagnosisId}`}
+                className={commonWrapper({})}
               >
                 <Card
                   shadow="light"
@@ -79,7 +92,12 @@ export default function FullCheckList({ petId }: FullCheckListProps) {
                   <Text type="label4" color="gray600">
                     {result.diagnosisDate}
                   </Text>
-                  <div className={styles.resultTopRank}>
+                  <div className={commonWrapper({ 
+                    paddingTop: 8, 
+                    paddingBottom: 12, 
+                    gap: 8, 
+                    justify: 'start',
+                  })}>
                     <Text type="headline2">
                       {getNameWithPossessiveSuffix(petInfo?.name)}의 검사결과
                     </Text>
@@ -103,14 +121,18 @@ export default function FullCheckList({ petId }: FullCheckListProps) {
           />
         </>
       ) : (
-        <div className={styles.fullCheckEmptyList}>
+        <div className={commonWrapper({
+          minHeight: 'fullWithHeader',
+          direction: 'col',
+          gap: 20,
+        })}>
           <EmptyList
             title={`등록된 검사 결과가 없어요\n진단 후 결과를 기록해보세요`}
           />
           <Button
             variant="solid"
             intent="secondary"
-            className={styles.createSurveyButton}
+            className={createSurveyButton}
           >
             진단하러 가기
           </Button>

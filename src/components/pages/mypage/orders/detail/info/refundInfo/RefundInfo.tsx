@@ -1,4 +1,3 @@
-import { refundReasonBox } from "./RefundInfo.css";
 import { commonWrapper } from "@/styles/common.css";
 import { format } from "date-fns";
 import Divider from "@/components/ui/divider/Divider";
@@ -31,7 +30,7 @@ const RefundReasonBox = ({
         backgroundColor='gray50' 
         shadow='none'
         align='start' 
-        className={refundReasonBox}
+        border='gray100'
       >
         <Text type="body3" color="gray900">{value}</Text>
       </Card>

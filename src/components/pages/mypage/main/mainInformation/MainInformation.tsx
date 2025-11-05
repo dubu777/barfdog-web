@@ -1,5 +1,6 @@
 'use client';
-import * as styles from "./MainInformation.css";
+import { commonWrapper, imageWrapper } from "@/styles/common.css";
+import { accountRecommendationCode } from "./MainInformation.css";
 import Link from "next/link";
 import Image from "next/image";
 import DefaultImage from "public/images/icons/default-profile.png";
@@ -19,26 +20,42 @@ export default function MainInformation() {
   if (!memberInfo) return null;
 
   return (
-    <article className={styles.userInfoContainer}>
-      <div className={styles.accountLinkBox}>
+    <article className={commonWrapper({ 
+      backgroundColors: 'gray50', 
+      direction: 'col', 
+      align: 'start',
+    })}>
+      <div className={commonWrapper({ 
+        padding: 20, 
+        direction: 'col', 
+        align: 'start',
+      })}>
         <RecommendationCode
           code={memberInfo?.myRecommendationCode ?? ""} 
           tailPosition='bottom' 
-          className={styles.accountRecommendationCode}
+          className={accountRecommendationCode}
         />
-        <div className={styles.accountLink}>
+        <div className={commonWrapper({ justify: 'start', gap: 12 })}>
           <Image
             src={representativePetImage ?? DefaultImage}
             alt='사용자 이미지'
             width={48}
             height={48}
-            className={styles.accountImage}
+            className={imageWrapper({ borderRadius: '50%', objectFit: 'cover', width: 48 })}
           />
           <Text type='title1'>{memberInfo?.name}</Text>
         </div>
       </div>
-      <div className={styles.membership}>
-        <div className={styles.membershipInfoTop}>
+      <div className={commonWrapper({
+        backgroundColors: 'gray0',
+        direction: 'col',
+        align: 'start',
+        gap: 6,
+        padding: 20,
+        paddingTop: 18,
+        paddingBottom: 12,
+      })}>
+        <div className={commonWrapper({ justify: 'between', align: 'start' })}>
           <Text type='headline1'>{userMembershipTier?.tier} 등급</Text>
           <Link href='/membership'>
             <Text type='headline4' color='gray300'>자세히 보기</Text>
