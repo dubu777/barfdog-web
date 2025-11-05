@@ -99,7 +99,7 @@ export default function HealthNoteMainHeader() {
         >
           <div className={styles.selectBottomSheetHeader}>
             <Text type="title4">반려견 선택</Text>
-            <Link href="/health-note/pets">
+            <Link href="/pet">
               <Text type="label4" color="gray500">
                 전체보기
               </Text>

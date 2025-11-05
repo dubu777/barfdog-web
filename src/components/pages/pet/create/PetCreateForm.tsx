@@ -1,4 +1,5 @@
 "use client";
+import { commonWrapper } from "@/styles/common.css";
 import { useState } from "react";
 import {
   defaultPetFormValues,
@@ -14,7 +15,6 @@ import { useToastStore } from "@/store/useToastStore";
 import PetCreateSuccess from "./PetCreateSuccess";
 import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
-import { petModalContainer } from "../PetModal.css";
 
 interface PetCreateFormProps {
   source: "diet-analysis" | "health-note";
@@ -81,7 +81,13 @@ export default function PetCreateForm({ source }: PetCreateFormProps) {
   };
 
   return (
-    <div className={petModalContainer}>
+    <div className={commonWrapper({
+      maxWidth: 600,
+      height: 'full',
+      backgroundColors: 'gray50',
+      direction: 'col',
+      justify: 'start',
+    })}>
       <Header centerTitle="반려견 등록" showBackButton />
       {isSuccess ? (
         <PetCreateSuccess
