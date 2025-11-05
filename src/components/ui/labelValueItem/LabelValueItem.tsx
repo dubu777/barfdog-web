@@ -14,7 +14,9 @@ interface LabelValueItemProps {
   valueColor?: keyof typeof fontColors;
   valueType?: keyof typeof textStyles;
   align?: "start" | "center" | "end";
+  justify?: "start" | "between";
   gap?: 6 | 12;
+  className?: string;
 }
 
 export default function LabelValueItem({
@@ -26,14 +28,22 @@ export default function LabelValueItem({
   valueColor = "gray700",
   valueType = "body2",
   align = "center",
+  justify = "start",
   gap = 6,
+  className = "",
 }: LabelValueItemProps) {
   const isNullish = value === null || value === undefined;
   const isEmptyString = typeof value === "string" && value.trim() === "";
 
   const displayValue = isNullish || isEmptyString ? "-" : value;
   return (
-    <div className={styles.labelValueItemContainer({ align, gap })}>
+    <div
+      className={`${styles.labelValueItemContainer({
+        align,
+        gap,
+        justify,
+      })} ${className}`}
+    >
       <Text
         type={labelType}
         color={labelColor}

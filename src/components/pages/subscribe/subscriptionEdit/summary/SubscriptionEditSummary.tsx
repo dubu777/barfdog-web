@@ -2,25 +2,40 @@
 
 import Text from "@/components/ui/text/Text";
 import { commonWrapper, marginStyles } from "@/styles/common.css";
-import { SubscriptionInfoResponse } from "@/types";
+import {
+  DeliveryPlan,
+  MealPlan,
+  RecipeFormItem,
+  RecipeListType,
+  SubscriptionInfoResponse,
+} from "@/types";
 import PlanPicker from "./planPicker/PlanPicker";
 import SubscriptionItemPicker from "./subscriptionItemPicker/SubscriptionItemPicker";
+import { de } from "date-fns/locale";
+import { RecipeCatalogMap } from "@/utils/subscription/buildRecipeCatalog";
+import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface SubscriptionEditProps {
+  mealPlan: MealPlan;
+  deliveryPlan: DeliveryPlan;
   packCount: number;
-  currentSubscriptionInfo: SubscriptionInfoResponse;
+  recipeCatalog: RecipeCatalogMap;
+  subscriptionCount: number;
   onOpenPlanSheet: () => void;
   onGoToEdit: () => void;
+  calculatedRecipes: CalculatedRecipe[];
 }
 
 export default function SubscriptionEditSummary({
-  currentSubscriptionInfo,
+  mealPlan,
+  deliveryPlan,
+  recipeCatalog,
+  subscriptionCount,
   packCount,
   onOpenPlanSheet,
   onGoToEdit,
+  calculatedRecipes,
 }: SubscriptionEditProps) {
-  const { mealCount, weeks } = currentSubscriptionInfo.planInfo;
-  const { recipeList, subscriptionCount } = currentSubscriptionInfo;
   return (
     <div
       className={commonWrapper({
@@ -40,16 +55,17 @@ export default function SubscriptionEditSummary({
         </Text>
       </div>
       <PlanPicker
-        mealPlan={mealCount}
-        deliveryPlan={weeks}
+        mealPlan={mealPlan}
+        deliveryPlan={deliveryPlan}
         onClick={onOpenPlanSheet}
       />
       <SubscriptionItemPicker
-        mealPlan={mealCount}
-        deliveryPlan={weeks}
-        recipeList={recipeList}
+        mealPlan={mealPlan}
+        deliveryPlan={deliveryPlan}
         packCount={packCount}
         onClick={onGoToEdit}
+        calculatedRecipes={calculatedRecipes}
+        recipeCatalog={recipeCatalog}
       />
     </div>
   );

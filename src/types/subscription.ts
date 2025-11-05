@@ -335,4 +335,5 @@ export type {
   CurrentRecipeItem,
   SubscriptionOrderSheet,
   Plan,
+  RecipeListType,
 };

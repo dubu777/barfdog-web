@@ -55,6 +55,7 @@ const createSubscription = async ({
   throw new Error(message);
 };
 
+// 현재 구독 정보 조회 - 구독 변경 페이지
 const getSubscriptionInfo = async (
   subscribeId: number,
   instance: AxiosInstance = axiosInstance
@@ -63,6 +64,7 @@ const getSubscriptionInfo = async (
   return validateApiResponse(data, "구독 정보 조회에 실패했습니다.");
 };
 
+// 추천 레시피 정보가 포함된 레시피 정보 조회
 const getSubscriptionOrderSheet = async (
   surveyId: number,
   instance: AxiosInstance = axiosInstance
@@ -81,7 +83,7 @@ const updateSubscription = async ({
   subscribeId: number;
   body: UpdateSubscriptionRequest;
 }): Promise<CreateSubscriptionResponse> => {
-  const { data } = await axiosInstance.post(
+  const { data } = await axiosInstance.put(
     `/api/v2/user/subscribes/${subscribeId}`,
     body
   );

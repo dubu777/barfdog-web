@@ -1,11 +1,11 @@
 "use client";
 
-import { paddingStyles } from "@/styles/common.css";
+import { commonWrapper, paddingStyles } from "@/styles/common.css";
 import { calculateDeliveryCyclePackCount } from "@/utils/subscription/calculateRecipe";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import useModal from "@/hooks/useModal";
 import PlanBottomSheet from "./bottomSheet/PlanBottomSheet";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import {
   defaultSubscriptionValues,
   subscriptionSchema,
@@ -25,6 +25,7 @@ import { useGetSubscriptionOrderSheet } from "@/api/subscription/queries/useGetS
 import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
 import { getPlanFromMealAndDelivery } from "@/utils/subscription/getPlanFromMealAndDelivery";
 import { buildRecipeCatalog } from "@/utils/subscription/buildRecipeCatalog";
+import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface SubscriptionEditProps {
   subscribeId: number;
@@ -50,7 +51,7 @@ export default function SubscriptionEdit({
     [orderSheetData]
   );
 
-  console.log(subscriptionInfo);
+  console.log("subscriptionInfo", subscriptionInfo);
 
   // Form setup
   const stableDefaultValues = useMemo(() => defaultSubscriptionValues(), []);
@@ -61,11 +62,23 @@ export default function SubscriptionEdit({
   });
 
   const {
+    control,
     watch,
     reset,
     handleSubmit,
     formState: { isDirty },
   } = form;
+
+  const [mealPlan, deliveryPlan, recipeList] = useWatch({
+    control,
+    name: ["mealPlan", "deliveryPlan", "recipeList"],
+  });
+
+  const { recipes, totals, recipeCount } = useSubscriptionCalculation({
+    savedSelection: recipeList,
+    mealPlan,
+    deliveryPlan,
+  });
 
   // Form initialization with subscription data
   useEffect(() => {
@@ -136,14 +149,26 @@ export default function SubscriptionEdit({
 
   return (
     <FormProvider {...form}>
-      <div className={paddingStyles({ bottom: 85 })}>
-        <Header onBack={handleBack} showBackButton centerTitle="식단 변경" />
+      <Header onBack={handleBack} showBackButton centerTitle="식단 변경" />
+      <div
+        className={commonWrapper({
+          backgroundColors: "gray50",
+          paddingBottom: 85,
+          direction: "col",
+          minHeight: "fullWithHeader",
+          justify: "start",
+        })}
+      >
         {step === "summary" && (
           <SubscriptionEditSummary
-            currentSubscriptionInfo={subscriptionInfo}
+            subscriptionCount={subscriptionInfo.subscriptionCount}
+            mealPlan={mealPlan}
+            deliveryPlan={deliveryPlan}
             packCount={packCount}
             onOpenPlanSheet={handleOpenPlanSheet}
             onGoToEdit={handleGoToEdit}
+            recipeCatalog={recipeCatalog}
+            calculatedRecipes={recipes}
           />
         )}
         {step === "edit" && orderSheetData && (
@@ -152,16 +177,25 @@ export default function SubscriptionEdit({
         {step === "confirm" && (
           <SubscriptionEditConfirm
             currentSubscriptionInfo={subscriptionInfo}
+            mealPlan={mealPlan}
+            deliveryPlan={deliveryPlan}
             packCount={packCount}
             recipeCatalog={recipeCatalog}
+            totalRecipePrice={totals}
+            calculatedRecipes={recipes}
           />
         )}
         {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}
         <ButtonDocked
-          primaryButtonLabel="식단 변경하기"
+          primaryButtonLabel={
+            step === "confirm" ? "변경 완료" : "식단 변경하기"
+          }
           onPrimaryClick={handleAction}
           type="full-button"
           isPrimaryDisabled={!isDirty}
+          {...(step == "edit" && recipeCount > 0
+            ? { primaryCount: recipeCount }
+            : {})}
         />
       </div>
     </FormProvider>

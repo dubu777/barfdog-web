@@ -1,8 +1,5 @@
 import Text from "@/components/ui/text/Text";
-import {
-  mealFrequencyButtonWrapper,
-  selectOptionWrapper,
-} from "../DeliveryOptions.css";
+import * as styles from "../DeliveryOptions.css";
 import { useController, useFormContext, useWatch } from "react-hook-form";
 import { commonWrapper } from "@/styles/common.css";
 import { deliveryOptions } from "@/constants";
@@ -38,11 +35,11 @@ export default function DeliveryCycle({ source }: DeliveryCycleProps) {
       : deliveryOptions.deliveryPlan;
 
   return (
-    <div className={selectOptionWrapper({ source })}>
+    <div className={styles.selectOptionWrapper({ source })}>
       <Text type="title4">배송주기</Text>
-      <div className={commonWrapper({ gap: 8, justify: "start" })}>
+      <div className={styles.deliveryCycleGrid}>
         {availableCycles.map((item) => (
-          <div className={mealFrequencyButtonWrapper} key={item.value}>
+          <div className={styles.mealFrequencyButtonWrapper} key={item.value}>
             <SurveyButton
               label={item.label}
               value={item.value}

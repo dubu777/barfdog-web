@@ -286,6 +286,34 @@ export const commonWrapper = recipe({
         paddingTop: "114px",
       },
     },
+    paddingX: {
+      12: {
+        paddingLeft: "12px",
+        paddingRight: "12px",
+      },
+      16: {
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      },
+      20: {
+        paddingLeft: "20px",
+        paddingRight: "20px",
+      },
+    },
+    paddingY: {
+      12: {
+        paddingTop: "12px",
+        paddingBottom: "12px",
+      },
+      16: {
+        paddingTop: "16px",
+        paddingBottom: "16px",
+      },
+      20: {
+        paddingTop: "20px",
+        paddingBottom: "20px",
+      },
+    },
     marginBottom: {
       85: {
         marginBottom: "85px",
@@ -413,7 +441,7 @@ export const commonWrapper = recipe({
       },
       unset: {
         flexWrap: "unset",
-      }
+      },
     },
   },
   defaultVariants: {
@@ -512,6 +540,18 @@ export const paddingStyles = recipe({
         padding: "20px",
       },
     },
+    x: {
+      4: { paddingLeft: "4px", paddingRight: "4px" },
+      12: { paddingLeft: "12px", paddingRight: "12px" },
+      16: { paddingLeft: "16px", paddingRight: "16px" },
+      20: { paddingLeft: "20px", paddingRight: "20px" },
+    },
+    y: {
+      4: { paddingTop: "4px", paddingBottom: "4px" },
+      12: { paddingTop: "12px", paddingBottom: "12px" },
+      16: { paddingTop: "16px", paddingBottom: "16px" },
+      20: { paddingTop: "20px", paddingBottom: "20px" },
+    },
     top: {
       4: { paddingTop: "4px" },
       6: { paddingTop: "6px" },
@@ -522,6 +562,7 @@ export const paddingStyles = recipe({
       4: { paddingBottom: "4px" },
       6: { paddingBottom: "6px" },
       8: { paddingBottom: "8px" },
+      12: { paddingBottom: "12px" },
       85: { paddingBottom: "85px" },
     },
   },

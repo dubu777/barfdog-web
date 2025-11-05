@@ -19,7 +19,7 @@ export type CalculatedRecipe = SubscriptionValues["recipeList"][0] & {
 
 export interface TotalRecipePrice {
   totalOriginalPrice: number;
-  paymentExpectedPrice: number;
+  totalPlanDiscountedPrice: number;
   totalDiscountAmount: number;
 }
 
@@ -60,17 +60,17 @@ export const useSubscriptionCalculation = ({
     });
 
     const totalOriginalPrice = recipes.reduce((s, x) => s + x.originalPrice, 0);
-    const paymentExpectedPrice = recipes.reduce(
+    const totalPlanDiscountedPrice = recipes.reduce(
       (s, x) => s + x.discountedPrice,
       0
     );
-    const totalDiscountAmount = totalOriginalPrice - paymentExpectedPrice;
+    const totalDiscountAmount = totalOriginalPrice - totalPlanDiscountedPrice;
 
     return {
       recipes,
       totals: {
         totalOriginalPrice,
-        paymentExpectedPrice,
+        totalPlanDiscountedPrice,
         totalDiscountAmount,
       },
       recipeCount,

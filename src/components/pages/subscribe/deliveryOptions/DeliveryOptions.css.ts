@@ -35,5 +35,12 @@ export const selectOptionWrapper = recipe({
 });
 
 export const mealFrequencyButtonWrapper = style({
-  width: "276px",
+  width: "100%",
+});
+
+export const deliveryCycleGrid = style({
+  width: "100%",
+  display: "grid",
+  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+  gap: "8px",
 });

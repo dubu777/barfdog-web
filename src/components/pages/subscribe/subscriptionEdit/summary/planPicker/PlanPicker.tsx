@@ -6,6 +6,7 @@ import Divider from "@/components/ui/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 import { DeliveryPlan, MealPlan } from "@/types";
 import Text from "@/components/ui/text/Text";
+import { useFormContext } from "react-hook-form";
 
 interface PlanPickerProps {
   mealPlan: MealPlan;
@@ -18,6 +19,7 @@ export default function PlanPicker({
   deliveryPlan,
   onClick,
 }: PlanPickerProps) {
+  const { control } = useFormContext();
   return (
     <Card shadow="light" padding={16} gap={12}>
       <div className={commonWrapper({ justify: "between" })}>

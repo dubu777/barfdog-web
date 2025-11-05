@@ -17,7 +17,7 @@ import { ReactNode } from "react";
 interface InfoBoxProps {
   type?: "help" | "info";
   color?: "red" | "blue" | "gray";
-  align?: 'start' | 'center';
+  align?: "start" | "center";
   showRightArrowButton?: boolean;
   text: string | ReactNode;
   fullWidth?: boolean;
@@ -26,7 +26,7 @@ interface InfoBoxProps {
   className?: string;
 }
 
-export default function InfoBox ({
+export default function InfoBox({
   type = "info",
   color = "gray",
   align = "center",
@@ -35,7 +35,7 @@ export default function InfoBox ({
   fullWidth = false,
   onClick,
   style,
-  className,
+  className = "",
 }: InfoBoxProps) {
   const iconColor: keyof typeof COLORS =
     color === "gray"
@@ -50,7 +50,7 @@ export default function InfoBox ({
     <div
       className={`${infoBoxBase} ${infoBoxColor[color]} ${
         infoBoxClickEvent[!!onClick ? "true" : "false"]
-      } ${fullWidth ? infoBoxFullWidth : ""} ${className || ""}`}
+      } ${fullWidth ? infoBoxFullWidth : ""} ${className}`}
       onClick={onClick || undefined}
       style={style}
     >
@@ -70,4 +70,4 @@ export default function InfoBox ({
       )}
     </div>
   );
-};
+}

@@ -2,7 +2,7 @@ import { SubscriptionOrderSheet } from "@/types";
 
 export type RecipeCatalogValue = {
   name: string;
-  displayImageUrl: { url: string };
+  url: string;
 };
 
 export type RecipeCatalogMap = Record<number, RecipeCatalogValue>;
@@ -18,7 +18,7 @@ export function buildRecipeCatalog(
 
     acc[item.recipeId] = {
       name,
-      displayImageUrl: item.displayImageUrl,
+      url: item.displayImageUrl.url,
     };
     return acc;
   }, {});

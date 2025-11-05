@@ -4,7 +4,6 @@ import { recipe } from "@vanilla-extract/recipes";
 export const labelValueItemContainer = recipe({
   base: {
     display: "flex",
-    justifyContent: "flex-start",
     alignItems: "center",
     alignSelf: "stretch",
   },
@@ -13,6 +12,10 @@ export const labelValueItemContainer = recipe({
       start: { alignItems: "flex-start" },
       center: { alignItems: "center" },
       end: { alignItems: "flex-end" },
+    },
+    justify: {
+      start: { justifyContent: "flex-start" },
+      between: { justifyContent: "space-between" },
     },
     gap: {
       6: { gap: "6px" },

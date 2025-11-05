@@ -2,25 +2,29 @@ import Card from "@/components/ui/card/Card";
 import Button from "@/components/ui/button/Button";
 import Divider from "@/components/ui/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
-import { CurrentRecipeItem, DeliveryPlan, MealPlan, RawFood } from "@/types";
+import { DeliveryPlan, MealPlan, RecipeFormItem } from "@/types";
 import React from "react";
 import RecipeItemCard from "../../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import Text from "@/components/ui/text/Text";
+import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
+import { RecipeCatalogMap } from "@/utils/subscription/buildRecipeCatalog";
 
 interface SubscriptionItemPickerProps {
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
   packCount: number;
   onClick: () => void;
-  recipeList: CurrentRecipeItem[];
+  calculatedRecipes: CalculatedRecipe[];
+  recipeCatalog: RecipeCatalogMap;
 }
 
 export default function SubscriptionItemPicker({
-  recipeList,
   mealPlan,
   deliveryPlan,
   packCount,
   onClick,
+  calculatedRecipes,
+  recipeCatalog,
 }: SubscriptionItemPickerProps) {
   return (
     <Card shadow="light" padding={16} gap={12}>
@@ -36,18 +40,18 @@ export default function SubscriptionItemPicker({
         </Button>
       </div>
       <Divider thickness={2} color="gray900" />
-      {recipeList.map((rawFood, idx) => (
-        <React.Fragment key={rawFood.recipeId}>
+      {calculatedRecipes.map((recipe, idx) => (
+        <React.Fragment key={recipe.recipeId}>
           <RecipeItemCard
             mealPlan={mealPlan}
             deliveryPlan={deliveryPlan}
-            originalPrice={rawFood.originalPrice}
+            originalPrice={recipe.originalPrice}
             packCount={packCount}
-            packGrams={rawFood.oneMealGramsPerRecipe}
-            displayImageUrl={rawFood?.displayImageUrl.url || ""}
-            recipeName={rawFood?.name || ""}
+            packGrams={recipe.packGrams}
+            displayImageUrl={recipeCatalog[recipe.recipeId]?.url || ""}
+            recipeName={recipeCatalog[recipe.recipeId]?.name || ""}
           />
-          {idx < recipeList.length - 1 && (
+          {idx < calculatedRecipes.length - 1 && (
             <Divider color="gray200" thickness={1} />
           )}
         </React.Fragment>

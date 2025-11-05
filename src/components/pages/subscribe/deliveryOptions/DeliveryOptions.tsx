@@ -15,7 +15,7 @@ interface DeliveryOptionsProps {
   orderSheetData: SubscriptionOrderSheet;
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
-  paymentExpectedPrice: number;
+  totalPlanDiscountedPrice: number;
   totalOriginalPrice: number;
   totalDiscountAmount: number;
   calculatedRecipes: CalculatedRecipe[];
@@ -25,7 +25,7 @@ export default function DeliveryOptions({
   orderSheetData,
   mealPlan,
   deliveryPlan,
-  paymentExpectedPrice,
+  totalPlanDiscountedPrice,
   totalOriginalPrice,
   totalDiscountAmount,
   calculatedRecipes,
@@ -52,7 +52,7 @@ export default function DeliveryOptions({
       />
       <Divider />
       <SubscriptionSummary
-        paymentExpectedPrice={paymentExpectedPrice}
+        totalPlanDiscountedPrice={totalPlanDiscountedPrice}
         totalOriginalPrice={totalOriginalPrice}
         discountAmount={totalDiscountAmount}
         deliveryPlan={deliveryPlan}

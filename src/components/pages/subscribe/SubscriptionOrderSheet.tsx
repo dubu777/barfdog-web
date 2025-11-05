@@ -124,7 +124,7 @@ export default function SubscriptionOrderSheet({
             mealPlan={mealPlan}
             deliveryPlan={deliveryPlan}
             totalOriginalPrice={totals.totalOriginalPrice}
-            paymentExpectedPrice={totals.paymentExpectedPrice}
+            totalPlanDiscountedPrice={totals.totalPlanDiscountedPrice}
             totalDiscountAmount={totals.totalDiscountAmount}
           />
         )}

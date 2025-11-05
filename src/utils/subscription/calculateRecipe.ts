@@ -23,7 +23,7 @@ export interface CalculateRecipeTotalOutput {
 
 export interface CalculateTotalPriceOutput {
   totalOriginalPrice: number;
-  paymentExpectedPrice: number;
+  totalPlanDiscountedPrice: number;
   totalDiscountAmount: number;
 }
 

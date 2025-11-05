@@ -7,14 +7,14 @@ import { commonWrapper } from "@/styles/common.css";
 import { DeliveryPlan } from "@/types";
 
 interface SubscriptionSummaryProps {
-  paymentExpectedPrice: number;
+  totalPlanDiscountedPrice: number;
   totalOriginalPrice: number;
   discountAmount: number;
   deliveryPlan: DeliveryPlan;
 }
 
 export default function SubscriptionSummary({
-  paymentExpectedPrice,
+  totalPlanDiscountedPrice,
   totalOriginalPrice,
   discountAmount,
   deliveryPlan,
@@ -26,7 +26,7 @@ export default function SubscriptionSummary({
         justify: "start",
         align: "start",
         gap: 16,
-        padding: '32/20',
+        padding: "32/20",
       })}
     >
       <Text type="title4">
@@ -58,7 +58,7 @@ export default function SubscriptionSummary({
       <Divider thickness={1} color="gray200" />
       <OrderSummaryRow
         label="결제 예정 금액"
-        value={paymentExpectedPrice}
+        value={totalPlanDiscountedPrice}
         labelType="headline2"
         labelColor="gray900"
         valueType="title2"
