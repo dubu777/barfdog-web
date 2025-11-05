@@ -21,10 +21,6 @@ export const labelValueItemContainer = recipe({
       6: { gap: "6px" },
       12: { gap: "12px" },
     },
-    justify: {
-      start: { justifyContent: "flex-start" },
-      between: { justifyContent: "space-between" },
-    },
   },
   defaultVariants: { align: "center" },
 });
