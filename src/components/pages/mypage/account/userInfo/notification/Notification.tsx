@@ -37,6 +37,7 @@ export default function Notification({
       backgroundColor='gray50'
       shadow='light'
       borderRadius={16}
+      border='gray300'
       className={notification({ isMobileDevice })}
     >
       <div className={commonWrapper({ direction: 'col', align: 'start', padding: 20 })} >

@@ -1,6 +1,6 @@
 "use client";
-
-import * as styles from "./PetForm.css";
+import { commonWrapper } from "@/styles/common.css";
+import { dogProfileImageWrapper } from "./PetForm.css";
 import { useCallback, useMemo, useState } from "react";
 import { format } from "date-fns";
 import { Controller, UseFormReturn, useWatch } from "react-hook-form";
@@ -104,9 +104,14 @@ export default function PetForm({
 
   return (
     <>
-      <article className={styles.dogProfileImageBox}>
+      <article className={commonWrapper({
+        direction: 'col',
+        align: 'start',
+        gap: 20,
+        padding: 20,
+      })}>
         <Text type="title4">반려견 정보</Text>
-        <div className={styles.dogProfileImageWrapper}>
+        <div className={dogProfileImageWrapper}>
           <FileUpload
             onFileChange={onFileChange}
             defaultImageUrl={dogPictureUrl}
@@ -119,7 +124,12 @@ export default function PetForm({
           />
         </div>
       </article>
-      <form className={styles.dogInfoForm}>
+      <form className={commonWrapper({
+        direction: 'col',
+        align: 'start',
+        gap: 20,
+        padding: 20,
+      })}>
         <Controller
           name="name"
           control={control}
@@ -145,36 +155,34 @@ export default function PetForm({
             />
           )}
         />
-        <div>
-          <Controller
-            name="gender"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputLabel label="성별" labelColor="gray800" isRequired />
-                <div className={styles.buttonBox}>
-                  <SurveyButton
-                    label={PET_GENDER["MALE"]}
-                    value="MALE"
-                    isChecked={field.value === "MALE"}
-                    onToggle={field.onChange}
-                  />
-                  <SurveyButton
-                    label={PET_GENDER["FEMALE"]}
-                    value="FEMALE"
-                    isChecked={field.value === "FEMALE"}
-                    onToggle={field.onChange}
-                  />
-                </div>
-              </>
-            )}
-          />
-        </div>
+        <Controller
+          name="gender"
+          control={control}
+          render={({ field }) => (
+            <div className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
+              <InputLabel label="성별" labelColor="gray800" isRequired />
+              <div className={commonWrapper({ justify: 'start', gap: 8 })}>
+                <SurveyButton
+                  label={PET_GENDER["MALE"]}
+                  value="MALE"
+                  isChecked={field.value === "MALE"}
+                  onToggle={field.onChange}
+                />
+                <SurveyButton
+                  label={PET_GENDER["FEMALE"]}
+                  value="FEMALE"
+                  isChecked={field.value === "FEMALE"}
+                  onToggle={field.onChange}
+                />
+              </div>
+            </div>
+          )}
+        />
         <Controller
           name="birthDay"
           control={control}
           render={({ field }) => (
-            <>
+            <div className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
               <InputLabel label="생년월일" labelColor="gray800" isRequired />
               <CustomDatePicker
                 name={field.name}
@@ -186,7 +194,7 @@ export default function PetForm({
                 marginBottom={false}
                 isDisabled={isEdit}
               />
-            </>
+            </div>
           )}
         />
 
@@ -205,6 +213,9 @@ export default function PetForm({
                   searchButton
                   value={label}
                   label="견종"
+                  labelType="headline4"
+                  labelColor="gray800"
+                  isRequired
                   onClick={onToggleDogTypeModal}
                 />
                 <PetTypeModal

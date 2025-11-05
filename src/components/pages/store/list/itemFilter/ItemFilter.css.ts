@@ -1,13 +1,5 @@
-import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
-
-export const itemTypeFilter = style({
-  width: '100%',
-  backgroundColor: themeVars.colors.gray.gray0,
-  display: 'flex',
-  justifyContent: 'space-between',
-})
 
 export const itemType = recipe({
   base: {
@@ -36,10 +28,4 @@ export const itemType = recipe({
       }
     }
   }
-})
-
-export const sortByFilter = style({
-  display: 'flex',
-  flexDirection: 'row-reverse',
-  padding: '12px 20px 8px',
 })

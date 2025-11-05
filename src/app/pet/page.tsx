@@ -6,8 +6,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import Spinner from "@/components/ui/spinner/Spinner";
-import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
-import PetManager from "@/components/pages/heathNote/common/petManager/PetManager";
+import PetManager from "@/components/pages/pet/list/PetManager";
 import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 
 export default async function HeathNoteDogsPage() {
@@ -24,7 +23,6 @@ export default async function HeathNoteDogsPage() {
           </Suspense>
         </ErrorBoundary>
       </HydrationBoundary>
-      <BottomNavBar />
     </>
   );
 }

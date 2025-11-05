@@ -1,6 +1,6 @@
 import { useState } from "react";
-import * as styles from './ReviewItem.css';
-import { ellipsis } from "@/styles/common.css";
+import { commonWrapper, ellipsis } from "@/styles/common.css";
+import { contentBox } from "./ReviewItem.css";
 import PictureIcon from '/public/images/icons/picture.svg';
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Text from "@/components/ui/text/Text";
@@ -56,7 +56,7 @@ export default function ReviewItem({
 	}
 	return (
 		<>
-			<div className={styles.contentBox({ background: backgroundColor, isExpanded })}>
+			<div className={contentBox({ background: backgroundColor, isExpanded })}>
 				<ReviewInfoTop
 					reviewer={reviewer}
 					star={star}
@@ -67,7 +67,11 @@ export default function ReviewItem({
 				{isExpanded &&
 					<Divider thickness={1} color='gray200' direction='horizontal' />
 				}
-				<div className={styles.contentBottom}>
+				<div className={commonWrapper({
+					direction: 'col',
+					align: 'start',
+					gap: 20,
+				})}>
 					{isExpanded && reviewImageList.length > 0 &&
 						<ImageCarousel
 							imageList={reviewImageList}
@@ -76,7 +80,13 @@ export default function ReviewItem({
 							height={100}
 						/>
 					}
-					<div className={styles.contents} onClick={!isExpanded ? onToggle : undefined}>
+					<div 
+						className={commonWrapper({
+							justify: 'start',
+							gap: 4,
+						})} 
+						onClick={!isExpanded ? onToggle : undefined}
+					>
 						{!isExpanded && hasReviewImages && <SvgIcon src={PictureIcon} size={24} />}
 						<Text type='body2' className={!isExpanded ? ellipsis({ lineSize: 'line1' }) : ''}>
 							{contents}

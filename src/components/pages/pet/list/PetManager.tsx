@@ -7,6 +7,7 @@ import PetList from "@/components/pages/dietAnalysis/main/PetList";
 import { useUpdateRepresentativePet } from "@/api/pet/mutations/useUpdateRepresentativePet";
 import { useToastStore } from "@/store/useToastStore";
 import { useMemo } from "react";
+import Header from "@/components/layout/header/Header";
 
 export default function PetManager() {
   const { data } = useGetPetList();
@@ -36,6 +37,11 @@ export default function PetManager() {
   };
 
   return (
+    <>
+    <Header
+      centerTitle="반려견 전체보기"
+      showBackButton
+    />
     <PetList
       pets={sortedVisibleDogs}
       totalCount={data.length}
@@ -54,5 +60,6 @@ export default function PetManager() {
         );
       }}
     />
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import * as styles from './SuspectedDiseases.css';
+import { commonWrapper } from '@/styles/common.css';
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
 import Text from "@/components/ui/text/Text";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
@@ -23,29 +23,34 @@ export default function SuspectedDiseases({
 	return (
 		<article>
 			<ResultCard
-				className={styles.diseaseListContainer}
+				className={commonWrapper({ direction: 'col', align: 'start', gap: 20 })}
 				title={`${petName}의\n의심되는 질병을 알려드릴게요`}
 				subTitle='해당 부위는 지속적으로 관리가 필요해요'
 			>
-				<div className={styles.diseaseList}>
+				<div className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
 					{diseaseList.map((disease, index) => (
 						<ResultAccordion
 							key={disease.category}
 							accordionButton={(
-								<div className={styles.diseaseAccordionHeader}>
+								<div className={commonWrapper({ justify: 'start', gap: 8 })}>
 									<Text type='headline2' color='gray400'>{index+1}</Text>
-									<SvgIcon src={DISEASE_CATEGORY[disease.category].imageUrl} size={46} className={styles.diseaseCategorySvg} />
-									<div>
-										<Text type='headline2' block>{BODY_PART_TO_CATEGORY[disease.category]}</Text>
-										<Text type='caption2' color='gray700' block>{disease.name}</Text>
+									<div className={commonWrapper({ justify: 'start', gap: 12 })}>
+										<SvgIcon 
+											src={DISEASE_CATEGORY[disease.category].imageUrl} 
+											size={46} 
+										/>
+										<div>
+											<Text type='headline2' block>{BODY_PART_TO_CATEGORY[disease.category]}</Text>
+											<Text type='caption2' color='gray700' block>{disease.name}</Text>
+										</div>
 									</div>
 								</div>
 							)}
 						>
-							<ul className={styles.diseaseList}>
+							<ul className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
 								{diseaseItemInfoList.map(item => (
-									<li key={item.key} className={styles.diseaseItem}>
-										<Text type='label3' color='gray800' className={styles.diseaseItemLabel}>{item.label}</Text>
+									<li key={item.key} className={commonWrapper({ justify: 'start', align: 'start', gap: 12 })}>
+										<Text type='label3' color='gray800' noShrink>{item.label}</Text>
 										<Text type='body3' color='gray700'>{disease[item.key]}</Text>
 									</li>
 								))}

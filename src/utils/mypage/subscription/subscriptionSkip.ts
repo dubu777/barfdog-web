@@ -2,18 +2,21 @@ import { SkipType } from "@/types/mypage/subscription";
 
 /**
  * 구독 건너뛰기 가능 여부를 판단
- * 다음 결제일까지 남은 일수가 5일 이상이면 true (건너뛰기 가능)
- * 5일 미만이면 false (건너뛰기 불가 - 이미 생산/배송 준비가 시작되었을 수 있음)
+ * 다음 결제일까지 남은 일수가 5일 이하이면 true (건너뛰기 가능)
+ * 5일 초과이면 false (건너뛰기 불가)
  * 
  * 비즈니스 로직:
- * - 배송일 전 주 토요일에 생산이 시작되므로, 최소 5일 전에 건너뛰기 결정이 필요
- * - 너무 임박하면 생산 준비가 이미 시작되어 비효율적
+ * - 결제일 당일부터 5일 전까지는 건너뛰기 가능
+ * - 6일 전 이상은 너무 이르므로 건너뛰기 불가
  * 
- * 예시:
- *  today: 2025-11-01
- *  nextPaymentDate: 2025-11-07 → true (6일 남음, 5일 이상)
- *  nextPaymentDate: 2025-11-06 → true (5일 남음, 5일 이상)
- *  nextPaymentDate: 2025-11-05 → false (4일 남음, 5일 미만)
+ * 예시 (결제일이 10-31이라고 가정):
+ *  today: 10-31 (당일) → diffInDays = 0 → true (건너뛰기 O)
+ *  today: 10-30 (1일 전) → diffInDays = 1 → true (건너뛰기 O)
+ *  today: 10-29 (2일 전) → diffInDays = 2 → true (건너뛰기 O)
+ *  today: 10-28 (3일 전) → diffInDays = 3 → true (건너뛰기 O)
+ *  today: 10-27 (4일 전) → diffInDays = 4 → true (건너뛰기 O)
+ *  today: 10-26 (5일 전) → diffInDays = 5 → true (건너뛰기 O)
+ *  today: 10-25 (6일 전) → diffInDays = 6 → false (건너뛰기 X)
  * 
  */
 export const canSkipSubscription = (nextPaymentDate: string | null | undefined): boolean => {
@@ -29,10 +32,10 @@ export const canSkipSubscription = (nextPaymentDate: string | null | undefined):
   const diffTime = paymentDate.getTime() - today.getTime();
   const diffInDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-  // 다음 결제일까지 5일 이상 남았으면 true (건너뛰기 가능)
-  // 5일 미만이면 생산 준비가 시작되었을 수 있어 건너뛰기 불가
+  // 다음 결제일까지 5일 이하 남았으면 true (건너뛰기 가능)
+  // 6일 전 이상은 너무 이르므로 건너뛰기 불가
   const availableSkipDate = 5;
-  return diffInDays >= availableSkipDate;
+  return diffInDays <= availableSkipDate;
 };
 
 /**

@@ -1,5 +1,6 @@
 'use client';
-import * as styles from './ItemFilter.css';
+import { commonWrapper } from '@/styles/common.css';
+import { itemType } from './ItemFilter.css';
 import { usePathname, useSearchParams } from "next/navigation";
 import Text from "@/components/ui/text/Text";
 import Dropdown from "@/components/ui/dropdown/Dropdown";
@@ -28,14 +29,17 @@ export default function ItemFilter() {
   }
   return (
     <article>
-      <ul className={styles.itemTypeFilter}>
+      <ul className={commonWrapper({
+        justify: 'between',
+        backgroundColors: 'gray0',
+      })}>
         {itemFilterCategoryList.map(category => {
           const active = selectedItemType === category.value;
           return (
             <li
               key={category.value}
               onClick={() => handleFilterChange('itemType', category.value as ItemType)}
-              className={styles.itemType({ active })}
+              className={itemType({ active })}
             >
               <Text type='label1' color={active ? 'red' : 'gray300'}>
                 {category.label}
@@ -44,7 +48,12 @@ export default function ItemFilter() {
           )
         })}
       </ul>
-      <div className={styles.sortByFilter}>
+      <div className={commonWrapper({
+        justify: 'end',
+        padding: 20,
+        paddingTop: 12,
+        paddingBottom: 8,
+      })}>
         <Dropdown
           label={ITEM_SORT_BY[selectedSortBy]}
           options={itemSortByList}

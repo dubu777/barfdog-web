@@ -12,7 +12,6 @@ interface ReviewDetailPageProps {
   }>
   searchParams: Promise<{
     reviewType: string;
-    source?: string;
   }>
 }
 

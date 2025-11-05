@@ -5,6 +5,7 @@ import Text from "@/components/ui/text/Text";
 
 interface EmptyListProps {
 	title: string;
+	padding?: '50/0'
 }
 
 export default function EmptyList({ title }: EmptyListProps) {

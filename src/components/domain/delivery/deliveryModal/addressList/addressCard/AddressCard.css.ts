@@ -1,5 +1,4 @@
 import { themeVars } from "@/styles/theme.css";
-import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const addressCardContainer = recipe({
@@ -28,46 +27,4 @@ export const addressCardContainer = recipe({
     isSelectedAddress: false,
   },
 });
-
-
-export const addressTitleWrapper = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: 'center',
-  gap: '8px'
-});
-
-export const addressContentWrapper = style({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: 'center',
-  gap: '2px'
-});
-
-export const buttonWrapper = style({
-  display: "flex",
-  justifyContent: 'space-between',
-  alignItems: "center",
-  alignSelf: 'stretch',
-});
-
-export const leftButtonContainer = style({
-  minWidth: "80px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-start",
-});
-
-export const rightButtonWrapper = style({
-  display: "flex",
-  justifyContent: 'center',
-  alignItems: "center",
-  gap: "4px",
-});
-
-
-
-
-
 

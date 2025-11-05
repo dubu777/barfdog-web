@@ -10,6 +10,8 @@ import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { useSubscriptionActions } from "@/hooks/mypage/subscription/useSubscriptionActions";
 import { useSubscriptionModalControl } from "@/hooks/mypage/subscription/useSubscriptionModalControl";
 import { useGetInfiniteSubscriptionList } from "@/api/mypage/subscription/queries/useGetInfiniteSubscriptionList";
+import { subscriptionPlanInfo } from "@/constants";
+import { CurrentPlanInfo } from "@/types";
 
 export default function SubscriptionList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteSubscriptionList();
@@ -19,7 +21,12 @@ export default function SubscriptionList() {
   const [selectedSubscriptionId, setSelectedSubscriptionId] = useState<number | null>(null);
 
   const { modals, closeModal, openKeepSubscriptionModal,  } = useSubscriptionModalControl();
-  const { onKeepSubscription, onRetryPayment, onGoToDetail } = useSubscriptionActions({});
+  const { 
+    onKeepSubscription, 
+    onRetryPayment, 
+    onGoToDetail, 
+    onResubscribe,
+  } = useSubscriptionActions({});
 
   return (
     <>
@@ -31,21 +38,31 @@ export default function SubscriptionList() {
       })}>
         {subscriptionList.length > 0 ? 
           <>
-            {subscriptionList.map((subscription) => (
-              <SubscriptionCard 
-                key={subscription.subscribeId}
-                subscriptionId={subscription.subscribeId}
-                status={subscription.status}
-                pictureUrl={subscription.pictureUrl ?? ''}
-                recipeNames={subscription.recipeNames}
-                dogName={subscription.dogName}
-                plan={subscription.plan}
-                onGoToDetail={() => onGoToDetail(subscription.subscribeId)}
-                onRetryPayment={() => onRetryPayment(subscription.subscribeId)}
-                openKeepSubscriptionModal={openKeepSubscriptionModal}
-                setSelectedSubscriptionId={setSelectedSubscriptionId}
-              />
-            ))}
+            {subscriptionList.map((subscription) => {
+              // TODO: 임시 적용 추후 수정 필요
+              const planInfo = {
+                name: subscription.plan,
+                weeks: subscriptionPlanInfo[subscription.plan].weeklyPaymentCycle,
+                days: subscriptionPlanInfo[subscription.plan].numberOfPacksPerDay,
+                mealCount: subscriptionPlanInfo[subscription.plan].totalNumberOfPacks,
+              }
+              return (
+                <SubscriptionCard 
+                  key={subscription.subscribeId}
+                  subscriptionId={subscription.subscribeId}
+                  status={subscription.status}
+                  pictureUrl={subscription.pictureUrl ?? ''}
+                  recipeNames={subscription.recipeNames}
+                  dogName={subscription.dogName}
+                  planInfo={planInfo as CurrentPlanInfo}
+                  onGoToDetail={() => onGoToDetail(subscription.subscribeId)}
+                  onRetryPayment={onRetryPayment}
+                  onResubscribe={() => onResubscribe(subscription.subscribeId)}
+                  openKeepSubscriptionModal={openKeepSubscriptionModal}
+                  setSelectedSubscriptionId={setSelectedSubscriptionId}
+                />
+              )
+            })}
             <InfiniteScrollTrigger
               ref={ref}
               hasNextPage={hasNextPage}

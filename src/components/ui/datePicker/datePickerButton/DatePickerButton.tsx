@@ -31,7 +31,7 @@ export default function DatePickerButton({
 						onToggle();
 					}
 				}}
-				className={styles.datePickerButton({ isOpen })}
+				className={styles.datePickerButton}
 			>
 				<Text
 					type='body2'

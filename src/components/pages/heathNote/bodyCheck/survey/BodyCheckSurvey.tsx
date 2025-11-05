@@ -1,5 +1,4 @@
 "use client";
-import * as styles from "./BodyCheckSurvey.css";
 import { commonWrapper } from "@/styles/common.css";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -136,7 +135,7 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
       <Header
         leftElement={
           !isFirstStep && (
-            <div className={styles.bodyCheckSurveyHeader}>
+            <div className={commonWrapper({ justify: 'start', gap: 6 })}>
               <SvgIcon
                 src={BackIcon}
                 size={24}
@@ -154,7 +153,13 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
         showCloseButton
       />
       <SurveyProgressBar currentStep={currentStep} sections={sections} />
-      <section className={styles.bodyCheckSurveyContainer}>
+      <section className={commonWrapper({
+        direction: 'col',
+        gap: 40,
+        padding: '40/20',
+        width: 'full',
+        height: '100%',
+      })}>
         <article
           className={commonWrapper({
             direction: "col",

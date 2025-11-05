@@ -14,9 +14,9 @@ export default function NoticeDetail({ noticeId }: { noticeId: number }) {
   return (
     <>
       <Header 
-        showBackButton
+        showCloseButton
         centerTitle='공지사항'
-        onBack={() => router.back()}
+        onClose={() => router.back()}
       />
       <DetailSection
         id={noticeDetail.id}

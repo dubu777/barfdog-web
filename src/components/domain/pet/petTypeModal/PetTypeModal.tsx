@@ -1,4 +1,4 @@
-import * as styles from "./PetTypeModal.css";
+import { commonWrapper } from "@/styles/common.css";
 import SearchableSelector from "@/components/domain/pet/searchableSelector/SearchableSelector";
 import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
 import Text from "@/components/ui/text/Text";
@@ -29,10 +29,24 @@ export default function PetTypeModal({
     })) ?? [];
   return (
     <FullModalWrapper isVisible={isOpen} handleClose={onClose}>
-      <div className={styles.dogTypeModalContainer}>
+      <div className={commonWrapper({
+        backgroundColors: 'gray50',
+        direction: 'col',
+        align: 'start',
+        gap: 32,
+        padding: 20,
+        paddingTop: 32,
+      })}>
         <Text type="title3">
-          {dogName}의<br />
-          견종은 무엇인가요?
+          {dogName 
+          ? (
+            <>
+              {dogName}의<br />
+              견종은 무엇인가요?
+            </>
+          )
+          : "견종을 선택해 주세요"
+        }
         </Text>
         <SearchableSelector
           placeholder="견종을 검색해 보세요"

@@ -9,7 +9,6 @@ export default function ReviewSection () {
     <>
       <Header
         showBackButton
-        showCartButton
         centerTitle='리뷰'
       />
       <section className={styles.reviewListContainer}>

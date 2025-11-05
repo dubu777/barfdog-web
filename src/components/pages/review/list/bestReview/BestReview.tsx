@@ -1,5 +1,5 @@
-import * as styles from './BestReview.css';
-import { ellipsis } from "@/styles/common.css";
+import { commonWrapper, ellipsis, imageWrapper } from "@/styles/common.css";
+import { bestReviewBanner, bestReviewBannerStar, bestReviewBox, bestReviewCard, bestReviewSlide } from './BestReview.css';
 import { useState } from "react";
 import { motion, Transition } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -45,7 +45,12 @@ export default function BestReview() {
   if (!bestReviewList) return null;
   return (
     <article>
-      <div className={styles.bestReviewTitle}>
+      <div className={commonWrapper({ 
+        direction: 'col',
+        align: 'start',
+        padding: 20, 
+        paddingTop: 40 
+      })}>
         <Text type='title2'>바프독 견주님들의<br/>생생한 후기를 확인하세요</Text>
         <Text type='body2' color='gray600'>명예의 바프독 BEST 리뷰 모음!</Text>
       </div>
@@ -53,25 +58,30 @@ export default function BestReview() {
         slidesPerView='auto'
         centeredSlides={true}
         spaceBetween={8}
-        className={styles.bestReviewBox}
+        className={bestReviewBox}
       >
         {bestReviewList.map(review => (
           <SwiperSlide
             key={review.reviewId}
-            className={styles.bestReviewSlide}
+            className={bestReviewSlide}
           >
             <Card shadow='normal' padding={12}>
-              <div onClick={() => handleSelectReview(review)} className={styles.bestReviewCard}>
+              <div onClick={() => handleSelectReview(review)} className={bestReviewCard}>
                 <Image
                   src={review.reviewImageList[0].displayImageUrl.url}
                   alt={(review.titleByAdmin ? review.titleByAdmin : review.reviewer) || ''}
                   width={200}
                   height={200}
-                  className={styles.bestReviewImage}
+                  className={imageWrapper({  width: 107, objectFit: 'cover', borderRadius: 8 })}
                 />
-                <div>
-                  <div className={styles.bestReviewContentTop}>
-                    <div className={styles.bestReviewUsername}>
+                <div className={commonWrapper({ 
+                  direction: 'col', 
+                  align: 'start', 
+                  justify: 'start', 
+                  gap: 8,
+                })}>
+                  <div className={commonWrapper({ justify: 'between' })}>
+                    <div className={commonWrapper({ justify: 'start', gap: 4 })}>
                       <SvgIcon src={UserIcon} size={19} />
                       <Text type='caption' color='gray900'>
                         {review.reviewer ? review.reviewer.split('@')[0] : ''}
@@ -89,7 +99,7 @@ export default function BestReview() {
         ))}
       </Swiper>
       <div
-        className={styles.bestReviewBanner}
+        className={bestReviewBanner}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
@@ -102,14 +112,14 @@ export default function BestReview() {
         <motion.div
           animate={{ rotate: [0, 10, 0] }}
           transition={motionTransition}
-          className={styles.bestReviewBannerStar({ xPosition: 'left' })}
+          className={bestReviewBannerStar({ xPosition: 'left' })}
         >
           <SvgIcon src={BannerStarIcon} size={17.45} color={isHover ? 'red' : 'pastelRed'} />
         </motion.div>
         <motion.div
           animate={{ scale: [1, .8, 1], rotate: [0, 10, 0] }}
           transition={motionTransition}
-          className={styles.bestReviewBannerStar({ xPosition: 'right' })}
+          className={bestReviewBannerStar({ xPosition: 'right' })}
         >
           <SvgIcon src={BannerStarIcon} size={17.45} color={isHover ? 'red' : 'pastelRed'} />
         </motion.div>
@@ -118,7 +128,11 @@ export default function BestReview() {
         </Text>
       </div>
       {selectedReview &&
-        <BestReviewModal isOpen={isOpen} onClose={handleCloseReview} reviewItem={selectedReview} />
+        <BestReviewModal 
+          isOpen={isOpen} 
+          onClose={handleCloseReview} 
+          reviewItem={selectedReview} 
+        />
       }
     </article>
   );

@@ -9,7 +9,7 @@ interface LabelValueItemProps {
   label: string;
   labelType?: keyof typeof textStyles;
   labelColor?: keyof typeof fontColors;
-  labelWidth?: 60 | 80 | 100 | 120;
+  labelWidth?: 'auto' | 60 | 80 | 100 | 120;
   value?: ReactNode;
   valueColor?: keyof typeof fontColors;
   valueType?: keyof typeof textStyles;

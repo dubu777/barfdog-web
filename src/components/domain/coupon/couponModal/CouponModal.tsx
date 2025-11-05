@@ -1,4 +1,5 @@
-import * as styles from "./CouponModal.css";
+import { commonWrapper } from "@/styles/common.css";
+import { couponModalWrapper } from "./CouponModal.css";
 import { Coupon, OrderType } from "@/types";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -184,7 +185,12 @@ export default function CouponModal({
         isVisible={isOpen}
         headerTitle="쿠폰"
         handleClose={handleModalClose}
-        className={styles.couponModalContainer}
+        className={commonWrapper({
+          maxWidth: 600,
+          width: 'full',
+          height: 'full',
+          backgroundColors: 'gray0',
+        })}
       >
         <CouponCategoryTabs 
           onChangeCouponCategory={(couponCategory) => {
@@ -203,8 +209,13 @@ export default function CouponModal({
           setCouponCode={setCode}
           buttonColor="gray800"
         />
-        <div className={styles.couponModalWrapper}>
-          <div className={styles.couponCardWrapper}>
+        <div className={couponModalWrapper}>
+          <div className={commonWrapper({
+            direction: 'col',
+            gap: 10,
+            padding: 20,
+            backgroundColors: 'gray50',
+          })}>
             {sortedCoupons.length > 0 
               ? sortedCoupons.map((coupon) => {
                 const discountInfo = couponDiscountMap.get(coupon.id);

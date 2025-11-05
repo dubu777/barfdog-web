@@ -1,8 +1,7 @@
-import * as styles from './HistoryForm.css';
+import { commonWrapper } from '@/styles/common.css';
 import { useParams } from "next/navigation";
 import { format } from "date-fns";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import CheckIcon from "public/images/survey/check_small.svg";
 import InputField from "@/components/ui/inputField/InputField";
 import Textarea from "@/components/ui/textarea/Textarea";
 import InputLabel from "@/components/ui/inputLabel/InputLabel";
@@ -40,8 +39,13 @@ export default function HistoryForm ({
 	const { isMobileDevice } = useDeviceState();
 
 	return (
-		<article className={styles.healthCheckFormContainer}>
-			<form className={styles.healthCheckForm}>
+		<article className={commonWrapper({ paddingBottom: 85 })}>
+			<form className={commonWrapper({
+				direction: 'col',
+				align: 'start',
+				gap: 20,
+				padding: 20,
+			})}>
 				<Controller
 					name='hospitalName'
 					control={control}
@@ -53,6 +57,7 @@ export default function HistoryForm ({
 							label='병원'
 							error={errors?.hospitalName?.message}
 							isRequired
+							labelColor='gray700'
 						/>
 					}
 				/>
@@ -60,7 +65,7 @@ export default function HistoryForm ({
 					name='diagnosisDate'
 					control={control}
 					render={({field}) =>
-						<div>
+						<div className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
 							<InputLabel
 								label='날짜'
 								labelColor='gray700'
@@ -91,41 +96,40 @@ export default function HistoryForm ({
 					name='diagnosisItemList'
 					control={control}
 					render={({field}) =>
-						<div>
+						<div className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
 							<InputLabel
 								label='검사 항목'
 								isRequired
 								labelColor='gray700'
 							/>
-							<div className={styles.diagnosisItemList}>
+							<div className={commonWrapper({ wrap: 'wrap', gap: 8, justify: 'start' })}>
 								{DIAGNOSIS_ITEM_LIST.map(item => {
 									const isChecked = field.value.includes(item.value as DiagnosisItem);
 									return (
-										<LabeledCheckbox
+										<Chips
 											key={item.value}
-											value={item.value}
-											isChecked={isChecked}
-											iconSize={0}
-											onToggle={(value) => {
-												if (!isChecked) {
-													field.onChange([...field.value, value]);
-												} else {
-													field.onChange(field.value.filter(v => v !== value))
-												}
-											}}
-											className={styles.diagnosisItemCheckbox}
+											variant='solid'
+											borderRadius='lg'
+											size='lg'
+											color='red'
+											switchOff={!isChecked}
+											showCheckIcon={isChecked}
 										>
-											<Chips
-												variant='solid'
-												borderRadius='lg'
-												size='lg'
-												color='red'
-												switchOff={!isChecked}
-												icon={isChecked ? CheckIcon : undefined}
+											<LabeledCheckbox
+												value={item.value}
+												isChecked={isChecked}
+												iconSize={0}
+												onToggle={(value) => {
+													if (!isChecked) {
+														field.onChange([...field.value, value]);
+													} else {
+														field.onChange(field.value.filter(v => v !== value))
+													}
+												}}
 											>
 												{item.label}
-											</Chips>
-										</LabeledCheckbox>
+											</LabeledCheckbox>
+										</Chips>
 									)
 								})}
 							</div>
@@ -143,7 +147,7 @@ export default function HistoryForm ({
 					name='note'
 					control={control}
 					render={({ field }) => (
-						<div>
+						<div className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
 							<InputLabel
 								label='특이사항'
 								labelColor='gray700'
@@ -154,6 +158,7 @@ export default function HistoryForm ({
 								value={field.value}
 								placeholder='예) 검진 후 스트레스를 받지 않도록 편안한 환경 제공하기'
 								error={errors.note?.message || ''}
+								fullWidth
 							/>
 						</div>
 					)}

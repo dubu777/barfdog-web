@@ -1,5 +1,5 @@
 'use client';
-import * as styles from './ItemList.css';
+import { commonWrapper } from '@/styles/common.css';
 import { Fragment } from "react";
 import { useSearchParams } from "next/navigation";    
 import StoreItem from "@/components/pages/store/list/Item/Item";
@@ -26,8 +26,12 @@ export default function ItemList() {
   const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
-    <article className={styles.storeItemListContainer}>
-      <div className={styles.storeItemList}>
+    <article className={commonWrapper({ padding: 20, direction: 'col' })}>
+      <div className={commonWrapper({
+        wrap: 'wrap',
+        gap: '32/8',
+        align: 'start',
+      })}>
         {itemList.map(item => (
           <Fragment key={item.id}>
             <StoreItem item={item} />

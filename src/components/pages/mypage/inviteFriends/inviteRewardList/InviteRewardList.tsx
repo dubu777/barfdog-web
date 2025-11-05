@@ -1,5 +1,5 @@
 import { commonWrapper } from "@/styles/common.css";
-import { codeActionButton, codeActions, recommendationCode, rewardListTopBox } from "../InviteFriends.css";
+import { codeActionButton, rewardListTopBox } from "../InviteFriends.css";
 import { Fragment } from "react";
 import { format } from "date-fns";
 import MessageIcon from "/public/images/mypage/message.svg";
@@ -87,13 +87,15 @@ export default function InviteRewardList({
           <Card
             shadow='light'
             borderRadius={0}
-            className={recommendationCode}
+            backgroundColor='gray0'
+            border='gray300'
+            className={commonWrapper({ paddingTop: 20, direction: 'col', align: 'start' })}
           >
             <div className={commonWrapper({ direction: 'col', gap: 4 })}>
               <Text type='label4'>나의 추천코드</Text>
               <Text type='title1'>{myRecommendationCode}</Text>
             </div>
-            <div className={codeActions}>
+            <div className={commonWrapper({ justify: 'start', paddingTop: 8, paddingBottom: 8 })}>
               {rewardActionList.map((action, index) => (
                 <Fragment key={action.label}>
                   <button

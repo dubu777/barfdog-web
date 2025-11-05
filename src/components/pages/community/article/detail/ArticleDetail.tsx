@@ -29,9 +29,9 @@ export default function ArticleDetail({ articleId, category }: { articleId: numb
   return (
     <>
       <Header
-        showBackButton
+        showCloseButton
         centerTitle='아티클'
-        onBack={() => router.back()}
+        onClose={() => router.back()}
       />
       <DetailSection
         id={articleDetail.id}

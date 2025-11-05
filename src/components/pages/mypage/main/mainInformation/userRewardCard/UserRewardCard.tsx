@@ -1,4 +1,5 @@
-import * as styles from '../MainInformation.css';
+import { commonWrapper } from '@/styles/common.css';
+import { rewardItem, userRewardLine } from '../MainInformation.css';
 import { Fragment } from "react";
 import { useRouter } from "next/navigation";
 import ArrowIcon from '/public/images/mypage/chevron-s.svg';
@@ -32,22 +33,22 @@ export default function UserRewardCard({
 	};
 
 	return (
-		<div className={`${styles.userReward} ${className || ''}`}>
+		<div className={`${commonWrapper({})} ${className || ''}`}>
 			{MENU_LIST.map(({ key, label, url }, index) => (
 				<Fragment key={key}>
 					<button
 						type='button'
 						onClick={() => !isDisabled ? router.push(url ?? '/mypage') : undefined}
-						className={styles.rewardItem({ isDisabled })}
+						className={rewardItem({ isDisabled })}
 					>
-						<div className={styles.userRewardTitle}>
+						<div className={commonWrapper({ justify: 'start' })}>
 							<Text type='body3' color='gray600'>{label}</Text>
 							<SvgIcon src={ArrowIcon} size={20} color='gray600' />
 						</div>
 						<Text type='label2'>{valueMap[key]}</Text>
 					</button>
 					{MENU_LIST.length !== index + 1 &&
-						<span className={styles.userRewardLine}>
+						<span className={userRewardLine}>
 							<Divider thickness={1} color='gray200' direction='vertical' />
 						</span>
 					}

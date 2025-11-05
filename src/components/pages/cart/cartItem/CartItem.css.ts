@@ -15,19 +15,6 @@ export const deleteButton = style({
   top: 0,
 });
 
-export const cartItem = style({
-  width: "100%",
-  display: "flex",
-  gap: "8px",
-});
-
-export const cartItemInfo = style({
-  width: "100%",
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-});
-
 export const cartItemImage = recipe({
   base: {
     borderRadius: "8px",
@@ -40,25 +27,6 @@ export const cartItemImage = recipe({
       }
     }
   }
-});
-
-export const cartItemInfoControls = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'flex-end',
-});
-
-export const cartItemPrice = style({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '2px',
-});
-
-export const cartItemOptionList = style({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '12px',
 });
 
 export const cartItemOptionBox = recipe({
@@ -75,11 +43,4 @@ export const cartItemOptionBox = recipe({
       }
     }
   }
-});
-
-export const cartItemOption = style({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center'
 });

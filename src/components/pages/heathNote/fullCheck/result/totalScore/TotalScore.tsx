@@ -1,4 +1,4 @@
-import * as styles from "./TotalScore.css";
+import { commonWrapper } from "@/styles/common.css";
 import CrownIcon from "/public/images/healthNote/full-check/crown.svg";
 import CohortIcon from "/public/images/healthNote/full-check/cohort.svg";
 import Text from "@/components/ui/text/Text";
@@ -38,7 +38,7 @@ export default function TotalScore({
 
   return (
     <ResultCard
-      className={styles.totalScoreContainer}
+      className={commonWrapper({ direction: 'col', gap: 20 })}
       title={`${petName}의\n건강 종합 점수`}
     >
       <CircleProgressBar

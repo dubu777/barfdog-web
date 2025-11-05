@@ -1,6 +1,7 @@
 'use client';
 import * as yup from "yup";
 import { commonWrapper } from "@/styles/common.css";
+import { useRouter } from "next/navigation";
 import { Controller } from "react-hook-form";
 import InputField from "@/components/ui/inputField/InputField";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
@@ -36,6 +37,7 @@ export default function SetPassword() {
 		getValues,
 		isValid,
 	} = useFormHandler<SetPasswordType>(setPasswordSchema, defaultSetPasswordValues);
+	const router = useRouter();
 	const { mutate } = useSetPassword();
 	const { handleSuccess } = useApiResponseHandler();
 
@@ -45,6 +47,7 @@ export default function SetPassword() {
 			{
 				onSuccess: () => {
 					handleSuccess('비밀번호 설정이 완료됐습니다');
+					router.push('/mypage/account');
 				}
 			}
 		)
