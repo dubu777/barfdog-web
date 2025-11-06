@@ -1,8 +1,8 @@
+import { commonWrapper } from "@/styles/common.css";
 import React, { useState, useMemo, ReactNode } from "react";
 import InputField from "@/components/ui/inputField/InputField";
 import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { Option } from "@/types";
-import { commonWrapper } from "@/styles/common.css";
 
 interface SearchableSelectorProps {
   placeholder?: string; // InputField placeholder

@@ -1,3 +1,4 @@
+import { commonWrapper } from "@/styles/common.css";
 import InputField from "@/components/ui/inputField/InputField";
 import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
@@ -10,7 +11,6 @@ import {
   addressSchema,
   defaultAddressValues,
 } from "@/utils/validation/addressValidation";
-import * as styles from "./AddressForm.css";
 import Button from "@/components/ui/button/Button";
 import AddressSearchModal from "@/components/domain/address/addressSearchModal/AddressSearchModal";
 import useModal from "@/hooks/useModal";
@@ -123,7 +123,12 @@ export default function AddressForm({
   return (
     <>
       <form
-        className={styles.deliveryAddressWithFooterWrapper}
+        className={commonWrapper({
+          direction: 'col',
+          align: 'center',
+          padding: 20,
+          gap: 20,
+        })}
         onSubmit={onSubmit}
       >
         <InputField
@@ -163,8 +168,14 @@ export default function AddressForm({
           onKeyUp={bind("phoneNumber")}
         />
 
-        <div className={styles.searchAddressWrapper}>
-          <div className={styles.searchAddressButtonWrapper}>
+        <div className={commonWrapper({
+          direction: 'col',
+          gap: 8,
+        })}>
+          <div className={commonWrapper({
+            align: 'end',
+            gap: 8,
+          })}>
             <InputField
               label="주소검색을 통해 입력"
               variants="box"

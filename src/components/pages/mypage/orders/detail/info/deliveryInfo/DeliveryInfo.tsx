@@ -2,9 +2,9 @@ import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/ui/button/Button";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
-import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
 import { DeliveryCompanyCode } from "@/types/mypage/orders";
 import { DELIVERY_COMPANY_CODE } from "@/constants/mypage/orders";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 
 interface DeliveryInfoProps {
   deliveryNumber: string;
@@ -22,21 +22,23 @@ export default function DeliveryInfo({
     <InfoWrapper title="배송 조회" titleType="title4" padding={false}>
       <CardWrapper>
         <div className={commonWrapper({ direction: 'col', gap: 2, justify: 'start' })}>
-          <InfoItem
+          <LabelValueItem
             label="택배사"
+            labelType='label4'
+            labelColor='gray900'
             value={DELIVERY_COMPANY_CODE[deliveryCode]}
-            labelColor='gray900'
-            valueColor='gray800'
-            justify='start'
-            minWidth={68}
+            valueType='body3'
+            align='start'
+            labelWidth={80}
           />
-          <InfoItem
+          <LabelValueItem
             label="운송장 번호"
-            value={deliveryNumber}
+            labelType='label4'
             labelColor='gray900'
-            valueColor='gray700'
-            justify='start'
-            minWidth={68}
+            value={deliveryNumber}
+            valueType='body3'
+            align='start'
+            labelWidth={80}
           />
         </div>
         <Button 

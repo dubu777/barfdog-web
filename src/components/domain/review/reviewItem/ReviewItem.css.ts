@@ -49,18 +49,6 @@ export const contentTop = recipe({
 	}
 })
 
-export const reviewer = style({
+export const contentReviewer = style({
 	marginBottom: '6px',
-})
-
-export const contentBottom = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '20px',
-})
-
-export const contents = style({
-	display: 'flex',
-	alignItems: 'center',
-	gap: '4px'
 })

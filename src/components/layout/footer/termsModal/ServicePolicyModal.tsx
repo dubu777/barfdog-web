@@ -1,5 +1,4 @@
 import { commonWrapper } from '@/styles/common.css';
-import { termsCard } from './termsModal.css';
 import FullModalWrapper from '@/components/ui/fullModalWrapper/FullModalWrapper';
 import Text from '@/components/ui/text/Text';
 import ButtonDocked from '@/components/ui/buttonDocked/ButtonDocked';
@@ -31,7 +30,6 @@ export default function ServicePolicyModal({ isOpen, onClose }: ServicePolicyMod
 				<Text type='label2'>개인정보 수집 및 이용약관</Text>
 				<ServicePolicy 
 					backgroundColor='gray50'
-					className={termsCard}
 				/>
 			</div>
 			<ButtonDocked

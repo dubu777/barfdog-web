@@ -1,6 +1,6 @@
 'use client';
-import * as styles from './ArticleItemList.css';
-import { ellipsis } from '@/styles/common.css';
+import { commonWrapper, ellipsis } from '@/styles/common.css';
+import { articleContents, articleGallery, articleItem, articleListBox } from './ArticleItemList.css';
 import { articleOverlay } from "@/components/pages/community/article/list/ArticleList.css";
 import { Fragment, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
@@ -69,8 +69,8 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
   }
 
   return (
-    <article className={styles.articleListContainer}>
-      <article className={styles.categoryFilter}>
+    <article className={commonWrapper({ direction: 'col', backgroundColors: 'gray0' })}>
+      <article className={commonWrapper({ padding: 20, justify: 'between' })}>
         <TabBar
           variant='chips'
           tabs={articleCategoryList.map(tab => ({
@@ -84,11 +84,12 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
           justifyContent='flexStart'
         />
       </article>
-      <div className={styles.articleList({ isEmpty: articleList.length === 0 })}>
+      <Divider thickness={1} color='gray100' />
+      <div className={articleListBox({ isEmpty: articleList.length === 0 })}>
         {articleList.length === 0 ?
           <EmptyState title='등록된 아티클이 없습니다.' />
           : <>
-            <div className={isGallery? styles.articleGallery : ''}>
+            <div className={isGallery? articleGallery : ''}>
               {articleList.map((article, index) => {
                 const rowHeight = getRowHeight(index);
                 return (
@@ -96,7 +97,7 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
                     <Link
                       href={`/community/article/${article.id}?category=${category}`}
                       style={{ gridRowEnd: `span ${Math.ceil(rowHeight / 10)}` }}
-                      className={styles.articleItem({ mode })}
+                      className={articleItem({ mode })}
                     >
                       {article?.displayImageUrl?.url && 
                         <Image
@@ -111,16 +112,18 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
                           }}
                         />
                       }
-                      <div className={`${styles.articleContents({ mode })} ${isGallery ? articleOverlay : ''}`}>
+                      <div className={`${articleContents({ mode })} ${isGallery ? articleOverlay : ''}`}>
                         {isGallery
                           ? <>
-                            <Text type='caption' color='white'>{ARTICLE_CATEGORY[article.category].label}</Text>
+                            <Text type='caption' color='white'>
+                              {ARTICLE_CATEGORY[article.category].label}
+                            </Text>
                             <Text type='label3' color='white' className={ellipsis({ lineSize: 'line1' })}>
                               {article.title}
                             </Text>
                           </>
-                          : <div className={styles.articleItemTitle}>
-                            <Text type='label3' color='gray900' className={styles.articleItemCategory}>[{ARTICLE_CATEGORY[article.category].label}]</Text>
+                          : <div className={commonWrapper({ gap: 4, justify: 'start' })}>
+                            <Text type='label3' color='gray900' noShrink>[{ARTICLE_CATEGORY[article.category].label}]</Text>
                             <Text type='label3' color='gray900' className={ellipsis({ lineSize: 'line1' })}>
                               {article.title}
                             </Text>

@@ -27,7 +27,6 @@ export default function HealthNoteHeader() {
       Array.isArray(value) ? value[0] : value,
     ])
   ) as Record<string, string>;
-  const goBack = useBackNavigation();
   const goBackToMain = () => router.push("/health-note");
 
   const headerConfigs: Record<
@@ -42,11 +41,6 @@ export default function HealthNoteHeader() {
       onBack?: () => void;
     }
   > = {
-    "/health-note/pets": {
-      centerTitle: "반려견 전체보기",
-      showBackButton: true,
-      onBack: goBack,
-    },
     "full-check": {
       centerTitle: "건강 종합 진단",
       showBackButton: true,

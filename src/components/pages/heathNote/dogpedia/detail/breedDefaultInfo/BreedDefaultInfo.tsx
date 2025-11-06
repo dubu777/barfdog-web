@@ -1,4 +1,4 @@
-import * as styles from './BreedDefaultInfo.css';
+import { commonWrapper, imageWrapper } from '@/styles/common.css';
 import Image from "next/image";
 import WeightIcon from '/public/images/healthNote/dogpedia/weight.svg';
 import HeightIcon from '/public/images/healthNote/dogpedia/hight.svg';
@@ -50,9 +50,9 @@ export default function BreedDefaultInfo({
 			value: [data.minLifespanYear, data.maxLifespanYear],
 		},
 	]
-	
+	if(!data) return null;
 	return (
-		<article className={styles.breedDefaultInfo}>
+		<article className={commonWrapper({ direction: 'col', gap: 16, align: 'start' })}>
 			<Text type='title2'>{data.name}에 대해<br/>알아볼까요?</Text>
 			{data.imageUrl &&
 				<Image
@@ -60,28 +60,28 @@ export default function BreedDefaultInfo({
 					alt={data.name}
 					width={600}
 					height={300}
-					className={styles.breedImage}
+					className={imageWrapper({ borderRadius: 16, objectFit: 'cover', height: 'auto' })}
 				/>
 			}
-			<div>
-				<div className={styles.tagChips}>
+			<div className={commonWrapper({ direction: 'col', gap: 12, align: 'start' })}>
+				<div className={commonWrapper({ gap: 6, justify: 'start' })}>
 					{data.temperament.split(' , ').map(tag => (
 						<Chips key={tag} variant='outlined' color='blue50'># {tag}</Chips>
 					))}
 				</div>
-				<ul className={styles.defaultInfoList}>
+				<ul className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
 					{defaultInfo.map(info => {
 						const valueLabel = info.key === 'weight' ? 'kg' : info.key === 'height' && 'cm';
 						const WeightHeightComponent = () => (
-							<div className={styles.infoCardValue}>
-								<div className={styles.infoValue}>
+							<div className={commonWrapper({ direction: 'col', gap: 6 })}>
+								<div className={commonWrapper({ gap: 8, justify: 'end', align: 'center' })}>
 									<Text type='label4'>최대</Text>
 									<Text type='headline2'>
 										{(info.value as { max: number }).max}
 										<Text type='label2'>&nbsp;{valueLabel}</Text>
 									</Text>
 								</div>
-								<div className={styles.infoValue}>
+								<div className={commonWrapper({ gap: 8, justify: 'end', align: 'center' })}>
 									<Text type='label4'>최소</Text>
 									<Text type='headline2'>
 										{(info.value as { min: number }).min}
@@ -91,9 +91,9 @@ export default function BreedDefaultInfo({
 							</div>
 						)
 						const LifeExpectancyComponent = () => (
-							<div className={styles.infoCardValue}>
-								<div className={styles.infoValue}>
-									<div className={styles.lifeExpectancy}>
+							<div className={commonWrapper({ direction: 'col', gap: 6, align: 'start' })}>
+								<div className={commonWrapper({ gap: 8, justify: 'between', align: 'center' })}>
+									<div className={commonWrapper({ gap: 4, justify: 'end' })}>
 										<Text type='headline2'>{info.value[0]}</Text>
 										<Text type='label4'>~</Text>
 										<Text type='headline2'>{info.value[1]}</Text>
@@ -111,11 +111,11 @@ export default function BreedDefaultInfo({
 								justify='between'
 								align='start'
 							>
-								<div className={styles.infoCardLabel}>
+								<div className={commonWrapper({ gap: 4, justify: 'start' })}>
 									<SvgIcon src={info.icon} />
 									<Text type='headline2'>{info.label}</Text>
 								</div>
-								<div>
+								<div className={commonWrapper({})}>
 									{info.key === 'weight' &&
 										<WeightHeightComponent />
 									}

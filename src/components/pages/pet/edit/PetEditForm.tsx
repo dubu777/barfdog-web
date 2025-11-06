@@ -1,4 +1,5 @@
 "use client";
+import { commonWrapper } from "@/styles/common.css";
 import { useState } from "react";
 import { useToastStore } from "@/store/useToastStore";
 import { useUpdatePet } from "@/api/pet/mutations/useUpdatePet";
@@ -17,7 +18,6 @@ import { useDeletePet } from "@/api/pet/mutations/useDeletePet";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
-import { petModalContainer } from "../PetModal.css";
 
 interface PetEditFormProps {
   petId: number;
@@ -74,9 +74,15 @@ export default function PetEditForm({ petId }: PetEditFormProps) {
     });
   };
   return (
-    <div className={petModalContainer}>
+    <div className={commonWrapper({
+      maxWidth: 600,
+      height: 'full',
+      backgroundColors: 'gray50',
+      direction: 'col',
+      justify: 'start',
+    })}>
       <Header
-        centerTitle="반려견 수정"
+        centerTitle="반려견 정보 수정"
         showBackButton
         rightElement={
           <SvgIcon src={TrashIcon} size={24} onClick={handleDeletePet} />

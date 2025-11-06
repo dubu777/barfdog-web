@@ -1,4 +1,5 @@
-import * as styles from './WalkScore.css';
+import { commonWrapper } from '@/styles/common.css';
+import { averageGraph, walkNotice } from './WalkScore.css';
 import { Fragment } from "react";
 import Image from "next/image";
 import WalkDogImage from '/public/images/healthNote/full-check/walk-dog.png';
@@ -68,16 +69,21 @@ export default function WalkScore ({
 	return (
 		<article>
 			<ResultCard
-				className={styles.walkScoreContainer}
+				className={commonWrapper({ direction: 'col', gap: 12 })}
 				title={`${petName}의 산책 습관\n 다른 아이들과 비교해볼까요?`}
 				subTitle='일주일 기준으로 점수가 매겨져요'
 			>
-				<div className={styles.walkScoreContentBox}>
+				<div className={commonWrapper({ direction: 'col', gap: 8 })}>
 					<Image src={WalkDogImage} alt='walk dog' width={303} height={140} />
 					<Card shadow='none'>
-						<div className={styles.walkScoreTop}>
-							<Text type='headline2'>{petName}의<br/>산책 활동 통계</Text>
-							<div>
+						<div className={commonWrapper({ 
+							align: 'start', 
+							justify: 'between', 
+							padding: 12, 
+							paddingBottom: 0,
+						})}>
+							<Text type='headline2' noShrink>{petName}의<br/>산책 활동 통계</Text>
+							<div className={commonWrapper({ paddingTop: 16, justify: 'end' })}>
 								<Text type='display1' applyLineHeight>
 									<Text type='label4'>상위</Text>
 									&nbsp;{totalWalkScorePercentile}
@@ -86,7 +92,7 @@ export default function WalkScore ({
 							</div>
 						</div>
 						<Divider thickness={1} color='gray100' />
-						<div className={styles.averageGraph}>
+						<div className={averageGraph}>
 							{averageGraphList.map(duration => (
 								<AverageBar
 									key={duration.label}
@@ -99,8 +105,10 @@ export default function WalkScore ({
 							))}
 						</div>
 					</Card>
-					<Text type='headline2' className={styles.walkScoreInfoTitle}>전체 반려견의 평균 산책 습관</Text>
-					<Card direction='row' className={styles.walkScoreInfo}>
+					<Text type='headline2' className={commonWrapper({ justify: 'start', padding: 12, paddingBottom: 0 })}>
+						전체 반려견의 평균 산책 습관
+					</Text>
+					<Card direction='row' className={commonWrapper({ justify: 'start', align: 'start' })}>
 						{walkInfo.map((info, index) => (
 							<Fragment key={info.label}>
 								<InfoBox
@@ -125,7 +133,7 @@ export default function WalkScore ({
 					shadow='none'
 					padding={12}
 					gap={8}
-					className={styles.walkNotice}
+					className={walkNotice}
 				>
 					<Text type='headline2' color='blue600'>반려견에게 산책은 왜 중요할까요?</Text>
 					<Text type='body3' color='gray700'>

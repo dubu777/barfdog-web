@@ -1,5 +1,5 @@
 'use client';
-import * as styles from './Cart.css';
+import { commonWrapper } from '@/styles/common.css';
 import { Fragment, useEffect, useRef } from "react";
 import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import Text from "@/components/ui/text/Text";
@@ -56,8 +56,18 @@ export default function Cart() {
 
   if (!cartData) return <Spinner fullscreen />;
   return (
-    <section className={styles.cartContainer}>
-      <article className={styles.cartItemControls}>
+    <section className={commonWrapper({
+      direction: 'col',
+      align: 'start',
+      backgroundColors: 'gray0',
+      paddingBottom: 85,
+    })}>
+      <article className={commonWrapper({
+        justify: 'between',
+        padding: 20,
+        paddingTop: 0,
+        paddingBottom: 16,
+      })}>
         <LabeledCheckbox
           value={isSelectedAll}
           isChecked={isSelectedAll}
@@ -67,59 +77,81 @@ export default function Cart() {
             전체 선택 ({selectedItems.length}/{cartInfo?.basketDtoList.length})
           </Text>
         </LabeledCheckbox>
-        <button onClick={handleDeleteSelectedItems} disabled={selectedItems.length === 0} className={styles.deleteButton}>
+        <button 
+          onClick={handleDeleteSelectedItems} 
+          disabled={selectedItems.length === 0} 
+          className={commonWrapper({ justify: 'end', align: 'center' })}
+        >
           <Text type='body3' color='gray700'>선택삭제</Text>
         </button>
       </article>
+      <Divider thickness={1} color='gray200' />
       <Divider thickness={8} color='gray50' />
-      <article className={styles.cartListBox}>
-        <div className={styles.cartItemList}>
+      <article className={commonWrapper({ padding: 20, paddingTop: 24, paddingBottom: 24 })}>
+        <div className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 24,
+        })}>
           {cartInfo?.basketDtoList?.map((item, index) => (
             <Fragment key={item.itemDto.basketId}>
-              <div key={item.itemDto.basketId}>
-                <CartItem
-                  key={item.itemDto.basketId}
-                  item={item.itemDto}
-                  options={item.itemOptionDtoList}
-                  isSelected={selectedItems.includes(item.itemDto.basketId)}
-                  onSelect={() => handleItemSelect(item.itemDto.basketId)}
-                />
-              </div>
-              <ListDivider listLength={cartInfo?.basketDtoList.length} index={index} color='gray200' />
+              <CartItem
+                key={item.itemDto.basketId}
+                item={item.itemDto}
+                options={item.itemOptionDtoList}
+                isSelected={selectedItems.includes(item.itemDto.basketId)}
+                onSelect={() => handleItemSelect(item.itemDto.basketId)}
+              />
+              <ListDivider 
+                listLength={cartInfo?.basketDtoList.length} 
+                index={index} 
+                color='gray200'
+              />
             </Fragment>
           ))}
         </div>
       </article>
       <Divider thickness={8} color='gray50' />
       {isSoldOut && (
-        <>
-          <article>
-            <div className={styles.cartSoldOutTitle}>
-              <Text type='headline2'>품절/구매불가</Text>
-              <Text type='body3' color='gray700'>해당 상품에 포함된 추가 상품도 구매가 불가능해요.</Text>
+        <article className={commonWrapper({ direction: 'col', align: 'start' })}>
+          <div className={commonWrapper({
+            direction: 'col',
+            align: 'start',
+            gap: 4,
+            padding: 20,
+            paddingTop: 24,
+            paddingBottom: 0,
+          })}>
+            <Text type='headline2'>품절/구매불가</Text>
+            <Text type='body3' color='gray700'>해당 상품에 포함된 추가 상품도 구매가 불가능해요.</Text>
+          </div>
+          <div className={commonWrapper({ padding: 20, paddingTop: 24, paddingBottom: 24 })}>
+            <div className={commonWrapper({
+              direction: 'col',
+              align: 'start',
+              gap: 24,
+            })}>
+              {cartInfo?.basketDtoList?.map((item, index) => (
+                <Fragment key={item.itemDto.basketId}>
+                  <CartItem
+                    key={item.itemDto.basketId}
+                    item={item.itemDto}
+                    options={item.itemOptionDtoList}
+                    isSelected={selectedItems.includes(item.itemDto.basketId)}
+                    onSelect={() => handleItemSelect(item.itemDto.basketId)}
+                    isSoldOut
+                  />
+                  <ListDivider 
+                    listLength={cartInfo?.basketDtoList.length} 
+                    index={index} 
+                    color='gray200' 
+                  />
+                </Fragment>
+              ))}
             </div>
-            <div className={styles.cartListBox}>
-              <div className={styles.cartItemList}>
-                {cartInfo?.basketDtoList?.map((item, index) => (
-                  <Fragment key={item.itemDto.basketId}>
-                    <div key={item.itemDto.basketId}>
-                      <CartItem
-                        key={item.itemDto.basketId}
-                        item={item.itemDto}
-                        options={item.itemOptionDtoList}
-                        isSelected={selectedItems.includes(item.itemDto.basketId)}
-                        onSelect={() => handleItemSelect(item.itemDto.basketId)}
-                        isSoldOut
-                      />
-                    </div>
-                    <ListDivider listLength={cartInfo?.basketDtoList.length} index={index} color='gray200' />
-                  </Fragment>
-                ))}
-              </div>
-            </div>
-          </article>
+          </div>
           <Divider thickness={8} color='gray50' />
-        </>
+        </article>
       )}
       <CartPriceInfo />
       <ButtonDocked

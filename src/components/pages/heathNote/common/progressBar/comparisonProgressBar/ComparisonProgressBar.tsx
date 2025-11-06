@@ -12,6 +12,7 @@ interface ComparisonProgressBarProps {
 	isCurrentScoreChips?: boolean;
 	prevBottomChildren?: ReactNode;
 	currentBottomChildren?: ReactNode;
+	align?: 'center' | 'end';
 }
 
 export default function ComparisonProgressBar({
@@ -22,6 +23,7 @@ export default function ComparisonProgressBar({
 	isCurrentScoreChips = false,
 	prevBottomChildren,
 	currentBottomChildren,
+	align = 'end',
 }: ComparisonProgressBarProps) {
 	const diff = currentScore - prevScore;
 	const status = getScoreChangeStatus(diff, diffValue);
@@ -40,7 +42,7 @@ export default function ComparisonProgressBar({
 	};
 
 	return (
-		<div className={styles.comparisonProgressBarBox}>
+		<div className={styles.comparisonProgressBarBox({ align })}>
 			<div className={styles.bars}>
 				<div className={styles.barBox}>
 					<Text type="label4" color='gray500'>{prevScore}점</Text>

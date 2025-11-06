@@ -1,5 +1,6 @@
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
+import { style } from "@vanilla-extract/css";
 
 export const datePickerButtonBox = recipe({
 	base: {
@@ -8,6 +9,7 @@ export const datePickerButtonBox = recipe({
 		backgroundColor: themeVars.colors.gray.gray0,
 		padding: '14px 20px',
 		cursor: 'pointer',
+		border: `1px solid ${themeVars.colors.gray.gray200}`,
 	},
 	variants: {
 		isOpen: {
@@ -36,19 +38,10 @@ export const datePickerButtonBox = recipe({
 	]
 })
 
-export const datePickerButton = recipe({
-	base: {
-		width: '100%',
-		textAlign: 'left',
-		display: 'flex',
-		justifyContent: 'space-between',
-		cursor: 'pointer'
-	},
-	variants: {
-		isOpen: {
-			true: {
-				marginBottom: '6px',
-			}
-		}
-	}
+export const datePickerButton = style({
+	width: '100%',
+	textAlign: 'left',
+	display: 'flex',
+	justifyContent: 'space-between',
+	cursor: 'pointer'
 })

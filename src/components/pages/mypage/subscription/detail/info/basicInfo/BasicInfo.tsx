@@ -3,27 +3,26 @@ import Button from "@/components/ui/button/Button";
 import InfoBox from "@/components/ui/infoBox/InfoBox";
 import SubscriptionCard from "../../../common/card/SubscriptionCard";
 import InfoWrapper from "../../../../common/wrapper/InfoWrapper";
-import { PlanKey } from "@/types";
+import { CurrentPlanInfo } from "@/types";
 import { SubscriptionStatus as SubscriptionStatusType, VisibleSubscribeStatus } from "@/types/mypage/subscription";
 import { isSubscriptionPendingStatus } from "@/utils/mypage/subscription/subscriptionStatusStep";
-import { subscriptionPlanInfo } from "@/constants";
 
 interface BasicInfoProps {
   subscriptionId: number;
-  plan: PlanKey;
   dogName: string;
   recipeNames: string;
   status: SubscriptionStatusType;
   onRetryPayment?: () => void;
+  planInfo: CurrentPlanInfo;
 }
 
 export default function BasicInfo({ 
   subscriptionId,
-  plan,
   dogName,
   recipeNames,
   status,
   onRetryPayment,
+  planInfo,
 }: BasicInfoProps) {
   return (
     <InfoWrapper
@@ -31,7 +30,7 @@ export default function BasicInfo({
       gap={20}
       title={(
         <>
-          <span className={pointColor}>{subscriptionPlanInfo[plan]?.weeklyPaymentCycle}주</span>마다<br/>
+          <span className={pointColor}>{planInfo.weeks}주</span>마다<br/>
           정기 구독 상품을 받고 있어요
         </>
       )}
@@ -41,7 +40,7 @@ export default function BasicInfo({
         status={status}
         recipeNames={recipeNames}
         dogName={dogName}
-        plan={plan}
+        planInfo={planInfo}
         showActions={false}
         shadow="strong"
       >

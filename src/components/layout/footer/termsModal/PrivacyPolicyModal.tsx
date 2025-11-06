@@ -1,5 +1,4 @@
 import { commonWrapper } from '@/styles/common.css';
-import { termsCard } from './termsModal.css';
 import Text from '@/components/ui/text/Text';
 import ButtonDocked from '@/components/ui/buttonDocked/ButtonDocked';
 import FullModalWrapper from '@/components/ui/fullModalWrapper/FullModalWrapper';
@@ -31,7 +30,6 @@ export default function PrivacyPolicyModal({ isOpen, onClose }: PrivacyPolicyMod
 				<Text type='label2'>바프독 개인정보 처리방침 안내</Text>
 				<PrivacyPolicy 
 					backgroundColor='gray50' 
-					className={termsCard}
 				/>
 			</div>
 			<ButtonDocked

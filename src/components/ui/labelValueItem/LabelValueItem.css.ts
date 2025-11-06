@@ -31,6 +31,7 @@ export const labelText = recipe({
   },
   variants: {
     width: {
+      auto: { width: "auto" },
       60: { width: "60px" },
       80: { width: "80px" },
       100: { width: "100px" },

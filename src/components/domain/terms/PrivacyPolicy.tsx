@@ -4,13 +4,13 @@ import Text from "@/components/ui/text/Text";
 import { PRIVACY_POLICY_INFO } from "@/constants/terms";
 
 interface PrivacyPolicyProps {
-  className?: string;
   backgroundColor?: "gray0" | "gray50";
+  className?: string;
 }
 
 export default function PrivacyPolicy({
-  className,
   backgroundColor = "gray50",
+  className,
 }: PrivacyPolicyProps) {
   return (
     <Card
@@ -22,6 +22,7 @@ export default function PrivacyPolicy({
       gap={26}
       backgroundColor={backgroundColor}
       borderRadius={8}
+      border='gray200'
       className={className}
     >
       {PRIVACY_POLICY_INFO.map((info, index) => (

@@ -2,10 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const aboutContainer = style({
-	backgroundColor: themeVars.colors.gray.gray0,
-})
-
 export const sectionBox = recipe({
 	base: {
 		display: 'flex',
@@ -43,31 +39,6 @@ export const sectionContent = style({
 	padding: '60px 20px',
 })
 
-export const signatureBox = style({
-	display: 'flex',
-	gap: '20px',
-	alignItems: 'flex-end',
-	justifyContent: 'flex-end',
-})
-
-export const ourProcessBox = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '20px',
-})
-
-export const ourProcessTitle = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '12px',
-})
-
-export const sectionDescription = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '6px',
-})
-
 export const snsContainer = style({
 	padding: '0 0 28px',
 	position: 'relative',
@@ -87,12 +58,6 @@ export const snsTopImageText = style({
 	gap: '6px',
 	justifyContent: 'center',
 	alignItems: 'center',
-})
-
-export const snsBox = style({
-	display: 'flex',
-	flexDirection: 'column',
-	gap: '40px',
 })
 
 export const snsList = style({

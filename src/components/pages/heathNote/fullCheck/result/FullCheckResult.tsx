@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
-import * as styles from "./FullCheckResult.css";
+import { commonWrapper } from "@/styles/common.css";
+import { deleteButton } from "./FullCheckResult.css";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -87,13 +88,18 @@ export default function FullCheckResult({
         centerTitle="결과 상세"
         onBack={() => router.push(`/health-note/${petId}/full-check`)}
         rightElement={
-          <button onClick={onToggle} className={styles.deleteButton}>
+          <button onClick={onToggle} className={deleteButton}>
             <SvgIcon src={DeleteIcon} size={24} />
           </button>
         }
       />
-      <section className={styles.fullCheckResultContainer}>
-        <article className={styles.fullCheckResultTitle}>
+      <section className={commonWrapper({
+        direction: 'col',
+        gap: 20,
+        padding: 20,
+        backgroundColors: 'gray0',
+      })}>
+        <div className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
           <ResultTitle title={`${data.diagnosisDate} 건강 종합 진단 결과`} />
           <TotalScore
             petName={petInfo.name}
@@ -101,7 +107,7 @@ export default function FullCheckResult({
             totalCheckupScorePercentile={data.snapshot.totalCheckupScorePercentile}
             cohortCheckupScorePercentile={data.snapshot.cohortCheckupScorePercentile}
           />
-        </article>
+        </div>
         {data.snapshot.previousDiagnosisDate &&
           <ChangedScore
             checkupScore={data.checkupScore}
@@ -126,7 +132,7 @@ export default function FullCheckResult({
             diseaseList={topSuspectedDiseases as unknown as DiseaseData[]}
           />
         }
-        <div className={styles.fullCheckResultProduct}>
+        <div className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
           <RecommendedItemList
             type='fullCheck'
             petName={petInfo.name}

@@ -2,11 +2,23 @@ import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
-export const comparisonProgressBarBox = style({
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	marginTop: '10px',
+export const comparisonProgressBarBox = recipe({
+	base: {
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		marginTop: '10px',
+	},
+	variants: {
+		align: {
+			center: {
+				alignItems: 'center',
+			},
+			end: {
+				alignItems: 'flex-end',
+			},
+		},
+	}
 });
 
 export const bars = style({
@@ -20,6 +32,7 @@ export const barBox = style({
 	display: 'flex',
 	flexDirection: 'column',
 	alignItems: 'center',
+	gap: '2px'
 });
 
 export const barBase = recipe({

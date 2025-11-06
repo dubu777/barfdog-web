@@ -1,5 +1,4 @@
 import { commonWrapper } from "@/styles/common.css";
-import { appliedCouponCard } from "./SubscriptionBottomSheet.css";
 import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import Card from "@/components/ui/card/Card";
@@ -81,7 +80,7 @@ export default function CancelNextPaymentCouponBottomSheet({
           gap={4}
           padding={20}
           align='start'
-          className={appliedCouponCard}
+          border='red'
         >
           <Text type="title1" color="red">{discount}</Text>
           <Text type="label1" color="gray700">{couponName}</Text>

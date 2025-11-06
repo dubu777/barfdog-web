@@ -1,4 +1,5 @@
-import * as styles from './Item.css';
+import { commonWrapper, imageWrapper } from '@/styles/common.css';
+import { itemImageBox, itemTags, storeItem } from './Item.css';
 import Link from "next/link";
 import RateStar from "@/components/ui/rateStar/RateStar";
 import ImageLoadingSpinner from "@/components/ui/imageLoadingSpinner/ImageLoadingSpinner";
@@ -26,11 +27,18 @@ export default function Item({
   } = getItemViewProps(item);
 
   return (
-    <div className={styles.storeItem}>
-      <Link href={`/store/${item.id}`} className={styles.storeLink}>
-        <div className={styles.itemImageBox}>
+    <div className={storeItem}>
+      <Link 
+        href={`/store/${item.id}`} 
+        className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 16,
+        })}
+      >
+        <div className={itemImageBox}>
           {tagList.length > 0 &&
-            <div className={styles.itemTags}>
+            <div className={itemTags}>
               {tagList.map(tag => (
                 <Chips key={tag.tag} variant='solid' color={tag.color as keyof typeof CHIPS_COLORS} size='sm'>
                   {tag.tag}
@@ -42,14 +50,14 @@ export default function Item({
             src={item.displayThumbnailUrl.url}
             alt={item.name}
             fill
-            className={styles.itemImage}
+            className={imageWrapper({ borderRadius: 8, height: '100%', objectFit: 'cover' })}
           />
         </div>
-        <div className={styles.itemInfoBox}>
+        <div className={commonWrapper({ direction: 'col', align: 'start', gap: 4 })}>
           <Text type='body2' color='gray700'>{item.name}</Text>
           {!isDiscounted
             ? (
-              <div className={styles.itemContent}>
+              <div className={commonWrapper({ justify: 'start', gap: 4 })}>
                 <Text type='headline1'>{formattedOriginalPrice}</Text>
                 {isSoldOut &&
                   <Chips variant='solid' color='gray600'>품절</Chips>
@@ -57,14 +65,14 @@ export default function Item({
               </div>
             )
             : (
-              <div className={styles.itemDiscount}>
-                <div className={styles.itemSalePriceBox}>
+              <div className={commonWrapper({ direction: 'col', align: 'start' })}>
+                <div className={commonWrapper({ justify: 'start', gap: 8 })}>
                   <Text type='caption2' color='red'>할인특가</Text>
-                  <Text type='caption2' color='gray600' className={styles.itemSalePrice}>
+                  <Text type='caption2' color='gray600' lineThrough>
                     {formattedOriginalPrice}
                   </Text>
                 </div>
-                <div className={styles.itemContent}>
+                <div className={commonWrapper({ justify: 'start', gap: 8 })}>
                   <Text type='headline1' color='red'>{discountRate}%</Text>
                   <Text type='headline1' color='gray900'>{formattedSalePrice}</Text>
                   {isSoldOut &&
@@ -74,7 +82,7 @@ export default function Item({
               </div>
             )
           }
-          <div className={styles.itemContent}>
+          <div className={commonWrapper({ justify: 'start', gap: 4 })}>
             <RateStar rateLength={1} color='red' align='left' size={16} />
             <Text type='caption2' color='gray600'>
               {starRating}

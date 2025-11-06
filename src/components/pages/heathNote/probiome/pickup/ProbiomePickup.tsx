@@ -1,5 +1,5 @@
 "use client";
-import * as styles from "./ProbiomePickup.css";
+import { commonWrapper } from "@/styles/common.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/layout/header/Header";
@@ -95,7 +95,10 @@ export default function ProbiomePickup({
         showCloseButton={completedMode}
         onClose={() => router.back()}
       />
-      <section className={styles.returnRequestContainer}>
+      <section className={commonWrapper({
+        backgroundColors: 'gray0',
+        direction: 'col',
+      })}>
         {!completedMode ? (
           <PickupForm
             uploadedFiles={uploadedFiles}
@@ -105,7 +108,12 @@ export default function ProbiomePickup({
             setIsConfirmed={setIsNoticeConfirmed}
           />
         ) : (
-          <div className={styles.completedContainer}>
+          <div className={commonWrapper({
+            backgroundColors: 'gray50',
+            direction: 'col',
+            gap: 12,
+            height: '100%',
+          })}>
             <CompletedBox>
               <Text type="title1">회수 신청이 완료됐어요</Text>
               <Text type="body2" color="gray600" align="center">

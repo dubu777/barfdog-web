@@ -1,5 +1,6 @@
+import { commonWrapper } from "@/styles/common.css";
+import { addressCardContainer } from "./AddressCard.css";
 import Text from "@/components/ui/text/Text";
-import * as styles from "./AddressCard.css";
 import { ClientDeliveryDto } from "@/types";
 import Chips from "@/components/ui/chips/Chips";
 import Button from "@/components/ui/button/Button";
@@ -51,20 +52,27 @@ export default function AddressCard({
 
   return (
     <div
-      className={styles.addressCardContainer({
+      className={addressCardContainer({
         isSelectedAddress,
       })}
       key={address.id}
     >
-      <div className={styles.addressTitleWrapper}>
+      <div className={commonWrapper({
+        justify: 'start',
+        gap: 8,
+      })}>
         <Text type="headline2">{address.deliveryName}</Text>
         {isDefaultAddress && (
-          <Chips variant="outlined" size="sm" switchOff borderRadius="lg">
+          <Chips variant="outlined" size="sm" borderRadius="lg">
             기본배송지
           </Chips>
         )}
       </div>
-      <div className={styles.addressContentWrapper}>
+      <div className={commonWrapper({
+        direction: 'col',
+        align: 'start',
+        gap: 2,
+      })}>
         <Text type="body3">
           {address.recipientName}•{address.phoneNumber}
         </Text>
@@ -72,21 +80,25 @@ export default function AddressCard({
           {address.street} {address.detailAddress}
         </Text>
       </div>
-      <div className={styles.buttonWrapper}>
-        <div className={styles.leftButtonContainer}>
+      <div className={commonWrapper({
+        justify: 'between',
+        align: 'end',
+      })}>
+        <div className={commonWrapper({
+          width: 'auto',
+        })}>
           {!isDefaultAddress && (
-            <Button
-              intent="secondary"
-              variant="text"
-              onClick={handleDeleteModal}
-            >
+            <button onClick={handleDeleteModal}>
               <Text type="label4" color="gray600" underLine>
                 삭제
               </Text>
-            </Button>
+            </button>
           )}
         </div>
-        <div className={styles.rightButtonWrapper}>
+        <div className={commonWrapper({
+          gap: 4,
+          width: 'auto',
+        })}>
           <Button
             intent="assistive"
             variant="outline"

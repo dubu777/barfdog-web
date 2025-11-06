@@ -1,5 +1,5 @@
 "use client";
-import * as styles from "./CreateProbiome.css";
+import { commonWrapper } from "@/styles/common.css";
 import { useCallback, useState } from "react";
 import Text from "@/components/ui/text/Text";
 import InputField from "@/components/ui/inputField/InputField";
@@ -39,7 +39,12 @@ export default function CreateProbiome({ petId }: CreateProbiomeProps) {
   }, [checkKit]);
 
   return (
-    <section className={styles.createProbiomeContainer}>
+    <section className={commonWrapper({
+      padding: '40/20',
+      direction: 'col',
+      gap: 20,
+      align: 'start',
+    })}>
       {!isKitVerified ? (
         <>
           <Text type="title3">
@@ -47,7 +52,7 @@ export default function CreateProbiome({ petId }: CreateProbiomeProps) {
             <br />
             시리얼 번호를 입력해 주세요
           </Text>
-          <div>
+          <div className={commonWrapper({})}>
             <InputField
               value={serialNo}
               onChange={(e) => setSerialNo(e.target.value)}

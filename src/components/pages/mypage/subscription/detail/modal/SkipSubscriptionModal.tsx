@@ -1,5 +1,4 @@
 import { commonWrapper } from "@/styles/common.css";
-import { skipSubscriptionCard } from "./SubscriptionModal.css";
 import { useState } from "react";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -11,7 +10,7 @@ import InfoText from "@/components/ui/typography/infoText/InfoText";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
-import InfoItem from "../../../common/card/typography/InfoItem";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 import { PlanKey } from "@/types";
 import { SkipType } from "@/types/mypage/subscription";
 import { subscriptionPlanInfo } from "@/constants";
@@ -77,20 +76,20 @@ export default function SkipSubscriptionModal({
             gap={8}
             align='start'
             shadow='none'
-            className={skipSubscriptionCard}
+            border='gray300'
           >
-            <InfoItem
+            <LabelValueItem
               label="기존 발송 예정일"
-              labelType='body2'
-              labelColor='gray700'
               value={format(new Date(nextDeliveryDate), 'yyyy-MM-dd (EEE)', { locale: ko })}
-              valueType='label1'
-              valueColor='gray900'
-            />
-            <InfoItem
-              label="변경 발송 예정일"
               labelType='body2'
               labelColor='gray700'
+              valueType="label1"
+              valueColor='gray900'
+              justify='between'
+              labelWidth='auto'
+            />
+            <LabelValueItem
+              label="변경 발송 예정일"
               value={
                 format(
                   new Date(
@@ -104,8 +103,12 @@ export default function SkipSubscriptionModal({
                   { locale: ko }
                 )
               }
-              valueType='label1'
+              labelType='body2'
+              labelColor='gray700'
+              valueType="label1"
               valueColor='red'
+              justify='between'
+              labelWidth='auto'
             />
           </Card>
           <div className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
@@ -152,7 +155,7 @@ export default function SkipSubscriptionModal({
             gap={8}
             align='start'
             shadow='none'
-            className={skipSubscriptionCard}
+            border='gray300'
           >
             <span>
               <Text type='headline4'>주문 후 배송 완료까지 </Text>

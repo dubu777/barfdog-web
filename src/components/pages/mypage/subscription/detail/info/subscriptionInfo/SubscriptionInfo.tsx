@@ -1,22 +1,20 @@
 import { commonWrapper } from "@/styles/common.css";
-import InfoItem from "@/components/pages/mypage/common/card/typography/InfoItem";
 import Divider from "@/components/ui/divider/Divider";
 import CardImage from "@/components/pages/mypage/common/card/image/CardImage";
 import Button from "@/components/ui/button/Button";
 import Text from "@/components/ui/text/Text";
 import InfoBox from "@/components/ui/infoBox/InfoBox";
 import ListDivider from "@/components/ui/listDivider/ListDivider";
+import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
 import InfoWrapper from "@/components/pages/mypage/common/wrapper/InfoWrapper";
 import CardWrapper from "@/components/pages/mypage/common/wrapper/CardWrapper";
-import { PlanKey } from "@/types";
-import { RecipeInfo } from "@/types/mypage/subscription";
-import { numberOfPacksPerDay, subscriptionPlanInfo } from "@/constants";
+import { DeliveryPlan, MealPlan, RawFood } from "@/types";
+import { DELIVERY_PLAN_LABEL, MEAL_PLAN_LABEL } from "@/constants";
 
 interface SubscriptionInfoProps {
-  plan: PlanKey;
-  canSkipSubscription: boolean;
-  subscriptionRecipeInfo: RecipeInfo[];
-  oneMealGramsPerRecipe: string[];
+  mealCount: MealPlan;
+  weeks: DeliveryPlan;
+  recipeList: RawFood[];
   subscriptionActions?: {
     onEditSubscription: () => void;
     onSkipSubscription: () => void;
@@ -24,10 +22,10 @@ interface SubscriptionInfoProps {
 }
 
 export default function SubscriptionInfo({ 
-  plan,
-  subscriptionRecipeInfo,
-  oneMealGramsPerRecipe,
   subscriptionActions,
+  mealCount,
+  weeks,
+  recipeList,
 }: SubscriptionInfoProps) {
   const subscriptionActionsList = subscriptionActions 
     ? [
@@ -41,45 +39,46 @@ export default function SubscriptionInfo({
         },
       ] 
     : [];
+ 
   return (
     <InfoWrapper title='구독 정보'>
       <CardWrapper gap={16} padding={12}>
         <div className={commonWrapper({ direction: 'col', align: 'start', gap: 4 })}>
-          <InfoItem
+          <LabelValueItem
             label="식사량"
-            labelType='label3'
-            labelColor='gray900'
-            value={numberOfPacksPerDay[subscriptionPlanInfo[plan].numberOfPacksPerDay]}
-            valueType='body3'
-            valueColor='gray700'
-            justify="start"
+            value={`하루 ${MEAL_PLAN_LABEL[mealCount]}`}
+            labelType="label3"
+            valueType="body3"
+            valueColor="gray900"
+            labelColor="gray700"
             gap={12}
+            labelWidth='auto'
           />
-          <InfoItem
+          <LabelValueItem
             label="배송 주기"
-            labelType='label3'
-            labelColor='gray900'
-            value={`${subscriptionPlanInfo[plan].weeklyPaymentCycle}주`}
-            valueType='body3'
-            valueColor='gray700'
-            justify="start"
+            value={DELIVERY_PLAN_LABEL[weeks]}
+            labelType="label3"
+            valueType="body3"
+            valueColor="gray900"
+            labelColor="gray700"
             gap={12}
+            labelWidth='auto'
           />
         </div>
         <Divider thickness={2} color="gray900" />
         <div className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
           <Text type='label3'>구독 상품</Text>
-          {subscriptionRecipeInfo.map((recipe, index) => (
-            <div key={recipe.id} className={commonWrapper({ gap: 12})}>
+          {recipeList.map((recipe, index) => (
+            <div key={recipe.recipeId} className={commonWrapper({ gap: 12})}>
               <CardImage 
-                imageUrl={recipe.imgUrl} 
+                imageUrl={recipe.displayImageUrl.url} 
                 name={recipe.name}       
               />
               <div className={commonWrapper({ direction: 'col', align: 'start', gap: 4 })}>
                 <Text type='headline2'>{recipe.name}</Text>
-                <Text type='body3' color='gray700'>{oneMealGramsPerRecipe[index]}g</Text>
+                <Text type='body3' color='gray700'>{recipe.pricePerGram}g</Text>
               </div>
-              <ListDivider listLength={subscriptionRecipeInfo.length} index={index} color='gray200' />
+              <ListDivider listLength={recipeList.length} index={index} color='gray200' />
             </div>
           ))}
         </div>

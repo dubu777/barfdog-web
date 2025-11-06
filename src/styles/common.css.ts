@@ -165,6 +165,9 @@ export const commonWrapper = recipe({
       40: {
         gap: "40px",
       },
+      '32/8': {
+        gap: "32px 8px",
+      }
     },
     padding: {
       8: {
@@ -232,6 +235,12 @@ export const commonWrapper = recipe({
       20: {
         paddingBottom: "20px",
       },
+      24: {
+        paddingTop: "24px",
+      },
+      28: {
+        paddingBottom: "28px",
+      },
       30: {
         paddingBottom: "30px",
       },
@@ -243,6 +252,9 @@ export const commonWrapper = recipe({
       },
       60: {
         paddingBottom: "60px",
+      },
+      80: {
+        paddingBottom: "80px",
       },
       85: {
         paddingBottom: "85px",
@@ -261,17 +273,32 @@ export const commonWrapper = recipe({
       6: {
         paddingTop: "6px",
       },
+      8: {
+        paddingTop: "8px",
+      },
       12: {
         paddingTop: "12px",
       },
       16: {
         paddingTop: "16px",
       },
+      18: {
+        paddingTop: "18px",
+      },
       20: {
         paddingTop: "20px",
       },
+      24: {
+        paddingTop: "24px",
+      },
+      28: {
+        paddingTop: "28px",
+      },
       30: {
         paddingTop: "30px",
+      },
+      32: {
+        paddingTop: "32px",
       },
       40: {
         paddingTop: "40px",
@@ -443,6 +470,21 @@ export const commonWrapper = recipe({
         flexWrap: "unset",
       },
     },
+    border: {
+      none: {},
+      gray100: {
+        border: `1px solid ${themeVars.colors.gray.gray100}`,
+      },
+      gray200: {
+        border: `1px solid ${themeVars.colors.gray.gray200}`,
+      },
+      gray300: {
+        border: `1px solid ${themeVars.colors.gray.gray300}`,
+      },
+      red: {
+        border: `1px solid ${themeVars.colors.red.red}`,
+      },
+    }
   },
   defaultVariants: {
     direction: "row",
@@ -480,8 +522,15 @@ export const imageWrapper = recipe({
       16: {
         borderRadius: 16,
       },
+      '50%': {
+        borderRadius: '50%',
+      }
     },
     width: {
+      48: {
+        width: 48,
+        height: 48,
+      },
       72: {
         width: 72,
         height: 72,
@@ -501,6 +550,10 @@ export const imageWrapper = recipe({
       100: {
         width: 100,
         height: 100,
+      },
+      107: {
+        width: 107,
+        height: 107,
       },
     },
     height: {

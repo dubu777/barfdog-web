@@ -60,7 +60,14 @@ export default function RecommendInfo({
 				<Text type='title2' align='center' block>친구 초대하고<br/>포인트 혜택 받아보세요!</Text>
 				<InviteFriendsImage />
 				{recommendedCode &&
-				<Chips variant='solid' tailVisible tailPosition='top' borderRadius='md' color='gray800' className={myRecommendationCode}>
+				<Chips 
+					variant='solid' 
+					tailVisible 
+					tailPosition='top' 
+					borderRadius='md' 
+					color='gray800' 
+					className={myRecommendationCode}
+				>
 					<SvgIcon src={InviteFriendsIcon} size={17} style={{ marginRight: 4 }} />
 					추천코드({recommendedCode || ''}) 입력을 완료했어요!
 				</Chips>
