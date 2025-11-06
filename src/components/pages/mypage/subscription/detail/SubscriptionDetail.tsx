@@ -158,9 +158,8 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
             onClick={openCancelSubscriptionModal} 
             className={commonWrapper({ 
               justify: 'start', 
-              padding: 20, 
+              paddingX: 20, 
               paddingTop: 16, 
-              paddingBottom: 0
             })}
           >
             <Text type="label4" color="gray700">구독 해지하기</Text>

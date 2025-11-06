@@ -47,7 +47,7 @@ export default function Notification({
           서비스 알림은 수신설정에 상관없이 발송돼요.
         </Text>
       </div>
-      <div className={commonWrapper({ padding: '16/20', justify: 'start' })}>
+      <div className={commonWrapper({ paddingY: 16, paddingX: 20, justify: 'start' })}>
         <LabeledRadioButton
           value={receiveAll}
           onToggle={handleReceiveAllChange}
@@ -59,9 +59,8 @@ export default function Notification({
       </div>
       <Divider thickness={1} color='gray300' />
       <div className={commonWrapper({ 
-        padding: 32, 
-        paddingTop: 16, 
-        paddingBottom: 16,
+        paddingX: 32, 
+        paddingY: 16,
         direction: 'col', 
         align: 'start', 
         gap: 16

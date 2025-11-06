@@ -102,7 +102,7 @@ export default function CouponList () {
         couponCode={couponCode}
         setCouponCode={setCouponCode}
       />
-      <article className={commonWrapper({ justify: 'between', align: 'center', padding: 20, paddingBottom: 0 })}>
+      <article className={commonWrapper({ justify: 'between', align: 'center', paddingX: 20, paddingTop: 20 })}>
         <Text type='label4'>사용가능한 쿠폰: {sortedCouponList.filter(coupon => coupon.status === 'ACTIVE').length}개</Text>
         <Dropdown
           label={ItemSortByFilterList[sortBy]?.label || "최신순"}

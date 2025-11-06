@@ -41,7 +41,8 @@ export default function SubscriptionEditSummary({
       className={commonWrapper({
         direction: "col",
         gap: 20,
-        padding: "40/20",
+        paddingY: 40,
+        paddingX: 20,
         align: "start",
       })}
     >

@@ -42,7 +42,7 @@ export default function DogpediaDetail({
 		<section className={commonWrapper({ direction: 'col', paddingBottom: 40 })}>
 			<article className={commonWrapper({
 				direction: 'col',
-				padding: 20,
+				paddingX: 20,
 				paddingTop: 16,
 				paddingBottom: 32,
 				gap: 28,

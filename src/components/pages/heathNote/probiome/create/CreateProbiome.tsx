@@ -40,7 +40,8 @@ export default function CreateProbiome({ petId }: CreateProbiomeProps) {
 
   return (
     <section className={commonWrapper({
-      padding: '40/20',
+      paddingX: 20,
+      paddingY: 40,
       direction: 'col',
       gap: 20,
       align: 'start',

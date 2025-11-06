@@ -8,7 +8,7 @@ interface CardProps {
   width?: "full" | "auto";
   height?: "full";
   shadow?: "none" | "light" | "normal" | "strong";
-  padding?: 8 |12 | 16 | 20 | 32 | "12/20" | "16/12" | "16/20" |"20/16";
+  padding?: 8 |12 | 16 | 20 | 32 |"20/16";
   textAlign?: "left" | "center";
   children: ReactNode;
   className?: string;
@@ -16,6 +16,8 @@ interface CardProps {
   borderRadius?: 0 | 8 | 12 | 16;
   gap?: 4 | 8 | 10 | 12 | 16 | 20 | 26 | 28 | 32 | 40;
   border?: "none" | "gray100" | "gray200" | "gray300" | "red";
+  paddingX?: 8 | 12 | 16 | 20 | 32 | 40;
+  paddingY?: 4 | 8 | 12 | 16 | 20 | 32 | 40;
 }
 
 const Card = ({
@@ -27,6 +29,8 @@ const Card = ({
   textAlign,
   shadow = "light",
   padding,
+  paddingX,
+  paddingY,
   children,
   backgroundColor = "gray0",
   borderRadius = 8,
@@ -43,6 +47,8 @@ const Card = ({
           align,
           gap,
           padding,
+          paddingX,
+          paddingY,
           textAlign,
           shadow,
           backgroundColors: backgroundColor,

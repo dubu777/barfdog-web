@@ -74,7 +74,7 @@ export default function OrderList () {
             />
           </>
         : (
-          <div className={commonWrapper({ direction: 'col', gap: 20, paddingTop: 60, paddingBottom: 60 })}>
+          <div className={commonWrapper({ direction: 'col', gap: 20, paddingY: 60 })}>
             <EmptyList 
               title={
                 orderType === 'SUBSCRIPTION' 

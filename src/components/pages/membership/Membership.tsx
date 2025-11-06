@@ -42,7 +42,8 @@ export default function Membership() {
 					direction: 'col',
 					align: 'start',
 					gap: 16,
-					padding: '40/20',
+					paddingX: 20,
+					paddingTop: 40,
 					paddingBottom: 60,
 					backgroundColors: 'gray0'
 				})}

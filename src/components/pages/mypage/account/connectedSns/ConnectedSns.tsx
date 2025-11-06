@@ -46,13 +46,13 @@ export default function ConnectedSns() {
         <div
           className={commonWrapper({
             direction: "col",
-            padding: "0/20",
+            paddingX: 20,
             backgroundColors: "gray0",
           })}
         >
           <div
             className={commonWrapper({
-              padding: "16/0",
+              paddingY: 16,
               justify: "between",
             })}
           >

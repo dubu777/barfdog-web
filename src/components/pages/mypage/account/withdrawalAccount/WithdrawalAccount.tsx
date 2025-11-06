@@ -85,7 +85,7 @@ export default function WithdrawalAccount() {
     <section>
       <article
         className={commonWrapper({
-          padding: 20,
+          paddingX: 20,
           paddingBottom: 85,
           paddingTop: 40,
           gap: 32,

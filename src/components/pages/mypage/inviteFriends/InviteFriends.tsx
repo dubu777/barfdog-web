@@ -16,7 +16,7 @@ export default function InviteFriends() {
   const rewardList = useFlattenedInfiniteData(data, 'rewardList');
 
   return (
-    <section className={commonWrapper({ paddingTop: 40, paddingBottom: 40, gap: 40, direction: 'col' })}>
+    <section className={commonWrapper({ paddingY: 40, gap: 40, direction: 'col' })}>
       <RecommendInfo 
         recommendedCode={referralRewardInfo?.recommend}
       />

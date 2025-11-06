@@ -89,7 +89,8 @@ export default function Recipes() {
               }}
               className={commonWrapper({
                 backgroundColors: "gray50",
-                padding: "32/20",
+                paddingY: 32,
+                paddingX: 20,
                 direction: "col",
                 align: "start",
                 gap: 20,

@@ -11,8 +11,7 @@ export default function EmptyState({ title, subTitle }: EmptyStateProps) {
 		<div className={commonWrapper({
 			direction: 'col',
 			gap: 4,
-			paddingTop: 60,
-			paddingBottom: 60,
+			paddingY: 60,
 		})}>
 			<Text type='label1' color='gray700' align='center'>
 				{title}
