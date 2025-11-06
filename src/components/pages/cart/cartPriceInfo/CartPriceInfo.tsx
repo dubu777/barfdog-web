@@ -32,9 +32,8 @@ export default function CartPriceInfo() {
       direction: 'col',
       align: 'start',
       gap: 16,
-      padding: 20,
-      paddingTop: 28,
-      paddingBottom: 28,
+      paddingX: 20,
+      paddingY: 28,
     })}>
       <Text type='title4'>결제 예상 금액</Text>
       {infoList.map(info => (

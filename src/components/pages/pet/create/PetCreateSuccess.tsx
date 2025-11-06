@@ -16,9 +16,8 @@ export default function PetCreateSuccess({
   return (
     <div className={commonWrapper({
       direction: 'col',
-      padding: 20,
-      paddingTop: 80,
-      paddingBottom: 80,
+      paddingX: 20,
+      paddingY: 80,
       gap: 12,
     })}>
       <SvgIcon src={CheckIcon} color="red" size={48} />

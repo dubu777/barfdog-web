@@ -33,7 +33,8 @@ export default function RewardInfo({
 			>
 				<Card
 					shadow='light'
-					padding='16/20'
+					paddingY={16}
+					paddingX={20}
 					align='start'
 				>
 					<div

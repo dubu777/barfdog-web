@@ -51,11 +51,11 @@ export default function RefundInfo({
       <CardWrapper
         padding={false} 
         gap={16}
-        className={commonWrapper({ direction: 'col', padding: '16/0' })}
+        className={commonWrapper({ direction: 'col', paddingY: 16 })}
       >
         <div className={commonWrapper({
           direction: 'col',
-          padding: '0/12',
+          paddingX: 12,
           gap: 6,
         })}>
           <LabelValueItem
@@ -80,7 +80,7 @@ export default function RefundInfo({
         <Divider thickness={1} color="gray100" />
         <div className={commonWrapper({
           direction: 'col',
-          padding: '0/12',
+          paddingX: 12,
           gap: 16,
         })}>
           <div className={commonWrapper({ direction: 'col', gap: 12, align: 'start' })}>

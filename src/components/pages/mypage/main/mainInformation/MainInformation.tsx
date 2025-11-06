@@ -51,7 +51,7 @@ export default function MainInformation() {
         direction: 'col',
         align: 'start',
         gap: 6,
-        padding: 20,
+        paddingX: 20,
         paddingTop: 18,
         paddingBottom: 12,
       })}>

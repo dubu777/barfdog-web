@@ -16,11 +16,15 @@ export default function CardWrapper({
   className,
   shadow = 'light',
 }: CardWrapperProps) {
+  const paddingX = typeof padding === 'string' ? 16 : undefined;
+  const paddingY = typeof padding === 'string' ? 12 : undefined;
   return (
     <Card
       direction="col"
       gap={gap}
-      padding={padding ? padding : undefined}
+      padding={typeof padding === 'number' ? padding : undefined}
+      paddingX={paddingX}
+      paddingY={paddingY}
       borderRadius={12}
       align='start'
       className={className ?? ''}

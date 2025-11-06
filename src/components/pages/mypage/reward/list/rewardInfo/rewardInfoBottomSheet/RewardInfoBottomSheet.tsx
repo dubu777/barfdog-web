@@ -22,8 +22,8 @@ export default function RewardInfoBottomSheet({ isOpen, onClose }: RewardInfoMod
           direction: 'col',
           gap: 8,
           align: 'start',
-          padding: '12/20',
-          paddingTop: 0,
+          paddingX: 20,
+          paddingBottom: 12,
         })}
       >
         {noticeList.map(notice => (

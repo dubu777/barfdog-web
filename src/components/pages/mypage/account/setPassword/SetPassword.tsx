@@ -53,7 +53,13 @@ export default function SetPassword() {
 		)
 	}
 	return (
-		<section className={commonWrapper({ direction: 'col', align: 'start', gap: 32, padding: '40/20' })}>
+		<section className={commonWrapper({ 
+			direction: 'col', 
+			align: 'start', 
+			gap: 32, 
+			paddingX: 20,
+			paddingY: 40,
+		})}>
 			<div className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
 				<Text type='title3'>
 					회원정보 수정을 위해<br/>

@@ -93,7 +93,7 @@ export default function ReviewForm({
           />
         </article>
         <article className={commonWrapper({ backgroundColors: 'gray0', direction: 'col' })}>
-          <Text type='title4' className={commonWrapper({ padding: 20, paddingBottom: 0, justify: 'start' })}>
+          <Text type='title4' className={commonWrapper({ paddingX: 20, paddingTop: 20, justify: 'start' })}>
             이 상품 어떠셨나요?
           </Text>
           <ReviewCard
@@ -120,7 +120,7 @@ export default function ReviewForm({
             gap: 20,
           })}
         >
-          <Text type='title4' className={commonWrapper({ paddingBottom: 0, justify: 'start' })}>
+          <Text type='title4' className={commonWrapper({ justify: 'start' })}>
             어떤 점이 좋았나요?
           </Text>
           <div className={commonWrapper({direction: 'col', align: 'start', gap: 8 })}>

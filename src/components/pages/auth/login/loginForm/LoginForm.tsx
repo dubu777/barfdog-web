@@ -30,7 +30,7 @@ export default function LoginForm({
   onInvalid,
 }: LoginFormProps) {
   return (
-    <form className={commonWrapper({ direction: "col", padding: "0/20" })}>
+    <form className={commonWrapper({ direction: "col", paddingX: 20 })}>
       <div className={commonWrapper({ direction: "col", gap: 12 })}>
         <InputField
           {...register("email")}

@@ -88,7 +88,8 @@ export default function CancelSubscriptionModal({
           </div>
           <div className={commonWrapper({
             backgroundColors: 'gray0',
-            padding: '40/20',
+            paddingX: 20,
+            paddingY: 40,
             direction: 'col',
             gap: 20,
           })}>

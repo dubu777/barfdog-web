@@ -79,8 +79,8 @@ export default function WalkScore ({
 						<div className={commonWrapper({ 
 							align: 'start', 
 							justify: 'between', 
-							padding: 12, 
-							paddingBottom: 0,
+							paddingX: 12, 
+							paddingTop: 12, 
 						})}>
 							<Text type='headline2' noShrink>{petName}의<br/>산책 활동 통계</Text>
 							<div className={commonWrapper({ paddingTop: 16, justify: 'end' })}>
@@ -105,7 +105,7 @@ export default function WalkScore ({
 							))}
 						</div>
 					</Card>
-					<Text type='headline2' className={commonWrapper({ justify: 'start', padding: 12, paddingBottom: 0 })}>
+					<Text type='headline2' className={commonWrapper({ justify: 'start', paddingX: 12, paddingTop: 12 })}>
 						전체 반려견의 평균 산책 습관
 					</Text>
 					<Card direction='row' className={commonWrapper({ justify: 'start', align: 'start' })}>

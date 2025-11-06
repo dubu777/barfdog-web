@@ -69,7 +69,7 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
       })}>
         <div className={bodyCheckListBox}>
           <div className={commonWrapper({ direction: 'col', align: 'start', shadow: 'light' })}>
-            <Text type="title3" className={commonWrapper({ padding: 20, paddingBottom: 0, justify: 'start' })}>
+            <Text type="title3" className={commonWrapper({ paddingX: 20, paddingTop: 20, justify: 'start' })}>
               결과 조회 내역
             </Text>
             <TabBar
