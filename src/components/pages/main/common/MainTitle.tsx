@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { mainTitle } from "@/components/pages/main/common/MainCommon.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import FadeInInteraction from "@/components/pages/main/common/FadeInInteraction";
 
 interface MainTitleProps {
@@ -8,18 +8,20 @@ interface MainTitleProps {
 	subTitle: string | ReactNode;
 	align?: 'center' | 'left';
 	hasInteraction?: boolean;
+	noPaddingTop?: boolean;
 }
 
-const MainTitle = ({
+export default function MainTitle({
 	title,
 	subTitle,
 	align = 'center',
 	hasInteraction = false,
-}: MainTitleProps) => {
+	noPaddingTop = false,
+}: MainTitleProps) {
 	const ContentElement = () => (
-		<div className={mainTitle({ align })}>
-			<DefaultText type='title2' align={align} preLine>{title}</DefaultText>
-			<DefaultText type='body2' align={align} preLine>{subTitle}</DefaultText>
+		<div className={mainTitle({ align, noPaddingTop })}>
+			<Text type='title2' align={align} preLine>{title}</Text>
+			<Text type='body2' align={align} preLine>{subTitle}</Text>
 		</div>
 	)
 	return (
@@ -29,8 +31,5 @@ const MainTitle = ({
 				<ContentElement />
 			</FadeInInteraction>
 		: <ContentElement />
-
 	);
-};
-
-export default MainTitle;
+}

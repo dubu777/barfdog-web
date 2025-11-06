@@ -1,7 +1,7 @@
 import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
-export const dogImage = recipe({
+export const petImage = recipe({
 	base: {
 		objectFit: 'cover',
 	},

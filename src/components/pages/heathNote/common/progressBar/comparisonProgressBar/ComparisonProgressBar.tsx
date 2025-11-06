@@ -1,8 +1,8 @@
 import * as styles from './ComparisonProgressBar.css';
 import { ReactNode } from "react";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import Chips from "@/components/common/chips/Chips";
-import { getScoreChangeStatus}  from "@/utils/healthNote/getHealthStatus";
+import Text from "@/components/ui/text/Text";
+import Chips from "@/components/ui/chips/Chips";
+import { getScoreChangeStatus }  from "@/utils/healthNote/common/getHealthStatus";
 
 interface ComparisonProgressBarProps {
 	prevScore: number;
@@ -12,9 +12,10 @@ interface ComparisonProgressBarProps {
 	isCurrentScoreChips?: boolean;
 	prevBottomChildren?: ReactNode;
 	currentBottomChildren?: ReactNode;
+	align?: 'center' | 'end';
 }
 
-const ComparisonProgressBar = ({
+export default function ComparisonProgressBar({
 	prevScore,
 	currentScore,
 	diffValue = 10,
@@ -22,7 +23,8 @@ const ComparisonProgressBar = ({
 	isCurrentScoreChips = false,
 	prevBottomChildren,
 	currentBottomChildren,
-}: ComparisonProgressBarProps) => {
+	align = 'end',
+}: ComparisonProgressBarProps) {
 	const diff = currentScore - prevScore;
 	const status = getScoreChangeStatus(diff, diffValue);
 
@@ -40,10 +42,10 @@ const ComparisonProgressBar = ({
 	};
 
 	return (
-		<div className={styles.comparisonProgressBarBox}>
+		<div className={styles.comparisonProgressBarBox({ align })}>
 			<div className={styles.bars}>
 				<div className={styles.barBox}>
-					<DefaultText type="label4" color='gray500'>{prevScore}점</DefaultText>
+					<Text type="label4" color='gray500'>{prevScore}점</Text>
 					<div className={`${styles.barBase({ size: barSize })} ${styles.prevBar[status]}`} />
 					{prevBottomChildren}
 				</div>
@@ -69,5 +71,3 @@ const ComparisonProgressBar = ({
 		</div>
 	);
 };
-
-export default ComparisonProgressBar;

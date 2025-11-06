@@ -1,15 +1,15 @@
 import * as styles from "./BundleDeliverySelector.css";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { BundleDeliveryAddress, OrderStatus } from "@/types";
 import OrderSection from "../../common/orderSection/OrderSection";
 import { orderSummaryRowContainer } from "../../common/orderSummary/orderSummaryRow/OrderSummaryRow.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import { ORDER_MESSAGE } from "@/constants";
-import LabeledCheckbox from "@/components/common/labeledCheckBox/LabeledCheckBox";
+import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import BundleDeliveryBottomSheet from "../../common/bottomSheet/bundleDeliveryBottomSheet/BundleDeliveryBottomSheet";
 import useModal from "@/hooks/useModal";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 
 interface BundleDeliverySelectorProps {
   bundleDeliveryAddress: BundleDeliveryAddress[];
@@ -28,8 +28,16 @@ export default function BundleDeliverySelector({
     setDeliveryDto,
   } = useDeliveryStore();
 
-  const { isOpen: isBottomSheetOpen, onClose: onBottomSheetClose, onToggle: onBottomSheetToggle } = useModal();
-  const { isOpen: isModalOpen, onClose: onModalClose, onToggle: onModalToggle } = useModal();
+  const {
+    isOpen: isBottomSheetOpen,
+    onClose: onBottomSheetClose,
+    onToggle: onBottomSheetToggle,
+  } = useModal();
+  const {
+    isOpen: isModalOpen,
+    onClose: onModalClose,
+    onToggle: onModalToggle,
+  } = useModal();
   const { onToggle: onCheckBoxToggle, isSelected } = useToggleOption<boolean>(
     isBundleDelivery,
     "checkbox",
@@ -44,19 +52,18 @@ export default function BundleDeliverySelector({
     : ORDER_MESSAGE.BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE;
   const fontColor = isAvailableBundle ? "gray900" : "gray500";
 
-
   // 모달 변경 버튼 클릭 - 묶음 배송 해제
   const handleCancelBundleDelivery = () => {
     setIsBundleDelivery(false);
     setDeliveryDto(backupDeliveryDto);
-    onBottomSheetClose()
-  }
+    onBottomSheetClose();
+  };
 
   // 모달 취소 버튼 클릭 - 묶음 배송 유지
   const handleKeepBundleDelivery = () => {
-    setIsBundleDelivery(true)
-    onModalClose()
-  }
+    setIsBundleDelivery(true);
+    onModalClose();
+  };
 
   // 묶음 배송 체크 박스 토글 함수
   const handleToggleCheckBox = () => {
@@ -67,17 +74,17 @@ export default function BundleDeliverySelector({
     if (newValue) {
       onBottomSheetToggle();
     } else {
-      onModalToggle()
+      onModalToggle();
     }
   };
 
   return (
     <OrderSection title="배송 일정">
       <div className={orderSummaryRowContainer}>
-        <DefaultText type="body2" color="gray700">
+        <Text type="body2" color="gray700">
           배송 예정일
-        </DefaultText>
-        <DefaultText type="label2">주문 후 1-2일 이내 발송 예정</DefaultText>
+        </Text>
+        <Text type="label2">주문 후 1-2일 이내 발송 예정</Text>
       </div>
       <div
         className={styles.bundleDeliveryBox({
@@ -91,12 +98,12 @@ export default function BundleDeliverySelector({
           onToggle={handleToggleCheckBox}
         >
           <div className={styles.bundleDeliveryContentWrapper}>
-            <DefaultText type="headline2" color={fontColor}>
+            <Text type="headline2" color={fontColor}>
               {title}
-            </DefaultText>
-            <DefaultText type="body3" color={fontColor}>
+            </Text>
+            <Text type="body3" color={fontColor}>
               {subtitle}
-            </DefaultText>
+            </Text>
           </div>
         </LabeledCheckbox>
       </div>

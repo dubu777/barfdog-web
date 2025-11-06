@@ -1,51 +1,45 @@
-import { BaseReviewItem, Page, ReviewImage, SelectedHealthType } from "@/types";
+import { DiscountType, Pagination } from "@/types";
 import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
-
-export type {
-  SortByType,
-  ItemType,
-  ItemTagType,
-  StoreItemListData,
-  StoreItemList,
-  StoreItemDetail,
-  DetailItemImage,
-  DetailItemOption,
-  StoreItemDetailReview,
-  StoreItemDetailReviewList,
-};
 
 type SortByType = keyof typeof ITEM_SORT_BY;
 type ItemType = keyof typeof ITEM_FILTER_CATEGORY;
 type ItemTagType = 'BEST' | 'NEW';
 
-interface StoreItemBase {
+interface ItemTag {
+  tag: ItemTagType;
+  color: string;
+}
+
+interface BaseStoreItem {
   id: number;
-  itemHealthType: SelectedHealthType;
   name: string;
-  itemIcons: string;
+  itemIcons: ItemTagType;
+  itemHealthType: string;
+  originalPrice: number;
+  salePrice: number;
+  inStock: boolean;
   packageType: null | string;
   unit: null | string;
   pricePerUnit: number;
-  originalPrice: number;
-  salePrice: number;
-  inStock : boolean;
 }
 
-interface StoreItemListData extends StoreItemBase {
-  thumbnailUrl: string;
+interface StoreItemListData extends BaseStoreItem {
+  displayThumbnailUrl: {
+    url: string;
+  };
   star: number;
   reviewCount: number;
-  thumbnailUrlBase64?: string;
+  itemType: ItemType;
 }
 
 interface StoreItemList {
-  itemList: StoreItemListData[];
-  page: Page;
+  shopItemList: StoreItemListData[];
+  pagination: Pagination;
 }
 
-interface DetailItemInfo extends StoreItemBase{
+interface ItemInfo extends BaseStoreItem{
   description: string;
-  discountType: string;
+  discountType: DiscountType;
   discountDegree: number;
   remaining: number;
   totalSalesAmount: number;
@@ -54,48 +48,49 @@ interface DetailItemInfo extends StoreItemBase{
   deleted: boolean;
 }
 
-interface DetailDeliveryConditionInfo {
+interface DeliveryConditionInfo {
   price: number;
   freeCondition: number;
 }
 
-interface DetailItemOption {
+interface ItemOption {
   id: number;
   name: string;
   optionPrice: number;
   remaining: number;
 }
 
-interface DetailItemImage {
+interface ItemImage {
   id: number;
   leakedOrder: number;
-  filename: string;
-  url: string;
+  displayImageUrl: {
+    url: string;
+  };
 }
 
-interface DetailItemReview {
+interface ItemReview {
   star: number;
   count: number;
 }
 
 interface StoreItemDetail {
-  itemDto: DetailItemInfo;
-  deliveryCondDto: DetailDeliveryConditionInfo;
-  itemOptionDtoList: DetailItemOption[];
-  itemImageDtoList: DetailItemImage[];
-  reviewDto: DetailItemReview;
+  itemInfo: ItemInfo;
+  freeDeliveryCondition: DeliveryConditionInfo;
+  itemOptionList: ItemOption[];
+  itemImageList: ItemImage[];
+  reviewSummary: ItemReview;
 }
 
-interface StoreItemReview extends BaseReviewItem {
-  createdDate: string;
-}
-
-interface StoreItemDetailReview {
-  reviewDto: StoreItemReview;
-  reviewImageDtoList: ReviewImage[];
-}
-
-interface StoreItemDetailReviewList {
-  page: Page;
-  reviewList: StoreItemDetailReview[]
-}
+export type {
+  SortByType,
+  ItemType,
+  ItemTagType,
+  ItemTag,
+  StoreItemListData,
+  StoreItemList,
+  StoreItemDetail,
+  DeliveryConditionInfo,
+  ItemReview,
+  ItemImage,
+  ItemOption,
+};

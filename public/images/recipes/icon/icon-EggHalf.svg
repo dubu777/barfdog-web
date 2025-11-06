@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffcd2c;
+      }
+
+      .cls-2 {
+        fill: #ededed;
+      }
+    </style>
+  </defs>
+  <path class="cls-2" d="M42.96,29.73c0,7.48-5.61,16.86-16.84,16.86s-16.84-9.37-16.84-16.86c0-15.91,10.29-24.31,16.84-24.31s16.84,8.41,16.84,24.31Z"/>
+  <circle class="cls-1" cx="26.12" cy="31.47" r="11.41"/>
+</svg>

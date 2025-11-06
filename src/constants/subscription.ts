@@ -1,19 +1,4 @@
-import { PlanInfo, PlanKey, SubscribeGeneralItem } from "@/types";
-
-export {
-  subscriptionStatus,
-  DEFAULT_MEALS_PER_DAY,
-  ORIGIN_SUBSCRIBE_ID_SET,
-  LEGACY_RECIPE_CONSTANTS,
-  subscriptionPlanInfo,
-  numberOfPacksPerDay,
-  recipeTab,
-  deliveryOptions,
-  recipeDetailTab,
-  subscribeStepMap,
-  generalItemTab,
-  generalTempItems,
-};
+import { PlanInfo, PlanKey, SubscriptionStatus } from "@/types";
 
 const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
   FULL: {
@@ -61,7 +46,6 @@ const numberOfPacksPerDay = {
   2: "하루 두 끼",
 };
 
-
 // 기본 하루 끼니 수
 const DEFAULT_MEALS_PER_DAY = 2;
 
@@ -80,7 +64,10 @@ const ORIGIN_SUBSCRIBE_ID_SET = new Set<number>([
 ]);
 
 // 레거시 계산용 상수 (레시피 ID → { gramPerKcal, pricePerGram })
-const LEGACY_RECIPE_CONSTANTS: Record<number, { gramPerKcal: number; pricePerGram: number }> = {
+const LEGACY_RECIPE_CONSTANTS: Record<
+  number,
+  { gramPerKcal: number; pricePerGram: number }
+> = {
   5: { gramPerKcal: 1.49462, pricePerGram: 35.649 },
   6: { gramPerKcal: 1.46324, pricePerGram: 39.9 },
   7: { gramPerKcal: 1.47532, pricePerGram: 40.452 },
@@ -88,13 +75,6 @@ const LEGACY_RECIPE_CONSTANTS: Record<number, { gramPerKcal: number; pricePerGra
 };
 
 const subscriptionStatus: Record<string, string> = {
-  // BEFORE_PAYMENT: '구독 비활성',
-  // SURVEY_COMPLETED: '구독 비활성',
-  // SUBSCRIBING: '구독 활성',
-  // SUBSCRIBE_PENDING: '구독 비활성',
-  // SUBSCRIBE_CANCEL: '구독 비활성',
-  // SUBSCRIBE_WILL_CANCEL: '구독 취소예정',
-  // ADMIN: '관리자구독',
   BEFORE_PAYMENT: "구독 전",
   SURVEY_COMPLETED: "설문 완료",
   SUBSCRIBE_WILL_CANCEL: "구독 취소 예정",
@@ -125,102 +105,104 @@ const generalItemTab = [
   },
 ];
 
-  const recipeDetailTab = [
-    {
-      label: "급여량",
-      value: "amount",
-    },
-    {
-      label: "효능",
-      value: "benefits",
-    },
-    {
-      label: "성분",
-      value: "ingredients",
-    },
-  ];
-
-const deliveryOptions = {
-  mealFrequency: [
-    { label: "하루 한 끼", value: 1, discountRate: "3%" },
-    { label: "하루 두 끼", value: 2, discountRate: "5%" },
-  ],
-  deliveryCycle: [
-    { label: "2주", value: 2 },
-    { label: "4주", value: 4 },
-  ]
-};
-
-const subscribeStepMap: Record<string, number> = {
-  "recipe": 1,
-  "general-item": 2,
-  "delivery-cycle": 3,
-};
-
-
-const generalTempItems: SubscribeGeneralItem[] = [
+const recipeDetailTab = [
   {
-    id: 28,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=6d945436-725c-4d15-b4e7-446e01cda7e1.jpg",
-    name: "머쉬룸스프 200ml × 2",
-    originalPrice: 16900,
-    inStock: true,
-    benefit: ["노령견건강", "피부∙모질"],
-    type: "topping",
+    label: "급여량",
+    value: "amount",
   },
   {
-    id: 27,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=2bf9fd47-4272-44ea-a969-503dedba83b1.jpg",
-    name: "치킨스프 200ml × 2",
-    originalPrice: 15900,
-    inStock: true,
-    benefit: ["노령견건강", "피부∙모질"],
-    type: "topping",
+    label: "효능",
+    value: "benefits",
   },
   {
-    id: 17,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=8ada6262-3167-47c6-8bdc-e191a22ea8de.jpg",
-    name: "바화이트",
-    originalPrice: 15900,
-    inStock: true,
-    benefit: ["노령견건강", "피부∙모질"],
-    type: "topping",
-  },
-  {
-    id: 14,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=b0c11e27-59ad-49af-8c67-ba4e050b1059.jpg",
-    name: "터메릭슈퍼큐브",
-    originalPrice: 15500,
-    inStock: true,
-    benefit: ["노령견건강", "피부∙모질"],
-    type: "topping",
-  },
-  {
-    id: 13,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=56601eaf-db90-415c-a791-f857e553e69a.jpg",
-    name: "바프레드",
-    originalPrice: 16000,
-    inStock: true,
-    benefit: ["노령견건강", "피부∙모질"],
-    type: "topping",
-  },
-  {
-    id: 25,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=d1257ef5-ac0a-4fcb-b917-85aecb09516d.jpg",
-    name: "노즈노우즈 닭(치킨)롤",
-    originalPrice: 12900,
-    inStock: true,
-    benefit: ["노령견건강", "피부∙모질"],
-    type: "snack",
-  },
-  {
-    id: 24,
-    imageUrl: "http://www.barfdogserver.com/display/items?filename=1612e845-f4da-406f-8a06-b2d4d67ea29d.jpg",
-    name: "노즈노우즈 칠면조(터키)롤",
-    originalPrice: 12900,
-    inStock: true,
-    benefit: ["노령견건강", "피부∙모질"],
-    type: "snack",
+    label: "성분",
+    value: "ingredients",
   },
 ];
 
+const deliveryOptions = {
+  mealPlan: [
+    { label: "하루 한 끼", value: 1, discountRate: "3%" },
+    { label: "하루 두 끼", value: 2, discountRate: "5%" },
+  ],
+  deliveryPlan: [
+    { label: "2주", value: 2 },
+    { label: "4주", value: 4 },
+  ],
+};
+
+const subscribeStepMap: Record<string, number> = {
+  rawFood: 1,
+  deliveryCycle: 2,
+};
+
+const DELIVERY_PLAN = [2, 4] as const;
+
+const MEAL_PLAN = [1, 2] as const;
+
+const DELIVERY_PLAN_LABEL = {
+  2: "2주",
+  4: "4주",
+};
+
+const MEAL_PLAN_LABEL = {
+  1: "한 끼",
+  2: "두 끼",
+};
+
+const PLAN = ["FULL", "HALF", "FOUR_WEEKS_TWO_MEAL"] as const;
+
+const PLAN_LABEL = {
+  FULL: "풀 플랜",
+  HALF: "하프 플랜",
+  FOUR_WEEKS_TWO_MEAL: "4주 두 끼 플랜",
+};
+
+const SUBSCRIPTION_STATUSES = [
+  "SURVEY_COMPLETED",
+  "BEFORE_PAYMENT",
+  "SUBSCRIBING",
+  "SUBSCRIBE_PENDING",
+  "SUBSCRIBE_WILL_CANCEL",
+  "SUBSCRIBE_CANCEL",
+  "ADMIN",
+] as const;
+
+const SUBSCRIPTION_STATUS_LABEL: Record<SubscriptionStatus, string> = {
+  SURVEY_COMPLETED: "설문완료",
+  BEFORE_PAYMENT: "구독전(결제전)",
+  SUBSCRIBING: "구독중",
+  SUBSCRIBE_PENDING: "구독보류",
+  SUBSCRIBE_WILL_CANCEL: "구독취소예정",
+  SUBSCRIBE_CANCEL: "구독취소",
+  ADMIN: "관리자구독",
+};
+
+const EDITABLE_SUBSCRIPTION_STATUSES = new Set<SubscriptionStatus>([
+  "SUBSCRIBING",
+  "SUBSCRIBE_PENDING",
+  "SUBSCRIBE_WILL_CANCEL",
+]);
+
+export {
+  subscriptionStatus,
+  DEFAULT_MEALS_PER_DAY,
+  ORIGIN_SUBSCRIBE_ID_SET,
+  LEGACY_RECIPE_CONSTANTS,
+  subscriptionPlanInfo,
+  numberOfPacksPerDay,
+  recipeTab,
+  deliveryOptions,
+  recipeDetailTab,
+  subscribeStepMap,
+  generalItemTab,
+  DELIVERY_PLAN,
+  MEAL_PLAN,
+  DELIVERY_PLAN_LABEL,
+  MEAL_PLAN_LABEL,
+  SUBSCRIPTION_STATUSES,
+  SUBSCRIPTION_STATUS_LABEL,
+  EDITABLE_SUBSCRIPTION_STATUSES,
+  PLAN,
+  PLAN_LABEL,
+};

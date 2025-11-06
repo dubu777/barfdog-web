@@ -12,26 +12,37 @@ import AiActive from "/public/images/icons/bottomNavBar/ai-active.svg";
 import StoreActive from "/public/images/icons/bottomNavBar/store-active.svg";
 import NoteActive from "/public/images/icons/bottomNavBar/note-active.svg";
 import MyPageActive from "/public/images/icons/bottomNavBar/mypage-active.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import useDeviceState from "@/hooks/useDeviceState";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { getCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { useEffect, useState } from "react";
 
-export default function BottomNavBar() {
+interface BottomNavBarProps {
+  position?: "sticky" | "fixed";
+}
+
+export default function BottomNavBar({
+  position = "fixed",
+}: BottomNavBarProps) {
   const pathname = usePathname();
   const { deviceOS } = useDeviceState();
   const [healthNoteHref, setHealthNoteHref] =
     useState<string>("/health-note/guest");
+  const [dietAnalysisHref, setDietAnalysisHref] = useState<string>(
+    "/diet-analysis/guest"
+  );
 
   useEffect(() => {
     const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
     const loggedIn = isAuthenticated(token);
     if (loggedIn) {
       setHealthNoteHref("/health-note");
+      setDietAnalysisHref("/diet-analysis");
     } else {
       setHealthNoteHref("/health-note/guest");
+      setDietAnalysisHref("/diet-analysis/guest");
     }
   }, []);
   const MENU_LIST = [
@@ -41,14 +52,14 @@ export default function BottomNavBar() {
       url: "/",
     },
     {
-      icon: pathname === "/store" ? <StoreActive /> : <Store />,
+      icon: pathname.startsWith("/store") ? <StoreActive /> : <Store />,
       label: "스토어",
       url: "/store",
     },
     {
-      icon: pathname === "/diet-analysis" ? <AiActive /> : <Ai />,
+      icon: pathname.startsWith("/diet-analysis") ? <AiActive /> : <Ai />,
       label: "Ai추천식단",
-      url: "/diet-analysis",
+      url: dietAnalysisHref,
     },
     {
       icon: pathname.startsWith("/health-note") ? <NoteActive /> : <Note />,
@@ -61,21 +72,37 @@ export default function BottomNavBar() {
       url: "/mypage",
     },
   ];
+
+  // 리액트 네이티브 웹뷰에서 바텀네비게이션 숨김 - TEST
+  const inApp =
+    typeof window !== "undefined" &&
+    (/BarfdogApp/i.test(navigator.userAgent) ||
+      new URLSearchParams(location.search).get("inapp") === "1");
+
+  if (inApp) return null;
+
   return (
     <nav
-      className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]}`}
+      className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]} ${styles.bottomNavBarPosition[position]}`}
     >
       {MENU_LIST.map((menu) => (
         <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
           {menu.icon}
-          <DefaultText
+          <Text
             type="caption"
-            color={pathname === menu.url ? "red" : "gray600"}
+            color={
+              menu.url === "/"
+                ? pathname === "/"
+                  ? "red"
+                  : "gray600"
+                : pathname.startsWith(menu.url)
+                ? "red"
+                : "gray600"
+            }
             block
-            // className={styles.navLabel}
           >
             {menu.label}
-          </DefaultText>
+          </Text>
         </Link>
       ))}
     </nav>

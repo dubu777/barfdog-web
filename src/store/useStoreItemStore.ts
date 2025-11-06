@@ -1,4 +1,6 @@
 import { create } from "zustand";
+import { DiscountType } from "@/types";
+import {calculateDiscountDegree} from "@/utils/store/calculateDiscountDegree";
 
 interface ItemOption {
   value: number;
@@ -9,35 +11,53 @@ interface ItemOption {
   count: number;
 }
 
-
 interface StoreItemStore {
   itemPrice: number; // 상품 기본 가격
+  salePrice: number; // 할인 적용된 가격
   totalPrice: number; // 총 가격
   itemAmount: number; // 상품 수량
   selectedOptions: ItemOption[]; // 선택된 옵션 목록
+  discountRate: number; // 할인율 %
+  discountType?: DiscountType; // 할인 방식
+
   setItemPrice: (price: number) => void; // 초기 상품 가격 설정
+  setDiscountRate: (originalPrice: number, salePrice: number) => void; // 할인 설정
+
   updateItemAmount: (itemAmount: number) => void; // 상품 수량 업데이트
   addOption: (option: ItemOption) => void; // 옵션 추가
   updateOptionCount: (value: number, count: number) => void; // 옵션 수량 업데이트
   removeOption: (value: number) => void; // 옵션 제거
+
   calculateTotalPrice: () => void; // 총 가격 재계산
+
   resetStore: () => void;
 }
 
+// 옵션 총합 계산
 const calculateOptionsTotal = (options: { count: number, price: number }[]) => {
   return options.reduce((total, option) => total + option.count * option.price, 0);
 }
 
 export const useStoreItemStore = create<StoreItemStore>((set) => ({
   itemPrice: 0,
+  salePrice: 0,
   totalPrice: 0,
   itemAmount: 1,
   selectedOptions: [],
+
+  discountRate: 0,
+  discountType: undefined,
+
 
   setItemPrice: (price) => set(() => ({
     itemPrice: price,
     totalPrice: price,
   })),
+  setDiscountRate: (originalPrice, salePrice) =>
+    set(() => ({
+      salePrice,
+      discountRate: calculateDiscountDegree(originalPrice, salePrice, 'FIXED_RATE'),
+    })),
   updateItemAmount: (itemAmount) => set((state) => {
     const optionsTotal = calculateOptionsTotal(state.selectedOptions);
     const newTotalPrice = state.itemPrice * itemAmount + optionsTotal;
@@ -89,5 +109,8 @@ export const useStoreItemStore = create<StoreItemStore>((set) => ({
   resetStore: () => set({
     itemAmount: 1,
     selectedOptions: [],
+    discountRate: 0,
+    discountType: undefined,
+    salePrice: 0,
   })
 }))

@@ -7,31 +7,28 @@ import {
  * Survey form values를 DietAnalysisPayload로 매핑
  */
 export function buildDietAnalysisPayload(
-  values: DietAnalysisFormValues
+  values: DietAnalysisFormValues,
+  dogId: number
 ): DietAnalysisPayload {
   const {
-    step1: { name, gender, neutralization },
-    step2: { birthDay, oldDog },
+    step1: { neutralization },
+    step2: { oldDog },
     step3: { dogSize, weight },
-    step4: { dogType },
-    step5: { pregnancy },
-    step6: { lactation },
-    step7: { bodyCondition },
-    step8: { activityLevel },
-    step9: { snackCountLevel },
-    step10: { inedibleFood },
-    step11: { healthConcerns },
-    step12: { currentMeal },
-    step13: { supplements },
-    step14: { healthIssues },
+    step4: { pregnancy },
+    step5: { lactation },
+    step6: { bodyCondition },
+    step7: { activityLevel },
+    step8: { snackCountLevel },
+    step9: { inedibleFoods },
+    step10: { healthConcerns },
+    step11: { currentMeals },
+    step12: { supplements },
+    step13: { healthIssues },
   } = values;
 
   return {
-    name,
-    gender,
-    birthDay,
+    dogId, // 임시
     oldDog,
-    dogType,
     dogSize,
     weight,
     neutralization,
@@ -40,9 +37,9 @@ export function buildDietAnalysisPayload(
     pregnancy,
     lactation,
     snackCountLevel,
-    inedibleFood,
+    inedibleFoods,
     healthConcerns,
-    currentMeal,
+    currentMeals,
     supplements,
     healthIssues,
   };

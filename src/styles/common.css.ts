@@ -90,7 +90,6 @@ export const sanitizedHTML = style({});
 
 globalStyle(`${sanitizedHTML} *`, {
   textAlign: "unset",
-  font: "auto",
 });
 
 globalStyle(`${sanitizedHTML} img`, {
@@ -101,12 +100,21 @@ globalStyle(`${sanitizedHTML} img`, {
   margin: "0 auto",
 });
 
+globalStyle(`${sanitizedHTML} h1`, {
+  fontSize: themeVars.fontSize["title-lg"],
+  fontWeight: themeVars.fontWeight.bold,
+});
+
 globalStyle(`${sanitizedHTML} h2`, {
   fontSize: themeVars.fontSize["title-md"],
 });
 
 globalStyle(`${sanitizedHTML} b, strong`, {
   fontWeight: themeVars.fontWeight.bold,
+});
+
+globalStyle(`${sanitizedHTML} p`, {
+  margin: "10px 0",
 });
 
 export const commonWrapper = recipe({
@@ -127,6 +135,9 @@ export const commonWrapper = recipe({
       8: {
         gap: "8px",
       },
+      10: {
+        gap: "10px",
+      },
       12: {
         gap: "12px",
       },
@@ -139,6 +150,12 @@ export const commonWrapper = recipe({
       20: {
         gap: "20px",
       },
+      24: {
+        gap: "24px",
+      },
+      26: {
+        gap: "26px",
+      },
       28: {
         gap: "28px",
       },
@@ -148,8 +165,14 @@ export const commonWrapper = recipe({
       40: {
         gap: "40px",
       },
+      '32/8': {
+        gap: "32px 8px",
+      }
     },
     padding: {
+      8: {
+        padding: "8px",
+      },
       12: {
         padding: "12px",
       },
@@ -160,26 +183,98 @@ export const commonWrapper = recipe({
         padding: "20px",
       },
       32: {
-        padding: "32px 20px",
+        padding: "32px",
+      },
+      40: {
+        padding: "40px",
+      },
+      "12/20": {
+        padding: "12px 20px",
+      },
+      "16/12": {
+        padding: "16px 12px",
+      },
+      "16/20": {
+        padding: "16px 20px",
       },
       "20/16": {
         padding: "20px 16px",
       },
+      "40/20": {
+        padding: "40px 20px",
+      },
       "32/20": {
         padding: "32px 20px",
+      },
+      "0/12": {
+        padding: "0 12px",
       },
       "0/20": {
         padding: "0 20px",
       },
+      "16/0": {
+        padding: "16px 0",
+      },
     },
     paddingBottom: {
+      0: {
+        paddingBottom: "0px",
+      },
+      4: {
+        paddingBottom: "4px",
+      },
+      8: {
+        paddingBottom: "8px",
+      },
+      12: {
+        paddingBottom: "12px",
+      },
+      16: {
+        paddingBottom: "16px",
+      },
+      20: {
+        paddingBottom: "20px",
+      },
+      24: {
+        paddingTop: "24px",
+      },
+      28: {
+        paddingBottom: "28px",
+      },
+      30: {
+        paddingBottom: "30px",
+      },
+      32: {
+        paddingBottom: "30px",
+      },
+      40: {
+        paddingBottom: "40px",
+      },
+      60: {
+        paddingBottom: "60px",
+      },
+      80: {
+        paddingBottom: "80px",
+      },
       85: {
         paddingBottom: "85px",
       },
+      128: {
+        paddingBottom: "128px",
+      },
     },
     paddingTop: {
+      0: {
+        paddingTop: "0px",
+      },
       4: {
         paddingTop: "4px",
+      },
+      6: {
+        paddingTop: "6px",
+      },
+      8: {
+        paddingTop: "8px",
       },
       12: {
         paddingTop: "12px",
@@ -187,8 +282,68 @@ export const commonWrapper = recipe({
       16: {
         paddingTop: "16px",
       },
+      18: {
+        paddingTop: "18px",
+      },
       20: {
         paddingTop: "20px",
+      },
+      24: {
+        paddingTop: "24px",
+      },
+      28: {
+        paddingTop: "28px",
+      },
+      30: {
+        paddingTop: "30px",
+      },
+      32: {
+        paddingTop: "32px",
+      },
+      40: {
+        paddingTop: "40px",
+      },
+      60: {
+        paddingTop: "60px",
+      },
+      80: {
+        paddingTop: "80px",
+      },
+      114: {
+        paddingTop: "114px",
+      },
+    },
+    paddingX: {
+      12: {
+        paddingLeft: "12px",
+        paddingRight: "12px",
+      },
+      16: {
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      },
+      20: {
+        paddingLeft: "20px",
+        paddingRight: "20px",
+      },
+    },
+    paddingY: {
+      12: {
+        paddingTop: "12px",
+        paddingBottom: "12px",
+      },
+      16: {
+        paddingTop: "16px",
+        paddingBottom: "16px",
+      },
+      20: {
+        paddingTop: "20px",
+        paddingBottom: "20px",
+      },
+    },
+    marginBottom: {
+      85: {
+        marginBottom: "85px",
       },
     },
     direction: {
@@ -205,6 +360,9 @@ export const commonWrapper = recipe({
       },
       start: {
         justifyContent: "flex-start",
+      },
+      around: {
+        justifyContent: "space-around",
       },
       between: {
         justifyContent: "space-between",
@@ -230,6 +388,17 @@ export const commonWrapper = recipe({
     height: {
       full: {
         height: "100vh",
+      },
+      "100%": {
+        height: "100%",
+      },
+      fullWithHeader: {
+        height: "calc(100vh - 52px)",
+      },
+    },
+    minHeight: {
+      fullWithHeader: {
+        minHeight: "calc(100vh - 52px)",
       },
     },
     backgroundColors: {
@@ -262,7 +431,15 @@ export const commonWrapper = recipe({
         width: "auto",
       },
     },
+    maxWidth: {
+      600: {
+        maxWidth: "600px",
+      },
+    },
     borderRadius: {
+      0: {
+        borderRadius: 0,
+      },
       8: {
         borderRadius: "8px",
       },
@@ -289,7 +466,25 @@ export const commonWrapper = recipe({
       wrap: {
         flexWrap: "wrap",
       },
+      unset: {
+        flexWrap: "unset",
+      },
     },
+    border: {
+      none: {},
+      gray100: {
+        border: `1px solid ${themeVars.colors.gray.gray100}`,
+      },
+      gray200: {
+        border: `1px solid ${themeVars.colors.gray.gray200}`,
+      },
+      gray300: {
+        border: `1px solid ${themeVars.colors.gray.gray300}`,
+      },
+      red: {
+        border: `1px solid ${themeVars.colors.red.red}`,
+      },
+    }
   },
   defaultVariants: {
     direction: "row",
@@ -299,7 +494,129 @@ export const commonWrapper = recipe({
   },
 });
 
-export const infiniteTrigger = style({
-  height: "72px",
-  background: themeVars.colors.gray.gray50,
+export const imageWrapper = recipe({
+  base: {
+    width: "100%",
+  },
+  variants: {
+    objectFit: {
+      cover: {
+        objectFit: "cover",
+      },
+      contain: {
+        objectFit: "contain",
+      },
+    },
+    objectPosition: {
+      bottom: {
+        objectPosition: "bottom",
+      },
+    },
+    borderRadius: {
+      6: {
+        borderRadius: 6,
+      },
+      8: {
+        borderRadius: 8,
+      },
+      16: {
+        borderRadius: 16,
+      },
+      '50%': {
+        borderRadius: '50%',
+      }
+    },
+    width: {
+      48: {
+        width: 48,
+        height: 48,
+      },
+      72: {
+        width: 72,
+        height: 72,
+      },
+      76: {
+        width: 76,
+        height: 76,
+      },
+      80: {
+        width: 80,
+        height: 80,
+      },
+      96: {
+        width: 96,
+        height: 96,
+      },
+      100: {
+        width: 100,
+        height: 100,
+      },
+      107: {
+        width: 107,
+        height: 107,
+      },
+    },
+    height: {
+      "100%": {
+        height: "100%",
+      },
+      auto: {
+        height: "auto",
+      },
+    },
+  },
+});
+
+export const marginStyles = recipe({
+  base: {},
+  variants: {
+    top: {
+      4: { marginTop: "4px" },
+      6: { marginTop: "6px" },
+      8: { marginTop: "8px" },
+      12: { marginTop: "12px" },
+    },
+    bottom: {
+      4: { marginBottom: "4px" },
+      6: { marginBottom: "6px" },
+      8: { marginBottom: "8px" },
+      60: { marginBottom: "60px" },
+    },
+  },
+});
+
+export const paddingStyles = recipe({
+  base: {},
+  variants: {
+    all: {
+      20: {
+        padding: "20px",
+      },
+    },
+    x: {
+      4: { paddingLeft: "4px", paddingRight: "4px" },
+      12: { paddingLeft: "12px", paddingRight: "12px" },
+      16: { paddingLeft: "16px", paddingRight: "16px" },
+      20: { paddingLeft: "20px", paddingRight: "20px" },
+    },
+    y: {
+      4: { paddingTop: "4px", paddingBottom: "4px" },
+      12: { paddingTop: "12px", paddingBottom: "12px" },
+      16: { paddingTop: "16px", paddingBottom: "16px" },
+      20: { paddingTop: "20px", paddingBottom: "20px" },
+    },
+    top: {
+      4: { paddingTop: "4px" },
+      6: { paddingTop: "6px" },
+      8: { paddingTop: "8px" },
+      12: { paddingTop: "12px" },
+    },
+    bottom: {
+      4: { paddingBottom: "4px" },
+      6: { paddingBottom: "6px" },
+      8: { paddingBottom: "8px" },
+      12: { paddingBottom: "12px" },
+      85: { paddingBottom: "85px" },
+    },
+  },
 });

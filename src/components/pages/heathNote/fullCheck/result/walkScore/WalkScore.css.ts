@@ -1,37 +1,9 @@
 import { style } from "@vanilla-extract/css";
 import { themeVars } from "@/styles/theme.css";
 
-export const walkScoreContainer = style({
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	gap: '12px',
-})
-
-export const walkScoreContentBox = style({
+export const averageGraph = style({
 	width: '100%',
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	gap: '8px',
-})
-
-export const walkScore = style({
-	width: '100%',
-	display: 'flex',
-	justifyContent: 'space-between',
-	padding: '12px 12px 0'
-})
-
-export const walkScoreInfo = style({
-	width: '100%',
-	display: 'flex',
-	padding: '12px 16px'
-})
-
-export const averageDurations = style({
-	width: '100%',
-	padding: '24px 16px 0',
+	padding: '16px',
 	display: 'flex',
 	alignItems: 'flex-end',
 	justifyContent: 'center',
@@ -46,7 +18,7 @@ export const averageDurations = style({
 			height: '1px',
 			background: 'linear-gradient(90deg, rgba(145, 145, 145, 0.00) 0%, rgba(94, 94, 94, 0.60) 50%, rgba(145, 145, 145, 0.00) 100%)',
 			position: 'absolute',
-			bottom: '23px',
+			bottom: '39px',
 			left: '50%',
 			transform: 'translateX(-50%)',
 		}

@@ -1,10 +1,4 @@
-import {
-  Coupon,
-  CouponUsabilityResult,
-  OrderType,
-  Reason,
-} from "@/types";
-
+import { Coupon, CouponUsabilityResult, OrderType, Reason } from "@/types";
 
 /**
  * 쿠폰 사용 가능 여부 판단 함수
@@ -15,17 +9,17 @@ export function isCouponUsable(
   orderType: string
 ): CouponUsabilityResult {
   const reasons: Reason[] = [];
-  
+
   // 주문 금액이 최소 주문 금액 미달이면 "minPrice" 추가
   if (orderPrice <= coupon.availableMinPrice) {
     reasons.push("minPrice");
   }
-  
+
   // 주문 타입이 일치하지 않으면 "orderType" 추가
   if (coupon.couponTarget !== "ALL" && coupon.couponTarget !== orderType) {
     reasons.push("orderType");
   }
-  
+
   return {
     usable: reasons.length === 0,
     reasons,
@@ -38,24 +32,28 @@ export function isCouponUsable(
  * @param orderType - 일반, 구독 결제 여부
  * @returns 사용 가능한 쿠폰 배열
  */
-export function getAvailableCoupons(coupons: Coupon[], orderPrice: number, orderType: OrderType): Coupon[] {
-  return coupons.filter(coupon => isCouponUsable(coupon, orderPrice, orderType).usable);
+export function getAvailableCoupons(
+  coupons: Coupon[],
+  orderPrice: number,
+  orderType: OrderType
+): Coupon[] {
+  return coupons.filter(
+    (coupon) => isCouponUsable(coupon, orderPrice, orderType).usable
+  );
 }
 
+const toWonInt = (amount: number) => Math.max(0, Math.floor(amount));
+
 /**
- * 쿠폰 할인 금액 계산 함수
+ * 쿠폰 기본 할인 금액 계산 함수 (쿠폰 자체 제약만 적용)
  * @param orderPrice - 주문 금액
  * @param coupon - 쿠폰 정보 객체
- * @param maxAvailableCouponDiscount - 전역 최대 쿠폰 할인 금액
- * @returns 쿠폰 할인 계산 결과 객체
- *          - discountBasedOnCoupon: 쿠폰의 최대 할인 금액만 고려
- *          - discountBasedOnCouponAndGlobal: 쿠폰의 최대 할인 금액과 전역 최대 할인 금액을 고려
+ * @returns 쿠폰의 최대 할인 금액만 고려한 할인 금액
  */
-export function calculateCouponDiscount(
+export function calculateBasicCouponDiscount(
   orderPrice: number,
-  coupon: Coupon,
-  maxAvailableCouponDiscount: number
-): { discountBasedOnCoupon: number; discountBasedOnCouponAndGlobal: number } {
+  coupon: Coupon
+): number {
   let calculatedDiscount = 0;
 
   // 할인 유형에 따라 기본 할인 금액 계산
@@ -68,14 +66,40 @@ export function calculateCouponDiscount(
       break;
     default:
       console.warn(`알 수 없는 할인 유형: ${coupon.discountType}`);
-      return { discountBasedOnCoupon: 0, discountBasedOnCouponAndGlobal: 0 };
+      return 0;
   }
 
-  // 쿠폰에 설정된 최대 할인 금액 제한만 적용한 할인 금액 계산
-  const discountBasedOnCoupon = Math.min(calculatedDiscount, coupon.availableMaxDiscount);
-  
-  // 쿠폰 제한과 전역 최대 할인 금액 제한을 모두 적용한 할인 금액 계산
-  const discountBasedOnCouponAndGlobal = Math.min(discountBasedOnCoupon, maxAvailableCouponDiscount);
+  // 쿠폰에 설정된 최대 할인 금액 제한만 적용
+  const cappedByCoupon = Math.min(
+    calculatedDiscount,
+    coupon.availableMaxDiscount
+  );
+
+  // 원 단위 정수 반환 (내림)
+  return toWonInt(cappedByCoupon);
+}
+
+/**
+ * 쿠폰 할인 금액 계산 함수 (전역 제약 포함)
+ * @param orderPrice - 주문 금액
+ * @param coupon - 쿠폰 정보 객체
+ * @param maxAvailableCouponDiscount - 전역 최대 쿠폰 할인 금액
+ * @returns 쿠폰 할인 계산 결과 객체
+ *          - discountBasedOnCoupon: 쿠폰의 최대 할인 금액만 고려
+ *          - discountBasedOnCouponAndGlobal: 쿠폰의 최대 할인 금액과 전역 최대 할인 금액을 고려
+ */
+export function calculateCouponDiscount(
+  orderPrice: number,
+  coupon: Coupon,
+  maxAvailableCouponDiscount: number
+): { discountBasedOnCoupon: number; discountBasedOnCouponAndGlobal: number } {
+  // 기본 할인 금액 계산 (쿠폰 자체 제약만 적용)
+  const discountBasedOnCoupon = calculateBasicCouponDiscount(orderPrice, coupon);
+
+  // 전역 최대 할인 금액 제한 추가 적용
+  const discountBasedOnCouponAndGlobal = toWonInt(
+    Math.min(discountBasedOnCoupon, maxAvailableCouponDiscount)
+  );
 
   return { discountBasedOnCoupon, discountBasedOnCouponAndGlobal };
 }
@@ -90,20 +114,18 @@ export function calculateCouponDiscount(
  * @param coupons - 정렬할 쿠폰 배열
  * @param orderPrice - 주문 금액
  * @param orderType - 주문 타입 (쿠폰 대상과 비교)
- * @param maxAvailableCouponDiscount - 전역 최대 할인 금액
  * @returns 정렬된 쿠폰 배열
  */
 export function sortCoupons(
   coupons: Coupon[],
   orderPrice: number,
-  orderType: OrderType,
-  maxAvailableCouponDiscount: number
+  orderType: OrderType
 ): Coupon[] {
   // 미리 계산된 값을 이용하여 정렬 효율 개선
   const computedCoupons = coupons.map((coupon) => ({
     coupon,
     usable: isCouponUsable(coupon, orderPrice, orderType).usable,
-    discount: calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount).discountBasedOnCoupon,
+    discount: calculateBasicCouponDiscount(orderPrice, coupon),
     expiry: new Date(coupon.expiredDate).getTime(),
   }));
 
@@ -136,3 +158,9 @@ export function getCouponTargetText(couponTarget: string): string {
       return "";
   }
 }
+
+export const validateCouponCode = (code: string) => {
+  if (!code) return "코드를 입력해 주세요.";
+  if (code.length > 20) return "20자 이하 입력 가능합니다.";
+  return null;
+};

@@ -1,6 +1,6 @@
 import * as styles from './ProgressBar.css';
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Indicator from '/public/images/mypage/progress-indicator.svg';
 
 interface ProgressBarProps {
@@ -8,7 +8,7 @@ interface ProgressBarProps {
 	label?: string;
 	className?: string;
 }
-const ProgressBar = ({ progress, label, className }: ProgressBarProps) => {
+export default function ProgressBar({ progress, label, className }: ProgressBarProps) {
 	return (
 		<div className={`${styles.progressBarContainer} ${className || ''}`}>
 			<div
@@ -22,14 +22,12 @@ const ProgressBar = ({ progress, label, className }: ProgressBarProps) => {
 					style={{ left: `${progress}%` }}
 					className={styles.progressLabel}
 				>
-					<DefaultText type='caption'>
+					<Text type='caption'>
 						{label}
-					</DefaultText>
+					</Text>
 				</div>
 				</>
 			}
 		</div>
 	);
 };
-
-export default ProgressBar;

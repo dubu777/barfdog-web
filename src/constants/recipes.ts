@@ -1,0 +1,638 @@
+import ChickenIcon from "public/images/recipes/icon/icon-Chicken.svg";
+import TurkeyIcon from "public/images/recipes/icon/icon-Turkey.svg";
+import CauliflowerIcon from "public/images/recipes/icon/icon-Cauliflower.svg";
+import MushroomShiitakeIcon from "public/images/recipes/icon/icon-MushroomShiitake.svg";
+import BlueberryIcon from "public/images/recipes/icon/icon-Blueberry.svg";
+import CowIcon from "public/images/recipes/icon/icon-Cow.svg";
+import AppleIcon from "public/images/recipes/icon/icon-Apple.svg";
+import ChiaSeedIcon from "public/images/recipes/icon/icon-ChiaSeed.svg";
+import LambIcon from "public/images/recipes/icon/icon-Lamb.svg";
+import DuckIcon from "public/images/recipes/icon/icon-Duck.svg";
+import KelpIcon from "public/images/recipes/icon/icon-Kelp.svg";
+import CoconutOilIcon from "public/images/recipes/icon/icon-CoconutOil.svg";
+import TurmericIcon from "public/images/recipes/icon/icon-Turmeric.svg";
+import KaleIcon from "public/images/recipes/icon/icon-Kale.svg";
+import HempSeedIcon from "public/images/recipes/icon/icon-HempSeed.svg";
+import BananaIcon from "public/images/recipes/icon/icon-Banana.svg";
+import StrawberryIcon from "public/images/recipes/icon/icon-Strawberry.svg";
+import CarrotIcon from "public/images/recipes/icon/icon-Carrot.svg";
+import EggHalfIcon from "public/images/recipes/icon/icon-EggHalf.svg";
+
+import CheeseIcon from "public/images/recipes/icon/icon-CottageCheese.svg";
+import FlaxSeedIcon from "public/images/recipes/icon/icon-FlaxSeed.svg";
+import GreenBeanIcon from "public/images/recipes/icon/icon-Greenbean.svg";
+import PsylliumHuskIcon from "public/images/recipes/icon/icon-PsylliumHusk.svg";
+import SpirulinaIcon from "public/images/recipes/icon/icon-Spirulina.svg";
+import PumpkinIcon from "public/images/recipes/icon/icon-SweetPumpkin.svg";
+import ZucchiniIcon from "public/images/recipes/icon/icon-Zucchini.svg";
+
+const INGREDIENTS_MAP = {
+  CHICKEN: { icon: ChickenIcon, label: "닭" },
+  TURKEY: { icon: TurkeyIcon, label: "칠면조" },
+  CAULIFLOWER: { icon: CauliflowerIcon, label: "콜리플라워" },
+  SHIITAKE: { icon: MushroomShiitakeIcon, label: "표고버섯" },
+  BLUEBERRY: { icon: BlueberryIcon, label: "블루베리" },
+  BEEF: { icon: CowIcon, label: "소" },
+  APPLE: { icon: AppleIcon, label: "사과" },
+  CHIA_SEED: { icon: ChiaSeedIcon, label: "치아씨드" },
+  LAMB: { icon: LambIcon, label: "양" },
+  DUCK: { icon: DuckIcon, label: "오리" },
+  KELP: { icon: KelpIcon, label: "켈프" },
+  COCONUT: { icon: CoconutOilIcon, label: "코코넛 오일" },
+  TURMERIC: { icon: TurmericIcon, label: "강황" },
+  KALE: { icon: KaleIcon, label: "케일" },
+  HEMP_SEED: { icon: HempSeedIcon, label: "햄프씨드" },
+  GREEN_BANANA: { icon: BananaIcon, label: "녹색바나나" },
+  STRAWBERRY: { icon: StrawberryIcon, label: "딸기" },
+  EGG_YOLK: { icon: EggHalfIcon, label: "계란 노른자" },
+  CARROT: { icon: CarrotIcon, label: "당근" },
+  
+  COTTAGE_CHEESE: { icon: CheeseIcon, label: "커티지 치즈" },
+  FLAX_SEED: { icon: FlaxSeedIcon, label: "아마씨드" },
+  GREEN_BEAN: { icon: GreenBeanIcon, label: "완두콩" },
+  PSYLIUMHUSK: { icon: PsylliumHuskIcon, label: "실리엄 허스크" },
+  SPIRULINA: { icon: SpirulinaIcon, label: "스피루리나" },
+  SWEET_PUMPKIN: { icon: PumpkinIcon, label: "단호박" },
+  ZUCCHINI: { icon: ZucchiniIcon, label: "애호박" },
+} as const;
+
+const NUTRIENT_CONDITION = {
+  lte: "이하",
+  gte: "이상",
+} as const;
+
+const NUTRIENT_MAP = {
+  moisture: {
+    label: "수분",
+    condition: "lte",
+  },
+  crudeProtein: {
+    label: "조단백",
+    condition: "gte",
+  },
+  crudeFat: {
+    label: "조지방",
+    condition: "gte",
+  },
+  crudeAsh: {
+    label: "조회분",
+    condition: "lte",
+  },
+  crudeFiber: {
+    label: "조섬유",
+    condition: "lte",
+  },
+  calcium: {
+    label: "칼슘",
+    condition: "gte",
+  },
+  phosphorus: {
+    label: "인",
+    condition: "gte",
+  },
+} as const;
+
+const DRY_MATTER_MAP = {
+  Protein: "%",
+  Fat: "%",
+  Thiamin: "mg",
+  Rivoflavin: "mg",
+  Niacin: "mg",
+  "Pantothenic acid": "mg",
+  Pyridoxine: "mg",
+  Folate: "µg",
+  Cobalamin: "µg",
+  Retinol: "IU",
+  "Vit.D": "IU",
+  "Vit.E(alpha)": "IU",
+  "Linoleic acid": "%",
+  "EPA + DHA": "%",
+  //
+  Fiber: "%",
+  Ash: "%",
+  Na: "%",
+  Mg: "%",
+  Phosphours: "%",
+  K: "%",
+  Calcium: "%",
+  Mn: "mg",
+  Fe: "mg",
+  Zn: "mg",
+  Se: "µg",
+  Cu: "mg",
+  Iodine: "µg",
+} as const;
+
+const RECIPES_INFO = {
+  5: {
+    id: 5,
+    key: "STARTER PREMIUM +",
+    name: "스타터프리미엄+",
+    totalIngredientsInfo:
+      "통닭(국내산 무항생제), 칠면조 가슴살(칠레산), 닭가슴살(국내산 무항생제), 닭안심(국내산 무항생제), 닭간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 커티지치즈(국내산), 저염멸치(국내산), 밀싹(국내산), 벌꿀(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
+    kcalPerGrams: 139,
+    nutrient: {
+      moisture: 76.7,
+      crudeProtein: 12.9,
+      crudeFat: 4.2,
+      crudeAsh: 1.9,
+      crudeFiber: 0.6,
+      calcium: 0.2,
+      phosphorus: 0.18,
+    },
+    dryMatter: {
+      Protein: 63.55,
+      Fat: 20.69,
+      Thiamin: 2.25,
+      Rivoflavin: 2.86,
+      Niacin: 17.89,
+      "Pantothenic acid": 4.42,
+      Pyridoxine: 4.63,
+      Folate: 2.2,
+      Cobalamin: 16.09,
+      Retinol: 2984,
+      "Vit.D": 190.24,
+      "Vit.E(alpha)": 24.6,
+      "Linoleic acid": 5.19,
+      "EPA + DHA": 0.31,
+      Fiber: 2.96,
+      Ash: 9.36,
+      Na: 0.38,
+      Mg: 0.14,
+      Phosphours: 0.89,
+      K: 1.43,
+      Calcium: 0.99,
+      Mn: 1.24,
+      Fe: 15.06,
+      Zn: 19.74,
+      Se: 58.74,
+      Cu: 1.17,
+      Iodine: 454.7,
+    },
+    efficacy: [
+      {
+        title: "첫 생식에 완벽한 레시피",
+        description:
+          "생식이 처음인 아이들이 편하게 적응 할 수 있도록 도와줍니다",
+      },
+      {
+        title: "생식의 시작",
+        description:
+          "전 세계 생식 레시피에서 첫 생식으로 권장하는 흰살코기 닭고기와 칠면조를 담았습니다",
+      },
+      {
+        title: "높은 흡수율과 소화",
+        description:
+          "부드러운 생고기와 우수한 흡수력을 집중하여 설계된 레시피 입니다",
+      },
+    ],
+  },
+  6: {
+    id: 6,
+    key: "TURKEY&BEEF +",
+    name: "터키앤비프+",
+    totalIngredientsInfo:
+      "칠면조 가슴살(칠레산), 칠면조 정육(칠레산), 소보섭살(풀먹은 호주 방목 유기농), 소사태살(풀먹은 호주 방목 유기농), 칠면조 목뼈(칠레산), 소간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 커티지치즈(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(USDA 유기농 인증 미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
+    kcalPerGrams: 147,
+    nutrient: {
+      moisture: 77,
+      crudeProtein: 12.5,
+      crudeFat: 4.6,
+      crudeAsh: 2.0,
+      crudeFiber: 0.7,
+      calcium: 0.23,
+      phosphorus: 0.21,
+    },
+    dryMatter: {
+      Protein: 54.35,
+      Fat: 20,
+      Thiamin: 3.04,
+      Rivoflavin: 1.59,
+      Niacin: 11.86,
+      "Pantothenic acid": 2.48,
+      Pyridoxine: 2.19,
+      Folate: 96.14,
+      Cobalamin: 21.13,
+      Retinol: 3412,
+      "Vit.D": 201.65,
+      "Vit.E(alpha)": 26.2,
+      "Linoleic acid": 4.28,
+      "EPA + DHA": 0.29,
+      Fiber: 3.04,
+      Ash: 8.7,
+      Na: 0.32,
+      Mg: 0.12,
+      Phosphours: 0.91,
+      K: 1.04,
+      Calcium: 1,
+      Mn: 1.28,
+      Fe: 10.28,
+      Zn: 17.66,
+      Se: 66.14,
+      Cu: 1.21,
+      Iodine: 496.57,
+    },
+    efficacy: [
+      {
+        title: "양질의 단백질, 풍부한 아미노산",
+        description:
+          "성장 단계의 자견의 발육과 성견의 영양 보충에 도움을 줍니다",
+      },
+      {
+        title: "면역체계에 좋은 셀레늄",
+        description:
+          "노화 방지, 혈액순환 촉진, 항암력을 증진 시켜 면역 체계에 도움을 줍니다",
+      },
+      {
+        title: "무가공된 육즙과 자연의 맛",
+        description:
+          "가공을 거치지 않은 자연 그대로의 풍부한 육즙과 맛은 입맛이 까다로운 친구들에게도 즐거운 식사로 기억될 것입니다",
+      },
+    ],
+  },
+  7: {
+    id: 7,
+    key: "DUCK&LAMB +",
+    name: "덕앤램+",
+    totalIngredientsInfo:
+      "오리 정육(국내산 무항생제), 오리 근위(국내산 무항생제), 닭간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 브로콜리(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 강황(USDA 유기농 인증 미국산/인도산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산), 후추(USDA 유기농 인증 미국산)",
+    kcalPerGrams: 146,
+    nutrient: {
+      moisture: 78,
+      crudeProtein: 13.0,
+      crudeFat: 4.0,
+      crudeAsh: 2.3,
+      crudeFiber: 0.6,
+      calcium: 0.24,
+      phosphorus: 0.22,
+    },
+    dryMatter: {
+      Protein: 59.09,
+      Fat: 18.18,
+      Thiamin: 3.74,
+      Rivoflavin: 1.57,
+      Niacin: 18.71,
+      "Pantothenic acid": 1.16,
+      Pyridoxine: 2.17,
+      Folate: 99.31,
+      Cobalamin: 18.15,
+      Retinol: 3922,
+      "Vit.D": 204.24,
+      "Vit.E(alpha)": 19.4,
+      "Linoleic acid": 5.21,
+      "EPA + DHA": 0.31,
+      Fiber: 2.73,
+      Ash: 10.45,
+      Na: 0.46,
+      Mg: 0.15,
+      Phosphours: 1.0,
+      K: 1.02,
+      Calcium: 1.09,
+      Mn: 1.79,
+      Fe: 12.14,
+      Zn: 19.79,
+      Se: 52.24,
+      Cu: 1.36,
+      Iodine: 415.4,
+    },
+    efficacy: [
+      {
+        title: "피로회복 영양식",
+        description:
+          "단백질과 필수 아미노산이 풍부하여 피로회복에 좋은 기력 회복 레시피",
+      },
+      {
+        title: "관절 강화에 필수인 강황가루",
+        description: "높은 흡수율로 관절 강화를 돕습니다",
+      },
+      {
+        title: "면역체계에 필수인 아연과 셀레늄",
+        description:
+          "강력한 항산화력으로 신체 조직의 노화 방지를 도와줍니다\n항산화 작용은 해독 작용과 면역 기능을 증진시키고 염증 등을 예방시켜줍니다",
+      },
+    ],
+  },
+  8: {
+    id: 8,
+    key: "LAMB&BEEF +",
+    name: "램앤비프+",
+    totalIngredientsInfo:
+      "양어깨살(뉴질랜드산 방목 유기농 LAMB), 소보섭살(풀먹은 호주산 방목 유기농), 소사태살(풀먹은 호주산 방목 유기농), 양목뼈(호주산 무항생제/뉴질랜드산 방목 유기농 LAMB), 소간(국내산), 소비장(국내산), 소신장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
+    kcalPerGrams: 159,
+    nutrient: {
+      moisture: 77,
+      crudeProtein: 13.4,
+      crudeFat: 5.2,
+      crudeAsh: 2.2,
+      crudeFiber: 0.6,
+      calcium: 0.2,
+      phosphorus: 0.18,
+    },
+    dryMatter: {
+      Protein: 58.26,
+      Fat: 22.61,
+      Thiamin: 3.61,
+      Rivoflavin: 1.08,
+      Niacin: 16.47,
+      "Pantothenic acid": 3.56,
+      Pyridoxine: 1.41,
+      Folate: 68.51,
+      Cobalamin: 22.48,
+      Retinol: 3177,
+      "Vit.D": 186.34,
+      "Vit.E(alpha)": 19.6,
+      "Linoleic acid": 5.84,
+      "EPA + DHA": 0.26,
+      Fiber: 2.61,
+      Ash: 9.57,
+      Na: 0.29,
+      Mg: 0.11,
+      Phosphours: 0.78,
+      K: 1.0,
+      Calcium: 0.87,
+      Mn: 1.41,
+      Fe: 12.98,
+      Zn: 20.65,
+      Se: 59.08,
+      Cu: 0.82,
+      Iodine: 418.09,
+    },
+    efficacy: [
+      {
+        title: "독성해소에 좋은 양고기",
+        description:
+          "양고기를 기반으로 설계되어 독성해소, 살균, 이뇨, 피부미용에 효과적으로 반려견의 피부와 모질을 개선하는데 도움을 줍니다",
+      },
+      {
+        title: "비타민, 칼슘, 인, 철 풍부",
+        description:
+          "광물질이 풍부하면서 수분함량과 소화력이 높아 양질의 단백질을 올바르게 흡수할 수 있습니다",
+      },
+      {
+        title: "저칼로리, 고단백, 고칼슘",
+        description:
+          "풍부하고 질 좋은 단백질과 칼슘은 높이고 지방과 열량은 낮춰 적절한 체중관리를 위한 프리미엄 식이요법 레시피",
+      },
+    ],
+  },
+  9: {
+    id: 9,
+    key: "Premium CHICKEN",
+    name: "프리미엄 치킨",
+    totalIngredientsInfo:
+      "통닭(국내산 무항생제), 닭가슴살(국내산 무항생제), 닭근위(국내산), 닭심장(국내산), 닭안심(국내산), 닭간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 커티지치즈(국내산), 딸기(국내산), 블루베리(미국산), 저염멸치(국내산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 아마씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 강황(USDA 유기농 인증 미국산/인도산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산), 후추(USDA 유기농 인증 미국산)",
+    kcalPerGrams: 138,
+    nutrient: {
+      moisture: 79,
+      crudeProtein: 12.1,
+      crudeFat: 3.7,
+      crudeAsh: 1.5,
+      crudeFiber: 0.6,
+      calcium: 0.2,
+      phosphorus: 0.18,
+    },
+    dryMatter: {
+      Protein: 57.62,
+      Fat: 17.62,
+      Thiamin: 3.57,
+      Rivoflavin: 1.04,
+      Niacin: 14.52,
+      "Pantothenic acid": 2.02,
+      Pyridoxine: 1.29,
+      Folate: 125.65,
+      Cobalamin: 19.71,
+      Retinol: 3548,
+      "Vit.D": 275.44,
+      "Vit.E(alpha)": 21.3,
+      "Linoleic acid": 3.54,
+      "EPA + DHA": 0.21,
+      Fiber: 2.86,
+      Ash: 7.14,
+      Na: 0.3,
+      Mg: 0.12,
+      Phosphours: 0.86,
+      K: 1.24,
+      Calcium: 0.95,
+      Mn: 1.57,
+      Fe: 14.6,
+      Zn: 20.57,
+      Se: 71.04,
+      Cu: 0.99,
+      Iodine: 438.07,
+    },
+    efficacy: [
+      {
+        title: "첫 생식에 완벽한 레시피",
+        description:
+          "생식이 처음인 아이들이 편하게 적응 할 수 있도록 도와줍니다",
+      },
+      {
+        title: "생식의 시작",
+        description:
+          "전 세계 생식 레시피에서 첫 생식으로 권장하는흰살코기 닭고기를 기반으로 설계하였습니다",
+      },
+      {
+        title: "높은 흡수율과 소화",
+        description:
+          "부드러운 생고기와 우수한 흡수력을 집중하여 설계된 레시피 입니다",
+      },
+      {
+        title: "노령견에게도 적합한 레시피",
+        description:
+          "칼슘, 인 함량이 다른 레시피보다 낮아 노령견에게도 적합합니다",
+      },
+    ],
+  },
+  10: {
+    id: 10,
+    key: "Premium TURKEY",
+    name: "프리미엄 터키",
+    totalIngredientsInfo:
+      "칠면조 가슴살(칠레산), 칠면조 정육(칠레산), 칠면조 목뼈(칠레산), 닭간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 난황(국내산), 표고버섯(국내산), 커티지치즈(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
+    kcalPerGrams: 130,
+    nutrient: {
+      moisture: 78,
+      crudeProtein: 12.8,
+      crudeFat: 3.8,
+      crudeAsh: 2.0,
+      crudeFiber: 0.5,
+      calcium: 0.34,
+      phosphorus: 0.3,
+    },
+    dryMatter: {
+      Protein: 58.18,
+      Fat: 17.27,
+      Thiamin: 2.98,
+      Rivoflavin: 1.14,
+      Niacin: 11.41,
+      "Pantothenic acid": 2.69,
+      Pyridoxine: 2.24,
+      Folate: 107.3,
+      Cobalamin: 20.24,
+      Retinol: 3124,
+      "Vit.D": 189.9,
+      "Vit.E(alpha)": 28.8,
+      "Linoleic acid": 2.26,
+      "EPA + DHA": 0.17,
+      Fiber: 2.27,
+      Ash: 9.09,
+      Na: 0.24,
+      Mg: 0.11,
+      Phosphours: 1.36,
+      K: 0.98,
+      Calcium: 1.55,
+      Mn: 1.54,
+      Fe: 8.09,
+      Zn: 16.52,
+      Se: 46.54,
+      Cu: 1.27,
+      Iodine: 407.24,
+    },
+    efficacy: [
+      {
+        title: "풍부한 비타민과 미네랄",
+        description:
+          "칠면조 고기는 비타민 B6, B12, 리보플라빈, 니아신 등 다양한 비타민과 철, 아연,셀레늄 등의 미네랄이 풍부해 에너지 대사, 면역 기능, 피부 및 털 건강 유지에 도움을 줍니다",
+      },
+      {
+        title: "편안한 소화",
+        description:
+          "소화 문제를 겪는 반려견이라면 소화가 잘되는 칠면조 고기를 추천합니다",
+      },
+      {
+        title: "고단백, 저지방의 고품질 단백질",
+        description:
+          "근육 유지와 체중 관리에 도움이 되며 전반적인 건강 증진에 도움",
+      },
+    ],
+  },
+  11: {
+    id: 11,
+    name: "프리미엄 램",
+    key: "Premium LAMB",
+    totalIngredientsInfo:
+      "양어깨살(뉴질랜드산 방목 유기농 LAMB), 양심장(뉴질랜드산 방목 유기농 LAMB), 양목뼈(뉴질랜드산 방목 유기농 LAMB), 소간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
+    kcalPerGrams: 150,
+    nutrient: {
+      moisture: 77,
+      crudeProtein: 13.1,
+      crudeFat: 6.8,
+      crudeAsh: 1.6,
+      crudeFiber: 0.6,
+      calcium: 0.27,
+      phosphorus: 0.25,
+    },
+    dryMatter: {
+      Protein: 56.96,
+      Fat: 29.57,
+      Thiamin: 2.19,
+      Rivoflavin: 2.25,
+      Niacin: 8.94,
+      "Pantothenic acid": 1.12,
+      Pyridoxine: 1.09,
+      Folate: 69.54,
+      Cobalamin: 22.44,
+      Retinol: 2968,
+      "Vit.D": 229.53,
+      "Vit.E(alpha)": 22.8,
+      "Linoleic acid": 3.82,
+      "EPA + DHA": 0.21,
+      Fiber: 2.61,
+      Ash: 6.96,
+      Na: 0.28,
+      Mg: 0.08,
+      Phosphours: 1.09,
+      K: 1.12,
+      Calcium: 1.17,
+      Mn: 1.62,
+      Fe: 8.24,
+      Zn: 21.24,
+      Se: 51.84,
+      Cu: 0.74,
+      Iodine: 437.24,
+    },
+    efficacy: [
+      {
+        title: "오메가-3 및 오메가-6 지방산",
+        description:
+          "양고기의 오메가-3와 오메가-6 지방산은 반려견의 털을 부드럽게 만들어 주며 염증을 완화시키는데 도움을 줍니다",
+      },
+      {
+        title: "입맛을 자극하는 풍미",
+        description:
+          "까다로운 식성을 가진 친구라도 양고기 본연의 풍미는 식욕을 증진시키는데 도움을 줄 수 있습니다",
+      },
+      {
+        title: "체중 관리에 도움",
+        description:
+          "L-카르니틴 성분은 반려견 심장 건강을 지원하고 지방 대사를 촉진하여 체중 관리에 도움을 줄 수 있답니다",
+      },
+    ],
+  },
+  12: {
+    id: 12,
+    name: "프리미엄 비프",
+    key: "Premium BEEF",
+    totalIngredientsInfo:
+      "소보섭살(풀먹은 호주산 방목 유기농), 소사태살(풀먹은 호주산 방목 유기농), 소심장(풀먹은 호주산 방목 유기농), 송아지 목뼈(풀먹은 호주산 방목 유기농), 소간(국내산), 소비장(국내산), 단호박(국내산), 당근(국내산), 양배추(국내산), 콜리플라워(국내산), 그린빈(벨기에산), 애호박(국내산), 케일(국내산), 사과(국내산), 녹색바나나(필리핀산), 표고버섯(국내산), 딸기(국내산), 블루베리(미국산), 밀싹(국내산), 햄프씨드(USDA 유기농 인증 미국산), 치아씨드(USDA 유기농 인증 미국산), 대구간유(USDA 유기농 인증 미국산), 코코넛오일(USDA 유기농 인증 미국산), 켈프(USDA 유기농 인증 미국산), 스피루리나(USDA 유기농 인증 미국산), 실리엄허스크(USDA 유기농 인증 미국산), 난각분(국내산), 요오드화소금(미국산), 비타민E(미국산), 망간(미국산), 아연(미국산), 비타민D(미국산), 비타민 B-Complex(미국산)",
+    kcalPerGrams: 121,
+    nutrient: {
+      moisture: 79,
+      crudeProtein: 13.4,
+      crudeFat: 2.8,
+      crudeAsh: 2.3,
+      crudeFiber: 0.6,
+      calcium: 0.28,
+      phosphorus: 0.26,
+    },
+    dryMatter: {
+      Protein: 63.81,
+      Fat: 13.33,
+      Thiamin: 3.62,
+      Rivoflavin: 1.53,
+      Niacin: 12.74,
+      "Pantothenic acid": 2.24,
+      Pyridoxine: 0.94,
+      Folate: 94.14,
+      Cobalamin: 23.61,
+      Retinol: 2888,
+      "Vit.D": 206.77,
+      "Vit.E(alpha)": 19.8,
+      "Linoleic acid": 3.6,
+      "EPA + DHA": 0.18,
+      Fiber: 2.86,
+      Ash: 10.95,
+      Na: 0.41,
+      Mg: 0.15,
+      Phosphours: 1.24,
+      K: 0.94,
+      Calcium: 1.33,
+      Mn: 1.71,
+      Fe: 11.7,
+      Zn: 18.75,
+      Se: 61.26,
+      Cu: 0.92,
+      Iodine: 433.11,
+    },
+    efficacy: [
+      {
+        title: "풍부한 육즙과 높은 기호성",
+        description:
+          "방목으로 자란 소의 높은 영양가를 담은 풍부한 육즙 까다로운 식성을 가진 반려견도 좋아할 탁월한 기호성",
+      },
+      {
+        title: "면역 체계 강화와 빈혈 예방",
+        description:
+          "풍부한 비타민 B12와 철분으로 반려견의 에너지와 혈액 건강을 최상의 상태로 유지하는데 도움을 줍니다",
+      },
+    ],
+  },
+};
+
+export {
+  INGREDIENTS_MAP,
+  NUTRIENT_CONDITION,
+  NUTRIENT_MAP,
+  DRY_MATTER_MAP,
+  RECIPES_INFO,
+};

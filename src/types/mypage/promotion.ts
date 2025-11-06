@@ -1,0 +1,46 @@
+import { CouponTarget, DiscountType, Pagination } from "@/types";
+
+type PromotionStatus = "ACTIVE" | "INACTIVE";
+type PromotionType = "COUPON";
+
+interface PromotionCouponInfo {
+	couponId: number;
+	code: string;
+	name: string;
+	couponTarget: CouponTarget;
+	discountDegree: number;
+	discountType: DiscountType;
+	availableMinPrice: number;
+	availableMaxDiscount: number;
+	amount: number;
+	createdDate: string;
+}
+
+interface PromotionInfo {
+	promotionId: number;
+	type: PromotionType;
+	status: PromotionStatus;
+	name: string;
+	startDate: string;
+	expiredDate: string;
+}
+
+interface PromotionItem {
+	promotionInfo: PromotionInfo;
+	promotionCouponInfo: PromotionCouponInfo;
+}
+
+interface CreatePromotion {
+	promotionCode: string;
+}
+
+interface RawPromotionList {
+	promotionCouponDetailList: PromotionItem[];
+	pagination: Pagination;
+}
+
+export type {
+	PromotionItem,
+	CreatePromotion,
+	RawPromotionList,
+}

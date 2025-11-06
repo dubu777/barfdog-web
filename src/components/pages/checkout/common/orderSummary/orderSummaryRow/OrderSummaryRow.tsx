@@ -1,8 +1,8 @@
 "use client";
 
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import * as styles from "./OrderSummaryRow.css";
-import { fontColors, textStyles } from "@/components/common/defaultText/DefaultText.css";
+import { fontColors, textStyles } from "@/components/ui/text/Text.css";
 import { formatNumberWithCommas } from "@/utils/formatNumberWithCommas";
 
 
@@ -55,12 +55,12 @@ export default function OrderSummaryRow({
   })()
   return (
     <div className={styles.orderSummaryRowContainer}>
-      <DefaultText type={labelType} color={labelColor}>
+      <Text type={labelType} color={labelColor}>
         {label}
-      </DefaultText>
-      <DefaultText type={valueType} color={valueColor ?? computedValueColor}>
+      </Text>
+      <Text type={valueType} color={valueColor ?? computedValueColor}>
         {formattedValue}
-      </DefaultText>
+      </Text>
     </div>
   );
 }

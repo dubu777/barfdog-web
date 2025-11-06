@@ -1,7 +1,6 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { prefetchGetMyPageInfo } from "@/api/mypage/queries/usePrefetchGetMyPageInfo";
-import { prefetchGetMyPageBanner } from "@/api/mypage/queries/usePrefetchGetMyPageBanner";
-import { prefetchGetSubscriptionList } from "@/api/subscription/queries/usePrefetchGetSubscriptionList";
+import { prefetchGetMyPageInfo } from "@/api/mypage/common/queries/prefetchGetMyPageInfo";
+import { prefetchGetMyPageBanner } from "@/api/mypage/common/queries/prefetchGetMyPageBanner";
 import MyPageMain from "@/components/pages/mypage/main/MyPageMain";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 
@@ -10,7 +9,6 @@ export default async function MyPagePage() {
 
   await prefetchGetMyPageInfo(queryClient);
   await prefetchGetMyPageBanner(queryClient);
-  await prefetchGetSubscriptionList(queryClient, 0, 999);
 
   const dehydrateState = dehydrate(queryClient);
 

@@ -1,35 +1,43 @@
-import ResultCard from "../../../common/resultCard/ResultCard";
 import { commonWrapper } from "@/styles/common.css";
+import { phaseTextStyle } from "../BodyCheckResult.css";
 import SirenIcon from "public/images/healthNote/siren.svg";
 import LightIcon from "public/images/healthNote/light-bulb.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import {
-  getBodyCheckDiseaseMeta,
-  getPhaseDescription,
-} from "@/utils/healthNote/bodyCheckScore";
-import { DiseaseName, DiseasePhaseType } from "@/types/healthNote";
-import Card from "@/components/common/card/Card";
-import { phaseTextStyle } from "../BodyCheckResult.css";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Card from "@/components/ui/card/Card";
+import ResultCard from "../../../common/resultCard/ResultCard";
+import Text from "@/components/ui/text/Text";
+import { getPhaseDescription } from "@/utils/healthNote/bodyCheck/bodyCheckScore";
+import { DiseaseCategoryKey, DiseasePhaseType } from "@/types/healthNote/bodyCheck";
+import { BODY_CHECK_DISEASE_INFO, DISEASE_PHASES_LIST, DISEASE_PHASES_WEIGHT_BALANCE_LIST } from "@/constants/healthNote/bodyCheck/common";
+
 interface DiseasePhaseProps {
-  diseaseName: DiseaseName;
+  diseaseName: DiseaseCategoryKey;
 }
 
 export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
-  const phases = ["초기", "중기", "심화"];
-  const { healthGuide } = getBodyCheckDiseaseMeta(diseaseName);
+  const { management } = BODY_CHECK_DISEASE_INFO[diseaseName];
+  
+  const isWeightBalanceScore = diseaseName === 'weightBalanceScore';
+  const diseaseTitle = isWeightBalanceScore
+    ? '체중 불균형'
+    : BODY_CHECK_DISEASE_INFO[diseaseName].name;
+  const diseasePhasesList = isWeightBalanceScore ? DISEASE_PHASES_WEIGHT_BALANCE_LIST : DISEASE_PHASES_LIST;
+
   return (
-    <ResultCard gap={12}>
+    <ResultCard gap={12} title={`${diseaseTitle}이\n의심된다면 이렇게 관리해 주세요`}>
       <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
         <div className={commonWrapper({ gap: 8, justify: "start" })}>
           <SvgIcon src={SirenIcon} size={24} />
-          <DefaultText type="headline2" applyLineHeight={false}>
-            증상별 경과
-          </DefaultText>
+          <Text type="headline2" applyLineHeight={false}>
+            {isWeightBalanceScore
+              ? '체형별 상태'
+              : '증상별 경과'
+            }
+          </Text>
         </div>
-        {phases.map((phase) => (
+        {diseasePhasesList.map((phase, index) => (
           <div
-            key={phase}
+            key={`${phase.value}-${index}`}
             className={commonWrapper({
               direction: "col",
               gap: 6,
@@ -42,16 +50,16 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
                 align: "start",
               })}
             >
-              <DefaultText
-                type="headline2"
-                className={phaseTextStyle}
+              <Text
+                type="label3"
+                className={phaseTextStyle({ fixedMinWidth: isWeightBalanceScore })}
                 applyLineHeight={false}
               >
-                {phase}
-              </DefaultText>
-              <DefaultText type="body3" color="gray700">
-                {getPhaseDescription(diseaseName, phase as DiseasePhaseType)}
-              </DefaultText>
+                {phase.label}
+              </Text>
+              <Text type="body3" color="gray700">
+                {getPhaseDescription(diseaseName, phase.value as DiseasePhaseType)}
+              </Text>
             </div>
           </div>
         ))}
@@ -59,11 +67,11 @@ export default function DiseasePhase({ diseaseName }: DiseasePhaseProps) {
       <Card shadow="light" padding={16} backgroundColor="gray0" gap={8}>
         <div className={commonWrapper({ gap: 6, justify: "start" })}>
           <SvgIcon src={LightIcon} size={24} />
-          <DefaultText type="headline2">건강 관리 가이드</DefaultText>
+          <Text type="headline2">건강 관리 가이드</Text>
         </div>
-        <DefaultText type="body3" color="gray700">
-          {healthGuide}
-        </DefaultText>
+        <Text type="body3" color="gray700">
+          {management}
+        </Text>
       </Card>
     </ResultCard>
   );

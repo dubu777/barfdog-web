@@ -17,6 +17,10 @@ globalStyle("body", {
   overscrollBehavior: "none",
 });
 
+globalStyle("button", {
+  cursor: "pointer",
+});
+
 globalStyle(".swiper-pagination-bullet", {
   width: "6px !important",
   height: "6px !important",

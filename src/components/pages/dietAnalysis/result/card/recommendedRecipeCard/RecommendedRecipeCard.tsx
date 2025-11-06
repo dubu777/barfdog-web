@@ -1,0 +1,118 @@
+import Card from "@/components/ui/card/Card";
+import Chips from "@/components/ui/chips/Chips";
+import Text from "@/components/ui/text/Text";
+import { commonWrapper } from "@/styles/common.css";
+import { RecommendRecipeRankDto } from "@/types/dietAnalysis";
+import { resultCardStyle } from "../levelGaugeCard/LevelGaugeCard.css";
+import Image from "next/image";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import ArrowIcon from "public/images/header/chevron-right.svg";
+import CheckIcon from "public/images/healthNote/body-check/notice-check.svg";
+import * as styles from "./RecommendedRecipeCard.css";
+import { HEALTH_CONCERN_LABEL } from "@/constants/dietAnalysis";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/free-mode";
+import { INGREDIENTS_MAP } from "@/constants/recipes";
+
+interface RecommendedRecipeCardProps {
+  recipe: RecommendRecipeRankDto;
+  dogName: string;
+}
+
+export default function RecommendedRecipeCard({
+  recipe,
+  dogName,
+}: RecommendedRecipeCardProps) {
+  return (
+    <Card shadow="strong" padding={"20/16"} gap={20} borderRadius={16}>
+      <div className={commonWrapper({ justify: "start", gap: 8 })}>
+        <Chips variant="solid" color="red" borderRadius="lg" size="md">
+          {recipe.rank}위
+        </Chips>
+        <Text type="headline2" color="gray800">
+          {recipe.uiNameKorean}
+        </Text>
+      </div>
+      <Card
+        direction="row"
+        justify="start"
+        className={resultCardStyle}
+        gap={12}
+        padding={12}
+      >
+        <Image
+          alt="레시피이미지"
+          src={recipe.recommendRecipeImgUrl}
+          width={76}
+          height={76}
+          priority
+        />
+        <div
+          className={commonWrapper({ justify: "start", gap: 4, wrap: "wrap" })}
+        >
+          {recipe.healthConcernsList.map((concern) => (
+            <Chips key={concern} variant="solid" color="gray100">
+              {HEALTH_CONCERN_LABEL[concern]}
+            </Chips>
+          ))}
+        </div>
+        <SvgIcon src={ArrowIcon} size={20} color="gray600" />
+      </Card>
+      <div
+        className={commonWrapper({ direction: "col", align: "start", gap: 12 })}
+      >
+        <Text type="headline2" color="gray800">
+          {dogName}의 건강 개선 가이드
+        </Text>
+        {recipe.healthImprovements.map(
+          (
+            { healthConcernsExplanationTitle, healthConcernsExplanation },
+            idx
+          ) => (
+            <div key={idx} className={styles.healthTipGridWrapper}>
+              <SvgIcon
+                src={CheckIcon}
+                color="blue300"
+                className={styles.iconGrid}
+              />
+              <Text type="label4" color="gray800" className={styles.titleGrid}>
+                {healthConcernsExplanationTitle}
+              </Text>
+              <Text
+                type="body3"
+                color="gray700"
+                className={styles.descriptionGrid}
+              >
+                {healthConcernsExplanation}
+              </Text>
+            </div>
+          )
+        )}
+      </div>
+      <Swiper
+        slidesPerView="auto"
+        spaceBetween={8}
+        modules={[FreeMode]}
+        freeMode={true}
+        className={styles.ingredientSwiper}
+      >
+        {[...recipe.ingredients, ...recipe.subIngredients].map(
+          (ingredient, index) => (
+            <SwiperSlide key={index} className={styles.ingredientSlide}>
+              <div className={styles.ingredientItem}>
+                <div className={styles.ingredientIcon}>
+                  <SvgIcon src={INGREDIENTS_MAP[ingredient].icon} size={52} />
+                </div>
+                <Text type="caption" color="gray700">
+                  {INGREDIENTS_MAP[ingredient].label}
+                </Text>
+              </div>
+            </SwiperSlide>
+          )
+        )}
+      </Swiper>
+    </Card>
+  );
+}

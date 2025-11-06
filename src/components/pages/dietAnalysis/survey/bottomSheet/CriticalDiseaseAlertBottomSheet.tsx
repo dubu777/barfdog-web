@@ -1,8 +1,8 @@
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
 import * as styles from "./SurveyBottomSheet.css";
-import Chips from "@/components/common/chips/Chips";
+import Chips from "@/components/ui/chips/Chips";
 import { CRITICAL_DISEASES } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
 
@@ -22,13 +22,13 @@ export default function CriticalDiseaseAlertBottomSheet({
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className={styles.surveyBottomSheetContainer}>
-        <DefaultText type="headline1">
+        <Text type="headline1">
           바프독 레시피는 아래의 질병이 있을 경우 상담을 권장하고 있어요
-        </DefaultText>
-        <DefaultText type="body2" color="gray600">
+        </Text>
+        <Text type="body2" color="gray600">
           영양학 전문가와 질병에 대해 상담을 받아본 후 급여를 결정해보시는 걸
           권장드립니다.
-        </DefaultText>
+        </Text>
         <div className={commonWrapper({ justify: "start", gap: 8 })}>
           {CRITICAL_DISEASES.map(({ value, label }) => (
             <Chips

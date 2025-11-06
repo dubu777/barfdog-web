@@ -1,53 +1,58 @@
-import { commonWrapper } from "@/styles/common.css";
+import { commonWrapper, marginStyles } from "@/styles/common.css";
 import * as styles from "./RecipeItemCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import Image from "next/image";
-import { RecipeTempData } from "@/constants";
+import { DeliveryPlan, MealPlan } from "@/types";
+import { DELIVERY_PLAN_LABEL, MEAL_PLAN_LABEL } from "@/constants";
 
 interface RecipeItemCardProps {
-  packGrams: number;
-  originPrice: number;
+  mealPlan: MealPlan;
+  deliveryPlan: DeliveryPlan;
+  displayImageUrl: string;
+  recipeName: string;
+  originalPrice: number;
   packCount: number;
-  mealFrequency: 1 | 2;
-  deliveryCycle: 2 | 4;
-  recipeTempData: RecipeTempData;
+  packGrams: number;
 }
 
 export default function RecipeItemCard({
-  packGrams,
-  originPrice,
+  mealPlan,
+  deliveryPlan,
+  displayImageUrl,
+  recipeName,
+  originalPrice,
   packCount,
-  mealFrequency,
-  deliveryCycle,
-  recipeTempData,
+  packGrams,
 }: RecipeItemCardProps) {
-  const mealFrequencyText = mealFrequency === 1 ? "하루 한 끼" : "하루 두 끼";
   return (
     <div className={styles.itemCardContainer}>
       <Image
-        src={recipeTempData.imageUrl}
-        alt={recipeTempData.name}
+        src={displayImageUrl}
+        alt={recipeName}
         width={76}
         height={76}
         priority
+        className={styles.itemCardImage}
       />
       <div
         className={commonWrapper({
           direction: "col",
-          gap: 6,
-          justify: "start",
+          justify: "between",
           align: "start",
         })}
       >
         <div>
-          <DefaultText type="headline2" block>{recipeTempData.name}</DefaultText>
-          <DefaultText
+          <Text type="headline2" block className={marginStyles({ bottom: 4 })}>
+            {recipeName}
+          </Text>
+          <Text
             type="body3"
             color="gray600"
             block
-          >{`${packGrams}g | ${mealFrequencyText} | ${deliveryCycle}주 | ${packCount}팩`}</DefaultText>
+            className={marginStyles({ bottom: 6 })}
+          >{`${packGrams}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</Text>
         </div>
-        <DefaultText type="label3">{originPrice.toLocaleString()}원</DefaultText>
+        <Text type="label3">{originalPrice.toLocaleString()}원</Text>
       </div>
     </div>
   );

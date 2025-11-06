@@ -1,36 +1,49 @@
 import axiosInstance from "@/api/axiosInstance";
 import { AxiosInstance } from "axios";
-import { StoreItemDetail, StoreItemDetailReviewList, StoreItemList } from "@/types/store";
+import {
+  ItemType,
+  SortByType,
+  StoreItemDetail,
+  StoreItemList,
+} from "@/types/store";
+import { ApiResponse } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
-export { getStoreItemList, getStoreItemDetail, getStoreItemReviewList };
+const getStoreItemList = async ({ 
+  pageParam = 0, 
+  size = 20, 
+  sortBy = 'recent',
+  itemType = 'ALL',
+  instance = axiosInstance
+}: { 
+  pageParam: number; 
+  size?: number; 
+  sortBy?: SortByType;
+  itemType?: ItemType;
+  instance?: AxiosInstance;
+}) => {
+  const { data }: { data: ApiResponse<StoreItemList> } = await instance.get(`/api/v2/public/items`, {
+    params: { 
+      page: pageParam,
+      size,
+      sortBy,
+      itemType: itemType.toUpperCase(),
+    },
+  });
 
-const getStoreItemList = async (page = 0, size = 10, sortBy = 'recent', itemType = 'ALL', instance: AxiosInstance = axiosInstance): Promise<StoreItemList> => {
-  const { data } = await instance.get(`/api/items?page=${page}&size=${size}&sortBy=${sortBy}&itemType=${itemType.toUpperCase()}`);
-
-  // return {
-  //   page: {
-  //     size: data.size,
-  //     totalElements: data.totalElements,
-  //     totalPages: data.totalPages,
-  //     number: data.number,
-  //   },
-  //   itemList: data?.content || [],
-  // };
+  const responseData = validateApiResponse(data, "상품 목록 조회에 실패했습니다.");
   return {
-    page: data.page,
-    itemList: data?._embedded?.queryItemsDtoList || [],
+    pagination: responseData.pagination,
+    itemList: responseData.shopItemList,
   };
 };
 
-const getStoreItemDetail = async (itemId: number): Promise<StoreItemDetail> => {
-  const { data } = await axiosInstance.get(`/api/items/${itemId}`);
-  return data;
-};
-
-const getStoreItemReviewList = async (itemId: number, page = 0, size = 6): Promise<StoreItemDetailReviewList> => {
-  const { data } = await axiosInstance.get(`/api/items/${itemId}/reviews?page=${page}&size=${size}`);
-  return {
-    page: data?.page,
-    reviewList: data._embedded.itemReviewsDtoList || [],
-  };
+const getStoreItemDetail = async (itemId: number, instance: AxiosInstance = axiosInstance): Promise<StoreItemDetail> => {
+  const { data }: { data: ApiResponse<StoreItemDetail> } = await instance.get(`/api/v2/public/items/${itemId}`);
+  return validateApiResponse(data, "상품 상세 조회에 실패했습니다.");
 }
+
+export { 
+  getStoreItemList,
+  getStoreItemDetail,
+};

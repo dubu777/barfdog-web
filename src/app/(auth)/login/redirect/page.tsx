@@ -1,15 +1,15 @@
 import LoginRedirect from "@/components/pages/auth/login/loginRedirect/LoginRedirect";
-import { SnSProvider } from "@/types";
+import { SnsProvider } from "@/types";
 
 interface RedirectLoginPageProps {
-	searchParams: {
-		provider: SnSProvider;
-		code: string;
-	}
+  searchParams: {
+    provider: SnsProvider;
+    code: string;
+  };
 }
 
-export default function RedirectLoginPage({ searchParams }: RedirectLoginPageProps) {
-	return (
-		<LoginRedirect searchParams={searchParams} />
-	)
+export default function RedirectLoginPage({
+  searchParams,
+}: RedirectLoginPageProps) {
+  return <LoginRedirect searchParams={searchParams} />;
 }

@@ -1,18 +1,18 @@
 import { useRouter } from "next/navigation";
+import { motion } from 'framer-motion';
+import Image from "next/image";
+import FaqAvatar from '/public/images/main/faqAvatar.png';
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
-import Button from "@/components/common/button/Button";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Button from "@/components/ui/button/Button";
+import Text from "@/components/ui/text/Text";
 import {
 	mainFAQButton,
 	mainFAQButtonAvatar,
 	mainFAQButtonBox,
 	mainFAQDescription, mainFAQDescriptionBox
 } from "@/components/pages/main/common/MainCommon.css";
-import FaqAvatar from '/public/images/main/faqAvatar.png';
-import { motion } from 'framer-motion';
 import { MAIN_DATA } from "@/constants/main";
-import Image from "next/image";
 
 const parentVariants = {
 	hidden: {},
@@ -37,12 +37,13 @@ const childVariants = {
 	},
 };
 
-const FAQSection = () => {
+export default function FAQSection() {
 	const router = useRouter();
 	const title = MAIN_DATA.FAQ.title;
 	const subTitle = MAIN_DATA.FAQ.subTitle;
 	const action = MAIN_DATA.FAQ.action;
 	const descriptions = MAIN_DATA.FAQ.descriptions;
+	
 	return (
 		<MainContainer backgroundColor='yellow'>
 			<MainTitle title={title} subTitle={subTitle} hasInteraction />
@@ -55,9 +56,9 @@ const FAQSection = () => {
 			>
 				{descriptions.map(description => (
 					<motion.div key={description} variants={childVariants} className={mainFAQDescription}>
-						<DefaultText type='label4'>
+						<Text type='label4'>
 							{description}
-						</DefaultText>
+						</Text>
 					</motion.div>
 				))}
 			</motion.div>
@@ -70,5 +71,3 @@ const FAQSection = () => {
 		</MainContainer>
 	);
 };
-
-export default FAQSection;

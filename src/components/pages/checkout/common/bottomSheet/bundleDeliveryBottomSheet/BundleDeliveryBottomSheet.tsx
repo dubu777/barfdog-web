@@ -1,11 +1,11 @@
-import BottomSheet from "@/components/common/bottomSheet/BottomSheet";
+import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 import * as styles from "./BundleDeliveryBottomSheet.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import { BundleDeliveryAddress } from "@/types";
 import BundleDeliveryCard from "./bundleDeliveryCard/BundleDeliveryCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
-import ButtonDocked from "@/components/common/buttonDocked/ButtonDocked";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 
 interface BundleDeliveryBottomSheetProps {
   bundleDeliveryAddress: BundleDeliveryAddress[];
@@ -73,16 +73,12 @@ export default function BundleDeliveryBottomSheet({
     >
       <div className={styles.bundleBottomSheetTitleWrapper}>
         <div>
-          <DefaultText type="title4">
-            묶음 배송은 정기 구독 배송지와
-          </DefaultText>
-          <DefaultText type="title4">
-            동일한 배송지로 설정할 수 있어요
-          </DefaultText>
+          <Text type="title4">묶음 배송은 정기 구독 배송지와</Text>
+          <Text type="title4">동일한 배송지로 설정할 수 있어요</Text>
         </div>
-        <DefaultText type="body3" color="gray800">
+        <Text type="body3" color="gray800">
           배송지를 변경하고 묶음배송을 신청하시겠어요?
-        </DefaultText>
+        </Text>
       </div>
       <div className={styles.bundleBottomSheetCardWrapper}>
         {bundleDeliveryAddress.map((address) => (

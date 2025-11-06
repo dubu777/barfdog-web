@@ -2,7 +2,7 @@ import { commonWrapper } from "@/styles/common.css";
 import * as styles from "../recipeItemCard/RecipeItemCard.css";
 import Image from "next/image";
 import { SubscribeGeneralItem } from "@/types";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 
 interface GeneralItemCardProps {
   amount: number;
@@ -33,14 +33,14 @@ export default function GeneralItemCard({
               })}
             >
               <div>
-                <DefaultText type="headline2" block>{generalTempData.name}</DefaultText>
-                <DefaultText
+                <Text type="headline2" block>{generalTempData.name}</Text>
+                <Text
                   type="body3"
                   color="gray600"
                   block
-                >구독 수량 | {amount}개</DefaultText>
+                >구독 수량 | {amount}개</Text>
               </div>
-              <DefaultText type="label3">{originPrice.toLocaleString()}원</DefaultText>
+              <Text type="label3">{originPrice.toLocaleString()}원</Text>
             </div>
     </div>
   );

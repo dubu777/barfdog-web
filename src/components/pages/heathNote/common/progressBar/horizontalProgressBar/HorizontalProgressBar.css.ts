@@ -1,4 +1,5 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
 
 export const progressBarWrapper = style({
@@ -12,10 +13,19 @@ export const labelRow = style({
 	gap: '4px',
 });
 
-export const barContainer = style({
-	height: '28px',
-	display: 'flex',
-	alignItems: 'center',
+export const barContainer = recipe({
+	base: {
+		display: 'flex',
+		alignItems: 'center',
+	},
+	variants: {
+		fixedHeight: {
+			true: {
+				height: '28px',
+			},
+			false: {},
+		}
+	}
 });
 
 export const bar = style({
@@ -24,7 +34,6 @@ export const bar = style({
 	backgroundColor: themeVars.colors.gray.gray200,
 	borderRadius: '8px',
 });
-
 
 export const barProgress = style({
 	position: 'relative',
@@ -43,6 +52,9 @@ export const barColorStyle = {
 	}),
 	red: style({
 		background: themeVars.colors.red.red,
+	}),
+	pastelRed: style({
+		background: themeVars.colors.red.pastelRed,
 	}),
 };
 

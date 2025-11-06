@@ -9,19 +9,23 @@ import { AxiosInstance } from "axios";
 const createDietAnalysisResult = async (
   body: DietAnalysisPayload
 ): Promise<CreateDietAnalysisResultResponse> => {
-  const { data } = await axiosInstance.post("/api/dogs", body);
-  console.log(">>createDietAnalysisResult", data);
+  const { data } = await axiosInstance.post(
+    "/api/v2/user/recipes/survey",
+    body
+  );
 
   return data;
 };
 
 const getDietAnalysisResult = async (
-  reportId: number,
+  surveyId: number,
   instance: AxiosInstance = axiosInstance
 ): Promise<DietAnalysisResult> => {
-  const { data } = await instance.get(`/api/surveyReports/${reportId}/result`);
+  const { data } = await instance.get(
+    `/api/v2/user/recipes/survey/${surveyId}/analysis`
+  );
 
-  return data;
+  return data.data;
 };
 
 export { createDietAnalysisResult, getDietAnalysisResult };

@@ -1,11 +1,21 @@
 import { Suspense } from "react";
-import LoginWrapper from "@/components/pages/auth/login/loginWrapper/LoginWrapper";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/ui/spinner/Spinner";
+import Header from "@/components/layout/header/Header";
+import LogoIcon from "public/images/logo/logo.svg";
+import LoginSection from "@/components/pages/auth/login/loginSection/LoginSection";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<Loader fullscreen />}>
-      <LoginWrapper />
+    <Suspense fallback={<Spinner fullscreen />}>
+      <Header
+        leftElement={
+          <Link href="/" aria-label="홈">
+            <LogoIcon />
+          </Link>
+        }
+      />
+      <LoginSection />
     </Suspense>
-  )
+  );
 }

@@ -1,19 +1,23 @@
 "use client";
 import { useMemo } from "react";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Header from "@/components/layout/header/Header";
-import AlertModal from "@/components/common/modal/alertModal/AlertModal";
-import useModal from "@/hooks/useModal";
 import { useBackNavigation } from "@/utils";
 import { getHeaderProps } from "@/utils/getHeaderProps";
 
 type HealthNoteParams = {
-  dogId?: string;
-  historyId?: string;
+  petId?: string;
+  diagnosisId?: string;
   reportId?: string;
 };
 
-const HealthNoteHeader = () => {
+export default function HealthNoteHeader() {
+  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const rawParams = useParams();
@@ -23,14 +27,7 @@ const HealthNoteHeader = () => {
       Array.isArray(value) ? value[0] : value,
     ])
   ) as Record<string, string>;
-  const goBack = useBackNavigation();
-  const goBackPreviousPage = useBackNavigation(undefined, true);
-
-  const {
-    isOpen: isOpenConfirmAlert,
-    onClose: onCloseConfirmAlert,
-    onToggle: onToggleConfirmAlert,
-  } = useModal();
+  const goBackToMain = () => router.push("/health-note");
 
   const headerConfigs: Record<
     string,
@@ -44,36 +41,35 @@ const HealthNoteHeader = () => {
       onBack?: () => void;
     }
   > = {
-    "/health-note/dogs": {
-      centerTitle: "반려견 전체보기",
-      showBackButton: true,
-      onBack: goBack,
-    },
-    "/health-note/full-check": {
+    "full-check": {
       centerTitle: "건강 종합 진단",
       showBackButton: true,
+      onBack: goBackToMain,
     },
-    "/health-note/body-check": {
+    "body-check": {
       centerTitle: "부위별 진단",
       showBackButton: true,
+      onBack: goBackToMain,
     },
-    "/health-note/health-check-history": {
-      centerTitle: "건강검진 내역",
+    "medical-history": {
+      centerTitle: "병원 진료 기록",
+      showBackButton: true,
+      onBack: goBackToMain,
+    },
+    "medical-history/create": {
+      centerTitle: "병원 진료 기록 등록",
       showBackButton: true,
     },
-    "/health-note/health-check-history/create": {
-      centerTitle: "건강검진 등록",
-      showBackButton: true,
-    },
-    "/health-note/dogpedia": {
+    dogpedia: {
       centerTitle: "견종 백과",
       showBackButton: true,
     },
-    "/health-note/gut-check": {
+    probiome: {
       centerTitle: "장내 미생물 검사",
       showBackButton: true,
+      onBack: goBackToMain,
     },
-    "/health-note/gut-check/create": {
+    "probiome/create": {
       centerTitle: "장내 미생물 검사",
       showBackButton: true,
     },
@@ -94,22 +90,8 @@ const HealthNoteHeader = () => {
       onBack?: () => void;
     }
   > = {
-    "/health-note/dogs/": (params) => {
-      const dogDetail = !!params?.dogId;
-      return {
-        centerTitle: dogDetail ? "반려견 정보 수정" : "반려견 추가",
-        showBackButton: dogDetail,
-        onBack: goBackPreviousPage,
-        showCloseButton: !dogDetail,
-        onClose: onToggleConfirmAlert,
-      };
-    },
-    "/health-note/gut-check/detail/": () => ({
-      centerTitle: "",
-      showBackButton: true,
-    }),
-    "/health-note/gut-check/return-request/": () => ({
-      centerTitle: "회수신청",
+    "probiome/detail/": () => ({
+      centerTitle: "상세보기",
       showBackButton: true,
     }),
   };
@@ -130,16 +112,17 @@ const HealthNoteHeader = () => {
   const exactExcludePaths = [
     "/health-note/guest",
     "/health-note",
-    `/health-note/health-check-history/${params.historyId}`,
-    `/health-note/full-check/result/${params.reportId}`,
-    "/health-note/gut-check/survey",
+    `/health-note/${params.petId}/medical-history/${params.diagnosisId}`,
+    `/health-note/${params.petId}/full-check/result/${params.diagnosisId}`,
+    `/health-note/${params.petId}/probiome/survey`,
+    `/health-note/${params.petId}/probiome/pickup/${params.diagnosisId}`,
   ];
 
   // 접두사로 시작하면 제외할 경로
   const prefixExcludePaths = [
-    "/health-note/full-check/survey",
-    "/health-note/body-check/survey",
-    "/health-note/body-check/result",
+    `/health-note/${params.petId}/full-check/survey`,
+    `/health-note/${params.petId}/body-check/survey`,
+    `/health-note/${params.petId}/body-check/result`,
   ];
 
   const shouldRenderHeader = useMemo(() => {
@@ -154,23 +137,5 @@ const HealthNoteHeader = () => {
     return true;
   }, [pathname, params.historyId]);
 
-  return (
-    <>
-      {shouldRenderHeader && <Header {...headerProps} />}
-      {isOpenConfirmAlert && (
-        <AlertModal
-          title="등록을 종료하시겠어요?"
-          content="입력하신 정보는 저장되지 않아요"
-          isOpen={isOpenConfirmAlert}
-          onClose={onCloseConfirmAlert}
-          cancelText="돌아가기"
-          confirmText="삭제하기"
-          onCancel={() => onCloseConfirmAlert()}
-          onConfirm={() => goBackPreviousPage()}
-        />
-      )}
-    </>
-  );
-};
-
-export default HealthNoteHeader;
+  return <>{shouldRenderHeader && <Header {...headerProps} />}</>;
+}

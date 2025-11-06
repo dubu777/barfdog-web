@@ -35,73 +35,55 @@ import FillPancreas from "public/images/survey/IconFill-pancreas.svg";
 import FillPuppy from "public/images/survey/IconFill-Puppy.svg";
 import FillSkin from "public/images/survey/IconFill-Skin.svg";
 import FillSkincare from "public/images/survey/IconFill-Skincare.svg";
-import { DOG_TYPE } from "@/constants/dog";
-
-export {
-  DIET_ANALYSIS_FORM_INFO,
-  recipeTempData,
-  SURVEY_NO_AUTO_STEP,
-  NONE_VALUE,
-  SURVEY_SECTIONS,
-  SURVEY_TITLES,
-  CRITICAL_DISEASES,
-  CRITICAL_SET,
-};
+import { PET_TYPE } from "@/constants/pet";
 
 const SURVEY_SECTIONS = [
-  { key: "dogBasicInfo", label: "기본 정보", steps: 6 },
+  { key: "dogBasicInfo", label: "기본 정보", steps: 5 },
   { key: "lifestyle", label: "생활 정보", steps: 5 },
   { key: "dogDietHealth", label: "식단/건강", steps: 3 },
 ];
 
 const SURVEY_TITLES: Record<SurveyStepKeys, SurveyTitleConfig> = {
   step1: {
-    titleTemplates: ["반려견에 대해 알려주세요"],
+    titleTemplates: ["{dogName}의", "중성화 여부를 알려주세요"],
   },
   step2: {
-    titleTemplates: ["{dogName}의", "생년월일은 언제인가요?"],
-    subtitleTemplates: [
-      [{ text: "아이의 생년월에 따라 급여량이 달라져요.", color: "gray600" }],
-      [{ text: "정확히 모르신다면 대략적으로 알려주세요.", color: "gray600" }],
-    ],
+    titleTemplates: ["{dogName:topic}은", "노령견인가요?"],
   },
   step3: {
     titleTemplates: ["{dogName}의", "몸무게는 얼마인가요?"],
   },
   step4: {
-    titleTemplates: ["{dogName}의", "견종은 무엇인가요?"],
-  },
-  step5: {
     titleTemplates: ["{dogName:topic}", "현재 임신 중인가요?"],
   },
-  step6: {
+  step5: {
     titleTemplates: ["{dogName:topic}", "현재 수유 중인가요?"],
   },
-  step7: {
+  step6: {
     titleTemplates: ["{dogName}의", "체형은 어느 쪽에 가까운가요?"],
   },
-  step8: {
+  step7: {
     titleTemplates: ["{dogName}의", "활동량은 어느 쪽에 가까운가요?"],
   },
-  step9: {
+  step8: {
     titleTemplates: ["{dogName}의", "간식량은 어떤가요?"],
   },
-  step10: {
+  step9: {
     titleTemplates: ["{dogName:subject}", "못 먹는 재료는 무엇인가요?"],
   },
-  step11: {
+  step10: {
     titleTemplates: ["{dogName}의", "건강고민은 무엇인가요?"],
     subtitleTemplates: [
       [{ text: "1순위부터 3순위까지 선택해 주세요", color: "red" }],
     ],
   },
-  step12: {
+  step11: {
     titleTemplates: ["{dogName:subject}", "현재 먹고 있는 사료는 무엇인가요?"],
   },
-  step13: {
+  step12: {
     titleTemplates: ["{dogName:subject}", "현재 먹고 있는 영양제가 있나요?"],
   },
-  step14: {
+  step13: {
     titleTemplates: ["{dogName:topic}", "앓고 있는 질병이 있나요?"],
   },
 };
@@ -146,7 +128,7 @@ const DIET_ANALYSIS_FORM_INFO = {
           imageUrl: "/images/survey/small-dog.png",
         },
         {
-          value: "MEDIUM",
+          value: "MIDDLE",
           label: "중형",
           imageUrl: "/images/survey/medium-dog.png",
         },
@@ -159,7 +141,7 @@ const DIET_ANALYSIS_FORM_INFO = {
     },
     dogType: {
       placeholder: "견종을 검색해 보세요",
-      options: DOG_TYPE,
+      options: PET_TYPE,
     },
     pregnancy: {
       options: [
@@ -222,10 +204,36 @@ const DIET_ANALYSIS_FORM_INFO = {
         { value: "VERY_LOW", label: "매우 적어요" },
       ],
     },
+    // 알러지 여부
+    allergyStatus: {
+      key: "알러지 여부",
+      title: "알러지가 있나요?",
+      options: [
+        { value: "HAS_ALLERGY", label: "있어요" },
+        { value: "NO_ALLERGY", label: "없어요" },
+      ],
+    },
+    allergenFoodList: {
+      key: "알러지원",
+
+      options: [
+        { value: "CHICKEN", label: "닭" },
+        { value: "TURKEY", label: "칠면조" },
+        { value: "DUCK", label: "오리" },
+        { value: "LAMB", label: "양" },
+        { value: "BEEF", label: "소" },
+        { value: "RABBIT", label: "토끼" },
+        { value: "GOAT", label: "염소" },
+        { value: "QUAIL", label: "메추라기" },
+        { value: "PORK", label: "돼지" },
+        { value: "OSTRICH", label: "타조" },
+      ],
+    },
+
     snackCountLevel: {
       options: [
         {
-          value: "LITTLE",
+          value: "LOW",
           label: "적어요",
           subLabel: "식사에 영향을 주지 않는 양",
         },
@@ -235,72 +243,58 @@ const DIET_ANALYSIS_FORM_INFO = {
           subLabel: "어느정도 영향을 주는 양",
         },
         {
-          value: "MUCH",
+          value: "HIGH",
           label: "많아요",
           subLabel: "식사에 상당한 영향을 주는 양",
         },
       ],
     },
-    inedibleFood: {
-      options: [
-        { value: "NONE", label: "없어요" },
-        { value: "CHICKEN", label: "닭" },
-        { value: "TURKEY", label: "칠면조" },
-        { value: "DUCK", label: "오리" },
-        { value: "LAMB", label: "양" },
-        { value: "COW", label: "소" },
-        { value: "KANGAROO", label: "캥거루" },
-        { value: "GOAT", label: "염소" },
-        { value: "QUAIL", label: "메추리" },
-        { value: "HEART", label: "심장" },
-      ],
-    },
     healthConcerns: {
       options: [
         {
-          value: "VOMITING_DIARRHEA",
+          value: "DIGESTIVE_CARE",
           label: "구토•설사",
           Icon: Bowel,
           SelectedIcon: FillBowel,
         },
         {
-          value: "WEIGHT_CONTROL",
+          value: "WEIGHT_MANAGEMENT",
           label: "체중조절",
           Icon: Diet,
           SelectedIcon: FillDiet,
         },
         {
-          value: "ENERGY_BOOST",
+          value: "VITALITY_BOOST",
           label: "기력보충",
           Icon: Energy,
           SelectedIcon: FillEnergy,
         },
         {
-          value: "TEARS",
+          value: "TEAR_STAIN",
           label: "눈물•눈곱",
           Icon: Eye,
           SelectedIcon: FillEye,
         },
         {
-          value: "SKIN_HAIR",
+          value: "SKIN_COAT",
           label: "피부•모질",
           Icon: Skincare,
           SelectedIcon: FillSkincare,
         },
         {
-          value: "JOINT_HEALTH",
+          value: "JOINT_CARE",
           label: "관절 건강",
           Icon: Born,
           SelectedIcon: FillBorn,
         },
         {
-          value: "PUPPY_DEVELOPMENT",
+          value: "PUPPY_GROWTH",
           label: "자견 발육",
           Icon: Puppy,
           SelectedIcon: FillPuppy,
         },
         {
-          value: "SENIOR_HEALTH",
+          value: "AGING_CARE",
           label: "노령견 건강",
           Icon: Olddog,
           SelectedIcon: FillOlddog,
@@ -309,31 +303,33 @@ const DIET_ANALYSIS_FORM_INFO = {
     },
   },
   dogDietHealth: {
-    currentMeal: {
+    currentMeals: {
       options: [
         { value: "DRY", label: "건사료" },
         { value: "WET", label: "습식사료" },
-        { value: "COOKED", label: "화식" },
-        { value: "HOME_MADE_FOOD", label: "홈메이드식" },
+        { value: "COOKED", label: "화식사료" },
+        { value: "RAW", label: "생식사료" },
         { value: "HUMAN_FOOD", label: "사람이 먹는 음식" },
-        { value: "FREEZE_DRY_FOOD", label: "동결건조" },
-        { value: "RAW", label: "생식" },
+        { value: "HOME_MADE_FOOD", label: "홈메이드식" },
+        { value: "FREEZE_DRY_FOOD", label: "동결건조사료" },
       ],
     },
     supplements: {
       options: [
-        { value: "NONE", label: "없어요" },
+        { value: "NONE", label: "없음" },
         { value: "PROBIOTICS", label: "유산균" },
         { value: "OMEGA_3", label: "오메가-3" },
         { value: "ANTIOXIDANT", label: "항산화" },
-        { value: "JOINT", label: "관절" },
         { value: "EYE", label: "눈" },
+        { value: "JOINT", label: "관절" },
         { value: "SKIN", label: "피부" },
-        { value: "IMMUNITY", label: "면역력" },
+        { value: "IMMUNE", label: "면역력" },
         { value: "HEART", label: "심장" },
         { value: "TEETH", label: "치아" },
-        { value: "BRONCHUS", label: "기관지" },
-        { value: "GENERAL", label: "종합" },
+        { value: "RESPIRATORY", label: "기관지" },
+        { value: "VITAMIN", label: "종합비타민" },
+        { value: "INTESTINE", label: "장" },
+        { value: "OTHER", label: "기타" },
       ],
     },
     healthIssues: {
@@ -346,19 +342,19 @@ const DIET_ANALYSIS_FORM_INFO = {
           SelectedIcon: FillHyperlipidemia,
         },
         {
-          value: "PANCREATIC",
+          value: "PANCREATITIS",
           label: "췌장질환",
           Icon: Pancreas,
           SelectedIcon: FillPancreas,
         },
         {
-          value: "HEART",
+          value: "HEART_DISEASE",
           label: "심장병",
           Icon: Heart,
           SelectedIcon: FillHeart,
         },
         {
-          value: "KIDNEY",
+          value: "RENAL_DISEASE",
           label: "신장병",
           Icon: Kidney,
           SelectedIcon: FillKidney,
@@ -370,8 +366,8 @@ const DIET_ANALYSIS_FORM_INFO = {
           SelectedIcon: FillSkin,
         },
         {
-          value: "CHOLELITHIASIS",
-          label: "쓸개골탈구",
+          value: "PATELLAR_LUXATION",
+          label: "슬개골탈구",
           Icon: Born,
           SelectedIcon: FillBorn,
         },
@@ -388,13 +384,13 @@ const DIET_ANALYSIS_FORM_INFO = {
           SelectedIcon: FillDiabetes,
         },
         {
-          value: "EAR_INFLAMMATION",
+          value: "OTITIS",
           label: "귀염증",
           Icon: Ear,
           SelectedIcon: FillEar,
         },
         {
-          value: "TEARS",
+          value: "OCULAR_DISEASES",
           label: "눈물•안구",
           Icon: Eye,
           SelectedIcon: FillEye,
@@ -496,13 +492,24 @@ const recipeTempData: Record<number, RecipeTempData> = {
 // 자동 다음 스텝으로 넘어가지 말아야 하는 스텝들을 Set으로 관리.
 const SURVEY_NO_AUTO_STEP = new Set<SurveyStepKeys>([
   "step3",
+  "step9",
   "step10",
   "step11",
   "step12",
   "step13",
-  "step14",
 ]);
 
 const CRITICAL_SET = new Set(CRITICAL_DISEASES.map((cd) => cd.value));
 
 const NONE_VALUE = "NONE";
+
+export {
+  DIET_ANALYSIS_FORM_INFO,
+  recipeTempData,
+  SURVEY_NO_AUTO_STEP,
+  NONE_VALUE,
+  SURVEY_SECTIONS,
+  SURVEY_TITLES,
+  CRITICAL_DISEASES,
+  CRITICAL_SET,
+};

@@ -1,12 +1,10 @@
-"use client";
-
 import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext } from "react-hook-form";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import { commonWrapper } from "@/styles/common.css";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -19,16 +17,16 @@ export default function SurveyStep5({
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
 
-  const { field: pregnancyField } = useController({
-    name: "step5.pregnancy",
+  const { field: lactationField } = useController({
+    name: "step5.lactation",
     control,
   });
 
   const { onToggle, isSelected } = useSurveyToggleOption({
-    selectedValue: pregnancyField.value,
+    selectedValue: lactationField.value,
     mode: "radio",
     onChange: (value) => {
-      pregnancyField.onChange(value);
+      lactationField.onChange(value);
       handleChange();
     },
   });
@@ -43,7 +41,7 @@ export default function SurveyStep5({
           gap: 12,
         })}
       >
-        {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.pregnancy.options.map(
+        {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.lactation.options.map(
           (option) => (
             <SurveyButton
               key={option.label}

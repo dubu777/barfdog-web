@@ -1,10 +1,8 @@
+  const COUPON_CATEGORY_FILTER = [
+    { label: '일반 쿠폰', value: 'NON_ALLIANCE' },
+    { label: '제휴 쿠폰', value: 'ALLIANCE' },
+  ];
 
-
-
-const discountUnitType = {
-  FIXED_RATE: '%',
-  FLAT_RATE: '원',
-} as const;
-
-
-export { discountUnitType }
+  export {
+    COUPON_CATEGORY_FILTER,
+  };

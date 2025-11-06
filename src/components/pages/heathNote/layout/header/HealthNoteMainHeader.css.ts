@@ -38,7 +38,7 @@ export const selectBottomSheetBox = style({
   alignItems: "center",
 });
 
-export const selectDogButton = style({
+export const selectPetButton = style({
   width: "100%",
   display: "flex",
   justifyContent: "space-between",
@@ -47,7 +47,7 @@ export const selectDogButton = style({
   cursor: "pointer",
 });
 
-export const selectBottomSheetDogInfo = style({
+export const selectBottomSheetPetInfo = style({
   display: "flex",
   alignItems: "center",
   gap: "8px",

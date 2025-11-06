@@ -1,53 +1,75 @@
 "use client";
-import { useState } from "react";
-import * as styles from "./Dogpedia.css";
+import { commonWrapper } from "@/styles/common.css";
+import { searchableSelectorButton } from "./Dogpedia.css";
+import { useMemo, useState } from "react";
 import ArrowRightIcon from "/public/images/icons/chevron-right-blue.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import SearchableSelector from "@/components/common/searchableSelector/SearchableSelector";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
+import SearchableSelector from "@/components/domain/pet/searchableSelector/SearchableSelector";
 import DogpediaDetail from "@/components/pages/heathNote/dogpedia/detail/DogpediaDetail";
-import { DOG_TYPE_OPTIONS, DOG_TYPE_TEMP } from "@/constants/dog";
+import { Option } from "@/types";
+import { useGetBreedList } from "@/api/healthNote/dogpidea/queries/useGetBreedList";
+import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 
-const Dogpedia = () => {
-  // 건강수첩 메인에서 선택한 대표 반려견의 dogType initialValue값 적용 필요
-  const [selectedDog, setSelectedDog] = useState<
-    keyof typeof DOG_TYPE_TEMP | null
-  >(null);
-  const DOGPEDIA_OPTIONS = DOG_TYPE_OPTIONS.filter(
-    (v) => v.value !== "Unknown_Breed" && v.value !== "Mixed_Breed"
-  );
-  console.log();
+interface DogpediaProps {
+  petId: number;
+}
 
-  const handleSelect = (value: string) => {
-    setSelectedDog(value as keyof typeof DOG_TYPE_TEMP);
+export default function Dogpedia({ petId }: DogpediaProps) {
+  const { data } = useGetBreedList();
+  const { data: petInfo } = useGetPetDetail(petId);
+
+  // 건강수첩 메인에서 선택한 대표 반려견의 breed initialValue값 적용
+  const petBreedId = useMemo(() => {
+    if (!data || !petInfo || !petInfo.breedInfo) return null;
+    const found = data.find(breed => breed.breedName === petInfo.breedInfo.name);
+    return found ? found.breedId : null;
+  }, [data, petInfo]);
+
+  const [selectedBreedId, setSelectedBreedId] = useState<number | null>(petBreedId);
+
+  const DOGPEDIA_OPTIONS: Option<number>[] = useMemo(() => {
+    return data.map((breed) => ({
+      label: breed.breedName,
+      value: breed.breedId,
+    }));
+  }, [data]);
+
+  const handleSelect = (value) => {
+    setSelectedBreedId(Number(value));
     window.scrollTo(0, 0);
   };
 
   return (
     <>
-      {selectedDog === null ? (
-        <section className={styles.searchDogContainer}>
-          <DefaultText type="title3">
-            궁금한 견종이 있으신가요?
-            <br />
+      {selectedBreedId === null || !petInfo ? (
+        <section className={commonWrapper({
+          direction: 'col',
+          align: 'start',
+          gap: 32,
+          padding: 20,
+          paddingTop: 40,
+        })}>
+          <Text type="title3">
+            궁금한 견종이 있으신가요?<br />
             지금 바로 검색해 보세요
-          </DefaultText>
-          <div className={styles.searchableSelector}>
+          </Text>
+          <div className={commonWrapper({ direction: 'col', gap: 20, align: 'start' })}>
             <SearchableSelector
               placeholder="견종을 검색해 보세요"
               onChange={handleSelect}
               options={DOGPEDIA_OPTIONS}
-              selectedValue={selectedDog}
-              className={styles.searchableSelectorButton}
+              selectedValue={selectedBreedId}
+              className={searchableSelectorButton}
               type="button"
               rightElement={<SvgIcon src={ArrowRightIcon} />}
               emptyElement={
-                <div className={styles.searchableSelectorEmpty}>
-                  <DefaultText type="label1" color="gray700" align="center">
+                <div className={commonWrapper({ paddingTop: 20 })}>
+                  <Text type="label1" color="gray700" align="center">
                     앗, 현재 등록되지 않은 견종이에요!
                     <br />
                     다른 견종을 검색해 보세요!
-                  </DefaultText>
+                  </Text>
                 </div>
               }
             />
@@ -55,11 +77,10 @@ const Dogpedia = () => {
         </section>
       ) : (
         <DogpediaDetail
-          setSelectedDog={(dog) => setSelectedDog(dog as keyof typeof DOG_TYPE_TEMP | null)}
+          breedId={selectedBreedId}
+          setSelectedBreedId={setSelectedBreedId}
         />
       )}
     </>
   );
-};
-
-export default Dogpedia;
+}

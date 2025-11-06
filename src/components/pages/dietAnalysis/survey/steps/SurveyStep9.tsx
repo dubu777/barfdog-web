@@ -1,63 +1,111 @@
-"use client";
-
-import React from "react";
-import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import {
+  DIET_ANALYSIS_FORM_INFO,
+  SURVEY_TITLES,
+} from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { useFormContext, useController } from "react-hook-form";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import { useController, useFormContext, useWatch } from "react-hook-form";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import useModal from "@/hooks/useModal";
+import InedibleBottomSheet from "../bottomSheet/InedibleFoodBottomSheet";
 import { commonWrapper } from "@/styles/common.css";
+import SurveyButtonGroup from "@/components/domain/survey/surveyButtonGroup/SurveyButtonGroup";
 
 interface SurveyStepProps {
   handleChange: () => void;
+  handleNextStep: () => void;
   dogName: string;
 }
 
 export default function SurveyStep9({
   handleChange,
+  handleNextStep,
   dogName,
 }: SurveyStepProps) {
-  const { control } = useFormContext<SurveyStepValues>();
+  const { control, setValue } = useFormContext<SurveyStepValues>();
+  const { isOpen, onToggle: toggleModal, onClose } = useModal();
 
-  const { field: snackCountLevelField } = useController({
-    name: "step9.snackCountLevel",
+  // inedibleFoods field controller
+  const { field: inedibleStatusField } = useController({
+    name: "step9.inedibleFoodStatus",
+    control,
+  });
+  const { field: inedibleField } = useController({
+    name: "step9.inedibleFoods",
     control,
   });
 
-  const { onToggle, isSelected } = useSurveyToggleOption({
-    selectedValue: snackCountLevelField.value,
-    mode: "radio",
-    onChange: (value) => {
-      snackCountLevelField.onChange(value);
-      handleChange();
-    },
+  const { onToggle: onStatusToggle, isSelected: isStatusSelected } =
+    useSurveyToggleOption<string>({
+      selectedValue: inedibleStatusField.value ?? null,
+      mode: "radio",
+      onChange: (value) => {
+        inedibleStatusField.onChange(value);
+        handleChange();
+        if (value === "NO_ALLERGY") {
+          setValue("step9.inedibleFoods", [], {
+            shouldValidate: true,
+          });
+          handleNextStep();
+        }
+      },
+    });
+
+  const { onToggle: onFoodToggle, isSelected: isFoodSelected } =
+    useSurveyToggleOption<string>({
+      selectedValue: inedibleField.value ?? null,
+      mode: "checkbox",
+      onChange: (value) => {
+        inedibleField.onChange(value);
+        handleChange();
+      },
+    });
+
+  const inedibleFoodStatus = useWatch({
+    name: "step9.inedibleFoodStatus",
+    control,
   });
 
   return (
     <>
-      <SurveyTitle dogName={dogName} config={SURVEY_TITLES.step9} />
-      <div
-        className={commonWrapper({
-          direction: "col",
-          align: "start",
-          gap: 12,
-        })}
-      >
-        {DIET_ANALYSIS_FORM_INFO.lifestyle.snackCountLevel.options.map(
+      <SurveyTitle
+        dogName={dogName}
+        config={SURVEY_TITLES.step9}
+        infoBoxContent="알러지 분류 참고사항"
+        onInfoBoxClick={toggleModal}
+      />
+
+      <div className={commonWrapper({ align: "start", gap: 8 })}>
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.allergyStatus.options.map(
           (option) => (
             <SurveyButton
               key={option.label}
               label={option.label}
               value={option.value}
-              subLabel={option.subLabel}
-              inputType="radio"
-              isChecked={isSelected(option.value)}
-              onToggle={onToggle}
+              isChecked={isStatusSelected(option.value)}
+              onToggle={onStatusToggle}
             />
           )
         )}
       </div>
+      {inedibleFoodStatus === "HAS_ALLERGY" && (
+        <SurveyButtonGroup direction="col" isMultiple>
+          {DIET_ANALYSIS_FORM_INFO.lifestyle.allergenFoodList.options.map(
+            (option) => (
+              <SurveyButton
+                key={option.label}
+                label={option.label}
+                value={option.value}
+                inputType="checkbox"
+                isChecked={isFoodSelected(option.value)}
+                onToggle={() => onFoodToggle(option.value)}
+              />
+            )
+          )}
+        </SurveyButtonGroup>
+      )}
+      <InedibleBottomSheet isOpen={isOpen} onClose={onClose} />
     </>
   );
 }

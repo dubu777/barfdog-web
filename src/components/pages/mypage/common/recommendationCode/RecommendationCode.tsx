@@ -1,5 +1,5 @@
 import * as styles from './RecommendationCode.css';
-import Chips from "@/components/common/chips/Chips";
+import Chips from "@/components/ui/chips/Chips";
 import { useToastStore } from "@/store/useToastStore";
 import { copyToClipboard } from "@/utils";
 
@@ -9,7 +9,11 @@ interface RecommendationCodeProps {
 	className?: string;
 }
 
-const RecommendationCode = ({ code, tailPosition = 'top', className }: RecommendationCodeProps) => {
+export default function RecommendationCode({
+	code,
+	tailPosition = 'top',
+	className
+}: RecommendationCodeProps) {
 	const { addToast } = useToastStore();
 	const handleCopyCode = async () => {
 		await copyToClipboard(code);
@@ -23,5 +27,3 @@ const RecommendationCode = ({ code, tailPosition = 'top', className }: Recommend
 		</div>
 	);
 };
-
-export default RecommendationCode;

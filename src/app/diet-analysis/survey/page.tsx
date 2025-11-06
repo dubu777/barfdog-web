@@ -1,16 +1,34 @@
-import { Suspense } from "react";
-import NavigationGuard from "@/components/common/navigationGuard/NavigationGuard";
-import SurveyPageContainer from "@/components/pages/dietAnalysis/survey/surveyPageContainer/surveyPageContainer";
-import Loader from "@/components/common/loader/Loader";
+import NavigationGuard from "@/components/ui/navigationGuard/NavigationGuard";
+import SurveyPageContainer from "@/components/pages/dietAnalysis/survey/surveyPageContainer/SurveyPageContainer";
+import { Gender } from "@/types";
+import { redirect } from "next/navigation";
 
-export default function SurveyPage() {
+interface SurveyPageProps {
+  searchParams: {
+    petName?: string;
+    petId?: string;
+    gender?: string;
+  };
+}
+
+export default function SurveyPage({ searchParams }: SurveyPageProps) {
+  const { petName = "", petId, gender = "MALE" } = searchParams;
+
+  // petId는 필수, 없거나 숫자로 파싱 불가 시 리디렉트
+  const petIdNum = Number(petId);
+  if (!petId || Number.isNaN(petIdNum)) {
+    return redirect("/diet-analysis");
+  }
+
   return (
-    <Suspense fallback={<Loader fullscreen />}>
-      <main>
-        <NavigationGuard>
-          <SurveyPageContainer />
-        </NavigationGuard>
-      </main>
-    </Suspense>
+    <main>
+      <NavigationGuard>
+        <SurveyPageContainer
+          petName={petName}
+          petId={petIdNum}
+          gender={gender as Gender}
+        />
+      </NavigationGuard>
+    </main>
   );
 }

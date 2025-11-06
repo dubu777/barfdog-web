@@ -1,85 +1,74 @@
 'use client';
-import * as styles from "./MainInformation.css";
-import { useEffect } from "react";
+import { commonWrapper, imageWrapper } from "@/styles/common.css";
+import { accountRecommendationCode } from "./MainInformation.css";
 import Link from "next/link";
 import Image from "next/image";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import UserImage from "/public/images/mypage/user-profile.svg";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
+import DefaultImage from "public/images/icons/default-profile.png";
+import Text from "@/components/ui/text/Text";
 import RecommendationCode from "@/components/pages/mypage/common/recommendationCode/RecommendationCode";
 import UserRewardCard from "@/components/pages/mypage/main/mainInformation/userRewardCard/UserRewardCard";
-import { useGetMyPageInfo } from "@/api/mypage/queries/useGetMypageInfo";
-import { MyPageMemberDto } from "@/types";
-import { usePersistMypageStore } from "@/store/usePersistMypageStore";
-import { getNextTierRequirements } from "@/utils/mypage/getNextTierRequirements";
-import { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR } from "@/constants/membership";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
+import { MEMBERSHIP_TIERS } from "@/constants/membership";
 
-const MainInformation = () => {
-  const { data: myPageData } = useGetMyPageInfo();
+export default function MainInformation() {
+  const { data } = useGetMyPageInfo();
+  const memberInfo = data?.memberInfo;
 
+  const userMembershipTier = MEMBERSHIP_TIERS[memberInfo?.grade ?? 'BRONZE'];
+  const representativePetImage = data?.representativePetInfo?.displayThumbnailUrl?.url;
 
-  const userData: MyPageMemberDto = myPageData?.mypageMemberDto;
-
-  const { setMypageUserInfo, setUserMembershipTier } = usePersistMypageStore();
-
-  const userMembershipTier = MEMBERSHIP_TIERS[MEMBERSHIP_TIERS_KR[userData?.grade]];
-  const userImage = userData?.imageUrl;
-
-  useEffect(() => {
-    if (userData) {
-      setMypageUserInfo(userData)
-      if(userMembershipTier) {
-        setUserMembershipTier(userMembershipTier);
-      }
-    }
-  }, [userData, setMypageUserInfo]);
-
-  const { additionalSubscription, additionalPurchase, nextTier } = getNextTierRequirements(userMembershipTier.tier, 2, 90000);
+  if (!memberInfo) return null;
 
   return (
-    <article className={styles.userInfoContainer}>
-      <div className={styles.accountLinkBox}>
-        <RecommendationCode code={userData.myRecommendationCode} tailPosition='bottom' className={styles.accountRecommendationCode} />
-        <Link href='/mypage/account/user-info' className={styles.accountLink}>
-          {userImage ?
-            <Image
-              src={userImage}
-              alt='사용자 이미지'
-              width={48}
-              height={48}
-              className={styles.accountImage}
-            />
-            : <SvgIcon src={UserImage} size={48} />
-          }
-          <DefaultText className={styles.userName} type='title1'>{userData.memberName}</DefaultText>
-          <SvgIcon src={ArrowRightIcon} size={24} />
-        </Link>
-      </div>
-      <div className={styles.membership}>
-        <div className={styles.membershipInfo}>
-          <div className={styles.membershipInfoTop}>
-            <DefaultText type='headline1'>{userMembershipTier?.tier} 등급</DefaultText>
-            <Link href='/membership'>
-              <DefaultText type='headline4' color='gray300'>자세히 보기</DefaultText>
-            </Link>
-          </div>
-          <DefaultText type='caption' color='red'>{userMembershipTier?.description}</DefaultText>
+    <article className={commonWrapper({ 
+      backgroundColors: 'gray50', 
+      direction: 'col', 
+      align: 'start',
+    })}>
+      <div className={commonWrapper({ 
+        padding: 20, 
+        direction: 'col', 
+        align: 'start',
+      })}>
+        <RecommendationCode
+          code={memberInfo?.myRecommendationCode ?? ""} 
+          tailPosition='bottom' 
+          className={accountRecommendationCode}
+        />
+        <div className={commonWrapper({ justify: 'start', gap: 12 })}>
+          <Image
+            src={representativePetImage ?? DefaultImage}
+            alt='사용자 이미지'
+            width={48}
+            height={48}
+            className={imageWrapper({ borderRadius: '50%', objectFit: 'cover', width: 48 })}
+          />
+          <Text type='title1'>{memberInfo?.name}</Text>
         </div>
-        <DefaultText type='caption' color='gray500'>
-          {userMembershipTier && userMembershipTier.tier !== 'THE_BARF'
-            ? <>
-              {additionalSubscription > 0 && `구독 ${additionalSubscription}회 추가 `}
-              누적 혹은 {additionalPurchase > 0 && `${additionalPurchase.toLocaleString()}원 추가 구매시 `}
-              <strong>{nextTier}</strong> 등급 달성!
-            </>
-            : <>{getNextTierRequirements('THE_BARF').message}</>
-          }
-        </DefaultText>
       </div>
-      <UserRewardCard myPageData={myPageData} />
+      <div className={commonWrapper({
+        backgroundColors: 'gray0',
+        direction: 'col',
+        align: 'start',
+        gap: 6,
+        padding: 20,
+        paddingTop: 18,
+        paddingBottom: 12,
+      })}>
+        <div className={commonWrapper({ justify: 'between', align: 'start' })}>
+          <Text type='headline1'>{userMembershipTier?.tier} 등급</Text>
+          <Link href='/membership'>
+            <Text type='headline4' color='gray300'>자세히 보기</Text>
+          </Link>
+        </div>
+        {userMembershipTier?.description && 
+          <Text type='caption' color='red'>{userMembershipTier?.description}</Text>
+        }
+      </div>
+      <UserRewardCard
+        couponCount={data?.couponCount ?? 0}
+        rewardCount={memberInfo?.reward ?? 0}
+      />
     </article>
   );
 };
-
-export default MainInformation;

@@ -1,14 +1,8 @@
-import { SignupStepKeys } from "@/utils/validation/authValidation";
-
-export {
-  AUTH_CONFIG,
-  SIGNUP_NO_AUTO_STEP,
-  GENDER_CATEGORY,
-  SIGNUP_OPTIONAL_FIELDS,
-};
+import { SnsProvider } from "@/types";
+import { SignupStepKeys } from "@/utils/validation/auth/signup";
 
 const AUTH_CONFIG = {
-  ACCESS_TOKEN_COOKIE: "access_token",
+  ACCESS_TOKEN_COOKIE: "accessToken",
   REFRESH_TOKEN_COOKIE: "refreshToken",
 };
 
@@ -27,4 +21,20 @@ const GENDER_CATEGORY = [
 
 const SIGNUP_OPTIONAL_FIELDS: Record<string, string[]> = {
   step3: ["recommendCode"],
+};
+
+const PROVIDERS = ["kakao", "naver"] as const;
+
+const PROVIDERS_LABEL = {
+  kakao: "카카오",
+  naver: "네이버",
+} as const satisfies Record<SnsProvider, string>;
+
+export {
+  AUTH_CONFIG,
+  SIGNUP_NO_AUTO_STEP,
+  GENDER_CATEGORY,
+  SIGNUP_OPTIONAL_FIELDS,
+  PROVIDERS,
+  PROVIDERS_LABEL,
 };

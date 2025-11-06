@@ -1,58 +1,122 @@
-'use client'
-
-import * as styles from "./MainMenus.css";
+"use client";
+import { commonWrapper } from "@/styles/common.css";
+import { Fragment } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import { MENU_LIST } from "@/constants/mypage";
-import { useLogout } from "@/api/auth/mutations/useLogout";
-import { useRouter } from "next/navigation";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import ListDivider from "@/components/ui/listDivider/ListDivider";
 import { deleteCookie } from "@/utils/auth/cookie";
+import { saveEntryPoint } from "@/utils/navigationEntry";
+import { MENU_LIST } from "@/constants/mypage/common";
 import { AUTH_CONFIG } from "@/constants/auth";
-import { resetStores } from "@/store/resetStores";
+import { useLogout } from "@/api/auth/mutations/useLogout";
 
-const MainMenus = () => {
-  const router = useRouter();
+export default function MainMenus() {
+  const pathname = usePathname();
 
   const { mutate: logout } = useLogout();
+
+  // 커뮤니티 링크 클릭 시 진입 경로 저장
+  const handleCommunityLinkClick = (url: string) => {
+    saveEntryPoint(url, pathname, (_, target) =>
+      target.startsWith("/community/")
+    );
+  };
   const handleLogout = () => {
-    logout(undefined, {
-      onSuccess: () => {
-        resetStores();
-        deleteCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-        deleteCookie(AUTH_CONFIG.REFRESH_TOKEN_COOKIE);
-        router.push("/");
-        window.location.reload();
-      },
-      onError: (error) => {
-        console.error("Logout error", error);
-      },
-    });
+    logout(undefined);
   };
   return (
     <article>
-      <div className={styles.myPageMenuContainer}>
+      <div
+        className={commonWrapper({
+          padding: 20,
+          direction: "col",
+          gap: 16,
+          align: "start",
+          backgroundColors: "gray0",
+        })}
+      >
         {MENU_LIST.map(({ category, menus }) => (
-          <div key={category} className={styles.menuBox}>
-            <DefaultText type='headline1' className={styles.category}>{category}</DefaultText>
-            <ul>
-              {menus.map(({ label, url }) => (
-                <li key={label} className={styles.menuItem}>
-                  <Link href={url ?? "/mypage"} className={styles.menuLink}>
-                    <DefaultText type='label1'>{label}</DefaultText>
-                  </Link>
-                </li>
+          <div
+            key={category}
+            className={commonWrapper({
+              direction: "col",
+              align: "start",
+            })}
+          >
+            <Text
+              type="headline1"
+              className={commonWrapper({
+                paddingTop: 20,
+                paddingBottom: 16,
+                justify: "start",
+              })}
+            >
+              {category}
+            </Text>
+            <Divider thickness={2} color="gray900" />
+            <ul className={commonWrapper({ direction: "col" })}>
+              {menus.map(({ label, url, action }, index) => (
+                <Fragment key={label}>
+                  <li
+                    className={commonWrapper({
+                      padding: "16/0",
+                    })}
+                  >
+                    {url ? (
+                      <Link
+                        href={url ?? "/mypage"}
+                        className={commonWrapper({ justify: "start" })}
+                        onClick={() =>
+                          handleCommunityLinkClick(url ?? "/mypage")
+                        }
+                      >
+                        <Text type="body1">{label}</Text>
+                      </Link>
+                    ) : (
+                      action && (
+                        <button
+                          onClick={action}
+                          className={commonWrapper({ justify: "start" })}
+                        >
+                          <Text type="body1">{label}</Text>
+                        </button>
+                      )
+                    )}
+                  </li>
+                  <ListDivider
+                    listLength={menus.length}
+                    index={index}
+                    color="gray200"
+                  />
+                </Fragment>
               ))}
             </ul>
           </div>
         ))}
       </div>
-      <div className={styles.logout}>
-        <button className={styles.logoutButton} onClick={handleLogout}>
-          <DefaultText type='body2'>로그아웃</DefaultText>
+      <div
+        className={commonWrapper({
+          padding: 20,
+          paddingTop: 16,
+          paddingBottom: 60,
+          backgroundColors: "gray50",
+          justify: "start",
+        })}
+      >
+        <button
+          onClick={handleLogout}
+          className={commonWrapper({
+            paddingTop: 4,
+            paddingBottom: 4,
+            justify: "start",
+          })}
+        >
+          <Text type="body2">로그아웃</Text>
         </button>
       </div>
     </article>
   );
-};
-
-export default MainMenus;
+}

@@ -5,7 +5,6 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		tier: "BRONZE",
 		tierKR: "브론즈",
 		condition: "회원가입 완료 고객",
-		description: '회원가입 축하 포인트 증정!',
 		image: '/images/membership/bronze.png',
 		benefits: ["회원가입 축하 포인트 증정!"],
 	},
@@ -13,7 +12,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		tier: "SILVER",
 		tierKR: "실버",
 		condition: "정기배송 1회차 이상 진행중 혹은 9만원 이상 결제고객",
-		description: '적립 0.5% 멤버십 할인 쿠폰',
+		description: '0.5% 적립 • 멤버십 쿠폰팩',
 		image: '/images/membership/silver.png',
 		benefits: [
 			"적립율 0.5%",
@@ -29,7 +28,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		tier: "GOLD",
 		tierKR: "골드",
 		condition: "정기배송 5회차 이상 진행중 혹은 45만원 이상 결제고객",
-		description: '정기 결제 할인 및 적립 1% 멤버십 할인 쿠폰',
+		description: '1% 적립 • 1% 정기결제 할인 • 멤버십 쿠폰팩',
 		image: '/images/membership/gold.png',
 		benefits: [
 			"적립율 1%",
@@ -48,7 +47,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		tier: "PLATINUM",
 		tierKR: "플래티넘",
 		condition: "정기배송 10회차 이상 진행중 혹은 90만원 이상 결제고객",
-		description: '정기 결제 할인 및 적립 1.5% 멤버십 할인 쿠폰',
+		description: '1.5% 적립 • 3% 정기결제 할인 • 멤버십 쿠폰팩',
 		image: '/images/membership/platinum.png',
 		benefits: [
 			"적립율 1.5%",
@@ -68,7 +67,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 		tier: "DIA",
 		tierKR: "다이아",
 		condition: "정기배송 15회차 이상 진행 중 혹은 135만원 이상 결제고객",
-		description: '정기 결제 할인 및 적립 2% 멤버십 할인 쿠폰',
+		description: '2% 적립 • 5% 정기결제 할인 • 멤버십 쿠폰팩',
 		image: '/images/membership/dia.png',
 		benefits: [
 			"적립율 2%",
@@ -88,9 +87,9 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 	},
 	THE_BARF: {
 		tier: "THE_BARF",
-		tierKR: "더 바프",
+		tierKR: "더바프",
 		condition: "정기배송 25회차 이상 진행 중 혹은 255만원 이상 결제 고객",
-		description: '정기 결제 할인 및 적립 3% 멤버십 할인 쿠폰',
+		description: '3% 적립 • 7% 정기결제 할인 • 멤버십 쿠폰팩',
 		image: '/images/membership/thebarf.png',
 		benefits: [
 			"적립율 4%",
@@ -111,16 +110,7 @@ const MEMBERSHIP_TIERS: Record<Tier, MembershipTier> =  {
 	}
 } as const;
 
-const MEMBERSHIP_TIERS_KR = {
-	'브론즈': 'BRONZE',
-	'다이아': 'DIA',
-	'골드': 'GOLD',
-	'플래티넘': 'PLATINUM',
-	'실버': 'SILVER',
-	'더 바프': 'THE_BARF',
-}
-
 const MEMBERSHIP_TIERS_LIST: MembershipTier[] = Object.values(MEMBERSHIP_TIERS);
 
 
-export { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_KR, MEMBERSHIP_TIERS_LIST };
+export { MEMBERSHIP_TIERS, MEMBERSHIP_TIERS_LIST };

@@ -1,34 +1,13 @@
-import { subscriptionPlanInfo, subscriptionStatus } from "@/constants";
-import { RecipeDto } from "./recipe";
-
-export type {
-  PlanDiscountResponse,
-  RecipeMeal,
-  CalculateSubscribePriceInput,
-  RecipePriceDetails,
-  CalculateSubscribePriceOutput,
-  calculateOneMealGramsInput,
-  calculateOneMealGramsOutput,
-  calculateOneMealGramsWithVolumeInput,
-  SubscriptionDetailDto,
-  SubscriptionDto,
-  SubscriptionAddressData,
-  AddressDto,
-  SubscriptionListData,
-  BenefitDto,
-  PaymentBody,
-  SubscriptionResponse,
-  SubscriptionData,
-  BenefitStatus,
-  SubscriptionSkipType,
-  SubscriptionStatusKey,
-  PlanKey,
-  PlanName,
-  PlanInfo,
-  // UsingCoupon,
-  SubscribeGeneralItem,
-  SubscriptionStep,
-};
+import {
+  DELIVERY_PLAN,
+  MEAL_PLAN,
+  PLAN,
+  SUBSCRIPTION_STATUSES,
+  subscriptionPlanInfo,
+} from "@/constants";
+import { HealthConcernType } from "./survey";
+import { UrlObject, ValueOfTuple } from "./common";
+import { RecipeDto } from "./recipes";
 
 interface SubscriptionResponse<T> {
   isDone: boolean;
@@ -40,7 +19,6 @@ interface SubscriptionResponse<T> {
 interface SubscriptionData {
   [key: string]: any; // 실제 데이터 구조에 따라 수정 필요
 }
-
 
 interface PaymentBody {
   plan: PlanName | null;
@@ -59,7 +37,6 @@ interface PlanDiscountResponse {
   toppingFull: number;
   toppingHalf: number;
 }
-
 
 interface RecipeMeal {
   recipeId: number;
@@ -115,51 +92,6 @@ interface calculateOneMealGramsWithVolumeInput {
   selectedVolume?: string | null;
 }
 
-interface DefaultSubscriptionDto {
-  plan: string;
-  dogName: string;
-  countSkipOneTime: number;
-  countSkipOneWeek: number;
-  nextPaymentDate: string;
-  nextPaymentPrice: number;
-  discountCoupon: number;
-  discountGrade: number;
-  overDiscount: number;
-  subscriptionMonth: number;
-  nextDeliveryDate: string | null;
-}
-
-interface SubscriptionDetailDto extends DefaultSubscriptionDto {
-  id: number;
-  subscribeStatus: SubscriptionStatusKey;
-  dogId: number;
-  dogName: string;
-  cancelReason?: null | string;
-  subscribeCount: number;
-  plan: PlanKey;
-  oneMealGramsPerRecipe: string;
-  oneDayRecommendKcal: number;
-  usingMemberCouponId?: null | number;
-  couponName?: null | string;
-  previousOrderConfirmDate?: null | string;
-}
-
-interface SubscriptionDto extends DefaultSubscriptionDto {
-  subscribeId: number;
-  pictureUrl?: null | string,
-  status: SubscriptionStatusKey;
-  startDate: string;
-  packagePrice: number;
-  packageOriginalPrice: number;
-  shippingLeft: number;
-}
-
-interface SubscriptionAddressData {
-  currentAddress: AddressDto;
-  nextAddress: AddressDto;
-  nextDeliveryDate: string;
-}
-
 interface AddressDto {
   deliveryName?: string;
   recipientName?: string;
@@ -171,23 +103,6 @@ interface AddressDto {
   request?: string;
 }
 
-interface SubscriptionListData {
-  itemNames: string;
-  recipeNames: string;
-  subscribeDto: SubscriptionDto;
-}
-
-interface BenefitDto {
-  benefitExpiredDate: string;
-  benefitId: number;
-  benefitName: string;
-  benefitRequestDate?: null | string | Date;
-  benefitStatus: string;
-  benefitUsedDate?: null | string | Date;
-  benefitValue: number;
-  subscribeId: number;
-}
-
 interface PlanInfo {
   id: string;
   label: string;
@@ -196,12 +111,6 @@ interface PlanInfo {
   totalNumberOfPacks: number;
   maxRecipeCount?: number;
 }
-
-// interface UsingCoupon {
-//   memberCouponId: number;
-//   discount: number;
-//   overDiscount: number;
-// }
 
 interface SubscribeGeneralItem {
   id: number;
@@ -213,14 +122,218 @@ interface SubscribeGeneralItem {
   type: "topping" | "snack";
 }
 
-type BenefitStatus = 'AVAILABLE' | 'REQUESTED' | 'USED';
+type MeetType = "SINGLE" | "DOUBLE";
 
-type SubscriptionSkipType = 'ONCE' | 'WEEK';
+/** 생식 레시피 아이템 */
+interface RawFoodOrderItem {
+  recipeId: number;
+  rank: number;
+  recipeNameKorea: string;
+  recipeNameEnglish: string;
+  /** g/kcal (서버 키 그대로: gramPerKal) */
+  gramPerKal: number;
+  /** g당 가격 */
+  pricePerGram: number;
+  displayImageUrl: UrlObject;
+  healthConcernsChips: HealthConcernType[];
+  /** 1회 급여 권장 g */
+  oneMealRecommendGram: number;
+  /** 단일/복수 단백질 구성 */
+  meet: MeetType;
+  /** 추천 여부 */
+  isRecommend: boolean;
+  subIngredients: string[];
+  ingredients: string[];
+}
 
-type SubscriptionStatusKey = keyof typeof subscriptionStatus;
+/** 생식 주문서 응답 루트 */
+interface RawFoodOrderSheet {
+  petName: string;
+  petId: number;
+  oneDayRecommendKcal: number;
+  inedibleFoods: string[];
+  recipeList: RawFoodOrderItem[];
+}
 
-type PlanKey = 'FULL' | 'HALF' | 'TOPPING_FULL' | 'TOPPING_HALF' | 'TOPPING';
+interface RecipeListType {
+  oneMealGramsPerRecipe: number; // 해당 레시피 1팩당 급여량(g)
+  originalPrice: number; // 할인 적용 전 가격
+  recipeId: number;
+}
+
+interface CreateSubscriptionRequest {
+  plan: Plan;
+  recipeList: RecipeListType[];
+}
+
+interface UpdateSubscriptionRequest extends CreateSubscriptionRequest {
+  isAgreeSubscription: boolean;
+}
+
+interface CreateSubscriptionResponse {
+  subscriptionId: number;
+}
+
+interface RawFoodDetailResponse {
+  recipeId: number;
+  recipeNameKorea: string;
+  recipeNameEnglish: string;
+  gramPerKal: number;
+  pricePerGram: number;
+  ingredients: string[];
+  primaryIngredients: string[];
+  itemImageUrl: string;
+}
+
+interface RawFood {
+  recipeId: number;
+  name: string;
+  oneMealGramsPerRecipe: number;
+  pricePerGram: number;
+  originalPrice: number;
+  displayImageUrl: UrlObject;
+}
+
+interface SubscriptionDetail {
+  deliveryPlan: DeliveryPlan;
+  mealPlan: MealPlan;
+  next: boolean; // false면 이번 배송부터 변경가능
+  orderId: number;
+  paymentPrice: number; // 결제한 금액
+  rawFoods: RawFood[];
+  subscriptionCount: number; // 현재 구독 회차
+  subscriptionId: number;
+}
+
+type RecipeFormItem = {
+  recipeId: number;
+  packGrams: number;
+  packPrice: number;
+};
+
+interface SubscriptionValues {
+  mealPlan: MealPlan;
+  deliveryPlan: DeliveryPlan;
+  recipeList: RecipeFormItem[] | [];
+  isAgreeSubscription?: boolean;
+}
+
+interface CurrentPlanInfo {
+  /** 예: "HALF" */
+  name: Plan | string;
+  /** 구독 주기(주) */
+  weeks: DeliveryPlan;
+  /** 구독 주기(일) */
+  days: number;
+  /** 1일 급여 횟수 */
+  mealCount: MealPlan;
+}
+
+interface CurrentRecipeItem {
+  displayImageUrl: UrlObject;
+  recipeId: number;
+  /** 예: "DUCK&LAMB +" */
+  name: string;
+  /** 이 레시피의 1끼 급여량(g) */
+  oneMealGramsPerRecipe: number;
+  /** g당 가격(원) */
+  pricePerGram: number;
+  /** 정가(원) */
+  originalPrice: number;
+}
+
+interface SubscriptionInfoResponse {
+  subscriptionId: number;
+  /** 구독 횟수(회차) */
+  subscriptionCount: number;
+  planInfo: CurrentPlanInfo;
+  recipeList: CurrentRecipeItem[];
+  /** 결제 금액(원) */
+  paymentPrice: number;
+}
+
+/** 생식 레시피 아이템 */
+interface RawFoodOrderItem {
+  recipeId: number;
+  rank: number;
+  recipeNameKorea: string;
+  recipeNameEnglish: string;
+  /** g/kcal (서버 키 그대로: gramPerKal) */
+  gramPerKal: number;
+  /** g당 가격 */
+  pricePerGram: number;
+  displayImageUrl: UrlObject;
+  healthConcernsChips: HealthConcernType[];
+  /** 1회 급여 권장 g */
+  oneMealRecommendGram: number;
+  /** 단일/복수 단백질 구성 */
+  meet: MeetType;
+  /** 추천 여부 */
+  isRecommend: boolean;
+  subIngredients: string[];
+  ingredients: string[];
+}
+
+/** 생식 주문서 응답 루트 */
+interface SubscriptionOrderSheet {
+  petName: string;
+  petId: number;
+  oneDayRecommendKcal: number;
+  inedibleFoods: string[];
+  recipeList: RawFoodOrderItem[];
+}
+
+type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";
 
 type PlanName = keyof typeof subscriptionPlanInfo;
 
-type SubscriptionStep = "recipe" | "general-item" | "delivery-cycle";
+type Plan = ValueOfTuple<typeof PLAN>;
+
+type SubscriptionStep = "rawFood" | "deliveryCycle";
+
+type SubscriptionEditStep = "summary" | "edit" | "confirm";
+
+type DeliveryPlan = ValueOfTuple<typeof DELIVERY_PLAN>;
+
+type MealPlan = ValueOfTuple<typeof MEAL_PLAN>;
+
+type SubscriptionStatus = ValueOfTuple<typeof SUBSCRIPTION_STATUSES>;
+export type {
+  PlanDiscountResponse,
+  RecipeMeal,
+  CalculateSubscribePriceInput,
+  RecipePriceDetails,
+  CalculateSubscribePriceOutput,
+  calculateOneMealGramsInput,
+  calculateOneMealGramsOutput,
+  calculateOneMealGramsWithVolumeInput,
+  AddressDto,
+  PaymentBody,
+  SubscriptionResponse,
+  SubscriptionData,
+  PlanKey,
+  PlanName,
+  PlanInfo,
+  SubscribeGeneralItem,
+  SubscriptionStep,
+  RawFoodOrderSheet,
+  DeliveryPlan,
+  RawFoodOrderItem,
+  MealPlan,
+  CreateSubscriptionRequest,
+  RawFoodDetailResponse,
+  CreateSubscriptionResponse,
+  SubscriptionStatus,
+  UpdateSubscriptionRequest,
+  SubscriptionDetail,
+  RawFood,
+  SubscriptionEditStep,
+  SubscriptionValues,
+  RecipeFormItem,
+  SubscriptionInfoResponse,
+  CurrentPlanInfo,
+  CurrentRecipeItem,
+  SubscriptionOrderSheet,
+  Plan,
+  RecipeListType,
+};

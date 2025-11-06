@@ -1,24 +1,179 @@
-'use client';
-import { useSearchParams } from "next/navigation";
-import WithdrawalGuide from "@/components/pages/mypage/account/withdrawalAccount/withdrawalGuide/WithdrawalGuide";
-import WithdrawalReasonForm
-	from "@/components/pages/mypage/account/withdrawalAccount/withdrawalReasonForm/WithdrawalReasonForm";
-import WithdrawalConfirmation
-	from "@/components/pages/mypage/account/withdrawalAccount/withdrawalConfirmation/WithdrawalConfirmation";
+"use client";
+import { useState } from "react";
+import { commonWrapper, imageWrapper, pointColor } from "@/styles/common.css";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import Image1 from "public/images/mypage/account/withdrawal/image1.png";
+import Image2 from "public/images/mypage/account/withdrawal/image2.png";
+import Image3 from "public/images/mypage/account/withdrawal/image3.png";
+import Divider from "@/components/ui/divider/Divider";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
+import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import Text from "@/components/ui/text/Text";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
+import useModal from "@/hooks/useModal";
+import useDeviceState from "@/hooks/useDeviceState";
+import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
+import { useGetMyPageInfo } from "@/api/mypage/common/queries/useGetMypageInfo";
+import { useWithdrawalAccount } from "@/api/mypage/account/mutations/useWithdrawalAccount";
+import { extractErrorCode } from "@/utils/api/apiResponseUtils";
+import { useLogout } from "@/api/auth/mutations/useLogout";
 
-type WithdrawalStep = 'guide' | 'reason' | 'confirmation';
+const guideSteps = [
+  {
+    title: "멤버십 혜택이 사라집니다",
+    description:
+      "탈퇴 시 소중한 멤버십 혜택이 사라져요\n다시 가입해도 최초 회원가입 혜택은 받을 수 없어요",
+    imageSrc: Image1,
+  },
+  {
+    title: "포인트와 쿠폰이 모두 소멸됩니다",
+    description:
+      "탈퇴 시 누적 포인트와 쿠폰 내역이 모두 소멸됩니다\n재가입 시에도 해당 내역은 복구되지 않습니다",
+    imageSrc: Image2,
+  },
+  {
+    title:
+      "건강 문진 기록, 식단 구독 내역 등\n반려견에 대한 소중한 기록이 사라져요",
+    description: "탈퇴하면 데이터를 다시 불러올 수 없어요.",
+    imageSrc: Image3,
+  },
+];
+export default function WithdrawalAccount() {
+  const router = useRouter();
+  const { isMobileWidth } = useDeviceState();
+  const [confirm, setConfirm] = useState<boolean>(false);
 
-const WithdrawalAccount = () => {
-	const searchParams = useSearchParams();
-	const step= searchParams.get('step') as WithdrawalStep || 'guide';
+  const { data } = useGetMyPageInfo();
+  const memberInfo = data?.memberInfo;
+  const username = memberInfo?.name;
 
-	return (
-		<section>
-			{step === 'guide' && <WithdrawalGuide />}
-			{step === 'reason' && <WithdrawalReasonForm />}
-			{step === 'confirmation' && <WithdrawalConfirmation />}
-		</section>
-	);
-};
+  const { mutate: withdrawalAccount } = useWithdrawalAccount();
+  const { mutate: logout } = useLogout();
+  const { handleError } = useApiResponseHandler();
+  const {
+    isOpen: isOpenErrorAlert,
+    onClose: onCloseErrorAlert,
+    onToggle: onToggleErrorAlert,
+  } = useModal();
 
-export default WithdrawalAccount;
+  const onSubmit = () => {
+    withdrawalAccount(undefined, {
+      onSuccess: () => {
+        router.push("/");
+        sessionStorage.setItem("withdrawalSuccess", "true");
+        logout(undefined);
+      },
+      onError: (error) => {
+        const errorCode = extractErrorCode(error);
+        if (errorCode === "NOT_DELETABLE_RESOURCE") {
+          onToggleErrorAlert();
+        } else {
+          handleError(
+            error,
+            "회원 탈퇴를 진행할 수 없습니다. 관리자에게 문의해주세요.",
+            undefined,
+            "above-button"
+          );
+        }
+      },
+    });
+  };
+
+  return (
+    <section>
+      <article
+        className={commonWrapper({
+          padding: 20,
+          paddingBottom: 85,
+          paddingTop: 40,
+          gap: 32,
+          direction: "col",
+          align: "start",
+          justify: "start",
+        })}
+      >
+        <div
+          className={commonWrapper({
+            direction: "col",
+            align: "start",
+            gap: 4,
+          })}
+        >
+          <Text type="title3">
+            잠깐! {username}님,
+            <br />
+            탈퇴하시기 전에 꼭 확인해주세요
+          </Text>
+          <Text type="body1" color="gray600">
+            탈퇴 시 바프독 회원 혜택이 사라집니다
+          </Text>
+        </div>
+        <Divider thickness={2} color="gray900" />
+        {guideSteps.map((guide, index) => (
+          <div
+            key={index}
+            className={commonWrapper({
+              direction: isMobileWidth ? "col" : "row",
+              align: "start",
+              gap: 12,
+              width: isMobileWidth ? "full" : "auto",
+            })}
+          >
+            <div
+              className={commonWrapper({
+                direction: "col",
+                align: "start",
+                gap: 4,
+              })}
+            >
+              <Text type="title4" preLine>
+                <span className={pointColor}>0{index + 1}</span>
+                <br />
+                {guide.title}
+              </Text>
+              <Text type="body2" color="gray600" preLine>
+                {guide.description}
+              </Text>
+            </div>
+            <Image
+              src={guide.imageSrc}
+              alt="탈퇴 안내 이미지"
+              width={1200}
+              height={200}
+              className={imageWrapper({ objectFit: "contain" })}
+            />
+          </div>
+        ))}
+        <div className={commonWrapper({ paddingBottom: 40, justify: "start" })}>
+          <LabeledRadioButton
+            value="confirm"
+            isChecked={confirm}
+            onToggle={() => setConfirm(!confirm)}
+          >
+            <Text type="body3">회원 탈퇴 유의사항을 확인했어요.</Text>
+          </LabeledRadioButton>
+        </div>
+      </article>
+      <ButtonDocked
+        type="full-button"
+        primaryButtonLabel="탈퇴하기"
+        onPrimaryClick={onSubmit}
+        isPrimaryDisabled={!confirm}
+      />
+      {isOpenErrorAlert && (
+        <AlertModal
+          isOpen={isOpenErrorAlert}
+          onConfirm={onCloseErrorAlert}
+          onClose={onCloseErrorAlert}
+          title="회원 탈퇴를 진행할 수 없습니다"
+          content="현재 구독 중이거나 완료되지 않은 주문이 있어 탈퇴할 수 없습니다. 구독 해지 및 주문 완료 후 다시 시도해 주세요."
+          confirmText="확인"
+          buttonPosition="right"
+          closeOnBackgroundClick={false}
+        />
+      )}
+    </section>
+  );
+}

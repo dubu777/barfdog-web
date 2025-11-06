@@ -1,5 +1,7 @@
-import { fontColors } from "@/components/common/defaultText/DefaultText.css";
-import { RecipeDto } from "@/types/recipe";
+import { fontColors } from "@/components/ui/text/Text.css";
+import { ValueOfTuple } from "./common";
+import { HEALTH_CONCERNS } from "@/constants";
+import { RecipeDto } from "./recipes";
 
 interface FoodAnalysis {
   oneDayRecommendGram: number;
@@ -163,6 +165,69 @@ interface SurveyTitleConfig {
   subtitleTemplates?: SubtitlePart[][];
 }
 
+/** 성별 */
+type Gender = "MALE" | "FEMALE";
+
+/** 견사이즈 */
+type DogSize = "SMALL" | "MIDDLE" | "LARGE";
+
+type GeneralLevel = "VERY_HIGH" | "HIGH" | "NORMAL" | "LOW" | "VERY_LOW";
+
+type SnackCountLevel = "HIGH" | "NORMAL" | "LOW";
+
+/** 체형(BCS) */
+type BodyFit = "VERY_THIN" | "THIN" | "NORMAL" | "FAT" | "VERY_FAT";
+
+type PregnancyStatus = "NONE" | "PREGNANCY_EARLY" | "PREGNANCY_LATE";
+
+type LactationStatus =
+  | "NONE"
+  | "LACTATION_1_TO_2"
+  | "LACTATION_3_TO_4"
+  | "LACTATION_5_TO_6"
+  | "LACTATION_7_OR_MORE";
+
+type HealthConcernType = ValueOfTuple<typeof HEALTH_CONCERNS>;
+
+type CurrentMealType =
+  | "DRY"
+  | "WET"
+  | "HOMEMADE"
+  | "FREEZE_DRIED"
+  | "COOKED"
+  | "RAW";
+
+/** 보조제 유형 */
+type SupplementType =
+  | "NONE"
+  | "PROBIOTICS"
+  | "OMEGA_3"
+  | "ANTIOXIDANT"
+  | "EYE"
+  | "JOINT"
+  | "SKIN"
+  | "IMMUNE"
+  | "HEART"
+  | "TEETH"
+  | "RESPIRATORY"
+  | "VITAMIN"
+  | "INTESTINE"
+  | "OTHER";
+
+/** 현재 겪고 있는 건강 이슈 유형 */
+type HealthIssuesType =
+  | "NONE"
+  | "HYPERLIPIDEMIA"
+  | "PANCREATITIS"
+  | "HEART_DISEASE"
+  | "RENAL_DISEASE"
+  | "DERMATITIS"
+  | "DIABETES"
+  | "PATELLAR_LUXATION"
+  | "LIVER_DISEASE"
+  | "OTITIS"
+  | "OCULAR_DISEASES";
+
 export type {
   SubscribePlan,
   FoodAnalysis,
@@ -171,4 +236,15 @@ export type {
   SurveySection,
   SurveyTitleConfig,
   SubtitlePart,
+  HealthConcernType,
+  HealthIssuesType,
+  CurrentMealType,
+  SupplementType,
+  SnackCountLevel,
+  GeneralLevel,
+  Gender,
+  DogSize,
+  BodyFit,
+  PregnancyStatus,
+  LactationStatus,
 };

@@ -1,38 +1,58 @@
 "use client";
 import * as styles from "./HealthNoteUser.css";
 import Image from "next/image";
-import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
 import ComparisonProgressBar from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
-import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants";
-import { useGetDogList } from "@/api/dog/queries/useGetDogList";
-import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
 import CreateDogCard from "@/components/pages/heathNote/common/createDogCard/CreateDogCard";
-import { useHealthNoteStore } from "@/store/useHealthNoteStore";
+import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
+import { useGetPetList } from "@/api/pet/queries/useGetPetList";
+import { useGetFullCheckSummary } from "@/api/healthNote/fullCheck/queries/useGetFullCheckSummary";
+import { HEALTH_NOTE_MENU_CATEGORY } from "@/constants/healthNote/common";
 
 const HealthNoteUser = () => {
-  const { data: dogList = [] } = useGetDogList();
-  const { dogInfo } = useHealthNoteStore();
-  const isFirstFullCheck = false;
-  const fullCheckTopRank = 2.4;
-  const fullCheckScore = 50;
-  const fullCheckPrevScore = 80;
+  const { data: petList = [] } = useGetPetList();
+  const petInfo = petList?.find((pet) => pet.isRepresentative);
+
+  const { data: fullCheckSummary } = useGetFullCheckSummary(petInfo?.id, {
+    enabled: !!petInfo?.id, // petInfo.id가 있을 때만 호출
+  });
+
+  const isFirstFullCheck = !fullCheckSummary?.isExistDiagnosis;
+  const checkupScoreUpperPercentile =
+    fullCheckSummary?.checkupScoreUpperPercentile;
+  const checkupScore = fullCheckSummary?.checkupScore ?? 0;
+  const avgCheckupScore = fullCheckSummary?.avgCheckupScore ?? 0;
+
   const { label: fullCheckStatusLabel, color: fullCheckStatusColor } =
-    useScoreStatus({ current: fullCheckScore, previous: fullCheckPrevScore });
+    useScoreStatus({
+      current: checkupScore,
+      scoreDifference: checkupScore - avgCheckupScore,
+    });
 
   const handleGotoMenu = (url) => {
-    if (url === "/health-note/full-check") {
-      window.location.href = `${url}${isFirstFullCheck ? "/survey" : ""}`;
-    } else if (url === "/health-note/gut-check" && dogInfo?.dogId) {
-      window.location.href = `${url}?dogId=${dogInfo.dogId}`;
-    } else {
-      window.location.href = url;
+    switch (url) {
+      case "/full-check":
+        if (!petInfo?.id) return;
+        window.location.href = `/health-note/${petInfo.id}${url}${
+          isFirstFullCheck ? "/survey" : ""
+        }`;
+        break;
+      case "/medical-history":
+      case "/body-check":
+      case "/dogpedia":
+      case "/probiome":
+        if (!petInfo?.id) return;
+        window.location.href = `/health-note/${petInfo.id}${url}`;
+        break;
+      default:
+        window.location.href = `/health-note${url}`;
     }
   };
 
   return (
     <section className={styles.heathNoteMainContainer}>
-      {dogList?.length > 0 ? (
+      {petList?.length > 0 ? (
         <article>
           <div className={styles.menuCategoryBox}>
             {HEALTH_NOTE_MENU_CATEGORY.map((menu) => {
@@ -57,11 +77,11 @@ const HealthNoteUser = () => {
                     })}
                   >
                     <div>
-                      <DefaultText type="headline1" block>
+                      <Text type="headline1" block>
                         {menu.label}
-                      </DefaultText>
+                      </Text>
                       {menu.description && (
-                        <DefaultText
+                        <Text
                           type="body3"
                           color="gray700"
                           block
@@ -73,17 +93,17 @@ const HealthNoteUser = () => {
                           ) : (
                             <>
                               상위&nbsp;
-                              <DefaultText
+                              <Text
                                 type="body3"
                                 color={fullCheckStatusColor}
                               >
-                                {fullCheckTopRank}%
-                              </DefaultText>
+                                {checkupScoreUpperPercentile}%
+                              </Text>
                               로<br />
                               {fullCheckStatusLabel}
                             </>
                           )}
-                        </DefaultText>
+                        </Text>
                       )}
                     </div>
                     {!isFullCheck || isFullCheckAndFirst ? (
@@ -96,19 +116,19 @@ const HealthNoteUser = () => {
                       />
                     ) : (
                       <ComparisonProgressBar
-                        prevScore={fullCheckPrevScore}
-                        currentScore={fullCheckScore}
+                        prevScore={avgCheckupScore}
+                        currentScore={checkupScore}
                         isCurrentScoreChips
                         barSize="sm"
                         prevBottomChildren={
-                          <DefaultText type="caption" color="gray600">
+                          <Text type="caption" color="gray600">
                             전체 평균
-                          </DefaultText>
+                          </Text>
                         }
                         currentBottomChildren={
-                          <DefaultText type="caption" color="gray700">
+                          <Text type="caption" color="gray700">
                             우리 아이
-                          </DefaultText>
+                          </Text>
                         }
                       />
                     )}

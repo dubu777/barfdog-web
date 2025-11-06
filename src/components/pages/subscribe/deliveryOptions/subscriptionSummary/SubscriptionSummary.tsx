@@ -1,21 +1,23 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import Divider from "@/components/common/divider/Divider";
-import InfoBox from "@/components/common/infoBox/InfoBox";
+import Text from "@/components/ui/text/Text";
+import Divider from "@/components/ui/divider/Divider";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
 import OrderSummaryRow from "@/components/pages/checkout/common/orderSummary/orderSummaryRow/OrderSummaryRow";
+import { DELIVERY_PLAN_LABEL } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
+import { DeliveryPlan } from "@/types";
 
 interface SubscriptionSummaryProps {
-  finalPrice: number;
-  originPrice: number;
+  totalPlanDiscountedPrice: number;
+  totalOriginalPrice: number;
   discountAmount: number;
-  deliveryCycle: number;
+  deliveryPlan: DeliveryPlan;
 }
 
 export default function SubscriptionSummary({
-  finalPrice,
-  originPrice,
+  totalPlanDiscountedPrice,
+  totalOriginalPrice,
   discountAmount,
-  deliveryCycle,
+  deliveryPlan,
 }: SubscriptionSummaryProps) {
   return (
     <div
@@ -24,16 +26,16 @@ export default function SubscriptionSummary({
         justify: "start",
         align: "start",
         gap: 16,
-        padding: 32,
+        padding: "32/20",
       })}
     >
-      <DefaultText type="title4">
-        <DefaultText type="title4" color="red">
-          {deliveryCycle}주
-        </DefaultText>
+      <Text type="title4">
+        <Text type="title4" color="red">
+          {DELIVERY_PLAN_LABEL[deliveryPlan]}
+        </Text>
         마다 <br />
         정기 결제가 진행돼요
-      </DefaultText>
+      </Text>
       <div
         className={commonWrapper({
           direction: "col",
@@ -42,7 +44,7 @@ export default function SubscriptionSummary({
       >
         <OrderSummaryRow
           label="총 금액"
-          value={originPrice}
+          value={totalOriginalPrice}
           valueType="headline2"
           plainColor
           plus
@@ -56,7 +58,7 @@ export default function SubscriptionSummary({
       <Divider thickness={1} color="gray200" />
       <OrderSummaryRow
         label="결제 예정 금액"
-        value={finalPrice}
+        value={totalPlanDiscountedPrice}
         labelType="headline2"
         labelColor="gray900"
         valueType="title2"

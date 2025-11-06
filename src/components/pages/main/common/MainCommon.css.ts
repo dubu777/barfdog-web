@@ -5,13 +5,25 @@ import { themeVars } from "@/styles/theme.css";
 
 export const mainWrapper = style({
 	minHeight: '100vh',
-	marginBottom: '60px'
+	marginBottom: '85px'
 });
 
-export const mainContainer = style({
-	height: 'auto',
-	padding: '60px 0',
-	overflowX: 'hidden',
+export const mainContainer = recipe({
+	base: {
+		height: 'auto',
+		padding: '40px 0',
+		overflowX: 'hidden',
+		display: 'flex',
+		flexDirection: 'column',
+	},
+	variants: {
+		noPaddingBottom: {
+			true: {
+				paddingBottom: '0',
+			},
+			false: {},
+		},
+	}
 })
 
 export const mainContainerBackgroundColor = {
@@ -47,11 +59,18 @@ export const mainTitle = recipe({
 			left: {
 				alignItems: 'flex-start'
 			}
+		},
+		noPaddingTop: {
+			true: {
+				paddingTop: '0',
+			},
+			false: {},
 		}
 	}
 })
 
 export const mainBox = style({
+	width: '100%',
 	padding: '20px !important',
 })
 
@@ -76,7 +95,8 @@ export const mainBannerImage = style({
 })
 
 export const mainReviewDescription = style({
-	margin: '28px 40px 57px',
+	maxWidth: '303px',
+	margin: '28px auto 57px',
 	padding: '20px',
 	backgroundColor: themeVars.colors.red.pastelPink,
 	borderRadius: '8px',
@@ -124,13 +144,13 @@ export const mainReviewButton = style({
 	marginTop: '20px',
 })
 
-export const mainStoreItemList = style({
-
+export const mainStoreItem = style({
+	width: 'fit-content !important',
+	height: 'auto',
 })
 
-export const mainStoreItem = style({
-	width: '120px !important',
-	display: 'flex !important',
+export const mainStoreItemLink = style({
+	display: 'flex',
 	flexDirection: 'column',
 	gap: '6px',
 })
@@ -190,7 +210,8 @@ export const mainSurveyImage1 = style({
 
 export const mainChapterIndexChips = style({
 	display: 'inline-block',
-	margin: '0 20px',
+	marginLeft: '20px',
+	marginBottom: '12px',
 	borderRadius: '50px',
 	background: themeVars.colors.red.red,
 	color: themeVars.colors.gray.gray0,
@@ -212,26 +233,67 @@ export const mainChapter1Image = style({
 	borderRadius: '8px',
 })
 
-export const mainChapter2ImageList = style({
-	display: 'flex',
-	flexWrap: 'wrap',
-	gap: '6px 4px',
-	padding: '20px',
+export const mainChapter2ImageList = recipe({
+	base: {
+		display: 'grid',
+		gridTemplateColumns: '1fr 1fr',
+		gridTemplateRows: 'auto auto',
+		gap: '6px 4px',
+		paddingBottom: '20px',
+	},
+	variants: {
+		isMobileWidth: {
+			true: {
+				maxWidth: '100%',
+				padding: '20px',
+			},
+			false: {
+				width: '440px',
+				margin: '0 auto',
+			},
+		}
+	}
+})
+
+export const mainChapter2ImageBox = style({
+	borderRadius: '8px',
+	boxShadow: themeVars.shadow.strong,
 })
 
 export const mainChapter2Image = style({
 	width: '100%',
-	height: 'auto',
+	height: '100%',
 	borderRadius: '8px',
 })
 
+export const mainChapter3ImageList = style({
+	padding: '0 20px !important',
+})
+
+export const mainChapter3ImageSlide = style({
+	width: 'fit-content !important',
+	height: '280px !important',
+	borderRadius: '8px',
+	overflow: 'hidden',
+})
+
 export const mainChapter3Image = style({
-	width: '247px !important',
-	height: '280px',
+	width: '100%',
+	height: '100%',
+	objectFit: 'cover',
+})
+
+export const mainBarfContentBox = style({
+	padding: '0 20px 20px',
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '10px',
 })
 
 export const mainBarfImage = style({
-	padding: '0 20px'
+	width: '100%',
+	height: '306px',
+	objectFit: 'cover',
 })
 
 export const mainProductionPointsBox = style({
@@ -264,14 +326,16 @@ export const mainProductionPointDivider = style({
 
 export const mainProductionImageBox = style({
 	display: 'flex',
+	justifyContent: 'center',
 	gap: '4px',
-	padding: '0 20px 20px'
+	padding: '0 20px 20px',
 })
 
 export const mainProductionImage = style({
-	width: 'calc(100% / 3)',
-	height: 'auto',
+	width: '109px',
+	height: '148px',
 	objectFit: 'contain',
+	borderRadius: '8px',
 })
 
 export const mainProductionVideo = style({
@@ -297,19 +361,29 @@ export const mainDeliveryMarquee = style({
 	gap: '8px',
 })
 
+export const mainDeliveryImage = style({
+	maxWidth: '340px',
+	width: '100%',
+	height: 'auto',
+	objectFit: 'contain',
+	borderRadius: '8px',
+	margin: '0 auto 10px',
+})
+
 export const mainBrandStoryContainer = style({
 	padding: '40px 20px 316px !important',
 })
 
 export const mainBrandStoryMarquee = style({
-	background: themeVars.colors.gray.gray800,
+	background: themeVars.colors.gray.gray0,
+	height: '64px',
 	display: 'flex',
 	alignItems: 'center',
-	padding: '4px 0'
+	padding: '8px 0'
 })
 
 export const mainBrandStoryLogo = style({
-	margin: '0 10px',
+	margin: '0 12px',
 	width: 'auto',
-	height: '40px',
+	height: 'auto',
 })

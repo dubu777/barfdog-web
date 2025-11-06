@@ -12,7 +12,7 @@ export function useGetSurveyResult(id: number, queryOptions?: UseSuspenseQueryCu
 }
 
 export async function prefetchGetSurveyResult(queryClient: QueryClient, id: number) {
-    await queryClient.prefetchQuery({
+    return await queryClient.prefetchQuery({
       queryFn: () => getSurveyResult(Number(id)),
       queryKey: [queryKeys.SURVEY.BASE, queryKeys.SURVEY.GET_SURVEY_RESULT, id],
     });

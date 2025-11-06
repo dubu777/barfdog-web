@@ -7,22 +7,22 @@ import {
 } from "@tanstack/react-query";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import Header from "@/components/layout/header/Header";
-import DietAnalysisPageContainer from "@/components/pages/dietAnalysis/DietAnalysisPageContainer";
-import { prefetchGetDogList } from "@/api/dog/queries/usePrefetchGetDogList";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/ui/spinner/Spinner";
+import DietAnalysisMain from "@/components/pages/dietAnalysis/main/DietAnalysisMain";
+import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 
 export default async function DietAnalysisPage() {
   const queryClient = new QueryClient();
 
-  await prefetchGetDogList(queryClient);
+  await prefetchGetPetList(queryClient);
 
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<div>추천식단 에러</div>}>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Spinner />}>
           <Header leftTitle="AI 추천식단" showCartButton />
-          <DietAnalysisPageContainer />
+          <DietAnalysisMain />
           <BottomNavBar />
         </Suspense>
       </ErrorBoundary>

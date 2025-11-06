@@ -1,9 +1,14 @@
 import axiosInstance from "@/api/axiosInstance";
-import {RecipeDto} from "@/types";
+import { AxiosInstance } from "axios";
+import { ApiResponse, RecipeItem } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
-export { getRecipeList };
-
-const getRecipeList = async (): Promise<RecipeDto[]> => {
-  const { data } = await axiosInstance.get('/api/recipes');
-  return data._embedded.recipeListResponseDtoList.sort((a, b) => a.id - b.id);
+const getRecipeList = async (instance: AxiosInstance = axiosInstance): Promise<RecipeItem[]> => {
+  const { data }: { data: ApiResponse<Record<string, RecipeItem[]>> } = await instance.get('/api/v2/public/recipes');
+  const responseData = validateApiResponse(data, '레시피 목록 조회에 실패했습니다.');
+  return responseData.recipeList;
 }
+
+export { 
+  getRecipeList
+};

@@ -1,10 +1,10 @@
-import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
 import { useController, useFormContext } from "react-hook-form";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
 import { commonWrapper } from "@/styles/common.css";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
+import SurveyOptionCard from "@/components/domain/survey/surveyOptionCard/SurveyOptionCard";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -16,17 +16,16 @@ export default function SurveyStep6({
   dogName,
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
-
-  const { field: lactationField } = useController({
-    name: "step6.lactation",
+  const { field: bodyConditionField } = useController({
+    name: "step6.bodyCondition",
     control,
   });
 
   const { onToggle, isSelected } = useSurveyToggleOption({
-    selectedValue: lactationField.value,
+    selectedValue: bodyConditionField.value,
     mode: "radio",
     onChange: (value) => {
-      lactationField.onChange(value);
+      bodyConditionField.onChange(value);
       handleChange();
     },
   });
@@ -41,13 +40,16 @@ export default function SurveyStep6({
           gap: 12,
         })}
       >
-        {DIET_ANALYSIS_FORM_INFO.dogBasicInfo.lactation.options.map(
+        {DIET_ANALYSIS_FORM_INFO.lifestyle.bodyCondition.options.map(
           (option) => (
-            <SurveyButton
+            <SurveyOptionCard
               key={option.label}
+              imageSrc={option.imageUrl}
               label={option.label}
               value={option.value}
-              inputType="radio"
+              imageSize={114}
+              imageWrapperSize={114}
+              subLabel={option.subLabel}
               isChecked={isSelected(option.value)}
               onToggle={onToggle}
             />

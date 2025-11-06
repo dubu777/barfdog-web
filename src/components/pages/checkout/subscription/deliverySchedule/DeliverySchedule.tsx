@@ -1,4 +1,4 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import OrderSection from "../../common/orderSection/OrderSection";
 import * as styles from "./DeliverySchedule.css";
 import DeliveryScheduleBottomSheet from "../../common/bottomSheet/deliveryScheduleBottomSheet/DeliveryScheduleBottomSheet";
@@ -10,8 +10,11 @@ interface DeliveryScheduleProps {
   nextDeliveryDate: string;
 }
 
-export default function DeliverySchedule({deliveryDate, nextDeliveryDate}: DeliveryScheduleProps) {
-  const {isOpen, onClose, onToggle} = useModal();
+export default function DeliverySchedule({
+  deliveryDate,
+  nextDeliveryDate,
+}: DeliveryScheduleProps) {
+  const { isOpen, onClose, onToggle } = useModal();
   return (
     <OrderSection
       title="배송 일정"
@@ -21,23 +24,27 @@ export default function DeliverySchedule({deliveryDate, nextDeliveryDate}: Deliv
     >
       <div className={styles.deliveryScheduleWrapper}>
         <div className={styles.deliveryScheduleContentWrapper}>
-          <DefaultText type="body2" color="gray700">
+          <Text type="body2" color="gray700">
             배송 예정일
-          </DefaultText>
-          <DefaultText type="label2" color="gray900">
-          {format(deliveryDate, "yy.MM.dd")}
-          </DefaultText>
+          </Text>
+          <Text type="label2" color="gray900">
+            {format(deliveryDate, "yy.MM.dd")}
+          </Text>
         </div>
         <div className={styles.deliveryScheduleContentWrapper}>
-          <DefaultText type="body2" color="gray700">
+          <Text type="body2" color="gray700">
             다음 배송 예정일
-          </DefaultText>
-          <DefaultText type="label2" color="gray900">
-          {format(nextDeliveryDate, "yy.MM.dd")}
-          </DefaultText>
+          </Text>
+          <Text type="label2" color="gray900">
+            {format(nextDeliveryDate, "yy.MM.dd")}
+          </Text>
         </div>
       </div>
-      <DeliveryScheduleBottomSheet isOpen={isOpen} onClose={onClose} deliveryDate={deliveryDate} nextDeliveryDate={nextDeliveryDate} />
+      <DeliveryScheduleBottomSheet
+        isOpen={isOpen}
+        onClose={onClose}
+        deliveryDate={deliveryDate}
+      />
     </OrderSection>
   );
 }

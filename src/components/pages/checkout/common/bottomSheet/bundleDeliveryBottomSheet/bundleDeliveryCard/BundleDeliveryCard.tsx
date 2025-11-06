@@ -1,6 +1,6 @@
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 import * as styles from "./BundleDeliveryCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import { BundleDeliveryAddress } from "@/types";
 import { commonWrapper } from "@/styles/common.css";
 
@@ -31,9 +31,9 @@ export default function BundleDeliveryCard({
           })}
         >
           <div className={styles.bundleDeliveryCardTitleWrapper}>
-            <DefaultText type="headline2">
+            <Text type="headline2">
               {address.deliveryName ?? address.recipientName}
-            </DefaultText>
+            </Text>
           </div>
           <div
             className={commonWrapper({
@@ -43,15 +43,15 @@ export default function BundleDeliveryCard({
             })}
           >
             <div className={commonWrapper({ gap: 4, justify: "start" })}>
-              <DefaultText type="body3">
+              <Text type="body3">
                 {address.deliveryName ?? address.recipientName}
-              </DefaultText>
-              <DefaultText type="body3">•</DefaultText>
-              <DefaultText type="body3">{address.phoneNumber}</DefaultText>
+              </Text>
+              <Text type="body3">•</Text>
+              <Text type="body3">{address.phoneNumber}</Text>
             </div>
-            <DefaultText type="body3">
+            <Text type="body3">
               {address.street} {address.detailAddress}
-            </DefaultText>
+            </Text>
           </div>
         </div>
       </LabeledRadioButton>

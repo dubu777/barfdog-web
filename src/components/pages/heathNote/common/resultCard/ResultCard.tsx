@@ -1,7 +1,7 @@
-import * as styles from "./ResultCard.css";
+import { commonWrapper } from "@/styles/common.css";
 import { ReactNode } from "react";
-import Card from "@/components/common/card/Card";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Card from "@/components/ui/card/Card";
+import Text from "@/components/ui/text/Text";
 
 interface ResultCardProps {
   children: ReactNode;
@@ -26,16 +26,16 @@ const ResultCard = ({
       gap={gap !== "none" ? gap : undefined}
       className={`${className || ""}`}
     >
-      <div className={styles.resultCardHeader}>
+      <div className={commonWrapper({ direction: 'col', gap: 4 })}>
         {title && (
-          <DefaultText type="title3" align="center" preLine>
+          <Text type="title3" align="center" preLine>
             {title}
-          </DefaultText>
+          </Text>
         )}
         {subTitle && (
-          <DefaultText type="body3" color="gray600" align="center" preLine>
+          <Text type="body3" color="gray600" align="center" preLine>
             {subTitle}
-          </DefaultText>
+          </Text>
         )}
       </div>
       {children}

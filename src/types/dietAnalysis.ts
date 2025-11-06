@@ -1,146 +1,55 @@
 import { ComponentType, SVGProps } from "react";
-
-/** 성별 */
-type Gender = "MALE" | "FEMALE";
-
-/** 견사이즈 */
-type DogSize = "SMALL" | "MEDIUM" | "LARGE";
-
-/** 활동량 */
-type ActivityLevel = "VERY_HIGH" | "HIGH" | "NORMAL" | "LOW" | "VERY_LOW";
-
-/** 체형(BCS) */
-type BodyFit = "VERY_THIN" | "THIN" | "NORMAL" | "FAT" | "VERY_FAT";
-
-/** 임신 단계 */
-type PregnancyStatus = "NONE" | "EARLY" | "LATE";
-
-/** 수유 상태 */
-type LactationStatus =
-  | "NONE"
-  | "LACTATION_ONE"
-  | "LACTATION_THREE"
-  | "LACTATION_FIVE"
-  | "LACTATION_SEVEN";
-
-/** 간식 섭취량 */
-type SnackCountLevel = "LITTLE" | "NORMAL" | "MUCH";
-
-/** 못 먹는 식재료 */
-type InedibleFood =
-  | "NONE"
-  | "CHICKEN"
-  | "TURKEY"
-  | "DUCK"
-  | "LAMB"
-  | "COW"
-  | "KANGAROO"
-  | "GOAT"
-  | "QUAIL"
-  | "HEART";
-
-/** 주요 건강 고민 */
-type HealthConcern =
-  | "VOMITING_DIARRHEA"
-  | "WEIGHT_CONTROL"
-  | "ENERGY_BOOST"
-  | "TEARS"
-  | "SKIN_HAIR"
-  | "JOINT_HEALTH"
-  | "PUPPY_DEVELOPMENT"
-  | "SENIOR_HEALTH";
-
-/** 현재 식단 */
-type CurrentMeal =
-  | "DRY"
-  | "WET"
-  | "HOMEMADE"
-  | "FREEZE_DRIED"
-  | "COOKED"
-  | "RAW";
-
-/** 영양제 */
-type Supplements =
-  | "NONE"
-  | "PROBIOTICS"
-  | "OMEGA_3"
-  | "ANTIOXIDANT"
-  | "JOINT"
-  | "EYE"
-  | "SKIN"
-  | "IMMUNITY"
-  | "HEART"
-  | "TEETH"
-  | "BRONCHUS"
-  | "GENERAL";
-
-/** 기저 질환 */
-type HealthIssue =
-  | "NONE"
-  | "HYPERLIPIDEMIA"
-  | "PANCREATIC"
-  | "HEART"
-  | "KIDNEY"
-  | "DERMATITIS"
-  | "CHOLELITHIASIS"
-  | "LIVER_DISEASE"
-  | "DIABETES"
-  | "EAR_INFLAMMATION"
-  | "TEARS";
-
-type RecipeEfficacy =
-  | "부드러운 소화"
-  | "균형 잡힌 체형"
-  | "빠른 기력 회복"
-  | "눈가 청결 유지"
-  | "윤기나는 모질"
-  | "관절 기능 강화"
-  | "튼튼한 성장"
-  | "활기찬 노후";
+import { SubscriptionStatus } from "./subscription";
+import {
+  BodyFit,
+  DogSize,
+  GeneralLevel,
+  HealthConcernType,
+  LactationStatus,
+  PregnancyStatus,
+  SnackCountLevel,
+} from "./survey";
 
 /** 설문 제출‧결과 공통 인터페이스 */
 interface DietAnalysisPayload {
-  name: string;
-  gender: Gender;
-  birthDay: string;
+  dogId: number;
   oldDog: boolean;
-  dogType: string;
   dogSize: DogSize;
   weight: string; // '5.2'처럼 문자열로 받되 필요 시 number 변환
   neutralization: boolean;
-  activityLevel: ActivityLevel;
+  activityLevel: GeneralLevel;
   bodyCondition: BodyFit;
   pregnancy: PregnancyStatus;
   lactation: LactationStatus;
   snackCountLevel: SnackCountLevel;
-  inedibleFood: InedibleFood[];
-  healthConcerns: HealthConcern[];
-  currentMeal: CurrentMeal[];
-  supplements: Supplements[];
-  healthIssues: HealthIssue[];
+  inedibleFoods: string[];
+  healthConcerns: string[];
+  currentMeals: string[];
+  supplements: string[];
+  healthIssues: string[];
 }
 
 interface DietAnalysisFormValues {
-  step1: Pick<DietAnalysisPayload, "name" | "gender" | "neutralization">;
-  step2: { birthDay: string; oldDog: boolean };
+  step1: Pick<DietAnalysisPayload, "neutralization">;
+  step2: { oldDog: boolean };
   step3: Pick<DietAnalysisPayload, "dogSize" | "weight">;
-  step4: Pick<DietAnalysisPayload, "dogType">;
-  step5: Pick<DietAnalysisPayload, "pregnancy">;
-  step6: Pick<DietAnalysisPayload, "lactation">;
-  step7: Pick<DietAnalysisPayload, "bodyCondition">;
-  step8: Pick<DietAnalysisPayload, "activityLevel">;
-  step9: Pick<DietAnalysisPayload, "snackCountLevel">;
-  step10: Pick<DietAnalysisPayload, "inedibleFood">;
-  step11: Pick<DietAnalysisPayload, "healthConcerns">;
-  step12: Pick<DietAnalysisPayload, "currentMeal">;
-  step13: Pick<DietAnalysisPayload, "supplements">;
-  step14: Pick<DietAnalysisPayload, "healthIssues">;
+  step4: Pick<DietAnalysisPayload, "pregnancy">;
+  step5: Pick<DietAnalysisPayload, "lactation">;
+  step6: Pick<DietAnalysisPayload, "bodyCondition">;
+  step7: Pick<DietAnalysisPayload, "activityLevel">;
+  step8: Pick<DietAnalysisPayload, "snackCountLevel">;
+  step9: Pick<DietAnalysisPayload, "inedibleFoods">;
+  step10: Pick<DietAnalysisPayload, "healthConcerns">;
+  step11: Pick<DietAnalysisPayload, "currentMeals">;
+  step12: Pick<DietAnalysisPayload, "supplements">;
+  step13: Pick<DietAnalysisPayload, "healthIssues">;
 }
 
 // 추천 식단 설문 결과지
 interface DietAnalysisResult {
+  surveyReportId: number;
   subscribeId: number;
-  subscribeStatus: string;
+  subscribeStatus: SubscriptionStatus;
   recommendRecipeExist: boolean;
   firstResultResponse: FirstResultResponse;
   secondResultResponse: SecondResultResponse;
@@ -148,17 +57,19 @@ interface DietAnalysisResult {
 }
 
 interface FirstResultResponse {
-  firstHealthConcernsSymptomsList: string[];
-  healthConcernsOtherSymptomsList: string[];
-  activityLevel: ActivityLevel;
+  firstHealthConcernSymptomList: string[];
+  healthConcernOtherSymptomList: string[];
+  activityLevel: GeneralLevel;
   snackCountLevel: SnackCountLevel;
-  inedibleFoodType: InedibleFood[];
+  foodAllergyTypes: string[];
+  surveyReportCreatedDate: string[];
+  surveyReportModifiedDate: string[];
 }
 
 interface SecondResultResponse {
   dogId: number;
   dogName: string;
-  firstHealthConcerns: HealthConcern;
+  firstHealthConcerns: HealthConcernType;
   firstHealthConcernsCauseList: string[];
   recipeEfficacyList: string[];
 }
@@ -173,14 +84,27 @@ interface RecommendRecipeRankDto {
   recommendRecipeId: number;
   recommendRecipeName: string;
   recommendRecipeDescription: string;
+  healthImprovements: HealthImprovements[];
   recommendRecipeImgUrl: string;
-  ingredientsList: InedibleFood[];
+  foodAllergies: string[];
+  ingredients: string[];
+  subIngredients: string[];
+  healthConcernsList: HealthConcernType[];
   uiNameKorean: string;
   uiNameEnglish: string;
 }
 
+interface HealthImprovements {
+  healthConcernsExplanationTitle: string;
+  healthConcernsExplanation: string;
+}
+
 interface CreateDietAnalysisResultResponse {
-  surveyReportId: number;
+  success: boolean;
+  data: null | number;
+  message: null | string;
+  detailMessage: null | string;
+  errorCode: null | string;
 }
 
 interface EfficacyData {
@@ -195,10 +119,6 @@ export type {
   FirstResultResponse,
   SecondResultResponse,
   ThirdResultResponse,
-  ActivityLevel,
-  SnackCountLevel,
-  InedibleFood,
-  RecipeEfficacy,
   RecommendRecipeRankDto,
   EfficacyData,
   DietAnalysisFormValues,

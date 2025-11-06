@@ -1,99 +1,93 @@
-import * as styles from './ChangedScore.css';
+import { commonWrapper } from '@/styles/common.css';
 import GoodEmogi from '/public/images/healthNote/good_emoji.svg';
 import DangerEmogi from '/public/images/healthNote/danger_emogi.svg';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SameEmogi from '/public/images/healthNote/same_emoji.svg';
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import ResultCard from "@/components/pages/heathNote/common/resultCard/ResultCard";
-import DefaultText from "@/components/common/defaultText/DefaultText";
-import Card from "@/components/common/card/Card";
+import Text from "@/components/ui/text/Text";
+import Card from "@/components/ui/card/Card";
 import ComparisonProgressBar
 	from "@/components/pages/heathNote/common/progressBar/comparisonProgressBar/ComparisonProgressBar";
-import { BODY_PART_TO_CATEGORY } from "@/constants";
 import { useScoreStatus } from "@/hooks/healthNote/useScoreStatus";
 
 interface ScoreInfoProps {
 	date: string;
-	score: number;
+	checkupScore: number;
 	isCurrent?: boolean;
 }
 
 interface ChangedScoreProps {
-	score: number;
-	prevScore: number;
-	prevDate: string;
-	createdDate: string;
-	bodyPart: (keyof typeof BODY_PART_TO_CATEGORY)[];
+	checkupScore: number;
+	scoreDifference: number;
+	previousDiagnosisDate: string;
+	diagnosisDate: string;
 }
 
 const STATUS_MESSAGE = {
 	same: {
 		title: '이전 점수와 동일해요!',
+		description: '건강 상태가 이전과 동일하네요! 우리 아이의 건강한 삶을 위해 꾸준하게 관리해 주세요',
+		icon: SameEmogi,
 	},
 	up: {
 		title: '올랐어요!',
-		description: '의 건강 상태가 좋아졌어요!\n우리 아이가 건강을 잘 유지할 수 있도록 지금처럼 관리해 주세요',
+		description: '이전보다 건강 상태가 좋아졌어요! 우리 아이가 건강을 잘 유지할 수 있도록 지금처럼 관리해 주세요',
 		icon: GoodEmogi,
 	},
 	down: {
 		title: '떨어졌어요!',
-		description: '에서 관리가 필요한 상태에요!\n우리 아이의 건강을 위해 지속적으로 살펴봐 주세요',
+		description: '이전보다 관리가 필요한 상태예요! 우리 아이의 건강을 위해 지속적으로 살펴봐 주세요',
 		icon: DangerEmogi,
 	},
 }
-
-const ChangedScore = ({
-	score,
-	prevScore,
-	prevDate,
-	createdDate,
-	bodyPart = [],
-}: ChangedScoreProps) => {
-	const { diff: diffScore, status } = useScoreStatus({ current: score, previous: prevScore });
-
+export default function ChangedScore({
+	checkupScore,
+	scoreDifference,
+	previousDiagnosisDate,
+	diagnosisDate,
+}: ChangedScoreProps) {
+	const { prev: prevScore, status } = useScoreStatus({ current: checkupScore, scoreDifference: scoreDifference });
 	return (
-		<article>
-			<ResultCard
-				className={styles.changedScoreContainer}
-				title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${Math.abs(diffScore)}점 ` : ''}${STATUS_MESSAGE[status].title}`}
-			>
-				{status !== 'same' &&
-					<Card
-						shadow='none'
-						direction='row'
-						padding={12}
-						gap={12}
-						className={styles.changedScoreNotice}
-					>
-						<SvgIcon src={STATUS_MESSAGE[status].icon} />
-						<DefaultText type='label4' color='gray700'>
-							{bodyPart.map(v => BODY_PART_TO_CATEGORY[v]).join(', ')}
-							{STATUS_MESSAGE[status].description}
-						</DefaultText>
-					</Card>
-				}
+		<ResultCard
+			className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}
+			title={`건강 종합 점수가\n${status !== 'same' ? `이전보다 ${Math.abs(scoreDifference)}점 ` : ''}${STATUS_MESSAGE[status].title}`}
+		>
+			<div className={commonWrapper({ direction: 'col', align: 'start', gap: 6 })}>
+				<Card
+					shadow='none'
+					direction='row'
+					padding={12}
+					gap={12}
+					border='gray200'
+				>
+					<SvgIcon src={STATUS_MESSAGE[status].icon} />
+					<Text type='label4' color='gray700'>
+						{STATUS_MESSAGE[status].description}
+					</Text>
+				</Card>
 				<ComparisonProgressBar
+					align='center'
 					prevScore={prevScore}
-					currentScore={score}
+					currentScore={checkupScore}
 					prevBottomChildren={(
-						<ScoreInfo date={prevDate} score={prevScore} />
+						<ScoreInfo date={previousDiagnosisDate} checkupScore={prevScore} />
 					)}
 					currentBottomChildren={
-						<ScoreInfo date={createdDate} score={score} />
+						<ScoreInfo date={diagnosisDate} checkupScore={checkupScore} />
 					}
 				/>
-			</ResultCard>
-		</article>
+			</div>
+		</ResultCard>
 	);
 };
 
-const ScoreInfo = ({ date, score, isCurrent = false }: ScoreInfoProps) => (
-	<div className={styles.scoreInfo}>
-		<DefaultText type='body3' color='gray600'>
+const ScoreInfo = ({ date, checkupScore, isCurrent = false }: ScoreInfoProps) => (
+	<div className={commonWrapper({ direction: 'col' })}>
+		<Text type='body3' color='gray600'>
 			{date}
-		</DefaultText>
-		<DefaultText type='headline2' color={!isCurrent ? 'gray600' : 'gray900'}>
-			{score}점
-		</DefaultText>
+		</Text>
+		<Text type='headline2' color={!isCurrent ? 'gray600' : 'gray900'}>
+			{checkupScore}점
+		</Text>
 	</div>
 )
-
-export default ChangedScore;

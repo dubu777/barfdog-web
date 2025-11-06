@@ -1,15 +1,14 @@
 import axiosInstance from "../axiosInstance";
 import {
-  BenefitDto,
   PaymentBody,
   PlanDiscountResponse,
-  SubscriptionAddressData,
-  SubscriptionListData,
-  SubscriptionDetailDto,
-  SubscriptionSkipType,
-  AddressDto,
-  UsingCoupon,
+  CreateSubscriptionRequest,
+  CreateSubscriptionResponse,
+  SubscriptionInfoResponse,
+  SubscriptionOrderSheet,
+  UpdateSubscriptionRequest,
 } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 import { AxiosInstance } from "axios";
 
 const getPlanDiscount = async (): Promise<PlanDiscountResponse[]> => {
@@ -23,124 +22,79 @@ export interface RequestCreateSubscription {
   body: PaymentBody;
 }
 
+const getRawFoodOrderSheet = async (
+  surveyId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<any> => {
+  const { data } = await instance.get(
+    `/api/v2/orders/raw/sheet/subscription/${surveyId}`
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "생식 주문서 조회에 실패했습니다";
+  throw new Error(message);
+};
+
+// 구독 주문서 - 구독 생성
+const createSubscription = async ({
+  surveyId,
+  body,
+}: {
+  surveyId: number;
+  body: CreateSubscriptionRequest;
+}): Promise<CreateSubscriptionResponse> => {
+  const { data } = await axiosInstance.post(
+    `api/v2/orders/payment/sheet/subscription/${surveyId}`,
+    body
+  );
+  if (data.success) {
+    return data.data;
+  }
+  const message = data.detailMessage ?? "구독 생성에 실패했습니다";
+  throw new Error(message);
+};
+
+// 현재 구독 정보 조회 - 구독 변경 페이지
+const getSubscriptionInfo = async (
+  subscribeId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<SubscriptionInfoResponse> => {
+  const { data } = await instance.get(`/api/v2/user/subscribes/${subscribeId}`);
+  return validateApiResponse(data, "구독 정보 조회에 실패했습니다.");
+};
+
+// 추천 레시피 정보가 포함된 레시피 정보 조회
+const getSubscriptionOrderSheet = async (
+  surveyId: number,
+  instance: AxiosInstance = axiosInstance
+): Promise<SubscriptionOrderSheet> => {
+  const { data } = await instance.get(
+    `/api/v2/user/recipes/with-recommendation?recipeSurveyId=${surveyId}`
+  );
+  return validateApiResponse(data, "구독 주문서 조회에 실패했습니다.");
+};
+
+// 구독 정보 변경 요청
 const updateSubscription = async ({
   subscribeId,
   body,
-}: RequestCreateSubscription) => {
-  const response = await axiosInstance.put(
-    `/api/subscribes/${subscribeId}`,
-    body
-  );
-  return response;
-};
-
-const getSubscriptionDetail = async (
-  subscribeId: number,
-  instance: AxiosInstance = axiosInstance
-): Promise<SubscriptionDetailDto> => {
-  const { data } = await instance.get(`/api/subscribes/${subscribeId}`);
-  const matchedRecipes = data?.subscribeRecipeDtoList.map((recipe) => {
-    const matchedRecipe = data?.recipeDtoList.find(
-      (r) => r.id === recipe.recipeId
-    );
-    return {
-      recipeId: recipe.recipeId,
-      recipeNames: recipe.recipeName,
-      imageUrl: matchedRecipe?.imgUrl ?? null,
-    };
-  });
-  return {
-    ...(({ subscribeStatus, ...rest }) => ({
-      ...rest,
-      status: subscribeStatus,
-    }))(data.subscribeDto),
-    recipeList: matchedRecipes,
-  };
-};
-
-const getSubscriptionList = async (
-  page = 0,
-  size = 50,
-  instance: AxiosInstance = axiosInstance
-): Promise<SubscriptionListData[]> => {
-  const { data } = await instance.get(
-    `/api/subscribes?page=${page}&size=${size}`
-  );
-  return data?._embedded?.querySubscribesDtoList || [];
-};
-
-const getSubscriptionBenefits = async (
-  subscribeId: string
-): Promise<BenefitDto[]> => {
-  const { data } = await axiosInstance.get(
-    `/api/subscribes/benefits/${subscribeId}`
-  );
-  return data._embedded.subscribeBenefitDtoList;
-};
-
-const getSubscriptionAddress = async (
-  subscribeId: number,
-  instance: AxiosInstance = axiosInstance
-): Promise<SubscriptionAddressData> => {
-  const { data } = await instance.get(`/api/address/subscribe/${subscribeId}`);
-  return data;
-};
-
-const skipSubscription = async (
-  subscribeId: number,
-  skipType: SubscriptionSkipType
-) => {
-  const body = {
-    id: subscribeId,
-    type: skipType,
-  };
-  const { data } = await axiosInstance.post(
-    `/api/subscribes/${subscribeId}/skip/week`,
-    body
-  );
-  return data;
-};
-
-const updateSubscriptionAddress = async (
-  subscribeId: number,
-  changeType: string,
-  body: AddressDto
-) => {
-  const { data } = await axiosInstance.post(
-    `/api/address/subscribe/${subscribeId}/${changeType}`,
-    body
-  );
-  return data;
-};
-
-const cancelUsedCoupon = async (
-  subscriptionId: number,
-  usingCouponId: number
-) => {
+}: {
+  subscribeId: number;
+  body: UpdateSubscriptionRequest;
+}): Promise<CreateSubscriptionResponse> => {
   const { data } = await axiosInstance.put(
-    `/api/subscribes/${subscriptionId}/coupon/cancel`,
-    { memberCouponId: usingCouponId }
-  );
-  return { ...data, subscriptionId: subscriptionId };
-};
-
-const updateUsingCoupon = async (subscriptionId: number, body: UsingCoupon) => {
-  const { data } = await axiosInstance.post(
-    `/api/subscribes/${subscriptionId}/coupon`,
+    `/api/v2/user/subscribes/${subscribeId}`,
     body
   );
-  return { ...data, subscriptionId: subscriptionId };
+  return validateApiResponse(data, "구독 정보 변경에 실패했습니다.");
 };
 
 export {
   getPlanDiscount,
-  getSubscriptionDetail,
-  getSubscriptionBenefits,
-  getSubscriptionList,
-  getSubscriptionAddress,
+  getRawFoodOrderSheet,
+  createSubscription,
   updateSubscription,
-  skipSubscription,
-  updateSubscriptionAddress,
-  cancelUsedCoupon,
-  updateUsingCoupon,
+  getSubscriptionInfo,
+  getSubscriptionOrderSheet,
 };

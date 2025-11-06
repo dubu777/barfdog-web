@@ -48,6 +48,8 @@ export function useSurveyStep<K extends string>(
     const skip = skipConditions.find(
       (c) => c.from === currentKey && c.predicate()
     );
+    console.log("skip", skip);
+
     if (skip) {
       // skip.to 단계로 이동
       const targetIndex = stepKeys.indexOf(skip.to);

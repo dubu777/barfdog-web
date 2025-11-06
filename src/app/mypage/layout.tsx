@@ -1,18 +1,16 @@
 import { ReactNode, Suspense } from "react";
 import MyPageHeader from "@/components/pages/mypage/layout/MyPageHeader";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
-import Loader from "@/components/common/loader/Loader";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 interface DefaultLayoutProps {
   children: ReactNode;
 }
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Spinner fullscreen />}>
       <MyPageHeader />
-      <Wrapper>
-        {children}
-      </Wrapper>
+      <Wrapper>{children}</Wrapper>
     </Suspense>
   );
 }

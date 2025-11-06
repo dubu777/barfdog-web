@@ -1,30 +1,30 @@
 import { ComponentType, ReactNode, SVGProps } from "react";
 import * as styles from './InfoBox.css';
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Text from "@/components/ui/text/Text";
 
 interface DualInfoBoxProps {
 	label: string;
 	content: ReactNode;
 	icon: ComponentType<SVGProps<SVGSVGElement>>;
+	align?: 'center' | 'start';
 }
 
-const InfoBox = ({
+export default function InfoBox({
 	label,
 	content,
 	icon,
-}: DualInfoBoxProps) => {
+	align = 'center'
+}: DualInfoBoxProps) {
 	return (
-		<div className={styles.infoBox}>
+		<div className={styles.infoBox({ align })}>
 			<div className={styles.infoContent}>
 				<SvgIcon src={icon} size={20} />
-				<DefaultText type='body3'>{label}</DefaultText>
+				<Text type='body3'>{label}</Text>
 			</div>
-			<div className={styles.infoContent}>
+			<div className={`${styles.infoContent} ${align === 'start' ? styles.infoContentAlignStart : ''}`}>
 				{content}
 			</div>
 		</div>
 	);
 };
-
-export default InfoBox;

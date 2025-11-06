@@ -1,10 +1,10 @@
 import { GeneralOrderItem } from "@/types";
 import Image from "next/image";
-import * as styles from "../../../subscription/subscriptionOrderItemList/orderItemCard/OrderItemCard.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import * as styles from "./GeneralOrderItemCard.css";
+import Text from "@/components/ui/text/Text";
 import { formatNumberWithCommas } from "@/utils";
-import Chips from "@/components/common/chips/Chips";
-import Divider from "@/components/common/divider/Divider";
+import Chips from "@/components/ui/chips/Chips";
+import Divider from "@/components/ui/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 
 interface GeneralOrderItemCardProps {
@@ -14,12 +14,11 @@ interface GeneralOrderItemCardProps {
 export default function GeneralOrderItemCard({
   orderItemData,
 }: GeneralOrderItemCardProps) {
-  const baseImageUrl = process.env.NEXT_PUBLIC_S3_URL;
   return (
     <div className={styles.orderItemCardContainer}>
       <div className={commonWrapper({ gap: 8, justify: "start" })}>
         <Image
-          src={`${baseImageUrl}${orderItemData.itemImageFilename}`}
+          src={orderItemData.itemImageFilename.url}
           alt="임시"
           width={88}
           height={88}
@@ -28,14 +27,12 @@ export default function GeneralOrderItemCard({
         />
         <div className={styles.orderItemContentWrapper}>
           <div className={styles.orderItemInfoWrapper}>
-            <DefaultText type="label2">{orderItemData.name}</DefaultText>
-            <DefaultText type="body3">
-              구매수량 | {orderItemData.amount}개
-            </DefaultText>
+            <Text type="label2">{orderItemData.name}</Text>
+            <Text type="body3">구매수량 | {orderItemData.amount}개</Text>
           </div>
-          <DefaultText type="headline2">
+          <Text type="headline2">
             {formatNumberWithCommas(orderItemData.itemOriginalPrice)}원
-          </DefaultText>
+          </Text>
         </div>
       </div>
       <div
@@ -52,17 +49,17 @@ export default function GeneralOrderItemCard({
               })}
             >
               <div className={commonWrapper({ gap: 8, justify: "start" })}>
-                <DefaultText type="body3" color="gray700">
+                <Text type="body3" color="gray700">
                   {option.name}
-                </DefaultText>
+                </Text>
                 <Divider direction="vertical" thickness={1} color="gray300" />
-                <DefaultText type="body3" color="gray700">
+                <Text type="body3" color="gray700">
                   {option.amount}개
-                </DefaultText>
+                </Text>
               </div>
-              <DefaultText type="label3">
+              <Text type="label3">
                 {formatNumberWithCommas(option.price)}원
-              </DefaultText>
+              </Text>
             </div>
           </div>
         ))}

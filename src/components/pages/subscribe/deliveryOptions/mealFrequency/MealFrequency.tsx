@@ -1,24 +1,27 @@
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import { selectOptionWrapper } from "../DeliveryOptions.css";
-import SurveyButton from "@/components/common/surveyButton/SurveyButton";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
 import { deliveryOptions } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
-import { SubscriptionValues } from "@/utils/validation/subscriptionValidation";
 import { Controller, useFormContext } from "react-hook-form";
+import { SubscriptionValues } from "@/types";
 
-export default function MealFrequency() {
+interface MealFrequencyProps {
+  source?: "edit" | "order";
+}
+
+export default function MealFrequency({ source }: MealFrequencyProps) {
   const { control } = useFormContext<SubscriptionValues>();
 
   return (
-    <div className={selectOptionWrapper}>
-      <DefaultText type="title4">식사량</DefaultText>
-
+    <div className={selectOptionWrapper({ source })}>
+      <Text type="title4">식사량</Text>
       <Controller
-        name="mealFrequency"
+        name="mealPlan"
         control={control}
         render={({ field }) => (
           <div className={commonWrapper({ gap: 8 })}>
-            {deliveryOptions.mealFrequency.map((item) => (
+            {deliveryOptions.mealPlan.map((item) => (
               <SurveyButton
                 key={item.value}
                 label={item.label}

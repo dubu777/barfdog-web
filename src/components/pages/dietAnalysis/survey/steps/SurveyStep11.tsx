@@ -1,10 +1,12 @@
-import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
+import React from "react";
+import { useFormContext, useController } from "react-hook-form";
 import { SurveyStepValues } from "@/utils/validation/surveyValidation";
-import { useController, useFormContext } from "react-hook-form";
-import SurveyTitle from "@/components/common/survey/surveyTitle/SurveyTitle";
-import ImageButton from "../imageButton/ImageButton";
-import SurveyGridButtonGroup from "../../../../common/survey/surveyGridButtonGroup/SurveyGridButtonGroup";
-import { useSurveyRankOption } from "@/hooks/survey/useSurveyRankOption";
+import SurveyTitle from "@/components/domain/survey/surveyTitle/SurveyTitle";
+import Text from "@/components/ui/text/Text";
+import SurveyButton from "@/components/domain/survey/surveyButton/SurveyButton";
+import { useSurveyToggleOption } from "@/hooks/survey/useSurveyToggleOption";
+import { commonWrapper } from "@/styles/common.css";
+import { DIET_ANALYSIS_FORM_INFO, SURVEY_TITLES } from "@/constants";
 
 interface SurveyStepProps {
   handleChange: () => void;
@@ -17,49 +19,52 @@ export default function SurveyStep11({
 }: SurveyStepProps) {
   const { control } = useFormContext<SurveyStepValues>();
 
-  // healthConcerns field controller
-  const { field: concernsField } = useController({
-    name: "step11.healthConcerns",
+  // useController로 필드를 최상단에서 가져옵니다.
+  const { field: currentMealField } = useController({
+    name: "step11.currentMeals",
     control,
   });
 
-  // useSurveyRankOption must be called at top level
-  const selected = (concernsField.value as string[]) ?? [];
-  const { onToggle, isDisabled, getRank, onReselect } =
-    useSurveyRankOption<string>(
-      selected,
-      (next) => {
-        concernsField.onChange(next);
-        handleChange();
-      },
-      3
-    );
+  // useSurveyToggleOption 훅도 최상단에서 호출합니다.
+  const { onToggle, isSelected } = useSurveyToggleOption({
+    selectedValue: currentMealField.value,
+    mode: "checkbox",
+    onChange: (value) => {
+      currentMealField.onChange(value);
+      handleChange();
+    },
+  });
 
   return (
     <>
       <SurveyTitle
         dogName={dogName}
         config={SURVEY_TITLES.step11}
-        onReselect={onReselect}
+        chipContent="더 정밀한 추천을 위해 3가지만 더 여쭤볼게요 🐶"
       />
-      <SurveyGridButtonGroup>
-        {DIET_ANALYSIS_FORM_INFO.lifestyle.healthConcerns.options.map(
+      <div
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 12,
+        })}
+      >
+        <Text type="label2" color="gray500">
+          *복수응답가능
+        </Text>
+        {DIET_ANALYSIS_FORM_INFO.dogDietHealth.currentMeals.options.map(
           (option) => (
-            <ImageButton
-              key={option.value}
+            <SurveyButton
+              key={option.label}
               label={option.label}
               value={option.value}
-              inputType="rank"
-              defaultSvg={option.Icon}
-              selectedSvg={option.SelectedIcon}
-              isChecked={selected.includes(option.value)}
-              rank={getRank(option.value)}
-              disabled={isDisabled(option.value)}
-              onToggle={() => onToggle(option.value)}
+              inputType="checkbox"
+              isChecked={isSelected(option.value)}
+              onToggle={onToggle}
             />
           )
         )}
-      </SurveyGridButtonGroup>
+      </div>
     </>
   );
 }

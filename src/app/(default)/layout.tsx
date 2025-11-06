@@ -1,33 +1,42 @@
 import { ReactNode } from "react";
-import { themeVars } from "@/styles/theme.css";
-import { headerContainer, headerContent } from "@/components/layout/header/Header.css";
-import Image from "next/image";
-import Logo from "/public/images/logo/logo-default.png";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
+import Header from "@/components/layout/header/Header";
+import { cookies } from "next/headers";
+import { isAuthenticated } from "@/utils/auth/isAuthenticated";
+import { AUTH_CONFIG } from "@/constants/auth";
 import Link from "next/link";
+import Text from "@/components/ui/text/Text";
+import LogoIcon from "public/images/logo/logo.svg";
+import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 
 interface DefaultLayoutProps {
   children: ReactNode;
 }
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
+  const cookieStore = cookies();
+  const token = cookieStore.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
+  const isAuthed = isAuthenticated(token);
+
+  const rightElement = !isAuthed ? (
+    <Link href="/login" prefetch>
+      <Text type="headline4" color="gray800">
+        로그인
+      </Text>
+    </Link>
+  ) : undefined;
   return (
     <>
-      <header className={headerContainer} style={{ backgroundColor: themeVars.colors.gray.gray0, }}>
-        <div className={headerContent}>
-          <Link href='/'>
-            <Image
-              src={Logo}
-              alt="사이트 로고"
-              width={148}
-              height={26}
-              priority
-            />
+      <Header
+        rightElement={rightElement}
+        showCartButton={isAuthed}
+        leftElement={
+          <Link href="/" aria-label="홈">
+            <LogoIcon />
           </Link>
-        </div>
-      </header>
-      <Wrapper>
-        {children}
-      </Wrapper>
+        }
+      />
+      <Wrapper>{children}</Wrapper>
+      <BottomNavBar />
     </>
   );
 }

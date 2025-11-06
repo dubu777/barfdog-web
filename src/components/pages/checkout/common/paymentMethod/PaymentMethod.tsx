@@ -1,13 +1,13 @@
 "use client";
 
-import { usePaymentStore } from "@/store/order/usePaymentStore";
+import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import * as styles from "./PaymentMethod.css";
 import OrderSection from "../orderSection/OrderSection";
 import Image from "next/image";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import { PAYMENT_METHOD_INFO } from "@/constants";
 import { useToggleOption } from "@/hooks/useToggleOption";
-import LabeledRadioButton from "@/components/common/labeledRadioButton/LabeledRadioButton";
+import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 
 export default function PaymentMethod() {
   const { paymentMethod, setPaymentMethod } = usePaymentStore();
@@ -33,7 +33,7 @@ export default function PaymentMethod() {
               {imageUrl && (
                 <Image src={imageUrl} alt={label} width={48} height={20} />
               )}
-              <DefaultText type="label1">{label}</DefaultText>
+              <Text type="label1">{label}</Text>
             </div>
           </LabeledRadioButton>
         )

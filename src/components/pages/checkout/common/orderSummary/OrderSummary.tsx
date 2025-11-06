@@ -1,23 +1,23 @@
 "use client";
 
-import { orderCalculation } from "@/utils/order/orderCalculation";
+import { orderCalculation } from "@/utils/checkout/orderCalculation";
 import * as styles from "../../OrderSheetCommon.css";
 import { ORDER_TYPE } from "@/constants";
 import { GeneralOrderItem, OrderType } from "@/types";
 import { formatNumberWithCommas } from "@/utils";
 import { useEffect, useMemo } from "react";
-import { useRewardStore } from "@/store/order/useRewardStore";
-import { useDeliveryStore } from "@/store/order/useDeliveryStore";
+import { useRewardStore } from "@/store/checkout/useRewardStore";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import OrderSection from "../orderSection/OrderSection";
 import OrderSummaryRow from "./orderSummaryRow/OrderSummaryRow";
-import Divider from "@/components/common/divider/Divider";
-import { useCouponStore } from "@/store/order/useCouponStore";
-import InfoBox from "@/components/common/infoBox/InfoBox";
-import { usePaymentStore } from "@/store/order/usePaymentStore";
+import Divider from "@/components/ui/divider/Divider";
+import { useCouponStore } from "@/store/checkout/useCouponStore";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
+import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 import { orderSummaryRowContainer } from "./orderSummaryRow/OrderSummaryRow.css";
-import DefaultText from "@/components/common/defaultText/DefaultText";
+import Text from "@/components/ui/text/Text";
 import HelpIcon from "public/images/icons/help.svg";
-import SvgIcon from "@/components/common/svgIcon/SvgIcon";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import { nextPaymentTextWrapper } from "./OrderSummary.css";
 import NextPaymentBottomSheet from "../bottomSheet/nextPaymentBottomSheet/NextPaymentBottomSheet";
 import useModal from "@/hooks/useModal";
@@ -158,18 +158,18 @@ export default function OrderSummary({
           )}
           <div className={orderSummaryRowContainer}>
             <div className={nextPaymentTextWrapper}>
-              <DefaultText type="label4" color="gray700">
+              <Text type="label4" color="gray700">
                 2회차 예상 결제 금액
-              </DefaultText>
+              </Text>
               <SvgIcon
                 src={HelpIcon}
                 color="gray700"
                 onClick={() => onToggle()}
               />
             </div>
-            <DefaultText type="headline2" color="gray700">
+            <Text type="headline2" color="gray700">
               {formatNumberWithCommas(appliedDefaultDiscountPrice)}원
-            </DefaultText>
+            </Text>
           </div>
         </div>
       ) : (

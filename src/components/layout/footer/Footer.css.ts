@@ -11,11 +11,11 @@ export const logo = style({
 })
 
 export const menuLinkBox = style({
-  padding: '0 8px',
+  padding: '4px 8px',
 })
 
 export const menuLink = style({
-  padding: '12px',
+  padding: '8px 12px',
 })
 
 export const policyMenuLinkBox = style({
