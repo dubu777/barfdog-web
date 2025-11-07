@@ -42,6 +42,13 @@ const HEALTH_NOTE_MENU_CATEGORY = [
     width: 64,
     height: 64,
   },
+  {
+    label: "AI 비만 진단",
+    url: "/ai-obesity-check",
+    imageUrl: DogPediaImage,
+    width: 64,
+    height: 64,
+  },
 ];
 
 const POSITIVE_KEY = "none";

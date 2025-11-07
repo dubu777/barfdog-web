@@ -1,6 +1,6 @@
 import axios from "axios";
 import { NextRequest } from "next/server";
-import { LIFET_PASSWORD, LIFET_USERNAME } from "@/constants/sVoucher";
+import { LIFET_PASSWORD, LIFET_USERNAME } from "@/constants/healthNote/aiObesityCheck";
 
 const token = Buffer.from(`${LIFET_USERNAME}:${LIFET_PASSWORD}`).toString('base64');
 

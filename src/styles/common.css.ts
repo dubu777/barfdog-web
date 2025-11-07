@@ -480,6 +480,9 @@ export const commonWrapper = recipe({
       red: {
         border: `1px solid ${themeVars.colors.red.red}`,
       },
+      blue500: {
+        border: `1px solid ${themeVars.colors.blue.blue500}`,
+      },
     }
   },
   defaultVariants: {

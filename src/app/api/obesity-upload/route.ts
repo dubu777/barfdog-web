@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NextRequest } from 'next/server';
-import { LIFET_PASSWORD, LIFET_USERNAME } from '@/constants/sVoucher';
+import { LIFET_PASSWORD, LIFET_USERNAME } from '@/constants/healthNote/aiObesityCheck';
 
 export async function POST(req: NextRequest) {
 	try {

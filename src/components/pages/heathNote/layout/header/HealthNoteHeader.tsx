@@ -73,6 +73,11 @@ export default function HealthNoteHeader() {
       centerTitle: "장내 미생물 검사",
       showBackButton: true,
     },
+    "ai-obesity-check": {
+      centerTitle: "AI 비만 진단",
+      showBackButton: true,
+      onBack: goBackToMain,
+    },
   };
 
   const dynamicHeaderConfigs: Record<
@@ -93,6 +98,10 @@ export default function HealthNoteHeader() {
     "probiome/detail/": () => ({
       centerTitle: "상세보기",
       showBackButton: true,
+    }),
+    "ai-obesity-check/result/": () => ({
+      showBackButton: true,
+      onBack: goBackToMain,
     }),
   };
 
@@ -116,6 +125,7 @@ export default function HealthNoteHeader() {
     `/health-note/${params.petId}/full-check/result/${params.diagnosisId}`,
     `/health-note/${params.petId}/probiome/survey`,
     `/health-note/${params.petId}/probiome/pickup/${params.diagnosisId}`,
+    `/health-note/${params.petId}/ai-obesity-check`,
   ];
 
   // 접두사로 시작하면 제외할 경로
