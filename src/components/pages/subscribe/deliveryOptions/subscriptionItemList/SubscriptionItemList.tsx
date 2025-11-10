@@ -26,7 +26,7 @@ export default function SubscriptionItemList({
         direction: "col",
         gap: 20,
         align: "start",
-        padding: '32/20',
+        padding: "32/20",
       })}
     >
       <Text type="title4">
@@ -48,7 +48,7 @@ export default function SubscriptionItemList({
               deliveryPlan={deliveryPlan}
               originalPrice={item.originalPrice}
               packCount={item.packCount}
-              packGrams={item.packGrams}
+              gramsPerMeal={item.gramsPerMeal}
               displayImageUrl={rawFoodItem?.displayImageUrl.url || ""}
               recipeName={rawFoodItem?.recipeNameKorea || ""}
             />

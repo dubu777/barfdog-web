@@ -124,10 +124,11 @@ export default function SubscriptionEdit({
       subscribeId,
       body: {
         plan,
-        recipeList: data.recipeList.map((recipe) => ({
+        recipeList: recipes.map((recipe) => ({
           recipeId: recipe.recipeId,
-          oneMealGramsPerRecipe: recipe.packGrams,
-          originalPrice: recipe.packPrice,
+          gramsPerMeal: recipe.gramsPerMeal,
+          originalPricePerMeal: recipe.pricePerMeal,
+          totalOriginalPrice: recipe.originalPrice,
         })),
         isAgreeSubscription: data.isAgreeSubscription || false,
       },

@@ -30,9 +30,9 @@ interface RawFoodCardProps {
   isSelected: boolean;
   canOpenDetailModal: boolean;
   stagedSelection: StagedSelection | null;
-  onStageSelection: (packGrams: number, packPrice: number) => void;
+  onStageSelection: (gramsPerMeal: number, pricePerMeal: number) => void;
   onCommitSelection: (
-    resolvePack: () => { packGrams: number; packPrice: number }
+    resolvePack: () => { gramsPerMeal: number; pricePerMeal: number }
   ) => CommitSelectionResult;
   onRemoveSelection: () => void;
   onClearStage: () => void;
@@ -53,7 +53,8 @@ export default function RawFoodCard({
   onRemoveSelection,
   onClearStage,
 }: RawFoodCardProps) {
-  const { recommendedPackGrams, packGrams, packPrice, pricePer10g } = packData;
+  const { recommendedPackGrams, gramsPerMeal, pricePerMeal, pricePer10g } =
+    packData;
 
   const addToast = useToastStore((s) => s.addToast);
   const {
@@ -153,7 +154,7 @@ export default function RawFoodCard({
             })}
           >
             <Text type="headline1" color="gray900">
-              {packPrice.toLocaleString()}원
+              {pricePerMeal.toLocaleString()}원
             </Text>
             <Text type="caption" color="gray700">
               / 1팩 당
@@ -175,7 +176,7 @@ export default function RawFoodCard({
             onClick={() => onDetailToggle()}
           >
             <Text type="headline4" color="gray700">
-              {packGrams}g
+              {gramsPerMeal}g
             </Text>
             <SvgIcon src={PenIcon} size={20} />
           </div>

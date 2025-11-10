@@ -29,9 +29,9 @@ interface RecipeDetailModalProps {
   packData?: CalculateRecipePackReturn;
   dailyRecommendKcal?: number;
   stagedSelection?: StagedSelection | null;
-  onStageSelection?: (packGrams: number, packPrice: number) => void;
+  onStageSelection?: (gramsPerMeal: number, pricePerMeal: number) => void;
   onCommitSelection?: (
-    resolvePack: () => { packGrams: number; packPrice: number }
+    resolvePack: () => { gramsPerMeal: number; pricePerMeal: number }
   ) => CommitSelectionResult;
   isOpen: boolean;
   onClose: () => void;
@@ -77,8 +77,8 @@ export default function RecipeDetailModal({
       return;
     }
     const result = onCommitSelection(() => ({
-      packGrams: stagedSelection?.packGrams ?? packData.packGrams,
-      packPrice: stagedSelection?.packPrice ?? packData.packPrice,
+      gramsPerMeal: stagedSelection?.gramsPerMeal ?? packData.gramsPerMeal,
+      pricePerMeal: stagedSelection?.pricePerMeal ?? packData.pricePerMeal,
     }));
     if (result.success) {
       toast("레시피를 담았어요", "above-button");

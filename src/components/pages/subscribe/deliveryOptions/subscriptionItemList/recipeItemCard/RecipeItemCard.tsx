@@ -12,7 +12,7 @@ interface RecipeItemCardProps {
   recipeName: string;
   originalPrice: number;
   packCount: number;
-  packGrams: number;
+  gramsPerMeal: number;
 }
 
 export default function RecipeItemCard({
@@ -22,7 +22,7 @@ export default function RecipeItemCard({
   recipeName,
   originalPrice,
   packCount,
-  packGrams,
+  gramsPerMeal,
 }: RecipeItemCardProps) {
   return (
     <div className={styles.itemCardContainer}>
@@ -50,7 +50,7 @@ export default function RecipeItemCard({
             color="gray600"
             block
             className={marginStyles({ bottom: 6 })}
-          >{`${packGrams}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</Text>
+          >{`${gramsPerMeal}g | ${MEAL_PLAN_LABEL[mealPlan]} | ${DELIVERY_PLAN_LABEL[deliveryPlan]} | ${packCount}팩`}</Text>
         </div>
         <Text type="label3">{originalPrice.toLocaleString()}원</Text>
       </div>

@@ -32,7 +32,7 @@ interface MealAmountSelectorProps {
   packData?: CalculateRecipePackReturn;
   dailyRecommendKcal?: number;
   stagedSelection?: StagedSelection | null;
-  onStageSelection?: (packGrams: number, packPrice: number) => void;
+  onStageSelection?: (gramsPerMeal: number, pricePerMeal: number) => void;
 }
 
 const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
@@ -53,9 +53,9 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
 
     const toast = useToastStore((s) => s.addToast);
     const displayPackGrams =
-      stagedSelection?.packGrams ?? packData?.packGrams ?? 0;
+      stagedSelection?.gramsPerMeal ?? packData?.gramsPerMeal ?? 0;
     const displayPackPrice =
-      stagedSelection?.packPrice ?? packData?.packPrice ?? 0;
+      stagedSelection?.pricePerMeal ?? packData?.pricePerMeal ?? 0;
 
     const [inputValue, setInputValue] = useState<string>(
       displayPackGrams.toString()
@@ -89,14 +89,14 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
       if (parsed < 20) toast("한 끼 최소 급여량은 20g입니다.", "above-button");
       else if (parsed > 500) toast("최대 급여량은 500g입니다.", "above-button");
 
-      const { packPrice } = calculateRecipePack({
+      const { pricePerMeal } = calculateRecipePack({
         recommendedPackGrams: rawFoodItem.oneMealRecommendGram,
         pricePerGram: rawFoodItem.pricePerGram,
         customPackGrams: clamped,
       });
 
       setInputValue(clamped.toString());
-      onStageSelection(clamped, packPrice);
+      onStageSelection(clamped, pricePerMeal);
     }, [inputValue, onStageSelection, dailyRecommendKcal, toast]);
 
     if (inactive) return null;

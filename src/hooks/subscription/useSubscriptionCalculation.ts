@@ -45,7 +45,7 @@ export const useSubscriptionCalculation = ({
     // 레시피별 계산 결과
     const recipes: CalculatedRecipe[] = savedSelection.map((item) => {
       const { originalPrice, discountedPrice } = calculateRecipeTotal(
-        item.packPrice ?? 0,
+        item.pricePerMeal ?? 0,
         mealPlan,
         deliveryPlan,
         recipeCount

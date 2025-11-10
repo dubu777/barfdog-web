@@ -47,7 +47,7 @@ export default function SubscriptionItemPicker({
             deliveryPlan={deliveryPlan}
             originalPrice={recipe.originalPrice}
             packCount={packCount}
-            packGrams={recipe.packGrams}
+            gramsPerMeal={recipe.gramsPerMeal}
             displayImageUrl={recipeCatalog[recipe.recipeId]?.url || ""}
             recipeName={recipeCatalog[recipe.recipeId]?.name || ""}
           />
