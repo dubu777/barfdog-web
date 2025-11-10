@@ -14,10 +14,6 @@ import NoteActive from "/public/images/icons/bottomNavBar/note-active.svg";
 import MyPageActive from "/public/images/icons/bottomNavBar/mypage-active.svg";
 import Text from "@/components/ui/text/Text";
 import useDeviceState from "@/hooks/useDeviceState";
-import { isAuthenticated } from "@/utils/auth/isAuthenticated";
-import { getCookie } from "@/utils/auth/cookie";
-import { AUTH_CONFIG } from "@/constants/auth";
-import { useEffect, useState } from "react";
 
 interface BottomNavBarProps {
   position?: "sticky" | "fixed";
@@ -28,23 +24,7 @@ export default function BottomNavBar({
 }: BottomNavBarProps) {
   const pathname = usePathname();
   const { deviceOS } = useDeviceState();
-  const [healthNoteHref, setHealthNoteHref] =
-    useState<string>("/health-note/guest");
-  const [dietAnalysisHref, setDietAnalysisHref] = useState<string>(
-    "/diet-analysis/guest"
-  );
-
-  useEffect(() => {
-    const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
-    const loggedIn = isAuthenticated(token);
-    if (loggedIn) {
-      setHealthNoteHref("/health-note");
-      setDietAnalysisHref("/diet-analysis");
-    } else {
-      setHealthNoteHref("/health-note/guest");
-      setDietAnalysisHref("/diet-analysis/guest");
-    }
-  }, []);
+  
   const MENU_LIST = [
     {
       icon: pathname === "/" ? <HomeActive /> : <Home />,
@@ -59,12 +39,12 @@ export default function BottomNavBar({
     {
       icon: pathname.startsWith("/diet-analysis") ? <AiActive /> : <Ai />,
       label: "Ai추천식단",
-      url: dietAnalysisHref,
+      url: "/diet-analysis",
     },
     {
       icon: pathname.startsWith("/health-note") ? <NoteActive /> : <Note />,
       label: "건강수첩",
-      url: healthNoteHref,
+      url: "/health-note",
     },
     {
       icon: pathname.startsWith("/mypage") ? <MyPageActive /> : <MyPage />,

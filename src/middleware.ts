@@ -16,6 +16,29 @@ const protectedPaths = [
 // 예외 경로
 const exceptionPaths = ["/health-note/guest", "/diet-analysis/guest"];
 
+// 정규 페이지와 게스트 페이지 간의 매핑 규칙 정의
+const guestRoutes = [
+  { base: "/diet-analysis", guest: "/diet-analysis/guest" },
+  { base: "/health-note", guest: "/health-note/guest" },
+]
+
+// pathname이 특정 base 경로(또는 그 하위 경로)에 포함되는지 검사
+const matchBase = (pathname: string, base: string) =>
+  pathname === base || pathname.startsWith(base + "/");
+
+
+// 기존 요청의 쿼리스트링을 유지한 상태로 지정된 경로로 리다이렉트
+const redirectPreserve = (req: NextRequest, to: string) => {
+  const url = new URL(to, req.nextUrl.origin);
+  url.search = new URL(req.url).search;
+  return NextResponse.redirect(url);
+};
+
+// pathname이 base 또는 guest 규칙과 매칭되는 guestRoutes 항목을 반환
+const findRouteBy = <K extends "base" | "guest">(pathname: string, key: K) =>
+  guestRoutes.find((r) => matchBase(pathname, r[key]));
+
+
 const isProtectedPath = (pathname: string): boolean => {
   // 예외 경로와 일치하면 보호 대상 아님
   if (exceptionPaths.includes(pathname)) {
@@ -94,8 +117,18 @@ export async function middleware(req: NextRequest) {
       return res;
     }
 
+    // 비로그인 사용자가 정규 경로 접근시 게스트 경로로 보내기
+    const matchedRoute = findRouteBy(pathname, "base");
+    if (matchedRoute) return redirectPreserve(req, matchedRoute.guest);
+
     // 리프레시 실패 → 로그인으로
     return redirectToLoginAndClear(req);
+  }
+
+  // 로그인한 사용자가 게스트 경로 접근시 정규 경로로 보내기
+  if (isAuthed) {
+    const matchedRoute = findRouteBy(pathname, "guest");
+    if (matchedRoute) return redirectPreserve(req, matchedRoute.base);
   }
 
   // 로그인한 사용자가 '/login'에 접근하면 루트로
