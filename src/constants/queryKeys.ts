@@ -157,4 +157,9 @@ const queryKeys = {
     GET_BODY_CHECK_LIST: "getBodyCheckList",
     GET_BODY_CHECK_RESULT_DETAIL: "getBodyCheckResultDetail",
   },
+  AI_OBESITY_CHECK: {
+    BASE: "aiObesityCheck",
+    GET_OBESITY_DETAIL: "getObesityDetail",
+    GET_RECOMMEND_ITEMS: "getRecommendItems",
+  }
 } as const;

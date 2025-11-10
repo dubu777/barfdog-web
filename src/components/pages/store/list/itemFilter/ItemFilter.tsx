@@ -50,7 +50,7 @@ export default function ItemFilter() {
       </ul>
       <div className={commonWrapper({
         justify: 'end',
-        padding: 20,
+        paddingX: 20,
         paddingTop: 12,
         paddingBottom: 8,
       })}>

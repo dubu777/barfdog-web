@@ -20,7 +20,8 @@ export default function RewardItem({
 					direction: 'col',
 					align: 'start',
 					gap: 16,
-					padding: '12/20',
+					paddingY: 12,
+					paddingX: 20,
 					backgroundColors: 'gray0',
 				})}
 			>

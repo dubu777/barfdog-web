@@ -188,41 +188,14 @@ export const commonWrapper = recipe({
       40: {
         padding: "40px",
       },
-      "12/20": {
-        padding: "12px 20px",
-      },
-      "16/12": {
-        padding: "16px 12px",
-      },
-      "16/20": {
-        padding: "16px 20px",
-      },
       "20/16": {
         padding: "20px 16px",
-      },
-      "40/20": {
-        padding: "40px 20px",
       },
       "32/20": {
         padding: "32px 20px",
       },
-      "0/12": {
-        padding: "0 12px",
-      },
-      "0/20": {
-        padding: "0 20px",
-      },
-      "16/0": {
-        padding: "16px 0",
-      },
     },
     paddingBottom: {
-      0: {
-        paddingBottom: "0px",
-      },
-      4: {
-        paddingBottom: "4px",
-      },
       8: {
         paddingBottom: "8px",
       },
@@ -234,12 +207,6 @@ export const commonWrapper = recipe({
       },
       20: {
         paddingBottom: "20px",
-      },
-      24: {
-        paddingTop: "24px",
-      },
-      28: {
-        paddingBottom: "28px",
       },
       30: {
         paddingBottom: "30px",
@@ -253,9 +220,6 @@ export const commonWrapper = recipe({
       60: {
         paddingBottom: "60px",
       },
-      80: {
-        paddingBottom: "80px",
-      },
       85: {
         paddingBottom: "85px",
       },
@@ -264,9 +228,6 @@ export const commonWrapper = recipe({
       },
     },
     paddingTop: {
-      0: {
-        paddingTop: "0px",
-      },
       4: {
         paddingTop: "4px",
       },
@@ -291,12 +252,6 @@ export const commonWrapper = recipe({
       24: {
         paddingTop: "24px",
       },
-      28: {
-        paddingTop: "28px",
-      },
-      30: {
-        paddingTop: "30px",
-      },
       32: {
         paddingTop: "32px",
       },
@@ -306,14 +261,15 @@ export const commonWrapper = recipe({
       60: {
         paddingTop: "60px",
       },
-      80: {
-        paddingTop: "80px",
-      },
       114: {
         paddingTop: "114px",
       },
     },
     paddingX: {
+      8: {
+        paddingLeft: "8px",
+        paddingRight: "8px",
+      },
       12: {
         paddingLeft: "12px",
         paddingRight: "12px",
@@ -326,8 +282,24 @@ export const commonWrapper = recipe({
         paddingLeft: "20px",
         paddingRight: "20px",
       },
+      32: {
+        paddingLeft: "32px",
+        paddingRight: "32px",
+      },
+      40: {
+        paddingLeft: "40px",
+        paddingRight: "40px",
+      },
     },
     paddingY: {
+      4: {
+        paddingTop: "4px",
+        paddingBottom: "4px",
+      },
+      8: {
+        paddingTop: "8px",
+        paddingBottom: "8px",
+      },
       12: {
         paddingTop: "12px",
         paddingBottom: "12px",
@@ -339,6 +311,30 @@ export const commonWrapper = recipe({
       20: {
         paddingTop: "20px",
         paddingBottom: "20px",
+      },
+      24: {
+        paddingTop: "24px",
+        paddingBottom: "24px",
+      },
+      28: {
+        paddingTop: "28px",
+        paddingBottom: "28px",
+      },
+      32: {
+        paddingTop: "32px",
+        paddingBottom: "32px",
+      },
+      40: {
+        paddingTop: "40px",
+        paddingBottom: "40px",
+      },
+      60: {
+        paddingTop: "60px",
+        paddingBottom: "60px",
+      },
+      80: {
+        paddingTop: "80px",
+        paddingBottom: "80px",
       },
     },
     marginBottom: {
@@ -483,6 +479,9 @@ export const commonWrapper = recipe({
       },
       red: {
         border: `1px solid ${themeVars.colors.red.red}`,
+      },
+      blue500: {
+        border: `1px solid ${themeVars.colors.blue.blue500}`,
       },
     }
   },

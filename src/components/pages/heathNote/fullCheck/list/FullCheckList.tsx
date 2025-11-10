@@ -72,8 +72,7 @@ export default function FullCheckList({ petId }: FullCheckListProps) {
           <article className={commonWrapper({
             direction: 'col',
             gap: 8,
-            padding: 20,
-            paddingTop: 0,
+            paddingX: 20,
             paddingBottom: 40,
           })}>
             {checkupDiagnosisList.map((result, index) => (

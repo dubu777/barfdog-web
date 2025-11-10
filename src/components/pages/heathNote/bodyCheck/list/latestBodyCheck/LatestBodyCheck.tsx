@@ -37,7 +37,8 @@ export default function LatestBodyCheck({
 			direction: 'col',
 			align: 'start',
 			gap: 20,
-			padding: '40/20',
+			paddingX: 20,
+			paddingY: 40,
 			backgroundColors: 'gray50',
 		})}>
 			<Text type="title3">

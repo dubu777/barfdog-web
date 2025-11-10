@@ -62,7 +62,7 @@ export default function LoginSection() {
           className={commonWrapper({
             direction: "col",
             gap: 4,
-            padding: "0/20",
+            paddingX: 20,
           })}
         >
           <Text type="title1">👋 안녕하세요 보호자님!</Text>

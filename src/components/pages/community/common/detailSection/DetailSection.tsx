@@ -51,7 +51,7 @@ export default function DetailSection({
 					<Text type='body3' color='gray600'>{format(new Date(createdDate), 'yyyy-MM-dd')}</Text>
 				}
 			</article>
-			<div className={commonWrapper({ padding: 20, paddingBottom: 60, paddingTop: 60 })}>
+			<div className={commonWrapper({ paddingX: 20, paddingY: 60 })}>
 				<div className={sanitizedHTML}>{parse(cleanHTML)}</div>
 			</div>
 			<Divider thickness={8} color='gray50' />

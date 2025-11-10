@@ -37,7 +37,8 @@ export default function OrderCancelRequestModal({
           justify: 'start', 
           align: 'start',
           gap: 32, 
-          padding: '40/20'
+          paddingX: 20,
+          paddingY: 40,
         })}>
           <div className={commonWrapper({ 
             direction: 'col', 

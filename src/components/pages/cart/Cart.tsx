@@ -64,8 +64,7 @@ export default function Cart() {
     })}>
       <article className={commonWrapper({
         justify: 'between',
-        padding: 20,
-        paddingTop: 0,
+        paddingX: 20,
         paddingBottom: 16,
       })}>
         <LabeledCheckbox
@@ -87,7 +86,7 @@ export default function Cart() {
       </article>
       <Divider thickness={1} color='gray200' />
       <Divider thickness={8} color='gray50' />
-      <article className={commonWrapper({ padding: 20, paddingTop: 24, paddingBottom: 24 })}>
+      <article className={commonWrapper({ paddingX: 20, paddingY: 24 })}>
         <div className={commonWrapper({
           direction: 'col',
           align: 'start',
@@ -118,14 +117,13 @@ export default function Cart() {
             direction: 'col',
             align: 'start',
             gap: 4,
-            padding: 20,
+            paddingX: 20,
             paddingTop: 24,
-            paddingBottom: 0,
           })}>
             <Text type='headline2'>품절/구매불가</Text>
             <Text type='body3' color='gray700'>해당 상품에 포함된 추가 상품도 구매가 불가능해요.</Text>
           </div>
-          <div className={commonWrapper({ padding: 20, paddingTop: 24, paddingBottom: 24 })}>
+          <div className={commonWrapper({ paddingX: 20, paddingY: 24 })}>
             <div className={commonWrapper({
               direction: 'col',
               align: 'start',

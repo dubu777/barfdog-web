@@ -34,8 +34,8 @@ export default function Account() {
 				<ul 
 					className={commonWrapper({ 
 						direction: 'col', 
-						padding: 20, 
-						paddingTop: 0,
+						paddingX: 20, 
+						paddingBottom: 20, 
 						align: 'start',
 						backgroundColors: 'gray0',
 					})}
@@ -49,7 +49,7 @@ export default function Account() {
 									href={`/mypage/account/${typedKey}`} 
 									className={commonWrapper({
 										justify: 'start',
-										padding: '16/0',
+										paddingY: 16,
 									})}
 								>
 									<Text type='body1'>

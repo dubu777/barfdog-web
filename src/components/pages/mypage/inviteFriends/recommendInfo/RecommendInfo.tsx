@@ -73,7 +73,7 @@ export default function RecommendInfo({
 				</Chips>
 				}
 			</article>
-			<article className={commonWrapper({ direction: 'col', gap: 12, justify: 'start', padding: 20, paddingTop: 0, paddingBottom: 0 })}>
+			<article className={commonWrapper({ direction: 'col', gap: 12, justify: 'start', paddingX: 20 })}>
 				{rewardInfoList.map((info, index) => {
 					const stringArray = info.split('/');
 					return (

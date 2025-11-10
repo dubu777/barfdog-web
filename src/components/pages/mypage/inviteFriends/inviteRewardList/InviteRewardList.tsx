@@ -95,7 +95,7 @@ export default function InviteRewardList({
               <Text type='label4'>나의 추천코드</Text>
               <Text type='title1'>{myRecommendationCode}</Text>
             </div>
-            <div className={commonWrapper({ justify: 'start', paddingTop: 8, paddingBottom: 8 })}>
+            <div className={commonWrapper({ justify: 'start', paddingY: 8 })}>
               {rewardActionList.map((action, index) => (
                 <Fragment key={action.label}>
                   <button
@@ -134,7 +134,8 @@ export default function InviteRewardList({
                     direction: 'col',
                     gap: 16,
                     backgroundColors: 'gray0',
-                    padding: '12/20',
+                    paddingY: 12,
+                    paddingX: 20,
                     align: 'start',
                   })}
                 >

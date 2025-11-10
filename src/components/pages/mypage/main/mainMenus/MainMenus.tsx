@@ -62,7 +62,7 @@ export default function MainMenus() {
                 <Fragment key={label}>
                   <li
                     className={commonWrapper({
-                      padding: "16/0",
+                      paddingY: 16,
                     })}
                   >
                     {url ? (
@@ -99,7 +99,7 @@ export default function MainMenus() {
       </div>
       <div
         className={commonWrapper({
-          padding: 20,
+          paddingX: 20,
           paddingTop: 16,
           paddingBottom: 60,
           backgroundColors: "gray50",
@@ -109,8 +109,7 @@ export default function MainMenus() {
         <button
           onClick={handleLogout}
           className={commonWrapper({
-            paddingTop: 4,
-            paddingBottom: 4,
+            paddingY: 4,
             justify: "start",
           })}
         >

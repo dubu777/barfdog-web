@@ -64,7 +64,8 @@ export default function PostNavigation({
           onClick={() => handleNavigate(prevPost.id)} 
           className={commonWrapper({
             width: 'full',
-            padding: '12/20',
+            paddingX: 20,
+            paddingY: 12,
             justify: 'start',
           })}
         >
@@ -77,7 +78,8 @@ export default function PostNavigation({
         disabled
         className={commonWrapper({
           width: 'full',
-          padding: '12/20',
+          paddingX: 20,
+          paddingY: 12,
           justify: 'start',
           backgroundColors: 'gray100',
         })}
@@ -91,7 +93,8 @@ export default function PostNavigation({
           onClick={() => handleNavigate(nextPost.id)} 
           className={commonWrapper({
             width: 'full',
-            padding: '12/20',
+            paddingX: 20,
+            paddingY: 12,
             justify: 'start',
           })}
         >

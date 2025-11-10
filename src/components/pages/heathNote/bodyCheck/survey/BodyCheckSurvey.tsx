@@ -156,7 +156,8 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
       <section className={commonWrapper({
         direction: 'col',
         gap: 40,
-        padding: '40/20',
+        paddingY: 40,
+        paddingX: 20,
         width: 'full',
         height: '100%',
       })}>

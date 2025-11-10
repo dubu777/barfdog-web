@@ -1,4 +1,3 @@
-import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import { ReactNode } from "react";
 import Wrapper from "@/components/layout/wrapper/Wrapper";
 import Header from "@/components/layout/header/Header";
@@ -8,6 +7,7 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import Link from "next/link";
 import Text from "@/components/ui/text/Text";
 import LogoIcon from "public/images/logo/logo.svg";
+import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 
 interface DefaultLayoutProps {
   children: ReactNode;

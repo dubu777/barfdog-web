@@ -17,7 +17,7 @@ export default function DietReason({ secondResponse }: DietReasonProps) {
     RECIPE_EFFICACY_DATA_MAP[secondResponse.recipeEfficacyList[0]];
   return (
     <div
-      className={commonWrapper({ direction: "col", gap: 20, padding: "0/20" })}
+      className={commonWrapper({ direction: "col", gap: 20, paddingX: 20 })}
     >
       <div className={commonWrapper({ justify: "between" })}>
         <Text type="title3">

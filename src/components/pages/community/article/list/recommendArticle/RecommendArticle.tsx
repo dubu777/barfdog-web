@@ -13,7 +13,7 @@ export default function RecommendArticle() {
   const { data: recommendArticles } = useGetRecommendArticleList();
 
   return (
-    <article className={commonWrapper({ padding: 20, paddingTop: 0 })}>
+    <article className={commonWrapper({ paddingX: 20, paddingBottom: 20 })}>
       <div className={recommendArticleList}>
         <Text 
           type='headline3' 

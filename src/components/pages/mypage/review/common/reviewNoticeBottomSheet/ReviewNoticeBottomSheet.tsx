@@ -54,8 +54,8 @@ export default function ReviewNoticeBottomSheet({
 		>
 			<div
 				className={commonWrapper({
-					padding: 20,
-					paddingTop: 0,
+					paddingX: 20,
+					paddingBottom: 20,
 					direction: 'col',
 					gap: 24,
 					align: 'start',

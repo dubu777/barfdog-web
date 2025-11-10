@@ -31,7 +31,7 @@ export default function HistoryControlBottomSheet({
         병원 진료 기록
       </Text>
       <div className={commonWrapper({
-        padding: 20,
+        paddingX: 20,
         paddingTop: 12,
         paddingBottom: 40,
         direction: 'col',

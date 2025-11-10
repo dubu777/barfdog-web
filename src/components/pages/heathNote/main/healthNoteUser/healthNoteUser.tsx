@@ -42,6 +42,7 @@ const HealthNoteUser = () => {
       case "/body-check":
       case "/dogpedia":
       case "/probiome":
+      case "/ai-obesity-check":
         if (!petInfo?.id) return;
         window.location.href = `/health-note/${petInfo.id}${url}`;
         break;

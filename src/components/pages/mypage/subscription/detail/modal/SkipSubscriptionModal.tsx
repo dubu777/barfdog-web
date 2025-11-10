@@ -56,13 +56,15 @@ export default function SkipSubscriptionModal({
         minHeight: 'fullWithHeader', 
         backgroundColors: 'gray0',
         direction: 'col', 
-        justify: 'start', gap: 20 
+        justify: 'start', 
+        gap: 20 
       })}>
         <div className={commonWrapper({
           backgroundColors: 'gray50',
           direction: 'col',
           justify: 'start',
-          padding: '40/20',
+          paddingX: 20,
+          paddingY: 40,
           gap: 20,
         })}>
           <div className={commonWrapper({ direction: 'col', gap: 4, align: 'start' })}>
@@ -71,7 +73,8 @@ export default function SkipSubscriptionModal({
           </div>
           <Card
             borderRadius={8}
-            padding='16/12'
+            paddingY={16}
+            paddingX={12}
             direction='col'
             gap={8}
             align='start'
@@ -116,7 +119,8 @@ export default function SkipSubscriptionModal({
               <Card 
                 key={item.value} 
                 borderRadius={8}
-                padding='16/12'
+                paddingY={16}
+                paddingX={12}
                 align='start'
               >
                 <LabeledRadioButton 
@@ -135,7 +139,8 @@ export default function SkipSubscriptionModal({
         </div>
         <div className={commonWrapper({
           direction: 'col',
-          padding: '40/20',
+          paddingY: 40,
+          paddingX: 20,
           gap: 16,
         })}>
           <div className={commonWrapper({ direction: 'col' })}>

@@ -61,7 +61,8 @@ export default function ChangePaymentMethodModal({
           minHeight: 'fullWithHeader',
           direction: 'col',
           justify: 'start',
-          padding: '40/20',
+          paddingX: 20,
+          paddingY: 40,
           gap: 20,
         })}>
           <div className={commonWrapper({
@@ -90,7 +91,7 @@ export default function ChangePaymentMethodModal({
                     isChecked={isSelected(value)}
                     onToggle={onToggle}
                     className={commonWrapper({
-                      padding: '16/0',
+                      paddingY: 16,
                       gap: 8,
                       justify: 'start',
                     })}
@@ -141,11 +142,7 @@ export default function ChangePaymentMethodModal({
               결제 수단으로 정기 결제가 진행돼요
             </Text>
           </CompletedBox>
-          <div className={commonWrapper({
-            padding: 40,
-            paddingTop: 0,
-            paddingBottom: 0,
-          })}>
+          <div className={commonWrapper({ paddingX: 40 })}>
             {/* TODO: 결제 수단 변경 후 결제 수단 정보 표시 */}
             <PaymentCard
               cardSize="lg"

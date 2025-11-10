@@ -26,6 +26,7 @@ const nextConfig = {
       "dev.barfdogserver.com",
       "renewal-dev.barfdogserver.com",
       "dev-barfdog.s3.ap-northeast-2.amazonaws.com",
+      "img.lifet.co.kr"
     ],
     remotePatterns: [
       {

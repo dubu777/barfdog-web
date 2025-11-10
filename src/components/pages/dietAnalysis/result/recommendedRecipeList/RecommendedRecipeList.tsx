@@ -16,7 +16,7 @@ export default function RecommendedRecipeList({
 }: RecommendedRecipeListProps) {
   return (
     <div
-      className={commonWrapper({ direction: "col", gap: 20, padding: "0/20" })}
+      className={commonWrapper({ direction: "col", gap: 20, paddingX: 20 })}
     >
       <div className={commonWrapper({ justify: "between" })}>
         <Text type="title3">
