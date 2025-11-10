@@ -32,7 +32,7 @@ export default function SubscriptionOrderItemList({
               deliveryPlan={deliveryPlan}
               originalPrice={item.originalPrice}
               packCount={packCount}
-              packGrams={item.oneMealGramsPerRecipe}
+              gramsPerMeal={item.oneMealGramsPerRecipe}
               displayImageUrl={item?.displayImageUrl.url || ""}
               recipeName={item?.name || ""}
             />

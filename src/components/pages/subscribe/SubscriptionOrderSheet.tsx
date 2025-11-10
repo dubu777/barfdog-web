@@ -87,10 +87,11 @@ export default function SubscriptionOrderSheet({
       surveyId,
       body: {
         plan,
-        recipeList: data.recipeList.map((recipe) => ({
+        recipeList: recipes.map((recipe) => ({
           recipeId: recipe.recipeId,
-          oneMealGramsPerRecipe: recipe.packGrams,
-          originalPrice: recipe.packPrice,
+          gramsPerMeal: recipe.gramsPerMeal,
+          originalPricePerMeal: recipe.pricePerMeal,
+          totalOriginalPrice: recipe.originalPrice,
         })),
       },
     };

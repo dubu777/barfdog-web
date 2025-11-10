@@ -1,5 +1,5 @@
 import { PAYMENT_METHOD } from "@/constants";
-import { DeliveryPlan, MealPlan, PlanName } from "./subscription";
+import { PlanName } from "./subscription";
 import { DiscountType, UrlObject } from "./common";
 
 interface SuccessGeneralPaymentRequest {

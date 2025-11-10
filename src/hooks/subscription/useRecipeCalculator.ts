@@ -16,7 +16,7 @@ export const useRecipeCalculator = ({
 }: UseRecipeCalculatorProps) => {
   const gramsMap = useMemo(() => {
     const m = new Map<number, number>();
-    for (const e of savedRecipes ?? []) m.set(e.recipeId, e.packGrams);
+    for (const e of savedRecipes ?? []) m.set(e.recipeId, e.gramsPerMeal);
     return m;
   }, [savedRecipes]);
 

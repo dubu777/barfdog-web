@@ -19,12 +19,12 @@ export const subscriptionSchema: yup.ObjectSchema<SubscriptionValues> = yup
       .of(
         yup.object({
           recipeId: yup.number().required("레시피 ID는 필수입니다"),
-          packGrams: yup
+          gramsPerMeal: yup
             .number()
             .min(20, "최소 20g 이상이어야 합니다.")
             .max(500, "최대 500g 이하이어야 합니다.")
             .required("급여량은 필수입니다."),
-          packPrice: yup.number().required("팩 가격은 필수입니다."),
+          pricePerMeal: yup.number().required("팩 가격은 필수입니다."),
         })
       )
       .min(1, "레시피를 선택해주세요.")

@@ -56,10 +56,10 @@ export default function RawFoodOptions({
   const buildHandlers = useCallback(
     (recipeId: number) => {
       return {
-        onStageSelection: (packGrams: number, packPrice: number) =>
-          stageSelection(recipeId, packGrams, packPrice),
+        onStageSelection: (gramsPerMeal: number, pricePerMeal: number) =>
+          stageSelection(recipeId, gramsPerMeal, pricePerMeal),
         onCommitSelection: (
-          resolvePack: () => { packGrams: number; packPrice: number }
+          resolvePack: () => { gramsPerMeal: number; pricePerMeal: number }
         ) => commitSelection(recipeId, resolvePack),
         onRemoveSelection: () => removeSelection(recipeId),
         onClearStage: () => clearStage(recipeId),

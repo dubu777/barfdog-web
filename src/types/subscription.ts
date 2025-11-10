@@ -7,18 +7,6 @@ import {
 } from "@/constants";
 import { HealthConcernType } from "./survey";
 import { UrlObject, ValueOfTuple } from "./common";
-import { RecipeDto } from "./recipes";
-
-interface SubscriptionResponse<T> {
-  isDone: boolean;
-  status: number;
-  error: string;
-  data: T;
-}
-
-interface SubscriptionData {
-  [key: string]: any; // 실제 데이터 구조에 따라 수정 필요
-}
 
 interface PaymentBody {
   plan: PlanName | null;
@@ -36,60 +24,6 @@ interface PlanDiscountResponse {
   topping: number;
   toppingFull: number;
   toppingHalf: number;
-}
-
-interface RecipeMeal {
-  recipeId: number;
-  recipeName: string;
-  oneMealGram: number;
-  pricePerGram: number;
-}
-
-// SubscribePrice 계산 함수 입력 타입
-interface CalculateSubscribePriceInput {
-  selectedRecipeMeals: RecipeMeal[];
-  selectedPlan: PlanName | null;
-  isOriginSubscriber: boolean;
-  discountPercent?: number;
-}
-
-// RecipePriceDetails 타입 (개별 레시피 계산 결과)
-interface RecipePriceDetails {
-  recipeId: number;
-  recipeName: string;
-  discountedPackPrice: number;
-  originPrice: number;
-  salePrice: number;
-}
-
-// SubscribePrice 계산 함수 출력 타입
-interface CalculateSubscribePriceOutput {
-  averagePackPrice: number;
-  recipePriceDetails: RecipePriceDetails[];
-  totalOriginalPriceAllRecipes: number;
-  totalDiscountedPriceAllRecipes: number;
-}
-
-interface calculateOneMealGramsInput {
-  selectedRecipeIds: number[];
-  recipeDtoList: RecipeDto[];
-  oneDayRecommendKcal: number;
-  isOriginSubscriber?: boolean;
-}
-
-interface calculateOneMealGramsOutput {
-  recipeId: number;
-  recipeName: string;
-  oneMealGram: number;
-  pricePerGram: number;
-}
-
-interface calculateOneMealGramsWithVolumeInput {
-  selectedRecipeIds: number[];
-  recipeDtoList: RecipeDto[];
-  oneDayRecommendKcal: number;
-  isOriginSubscriber?: boolean;
-  selectedVolume?: string | null;
 }
 
 interface AddressDto {
@@ -146,7 +80,6 @@ interface RawFoodOrderItem {
   ingredients: string[];
 }
 
-/** 생식 주문서 응답 루트 */
 interface RawFoodOrderSheet {
   petName: string;
   petId: number;
@@ -156,8 +89,9 @@ interface RawFoodOrderSheet {
 }
 
 interface RecipeListType {
-  oneMealGramsPerRecipe: number; // 해당 레시피 1팩당 급여량(g)
-  originalPrice: number; // 할인 적용 전 가격
+  gramsPerMeal: number; // 해당 레시피 1팩당 급여량(g)
+  originalPricePerMeal: number; // 할인 적용 전 한 팩당 가격
+  totalOriginalPrice: number; // originalPricePerMeal * 배송 주기 당 팩수 => FULL(2주 2끼)일 경우, originalPricePerMeal * 14 * 2
   recipeId: number;
 }
 
@@ -207,8 +141,8 @@ interface SubscriptionDetail {
 
 type RecipeFormItem = {
   recipeId: number;
-  packGrams: number;
-  packPrice: number;
+  gramsPerMeal: number;
+  pricePerMeal: number;
 };
 
 interface SubscriptionValues {
@@ -219,7 +153,6 @@ interface SubscriptionValues {
 }
 
 interface CurrentPlanInfo {
-  /** 예: "HALF" */
   name: Plan | string;
   /** 구독 주기(주) */
   weeks: DeliveryPlan;
@@ -232,24 +165,18 @@ interface CurrentPlanInfo {
 interface CurrentRecipeItem {
   displayImageUrl: UrlObject;
   recipeId: number;
-  /** 예: "DUCK&LAMB +" */
   name: string;
-  /** 이 레시피의 1끼 급여량(g) */
-  oneMealGramsPerRecipe: number;
-  /** g당 가격(원) */
+  gramsPerMeal: number; // 이 레시피의 1끼 급여량(g)
   pricePerGram: number;
-  /** 정가(원) */
-  originalPrice: number;
+  originalPricePerMeal: number;
 }
 
 interface SubscriptionInfoResponse {
   subscriptionId: number;
-  /** 구독 횟수(회차) */
   subscriptionCount: number;
   planInfo: CurrentPlanInfo;
   recipeList: CurrentRecipeItem[];
-  /** 결제 금액(원) */
-  paymentPrice: number;
+  paymentPrice: number; // 최종 결제 금액
 }
 
 /** 생식 레시피 아이템 */
@@ -258,23 +185,18 @@ interface RawFoodOrderItem {
   rank: number;
   recipeNameKorea: string;
   recipeNameEnglish: string;
-  /** g/kcal (서버 키 그대로: gramPerKal) */
   gramPerKal: number;
-  /** g당 가격 */
   pricePerGram: number;
   displayImageUrl: UrlObject;
   healthConcernsChips: HealthConcernType[];
-  /** 1회 급여 권장 g */
   oneMealRecommendGram: number;
-  /** 단일/복수 단백질 구성 */
   meet: MeetType;
-  /** 추천 여부 */
   isRecommend: boolean;
   subIngredients: string[];
   ingredients: string[];
 }
 
-/** 생식 주문서 응답 루트 */
+/** 추천 설문 정보를 포함한 레시피 정보 */
 interface SubscriptionOrderSheet {
   petName: string;
   petId: number;
@@ -300,17 +222,8 @@ type MealPlan = ValueOfTuple<typeof MEAL_PLAN>;
 type SubscriptionStatus = ValueOfTuple<typeof SUBSCRIPTION_STATUSES>;
 export type {
   PlanDiscountResponse,
-  RecipeMeal,
-  CalculateSubscribePriceInput,
-  RecipePriceDetails,
-  CalculateSubscribePriceOutput,
-  calculateOneMealGramsInput,
-  calculateOneMealGramsOutput,
-  calculateOneMealGramsWithVolumeInput,
   AddressDto,
   PaymentBody,
-  SubscriptionResponse,
-  SubscriptionData,
   PlanKey,
   PlanName,
   PlanInfo,

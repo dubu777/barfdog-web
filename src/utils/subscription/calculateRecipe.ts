@@ -3,8 +3,8 @@ import { roundTo } from "../numberUtils";
 
 export interface CalculateRecipePackReturn {
   recommendedPackGrams: number; // 추천 급여량
-  packGrams: number; // 팩당 그램 수 (추천 or 커스텀)
-  packPrice: number; // 팩당 가격
+  gramsPerMeal: number; // 팩당 그램 수 (추천 or 커스텀)
+  pricePerMeal: number; // 팩당 가격
   pricePer10g: number; // 10g당 가격
   under20g?: number;
 }
@@ -62,7 +62,7 @@ export function calculateMealDiscountRate(mealPlan: MealPlan): number {
  * (이전 computeCyclePricing → calculateRecipeTotal)
  */
 export function calculateRecipeTotal(
-  packPrice: number,
+  pricePerMeal: number,
   mealPlan: MealPlan,
   deliveryPlan: DeliveryPlan,
   recipeCount: 0 | 1 | 2
@@ -74,7 +74,7 @@ export function calculateRecipeTotal(
   );
   const discountRate = calculateMealDiscountRate(mealPlan);
 
-  const originalPrice = roundTo(packPrice * packsPerCycle, 0);
+  const originalPrice = roundTo(pricePerMeal * packsPerCycle, 0);
   const discountAmount = roundTo(originalPrice * discountRate, 0);
   const discountedPrice = roundTo(originalPrice - discountAmount, 0);
 
@@ -95,9 +95,15 @@ export function calculateRecipePack({
   const usedPackGrams =
     customPackGrams != null ? customPackGrams : recommendedPackGrams;
 
-  const packGrams = roundTo(usedPackGrams, 1);
-  const packPrice = roundTo(packGrams * pricePerGram, 0);
+  const gramsPerMeal = roundTo(usedPackGrams, 1);
+  const pricePerMeal = roundTo(gramsPerMeal * pricePerGram, 0);
   const pricePer10g = roundTo(pricePerGram * 10, 0);
 
-  return { recommendedPackGrams, packGrams, packPrice, pricePer10g, under20g };
+  return {
+    recommendedPackGrams,
+    gramsPerMeal,
+    pricePerMeal,
+    pricePer10g,
+    under20g,
+  };
 }

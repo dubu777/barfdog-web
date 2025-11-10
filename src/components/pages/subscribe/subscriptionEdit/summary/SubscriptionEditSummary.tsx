@@ -2,16 +2,9 @@
 
 import Text from "@/components/ui/text/Text";
 import { commonWrapper, marginStyles } from "@/styles/common.css";
-import {
-  DeliveryPlan,
-  MealPlan,
-  RecipeFormItem,
-  RecipeListType,
-  SubscriptionInfoResponse,
-} from "@/types";
+import { DeliveryPlan, MealPlan } from "@/types";
 import PlanPicker from "./planPicker/PlanPicker";
 import SubscriptionItemPicker from "./subscriptionItemPicker/SubscriptionItemPicker";
-import { de } from "date-fns/locale";
 import { RecipeCatalogMap } from "@/utils/subscription/buildRecipeCatalog";
 import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
 

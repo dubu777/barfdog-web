@@ -22,6 +22,7 @@ import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import InfoBox from "@/components/ui/infoBox/InfoBox";
 import Card from "@/components/ui/card/Card";
+import { DELIVERY_PLAN_LABEL } from "@/constants";
 
 interface SubscriptionEditProps {
   currentSubscriptionInfo: SubscriptionInfoResponse;
@@ -103,7 +104,7 @@ export default function SubscriptionEditConfirm({
         <InfoBox
           type="info"
           color="blue"
-          text="구독 변경으로 결제 금액이 줄어들면 쿠폰이 자동 해제되며 마이페이지에서 재적용할 수 있어요"
+          text="결제 금액이 쿠폰 최소 이용 금액보다 낮아질 경우, 쿠폰 적용이 해제될 수 있어요. 쿠폰은 마이페이지 > 구독 관리에서 다시 적용할 수 있어요"
           fullWidth
         />
         <LabeledCheckbox
@@ -120,7 +121,10 @@ export default function SubscriptionEditConfirm({
       </Card>
       <Card padding={20} gap={12} align="start">
         <Text type="title4" className={marginStyles({ bottom: 4 })}>
-          <span className={pointColor}>2주</span>마다
+          <span className={pointColor}>
+            {DELIVERY_PLAN_LABEL[deliveryPlan]}
+          </span>
+          마다
           <br />
           아래의 상품이 배송돼요
         </Text>
@@ -132,7 +136,7 @@ export default function SubscriptionEditConfirm({
               deliveryPlan={deliveryPlan}
               originalPrice={recipe.originalPrice}
               packCount={packCount}
-              packGrams={recipe.packGrams}
+              gramsPerMeal={recipe.gramsPerMeal}
               displayImageUrl={recipeCatalog[recipe.recipeId]?.url || ""}
               recipeName={recipeCatalog[recipe.recipeId]?.name || ""}
             />

@@ -7,11 +7,11 @@ export type CommitSelectionResult =
   | { success: true }
   | { success: false; reason: "LIMIT" | "NO_CHANGE" };
 
-export type StagedSelection = { packGrams: number; packPrice: number };
+export type StagedSelection = { gramsPerMeal: number; pricePerMeal: number };
 
 interface UseRecipeSelectionReturn {
   /** RHF에는 반영하지 않고 로컬 상태만 업데이트 */
-  stageSelection: (packGrams: number, packPrice: number) => void;
+  stageSelection: (gramsPerMeal: number, pricePerMeal: number) => void;
   /** 최종 확정값을 RHF 폼에 저장 */
   commitSelection: () => CommitSelectionResult;
   /** RHF와 로컬(스테이징)에서 모두 제거 */
@@ -49,7 +49,7 @@ export const useRecipeSelection = (
     useState<StagedSelection | null>(null);
 
   const resolve = useCallback(
-    (key: "packGrams" | "packPrice") =>
+    (key: "gramsPerMeal" | "pricePerMeal") =>
       stagedSelection?.[key] ?? savedSelection?.[key] ?? recommended[key],
     [stagedSelection, savedSelection, recommended]
   );
@@ -61,14 +61,14 @@ export const useRecipeSelection = (
   );
 
   const commitSelection = useCallback((): CommitSelectionResult => {
-    const packGrams = resolve("packGrams");
-    const packPrice = resolve("packPrice");
+    const gramsPerMeal = resolve("gramsPerMeal");
+    const pricePerMeal = resolve("pricePerMeal");
 
     // 이전 값과 동일 하면 거절
     if (
       savedSelection &&
-      savedSelection.packGrams === packGrams &&
-      savedSelection.packPrice === packPrice
+      savedSelection.gramsPerMeal === gramsPerMeal &&
+      savedSelection.pricePerMeal === pricePerMeal
     ) {
       return { success: false, reason: "NO_CHANGE" };
     }
@@ -80,7 +80,7 @@ export const useRecipeSelection = (
       return { success: false, reason: "LIMIT" };
     }
 
-    const selection = { recipeId, packGrams, packPrice };
+    const selection = { recipeId, gramsPerMeal, pricePerMeal };
 
     // 인덱스가 -1이면 기존에 배열에 없는 것 즉 신규 추가
     const idx = current.findIndex((f) => f.recipeId === recipeId);
@@ -99,9 +99,12 @@ export const useRecipeSelection = (
     MAX_SELECTABLE_ITEMS,
   ]);
 
-  const stageSelection = useCallback((packGrams: number, packPrice: number) => {
-    setStagedSelection({ packGrams, packPrice });
-  }, []);
+  const stageSelection = useCallback(
+    (gramsPerMeal: number, pricePerMeal: number) => {
+      setStagedSelection({ gramsPerMeal, pricePerMeal });
+    },
+    []
+  );
 
   const removeSelection = useCallback(() => {
     const current = getValues("recipeList") ?? [];

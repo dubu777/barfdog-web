@@ -6,7 +6,7 @@ export type CommitSelectionResult =
   | { success: true }
   | { success: false; reason: "LIMIT" | "NO_CHANGE" };
 
-export type StagedSelection = { packGrams: number; packPrice: number };
+export type StagedSelection = { gramsPerMeal: number; pricePerMeal: number };
 
 // 선택 가능한 최대 레시피 수
 const MAX_SELECTABLE_ITEMS = 2;
@@ -23,8 +23,6 @@ export function useRecipeSelections() {
     defaultValue: [] as RecipeFormItem[],
   });
 
-  console.log("save", savedRecipes);
-
   // - 현재 RHF에 저장된 선택 결과(recipeList)를 recipeId -> RecipeFormItem 형태의 Map으로 가공.
   // - 카드에서 isSelected, savedSelection 조회를 O(1)에 가깝게 하기 위한 최적화.
   const savedByIdMap = useMemo(() => {
@@ -40,18 +38,18 @@ export function useRecipeSelections() {
   );
 
   // - 모달에서 '적용'을 눌러 임시로 반영한 값(아직 RHF에는 미반영)을 레시피별로 보관하는 로컬 상태
-  // - key: recipeId, value: { packGrams, packPrice } 또는 null
+  // - key: recipeId, value: { gramsPerMeal, pricePerMeal } 또는 null
   const [stagedById, setStagedById] = useState<
     Record<number, StagedSelection | null>
   >({});
 
-  // - 특정 레시피에 대해 packGrams/packPrice 임시값을 기록한다(모달 '적용' 시 호출).
-  // - RHF에는 아직 쓰지 않는다 → 확정은 commitSelection에서 수행.
+  // - 특정 레시피에 대해 gramsPerMeal/pricePerMeal 임시값을 기록한다(모달 '적용' 시 호출).
+  // - RHF에는 아직 적용하지 않는다 → 확정은 commitSelection에서 수행.
   const stageSelection = useCallback(
-    (recipeId: number, packGrams: number, packPrice: number) => {
+    (recipeId: number, gramsPerMeal: number, pricePerMeal: number) => {
       setStagedById((prev) => ({
         ...prev,
-        [recipeId]: { packGrams, packPrice },
+        [recipeId]: { gramsPerMeal, pricePerMeal },
       }));
     },
     []
@@ -85,15 +83,15 @@ export function useRecipeSelections() {
   );
 
   // - 모달에서 '레시피 담기'(확정)을 눌렀을 때 호출되는 커밋 함수.
-  // - resolvePack 콜백을 통해 최종 반영할 packGrams/packPrice를 상위(카드)로부터 가져온다.
+  // - resolvePack 콜백을 통해 최종 반영할 gramsPerMeal/packPrice를 상위(카드)로부터 가져온다.
   //   (스테이징 우선, 없으면 기본 계산값 등 컨텍스트별 로직을 상위에서 해석)
   // - 신규면 append, 기존이면 update 수행. 변경 없음/개수 제한은 실패 사유로 반환.
   const commitSelection = useCallback(
     (
       recipeId: number,
-      resolvePack: () => { packGrams: number; packPrice: number }
+      resolvePack: () => { gramsPerMeal: number; pricePerMeal: number }
     ): CommitSelectionResult => {
-      const { packGrams, packPrice } = resolvePack(); // 최종 반영할 g/가격을 상위에서 계산해 가져옴
+      const { gramsPerMeal, pricePerMeal } = resolvePack(); // 최종 반영할 g/가격을 상위에서 계산해 가져옴
 
       const current = getValues("recipeList");
       const idx = current.findIndex((f) => f.recipeId === recipeId); // 동일 recipeId가 이미 있는지 확인
@@ -102,7 +100,10 @@ export function useRecipeSelections() {
       // 변경 없음 검사(이미 저장되어 있고 값이 동일한 경우)
       if (exists) {
         const saved = current[idx];
-        if (saved.packGrams === packGrams && saved.packPrice === packPrice) {
+        if (
+          saved.gramsPerMeal === gramsPerMeal &&
+          saved.pricePerMeal === pricePerMeal
+        ) {
           return { success: false, reason: "NO_CHANGE" }; // 값 변화가 없으면 커밋하지 않음
         }
       } else {
@@ -113,7 +114,7 @@ export function useRecipeSelections() {
       }
 
       // 여기까지 왔으면 저장/갱신 가능
-      const selection = { recipeId, packGrams, packPrice }; // 저장할 객체 구성
+      const selection = { recipeId, gramsPerMeal, pricePerMeal }; // 저장할 객체 구성
       if (exists) update(idx, selection); // 기존 항목이면 해당 인덱스 update
       else append(selection); // 신규 항목이면 append
 

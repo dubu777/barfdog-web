@@ -49,7 +49,7 @@ export default function SubscriptionItemList({
               deliveryPlan={deliveryPlan}
               originalPrice={item.originalPrice}
               packCount={item.packCount}
-              packGrams={item.packGrams}
+              gramsPerMeal={item.gramsPerMeal}
               displayImageUrl={rawFoodItem?.displayImageUrl.url || ""}
               recipeName={rawFoodItem?.recipeNameKorea || ""}
             />
