@@ -25,7 +25,7 @@ export default function HistoryList ({ petId }: HistoryListProps) {
 
 	return (
 		<section className={commonWrapper({ padding: 20 })}>
-			{!isEmpty ?
+			{isEmpty ?
 				<article className={commonWrapper({
 					direction: 'col',
 					gap: 20,
