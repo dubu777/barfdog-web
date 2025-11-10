@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import Spinner from "@/components/ui/spinner/Spinner";
 import PetManager from "@/components/pages/pet/list/PetManager";
+import Error from "@/components/layout/error/Error";
 import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 
 export default async function HeathNoteDogsPage() {
@@ -17,7 +18,7 @@ export default async function HeathNoteDogsPage() {
   return (
     <>
       <HydrationBoundary state={dehydrateState}>
-        <ErrorBoundary fallback={<div>반려견 전체보기 로딩 실패</div>}>
+        <ErrorBoundary fallback={<Error />}>
           <Suspense fallback={<Spinner fullscreen />}>
             <PetManager />
           </Suspense>

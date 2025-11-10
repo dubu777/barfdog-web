@@ -1,14 +1,16 @@
+import { Suspense } from "react";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
+import { ErrorBoundary } from "react-error-boundary";
+import { HydrationBoundary } from "@tanstack/react-query";
 import BottomNavBar from "@/components/layout/bottomNavBar/BottomNavBar";
 import HealthNoteUser from "@/components/pages/heathNote/main/healthNoteUser/healthNoteUser";
-import { HydrationBoundary } from "@tanstack/react-query";
-import { ErrorBoundary } from "react-error-boundary";
 import HealthNoteMainHeader from "@/components/pages/heathNote/layout/header/HealthNoteMainHeader";
-import { Suspense } from "react";
+import Error from "@/components/layout/error/Error";
+import Spinner from "@/components/ui/spinner/Spinner";
+import { PetListResponse } from "@/types/pet";
+import { queryKeys } from "@/constants/queryKeys";
 import { prefetchGetPetList } from "@/api/pet/queries/prefetchGetPetList";
 import { prefetchGetFullCheckSummary } from "@/api/healthNote/fullCheck/queries/prefetchGetFullCheckSummary";
-import { queryKeys } from "@/constants/queryKeys";
-import { PetListResponse } from "@/types/pet";
 
 export default async function HeathNotePage() {
   const queryClient = new QueryClient();
@@ -31,8 +33,8 @@ export default async function HeathNotePage() {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
+      <ErrorBoundary fallback={<Error />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <HealthNoteMainHeader />
           <HealthNoteUser />
           <BottomNavBar />

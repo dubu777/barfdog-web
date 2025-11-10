@@ -3,6 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import Spinner from "@/components/ui/spinner/Spinner";
 import PromotionList from "@/components/pages/mypage/promotion/list/PromotionList";
+import Error from "@/components/layout/error/Error";
 import { prefetchGetInfinitePromotionList } from "@/api/mypage/promotion/queries/prefetchGetInfinitePromotionList";
 
 export default async function PromotionPage() {
@@ -12,7 +13,7 @@ export default async function PromotionPage() {
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>사용 가능한 프로모션이 없습니다.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <PromotionList />
         </Suspense>

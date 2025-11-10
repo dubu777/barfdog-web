@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import { prefetchGetNoticeDetail } from "@/api/community/queries/prefetchGetNoticeDetail";
 import NoticeDetail from "@/components/pages/community/notice/detail/NoticeDetail";
 import Spinner from "@/components/ui/spinner/Spinner";
+import Error from "@/components/layout/error/Error";
+import { prefetchGetNoticeDetail } from "@/api/community/queries/prefetchGetNoticeDetail";
 
 interface NoticeDetailPageProps {
   params: Promise<{
@@ -18,7 +19,7 @@ export default async function NoticeDetailPage({ params }: NoticeDetailPageProps
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>상세 공지사항이 없습니다.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <NoticeDetail noticeId={Number(noticeId)} />
         </Suspense>

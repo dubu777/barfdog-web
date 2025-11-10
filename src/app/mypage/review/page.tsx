@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { prefetchGetInfiniteMypageReviewList } from "@/api/mypage/review/queries/prefetchGetInfiniteMypageReviewList";
 import ReviewList from "@/components/pages/mypage/review/ReviewList";
 import Spinner from "@/components/ui/spinner/Spinner";
+import Error from "@/components/layout/error/Error";
+import { prefetchGetInfiniteMypageReviewList } from "@/api/mypage/review/queries/prefetchGetInfiniteMypageReviewList";
 
 export default async function ReviewPage() {
   const queryClient = new QueryClient();
@@ -12,7 +13,7 @@ export default async function ReviewPage() {
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>리뷰 목록 로딩 실패</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <ReviewList />
         </Suspense>
