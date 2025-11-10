@@ -9,15 +9,6 @@ interface FoodAnalysis {
   oneMealRecommendGram: number;
 }
 
-interface Links {
-  query_orderSheet_subscribe: {
-    href: string;
-  };
-  self: {
-    href: string;
-  };
-}
-
 interface RecipeData {
   dogId: number;
   dogName: string;
@@ -31,7 +22,6 @@ interface RecipeData {
   subscribeStatus: string;
   uiNameEnglish: string;
   uiNameKorean: string;
-  _links: Links;
 }
 
 interface ActivityAnalysis {

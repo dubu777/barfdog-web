@@ -51,6 +51,7 @@ export default function SubscriptionEditConfirm({
     name: "isAgreeSubscription",
     control,
   });
+  console.log("total", totalRecipePrice);
 
   const { onToggle, isSelected } = useToggleOption(
     isAgreeField.value,

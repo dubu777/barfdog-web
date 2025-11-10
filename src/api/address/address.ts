@@ -1,15 +1,12 @@
 import { AddressRequest, AddressResponse } from "@/types/delivery";
 import axiosInstance from "../axiosInstance";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 // 주소 리스트 조회
 const getAddressList = async (): Promise<AddressResponse[]> => {
   const { data } = await axiosInstance.get("/api/v2/address");
 
-  if (data.success) {
-    return data.data.content;
-  }
-  const message = data.detailMessage ?? "주소 정보를 불러오지 못했습니다";
-  throw new Error(message);
+  return validateApiResponse(data, "주소 정보를 불러오지 못했습니다");
 };
 
 // 주소 등록
