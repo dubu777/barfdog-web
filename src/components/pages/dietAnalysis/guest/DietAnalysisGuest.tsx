@@ -37,11 +37,10 @@ export default function DietAnalysisGuest() {
             }}
           />
         </div>
-        {/* 이미지 작업 미완료로 임시 div */}
         <Button
           size="lg"
           fullWidth
-          onClick={() => router.push("/diet-analysis")}
+          onClick={() => router.push("/login?next=/diet-analysis")}
         >
           로그인하고 식단 추천받기
         </Button>
