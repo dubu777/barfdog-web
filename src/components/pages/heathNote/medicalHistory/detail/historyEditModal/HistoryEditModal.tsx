@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import HistoryForm from "@/components/pages/heathNote/medicalHistory/form/HistoryForm";
 import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
@@ -7,6 +6,7 @@ import { useToastStore } from "@/store/useToastStore";
 import { queryKeys } from "@/constants";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useMultiFileUpload } from "@/hooks/useMultiFileUpload";
+import { useCancelUploadOnLeave } from "@/hooks/useCancelUploadOnLeave";
 import { defaultMedicalHistoryValue, medicalHistorySchema } from "@/utils/validation/medicalHistoryValidation";
 import { DiagnosisFileList, MedicalHistoryFormValue } from "@/types/healthNote/medicalHistory";
 import { useUpdateMedicalHistory } from "@/api/healthNote/medicalHistory/mutations/useUpdateMedicalHistory";
@@ -29,16 +29,15 @@ export default function HistoryEditModal ({
 	const queryClient = useQueryClient();
 	const { addToast } = useToastStore();
 
-	const isFirstRender = useRef(true);
-
-	const { mutate } = useUpdateMedicalHistory();
+	const { mutate, isSuccess } = useUpdateMedicalHistory();
 	const { handleSubmit, control, errors, isValid } = useFormHandler<MedicalHistoryFormValue>(medicalHistorySchema, defaultMedicalHistoryValue(data.petId, data));
 	const {
 		uploadedFiles,
 		uploadFile,
 		removeFile,
 		cancelUpload,
-		fileChangeInfo
+		fileChangeInfo,
+		hasPendingUploads,
 	} = useMultiFileUpload({
 		initialFiles: initialFiles,
 		fileKey: 'uploadDiagnosisFile',
@@ -53,21 +52,11 @@ export default function HistoryEditModal ({
 		}),
 	})
 
-useEffect(() => {
-	// 초기 렌더링시 cleanup 함수 실행하지 않도록 처리
-	if (isFirstRender.current) {
-		isFirstRender.current = false;
-		return;
-	}
-
-	// 모달이 닫힐 경우 return
-	if (!isOpen) return;
-
-	// 컴포넌트가 언마운트 되거나 의존성 배열이 바뀌어 effect가 다시 실행될 때 호출됨
-	return () => {
-		cancelUpload();
-	};
-}, []);
+	useCancelUploadOnLeave({
+		hasPendingUploads,
+		cancelUpload,
+		submitted: isSuccess || !isOpen,
+	})
 
 	const onSubmit = (data) => {
 		const body = {

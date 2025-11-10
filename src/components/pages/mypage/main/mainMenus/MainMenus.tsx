@@ -1,16 +1,13 @@
 "use client";
 import { commonWrapper } from "@/styles/common.css";
 import { Fragment } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Text from "@/components/ui/text/Text";
 import Divider from "@/components/ui/divider/Divider";
 import ListDivider from "@/components/ui/listDivider/ListDivider";
-import { deleteCookie } from "@/utils/auth/cookie";
 import { saveEntryPoint } from "@/utils/navigationEntry";
 import { MENU_LIST } from "@/constants/mypage/common";
-import { AUTH_CONFIG } from "@/constants/auth";
 import { useLogout } from "@/api/auth/mutations/useLogout";
 
 export default function MainMenus() {

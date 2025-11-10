@@ -80,7 +80,7 @@ export default function PetForm({
       setValue("nameVerified", false, { shouldValidate: true });
       setSuccessMessage(undefined);
     }
-  }, [petName, checkDuplicate, setError, setValue, errors?.name]);
+  }, [checkDuplicate, setError, setValue, errors?.name]);
 
   const handleChangeName = () => {
     setValue("nameVerified", false, { shouldValidate: true });

@@ -1,6 +1,5 @@
 'use client';
 import axios from "axios";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import HistoryForm from "@/components/pages/heathNote/medicalHistory/form/HistoryForm";
@@ -9,6 +8,7 @@ import { useMultiFileUpload } from "@/hooks/useMultiFileUpload";
 import { useToastStore } from "@/store/useToastStore";
 import { queryKeys } from "@/constants";
 import { defaultMedicalHistoryValue, medicalHistorySchema } from "@/utils/validation/medicalHistoryValidation";
+import { useCancelUploadOnLeave } from "@/hooks/useCancelUploadOnLeave";
 import { useCreateMedicalHistory } from "@/api/healthNote/medicalHistory/mutations/useCreateMedicalHistory";
 import { MedicalHistoryFormValue } from "@/types/healthNote/medicalHistory";
 
@@ -21,7 +21,7 @@ export default function CreateHistory ({ petId }: CreateHistoryProps) {
 	const queryClient = useQueryClient();
 	const { addToast } = useToastStore();
 
-	const { mutate } = useCreateMedicalHistory();
+	const { mutate, isSuccess } = useCreateMedicalHistory();
 
 	const { handleSubmit, control, errors, isValid } = useFormHandler<MedicalHistoryFormValue>(
 		medicalHistorySchema,
@@ -33,7 +33,8 @@ export default function CreateHistory ({ petId }: CreateHistoryProps) {
 		uploadFile,
 		removeFile,
 		cancelUpload,
-		fileChangeInfo
+		fileChangeInfo,
+		hasPendingUploads,
 	} = useMultiFileUpload({
 		fileKey: 'uploadDiagnosisFile',
 		uploadApiUrl: '/api/v2/health-book/medical-diagnoses/files',
@@ -46,12 +47,12 @@ export default function CreateHistory ({ petId }: CreateHistoryProps) {
 			},
 		}),
 	})
-
-	useEffect(() => {
-		return () => {
-			cancelUpload();
-		};
-	}, [])
+	
+	useCancelUploadOnLeave({
+		hasPendingUploads,
+		cancelUpload,
+		submitted: isSuccess,
+	})
 
 	const onSubmit = (data) => {
 		const body = {

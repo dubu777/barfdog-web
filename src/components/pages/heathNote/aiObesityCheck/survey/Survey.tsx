@@ -127,6 +127,7 @@ export default function Survey({ petId }: { petId: number }) {
 			/>
 			<section className={commonWrapper({
 				minHeight: 'fullWithHeader',
+				height: 'full',
 				direction: 'col',
 				justify: 'start',
 				gap: 20,

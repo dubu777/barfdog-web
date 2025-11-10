@@ -2,7 +2,7 @@ import { ReactNode, useMemo } from "react";
 import Button from "@/components/ui/button/Button";
 import CardWrapper from "../../../common/wrapper/CardWrapper";
 import SubscriptionContents from "./SubscriptionContents";
-import { CurrentPlanInfo, PlanKey } from "@/types";
+import { CurrentPlanInfo } from "@/types";
 import { SubscriptionStatus as SubscriptionStatusType } from "@/types/mypage/subscription";
 import { VISIBLE_SUBSCRIPTION_STATUS_ACTIONS } from "@/constants/mypage/subscription";
 

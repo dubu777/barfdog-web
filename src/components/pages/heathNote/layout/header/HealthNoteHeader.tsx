@@ -1,5 +1,5 @@
 "use client";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import {
   useParams,
   usePathname,
@@ -7,7 +7,6 @@ import {
   useSearchParams,
 } from "next/navigation";
 import Header from "@/components/layout/header/Header";
-import { useBackNavigation } from "@/utils";
 import { getHeaderProps } from "@/utils/getHeaderProps";
 
 type HealthNoteParams = {
@@ -27,9 +26,11 @@ export default function HealthNoteHeader() {
       Array.isArray(value) ? value[0] : value,
     ])
   ) as Record<string, string>;
-  const goBackToMain = () => router.push("/health-note");
+  const goBackToMain = useCallback(() => {
+    router.push("/health-note");
+  }, [router]);
 
-  const headerConfigs: Record<
+  const headerConfigs = useMemo<Record<
     string,
     {
       centerTitle?: string;
@@ -40,7 +41,7 @@ export default function HealthNoteHeader() {
       onClose?: () => void;
       onBack?: () => void;
     }
-  > = {
+  >>(() => ({
     "full-check": {
       centerTitle: "건강 종합 진단",
       showBackButton: true,
@@ -78,9 +79,9 @@ export default function HealthNoteHeader() {
       showBackButton: true,
       onBack: goBackToMain,
     },
-  };
+  }), [goBackToMain]);
 
-  const dynamicHeaderConfigs: Record<
+  const dynamicHeaderConfigs = useMemo<Record<
     string,
     (
       params?: HealthNoteParams,
@@ -94,7 +95,7 @@ export default function HealthNoteHeader() {
       onClose?: () => void;
       onBack?: () => void;
     }
-  > = {
+  >>(() => ({
     "probiome/detail/": () => ({
       centerTitle: "상세보기",
       showBackButton: true,
@@ -103,7 +104,7 @@ export default function HealthNoteHeader() {
       showBackButton: true,
       onBack: goBackToMain,
     }),
-  };
+  }), [goBackToMain]);
 
   const headerProps = useMemo(
     () =>
@@ -114,11 +115,11 @@ export default function HealthNoteHeader() {
         params,
         searchParams,
       }),
-    [pathname, params]
+    [pathname, params, searchParams, headerConfigs, dynamicHeaderConfigs]
   );
 
   // 정확히 일치하면 제외할 경로
-  const exactExcludePaths = [
+  const exactExcludePaths = useMemo(() => [
     "/health-note/guest",
     "/health-note",
     `/health-note/${params.petId}/medical-history/${params.diagnosisId}`,
@@ -126,14 +127,14 @@ export default function HealthNoteHeader() {
     `/health-note/${params.petId}/probiome/survey`,
     `/health-note/${params.petId}/probiome/pickup/${params.diagnosisId}`,
     `/health-note/${params.petId}/ai-obesity-check`,
-  ];
+  ], [params.petId, params.diagnosisId]);
 
   // 접두사로 시작하면 제외할 경로
-  const prefixExcludePaths = [
+  const prefixExcludePaths = useMemo(() => [
     `/health-note/${params.petId}/full-check/survey`,
     `/health-note/${params.petId}/body-check/survey`,
     `/health-note/${params.petId}/body-check/result`,
-  ];
+  ], [params.petId]);
 
   const shouldRenderHeader = useMemo(() => {
     if (exactExcludePaths.includes(pathname)) {
@@ -145,7 +146,7 @@ export default function HealthNoteHeader() {
     }
 
     return true;
-  }, [pathname, params.historyId]);
+  }, [pathname, exactExcludePaths, prefixExcludePaths]);
 
   return <>{shouldRenderHeader && <Header {...headerProps} />}</>;
 }

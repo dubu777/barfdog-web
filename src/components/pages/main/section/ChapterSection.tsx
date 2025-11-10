@@ -198,7 +198,7 @@ export default function ChapterSection() {
 					modules={[ FreeMode ]}
 					className={mainChapter3ImageList}
 				>
-					{chapterData[2].imagesUrl?.map((image, i) => (
+					{chapterData[2].imagesUrl?.map((image) => (
 						<SwiperSlide 
 							key={image} 
 							className={mainChapter3ImageSlide}
