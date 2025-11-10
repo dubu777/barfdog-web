@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { commonWrapper, imageWrapper, pointColor } from "@/styles/common.css";
 import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Image1 from "public/images/mypage/account/withdrawal/image1.png";
 import Image2 from "public/images/mypage/account/withdrawal/image2.png";
