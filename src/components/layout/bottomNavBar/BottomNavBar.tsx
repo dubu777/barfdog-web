@@ -24,7 +24,7 @@ export default function BottomNavBar({
 }: BottomNavBarProps) {
   const pathname = usePathname();
   const { deviceOS } = useDeviceState();
-  
+
   const MENU_LIST = [
     {
       icon: pathname === "/" ? <HomeActive /> : <Home />,

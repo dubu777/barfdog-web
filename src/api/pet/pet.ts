@@ -26,7 +26,7 @@ const checkDuplicatePetName = async (
   petName: string
 ): Promise<ApiResponse<string>> => {
   const { data } = await axiosInstance.get(
-    `/api/v2/pets/check-name?petName=${petName}`
+    `/api/v2/pets/check-name?petName=${encodeURIComponent(petName)}`
   );
   return data;
 };

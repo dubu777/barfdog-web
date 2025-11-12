@@ -47,10 +47,7 @@ export default function CreateDogCard({ buttonLabel }: CreateDogCardProps) {
           className={styles.phoneImage}
         />
       </motion.div>
-      <Button
-        fullWidth
-        onClick={() => router.push("/pet/create?source=health-note")}
-      >
+      <Button fullWidth onClick={() => router.push("/login?next=/health-note")}>
         {buttonLabel}
       </Button>
     </Card>

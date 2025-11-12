@@ -20,12 +20,11 @@ const exceptionPaths = ["/health-note/guest", "/diet-analysis/guest"];
 const guestRoutes = [
   { base: "/diet-analysis", guest: "/diet-analysis/guest" },
   { base: "/health-note", guest: "/health-note/guest" },
-]
+];
 
 // pathname이 특정 base 경로(또는 그 하위 경로)에 포함되는지 검사
 const matchBase = (pathname: string, base: string) =>
   pathname === base || pathname.startsWith(base + "/");
-
 
 // 기존 요청의 쿼리스트링을 유지한 상태로 지정된 경로로 리다이렉트
 const redirectPreserve = (req: NextRequest, to: string) => {
@@ -37,7 +36,6 @@ const redirectPreserve = (req: NextRequest, to: string) => {
 // pathname이 base 또는 guest 규칙과 매칭되는 guestRoutes 항목을 반환
 const findRouteBy = <K extends "base" | "guest">(pathname: string, key: K) =>
   guestRoutes.find((r) => matchBase(pathname, r[key]));
-
 
 const isProtectedPath = (pathname: string): boolean => {
   // 예외 경로와 일치하면 보호 대상 아님
