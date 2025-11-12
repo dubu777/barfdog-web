@@ -43,7 +43,7 @@ export default function SubscriptionEditConfirm({
   totalRecipePrice,
   calculatedRecipes,
 }: SubscriptionEditProps) {
-  const { subscriptionCount } = currentSubscriptionInfo;
+  const { subscriptionCount, gradeInfo } = currentSubscriptionInfo;
 
   const { control } = useFormContext();
 
@@ -99,7 +99,10 @@ export default function SubscriptionEditConfirm({
           justify="between"
           className={paddingStyles({ bottom: 4 })}
           value={
-            totalRecipePrice.totalPlanDiscountedPrice.toLocaleString() + "원"
+            Math.floor(
+              totalRecipePrice.totalPlanDiscountedPrice *
+                (1 - gradeInfo.discountPercent / 100)
+            ).toLocaleString() + "원"
           }
         />
         <InfoBox

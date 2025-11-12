@@ -171,10 +171,17 @@ interface CurrentRecipeItem {
   originalPricePerMeal: number;
 }
 
+interface GradeInfo {
+  grade: string;
+  discountPercent: number; // 할인율
+  rewardPercent: number; // 적립율
+}
+
 interface SubscriptionInfoResponse {
   subscriptionId: number;
   subscriptionCount: number;
   planInfo: CurrentPlanInfo;
+  gradeInfo: GradeInfo;
   recipeList: CurrentRecipeItem[];
   paymentPrice: number; // 최종 결제 금액
 }
