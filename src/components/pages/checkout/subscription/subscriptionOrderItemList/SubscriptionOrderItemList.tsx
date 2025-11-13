@@ -1,38 +1,38 @@
 import React from "react";
 import Divider from "@/components/ui/divider/Divider";
 import OrderSection from "../../common/orderSection/OrderSection";
-import { DeliveryPlan, MealPlan, RawFoodItemSummary } from "@/types";
+import { DeliveryPlan, MealPlan, SubscribeRecipeItem } from "@/types";
 import RecipeItemCard from "@/components/pages/subscribe/deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import { calculateDeliveryCyclePackCount } from "@/utils/subscription/calculateRecipe";
 import { commonWrapper } from "@/styles/common.css";
 
 interface SubscriptionOrderItemListProps {
-  rawFoodList: RawFoodItemSummary[];
+  recipeList: SubscribeRecipeItem[];
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
 }
 
 export default function SubscriptionOrderItemList({
-  rawFoodList,
+  recipeList,
   mealPlan,
   deliveryPlan,
 }: SubscriptionOrderItemListProps) {
   const packCount = calculateDeliveryCyclePackCount(
     mealPlan,
     deliveryPlan,
-    rawFoodList.length
+    recipeList.length
   );
   return (
     <OrderSection title="구독 상품" gap={20}>
       <div className={commonWrapper({ direction: "col", gap: 16 })}>
-        {rawFoodList.map((item, index, array) => (
+        {recipeList.map((item, index, array) => (
           <React.Fragment key={item.recipeId}>
             <RecipeItemCard
               mealPlan={mealPlan}
               deliveryPlan={deliveryPlan}
-              originalPrice={item.originalPrice}
+              originalPrice={item.originalPricePerMeal}
               packCount={packCount}
-              gramsPerMeal={item.oneMealGramsPerRecipe}
+              gramsPerMeal={item.gramsPerMeal}
               displayImageUrl={item?.displayImageUrl.url || ""}
               recipeName={item?.name || ""}
             />

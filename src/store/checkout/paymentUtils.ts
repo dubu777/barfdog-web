@@ -74,9 +74,12 @@ export function buildSubscriptionPaymentRequest({
   merchantUid,
 }: SubscriptionPaymentDataParams): SubscriptionIamportRequest {
   const { paymentMethod, paymentPrice, deliveryDto, customerUid } = requestBody;
-  const { email, subscribeVo, rawFoodList } = subscriptionOrderSheetData;
+  const { subscribeInfo } = subscriptionOrderSheetData;
 
-  const itemName = rawFoodList.map((raw) => raw.name).join(", ");
+  const itemName = subscribeInfo.recipeList.map((recipe) => recipe.name).join(", ");
+  // email은 새로운 API 스펙에 없으므로 빈 문자열 사용 (필요시 추가 확인 필요)
+  const email = ""; // TODO: API 스펙 확인 후 수정
+
   const baseData = {
     channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentMethod],
     pay_method: PAYMENT_METHOD["CREDIT_CARD"],
@@ -111,7 +114,7 @@ export function buildSubscriptionPaymentRequest({
   };
   if (paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({
-      subscribeId: subscribeVo.subscriptionId,
+      subscribeId: subscribeInfo.id,
       isMobile: isMobileDevice,
     });
 

@@ -28,7 +28,7 @@ interface CouponModalProps {
   orderType: OrderType;
   coupons: Coupon[];
   isOpen: boolean;
-  orderPrice: number;
+  originalPrice: number;
   onClose: () => void;
   couponCategory: CouponCategory;
   setCouponCategory: (couponCategory: CouponCategory) => void;
@@ -39,7 +39,7 @@ export default function CouponModal({
   orderType,
   coupons,
   isOpen,
-  orderPrice,
+  originalPrice,
   onClose,
   couponCategory,
   setCouponCategory,
@@ -77,10 +77,14 @@ export default function CouponModal({
     return new Map(
       coupons.map((coupon) => [
         coupon.id,
-        calculateCouponDiscount(orderPrice, coupon, maxAvailableCouponDiscount),
+        calculateCouponDiscount(
+          originalPrice,
+          coupon,
+          maxAvailableCouponDiscount
+        ),
       ])
     );
-  }, [coupons, orderPrice, maxAvailableCouponDiscount]);
+  }, [coupons, originalPrice, maxAvailableCouponDiscount]);
 
   // 토글 관리 훅 (couponId를 기준으로)
   const { onToggle, isSelected } = useToggleOption<number>(
@@ -107,7 +111,7 @@ export default function CouponModal({
   );
 
   // 쿠폰 정렬 유틸 함수
-  const sortedCoupons = sortCoupons(coupons, orderPrice, orderType);
+  const sortedCoupons = sortCoupons(coupons, originalPrice, orderType);
 
   // 쿠폰 등록
   const handleRegisterCoupon = useCallback(() => {
@@ -124,7 +128,7 @@ export default function CouponModal({
           setCodeError(null);
         },
         onError: () => {
-          handleError("등록되지 않은 코드입니다", 'above-button');
+          handleError("등록되지 않은 코드입니다", "above-button");
         },
       }
     );
@@ -187,37 +191,39 @@ export default function CouponModal({
         handleClose={handleModalClose}
         className={commonWrapper({
           maxWidth: 600,
-          width: 'full',
-          height: 'full',
-          backgroundColors: 'gray0',
+          width: "full",
+          height: "full",
+          backgroundColors: "gray0",
         })}
       >
-        <CouponCategoryTabs 
+        <CouponCategoryTabs
           onChangeCouponCategory={(couponCategory) => {
-            setCode('');
+            setCode("");
             setCodeError(null);
             setCouponCategory(couponCategory);
           }}
         />
-        <Divider thickness={2} color='gray50' />
+        <Divider thickness={2} color="gray50" />
         <CreateCoupon
           couponCodeError={codeError}
           setCouponCodeError={setCodeError}
           onSubmit={handleRegisterCoupon}
-          couponCategory={couponCategory} 
-          couponCode={code} 
+          couponCategory={couponCategory}
+          couponCode={code}
           setCouponCode={setCode}
           buttonColor="gray800"
         />
         <div className={couponModalWrapper}>
-          <div className={commonWrapper({
-            direction: 'col',
-            gap: 10,
-            padding: 20,
-            backgroundColors: 'gray50',
-          })}>
-            {sortedCoupons.length > 0 
-              ? sortedCoupons.map((coupon) => {
+          <div
+            className={commonWrapper({
+              direction: "col",
+              gap: 10,
+              padding: 20,
+              backgroundColors: "gray50",
+            })}
+          >
+            {sortedCoupons.length > 0 ? (
+              sortedCoupons.map((coupon) => {
                 const discountInfo = couponDiscountMap.get(coupon.id);
                 if (!discountInfo) return null;
 
@@ -226,20 +232,19 @@ export default function CouponModal({
                     key={coupon.id}
                     orderType={orderType}
                     coupon={coupon}
-                    orderPrice={orderPrice}
+                    originalPrice={originalPrice}
                     discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
                     onToggle={onToggle}
                     isSelected={isSelected(coupon.id)}
                   />
                 );
               })
-              : (
-                <EmptyState
-                  title='사용 가능 쿠폰 내역이 없어요'
-                  subTitle='쿠폰 번호를 등록해주세요'
-                />
-              )
-          }
+            ) : (
+              <EmptyState
+                title="사용 가능 쿠폰 내역이 없어요"
+                subTitle="쿠폰 번호를 등록해주세요"
+              />
+            )}
           </div>
         </div>
         <ButtonDocked
@@ -253,7 +258,7 @@ export default function CouponModal({
           primaryButtonSize="lg"
         />
       </FullModalWrapper>
-      {isErrorModalOpen && 
+      {isErrorModalOpen && (
         <AlertModal
           title={`쿠폰 사용 시 ${formatNumberWithCommas(
             discountOnCouponAndGlobal
@@ -266,7 +271,7 @@ export default function CouponModal({
           onConfirm={handleConfirmCoupon}
           onCancel={handleCancelCoupon}
         />
-      }
+      )}
     </>
   );
 }

@@ -25,8 +25,8 @@ export const useUpdateOrderStores = () => {
       setOrderPrice(data.orderPrice);
 
       const deliveryInfo = {
-        default: data.defaultAddress.default,
-        deliveryId: data.defaultAddress.id,
+        isDefault: data.defaultAddress.default,
+        id: data.defaultAddress.id,
         deliveryName:
           data.defaultAddress.deliveryName ?? data.defaultAddress.recipientName,
         recipientName: data.defaultAddress.recipientName,
@@ -44,11 +44,11 @@ export const useUpdateOrderStores = () => {
       // 번들 배송이 가능한 경우에만 번들 배송 정보 설정
       if (data.deliveryAddress && data.deliveryAddress.length > 0) {
         setBundleDeliveryDto({
-          deliveryId: data.deliveryAddress[0].id,
+          id: data.deliveryAddress[0].id,
           deliveryName:
             data.deliveryAddress[0].deliveryName ??
             data.deliveryAddress[0].recipientName,
-          default: false,
+          isDefault: false,
           recipientName: data.deliveryAddress[0].recipientName,
           phoneNumber: data.deliveryAddress[0].phoneNumber,
           zipcode: data.deliveryAddress[0].zipcode,

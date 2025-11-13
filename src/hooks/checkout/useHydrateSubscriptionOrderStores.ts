@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { SubscriptionCheckoutSheetResponse } from "@/types";
+import { SubscriptionCheckoutResponse } from "@/types";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { useRewardStore } from "@/store/checkout/useRewardStore";
 import { usePaymentStore } from "@/store/checkout/usePaymentStore";
@@ -15,7 +15,7 @@ import { calculateNextDeliveryDate } from "@/utils/subscription/calculateNextDel
  * - 중복 실행 방지: hydratedRef 사용
  */
 export function useHydrateSubscriptionOrderStores(
-  data: SubscriptionCheckoutSheetResponse | undefined
+  data: SubscriptionCheckoutResponse | undefined
 ) {
   const setDeliveryDto = useDeliveryStore((s) => s.setDeliveryDto);
   const setUserTotalReward = useRewardStore((s) => s.setUserTotalReward);
@@ -30,29 +30,28 @@ export function useHydrateSubscriptionOrderStores(
   useEffect(() => {
     if (!data || hydratedRef.current) return;
 
-    const { defaultAddress, reward, subscribeVo } = data;
+    const { memberInfo, subscribeInfo, deliveryInfo, paymentInfo } = data;
+    const defaultAddress = deliveryInfo.defaultAddress;
 
-    // 렌더 단계가 아닌 이펙트에서만 상태 세팅
-    setDeliveryDto({
-      default: defaultAddress.default,
-      deliveryId: defaultAddress.id,
-      deliveryName: defaultAddress.deliveryName ?? defaultAddress.recipientName,
-      recipientName: defaultAddress.recipientName,
-      phoneNumber: defaultAddress.phoneNumber,
-      zipcode: defaultAddress.zipcode,
-      street: defaultAddress.street,
-      detailAddress: defaultAddress.detailAddress,
-      request: defaultAddress.request,
-    });
+    if (defaultAddress) {
+      console.warn("기본 배송지가 없습니다.");
+      // 렌더 단계가 아닌 이펙트에서만 상태 세팅
+      setDeliveryDto(defaultAddress);
+    }
 
-    setUserTotalReward(reward);
-    setDiscountGrade(subscribeVo.discountGrade);
-    setOrderPrice(subscribeVo.nextPaymentPrice);
+    setUserTotalReward(memberInfo.availableReward);
+    setDiscountGrade(paymentInfo.discountGrade);
+    // nextPaymentPrice = originalPrice - discountPlan - discountGrade
+    const nextPaymentPrice =
+      paymentInfo.originalPrice -
+      paymentInfo.discountPlan -
+      paymentInfo.discountGrade;
+    setOrderPrice(nextPaymentPrice);
 
     // 동적으로 생성되는 값도 이펙트 내부에서 계산/세팅
     setCustomerUid(generateCustomerUid());
     setNextDeliveryDate(calculateNextDeliveryDate());
-    setOrderId(data.orderId);
+    setOrderId(subscribeInfo.id);
     hydratedRef.current = true;
   }, [
     data,
@@ -62,5 +61,6 @@ export function useHydrateSubscriptionOrderStores(
     setDiscountGrade,
     setCustomerUid,
     setNextDeliveryDate,
+    setOrderId,
   ]);
 }

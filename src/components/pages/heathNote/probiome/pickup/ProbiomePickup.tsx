@@ -57,7 +57,7 @@ export default function ProbiomePickup({
   });
 
   const handlePickupSubmit = () => {
-    if (!deliveryDto?.deliveryId) {
+    if (!deliveryDto?.id) {
       addToast("배송지를 입력해주세요", "above-button");
       return;
     }
@@ -68,7 +68,7 @@ export default function ProbiomePickup({
 
     const body = {
       petId: petId,
-      deliveryAddressId: deliveryDto?.deliveryId,
+      deliveryAddressId: deliveryDto?.id,
       fileChangeInfo: fileChangeInfo,
     };
 
@@ -85,7 +85,7 @@ export default function ProbiomePickup({
     );
   };
 
-  const isFormValid = Boolean(deliveryDto?.deliveryId && isNoticeConfirmed);
+  const isFormValid = Boolean(deliveryDto?.id && isNoticeConfirmed);
 
   return (
     <>

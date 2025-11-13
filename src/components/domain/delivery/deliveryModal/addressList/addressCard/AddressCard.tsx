@@ -24,20 +24,10 @@ export default function AddressCard({
 }: AddressCardProps) {
   const { isOpen, onClose, onToggle } = useModal();
   const deliveryDto = useDeliveryStore((state) => state.deliveryDto);
-  const isDefaultAddress = address.default;
-  const isSelectedAddress = deliveryDto.deliveryId === address.id;
+  const isDefaultAddress = address.isDefault;
+  const isSelectedAddress = deliveryDto?.id === address.id;
   const handleSelect = () => {
-    onSelectAddress({
-      default: address.default,
-      deliveryId: address.id,
-      deliveryName: address.deliveryName,
-      recipientName: address.recipientName,
-      phoneNumber: address.phoneNumber,
-      zipcode: address.zipcode,
-      street: address.street,
-      detailAddress: address.detailAddress,
-      request: address.request,
-    });
+    onSelectAddress(address);
   };
   const { mutate: deleteAddress } = useDeleteAddress();
 
@@ -57,10 +47,12 @@ export default function AddressCard({
       })}
       key={address.id}
     >
-      <div className={commonWrapper({
-        justify: 'start',
-        gap: 8,
-      })}>
+      <div
+        className={commonWrapper({
+          justify: "start",
+          gap: 8,
+        })}
+      >
         <Text type="headline2">{address.deliveryName}</Text>
         {isDefaultAddress && (
           <Chips variant="outlined" size="sm" borderRadius="lg">
@@ -68,11 +60,13 @@ export default function AddressCard({
           </Chips>
         )}
       </div>
-      <div className={commonWrapper({
-        direction: 'col',
-        align: 'start',
-        gap: 2,
-      })}>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 2,
+        })}
+      >
         <Text type="body3">
           {address.recipientName}•{address.phoneNumber}
         </Text>
@@ -80,13 +74,17 @@ export default function AddressCard({
           {address.street} {address.detailAddress}
         </Text>
       </div>
-      <div className={commonWrapper({
-        justify: 'between',
-        align: 'end',
-      })}>
-        <div className={commonWrapper({
-          width: 'auto',
-        })}>
+      <div
+        className={commonWrapper({
+          justify: "between",
+          align: "end",
+        })}
+      >
+        <div
+          className={commonWrapper({
+            width: "auto",
+          })}
+        >
           {!isDefaultAddress && (
             <button onClick={handleDeleteModal}>
               <Text type="label4" color="gray600" underLine>
@@ -95,10 +93,12 @@ export default function AddressCard({
             </button>
           )}
         </div>
-        <div className={commonWrapper({
-          gap: 4,
-          width: 'auto',
-        })}>
+        <div
+          className={commonWrapper({
+            gap: 4,
+            width: "auto",
+          })}
+        >
           <Button
             intent="assistive"
             variant="outline"

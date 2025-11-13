@@ -11,7 +11,7 @@ import Text from "@/components/ui/text/Text";
 import { getNameWithPossessiveSuffix } from "@/utils";
 import InputField from "@/components/ui/inputField/InputField";
 import Button from "@/components/ui/button/Button";
-import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
+import { RecommendedRecipeItem, RecipeDetailSource } from "@/types";
 import { useToastStore } from "@/store/useToastStore";
 import { clamp } from "@/utils/numberUtils";
 import InfoBox from "@/components/ui/infoBox/InfoBox";
@@ -27,7 +27,7 @@ import { StagedSelection } from "@/hooks/subscription/useRecipeSelections";
 
 interface MealAmountSelectorProps {
   source: RecipeDetailSource;
-  rawFoodItem: RawFoodOrderItem;
+  rawFoodItem: RecommendedRecipeItem;
   petName?: string;
   packData?: CalculateRecipePackReturn;
   dailyRecommendKcal?: number;

@@ -34,7 +34,6 @@ export default function SubscriptionOrderSheet({
   const [step, setStep] = useState<SubscriptionStep>("rawFood");
   const { data: orderSheetData } = useGetSubscriptionOrderSheet(surveyId);
   const { mutate: createSubscription } = useCreateSubscription();
-  console.log(orderSheetData);
 
   useScrollToTop(step);
 
@@ -43,17 +42,18 @@ export default function SubscriptionOrderSheet({
     defaultValues: defaultSubscriptionValues(),
     mode: "all",
   });
+
   const { control, handleSubmit } = form;
   const savedSelection = useWatch({
-    control: form.control,
+    control: control,
     name: "recipeList",
   });
   const mealPlan = useWatch({
-    control: form.control,
+    control: control,
     name: "mealPlan",
   });
   const deliveryPlan = useWatch({
-    control: form.control,
+    control: control,
     name: "deliveryPlan",
   });
 
@@ -84,23 +84,27 @@ export default function SubscriptionOrderSheet({
     const plan = getPlanFromMealAndDelivery(data.mealPlan, data.deliveryPlan);
 
     const createBody = {
-      surveyId,
       body: {
+        petId: orderSheetData.petId,
         plan,
         recipeList: recipes.map((recipe) => ({
           recipeId: recipe.recipeId,
-          gramsPerMeal: recipe.gramsPerMeal,
           originalPricePerMeal: recipe.pricePerMeal,
           totalOriginalPrice: recipe.originalPrice,
+          gramsPerMeal: recipe.gramsPerMeal,
         })),
       },
     };
+    console.log("createBody", createBody);
     createSubscription(createBody, {
       onSuccess: (data) => {
-        router.push(`/checkout/subscription/${data.subscriptionId}`);
+        router.push(`/checkout/subscription/${data.subscribeId}`);
       },
     });
   };
+
+  console.log("orderSheetData", orderSheetData);
+  console.log("watch", form.watch());
 
   const primaryLabel = step === "deliveryCycle" ? "결제하러 가기" : "주문하기";
   const handleAction =

@@ -26,6 +26,7 @@ import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSub
 import { getPlanFromMealAndDelivery } from "@/utils/subscription/getPlanFromMealAndDelivery";
 import { buildRecipeCatalog } from "@/utils/subscription/buildRecipeCatalog";
 import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
+import { useToastStore } from "@/store/useToastStore";
 
 interface SubscriptionEditProps {
   subscribeId: number;
@@ -39,8 +40,10 @@ export default function SubscriptionEdit({
   // Router and state
   const router = useRouter();
   const [step, setStep] = useState<SubscriptionEditStep>("summary");
+  const [isAgreeSubscription, setIsAgreeSubscription] =
+    useState<boolean>(false);
   const { isOpen, onClose, onToggle } = useModal();
-
+  const addToast = useToastStore((s) => s.addToast);
   // API queries
   const { data: subscriptionInfo } = useGetSubscriptionInfo(subscribeId);
   const { data: orderSheetData } = useGetSubscriptionOrderSheet(surveyId);
@@ -118,6 +121,10 @@ export default function SubscriptionEdit({
   };
 
   const onSubmit = (data: SubscriptionValues) => {
+    if (!isAgreeSubscription) {
+      addToast("약관에 동의해주세요", "above-button");
+      return;
+    }
     const plan = getPlanFromMealAndDelivery(data.mealPlan, data.deliveryPlan);
 
     const updateBody = {
@@ -130,7 +137,7 @@ export default function SubscriptionEdit({
           originalPricePerMeal: recipe.pricePerMeal,
           totalOriginalPrice: recipe.originalPrice,
         })),
-        isAgreeSubscription: data.isAgreeSubscription || false,
+        isAgreeSubscription,
       },
     };
 
@@ -184,6 +191,8 @@ export default function SubscriptionEdit({
             recipeCatalog={recipeCatalog}
             totalRecipePrice={totals}
             calculatedRecipes={recipes}
+            isAgree={isAgreeSubscription}
+            setIsAgree={setIsAgreeSubscription}
           />
         )}
         {isOpen && <PlanBottomSheet isOpen={isOpen} onClose={onClose} />}

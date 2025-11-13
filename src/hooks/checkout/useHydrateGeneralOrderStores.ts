@@ -30,8 +30,8 @@ export function useHydrateGeneralOrderStores(
 
     // 기본 배송지 동기화
     const deliveryInfo = {
-      default: sheet.defaultAddress.default,
-      deliveryId: sheet.defaultAddress.id,
+      isDefault: sheet.defaultAddress.default,
+      id: sheet.defaultAddress.id,
       deliveryName:
         sheet.defaultAddress.deliveryName ?? sheet.defaultAddress.recipientName,
       recipientName: sheet.defaultAddress.recipientName,
@@ -51,9 +51,9 @@ export function useHydrateGeneralOrderStores(
     if (sheet.deliveryAddress && sheet.deliveryAddress.length > 0) {
       const first = sheet.deliveryAddress[0];
       setBundleDeliveryDto({
-        deliveryId: first.id,
+        id: first.id,
         deliveryName: first.deliveryName ?? first.recipientName,
-        default: false,
+        isDefault: false,
         recipientName: first.recipientName,
         phoneNumber: first.phoneNumber,
         zipcode: first.zipcode,

@@ -7,7 +7,7 @@ import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioB
 import AddressContent from "@/components/domain/address/addressContent/AddressContent";
 import DeliveryModal from "@/components/domain/delivery/deliveryModal/DeliveryModal";
 import useModal from "@/hooks/useModal";
-import { ClientDeliveryDto, UploadedFile } from "@/types";
+import { UploadedFile } from "@/types";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import MultiFileUploader from "@/components/ui/multiFileUploader/MultiFileUploader";
@@ -34,31 +34,20 @@ export default function PickupForm({
   const { deliveryDto, setDeliveryDto, setBackupDeliveryDto } =
     useDeliveryStore();
 
-  const rawDefaultAddress = useMemo(
-    () => addressData?.find((a) => a.default === true),
+  const defaultAddress = useMemo(
+    () => addressData?.find((a) => a.isDefault === true),
     [addressData]
   );
 
-  const defaultAddress = useMemo(() => {
-    if (!rawDefaultAddress) return null;
-    const { id, ...rest } = rawDefaultAddress;
-    return { ...rest, deliveryId: id }; // ClientDeliveryDto 형태로 변환
-  }, [rawDefaultAddress]);
-
-  const hasDefaultAddress = deliveryDto.deliveryId !== 0;
+  const hasDefaultAddress = deliveryDto !== null;
 
   // 3) 기본 주소 세팅: 데이터가 도착했을 때 1회만
   useEffect(() => {
-    if (defaultAddress && deliveryDto.deliveryId === 0) {
+    if (defaultAddress && !deliveryDto) {
       setDeliveryDto(defaultAddress);
       setBackupDeliveryDto?.(defaultAddress); // 필요 시
     }
-  }, [
-    defaultAddress,
-    deliveryDto.deliveryId,
-    setDeliveryDto,
-    setBackupDeliveryDto,
-  ]);
+  }, [defaultAddress, deliveryDto, setDeliveryDto, setBackupDeliveryDto]);
 
   const {
     isOpen: isOpenDeliveryModal,
@@ -75,10 +64,8 @@ export default function PickupForm({
       <div>
         <div className={styles.requestFormBox({ gap: 16 })}>
           <AddressContent
-            isDefault={deliveryDto.default}
-            addressData={
-              hasDefaultAddress ? (deliveryDto as ClientDeliveryDto) : null
-            }
+            isDefault={deliveryDto?.isDefault ?? false}
+            addressData={deliveryDto}
             handleEditAddress={
               hasDefaultAddress ? onToggleDeliveryModal : undefined
             }

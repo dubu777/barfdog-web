@@ -1,5 +1,10 @@
 import { PAYMENT_METHOD } from "@/constants";
-import { PlanName } from "./subscription";
+import {
+  GradeInfo,
+  PlanInfo,
+  PlanName,
+  SubscribeRecipeItem,
+} from "./subscription";
 import { DiscountType, UrlObject } from "./common";
 
 interface SuccessGeneralPaymentRequest {
@@ -7,17 +12,6 @@ interface SuccessGeneralPaymentRequest {
   merchantUid: string | null;
   discountReward: number;
   memberCouponId: number | null;
-}
-
-interface SuccessGeneralOrderResponse {
-  _links: {
-    self: {
-      href: string; // 현재 API 엔드포인트
-    };
-    profile: {
-      href: string; // 관련 API 문서 링크
-    };
-  };
 }
 
 interface SaveSubscriptionOrderRequest {
@@ -87,9 +81,9 @@ interface DeliveryDto {
 }
 
 interface ClientDeliveryDto extends DeliveryDto {
-  deliveryId: number;
+  id: number;
   deliveryName: string;
-  default: boolean;
+  isDefault: boolean;
 }
 
 interface GeneralOrderItemRequest {
@@ -413,6 +407,75 @@ interface PaymentValidationData {
   merchantUid: string;
 }
 
+// 구독 결제 페이지 조회
+interface SubscriptionCheckoutResponse {
+  memberInfo: MemberInfo;
+  subscribeInfo: SubscribeInfo;
+  deliveryInfo: DeliveryInfo;
+  paymentInfo: PaymentInfo;
+}
+
+/**
+ * 회원 정보
+ */
+interface MemberInfo {
+  id: number;
+  /** 사용 가능한 적립금 */
+  availableReward: number;
+  gradeInfo: GradeInfo;
+}
+
+interface SubscribeInfo {
+  id: number;
+  planInfo: PlanInfo;
+  recipeList: SubscribeRecipeItem[];
+}
+
+/**
+ * 배송 정보 전체
+ */
+interface DeliveryInfo {
+  /** 기본 배송지, 없으면 null */
+  defaultAddress: DeliveryAddress | null;
+  /** 이번 배송일 (YYYY-MM-DD) */
+  currentDeliveryDate: string;
+  /** 다음 배송 예정일 (YYYY-MM-DD) */
+  nextDeliveryDate: string;
+}
+
+/**
+ * 배송지 정보
+ */
+interface DeliveryAddress {
+  id: number;
+  /** 배송지명 (예: 우리집, 회사 등) */
+  deliveryName: string;
+  /** 수령인 이름 */
+  recipientName: string;
+  /** 연락처 */
+  phoneNumber: string;
+  zipcode: string;
+  city: string;
+  street: string;
+  detailAddress: string;
+  /** 기본 배송지 여부 */
+  isDefault: boolean;
+  /** 배송 요청사항 */
+  request: string;
+}
+
+/**
+ * 결제 금액 정보
+ */
+interface PaymentInfo {
+  /** 총 상품금액(원금) */
+  originalPrice: number;
+  /** 플랜 할인 금액 */
+  discountPlan: number;
+  /** 등급 할인 금액 */
+  discountGrade: number;
+}
+
 type PaymentMethod = keyof typeof PAYMENT_METHOD;
 
 type OrderDetailType = "general" | "subscribe";
@@ -445,7 +508,6 @@ export type {
   SaveSubscriptionOrderRequest,
   OrderTypeKey,
   SuccessGeneralPaymentRequest,
-  SuccessGeneralOrderResponse,
   PaymentMethodInfo,
   BundleDeliveryAddress,
   DefaultAddress,
@@ -458,4 +520,6 @@ export type {
   SubscribeDto,
   SubscriptionCheckoutSheetResponse,
   RawFoodItemSummary,
+  SubscriptionCheckoutResponse,
+  DeliveryInfo,
 };

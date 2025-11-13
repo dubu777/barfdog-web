@@ -36,9 +36,9 @@ export default function BundleDeliveryBottomSheet({
       );
       if (address) {
         setBundleDeliveryDto({
-          deliveryId: address.id,
+          id: address.id,
           deliveryName: address.deliveryName ?? address.recipientName,
-          default: false,
+          isDefault: false,
           recipientName: address.recipientName,
           phoneNumber: address.phoneNumber,
           zipcode: address.zipcode,

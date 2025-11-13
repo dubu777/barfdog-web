@@ -23,17 +23,19 @@ export default function AddressList({
 }: AddressListProps) {
   const sortedAddresses = useMemo(() => {
     return [...addressData].sort((a, b) =>
-      a.default === b.default ? 0 : a.default ? -1 : 1
+      a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1
     );
   }, [addressData]);
 
   return (
-    <div className={commonWrapper({
-      direction: 'col',
-      padding: 20,
-      paddingBottom: 40,
-      gap: 20,
-    })}>
+    <div
+      className={commonWrapper({
+        direction: "col",
+        padding: 20,
+        paddingBottom: 40,
+        gap: 20,
+      })}
+    >
       <Button
         intent="assistive"
         variant="outline"
@@ -44,10 +46,12 @@ export default function AddressList({
       >
         배송지 추가하기
       </Button>
-      <div className={commonWrapper({
-        direction: 'col',
-        gap: 8,
-      })}>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          gap: 8,
+        })}
+      >
         {sortedAddresses.map((address) => (
           <AddressCard
             key={address.id}

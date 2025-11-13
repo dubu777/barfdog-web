@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { commonWrapper } from "@/styles/common.css";
 import Divider from "@/components/ui/divider/Divider";
 import Text from "@/components/ui/text/Text";
@@ -19,19 +19,24 @@ import { VisibleSubscribeStatus } from "@/types/mypage/subscription";
 import { useSubscriptionActions } from "@/hooks/mypage/subscription/useSubscriptionActions";
 import { useSubscriptionModalControl } from "@/hooks/mypage/subscription/useSubscriptionModalControl";
 import { canSkipSubscription } from "@/utils/mypage/subscription/subscriptionSkip";
-import { CurrentPlanInfo, DeliveryPlan, MealPlan, RawFood } from "@/types";
+import { PlanInfo, DeliveryPlan, MealPlan, RawFood } from "@/types";
 
 interface SubscriptionDetailProps {
   subscriptionId: number;
 }
 
-export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetailProps) {
+export default function SubscriptionDetail({
+  subscriptionId,
+}: SubscriptionDetailProps) {
   const { data } = useGetSubscriptionDetail(subscriptionId);
   const { subscriptionInfo, subscriptionRecipeInfo } = data;
-  const subscribeStatus = subscriptionInfo.subscribeStatus as VisibleSubscribeStatus;
-  
+  const subscribeStatus =
+    subscriptionInfo.subscribeStatus as VisibleSubscribeStatus;
+
   const { data: paymentList } = useGetPaymentList();
-  const paymentInfo = (paymentList as any[]).find((payment) => payment.subscribeCardDto.subscribeId === subscriptionId);
+  const paymentInfo = (paymentList as any[]).find(
+    (payment) => payment.subscribeCardDto.subscribeId === subscriptionId
+  );
 
   const {
     modals,
@@ -50,13 +55,13 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
   } = useSubscriptionModalControl();
 
   // TODO: 하단 기능 로직 구현 필요
-  const { 
-    onApplyNextPaymentCoupon, 
+  const {
+    onApplyNextPaymentCoupon,
     onCancelAppliedNextPaymentCoupon,
-    onEditSubscription, 
-    onSkipSubscription, 
+    onEditSubscription,
+    onSkipSubscription,
     onChangePaymentMethod,
-    onCancelSubscription, 
+    onCancelSubscription,
     onRetryPayment,
   } = useSubscriptionActions({ subscriptionId });
 
@@ -68,41 +73,42 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
       name: "FULL",
       weeks: 2,
       days: 14,
-      mealCount: 2
+      mealCount: 2,
     },
     recipeList: [
       {
         displayImageUrl: {
-            url: "http://localhost:8080/display/recipes?filename=82467d35-d70e-4295-b769-cd3253d3e9f1.jpg"
+          url: "http://localhost:8080/display/recipes?filename=82467d35-d70e-4295-b769-cd3253d3e9f1.jpg",
         },
         recipeId: 7,
         name: "DUCK&LAMB +",
         oneMealGramsPerRecipe: 59.09,
         pricePerGram: 59.5,
-        originalPrice: 75600
-      }
+        originalPrice: 75600,
+      },
     ],
     paymentPrice: 93530,
     surveyId: 1,
-  }
-  
+  };
 
   if (!data) return null;
   return (
     <>
       <section
         className={commonWrapper({
-          direction: 'col',
-          align: 'start',
+          direction: "col",
+          align: "start",
           paddingBottom: 60,
-          backgroundColors: 'gray50',
+          backgroundColors: "gray50",
         })}
       >
-        <BasicInfo 
-          planInfo={temp.planInfo as CurrentPlanInfo}
+        <BasicInfo
+          planInfo={temp.planInfo as PlanInfo}
           subscriptionId={subscriptionId}
           dogName={subscriptionInfo.dogName}
-          recipeNames={subscriptionRecipeInfo.map((recipe) => recipe.name).join(', ')}
+          recipeNames={subscriptionRecipeInfo
+            .map((recipe) => recipe.name)
+            .join(", ")}
           status={subscriptionInfo.subscribeStatus}
           onRetryPayment={() => onRetryPayment(subscriptionId)}
         />
@@ -113,14 +119,14 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
           nextPaymentDate={subscriptionInfo.nextPaymentDate}
           nextDeliveryDate={subscriptionInfo.nextDeliveryDate}
           openApplyNextPaymentCouponModal={
-            isSubscribingStatus(subscribeStatus) 
-            ? openApplyNextPaymentCouponModal 
-            : undefined
+            isSubscribingStatus(subscribeStatus)
+              ? openApplyNextPaymentCouponModal
+              : undefined
           }
           openCancelNextPaymentCouponBottomSheet={
-            isSubscribingStatus(subscribeStatus) 
-            ? openCancelNextPaymentCouponBottomSheet 
-            : undefined
+            isSubscribingStatus(subscribeStatus)
+              ? openCancelNextPaymentCouponBottomSheet
+              : undefined
           }
         />
         <Divider thickness={8} color="gray100" />
@@ -145,7 +151,7 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
           }
         />
         <Divider thickness={8} color="gray100" />
-        <PaymentMethodInfo 
+        <PaymentMethodInfo
           paymentMethod={paymentInfo?.paymentMethod}
           openChangePaymentMethodModal={
             isSubscribingStatus(subscribeStatus)
@@ -153,52 +159,60 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
               : undefined
           }
         />
-        {isSubscribingStatus(subscribeStatus) && 
-          <button 
-            onClick={openCancelSubscriptionModal} 
-            className={commonWrapper({ 
-              justify: 'start', 
-              paddingX: 20, 
-              paddingTop: 16, 
+        {isSubscribingStatus(subscribeStatus) && (
+          <button
+            onClick={openCancelSubscriptionModal}
+            className={commonWrapper({
+              justify: "start",
+              paddingX: 20,
+              paddingTop: 16,
             })}
           >
-            <Text type="label4" color="gray700">구독 해지하기</Text>
+            <Text type="label4" color="gray700">
+              구독 해지하기
+            </Text>
           </button>
-        }
+        )}
       </section>
       {modals.changePaymentMethod && (
         <ChangePaymentMethodModal
           isOpen={modals.changePaymentMethod}
-          onClose={() => closeModal('changePaymentMethod')}
+          onClose={() => closeModal("changePaymentMethod")}
           onChangePaymentMethod={onChangePaymentMethod}
           openChangePaymentMethodErrorModal={openChangePaymentMethodErrorModal}
         />
       )}
       {modals.changePaymentMethodError && (
-        <AlertModal 
+        <AlertModal
           isOpen={modals.changePaymentMethodError}
-          onClose={() => closeModal('changePaymentMethodError')}
+          onClose={() => closeModal("changePaymentMethodError")}
           title="결제수단 변경에 실패했어요"
           content="결제수단 변경이 완료되지 않았어요. 필요하실 때 다시 시도해주세요"
           confirmText="확인"
           buttonPosition="center"
-          onConfirm={() => closeModal('changePaymentMethodError')}
+          onConfirm={() => closeModal("changePaymentMethodError")}
         />
       )}
       {modals.cancelSubscription && (
         <CancelSubscriptionModal
           isOpen={modals.cancelSubscription}
-          onClose={() => closeModal('cancelSubscription')}
+          onClose={() => closeModal("cancelSubscription")}
           onCancelSubscription={onCancelSubscription}
-          cancelSubscriptionConfirmModal={modals.cancelSubscriptionConfirm ?? false}
-          openCancelSubscriptionConfirmModal={openCancelSubscriptionConfirmModal}
-          closeCancelSubscriptionConfirmModal={() => closeModal('cancelSubscriptionConfirm')}
+          cancelSubscriptionConfirmModal={
+            modals.cancelSubscriptionConfirm ?? false
+          }
+          openCancelSubscriptionConfirmModal={
+            openCancelSubscriptionConfirmModal
+          }
+          closeCancelSubscriptionConfirmModal={() =>
+            closeModal("cancelSubscriptionConfirm")
+          }
         />
       )}
       {modals.applyNextPaymentCoupon && (
         <NextPaymentCouponModal
           isOpen={modals.applyNextPaymentCoupon}
-          onClose={() => closeModal('applyNextPaymentCoupon')}
+          onClose={() => closeModal("applyNextPaymentCoupon")}
           nextPaymentPrice={subscriptionInfo.nextPaymentPrice}
           onApplyNextPaymentCoupon={onApplyNextPaymentCoupon}
         />
@@ -207,21 +221,21 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
         subscriptionInfo.usingMemberCouponId && (
           <CancelNextPaymentCouponBottomSheet
             isOpen={bottomSheets.cancelNextPaymentCoupon}
-            onClose={() => closeBottomSheet('cancelNextPaymentCoupon')}
+            onClose={() => closeBottomSheet("cancelNextPaymentCoupon")}
             onCancelAppliedNextPaymentCoupon={onCancelAppliedNextPaymentCoupon}
             openApplyNextPaymentCouponModal={openApplyNextPaymentCouponModal}
             couponInfo={{
               discount: subscriptionInfo.discountCoupon ?? 0,
               memberCouponId: subscriptionInfo.usingMemberCouponId ?? 0,
               overDiscount: subscriptionInfo.overDiscount ?? 0,
-              couponName: subscriptionInfo.couponName ?? '',
+              couponName: subscriptionInfo.couponName ?? "",
             }}
           />
-      )}
+        )}
       {modals.skipSubscription && (
         <SkipSubscriptionModal
           isOpen={modals.skipSubscription}
-          onClose={() => closeModal('skipSubscription')}
+          onClose={() => closeModal("skipSubscription")}
           nextDeliveryDate={subscriptionInfo.nextDeliveryDate}
           plan={subscriptionInfo.plan}
           openSkipSubscriptionConfirmModal={openSkipSubscriptionConfirmModal}
@@ -230,7 +244,7 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
       {modals.skipSubscriptionError && (
         <AlertModal
           isOpen={modals.skipSubscriptionError}
-          onClose={() => closeModal('skipSubscriptionError')}
+          onClose={() => closeModal("skipSubscriptionError")}
           title="아직 배송 미루기를 이용할 수 없어요"
           content="배송 미루기는 다음 결제일 5일 전부터 이용하실 수 있어요"
           confirmText="확인"
@@ -240,7 +254,7 @@ export default function SubscriptionDetail({ subscriptionId }: SubscriptionDetai
       {modals.skipSubscriptionConfirm && (
         <AlertModal
           isOpen={modals.skipSubscriptionConfirm}
-          onClose={() => closeModal('skipSubscriptionConfirm')}
+          onClose={() => closeModal("skipSubscriptionConfirm")}
           title="1주 건너뛰기를 적용할까요?"
           content="미루기를 적용하면 되돌릴 수 없어요. 이번 회차의 배송 일정이 선택하신 기간만큼 늦춰지고 다음 결제 일정도 함께 변경됩니다"
           confirmText="확인"

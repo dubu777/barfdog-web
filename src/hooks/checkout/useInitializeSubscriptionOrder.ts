@@ -28,8 +28,8 @@ export function useInitializeSubscriptionOrder(
     if (!subscriptionOrderSheetData) return;
     const { defaultAddress, reward, subscribeDto } = subscriptionOrderSheetData;
     setDeliveryDto({
-      default: defaultAddress.default,
-      deliveryId: defaultAddress.id,
+      isDefault: defaultAddress.default,
+      id: defaultAddress.id,
       deliveryName: defaultAddress.deliveryName ?? defaultAddress.recipientName,
       recipientName: defaultAddress.recipientName,
       phoneNumber: defaultAddress.phoneNumber,

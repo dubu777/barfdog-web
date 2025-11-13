@@ -4,7 +4,7 @@ import Text from "@/components/ui/text/Text";
 import Button from "@/components/ui/button/Button";
 import { commonWrapper } from "@/styles/common.css";
 import Chips from "@/components/ui/chips/Chips";
-import { RawFoodOrderItem } from "@/types";
+import { RecommendedRecipeItem } from "@/types";
 import RecipeDetailModal from "../../recipeDetailModal/RecipeDetailModal";
 import useModal from "@/hooks/useModal";
 import { useToastStore } from "@/store/useToastStore";
@@ -21,7 +21,7 @@ import {
 } from "@/hooks/subscription/useRecipeSelections";
 
 interface RawFoodCardProps {
-  rawFoodItem: RawFoodOrderItem;
+  rawFoodItem: RecommendedRecipeItem;
   dailyRecommendKcal: number;
   inedibleFoods: string[];
   petName: string;

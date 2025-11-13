@@ -7,19 +7,18 @@ import {
   GeneralOrderSheetRequest,
   GeneralOrderSheetResponse,
   SubscriptionOrderSheetResponse,
-  SuccessGeneralOrderResponse,
   SuccessGeneralPaymentRequest,
   SuccessSubscriptionPaymentRequest,
-  SubscriptionCheckoutSheetResponse,
+  SubscriptionCheckoutResponse,
 } from "@/types";
 
 // 구독 결제 페이지 조회 - v2
-const getSubscriptionCheckoutSheet = async (
+const getSubscriptionCheckout = async (
   subscribeId: number,
   instance: AxiosInstance = axiosInstance
-): Promise<SubscriptionCheckoutSheetResponse> => {
+): Promise<SubscriptionCheckoutResponse> => {
   const { data } = await instance.get(
-    `/api/v2/orders/payment/sheet/subscription/${subscribeId}`
+    `/api/v2/user/subscribes/${subscribeId}/order-estimate`
   );
   if (data.success) {
     return data.data;
@@ -160,7 +159,7 @@ const successGeneralPayment = async ({
 }: {
   id: number;
   body: SuccessGeneralPaymentRequest;
-}): Promise<SuccessGeneralOrderResponse> => {
+}) => {
   const { data } = await axiosInstance.post(
     `/api/v2/orders/${id}/general/success`,
     body
@@ -202,6 +201,6 @@ export {
   failSubscriptionPayment,
   cancelGeneralPayment,
   cancelSubscriptionPayment,
-  getSubscriptionCheckoutSheet,
+  getSubscriptionCheckout,
   getGeneralCheckoutSheet,
 };

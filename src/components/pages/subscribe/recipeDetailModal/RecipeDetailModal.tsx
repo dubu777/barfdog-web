@@ -9,7 +9,7 @@ import TabBar from "@/components/ui/tabBar/TabBar";
 import MealAmountSelector from "./mealAmountSelector/MealAmountSelector";
 import { useMemo, useRef } from "react";
 import { scrollToElement } from "@/utils/scrollToElement";
-import { RawFoodOrderItem, RecipeDetailSource } from "@/types";
+import { RecommendedRecipeItem, RecipeDetailSource } from "@/types";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useToastStore } from "@/store/useToastStore";
 import { CalculateRecipePackReturn } from "@/utils/subscription/calculateRecipe";
@@ -24,7 +24,7 @@ import { INGREDIENTS_MAP } from "@/constants/recipes";
 
 interface RecipeDetailModalProps {
   source: RecipeDetailSource;
-  rawFoodItem: RawFoodOrderItem;
+  rawFoodItem: RecommendedRecipeItem;
   petName?: string;
   packData?: CalculateRecipePackReturn;
   dailyRecommendKcal?: number;

@@ -38,16 +38,11 @@ const getRawFoodOrderSheet = async (
 
 // 구독 주문서 - 구독 생성
 const createSubscription = async ({
-  surveyId,
   body,
 }: {
-  surveyId: number;
   body: CreateSubscriptionRequest;
 }): Promise<CreateSubscriptionResponse> => {
-  const { data } = await axiosInstance.post(
-    `api/v2/orders/payment/sheet/subscription/${surveyId}`,
-    body
-  );
+  const { data } = await axiosInstance.post(`/api/v2/user/subscribes`, body);
   if (data.success) {
     return data.data;
   }

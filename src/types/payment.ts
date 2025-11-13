@@ -4,7 +4,7 @@ import {
   OrderType,
   SaveGeneralOrderRequest,
   SaveSubscriptionOrderRequest,
-  SubscriptionCheckoutSheetResponse,
+  SubscriptionCheckoutResponse,
 } from "./checkout";
 
 interface IamportSubscribeResponse {
@@ -152,7 +152,7 @@ interface GeneralPaymentDataParams {
 
 interface SubscriptionPaymentDataParams {
   requestBody: SaveSubscriptionOrderRequest;
-  subscriptionOrderSheetData: SubscriptionCheckoutSheetResponse;
+  subscriptionOrderSheetData: SubscriptionCheckoutResponse;
   isMobileDevice: boolean;
   orderId: number;
   merchantUid: string;

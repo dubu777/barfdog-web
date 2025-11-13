@@ -1,6 +1,6 @@
-import { PlanInfo, PlanKey, SubscriptionStatus } from "@/types";
+import { PlanInfoConfig, PlanKey, SubscriptionStatus } from "@/types";
 
-const subscriptionPlanInfo: Record<PlanKey, PlanInfo> = {
+const subscriptionPlanInfo: Record<PlanKey, PlanInfoConfig> = {
   FULL: {
     id: "FULL",
     label: "풀 플랜",

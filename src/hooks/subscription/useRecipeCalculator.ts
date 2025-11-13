@@ -3,10 +3,10 @@ import {
   calculateRecipePack,
   CalculateRecipePackReturn,
 } from "@/utils/subscription/calculateRecipe";
-import { RawFoodOrderItem, SubscriptionValues } from "@/types";
+import { RecommendedRecipeItem, SubscriptionValues } from "@/types";
 
 interface UseRecipeCalculatorProps {
-  originalRecipes: RawFoodOrderItem[];
+  originalRecipes: RecommendedRecipeItem[];
   savedRecipes: SubscriptionValues["recipeList"];
 }
 

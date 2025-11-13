@@ -79,7 +79,7 @@ const queryKeys = {
   },
   CHECKOUT: {
     BASE: "checkout",
-    GET_SUBSCRIPTION_CHECKOUT_SHEET: "getSubscriptionCheckoutSheet",
+    GET_SUBSCRIPTION_CHECKOUT_SHEET: "getSubscriptionCheckout",
     GET_GENERAL_CHECKOUT_SHEET: "getGeneralCheckoutSheet",
   },
   MAIN: {
@@ -161,5 +161,5 @@ const queryKeys = {
     BASE: "aiObesityCheck",
     GET_OBESITY_DETAIL: "getObesityDetail",
     GET_RECOMMEND_ITEMS: "getRecommendItems",
-  }
+  },
 } as const;

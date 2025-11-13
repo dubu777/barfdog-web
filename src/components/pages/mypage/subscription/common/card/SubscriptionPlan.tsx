@@ -1,25 +1,26 @@
 import MetaText from "../../../common/card/typography/MetaText";
-import { CurrentPlanInfo } from "@/types";
+import { PlanInfo } from "@/types";
 import { PLAN_LABEL } from "@/constants";
 
 interface SubscriptionPlanProps {
   recipeNames: string;
-  planInfo: CurrentPlanInfo;
+  planInfo: PlanInfo;
 }
 
-export default function SubscriptionPlan({ recipeNames, planInfo }: SubscriptionPlanProps) {
+export default function SubscriptionPlan({
+  recipeNames,
+  planInfo,
+}: SubscriptionPlanProps) {
   return (
     <div>
-      <MetaText 
+      <MetaText
         textList={[
           PLAN_LABEL[planInfo?.name],
           `총 ${planInfo?.mealCount}회`,
-          `${planInfo?.weeks}주 정기결제`
+          `${planInfo?.weeks}주 정기결제`,
         ]}
       />
-      <MetaText
-        textList={[recipeNames]}
-      />
+      <MetaText textList={[recipeNames]} />
     </div>
   );
 }

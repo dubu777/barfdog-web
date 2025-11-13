@@ -3,7 +3,7 @@ import { ClientDeliveryDto } from "@/types";
 import { initialDeliveryDto } from "@/config/checkout";
 
 interface DeliveryState {
-  deliveryDto: ClientDeliveryDto; // 서버에 전송할 delivery 값
+  deliveryDto: ClientDeliveryDto | null; // 서버에 전송할 delivery 값
   backupDeliveryDto: ClientDeliveryDto; // 묶음 배송 선택에 영향 받지 않는 값
   bundleDeliveryDto: ClientDeliveryDto; // 묶음 배송으로 선택한 delivery 값
   deliveryId: number | null; // 묶음 배송지 delivery Id
@@ -16,7 +16,7 @@ interface DeliveryState {
 }
 
 export const useDeliveryStore = create<DeliveryState>((set) => ({
-  deliveryDto: initialDeliveryDto,
+  deliveryDto: null,
   backupDeliveryDto: initialDeliveryDto,
   bundleDeliveryDto: initialDeliveryDto,
   deliveryId: null,

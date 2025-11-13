@@ -1,7 +1,7 @@
 const initialDeliveryDto = {
-  deliveryId: 0,
+  id: 0,
   deliveryName: "",
-  default: false,
+  isDefault: false,
   recipientName: "",
   phoneNumber: "",
   zipcode: "",

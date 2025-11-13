@@ -8,7 +8,7 @@ interface CouponCardProps {
   coupon: Coupon;
   orderType: OrderType;
   isSelected: boolean;
-  orderPrice: number;
+  originalPrice: number;
   onToggle: (value: number) => void;
   discountBasedOnCoupon: number;
 }
@@ -17,7 +17,7 @@ export default function CouponCard({
   coupon,
   orderType,
   isSelected,
-  orderPrice,
+  originalPrice,
   onToggle,
   discountBasedOnCoupon,
 }: CouponCardProps) {
@@ -31,7 +31,7 @@ export default function CouponCard({
   } = coupon;
 
   // 사전 계산된 할인 금액 사용 (성능 개선)
-  const { usable, reasons } = isCouponUsable(coupon, orderPrice, orderType);
+  const { usable, reasons } = isCouponUsable(coupon, originalPrice, orderType);
 
   return (
     <div className={styles.couponCardContainer({ isSelected })}>

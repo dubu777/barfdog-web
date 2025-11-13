@@ -5,14 +5,14 @@ import type {
   SubscriptionIamportRequest,
   IamportCallback,
   CreateIamportSubscriptionPaymentRequest,
-  SubscriptionCheckoutSheetResponse,
+  SubscriptionCheckoutResponse,
 } from "@/types";
 import { buildSubscriptionPaymentRequest } from "@/store/checkout/paymentUtils";
 import { isPortoneUserCancel } from "../isPortoneUserCancel";
 
 export function createSubscriptionStrategy(deps: {
   /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
-  sheet: SubscriptionCheckoutSheetResponse; // 이메일/상품명 등 참조
+  sheet: SubscriptionCheckoutResponse; // 이메일/상품명 등 참조
   isMobile: boolean;
   // API DI
   createIamportPayment: (
@@ -30,7 +30,7 @@ export function createSubscriptionStrategy(deps: {
   failPayment: (orderId: number) => Promise<any>;
 }): CheckoutStrategy<
   SaveSubscriptionOrderRequest,
-  SubscriptionCheckoutSheetResponse,
+  SubscriptionCheckoutResponse,
   SubscriptionIamportRequest,
   IamportCallback
 > {
@@ -46,7 +46,7 @@ export function createSubscriptionStrategy(deps: {
       buildSubscriptionPaymentRequest({
         requestBody,
         subscriptionOrderSheetData: sheet,
-        subscribeId: sheet.subscribeVo.subscriptionId,
+        subscribeId: sheet.subscribeInfo.id,
         isMobileDevice: isMobile,
         orderId,
         merchantUid,
@@ -76,10 +76,10 @@ export function createSubscriptionStrategy(deps: {
         customer_uid: response.customer_uid,
         merchant_uid: saveOrder.merchantUid,
         amount: requestBody.paymentPrice,
-        name: deps.sheet.rawFoodList.map((raw) => raw.name).join(", "),
+        name: deps.sheet.subscribeInfo.recipeList.map((recipe) => recipe.name).join(", "),
         buyer_name: requestBody.deliveryDto.recipientName,
         buyer_tel: requestBody.deliveryDto.phoneNumber,
-        buyer_email: deps.sheet.email,
+        buyer_email: "", // TODO: API 스펙 확인 후 수정
         buyer_addr: `${requestBody.deliveryDto.street}, ${requestBody.deliveryDto.detailAddress}`,
         buyer_postcode: requestBody.deliveryDto.zipcode,
       };

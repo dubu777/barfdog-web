@@ -7,12 +7,11 @@ import {
   pointColor,
 } from "@/styles/common.css";
 import { DeliveryPlan, MealPlan, SubscriptionInfoResponse } from "@/types";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import RecipeItemCard from "../../deliveryOptions/subscriptionItemList/recipeItemCard/RecipeItemCard";
 import Text from "@/components/ui/text/Text";
 import Divider from "@/components/ui/divider/Divider";
 import LabelValueItem from "@/components/ui/labelValueItem/LabelValueItem";
-import { useController, useFormContext } from "react-hook-form";
 import {
   CalculatedRecipe,
   TotalRecipePrice,
@@ -32,6 +31,8 @@ interface SubscriptionEditProps {
   recipeCatalog: RecipeCatalogMap;
   totalRecipePrice: TotalRecipePrice;
   calculatedRecipes: CalculatedRecipe[];
+  isAgree: boolean;
+  setIsAgree: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function SubscriptionEditConfirm({
@@ -42,21 +43,15 @@ export default function SubscriptionEditConfirm({
   recipeCatalog,
   totalRecipePrice,
   calculatedRecipes,
+  isAgree,
+  setIsAgree,
 }: SubscriptionEditProps) {
   const { subscriptionCount, gradeInfo } = currentSubscriptionInfo;
 
-  const { control } = useFormContext();
-
-  const { field: isAgreeField } = useController({
-    name: "isAgreeSubscription",
-    control,
-  });
-  console.log("total", totalRecipePrice);
-
   const { onToggle, isSelected } = useToggleOption(
-    isAgreeField.value,
+    isAgree,
     "checkbox",
-    isAgreeField.onChange
+    setIsAgree
   );
   return (
     <div

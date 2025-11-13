@@ -1,17 +1,17 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import {
-  SubscriptionCheckoutSheetResponse,
+  SubscriptionCheckoutResponse,
   UseSuspenseQueryCustomOptions,
 } from "@/types";
-import { getSubscriptionCheckoutSheet } from "../checkout";
+import { getSubscriptionCheckout } from "../checkout";
 
-export function useGetSubscriptionCheckoutSheet(
+export function useGetSubscriptionCheckout(
   subscribeId: number,
-  queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionCheckoutSheetResponse>
+  queryOptions?: UseSuspenseQueryCustomOptions<SubscriptionCheckoutResponse>
 ) {
   return useSuspenseQuery({
-    queryFn: () => getSubscriptionCheckoutSheet(subscribeId),
+    queryFn: () => getSubscriptionCheckout(subscribeId),
     queryKey: [
       queryKeys.CHECKOUT.BASE,
       queryKeys.CHECKOUT.GET_SUBSCRIPTION_CHECKOUT_SHEET,

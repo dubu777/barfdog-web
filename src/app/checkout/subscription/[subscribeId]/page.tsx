@@ -6,7 +6,7 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import Spinner from "@/components/ui/spinner/Spinner";
-import { prefetchGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/prefetchGetSubscriptionCheckoutSheet";
+import { prefetchGetSubscriptionCheckout } from "@/api/checkout/queries/prefetchGetSubscriptionCheckout";
 import { prefetchGetInfiniteCouponList } from "@/api/coupon/queries/prefetchGetInfiniteCouponList";
 import SubscriptionCheckout from "@/components/pages/checkout/subscription/SubscriptionCheckout";
 import Header from "@/components/layout/header/Header";
@@ -22,7 +22,7 @@ export default async function SubscriptionPage({
 }: SubscriptionPageProps) {
   const subscribeId = Number(params.subscribeId);
   const queryClient = new QueryClient();
-  await prefetchGetSubscriptionCheckoutSheet(queryClient, subscribeId);
+  await prefetchGetSubscriptionCheckout(queryClient, subscribeId);
   await prefetchGetInfiniteCouponList(queryClient);
   const dehydrateState = dehydrate(queryClient);
 

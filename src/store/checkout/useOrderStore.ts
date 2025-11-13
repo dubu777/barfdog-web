@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-
 import { create } from "zustand";
 import {
   SaveGeneralOrderRequest,
@@ -59,12 +57,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     const { orderItemDtoList } = usePersistOrderStore.getState();
     // defaultAddress, address 형태를 deliveryDto와 맞추기 위해
     const extractServerDeliveryDto = (dto: ClientDeliveryDto): DeliveryDto => {
-      const {
-        deliveryId,
-        deliveryName,
-        default: isDefault,
-        ...serverDto
-      } = dto;
+      const { id, deliveryName, isDefault, ...serverDto } = dto;
       return serverDto;
     };
 

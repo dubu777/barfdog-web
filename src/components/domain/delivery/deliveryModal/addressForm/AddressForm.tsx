@@ -4,10 +4,10 @@ import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Text from "@/components/ui/text/Text";
-import { AddressRequest, AddressResponse } from "@/types/delivery";
+import { AddressResponse } from "@/types/delivery";
 import FooterButton from "@/components/ui/footerButton/FooterButton";
-import { useFormHandler } from "@/hooks/useFormHandler";
 import {
+  AddressFormValues,
   addressSchema,
   defaultAddressValues,
 } from "@/utils/validation/addressValidation";
@@ -16,8 +16,9 @@ import AddressSearchModal from "@/components/domain/address/addressSearchModal/A
 import useModal from "@/hooks/useModal";
 import { useUpdateAddress } from "@/api/address/mutations/useUpdateAddress";
 import { useCreateAddress } from "@/api/address/mutations/useCreateAddress";
-import { useWatch } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useEnterFocus } from "@/hooks/common/useEnterFocus";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface AddressFormProps {
   mode: "edit" | "add";
@@ -42,21 +43,25 @@ export default function AddressForm({
     [mode, address]
   );
 
+  const form = useForm<AddressFormValues>({
+    resolver: yupResolver(addressSchema),
+    defaultValues: initialValues,
+    mode: "all",
+  });
+
   const {
     control,
+    formState: { isValid, errors },
     watch,
-    errors,
     setValue,
     handleSubmit,
-    isValid,
     trigger,
     register,
     setFocus,
     getFieldState,
-  } = useFormHandler<AddressRequest>(addressSchema, initialValues, "all");
-  console.log("watch", watch());
+  } = form;
 
-  const { bind } = useEnterFocus<AddressRequest>({
+  const { bind } = useEnterFocus<AddressFormValues>({
     fieldNames: [
       "deliveryName",
       "recipientName",
@@ -71,7 +76,8 @@ export default function AddressForm({
   });
 
   // 수정 모드일 경우 기존 배송지 id와 기본 배송지 id 비교, 추가 모드면 기본 배송지 선택 false
-  const isDefaultAddress = mode === "edit" && address ? address.default : false;
+  const isDefaultAddress =
+    mode === "edit" && address ? address.isDefault : false;
 
   const { onToggle: onToggleDefault, isSelected: isDefaultSelected } =
     useToggleOption<boolean>(pendingDefault, "checkbox", setPendingDefault);
@@ -99,10 +105,10 @@ export default function AddressForm({
   const combinedError = errors.city?.message || errors.street?.message;
 
   // 폼 제출 처리: onFormSubmit 호출 시 서버 업데이트 후 기본배송지 적용 여부 처리
-  const onSubmit = handleSubmit((data: AddressRequest) => {
+  const onSubmit = handleSubmit((data: AddressFormValues) => {
     if (mode === "edit" && address) {
       updateAddress({
-        deliveryId: address.id,
+        addressId: address.id,
         body: data,
       });
       onBack();
@@ -124,8 +130,8 @@ export default function AddressForm({
     <>
       <form
         className={commonWrapper({
-          direction: 'col',
-          align: 'center',
+          direction: "col",
+          align: "center",
           padding: 20,
           gap: 20,
         })}
@@ -168,14 +174,18 @@ export default function AddressForm({
           onKeyUp={bind("phoneNumber")}
         />
 
-        <div className={commonWrapper({
-          direction: 'col',
-          gap: 8,
-        })}>
-          <div className={commonWrapper({
-            align: 'end',
+        <div
+          className={commonWrapper({
+            direction: "col",
             gap: 8,
-          })}>
+          })}
+        >
+          <div
+            className={commonWrapper({
+              align: "end",
+              gap: 8,
+            })}
+          >
             <InputField
               label="주소검색을 통해 입력"
               variants="box"

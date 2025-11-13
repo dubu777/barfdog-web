@@ -3,12 +3,12 @@ import { commonWrapper } from "@/styles/common.css";
 import RecipeItemCard from "./recipeItemCard/RecipeItemCard";
 import React from "react";
 import Divider from "@/components/ui/divider/Divider";
-import { DeliveryPlan, MealPlan, RawFoodOrderItem } from "@/types";
+import { DeliveryPlan, MealPlan, RecommendedRecipeItem } from "@/types";
 import { DELIVERY_PLAN_LABEL } from "@/constants";
 import { CalculatedRecipe } from "@/hooks/subscription/useSubscriptionCalculation";
 
 interface SubscriptionItemListProps {
-  rawFoodItems: RawFoodOrderItem[];
+  rawFoodItems: RecommendedRecipeItem[];
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
   calculatedRecipes: CalculatedRecipe[];

@@ -25,9 +25,9 @@ export default function GeneralOrderCompleted({}) {
     street: "리", // 도로명 주소
     detailAddress: "13호", // 상세 주소
     request: "하하", // 배송 요청사항
-    deliveryId: 12,
+    id: 12,
     deliveryName: "집",
-    default: true,
+    isDefault: true,
   };
 
   if (isPending || !generalOrderData) {

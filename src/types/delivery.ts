@@ -1,15 +1,15 @@
-export type {AddressResponse, AddressRequest}
+export type { AddressResponse, AddressRequest };
 
 interface AddressResponse {
   id: number;
+  deliveryName: string;
+  recipientName: string;
+  phoneNumber: string;
+  zipcode: string;
   city: string;
   street: string;
-  zipcode: string;
   detailAddress: string;
-  phoneNumber: string;
-  recipientName: string;
-  deliveryName: string;
-  default: boolean;
+  isDefault: boolean;
   request: string;
 }
 

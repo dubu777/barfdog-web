@@ -37,7 +37,7 @@ interface AddressDto {
   request?: string;
 }
 
-interface PlanInfo {
+interface PlanInfoConfig {
   id: string;
   label: string;
   numberOfPacksPerDay: number;
@@ -59,7 +59,7 @@ interface SubscribeGeneralItem {
 type MeetType = "SINGLE" | "DOUBLE";
 
 /** 생식 레시피 아이템 */
-interface RawFoodOrderItem {
+interface RecommendedRecipeItem {
   recipeId: number;
   rank: number;
   recipeNameKorea: string;
@@ -85,7 +85,7 @@ interface RawFoodOrderSheet {
   petId: number;
   oneDayRecommendKcal: number;
   inedibleFoods: string[];
-  recipeList: RawFoodOrderItem[];
+  recipeList: RecommendedRecipeItem[];
 }
 
 interface RecipeListType {
@@ -96,16 +96,19 @@ interface RecipeListType {
 }
 
 interface CreateSubscriptionRequest {
+  petId: number;
   plan: Plan;
   recipeList: RecipeListType[];
 }
 
-interface UpdateSubscriptionRequest extends CreateSubscriptionRequest {
+interface UpdateSubscriptionRequest {
+  plan: Plan;
+  recipeList: RecipeListType[];
   isAgreeSubscription: boolean;
 }
 
 interface CreateSubscriptionResponse {
-  subscriptionId: number;
+  subscribeId: number;
 }
 
 interface RawFoodDetailResponse {
@@ -149,10 +152,13 @@ interface SubscriptionValues {
   mealPlan: MealPlan;
   deliveryPlan: DeliveryPlan;
   recipeList: RecipeFormItem[] | [];
-  isAgreeSubscription?: boolean;
 }
 
-interface CurrentPlanInfo {
+interface EditSubscriptionRequest extends SubscriptionValues {
+  isAgreeSubscription: boolean;
+}
+
+interface PlanInfo {
   name: Plan | string;
   /** 구독 주기(주) */
   weeks: DeliveryPlan;
@@ -162,7 +168,7 @@ interface CurrentPlanInfo {
   mealCount: MealPlan;
 }
 
-interface CurrentRecipeItem {
+interface SubscribeRecipeItem {
   displayImageUrl: UrlObject;
   recipeId: number;
   name: string;
@@ -180,14 +186,14 @@ interface GradeInfo {
 interface SubscriptionInfoResponse {
   subscriptionId: number;
   subscriptionCount: number;
-  planInfo: CurrentPlanInfo;
+  planInfo: PlanInfo;
   gradeInfo: GradeInfo;
-  recipeList: CurrentRecipeItem[];
+  recipeList: SubscribeRecipeItem[];
   paymentPrice: number; // 최종 결제 금액
 }
 
 /** 생식 레시피 아이템 */
-interface RawFoodOrderItem {
+interface RecommendedRecipeItem {
   recipeId: number;
   rank: number;
   recipeNameKorea: string;
@@ -209,7 +215,7 @@ interface SubscriptionOrderSheet {
   petId: number;
   oneDayRecommendKcal: number;
   inedibleFoods: string[];
-  recipeList: RawFoodOrderItem[];
+  recipeList: RecommendedRecipeItem[];
 }
 
 type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";
@@ -233,12 +239,12 @@ export type {
   PaymentBody,
   PlanKey,
   PlanName,
-  PlanInfo,
+  PlanInfoConfig,
   SubscribeGeneralItem,
   SubscriptionStep,
   RawFoodOrderSheet,
   DeliveryPlan,
-  RawFoodOrderItem,
+  RecommendedRecipeItem,
   MealPlan,
   CreateSubscriptionRequest,
   RawFoodDetailResponse,
@@ -251,9 +257,11 @@ export type {
   SubscriptionValues,
   RecipeFormItem,
   SubscriptionInfoResponse,
-  CurrentPlanInfo,
-  CurrentRecipeItem,
+  PlanInfo,
+  SubscribeRecipeItem,
   SubscriptionOrderSheet,
   Plan,
   RecipeListType,
+  GradeInfo,
+  EditSubscriptionRequest,
 };

@@ -35,7 +35,7 @@ import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
 import { CHECKOUT_ROUTES, ORDER_TYPE } from "@/constants";
 import {
   SaveSubscriptionOrderRequest,
-  SubscriptionCheckoutSheetResponse,
+  SubscriptionCheckoutResponse,
   SubscriptionIamportRequest,
   IamportCallback,
 } from "@/types";
@@ -46,7 +46,7 @@ import { scrollToElement } from "@/utils/scrollToElement";
 import { createSubscriptionStrategy } from "@/utils/checkout/strategies/subscriptionStrategy";
 import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
-import { useGetSubscriptionCheckoutSheet } from "@/api/checkout/queries/useGetSubscriptionCheckoutSheet";
+import { useGetSubscriptionCheckout } from "@/api/checkout/queries/useGetSubscriptionCheckout";
 import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
 import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
@@ -74,9 +74,10 @@ export default function SubscriptionCheckout({
   const addToast = useToastStore((state) => state.addToast);
 
   // Data Fetching
-  const { data: checkoutData } = useGetSubscriptionCheckoutSheet(subscribeId);
+  const { data: checkoutData } = useGetSubscriptionCheckout(subscribeId);
   console.log("v2", checkoutData);
 
+  const { deliveryInfo, paymentInfo, subscribeInfo } = checkoutData;
   // Store Hydration
   useHydrateSubscriptionOrderStores(checkoutData);
 
@@ -112,7 +113,7 @@ export default function SubscriptionCheckout({
   // Checkout Flow
   const { start, isProcessing } = useCheckoutFlow<
     SaveSubscriptionOrderRequest,
-    SubscriptionCheckoutSheetResponse,
+    SubscriptionCheckoutResponse,
     SubscriptionIamportRequest,
     IamportCallback
   >({
@@ -157,37 +158,45 @@ export default function SubscriptionCheckout({
 
   return (
     <div className={checkoutPageContainer}>
-      <DeliveryAddress />
+      <DeliveryAddress deliveryInfo={deliveryInfo} />
       <Divider />
       <SubscriptionOrderItemList
-        rawFoodList={checkoutData.rawFoodList}
-        deliveryPlan={checkoutData.deliveryPlan === "TWO_WEEK" ? 2 : 4} // Todo: API 수정 후 DeliveryPlan 으로 변경
-        mealPlan={checkoutData.mealPlan === "ONE_MEAL" ? 1 : 2}
+        recipeList={subscribeInfo.recipeList}
+        deliveryPlan={subscribeInfo.planInfo.weeks}
+        mealPlan={subscribeInfo.planInfo.mealCount}
       />
       <Divider />
       <DeliverySchedule
-        deliveryDate={checkoutData.deliveryDate}
-        nextDeliveryDate={checkoutData.nextDeliveryDate}
+        deliveryDate={deliveryInfo.currentDeliveryDate}
+        nextDeliveryDate={deliveryInfo.nextDeliveryDate}
       />
       <Divider />
       <CouponSelector
         orderType={ORDER_TYPE.SUBSCRIPTION}
-        orderPrice={checkoutData.subscribeVo.nextPaymentPrice}
+        originalPrice={
+          paymentInfo.originalPrice -
+          paymentInfo.discountPlan -
+          paymentInfo.discountGrade
+        }
       />
       <Divider />
       <RewardUsage
         orderType={ORDER_TYPE.SUBSCRIPTION}
-        isAutoUseReward={checkoutData.autoUseReward}
+        isAutoUseReward={false}
       />
       <Divider />
       <PaymentMethod />
       <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
-        originPrice={checkoutData.totalOriginPrice}
-        appliedDefaultDiscountPrice={checkoutData.subscribeVo.nextPaymentPrice}
-        discountGrade={checkoutData.subscribeVo.discountGrade}
-        plan={checkoutData.subscribeVo.plan}
+        originPrice={paymentInfo.originalPrice}
+        appliedDefaultDiscountPrice={
+          paymentInfo.originalPrice -
+          paymentInfo.discountPlan -
+          paymentInfo.discountGrade
+        }
+        discountGrade={paymentInfo.discountGrade}
+        plan={subscribeInfo.planInfo.name}
       />
       <Divider />
       <OrderTerms

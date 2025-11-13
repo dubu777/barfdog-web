@@ -6,11 +6,19 @@ import OrderSection from "../orderSection/OrderSection";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import DeliveryModal from "@/components/domain/delivery/deliveryModal/DeliveryModal";
 import DeliveryContent from "@/components/domain/delivery/deliveryContent/DeliveryContent";
+import { DeliveryInfo } from "@/types";
 
-export default function DeliveryAddress() {
+interface DeliveryAddressProps {
+  deliveryInfo: DeliveryInfo;
+}
+
+export default function DeliveryAddress({
+  deliveryInfo,
+}: DeliveryAddressProps) {
   const { isOpen, onToggle, onClose } = useModal();
   const { deliveryDto, setDeliveryDto, setBackupDeliveryDto } =
     useDeliveryStore();
+  console.log("deliveryDto", deliveryDto);
 
   const { data: addressData } = useGetAddressList();
 
@@ -22,7 +30,7 @@ export default function DeliveryAddress() {
       showArrowIcon
       onSubtitleClick={onToggle}
     >
-      <DeliveryContent deliveryDto={deliveryDto} />
+      <DeliveryContent deliveryDto={deliveryDto} onToggle={onToggle} />
       {addressData && (
         <DeliveryModal
           addressData={addressData}

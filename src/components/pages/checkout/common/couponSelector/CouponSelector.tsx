@@ -14,25 +14,26 @@ import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { useGetInfiniteCouponList } from "@/api/coupon/queries/useGetInfiniteCouponList";
 
 interface CouponSelectorProps {
-  orderPrice: number;
+  originalPrice: number;
   orderType: OrderType;
 }
 
 export default function CouponSelector({
-  orderPrice,
+  originalPrice,
   orderType,
 }: CouponSelectorProps) {
-  const [couponCategory, setCouponCategory] = useState<CouponCategory>('NON_ALLIANCE');
+  const [couponCategory, setCouponCategory] =
+    useState<CouponCategory>("NON_ALLIANCE");
 
   const { data } = useGetInfiniteCouponList(couponCategory);
-  const coupons = useFlattenedInfiniteData(data, 'couponList');
+  const coupons = useFlattenedInfiniteData(data, "couponList");
 
   const appliedCoupon = useCouponStore((state) => state.appliedCoupon);
   const { isOpen, onClose, onToggle } = useModal();
 
   const usableCouponCount = getAvailableCoupons(
     coupons,
-    orderPrice,
+    originalPrice,
     orderType
   ).length;
 
@@ -83,7 +84,7 @@ export default function CouponSelector({
         coupons={coupons}
         isOpen={isOpen}
         onClose={onClose}
-        orderPrice={orderPrice}
+        originalPrice={originalPrice}
         couponCategory={couponCategory}
         setCouponCategory={setCouponCategory}
       />
