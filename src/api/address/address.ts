@@ -1,9 +1,9 @@
-import { AddressRequest, AddressResponse } from "@/types/delivery";
+import { DeliveryAddress } from "@/types";
 import axiosInstance from "../axiosInstance";
 import { AddressFormValues } from "@/utils/validation/addressValidation";
 
 // 주소 리스트 조회
-const getAddressList = async (): Promise<AddressResponse[]> => {
+const getAddressList = async (): Promise<DeliveryAddress[]> => {
   const { data } = await axiosInstance.get("/api/v2/address");
 
   if (data.success) {

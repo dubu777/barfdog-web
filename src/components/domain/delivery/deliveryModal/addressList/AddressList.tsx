@@ -1,16 +1,15 @@
 import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/ui/button/Button";
-import { ClientDeliveryDto } from "@/types";
+import { DeliveryAddress } from "@/types";
 import AddIcon from "/public/images/icons/add.svg";
 import { useMemo } from "react";
 import AddressCard from "./addressCard/AddressCard";
-import { AddressResponse } from "@/types/delivery";
 
 interface AddressListProps {
-  addressData: AddressResponse[];
+  addressData: DeliveryAddress[];
   goToAddAddress: () => void;
-  goToEditAddress: (address: AddressResponse) => void;
-  onSelectAddress: (deliveryDto: ClientDeliveryDto) => void;
+  goToEditAddress: (address: DeliveryAddress) => void;
+  onSelectAddress: (deliveryDto: DeliveryAddress) => void;
   showSelectButton?: boolean;
 }
 

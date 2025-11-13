@@ -34,10 +34,10 @@ import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
 // Constants & Types
 import { CHECKOUT_ROUTES, ORDER_TYPE } from "@/constants";
 import {
-  SaveSubscriptionOrderRequest,
   SubscriptionCheckoutResponse,
   SubscriptionIamportRequest,
   IamportCallback,
+  PrepareSubscriptionPaymentRequest,
 } from "@/types";
 
 // Utils & Adapters
@@ -48,7 +48,7 @@ import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
 import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { useGetSubscriptionCheckout } from "@/api/checkout/queries/useGetSubscriptionCheckout";
 import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
-import { useSaveSubscriptionOrder } from "@/api/checkout/mutations/subscription/useSaveSubscriptionOrder";
+import { usePrepareSubscriptionPayment } from "@/api/checkout/mutations/subscription/usePrepareSubscriptionPayment";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
 interface SubscriptionOrderContainerProps {
@@ -75,14 +75,14 @@ export default function SubscriptionCheckout({
 
   // Data Fetching
   const { data: checkoutData } = useGetSubscriptionCheckout(subscribeId);
-  console.log("v2", checkoutData);
+  console.log("checkoutData", checkoutData);
 
   const { deliveryInfo, paymentInfo, subscribeInfo } = checkoutData;
   // Store Hydration
   useHydrateSubscriptionOrderStores(checkoutData);
 
   // API Mutations
-  const { mutateAsync: saveSubscriptionOrder } = useSaveSubscriptionOrder(); // 결제 요청 전에 주문 정보 저장 - java 서버
+  const { mutateAsync: preparePayment } = usePrepareSubscriptionPayment(); // 결제 준비 - java 서버
   const { mutateAsync: createIamportPayment } =
     useCreateIamportSubscriptionPayment(); // 아임포트 구독 결제 생성 - next.js 서버
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
@@ -112,7 +112,7 @@ export default function SubscriptionCheckout({
 
   // Checkout Flow
   const { start, isProcessing } = useCheckoutFlow<
-    SaveSubscriptionOrderRequest,
+    PrepareSubscriptionPaymentRequest,
     SubscriptionCheckoutResponse,
     SubscriptionIamportRequest,
     IamportCallback
@@ -120,12 +120,12 @@ export default function SubscriptionCheckout({
     sheet: checkoutData,
     isMobile: isMobileDevice,
     saveOrder: async (req) => {
-      const res = await saveSubscriptionOrder({ subscribeId, body: req });
+      const res = await preparePayment({ body: req });
 
       return {
-        id: res.id,
+        id: res.orderId,
         merchantUid: res.merchantUid,
-        status: res.status,
+        status: res.orderStatus,
       };
     },
     paymentAdapter: iamportAdapter as PaymentAdapter<
@@ -152,7 +152,7 @@ export default function SubscriptionCheckout({
     }
     const requestBody = getRequestBody(
       ORDER_TYPE.SUBSCRIPTION
-    ) as SaveSubscriptionOrderRequest;
+    ) as PrepareSubscriptionPaymentRequest;
     await start(requestBody);
   };
 
@@ -173,11 +173,7 @@ export default function SubscriptionCheckout({
       <Divider />
       <CouponSelector
         orderType={ORDER_TYPE.SUBSCRIPTION}
-        originalPrice={
-          paymentInfo.originalPrice -
-          paymentInfo.discountPlan -
-          paymentInfo.discountGrade
-        }
+        originalPrice={paymentInfo.originalPrice}
       />
       <Divider />
       <RewardUsage
@@ -189,12 +185,8 @@ export default function SubscriptionCheckout({
       <Divider />
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
-        originPrice={paymentInfo.originalPrice}
-        appliedDefaultDiscountPrice={
-          paymentInfo.originalPrice -
-          paymentInfo.discountPlan -
-          paymentInfo.discountGrade
-        }
+        originalPrice={paymentInfo.originalPrice}
+        discountPlan={paymentInfo.discountPlan}
         discountGrade={paymentInfo.discountGrade}
         plan={subscribeInfo.planInfo.name}
       />

@@ -73,7 +73,7 @@ export function buildSubscriptionPaymentRequest({
   isMobileDevice,
   merchantUid,
 }: SubscriptionPaymentDataParams): SubscriptionIamportRequest {
-  const { paymentMethod, paymentPrice, deliveryDto, customerUid } = requestBody;
+  const { paymentInfo, deliveryInfo } = requestBody;
   const { subscribeInfo } = subscriptionOrderSheetData;
 
   const itemName = subscribeInfo.recipeList.map((recipe) => recipe.name).join(", ");
@@ -81,38 +81,38 @@ export function buildSubscriptionPaymentRequest({
   const email = ""; // TODO: API 스펙 확인 후 수정
 
   const baseData = {
-    channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentMethod],
+    channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentInfo.paymentMethod],
     pay_method: PAYMENT_METHOD["CREDIT_CARD"],
     merchant_uid: null,
-    customer_uid: customerUid,
+    customer_uid: paymentInfo.customerUid,
     amount: getPaymentDisplayAmount({
-      paymentMethod: paymentMethod,
-      originAmount: paymentPrice,
+      paymentMethod: paymentInfo.paymentMethod,
+      originAmount: paymentInfo.paymentPrice,
     }),
     name: itemName,
     buyer_email: email,
-    buyer_name: deliveryDto.recipientName,
-    buyer_tel: deliveryDto.phoneNumber,
-    buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
-    buyer_postcode: deliveryDto.zipcode,
+    buyer_name: deliveryInfo.address.recipientName,
+    buyer_tel: deliveryInfo.address.phoneNumber,
+    buyer_addr: `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`,
+    buyer_postcode: deliveryInfo.address.zipcode,
     m_redirect_url:
       `${window.location.origin}/checkout/mobile-payment-redirect/subscription?` +
       `order_id=${encodeURIComponent(orderId)}&` +
-      `customer_uid=${encodeURIComponent(customerUid)}&` +
+      `customer_uid=${encodeURIComponent(paymentInfo.customerUid)}&` +
       `merchantUid=${encodeURIComponent(merchantUid)}&` +
-      `amount=${encodeURIComponent(paymentPrice)}&` +
+      `amount=${encodeURIComponent(paymentInfo.paymentPrice)}&` +
       `name=${encodeURIComponent(itemName)}&` +
-      `discount_reward=${encodeURIComponent(requestBody.discountReward)}&` +
-      `buyer_name=${encodeURIComponent(deliveryDto.recipientName)}&` +
-      `buyer_tel=${encodeURIComponent(deliveryDto.phoneNumber)}&` +
+      `discount_reward=${encodeURIComponent(paymentInfo.discountReward)}&` +
+      `buyer_name=${encodeURIComponent(deliveryInfo.address.recipientName)}&` +
+      `buyer_tel=${encodeURIComponent(deliveryInfo.address.phoneNumber)}&` +
       `buyer_email=${encodeURIComponent(email)}&` +
       `subscription_Id=${encodeURIComponent(subscribeId)}&` +
       `buyer_addr=${encodeURIComponent(
-        `${deliveryDto.street}, ${deliveryDto.detailAddress}`
+        `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
       )}&` +
-      `buyer_postcode=${encodeURIComponent(deliveryDto.zipcode)}`,
+      `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}`,
   };
-  if (paymentMethod === "NAVER_PAY") {
+  if (paymentInfo.paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({
       subscribeId: subscribeInfo.id,
       isMobile: isMobileDevice,

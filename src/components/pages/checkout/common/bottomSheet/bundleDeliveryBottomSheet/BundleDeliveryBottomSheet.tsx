@@ -1,14 +1,14 @@
 import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
 import * as styles from "./BundleDeliveryBottomSheet.css";
 import Text from "@/components/ui/text/Text";
-import { BundleDeliveryAddress } from "@/types";
+import { DeliveryAddress } from "@/types";
 import BundleDeliveryCard from "./bundleDeliveryCard/BundleDeliveryCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 
 interface BundleDeliveryBottomSheetProps {
-  bundleDeliveryAddress: BundleDeliveryAddress[];
+  bundleDeliveryAddress: DeliveryAddress[];
   isOpen: boolean;
   onClose: () => void;
 }
@@ -35,17 +35,7 @@ export default function BundleDeliveryBottomSheet({
         (address) => address.id === newBundleDeliveryId
       );
       if (address) {
-        setBundleDeliveryDto({
-          id: address.id,
-          deliveryName: address.deliveryName ?? address.recipientName,
-          isDefault: false,
-          recipientName: address.recipientName,
-          phoneNumber: address.phoneNumber,
-          zipcode: address.zipcode,
-          street: address.street,
-          detailAddress: address.detailAddress,
-          request: "",
-        });
+        setBundleDeliveryDto(address);
         setDeliveryId(newBundleDeliveryId);
       }
     }

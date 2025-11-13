@@ -2,13 +2,12 @@ import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/ui/text/Text";
 import Chips from "@/components/ui/chips/Chips";
 import { formatPhoneNumber } from "@/utils";
-import { AddressResponse } from "@/types/delivery";
-import { ClientDeliveryDto } from "@/types";
+import { DeliveryAddress } from "@/types";
 import CreateButton from "../../../ui/createButton/CreateButton";
 
 interface AddressContentProps {
   isDefault?: boolean;
-  addressData: AddressResponse | ClientDeliveryDto | null;
+  addressData: DeliveryAddress | null;
   handleEditAddress?: () => void;
   onToggleDeliveryModal?: () => void;
 }
@@ -20,12 +19,14 @@ const AddressContent = ({
   onToggleDeliveryModal,
 }: AddressContentProps) => {
   return (
-    <div className={commonWrapper({
-      direction: 'col',
-      align: 'start',
-      gap: 16,
-    })}>
-      <div className={commonWrapper({ justify: 'between' })}>
+    <div
+      className={commonWrapper({
+        direction: "col",
+        align: "start",
+        gap: 16,
+      })}
+    >
+      <div className={commonWrapper({ justify: "between" })}>
         <Text type="title4">배송지</Text>
         {handleEditAddress && (
           <button onClick={handleEditAddress}>
@@ -37,12 +38,20 @@ const AddressContent = ({
       </div>
 
       {addressData ? (
-        <div className={commonWrapper({ direction: 'col', align: 'start' })}>
-          <div className={commonWrapper({ direction: 'col', align: 'start', gap: 12 })}>
-            <div className={commonWrapper({
-              justify: 'start',
-              gap: 8,
-            })}>
+        <div className={commonWrapper({ direction: "col", align: "start" })}>
+          <div
+            className={commonWrapper({
+              direction: "col",
+              align: "start",
+              gap: 12,
+            })}
+          >
+            <div
+              className={commonWrapper({
+                justify: "start",
+                gap: 8,
+              })}
+            >
               <Text type="headline2">{addressData.deliveryName}</Text>
               {isDefault && (
                 <Chips variant="outlined" borderRadius="lg">

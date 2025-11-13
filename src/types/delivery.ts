@@ -1,6 +1,6 @@
-export type { AddressResponse, AddressRequest };
+export type { DeliveryAddress, AddressRequest };
 
-interface AddressResponse {
+interface DeliveryAddress {
   id: number;
   deliveryName: string;
   recipientName: string;

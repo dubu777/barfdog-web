@@ -3,7 +3,7 @@ import {
   GeneralOrderSheetResponse,
   OrderType,
   SaveGeneralOrderRequest,
-  SaveSubscriptionOrderRequest,
+  PrepareSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
 } from "./checkout";
 
@@ -151,7 +151,7 @@ interface GeneralPaymentDataParams {
 }
 
 interface SubscriptionPaymentDataParams {
-  requestBody: SaveSubscriptionOrderRequest;
+  requestBody: PrepareSubscriptionPaymentRequest;
   subscriptionOrderSheetData: SubscriptionCheckoutResponse;
   isMobileDevice: boolean;
   orderId: number;

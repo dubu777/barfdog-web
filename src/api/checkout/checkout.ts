@@ -3,14 +3,15 @@ import axiosInstance from "../axiosInstance";
 import {
   SaveGeneralOrderRequest,
   SaveOrderResponse,
-  SaveSubscriptionOrderRequest,
   GeneralOrderSheetRequest,
   GeneralOrderSheetResponse,
-  SubscriptionOrderSheetResponse,
   SuccessGeneralPaymentRequest,
   SuccessSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
+  PrepareSubscriptionPaymentRequest,
+  PrepareSubscriptionPaymentResponse,
 } from "@/types";
+import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
 // 구독 결제 페이지 조회 - v2
 const getSubscriptionCheckout = async (
@@ -27,34 +28,17 @@ const getSubscriptionCheckout = async (
   throw new Error(message);
 };
 
-// 구독 결제 주문 정보 조회 - 레거시
-const getSubscriptionOrder = async (
-  subscribeId: number
-): Promise<SubscriptionOrderSheetResponse> => {
-  const { data } = await axiosInstance.get(
-    `/api/orders/sheet/subscribe/${subscribeId}`
-  );
-
-  return data;
-};
-
-// 구독 결제 주문 정보 저장 - v2
-const saveSubscriptionOrder = async ({
-  subscribeId,
+// 구독 결제 준비: 결제 1단계 - v2
+const prepareSubscriptionPayment = async ({
   body,
 }: {
-  subscribeId: number;
-  body: SaveSubscriptionOrderRequest;
-}): Promise<SaveOrderResponse> => {
+  body: PrepareSubscriptionPaymentRequest;
+}): Promise<PrepareSubscriptionPaymentResponse> => {
   const { data } = await axiosInstance.post(
-    `/api/v2/orders/subscription/${subscribeId}`,
+    "/api/v2/user/subscribe-orders/payment/prepare",
     body
   );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "결제 정보를 저장하지 못했습니다";
-  throw new Error(message);
+  return validateApiResponse(data, "구독 결제 준비에 실패 했습니다");
 };
 
 // 주문 결제 검증: 요청 결제 금액과 실 결제 금액 비교
@@ -190,12 +174,10 @@ const cancelGeneralPayment = async (id: number) => {
 };
 
 export {
-  getSubscriptionOrder,
   getGeneralOrder,
   saveGeneralOrder,
   successGeneralPayment,
   failGeneralPayment,
-  saveSubscriptionOrder,
   validateSubscriptionPayment,
   successSubscriptionPayment,
   failSubscriptionPayment,
@@ -203,4 +185,5 @@ export {
   cancelSubscriptionPayment,
   getSubscriptionCheckout,
   getGeneralCheckoutSheet,
+  prepareSubscriptionPayment,
 };

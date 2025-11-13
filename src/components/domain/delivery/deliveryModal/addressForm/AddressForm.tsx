@@ -4,7 +4,7 @@ import LabeledCheckbox from "@/components/ui/labeledCheckBox/LabeledCheckBox";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Text from "@/components/ui/text/Text";
-import { AddressResponse } from "@/types/delivery";
+import { DeliveryAddress } from "@/types/delivery";
 import FooterButton from "@/components/ui/footerButton/FooterButton";
 import {
   AddressFormValues,
@@ -22,7 +22,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 interface AddressFormProps {
   mode: "edit" | "add";
-  address?: AddressResponse;
+  address?: DeliveryAddress;
   onBack: () => void;
 }
 

@@ -1,19 +1,18 @@
 import * as styles from "./DeliveryModal.css";
 import { useState } from "react";
-import { ClientDeliveryDto } from "@/types";
+import { DeliveryAddress } from "@/types";
 import Header from "@/components/layout/header/Header";
 import AddressList from "./addressList/AddressList";
-import { AddressResponse } from "@/types/delivery";
 import AddressForm from "./addressForm/AddressForm";
 import ModalBackground from "@/components/ui/modalBackground/ModalBackground";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface DeliveryModalProps {
-  addressData: AddressResponse[];
+  addressData: DeliveryAddress[];
   isVisible: boolean;
   onClose: () => void;
-  setDeliveryDto: (delivery: ClientDeliveryDto) => void;
-  setBackupDeliveryDto: (delivery: ClientDeliveryDto) => void;
+  setDeliveryDto: (delivery: DeliveryAddress) => void;
+  setBackupDeliveryDto: (delivery: DeliveryAddress) => void;
   showSelectButton?: boolean;
 }
 
@@ -29,13 +28,13 @@ export default function DeliveryModal({
 }: DeliveryModalProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedAddress, setSelectedAddress] =
-    useState<AddressResponse | null>(null);
+    useState<DeliveryAddress | null>(null);
 
   // 배송지 등록으로 전환
   const goToAddAddress = () => setViewMode("add");
 
   // 배송지 수정으로 전환
-  const goToEditAddress = (address: AddressResponse) => {
+  const goToEditAddress = (address: DeliveryAddress) => {
     setViewMode("edit");
     setSelectedAddress(address);
   };
@@ -47,7 +46,7 @@ export default function DeliveryModal({
   };
 
   // 배송지 선택 - 묶음 배송시 배송지 정보 null로 초기화
-  const handleSelectAddress = (deliveryDto: ClientDeliveryDto) => {
+  const handleSelectAddress = (deliveryDto: DeliveryAddress) => {
     setDeliveryDto(deliveryDto);
     setBackupDeliveryDto(deliveryDto);
     onClose();

@@ -1,19 +1,18 @@
 import { commonWrapper } from "@/styles/common.css";
 import { addressCardContainer } from "./AddressCard.css";
 import Text from "@/components/ui/text/Text";
-import { ClientDeliveryDto } from "@/types";
+import { DeliveryAddress } from "@/types";
 import Chips from "@/components/ui/chips/Chips";
 import Button from "@/components/ui/button/Button";
-import { AddressResponse } from "@/types/delivery";
 import { useDeleteAddress } from "@/api/address/mutations/useDeleteAddress";
 import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 
 interface AddressCardProps {
-  address: AddressResponse;
-  onSelectAddress: (deliveryDto: ClientDeliveryDto) => void;
-  goToEditAddress: (address: AddressResponse) => void;
+  address: DeliveryAddress;
+  onSelectAddress: (deliveryDto: DeliveryAddress) => void;
+  goToEditAddress: (address: DeliveryAddress) => void;
   showSelectButton?: boolean;
 }
 export default function AddressCard({

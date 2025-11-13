@@ -1,11 +1,11 @@
 // 구독 결제 전략: "결제요청 빌드 → 콜백해석 → (데스크탑) again API → 검증 → 성공/실패 처리"
 import { CheckoutStrategy } from "../checkoutStrategies";
 import type {
-  SaveSubscriptionOrderRequest,
   SubscriptionIamportRequest,
   IamportCallback,
   CreateIamportSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
+  PrepareSubscriptionPaymentRequest,
 } from "@/types";
 import { buildSubscriptionPaymentRequest } from "@/store/checkout/paymentUtils";
 import { isPortoneUserCancel } from "../isPortoneUserCancel";
@@ -29,7 +29,7 @@ export function createSubscriptionStrategy(deps: {
   successPayment: (args: { orderId: number; body: any }) => Promise<any>;
   failPayment: (orderId: number) => Promise<any>;
 }): CheckoutStrategy<
-  SaveSubscriptionOrderRequest,
+  PrepareSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
   SubscriptionIamportRequest,
   IamportCallback
@@ -75,13 +75,15 @@ export function createSubscriptionStrategy(deps: {
       const orderData: CreateIamportSubscriptionPaymentRequest = {
         customer_uid: response.customer_uid,
         merchant_uid: saveOrder.merchantUid,
-        amount: requestBody.paymentPrice,
-        name: deps.sheet.subscribeInfo.recipeList.map((recipe) => recipe.name).join(", "),
-        buyer_name: requestBody.deliveryDto.recipientName,
-        buyer_tel: requestBody.deliveryDto.phoneNumber,
+        amount: requestBody.paymentInfo.paymentPrice,
+        name: deps.sheet.subscribeInfo.recipeList
+          .map((recipe) => recipe.name)
+          .join(", "),
+        buyer_name: requestBody.deliveryInfo.address.recipientName,
+        buyer_tel: requestBody.deliveryInfo.address.phoneNumber,
         buyer_email: "", // TODO: API 스펙 확인 후 수정
-        buyer_addr: `${requestBody.deliveryDto.street}, ${requestBody.deliveryDto.detailAddress}`,
-        buyer_postcode: requestBody.deliveryDto.zipcode,
+        buyer_addr: `${requestBody.deliveryInfo.address.street}, ${requestBody.deliveryInfo.address.detailAddress}`,
+        buyer_postcode: requestBody.deliveryInfo.address.zipcode,
       };
 
       // (1) 포트원 again 호출
@@ -106,7 +108,7 @@ export function createSubscriptionStrategy(deps: {
 
       const finalBody = {
         customerUid: response.customer_uid,
-        discountReward: requestBody.discountReward,
+        discountReward: requestBody.paymentInfo.discountReward,
         impUid: final.imp_uid,
         merchantUid: saveOrder.merchantUid,
       };

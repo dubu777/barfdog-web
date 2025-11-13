@@ -1,203 +1,205 @@
-"use client";
+// 일반 결제 스팩 변경 완료 될때 까지 주석 처리
 
-import { useCallback, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+// "use client";
 
-// API & Data Fetching
-import { useSaveGeneralOrder } from "@/api/checkout/mutations/general/useSaveGeneralOrder";
-import { useSuccessGeneralPayment } from "@/api/checkout/mutations/general/useSuccessGeneralPayment";
-import { useFailGeneralPayment } from "@/api/checkout/mutations/general/useFailGeneralPayment";
-import { useCancelGeneralPayment } from "@/api/checkout/mutations/general/useCancelGeneralPayment";
-import { useCheckoutFlow } from "@/hooks/checkout/useCheckoutFlow";
+// import { useCallback, useMemo, useRef, useState } from "react";
+// import { useRouter } from "next/navigation";
 
-// Stores (상태 관리)
-import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
-import { useOrderStore } from "@/store/checkout/useOrderStore";
-import { usePaymentStore } from "@/store/checkout/usePaymentStore";
-import { useToastStore } from "@/store/useToastStore";
+// // API & Data Fetching
+// import { useSaveGeneralOrder } from "@/api/checkout/mutations/general/useSaveGeneralOrder";
+// import { useSuccessGeneralPayment } from "@/api/checkout/mutations/general/useSuccessGeneralPayment";
+// import { useFailGeneralPayment } from "@/api/checkout/mutations/general/useFailGeneralPayment";
+// import { useCancelGeneralPayment } from "@/api/checkout/mutations/general/useCancelGeneralPayment";
+// import { useCheckoutFlow } from "@/hooks/checkout/useCheckoutFlow";
 
-// UI
-import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
-import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelector";
-import GeneralOrderItemList from "./generalOrderItemList/GenaralOrderItemList";
-import CouponSelector from "../common/couponSelector/CouponSelector";
-import RewardUsage from "../common/reward/RewardUsage";
-import PaymentMethod from "../common/paymentMethod/PaymentMethod";
-import OrderSummary from "../common/orderSummary/OrderSummary";
-import OrderTerms from "../common/orderTerms/OrderTerms";
-import OrderSection from "../common/orderSection/OrderSection";
-import Divider from "@/components/ui/divider/Divider";
-import Text from "@/components/ui/text/Text";
+// // Stores (상태 관리)
+// import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
+// import { useOrderStore } from "@/store/checkout/useOrderStore";
+// import { usePaymentStore } from "@/store/checkout/usePaymentStore";
+// import { useToastStore } from "@/store/useToastStore";
 
-// Constants & Types
-import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
-import {
-  GeneralIamportRequest,
-  GeneralIamportResponse,
-  GeneralOrderSheetResponse,
-  SaveGeneralOrderRequest,
-} from "@/types";
+// // UI
+// import DeliveryAddress from "../common/deliveryAddress/DeliveryAddress";
+// import BundleDeliverySelector from "./bundleDeliverySelector/BundleDeliverySelector";
+// import GeneralOrderItemList from "./generalOrderItemList/GenaralOrderItemList";
+// import CouponSelector from "../common/couponSelector/CouponSelector";
+// import RewardUsage from "../common/reward/RewardUsage";
+// import PaymentMethod from "../common/paymentMethod/PaymentMethod";
+// import OrderSummary from "../common/orderSummary/OrderSummary";
+// import OrderTerms from "../common/orderTerms/OrderTerms";
+// import OrderSection from "../common/orderSection/OrderSection";
+// import Divider from "@/components/ui/divider/Divider";
+// import Text from "@/components/ui/text/Text";
 
-// Utils
-import { formatNumberWithCommas } from "@/utils";
-import { scrollToElement } from "@/utils/scrollToElement";
-import useDeviceState from "@/hooks/useDeviceState";
+// // Constants & Types
+// import { CHECKOUT_ROUTES, ORDER_MESSAGE, ORDER_TYPE } from "@/constants";
+// import {
+//   GeneralIamportRequest,
+//   GeneralIamportResponse,
+//   GeneralOrderSheetResponse,
+//   SaveGeneralOrderRequest,
+// } from "@/types";
 
-// Strategy & Adapter
-import { createGeneralStrategy } from "@/utils/checkout/strategies/generalStrategy";
-import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
-import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
-import Spinner from "@/components/ui/spinner/Spinner";
-import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
-import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
-import { checkoutPageContainer } from "../OrderSheetCommon.css";
+// // Utils
+// import { formatNumberWithCommas } from "@/utils";
+// import { scrollToElement } from "@/utils/scrollToElement";
+// import useDeviceState from "@/hooks/useDeviceState";
 
-export default function GeneralCheckout() {
-  // Local State
-  const [showTermsErrors, setShowTermsErrors] = useState(false);
-  const termsRef = useRef<HTMLDivElement>(null);
+// // Strategy & Adapter
+// import { createGeneralStrategy } from "@/utils/checkout/strategies/generalStrategy";
+// import { iamportAdapter } from "@/utils/checkout/adapters/iamportAdapter";
+// import { useHydrateGeneralOrderStores } from "@/hooks/checkout/useHydrateGeneralOrderStores";
+// import Spinner from "@/components/ui/spinner/Spinner";
+// import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
+// import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+// import { checkoutPageContainer } from "../OrderSheetCommon.css";
 
-  // Store State
-  const { orderItemDtoList } = usePersistOrderStore();
-  const paymentPrice = usePaymentStore((s) => s.paymentPrice);
-  const getRequestBody = useOrderStore((s) => s.getRequestBody);
-  const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
-  const addToast = useToastStore((s) => s.addToast);
+// export default function GeneralCheckout() {
+//   // Local State
+//   const [showTermsErrors, setShowTermsErrors] = useState(false);
+//   const termsRef = useRef<HTMLDivElement>(null);
 
-  console.log("orderItemDtoList", orderItemDtoList);
+//   // Store State
+//   const { orderItemDtoList } = usePersistOrderStore();
+//   const paymentPrice = usePaymentStore((s) => s.paymentPrice);
+//   const getRequestBody = useOrderStore((s) => s.getRequestBody);
+//   const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
+//   const addToast = useToastStore((s) => s.addToast);
 
-  // Routing & Device
-  const router = useRouter();
-  const { isMobileDevice } = useDeviceState();
+//   console.log("orderItemDtoList", orderItemDtoList);
 
-  // React Query Data Fetching
-  const { data: generalOrderData, isPending } = useGetGeneralCheckoutSheet({
-    orderItemDtoList,
-  });
+//   // Routing & Device
+//   const router = useRouter();
+//   const { isMobileDevice } = useDeviceState();
 
-  console.log("generalOrderData", generalOrderData);
+//   // React Query Data Fetching
+//   const { data: generalOrderData, isPending } = useGetGeneralCheckoutSheet({
+//     orderItemDtoList,
+//   });
 
-  // React Query mutations
-  const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
-  const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
-  const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
-  const { mutateAsync: cancelGeneralPayment } = useCancelGeneralPayment();
+//   console.log("generalOrderData", generalOrderData);
 
-  // Store Hydration
-  useHydrateGeneralOrderStores(generalOrderData);
+//   // React Query mutations
+//   const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
+//   const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
+//   const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
+//   const { mutateAsync: cancelGeneralPayment } = useCancelGeneralPayment();
 
-  // Payment Strategy
-  const strategy = useMemo(
-    () =>
-      createGeneralStrategy({
-        successGeneralPayment: (args) => successGeneralPayment(args),
-        cancelGeneralPayment: (id) => cancelGeneralPayment(id),
-        failGeneralPayment: (id) => failGeneralPayment(id),
-      }),
-    [successGeneralPayment, cancelGeneralPayment, failGeneralPayment]
-  );
+//   // Store Hydration
+//   useHydrateGeneralOrderStores(generalOrderData);
 
-  // Checkout Flow
-  const { start, isProcessing } = useCheckoutFlow<
-    SaveGeneralOrderRequest,
-    GeneralOrderSheetResponse,
-    GeneralIamportRequest,
-    GeneralIamportResponse
-  >({
-    sheet: generalOrderData as GeneralOrderSheetResponse,
-    isMobile: isMobileDevice,
-    saveOrder: async (req) => {
-      const res = await saveGeneralOrder(req);
-      return {
-        id: res.id,
-        merchantUid: res.merchantUid,
-        status: res.status,
-      };
-    },
-    paymentAdapter: iamportAdapter,
-    strategy,
-    navigate: (path) => router.push(path),
-    routes: {
-      success: CHECKOUT_ROUTES.GENERAL.success,
-      fail: CHECKOUT_ROUTES.GENERAL.fail,
-    },
-  });
+//   // Payment Strategy
+//   const strategy = useMemo(
+//     () =>
+//       createGeneralStrategy({
+//         successGeneralPayment: (args) => successGeneralPayment(args),
+//         cancelGeneralPayment: (id) => cancelGeneralPayment(id),
+//         failGeneralPayment: (id) => failGeneralPayment(id),
+//       }),
+//     [successGeneralPayment, cancelGeneralPayment, failGeneralPayment]
+//   );
 
-  // 스크롤
-  const scrollToTerms = () => scrollToElement(termsRef.current);
+//   // Checkout Flow
+//   const { start, isProcessing } = useCheckoutFlow<
+//     SaveGeneralOrderRequest,
+//     GeneralOrderSheetResponse,
+//     GeneralIamportRequest,
+//     GeneralIamportResponse
+//   >({
+//     sheet: generalOrderData as GeneralOrderSheetResponse,
+//     isMobile: isMobileDevice,
+//     saveOrder: async (req) => {
+//       const res = await saveGeneralOrder(req);
+//       return {
+//         id: res.id,
+//         merchantUid: res.merchantUid,
+//         status: res.status,
+//       };
+//     },
+//     paymentAdapter: iamportAdapter,
+//     strategy,
+//     navigate: (path) => router.push(path),
+//     routes: {
+//       success: CHECKOUT_ROUTES.GENERAL.success,
+//       fail: CHECKOUT_ROUTES.GENERAL.fail,
+//     },
+//   });
 
-  // 결제 버튼
-  const handlePaymentSubmit = async () => {
-    if (!agreePrivacy) {
-      setShowTermsErrors(true);
-      addToast("결제 필수 사항에 동의해 주세요", "above-button");
-      setTimeout(scrollToTerms, 100);
-      return;
-    }
-    const requestBody = getRequestBody(
-      ORDER_TYPE.GENERAL
-    ) as SaveGeneralOrderRequest;
-    await start(requestBody);
-  };
+//   // 스크롤
+//   const scrollToTerms = () => scrollToElement(termsRef.current);
 
-  if (isPending || !generalOrderData) {
-    return <Spinner fullscreen />;
-  }
+//   // 결제 버튼
+//   const handlePaymentSubmit = async () => {
+//     if (!agreePrivacy) {
+//       setShowTermsErrors(true);
+//       addToast("결제 필수 사항에 동의해 주세요", "above-button");
+//       setTimeout(scrollToTerms, 100);
+//       return;
+//     }
+//     const requestBody = getRequestBody(
+//       ORDER_TYPE.GENERAL
+//     ) as SaveGeneralOrderRequest;
+//     await start(requestBody);
+//   };
 
-  return (
-    <div className={checkoutPageContainer}>
-      <DeliveryAddress />
-      <Divider />
-      {generalOrderData.orderStatus !== "UNSUBSCRIBE_ORDER" && (
-        <>
-          <BundleDeliverySelector
-            bundleDeliveryAddress={generalOrderData.deliveryAddress}
-            orderStatus={generalOrderData.orderStatus}
-          />
-          <Divider />
-        </>
-      )}
-      <GeneralOrderItemList
-        orderItemDtoList={generalOrderData.orderItemDtoList}
-      />
-      <Divider />
-      <CouponSelector
-        orderType={ORDER_TYPE.GENERAL}
-        orderPrice={generalOrderData.orderPrice}
-      />
-      <Divider />
-      <RewardUsage orderType={ORDER_TYPE.GENERAL} />
-      <Divider />
-      <PaymentMethod />
-      <Divider />
-      <OrderSummary
-        orderType={ORDER_TYPE.GENERAL}
-        originPrice={generalOrderData.orderPrice}
-        appliedDefaultDiscountPrice={generalOrderData.orderPrice}
-        freeCondition={generalOrderData.freeCondition}
-        deliveryPrice={generalOrderData.deliveryPrice}
-        orderItemDtoList={generalOrderData.orderItemDtoList}
-      />
-      <Divider />
-      <OrderTerms
-        orderType={ORDER_TYPE.GENERAL}
-        showErrors={showTermsErrors}
-        ref={termsRef}
-      />
-      <Divider />
-      <OrderSection padding={20}>
-        <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
-      </OrderSection>
-      <ButtonDocked
-        type="full-button"
-        isPrimaryDisabled={isProcessing}
-        onPrimaryClick={handlePaymentSubmit}
-        primaryButtonLabel={
-          isProcessing
-            ? "결제 처리 중..."
-            : `${formatNumberWithCommas(paymentPrice)}원 결제하기`
-        }
-      />
-    </div>
-  );
-}
+//   if (isPending || !generalOrderData) {
+//     return <Spinner fullscreen />;
+//   }
+
+//   return (
+//     <div className={checkoutPageContainer}>
+//       <DeliveryAddress />
+//       <Divider />
+//       {generalOrderData.orderStatus !== "UNSUBSCRIBE_ORDER" && (
+//         <>
+//           <BundleDeliverySelector
+//             bundleDeliveryAddress={generalOrderData.deliveryAddress}
+//             orderStatus={generalOrderData.orderStatus}
+//           />
+//           <Divider />
+//         </>
+//       )}
+//       <GeneralOrderItemList
+//         orderItemDtoList={generalOrderData.orderItemDtoList}
+//       />
+//       <Divider />
+//       <CouponSelector
+//         orderType={ORDER_TYPE.GENERAL}
+//         orderPrice={generalOrderData.orderPrice}
+//       />
+//       <Divider />
+//       <RewardUsage orderType={ORDER_TYPE.GENERAL} />
+//       <Divider />
+//       <PaymentMethod />
+//       <Divider />
+//       <OrderSummary
+//         orderType={ORDER_TYPE.GENERAL}
+//         originPrice={generalOrderData.orderPrice}
+//         appliedDefaultDiscountPrice={generalOrderData.orderPrice}
+//         freeCondition={generalOrderData.freeCondition}
+//         deliveryPrice={generalOrderData.deliveryPrice}
+//         orderItemDtoList={generalOrderData.orderItemDtoList}
+//       />
+//       <Divider />
+//       <OrderTerms
+//         orderType={ORDER_TYPE.GENERAL}
+//         showErrors={showTermsErrors}
+//         ref={termsRef}
+//       />
+//       <Divider />
+//       <OrderSection padding={20}>
+//         <Text type="headline2">{ORDER_MESSAGE.CONFIRM}</Text>
+//       </OrderSection>
+//       <ButtonDocked
+//         type="full-button"
+//         isPrimaryDisabled={isProcessing}
+//         onPrimaryClick={handlePaymentSubmit}
+//         primaryButtonLabel={
+//           isProcessing
+//             ? "결제 처리 중..."
+//             : `${formatNumberWithCommas(paymentPrice)}원 결제하기`
+//         }
+//       />
+//     </div>
+//   );
+// }

@@ -20,11 +20,12 @@ export default function NextPaymentCouponModal({
   nextPaymentPrice,
   onApplyNextPaymentCoupon,
 }: NextPaymentCouponModalProps) {
-  const [couponCategory, setCouponCategory] = useState<CouponCategory>('NON_ALLIANCE');
+  const [couponCategory, setCouponCategory] =
+    useState<CouponCategory>("NON_ALLIANCE");
 
   const { data } = useGetInfiniteCouponList(couponCategory);
-  const couponList = useFlattenedInfiniteData(data, 'couponList');
-  const cancelAppliedCoupon = useCouponStore(s => s.cancelAppliedCoupon);
+  const couponList = useFlattenedInfiniteData(data, "couponList");
+  const cancelAppliedCoupon = useCouponStore((s) => s.cancelAppliedCoupon);
 
   return (
     <CouponModal
@@ -35,17 +36,19 @@ export default function NextPaymentCouponModal({
         onClose();
         cancelAppliedCoupon();
       }}
-      orderPrice={nextPaymentPrice}
+      originalPrice={nextPaymentPrice}
       couponCategory={couponCategory}
       setCouponCategory={setCouponCategory}
       onAfterApply={(body) => {
         onApplyNextPaymentCoupon({
           discount: body.discountAmount,
           memberCouponId: body.couponId,
-          overDiscount: nextPaymentPrice > body.discountAmount ? 0 : nextPaymentPrice - body.discountAmount,
-        })
+          overDiscount:
+            nextPaymentPrice > body.discountAmount
+              ? 0
+              : nextPaymentPrice - body.discountAmount,
+        });
         cancelAppliedCoupon();
-        
       }}
     />
   );

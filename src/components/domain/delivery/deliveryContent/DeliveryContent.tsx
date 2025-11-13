@@ -1,13 +1,13 @@
 import Chips from "@/components/ui/chips/Chips";
 import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
-import { ClientDeliveryDto } from "@/types";
+import { DeliveryAddress } from "@/types";
 import { deliveryContentContainer } from "./DeliveryContent.css";
 import CreateButton from "@/components/ui/createButton/CreateButton";
 
 interface DeliveryContentProps {
-  deliveryDto: ClientDeliveryDto | null;
-  onToggle: () => void;
+  deliveryDto: DeliveryAddress | null;
+  onToggle?: () => void;
 }
 
 export default function DeliveryContent({

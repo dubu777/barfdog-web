@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { AddressRequest, AddressResponse } from "@/types/delivery";
+import { AddressRequest, DeliveryAddress } from "@/types/delivery";
 
 export const addressSchema = yup.object().shape({
   deliveryName: yup
@@ -30,7 +30,7 @@ export const addressSchema = yup.object().shape({
 export type AddressFormValues = yup.InferType<typeof addressSchema>;
 
 export const defaultAddressValues = (
-  addressData?: AddressResponse
+  addressData?: DeliveryAddress
 ): AddressRequest => ({
   deliveryName: addressData?.deliveryName ?? "",
   recipientName: addressData?.recipientName ?? "",

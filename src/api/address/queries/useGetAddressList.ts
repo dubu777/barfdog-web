@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constants/queryKeys";
 import { UseQueryCustomOptions } from "@/types";
 import { getAddressList } from "../address";
-import { AddressResponse } from "@/types/delivery";
+import { DeliveryAddress } from "@/types/delivery";
 
 export function useGetAddressList(
-  queryOptions?: UseQueryCustomOptions<AddressResponse[]>
+  queryOptions?: UseQueryCustomOptions<DeliveryAddress[]>
 ) {
   return useQuery({
     queryFn: getAddressList,

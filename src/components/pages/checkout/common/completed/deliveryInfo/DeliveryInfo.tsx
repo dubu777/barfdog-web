@@ -2,10 +2,10 @@ import Card from "@/components/ui/card/Card";
 import DeliveryContent from "@/components/domain/delivery/deliveryContent/DeliveryContent";
 import Divider from "@/components/ui/divider/Divider";
 import Text from "@/components/ui/text/Text";
-import { ClientDeliveryDto } from "@/types";
+import { DeliveryAddress } from "@/types";
 
 interface DeliveryInfoProps {
-  deliveryDto: ClientDeliveryDto;
+  deliveryDto: DeliveryAddress;
 }
 
 export default function DeliveryInfo({ deliveryDto }: DeliveryInfoProps) {

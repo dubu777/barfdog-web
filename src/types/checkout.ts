@@ -6,32 +6,13 @@ import {
   SubscribeRecipeItem,
 } from "./subscription";
 import { DiscountType, UrlObject } from "./common";
+import { DeliveryAddress } from "./delivery";
 
 interface SuccessGeneralPaymentRequest {
   impUid: string;
   merchantUid: string | null;
   discountReward: number;
   memberCouponId: number | null;
-}
-
-interface SaveSubscriptionOrderRequest {
-  agreePrivacy: boolean; // 개인정보 제공 동의 여부
-  agreeSubscription: boolean; // 구독 약관 동의 여부
-  customerUid: string; // 고유 사용자 ID
-  deliveryDto: DeliveryDto; // 배송지 정보
-  deliveryPrice: number; // 배송비
-  discountCoupon: number; // 쿠폰 할인 금액
-  discountGrade: number; // 등급 할인 금액
-  discountReward: number; // 적립금 할인 금액
-  discountSubscribeAlliance: number; // 제휴사 할인 금액
-  discountTotal: number; // 총 할인 금액
-  memberCouponId?: number | null; // 적용된 쿠폰 ID
-  nextDeliveryDate: string; // 다음 배송 날짜
-  orderPrice: number; // 플랜 할인만 적용된 금액
-  overDiscount: number; // 초과 할인 금액
-  paymentMethod: PaymentMethod; // 결제 방식
-  paymentPrice: number; // 실제 결제 금액
-  orderId: number; // 이번 결제 건 주문 ID
 }
 
 // 구독, 일반 결제 주문 정보 저장 응답
@@ -44,7 +25,7 @@ interface SaveOrderResponse {
 // 일반 결제 주문 정보 저장 요청
 interface SaveGeneralOrderRequest {
   orderItemDtoList: OrderItemDto[];
-  deliveryDto: DeliveryDto;
+  deliveryDto: DeliveryAddress;
   deliveryId: number | null;
   orderPrice: number;
   deliveryPrice: number;
@@ -78,12 +59,6 @@ interface DeliveryDto {
   street: string; // 도로명 주소
   detailAddress: string; // 상세 주소
   request: string; // 배송 요청사항
-}
-
-interface ClientDeliveryDto extends DeliveryDto {
-  id: number;
-  deliveryName: string;
-  isDefault: boolean;
 }
 
 interface GeneralOrderItemRequest {
@@ -154,7 +129,7 @@ type OrderStatus =
 interface GeneralOrderSheetResponse {
   orderItemDtoList: GeneralOrderItem[];
   defaultAddress: DefaultAddress;
-  deliveryAddress: BundleDeliveryAddress[];
+  deliveryAddress: DeliveryAddress[];
   deliveryPrice: number;
   email: string;
   freeCondition: number;
@@ -444,27 +419,6 @@ interface DeliveryInfo {
 }
 
 /**
- * 배송지 정보
- */
-interface DeliveryAddress {
-  id: number;
-  /** 배송지명 (예: 우리집, 회사 등) */
-  deliveryName: string;
-  /** 수령인 이름 */
-  recipientName: string;
-  /** 연락처 */
-  phoneNumber: string;
-  zipcode: string;
-  city: string;
-  street: string;
-  detailAddress: string;
-  /** 기본 배송지 여부 */
-  isDefault: boolean;
-  /** 배송 요청사항 */
-  request: string;
-}
-
-/**
  * 결제 금액 정보
  */
 interface PaymentInfo {
@@ -474,6 +428,48 @@ interface PaymentInfo {
   discountPlan: number;
   /** 등급 할인 금액 */
   discountGrade: number;
+}
+
+interface PrepareSubscriptionPaymentResponse {
+  orderId: number;
+  orderStatus: string;
+  merchantUid: string;
+}
+
+interface PrepareSubscriptionPaymentRequest {
+  subscribeId: number;
+  memberCouponId?: number | null;
+  deliveryInfo: DeliveryInfoRequest;
+  paymentInfo: PaymentInfoRequest;
+}
+
+interface DeliveryInfoRequest {
+  address: DeliveryAddress;
+  currentDeliveryDate: string;
+}
+
+interface PaymentInfoRequest {
+  customerUid: string;
+  /** 상품 원금  */
+  originalPrice: number;
+  /** 플랜 할인 금액 */
+  discountPlan: number;
+  /** 등급 할인 금액 */
+  discountGrade: number;
+  /** 쿠폰 할인 금액 */
+  discountCoupon: number;
+  /** 적립금 사용 금액 */
+  discountReward: number;
+  /** 총 할인 금액 */
+  discountTotal: number;
+  /** 초과 할인 금액 (0 이상일 때, 할인 한도를 넘은 부분 등) */
+  overDiscount: number;
+  /** 배송비 */
+  deliveryPrice: number;
+  /** 최종 결제금액 */
+  paymentPrice: number;
+  /** 결제 수단 */
+  paymentMethod: PaymentMethod;
 }
 
 type PaymentMethod = keyof typeof PAYMENT_METHOD;
@@ -505,13 +501,11 @@ export type {
   SaveGeneralOrderRequest,
   OrderType,
   DeliveryDto,
-  SaveSubscriptionOrderRequest,
   OrderTypeKey,
   SuccessGeneralPaymentRequest,
   PaymentMethodInfo,
   BundleDeliveryAddress,
   DefaultAddress,
-  ClientDeliveryDto,
   OrderStatus,
   SubscriptionOrderSheetResponse,
   PaymentResponse,
@@ -522,4 +516,8 @@ export type {
   RawFoodItemSummary,
   SubscriptionCheckoutResponse,
   DeliveryInfo,
+  PrepareSubscriptionPaymentRequest,
+  DeliveryInfoRequest,
+  PaymentInfoRequest,
+  PrepareSubscriptionPaymentResponse,
 };

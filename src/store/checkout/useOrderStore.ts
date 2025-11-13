@@ -1,10 +1,8 @@
 import { create } from "zustand";
 import {
   SaveGeneralOrderRequest,
-  SaveSubscriptionOrderRequest,
   OrderType,
-  ClientDeliveryDto,
-  DeliveryDto,
+  PrepareSubscriptionPaymentRequest,
 } from "@/types";
 
 import { useDeliveryStore } from "./useDeliveryStore";
@@ -18,25 +16,27 @@ interface OrderState {
   agreePrivacy: boolean;
   agreeSubscription: boolean;
   customerUid: string;
-  nextDeliveryDate: string;
+  currentDeliveryDate: string;
+  subscribeId: number | null;
   getRequestBody: (
     orderType: OrderType
-  ) => SaveGeneralOrderRequest | SaveSubscriptionOrderRequest;
-  // API가 일반 결제도 쿠폰 전체 적용으로 변경된다면 수정예정 => 삭제할듯
+  ) => SaveGeneralOrderRequest | PrepareSubscriptionPaymentRequest;
   setAgreePrivacy: (agreePrivacy: boolean) => void;
   setAgreeSubscription: (agreeSubscription: boolean) => void;
   setCustomerUid: (customerUid: string) => void;
-  setNextDeliveryDate: (nextDeliveryDate: string) => void;
+  setCurrentDeliveryDate: (currentDeliveryDate: string) => void;
+  setSubscribeId: (subscribeId: number) => void;
 }
 
 export const useOrderStore = create<OrderState>((set, get) => ({
   agreePrivacy: false,
   agreeSubscription: false,
   customerUid: "",
-  nextDeliveryDate: "",
+  currentDeliveryDate: "",
+  subscribeId: null,
 
   getRequestBody: (orderType) => {
-    const { agreePrivacy, agreeSubscription, customerUid, nextDeliveryDate } =
+    const { agreePrivacy, customerUid, currentDeliveryDate, subscribeId } =
       get();
 
     // 필요한 데이터들을 각각의 store에서 가져옴
@@ -47,22 +47,15 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       deliveryPrice,
       paymentPrice,
       paymentMethod,
-      orderPrice,
-      discountSubscribeAlliance,
+      originalPrice,
       discountGrade,
-      orderId,
     } = usePaymentStore.getState();
-    const { appliedReward, autoUseReward } = useRewardStore.getState();
+    const { appliedReward } = useRewardStore.getState();
     const { appliedCoupon } = useCouponStore.getState();
     const { orderItemDtoList } = usePersistOrderStore.getState();
-    // defaultAddress, address 형태를 deliveryDto와 맞추기 위해
-    const extractServerDeliveryDto = (dto: ClientDeliveryDto): DeliveryDto => {
-      const { id, deliveryName, isDefault, ...serverDto } = dto;
-      return serverDto;
-    };
 
     const commonBody = {
-      deliveryDto: extractServerDeliveryDto(deliveryDto),
+      deliveryDto,
       agreePrivacy,
       paymentMethod,
       discountCoupon: appliedCoupon?.discountAmount ?? 0,
@@ -70,7 +63,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       discountTotal,
       deliveryPrice,
       paymentPrice,
-      orderPrice,
+      orderPrice: originalPrice,
       memberCouponId: appliedCoupon?.couponId ?? null,
     };
 
@@ -82,21 +75,39 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       } as SaveGeneralOrderRequest;
     }
 
+    // 구독 결제: PrepareSubscriptionPaymentRequest 구조로 변환
+    if (!deliveryDto || !subscribeId) {
+      throw new Error("구독 결제에 필요한 정보가 없습니다.");
+    }
+
+    const { discountPlan } = usePaymentStore.getState();
+
     return {
-      ...commonBody,
-      customerUid,
-      nextDeliveryDate,
-      discountGrade,
-      agreeSubscription,
-      discountSubscribeAlliance,
-      overDiscount: 0,
-      autoUseReward,
-      orderId,
-    } as SaveSubscriptionOrderRequest;
+      subscribeId,
+      memberCouponId: appliedCoupon?.couponId ?? null,
+      deliveryInfo: {
+        address: deliveryDto,
+        currentDeliveryDate,
+      },
+      paymentInfo: {
+        customerUid,
+        originalPrice,
+        discountPlan,
+        discountGrade,
+        discountCoupon: appliedCoupon?.discountAmount ?? 0,
+        discountReward: appliedReward,
+        discountTotal,
+        overDiscount: 0,
+        deliveryPrice,
+        paymentPrice,
+        paymentMethod,
+      },
+    } as PrepareSubscriptionPaymentRequest;
   },
 
   setAgreePrivacy: (agreePrivacy) => set({ agreePrivacy }),
   setAgreeSubscription: (agreeSubscription) => set({ agreeSubscription }),
   setCustomerUid: (customerUid) => set({ customerUid }),
-  setNextDeliveryDate: (nextDeliveryDate) => set({ nextDeliveryDate }),
+  setCurrentDeliveryDate: (currentDeliveryDate) => set({ currentDeliveryDate }),
+  setSubscribeId: (subscribeId) => set({ subscribeId }),
 }));

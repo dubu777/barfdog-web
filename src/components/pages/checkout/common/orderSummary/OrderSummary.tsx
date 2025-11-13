@@ -24,8 +24,9 @@ import useModal from "@/hooks/useModal";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
-  originPrice: number; // 원금
-  appliedDefaultDiscountPrice: number; // 일반 주문: (원금 - 상품 할인금액) , 구독 주문: (원금 - 플랜 할인금액)  => 이 가격에 쿠폰 및 등급할인을 적용한다.
+  originalPrice: number; // 원금
+  discountPlan?: number; // 일반 주문: (원금 - 상품 할인금액) , 구독 주문: (원금 - 플랜 할인금액)  => 이 가격에 쿠폰 및 등급할인을 적용한다.
+  discountItem?: number;
   freeCondition?: number; // 배송비 무료를 위한 최소 금액
   deliveryPrice?: number;
   discountGrade?: number; // 등급 할인 금액
@@ -35,39 +36,35 @@ interface OrderSummaryPropsProps {
 
 export default function OrderSummary({
   orderType,
-  originPrice,
-  appliedDefaultDiscountPrice,
+  originalPrice,
+  discountPlan = 0,
+  discountItem = 0,
   freeCondition,
   deliveryPrice,
-  discountGrade,
+  discountGrade = 0,
   orderItemDtoList,
   plan,
 }: OrderSummaryPropsProps) {
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
     useRewardStore();
   const { appliedCoupon, setMaxAvailableCouponDiscount } = useCouponStore();
-  const {
-    setPaymentPrice,
-    setDeliveryPrice,
-    setDiscountTotal,
-    setDiscountPlan,
-  } = usePaymentStore();
+  const { setPaymentPrice, setDeliveryPrice, setDiscountTotal } =
+    usePaymentStore();
   const isBundleDelivery = useDeliveryStore((state) => state.isBundleDelivery);
 
   const calculation = useMemo(() => {
     return orderCalculation({
-      orderType,
       discountGrade,
       isBundleDelivery,
       userTotalReward,
       appliedReward,
-      originPrice,
-      appliedDefaultDiscountPrice,
+      originalPrice,
+      discountPlan,
+      discountItem,
       freeCondition,
       deliveryPrice,
       orderItemDtoList,
       discountCouponAmount: appliedCoupon?.discountAmount,
-      plan,
     });
   }, [
     orderType,
@@ -75,22 +72,20 @@ export default function OrderSummary({
     isBundleDelivery,
     userTotalReward,
     appliedReward,
-    appliedDefaultDiscountPrice,
+    discountPlan,
+    discountItem,
     freeCondition,
     deliveryPrice,
     orderItemDtoList,
     appliedCoupon,
     plan,
-    originPrice,
+    originalPrice,
   ]);
 
   const {
     finalPaymentAmount,
     deliveryFee,
-    gradeDiscount,
-    planDiscount,
     totalDiscount,
-    totalDiscountWithoutPlan,
     maxAvailableReward,
     maxAvailableCoupon,
   } = calculation;
@@ -99,25 +94,20 @@ export default function OrderSummary({
     setMaxAvailableCouponDiscount(maxAvailableCoupon);
     setMaxAvailableReward(maxAvailableReward);
     setDeliveryPrice(deliveryFee);
-    // 현재 서버에는 플랜 할인이 포함되지 않은 할인 금액을 보내야 함
-    setDiscountTotal(totalDiscountWithoutPlan);
-    setDiscountPlan(planDiscount);
+    setDiscountTotal(totalDiscount);
     setPaymentPrice(finalPaymentAmount);
   }, [
     maxAvailableCoupon,
     maxAvailableReward,
     deliveryFee,
-    planDiscount,
-    totalDiscountWithoutPlan,
+    discountPlan,
     finalPaymentAmount,
     setMaxAvailableCouponDiscount,
     setMaxAvailableReward,
     setDeliveryPrice,
     setDiscountTotal,
-    setDiscountPlan,
     setPaymentPrice,
   ]);
-  const itemDiscountAmount = originPrice - appliedDefaultDiscountPrice;
   const { isOpen, onClose, onToggle } = useModal();
 
   return (
@@ -125,20 +115,20 @@ export default function OrderSummary({
       {orderType === ORDER_TYPE.SUBSCRIPTION ? (
         <div className={styles.orderCommonWrapper({ direction: "col" })}>
           <OrderSummaryRow
-            label="총 금액"
-            value={originPrice}
+            label="구독 원가"
+            value={originalPrice}
             valueType="headline2"
             plainColor
             plus
           />
-          <OrderSummaryRow label="할인 혜택" value={planDiscount} />
-          <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
-          <OrderSummaryRow label="등급 할인" value={gradeDiscount} />
+          <OrderSummaryRow label="구독 할인" value={discountPlan} />
+          <OrderSummaryRow label="등급 할인" value={discountGrade} />
           <OrderSummaryRow
-            label="쿠폰 사용"
+            label="쿠폰 할인"
             value={appliedCoupon?.discountAmount ?? 0}
           />
-          <OrderSummaryRow label="적립금 사용" value={appliedReward} />
+          <OrderSummaryRow label="적립금 할인" value={appliedReward} />
+          <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
           <Divider thickness={2} color="gray300" />
           <OrderSummaryRow
             label="1회차 결제 금액"
@@ -156,32 +146,22 @@ export default function OrderSummary({
               fullWidth
             />
           )}
-          <div className={orderSummaryRowContainer}>
-            <div className={nextPaymentTextWrapper}>
-              <Text type="label4" color="gray700">
-                2회차 예상 결제 금액
-              </Text>
-              <SvgIcon
-                src={HelpIcon}
-                color="gray700"
-                onClick={() => onToggle()}
-              />
-            </div>
-            <Text type="headline2" color="gray700">
-              {formatNumberWithCommas(appliedDefaultDiscountPrice)}원
-            </Text>
-          </div>
         </div>
       ) : (
         <div className={styles.orderCommonWrapper({ direction: "col" })}>
           <OrderSummaryRow
-            label="총 금액"
-            value={originPrice}
+            label="상품 금액"
+            value={originalPrice}
             valueType="headline2"
             plainColor
             plus
           />
-          <OrderSummaryRow label="상품 할인" value={itemDiscountAmount} />
+          <OrderSummaryRow label="상품 할인" value={discountItem} />
+          <OrderSummaryRow
+            label="쿠폰 할인"
+            value={appliedCoupon?.discountAmount ?? 0}
+          />
+          <OrderSummaryRow label="적립금 할인" value={appliedReward} />
           <OrderSummaryRow
             label="배송비"
             value={deliveryFee}
@@ -189,11 +169,6 @@ export default function OrderSummary({
             plainColor
             plus
           />
-          <OrderSummaryRow
-            label="쿠폰 사용"
-            value={appliedCoupon?.discountAmount ?? 0}
-          />
-          <OrderSummaryRow label="적립금 사용" value={appliedReward} />
           <Divider thickness={1} color="gray300" />
           <OrderSummaryRow
             label="결제 금액"

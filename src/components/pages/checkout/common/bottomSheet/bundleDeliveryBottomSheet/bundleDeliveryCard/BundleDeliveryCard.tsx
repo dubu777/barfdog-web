@@ -1,11 +1,11 @@
 import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
 import * as styles from "./BundleDeliveryCard.css";
 import Text from "@/components/ui/text/Text";
-import { BundleDeliveryAddress } from "@/types";
+import { BundleDeliveryAddress, DeliveryAddress } from "@/types";
 import { commonWrapper } from "@/styles/common.css";
 
 interface BundleDeliveryCardProps {
-  address: BundleDeliveryAddress;
+  address: DeliveryAddress;
   isSelected: boolean;
   onToggle: (value: number) => void;
 }
