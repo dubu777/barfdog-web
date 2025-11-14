@@ -49,6 +49,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       paymentMethod,
       originalPrice,
       discountGrade,
+      overDiscount,
     } = usePaymentStore.getState();
     const { appliedReward } = useRewardStore.getState();
     const { appliedCoupon } = useCouponStore.getState();
@@ -97,7 +98,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
         discountCoupon: appliedCoupon?.discountAmount ?? 0,
         discountReward: appliedReward,
         discountTotal,
-        overDiscount: 0,
+        overDiscount,
         deliveryPrice,
         paymentPrice,
         paymentMethod,

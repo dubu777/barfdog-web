@@ -14,13 +14,6 @@ import Divider from "@/components/ui/divider/Divider";
 import { useCouponStore } from "@/store/checkout/useCouponStore";
 import InfoBox from "@/components/ui/infoBox/InfoBox";
 import { usePaymentStore } from "@/store/checkout/usePaymentStore";
-import { orderSummaryRowContainer } from "./orderSummaryRow/OrderSummaryRow.css";
-import Text from "@/components/ui/text/Text";
-import HelpIcon from "public/images/icons/help.svg";
-import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
-import { nextPaymentTextWrapper } from "./OrderSummary.css";
-import NextPaymentBottomSheet from "../bottomSheet/nextPaymentBottomSheet/NextPaymentBottomSheet";
-import useModal from "@/hooks/useModal";
 
 interface OrderSummaryPropsProps {
   orderType: OrderType;
@@ -48,8 +41,12 @@ export default function OrderSummary({
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
     useRewardStore();
   const { appliedCoupon, setMaxAvailableCouponDiscount } = useCouponStore();
-  const { setPaymentPrice, setDeliveryPrice, setDiscountTotal } =
-    usePaymentStore();
+  const {
+    setPaymentPrice,
+    setDeliveryPrice,
+    setDiscountTotal,
+    setOverDiscount,
+  } = usePaymentStore();
   const isBundleDelivery = useDeliveryStore((state) => state.isBundleDelivery);
 
   const calculation = useMemo(() => {
@@ -64,7 +61,8 @@ export default function OrderSummary({
       freeCondition,
       deliveryPrice,
       orderItemDtoList,
-      discountCouponAmount: appliedCoupon?.discountAmount,
+      discountCoupon: appliedCoupon?.discountAmount,
+      appliedCouponDiscount: appliedCoupon?.appliedDiscountAmount,
     });
   }, [
     orderType,
@@ -88,6 +86,7 @@ export default function OrderSummary({
     totalDiscount,
     maxAvailableReward,
     maxAvailableCoupon,
+    overDiscount,
   } = calculation;
 
   useEffect(() => {
@@ -96,6 +95,7 @@ export default function OrderSummary({
     setDeliveryPrice(deliveryFee);
     setDiscountTotal(totalDiscount);
     setPaymentPrice(finalPaymentAmount);
+    setOverDiscount(overDiscount);
   }, [
     maxAvailableCoupon,
     maxAvailableReward,
@@ -108,7 +108,6 @@ export default function OrderSummary({
     setDiscountTotal,
     setPaymentPrice,
   ]);
-  const { isOpen, onClose, onToggle } = useModal();
 
   return (
     <OrderSection title="결제 금액">
@@ -125,7 +124,7 @@ export default function OrderSummary({
           <OrderSummaryRow label="등급 할인" value={discountGrade} />
           <OrderSummaryRow
             label="쿠폰 할인"
-            value={appliedCoupon?.discountAmount ?? 0}
+            value={appliedCoupon?.appliedDiscountAmount ?? 0}
           />
           <OrderSummaryRow label="적립금 할인" value={appliedReward} />
           <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
@@ -159,7 +158,7 @@ export default function OrderSummary({
           <OrderSummaryRow label="상품 할인" value={discountItem} />
           <OrderSummaryRow
             label="쿠폰 할인"
-            value={appliedCoupon?.discountAmount ?? 0}
+            value={appliedCoupon?.appliedDiscountAmount ?? 0}
           />
           <OrderSummaryRow label="적립금 할인" value={appliedReward} />
           <OrderSummaryRow
@@ -188,7 +187,6 @@ export default function OrderSummary({
           )}
         </div>
       )}
-      <NextPaymentBottomSheet isOpen={isOpen} onClose={onClose} />
     </OrderSection>
   );
 }

@@ -35,7 +35,6 @@ export function useHydrateSubscriptionOrderStores(
 
     if (defaultAddress) {
       console.warn("기본 배송지가 없습니다.");
-      // 렌더 단계가 아닌 이펙트에서만 상태 세팅
       setDeliveryDto(defaultAddress);
     }
 

@@ -103,7 +103,8 @@ export default function CouponModal({
           setDiscountOnCouponAndGlobal(discountBasedOnCouponAndGlobal);
           setSelectedCoupon({
             couponId: newCouponId,
-            discountAmount: discountBasedOnCouponAndGlobal,
+            discountAmount: discountBasedOnCoupon,
+            appliedDiscountAmount: discountBasedOnCouponAndGlobal,
           });
         }
       }
@@ -179,6 +180,7 @@ export default function CouponModal({
       setSelectedCoupon({
         couponId: appliedCoupon.couponId,
         discountAmount: appliedCoupon.discountAmount,
+        appliedDiscountAmount: appliedCoupon.appliedDiscountAmount,
       });
     }
   }, [appliedCoupon, isOpen, setSelectedCoupon]);

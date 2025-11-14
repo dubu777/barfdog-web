@@ -6,15 +6,9 @@ import OrderSection from "../orderSection/OrderSection";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import DeliveryModal from "@/components/domain/delivery/deliveryModal/DeliveryModal";
 import DeliveryContent from "@/components/domain/delivery/deliveryContent/DeliveryContent";
-import { DeliveryInfo } from "@/types";
+import { forwardRef } from "react";
 
-interface DeliveryAddressProps {
-  deliveryInfo: DeliveryInfo;
-}
-
-export default function DeliveryAddress({
-  deliveryInfo,
-}: DeliveryAddressProps) {
+const DeliveryAddress = forwardRef<HTMLDivElement>((ref) => {
   const { isOpen, onToggle, onClose } = useModal();
   const { deliveryDto, setDeliveryDto, setBackupDeliveryDto } =
     useDeliveryStore();
@@ -42,4 +36,7 @@ export default function DeliveryAddress({
       )}
     </OrderSection>
   );
-}
+});
+DeliveryAddress.displayName = "DeliveryAddress";
+
+export default DeliveryAddress;

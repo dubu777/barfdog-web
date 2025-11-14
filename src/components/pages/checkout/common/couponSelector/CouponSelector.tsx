@@ -42,7 +42,7 @@ export default function CouponSelector({
       return (
         <Text type="label1">
           <Text type="headline1" color="red">
-            {appliedCoupon.discountAmount.toLocaleString()}원
+            {appliedCoupon.appliedDiscountAmount.toLocaleString()}원
           </Text>{" "}
           할인
         </Text>

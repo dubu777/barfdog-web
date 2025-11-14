@@ -50,6 +50,7 @@ import { useGetSubscriptionCheckout } from "@/api/checkout/queries/useGetSubscri
 import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionOrderItemList";
 import { usePrepareSubscriptionPayment } from "@/api/checkout/mutations/subscription/usePrepareSubscriptionPayment";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
+import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -61,6 +62,7 @@ export default function SubscriptionCheckout({
   // Local State
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
+  const deliveryRef = useRef<HTMLDivElement>(null);
 
   // Routing & Device
   const router = useRouter();
@@ -71,6 +73,7 @@ export default function SubscriptionCheckout({
   const agreePrivacy = useOrderStore((state) => state.agreePrivacy);
   const agreeSubscription = useOrderStore((state) => state.agreeSubscription);
   const paymentPrice = usePaymentStore((state) => state.paymentPrice);
+  const deliveryDto = useDeliveryStore((state) => state.deliveryDto);
   const addToast = useToastStore((state) => state.addToast);
 
   // Data Fetching
@@ -142,8 +145,14 @@ export default function SubscriptionCheckout({
 
   // Event Handlers
   const scrollToTerms = () => scrollToElement(termsRef.current);
+  const scrollToDelivery = () => scrollToElement(deliveryRef.current);
 
   const handlePaymentSubmit = async () => {
+    if (!deliveryDto) {
+      addToast("배송지를 입력해주세요", "above-button");
+      setTimeout(scrollToDelivery, 100);
+    }
+
     if (!agreePrivacy || !agreeSubscription) {
       setShowTermsErrors(true);
       addToast("결제 필수 사항에 동의해 주세요", "above-button");
@@ -158,7 +167,7 @@ export default function SubscriptionCheckout({
 
   return (
     <div className={checkoutPageContainer}>
-      <DeliveryAddress deliveryInfo={deliveryInfo} />
+      <DeliveryAddress ref={deliveryRef} />
       <Divider />
       <SubscriptionOrderItemList
         recipeList={subscribeInfo.recipeList}
@@ -176,10 +185,7 @@ export default function SubscriptionCheckout({
         originalPrice={paymentInfo.originalPrice}
       />
       <Divider />
-      <RewardUsage
-        orderType={ORDER_TYPE.SUBSCRIPTION}
-        isAutoUseReward={false}
-      />
+      <RewardUsage />
       <Divider />
       <PaymentMethod />
       <Divider />

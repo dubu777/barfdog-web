@@ -44,14 +44,14 @@ export default function SubscriptionSummary({
         })}
       >
         <OrderSummaryRow
-          label="총 금액"
+          label="구독 금액"
           value={totalOriginalPrice}
           valueType="headline2"
           plainColor
           plus
         />
         <OrderSummaryRow
-          label="할인 혜택"
+          label="구독 할인"
           value={discountAmount}
           valueType="body2"
         />

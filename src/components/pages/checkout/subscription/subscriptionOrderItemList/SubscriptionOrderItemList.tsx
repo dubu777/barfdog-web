@@ -22,6 +22,7 @@ export default function SubscriptionOrderItemList({
     deliveryPlan,
     recipeList.length
   );
+
   return (
     <OrderSection title="구독 상품" gap={20}>
       <div className={commonWrapper({ direction: "col", gap: 16 })}>
