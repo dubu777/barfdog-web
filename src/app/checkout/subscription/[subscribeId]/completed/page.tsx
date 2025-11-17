@@ -1,4 +1,4 @@
-import SubscriptionCompleted from "@/components/pages/checkout/subscription/completed/SubscriptionCompleted";
+// import SubscriptionCompleted from "@/components/pages/checkout/subscription/completed/SubscriptionCompleted";
 
 interface SubscriptionCompletedPageProps {
   params: {
@@ -10,5 +10,6 @@ export default async function SubscriptionCompletedPage({
   params,
 }: SubscriptionCompletedPageProps) {
   const subscribeId = Number(params.subscribeId);
-  return <SubscriptionCompleted subscribeId={subscribeId} />;
+  // return <SubscriptionCompleted subscribeId={subscribeId} />;
+  return null;
 }
