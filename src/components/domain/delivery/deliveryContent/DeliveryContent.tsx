@@ -2,7 +2,7 @@ import Chips from "@/components/ui/chips/Chips";
 import Text from "@/components/ui/text/Text";
 import { commonWrapper } from "@/styles/common.css";
 import { DeliveryAddress } from "@/types";
-import { deliveryContentContainer } from "./DeliveryContent.css";
+import * as styles from "./DeliveryContent.css";
 import CreateButton from "@/components/ui/createButton/CreateButton";
 
 interface DeliveryContentProps {
@@ -15,7 +15,7 @@ export default function DeliveryContent({
   onToggle,
 }: DeliveryContentProps) {
   return (
-    <div className={deliveryContentContainer}>
+    <div className={styles.deliveryContentContainer}>
       {deliveryDto ? (
         <>
           <div className={commonWrapper({ justify: "start", gap: 8 })}>
@@ -49,6 +49,13 @@ export default function DeliveryContent({
               {deliveryDto.street} {deliveryDto.detailAddress}
             </Text>
           </div>
+          {deliveryDto.request && (
+            <div className={styles.requestBox}>
+              <Text type="caption2" color="gray700">
+                {deliveryDto.request}
+              </Text>
+            </div>
+          )}
         </>
       ) : (
         <CreateButton text="배송지 추가하기" onClick={onToggle} />

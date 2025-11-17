@@ -7,6 +7,8 @@ import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
 import DeliveryModal from "@/components/domain/delivery/deliveryModal/DeliveryModal";
 import DeliveryContent from "@/components/domain/delivery/deliveryContent/DeliveryContent";
 import { forwardRef } from "react";
+import { deliveryContentWrapper } from "./DeliveryAddress.css";
+import DotSpinner from "@/components/ui/spinner/DotSpinner";
 
 const DeliveryAddress = forwardRef<HTMLDivElement>((ref) => {
   const { isOpen, onToggle, onClose } = useModal();
@@ -14,7 +16,7 @@ const DeliveryAddress = forwardRef<HTMLDivElement>((ref) => {
     useDeliveryStore();
   console.log("deliveryDto", deliveryDto);
 
-  const { data: addressData } = useGetAddressList();
+  const { data: addressData, isPending } = useGetAddressList();
 
   return (
     <OrderSection
@@ -24,7 +26,13 @@ const DeliveryAddress = forwardRef<HTMLDivElement>((ref) => {
       showArrowIcon
       onSubtitleClick={onToggle}
     >
-      <DeliveryContent deliveryDto={deliveryDto} onToggle={onToggle} />
+      <div className={deliveryContentWrapper}>
+        {isPending ? (
+          <DotSpinner />
+        ) : (
+          <DeliveryContent deliveryDto={deliveryDto} onToggle={onToggle} />
+        )}
+      </div>
       {addressData && (
         <DeliveryModal
           addressData={addressData}

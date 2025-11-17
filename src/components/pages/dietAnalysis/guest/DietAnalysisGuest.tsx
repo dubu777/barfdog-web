@@ -5,7 +5,7 @@ import { commonWrapper } from "@/styles/common.css";
 import Button from "@/components/ui/button/Button";
 import { useRouter } from "next/navigation";
 import Card from "@/components/ui/card/Card";
-
+import GuestIcon from "public/images/dietAnalysis/guest.svg";
 export default function DietAnalysisGuest() {
   const router = useRouter();
   return (
@@ -18,7 +18,7 @@ export default function DietAnalysisGuest() {
         height: "fullWithHeader",
       })}
     >
-      <Card shadow="light" gap={40} padding={16}>
+      <Card shadow="light" gap={20} padding={20}>
         <div>
           <Text type="title2" align="center">
             로그인하고
@@ -28,15 +28,8 @@ export default function DietAnalysisGuest() {
           <Text type="body2" color="gray700" align="center">
             우리 아이 상태에 딱 맞는 식단을 알려드려요!
           </Text>
-          <div
-            style={{
-              width: "300px",
-              height: "300px",
-              backgroundColor: "gray",
-              marginTop: "20px",
-            }}
-          />
         </div>
+        <GuestIcon />
         <Button
           size="lg"
           fullWidth

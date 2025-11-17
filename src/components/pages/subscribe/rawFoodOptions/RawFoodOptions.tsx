@@ -116,7 +116,7 @@ export default function RawFoodOptions({
           </Text>
         </div>
         <InfoBox
-          text={`${name}의 급여량을 추천해 드려요`}
+          text={`${name}의 하루 권장 칼로리 ${orderSheetData.oneDayRecommendKcal}kcal에 따라 한 끼 급여량을 추천해 드려요`}
           type="info"
           color="gray"
           showRightArrowButton

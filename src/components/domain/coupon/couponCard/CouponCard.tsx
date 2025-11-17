@@ -41,6 +41,7 @@ export default function CouponCard({
         onToggle={!usable ? () => {} : onToggle}
         optionType="selection"
         iconSize={32}
+        align="start"
       >
         <CouponContent
           coupon={coupon}

@@ -31,7 +31,7 @@ export default function SubscriptionOrderItemList({
             <RecipeItemCard
               mealPlan={mealPlan}
               deliveryPlan={deliveryPlan}
-              originalPrice={item.originalPricePerMeal}
+              originalPrice={item.totalOriginalPrice}
               packCount={packCount}
               gramsPerMeal={item.gramsPerMeal}
               displayImageUrl={item?.displayImageUrl.url || ""}

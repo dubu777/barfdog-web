@@ -47,7 +47,10 @@ export default function OrderSummary({
     setDiscountTotal,
     setOverDiscount,
   } = usePaymentStore();
+
   const isBundleDelivery = useDeliveryStore((state) => state.isBundleDelivery);
+  const discountDefault =
+    orderType === "SUBSCRIBE" ? discountPlan : discountItem;
 
   const calculation = useMemo(() => {
     return orderCalculation({
@@ -56,8 +59,7 @@ export default function OrderSummary({
       userTotalReward,
       appliedReward,
       originalPrice,
-      discountPlan,
-      discountItem,
+      discountDefault,
       freeCondition,
       deliveryPrice,
       orderItemDtoList,

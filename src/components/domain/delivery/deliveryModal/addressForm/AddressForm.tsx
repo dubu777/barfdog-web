@@ -51,8 +51,7 @@ export default function AddressForm({
 
   const {
     control,
-    formState: { isValid, errors },
-    watch,
+    formState: { isValid, errors, isDirty },
     setValue,
     handleSubmit,
     trigger,
@@ -72,7 +71,6 @@ export default function AddressForm({
     setFocus,
     getFieldState,
     trigger,
-    submitCurrentForm: () => onSubmit(),
   });
 
   // 수정 모드일 경우 기존 배송지 id와 기본 배송지 id 비교, 추가 모드면 기본 배송지 선택 false
@@ -121,11 +119,6 @@ export default function AddressForm({
     }
   });
 
-  const formValues = watch();
-  useEffect(() => {
-    console.log("Form values changed:", formValues);
-  }, [formValues]);
-
   return (
     <>
       <form
@@ -135,7 +128,10 @@ export default function AddressForm({
           padding: 20,
           gap: 20,
         })}
-        onSubmit={onSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit(e);
+        }}
       >
         <InputField
           {...register("deliveryName")}
@@ -249,7 +245,7 @@ export default function AddressForm({
           </LabeledCheckbox>
         )}
 
-        <FooterButton onClick={onSubmit} isDisabled={!isValid}>
+        <FooterButton onClick={onSubmit} isDisabled={!isDirty || !isValid}>
           저장하기
         </FooterButton>
       </form>

@@ -174,6 +174,7 @@ interface SubscribeRecipeItem {
   name: string;
   gramsPerMeal: number; // 이 레시피의 1끼 급여량(g)
   pricePerGram: number;
+  totalOriginalPrice: number;
   originalPricePerMeal: number;
 }
 

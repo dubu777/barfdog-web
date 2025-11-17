@@ -95,7 +95,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
         originalPrice,
         discountPlan,
         discountGrade,
-        discountCoupon: appliedCoupon?.discountAmount ?? 0,
+        discountCoupon: appliedCoupon?.appliedDiscountAmount ?? 0,
         discountReward: appliedReward,
         discountTotal,
         overDiscount,
