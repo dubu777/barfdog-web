@@ -1,5 +1,6 @@
-import GeneralOrderCompleted from "@/components/pages/checkout/general/completed/GeneralOrderCompleted";
+// import GeneralOrderCompleted from "@/components/pages/checkout/general/completed/GeneralOrderCompleted";
 
 export default function GeneralOrderCompletedPage() {
-  return <GeneralOrderCompleted />;
+  // return <GeneralOrderCompleted />;
+  return null;
 }
