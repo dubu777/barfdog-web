@@ -3,6 +3,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import Spinner from "@/components/ui/spinner/Spinner";
 import ReviewDetail from "@/components/pages/mypage/review/detail/ReviewDetail";
+import Error from "@/components/layout/error/Error";
 import { ReviewItemType } from "@/types";
 import { prefetchGetReviewDetail } from "@/api/mypage/review/queries/prefetchGetReviewDetail";
 
@@ -25,7 +26,7 @@ export default async function ReviewDetailPage({ params, searchParams }: ReviewD
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>리뷰 상세 로딩 실패</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <ReviewDetail
             reviewId={Number(reviewId)}

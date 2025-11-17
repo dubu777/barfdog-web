@@ -3,6 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import OrderList from "@/components/pages/mypage/orders/list/OrderList";
 import Spinner from "@/components/ui/spinner/Spinner";
+import Error from "@/components/layout/error/Error";
 import { prefetchGetInfiniteOrderList } from "@/api/mypage/orders/queries/prefetchGetInfiniteOrderList";
 
 export default async function OrderListPage() {
@@ -12,7 +13,7 @@ export default async function OrderListPage() {
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>주문 및 배송조회 데이터가 없습니다.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <OrderList />
         </Suspense>

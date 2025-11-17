@@ -1,6 +1,3 @@
-import { prefetchGetPetBreedList } from "@/api/pet/queries/prefetchGetPetBreedList";
-import PetCreateForm from "@/components/pages/pet/create/PetCreateForm";
-import Spinner from "@/components/ui/spinner/Spinner";
 import {
   dehydrate,
   HydrationBoundary,
@@ -8,6 +5,10 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import PetCreateForm from "@/components/pages/pet/create/PetCreateForm";
+import Spinner from "@/components/ui/spinner/Spinner";
+import Error from "@/components/layout/error/Error";
+import { prefetchGetPetBreedList } from "@/api/pet/queries/prefetchGetPetBreedList";
 
 interface PetCreatePageProps {
   searchParams: {
@@ -25,7 +26,7 @@ export default async function PetCreatePage({
   const source = searchParams?.source ?? "diet-analysis";
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <PetCreateForm source={source} />
         </Suspense>

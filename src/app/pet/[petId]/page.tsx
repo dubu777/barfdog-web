@@ -7,6 +7,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import Spinner from "@/components/ui/spinner/Spinner";
 import PetEditForm from "@/components/pages/pet/edit/PetEditForm";
+import Error from "@/components/layout/error/Error";
 import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 
 interface PetEditPageProps {
@@ -23,7 +24,7 @@ export default async function PetEditPage({ params }: PetEditPageProps) {
   return (
     <>
       <HydrationBoundary state={dehydrateState}>
-        <ErrorBoundary fallback={<div>반려견 상세 로딩 실패</div>}>
+        <ErrorBoundary fallback={<Error />}>
           <Suspense fallback={<Spinner fullscreen />}>
             <PetEditForm petId={Number(params.petId)} />
           </Suspense>

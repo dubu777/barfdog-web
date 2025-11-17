@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import OrderDetail from "@/components/pages/mypage/orders/detail/OrderDetail";
 import Spinner from "@/components/ui/spinner/Spinner";
+import Error from "@/components/layout/error/Error";
 import { OrderType } from "@/types/mypage/orders";
 import { prefetchGetOrderDetail } from "@/api/mypage/orders/queries/prefetchGetOrderDetail";
 
@@ -28,7 +29,7 @@ export default async function OrderDetailPage({
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>주문 데이터가 없습니다.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <OrderDetail orderId={Number(orderId)} orderType={orderType.toUpperCase() as OrderType} />
         </Suspense>

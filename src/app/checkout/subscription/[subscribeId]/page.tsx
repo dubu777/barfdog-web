@@ -10,6 +10,7 @@ import { prefetchGetSubscriptionCheckout } from "@/api/checkout/queries/prefetch
 import { prefetchGetInfiniteCouponList } from "@/api/coupon/queries/prefetchGetInfiniteCouponList";
 import SubscriptionCheckout from "@/components/pages/checkout/subscription/SubscriptionCheckout";
 import Header from "@/components/layout/header/Header";
+import Error from "@/components/layout/error/Error";
 
 interface SubscriptionPageProps {
   params: {
@@ -29,7 +30,7 @@ export default async function SubscriptionPage({
   return (
     <HydrationBoundary state={dehydrateState}>
       {/* 재시도 버튼 개발 예정 */}
-      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<Spinner fullscreen />}>
           <Header centerTitle="결제" showBackButton />

@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import InviteFriends from "@/components/pages/mypage/inviteFriends/InviteFriends";
+import Error from "@/components/layout/error/Error";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetReferralRewardList } from "@/api/mypage/inviteFriends/queries/prefetchGetInviteRewardList";
 
 export default async function InviteFriendsPage() {
@@ -10,8 +12,8 @@ export default async function InviteFriendsPage() {
   const dehydrateState = dehydrate(queryClient);
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>친구 초대 적립금이 없습니다.</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
+      <ErrorBoundary fallback={<Error />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <InviteFriends />
         </Suspense>
       </ErrorBoundary>

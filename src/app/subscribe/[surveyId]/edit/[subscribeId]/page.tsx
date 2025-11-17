@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import Error from "@/components/layout/error/Error";
 
 type Params = { subscribeId: string; surveyId: string };
 
@@ -26,7 +27,7 @@ export default async function SubscriptionEditPage({
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <SubscriptionEdit subscribeId={subscribeId} surveyId={surveyId} />
         </Suspense>

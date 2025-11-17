@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 // import GeneralCheckout from "@/components/pages/checkout/general/GeneralCheckout";
 import Header from "@/components/layout/header/Header";
+import Error from "@/components/layout/error/Error";
 import { prefetchGetInfiniteCouponList } from "@/api/coupon/queries/prefetchGetInfiniteCouponList";
 
 export default async function GeneralPage() {
@@ -15,7 +16,7 @@ export default async function GeneralPage() {
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Header centerTitle="결제" showBackButton />
         {/* 일반 결제 스팩 변경 될때 까지 주석 처리 */}
         {/* <GeneralCheckout /> */}

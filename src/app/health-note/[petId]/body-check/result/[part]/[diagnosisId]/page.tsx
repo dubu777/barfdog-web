@@ -3,10 +3,10 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { ErrorBoundary } from "react-error-boundary";
 import BodyCheckResult from "@/components/pages/heathNote/bodyCheck/result/BodyCheckResult";
 import Spinner from "@/components/ui/spinner/Spinner";
-import { BODY_PART } from "@/constants/healthNote/bodyCheck/common";
+import Error from "@/components/layout/error/Error";
+import { BodyPartType } from "@/types/healthNote/bodyCheck";
 import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 import { prefetchGetBodyCheckResultDetail } from "@/api/healthNote/bodyCheck/queries/prefetchGetBodyCheckResultDetail";
-import { BodyPartType } from "@/types/healthNote/bodyCheck";
 
 interface BodyCheckResultPageProps {
   params: Promise<{
@@ -25,7 +25,7 @@ export default async function BodyCheckResultPage({ params }: BodyCheckResultPag
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <ErrorBoundary fallback={<div>부위별 진단 ({BODY_PART[part].name}) 상세 로딩 실패</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
           <BodyCheckResult part={part as BodyPartType} petId={Number(petId)} diagnosisId={Number(diagnosisId)} />
         </Suspense>

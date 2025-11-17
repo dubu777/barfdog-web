@@ -6,9 +6,10 @@ import {
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import Header from "@/components/layout/header/Header";
-import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/prefetchGetDietAnalysisResult";
 import DietAnalysisResult from "@/components/pages/dietAnalysis/result/DietAnalysisResult";
 import Spinner from "@/components/ui/spinner/Spinner";
+import Error from "@/components/layout/error/Error";
+import { prefetchGetDietAnalysisResult } from "@/api/dietAnalysis/queries/prefetchGetDietAnalysisResult";
 
 interface DietAnalysisResultPageProps {
   params: {
@@ -30,7 +31,7 @@ export default async function DietAnalysisResultPage({
   return (
     <HydrationBoundary state={dehydrateState}>
       {/* 재시도 버튼 개발 예정 */}
-      <ErrorBoundary fallback={<div>Something went wrong.</div>}>
+      <ErrorBoundary fallback={<Error />}>
         {/* 로딩 컴포넌트 개발 예정 */}
         <Suspense fallback={<Spinner fullscreen />}>
           <Header showBackButton backHref="/diet-analysis" />

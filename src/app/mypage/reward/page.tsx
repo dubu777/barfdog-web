@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import RewardList from "@/components/pages/mypage/reward/list/RewardList";
+import Error from "@/components/layout/error/Error";
+import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetInfiniteRewardList } from "@/api/mypage/reward/queries/prefetchGetInfiniteRewardList";
 
 export default async function RewardPage() {
@@ -11,8 +13,8 @@ export default async function RewardPage() {
 
   return (
     <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<div>사용 가능한 적립금이 없습니다.</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
+      <ErrorBoundary fallback={<Error />}>
+        <Suspense fallback={<Spinner fullscreen />}>
           <RewardList />
         </Suspense>
       </ErrorBoundary>
