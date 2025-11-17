@@ -12,10 +12,10 @@ export default function DotSpinner({ className, fullscreen }: DotSpinnerProps) {
         className={[styles.placeLoadArea, className].filter(Boolean).join(" ")}
       >
         <div className={styles.dot1} />
-        <div className={styles.dot2} style={{ left: 0 }} />
-        <div className={styles.dot3} style={{ left: 0 }} />
-        <div className={styles.dot4} style={{ left: 0 }} />
-        <div className={styles.dot5} style={{ left: 0 }} />
+        <div className={styles.dot2} />
+        <div className={styles.dot3} />
+        <div className={styles.dot4} />
+        <div className={styles.dot5} />
       </div>
     </div>
   );

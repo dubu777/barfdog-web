@@ -87,6 +87,7 @@ export const dot2 = style([
   {
     // backgroundColor: '#e0e0e0',
     backgroundColor: "#BE1A21",
+    left: 0,
     animationName: dot2Keyframe,
   },
 ]);
@@ -96,6 +97,7 @@ export const dot3 = style([
   {
     // backgroundColor: '#bdbdbd',
     backgroundColor: "#FBD7D8",
+    left: 0,
     animationName: dot3Keyframe,
   },
 ]);
@@ -105,6 +107,7 @@ export const dot4 = style([
   {
     // backgroundColor: '#9e9e9e',
     backgroundColor: "#F1A3A6",
+    left: 0,
     animationName: dot4Keyframe,
   },
 ]);
@@ -114,6 +117,7 @@ export const dot5 = style([
   {
     // backgroundColor: '#e0e0e0',
     backgroundColor: "#BE1A21",
+    left: 0,
     animationName: dot5Keyframe,
   },
 ]);
