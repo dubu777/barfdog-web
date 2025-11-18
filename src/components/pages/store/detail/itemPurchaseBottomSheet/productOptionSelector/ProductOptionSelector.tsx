@@ -1,6 +1,6 @@
 import * as styles from './ProductOptionSelector.css';
 import { useState, useRef, Fragment } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import ArrowIcon from 'public/images/icons/chevron-up.svg';
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Divider from "@/components/ui/divider/Divider";

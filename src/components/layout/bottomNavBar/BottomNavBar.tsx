@@ -27,27 +27,32 @@ export default function BottomNavBar({
 
   const MENU_LIST = [
     {
-      icon: pathname === "/" ? <HomeActive /> : <Home />,
+      icon: Home,
+      activeIcon: HomeActive,
       label: "메인 홈",
       url: "/",
     },
     {
-      icon: pathname.startsWith("/store") ? <StoreActive /> : <Store />,
+      icon: Store,
+      activeIcon: StoreActive,
       label: "스토어",
       url: "/store",
     },
     {
-      icon: pathname.startsWith("/diet-analysis") ? <AiActive /> : <Ai />,
+      icon: Ai,
+      activeIcon: AiActive,
       label: "Ai추천식단",
       url: "/diet-analysis",
     },
     {
-      icon: pathname.startsWith("/health-note") ? <NoteActive /> : <Note />,
+      icon: Note,
+      activeIcon: NoteActive,
       label: "건강수첩",
       url: "/health-note",
     },
     {
-      icon: pathname.startsWith("/mypage") ? <MyPageActive /> : <MyPage />,
+      icon: MyPage,
+      activeIcon: MyPageActive,
       label: "마이페이지",
       url: "/mypage",
     },
@@ -61,30 +66,30 @@ export default function BottomNavBar({
 
   if (inApp) return null;
 
+  const getIsSelected = (url: string) => {
+    if (url === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(url);
+  };
+
   return (
     <nav
       className={`${styles.bottomNavBarBase} ${styles.bottomNavBarOs[deviceOS]} ${styles.bottomNavBarPosition[position]}`}
     >
-      {MENU_LIST.map((menu) => (
-        <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
-          {menu.icon}
-          <Text
-            type="caption"
-            color={
-              menu.url === "/"
-                ? pathname === "/"
-                  ? "red"
-                  : "gray600"
-                : pathname.startsWith(menu.url)
-                ? "red"
-                : "gray600"
-            }
-            block
-          >
-            {menu.label}
-          </Text>
-        </Link>
-      ))}
+      {MENU_LIST.map((menu) => {
+        const isSelected = getIsSelected(menu.url);
+        const IconComponent = isSelected ? menu.activeIcon : menu.icon;
+
+        return (
+          <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
+            <IconComponent />
+            <Text type="caption" color={isSelected ? "red" : "gray600"} block>
+              {menu.label}
+            </Text>
+          </Link>
+        );
+      })}
     </nav>
   );
 }

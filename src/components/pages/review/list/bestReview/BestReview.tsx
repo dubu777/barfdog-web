@@ -1,7 +1,7 @@
 import { commonWrapper, ellipsis, imageWrapper } from "@/styles/common.css";
 import { bestReviewBanner, bestReviewBannerStar, bestReviewBox, bestReviewCard, bestReviewSlide } from './BestReview.css';
 import { useState } from "react";
-import { motion, Transition } from 'framer-motion';
+import { motion, Transition } from 'motion/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/scrollbar';

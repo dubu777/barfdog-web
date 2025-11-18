@@ -4,7 +4,7 @@ import * as styles from "./Toast.css";
 import { ellipsis } from "@/styles/common.css";
 import CloseButton from "/public/images/icons/close.svg";
 import Text from "@/components/ui/text/Text";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useToastStore } from "@/store/useToastStore";
 import { toastPosition } from "./Toast.css";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";

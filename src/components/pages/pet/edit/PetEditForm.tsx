@@ -18,6 +18,8 @@ import { useDeletePet } from "@/api/pet/mutations/useDeletePet";
 import { useGetPetDetail } from "@/api/pet/queries/useGetPetDetail";
 import Header from "@/components/layout/header/Header";
 import { useRouter } from "next/navigation";
+import useModal from "@/hooks/useModal";
+import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 
 interface PetEditFormProps {
   petId: number;
@@ -30,6 +32,7 @@ export default function PetEditForm({ petId }: PetEditFormProps) {
   const { mutate: deletePet } = useDeletePet();
 
   const [file, setFile] = useState<File | null>(null);
+  const { isOpen, onClose, onToggle } = useModal();
 
   const { addToast } = useToastStore();
   const form = useForm<PetFormValues>({
@@ -68,25 +71,25 @@ export default function PetEditForm({ petId }: PetEditFormProps) {
         router.back();
       },
       onError: () => {
-        addToast("반려견 삭제에 실패했습니다.", "above-button");
+        addToast("구독 중인 펫은 삭제할 수 없어요", "above-button");
         router.back();
       },
     });
   };
   return (
-    <div className={commonWrapper({
-      maxWidth: 600,
-      height: 'full',
-      backgroundColors: 'gray50',
-      direction: 'col',
-      justify: 'start',
-    })}>
+    <div
+      className={commonWrapper({
+        maxWidth: 600,
+        height: "full",
+        backgroundColors: "gray50",
+        direction: "col",
+        justify: "start",
+      })}
+    >
       <Header
         centerTitle="반려견 정보 수정"
         showBackButton
-        rightElement={
-          <SvgIcon src={TrashIcon} size={24} onClick={handleDeletePet} />
-        }
+        rightElement={<SvgIcon src={TrashIcon} size={24} onClick={onToggle} />}
       />
       <PetForm
         isEdit={true}
@@ -95,6 +98,19 @@ export default function PetEditForm({ petId }: PetEditFormProps) {
         handleFileChange={handleFileChange}
         handleSubmit={form.handleSubmit(onSubmit)}
       />
+      {isOpen && (
+        <AlertModal
+          title="반려견 정보를 삭제하시겠어요?"
+          content="삭제한 반려견 정보는 다시 복구되지 않아요"
+          confirmText="삭제하기"
+          cancelText="돌아가기"
+          buttonPosition="center"
+          isOpen={isOpen}
+          onClose={onClose}
+          onConfirm={handleDeletePet}
+          onCancel={onClose}
+        />
+      )}
     </div>
   );
 }

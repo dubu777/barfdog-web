@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import * as styles from "@/components/ui/bottomSheet/BottomSheet.css";
 import CloseButton from "/public/images/icons/close.svg";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";

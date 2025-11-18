@@ -8,7 +8,7 @@ import {
 } from "./SelectWithInput.css";
 import { textStyles } from "@/components/ui/text/Text.css";
 import { ChangeEvent, useState } from "react";
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import ArrowRightIcon from '/public/images/icons/chevron-right-blue.svg';
 import Text from "@/components/ui/text/Text";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";

@@ -5,7 +5,7 @@ import Header from "@/components/layout/header/Header";
 import AddressList from "./addressList/AddressList";
 import AddressForm from "./addressForm/AddressForm";
 import ModalBackground from "@/components/ui/modalBackground/ModalBackground";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 
 interface DeliveryModalProps {
   addressData: DeliveryAddress[];

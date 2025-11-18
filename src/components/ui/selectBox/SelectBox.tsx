@@ -1,6 +1,6 @@
 import * as styles from "./SelectBox.css";
 import { MouseEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { MOTION } from "@/constants";
 import useModal from "@/hooks/useModal";
 import ArrowIcon from 'public/images/icons/chevron-up.svg';

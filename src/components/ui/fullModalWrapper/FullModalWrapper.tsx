@@ -1,7 +1,7 @@
 import * as styles from "./FullModalWrapper.css";
 import { backgroundColors } from "@/components/layout/header/Header.css";
 import { forwardRef, ReactNode } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import ModalBackground from "@/components/ui/modalBackground/ModalBackground";
 import Header from "@/components/layout/header/Header";
 

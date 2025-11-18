@@ -14,7 +14,7 @@ import Text from "@/components/ui/text/Text";
 import Card from "@/components/ui/card/Card";
 import RateStar from "@/components/ui/rateStar/RateStar";
 import Marquee from "react-fast-marquee";
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { MAIN_DATA } from "@/constants/main";
 import { useGetBestReviewList } from "@/api/review/queries/useGetBestReviewList";
 

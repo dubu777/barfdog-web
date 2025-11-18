@@ -1,7 +1,7 @@
 import {CSSProperties, ReactNode, useEffect, useRef, useState} from "react";
 import { dropdownBoxStyle, dropdownContainerStyle, dropdownLabelStyle, dropdownOptionStyle } from "./Dropdown.css";
 import { cardShadow } from "@/components/ui/card/Card.css";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import Text from "@/components/ui/text/Text";
 import ArrowUpIcon from '/public/images/icons/chevron-sort-up.svg';
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";

@@ -4,7 +4,7 @@ import {
 	mainSurveyImageBox, mainSurveyImageInnerBox
 } from "@/components/pages/main/common/MainCommon.css";
 import { pointColor } from "@/styles/common.css";
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import SurveyImage1 from "/public/images/main/recipe_survey1.png";
 import SurveyImage2 from "/public/images/main/recipe_survey2.png";
 import MainTitle from "@/components/pages/main/common/MainTitle";

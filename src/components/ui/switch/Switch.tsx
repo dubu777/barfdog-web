@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { switchButton, switchHandle } from "@/components/ui/switch/Switch.css";
 
 interface SwitchProps {

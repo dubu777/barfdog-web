@@ -1,7 +1,7 @@
 import * as styles from "./CreateDogCard.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Text from "@/components/ui/text/Text";
 import Button from "@/components/ui/button/Button";
 import Card from "@/components/ui/card/Card";

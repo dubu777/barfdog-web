@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from "next/image";
 import FaqAvatar from '/public/images/main/faqAvatar.png';
 import MainContainer from "@/components/pages/main/layout/MainContainer";

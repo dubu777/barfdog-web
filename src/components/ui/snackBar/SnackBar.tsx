@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useSnackBarStore } from "@/store/useSnackBar";
 import * as styles from "./SnackBar.css";
 import Button from "../button/Button";

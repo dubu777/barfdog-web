@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import * as styles from './Accordion.css';
 import AccordionIcon from '/public/images/icons/chevron-right-blue.svg';
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";

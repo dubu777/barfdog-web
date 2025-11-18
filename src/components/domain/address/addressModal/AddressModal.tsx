@@ -3,7 +3,7 @@ import Image from "next/image";
 import CloseButton from '/public/images/icons/close-black.png';
 import Portal from "@/components/ui/portal/Portal";
 import DaumPostcode, { Address } from 'react-daum-postcode';
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 
 interface AlertModalProps {
   isOpen: boolean;
