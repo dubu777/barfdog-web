@@ -470,6 +470,8 @@ interface PaymentInfoRequest {
   paymentPrice: number;
   /** 결제 수단 */
   paymentMethod: PaymentMethod;
+  /** 적립 예정 금액 */
+  saveReward: number;
 }
 
 type PaymentMethod = keyof typeof PAYMENT_METHOD;

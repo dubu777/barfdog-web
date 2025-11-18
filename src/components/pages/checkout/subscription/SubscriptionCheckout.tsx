@@ -80,7 +80,7 @@ export default function SubscriptionCheckout({
   const { data: checkoutData } = useGetSubscriptionCheckout(subscribeId);
   console.log("checkoutData", checkoutData);
 
-  const { deliveryInfo, paymentInfo, subscribeInfo } = checkoutData;
+  const { deliveryInfo, paymentInfo, subscribeInfo, memberInfo } = checkoutData;
   // Store Hydration
   useHydrateSubscriptionOrderStores(checkoutData);
 

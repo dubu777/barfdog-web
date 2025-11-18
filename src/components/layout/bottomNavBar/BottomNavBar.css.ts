@@ -14,47 +14,38 @@ export const bottomNavBarBase = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  borderTop: `1px solid ${themeVars.colors.gray.gray200}`
+  borderTop: `1px solid ${themeVars.colors.gray.gray200}`,
 });
 
 export const bottomNavBarOs = {
   iOS: style({
-    padding: '8px 12px 34px',
+    padding: "8px 12px 34px",
   }),
   Android: style({
-    padding: '14px 12px 24px',
+    padding: "14px 12px 24px",
   }),
   Other: style({
-    padding: '14px 12px 24px',
+    padding: "14px 12px 24px",
   }),
-}
+};
 
 export const bottomNavBarPosition = {
   fixed: style({
-    position: 'fixed',
+    position: "fixed",
   }),
   sticky: style({
-    position: 'sticky',
+    position: "sticky",
   }),
-}
-
-export const bottomNavBarWrapper = style({
-  flex: 1,
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: '100%',
-  height: '100%',
-});
+};
 
 export const navLinkItem = style({
-  width: 'calc(100% / 5)',
+  width: "calc(100% / 5)",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: 'center',
+  alignItems: "center",
 });
 
 export const navLabel = style({
-  height: '17px',
+  height: "17px",
 });

@@ -81,7 +81,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       throw new Error("구독 결제에 필요한 정보가 없습니다.");
     }
 
-    const { discountPlan } = usePaymentStore.getState();
+    const { discountPlan, saveReward } = usePaymentStore.getState();
 
     return {
       subscribeId,
@@ -102,6 +102,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
         deliveryPrice,
         paymentPrice,
         paymentMethod,
+        saveReward,
       },
     } as PrepareSubscriptionPaymentRequest;
   },

@@ -22,6 +22,7 @@ import { useToggleOption } from "@/hooks/useToggleOption";
 import InfoBox from "@/components/ui/infoBox/InfoBox";
 import Card from "@/components/ui/card/Card";
 import { DELIVERY_PLAN_LABEL } from "@/constants";
+import { calculateDiscountedPrice } from "@/utils/discount/discountCalculation";
 
 interface SubscriptionEditProps {
   currentSubscriptionInfo: SubscriptionInfoResponse;
@@ -94,9 +95,9 @@ export default function SubscriptionEditConfirm({
           justify="between"
           className={paddingStyles({ bottom: 4 })}
           value={
-            Math.floor(
-              totalRecipePrice.totalPlanDiscountedPrice *
-                (1 - gradeInfo.discountPercent / 100)
+            calculateDiscountedPrice(
+              totalRecipePrice.totalPlanDiscountedPrice,
+              gradeInfo.discountPercent
             ).toLocaleString() + "원"
           }
         />
