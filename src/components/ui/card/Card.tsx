@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { commonWrapper } from "@/styles/common.css";
+import { cardRecipe } from "./Card.css";
 
 interface CardProps {
   direction?: "row" | "col";
@@ -8,7 +9,7 @@ interface CardProps {
   width?: "full" | "auto";
   height?: "full";
   shadow?: "none" | "light" | "normal" | "strong";
-  padding?: 8 |12 | 16 | 20 | 32 |"20/16";
+  padding?: 8 | 12 | 16 | 20 | 32 | "20/16";
   textAlign?: "left" | "center";
   children: ReactNode;
   className?: string;
@@ -18,6 +19,8 @@ interface CardProps {
   border?: "none" | "gray100" | "gray200" | "gray300" | "red" | "blue500";
   paddingX?: 8 | 12 | 16 | 20 | 32 | 40;
   paddingY?: 4 | 8 | 12 | 16 | 20 | 32 | 40;
+  hoverShadow?: boolean;
+  hoverScale?: boolean;
 }
 
 const Card = ({
@@ -37,6 +40,8 @@ const Card = ({
   gap,
   className,
   border = "none",
+  hoverShadow = false,
+  hoverScale = false,
 }: CardProps) => {
   return (
     <div
@@ -57,6 +62,7 @@ const Card = ({
           borderRadius,
           border,
         })}
+				${cardRecipe({ hoverShadow, hoverScale })}
 				${className || ""}
 			`}
     >

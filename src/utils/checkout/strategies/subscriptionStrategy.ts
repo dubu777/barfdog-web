@@ -28,6 +28,7 @@ export function createSubscriptionStrategy(deps: {
   }) => Promise<boolean>;
   successPayment: (args: { orderId: number; body: any }) => Promise<any>;
   failPayment: (orderId: number) => Promise<any>;
+  cancelPayment: (orderId: number) => Promise<any>;
 }): CheckoutStrategy<
   PrepareSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
@@ -56,7 +57,8 @@ export function createSubscriptionStrategy(deps: {
     //    - 일반적으로 success/fail만 구분 (모바일은 redirect-flow로 콜백이 안 오거나, 와도 즉시 이동)
     afterGatewayCallback: async ({ response }) => {
       if (response?.success) return "success";
-      // ✅ "사용자가 결제를 취소하였습니다."면 'cancel'로 분기
+      // ✅ 취소 메시지이면 'cancel'로 분기
+
       if (isPortoneUserCancel(response)) return "cancel";
       // 그 외 실패
       return "fail";
@@ -121,7 +123,14 @@ export function createSubscriptionStrategy(deps: {
       }
     },
 
-    // 4) 실패 공통 처리
+    // 4) 취소 처리
+    onCancel: async ({ saveOrder }) => {
+      if (saveOrder.id > 0) {
+        await deps.cancelPayment(saveOrder.id).catch(() => {});
+      }
+    },
+
+    // 5) 실패 공통 처리
     onFail: async ({ saveOrder }) => {
       if (saveOrder.id > 0) {
         await deps.failPayment(saveOrder.id).catch(() => {});

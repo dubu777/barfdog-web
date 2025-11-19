@@ -10,18 +10,22 @@ export default function ServiceMenu({ petId }: { petId: number }) {
   const router = useRouter();
 
   return (
-    <article className={commonWrapper({
-      direction: 'col',
-      align: 'start',
-      justify: 'start',
-      gap: 12,
-      paddingBottom: 40,
-    })}>
-      <Text type="headline1" color="gray800">추천 서비스</Text>
+    <article
+      className={commonWrapper({
+        direction: "col",
+        align: "start",
+        justify: "start",
+        gap: 12,
+        paddingBottom: 40,
+      })}
+    >
+      <Text type="headline1" color="gray800">
+        추천 서비스
+      </Text>
       {HEALTH_NOTE_SERVICE_MENU.map((menu) => (
-        <button 
-          key={menu.url} 
-          className={commonWrapper({})} 
+        <button
+          key={menu.url}
+          className={commonWrapper({})}
           onClick={() => router.push(`/health-note/${petId}${menu.url}`)}
         >
           <Card
@@ -31,10 +35,18 @@ export default function ServiceMenu({ petId }: { petId: number }) {
             justify="between"
             padding={16}
             borderRadius={12}
+            hoverShadow
+            hoverScale
           >
-            <div className={commonWrapper({ justify: 'start', gap: 12 })}>
-              <SvgIcon src={menu.imageUrl} size={menu.width} height={menu.height} />
-              <Text type="headline1" color="gray800">{menu.label}</Text>
+            <div className={commonWrapper({ justify: "start", gap: 12 })}>
+              <SvgIcon
+                src={menu.imageUrl}
+                size={menu.width}
+                height={menu.height}
+              />
+              <Text type="headline1" color="gray800">
+                {menu.label}
+              </Text>
             </div>
             <SvgIcon src={ArrowIcon} size={20} color="gray600" />
           </Card>

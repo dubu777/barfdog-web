@@ -14,6 +14,7 @@ import DefaultImage from "public/images/icons/default-profile.png";
 import { BreedInfo } from "@/types/pet";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
+import Card from "@/components/ui/card/Card";
 
 interface PetCardProps {
   petId: number;
@@ -44,7 +45,7 @@ export default function PetCard({
   const router = useRouter();
 
   return (
-    <div className={styles.dogCardContainer}>
+    <Card padding={12} gap={12} borderRadius={12} shadow="light" hoverShadow>
       <div className={commonWrapper({ gap: 12 })}>
         <Image
           className={styles.profileImageStyle}
@@ -98,6 +99,6 @@ export default function PetCard({
         </div>
       </div>
       {actionSlot}
-    </div>
+    </Card>
   );
 }

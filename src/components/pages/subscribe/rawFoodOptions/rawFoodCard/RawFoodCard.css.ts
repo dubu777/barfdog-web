@@ -4,8 +4,6 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const subscribeItemCardContainer = recipe({
   base: {
-    position: "relative",
-    boxSizing: 'border-box',
     width: "100%",
     backgroundColor: themeVars.colors.gray.gray0,
     display: "flex",
@@ -14,12 +12,15 @@ export const subscribeItemCardContainer = recipe({
     padding: "16px",
     cursor: "pointer",
     boxShadow: themeVars.shadow.light,
-    border: '1px solid transparent',
+    transition: "box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      boxShadow: themeVars.shadow.normal,
+    },
   },
   variants: {
     isSelected: {
       true: {
-        borderColor: themeVars.colors.red.red,
+        border: `1px solid ${themeVars.colors.red.red}`,
       },
       false: {},
     },

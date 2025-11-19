@@ -37,15 +37,18 @@ export default function TopSurveyMenu({ petId }: { petId?: number }) {
       isFullCheck && isFirstFullCheck ? "/survey" : ""
     }`;
   };
-  
+
   return (
-    <article className={commonWrapper({
-      direction: 'col',
-      align: 'start',
-      gap: 12,
-    })}>
+    <article
+      className={commonWrapper({
+        direction: "col",
+        align: "start",
+        gap: 12,
+      })}
+    >
       <Text type="title3">
-        최고 예쁜 우리 아이 💕<br />
+        최고 예쁜 우리 아이 💕
+        <br />
         과연 건강 점수는 몇 점일까?
       </Text>
       <div className={menuCategoryBox}>
@@ -66,41 +69,44 @@ export default function TopSurveyMenu({ petId }: { petId?: number }) {
                 borderRadius={12}
                 align="between"
                 justify="between"
+                hoverShadow
+                hoverScale
               >
-                <div className={commonWrapper({
-                  direction: 'col',
-                  gap: 4,
-                  align: 'start',
-                  justify: 'start',
-                })}>
-                  <Text 
+                <div
+                  className={commonWrapper({
+                    direction: "col",
+                    gap: 4,
+                    align: "start",
+                    justify: "start",
+                  })}
+                >
+                  <Text
                     type="headline1"
                     color="gray800"
-                    className={commonWrapper({ justify: 'start', gap: 6 })}
+                    className={commonWrapper({ justify: "start", gap: 6 })}
                   >
                     {menu.label}
                     <SvgIcon src={ArrowIcon} size={20} color="gray600" />
                   </Text>
                   {menu.description && (
-                    <Text
-                      type="body3"
-                      color="gray700"
-                      preLine
-                    >
-                      {shouldFullCheckFirst ? menu.description : (
+                    <Text type="body3" color="gray700" preLine>
+                      {shouldFullCheckFirst ? (
+                        menu.description
+                      ) : (
                         <>
-                          상위{' '}
+                          상위{" "}
                           <Text type="body3" color={fullCheckStatusColor}>
                             {checkupScoreUpperPercentile}%
-                          </Text>로<br />
+                          </Text>
+                          로<br />
                           {fullCheckStatusLabel}
                         </>
                       )}
                     </Text>
                   )}
                 </div>
-                {isFullCheck && (
-                  shouldFullCheckFirst ? (
+                {isFullCheck &&
+                  (shouldFullCheckFirst ? (
                     <Image
                       src={menu.imageUrl}
                       alt={menu.label}
@@ -124,18 +130,16 @@ export default function TopSurveyMenu({ petId }: { petId?: number }) {
                         </Text>
                       }
                     />
-                  )
-                )
-                }
-                {!isFullCheck && 
-                  <div className={commonWrapper({ justify: 'end' })}>
-                    <SvgIcon 
-                      src={menu.imageUrl} 
-                      size={menu.width} 
+                  ))}
+                {!isFullCheck && (
+                  <div className={commonWrapper({ justify: "end" })}>
+                    <SvgIcon
+                      src={menu.imageUrl}
+                      size={menu.width}
                       height={menu.height}
                     />
                   </div>
-                }
+                )}
               </Card>
             </button>
           );

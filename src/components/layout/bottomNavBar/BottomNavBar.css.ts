@@ -40,10 +40,19 @@ export const bottomNavBarPosition = {
 
 export const navLinkItem = style({
   width: "calc(100% / 5)",
+});
+
+export const navItemWrapper = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  padding: "8px",
+  // borderRadius: "20px",
+  // transition: "background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+  // ":hover": {
+  //   backgroundColor: themeVars.colors.gray.gray50,
+  // },
 });
 
 export const navLabel = style({

@@ -83,10 +83,12 @@ export default function BottomNavBar({
 
         return (
           <Link key={menu.url} href={menu.url} className={styles.navLinkItem}>
-            <IconComponent />
-            <Text type="caption" color={isSelected ? "red" : "gray600"} block>
-              {menu.label}
-            </Text>
+            <div className={styles.navItemWrapper}>
+              <IconComponent />
+              <Text type="caption" color={isSelected ? "red" : "gray600"} block>
+                {menu.label}
+              </Text>
+            </div>
           </Link>
         );
       })}

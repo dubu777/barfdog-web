@@ -1,22 +1,6 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 import { themeVars } from "@/styles/theme.css";
-
-export const cardBaseStyle = style({
-  // display: "flex",
-  // flexDirection: "column",
-});
-
-export const cardColorStyle = {
-  gray0: style({
-    backgroundColor: themeVars.colors.gray.gray0,
-  }),
-  gray50: style({
-    backgroundColor: themeVars.colors.gray.gray50,
-  }),
-  gray100: style({
-    backgroundColor: themeVars.colors.gray.gray100,
-  }),
-};
 
 export const cardShadow = {
   light: style({
@@ -33,70 +17,32 @@ export const cardShadow = {
   }),
 };
 
-export const cardBackgroundStyle = {
-	white: style({
-		backgroundColor: themeVars.colors.gray.gray0,
-	}),
-	gray50: style({
-		backgroundColor: themeVars.colors.gray.gray50,
-	}),
-}
-
-export const cardPadding = {
-  0: style({
-    padding: "0",
-  }),
-  12: style({
-    padding: "12px",
-  }),
-  16: style({
-    padding: "16px",
-  }),
-  20: style({
-    padding: "20px",
-  }),
-  "20/16": style({
-    padding: "20px 16px",
-  }),
-};
-export const cardGap = {
-  0: style({
-    gap: "0",
-  }),
-  4: style({
-    gap: "4px",
-  }),
-  8: style({
-    gap: "8px",
-  }),
-  12: style({
-    gap: "12px",
-  }),
-  16: style({
-    gap: "16px",
-  }),
-  "20": style({
-    gap: "20px",
-  }),
-};
-
-export const cardAlign = {
-  left: style({
-    textAlign: "left",
-  }),
-  center: style({
-    textAlign: "center",
-  }),
-};
-
-export const cardBorderRadius = {
-  default: style({
-    borderRadius: "8px",
-  }),
-  none: style({
-    borderRadius: 0,
-  }),
-  "12": {
-    borderRadius: "12px",
+export const cardRecipe = recipe({
+  base: {},
+  variants: {
+    hoverShadow: {
+      true: {
+        transition: "box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        cursor: "pointer",
+        ":hover": {
+          boxShadow: themeVars.shadow.normal,
+        },
+      },
+      false: {},
+    },
+    hoverScale: {
+      true: {
+        transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        willChange: "transform",
+        ":hover": {
+          transform: "scale(0.99)",
+        },
+      },
+      false: {},
+    },
   },
-};
+  defaultVariants: {
+    hoverShadow: false,
+    hoverScale: false,
+  },
+});

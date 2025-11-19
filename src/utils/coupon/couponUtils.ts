@@ -42,7 +42,7 @@ export function getAvailableCoupons(
   );
 }
 
-const toWonInt = (amount: number) => Math.max(0, Math.floor(amount));
+const toWonInt = (amount: number) => Math.max(0, Math.round(amount));
 
 /**
  * 쿠폰 기본 할인 금액 계산 함수 (쿠폰 자체 제약만 적용)
@@ -94,7 +94,10 @@ export function calculateCouponDiscount(
   maxAvailableCouponDiscount: number
 ): { discountBasedOnCoupon: number; discountBasedOnCouponAndGlobal: number } {
   // 기본 할인 금액 계산 (쿠폰 자체 제약만 적용)
-  const discountBasedOnCoupon = calculateBasicCouponDiscount(orderPrice, coupon);
+  const discountBasedOnCoupon = calculateBasicCouponDiscount(
+    orderPrice,
+    coupon
+  );
 
   // 전역 최대 할인 금액 제한 추가 적용
   const discountBasedOnCouponAndGlobal = toWonInt(

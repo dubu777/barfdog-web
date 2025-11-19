@@ -51,6 +51,7 @@ import SubscriptionOrderItemList from "./subscriptionOrderItemList/SubscriptionO
 import { usePrepareSubscriptionPayment } from "@/api/checkout/mutations/subscription/usePrepareSubscriptionPayment";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
+import { useCancelSubscriptionPayment } from "@/api/checkout/mutations/subscription/useCancelSubscriptionPayment";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -91,6 +92,7 @@ export default function SubscriptionCheckout({
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
+  const { mutateAsync: cancelPayment } = useCancelSubscriptionPayment();
 
   // Payment Strategy
   const strategy = useMemo(
@@ -102,6 +104,7 @@ export default function SubscriptionCheckout({
         validatePayment: (args) => validatePayment(args),
         successPayment: (args) => successPayment(args),
         failPayment: (orderId) => failPayment(orderId),
+        cancelPayment: (orderId) => cancelPayment(orderId),
       }),
     [
       checkoutData,
@@ -110,6 +113,7 @@ export default function SubscriptionCheckout({
       validatePayment,
       successPayment,
       failPayment,
+      cancelPayment,
     ]
   );
 
