@@ -11,6 +11,11 @@ export const surveyOptionCardContainer = recipe({
     borderRadius: "8px",
     width: "100%",
     cursor: "pointer",
+    boxShadow: themeVars.shadow.light,
+    transition: "box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    ":hover": {
+      boxShadow: themeVars.shadow.normal,
+    },
   },
   variants: {
     isChecked: {
@@ -21,7 +26,6 @@ export const surveyOptionCardContainer = recipe({
       false: {
         backgroundColor: themeVars.colors.gray.gray0,
         border: `1px solid ${themeVars.colors.gray.gray200}`,
-        boxShadow: themeVars.shadow.light,
       },
     },
     imageWrapperSize: {
@@ -42,6 +46,9 @@ export const surveyOptionCardImageWrapper = recipe({
     flexShrink: 0,
     backgroundColor: themeVars.colors.gray.gray100,
     height: "100%",
+    overflow: "hidden",
+    borderTopLeftRadius: "8px",
+    borderBottomLeftRadius: "8px",
   },
   variants: {
     imageWrapperSize: {

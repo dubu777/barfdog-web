@@ -2,7 +2,6 @@ import { themeVars } from "@/styles/theme.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
-
 export const imageButtonBox = recipe({
   base: {
     position: "relative",
@@ -14,6 +13,11 @@ export const imageButtonBox = recipe({
     padding: "10px",
     borderRadius: "8px",
     cursor: "pointer",
+    transition: "box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    boxShadow: themeVars.shadow.light,
+    ":hover": {
+      boxShadow: themeVars.shadow.normal,
+    },
   },
   variants: {
     isChecked: {
@@ -24,26 +28,25 @@ export const imageButtonBox = recipe({
       false: {
         backgroundColor: themeVars.colors.gray.gray0,
         border: `1px solid ${themeVars.colors.gray.gray200}`,
-        boxShadow: themeVars.shadow.light,
       },
     },
     display: {
       grid1: {
-        flexBasis: 'calc((100% - 16px) / 3)',
+        flexBasis: "calc((100% - 16px) / 3)",
       },
       grid2: {
-        '@media': {
-          'screen and (min-width: 600px)': {
-            flexBasis: 'calc((100% - 24px) / 4)',
+        "@media": {
+          "screen and (min-width: 600px)": {
+            flexBasis: "calc((100% - 24px) / 4)",
           },
-          'screen and (max-width: 599px)': {
-            flexBasis: 'calc((100% - 16px) / 3)',
+          "screen and (max-width: 599px)": {
+            flexBasis: "calc((100% - 16px) / 3)",
           },
         },
       },
       flex: {
         width: "100%",
-      }
+      },
     },
     disabled: {
       true: {
@@ -58,7 +61,7 @@ export const imageButtonBox = recipe({
     display: "flex",
     disabled: false,
   },
-})
+});
 
 export const rankChip = style({
   position: "absolute",

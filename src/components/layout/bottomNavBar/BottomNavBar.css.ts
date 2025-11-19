@@ -48,7 +48,7 @@ export const navItemWrapper = style({
   justifyContent: "center",
   alignItems: "center",
   padding: "8px",
-  // borderRadius: "20px",
+  // borderRadius: "30px",
   // transition: "background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
   // ":hover": {
   //   backgroundColor: themeVars.colors.gray.gray50,

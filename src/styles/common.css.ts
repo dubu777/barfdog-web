@@ -30,22 +30,22 @@ export const ellipsis = recipe({
         lineHeight: "normal",
       },
       line2: {
-        display: "-webkit-box !important",
+        display: "-webkit-box",
         "-webkit-box-orient": "vertical",
         "-webkit-line-clamp": "2",
       },
       line3: {
-        display: "-webkit-box !important",
+        display: "-webkit-box",
         "-webkit-box-orient": "vertical",
         "-webkit-line-clamp": "3",
       },
       line4: {
-        display: "-webkit-box !important",
+        display: "-webkit-box",
         "-webkit-box-orient": "vertical",
         "-webkit-line-clamp": "4",
       },
       line5: {
-        display: "-webkit-box !important",
+        display: "-webkit-box",
         "-webkit-box-orient": "vertical",
         "-webkit-line-clamp": "5",
       },
@@ -165,9 +165,9 @@ export const commonWrapper = recipe({
       40: {
         gap: "40px",
       },
-      '32/8': {
+      "32/8": {
         gap: "32px 8px",
-      }
+      },
     },
     padding: {
       8: {
@@ -483,7 +483,7 @@ export const commonWrapper = recipe({
       blue500: {
         border: `1px solid ${themeVars.colors.blue.blue500}`,
       },
-    }
+    },
   },
   defaultVariants: {
     direction: "row",
@@ -521,9 +521,9 @@ export const imageWrapper = recipe({
       16: {
         borderRadius: 16,
       },
-      '50%': {
-        borderRadius: '50%',
-      }
+      "50%": {
+        borderRadius: "50%",
+      },
     },
     width: {
       48: {
@@ -563,6 +563,22 @@ export const imageWrapper = recipe({
         height: "auto",
       },
     },
+    hoverScale: {
+      true: {
+        transition: "transform 0.3s ease",
+        backfaceVisibility: "hidden",
+        transform: "translate3d(0, 0, 0)",
+        selectors: {
+          "&:hover": {
+            transform: "scale(1.1) translate3d(0, 0, 0)",
+            willChange: "transform",
+          },
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    hoverScale: false,
   },
 });
 

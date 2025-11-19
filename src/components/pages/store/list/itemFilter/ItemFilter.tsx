@@ -1,12 +1,11 @@
-'use client';
-import { commonWrapper } from '@/styles/common.css';
-import { itemType } from './ItemFilter.css';
+"use client";
+import { commonWrapper } from "@/styles/common.css";
+import { itemType } from "./ItemFilter.css";
 import { usePathname, useSearchParams } from "next/navigation";
-import Text from "@/components/ui/text/Text";
 import Dropdown from "@/components/ui/dropdown/Dropdown";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
-import { QueryParams } from '@/types';
+import { QueryParams } from "@/types";
 import { ItemType, SortByType } from "@/types/store";
 
 export default function ItemFilter() {
@@ -14,52 +13,66 @@ export default function ItemFilter() {
   const searchParams = useSearchParams();
   const { pushWithQuery } = useDynamicQueryPush();
 
-  const selectedItemType = searchParams.get('itemType') || 'ALL';
-  const itemFilterCategoryList = Object.entries(ITEM_FILTER_CATEGORY).map(([value, label]) => ({ value, label }));
+  const selectedItemType = searchParams.get("itemType") || "ALL";
+  const itemFilterCategoryList = Object.entries(ITEM_FILTER_CATEGORY).map(
+    ([value, label]) => ({ value, label })
+  );
 
-  const selectedSortBy = searchParams.get('sortBy') || 'recent';
-  const itemSortByList = Object.entries(ITEM_SORT_BY).map(([value, label]) => ({ value, label }));
+  const selectedSortBy = searchParams.get("sortBy") || "recent";
+  const itemSortByList = Object.entries(ITEM_SORT_BY).map(([value, label]) => ({
+    value,
+    label,
+  }));
 
-  const handleFilterChange = async (type: 'sortBy' | 'itemType', filterValue: SortByType | ItemType) => {
+  const handleFilterChange = async (
+    type: "sortBy" | "itemType",
+    filterValue: SortByType | ItemType
+  ) => {
     pushWithQuery(pathname, {
-      [type]: type === 'sortBy'
-        ? filterValue as SortByType
-        : filterValue as ItemType,
+      [type]:
+        type === "sortBy"
+          ? (filterValue as SortByType)
+          : (filterValue as ItemType),
     } as QueryParams);
-  }
+  };
   return (
     <article>
-      <ul className={commonWrapper({
-        justify: 'between',
-        backgroundColors: 'gray0',
-      })}>
-        {itemFilterCategoryList.map(category => {
+      <ul
+        className={commonWrapper({
+          justify: "between",
+          backgroundColors: "gray0",
+        })}
+      >
+        {itemFilterCategoryList.map((category) => {
           const active = selectedItemType === category.value;
           return (
             <li
               key={category.value}
-              onClick={() => handleFilterChange('itemType', category.value as ItemType)}
+              onClick={() =>
+                handleFilterChange("itemType", category.value as ItemType)
+              }
               className={itemType({ active })}
             >
-              <Text type='label1' color={active ? 'red' : 'gray300'}>
-                {category.label}
-              </Text>
+              {category.label}
             </li>
-          )
+          );
         })}
       </ul>
-      <div className={commonWrapper({
-        justify: 'end',
-        paddingX: 20,
-        paddingTop: 12,
-        paddingBottom: 8,
-      })}>
+      <div
+        className={commonWrapper({
+          justify: "end",
+          paddingX: 20,
+          paddingY: 12,
+        })}
+      >
         <Dropdown
           label={ITEM_SORT_BY[selectedSortBy]}
           options={itemSortByList}
-          onSelect={(value) => handleFilterChange('sortBy', value as SortByType)}
+          onSelect={(value) =>
+            handleFilterChange("sortBy", value as SortByType)
+          }
         />
       </div>
     </article>
   );
-};
+}

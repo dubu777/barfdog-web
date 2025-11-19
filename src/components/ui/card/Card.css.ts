@@ -32,10 +32,12 @@ export const cardRecipe = recipe({
     },
     hoverScale: {
       true: {
-        transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-        willChange: "transform",
+        transition: "transform 0.4s ease",
+        transform: "translate3d(0, 0, 0)" /* 미리 GPU 레이어 생성 */,
+        backfaceVisibility: "hidden",
         ":hover": {
-          transform: "scale(0.99)",
+          transform: "scale(0.99) translate3d(0, 0, 0)",
+          willChange: "transform",
         },
       },
       false: {},
