@@ -1,3 +1,4 @@
+import { Variants } from "motion/react";
 
 export const MOTION = {
   SURVEY_STEP: {
@@ -14,7 +15,7 @@ export const MOTION = {
       opacity: 1,
       transition: {
         duration: 0.2,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     },
     exit: {
@@ -24,7 +25,7 @@ export const MOTION = {
         duration: 0.1,
       },
     },
-  },
+  } as Variants,
   EXPAND_FROM_TOP: {
     hidden: {
       height: 0,
@@ -35,7 +36,7 @@ export const MOTION = {
       opacity: 1,
       transition: {
         duration: 0.15,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     },
     exit: {
@@ -43,10 +44,10 @@ export const MOTION = {
       opacity: 0,
       transition: {
         duration: 0.15,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     },
-  },
+  } as Variants,
   SNACKBAR: {
     hidden: {
       opacity: 0,
@@ -66,5 +67,5 @@ export const MOTION = {
         duration: 1,
       },
     },
-  },
+  } as Variants,
 };
