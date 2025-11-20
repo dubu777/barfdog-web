@@ -7,12 +7,20 @@ import { ItemType, SortByType } from "@/types";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { useGetInfiniteStoreItemList } from "@/api/store/queries/useGetInfiniteStoreItemList";
+import { useEffect } from "react";
+import { sendLogToNative } from "@/utils/debug/webviewLogger";
 
 export default function ItemList() {
   const searchParams = useSearchParams();
 
   const sortBy = (searchParams.get("sortBy") as SortByType) || "recent";
   const itemType = (searchParams.get("itemType") as ItemType) || "ALL";
+
+  // 디버깅용 로그
+  useEffect(() => {
+    sendLogToNative('[ItemList] URL 파라미터 변경', { sortBy, itemType });
+    sendLogToNative('[ItemList] 전체 searchParams', searchParams.toString());
+  }, [sortBy, itemType, searchParams]);
 
   const {
     data: infiniteData,
@@ -21,6 +29,11 @@ export default function ItemList() {
     isFetchingNextPage,
   } = useGetInfiniteStoreItemList(sortBy, itemType);
   const itemList = useFlattenedInfiniteData(infiniteData, "itemList");
+
+  // 데이터 로딩 상태 로그
+  useEffect(() => {
+    sendLogToNative('[ItemList] 아이템 리스트', `${itemList.length}개`);
+  }, [itemList]);
 
   const ref = useInfiniteScroll({
     hasNextPage,
