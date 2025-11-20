@@ -1,6 +1,5 @@
 "use client";
 import { commonWrapper } from "@/styles/common.css";
-import { Fragment } from "react";
 import { useSearchParams } from "next/navigation";
 import StoreItem from "@/components/pages/store/list/Item/Item";
 import InfiniteScrollTrigger from "@/components/ui/infiniteScrollTrigger/InfiniteScrollTrigger";
@@ -39,8 +38,8 @@ export default function ItemList() {
           justify: "start",
         })}
       >
-        {itemList.map((item) => {
-          return <StoreItem key={item.id} item={item} />;
+        {itemList.map((item, index) => {
+          return <StoreItem key={item.id} item={item} index={index} />;
         })}
       </div>
       {itemList.length > 0 && (

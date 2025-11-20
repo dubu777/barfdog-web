@@ -8,12 +8,14 @@ import { StoreItemListData } from "@/types/store";
 import { getItemViewProps } from "@/utils/store/getItemViewProps";
 import { CHIPS_COLORS } from "@/constants/style";
 import Image from "next/image";
+import { memo } from "react";
 
 interface StoreItemProps {
   item: StoreItemListData;
+  index: number;
 }
 
-export default function Item({ item }: StoreItemProps) {
+function Item({ item, index }: StoreItemProps) {
   const {
     isDiscounted,
     formattedOriginalPrice,
@@ -53,8 +55,11 @@ export default function Item({ item }: StoreItemProps) {
             src={item.displayThumbnailUrl.url}
             alt={item.name}
             fill
+            priority={index < 6}
+            loading={index < 6 ? "eager" : "lazy"}
+            fetchPriority={index < 3 ? "high" : "auto"}
+            sizes="(max-width: 499px) 50vw, 33vw"
             className={imageWrapper({
-              height: "100%",
               objectFit: "cover",
               hoverScale: true,
             })}
@@ -67,7 +72,11 @@ export default function Item({ item }: StoreItemProps) {
             gap: 4,
           })}
         >
-          <Text type="body2" color="gray700" className={ellipsis({ lineSize: "line2" })}>
+          <Text
+            type="body2"
+            color="gray700"
+            className={ellipsis({ lineSize: "line2" })}
+          >
             {item.name}
           </Text>
           {!isDiscounted ? (
@@ -117,3 +126,5 @@ export default function Item({ item }: StoreItemProps) {
     </div>
   );
 }
+
+export default memo(Item);

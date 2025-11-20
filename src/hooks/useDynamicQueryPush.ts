@@ -1,18 +1,19 @@
 import { QueryParams } from "@/types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
 export function useDynamicQueryPush() {
   const router = useRouter();
+  const currentSearchParams = useSearchParams();
+
   const pushWithQuery = useCallback((
     path: string,
     newQuery: QueryParams,
     removeQueryKeys?: string[],
     preserveScroll: boolean = false,
   ) => {
-    const currentUrl = window.location.href;
-    const url = new URL(currentUrl);
-    const searchParams = url.searchParams;
+    // URLSearchParams 객체를 복사하여 사용
+    const searchParams = new URLSearchParams(currentSearchParams.toString());
 
     Object.entries(newQuery).forEach(([key, value]) => {
       searchParams.set(key, String(value));
@@ -23,7 +24,7 @@ export function useDynamicQueryPush() {
     }
 
     router.push(`${path}?${searchParams.toString()}`, { scroll: !preserveScroll });
-  }, [router]);
+  }, [router, currentSearchParams]);
 
   return { pushWithQuery };
 }
