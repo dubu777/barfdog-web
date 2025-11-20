@@ -2,6 +2,7 @@ import { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from "axios";
 import { getCookie, setCookie } from "@/utils/auth/cookie";
 import { AUTH_CONFIG } from "@/constants/auth";
 import { authAxios } from "./axiosInstance";
+import { sendLogToNative } from "@/utils/debug/webviewLogger";
 
 type Cfg = InternalAxiosRequestConfig & { _retry?: boolean };
 
@@ -13,11 +14,22 @@ export function attachAuthInterceptors(
 
   const injectToken = (config: InternalAxiosRequestConfig) => {
     const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
+
+    sendLogToNative('[Interceptor] 토큰 주입 시도', {
+      hasToken: !!token,
+      tokenLength: token?.length,
+      url: config.url
+    });
+
     if (token) {
       config.headers = config.headers ?? {};
       config.headers.Authorization = token.startsWith("Bearer ")
         ? token
         : `Bearer ${token}`;
+
+      sendLogToNative('[Interceptor] Authorization 헤더 설정 완료', {
+        authHeader: config.headers.Authorization?.substring(0, 20) + '...'
+      });
     }
 
     return config;
