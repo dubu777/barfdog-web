@@ -49,11 +49,17 @@ const validateSubscriptionPayment = async ({
   orderId: number;
   impUid: string;
 }): Promise<boolean> => {
-  const { data } = await axiosInstance.post(
-    `/api/orders/${orderId}/validation`,
-    { impUid }
-  );
-  return data.valid;
+  try {
+    const { data } = await axiosInstance.post(
+      `/api/v2/user/subscribe-orders/${orderId}/payment/consistency`,
+      { impUid }
+    );
+
+    return data.success;
+  } catch (error) {
+    console.error("결제 검증 API 요청 실패:", error);
+    return false;
+  }
 };
 
 // 정상 결제 요청: 최종 결제 완료 - v2
@@ -64,15 +70,11 @@ const successSubscriptionPayment = async ({
   orderId: number;
   body: SuccessSubscriptionPaymentRequest;
 }) => {
-  const { data } = await axiosInstance.post(
-    `/api/v2/orders/${orderId}/subscription/success`,
+  const { data } = await axiosInstance.put(
+    `/api/v2/user/subscribe-orders/${orderId}/payment/success`,
     body
   );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "결제 성공 처리에 실패했습니다";
-  throw new Error(message);
+  return validateApiResponse(data, "결제 성공 처리에 실패 했습니다");
 };
 
 // 구독 결제 실패 - v2

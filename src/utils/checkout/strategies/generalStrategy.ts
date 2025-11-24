@@ -52,10 +52,10 @@ export function createGeneralStrategy(deps: {
       return "fail";
     },
 
-    onSuccess: async ({ saveOrder, response, requestBody }) => {
+    onSuccess: async ({ preparePayment, response, requestBody }) => {
       try {
         await deps.successGeneralPayment({
-          id: saveOrder.id,
+          id: preparePayment.id,
           body: {
             impUid: (response as any).imp_uid!,
             merchantUid: (response as any).merchant_uid ?? null,
@@ -64,19 +64,19 @@ export function createGeneralStrategy(deps: {
           },
         });
       } catch {
-        await deps.cancelGeneralPayment(saveOrder.id);
+        await deps.cancelGeneralPayment(preparePayment.id);
         throw new Error("successGeneralPayment failed → canceled");
       }
     },
 
-    onFail: async ({ saveOrder }) => {
-      if (saveOrder.id > 0) {
-        await deps.failGeneralPayment(saveOrder.id).catch(() => {});
+    onFail: async ({ preparePayment }) => {
+      if (preparePayment.id > 0) {
+        await deps.failGeneralPayment(preparePayment.id).catch(() => {});
       }
     },
 
-    onCancel: async ({ saveOrder }) => {
-      await deps.cancelGeneralPayment(saveOrder.id).catch(() => {});
+    onCancel: async ({ preparePayment }) => {
+      await deps.cancelGeneralPayment(preparePayment.id).catch(() => {});
     },
   };
 }

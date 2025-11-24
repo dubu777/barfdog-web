@@ -104,7 +104,6 @@ interface CreateSubscriptionRequest {
 interface UpdateSubscriptionRequest {
   plan: Plan;
   recipeList: RecipeListType[];
-  isAgreeSubscription: boolean;
 }
 
 interface CreateSubscriptionResponse {
@@ -217,6 +216,7 @@ interface SubscriptionOrderSheet {
   oneDayRecommendKcal: number;
   inedibleFoods: string[];
   recipeList: RecommendedRecipeItem[];
+  subscribeId: number | null;
 }
 
 type PlanKey = "FULL" | "HALF" | "TOPPING_FULL" | "TOPPING_HALF" | "TOPPING";

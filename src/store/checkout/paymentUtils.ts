@@ -102,7 +102,6 @@ export function buildSubscriptionPaymentRequest({
       `merchantUid=${encodeURIComponent(merchantUid)}&` +
       `amount=${encodeURIComponent(paymentInfo.paymentPrice)}&` +
       `name=${encodeURIComponent(itemName)}&` +
-      `discount_reward=${encodeURIComponent(paymentInfo.discountReward)}&` +
       `buyer_name=${encodeURIComponent(deliveryInfo.address.recipientName)}&` +
       `buyer_tel=${encodeURIComponent(deliveryInfo.address.phoneNumber)}&` +
       `buyer_email=${encodeURIComponent(email)}&` +

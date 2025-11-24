@@ -22,6 +22,7 @@ import { useCreateSubscription } from "@/api/subscription/mutations/useCreateSub
 import { useSubscriptionCalculation } from "@/hooks/subscription/useSubscriptionCalculation";
 import { useGetSubscriptionOrderSheet } from "@/api/subscription/queries/useGetSubscriptionOrderSheet";
 import { getPlanFromMealAndDelivery } from "@/utils/subscription/getPlanFromMealAndDelivery";
+import { useUpdateSubscription } from "@/api/subscription/mutations/useUpdateSubscription";
 
 interface SubscriptionOrderSheetProps {
   surveyId: number;
@@ -34,6 +35,7 @@ export default function SubscriptionOrderSheet({
   const [step, setStep] = useState<SubscriptionStep>("rawFood");
   const { data: orderSheetData } = useGetSubscriptionOrderSheet(surveyId);
   const { mutate: createSubscription } = useCreateSubscription();
+  const { mutate: updateSubscription } = useUpdateSubscription();
 
   useScrollToTop(step);
 
@@ -83,24 +85,45 @@ export default function SubscriptionOrderSheet({
   const onSubmit = (data: SubscriptionValues) => {
     const plan = getPlanFromMealAndDelivery(data.mealPlan, data.deliveryPlan);
 
-    const createBody = {
-      body: {
-        petId: orderSheetData.petId,
-        plan,
-        recipeList: recipes.map((recipe) => ({
-          recipeId: recipe.recipeId,
-          originalPricePerMeal: recipe.pricePerMeal,
-          totalOriginalPrice: recipe.originalPrice,
-          gramsPerMeal: recipe.gramsPerMeal,
-        })),
-      },
-    };
-    console.log("createBody", createBody);
-    createSubscription(createBody, {
-      onSuccess: (data) => {
-        router.push(`/checkout/subscription/${data.subscribeId}`);
-      },
-    });
+    const recipeList = recipes.map((recipe) => ({
+      recipeId: recipe.recipeId,
+      originalPricePerMeal: recipe.pricePerMeal,
+      totalOriginalPrice: recipe.originalPrice,
+      gramsPerMeal: recipe.gramsPerMeal,
+    }));
+
+    // subscribeId가 있으면 updateSubscription, 없으면 createSubscription
+    if (orderSheetData.subscribeId) {
+      const updateBody = {
+        subscribeId: orderSheetData.subscribeId,
+        body: {
+          plan,
+          recipeList,
+        },
+      };
+
+      console.log("updateBody", updateBody);
+      updateSubscription(updateBody, {
+        onSuccess: () => {
+          router.push(`/checkout/subscription/${orderSheetData.subscribeId}`);
+        },
+      });
+    } else {
+      const createBody = {
+        body: {
+          petId: orderSheetData.petId,
+          plan,
+          recipeList,
+        },
+      };
+
+      console.log("createBody", createBody);
+      createSubscription(createBody, {
+        onSuccess: (data) => {
+          router.push(`/checkout/subscription/${data.subscribeId}`);
+        },
+      });
+    }
   };
 
   console.log("orderSheetData", orderSheetData);

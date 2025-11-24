@@ -12,19 +12,19 @@ export interface CheckoutStrategy<Request, Sheet, PayReq, PayRes> {
   afterGatewayCallback(args: {
     response: PayRes;
     requestBody: Request;
-    saveOrder: SaveOrderResponse;
+    preparePayment: SaveOrderResponse;
   }): Promise<"success" | "fail" | "cancel">;
 
   onSuccess(args: {
-    saveOrder: SaveOrderResponse;
+    preparePayment: SaveOrderResponse;
     response: PayRes;
     requestBody: Request;
   }): Promise<void>;
 
   onFail(args: {
-    saveOrder: SaveOrderResponse;
+    preparePayment: SaveOrderResponse;
     reason?: string;
   }): Promise<void>;
 
-  onCancel?(args: { saveOrder: SaveOrderResponse }): Promise<void>;
+  onCancel?(args: { preparePayment: SaveOrderResponse }): Promise<void>;
 }

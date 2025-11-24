@@ -15,7 +15,7 @@ export function createSubscriptionStrategy(deps: {
   sheet: SubscriptionCheckoutResponse; // 이메일/상품명 등 참조
   isMobile: boolean;
   // API DI
-  createIamportPayment: (
+  billingAgainPayment: (
     body: CreateIamportSubscriptionPaymentRequest
   ) => Promise<{
     code: number;
@@ -57,8 +57,8 @@ export function createSubscriptionStrategy(deps: {
     //    - 일반적으로 success/fail만 구분 (모바일은 redirect-flow로 콜백이 안 오거나, 와도 즉시 이동)
     afterGatewayCallback: async ({ response }) => {
       if (response?.success) return "success";
-      // ✅ 취소 메시지이면 'cancel'로 분기
 
+      // ✅ 취소 메시지이면 'cancel'로 분기
       if (isPortoneUserCancel(response)) return "cancel";
       // 그 외 실패
       return "fail";
@@ -67,7 +67,7 @@ export function createSubscriptionStrategy(deps: {
     // 3) 성공 후 처리 - IMP.request_pay로 빌링키 발급 성공시
     //    - 데스크탑만: again API → validate → success/fail
     //    - 모바일: redirect 페이지에서 처리되므로 여기서는 no-op
-    onSuccess: async ({ saveOrder, response, requestBody }) => {
+    onSuccess: async ({ preparePayment, response, requestBody }) => {
       if (deps.isMobile) {
         // 모바일: IMP가 m_redirect_url로 이동하므로 여기서 추가 처리는 하지 않음
         return;
@@ -76,7 +76,7 @@ export function createSubscriptionStrategy(deps: {
       // again 결제에 필요한 바디 구성
       const orderData: CreateIamportSubscriptionPaymentRequest = {
         customer_uid: response.customer_uid,
-        merchant_uid: saveOrder.merchantUid,
+        merchant_uid: preparePayment.merchantUid,
         amount: requestBody.paymentInfo.paymentPrice,
         name: deps.sheet.subscribeInfo.recipeList
           .map((recipe) => recipe.name)
@@ -89,7 +89,7 @@ export function createSubscriptionStrategy(deps: {
       };
 
       // (1) 포트원 again 호출
-      const iamportResp = await deps.createIamportPayment(orderData);
+      const iamportResp = await deps.billingAgainPayment(orderData);
       if (iamportResp.code !== 0) {
         throw new Error(
           `again 결제 실패: ${iamportResp.message ?? "알 수 없음"}`
@@ -103,37 +103,42 @@ export function createSubscriptionStrategy(deps: {
       }
 
       // (2) 서버 검증
+
       const isValid = await deps.validatePayment({
-        orderId: saveOrder.id,
+        orderId: preparePayment.id,
         impUid: final.imp_uid,
       });
 
+      console.log("isValid", isValid);
+
       const finalBody = {
         customerUid: response.customer_uid,
-        discountReward: requestBody.paymentInfo.discountReward,
         impUid: final.imp_uid,
-        merchantUid: saveOrder.merchantUid,
+        merchantUid: preparePayment.merchantUid,
       };
 
       // (3) 성공/위변조 처리
       if (isValid) {
-        await deps.successPayment({ orderId: saveOrder.id, body: finalBody });
+        await deps.successPayment({
+          orderId: preparePayment.id,
+          body: finalBody,
+        });
       } else {
-        await deps.failPayment(saveOrder.id);
+        await deps.failPayment(preparePayment.id);
       }
     },
 
     // 4) 취소 처리
-    onCancel: async ({ saveOrder }) => {
-      if (saveOrder.id > 0) {
-        await deps.cancelPayment(saveOrder.id).catch(() => {});
+    onCancel: async ({ preparePayment }) => {
+      if (preparePayment.id > 0) {
+        await deps.cancelPayment(preparePayment.id).catch(() => {});
       }
     },
 
     // 5) 실패 공통 처리
-    onFail: async ({ saveOrder }) => {
-      if (saveOrder.id > 0) {
-        await deps.failPayment(saveOrder.id).catch(() => {});
+    onFail: async ({ preparePayment }) => {
+      if (preparePayment.id > 0) {
+        await deps.failPayment(preparePayment.id).catch(() => {});
       }
     },
   };

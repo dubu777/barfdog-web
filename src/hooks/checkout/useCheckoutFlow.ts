@@ -23,7 +23,7 @@ interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
    * - 서버에 주문을 저장하고 결제에 필요한 id/merchantUid/status 를 반환
    * - status !== 200 이면 실패로 간주
    */
-  saveOrder: (req: Request) => Promise<SaveOrderResponse>;
+  preparePayment: (req: Request) => Promise<SaveOrderResponse>;
   /**
    * PG 어댑터
    * - PG SDK 초기화(init) 및 결제 요청(requestPay)을 캡슐화
@@ -59,8 +59,8 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
       if (isProcessing) return;
       setIsProcessing(true);
       try {
-        // 1) 주문 저장
-        const saveOrder = await deps.saveOrder(requestBody);
+        // 1) 주문 준비 (order 생성 및 정합성 검사)
+        const preparePayment = await deps.preparePayment(requestBody);
 
         // 2) PG 초기화
         await deps.paymentAdapter.init();
@@ -69,8 +69,8 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
         const payReq = deps.strategy.buildPaymentRequest({
           requestBody,
           sheet: deps.sheet,
-          orderId: saveOrder.id,
-          merchantUid: saveOrder.merchantUid,
+          orderId: preparePayment.id,
+          merchantUid: preparePayment.merchantUid,
           isMobile: deps.isMobile,
         });
 
@@ -81,27 +81,30 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
         const outcome = await deps.strategy.afterGatewayCallback({
           response: payRes,
           requestBody,
-          saveOrder,
+          preparePayment,
         });
 
         // 6) 분기 처리
         if (outcome === "success") {
           await deps.strategy.onSuccess({
-            saveOrder,
+            preparePayment,
             response: payRes,
             requestBody,
           });
           deps.navigate(deps.routes?.success);
         } else if (outcome === "cancel") {
-          await deps.strategy.onCancel?.({ saveOrder });
+          await deps.strategy.onCancel?.({ preparePayment });
         } else {
-          await deps.strategy.onFail({ saveOrder, reason: "gateway fail" });
+          await deps.strategy.onFail({
+            preparePayment,
+            reason: "gateway fail",
+          });
           deps.navigate(deps.routes?.fail);
         }
       } catch (e) {
         // 공통 예외 처리
         await deps.strategy.onFail({
-          saveOrder: { id: -1, merchantUid: "", status: "" },
+          preparePayment: { id: -1, merchantUid: "", status: "" },
           reason: (e as Error)?.message,
         });
         deps.navigate(deps.routes?.fail);

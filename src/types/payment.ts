@@ -53,7 +53,6 @@ interface NaverPayGeneralParamInput {
 
 interface SuccessSubscriptionPaymentRequest {
   customerUid: string;
-  discountReward: number;
   impUid: string;
   merchantUid: string;
 }

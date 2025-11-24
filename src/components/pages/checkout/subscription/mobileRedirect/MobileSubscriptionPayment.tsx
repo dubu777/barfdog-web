@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Spinner from "@/components/ui/spinner/Spinner";
 import { useToastStore } from "@/store/useToastStore";
-import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
+import { useBillingAgainPayment } from "@/api/iamport/mutations/useBillingAgainPayment";
 import { useValidateSubscriptionPayment } from "@/api/checkout/mutations/subscription/useValidateSubscriptionPayment";
 import { useSuccessSubscriptionPayment } from "@/api/checkout/mutations/subscription/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/checkout/mutations/subscription/useFailSubscriptionPayment";
@@ -18,8 +18,7 @@ export default function MobileSubscriptionPayment() {
   const searchParams = useSearchParams();
   const addToast = useToastStore((s) => s.addToast);
 
-  const { mutateAsync: createIamportPayment } =
-    useCreateIamportSubscriptionPayment();
+  const { mutateAsync: billingAgainPayment } = useBillingAgainPayment();
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
@@ -49,7 +48,6 @@ export default function MobileSubscriptionPayment() {
           customerUid,
           merchantUid,
           amount,
-          discountReward,
           name,
           buyer_name,
           buyer_tel,
@@ -67,7 +65,7 @@ export default function MobileSubscriptionPayment() {
         }
 
         // 모바일: again API로 실과금 → validate
-        const iamportResp = await createIamportPayment({
+        const iamportResp = await billingAgainPayment({
           customer_uid: customerUid,
           merchant_uid: merchantUid,
           amount,
@@ -102,7 +100,6 @@ export default function MobileSubscriptionPayment() {
 
         const finalBody = {
           customerUid,
-          discountReward,
           impUid: final.imp_uid,
           merchantUid,
         };
@@ -126,7 +123,7 @@ export default function MobileSubscriptionPayment() {
     params,
     router,
     addToast,
-    createIamportPayment,
+    billingAgainPayment,
     validatePayment,
     successPayment,
     failPayment,

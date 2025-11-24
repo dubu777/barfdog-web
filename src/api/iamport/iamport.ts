@@ -4,16 +4,13 @@ import {
 } from "@/types";
 import axios from "axios";
 
-export { createIamportSubscriptionPayment };
+export { billingAgainPayment };
 
-// IAMPORT 구독 결제 요청
-const createIamportSubscriptionPayment = async (
+// 포트원 빌링키를 이용한 즉시 결제 요청
+const billingAgainPayment = async (
   body: CreateIamportSubscriptionPaymentRequest
 ): Promise<IamportSubscribeResponse> => {
   const baseUrl = window.location.origin;
-  const { data } = await axios.post(
-    `${baseUrl}/api/iamport/subscribe`,
-    body
-  );
+  const { data } = await axios.post(`${baseUrl}/api/iamport/subscribe`, body);
   return data;
 };

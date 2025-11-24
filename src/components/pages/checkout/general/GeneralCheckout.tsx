@@ -108,7 +108,7 @@
 //   >({
 //     sheet: generalOrderData as GeneralOrderSheetResponse,
 //     isMobile: isMobileDevice,
-//     saveOrder: async (req) => {
+//     preparePayment: async (req) => {
 //       const res = await saveGeneralOrder(req);
 //       return {
 //         id: res.id,

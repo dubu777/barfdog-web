@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // API & Data Fetching
-import { useCreateIamportSubscriptionPayment } from "@/api/iamport/mutations/useCreateIamportSubscriptionPayment";
+import { useBillingAgainPayment } from "@/api/iamport/mutations/useBillingAgainPayment";
 import { useValidateSubscriptionPayment } from "@/api/checkout/mutations/subscription/useValidateSubscriptionPayment";
 import { useSuccessSubscriptionPayment } from "@/api/checkout/mutations/subscription/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/checkout/mutations/subscription/useFailSubscriptionPayment";
@@ -81,14 +81,13 @@ export default function SubscriptionCheckout({
   const { data: checkoutData } = useGetSubscriptionCheckout(subscribeId);
   console.log("checkoutData", checkoutData);
 
-  const { deliveryInfo, paymentInfo, subscribeInfo, memberInfo } = checkoutData;
+  const { deliveryInfo, paymentInfo, subscribeInfo } = checkoutData;
   // Store Hydration
   useHydrateSubscriptionOrderStores(checkoutData);
 
   // API Mutations
   const { mutateAsync: preparePayment } = usePrepareSubscriptionPayment(); // 결제 준비 - java 서버
-  const { mutateAsync: createIamportPayment } =
-    useCreateIamportSubscriptionPayment(); // 아임포트 구독 결제 생성 - next.js 서버
+  const { mutateAsync: billingAgainPayment } = useBillingAgainPayment(); // 포트원 빌링키 이용한 즉시 결제 요청 - next.js 서버
   const { mutateAsync: validatePayment } = useValidateSubscriptionPayment();
   const { mutateAsync: successPayment } = useSuccessSubscriptionPayment();
   const { mutateAsync: failPayment } = useFailSubscriptionPayment();
@@ -100,7 +99,7 @@ export default function SubscriptionCheckout({
       createSubscriptionStrategy({
         sheet: checkoutData,
         isMobile: isMobileDevice,
-        createIamportPayment: (body) => createIamportPayment(body),
+        billingAgainPayment: (body) => billingAgainPayment(body),
         validatePayment: (args) => validatePayment(args),
         successPayment: (args) => successPayment(args),
         failPayment: (orderId) => failPayment(orderId),
@@ -109,7 +108,7 @@ export default function SubscriptionCheckout({
     [
       checkoutData,
       isMobileDevice,
-      createIamportPayment,
+      billingAgainPayment,
       validatePayment,
       successPayment,
       failPayment,
@@ -126,7 +125,7 @@ export default function SubscriptionCheckout({
   >({
     sheet: checkoutData,
     isMobile: isMobileDevice,
-    saveOrder: async (req) => {
+    preparePayment: async (req) => {
       const res = await preparePayment({ body: req });
 
       return {
