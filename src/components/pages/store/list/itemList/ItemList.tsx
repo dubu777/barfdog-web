@@ -18,8 +18,13 @@ export default function ItemList() {
 
   // 디버깅용 로그
   useEffect(() => {
-    sendLogToNative('[ItemList] URL 파라미터 변경', { sortBy, itemType });
-    sendLogToNative('[ItemList] 전체 searchParams', searchParams.toString());
+    if (typeof window !== "undefined") {
+      sendLogToNative("[DEBUG] window.location.origin", {
+        origin: window.location.origin,
+      });
+    }
+    sendLogToNative("[ItemList] URL 파라미터 변경", { sortBy, itemType });
+    sendLogToNative("[ItemList] 전체 searchParams", searchParams.toString());
   }, [sortBy, itemType, searchParams]);
 
   const {
@@ -32,7 +37,7 @@ export default function ItemList() {
 
   // 데이터 로딩 상태 로그
   useEffect(() => {
-    sendLogToNative('[ItemList] 아이템 리스트', `${itemList.length}개`);
+    sendLogToNative("[ItemList] 아이템 리스트", `${itemList.length}개`);
   }, [itemList]);
 
   const ref = useInfiniteScroll({
