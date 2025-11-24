@@ -11,16 +11,16 @@ import Error from "@/components/layout/error/Error";
 import { prefetchGetInfiniteStoreItemList } from "@/api/store/queries/prefetchGetInfiniteStoreItemList";
 
 export default async function StorePage() {
-  // const queryClient = new QueryClient();
-  // await prefetchGetInfiniteStoreItemList(queryClient);
-  // const dehydrateState = dehydrate(queryClient);
+  const queryClient = new QueryClient();
+  await prefetchGetInfiniteStoreItemList(queryClient);
+  const dehydrateState = dehydrate(queryClient);
   return (
-    // <HydrationBoundary state={dehydrateState}>
-    // <ErrorBoundary fallback={<Error />}>
-    // <Suspense fallback={<Spinner fullscreen /> }>
-    <StoreList />
-    // </Suspense>
-    // </ErrorBoundary>
-    // </HydrationBoundary>
+    <HydrationBoundary state={dehydrateState}>
+      <ErrorBoundary fallback={<Error />}>
+        <Suspense fallback={<Spinner fullscreen />}>
+          <StoreList />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrationBoundary>
   );
 }

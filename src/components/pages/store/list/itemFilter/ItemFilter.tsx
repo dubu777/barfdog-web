@@ -29,8 +29,12 @@ export default function ItemFilter() {
     type: "sortBy" | "itemType",
     filterValue: SortByType | ItemType
   ) => {
-    sendLogToNative('[ItemFilter] 필터 변경 시도', { type, filterValue, pathname });
-    sendLogToNative('[ItemFilter] 현재 searchParams', searchParams.toString());
+    sendLogToNative("[ItemFilter] 필터 변경 시도", {
+      type,
+      filterValue,
+      pathname,
+    });
+    sendLogToNative("[ItemFilter] 현재 searchParams", searchParams.toString());
 
     pushWithQuery(pathname, {
       [type]:
@@ -39,7 +43,7 @@ export default function ItemFilter() {
           : (filterValue as ItemType),
     } as QueryParams);
 
-    sendLogToNative('[ItemFilter] pushWithQuery 호출 완료');
+    sendLogToNative("[ItemFilter] pushWithQuery 호출 완료");
   };
   return (
     <article>
