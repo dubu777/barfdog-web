@@ -1,4 +1,8 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import StoreList from "@/components/pages/store/list/StoreList";
@@ -7,16 +11,16 @@ import Error from "@/components/layout/error/Error";
 import { prefetchGetInfiniteStoreItemList } from "@/api/store/queries/prefetchGetInfiniteStoreItemList";
 
 export default async function StorePage() {
-  const queryClient = new QueryClient();
-  await prefetchGetInfiniteStoreItemList(queryClient);
-  const dehydrateState = dehydrate(queryClient);
+  // const queryClient = new QueryClient();
+  // await prefetchGetInfiniteStoreItemList(queryClient);
+  // const dehydrateState = dehydrate(queryClient);
   return (
-    <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<Error />}>
-        <Suspense fallback={<Spinner fullscreen /> }>
-          <StoreList />
-        </Suspense>
-      </ErrorBoundary>
-    </HydrationBoundary>
-  )
+    // <HydrationBoundary state={dehydrateState}>
+    // <ErrorBoundary fallback={<Error />}>
+    // <Suspense fallback={<Spinner fullscreen /> }>
+    <StoreList />
+    // </Suspense>
+    // </ErrorBoundary>
+    // </HydrationBoundary>
+  );
 }

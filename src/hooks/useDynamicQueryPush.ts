@@ -34,7 +34,7 @@ export function useDynamicQueryPush() {
       const newUrl = `${path}?${searchParams.toString()}`;
       sendLogToNative("[useDynamicQueryPush] 새로운 URL", newUrl);
 
-      router.replace(newUrl, { scroll: !preserveScroll });
+      router.push(newUrl, { scroll: !preserveScroll });
 
       sendLogToNative("[useDynamicQueryPush] router.push 호출 완료");
     },
