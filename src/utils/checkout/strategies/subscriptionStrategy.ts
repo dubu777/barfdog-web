@@ -60,7 +60,7 @@ export function createSubscriptionStrategy(deps: {
       if (response?.success) return "success";
 
       // ✅ 취소 메시지이면 'cancel'로 분기
-      if (isPortoneUserCancel(response)) return "cancel";
+      if (isPortoneUserCancel(response?.error_msg)) return "cancel";
       // 그 외 실패
       return "fail";
     },

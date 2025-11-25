@@ -57,10 +57,6 @@ interface SuccessSubscriptionPaymentRequest {
   merchantUid: string;
 }
 
-interface ValidateSubscriptionPaymentResponse {
-  valid: boolean;
-}
-
 // General 결제 데이터 타입
 interface GeneralIamportRequest {
   channelKey: string;
@@ -184,7 +180,6 @@ export type {
   CreateIamportSubscriptionPaymentRequest,
   IamportSubscribeResponse,
   SuccessSubscriptionPaymentRequest,
-  ValidateSubscriptionPaymentResponse,
   GeneralPaymentDataParams,
   SubscriptionPaymentDataParams,
 };

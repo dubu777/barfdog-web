@@ -12,6 +12,7 @@ import { parseSubscriptionParams } from "@/utils/checkout/redirectParams";
 import { mobilePaymentResultContainer } from "@/app/checkout/mobile-payment-redirect/MobilePaymentRedirect.css";
 import { useCancelSubscriptionPayment } from "@/api/checkout/mutations/subscription/useCancelSubscriptionPayment";
 import { CHECKOUT_ROUTES } from "@/constants";
+import { isPortoneUserCancel } from "@/utils/checkout/isPortoneUserCancel";
 
 export default function MobileSubscriptionPayment() {
   const router = useRouter();
@@ -40,7 +41,6 @@ export default function MobileSubscriptionPayment() {
 
         const {
           // 1차 응답/부가정보
-          impSuccess,
           errorMsg,
           subscribeId,
           // again/검증용 데이터
@@ -56,8 +56,8 @@ export default function MobileSubscriptionPayment() {
           buyer_postcode,
         } = params;
 
-        // 취소
-        if (errorMsg === "결제를 취소하였습니다.") {
+        // 취소 체크: isPortoneUserCancel 함수 사용
+        if (isPortoneUserCancel(errorMsg)) {
           await cancelPayment(orderId);
           addToast("결제를 취소하였습니다.", "above-button");
           router.push(`/checkout/subscription/${subscribeId ?? ""}`);
