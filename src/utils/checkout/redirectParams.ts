@@ -69,6 +69,7 @@ export type SubscriptionRedirectParams = {
 
   errorMsg?: string;
   subscribeId?: string;
+  from?: "app" | "web";
 };
 
 export function parseSubscriptionParams(
@@ -90,6 +91,7 @@ export function parseSubscriptionParams(
 
   const errorMsg = sp.get("error_msg") ?? undefined;
   const subscribeId = sp.get("subscription_Id") ?? undefined;
+  const from = (sp.get("from") as "app" | "web") ?? "web";
 
   if (
     !imp_uid ||
@@ -122,5 +124,6 @@ export function parseSubscriptionParams(
     buyer_postcode,
     errorMsg,
     subscribeId,
+    from,
   };
 }

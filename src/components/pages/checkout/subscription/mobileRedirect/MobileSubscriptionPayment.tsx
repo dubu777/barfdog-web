@@ -43,6 +43,7 @@ export default function MobileSubscriptionPayment() {
           // 1차 응답/부가정보
           errorMsg,
           subscribeId,
+          from = "web",
           // again/검증용 데이터
           orderId,
           customerUid,
@@ -60,7 +61,13 @@ export default function MobileSubscriptionPayment() {
         if (isPortoneUserCancel(errorMsg)) {
           await cancelPayment(orderId);
           addToast("결제를 취소하였습니다.", "above-button");
-          router.push(`/checkout/subscription/${subscribeId ?? ""}`);
+
+          // 앱에서 온 경우 딥링크로, 웹에서 온 경우 웹으로 이동
+          if (from === "app") {
+            window.location.href = `barfdogexpo://checkout/subscription/${subscribeId}`;
+          } else {
+            router.push(`/checkout/subscription/${subscribeId ?? ""}`);
+          }
           return;
         }
 
@@ -107,15 +114,33 @@ export default function MobileSubscriptionPayment() {
 
         if (isValid) {
           await successPayment({ orderId, body: finalBody });
-          router.push(`/checkout/subscription/${subscribeId}/completed`);
+
+          // 앱에서 온 경우 딥링크로, 웹에서 온 경우 웹으로 이동
+          if (from === "app") {
+            window.location.href = `barfdogexpo://checkout/subscription/${subscribeId}/completed`;
+          } else {
+            router.push(`/checkout/subscription/${subscribeId}/completed`);
+          }
         } else {
           // 재 검증하는 코드
           await failPayment(orderId);
-          router.push(CHECKOUT_ROUTES.SUBSCRIPTION.fail);
+
+          // 앱에서 온 경우 딥링크로, 웹에서 온 경우 웹으로 이동
+          if (from === "app") {
+            window.location.href = `barfdogexpo://checkout/subscription/fail`;
+          } else {
+            router.push(CHECKOUT_ROUTES.SUBSCRIPTION.fail);
+          }
         }
       } catch (e) {
         console.error("[MobileSubscriptionPaymentRedirect] 처리 실패:", e);
-        router.push(CHECKOUT_ROUTES.SUBSCRIPTION.fail);
+
+        // 앱에서 온 경우 딥링크로, 웹에서 온 경우 웹으로 이동
+        if (params?.from === "app") {
+          window.location.href = `barfdogexpo://checkout/subscription/fail`;
+        } else {
+          router.push(CHECKOUT_ROUTES.SUBSCRIPTION.fail);
+        }
       }
     };
 

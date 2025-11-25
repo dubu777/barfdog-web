@@ -72,6 +72,7 @@ export function buildSubscriptionPaymentRequest({
   subscriptionOrderSheetData,
   isMobileDevice,
   merchantUid,
+  from = "web",
 }: SubscriptionPaymentDataParams): SubscriptionIamportRequest {
   const { paymentInfo, deliveryInfo } = requestBody;
   const { subscribeInfo } = subscriptionOrderSheetData;
@@ -109,7 +110,8 @@ export function buildSubscriptionPaymentRequest({
       `buyer_addr=${encodeURIComponent(
         `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
       )}&` +
-      `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}`,
+      `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}&` +
+      `from=${encodeURIComponent(from)}`,
   };
   if (paymentInfo.paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({

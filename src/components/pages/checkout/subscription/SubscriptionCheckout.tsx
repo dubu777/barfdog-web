@@ -67,7 +67,7 @@ export default function SubscriptionCheckout({
 
   // Routing & Device
   const router = useRouter();
-  const { isMobileDevice } = useDeviceState();
+  const { isMobileDevice, isWebView } = useDeviceState();
 
   // Store State
   const getRequestBody = useOrderStore((state) => state.getRequestBody);
@@ -99,6 +99,7 @@ export default function SubscriptionCheckout({
       createSubscriptionStrategy({
         sheet: checkoutData,
         isMobile: isMobileDevice,
+        isWebView,
         billingAgainPayment: (body) => billingAgainPayment(body),
         validatePayment: (args) => validatePayment(args),
         successPayment: (args) => successPayment(args),
@@ -108,6 +109,7 @@ export default function SubscriptionCheckout({
     [
       checkoutData,
       isMobileDevice,
+      isWebView,
       billingAgainPayment,
       validatePayment,
       successPayment,

@@ -7,6 +7,7 @@ interface DeviceState {
   isMobileDevice: boolean;
   deviceWidth: number;
   deviceOS: DeviceOS;
+  isWebView: boolean;
 }
 
 /**
@@ -33,12 +34,31 @@ function getMobileOS(): DeviceOS {
   return "Other";
 }
 
+/**
+ * WebView 환경 감지
+ */
+function checkIsWebView(): boolean {
+  const userAgent = navigator.userAgent || "";
+
+  // React Native WebView 감지
+  if (/ReactNativeWebView/i.test(userAgent)) return true;
+
+  // iOS WebView 감지 (WKWebView, UIWebView)
+  if (/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(userAgent)) return true;
+
+  // Android WebView 감지
+  if (/wv|WebView/i.test(userAgent) && /Android/i.test(userAgent)) return true;
+
+  return false;
+}
+
 export default function useDeviceState(): DeviceState {
   const [deviceState, setDeviceState] = useState<DeviceState>({
     isMobileWidth: false,
     isMobileDevice: false,
     deviceWidth: 0,
     deviceOS: "Other",
+    isWebView: false,
   });
 
   /** 모바일 디바이스 여부 확인 */
@@ -60,6 +80,7 @@ export default function useDeviceState(): DeviceState {
       isMobileDevice: checkIsMobileDevice(),
       deviceWidth,
       deviceOS: getMobileOS(),
+      isWebView: checkIsWebView(),
     });
   }, [checkIsMobileDevice]);
 

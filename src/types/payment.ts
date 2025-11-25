@@ -152,6 +152,7 @@ interface SubscriptionPaymentDataParams {
   orderId: number;
   merchantUid: string;
   subscribeId: number;
+  from?: "app" | "web";
 }
 
 // 네이버페이 카테고리 타입 및 ID 정의

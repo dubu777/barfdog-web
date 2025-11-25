@@ -14,6 +14,7 @@ export function createSubscriptionStrategy(deps: {
   /** 콜백 이후 추가 처리에 필요한 의존성들은 DI로 주입 */
   sheet: SubscriptionCheckoutResponse; // 이메일/상품명 등 참조
   isMobile: boolean;
+  isWebView: boolean;
   // API DI
   billingAgainPayment: (
     body: CreateIamportSubscriptionPaymentRequest
@@ -52,6 +53,7 @@ export function createSubscriptionStrategy(deps: {
         isMobileDevice: isMobile,
         orderId,
         merchantUid,
+        from: deps.isWebView ? "app" : "web",
       }),
 
     // 2) 게이트웨이 콜백 해석
