@@ -81,6 +81,29 @@ export function buildSubscriptionPaymentRequest({
   // email은 새로운 API 스펙에 없으므로 빈 문자열 사용 (필요시 추가 확인 필요)
   const email = ""; // TODO: API 스펙 확인 후 수정
 
+  // 앱에서 결제 시도한 경우 딥링크로 직접 리다이렉트
+  const baseUrl =
+    from === "app"
+      ? "barfdogexpo://checkout/mobile-payment-redirect/subscription"
+      : `${window.location.origin}/checkout/mobile-payment-redirect/subscription`;
+
+  const redirectUrl =
+    `${baseUrl}?` +
+    `order_id=${encodeURIComponent(orderId)}&` +
+    `customer_uid=${encodeURIComponent(paymentInfo.customerUid)}&` +
+    `merchantUid=${encodeURIComponent(merchantUid)}&` +
+    `amount=${encodeURIComponent(paymentInfo.paymentPrice)}&` +
+    `name=${encodeURIComponent(itemName)}&` +
+    `buyer_name=${encodeURIComponent(deliveryInfo.address.recipientName)}&` +
+    `buyer_tel=${encodeURIComponent(deliveryInfo.address.phoneNumber)}&` +
+    `buyer_email=${encodeURIComponent(email)}&` +
+    `subscription_Id=${encodeURIComponent(subscribeId)}&` +
+    `buyer_addr=${encodeURIComponent(
+      `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
+    )}&` +
+    `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}&` +
+    `from=${encodeURIComponent(from)}`;
+
   const baseData = {
     channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentInfo.paymentMethod],
     pay_method: PAYMENT_METHOD["CREDIT_CARD"],
@@ -96,22 +119,7 @@ export function buildSubscriptionPaymentRequest({
     buyer_tel: deliveryInfo.address.phoneNumber,
     buyer_addr: `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`,
     buyer_postcode: deliveryInfo.address.zipcode,
-    m_redirect_url:
-      `${window.location.origin}/checkout/mobile-payment-redirect/subscription?` +
-      `order_id=${encodeURIComponent(orderId)}&` +
-      `customer_uid=${encodeURIComponent(paymentInfo.customerUid)}&` +
-      `merchantUid=${encodeURIComponent(merchantUid)}&` +
-      `amount=${encodeURIComponent(paymentInfo.paymentPrice)}&` +
-      `name=${encodeURIComponent(itemName)}&` +
-      `buyer_name=${encodeURIComponent(deliveryInfo.address.recipientName)}&` +
-      `buyer_tel=${encodeURIComponent(deliveryInfo.address.phoneNumber)}&` +
-      `buyer_email=${encodeURIComponent(email)}&` +
-      `subscription_Id=${encodeURIComponent(subscribeId)}&` +
-      `buyer_addr=${encodeURIComponent(
-        `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
-      )}&` +
-      `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}&` +
-      `from=${encodeURIComponent(from)}`,
+    m_redirect_url: redirectUrl,
   };
   if (paymentInfo.paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPaySubscriptionPaymentParam({
