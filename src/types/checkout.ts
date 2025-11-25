@@ -474,6 +474,11 @@ interface PaymentInfoRequest {
   saveReward: number;
 }
 
+interface ValidateSubscriptionPaymentResponse {
+  impUid: string;
+  customerUid: string;
+}
+
 type PaymentMethod = keyof typeof PAYMENT_METHOD;
 
 type OrderDetailType = "general" | "subscribe";
@@ -522,4 +527,5 @@ export type {
   DeliveryInfoRequest,
   PaymentInfoRequest,
   PrepareSubscriptionPaymentResponse,
+  ValidateSubscriptionPaymentResponse,
 };

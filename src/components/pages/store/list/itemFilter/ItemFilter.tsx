@@ -7,7 +7,6 @@ import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ITEM_FILTER_CATEGORY, ITEM_SORT_BY } from "@/constants/store";
 import { QueryParams } from "@/types";
 import { ItemType, SortByType } from "@/types/store";
-import { sendLogToNative } from "@/utils/debug/webviewLogger";
 
 export default function ItemFilter() {
   const pathname = usePathname();
@@ -29,21 +28,12 @@ export default function ItemFilter() {
     type: "sortBy" | "itemType",
     filterValue: SortByType | ItemType
   ) => {
-    sendLogToNative("[ItemFilter] 필터 변경 시도", {
-      type,
-      filterValue,
-      pathname,
-    });
-    sendLogToNative("[ItemFilter] 현재 searchParams", searchParams.toString());
-
     pushWithQuery(pathname, {
       [type]:
         type === "sortBy"
           ? (filterValue as SortByType)
           : (filterValue as ItemType),
     } as QueryParams);
-
-    sendLogToNative("[ItemFilter] pushWithQuery 호출 완료");
   };
   return (
     <article>

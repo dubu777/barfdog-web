@@ -91,6 +91,7 @@ export default function MobileSubscriptionPayment() {
         const validateRes = await validatePayment({
           orderId,
           impUid: final.imp_uid,
+          customerUid,
         });
 
         const isValid =

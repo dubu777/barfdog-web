@@ -29,11 +29,9 @@ const getSubscriptionCheckout = async (
 };
 
 // 구독 결제 준비: 결제 1단계 - v2
-const prepareSubscriptionPayment = async ({
-  body,
-}: {
-  body: PrepareSubscriptionPaymentRequest;
-}): Promise<PrepareSubscriptionPaymentResponse> => {
+const prepareSubscriptionPayment = async (
+  body: PrepareSubscriptionPaymentRequest
+): Promise<PrepareSubscriptionPaymentResponse> => {
   const { data } = await axiosInstance.post(
     "/api/v2/user/subscribe-orders/payment/prepare",
     body
@@ -45,14 +43,19 @@ const prepareSubscriptionPayment = async ({
 const validateSubscriptionPayment = async ({
   orderId,
   impUid,
+  customerUid,
 }: {
   orderId: number;
   impUid: string;
+  customerUid: string;
 }): Promise<boolean> => {
   try {
     const { data } = await axiosInstance.post(
       `/api/v2/user/subscribe-orders/${orderId}/payment/consistency`,
-      { impUid }
+      {
+        impUid,
+        customerUid,
+      }
     );
 
     return data.success;

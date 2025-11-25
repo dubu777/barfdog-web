@@ -25,6 +25,7 @@ export function createSubscriptionStrategy(deps: {
   validatePayment: (args: {
     orderId: number;
     impUid: string;
+    customerUid: string;
   }) => Promise<boolean>;
   successPayment: (args: { orderId: number; body: any }) => Promise<any>;
   failPayment: (orderId: number) => Promise<any>;
@@ -107,6 +108,7 @@ export function createSubscriptionStrategy(deps: {
       const isValid = await deps.validatePayment({
         orderId: preparePayment.id,
         impUid: final.imp_uid,
+        customerUid: response.customer_uid,
       });
 
       console.log("isValid", isValid);

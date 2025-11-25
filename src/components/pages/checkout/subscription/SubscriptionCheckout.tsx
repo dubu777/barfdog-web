@@ -126,7 +126,7 @@ export default function SubscriptionCheckout({
     sheet: checkoutData,
     isMobile: isMobileDevice,
     preparePayment: async (req) => {
-      const res = await preparePayment({ body: req });
+      const res = await preparePayment(req);
 
       return {
         id: res.orderId,
