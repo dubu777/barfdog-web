@@ -77,14 +77,16 @@ export function buildSubscriptionPaymentRequest({
   const { paymentInfo, deliveryInfo } = requestBody;
   const { subscribeInfo } = subscriptionOrderSheetData;
 
-  const itemName = subscribeInfo.recipeList.map((recipe) => recipe.name).join(", ");
+  const itemName = subscribeInfo.recipeList
+    .map((recipe) => recipe.name)
+    .join(", ");
   // email은 새로운 API 스펙에 없으므로 빈 문자열 사용 (필요시 추가 확인 필요)
   const email = ""; // TODO: API 스펙 확인 후 수정
 
   // 앱에서 결제 시도한 경우 딥링크로 직접 리다이렉트
   const baseUrl =
     from === "app"
-      ? "barfdogexpo://checkout/mobile-payment-redirect/subscription"
+      ? "barfdogexpo://checkout/subscription"
       : `${window.location.origin}/checkout/mobile-payment-redirect/subscription`;
 
   const redirectUrl =

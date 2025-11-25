@@ -95,16 +95,11 @@ export default function MobileSubscriptionPayment() {
         }
 
         // 검증 (훅 반환 타입 편차 대비)
-        const validateRes = await validatePayment({
+        const isValid = await validatePayment({
           orderId,
           impUid: final.imp_uid,
           customerUid,
         });
-
-        const isValid =
-          typeof validateRes === "boolean"
-            ? validateRes
-            : (validateRes as any)?.valid ?? false;
 
         const finalBody = {
           customerUid,

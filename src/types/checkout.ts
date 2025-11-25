@@ -45,7 +45,7 @@ interface OrderItemDto {
   selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
 }
 
-// 상품 옵션 정보 타입
+// 상품 옵션 정보 타입1
 interface SelectOptionDto {
   itemOptionId: number; // 옵션 ID
   amount: number; // 옵션 수량
