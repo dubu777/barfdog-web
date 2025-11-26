@@ -1,6 +1,5 @@
 // src/api/iamport/getIamportAccessToken.ts
 import axios from "axios";
-import { headers } from "next/headers"; // ✅ Next.js 서버에서 요청 헤더 가져오기
 
 let cachedToken: string | null = null;
 let tokenExpiresAt: number = 0;
@@ -17,17 +16,10 @@ export const getIamportAccessToken = async (): Promise<string | null> => {
       return cachedToken;
     }
 
-    // 서버 환경에서 현재 요청의 브라우저 주소 가져오기
-    const host = headers().get("host"); // 예: localhost:4001, www.barfdog.co.kr
-    const protocol = headers().get("x-forwarded-proto") || "https"; // 기본 HTTPS 사용
-    const siteURL = host
-      ? `${protocol}://${host}`
-      : process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:4000";
-
-    console.log(`현재 환경에서 siteURL: ${siteURL}`);
+    const baseURL = process.env.NEXT_SERVER_BASE_URL;
 
     // IAMPORT Access Token 요청
-    const { data } = await axios.get(`${siteURL}/api/iamport/token`);
+    const { data } = await axios.get(`${baseURL}/api/iamport/token`);
     const accessToken = data?.accessToken;
     const expiredAt = data?.expiredAt; // IAMPORT에서 제공하는 만료 시간 (Unix Timestamp)
 

@@ -16,6 +16,12 @@ export function useUpdateSubscription(
           queryKeys.SUBSCRIPTION.GET_SUBSCRIPTION_INFO,
         ],
       });
+      await queryClient.invalidateQueries({
+        queryKey: [
+          queryKeys.CHECKOUT.BASE,
+          queryKeys.CHECKOUT.GET_SUBSCRIPTION_CHECKOUT_SHEET,
+        ],
+      });
     },
     ...mutationOptions,
   });
