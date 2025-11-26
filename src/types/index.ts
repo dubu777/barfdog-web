@@ -16,3 +16,4 @@ export * from "./store";
 export * from "./review";
 export * from "./checkout";
 export * from "./delivery";
+export * from "./payment";

@@ -5,15 +5,15 @@ import { lottieAnimation } from "./Loader.css";
 import { commonWrapper } from "@/styles/common.css";
 import animationData from "public/animations/loader.json";
 
-interface LottieLoaderProps {
+interface SurveyLoaderProps {
   fullscreen?: boolean;
   size?: "sm" | "md" | "lg" | "xl";
 }
 
-const LottieLoader = ({
+export default function SurveyLoader({
   fullscreen = false,
   size = "lg",
-}: LottieLoaderProps) => {
+}: SurveyLoaderProps) {
   return (
     <div
       className={commonWrapper({
@@ -26,6 +26,4 @@ const LottieLoader = ({
       </div>
     </div>
   );
-};
-
-export default LottieLoader;
+}

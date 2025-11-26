@@ -5,6 +5,7 @@ import {
   SaveGeneralOrderRequest,
   PrepareSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
+  PaymentMethod,
 } from "./checkout";
 
 interface IamportSubscribeResponse {
@@ -49,12 +50,6 @@ interface NaverPayGeneralParamOutput {
 interface NaverPayGeneralParamInput {
   items: GeneralOrderItem[];
   isMobile: boolean;
-}
-
-interface SuccessSubscriptionPaymentRequest {
-  customerUid: string;
-  impUid: string;
-  merchantUid: string;
 }
 
 // General 결제 데이터 타입
@@ -159,9 +154,6 @@ interface SubscriptionPaymentDataParams {
 type NaverPayCategoryType = "PRODUCT" | "FOOD" | "ETC";
 type NaverPayCategoryId = "GENERAL" | "DELIVERY" | "ETC";
 
-// 주문 아이템 타입 및 인터페이스
-// type NaverPayGeneralItemType = "RAW" | "GOODS" | "TOPPING";
-
 type PaymentMethodType = "card" | "naverpay" | "kakaopay";
 
 export type {
@@ -180,7 +172,6 @@ export type {
   IamportResponseMap,
   CreateIamportSubscriptionPaymentRequest,
   IamportSubscribeResponse,
-  SuccessSubscriptionPaymentRequest,
   GeneralPaymentDataParams,
   SubscriptionPaymentDataParams,
 };

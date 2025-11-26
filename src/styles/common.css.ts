@@ -10,7 +10,7 @@ export const commonLayoutContainer = style({
   minWidth: "320px",
   maxWidth: "600px",
   margin: "0 auto",
-  backgroundColor: themeVars.colors.gray.gray0,
+  backgroundColor: themeVars.colors.gray.gray50,
   position: "relative",
 });
 

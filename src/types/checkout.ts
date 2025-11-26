@@ -474,6 +474,48 @@ interface PaymentInfoRequest {
   saveReward: number;
 }
 
+interface SuccessSubscriptionPaymentRequest {
+  customerUid: string;
+  impUid: string;
+  merchantUid: string;
+}
+
+interface SuccessSubscriptionPaymentResponse {
+  deliveryInfo: SuccessSubscriptionDeliveryInfo;
+  paymentInfo: SuccessSubscriptionPaymentInfo;
+  planInfo: SuccessSubscriptionPlanInfo;
+  recipeList: SuccessSubscriptionRecipeItem[];
+}
+
+interface SuccessSubscriptionDeliveryInfo {
+  deliveryName: string;
+  recipientName: string;
+  phone: string;
+  zipcode: string;
+  street: string;
+  detailAddress: string;
+}
+
+interface SuccessSubscriptionPaymentInfo {
+  paymentPrice: number;
+  paymentMethod: PaymentMethod;
+}
+
+interface SuccessSubscriptionPlanInfo {
+  weeks: number;
+  days: number;
+  mealCount: number;
+}
+
+interface SuccessSubscriptionRecipeItem {
+  name: string;
+  displayImageUrl: {
+    url: string;
+  };
+  gramsPerMeal: number;
+  totalOriginalPrice: number;
+}
+
 type PaymentMethod = keyof typeof PAYMENT_METHOD;
 
 type OrderDetailType = "general" | "subscribe";
@@ -522,4 +564,10 @@ export type {
   DeliveryInfoRequest,
   PaymentInfoRequest,
   PrepareSubscriptionPaymentResponse,
+  SuccessSubscriptionPaymentRequest,
+  SuccessSubscriptionPaymentResponse,
+  SuccessSubscriptionDeliveryInfo,
+  SuccessSubscriptionPaymentInfo,
+  SuccessSubscriptionPlanInfo,
+  SuccessSubscriptionRecipeItem,
 };
