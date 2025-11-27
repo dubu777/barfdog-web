@@ -68,7 +68,6 @@ export function buildGeneralPaymentRequest({
 export function buildSubscriptionPaymentRequest({
   requestBody,
   orderId,
-  subscribeId,
   subscriptionOrderSheetData,
   isMobileDevice,
   merchantUid,
@@ -99,7 +98,6 @@ export function buildSubscriptionPaymentRequest({
     `buyer_name=${encodeURIComponent(deliveryInfo.address.recipientName)}&` +
     `buyer_tel=${encodeURIComponent(deliveryInfo.address.phoneNumber)}&` +
     `buyer_email=${encodeURIComponent(email)}&` +
-    `subscription_Id=${encodeURIComponent(subscribeId)}&` +
     `buyer_addr=${encodeURIComponent(
       `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
     )}&` +

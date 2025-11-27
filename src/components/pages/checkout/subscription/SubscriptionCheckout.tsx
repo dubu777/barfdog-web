@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 
 // API & Data Fetching
 import { useBillingAgainPayment } from "@/api/iamport/mutations/useBillingAgainPayment";
@@ -32,7 +31,7 @@ import OrderTerms from "../common/orderTerms/OrderTerms";
 import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
 
 // Constants & Types
-import { CHECKOUT_ROUTES, ORDER_TYPE } from "@/constants";
+import { ORDER_TYPE } from "@/constants";
 import {
   SubscriptionCheckoutResponse,
   SubscriptionIamportRequest,
@@ -52,6 +51,7 @@ import { usePrepareSubscriptionPayment } from "@/api/checkout/mutations/subscrip
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { useCancelSubscriptionPayment } from "@/api/checkout/mutations/subscription/useCancelSubscriptionPayment";
+import PaymentLoader from "../common/paymentLoader/PaymentLoader";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -66,7 +66,6 @@ export default function SubscriptionCheckout({
   const deliveryRef = useRef<HTMLDivElement>(null);
 
   // Routing & Device
-  const router = useRouter();
   const { isMobileDevice, isWebView } = useDeviceState();
 
   // Store State
@@ -141,11 +140,6 @@ export default function SubscriptionCheckout({
       SubscriptionIamportRequest
     >,
     strategy,
-    navigate: (path) => router.push(path),
-    routes: {
-      success: `/checkout/subscription/${subscribeId}/completed`,
-      fail: CHECKOUT_ROUTES.SUBSCRIPTION.fail,
-    },
   });
 
   // Event Handlers
@@ -214,6 +208,7 @@ export default function SubscriptionCheckout({
           ? "결제 처리 중..."
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
+      {isProcessing && <PaymentLoader />}
     </div>
   );
 }

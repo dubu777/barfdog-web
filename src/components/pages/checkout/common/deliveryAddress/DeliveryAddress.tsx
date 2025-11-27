@@ -9,6 +9,7 @@ import DeliveryContent from "@/components/domain/delivery/deliveryContent/Delive
 import { forwardRef } from "react";
 import { deliveryContentWrapper } from "./DeliveryAddress.css";
 import DotSpinner from "@/components/ui/spinner/DotSpinner";
+import Spinner from "@/components/ui/spinner/Spinner";
 
 const DeliveryAddress = forwardRef<HTMLDivElement>((ref) => {
   const { isOpen, onToggle, onClose } = useModal();
@@ -30,6 +31,7 @@ const DeliveryAddress = forwardRef<HTMLDivElement>((ref) => {
         {isPending ? (
           <DotSpinner />
         ) : (
+          // <Spinner />
           <DeliveryContent deliveryDto={deliveryDto} onToggle={onToggle} />
         )}
       </div>

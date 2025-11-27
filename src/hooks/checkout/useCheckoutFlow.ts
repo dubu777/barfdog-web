@@ -1,17 +1,13 @@
 import { SaveOrderResponse } from "@/types";
 import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { CheckoutStrategy } from "@/utils/checkout/checkoutStrategies";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
 /**
  * 결제 전체 플로우: 저장 → PG요청 → 콜백해석 → 성공/취소/실패 처리 → 라우팅
  * - deps로 모든 의존을 주입(DI) → 테스트/교체 용이
  */
-
-type Routes = {
-  success: string;
-  fail: string;
-};
 
 interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
   // 결제 시트 데이터(서버에서 조회해 화면/전략에 공유할 원천 데이터)
@@ -36,13 +32,6 @@ interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
    * - 성공/취소/실패 후처리(onSuccess/onCancel/onFail)
    */
   strategy: CheckoutStrategy<Request, Sheet, PayReq, PayRes>;
-  // 라우팅 함수
-  navigate: (path: string) => void;
-  /**
-   * 라우팅 경로들
-   * - 타입(일반/구독)별로 다르므로 외부에서 주입
-   */
-  routes: Routes;
 }
 
 /**
@@ -53,6 +42,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
   deps: CheckoutFlowDeps<Request, Sheet, PayReq, PayRes>
 ) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
 
   const start = useCallback(
     async (requestBody: Request) => {
@@ -91,7 +81,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
             response: payRes,
             requestBody,
           });
-          deps.navigate(deps.routes?.success);
+          router.push(`/checkout/subscription/completed/${preparePayment.id}`);
         } else if (outcome === "cancel") {
           await deps.strategy.onCancel?.({ preparePayment });
         } else {
@@ -99,7 +89,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
             preparePayment,
             reason: "gateway fail",
           });
-          deps.navigate(deps.routes?.fail);
+          router.push(`/checkout/subscription/fail`);
         }
       } catch (e) {
         // 공통 예외 처리
@@ -107,7 +97,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
           preparePayment: { id: -1, merchantUid: "", status: "" },
           reason: (e as Error)?.message,
         });
-        deps.navigate(deps.routes?.fail);
+        router.push(`/checkout/subscription/fail`);
       } finally {
         setIsProcessing(false);
       }

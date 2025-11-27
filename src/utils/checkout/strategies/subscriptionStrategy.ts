@@ -49,7 +49,6 @@ export function createSubscriptionStrategy(deps: {
       buildSubscriptionPaymentRequest({
         requestBody,
         subscriptionOrderSheetData: sheet,
-        subscribeId: sheet.subscribeInfo.id,
         isMobileDevice: isMobile,
         orderId,
         merchantUid,
