@@ -146,17 +146,17 @@ const DIET_ANALYSIS_FORM_INFO = {
     pregnancy: {
       options: [
         { value: "NONE", label: "아니요" },
-        { value: "EARLY", label: "임신 초기" },
-        { value: "LATE", label: "임신 후기" },
+        { value: "PREGNANCY_EARLY", label: "임신 초기" },
+        { value: "PREGNANCY_LATE", label: "임신 후기" },
       ],
     },
     lactation: {
       options: [
         { value: "NONE", label: "아니요" },
-        { value: "LACTATION_ONE", label: "1~2마리" },
-        { value: "LACTATION_THREE", label: "3~4마리" },
-        { value: "LACTATION_FIVE", label: "5~6마리" },
-        { value: "LACTATION_SEVEN", label: "7마리 이상" },
+        { value: "LACTATION_1_TO_2", label: "1~2마리" },
+        { value: "LACTATION_3_TO_4", label: "3~4마리" },
+        { value: "LACTATION_5_TO_6", label: "5~6마리" },
+        { value: "LACTATION_7_OR_MORE", label: "7마리 이상" },
       ],
     },
   },

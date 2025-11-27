@@ -22,7 +22,7 @@ export default function DietAnalysisResult({
   const { data: dietAnalysisResult } = useGetDietAnalysisResult(surveyId);
   console.log("dietAnalysisResult", dietAnalysisResult);
   const isEdit = EDITABLE_SUBSCRIPTION_STATUSES.has(
-    dietAnalysisResult.subscribeStatus
+    dietAnalysisResult?.subscribeStatus
   );
   const handleNavigate = () => {
     if (isEdit) {
