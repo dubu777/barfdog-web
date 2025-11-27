@@ -62,13 +62,17 @@ const nextConfig = {
       "Default API URL (PROD): ",
       process.env.NEXT_PUBLIC_API_URL_PRODUCT
     );
+
+    const sourcePath = process.env.SOURCE_PATH || '/api/:path*';
+    const apiUrl = dev
+      ? process.env.NEXT_PUBLIC_API_URL_DEV
+      : process.env.NEXT_PUBLIC_API_URL_PRODUCT;
+
     return [
       { source: "/api/oauth/:path*", destination: "/api/oauth/:path*" },
       {
-        source: process.env.SOURCE_PATH,
-        destination: dev
-          ? process.env.NEXT_PUBLIC_API_URL_DEV
-          : process.env.NEXT_PUBLIC_API_URL_PRODUCT,
+        source: sourcePath,
+        destination: apiUrl,
       },
       {
         source: "/oauth2.0/:path*",
