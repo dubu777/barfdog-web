@@ -9,9 +9,6 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { authAxios } from "@/api/axiosInstance";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
-import SurveyLoader from "@/components/ui/loader/SurveyLoader";
-import CheckoutFailed from "@/components/pages/checkout/common/failed/CheckoutFailedModal";
-import useModal from "@/hooks/useModal";
 
 export default function GeneralShopTest() {
   const router = useRouter();
@@ -19,7 +16,6 @@ export default function GeneralShopTest() {
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
   const { data } = useGetAddressList();
   const isLogin = isAuthenticated(token);
-  const { isOpen, onClose, onToggle } = useModal();
   console.log("isLogin", isLogin);
   console.log("address data", data);
 
@@ -50,12 +46,10 @@ export default function GeneralShopTest() {
     });
   };
   return (
-    <CheckoutFailed isOpen={true} onClose={onClose} />
-    // <div className={styles.testContainer}>
-    //   {/* <SurveyLoader size="lg" /> */}
-    //   <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
-    //   <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
-    //   <Button onClick={handleRefresh}>리프레시 버튼</Button>
-    // </div>
+    <div className={styles.testContainer}>
+      <Button onClick={generalPaymentTest}>일반 상품 구매 테스트 버튼</Button>
+      <Button onClick={handleSubscriptionOptions}>주문서 이동 버튼</Button>
+      <Button onClick={handleRefresh}>리프레시 버튼</Button>
+    </div>
   );
 }
