@@ -146,7 +146,7 @@ export default function SubscriptionEdit({
         router.push("/diet-analysis"); // 구독 상세 페이지 완료되면 수정
       },
       onError: (error) => {
-        console.error("구독 변경 실패:", error);
+        addToast("구독 변경에 실패했어요", "above-button");
       },
     });
   };

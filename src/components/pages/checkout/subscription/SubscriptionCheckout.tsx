@@ -161,7 +161,9 @@ export default function SubscriptionCheckout({
     const requestBody = getRequestBody(
       ORDER_TYPE.SUBSCRIPTION
     ) as PrepareSubscriptionPaymentRequest;
-    await start(requestBody);
+    console.log("req", requestBody);
+
+    // await start(requestBody);
   };
 
   return (

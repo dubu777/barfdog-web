@@ -4,8 +4,8 @@ import axios from "axios";
 export async function GET() {
   try {
     const { data } = await axios.post("https://api.iamport.kr/users/getToken", {
-      imp_key: `${process.env.NEXT_PUBLIC_IAMPORT_REST_API_KEY}`,
-      imp_secret: `${process.env.NEXT_PUBLIC_IAMPORT_REST_API_SECRET}`,
+      imp_key: `${process.env.IAMPORT_REST_API_KEY}`,
+      imp_secret: `${process.env.IAMPORT_REST_API_SECRET}`,
     });
 
     const accessToken = data?.response?.access_token;
