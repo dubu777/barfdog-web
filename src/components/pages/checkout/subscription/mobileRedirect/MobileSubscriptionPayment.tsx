@@ -13,6 +13,7 @@ import { mobilePaymentResultContainer } from "@/app/checkout/mobile-payment-redi
 import { useCancelSubscriptionPayment } from "@/api/checkout/mutations/subscription/useCancelSubscriptionPayment";
 import { CHECKOUT_ROUTES } from "@/constants";
 import { isPortoneUserCancel } from "@/utils/checkout/isPortoneUserCancel";
+import { PaymentMethod } from "@/types";
 
 export default function MobileSubscriptionPayment() {
   const router = useRouter();
@@ -55,6 +56,7 @@ export default function MobileSubscriptionPayment() {
           buyer_email,
           buyer_addr,
           buyer_postcode,
+          paymentMethod,
         } = params;
 
         // 취소 체크: isPortoneUserCancel 함수 사용
@@ -105,6 +107,7 @@ export default function MobileSubscriptionPayment() {
           customerUid,
           impUid: final.imp_uid,
           merchantUid,
+          paymentMethod: paymentMethod as PaymentMethod,
         };
 
         if (isValid) {

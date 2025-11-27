@@ -1,7 +1,6 @@
 import { SaveOrderResponse } from "@/types";
 import { PaymentAdapter } from "@/utils/checkout/adapters/paymentAdapter";
 import { CheckoutStrategy } from "@/utils/checkout/checkoutStrategies";
-import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
 /**
@@ -32,6 +31,15 @@ interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
    * - 성공/취소/실패 후처리(onSuccess/onCancel/onFail)
    */
   strategy: CheckoutStrategy<Request, Sheet, PayReq, PayRes>;
+  /**
+   * 결제 성공 시 호출될 콜백 (선택)
+   * - orderId를 인자로 받음
+   */
+  onPaymentSuccess?: (orderId: number) => void;
+  /**
+   * 결제 실패 시 호출될 콜백 (선택)
+   */
+  onPaymentFailed?: () => void;
 }
 
 /**
@@ -42,7 +50,6 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
   deps: CheckoutFlowDeps<Request, Sheet, PayReq, PayRes>
 ) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
 
   const start = useCallback(
     async (requestBody: Request) => {
@@ -81,7 +88,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
             response: payRes,
             requestBody,
           });
-          router.push(`/checkout/subscription/completed/${preparePayment.id}`);
+          deps.onPaymentSuccess?.(preparePayment.id);
         } else if (outcome === "cancel") {
           await deps.strategy.onCancel?.({ preparePayment });
         } else {
@@ -89,7 +96,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
             preparePayment,
             reason: "gateway fail",
           });
-          router.push(`/checkout/subscription/fail`);
+          deps.onPaymentFailed?.();
         }
       } catch (e) {
         // 공통 예외 처리
@@ -97,7 +104,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
           preparePayment: { id: -1, merchantUid: "", status: "" },
           reason: (e as Error)?.message,
         });
-        router.push(`/checkout/subscription/fail`);
+        deps.onPaymentFailed?.();
       } finally {
         setIsProcessing(false);
       }

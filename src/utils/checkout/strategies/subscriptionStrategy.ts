@@ -112,12 +112,11 @@ export function createSubscriptionStrategy(deps: {
         customerUid: response.customer_uid,
       });
 
-      console.log("isValid", isValid);
-
       const finalBody = {
         customerUid: response.customer_uid,
         impUid: final.imp_uid,
         merchantUid: preparePayment.merchantUid,
+        paymentMethod: requestBody.paymentInfo.paymentMethod,
       };
 
       // (3) 성공/위변조 처리
@@ -128,6 +127,7 @@ export function createSubscriptionStrategy(deps: {
         });
       } else {
         await deps.failPayment(preparePayment.id);
+        throw new Error("결제 검증 실패");
       }
     },
 

@@ -83,26 +83,18 @@ const successSubscriptionPayment = async ({
 
 // 구독 결제 실패 - v2
 const failSubscriptionPayment = async (orderId: number) => {
-  const { data } = await axiosInstance.post(
-    `/api/v2/orders/${orderId}/subscription/fail`
+  const { data } = await axiosInstance.put(
+    `/api/v2/user/subscribe-orders/${orderId}/payment/fail`
   );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "결제 실패 처리에 실패했습니다";
-  throw new Error(message);
+  return validateApiResponse(data, "결제 실패 처리에 실패 했습니다");
 };
 
 // 구독 결제 취소 - v2
 const cancelSubscriptionPayment = async (orderId: number) => {
-  const { data } = await axiosInstance.post(
-    `/api/orders/${orderId}/subscribe/cancel`
+  const { data } = await axiosInstance.put(
+    `/api/v2/user/subscribe-orders/${orderId}/payment/cancel`
   );
-  if (data.success) {
-    return data.data;
-  }
-  const message = data.detailMessage ?? "결제 취소 처리에 실패했습니다";
-  throw new Error(message);
+  return validateApiResponse(data, "결제 취소 처리에 실패 했습니다");
 };
 
 // 일반 결제 주문 정보 조회 - v2

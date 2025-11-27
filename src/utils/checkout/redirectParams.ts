@@ -66,6 +66,7 @@ export type SubscriptionRedirectParams = {
   buyer_email: string;
   buyer_addr: string;
   buyer_postcode: string;
+  paymentMethod: string;
 
   errorMsg?: string;
   subscribeId?: string;
@@ -88,6 +89,7 @@ export function parseSubscriptionParams(
   const buyer_email = sp.get("buyer_email") ?? "";
   const buyer_addr = sp.get("buyer_addr") ?? "";
   const buyer_postcode = sp.get("buyer_postcode") ?? "";
+  const paymentMethod = sp.get("payment_method") ?? "";
 
   const errorMsg = sp.get("error_msg") ?? undefined;
   const subscribeId = sp.get("subscription_Id") ?? undefined;
@@ -99,7 +101,8 @@ export function parseSubscriptionParams(
     !merchantUid ||
     !orderIdStr ||
     !customerUid ||
-    !amountStr
+    !amountStr ||
+    !paymentMethod
   ) {
     return null;
   }
@@ -122,6 +125,7 @@ export function parseSubscriptionParams(
     buyer_email,
     buyer_addr,
     buyer_postcode,
+    paymentMethod,
     errorMsg,
     subscribeId,
     from,

@@ -144,7 +144,13 @@ export default function ResultSummary({
               <SvgIcon src={WarningIcon} />
               <Text type="headline2">알러지</Text>
             </div>
-            <div className={commonWrapper({ gap: 6, justify: "start" })}>
+            <div
+              className={commonWrapper({
+                gap: 6,
+                justify: "start",
+                wrap: "wrap",
+              })}
+            >
               {firstResponse.foodAllergyTypes.map((food) => (
                 <Chips
                   key={food}

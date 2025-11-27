@@ -478,6 +478,7 @@ interface SuccessSubscriptionPaymentRequest {
   customerUid: string;
   impUid: string;
   merchantUid: string;
+  paymentMethod: PaymentMethod;
 }
 
 interface SuccessSubscriptionPaymentResponse {

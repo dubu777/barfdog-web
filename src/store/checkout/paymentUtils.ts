@@ -102,6 +102,7 @@ export function buildSubscriptionPaymentRequest({
       `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
     )}&` +
     `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}&` +
+    `payment_method=${encodeURIComponent(paymentInfo.paymentMethod)}&` +
     `from=${encodeURIComponent(from)}`;
 
   const baseData = {

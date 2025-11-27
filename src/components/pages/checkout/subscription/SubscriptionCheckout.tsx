@@ -17,6 +17,8 @@ import { useToastStore } from "@/store/useToastStore";
 import { useCheckoutFlow } from "@/hooks/checkout/useCheckoutFlow";
 import { useHydrateSubscriptionOrderStores } from "@/hooks/checkout/useHydrateSubscriptionOrderStores";
 import useDeviceState from "@/hooks/useDeviceState";
+import useModal from "@/hooks/useModal";
+import { useRouter } from "next/navigation";
 
 // Components
 import Divider from "@/components/ui/divider/Divider";
@@ -29,6 +31,7 @@ import PaymentMethod from "../common/paymentMethod/PaymentMethod";
 import OrderSummary from "../common/orderSummary/OrderSummary";
 import OrderTerms from "../common/orderTerms/OrderTerms";
 import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
+import CheckoutFailedModal from "../common/failed/CheckoutFailedModal";
 
 // Constants & Types
 import { ORDER_TYPE } from "@/constants";
@@ -51,7 +54,7 @@ import { usePrepareSubscriptionPayment } from "@/api/checkout/mutations/subscrip
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { useCancelSubscriptionPayment } from "@/api/checkout/mutations/subscription/useCancelSubscriptionPayment";
-import PaymentLoader from "../common/paymentLoader/PaymentLoader";
+import PendingLoaderOverlay from "@/components/ui/pendingLoaderOverlay/PendingLoaderOverlay";
 
 interface SubscriptionOrderContainerProps {
   subscribeId: number;
@@ -64,8 +67,14 @@ export default function SubscriptionCheckout({
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
   const deliveryRef = useRef<HTMLDivElement>(null);
+  const {
+    isOpen: isFailedModalOpen,
+    onOpen: openFailedModal,
+    onClose: closeFailedModal,
+  } = useModal();
 
   // Routing & Device
+  const router = useRouter();
   const { isMobileDevice, isWebView } = useDeviceState();
 
   // Store State
@@ -140,6 +149,10 @@ export default function SubscriptionCheckout({
       SubscriptionIamportRequest
     >,
     strategy,
+    onPaymentSuccess: (orderId) => {
+      router.push(`/checkout/subscription/completed/${orderId}`);
+    },
+    onPaymentFailed: openFailedModal,
   });
 
   // Event Handlers
@@ -161,9 +174,7 @@ export default function SubscriptionCheckout({
     const requestBody = getRequestBody(
       ORDER_TYPE.SUBSCRIPTION
     ) as PrepareSubscriptionPaymentRequest;
-    console.log("req", requestBody);
-
-    // await start(requestBody);
+    await start(requestBody);
   };
 
   return (
@@ -210,7 +221,13 @@ export default function SubscriptionCheckout({
           ? "결제 처리 중..."
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
-      {isProcessing && <PaymentLoader />}
+      {isProcessing && <PendingLoaderOverlay text="결제를 진행중입니다" />}
+      {isFailedModalOpen && (
+        <CheckoutFailedModal
+          isOpen={isFailedModalOpen}
+          onClose={closeFailedModal}
+        />
+      )}
     </div>
   );
 }
