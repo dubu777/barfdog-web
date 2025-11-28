@@ -4,6 +4,7 @@ import {
   useImperativeHandle,
   useRef,
   useState,
+  useEffect,
 } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import * as styles from "@/components/ui/bottomSheet/BottomSheet.css";
@@ -12,6 +13,8 @@ import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import ModalBackground from "../modalBackground/ModalBackground";
 import Text from "../text/Text";
 
+type BottomSheetHeight = "full" | "half" | "auto";
+
 interface BottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,7 +22,8 @@ interface BottomSheetProps {
   subTitle?: string;
   children: ReactNode;
   closeOnBackgroundClick?: boolean;
-  fullHeight?: boolean;
+  height?: BottomSheetHeight;
+  enableHeightToggle?: boolean;
   className?: string;
   showCloseButton?: boolean;
 }
@@ -33,7 +37,8 @@ const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
       subTitle,
       children,
       closeOnBackgroundClick = true,
-      fullHeight = false,
+      height = "auto",
+      enableHeightToggle = false,
       className,
       showCloseButton = true,
     },
@@ -43,23 +48,49 @@ const BottomSheet = forwardRef<HTMLDivElement, BottomSheetProps>(
 
     useImperativeHandle(ref, () => innerRef.current!);
 
-    const initialHeight = fullHeight ? "95vh" : "auto";
+    // height prop을 실제 CSS 값으로 변환
+    const getHeightValue = (heightType: BottomSheetHeight): string => {
+      switch (heightType) {
+        case "full":
+          return "95vh";
+        case "half":
+          return "65vh";
+        case "auto":
+          return "auto";
+        default:
+          return "auto";
+      }
+    };
+
+    const initialHeight = getHeightValue(height);
     const [sheetHeight, setSheetHeight] = useState(initialHeight);
+
     // 모바일 더블 탭 감지
     const lastTapRef = useRef<number | null>(null);
     const doubleTapThreshold = 300; // 300ms 이내에 두 번 터치하면 double tap으로 인식
 
+    // height prop이 변경되면 sheetHeight 초기화
+    useEffect(() => {
+      setSheetHeight(getHeightValue(height));
+    }, [height]);
+
     const handleDoubleClick = () => {
-      if (!fullHeight) return;
-      setSheetHeight((prev) => (prev === "95vh" ? "60vh" : "95vh"));
+      // enableHeightToggle이 false면 높이 변경 안 함
+      if (!enableHeightToggle) return;
+
+      // full이나 half일 때는 95vh ↔ 65vh 토글
+      setSheetHeight((prev) => (prev === "95vh" ? "65vh" : "95vh"));
     };
 
     // 모바일용 터치 이벤트 핸들러 (더블 탭 감지)
     const handleTouchEnd = () => {
-      if (!fullHeight) return;
+      // enableHeightToggle이 false면 높이 변경 안 함
+      if (!enableHeightToggle) return;
+
       const now = Date.now();
       if (lastTapRef.current && now - lastTapRef.current < doubleTapThreshold) {
-        setSheetHeight((prev) => (prev === "95vh" ? "60vh" : "95vh"));
+        setSheetHeight((prev) => (prev === "95vh" ? "65vh" : "95vh"));
+
         lastTapRef.current = null;
       } else {
         lastTapRef.current = now;

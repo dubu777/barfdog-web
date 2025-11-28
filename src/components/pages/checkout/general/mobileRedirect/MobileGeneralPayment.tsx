@@ -8,8 +8,8 @@ import { useSuccessGeneralPayment } from "@/api/checkout/mutations/general/useSu
 import { useFailGeneralPayment } from "@/api/checkout/mutations/general/useFailGeneralPayment";
 import { useCancelGeneralPayment } from "@/api/checkout/mutations/general/useCancelGeneralPayment";
 import { parseGeneralParams } from "@/utils/checkout/redirectParams";
-import { mobilePaymentResultContainer } from "@/app/checkout/mobile-payment-redirect/MobilePaymentRedirect.css";
 import { CHECKOUT_ROUTES } from "@/constants";
+import { commonWrapper } from "@/styles/common.css";
 
 export default function MobileGeneralPayment() {
   const router = useRouter();
@@ -74,7 +74,13 @@ export default function MobileGeneralPayment() {
   }, [params, router, addToast, cancelPayment, successPayment, failPayment]);
 
   return (
-    <div className={mobilePaymentResultContainer}>
+    <div
+      className={commonWrapper({
+        height: "full",
+        align: "center",
+        justify: "center",
+      })}
+    >
       <Spinner />
     </div>
   );

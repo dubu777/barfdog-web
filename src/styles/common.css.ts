@@ -484,6 +484,11 @@ export const commonWrapper = recipe({
         border: `1px solid ${themeVars.colors.blue.blue500}`,
       },
     },
+    overflowY: {
+      auto: {
+        overflowY: "auto",
+      },
+    },
   },
   defaultVariants: {
     direction: "row",

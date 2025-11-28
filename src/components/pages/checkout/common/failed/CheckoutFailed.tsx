@@ -1,3 +1,5 @@
+'"use client";';
+
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Text from "@/components/ui/text/Text";

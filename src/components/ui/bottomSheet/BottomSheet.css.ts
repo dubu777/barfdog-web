@@ -23,24 +23,27 @@ export const bottomSheetContentWrapper = style({
   flexDirection: "column",
   alignItems: "flex-start",
   width: "100%",
+  flex: 1,
+  overflow: "hidden",
+  position: "relative",
 });
 
 export const bottomSheetHeaderWrapper = recipe({
   base: {
     width: "100%",
     display: "flex",
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    gap: '12px',
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    gap: "12px",
   },
   variants: {
     hasSubTitle: {
       true: {
-        padding: '20px',
+        padding: "20px",
       },
-      false: {}
-    }
-  }
+      false: {},
+    },
+  },
 });
 
 export const bottomSheetHeader = recipe({
@@ -58,15 +61,15 @@ export const bottomSheetHeader = recipe({
       false: {
         height: "52px",
         padding: "0 20px",
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
 export const handleWrapper = style({
-	width: "60px",
-	height: "20px",
-	paddingTop: "4px"
+  width: "60px",
+  height: "20px",
+  paddingTop: "4px",
 });
 
 export const handleButton = style({

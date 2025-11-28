@@ -6,6 +6,7 @@ import { useToggleOption } from "@/hooks/useToggleOption";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { commonWrapper } from "@/styles/common.css";
+import { bundleDeliveryBottomSheetContainer } from "./BundleDeliveryBottomSheet.css";
 
 interface BundleDeliveryBottomSheetProps {
   bundleDeliveryAddress: DeliveryAddress[];
@@ -60,50 +61,60 @@ export default function BundleDeliveryBottomSheet({
       isOpen={isOpen}
       onClose={onClose}
       closeOnBackgroundClick={false}
+      className={bundleDeliveryBottomSheetContainer}
     >
       <div
         className={commonWrapper({
           direction: "col",
-          gap: 12,
+          overflowY: "auto",
           align: "start",
-          padding: 20,
+          justify: "start",
         })}
       >
-        <div>
-          <Text type="title4">어떤 구독 배송과 함께 보내드릴까요?</Text>
+        <div
+          className={commonWrapper({
+            direction: "col",
+            gap: 12,
+            align: "start",
+            padding: 20,
+          })}
+        >
+          <div>
+            <Text type="title4">어떤 구독 배송과 함께 보내드릴까요?</Text>
+          </div>
+          <Text type="body3" color="gray800">
+            현재 묶음 배송 가능한 구독 배송지가 아래에 표시돼요.
+            <br />
+            배송을 시작했거나 결제 전일 경우 묶음 배송이 불가능합니다.
+          </Text>
         </div>
-        <Text type="body3" color="gray800">
-          현재 묶음 배송 가능한 구독 배송지가 아래에 표시돼요.
-          <br />
-          배송을 시작했거나 결제 전일 경우 묶음 배송이 불가능합니다.
-        </Text>
+        <div
+          className={commonWrapper({
+            direction: "col",
+            padding: 20,
+            backgroundColors: "gray50",
+            gap: 12,
+          })}
+        >
+          {bundleDeliveryAddress.map((delivery) => (
+            <BundleDeliveryCard
+              key={delivery.id}
+              delivery={delivery}
+              onToggle={onToggle}
+              isSelected={isSelected(delivery.id)}
+            />
+          ))}
+        </div>
+        <ButtonDocked
+          type="dual-button"
+          primaryButtonLabel="변경하고 묶음 배송 신청하기"
+          secondaryButtonLabel="취소"
+          onPrimaryClick={handleBundleDelivery}
+          onSecondaryClick={handleCancelBundleDelivery}
+          primaryButtonSize="lg"
+          position="sticky"
+        />
       </div>
-      <div
-        className={commonWrapper({
-          direction: "col",
-          gap: 8,
-          padding: 20,
-          marginBottom: 85,
-          backgroundColors: "gray50",
-        })}
-      >
-        {bundleDeliveryAddress.map((delivery) => (
-          <BundleDeliveryCard
-            key={delivery.id}
-            delivery={delivery}
-            onToggle={onToggle}
-            isSelected={isSelected(delivery.id)}
-          />
-        ))}
-      </div>
-      <ButtonDocked
-        type="dual-button"
-        primaryButtonLabel="변경하고 묶음 배송 신청하기"
-        secondaryButtonLabel="취소"
-        onPrimaryClick={handleBundleDelivery}
-        onSecondaryClick={handleCancelBundleDelivery}
-        primaryButtonSize="lg"
-      />
     </BottomSheet>
   );
 }

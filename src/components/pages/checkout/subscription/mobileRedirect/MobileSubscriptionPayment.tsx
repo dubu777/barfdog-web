@@ -9,11 +9,11 @@ import { useValidateSubscriptionPayment } from "@/api/checkout/mutations/subscri
 import { useSuccessSubscriptionPayment } from "@/api/checkout/mutations/subscription/useSuccessSubscriptionPayment";
 import { useFailSubscriptionPayment } from "@/api/checkout/mutations/subscription/useFailSubscriptionPayment";
 import { parseSubscriptionParams } from "@/utils/checkout/redirectParams";
-import { mobilePaymentResultContainer } from "@/app/checkout/mobile-payment-redirect/MobilePaymentRedirect.css";
 import { useCancelSubscriptionPayment } from "@/api/checkout/mutations/subscription/useCancelSubscriptionPayment";
 import { CHECKOUT_ROUTES } from "@/constants";
 import { isPortoneUserCancel } from "@/utils/checkout/isPortoneUserCancel";
 import { PaymentMethod } from "@/types";
+import { commonWrapper } from "@/styles/common.css";
 
 export default function MobileSubscriptionPayment() {
   const router = useRouter();
@@ -142,7 +142,13 @@ export default function MobileSubscriptionPayment() {
   ]);
 
   return (
-    <div className={mobilePaymentResultContainer}>
+    <div
+      className={commonWrapper({
+        height: "full",
+        align: "center",
+        justify: "center",
+      })}
+    >
       <Spinner fullscreen />
     </div>
   );

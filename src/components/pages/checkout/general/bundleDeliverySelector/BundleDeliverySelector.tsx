@@ -79,7 +79,7 @@ export default function BundleDeliverySelector({
         </Text>
         <Text type="label2">주문 후 1-2일 이내 발송 예정</Text>
       </div>
-      {bundleDeliveryAddress.length > 1 ? (
+      {bundleDeliveryAddress.length > 0 ? (
         <div
           className={styles.bundleDeliveryBox({
             isSelected: isBundleDelivery,
