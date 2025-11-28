@@ -49,7 +49,7 @@ export default function MobileGeneralPayment() {
         if (errorMsg === "결제를 취소하였습니다.") {
           await cancelPayment(orderId);
           addToast("결제를 취소하였습니다.", "above-button");
-          router.push("/checkout/general");
+          router.push(CHECKOUT_ROUTES.GENERAL.order);
           return;
         }
 
@@ -59,14 +59,14 @@ export default function MobileGeneralPayment() {
             id: orderId,
             body: { impUid, merchantUid, discountReward, memberCouponId },
           });
-          router.push(CHECKOUT_ROUTES.GENERAL.success);
+          router.push(CHECKOUT_ROUTES.GENERAL.completed(orderId));
         } else {
           await failPayment(orderId);
-          router.push(CHECKOUT_ROUTES.GENERAL.fail);
+          router.push(CHECKOUT_ROUTES.GENERAL.failed);
         }
       } catch (e) {
         console.error("[MobileGeneralPaymentRedirect] 처리 실패:", e);
-        router.push(CHECKOUT_ROUTES.GENERAL.fail);
+        router.push(CHECKOUT_ROUTES.GENERAL.failed);
       }
     };
 

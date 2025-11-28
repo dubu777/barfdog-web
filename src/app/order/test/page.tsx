@@ -36,7 +36,7 @@ export default function GeneralShopTest() {
   const generalPaymentTest = () => {
     console.log("일반상점테스트");
     setItemList(itemList);
-    window.location.href = "/checkout/general";
+    window.location.href = "/checkout/general/order";
   };
 
   const handleSubscriptionOptions = async () => {

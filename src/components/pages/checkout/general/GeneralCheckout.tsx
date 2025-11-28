@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // API & Data Fetching
@@ -60,7 +60,7 @@ export default function GeneralCheckout() {
   const termsRef = useRef<HTMLDivElement>(null);
   const deliveryRef = useRef<HTMLDivElement>(null);
   // Store State
-  const { itemList } = usePersistOrderStore();
+  const { itemList, clearItemList } = usePersistOrderStore();
   const paymentPrice = usePaymentStore((s) => s.paymentPrice);
   const getRequestBody = useOrderStore((s) => s.getRequestBody);
   const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
@@ -119,6 +119,13 @@ export default function GeneralCheckout() {
     },
     paymentAdapter: iamportAdapter,
     strategy,
+    onPaymentFailed: () => {
+      router.push(CHECKOUT_ROUTES.GENERAL.failed);
+    },
+    onPaymentSuccess: (orderId) => {
+      clearItemList();
+      router.push(CHECKOUT_ROUTES.GENERAL.completed(orderId));
+    },
   });
 
   // 스크롤

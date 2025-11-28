@@ -5,13 +5,33 @@ import { commonWrapper, marginStyles, pointColor } from "@/styles/common.css";
 import { useRouter } from "next/navigation";
 import WarningIcon from "public/images/icons/warning-circle.svg";
 import { CHECKOUT_ROUTES } from "@/constants";
+import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
+import { OrderType } from "@/types";
 
 interface CheckoutFailedProps {
-  subscribeId: number;
+  subscribeId?: number;
+  orderType: OrderType;
 }
 
-export default function CheckoutFailed({ subscribeId }: CheckoutFailedProps) {
+export default function CheckoutFailed({
+  subscribeId,
+  orderType,
+}: CheckoutFailedProps) {
   const router = useRouter();
+  const { clearItemList } = usePersistOrderStore();
+  const handleGoToCheckout = () => {
+    if (orderType === "GENERAL") {
+      router.push(CHECKOUT_ROUTES.GENERAL.order);
+    } else {
+      router.push(CHECKOUT_ROUTES.SUBSCRIPTION.order(subscribeId!));
+    }
+  };
+  const handleGoToHome = () => {
+    if (orderType === "GENERAL") {
+      clearItemList();
+    }
+    router.push("/");
+  };
   return (
     <div
       className={commonWrapper({
@@ -55,12 +75,8 @@ export default function CheckoutFailed({ subscribeId }: CheckoutFailedProps) {
         primaryButtonSize="lg"
         primaryButtonLabel="상품 재구매"
         secondaryButtonLabel="홈으로"
-        onPrimaryClick={() => {
-          router.push(CHECKOUT_ROUTES.SUBSCRIPTION.order(subscribeId));
-        }}
-        onSecondaryClick={() => {
-          router.push("/");
-        }}
+        onPrimaryClick={handleGoToCheckout}
+        onSecondaryClick={handleGoToHome}
       />
     </div>
   );

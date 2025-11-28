@@ -1,4 +1,4 @@
-import { GeneralItem, GeneralItemRequest } from "@/types";
+import { GeneralItemRequest } from "@/types";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -17,7 +17,7 @@ export const usePersistOrderStore = create(
     }),
     {
       name: "general-order",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
