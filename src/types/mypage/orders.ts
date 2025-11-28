@@ -1,11 +1,18 @@
-import { DELIVERY_COMPANY_CODE, ORDER_STATUS, ORDER_TYPE, ORDER_TYPE_TO_SERVER_PARAM, VISIBLE_ORDER_STATUS } from "@/constants/mypage/orders";
+import {
+  DELIVERY_COMPANY_CODE,
+  ORDER_STATUS,
+  ORDER_TYPE,
+  ORDER_TYPE_TO_SERVER_PARAM,
+  VISIBLE_ORDER_STATUS,
+} from "@/constants/mypage/orders";
 import { Page } from "../common";
 import { PaymentMethod } from "../checkout";
 import { ITEM_FILTER_CATEGORY } from "@/constants/store";
 import { PlanKey } from "../subscription";
 
 type OrderType = keyof typeof ORDER_TYPE;
-type OrderTypeServerParam = typeof ORDER_TYPE_TO_SERVER_PARAM[keyof typeof ORDER_TYPE_TO_SERVER_PARAM];
+type OrderTypeServerParam =
+  (typeof ORDER_TYPE_TO_SERVER_PARAM)[keyof typeof ORDER_TYPE_TO_SERVER_PARAM];
 
 type DeliveryCompanyCode = keyof typeof DELIVERY_COMPANY_CODE;
 
@@ -53,8 +60,8 @@ interface ItemNameList {
 
 interface RawOrderList {
   subscriptionOrderList: RawSubscriptionOrder[];
-	generalOrderList: RawGeneralOrder[];
-	page: Page;
+  generalOrderList: RawGeneralOrder[];
+  page: Page;
 }
 
 // 통합된 주문 정보 타입
@@ -65,7 +72,7 @@ interface UnifiedOrderInfo {
   orderDate: string;
   paymentPrice: number;
   orderStatus: OrderStatus;
-  
+
   // 구독
   subscribeId?: number;
   dogName?: string;
@@ -129,7 +136,7 @@ interface OrderItem {
   orderItemId: number;
   thumbnailUrl: string;
   selectOptionList: SelectOption[];
-  selectOptionDtoList?: SelectOption[];
+  ItemOptionDtoList?: SelectOption[];
   itemId: number;
   itemName: string;
   amount: number;
@@ -193,13 +200,13 @@ interface RecipeInfo {
 }
 
 interface RawGeneralOrderDetail {
-  orderItemDtoList: OrderItem[];
+  itemList: OrderItem[];
   savedRewardTotal: number;
   orderDto: OrderInfo;
 }
 
 interface RawSubscriptionOrderDetail {
-  orderDto: Omit<OrderInfo, 'orderId'>;
+  orderDto: Omit<OrderInfo, "orderId">;
   recipeDto: RecipeInfo;
   recipeNames: string;
 }
@@ -209,7 +216,7 @@ interface OrderDetail {
   orderInfo: OrderInfo;
 
   // 일반
-  orderItemInfoList?: OrderItem[],
+  orderItemInfoList?: OrderItem[];
   savedRewardTotal?: number;
 
   // 구독

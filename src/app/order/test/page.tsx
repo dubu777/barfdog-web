@@ -9,30 +9,33 @@ import { AUTH_CONFIG } from "@/constants/auth";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { authAxios } from "@/api/axiosInstance";
 import { useGetAddressList } from "@/api/address/queries/useGetAddressList";
+import { useGetGeneralCheckout } from "@/api/checkout/queries/useGetGeneralCheckout";
 
 export default function GeneralShopTest() {
   const router = useRouter();
-  const { setOrderItemDtoList } = usePersistOrderStore();
+  const { setItemList } = usePersistOrderStore();
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
   const { data } = useGetAddressList();
   const isLogin = isAuthenticated(token);
   console.log("isLogin", isLogin);
   console.log("address data", data);
 
-  const orderItemListData = [
+  const itemList = [
     {
-      itemId: 10,
+      id: 10,
       amount: 1,
-      selectOptionDtoList: [
-        // { itemOptionId: 18, amount: 1 },
-        // { itemOptionId: 19, amount: 1 },
+      itemOptionList: [
+        { id: 18, amount: 1 },
+        { id: 14, amount: 1 },
       ],
     },
   ];
+  const { data: generalOrderData } = useGetGeneralCheckout({ itemList });
+  console.log("generalOrderData", generalOrderData);
 
   const generalPaymentTest = () => {
     console.log("일반상점테스트");
-    setOrderItemDtoList(orderItemListData);
+    setItemList(itemList);
     window.location.href = "/checkout/general";
   };
 

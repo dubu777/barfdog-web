@@ -8,7 +8,7 @@ import {
 } from "@/utils/validation/subscriptionValidation";
 import DeliveryOptions from "./deliveryOptions/DeliveryOptions";
 import SubscribeProgressBar from "./subscribeProgressBar/SubscribeProgressBar";
-import { subscribeStepMap } from "@/constants";
+import { CHECKOUT_ROUTES, subscribeStepMap } from "@/constants";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { useCallback, useState } from "react";
 import { SubscriptionStep, SubscriptionValues } from "@/types";
@@ -102,10 +102,13 @@ export default function SubscriptionOrderSheet({
         },
       };
 
-      console.log("updateBody", updateBody);
       updateSubscription(updateBody, {
         onSuccess: () => {
-          router.push(`/checkout/subscription/${orderSheetData.subscribeId}`);
+          if (orderSheetData.subscribeId) {
+            router.push(
+              CHECKOUT_ROUTES.SUBSCRIPTION.order(orderSheetData.subscribeId)
+            );
+          }
         },
       });
     } else {
@@ -117,17 +120,13 @@ export default function SubscriptionOrderSheet({
         },
       };
 
-      console.log("createBody", createBody);
       createSubscription(createBody, {
         onSuccess: (data) => {
-          router.push(`/checkout/subscription/${data.subscribeId}`);
+          router.push(CHECKOUT_ROUTES.SUBSCRIPTION.order(data.subscribeId));
         },
       });
     }
   };
-
-  console.log("orderSheetData", orderSheetData);
-  console.log("watch", form.watch());
 
   const primaryLabel = step === "deliveryCycle" ? "결제하러 가기" : "주문하기";
   const handleAction =

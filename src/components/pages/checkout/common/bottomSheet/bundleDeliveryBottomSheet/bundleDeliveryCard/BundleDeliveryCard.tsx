@@ -1,60 +1,44 @@
-import LabeledRadioButton from "@/components/ui/labeledRadioButton/LabeledRadioButton";
-import * as styles from "./BundleDeliveryCard.css";
 import Text from "@/components/ui/text/Text";
-import { BundleDeliveryAddress, DeliveryAddress } from "@/types";
+import { DeliveryAddress } from "@/types";
 import { commonWrapper } from "@/styles/common.css";
+import UnCheckedIcon from "/public/images/option/unchecked_radio.svg";
+import CheckedIcon from "/public/images/option/checked_selection.svg";
+import DeliveryContent from "@/components/domain/delivery/deliveryContent/DeliveryContent";
+import Divider from "@/components/ui/divider/Divider";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import Card from "@/components/ui/card/Card";
 
 interface BundleDeliveryCardProps {
-  address: DeliveryAddress;
+  delivery: DeliveryAddress;
   isSelected: boolean;
   onToggle: (value: number) => void;
 }
 
 export default function BundleDeliveryCard({
-  address,
+  delivery,
   isSelected,
   onToggle,
 }: BundleDeliveryCardProps) {
+  const handleClick = () => {
+    onToggle(delivery.id);
+  };
   return (
-    <div className={styles.bundleBottomSheetCardBox({ isSelected })}>
-      <LabeledRadioButton
-        value={address.id}
-        isChecked={isSelected}
-        onToggle={onToggle}
-        optionType="selection"
+    <Card
+      padding={12}
+      border={isSelected ? "red" : "gray200"}
+      onClick={handleClick}
+      hoverShadow
+    >
+      <div
+        className={commonWrapper({ gap: 8, direction: "col", align: "start" })}
       >
-        <div
-          className={commonWrapper({
-            direction: "col",
-            gap: 4,
-            align: "start",
-          })}
-        >
-          <div className={styles.bundleDeliveryCardTitleWrapper}>
-            <Text type="headline2">
-              {address.deliveryName ?? address.recipientName}
-            </Text>
-          </div>
-          <div
-            className={commonWrapper({
-              direction: "col",
-              gap: 2,
-              align: "start",
-            })}
-          >
-            <div className={commonWrapper({ gap: 4, justify: "start" })}>
-              <Text type="body3">
-                {address.deliveryName ?? address.recipientName}
-              </Text>
-              <Text type="body3">•</Text>
-              <Text type="body3">{address.phoneNumber}</Text>
-            </div>
-            <Text type="body3">
-              {address.street} {address.detailAddress}
-            </Text>
-          </div>
+        <div className={commonWrapper({ gap: 8, justify: "start" })}>
+          <SvgIcon src={isSelected ? CheckedIcon : UnCheckedIcon} />
+          <Text type="headline2">{delivery.petName}</Text>
         </div>
-      </LabeledRadioButton>
-    </div>
+        <Divider thickness={1} color="gray200" />
+        <DeliveryContent deliveryDto={delivery} />
+      </div>
+    </Card>
   );
 }

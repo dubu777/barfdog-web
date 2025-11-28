@@ -6,7 +6,7 @@ import {
   SubscribeRecipeItem,
 } from "./subscription";
 import { DiscountType, UrlObject } from "./common";
-import { DeliveryAddress } from "./delivery";
+import { DeliveryAddress, DeliveryRequest } from "./delivery";
 
 interface SuccessGeneralPaymentRequest {
   impUid: string;
@@ -24,7 +24,7 @@ interface SaveOrderResponse {
 
 // 일반 결제 주문 정보 저장 요청
 interface SaveGeneralOrderRequest {
-  orderItemDtoList: OrderItemDto[];
+  itemList: GeneralItem[];
   deliveryDto: DeliveryAddress;
   deliveryId: number | null;
   orderPrice: number;
@@ -37,18 +37,6 @@ interface SaveGeneralOrderRequest {
   memberCouponId: number | null;
   paymentMethod: PaymentMethod;
   agreePrivacy: boolean;
-}
-// 각 상품 정보 타입
-interface OrderItemDto {
-  itemId: number; // 상품 ID
-  amount: number; // 상품 수량
-  selectOptionDtoList: SelectOptionDto[]; // 상품 옵션 목록
-}
-
-// 상품 옵션 정보 타입1
-interface SelectOptionDto {
-  itemOptionId: number; // 옵션 ID
-  amount: number; // 옵션 수량
 }
 
 // 배송 정보 타입
@@ -74,27 +62,7 @@ interface GeneralOrderItemRequest {
 
 // 일반 주문 시트 조회 요청
 interface GeneralOrderSheetRequest {
-  orderItemDtoList: OrderItemDto[];
-}
-
-interface OptionDto {
-  amount: number;
-  name: string;
-  optionId: number;
-  price: number;
-}
-
-interface GeneralOrderItem {
-  itemId: number;
-  itemSalePrice: number; // 자체 할인 후 상품 + 옵션 가격 총 가격
-  itemOriginalPrice: number; // 상품 원금 + 옵션 가격 총 가격
-  name: string;
-  itemType: string;
-  optionDtoList?: OptionDto[];
-  amount: number;
-  deliveryFree: boolean;
-  discountedItemAndOptionPrice: number;
-  itemImageFilename: UrlObject;
+  itemList: GeneralItemRequest[];
 }
 
 interface DefaultAddress {
@@ -127,7 +95,7 @@ type OrderStatus =
 
 // 일반 주문 시트 조회 응답
 interface GeneralOrderSheetResponse {
-  orderItemDtoList: GeneralOrderItem[];
+  itemList: GeneralItem[];
   defaultAddress: DefaultAddress;
   deliveryAddress: DeliveryAddress[];
   deliveryPrice: number;
@@ -254,7 +222,7 @@ interface OrderCancel {
   cancelConfirmDate: string;
 }
 
-interface SelectOptionDtoList {
+interface ItemOptionDtoList {
   itemOptionId: number;
   amount: number;
 }
@@ -262,7 +230,7 @@ interface SelectOptionDtoList {
 interface OrderItemDtoList {
   orderItemId: number;
   thumbnailUrl: string;
-  selectOptionDtoList: SelectOptionDtoList[];
+  ItemOptionDtoList: ItemOptionDtoList[];
   itemId: number;
   itemName: string;
   amount: number;
@@ -332,14 +300,14 @@ interface OrderCancel {
   cancelConfirmDate: string;
 }
 
-interface SelectOptionDtoList {
+interface ItemOptionDtoList {
   itemOptionId: number;
   amount: number;
 }
 
 interface OrderDetailData {
   orderDto: OrderDetailDto;
-  orderItemDtoList: OrderItemDtoList[];
+  itemList: OrderItemDtoList[];
   savedRewardTotal: number;
   recipeNames?: string;
 }
@@ -444,7 +412,7 @@ interface PrepareSubscriptionPaymentRequest {
 }
 
 interface DeliveryInfoRequest {
-  address: DeliveryAddress;
+  address: DeliveryRequest;
   currentDeliveryDate: string;
 }
 
@@ -517,6 +485,70 @@ interface SuccessSubscriptionRecipeItem {
   totalOriginalPrice: number;
 }
 
+interface GeneralMemberInfo {
+  id: number;
+  availableReward: number;
+}
+
+interface GeneralPaymentInfo {
+  originalPrice: number;
+  discountProduct: number;
+  deliveryPrice: number;
+  freeCondition: number;
+}
+
+interface GeneralItemOption {
+  id: number;
+  name: string;
+  amount: number;
+  totalOriginalPrice: number;
+}
+
+interface GeneralItem {
+  id: number;
+  name: string;
+  displayImageUrl: UrlObject;
+  amount: number;
+  totalOriginalPrice: number;
+  totalSalePrice: number;
+  totalDiscountProduct: number;
+  deliveryFree: boolean;
+  // 필요하면 나중에 'RAW' | 'TOPPING' 같은 유니온 타입으로 좁혀도 됨
+  type: string;
+  itemOptionList: GeneralItemOption[];
+}
+
+interface PackageableDelivery {
+  id: number;
+  petName: string;
+  deliveryName: string;
+  recipientName: string;
+  phoneNumber: string;
+  zipcode: string;
+  street: string;
+  detailAddress: string;
+  request: string;
+  deliveryDate: string; // "YYYY-MM-DD"
+}
+
+interface GetGeneralCheckoutResponse {
+  memberInfo: GeneralMemberInfo;
+  paymentInfo: GeneralPaymentInfo;
+  defaultAddress: DefaultAddress;
+  itemList: GeneralItem[];
+  // 백엔드 필드명이 pakageableDeliveryList 인 것 그대로 사용
+  pakageableDeliveryList: PackageableDelivery[];
+}
+
+interface GeneralItemRequest {
+  id: number;
+  amount: number;
+  itemOptionList: {
+    id: number;
+    amount: number;
+  }[];
+}
+
 type PaymentMethod = keyof typeof PAYMENT_METHOD;
 
 type OrderDetailType = "general" | "subscribe";
@@ -538,8 +570,7 @@ export type {
   OrderDetailType,
   GeneralOrderSheetResponse,
   GeneralOrderSheetRequest,
-  GeneralOrderItem,
-  OrderItemDto,
+  GeneralItem,
   OrderItem,
   GeneralOrderItemRequest,
   SaveOrderResponse,
@@ -571,4 +602,10 @@ export type {
   SuccessSubscriptionPaymentInfo,
   SuccessSubscriptionPlanInfo,
   SuccessSubscriptionRecipeItem,
+  GeneralItemOption,
+  GetGeneralCheckoutResponse,
+  PackageableDelivery,
+  GeneralMemberInfo,
+  GeneralPaymentInfo,
+  GeneralItemRequest,
 };

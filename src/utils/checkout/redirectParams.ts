@@ -67,10 +67,8 @@ export type SubscriptionRedirectParams = {
   buyer_addr: string;
   buyer_postcode: string;
   paymentMethod: string;
-
   errorMsg?: string;
-  subscribeId?: string;
-  from?: "app" | "web";
+  subscribeId?: number;
 };
 
 export function parseSubscriptionParams(
@@ -92,14 +90,14 @@ export function parseSubscriptionParams(
   const paymentMethod = sp.get("payment_method") ?? "";
 
   const errorMsg = sp.get("error_msg") ?? undefined;
-  const subscribeId = sp.get("subscription_Id") ?? undefined;
-  const from = (sp.get("from") as "app" | "web") ?? "web";
+  const subscribeIdStr = sp.get("subscription_Id") ?? undefined;
 
   if (
     !imp_uid ||
     !imp_success ||
     !merchantUid ||
     !orderIdStr ||
+    !subscribeIdStr ||
     !customerUid ||
     !amountStr ||
     !paymentMethod
@@ -108,9 +106,15 @@ export function parseSubscriptionParams(
   }
 
   const orderId = Number(orderIdStr);
+  const subscribeId = Number(subscribeIdStr);
   const amount = Number(amountStr);
 
-  if (Number.isNaN(orderId) || Number.isNaN(amount)) return null;
+  if (
+    Number.isNaN(orderId) ||
+    Number.isNaN(amount) ||
+    Number.isNaN(subscribeId)
+  )
+    return null;
 
   return {
     impUid: imp_uid,
@@ -128,6 +132,5 @@ export function parseSubscriptionParams(
     paymentMethod,
     errorMsg,
     subscribeId,
-    from,
   };
 }

@@ -8,14 +8,14 @@
 // import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 // import { useRouter } from "next/navigation";
 // import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
-// import { useGetGeneralCheckoutSheet } from "@/api/checkout/queries/useGetGeneralCheckoutSheet";
+// import { useGetGeneralCheckout } from "@/api/checkout/queries/useGetGeneralCheckout";
 // import Spinner from "@/components/ui/spinner/Spinner";
 // import GeneralItemInfo from "../../common/completed/generalItemInfo.tsx/GeneralItemInfo";
 
 // export default function GeneralOrderCompleted({}) {
-//   const { orderItemDtoList, clearOrderItemDtoList } = usePersistOrderStore();
-//   const { data: generalOrderData, isPending } = useGetGeneralCheckoutSheet({
-//     orderItemDtoList,
+//   const { itemList, clearItemList } = usePersistOrderStore();
+//   const { data: generalOrderData, isPending } = useGetGeneralCheckout({
+//     itemList,
 //   });
 //   const router = useRouter();
 //   const deliveryDto = {
@@ -35,11 +35,11 @@
 //   }
 
 //   const handleGoToDetail = () => {
-//     clearOrderItemDtoList();
+//     clearItemList();
 //   };
 
 //   const handleGoToHome = () => {
-//     clearOrderItemDtoList();
+//     clearItemList();
 //     router.push("/");
 //   };
 
@@ -55,7 +55,7 @@
 //       </div>
 //       <DeliveryInfo deliveryDto={deliveryDto} />
 //       <PaymentInfo paymentPrice={13000} paymentMethod="NAVER_PAY" />
-//       <GeneralItemInfo orderItemDtoList={generalOrderData.orderItemDtoList} />
+//       <GeneralItemInfo itemList={generalOrderData.itemList} />
 //       <ButtonDocked
 //         type="dual-button"
 //         primaryButtonLabel="구독 상세보기"

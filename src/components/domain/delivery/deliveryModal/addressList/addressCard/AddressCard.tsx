@@ -8,6 +8,7 @@ import { useDeleteAddress } from "@/api/address/mutations/useDeleteAddress";
 import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
 import useModal from "@/hooks/useModal";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
+import Card from "@/components/ui/card/Card";
 
 interface AddressCardProps {
   address: DeliveryAddress;
@@ -24,7 +25,7 @@ export default function AddressCard({
   const { isOpen, onClose, onToggle } = useModal();
   const deliveryDto = useDeliveryStore((state) => state.deliveryDto);
   const isDefaultAddress = address.isDefault;
-  const isSelectedAddress = deliveryDto?.id === address.id;
+  const isSelected = deliveryDto?.id === address.id;
   const handleSelect = () => {
     onSelectAddress(address);
   };
@@ -40,11 +41,13 @@ export default function AddressCard({
   };
 
   return (
-    <div
-      className={addressCardContainer({
-        isSelectedAddress,
-      })}
-      key={address.id}
+    <Card
+      paddingX={20}
+      paddingTop={20}
+      paddingBottom={16}
+      gap={12}
+      hoverShadow
+      border={isSelected ? "red" : "gray200"}
     >
       <div
         className={commonWrapper({
@@ -123,6 +126,6 @@ export default function AddressCard({
         onConfirm={confirmDelete}
         onCancel={() => onClose()}
       />
-    </div>
+    </Card>
   );
 }

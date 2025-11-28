@@ -10,17 +10,19 @@ import { useToggleOption } from "@/hooks/useToggleOption";
 import BundleDeliveryBottomSheet from "../../common/bottomSheet/bundleDeliveryBottomSheet/BundleDeliveryBottomSheet";
 import useModal from "@/hooks/useModal";
 import AlertModal from "@/components/ui/modal/alertModal/AlertModal";
+import { commonWrapper } from "@/styles/common.css";
+import InfoBox from "@/components/ui/infoBox/InfoBox";
+import InfoIcon from "/public/images/icons/info.svg";
+import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
+import InfoText from "@/components/ui/typography/infoText/InfoText";
 
 interface BundleDeliverySelectorProps {
   bundleDeliveryAddress: DeliveryAddress[];
-  orderStatus: OrderStatus;
 }
 
 export default function BundleDeliverySelector({
   bundleDeliveryAddress,
-  orderStatus,
 }: BundleDeliverySelectorProps) {
-  // const []
   const {
     isBundleDelivery,
     backupDeliveryDto,
@@ -43,14 +45,6 @@ export default function BundleDeliverySelector({
     "checkbox",
     setIsBundleDelivery
   );
-  const isAvailableBundle = orderStatus === "SUBSCRIBE_ORDER";
-  const title = isAvailableBundle
-    ? ORDER_MESSAGE.BUNDLE_DELIVERY_TITLE
-    : ORDER_MESSAGE.BUNDLE_DELIVERY_UNAVAILABLE_TITLE;
-  const subtitle = isAvailableBundle
-    ? ORDER_MESSAGE.BUNDLE_DELIVERY_SUBTITLE
-    : ORDER_MESSAGE.BUNDLE_DELIVERY_UNAVAILABLE_SUBTITLE;
-  const fontColor = isAvailableBundle ? "gray900" : "gray500";
 
   // 모달 변경 버튼 클릭 - 묶음 배송 해제
   const handleCancelBundleDelivery = () => {
@@ -67,7 +61,6 @@ export default function BundleDeliverySelector({
 
   // 묶음 배송 체크 박스 토글 함수
   const handleToggleCheckBox = () => {
-    if (!isAvailableBundle) return;
     const newValue = !isBundleDelivery;
     onCheckBoxToggle(newValue);
 
@@ -86,37 +79,80 @@ export default function BundleDeliverySelector({
         </Text>
         <Text type="label2">주문 후 1-2일 이내 발송 예정</Text>
       </div>
-      <div
-        className={styles.bundleDeliveryBox({
-          isSelected: isBundleDelivery,
-          isAvailableBundle,
-        })}
-      >
-        <LabeledCheckbox
-          value={true}
-          isChecked={isSelected(true)}
-          onToggle={handleToggleCheckBox}
+      {bundleDeliveryAddress.length > 1 ? (
+        <div
+          className={styles.bundleDeliveryBox({
+            isSelected: isBundleDelivery,
+          })}
         >
-          <div className={styles.bundleDeliveryContentWrapper}>
-            <Text type="headline2" color={fontColor}>
-              {title}
-            </Text>
-            <Text type="body3" color={fontColor}>
-              {subtitle}
-            </Text>
+          <LabeledCheckbox
+            value={true}
+            isChecked={isSelected(true)}
+            onToggle={handleToggleCheckBox}
+          >
+            <div
+              className={commonWrapper({
+                gap: 4,
+                direction: "col",
+                align: "start",
+              })}
+            >
+              <Text type="headline2">
+                {ORDER_MESSAGE.BUNDLE_DELIVERY_TITLE}
+              </Text>
+              <Text type="body3" color="gray700">
+                {ORDER_MESSAGE.BUNDLE_DELIVERY_SUBTITLE}
+              </Text>
+            </div>
+          </LabeledCheckbox>
+        </div>
+      ) : (
+        <InfoBox type="info" color="blue" fullWidth>
+          <div
+            className={commonWrapper({
+              gap: 8,
+              direction: "col",
+              align: "start",
+            })}
+          >
+            <div className={commonWrapper({ gap: 4, justify: "start" })}>
+              <SvgIcon src={InfoIcon} color="blue500" />
+              <Text type="headline2" color="blue500">
+                {ORDER_MESSAGE.BUNDLE_DELIVERY_INFO_TITLE}
+              </Text>
+            </div>
+            <div
+              className={commonWrapper({
+                gap: 2,
+                direction: "col",
+                align: "start",
+              })}
+            >
+              {(ORDER_MESSAGE.BUNDLE_DELIVERY_INFO_CONTENT as string[]).map(
+                (content) => (
+                  <InfoText
+                    key={content}
+                    type="body3"
+                    color="gray700"
+                    text={content}
+                  />
+                )
+              )}
+            </div>
           </div>
-        </LabeledCheckbox>
-      </div>
+        </InfoBox>
+      )}
       <BundleDeliveryBottomSheet
         bundleDeliveryAddress={bundleDeliveryAddress}
         isOpen={isBottomSheetOpen}
         onClose={onBottomSheetClose}
       />
       <AlertModal
-        title="배송지를 변경하시겠어요?"
-        content="배송지 변경하기 버튼을 누르시면 묶음 배송 신청이 취소돼요"
-        cancelText="묶음 배송 유지하기"
-        confirmText="묶음 배송 취소하기"
+        title={ORDER_MESSAGE.BUNDLE_DELIVERY_MODAL_TITLE as string}
+        content={ORDER_MESSAGE.BUNDLE_DELIVERY_MODAL_CONTENT as string}
+        cancelText="취소"
+        confirmText="해제하기"
+        buttonPosition="center"
         isOpen={isModalOpen}
         onClose={onModalClose}
         onCancel={handleKeepBundleDelivery}

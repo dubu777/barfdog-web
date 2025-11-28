@@ -1,12 +1,22 @@
-export type { DeliveryAddress, AddressRequest };
-
 interface DeliveryAddress {
   id: number;
   deliveryName: string;
   recipientName: string;
   phoneNumber: string;
   zipcode: string;
-  city: string;
+  city?: string;
+  street: string;
+  detailAddress: string;
+  isDefault: boolean;
+  request: string;
+  petName?: string;
+}
+
+interface DeliveryRequest {
+  deliveryName: string;
+  recipientName: string;
+  phoneNumber: string;
+  zipcode: string;
   street: string;
   detailAddress: string;
   isDefault: boolean;
@@ -24,3 +34,5 @@ interface AddressRequest {
   request: string;
   isDefault: boolean;
 }
+
+export type { DeliveryAddress, AddressRequest, DeliveryRequest };

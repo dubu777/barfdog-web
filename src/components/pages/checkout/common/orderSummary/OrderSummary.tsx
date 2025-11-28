@@ -3,7 +3,7 @@
 import { orderCalculation } from "@/utils/checkout/orderCalculation";
 import * as styles from "../../OrderSheetCommon.css";
 import { ORDER_TYPE } from "@/constants";
-import { GeneralOrderItem, OrderType } from "@/types";
+import { GeneralItem, OrderType } from "@/types";
 import { formatNumberWithCommas } from "@/utils";
 import { useEffect, useMemo } from "react";
 import { useRewardStore } from "@/store/checkout/useRewardStore";
@@ -18,24 +18,22 @@ import { usePaymentStore } from "@/store/checkout/usePaymentStore";
 interface OrderSummaryPropsProps {
   orderType: OrderType;
   originalPrice: number; // 원금
-  discountPlan?: number; // 일반 주문: (원금 - 상품 할인금액) , 구독 주문: (원금 - 플랜 할인금액)  => 이 가격에 쿠폰 및 등급할인을 적용한다.
-  discountItem?: number;
+  discountDefault?: number; // 일반 주문: (원금 - 관리자 상품 할인금액) , 구독 주문: (원금 - 플랜 할인금액)
   freeCondition?: number; // 배송비 무료를 위한 최소 금액
   deliveryPrice?: number;
   discountGrade?: number; // 등급 할인 금액
-  orderItemDtoList?: GeneralOrderItem[];
+  itemList?: GeneralItem[];
   plan?: string;
 }
 
 export default function OrderSummary({
   orderType,
   originalPrice,
-  discountPlan = 0,
-  discountItem = 0,
+  discountDefault = 0,
   freeCondition,
   deliveryPrice,
   discountGrade = 0,
-  orderItemDtoList,
+  itemList,
   plan,
 }: OrderSummaryPropsProps) {
   const { userTotalReward, appliedReward, setMaxAvailableReward } =
@@ -49,8 +47,6 @@ export default function OrderSummary({
   } = usePaymentStore();
 
   const isBundleDelivery = useDeliveryStore((state) => state.isBundleDelivery);
-  const discountDefault =
-    orderType === "SUBSCRIBE" ? discountPlan : discountItem;
 
   const calculation = useMemo(() => {
     return orderCalculation({
@@ -62,7 +58,7 @@ export default function OrderSummary({
       discountDefault,
       freeCondition,
       deliveryPrice,
-      orderItemDtoList,
+      itemList,
       discountCoupon: appliedCoupon?.discountAmount,
       appliedCouponDiscount: appliedCoupon?.appliedDiscountAmount,
     });
@@ -72,11 +68,10 @@ export default function OrderSummary({
     isBundleDelivery,
     userTotalReward,
     appliedReward,
-    discountPlan,
-    discountItem,
+    discountDefault,
     freeCondition,
     deliveryPrice,
-    orderItemDtoList,
+    itemList,
     appliedCoupon,
     plan,
     originalPrice,
@@ -102,7 +97,7 @@ export default function OrderSummary({
     maxAvailableCoupon,
     maxAvailableReward,
     deliveryFee,
-    discountPlan,
+    discountDefault,
     finalPaymentAmount,
     setMaxAvailableCouponDiscount,
     setMaxAvailableReward,
@@ -122,7 +117,7 @@ export default function OrderSummary({
             plainColor
             plus
           />
-          <OrderSummaryRow label="구독 할인" value={discountPlan} />
+          <OrderSummaryRow label="구독 할인" value={discountDefault} />
           <OrderSummaryRow label="등급 할인" value={discountGrade} />
           <OrderSummaryRow
             label="쿠폰 할인"
@@ -157,7 +152,7 @@ export default function OrderSummary({
             plainColor
             plus
           />
-          <OrderSummaryRow label="상품 할인" value={discountItem} />
+          <OrderSummaryRow label="상품 할인" value={discountDefault} />
           <OrderSummaryRow
             label="쿠폰 할인"
             value={appliedCoupon?.appliedDiscountAmount ?? 0}

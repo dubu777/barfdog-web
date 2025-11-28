@@ -4,7 +4,7 @@ import { recipe } from "@vanilla-extract/recipes";
 export const addressCardContainer = recipe({
   base: {
     display: "flex",
-    flexDirection: 'column',
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
     width: "100%",
@@ -27,4 +27,3 @@ export const addressCardContainer = recipe({
     isSelectedAddress: false,
   },
 });
-

@@ -19,9 +19,7 @@ export default function DeliveryContent({
       {deliveryDto ? (
         <>
           <div className={commonWrapper({ justify: "start", gap: 8 })}>
-            <Text type="headline2">
-              {deliveryDto.deliveryName ?? deliveryDto.recipientName}
-            </Text>
+            <Text type="headline2">{deliveryDto.deliveryName}</Text>
             {deliveryDto.isDefault && (
               <Chips
                 variant="outlined"

@@ -51,6 +51,7 @@ export function createSubscriptionStrategy(deps: {
         subscriptionOrderSheetData: sheet,
         isMobileDevice: isMobile,
         orderId,
+        subscribeId: sheet.subscribeInfo.id,
         merchantUid,
         from: deps.isWebView ? "app" : "web",
       }),
@@ -119,7 +120,7 @@ export function createSubscriptionStrategy(deps: {
         paymentMethod: requestBody.paymentInfo.paymentMethod,
       };
 
-      // (3) 성공/위변조 실패 처리
+      // (3) 성공/위변조 처리
       if (isValid) {
         await deps.successPayment({
           orderId: preparePayment.id,

@@ -1,19 +1,19 @@
-import { OrderItemDto } from "@/types";
+import { GeneralItem, GeneralItemRequest } from "@/types";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface PersistOrderStore {
-  orderItemDtoList: OrderItemDto[];
-  setOrderItemDtoList: (items: OrderItemDto[]) => void;
-  clearOrderItemDtoList: () => void;
+  itemList: GeneralItemRequest[];
+  setItemList: (items: GeneralItemRequest[]) => void;
+  clearItemList: () => void;
 }
 
 export const usePersistOrderStore = create(
   persist<PersistOrderStore>(
     (set) => ({
-      orderItemDtoList: [],
-      setOrderItemDtoList: (items) => set({ orderItemDtoList: items }),
-      clearOrderItemDtoList: () => set({ orderItemDtoList: [] }),
+      itemList: [],
+      setItemList: (items) => set({ itemList: items }),
+      clearItemList: () => set({ itemList: [] }),
     }),
     {
       name: "general-order",

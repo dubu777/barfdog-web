@@ -1,11 +1,11 @@
 import BottomSheet from "@/components/ui/bottomSheet/BottomSheet";
-import * as styles from "./BundleDeliveryBottomSheet.css";
 import Text from "@/components/ui/text/Text";
 import { DeliveryAddress } from "@/types";
 import BundleDeliveryCard from "./bundleDeliveryCard/BundleDeliveryCard";
 import { useToggleOption } from "@/hooks/useToggleOption";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
+import { commonWrapper } from "@/styles/common.css";
 
 interface BundleDeliveryBottomSheetProps {
   bundleDeliveryAddress: DeliveryAddress[];
@@ -61,22 +61,38 @@ export default function BundleDeliveryBottomSheet({
       onClose={onClose}
       closeOnBackgroundClick={false}
     >
-      <div className={styles.bundleBottomSheetTitleWrapper}>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          gap: 12,
+          align: "start",
+          padding: 20,
+        })}
+      >
         <div>
-          <Text type="title4">묶음 배송은 정기 구독 배송지와</Text>
-          <Text type="title4">동일한 배송지로 설정할 수 있어요</Text>
+          <Text type="title4">어떤 구독 배송과 함께 보내드릴까요?</Text>
         </div>
         <Text type="body3" color="gray800">
-          배송지를 변경하고 묶음배송을 신청하시겠어요?
+          현재 묶음 배송 가능한 구독 배송지가 아래에 표시돼요.
+          <br />
+          배송을 시작했거나 결제 전일 경우 묶음 배송이 불가능합니다.
         </Text>
       </div>
-      <div className={styles.bundleBottomSheetCardWrapper}>
-        {bundleDeliveryAddress.map((address) => (
+      <div
+        className={commonWrapper({
+          direction: "col",
+          gap: 8,
+          padding: 20,
+          marginBottom: 85,
+          backgroundColors: "gray50",
+        })}
+      >
+        {bundleDeliveryAddress.map((delivery) => (
           <BundleDeliveryCard
-            key={address.id}
-            address={address}
+            key={delivery.id}
+            delivery={delivery}
             onToggle={onToggle}
-            isSelected={isSelected(address.id)}
+            isSelected={isSelected(delivery.id)}
           />
         ))}
       </div>

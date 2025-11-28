@@ -8,7 +8,6 @@ import {
   infoBoxColor,
   infoBoxStyle,
   infoTextStyle,
-  infoBoxFullWidth,
 } from "@/components/ui/infoBox/InfoBox.css";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import { COLORS } from "@/constants/style";
@@ -19,9 +18,10 @@ interface InfoBoxProps {
   color?: "red" | "blue" | "gray";
   align?: "start" | "center";
   showRightArrowButton?: boolean;
-  text: string | ReactNode;
+  text?: string | ReactNode;
   fullWidth?: boolean;
   onClick?: () => void;
+  children?: ReactNode;
   style?: React.CSSProperties;
   className?: string;
 }
@@ -34,6 +34,7 @@ export default function InfoBox({
   text,
   fullWidth = false,
   onClick,
+  children,
   style,
   className = "",
 }: InfoBoxProps) {
@@ -48,20 +49,25 @@ export default function InfoBox({
 
   return (
     <div
-      className={`${infoBoxBase} ${infoBoxColor[color]} ${
+      className={`${infoBoxBase({ fullWidth })} ${infoBoxColor[color]} ${
         infoBoxClickEvent[!!onClick ? "true" : "false"]
-      } ${fullWidth ? infoBoxFullWidth : ""} ${className}`}
+      } ${className}`}
       onClick={onClick || undefined}
       style={style}
     >
       <div className={infoBoxStyle({ align })}>
-        <SvgIcon
-          src={type === "help" ? HelpIcon : InfoIcon}
-          color={iconColor}
-        />
-        <Text type="label4" color={iconColor} className={infoTextStyle}>
-          {text}
-        </Text>
+        {text && (
+          <>
+            <SvgIcon
+              src={type === "help" ? HelpIcon : InfoIcon}
+              color={iconColor}
+            />
+            <Text type="label4" color={iconColor} className={infoTextStyle}>
+              {text}
+            </Text>
+          </>
+        )}
+        {children}
       </div>
       {showRightArrowButton && (
         <button>

@@ -11,6 +11,7 @@ import { ORDER_TYPE } from "@/constants";
 import { useRewardStore } from "./useRewardStore";
 import { useCouponStore } from "./useCouponStore";
 import { usePersistOrderStore } from "./usePersistOrderStore";
+import { convertToDeliveryRequest } from "@/utils/delivery/convertToDeliveryRequest";
 
 interface OrderState {
   agreePrivacy: boolean;
@@ -53,7 +54,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     } = usePaymentStore.getState();
     const { appliedReward } = useRewardStore.getState();
     const { appliedCoupon } = useCouponStore.getState();
-    const { orderItemDtoList } = usePersistOrderStore.getState();
+    const { itemList } = usePersistOrderStore.getState();
 
     const commonBody = {
       deliveryDto,
@@ -71,7 +72,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     if (orderType === ORDER_TYPE.GENERAL) {
       return {
         ...commonBody,
-        orderItemDtoList,
+        itemList,
         deliveryId: isBundleDelivery ? deliveryId : null,
       } as SaveGeneralOrderRequest;
     }
@@ -87,7 +88,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       subscribeId,
       memberCouponId: appliedCoupon?.couponId ?? null,
       deliveryInfo: {
-        address: deliveryDto,
+        address: convertToDeliveryRequest(deliveryDto),
         currentDeliveryDate,
       },
       paymentInfo: {

@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { getGeneralCheckoutSheet } from "../checkout";
+import { getGeneralCheckout } from "../checkout";
 import {
   GeneralOrderSheetRequest,
-  GeneralOrderSheetResponse,
+  GetGeneralCheckoutResponse,
   UseQueryCustomOptions,
 } from "@/types";
 import { queryKeys } from "@/constants";
 
-export function useGetGeneralCheckoutSheet(
+export function useGetGeneralCheckout(
   body: GeneralOrderSheetRequest,
-  queryOptions?: UseQueryCustomOptions<GeneralOrderSheetResponse>
+  queryOptions?: UseQueryCustomOptions<GetGeneralCheckoutResponse>
 ) {
   return useQuery({
     queryKey: [
@@ -17,7 +17,7 @@ export function useGetGeneralCheckoutSheet(
       queryKeys.CHECKOUT.GET_GENERAL_CHECKOUT_SHEET,
       body,
     ],
-    queryFn: () => getGeneralCheckoutSheet(body),
+    queryFn: () => getGeneralCheckout(body),
     ...queryOptions,
   });
 }

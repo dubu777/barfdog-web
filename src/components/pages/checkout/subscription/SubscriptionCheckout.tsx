@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // API & Data Fetching
 import { useBillingAgainPayment } from "@/api/iamport/mutations/useBillingAgainPayment";
@@ -17,7 +17,6 @@ import { useToastStore } from "@/store/useToastStore";
 import { useCheckoutFlow } from "@/hooks/checkout/useCheckoutFlow";
 import { useHydrateSubscriptionOrderStores } from "@/hooks/checkout/useHydrateSubscriptionOrderStores";
 import useDeviceState from "@/hooks/useDeviceState";
-import useModal from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 
 // Components
@@ -31,10 +30,9 @@ import PaymentMethod from "../common/paymentMethod/PaymentMethod";
 import OrderSummary from "../common/orderSummary/OrderSummary";
 import OrderTerms from "../common/orderTerms/OrderTerms";
 import SubscriptionNotice from "./subscriptionNotice/SubscriptionNotice";
-import CheckoutFailedModal from "../common/failed/CheckoutFailedModal";
 
 // Constants & Types
-import { ORDER_TYPE } from "@/constants";
+import { ORDER_TYPE, CHECKOUT_ROUTES } from "@/constants";
 import {
   SubscriptionCheckoutResponse,
   SubscriptionIamportRequest,
@@ -67,11 +65,6 @@ export default function SubscriptionCheckout({
   const [showTermsErrors, setShowTermsErrors] = useState(false);
   const termsRef = useRef<HTMLDivElement>(null);
   const deliveryRef = useRef<HTMLDivElement>(null);
-  const {
-    isOpen: isFailedModalOpen,
-    onOpen: openFailedModal,
-    onClose: closeFailedModal,
-  } = useModal();
 
   // Routing & Device
   const router = useRouter();
@@ -150,9 +143,11 @@ export default function SubscriptionCheckout({
     >,
     strategy,
     onPaymentSuccess: (orderId) => {
-      router.push(`/checkout/subscription/completed/${orderId}`);
+      router.push(CHECKOUT_ROUTES.SUBSCRIPTION.completed(orderId));
     },
-    onPaymentFailed: openFailedModal,
+    onPaymentFailed: () => {
+      router.push(CHECKOUT_ROUTES.SUBSCRIPTION.failed(subscribeInfo.id));
+    },
   });
 
   // Event Handlers
@@ -204,7 +199,7 @@ export default function SubscriptionCheckout({
       <OrderSummary
         orderType={ORDER_TYPE.SUBSCRIPTION}
         originalPrice={paymentInfo.originalPrice}
-        discountPlan={paymentInfo.discountPlan}
+        discountDefault={paymentInfo.discountPlan}
         discountGrade={paymentInfo.discountGrade}
         plan={subscribeInfo.planInfo.name}
       />
@@ -222,12 +217,6 @@ export default function SubscriptionCheckout({
           : `${formatNumberWithCommas(paymentPrice)}원 결제하기`}
       </FooterButton>
       {isProcessing && <PendingLoaderOverlay text="결제를 진행중입니다" />}
-      {isFailedModalOpen && (
-        <CheckoutFailedModal
-          isOpen={isFailedModalOpen}
-          onClose={closeFailedModal}
-        />
-      )}
     </div>
   );
 }

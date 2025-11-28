@@ -1,5 +1,5 @@
 import { IAMPORT_MIN_PAYMENT_PRICE } from "@/constants/payment";
-import { GeneralOrderItem } from "@/types";
+import { GeneralItem } from "@/types";
 
 interface OrderCalculationProps {
   originalPrice: number;
@@ -11,7 +11,7 @@ interface OrderCalculationProps {
   appliedReward: number; // 적용한 적립금
   freeCondition?: number; // 배송비 무료 적용되는 최소 금액
   deliveryPrice?: number; // 배송비
-  orderItemDtoList?: GeneralOrderItem[];
+  itemList?: GeneralItem[];
   isBundleDelivery: boolean;
 }
 
@@ -25,7 +25,7 @@ export const orderCalculation = ({
   appliedReward,
   freeCondition,
   deliveryPrice,
-  orderItemDtoList,
+  itemList,
   isBundleDelivery,
 }: OrderCalculationProps) => {
   // 배송비 할인 금액
@@ -33,7 +33,7 @@ export const orderCalculation = ({
     const isFreeDelivery =
       isBundleDelivery ||
       (freeCondition && originalPrice >= freeCondition) ||
-      !(orderItemDtoList?.some((item) => !item.deliveryFree) ?? false);
+      !(itemList?.some((item) => !item.deliveryFree) ?? false);
 
     return isFreeDelivery ? deliveryPrice ?? 0 : 0;
   };

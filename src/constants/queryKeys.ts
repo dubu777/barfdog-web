@@ -80,7 +80,7 @@ const queryKeys = {
   CHECKOUT: {
     BASE: "checkout",
     GET_SUBSCRIPTION_CHECKOUT_SHEET: "getSubscriptionCheckout",
-    GET_GENERAL_CHECKOUT_SHEET: "getGeneralCheckoutSheet",
+    GET_GENERAL_CHECKOUT_SHEET: "getGeneralCheckout",
   },
   MAIN: {
     BASE: "main",

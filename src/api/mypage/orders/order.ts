@@ -1,8 +1,8 @@
 import axiosInstance from "@/api/axiosInstance";
 import { getServerParam } from "@/constants/mypage/orders";
 
-import { 
-  OrderType, 
+import {
+  OrderType,
   RawSubscriptionOrder,
   RawGeneralOrder,
   UnifiedOrderData,
@@ -20,7 +20,7 @@ import { AxiosInstance } from "axios";
 // 구독 리스트
 const toUnifiedSubscription = (order: RawSubscriptionOrder) => {
   const { recipeDto, subscribeOrderDto } = order;
-  
+
   return {
     recipeInfo: {
       thumbnailUrl: decodeImageFilenameFromUrl(recipeDto.thumbnailUrl),
@@ -35,7 +35,7 @@ const toUnifiedSubscription = (order: RawSubscriptionOrder) => {
 // 일반 리스트
 const toUnifiedGeneral = (order: RawGeneralOrder) => {
   const { orderDto, itemNameList, thumbnailUrl } = order;
-  
+
   return {
     orderInfo: {
       orderId: orderDto.id,
@@ -61,25 +61,25 @@ const getOrderListByOrderType = async ({
   orderType: OrderType;
   instance?: AxiosInstance;
 }): Promise<UnifiedOrderListResponse> => {
-
   const serverParam = getServerParam(orderType);
   const endpoint = `/api/orders/${serverParam}`;
-  const key = orderType === 'SUBSCRIPTION' ? 'querySubscribeOrdersDtoList' : 'queryGeneralOrdersDtoList';
+  const key =
+    orderType === "SUBSCRIPTION"
+      ? "querySubscribeOrdersDtoList"
+      : "queryGeneralOrdersDtoList";
 
-  const { data } = await instance.get(
-    `${endpoint}`, {
-      params: {
-        page: pageParam,
-        size: size,
-      },
-    }
-  );
-  
+  const { data } = await instance.get(`${endpoint}`, {
+    params: {
+      page: pageParam,
+      size: size,
+    },
+  });
+
   const rawOrders = data._embedded?.[key] || [];
 
   // 주문 타입에 따라 적절한 변환 함수를 사용하여 통합된 타입으로 변환
   const convertedOrders = rawOrders.map((order) => {
-    return orderType === 'SUBSCRIPTION' 
+    return orderType === "SUBSCRIPTION"
       ? toUnifiedSubscription(order as RawSubscriptionOrder)
       : toUnifiedGeneral(order as RawGeneralOrder);
   });
@@ -95,27 +95,31 @@ const getOrderListByOrderType = async ({
 
 // 일반 주문 상세
 const toUnifiedGeneralDetail = (order: RawGeneralOrderDetail) => {
-  const { orderDto, orderItemDtoList, savedRewardTotal } = order;
-  
+  const { orderDto, itemList, savedRewardTotal } = order;
+
   return {
     orderInfo: { ...orderDto },
-    orderItemInfoList: orderItemDtoList.map((item) => ({
+    orderItemInfoList: itemList.map((item) => ({
       ...item,
       thumbnailUrl: decodeImageFilenameFromUrl(item.thumbnailUrl),
-      selectOptionList: item.selectOptionDtoList?.map((option) => ({
-        optionName: option.optionName,
-        optionAmount: option.optionAmount,
-      })) ?? [],
+      selectOptionList:
+        item.ItemOptionDtoList?.map((option) => ({
+          optionName: option.optionName,
+          optionAmount: option.optionAmount,
+        })) ?? [],
     })),
     savedRewardTotal,
   };
 };
 
 // 구독 주문 상세
-const toUnifiedSubscriptionDetail = (order: RawSubscriptionOrderDetail, orderId: number) => {
+const toUnifiedSubscriptionDetail = (
+  order: RawSubscriptionOrderDetail,
+  orderId: number
+) => {
   const { orderDto, recipeDto, recipeNames } = order;
   const { recipientName, recipientPhone, ...commonOrderFields } = orderDto;
-  
+
   return {
     orderInfo: {
       orderId,
@@ -138,36 +142,40 @@ const getOrderDetail = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<OrderDetail> => {
   const serverParam = getServerParam(type);
-  const { data } = await instance.get(
-    `/api/orders/${orderId}/${serverParam}`
-  );
+  const { data } = await instance.get(`/api/orders/${orderId}/${serverParam}`);
 
-  return type === 'SUBSCRIPTION' 
-    ? toUnifiedSubscriptionDetail(data, orderId) as OrderDetail
-    : toUnifiedGeneralDetail(data) as OrderDetail;
+  return type === "SUBSCRIPTION"
+    ? (toUnifiedSubscriptionDetail(data, orderId) as OrderDetail)
+    : (toUnifiedGeneralDetail(data) as OrderDetail);
 };
 
-// 주문 취소 신청 
+// 주문 취소 신청
 const cancelRequestOrder = async (
   orderId: number,
   orderType: OrderType,
   body: CancelRequestBody
-): Promise<{ data: void, orderId: number }> => {
-  const { data } = await axiosInstance.post( `/api/orders/${orderId}/${getServerParam(orderType)}/cancelRequest`, body);
+): Promise<{ data: void; orderId: number }> => {
+  const { data } = await axiosInstance.post(
+    `/api/orders/${orderId}/${getServerParam(orderType)}/cancelRequest`,
+    body
+  );
   return data;
 };
 
 // 일반 주문 구매확정
 const confirmGeneralOrder = async (
   body: ConfirmGeneralOrderBody
-): Promise<{ data: void, orderId: number }> => {
-  const { data } = await axiosInstance.post( `/api/orders/general/confirm`, body);
+): Promise<{ data: void; orderId: number }> => {
+  const { data } = await axiosInstance.post(
+    `/api/orders/general/confirm`,
+    body
+  );
   return data;
 };
 
-export { 
+export {
   getOrderListByOrderType,
-  getOrderDetail, 
-  cancelRequestOrder, 
-  confirmGeneralOrder, 
+  getOrderDetail,
+  cancelRequestOrder,
+  confirmGeneralOrder,
 };

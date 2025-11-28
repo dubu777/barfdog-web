@@ -19,8 +19,11 @@ interface CardProps {
   border?: "none" | "gray100" | "gray200" | "gray300" | "red" | "blue500";
   paddingX?: 8 | 12 | 16 | 20 | 32 | 40;
   paddingY?: 4 | 8 | 12 | 16 | 20 | 32 | 40;
+  paddingBottom?: 8 | 12 | 16 | 20 | 32 | 40;
+  paddingTop?: 8 | 12 | 16 | 20 | 32 | 40;
   hoverShadow?: boolean;
   hoverScale?: boolean;
+  onClick?: () => void;
 }
 
 const Card = ({
@@ -34,6 +37,8 @@ const Card = ({
   padding,
   paddingX,
   paddingY,
+  paddingBottom,
+  paddingTop,
   children,
   backgroundColor = "gray0",
   borderRadius = 8,
@@ -42,6 +47,7 @@ const Card = ({
   border = "none",
   hoverShadow = false,
   hoverScale = false,
+  onClick,
 }: CardProps) => {
   return (
     <div
@@ -54,6 +60,8 @@ const Card = ({
           padding,
           paddingX,
           paddingY,
+          paddingBottom,
+          paddingTop,
           textAlign,
           shadow,
           backgroundColors: backgroundColor,
@@ -65,6 +73,7 @@ const Card = ({
 				${cardRecipe({ hoverShadow, hoverScale })}
 				${className || ""}
 			`}
+      onClick={onClick}
     >
       {children}
     </div>

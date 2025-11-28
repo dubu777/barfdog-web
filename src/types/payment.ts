@@ -1,11 +1,10 @@
 import {
-  GeneralOrderItem,
-  GeneralOrderSheetResponse,
+  GetGeneralCheckoutResponse,
   OrderType,
   SaveGeneralOrderRequest,
   PrepareSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
-  PaymentMethod,
+  GeneralItem,
 } from "./checkout";
 
 interface IamportSubscribeResponse {
@@ -48,7 +47,7 @@ interface NaverPayGeneralParamOutput {
 }
 
 interface NaverPayGeneralParamInput {
-  items: GeneralOrderItem[];
+  items: GeneralItem[];
   isMobile: boolean;
 }
 
@@ -136,7 +135,7 @@ interface GeneralPaymentDataParams {
   requestBody: SaveGeneralOrderRequest;
   orderId: number;
   merchantUid: string;
-  generalOrderSheetData: GeneralOrderSheetResponse;
+  generalOrderSheetData: GetGeneralCheckoutResponse;
   isMobileDevice: boolean;
 }
 
@@ -145,6 +144,7 @@ interface SubscriptionPaymentDataParams {
   subscriptionOrderSheetData: SubscriptionCheckoutResponse;
   isMobileDevice: boolean;
   orderId: number;
+  subscribeId: number;
   merchantUid: string;
   from?: "app" | "web";
 }

@@ -22,10 +22,12 @@ export function buildGeneralPaymentRequest({
   isMobileDevice,
 }: GeneralPaymentDataParams): GeneralIamportRequest {
   const { paymentMethod, paymentPrice, deliveryDto } = requestBody;
-  const { orderItemDtoList, email } = generalOrderSheetData;
+  const { itemList } = generalOrderSheetData;
 
-  const itemList = orderItemDtoList;
   const itemName = itemList.map((item) => item.name).join(", ");
+
+  // email은 새로운 API 스펙에 없으므로 빈 문자열 사용
+  const email = "";
 
   const baseData = {
     channelKey: PG_CHANNEL_KEY.GENERAL[paymentMethod],
@@ -50,7 +52,7 @@ export function buildGeneralPaymentRequest({
 
   if (paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPayGeneralPaymentParam({
-      items: orderItemDtoList,
+      items: itemList,
       isMobile: isMobileDevice,
     });
 
@@ -68,6 +70,7 @@ export function buildGeneralPaymentRequest({
 export function buildSubscriptionPaymentRequest({
   requestBody,
   orderId,
+  subscribeId,
   subscriptionOrderSheetData,
   isMobileDevice,
   merchantUid,
@@ -98,12 +101,11 @@ export function buildSubscriptionPaymentRequest({
     `buyer_name=${encodeURIComponent(deliveryInfo.address.recipientName)}&` +
     `buyer_tel=${encodeURIComponent(deliveryInfo.address.phoneNumber)}&` +
     `buyer_email=${encodeURIComponent(email)}&` +
+    `subscription_Id=${encodeURIComponent(subscribeId)}&` +
     `buyer_addr=${encodeURIComponent(
       `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
     )}&` +
-    `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}&` +
-    `payment_method=${encodeURIComponent(paymentInfo.paymentMethod)}&` +
-    `from=${encodeURIComponent(from)}`;
+    `buyer_postcode=${encodeURIComponent(deliveryInfo.address.zipcode)}`;
 
   const baseData = {
     channelKey: PG_CHANNEL_KEY.SUBSCRIPTION[paymentInfo.paymentMethod],

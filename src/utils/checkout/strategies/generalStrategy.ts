@@ -1,7 +1,7 @@
 import { CheckoutStrategy } from "../checkoutStrategies";
 import type {
   SaveGeneralOrderRequest,
-  GeneralOrderSheetResponse,
+  GetGeneralCheckoutResponse,
   GeneralIamportResponse,
   GeneralIamportRequest, // 프로젝트 내 정의가 있다고 전제
 } from "@/types";
@@ -25,7 +25,7 @@ export function createGeneralStrategy(deps: {
   failGeneralPayment: (id: number) => Promise<any>;
 }): CheckoutStrategy<
   SaveGeneralOrderRequest,
-  GeneralOrderSheetResponse,
+  GetGeneralCheckoutResponse,
   GeneralIamportRequest,
   GeneralIamportResponse
 > {

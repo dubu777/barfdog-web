@@ -1,45 +1,63 @@
-import { GeneralOrderItem } from "@/types";
+import { GeneralItem } from "@/types";
 import Image from "next/image";
 import * as styles from "./GeneralOrderItemCard.css";
 import Text from "@/components/ui/text/Text";
-import { formatNumberWithCommas } from "@/utils";
 import Chips from "@/components/ui/chips/Chips";
 import Divider from "@/components/ui/divider/Divider";
 import { commonWrapper } from "@/styles/common.css";
 
 interface GeneralOrderItemCardProps {
-  orderItemData: GeneralOrderItem;
+  generalItem: GeneralItem;
 }
 
 export default function GeneralOrderItemCard({
-  orderItemData,
+  generalItem,
 }: GeneralOrderItemCardProps) {
   return (
     <div className={styles.orderItemCardContainer}>
       <div className={commonWrapper({ gap: 8, justify: "start" })}>
         <Image
-          src={orderItemData.itemImageFilename.url}
+          src={generalItem.displayImageUrl.url}
           alt="임시"
           width={88}
           height={88}
           priority
           className={styles.orderItemCardImage}
         />
-        <div className={styles.orderItemContentWrapper}>
-          <div className={styles.orderItemInfoWrapper}>
-            <Text type="label2">{orderItemData.name}</Text>
-            <Text type="body3">구매수량 | {orderItemData.amount}개</Text>
+        <div
+          className={commonWrapper({
+            gap: 8,
+            justify: "start",
+            direction: "col",
+          })}
+        >
+          <div className={commonWrapper({ direction: "col", align: "start" })}>
+            <Text type="label2" color="gray700">
+              {generalItem.name}
+            </Text>
+            <div className={commonWrapper({ gap: 8, justify: "start" })}>
+              <Text type="body3" color="gray600">
+                구매수량 | {generalItem.amount}개
+              </Text>
+            </div>
           </div>
-          <Text type="headline2">
-            {formatNumberWithCommas(orderItemData.itemOriginalPrice)}원
-          </Text>
+          <div className={commonWrapper({ gap: 8, justify: "start" })}>
+            <Text type="headline2">
+              {generalItem.totalSalePrice.toLocaleString()}원
+            </Text>
+            {generalItem.totalDiscountProduct > 0 && (
+              <Text type="body3" color="gray400" lineThrough>
+                {generalItem.totalOriginalPrice.toLocaleString()}원
+              </Text>
+            )}
+          </div>
         </div>
       </div>
       <div
         className={commonWrapper({ gap: 4, direction: "col", align: "start" })}
       >
-        {orderItemData.optionDtoList?.map((option) => (
-          <div key={option.optionId} className={styles.orderOptionWrapper}>
+        {generalItem.itemOptionList?.map((option) => (
+          <div key={option.id} className={styles.orderOptionWrapper}>
             <Chips variant="outlined">추가상품</Chips>
             <div
               className={commonWrapper({
@@ -58,7 +76,7 @@ export default function GeneralOrderItemCard({
                 </Text>
               </div>
               <Text type="label3">
-                {formatNumberWithCommas(option.price)}원
+                {option.totalOriginalPrice.toLocaleString()}원
               </Text>
             </div>
           </div>

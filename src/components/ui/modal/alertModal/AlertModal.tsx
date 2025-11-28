@@ -5,7 +5,7 @@ import Button from "../../button/Button";
 import { ReactNode, useCallback, useMemo } from "react";
 
 interface ModalProps {
-  title?: string;
+  title: string;
   content: string | ReactNode;
   buttonType?: "default" | "text";
   confirmText?: string;
