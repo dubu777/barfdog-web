@@ -135,7 +135,7 @@ export default function RecipeDetailModal({
       </div>
       <div className={styles.recipeDetailContentWrapper}>
         <div className={styles.recipeDetailTabBarWrapper}>
-          <TabBar variant="text" tabs={tabs} borderRadius={20} />
+          <TabBar variant="text" tabs={tabs} borderRadius={20} fullWidth />
         </div>
         {!isRecipeSource && (
           <>

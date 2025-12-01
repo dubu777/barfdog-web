@@ -10,7 +10,7 @@ export const modalContainer = style({
   width: "100%",
   height: "100%",
   margin: "0 auto",
-  overflowY: "auto",
+  overflow: "auto",
   backgroundColor: themeVars.colors.gray.gray0,
 });
 

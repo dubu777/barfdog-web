@@ -14,7 +14,11 @@ export default function CouponCategoryTabs({
 }: CouponCategoryTabsProps) {
   return (
     <TabBar
-      className={commonWrapper({ padding: 20, backgroundColors: "gray0" })}
+      className={commonWrapper({
+        padding: 20,
+        backgroundColors: "gray0",
+        justify: "start",
+      })}
       variant="chips"
       tabs={COUPON_CATEGORY_FILTER.map((tab) => ({
         ...tab,
@@ -22,7 +26,6 @@ export default function CouponCategoryTabs({
           onChangeCouponCategory?.(tab.value as CouponCategory);
         },
       }))}
-      defaultIndex={0}
       chipsActiveColor={chipsActiveColor}
     />
   );

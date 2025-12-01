@@ -1,4 +1,4 @@
-'"use client";';
+"use client";
 
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";

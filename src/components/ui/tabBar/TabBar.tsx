@@ -2,9 +2,10 @@ import { ReactNode, useState } from "react";
 import {
   tabBarButton,
   tabBarChipsActive,
-  tabBarContainer,
+  tabBarButtonWrapper,
   tabBarSlideItem,
   tabBarSlider,
+  tabBarContainer,
 } from "@/components/ui/tabBar/TabBar.css";
 import Text from "@/components/ui/text/Text";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -28,6 +29,7 @@ interface TabBarProps {
   onTabClick?: (index: number) => void;
   chipsActiveColor?: "gray800" | "red";
   borderRadius?: 20;
+  fullWidth?: boolean;
 }
 
 export default function TabBar({
@@ -41,6 +43,7 @@ export default function TabBar({
   onTabClick,
   chipsActiveColor = "red",
   borderRadius,
+  fullWidth = false,
 }: TabBarProps) {
   const VARIANT_CONFIG = {
     text: {
@@ -95,7 +98,11 @@ export default function TabBar({
 
   return (
     <>
-      <div className={className}>
+      <div
+        className={`${tabBarContainer({ fullWidth })} ${
+          className || ""
+        }`.trim()}
+      >
         {isScrollable ? (
           <Swiper
             spaceBetween={8}
@@ -109,7 +116,9 @@ export default function TabBar({
             ))}
           </Swiper>
         ) : (
-          <div className={tabBarContainer({ variant, justify, borderRadius })}>
+          <div
+            className={tabBarButtonWrapper({ variant, justify, borderRadius })}
+          >
             {tabs.map((tab, index) => (
               <TabButtonComponent key={index} tab={tab} index={index} />
             ))}

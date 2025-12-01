@@ -13,6 +13,7 @@ export const recipeDetailContentWrapper = style({
 
 export const recipeDetailTabBarWrapper = style({
   position: "sticky",
+  display: "flex",
   top: "52px",
   zIndex: 1,
   width: "100%",

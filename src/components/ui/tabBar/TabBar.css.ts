@@ -3,8 +3,18 @@ import { themeVars } from "@/styles/theme.css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const tabBarContainer = recipe({
+  base: {},
+  variants: {
+    fullWidth: {
+      true: {
+        width: "100%",
+      },
+    },
+  },
+});
+
+export const tabBarButtonWrapper = recipe({
   base: {
-    width: "100%",
     display: "flex",
     alignItems: "center",
   },
@@ -44,12 +54,12 @@ export const tabBarContainer = recipe({
 
 export const tabBarButton = recipe({
   base: {
+    width: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     cursor: "pointer",
     position: "relative",
-    width: "100%",
     zIndex: 2,
     borderTopLeftRadius: "20px",
     borderTopRightRadius: "20px",
