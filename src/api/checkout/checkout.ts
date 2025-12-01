@@ -4,14 +4,12 @@ import {
   SaveGeneralOrderRequest,
   SaveOrderResponse,
   GeneralOrderSheetRequest,
-  GeneralOrderSheetResponse,
   GetGeneralCheckoutResponse,
   SuccessGeneralPaymentRequest,
   SuccessSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
   PrepareSubscriptionPaymentRequest,
   PrepareSubscriptionPaymentResponse,
-  SuccessSubscriptionPaymentResponse,
 } from "@/types";
 import { validateApiResponse } from "@/utils/api/apiResponseUtils";
 
@@ -74,7 +72,7 @@ const successSubscriptionPayment = async ({
 }: {
   orderId: number;
   body: SuccessSubscriptionPaymentRequest;
-}): Promise<SuccessSubscriptionPaymentResponse> => {
+}) => {
   const { data } = await axiosInstance.put(
     `/api/v2/user/subscribe-orders/${orderId}/payment/success`,
     body

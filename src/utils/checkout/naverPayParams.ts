@@ -1,4 +1,10 @@
-import { NaverPayGeneralParamInput, NaverPayGeneralParamOutput, NaverPayGeneralProducts, NaverPaySubscriptionInput, NaverPaySubscriptionOutput } from "@/types";
+import {
+  NaverPayGeneralParamInput,
+  NaverPayGeneralParamOutput,
+  NaverPayGeneralProducts,
+  NaverPaySubscriptionInput,
+  NaverPaySubscriptionOutput,
+} from "@/types";
 
 // 일반 결제 파라미터 생성 함수
 export const getNaverPayGeneralPaymentParam = ({
@@ -8,11 +14,11 @@ export const getNaverPayGeneralPaymentParam = ({
   if (!items?.length) return null;
 
   const naverProducts: NaverPayGeneralProducts[] = items.map((item) => ({
-    categoryType: 'PRODUCT', // 네이버페 검수 결과 -> 가맹점 취급 상품이 모두 일반상품으로 분류됨 -> `PRODUCT` 적용
-    categoryId: 'GENERAL', // 네이버페 검수 결과 -> 가맹점 취급 상품이 모두 일반상품으로 분류됨 -> `GENERAL` 적용
+    categoryType: "PRODUCT", // 네이버페 검수 결과 -> 가맹점 취급 상품이 모두 일반상품으로 분류됨 -> `PRODUCT` 적용
+    categoryId: "GENERAL", // 네이버페 검수 결과 -> 가맹점 취급 상품이 모두 일반상품으로 분류됨 -> `GENERAL` 적용
     count: item.amount,
     name: item.name,
-    uid: `general-item-${item.itemId}`, // 상품 고유 ID
+    uid: `general-item-${item.id}`, // 상품 고유 ID
   }));
 
   return {
@@ -22,7 +28,6 @@ export const getNaverPayGeneralPaymentParam = ({
     naverProducts, // 변환된 상품 정보
   };
 };
-
 
 // 정기 결제 파라미터 생성 함수
 export const getNaverPaySubscriptionPaymentParam = ({
