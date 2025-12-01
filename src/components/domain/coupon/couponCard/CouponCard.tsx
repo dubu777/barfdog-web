@@ -34,7 +34,10 @@ export default function CouponCard({
   const { usable, reasons } = isCouponUsable(coupon, originalPrice, orderType);
 
   return (
-    <div className={styles.couponCardContainer({ isSelected })}>
+    <button
+      className={styles.couponCardContainer({ isSelected })}
+      disabled={!usable}
+    >
       <LabeledRadioButton
         value={id}
         isChecked={isSelected}
@@ -55,6 +58,6 @@ export default function CouponCard({
           reasons={reasons}
         />
       </LabeledRadioButton>
-    </div>
+    </button>
   );
 }

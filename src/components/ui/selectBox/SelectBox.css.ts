@@ -33,15 +33,15 @@ export const arrowIcon = recipe({
     top: "50%",
     right: "20px",
     transform: "translateY(-50%)",
-    transition: 'all .35s',
+    transition: "all .35s",
   },
   variants: {
     isOpen: {
       true: {
         transform: "rotate(180deg) translateY(50%)",
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
 export const inputField = recipe({
@@ -105,7 +105,7 @@ export const optionsContainer = style({
 });
 
 export const optionsWrapper = style({
-  height: '100%',
+  height: "100%",
   overflowY: "scroll",
 });
 
@@ -115,10 +115,8 @@ globalStyle(`${optionsWrapper}::-webkit-scrollbar`, {
 
 export const option = recipe({
   base: {
-    transitionTimingFunction: "ease",
-    transitionDuration: "0.3s",
-    transitionProperty: "background, color",
-    padding: '12px 20px',
+    transform: "transform 0.3s ease",
+    padding: "12px 20px",
     height: "48px",
     display: "flex",
     alignItems: "center",

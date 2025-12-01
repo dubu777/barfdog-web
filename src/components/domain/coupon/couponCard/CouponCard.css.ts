@@ -13,6 +13,11 @@ export const couponCardContainer = recipe({
     gap: "8px",
     border: "1px solid transparent",
     boxShadow: themeVars.shadow.light,
+    selectors: {
+      "&:disabled": {
+        cursor: "auto",
+      },
+    },
   },
   variants: {
     isSelected: {

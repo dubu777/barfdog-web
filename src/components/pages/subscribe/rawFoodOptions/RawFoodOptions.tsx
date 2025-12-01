@@ -96,7 +96,7 @@ export default function RawFoodOptions({
     () =>
       recipeTab.map((tab) => ({
         ...tab,
-        onInit: () => scrollToElement(refs[tab.value!].current),
+        onTabChange: () => scrollToElement(refs[tab.value!].current),
       })),
     [refs]
   );

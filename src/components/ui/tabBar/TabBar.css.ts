@@ -44,10 +44,11 @@ export const tabBarButtonWrapper = recipe({
       },
     },
     borderRadius: {
-      20: {
+      true: {
         borderTopLeftRadius: "20px",
         borderTopRightRadius: "20px",
       },
+      false: {},
     },
   },
 });
@@ -61,8 +62,6 @@ export const tabBarButton = recipe({
     cursor: "pointer",
     position: "relative",
     zIndex: 2,
-    borderTopLeftRadius: "20px",
-    borderTopRightRadius: "20px",
     transition: "all 0.2s",
   },
   variants: {
@@ -70,22 +69,46 @@ export const tabBarButton = recipe({
       text: {
         padding: "20px 16px 10px",
         backgroundColor: themeVars.colors.gray.gray0,
+        fontWeight: themeVars.typography.label.label1.fontWeight,
+        fontSize: themeVars.typography.label.label1.fontSize,
+        lineHeight: themeVars.typography.label.label1.lineHeight,
+        letterSpacing: themeVars.typography.label.label1.letterSpacing,
+        color: themeVars.colors.gray.gray300,
       },
       segmentedButton: {
         height: "42px",
+        fontWeight: themeVars.typography.headline.headline3.fontWeight,
+        fontSize: themeVars.typography.headline.headline3.fontSize,
+        lineHeight: themeVars.typography.headline.headline3.lineHeight,
+        letterSpacing: themeVars.typography.headline.headline3.letterSpacing,
         color: themeVars.colors.gray.gray300,
         borderRight: `1px solid ${themeVars.colors.gray.gray300}`,
       },
       chips: {
         padding: "4px 12px",
+        fontWeight: themeVars.typography.headline.headline3.fontWeight,
+        fontSize: themeVars.typography.headline.headline3.fontSize,
+        lineHeight: themeVars.typography.headline.headline3.lineHeight,
+        letterSpacing: themeVars.typography.headline.headline3.letterSpacing,
         color: themeVars.colors.gray.gray700,
         backgroundColor: themeVars.colors.gray.gray100,
         borderRadius: "4px",
       },
     },
+    borderRadius: {
+      true: {
+        borderTopLeftRadius: "20px",
+        borderTopRightRadius: "20px",
+      },
+      false: {},
+    },
     isActive: {
       true: {},
       false: {},
+    },
+    chipsActiveColor: {
+      red: {},
+      gray800: {},
     },
   },
   compoundVariants: [
@@ -96,6 +119,7 @@ export const tabBarButton = recipe({
       },
       style: {
         position: "relative",
+        color: themeVars.colors.gray.gray900,
         selectors: {
           "&::after": {
             content: "",
@@ -114,42 +138,91 @@ export const tabBarButton = recipe({
     },
     {
       variants: {
+        variant: "text",
+        isActive: false,
+      },
+      style: {
+        position: "relative",
+        selectors: {
+          "&:hover": {
+            color: themeVars.colors.gray.gray400,
+          },
+          "&:hover:after": {
+            content: "",
+            display: "block",
+            width: "20px",
+            height: "2px",
+            borderRadius: "10px",
+            backgroundColor: themeVars.colors.gray.gray400,
+            position: "absolute",
+            bottom: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+          },
+        },
+      },
+    },
+    {
+      variants: {
         variant: "segmentedButton",
         isActive: true,
       },
       style: {
         color: themeVars.colors.gray.gray0,
-        background: themeVars.colors.red.red,
+        backgroundColor: themeVars.colors.red.red,
         border: 0,
+      },
+    },
+    {
+      variants: {
+        variant: "segmentedButton",
+        isActive: false,
+      },
+      style: {
+        selectors: {
+          "&:hover": {
+            color: themeVars.colors.gray.gray900,
+          },
+        },
+      },
+    },
+
+    {
+      variants: {
+        variant: "chips",
+        isActive: true,
+        chipsActiveColor: "red",
+      },
+      style: {
+        color: themeVars.colors.gray.gray0,
+        backgroundColor: themeVars.colors.red.red,
       },
     },
     {
       variants: {
         variant: "chips",
         isActive: true,
+        chipsActiveColor: "gray800",
       },
       style: {
         color: themeVars.colors.gray.gray0,
-        background: themeVars.colors.red.red,
+        backgroundColor: themeVars.colors.gray.gray800,
+      },
+    },
+    {
+      variants: {
+        variant: "chips",
+        isActive: false,
+      },
+      style: {
+        selectors: {
+          "&:hover": {
+            backgroundColor: themeVars.colors.gray.gray200,
+          },
+        },
       },
     },
   ],
-});
-
-export const tabBarChipsActive = recipe({
-  base: {},
-  variants: {
-    color: {
-      gray800: {
-        background: themeVars.colors.gray.gray800,
-        color: themeVars.colors.gray.gray0,
-      },
-      red: {
-        background: themeVars.colors.red.red,
-        color: themeVars.colors.gray.gray0,
-      },
-    },
-  },
 });
 
 export const tabBarSlider = style({

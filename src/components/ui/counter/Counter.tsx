@@ -1,5 +1,5 @@
-'use client';
-import * as styles from './Counter.css';
+"use client";
+import * as styles from "./Counter.css";
 import Text from "@/components/ui/text/Text";
 import PlusIcon from "/public/images/icons/plus.svg";
 import MinusIcon from "/public/images/icons/minus.svg";
@@ -10,7 +10,7 @@ interface CounterProps {
   max?: number;
   initialCount?: number;
   step?: number;
-  onChange?: (value: number, type: 'increase' | 'decrease') => void;
+  onChange?: (value: number, type: "increase" | "decrease") => void;
   fullWidth?: boolean;
   className?: string;
 }
@@ -23,29 +23,50 @@ const Counter = ({
   onChange,
   fullWidth = false,
   className,
-}:
-  CounterProps) => {
+}: CounterProps) => {
   const handleIncrement = () => {
     if (initialCount + step <= max) {
       const newValue = initialCount + step;
-      onChange?.(newValue, 'increase');
+      onChange?.(newValue, "increase");
     }
-  }
+  };
   const handleDecrement = () => {
     if (initialCount - step >= min) {
       const newValue = initialCount - step;
-      onChange?.(newValue, 'decrease');
+      onChange?.(newValue, "decrease");
     }
-  }
+  };
 
   return (
-    <div className={`${styles.counterContainer({ fullWidth: fullWidth })} ${className || ''}`}>
-      <button onClick={handleDecrement} disabled={initialCount <= min}>
-        <SvgIcon src={MinusIcon} size={24} color={initialCount <= min ? 'gray300' : 'gray800'} />
+    <div
+      className={`${styles.counterContainer({ fullWidth: fullWidth })} ${
+        className || ""
+      }`}
+    >
+      <button
+        className={styles.countButton}
+        onClick={handleDecrement}
+        disabled={initialCount <= min}
+      >
+        <SvgIcon
+          src={MinusIcon}
+          size={24}
+          color={initialCount <= min ? "gray300" : "gray800"}
+        />
       </button>
-      <Text type='label4' color='gray800'>{initialCount}</Text>
-      <button onClick={handleIncrement} disabled={initialCount >= max}>
-        <SvgIcon src={PlusIcon} size={24} color={initialCount >= max ? 'gray300' : 'gray800'} />
+      <Text type="label4" color="gray800" className={styles.countText}>
+        {initialCount}
+      </Text>
+      <button
+        className={styles.countButton}
+        onClick={handleIncrement}
+        disabled={initialCount >= max}
+      >
+        <SvgIcon
+          src={PlusIcon}
+          size={24}
+          color={initialCount >= max ? "gray300" : "gray800"}
+        />
       </button>
     </div>
   );

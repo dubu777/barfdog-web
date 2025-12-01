@@ -68,7 +68,6 @@ export default function Review() {
         className={commonWrapper({
           padding: 20,
           backgroundColors: "gray0",
-          width: "full",
         })}
       >
         <TabBar
@@ -85,7 +84,7 @@ export default function Review() {
           hasTabContent={false}
           variant="segmentedButton"
           defaultIndex={activeIndex}
-          className={commonWrapper({})}
+          fullWidth
         />
       </article>
       <article

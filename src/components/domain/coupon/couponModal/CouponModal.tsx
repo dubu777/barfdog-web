@@ -230,53 +230,15 @@ export default function CouponModal({
                 const discountInfo = couponDiscountMap.get(coupon.id);
                 if (!discountInfo) return null;
                 return (
-                  <>
-                    <CouponCard
-                      key={coupon.id}
-                      orderType={orderType}
-                      coupon={coupon}
-                      originalPrice={originalPrice}
-                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
-                      onToggle={onToggle}
-                      isSelected={isSelected(coupon.id)}
-                    />
-                    <CouponCard
-                      key={coupon.id}
-                      orderType={orderType}
-                      coupon={coupon}
-                      originalPrice={originalPrice}
-                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
-                      onToggle={onToggle}
-                      isSelected={isSelected(coupon.id)}
-                    />
-                    <CouponCard
-                      key={coupon.id}
-                      orderType={orderType}
-                      coupon={coupon}
-                      originalPrice={originalPrice}
-                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
-                      onToggle={onToggle}
-                      isSelected={isSelected(coupon.id)}
-                    />
-                    <CouponCard
-                      key={coupon.id}
-                      orderType={orderType}
-                      coupon={coupon}
-                      originalPrice={originalPrice}
-                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
-                      onToggle={onToggle}
-                      isSelected={isSelected(coupon.id)}
-                    />
-                    <CouponCard
-                      key={coupon.id}
-                      orderType={orderType}
-                      coupon={coupon}
-                      originalPrice={originalPrice}
-                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
-                      onToggle={onToggle}
-                      isSelected={isSelected(coupon.id)}
-                    />
-                  </>
+                  <CouponCard
+                    key={coupon.id}
+                    orderType={orderType}
+                    coupon={coupon}
+                    originalPrice={originalPrice}
+                    discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
+                    onToggle={onToggle}
+                    isSelected={isSelected(coupon.id)}
+                  />
                 );
               })
             ) : (
