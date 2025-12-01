@@ -102,6 +102,7 @@ export function buildSubscriptionPaymentRequest({
     `buyer_tel=${encodeURIComponent(deliveryInfo.address.phoneNumber)}&` +
     `buyer_email=${encodeURIComponent(email)}&` +
     `subscription_Id=${encodeURIComponent(subscribeId)}&` +
+    `payment_method=${encodeURIComponent(paymentInfo.paymentMethod)}&` +
     `buyer_addr=${encodeURIComponent(
       `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`
     )}&` +
