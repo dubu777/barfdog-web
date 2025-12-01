@@ -198,24 +198,25 @@ export default function CouponModal({
           backgroundColors: "gray0",
         })}
       >
-        <CouponCategoryTabs
-          onChangeCouponCategory={(couponCategory) => {
-            setCode("");
-            setCodeError(null);
-            setCouponCategory(couponCategory);
-          }}
-        />
-        <Divider thickness={2} color="gray50" />
-        <CreateCoupon
-          couponCodeError={codeError}
-          setCouponCodeError={setCodeError}
-          onSubmit={handleRegisterCoupon}
-          couponCategory={couponCategory}
-          couponCode={code}
-          setCouponCode={setCode}
-          buttonColor="gray800"
-        />
         <div className={couponModalWrapper}>
+          <CouponCategoryTabs
+            onChangeCouponCategory={(couponCategory) => {
+              setCode("");
+              setCodeError(null);
+              setCouponCategory(couponCategory);
+            }}
+          />
+          <Divider thickness={2} color="gray50" />
+          <CreateCoupon
+            couponCodeError={codeError}
+            setCouponCodeError={setCodeError}
+            onSubmit={handleRegisterCoupon}
+            couponCategory={couponCategory}
+            couponCode={code}
+            setCouponCode={setCode}
+            buttonColor="gray800"
+          />
+
           <div
             className={commonWrapper({
               direction: "col",
@@ -228,17 +229,54 @@ export default function CouponModal({
               sortedCoupons.map((coupon) => {
                 const discountInfo = couponDiscountMap.get(coupon.id);
                 if (!discountInfo) return null;
-
                 return (
-                  <CouponCard
-                    key={coupon.id}
-                    orderType={orderType}
-                    coupon={coupon}
-                    originalPrice={originalPrice}
-                    discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
-                    onToggle={onToggle}
-                    isSelected={isSelected(coupon.id)}
-                  />
+                  <>
+                    <CouponCard
+                      key={coupon.id}
+                      orderType={orderType}
+                      coupon={coupon}
+                      originalPrice={originalPrice}
+                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
+                      onToggle={onToggle}
+                      isSelected={isSelected(coupon.id)}
+                    />
+                    <CouponCard
+                      key={coupon.id}
+                      orderType={orderType}
+                      coupon={coupon}
+                      originalPrice={originalPrice}
+                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
+                      onToggle={onToggle}
+                      isSelected={isSelected(coupon.id)}
+                    />
+                    <CouponCard
+                      key={coupon.id}
+                      orderType={orderType}
+                      coupon={coupon}
+                      originalPrice={originalPrice}
+                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
+                      onToggle={onToggle}
+                      isSelected={isSelected(coupon.id)}
+                    />
+                    <CouponCard
+                      key={coupon.id}
+                      orderType={orderType}
+                      coupon={coupon}
+                      originalPrice={originalPrice}
+                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
+                      onToggle={onToggle}
+                      isSelected={isSelected(coupon.id)}
+                    />
+                    <CouponCard
+                      key={coupon.id}
+                      orderType={orderType}
+                      coupon={coupon}
+                      originalPrice={originalPrice}
+                      discountBasedOnCoupon={discountInfo.discountBasedOnCoupon}
+                      onToggle={onToggle}
+                      isSelected={isSelected(coupon.id)}
+                    />
+                  </>
                 );
               })
             ) : (
@@ -248,17 +286,17 @@ export default function CouponModal({
               />
             )}
           </div>
+          <ButtonDocked
+            type="full-button"
+            primaryButtonLabel={
+              selectedCoupon
+                ? `${formatNumberWithCommas(discountOnCoupon)}원 사용하기`
+                : "사용 취소하기"
+            }
+            onPrimaryClick={handleApplyCoupon}
+            primaryButtonSize="lg"
+          />
         </div>
-        <ButtonDocked
-          type="full-button"
-          primaryButtonLabel={
-            selectedCoupon
-              ? `${formatNumberWithCommas(discountOnCoupon)}원 사용하기`
-              : "사용 취소하기"
-          }
-          onPrimaryClick={handleApplyCoupon}
-          primaryButtonSize="lg"
-        />
       </FullModalWrapper>
       {isErrorModalOpen && (
         <AlertModal

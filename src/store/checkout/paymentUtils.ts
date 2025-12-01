@@ -88,7 +88,7 @@ export function buildSubscriptionPaymentRequest({
   // 앱에서 결제 시도한 경우 딥링크로 직접 리다이렉트
   const baseUrl =
     from === "app"
-      ? "barfdogexpo://checkout/subscription"
+      ? "barfdogexpo://checkout/subscription/order"
       : `${window.location.origin}/checkout/mobile-redirect/subscription`;
 
   const redirectUrl =
