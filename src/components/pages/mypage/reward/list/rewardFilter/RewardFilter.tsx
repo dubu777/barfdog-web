@@ -32,11 +32,10 @@ export default function RewardFilter() {
           variant='chips'
           tabs={tabs.map(tab => ({
             ...tab,
-            onInit: () => handleFilterChange(tab.value)
+            onTabChange: () => handleFilterChange(tab.value)
           }))}
           defaultIndex={defaultTabIndex}
-          width={68}
-          justifyContent='center'
+          justify='center'
         />
       </div>
     </article>

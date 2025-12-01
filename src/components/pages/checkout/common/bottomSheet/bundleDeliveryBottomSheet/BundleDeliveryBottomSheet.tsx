@@ -105,16 +105,16 @@ export default function BundleDeliveryBottomSheet({
             />
           ))}
         </div>
-        <ButtonDocked
-          type="dual-button"
-          primaryButtonLabel="변경하고 묶음 배송 신청하기"
-          secondaryButtonLabel="취소"
-          onPrimaryClick={handleBundleDelivery}
-          onSecondaryClick={handleCancelBundleDelivery}
-          primaryButtonSize="lg"
-          position="sticky"
-        />
       </div>
+      <ButtonDocked
+        type="dual-button"
+        primaryButtonLabel="변경하고 묶음 배송 신청하기"
+        secondaryButtonLabel="취소"
+        onPrimaryClick={handleBundleDelivery}
+        onSecondaryClick={handleCancelBundleDelivery}
+        primaryButtonSize="lg"
+        position="sticky"
+      />
     </BottomSheet>
   );
 }

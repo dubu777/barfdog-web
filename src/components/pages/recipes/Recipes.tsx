@@ -77,7 +77,6 @@ export default function Recipes() {
             tabs={tabs as Tab[]}
             variant="chips"
             defaultIndex={activeIndex}
-            hasTabContent={false}
             onTabClick={handleTabClick}
           />
         </article>

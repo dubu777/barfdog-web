@@ -16,7 +16,7 @@ import AddressSearchModal from "@/components/domain/address/addressSearchModal/A
 import useModal from "@/hooks/useModal";
 import { useUpdateAddress } from "@/api/address/mutations/useUpdateAddress";
 import { useCreateAddress } from "@/api/address/mutations/useCreateAddress";
-import { useForm, useWatch } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { useEnterFocus } from "@/hooks/common/useEnterFocus";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -32,7 +32,6 @@ export default function AddressForm({
   onBack,
 }: AddressFormProps) {
   const { isOpen, onClose, onToggle: toggleAddressModal } = useModal();
-  const [pendingDefault, setPendingDefault] = useState<boolean>(false);
 
   // mode에 따라 기존 데이터를 채우거나 빈 기본값 사용
   const initialValues = useMemo(
@@ -76,9 +75,6 @@ export default function AddressForm({
   // 수정 모드일 경우 기존 배송지 id와 기본 배송지 id 비교, 추가 모드면 기본 배송지 선택 false
   const isDefaultAddress =
     mode === "edit" && address ? address.isDefault : false;
-
-  const { onToggle: onToggleDefault, isSelected: isDefaultSelected } =
-    useToggleOption<boolean>(pendingDefault, "checkbox", setPendingDefault);
 
   // Mutation hooks
   const { mutate: updateAddress } = useUpdateAddress();
@@ -231,18 +227,21 @@ export default function AddressForm({
         />
 
         {!isDefaultAddress && (
-          <LabeledCheckbox
-            value={true}
-            onToggle={() => {
-              onToggleDefault(true);
-              setValue("isDefault", !pendingDefault);
-            }}
-            isChecked={isDefaultSelected(true)}
-          >
-            <Text type="label2" color="gray700">
-              기본 배송지로 설정
-            </Text>
-          </LabeledCheckbox>
+          <Controller
+            name="isDefault"
+            control={control}
+            render={({ field }) => (
+              <LabeledCheckbox
+                value={true}
+                onToggle={() => field.onChange(!field.value)}
+                isChecked={!!field.value}
+              >
+                <Text type="label2" color="gray700">
+                  기본 배송지로 설정
+                </Text>
+              </LabeledCheckbox>
+            )}
+          />
         )}
 
         <FooterButton onClick={onSubmit} isDisabled={!isDirty || !isValid}>

@@ -8,23 +8,21 @@ interface CouponCategoryTabsProps {
   chipsActiveColor?: "gray800" | "red";
 }
 
-export default function CouponCategoryTabs({ 
+export default function CouponCategoryTabs({
   chipsActiveColor = "gray800",
   onChangeCouponCategory,
 }: CouponCategoryTabsProps) {
-
   return (
     <TabBar
-      className={commonWrapper({ padding: 20, backgroundColors: 'gray0' })}
-      variant='chips'
-      tabs={COUPON_CATEGORY_FILTER.map(tab => ({
+      className={commonWrapper({ padding: 20, backgroundColors: "gray0" })}
+      variant="chips"
+      tabs={COUPON_CATEGORY_FILTER.map((tab) => ({
         ...tab,
-        onInit: async () => {
+        onTabChange: async () => {
           onChangeCouponCategory?.(tab.value as CouponCategory);
-        }
+        },
       }))}
       defaultIndex={0}
-      justifyContent='flexStart'
       chipsActiveColor={chipsActiveColor}
     />
   );

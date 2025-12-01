@@ -29,16 +29,22 @@ export default function RecipeDetailModal({
   subIngredients,
 }: RecipeDetailModalProps) {
   const { name, key } = RECIPES_INFO[recipeId];
-  const { tabContentRefs, activeIndex, handleTabClick, scrollContainerRef } = useStickyTabScroll({ stickyOffset: 109 });
+  const { tabContentRefs, activeIndex, handleTabClick, scrollContainerRef } =
+    useStickyTabScroll({ stickyOffset: 109 });
 
   const tabs = [
-    { 
-      label: "효능", 
+    {
+      label: "효능",
       content: <RecipeEfficacy recipeId={recipeId} />,
     },
-    { 
-      label: "성분", 
-      content: <RecipeIngredients recipeId={recipeId} ingredients={[ ...ingredients, ...subIngredients]} />,
+    {
+      label: "성분",
+      content: (
+        <RecipeIngredients
+          recipeId={recipeId}
+          ingredients={[...ingredients, ...subIngredients]}
+        />
+      ),
     },
   ];
   return (
@@ -48,60 +54,68 @@ export default function RecipeDetailModal({
       ref={scrollContainerRef}
     >
       <div
-        className={commonWrapper({ 
-          direction: 'col', 
-          backgroundColors: 'gray0', 
-          align: 'start',
+        className={commonWrapper({
+          direction: "col",
+          backgroundColors: "gray0",
+          align: "start",
         })}
       >
-        <div 
-          className={commonWrapper({ 
-            direction: 'col', 
-            gap: 8, 
-            backgroundColors: 'gray50', 
-            paddingTop: 20, 
-            paddingBottom: 40
+        <div
+          className={commonWrapper({
+            direction: "col",
+            gap: 8,
+            backgroundColors: "gray50",
+            paddingTop: 20,
+            paddingBottom: 40,
           })}
         >
-          <Image 
-            src={displayImageUrl} 
-            alt={name} 
-            width={100} 
-            height={100} 
+          <Image
+            src={displayImageUrl}
+            alt={name}
+            width={100}
+            height={100}
             className={imageWrapper({ borderRadius: 8, width: 100 })}
           />
           <div>
-            <Text type="title4" block>{name}</Text>
-            <Text type="headline4" color="gray500" block>{key}</Text>
+            <Text type="title4" block>
+              {name}
+            </Text>
+            <Text type="headline4" color="gray500" block>
+              {key}
+            </Text>
           </div>
-          <div className={commonWrapper({ direction: 'row', gap: 4 })}>
+          <div className={commonWrapper({ direction: "row", gap: 4 })}>
             {ingredients.map((ingredient) => (
               <div key={ingredient}>
-                <Chips variant="solid" color="gray200" size="sm" borderRadius="sm">{INGREDIENTS_MAP[ingredient].label}</Chips>
+                <Chips
+                  variant="solid"
+                  color="gray200"
+                  size="sm"
+                  borderRadius="sm"
+                >
+                  {INGREDIENTS_MAP[ingredient].label}
+                </Chips>
               </div>
             ))}
           </div>
         </div>
-        <TabBar 
+        <TabBar
           tabs={tabs}
           variant="text"
           defaultIndex={activeIndex}
           onTabClick={handleTabClick}
-          hasTabContent={false}
           className={recipeDetailModalTabBar}
         />
         <Divider thickness={8} color="gray50" />
         {tabs.map((tab, index) => (
-          <div 
+          <div
             key={index}
             ref={(el) => {
               tabContentRefs.current[index] = el;
             }}
           >
             {tab.content}
-            {index === 0 && 
-              <Divider thickness={8} color="gray50" />
-            }
+            {index === 0 && <Divider thickness={8} color="gray50" />}
           </div>
         ))}
       </div>

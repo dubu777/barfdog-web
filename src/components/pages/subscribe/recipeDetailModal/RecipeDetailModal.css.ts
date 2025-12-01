@@ -17,6 +17,9 @@ export const recipeDetailTabBarWrapper = style({
   zIndex: 1,
   width: "100%",
   backgroundColor: themeVars.colors.gray.gray0,
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  boxShadow: themeVars.shadow.light,
 });
 
 export const recipeDetailSection = style({

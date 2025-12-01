@@ -74,9 +74,9 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
             </Text>
             <TabBar
               tabs={[
-                { label: BODY_PART.gastro.name, onInit: () => handleTabClick('gastro') },
-                { label: BODY_PART.skin.name, onInit: () => handleTabClick('skin') },
-                { label: BODY_PART.obesity.name, onInit: () => handleTabClick('obesity') },
+                { label: BODY_PART.gastro.name, onTabChange: () => handleTabClick('gastro') },
+                { label: BODY_PART.skin.name, onTabChange: () => handleTabClick('skin') },
+                { label: BODY_PART.obesity.name, onTabChange: () => handleTabClick('obesity') },
               ]}
               hasTabContent={false}
               variant='text'

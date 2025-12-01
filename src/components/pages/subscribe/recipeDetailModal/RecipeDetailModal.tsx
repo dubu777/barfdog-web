@@ -65,7 +65,7 @@ export default function RecipeDetailModal({
         .filter((tab) => (isRecipeSource ? tab.value !== "amount" : true))
         .map((tab) => ({
           ...tab,
-          onInit: () => {
+          onTabChange: () => {
             scrollToElement(refs[tab.value]?.current);
           },
         })),
@@ -135,7 +135,7 @@ export default function RecipeDetailModal({
       </div>
       <div className={styles.recipeDetailContentWrapper}>
         <div className={styles.recipeDetailTabBarWrapper}>
-          <TabBar variant="text" tabs={tabs} />
+          <TabBar variant="text" tabs={tabs} borderRadius={20} />
         </div>
         {!isRecipeSource && (
           <>
@@ -171,6 +171,7 @@ export default function RecipeDetailModal({
           onPrimaryClick={handleCommit}
           onSecondaryClick={handleClose}
           primaryButtonSize="lg"
+          position="sticky"
         />
       )}
     </FullModalWrapper>

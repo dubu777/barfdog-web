@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { commonWrapper } from "@/styles/common.css";
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -15,30 +15,39 @@ import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 import { useFlattenedInfiniteData } from "@/hooks/useFlattenedInfiniteData";
 import { queryKeys } from "@/constants";
 import { useReviewStore } from "@/store/mypage/useReviewStore";
-import { CreateReviewDetail, ReviewListType } from '@/types';
+import { CreateReviewDetail, ReviewListType } from "@/types";
 import { useGetInfiniteMypageReviewList } from "@/api/mypage/review/queries/useGetInfiniteMypageReviewList";
 
-export default function Review () {
+export default function Review() {
   const { pushWithQuery } = useDynamicQueryPush();
   const queryClient = useQueryClient();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const type = searchParams.get('type') ?? 'writable' as ReviewListType;
-  const isWriteableReview = type === 'writable';
-  const activeIndex = (!type || isWriteableReview) ? 0 : 1;
+  const type = searchParams.get("type") ?? ("writable" as ReviewListType);
+  const isWriteableReview = type === "writable";
+  const activeIndex = !type || isWriteableReview ? 0 : 1;
 
-  const { data: reviewListData, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetInfiniteMypageReviewList(type as ReviewListType);
-  const reviewList = useFlattenedInfiniteData(reviewListData, 'reviewList');
+  const {
+    data: reviewListData,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useGetInfiniteMypageReviewList(type as ReviewListType);
+  const reviewList = useFlattenedInfiniteData(reviewListData, "reviewList");
   const totalCount = reviewListData?.pages[0].pagination.totalCount ?? 0;
 
-  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
+  const ref = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   const { setCreateReview } = useReviewStore();
 
   useEffect(() => {
     setCreateReview(null);
-  }, [])
+  }, []);
 
   const handleTabClick = async (type: ReviewListType) => {
     pushWithQuery(pathname, { type });
@@ -47,62 +56,74 @@ export default function Review () {
         queryKeys.MYPAGE.BASE,
         queryKeys.MYPAGE.REVIEW.BASE,
         queryKeys.MYPAGE.REVIEW.GET_MYPAGE_REVIEW_LIST,
-        type
-      ]
+        type,
+      ],
     });
-  }
-  
+  };
+
   return (
     <section>
-      <Divider thickness={2} color='gray50' />
+      <Divider thickness={2} color="gray50" />
       <article
         className={commonWrapper({
           padding: 20,
-          backgroundColors: 'gray0',
-          width: 'full'
+          backgroundColors: "gray0",
+          width: "full",
         })}
       >
         <TabBar
           tabs={[
-            { label: '작성 가능한 리뷰', onInit: () => handleTabClick('writable') },
-            { label: '내가 작성한 리뷰', onInit: () => handleTabClick('written') },
+            {
+              label: "작성 가능한 리뷰",
+              onTabChange: () => handleTabClick("writable"),
+            },
+            {
+              label: "내가 작성한 리뷰",
+              onTabChange: () => handleTabClick("written"),
+            },
           ]}
           hasTabContent={false}
-          variant='segmentedButton'
+          variant="segmentedButton"
           defaultIndex={activeIndex}
-          className={commonWrapper({ width: 'full' })}
+          className={commonWrapper({})}
         />
       </article>
       <article
         className={commonWrapper({
-          align: 'center',
-          justify: 'start',
+          align: "center",
+          justify: "start",
           gap: 4,
-          backgroundColors: 'gray0',
+          backgroundColors: "gray0",
         })}
-        style={{ padding: '8px 20px' }}
+        style={{ padding: "8px 20px" }}
       >
-        <Text type='label4' applyLineHeight={false}>리뷰</Text>
-        <Text type='label4' applyLineHeight={false}>{totalCount}</Text>
-        {isWriteableReview &&
+        <Text type="label4" applyLineHeight={false}>
+          리뷰
+        </Text>
+        <Text type="label4" applyLineHeight={false}>
+          {totalCount}
+        </Text>
+        {isWriteableReview && (
           <Tooltip>
-            <Text type='caption2' color='white'>리뷰는 구매확정 후 30일 이내에만 작성 가능해요</Text>
+            <Text type="caption2" color="white">
+              리뷰는 구매확정 후 30일 이내에만 작성 가능해요
+            </Text>
           </Tooltip>
-        }
+        )}
       </article>
       <article
         className={commonWrapper({
-          backgroundColors: 'gray50',
+          backgroundColors: "gray50",
           paddingBottom: 40,
-          direction: 'col',
+          direction: "col",
         })}
       >
-        {reviewList.length > 0 ?
+        {reviewList.length > 0 ? (
           <div
             className={commonWrapper({
-              direction: 'col',
+              direction: "col",
               gap: 8,
-              backgroundColors: 'gray50'
+              backgroundColors: "gray50",
             })}
           >
             <span />
@@ -124,7 +145,9 @@ export default function Review () {
                 contents={review?.contents ?? undefined}
                 returnReason={review?.returnReason}
                 showDetail
-                handleCreate={() => setCreateReview(review as CreateReviewDetail)}
+                handleCreate={() =>
+                  setCreateReview(review as CreateReviewDetail)
+                }
               />
             ))}
             <InfiniteScrollTrigger
@@ -133,18 +156,19 @@ export default function Review () {
               isFetchingNextPage={isFetchingNextPage}
             />
           </div>
-          : (
-            <EmptyState
-              title={`아직 ${isWriteableReview ? '작성 가능한' : '작성한'} 리뷰가 없어요`}
-              subTitle={
-                isWriteableReview
-                  ? '상품을 수령하고 ‘구매확정’하면 리뷰를 남길 수 있어요'
-                  : `리뷰를 작성하면 다른 보호자님에게 도움이 되고\n적립금 혜택도 받을 수 있어요`
-              }
-            />
-          )
-        }
+        ) : (
+          <EmptyState
+            title={`아직 ${
+              isWriteableReview ? "작성 가능한" : "작성한"
+            } 리뷰가 없어요`}
+            subTitle={
+              isWriteableReview
+                ? "상품을 수령하고 ‘구매확정’하면 리뷰를 남길 수 있어요"
+                : `리뷰를 작성하면 다른 보호자님에게 도움이 되고\n적립금 혜택도 받을 수 있어요`
+            }
+          />
+        )}
       </article>
     </section>
   );
-};
+}

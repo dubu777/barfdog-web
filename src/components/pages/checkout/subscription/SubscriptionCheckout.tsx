@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 // API & Data Fetching
 import { useBillingAgainPayment } from "@/api/iamport/mutations/useBillingAgainPayment";
@@ -80,7 +80,6 @@ export default function SubscriptionCheckout({
 
   // Data Fetching
   const { data: checkoutData } = useGetSubscriptionCheckout(subscribeId);
-  console.log("checkoutData", checkoutData);
 
   const { deliveryInfo, paymentInfo, subscribeInfo } = checkoutData;
   // Store Hydration

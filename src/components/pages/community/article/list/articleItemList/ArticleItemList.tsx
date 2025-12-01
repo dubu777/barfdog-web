@@ -1,6 +1,11 @@
-'use client';
-import { commonWrapper, ellipsis } from '@/styles/common.css';
-import { articleContents, articleGallery, articleItem, articleListBox } from './ArticleItemList.css';
+"use client";
+import { commonWrapper, ellipsis } from "@/styles/common.css";
+import {
+  articleContents,
+  articleGallery,
+  articleItem,
+  articleListBox,
+} from "./ArticleItemList.css";
 import { articleOverlay } from "@/components/pages/community/article/list/ArticleList.css";
 import { Fragment, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
@@ -12,50 +17,64 @@ import Text from "@/components/ui/text/Text";
 import TabBar from "@/components/ui/tabBar/TabBar";
 import Divider from "@/components/ui/divider/Divider";
 import EmptyState from "@/components/pages/mypage/common/emptyState/EmptyState";
-import useFilterTabs from '@/hooks/useFilterTabs';
+import useFilterTabs from "@/hooks/useFilterTabs";
 import { usePagination } from "@/hooks/usePagination";
 import { useQueryClient } from "@tanstack/react-query";
-import { prefetchGetArticleList, useGetArticleList } from "@/api/community/queries/useGetArticleList";
+import {
+  prefetchGetArticleList,
+  useGetArticleList,
+} from "@/api/community/queries/useGetArticleList";
 import { useDynamicQueryPush } from "@/hooks/useDynamicQueryPush";
 import { ArticleCategory } from "@/types";
 import { ARTICLE_CATEGORY } from "@/constants/community";
 
 function getRowHeight(index: number): number {
   const mod = index % 6;
-  if (mod === 0 || mod === 3 || mod === 5 ) return 186;
+  if (mod === 0 || mod === 3 || mod === 5) return 186;
   if (mod === 2) return 281;
   return 233.5;
 }
 
-export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' }) {
+export default function ArticleItemList({
+  mode,
+}: {
+  mode: "board" | "gallery";
+}) {
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
 
-  const category = searchParams.get('category') as ArticleCategory || 'ALL';
+  const category = (searchParams.get("category") as ArticleCategory) || "ALL";
   const { pushWithQuery } = useDynamicQueryPush();
-  
-  const { currentPage, totalPages, setPaginationData, onPageChange } = usePagination({
-    prefetchFn: (page: number) => prefetchGetArticleList(queryClient, category, page),
-    pushWithQuery,
-  })
 
-  const paginationProps = useMemo(() => ({
-    currentPage,
-    totalPages,
-    onPageChange,
-  }), [currentPage, totalPages, onPageChange]);
-  
+  const { currentPage, totalPages, setPaginationData, onPageChange } =
+    usePagination({
+      prefetchFn: (page: number) =>
+        prefetchGetArticleList(queryClient, category, page),
+      pushWithQuery,
+    });
+
+  const paginationProps = useMemo(
+    () => ({
+      currentPage,
+      totalPages,
+      onPageChange,
+    }),
+    [currentPage, totalPages, onPageChange]
+  );
+
   const { data } = useGetArticleList(category, currentPage);
   const articleList = data?.articleList || [];
-  const isGallery = mode === 'gallery';
+  const isGallery = mode === "gallery";
 
-  const articleCategoryList = Object.entries(ARTICLE_CATEGORY).map(([value, { label }]) => ({label, value}));
+  const articleCategoryList = Object.entries(ARTICLE_CATEGORY).map(
+    ([value, { label }]) => ({ label, value })
+  );
 
   const { defaultTabIndex, handleFilterChange } = useFilterTabs({
-    filterKey: 'category',
-    defaultValue: 'ALL',
+    filterKey: "category",
+    defaultValue: "ALL",
     tabs: articleCategoryList,
-  })
+  });
 
   useEffect(() => {
     if (data.pagination) {
@@ -64,42 +83,45 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
   }, [data.pagination, setPaginationData]);
 
   const handleCategoryFilter = (category: ArticleCategory) => {
-    handleFilterChange(category, { page: 1 })
+    handleFilterChange(category, { page: 1 });
     setPaginationData({ ...data.pagination });
-  }
+  };
 
   return (
-    <article className={commonWrapper({ direction: 'col', backgroundColors: 'gray0' })}>
-      <article className={commonWrapper({ padding: 20, justify: 'between' })}>
+    <article
+      className={commonWrapper({ direction: "col", backgroundColors: "gray0" })}
+    >
+      <article className={commonWrapper({ padding: 20, justify: "between" })}>
         <TabBar
-          variant='chips'
-          tabs={articleCategoryList.map(tab => ({
+          variant="chips"
+          tabs={articleCategoryList.map((tab) => ({
             ...tab,
-            onInit: async () => {
+            onTabChange: async () => {
               handleCategoryFilter(tab.value as ArticleCategory);
-            }
+            },
           }))}
           defaultIndex={defaultTabIndex}
-          width={68}
-          justifyContent='flexStart'
         />
       </article>
-      <Divider thickness={1} color='gray100' />
+      <Divider thickness={1} color="gray100" />
       <div className={articleListBox({ isEmpty: articleList.length === 0 })}>
-        {articleList.length === 0 ?
-          <EmptyState title='등록된 아티클이 없습니다.' />
-          : <>
-            <div className={isGallery? articleGallery : ''}>
+        {articleList.length === 0 ? (
+          <EmptyState title="등록된 아티클이 없습니다." />
+        ) : (
+          <>
+            <div className={isGallery ? articleGallery : ""}>
               {articleList.map((article, index) => {
                 const rowHeight = getRowHeight(index);
                 return (
                   <Fragment key={index}>
                     <Link
                       href={`/community/article/${article.id}?category=${category}`}
-                      style={{ gridRowEnd: `span ${Math.ceil(rowHeight / 10)}` }}
+                      style={{
+                        gridRowEnd: `span ${Math.ceil(rowHeight / 10)}`,
+                      }}
                       className={articleItem({ mode })}
                     >
-                      {article?.displayImageUrl?.url && 
+                      {article?.displayImageUrl?.url && (
                         <Image
                           src={article.displayImageUrl?.url}
                           alt={article.title}
@@ -111,36 +133,63 @@ export default function ArticleItemList({ mode }: { mode: 'board' | 'gallery' })
                             width: isGallery ? 300 : 96,
                           }}
                         />
-                      }
-                      <div className={`${articleContents({ mode })} ${isGallery ? articleOverlay : ''}`}>
-                        {isGallery
-                          ? <>
-                            <Text type='caption' color='white'>
+                      )}
+                      <div
+                        className={`${articleContents({ mode })} ${
+                          isGallery ? articleOverlay : ""
+                        }`}
+                      >
+                        {isGallery ? (
+                          <>
+                            <Text type="caption" color="white">
                               {ARTICLE_CATEGORY[article.category].label}
                             </Text>
-                            <Text type='label3' color='white' className={ellipsis({ lineSize: 'line1' })}>
+                            <Text
+                              type="label3"
+                              color="white"
+                              className={ellipsis({ lineSize: "line1" })}
+                            >
                               {article.title}
                             </Text>
                           </>
-                          : <div className={commonWrapper({ gap: 4, justify: 'start' })}>
-                            <Text type='label3' color='gray900' noShrink>[{ARTICLE_CATEGORY[article.category].label}]</Text>
-                            <Text type='label3' color='gray900' className={ellipsis({ lineSize: 'line1' })}>
+                        ) : (
+                          <div
+                            className={commonWrapper({
+                              gap: 4,
+                              justify: "start",
+                            })}
+                          >
+                            <Text type="label3" color="gray900" noShrink>
+                              [{ARTICLE_CATEGORY[article.category].label}]
+                            </Text>
+                            <Text
+                              type="label3"
+                              color="gray900"
+                              className={ellipsis({ lineSize: "line1" })}
+                            >
                               {article.title}
                             </Text>
                           </div>
-                        }
-                        {!isGallery && <Text type='label4'>{format(new Date(article.createdDate), 'yyyy-MM-dd')}</Text>}
+                        )}
+                        {!isGallery && (
+                          <Text type="label4">
+                            {format(
+                              new Date(article.createdDate),
+                              "yyyy-MM-dd"
+                            )}
+                          </Text>
+                        )}
                       </div>
                     </Link>
-                    {!isGallery && <Divider thickness={2} color='gray50' />}
+                    {!isGallery && <Divider thickness={2} color="gray50" />}
                   </Fragment>
                 );
               })}
             </div>
             <Pagination {...paginationProps} />
           </>
-        }
+        )}
       </div>
     </article>
   );
-};
+}

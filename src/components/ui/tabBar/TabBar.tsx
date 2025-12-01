@@ -1,15 +1,10 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import {
-  tabBarActiveVariants,
-  tabBarBase,
-  tabBarBaseVariants,
-  tabBarChipsActiveVariants,
-  tabBarContainerAlign,
-  tabBarContainerBase,
-  tabBarContainerVariants,
+  tabBarButton,
+  tabBarChipsActive,
+  tabBarContainer,
   tabBarSlideItem,
   tabBarSlider,
-  tabBarVariants,
 } from "@/components/ui/tabBar/TabBar.css";
 import Text from "@/components/ui/text/Text";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,20 +14,20 @@ export interface Tab {
   label: string;
   value?: string;
   content?: ReactNode;
-  onInit?: () => void;
+  onTabChange?: () => void;
 }
 
 interface TabBarProps {
-  variant?: keyof typeof tabBarVariants;
+  variant?: "text" | "segmentedButton" | "chips";
   tabs: Tab[];
   defaultIndex?: number;
   hasTabContent?: boolean;
-  width?: number;
-  justifyContent?: "center" | "spaceBetween" | "flexStart";
+  justify?: "center" | "between" | "start";
   className?: string;
   isScrollable?: boolean;
   onTabClick?: (index: number) => void;
   chipsActiveColor?: "gray800" | "red";
+  borderRadius?: 20;
 }
 
 export default function TabBar({
@@ -40,57 +35,67 @@ export default function TabBar({
   tabs = [],
   defaultIndex = 0,
   hasTabContent = false,
-  width,
-  justifyContent = "flexStart",
+  justify = "start",
   className,
   isScrollable = false,
   onTabClick,
   chipsActiveColor = "red",
+  borderRadius,
 }: TabBarProps) {
-  const textType = variant === "text" ? "label1" : "headline3";
-  const textColor = variant === "chips" ? "gray600" : "gray300";
-  const activeTextColor = variant === "text" ? "gray900" : "white";
+  const VARIANT_CONFIG = {
+    text: {
+      textType: "label1",
+      textColor: "gray300",
+      activeTextColor: "gray900",
+    },
+    segmentedButton: {
+      textType: "headline3",
+      textColor: "gray300",
+      activeTextColor: "white",
+    },
+    chips: {
+      textType: "headline3",
+      textColor: "gray600",
+      activeTextColor: "white",
+    },
+  } as const;
 
+  const config = VARIANT_CONFIG[variant];
   const [activeIndex, setActiveIndex] = useState(defaultIndex);
-
-  useEffect(() => {
-    setActiveIndex(defaultIndex);
-  }, [defaultIndex]);
 
   const handleTabChange = (index: number) => {
     setActiveIndex(index);
-    tabs[index]?.onInit?.();
+    tabs[index]?.onTabChange?.();
     onTabClick?.(index);
   };
 
-  const TabButtonComponent = ({ tab, index }: { tab: Tab; index: number }) => (
-    <button
-      key={index}
-      style={{
-        width:
-          variant !== "chips"
-            ? `calc(100% / ${tabs.length})`
-            : width
-            ? width
-            : "auto",
-      }}
-      className={`${tabBarBaseVariants} ${tabBarVariants[variant]} ${
-        activeIndex === index ? tabBarActiveVariants[variant] : ""
-      } ${variant === "chips" && activeIndex === index ? tabBarChipsActiveVariants({ color: chipsActiveColor }) : ""}`}
-      onClick={() => handleTabChange(index)}
-    >
-      <Text
-        type={textType}
-        color={activeIndex === index ? activeTextColor : textColor}
+  const TabButtonComponent = ({ tab, index }: { tab: Tab; index: number }) => {
+    const isActive = activeIndex === index;
+    const buttonClassName = tabBarButton({ variant, isActive });
+    const chipsClassName =
+      variant === "chips" && isActive
+        ? tabBarChipsActive({ color: chipsActiveColor })
+        : "";
+
+    return (
+      <button
+        key={index}
+        className={`${buttonClassName} ${chipsClassName}`.trim()}
+        onClick={() => handleTabChange(index)}
       >
-        {tab.label}
-      </Text>
-    </button>
-  );
+        <Text
+          type={config.textType}
+          color={isActive ? config.activeTextColor : config.textColor}
+        >
+          {tab.label}
+        </Text>
+      </button>
+    );
+  };
 
   return (
     <>
-      <div className={`${tabBarBase} ${className || ""}`}>
+      <div className={className}>
         {isScrollable ? (
           <Swiper
             spaceBetween={8}
@@ -104,9 +109,7 @@ export default function TabBar({
             ))}
           </Swiper>
         ) : (
-          <div
-            className={`${tabBarContainerBase} ${tabBarContainerAlign[justifyContent]} ${tabBarContainerVariants[variant]}`}
-          >
+          <div className={tabBarContainer({ variant, justify, borderRadius })}>
             {tabs.map((tab, index) => (
               <TabButtonComponent key={index} tab={tab} index={index} />
             ))}
