@@ -61,7 +61,7 @@ interface GeneralOrderItemRequest {
 }
 
 // 일반 주문 시트 조회 요청
-interface GeneralOrderSheetRequest {
+interface GetGeneralCheckoutRequest {
   itemList: GeneralItemRequest[];
 }
 
@@ -491,10 +491,11 @@ interface GeneralMemberInfo {
 }
 
 interface GeneralPaymentInfo {
-  originalPrice: number;
-  discountProduct: number;
+  originalPrice: number; // 상품 총액 - 원가
+  paymentPrice: number; // 상품 총액 - 기본 할인 적용
+  discountProduct: number; // 기본 할인금
   deliveryPrice: number;
-  freeCondition: number;
+  freeCondition: number; // 배송비 무료 최소 결제 금액
 }
 
 interface GeneralItemOption {
@@ -509,11 +510,10 @@ interface GeneralItem {
   name: string;
   displayImageUrl: UrlObject;
   amount: number;
-  totalOriginalPrice: number;
-  totalSalePrice: number;
-  totalDiscountProduct: number;
+  totalOriginalPrice: number; // 상품 + 옵션: 원금
+  totalSalePrice: number; // 상품 + 옵션: 기본 할인 적용 금액
+  totalDiscountProduct: number; // 상품 + 옵션 기본 할인금
   deliveryFree: boolean;
-  // 필요하면 나중에 'RAW' | 'TOPPING' 같은 유니온 타입으로 좁혀도 됨
   type: string;
   itemOptionList: GeneralItemOption[];
 }
@@ -536,7 +536,6 @@ interface GetGeneralCheckoutResponse {
   paymentInfo: GeneralPaymentInfo;
   defaultAddress: DefaultAddress;
   itemList: GeneralItem[];
-  // 백엔드 필드명이 pakageableDeliveryList 인 것 그대로 사용
   pakageableDeliveryList: PackageableDelivery[];
 }
 
@@ -547,6 +546,34 @@ interface GeneralItemRequest {
     id: number;
     amount: number;
   }[];
+}
+
+// 배송 정보
+interface PrepareGeneralPaymentDeliveryInfo {
+  address: DeliveryRequest;
+  deliveryId: number | null; // null이면 신규 배송, 숫자면 묶음배송 ID
+}
+
+// 결제 정보
+interface PrepareGeneralPaymentPaymentInfo {
+  originalPrice: number; // 상품 원가 총합
+  discountTotal: number; // 전체 할인 합계
+  discountProduct: number; // 상품 할인
+  discountReward: number; // 적립금 할인
+  discountCoupon: number; // 쿠폰 할인
+  deliveryPrice: number; // 배송비
+  paymentPrice: number; // 실제 결제 금액
+  overDiscount: number; // 과할인 보정 값
+  saveReward: number; // 적립 예정 포인트
+  paymentMethod: string; // 예: "CREDIT_CARD"
+}
+
+// 최상위 요청 바디
+interface PrepareGeneralPaymentRequest {
+  itemList: GeneralItemRequest[];
+  memberCouponId?: number | null; // null 또는 필드 자체 누락 모두 허용
+  deliveryInfo: PrepareGeneralPaymentDeliveryInfo;
+  paymentInfo: PrepareGeneralPaymentPaymentInfo;
 }
 
 type PaymentMethod = keyof typeof PAYMENT_METHOD;
@@ -569,7 +596,7 @@ export type {
   PaymentMethod,
   OrderDetailType,
   GeneralOrderSheetResponse,
-  GeneralOrderSheetRequest,
+  GetGeneralCheckoutRequest,
   GeneralItem,
   OrderItem,
   GeneralOrderItemRequest,
@@ -608,4 +635,5 @@ export type {
   GeneralMemberInfo,
   GeneralPaymentInfo,
   GeneralItemRequest,
+  PrepareGeneralPaymentRequest,
 };

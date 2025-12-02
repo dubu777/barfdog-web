@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { UseMutationCustomOptions } from "@/types";
-import { saveGeneralOrder } from "../../checkout";
+import { prepareGeneralPayment } from "../../checkout";
 
-export function useSaveGeneralOrder(
+export function usePrepareGeneralPayment(
   mutationOptions?: UseMutationCustomOptions
 ) {
   return useMutation({
-    mutationFn: saveGeneralOrder,
+    mutationFn: prepareGeneralPayment,
     ...mutationOptions,
   });
 }

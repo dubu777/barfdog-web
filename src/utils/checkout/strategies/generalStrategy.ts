@@ -12,7 +12,7 @@ import { buildGeneralPaymentRequest } from "@/store/checkout/paymentUtils";
  * - 성공/실패/취소 API는 DI로 주입(기존 React Query mutateAsync 사용)
  */
 export function createGeneralStrategy(deps: {
-  successGeneralPayment: (args: {
+  successPayment: (args: {
     id: number;
     body: {
       impUid: string;
@@ -21,8 +21,8 @@ export function createGeneralStrategy(deps: {
       memberCouponId: number | null;
     };
   }) => Promise<any>;
-  cancelGeneralPayment: (id: number) => Promise<any>;
-  failGeneralPayment: (id: number) => Promise<any>;
+  cancelPayment: (id: number) => Promise<any>;
+  failPayment: (id: number) => Promise<any>;
 }): CheckoutStrategy<
   SaveGeneralOrderRequest,
   GetGeneralCheckoutResponse,
@@ -54,7 +54,7 @@ export function createGeneralStrategy(deps: {
 
     onSuccess: async ({ preparePayment, response, requestBody }) => {
       try {
-        await deps.successGeneralPayment({
+        await deps.successPayment({
           id: preparePayment.id,
           body: {
             impUid: (response as any).imp_uid!,
@@ -64,19 +64,19 @@ export function createGeneralStrategy(deps: {
           },
         });
       } catch {
-        await deps.cancelGeneralPayment(preparePayment.id);
-        throw new Error("successGeneralPayment failed → canceled");
+        await deps.cancelPayment(preparePayment.id);
+        throw new Error("successPayment failed → canceled");
       }
     },
 
     onFail: async ({ preparePayment }) => {
       if (preparePayment.id > 0) {
-        await deps.failGeneralPayment(preparePayment.id).catch(() => {});
+        await deps.failPayment(preparePayment.id).catch(() => {});
       }
     },
 
     onCancel: async ({ preparePayment }) => {
-      await deps.cancelGeneralPayment(preparePayment.id).catch(() => {});
+      await deps.cancelPayment(preparePayment.id).catch(() => {});
     },
   };
 }

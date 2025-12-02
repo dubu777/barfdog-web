@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { getGeneralCheckout } from "../checkout";
 import {
-  GeneralOrderSheetRequest,
+  GetGeneralCheckoutRequest,
   GetGeneralCheckoutResponse,
   UseQueryCustomOptions,
 } from "@/types";
 import { queryKeys } from "@/constants";
 
 export function useGetGeneralCheckout(
-  body: GeneralOrderSheetRequest,
+  body: GetGeneralCheckoutRequest,
   queryOptions?: UseQueryCustomOptions<GetGeneralCheckoutResponse>
 ) {
   return useQuery({

@@ -1,4 +1,5 @@
 import { themeVars } from "@/styles/theme.css";
+import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
 export const surveyButtonContainer = recipe({
@@ -77,4 +78,10 @@ export const surveyButtonContentWrapper = recipe({
   defaultVariants: {
     isNormal: false,
   },
+});
+
+export const chipsButton = style({
+  position: "absolute",
+  top: "4px",
+  left: "4px",
 });

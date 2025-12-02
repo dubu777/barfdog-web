@@ -3,7 +3,7 @@ import axiosInstance from "../axiosInstance";
 import {
   SaveGeneralOrderRequest,
   SaveOrderResponse,
-  GeneralOrderSheetRequest,
+  GetGeneralCheckoutRequest,
   GetGeneralCheckoutResponse,
   SuccessGeneralPaymentRequest,
   SuccessSubscriptionPaymentRequest,
@@ -98,7 +98,7 @@ const cancelSubscriptionPayment = async (orderId: number) => {
 
 // 일반 결제 주문 정보 조회 - v2
 const getGeneralCheckout = async (
-  body: GeneralOrderSheetRequest
+  body: GetGeneralCheckoutRequest
 ): Promise<GetGeneralCheckoutResponse> => {
   const { data } = await axiosInstance.post(
     "/api/v2/user/general-orders/payment/estimate",
@@ -107,8 +107,8 @@ const getGeneralCheckout = async (
   return validateApiResponse(data, "일반 결제 페이지 조회에 실패 했습니다");
 };
 
-// 일반 결제 주문 정보 저장 - v2
-const saveGeneralOrder = async (
+// 일반 결제 준비 - 결제 1단계
+const prepareGeneralPayment = async (
   body: SaveGeneralOrderRequest
 ): Promise<SaveOrderResponse> => {
   const { data } = await axiosInstance.post("/api/v2/orders/general", body);
@@ -158,7 +158,7 @@ const cancelGeneralPayment = async (id: number) => {
 };
 
 export {
-  saveGeneralOrder,
+  prepareGeneralPayment,
   successGeneralPayment,
   failGeneralPayment,
   validateSubscriptionPayment,

@@ -590,19 +590,35 @@ export const imageWrapper = recipe({
 export const marginStyles = recipe({
   base: {},
   variants: {
+    all: {
+      20: {
+        margin: "20px",
+      },
+    },
+    x: {
+      20: { marginLeft: "20px", marginRight: "20px" },
+    },
     top: {
       4: { marginTop: "4px" },
       6: { marginTop: "6px" },
       8: { marginTop: "8px" },
       12: { marginTop: "12px" },
+      30: { marginTop: "30px" },
     },
     bottom: {
       4: { marginBottom: "4px" },
       6: { marginBottom: "6px" },
       8: { marginBottom: "8px" },
       12: { marginBottom: "12px" },
+      20: { marginBottom: "20px" },
       28: { marginBottom: "28px" },
       60: { marginBottom: "60px" },
+    },
+    fullWidth: {
+      true: {
+        width: "100%",
+      },
+      false: {},
     },
   },
 });
@@ -639,6 +655,12 @@ export const paddingStyles = recipe({
       8: { paddingBottom: "8px" },
       12: { paddingBottom: "12px" },
       85: { paddingBottom: "85px" },
+    },
+    fullWidth: {
+      true: {
+        width: "100%",
+      },
+      false: {},
     },
   },
 });

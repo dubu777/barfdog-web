@@ -1,7 +1,6 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
-  mainBox,
   mainChapter1Image,
   mainChapter1ImageList,
   mainChapter2Image,
@@ -25,6 +24,7 @@ import "swiper/css/free-mode";
 import "swiper/css";
 import useDeviceState from "@/hooks/useDeviceState";
 import { MAIN_DATA } from "@/constants/main";
+import { paddingStyles } from "@/styles/common.css";
 
 const getPosition = (index: number) => {
   if (index === 0) return { x: 0, y: -40 };
@@ -33,12 +33,6 @@ const getPosition = (index: number) => {
   return { x: 0, y: 0 };
 };
 
-const getGridArea = (index: number) => {
-  if (index === 0) return "1 / 1 / 2 / 2"; // 첫 번째 행, 첫 번째 열
-  if (index === 1) return "1 / 2 / 2 / 3"; // 첫 번째 행, 두 번째 열
-  if (index === 2) return "2 / 1 / 3 / 3"; // 두 번째 행, 전체 너비
-  return "";
-};
 
 const parentVariants0 = {
   hidden: {},
@@ -122,7 +116,7 @@ export default function ChapterSection() {
             </motion.div>
           ))}
         </motion.div>
-        <div className={mainBox}>
+        <div className={paddingStyles({ all: 20 })}>
           <Button
             onClick={() => router.push(chapterData[0].action.url)}
             variant={chapterData[0].action.variant}
@@ -155,8 +149,9 @@ export default function ChapterSection() {
             <motion.div
               key={i}
               variants={childVariants1(i)}
-              style={{ gridArea: getGridArea(i) }}
-              className={mainChapter2ImageBox}
+              className={mainChapter2ImageBox({
+                gridPosition: i as 0 | 1 | 2,
+              })}
             >
               <Image
                 src={image}
@@ -168,7 +163,7 @@ export default function ChapterSection() {
             </motion.div>
           ))}
         </motion.div>
-        <div className={mainBox}>
+        <div className={paddingStyles({ all: 20 })}>
           <Button
             onClick={() => router.push(chapterData[1].action.url)}
             variant={chapterData[1].action.variant}
@@ -209,7 +204,7 @@ export default function ChapterSection() {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className={mainBox}>
+        <div className={paddingStyles({ all: 20 })}>
           <Button
             onClick={() => router.push(chapterData[2].action.url)}
             variant={chapterData[2].action.variant}

@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // API & Data Fetching
-import { useSaveGeneralOrder } from "@/api/checkout/mutations/general/useSaveGeneralOrder";
+import { usePrepareGeneralPayment } from "@/api/checkout/mutations/general/usePrepareGeneralPayment";
 import { useSuccessGeneralPayment } from "@/api/checkout/mutations/general/useSuccessGeneralPayment";
 import { useFailGeneralPayment } from "@/api/checkout/mutations/general/useFailGeneralPayment";
 import { useCancelGeneralPayment } from "@/api/checkout/mutations/general/useCancelGeneralPayment";
@@ -81,10 +81,10 @@ export default function GeneralCheckout() {
   console.log("generalOrderData", generalOrderData);
 
   // React Query mutations
-  const { mutateAsync: saveGeneralOrder } = useSaveGeneralOrder();
-  const { mutateAsync: successGeneralPayment } = useSuccessGeneralPayment();
-  const { mutateAsync: failGeneralPayment } = useFailGeneralPayment();
-  const { mutateAsync: cancelGeneralPayment } = useCancelGeneralPayment();
+  const { mutateAsync: preparePayment } = usePrepareGeneralPayment();
+  const { mutateAsync: successPayment } = useSuccessGeneralPayment();
+  const { mutateAsync: failPayment } = useFailGeneralPayment();
+  const { mutateAsync: cancelPayment } = useCancelGeneralPayment();
 
   // Store Hydration
   useHydrateGeneralOrderStores(generalOrderData);
@@ -93,11 +93,11 @@ export default function GeneralCheckout() {
   const strategy = useMemo(
     () =>
       createGeneralStrategy({
-        successGeneralPayment: (args) => successGeneralPayment(args),
-        cancelGeneralPayment: (id) => cancelGeneralPayment(id),
-        failGeneralPayment: (id) => failGeneralPayment(id),
+        successPayment: (args) => successPayment(args),
+        cancelPayment: (id) => cancelPayment(id),
+        failPayment: (id) => failPayment(id),
       }),
-    [successGeneralPayment, cancelGeneralPayment, failGeneralPayment]
+    [successPayment, cancelPayment, failPayment]
   );
 
   // Checkout Flow
@@ -110,7 +110,7 @@ export default function GeneralCheckout() {
     sheet: generalOrderData as GetGeneralCheckoutResponse,
     isMobile: isMobileDevice,
     preparePayment: async (req) => {
-      const res = await saveGeneralOrder(req);
+      const res = await preparePayment(req);
       return {
         id: res.id,
         merchantUid: res.merchantUid,

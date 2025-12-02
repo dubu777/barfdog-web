@@ -1,5 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
-import { style } from "@vanilla-extract/css";
+import { style, createVar } from "@vanilla-extract/css";
 import { MAIN_BACKGROUND_COLORS } from "@/constants/style";
 import { themeVars } from "@/styles/theme.css";
 
@@ -8,41 +8,51 @@ export const mainWrapper = style({
   marginBottom: "85px",
 });
 
+// CSS 변수 정의
+export const backgroundImageVar = createVar();
+
 export const mainContainer = recipe({
   base: {
-    height: "auto",
-    padding: "40px 0",
-    overflowX: "hidden",
     display: "flex",
     flexDirection: "column",
+    overflowX: "hidden",
   },
   variants: {
-    noPaddingBottom: {
-      true: {
-        paddingBottom: "0",
+    paddingBottom: {
+      0: {},
+      10: {
+        paddingBottom: "10px",
       },
-      false: {},
+      40: {
+        paddingBottom: "40px",
+      },
+    },
+    paddingY: {
+      0: {},
+      40: {
+        paddingTop: "40px",
+        paddingBottom: "40px",
+      },
+    },
+    backgroundColor: {
+      pinkWhite: {
+        backgroundColor: MAIN_BACKGROUND_COLORS.pinkWhite,
+      },
+      yellow: {
+        backgroundColor: MAIN_BACKGROUND_COLORS.yellow,
+      },
+      gray200: {
+        backgroundColor: MAIN_BACKGROUND_COLORS.gray200,
+      },
+      gray50: {
+        backgroundColor: MAIN_BACKGROUND_COLORS.gray50,
+      },
+      white: {
+        backgroundColor: MAIN_BACKGROUND_COLORS.white,
+      },
     },
   },
 });
-
-export const mainContainerBackgroundColor = {
-  pinkWhite: style({
-    backgroundColor: MAIN_BACKGROUND_COLORS.pinkWhite,
-  }),
-  yellow: style({
-    backgroundColor: MAIN_BACKGROUND_COLORS.yellow,
-  }),
-  gray200: style({
-    backgroundColor: MAIN_BACKGROUND_COLORS.gray200,
-  }),
-  gray50: style({
-    backgroundColor: MAIN_BACKGROUND_COLORS.gray50,
-  }),
-  white: style({
-    backgroundColor: MAIN_BACKGROUND_COLORS.white,
-  }),
-};
 
 export const mainTitle = recipe({
   base: {
@@ -66,12 +76,13 @@ export const mainTitle = recipe({
       },
       false: {},
     },
+    paddingTop: {
+      0: {},
+      60: {
+        paddingTop: "60px",
+      },
+    },
   },
-});
-
-export const mainBox = style({
-  width: "100%",
-  padding: "20px !important",
 });
 
 export const mainBannerContainer = style({
@@ -120,9 +131,15 @@ export const mainReviewDescription = style({
 });
 
 export const mainReviewCard = style({
-  width: "120px !important",
-  margin: "0 2px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "start",
+  width: "120px",
+  margin: "0 2px 10px 2px",
   overflow: "hidden",
+  boxShadow: themeVars.shadow.light,
+  backgroundColor: themeVars.colors.gray.gray0,
+  borderRadius: "8px",
 });
 
 export const mainReviewImage = style({
@@ -253,9 +270,24 @@ export const mainChapter2ImageList = recipe({
   },
 });
 
-export const mainChapter2ImageBox = style({
-  borderRadius: "8px",
-  boxShadow: themeVars.shadow.strong,
+export const mainChapter2ImageBox = recipe({
+  base: {
+    borderRadius: "8px",
+    boxShadow: themeVars.shadow.strong,
+  },
+  variants: {
+    gridPosition: {
+      0: {
+        gridArea: "1 / 1 / 2 / 2", // 첫 번째 행, 첫 번째 열
+      },
+      1: {
+        gridArea: "1 / 2 / 2 / 3", // 첫 번째 행, 두 번째 열
+      },
+      2: {
+        gridArea: "2 / 1 / 3 / 3", // 두 번째 행, 전체 너비
+      },
+    },
+  },
 });
 
 export const mainChapter2Image = style({
@@ -369,7 +401,7 @@ export const mainDeliveryImage = style({
 });
 
 export const mainBrandStoryContainer = style({
-  padding: "40px 20px 316px !important",
+  padding: "40px 20px 316px",
 });
 
 export const mainBrandStoryMarquee = style({

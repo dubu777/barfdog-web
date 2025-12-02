@@ -71,16 +71,12 @@ export default function SurveyButton<T>({
           <Chips
             variant="solid"
             color={isChecked ? "red" : "gray800"}
-            style={{ position: "absolute", top: "4px", left: "4px" }}
+            className={styles.chipsButton}
           >
             {chipText}
           </Chips>
         )}
-        <Text
-          type="headline3"
-          color={labelColor}
-          applyLineHeight={false}
-        >
+        <Text type="headline3" color={labelColor} applyLineHeight={false}>
           {label}
         </Text>
         {subLabel && (

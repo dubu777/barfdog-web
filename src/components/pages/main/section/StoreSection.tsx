@@ -1,9 +1,13 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { cardShadow } from "@/components/ui/card/Card.css";
-import { commonWrapper, ellipsis, pointColor } from "@/styles/common.css";
 import {
-  mainBox,
+  commonWrapper,
+  ellipsis,
+  paddingStyles,
+  pointColor,
+} from "@/styles/common.css";
+import {
   mainStoreItem,
   mainStoreItemLink,
 } from "@/components/pages/main/common/MainCommon.css";
@@ -40,7 +44,7 @@ export default function StoreSection() {
         spaceBetween={14}
         freeMode
         modules={[FreeMode]}
-        className={mainBox}
+        className={paddingStyles({ all: 20 })}
       >
         {storeItemList.map((item) => {
           const { isDiscounted, formattedSalePrice, discountRate } =
@@ -53,8 +57,7 @@ export default function StoreSection() {
                   alt={item.name}
                   width={120}
                   height={120}
-                  style={{ borderRadius: "8px" }}
-                  className={cardShadow.normal}
+                  className={cardShadow.light}
                 />
                 <div>
                   <Text
@@ -81,7 +84,7 @@ export default function StoreSection() {
           );
         })}
       </Swiper>
-      <div className={mainBox}>
+      <div className={paddingStyles({ all: 20 })}>
         <Button
           onClick={() => router.push(action.url)}
           variant={action.variant}
