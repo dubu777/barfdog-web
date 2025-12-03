@@ -90,6 +90,12 @@ export default function RecipeDetailModal({
     onClose();
   };
 
+  // 적용된 레시피 그램이 20미만이면 담기 불가능
+  const currentGramsPerMeal =
+    stagedSelection?.gramsPerMeal ?? packData?.gramsPerMeal ?? 0;
+  const isPrimaryDisabled = currentGramsPerMeal < 20;
+
+  console.log("stage", stagedSelection, "pack", packData);
   return (
     <FullModalWrapper
       isVisible={isOpen}
@@ -168,6 +174,7 @@ export default function RecipeDetailModal({
           type="dual-button"
           primaryButtonLabel="레시피 담기"
           secondaryButtonLabel="이전"
+          isPrimaryDisabled={isPrimaryDisabled}
           onPrimaryClick={handleCommit}
           onSecondaryClick={handleClose}
           primaryButtonSize="lg"

@@ -150,7 +150,6 @@ export default function RawFoodOptions({
                       inedibleFoods={orderSheetData.inedibleFoods}
                       packData={packData}
                       petName={orderSheetData.petName}
-                      isUnder20g={packData.under20g !== undefined}
                       isSelected={sel.isSelected}
                       canOpenDetailModal={sel.canOpenDetailModal}
                       stagedSelection={sel.stagedSelection}

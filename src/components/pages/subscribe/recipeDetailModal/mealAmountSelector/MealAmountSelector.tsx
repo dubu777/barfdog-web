@@ -1,6 +1,6 @@
 "use client";
 
-import { commonWrapper } from "@/styles/common.css";
+import { commonWrapper, fontWeightStyle } from "@/styles/common.css";
 import { forwardRef, useCallback, useState } from "react";
 import {
   mealSelectorBox,
@@ -172,17 +172,13 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
             <>
               <Divider color="gray800" thickness={1} />
               <div className={commonWrapper({ align: "start", gap: 8 })}>
-                <SvgIcon src={WarningIcon} size={20} />
+                <SvgIcon src={WarningIcon} size={18} />
                 <Text type="body3" color="gray900">
-                  <Text type="label3" color="gray900">
-                    추천 급여량 {packData.under20g}g
-                  </Text>
-                  구독 급여량은{" "}
-                  <Text type="label3" color="gray900">
-                    최소 20g
-                  </Text>
-                  부터 설정 가능해요. 추천 급여량보다 많더라도 급여는 아이에게
-                  맞게 소분해 주세요.
+                  추천 급여량{" "}
+                  <span className={fontWeightStyle}>{packData.under20g}g</span>
+                  으로 계산되었지만, 구독은 포장 단위 기준에 따라{" "}
+                  <span className={fontWeightStyle}>20g</span>부터 가능해요.
+                  급여는 추천된 양에 맞춰 소분해주세요
                 </Text>
               </div>
             </>

@@ -26,7 +26,6 @@ interface RawFoodCardProps {
   inedibleFoods: string[];
   petName: string;
   packData: CalculateRecipePackReturn;
-  isUnder20g: boolean;
   isSelected: boolean;
   canOpenDetailModal: boolean;
   stagedSelection: StagedSelection | null;
@@ -44,7 +43,6 @@ export default function RawFoodCard({
   inedibleFoods,
   petName,
   packData,
-  isUnder20g,
   isSelected,
   canOpenDetailModal,
   stagedSelection,
@@ -121,11 +119,9 @@ export default function RawFoodCard({
           )}
           <Text type="headline2">{rawFoodItem.recipeNameKorea}</Text>
         </div>
-        {!isUnder20g && (
-          <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
-            추천 급여량 {recommendedPackGrams}g
-          </Chips>
-        )}
+        <Chips variant="solid" color="blue50" size="sm" borderRadius="lg">
+          추천 급여량 {recommendedPackGrams}g
+        </Chips>
       </div>
       <div className={commonWrapper({ direction: "row", gap: 12 })}>
         <Image

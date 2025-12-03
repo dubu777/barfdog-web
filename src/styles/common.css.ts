@@ -72,6 +72,8 @@ export const ellipsis = recipe({
 });
 export const pointColor = style({ color: themeVars.colors.red.red });
 
+export const fontWeightStyle = style({ fontWeight: 700 });
+
 export const defaultWidth = style({
   minWidth: "335px",
   width: "80%",
