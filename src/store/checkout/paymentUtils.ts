@@ -21,7 +21,7 @@ export function buildGeneralPaymentRequest({
   generalOrderSheetData,
   isMobileDevice,
 }: GeneralPaymentDataParams): GeneralIamportRequest {
-  const { paymentMethod, paymentPrice, deliveryDto } = requestBody;
+  const { paymentInfo, deliveryInfo, memberCouponId } = requestBody;
   const { itemList } = generalOrderSheetData;
 
   const itemName = itemList.map((item) => item.name).join(", ");
@@ -30,27 +30,25 @@ export function buildGeneralPaymentRequest({
   const email = "";
 
   const baseData = {
-    channelKey: PG_CHANNEL_KEY.GENERAL[paymentMethod],
-    pay_method: PAYMENT_METHOD[paymentMethod],
+    channelKey: PG_CHANNEL_KEY.GENERAL[paymentInfo.paymentMethod],
+    pay_method: PAYMENT_METHOD[paymentInfo.paymentMethod],
     merchant_uid: merchantUid,
-    amount: paymentPrice,
+    amount: paymentInfo.paymentPrice,
     name: itemName,
     buyer_email: email,
-    buyer_name: deliveryDto.recipientName,
-    buyer_tel: deliveryDto.phoneNumber ?? "",
-    buyer_addr: `${deliveryDto.street}, ${deliveryDto.detailAddress}`,
-    buyer_postcode: deliveryDto.zipcode ?? "",
+    buyer_name: deliveryInfo.address.recipientName,
+    buyer_tel: deliveryInfo.address.phoneNumber ?? "",
+    buyer_addr: `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`,
+    buyer_postcode: deliveryInfo.address.zipcode ?? "",
     m_redirect_url:
       `${window.location.origin}/checkout/mobile-redirect/general?` +
       `order_id=${encodeURIComponent(orderId)}&` +
       `merchantUid=${encodeURIComponent(merchantUid)}&` +
-      `discount_reward=${encodeURIComponent(requestBody.discountReward)}&` +
-      `member_coupon_id=${encodeURIComponent(
-        requestBody.memberCouponId ?? ""
-      )}&`,
+      `discount_reward=${encodeURIComponent(paymentInfo.discountReward)}&` +
+      `member_coupon_id=${encodeURIComponent(memberCouponId ?? "")}&`,
   };
 
-  if (paymentMethod === "NAVER_PAY") {
+  if (paymentInfo.paymentMethod === "NAVER_PAY") {
     const naverPayData = getNaverPayGeneralPaymentParam({
       items: itemList,
       isMobile: isMobileDevice,

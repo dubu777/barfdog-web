@@ -35,7 +35,7 @@ import {
   GeneralIamportRequest,
   GeneralIamportResponse,
   GetGeneralCheckoutResponse,
-  SaveGeneralOrderRequest,
+  PrepareGeneralPaymentRequest,
 } from "@/types";
 
 // Utils
@@ -102,7 +102,7 @@ export default function GeneralCheckout() {
 
   // Checkout Flow
   const { start, isProcessing } = useCheckoutFlow<
-    SaveGeneralOrderRequest,
+    PrepareGeneralPaymentRequest,
     GetGeneralCheckoutResponse,
     GeneralIamportRequest,
     GeneralIamportResponse
@@ -147,7 +147,7 @@ export default function GeneralCheckout() {
     }
     const requestBody = getRequestBody(
       ORDER_TYPE.GENERAL
-    ) as SaveGeneralOrderRequest;
+    ) as PrepareGeneralPaymentRequest;
     await start(requestBody);
   };
 

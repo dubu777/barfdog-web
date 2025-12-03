@@ -1,7 +1,7 @@
 import {
   GetGeneralCheckoutResponse,
   OrderType,
-  SaveGeneralOrderRequest,
+  PrepareGeneralPaymentRequest,
   PrepareSubscriptionPaymentRequest,
   SubscriptionCheckoutResponse,
   GeneralItem,
@@ -132,7 +132,7 @@ interface CreateIamportSubscriptionPaymentRequest {
 }
 
 interface GeneralPaymentDataParams {
-  requestBody: SaveGeneralOrderRequest;
+  requestBody: PrepareGeneralPaymentRequest;
   orderId: number;
   merchantUid: string;
   generalOrderSheetData: GetGeneralCheckoutResponse;

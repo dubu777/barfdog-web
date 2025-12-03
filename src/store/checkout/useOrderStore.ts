@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import {
-  SaveGeneralOrderRequest,
+  PrepareGeneralPaymentRequest,
   OrderType,
   PrepareSubscriptionPaymentRequest,
 } from "@/types";
@@ -21,7 +21,7 @@ interface OrderState {
   subscribeId: number | null;
   getRequestBody: (
     orderType: OrderType
-  ) => SaveGeneralOrderRequest | PrepareSubscriptionPaymentRequest;
+  ) => PrepareGeneralPaymentRequest | PrepareSubscriptionPaymentRequest;
   setAgreePrivacy: (agreePrivacy: boolean) => void;
   setAgreeSubscription: (agreeSubscription: boolean) => void;
   setCustomerUid: (customerUid: string) => void;
@@ -37,8 +37,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
   subscribeId: null,
 
   getRequestBody: (orderType) => {
-    const { agreePrivacy, customerUid, currentDeliveryDate, subscribeId } =
-      get();
+    const { customerUid, currentDeliveryDate, subscribeId } = get();
 
     // 필요한 데이터들을 각각의 store에서 가져옴
     const { deliveryDto, deliveryId, isBundleDelivery } =
@@ -51,30 +50,37 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       originalPrice,
       discountGrade,
       overDiscount,
+      saveReward,
     } = usePaymentStore.getState();
     const { appliedReward } = useRewardStore.getState();
     const { appliedCoupon } = useCouponStore.getState();
     const { itemList } = usePersistOrderStore.getState();
 
-    const commonBody = {
-      deliveryDto,
-      agreePrivacy,
-      paymentMethod,
-      discountCoupon: appliedCoupon?.discountAmount ?? 0,
-      discountReward: appliedReward,
-      discountTotal,
-      deliveryPrice,
-      paymentPrice,
-      orderPrice: originalPrice,
-      memberCouponId: appliedCoupon?.couponId ?? null,
-    };
-
     if (orderType === ORDER_TYPE.GENERAL) {
+      if (!deliveryDto) {
+        throw new Error("일반 결제에 필요한 배송지 정보가 없습니다.");
+      }
+
       return {
-        ...commonBody,
         itemList,
-        deliveryId: isBundleDelivery ? deliveryId : null,
-      } as SaveGeneralOrderRequest;
+        memberCouponId: appliedCoupon?.couponId ?? null,
+        deliveryInfo: {
+          address: convertToDeliveryRequest(deliveryDto),
+          deliveryId: isBundleDelivery ? deliveryId : null,
+        },
+        paymentInfo: {
+          originalPrice,
+          discountTotal,
+          discountProduct: 0, // 상품 기본 할인은 서버에서 계산됨
+          discountReward: appliedReward,
+          discountCoupon: appliedCoupon?.discountAmount ?? 0,
+          deliveryPrice,
+          paymentPrice,
+          overDiscount,
+          saveReward,
+          paymentMethod,
+        },
+      } as PrepareGeneralPaymentRequest;
     }
 
     // 구독 결제: PrepareSubscriptionPaymentRequest 구조로 변환
@@ -82,7 +88,7 @@ export const useOrderStore = create<OrderState>((set, get) => ({
       throw new Error("구독 결제에 필요한 정보가 없습니다.");
     }
 
-    const { discountPlan, saveReward } = usePaymentStore.getState();
+    const { discountPlan } = usePaymentStore.getState();
 
     return {
       subscribeId,

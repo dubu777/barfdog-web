@@ -14,6 +14,7 @@ import {
   mainFAQDescriptionBox,
 } from "@/components/pages/main/common/MainCommon.css";
 import { MAIN_DATA } from "@/constants/main";
+import { commonWrapper } from "@/styles/common.css";
 
 const parentVariants = {
   hidden: {},
@@ -48,23 +49,25 @@ export default function FAQSection() {
   return (
     <MainContainer backgroundColor="yellow">
       <MainTitle title={title} subTitle={subTitle} hasInteraction />
-      <motion.div
-        variants={parentVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: "all" }}
-        className={mainFAQDescriptionBox}
-      >
-        {descriptions.map((description) => (
-          <motion.div
-            key={description}
-            variants={childVariants}
-            className={mainFAQDescription}
-          >
-            <Text type="label4">{description}</Text>
-          </motion.div>
-        ))}
-      </motion.div>
+      <div className={commonWrapper({})}>
+        <motion.div
+          variants={parentVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: "all" }}
+          className={mainFAQDescriptionBox}
+        >
+          {descriptions.map((description) => (
+            <motion.div
+              key={description}
+              variants={childVariants}
+              className={mainFAQDescription}
+            >
+              <Text type="label4">{description}</Text>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
       <div className={mainFAQButtonBox}>
         <Button
           onClick={() => router.push(action.url)}

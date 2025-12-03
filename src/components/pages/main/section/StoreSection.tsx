@@ -1,6 +1,5 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { cardShadow } from "@/components/ui/card/Card.css";
 import {
   commonWrapper,
   ellipsis,
@@ -9,7 +8,7 @@ import {
 } from "@/styles/common.css";
 import {
   mainStoreItem,
-  mainStoreItemLink,
+  storeItemImage,
 } from "@/components/pages/main/common/MainCommon.css";
 import MainContainer from "@/components/pages/main/layout/MainContainer";
 import MainTitle from "@/components/pages/main/common/MainTitle";
@@ -51,13 +50,16 @@ export default function StoreSection() {
             getItemViewProps(item);
           return (
             <SwiperSlide key={item.id} className={mainStoreItem}>
-              <Link href={`/store/${item.id}`} className={mainStoreItemLink}>
+              <Link
+                href={`/store/${item.id}`}
+                className={commonWrapper({ direction: "col", gap: 6 })}
+              >
                 <Image
                   src={item.displayThumbnailUrl.url}
                   alt={item.name}
                   width={120}
                   height={120}
-                  className={cardShadow.light}
+                  className={storeItemImage}
                 />
                 <div>
                   <Text

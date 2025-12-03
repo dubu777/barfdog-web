@@ -1,6 +1,6 @@
 import { CheckoutStrategy } from "../checkoutStrategies";
 import type {
-  SaveGeneralOrderRequest,
+  PrepareGeneralPaymentRequest,
   GetGeneralCheckoutResponse,
   GeneralIamportResponse,
   GeneralIamportRequest, // 프로젝트 내 정의가 있다고 전제
@@ -24,7 +24,7 @@ export function createGeneralStrategy(deps: {
   cancelPayment: (id: number) => Promise<any>;
   failPayment: (id: number) => Promise<any>;
 }): CheckoutStrategy<
-  SaveGeneralOrderRequest,
+  PrepareGeneralPaymentRequest,
   GetGeneralCheckoutResponse,
   GeneralIamportRequest,
   GeneralIamportResponse
@@ -59,7 +59,7 @@ export function createGeneralStrategy(deps: {
           body: {
             impUid: (response as any).imp_uid!,
             merchantUid: (response as any).merchant_uid ?? null,
-            discountReward: requestBody.discountReward,
+            discountReward: requestBody.paymentInfo.discountReward,
             memberCouponId: requestBody.memberCouponId ?? null,
           },
         });

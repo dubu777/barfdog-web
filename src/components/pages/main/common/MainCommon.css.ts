@@ -173,9 +173,10 @@ export const mainStoreItemLink = style({
 export const mainFAQDescriptionBox = style({
   display: "flex",
   flexDirection: "column",
-  alignItems: "flex-start",
+  width: "100%",
   gap: "16px",
   padding: "40px 20px 20px",
+  maxWidth: "440px",
 });
 
 export const mainFAQDescription = style({
@@ -183,8 +184,14 @@ export const mainFAQDescription = style({
   backgroundColor: themeVars.colors.yellow.yellow200,
   borderRadius: "48px",
   selectors: {
+    "&:nth-child(1)": {
+      marginRight: "auto",
+    },
     "&:nth-child(2)": {
       marginLeft: "auto",
+    },
+    "&:nth-child(3)": {
+      marginRight: "auto",
     },
   },
 });
@@ -318,6 +325,11 @@ export const mainBarfContentBox = style({
   display: "flex",
   flexDirection: "column",
   gap: "10px",
+});
+
+export const storeItemImage = style({
+  boxShadow: themeVars.shadow.light,
+  borderRadius: "8px",
 });
 
 export const mainBarfImage = style({

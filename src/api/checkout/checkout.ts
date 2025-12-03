@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import axiosInstance from "../axiosInstance";
 import {
-  SaveGeneralOrderRequest,
+  PrepareGeneralPaymentRequest,
   SaveOrderResponse,
   GetGeneralCheckoutRequest,
   GetGeneralCheckoutResponse,
@@ -109,9 +109,12 @@ const getGeneralCheckout = async (
 
 // 일반 결제 준비 - 결제 1단계
 const prepareGeneralPayment = async (
-  body: SaveGeneralOrderRequest
+  body: PrepareGeneralPaymentRequest
 ): Promise<SaveOrderResponse> => {
-  const { data } = await axiosInstance.post("/api/v2/orders/general", body);
+  const { data } = await axiosInstance.post(
+    "/api/v2/user/general-orders/payment/prepare",
+    body
+  );
 
   if (data.success) {
     return data.data;
