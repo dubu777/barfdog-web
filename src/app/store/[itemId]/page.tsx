@@ -1,4 +1,8 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import ItemDetail from "@/components/pages/store/detail/ItemDetail";
@@ -10,7 +14,9 @@ interface StoreItemDetailPageProps {
   params: { itemId: string };
 }
 
-export default async function StoreItemDetailPage({ params }: StoreItemDetailPageProps) {
+export default async function StoreItemDetailPage({
+  params,
+}: StoreItemDetailPageProps) {
   const itemId = Number(params.itemId);
 
   const queryClient = new QueryClient();
@@ -25,5 +31,5 @@ export default async function StoreItemDetailPage({ params }: StoreItemDetailPag
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

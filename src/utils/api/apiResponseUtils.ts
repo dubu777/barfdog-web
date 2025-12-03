@@ -10,14 +10,15 @@ import { ApiResponse } from "@/types/common";
  */
 export const validateApiResponse = <T>(
   data: ApiResponse<T>,
-  defaultErrorMessage: string = 'API 요청이 실패했습니다.'
+  defaultErrorMessage: string = "API 요청이 실패했습니다."
 ): T => {
   if (!data.success) {
-    const errorMessage = data.detailMessage || data.message || defaultErrorMessage;
-    const errorCode = data.errorCode || 'UNKNOWN_ERROR';
+    const errorMessage =
+      data.detailMessage || data.message || defaultErrorMessage;
+    const errorCode = data.errorCode || "UNKNOWN_ERROR";
     throw new Error(`${errorCode}: ${errorMessage}`);
   }
-  
+
   return data.data as T;
 };
 
@@ -30,15 +31,15 @@ export const validateApiResponse = <T>(
  */
 export const extractErrorMessage = (
   error: unknown,
-  defaultMessage: string = '요청 처리 중 오류가 발생했습니다.'
+  defaultMessage: string = "요청 처리 중 오류가 발생했습니다."
 ): string => {
   if (error instanceof Error) {
     // API에서 던진 에러 메시지에서 사용자 메시지만 추출
     // 형식: "ERROR_CODE: 사용자 메시지" 또는 "사용자 메시지"
-    const errorParts = error.message.split(': ');
+    const errorParts = error.message.split(": ");
     return errorParts.length > 1 ? errorParts[1] : errorParts[0];
   }
-  
+
   return defaultMessage;
 };
 
@@ -51,14 +52,14 @@ export const extractErrorMessage = (
  */
 export const extractErrorCode = (
   error: unknown,
-  defaultCode: string = 'UNKNOWN_ERROR'
+  defaultCode: string = "UNKNOWN_ERROR"
 ): string => {
   if (error instanceof Error) {
     // API에서 던진 에러 메시지에서 에러 코드만 추출
     // 형식: "ERROR_CODE: 사용자 메시지" 또는 "사용자 메시지"
-    const errorParts = error.message.split(': ');
+    const errorParts = error.message.split(": ");
     return errorParts.length > 1 ? errorParts[0] : defaultCode;
   }
-  
+
   return defaultCode;
 };

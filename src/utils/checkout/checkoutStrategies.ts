@@ -3,10 +3,8 @@ import { SaveOrderResponse } from "@/types";
 export interface CheckoutStrategy<Request, Sheet, PayReq, PayRes> {
   buildPaymentRequest(args: {
     requestBody: Request;
-    sheet: Sheet;
     orderId: number;
     merchantUid: string;
-    isMobile: boolean;
   }): PayReq;
 
   afterGatewayCallback(args: {

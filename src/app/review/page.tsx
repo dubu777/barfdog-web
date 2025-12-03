@@ -1,4 +1,8 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import ReviewSection from "@/components/pages/review/list/ReviewSection";
@@ -20,5 +24,5 @@ export default async function ReviewPage() {
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

@@ -10,6 +10,7 @@ import { useCancelGeneralPayment } from "@/api/checkout/mutations/general/useCan
 import { parseGeneralParams } from "@/utils/checkout/redirectParams";
 import { CHECKOUT_ROUTES } from "@/constants";
 import { commonWrapper } from "@/styles/common.css";
+import { isPortoneUserCancel } from "@/utils/checkout/isPortoneUserCancel";
 
 export default function MobileGeneralPayment() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function MobileGeneralPayment() {
       processedRef.current = true;
 
       try {
+        console.log(params);
         if (!params) throw new Error("필수 결제 정보가 누락되었습니다.");
 
         const {
@@ -40,13 +42,11 @@ export default function MobileGeneralPayment() {
           impSuccess,
           merchantUid,
           orderId,
-          discountReward,
-          memberCouponId,
+          basketIdList,
           errorMsg,
         } = params;
 
-        // 취소
-        if (errorMsg === "결제를 취소하였습니다.") {
+        if (isPortoneUserCancel(errorMsg)) {
           await cancelPayment(orderId);
           addToast("결제를 취소하였습니다.", "above-button");
           router.push(CHECKOUT_ROUTES.GENERAL.order);
@@ -56,17 +56,21 @@ export default function MobileGeneralPayment() {
         // 성공/실패
         if (impSuccess) {
           await successPayment({
-            id: orderId,
-            body: { impUid, merchantUid, discountReward, memberCouponId },
+            orderId,
+            body: {
+              impUid,
+              merchantUid,
+              basketInfo: basketIdList.length > 0 ? { basketIdList } : null,
+            },
           });
           router.push(CHECKOUT_ROUTES.GENERAL.completed(orderId));
         } else {
           await failPayment(orderId);
-          router.push(CHECKOUT_ROUTES.GENERAL.failed);
+          // router.push(CHECKOUT_ROUTES.GENERAL.failed);
         }
       } catch (e) {
         console.error("[MobileGeneralPaymentRedirect] 처리 실패:", e);
-        router.push(CHECKOUT_ROUTES.GENERAL.failed);
+        // router.push(CHECKOUT_ROUTES.GENERAL.failed);
       }
     };
 

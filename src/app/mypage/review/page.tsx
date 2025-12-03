@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import ReviewList from "@/components/pages/mypage/review/ReviewList";
 import Spinner from "@/components/ui/spinner/Spinner";
 import Error from "@/components/layout/error/Error";
@@ -8,7 +12,7 @@ import { prefetchGetInfiniteMypageReviewList } from "@/api/mypage/review/queries
 
 export default async function ReviewPage() {
   const queryClient = new QueryClient();
-  await prefetchGetInfiniteMypageReviewList('writable', queryClient);
+  await prefetchGetInfiniteMypageReviewList("writable", queryClient);
   const dehydrateState = dehydrate(queryClient);
 
   return (
@@ -19,5 +23,5 @@ export default async function ReviewPage() {
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

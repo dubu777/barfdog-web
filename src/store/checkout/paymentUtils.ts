@@ -20,14 +20,30 @@ export function buildGeneralPaymentRequest({
   merchantUid,
   generalOrderSheetData,
   isMobileDevice,
+  from = "web",
 }: GeneralPaymentDataParams): GeneralIamportRequest {
-  const { paymentInfo, deliveryInfo, memberCouponId } = requestBody;
+  const { paymentInfo, deliveryInfo } = requestBody;
   const { itemList } = generalOrderSheetData;
 
   const itemName = itemList.map((item) => item.name).join(", ");
 
   // email은 새로운 API 스펙에 없으므로 빈 문자열 사용
   const email = "";
+
+  // 앱에서 결제 시도한 경우 딥링크로 직접 리다이렉트
+  const baseUrl =
+    from === "app"
+      ? "barfdogexpo://checkout/general/order"
+      : `${window.location.origin}/checkout/mobile-redirect/general`;
+
+  // TODO: 장바구니 개발 후 실제 basketIdList 전달
+  const basketIdList: number[] = []; // 임시로 빈 배열
+
+  const redirectUrl =
+    `${baseUrl}?` +
+    `order_id=${encodeURIComponent(orderId)}&` +
+    `merchantUid=${encodeURIComponent(merchantUid)}&` +
+    `basket_id_list=${encodeURIComponent(basketIdList.join(","))}&`;
 
   const baseData = {
     channelKey: PG_CHANNEL_KEY.GENERAL[paymentInfo.paymentMethod],
@@ -40,12 +56,7 @@ export function buildGeneralPaymentRequest({
     buyer_tel: deliveryInfo.address.phoneNumber ?? "",
     buyer_addr: `${deliveryInfo.address.street}, ${deliveryInfo.address.detailAddress}`,
     buyer_postcode: deliveryInfo.address.zipcode ?? "",
-    m_redirect_url:
-      `${window.location.origin}/checkout/mobile-redirect/general?` +
-      `order_id=${encodeURIComponent(orderId)}&` +
-      `merchantUid=${encodeURIComponent(merchantUid)}&` +
-      `discount_reward=${encodeURIComponent(paymentInfo.discountReward)}&` +
-      `member_coupon_id=${encodeURIComponent(memberCouponId ?? "")}&`,
+    m_redirect_url: redirectUrl,
   };
 
   if (paymentInfo.paymentMethod === "NAVER_PAY") {

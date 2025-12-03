@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import Spinner from "@/components/ui/spinner/Spinner";
 import FullCheckResult from "@/components/pages/heathNote/fullCheck/result/FullCheckResult";
@@ -11,10 +15,12 @@ interface FullCheckResultPageProps {
   params: Promise<{
     petId: string;
     diagnosisId: string;
-  }>
+  }>;
 }
 
-export default async function FullCheckResultPage({ params }: FullCheckResultPageProps) {
+export default async function FullCheckResultPage({
+  params,
+}: FullCheckResultPageProps) {
   const { petId, diagnosisId } = await params;
 
   const queryClient = new QueryClient();
@@ -26,7 +32,10 @@ export default async function FullCheckResultPage({ params }: FullCheckResultPag
     <HydrationBoundary state={dehydratedState}>
       <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <FullCheckResult diagnosisId={Number(diagnosisId)} petId={Number(petId)} />
+          <FullCheckResult
+            diagnosisId={Number(diagnosisId)}
+            petId={Number(petId)}
+          />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

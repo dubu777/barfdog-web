@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import Spinner from "@/components/ui/spinner/Spinner";
 import Dogpedia from "@/components/pages/heathNote/dogpedia/Dogpedia";
 import Error from "@/components/layout/error/Error";
@@ -8,25 +12,25 @@ import { prefetchGetBreedList } from "@/api/healthNote/dogpidea/queries/prefetch
 import { prefetchGetPetDetail } from "@/api/pet/queries/prefetchGetPetDetail";
 
 interface DogPediaPageProps {
-	params: Promise<{
-		petId: string;
-	}>;
+  params: Promise<{
+    petId: string;
+  }>;
 }
 
 export default async function DogPediaPage({ params }: DogPediaPageProps) {
-	const { petId } = await params;
-	const queryClient = new QueryClient();
-	await prefetchGetBreedList(queryClient);
-	await prefetchGetPetDetail(queryClient, Number(petId));
-	const dehydratedState = dehydrate(queryClient);
+  const { petId } = await params;
+  const queryClient = new QueryClient();
+  await prefetchGetBreedList(queryClient);
+  await prefetchGetPetDetail(queryClient, Number(petId));
+  const dehydratedState = dehydrate(queryClient);
 
-	return (
-		<HydrationBoundary state={dehydratedState}>
-			<ErrorBoundary fallback={<Error />}>
-				<Suspense fallback={<Spinner fullscreen />}>
-					<Dogpedia petId={Number(petId)} />
-				</Suspense>
-			</ErrorBoundary>
-		</HydrationBoundary>
-	);
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <ErrorBoundary fallback={<Error />}>
+        <Suspense fallback={<Spinner fullscreen />}>
+          <Dogpedia petId={Number(petId)} />
+        </Suspense>
+      </ErrorBoundary>
+    </HydrationBoundary>
+  );
 }

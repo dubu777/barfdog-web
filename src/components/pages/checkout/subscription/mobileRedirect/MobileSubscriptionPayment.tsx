@@ -38,10 +38,13 @@ export default function MobileSubscriptionPayment() {
       processedRef.current = true;
 
       try {
+        console.log(params);
+
         if (!params) throw new Error("필수 결제 정보가 누락되었습니다.");
 
         const {
           // 1차 응답/부가정보
+          impSuccess,
           errorMsg,
           subscribeId,
           // again/검증용 데이터
@@ -60,6 +63,18 @@ export default function MobileSubscriptionPayment() {
 
         // 취소 체크: isPortoneUserCancel 함수 사용
         if (isPortoneUserCancel(errorMsg)) {
+          await cancelPayment(orderId);
+          addToast("결제를 취소하였습니다.", "above-button");
+          if (subscribeId) {
+            router.push(CHECKOUT_ROUTES.SUBSCRIPTION.order(subscribeId));
+          } else {
+            router.push("/");
+          }
+          return;
+        }
+
+        // impSuccess가 false면 빌링키 발급 실패 → 취소로 간주
+        if (!impSuccess) {
           await cancelPayment(orderId);
           addToast("결제를 취소하였습니다.", "above-button");
           if (subscribeId) {
@@ -139,6 +154,7 @@ export default function MobileSubscriptionPayment() {
     validatePayment,
     successPayment,
     failPayment,
+    cancelPayment,
   ]);
 
   return (

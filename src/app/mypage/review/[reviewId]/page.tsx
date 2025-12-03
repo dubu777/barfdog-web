@@ -1,4 +1,8 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import Spinner from "@/components/ui/spinner/Spinner";
@@ -10,18 +14,25 @@ import { prefetchGetReviewDetail } from "@/api/mypage/review/queries/prefetchGet
 interface ReviewDetailPageProps {
   params: Promise<{
     reviewId: string;
-  }>
+  }>;
   searchParams: Promise<{
     reviewType: string;
-  }>
+  }>;
 }
 
-export default async function ReviewDetailPage({ params, searchParams }: ReviewDetailPageProps) {
+export default async function ReviewDetailPage({
+  params,
+  searchParams,
+}: ReviewDetailPageProps) {
   const { reviewId } = await params;
   const { reviewType } = await searchParams;
 
   const queryClient = new QueryClient();
-  await prefetchGetReviewDetail(Number(reviewId), reviewType as ReviewItemType, queryClient);
+  await prefetchGetReviewDetail(
+    Number(reviewId),
+    reviewType as ReviewItemType,
+    queryClient
+  );
   const dehydrateState = dehydrate(queryClient);
 
   return (
@@ -35,5 +46,5 @@ export default async function ReviewDetailPage({ params, searchParams }: ReviewD
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

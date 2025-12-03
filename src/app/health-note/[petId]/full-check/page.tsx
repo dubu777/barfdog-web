@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import Spinner from "@/components/ui/spinner/Spinner";
 import FullCheckList from "@/components/pages/heathNote/fullCheck/list/FullCheckList";
 import Error from "@/components/layout/error/Error";
@@ -12,7 +16,9 @@ interface FullCheckListPageProps {
   }>;
 }
 
-export default async function FullCheckListPage({ params }: FullCheckListPageProps) {
+export default async function FullCheckListPage({
+  params,
+}: FullCheckListPageProps) {
   const { petId } = await params;
   const queryClient = new QueryClient();
   await prefetchGetInfiniteFullCheckList(Number(petId), queryClient);

@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import Spinner from "@/components/ui/spinner/Spinner";
 import PromotionList from "@/components/pages/mypage/promotion/list/PromotionList";
@@ -19,5 +23,5 @@ export default async function PromotionPage() {
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

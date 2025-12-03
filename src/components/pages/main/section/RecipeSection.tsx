@@ -4,10 +4,10 @@ import {
   mainSurveyImageBox,
   mainSurveyImageInnerBox,
 } from "@/components/pages/main/common/MainCommon.css";
-import { pointColor } from "@/styles/common.css";
+import { paddingStyles, pointColor } from "@/styles/common.css";
 import { motion } from "motion/react";
-import SurveyImage1 from "/public/images/main/recipe_survey1.png";
-import SurveyImage2 from "/public/images/main/recipe_survey2.png";
+import SurveyImage1 from "/public/images/main/recipe-survey1.png";
+import SurveyImage2 from "/public/images/main/recipe-survey2.png";
 import MainTitle from "@/components/pages/main/common/MainTitle";
 import MainContainer from "../layout/MainContainer";
 import { MAIN_DATA } from "@/constants/main";
@@ -16,7 +16,11 @@ export default function RecipeSection() {
   const title = MAIN_DATA.RECIPE.title.split("\n");
   const subTitle = MAIN_DATA.RECIPE.subTitle;
   return (
-    <MainContainer paddingBottom={0}>
+    <MainContainer
+      paddingBottom={0}
+      paddingY={0}
+      className={paddingStyles({ top: 40 })}
+    >
       <MainTitle
         title={
           <>

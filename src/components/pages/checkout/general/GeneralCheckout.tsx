@@ -53,6 +53,7 @@ import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
 import { checkoutPageContainer } from "../OrderSheetCommon.css";
 import { useDeliveryStore } from "@/store/checkout/useDeliveryStore";
 import { convertToDeliveryAddresses } from "@/utils/delivery/convertToDeliveryRequest";
+import Error from "@/components/layout/error/Error";
 
 export default function GeneralCheckout() {
   // Local State
@@ -71,10 +72,14 @@ export default function GeneralCheckout() {
 
   // Routing & Device
   const router = useRouter();
-  const { isMobileDevice } = useDeviceState();
+  const { isMobileDevice, isWebView } = useDeviceState();
 
   // React Query Data Fetching
-  const { data: generalOrderData, isPending } = useGetGeneralCheckout({
+  const {
+    data: generalOrderData,
+    isPending,
+    isError,
+  } = useGetGeneralCheckout({
     itemList,
   });
 
@@ -93,11 +98,21 @@ export default function GeneralCheckout() {
   const strategy = useMemo(
     () =>
       createGeneralStrategy({
+        sheet: generalOrderData as GetGeneralCheckoutResponse,
+        isMobile: isMobileDevice,
+        isWebView,
         successPayment: (args) => successPayment(args),
-        cancelPayment: (id) => cancelPayment(id),
-        failPayment: (id) => failPayment(id),
+        cancelPayment: (orderId) => cancelPayment(orderId),
+        failPayment: (orderId) => failPayment(orderId),
       }),
-    [successPayment, cancelPayment, failPayment]
+    [
+      generalOrderData,
+      isMobileDevice,
+      isWebView,
+      successPayment,
+      cancelPayment,
+      failPayment,
+    ]
   );
 
   // Checkout Flow
@@ -107,14 +122,12 @@ export default function GeneralCheckout() {
     GeneralIamportRequest,
     GeneralIamportResponse
   >({
-    sheet: generalOrderData as GetGeneralCheckoutResponse,
-    isMobile: isMobileDevice,
     preparePayment: async (req) => {
       const res = await preparePayment(req);
       return {
-        id: res.id,
+        orderId: res.orderId,
         merchantUid: res.merchantUid,
-        status: res.status,
+        orderStatus: res.orderStatus,
       };
     },
     paymentAdapter: iamportAdapter,
@@ -150,6 +163,10 @@ export default function GeneralCheckout() {
     ) as PrepareGeneralPaymentRequest;
     await start(requestBody);
   };
+
+  if (isError) {
+    return <Error />;
+  }
 
   if (isPending || !generalOrderData) {
     return <Spinner fullscreen />;

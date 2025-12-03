@@ -650,6 +650,7 @@ export const paddingStyles = recipe({
       6: { paddingTop: "6px" },
       8: { paddingTop: "8px" },
       12: { paddingTop: "12px" },
+      40: { paddingTop: "40px" },
     },
     bottom: {
       4: { paddingBottom: "4px" },

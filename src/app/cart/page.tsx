@@ -1,4 +1,8 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import Cart from "@/components/pages/cart/Cart";
 import Error from "@/components/layout/error/Error";
@@ -14,5 +18,5 @@ export default async function CartPage() {
         <Cart />
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

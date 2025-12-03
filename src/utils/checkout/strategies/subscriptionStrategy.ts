@@ -39,19 +39,13 @@ export function createSubscriptionStrategy(deps: {
 > {
   return {
     // 1) PG 결제요청 페이로드 구성
-    buildPaymentRequest: ({
-      requestBody,
-      sheet,
-      orderId,
-      merchantUid,
-      isMobile,
-    }) =>
+    buildPaymentRequest: ({ requestBody, orderId, merchantUid }) =>
       buildSubscriptionPaymentRequest({
         requestBody,
-        subscriptionOrderSheetData: sheet,
-        isMobileDevice: isMobile,
+        subscriptionOrderSheetData: deps.sheet,
+        isMobileDevice: deps.isMobile,
         orderId,
-        subscribeId: sheet.subscribeInfo.id,
+        subscribeId: deps.sheet.subscribeInfo.id,
         merchantUid,
         from: deps.isWebView ? "app" : "web",
       }),
@@ -108,7 +102,7 @@ export function createSubscriptionStrategy(deps: {
       // (2) 서버 검증
 
       const isValid = await deps.validatePayment({
-        orderId: preparePayment.id,
+        orderId: preparePayment.orderId,
         impUid: final.imp_uid,
         customerUid: response.customer_uid,
       });
@@ -123,26 +117,26 @@ export function createSubscriptionStrategy(deps: {
       // (3) 성공/위변조 처리
       if (isValid) {
         await deps.successPayment({
-          orderId: preparePayment.id,
+          orderId: preparePayment.orderId,
           body: finalBody,
         });
       } else {
-        await deps.failPayment(preparePayment.id);
+        await deps.failPayment(preparePayment.orderId);
         throw new Error("결제 검증 실패");
       }
     },
 
     // 4) 취소 처리
     onCancel: async ({ preparePayment }) => {
-      if (preparePayment.id > 0) {
-        await deps.cancelPayment(preparePayment.id).catch(() => {});
+      if (preparePayment.orderId > 0) {
+        await deps.cancelPayment(preparePayment.orderId).catch(() => {});
       }
     },
 
     // 5) 실패 공통 처리
     onFail: async ({ preparePayment }) => {
-      if (preparePayment.id > 0) {
-        await deps.failPayment(preparePayment.id).catch(() => {});
+      if (preparePayment.orderId > 0) {
+        await deps.failPayment(preparePayment.orderId).catch(() => {});
       }
     },
   };

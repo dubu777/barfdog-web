@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import RewardList from "@/components/pages/mypage/reward/list/RewardList";
 import Error from "@/components/layout/error/Error";
 import Spinner from "@/components/ui/spinner/Spinner";
@@ -19,5 +23,5 @@ export default async function RewardPage() {
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

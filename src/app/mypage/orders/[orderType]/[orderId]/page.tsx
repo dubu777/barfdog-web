@@ -24,14 +24,21 @@ export default async function OrderDetailPage({
   const { orderId, orderType } = await params;
 
   const queryClient = new QueryClient();
-  await prefetchGetOrderDetail(queryClient, Number(orderId), orderType.toUpperCase() as OrderType);
+  await prefetchGetOrderDetail(
+    queryClient,
+    Number(orderId),
+    orderType.toUpperCase() as OrderType
+  );
   const dehydrateState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <OrderDetail orderId={Number(orderId)} orderType={orderType.toUpperCase() as OrderType} />
+          <OrderDetail
+            orderId={Number(orderId)}
+            orderType={orderType.toUpperCase() as OrderType}
+          />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

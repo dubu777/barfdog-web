@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import OrderList from "@/components/pages/mypage/orders/list/OrderList";
 import Spinner from "@/components/ui/spinner/Spinner";
@@ -19,5 +23,5 @@ export default async function OrderListPage() {
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

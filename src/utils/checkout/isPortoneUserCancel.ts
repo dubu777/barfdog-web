@@ -1,6 +1,7 @@
 const CANCEL_PATTERNS = [
   "사용자가결제를취소하였습니다", // 네이버페이
   "결제포기사용자가결제를취소하셨습니다", // 카카오페이/NHN
+  "결제를 취소하였습니다.",
 ];
 
 function normalize(s: string) {
@@ -21,5 +22,5 @@ export function isPortoneUserCancel(errorMsg?: string): boolean {
   if (!errorMsg) return false;
 
   const norm = normalize(errorMsg.trim());
-  return CANCEL_PATTERNS.some((p) => norm.includes(p));
+  return CANCEL_PATTERNS.some((p) => norm.includes(normalize(p)));
 }

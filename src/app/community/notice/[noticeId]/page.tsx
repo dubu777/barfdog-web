@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import NoticeDetail from "@/components/pages/community/notice/detail/NoticeDetail";
 import Spinner from "@/components/ui/spinner/Spinner";
@@ -12,7 +16,9 @@ interface NoticeDetailPageProps {
   }>;
 }
 
-export default async function NoticeDetailPage({ params }: NoticeDetailPageProps) {
+export default async function NoticeDetailPage({
+  params,
+}: NoticeDetailPageProps) {
   const { noticeId } = await params;
   const queryClient = new QueryClient();
   await prefetchGetNoticeDetail(queryClient, Number(noticeId));
@@ -25,5 +31,5 @@ export default async function NoticeDetailPage({ params }: NoticeDetailPageProps
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

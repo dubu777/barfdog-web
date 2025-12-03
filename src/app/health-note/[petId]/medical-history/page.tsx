@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import Spinner from "@/components/ui/spinner/Spinner";
 import HistoryList from "@/components/pages/heathNote/medicalHistory/list/HistoryList";
 import Error from "@/components/layout/error/Error";
@@ -12,7 +16,9 @@ interface MedicalHistoryListPageProps {
   }>;
 }
 
-export default async function MedicalHistoryListPage({ params }: MedicalHistoryListPageProps) {
+export default async function MedicalHistoryListPage({
+  params,
+}: MedicalHistoryListPageProps) {
   const { petId } = await params;
   const queryClient = new QueryClient();
   await prefetchGetMedicalHistoryList(Number(petId), queryClient);

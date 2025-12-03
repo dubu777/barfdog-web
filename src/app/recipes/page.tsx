@@ -1,4 +1,8 @@
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import Recipes from "@/components/pages/recipes/Recipes";
@@ -15,7 +19,7 @@ export default async function RecipesPage() {
     <HydrationBoundary state={dehydratedState}>
       <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
-					<Recipes />
+          <Recipes />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

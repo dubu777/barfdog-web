@@ -9,10 +9,6 @@ import { useCallback, useState } from "react";
  */
 
 interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
-  // 결제 시트 데이터(서버에서 조회해 화면/전략에 공유할 원천 데이터)
-  sheet: Sheet;
-  // 모바일 환경 여부(모바일 리다이렉트/again API 등 분기에 사용)
-  isMobile: boolean;
   /**
    * 주문 저장 함수
    * - 서버에 주문을 저장하고 결제에 필요한 id/merchantUid/status 를 반환
@@ -65,10 +61,8 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
         // 3) PG 요청 페이로드 빌드(전략에 위임)
         const payReq = deps.strategy.buildPaymentRequest({
           requestBody,
-          sheet: deps.sheet,
-          orderId: preparePayment.id,
+          orderId: preparePayment.orderId,
           merchantUid: preparePayment.merchantUid,
-          isMobile: deps.isMobile,
         });
 
         // 4) 결제 요청
@@ -88,7 +82,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
             response: payRes,
             requestBody,
           });
-          deps.onPaymentSuccess?.(preparePayment.id);
+          deps.onPaymentSuccess?.(preparePayment.orderId);
         } else if (outcome === "cancel") {
           await deps.strategy.onCancel?.({ preparePayment });
         } else {
@@ -101,7 +95,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
       } catch (e) {
         // 공통 예외 처리
         await deps.strategy.onFail({
-          preparePayment: { id: -1, merchantUid: "", status: "" },
+          preparePayment: { orderId: -1, merchantUid: "", orderStatus: "" },
           reason: (e as Error)?.message,
         });
         deps.onPaymentFailed?.();

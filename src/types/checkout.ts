@@ -11,15 +11,16 @@ import { DeliveryAddress, DeliveryRequest } from "./delivery";
 interface SuccessGeneralPaymentRequest {
   impUid: string;
   merchantUid: string | null;
-  discountReward: number;
-  memberCouponId: number | null;
+  basketInfo: {
+    basketIdList: number[];
+  } | null;
 }
 
 // 구독, 일반 결제 주문 정보 저장 응답
 interface SaveOrderResponse {
-  id: number;
+  orderId: number;
   merchantUid: string;
-  status: string; // 'BEFORE_PAYMENT'와 같은 상태
+  orderStatus: string; // 'BEFORE_PAYMENT'와 같은 상태
 }
 
 // 일반 결제 주문 정보 저장 요청

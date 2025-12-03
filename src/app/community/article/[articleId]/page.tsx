@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import ArticleDetail from "@/components/pages/community/article/detail/ArticleDetail";
 import Spinner from "@/components/ui/spinner/Spinner";
@@ -15,7 +19,10 @@ interface ArticleDetailPageProps {
   }>;
 }
 
-export default async function ArticleDetailPage({ params, searchParams }: ArticleDetailPageProps) {
+export default async function ArticleDetailPage({
+  params,
+  searchParams,
+}: ArticleDetailPageProps) {
   const { articleId } = await params;
   const { category } = await searchParams;
   const queryClient = new QueryClient();
@@ -29,5 +36,5 @@ export default async function ArticleDetailPage({ params, searchParams }: Articl
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

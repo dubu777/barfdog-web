@@ -38,10 +38,10 @@ export default function CheckoutFailed({
     <div
       className={commonWrapper({
         direction: "col",
+        justify: "start",
         paddingTop: 60,
         paddingX: 20,
         backgroundColors: "gray0",
-        height: "full",
       })}
     >
       <SvgIcon

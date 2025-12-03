@@ -6,8 +6,8 @@ import {
 } from "@tanstack/react-query";
 import GeneralCheckout from "@/components/pages/checkout/general/GeneralCheckout";
 import Header from "@/components/layout/header/Header";
-import Error from "@/components/layout/error/Error";
 import { prefetchGetInfiniteCouponList } from "@/api/coupon/queries/prefetchGetInfiniteCouponList";
+import Error from "@/components/layout/error/Error";
 
 export default async function GeneralPage() {
   const queryClient = new QueryClient();

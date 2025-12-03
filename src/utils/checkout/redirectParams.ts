@@ -3,8 +3,7 @@ export type GeneralRedirectParams = {
   impSuccess: boolean;
   merchantUid: string;
   orderId: number;
-  discountReward: number;
-  memberCouponId: number;
+  basketIdList: number[];
   errorMsg?: string;
 };
 
@@ -15,31 +14,32 @@ export function parseGeneralParams(
   const imp_success = sp.get("imp_success");
   const merchantUid = sp.get("merchantUid");
   const orderIdStr = sp.get("order_id");
-  const discountRewardStr = sp.get("discount_reward");
-  const memberCouponIdStr = sp.get("member_coupon_id");
+  const basketIdListStr = sp.get("basket_id_list");
   const errorMsg = sp.get("error_msg") ?? undefined;
 
   if (
     !imp_uid ||
     !imp_success ||
     !merchantUid ||
-    !orderIdStr ||
-    !discountRewardStr ||
-    !memberCouponIdStr
+    !orderIdStr
   ) {
     return null;
   }
 
   const orderId = Number(orderIdStr);
-  const discountReward = Number(discountRewardStr);
-  const memberCouponId = Number(memberCouponIdStr);
 
-  if (
-    Number.isNaN(orderId) ||
-    Number.isNaN(discountReward) ||
-    Number.isNaN(memberCouponId)
-  ) {
+  if (Number.isNaN(orderId)) {
     return null;
+  }
+
+  // TODO: 장바구니 개발 후 실제 basketIdList 파싱
+  // 현재는 빈 배열 또는 빈 문자열이 올 수 있음
+  let basketIdList: number[] = [];
+  if (basketIdListStr && basketIdListStr.trim() !== "") {
+    basketIdList = basketIdListStr
+      .split(",")
+      .map((id) => Number(id.trim()))
+      .filter((id) => !Number.isNaN(id));
   }
 
   return {
@@ -47,8 +47,7 @@ export function parseGeneralParams(
     impSuccess: imp_success === "true",
     merchantUid,
     orderId,
-    discountReward,
-    memberCouponId,
+    basketIdList,
     errorMsg,
   };
 }

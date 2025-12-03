@@ -137,6 +137,7 @@ interface GeneralPaymentDataParams {
   merchantUid: string;
   generalOrderSheetData: GetGeneralCheckoutResponse;
   isMobileDevice: boolean;
+  from?: "web" | "app";
 }
 
 interface SubscriptionPaymentDataParams {

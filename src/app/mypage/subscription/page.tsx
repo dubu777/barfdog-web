@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import Spinner from "@/components/ui/spinner/Spinner";
 import SubscriptionList from "@/components/pages/mypage/subscription/list/SubscriptionList";
 import Error from "@/components/layout/error/Error";
@@ -19,5 +23,5 @@ export default async function ManageSubscriptionPage() {
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>
-  )
+  );
 }

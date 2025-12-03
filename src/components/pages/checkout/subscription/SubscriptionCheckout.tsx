@@ -125,15 +125,12 @@ export default function SubscriptionCheckout({
     SubscriptionIamportRequest,
     IamportCallback
   >({
-    sheet: checkoutData,
-    isMobile: isMobileDevice,
     preparePayment: async (req) => {
       const res = await preparePayment(req);
-
       return {
-        id: res.orderId,
+        orderId: res.orderId,
         merchantUid: res.merchantUid,
-        status: res.orderStatus,
+        orderStatus: res.orderStatus,
       };
     },
     paymentAdapter: iamportAdapter as PaymentAdapter<

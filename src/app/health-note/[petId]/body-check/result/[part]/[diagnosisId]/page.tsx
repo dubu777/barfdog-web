@@ -1,5 +1,9 @@
 import { Suspense } from "react";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import BodyCheckResult from "@/components/pages/heathNote/bodyCheck/result/BodyCheckResult";
 import Spinner from "@/components/ui/spinner/Spinner";
@@ -13,13 +17,19 @@ interface BodyCheckResultPageProps {
     petId: string;
     diagnosisId: string;
     part: string;
-  }>
+  }>;
 }
 
-export default async function BodyCheckResultPage({ params }: BodyCheckResultPageProps) {
+export default async function BodyCheckResultPage({
+  params,
+}: BodyCheckResultPageProps) {
   const { petId, part, diagnosisId } = await params;
   const queryClient = new QueryClient();
-  await prefetchGetBodyCheckResultDetail(part as BodyPartType, Number(diagnosisId), queryClient);
+  await prefetchGetBodyCheckResultDetail(
+    part as BodyPartType,
+    Number(diagnosisId),
+    queryClient
+  );
   await prefetchGetPetDetail(queryClient, Number(petId));
   const dehydratedState = dehydrate(queryClient);
 
@@ -27,7 +37,11 @@ export default async function BodyCheckResultPage({ params }: BodyCheckResultPag
     <HydrationBoundary state={dehydratedState}>
       <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <BodyCheckResult part={part as BodyPartType} petId={Number(petId)} diagnosisId={Number(diagnosisId)} />
+          <BodyCheckResult
+            part={part as BodyPartType}
+            petId={Number(petId)}
+            diagnosisId={Number(diagnosisId)}
+          />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

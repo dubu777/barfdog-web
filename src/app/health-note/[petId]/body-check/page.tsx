@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import BodyCheckList from "@/components/pages/heathNote/bodyCheck/list/BodyCheckList";
 import Spinner from "@/components/ui/spinner/Spinner";
 import Error from "@/components/layout/error/Error";
