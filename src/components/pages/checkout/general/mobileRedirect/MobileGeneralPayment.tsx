@@ -66,11 +66,11 @@ export default function MobileGeneralPayment() {
           router.push(CHECKOUT_ROUTES.GENERAL.completed(orderId));
         } else {
           await failPayment(orderId);
-          // router.push(CHECKOUT_ROUTES.GENERAL.failed);
+          router.push(CHECKOUT_ROUTES.GENERAL.failed);
         }
       } catch (e) {
         console.error("[MobileGeneralPaymentRedirect] 처리 실패:", e);
-        // router.push(CHECKOUT_ROUTES.GENERAL.failed);
+        router.push(CHECKOUT_ROUTES.GENERAL.failed);
       }
     };
 
