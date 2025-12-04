@@ -61,7 +61,7 @@ export default function GeneralCheckout() {
   const termsRef = useRef<HTMLDivElement>(null);
   const deliveryRef = useRef<HTMLDivElement>(null);
   // Store State
-  const { itemList, clearItemList } = usePersistOrderStore();
+  const { itemList } = usePersistOrderStore();
   const paymentPrice = usePaymentStore((s) => s.paymentPrice);
   const getRequestBody = useOrderStore((s) => s.getRequestBody);
   const agreePrivacy = useOrderStore((s) => s.agreePrivacy);
@@ -136,11 +136,9 @@ export default function GeneralCheckout() {
       router.push(CHECKOUT_ROUTES.GENERAL.failed);
     },
     onPaymentSuccess: (orderId) => {
-      clearItemList();
       router.push(CHECKOUT_ROUTES.GENERAL.completed(orderId));
     },
   });
-  console.log("????");
 
   // 스크롤
   const scrollToTerms = () => scrollToElement(termsRef.current);
@@ -165,7 +163,7 @@ export default function GeneralCheckout() {
     await start(requestBody);
   };
 
-  if (isError) {
+  if (isError && !isProcessing) {
     return <Error />;
   }
 

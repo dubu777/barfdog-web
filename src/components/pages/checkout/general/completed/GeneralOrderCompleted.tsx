@@ -11,41 +11,35 @@ import { usePersistOrderStore } from "@/store/checkout/usePersistOrderStore";
 import { useGetGeneralCheckout } from "@/api/checkout/queries/useGetGeneralCheckout";
 import Spinner from "@/components/ui/spinner/Spinner";
 import GeneralItemInfo from "../../common/completed/generalItemInfo.tsx/GeneralItemInfo";
+import Button from "@/components/ui/button/Button";
+import Link from "next/link";
+import { useEffect } from "react";
 
-export default function GeneralOrderCompleted({}) {
-  const { itemList, clearItemList } = usePersistOrderStore();
-  const { data: generalOrderData, isPending } = useGetGeneralCheckout({
-    itemList,
-  });
-  const router = useRouter();
-  const deliveryDto = {
-    recipientName: "Mock 데이터", // 수령자 이름
-    phoneNumber: "12312341234", // 수령자 전화번호
-    zipcode: "123", // 우편번호
-    street: "리", // 도로명 주소
-    detailAddress: "13호", // 상세 주소
-    request: "하하", // 배송 요청사항
-    id: 12,
-    deliveryName: "집",
-    isDefault: true,
-  };
+interface GeneralOrderCompletedProps {
+  orderId: number;
+}
 
-  if (isPending || !generalOrderData) {
-    return <Spinner fullscreen />;
-  }
+export default function GeneralOrderCompleted({
+  orderId,
+}: GeneralOrderCompletedProps) {
+  const { clearItemList } = usePersistOrderStore();
 
-  const handleGoToDetail = () => {
+  useEffect(() => {
     clearItemList();
-  };
-
-  const handleGoToHome = () => {
-    clearItemList();
-    router.push("/");
-  };
+  }, [clearItemList]);
 
   return (
     <div className={completedContainer}>
-      <div className={commonWrapper({ direction: "col", gap: 12 })}>
+      <div className={commonWrapper({ direction: "col", gap: 8 })}>
+        <Text type="title1">일반 결제 완료 페이지, orderId: {orderId}</Text>
+        <Link href={"/"}>
+          <Button>메인 페이지</Button>
+        </Link>
+        <Link href={"/order/test"}>
+          <Button>Order test</Button>
+        </Link>
+      </div>
+      {/* <div className={commonWrapper({ direction: "col", gap: 12 })}>
         <Text type="title2">
           <span className={pointColor}>주문이 완료</span>되었어요
         </Text>
@@ -62,7 +56,7 @@ export default function GeneralOrderCompleted({}) {
         secondaryButtonLabel="홈으로"
         onPrimaryClick={handleGoToDetail}
         onSecondaryClick={handleGoToHome}
-      />
+      /> */}
     </div>
   );
 }

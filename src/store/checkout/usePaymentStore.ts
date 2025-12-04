@@ -59,7 +59,6 @@ export const usePaymentStore = create<PaymentStore>((set, get) => ({
   setOrderId: (id) => set({ orderId: id }),
   setRewardPercent: (percent) => {
     set({ rewardPercent: Number(percent) });
-    get().calculateSaveReward();
   },
   calculateSaveReward: () => {
     const { paymentPrice, rewardPercent, deliveryPrice } = get();

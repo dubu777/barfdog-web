@@ -1,4 +1,4 @@
-import Text from "@/components/ui/text/Text";
+import GeneralOrderCompleted from "@/components/pages/checkout/general/completed/GeneralOrderCompleted";
 
 interface GeneralCompletedPageProps {
   params: {
@@ -11,5 +11,5 @@ export default async function GeneralCompletedPage({
 }: GeneralCompletedPageProps) {
   const orderId = Number(params.orderId);
 
-  return <Text type="title1">일반 결제 완료 페이지, orderId: {orderId}</Text>;
+  return <GeneralOrderCompleted orderId={orderId} />;
 }
