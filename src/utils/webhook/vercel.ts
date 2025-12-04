@@ -95,14 +95,10 @@ export async function verifyVercelRequest(
 export function buildDeploymentMessage(
   event: VercelWebhookEvent
 ): string | null {
-  const { type, createdAt, payload } = event;
+  const { type, payload } = event;
   const { deployment, target, error, meta } = payload;
 
   if (!deployment) return null;
-
-  const timeText: string = new Date(createdAt).toLocaleString("ko-KR", {
-    timeZone: "Asia/Seoul",
-  });
 
   const url: string = deployment.url ? `https://${deployment.url}` : "없음";
   const env: string =
@@ -115,7 +111,6 @@ export function buildDeploymentMessage(
     `프로젝트: ${deployment.name}`,
     `환경: ${env}`,
     `배포 URL: ${url}`,
-    `시간: ${timeText}`,
   ].join("\n");
 
   if (type === "deployment.succeeded") {
