@@ -140,6 +140,7 @@ export default function GeneralCheckout() {
       router.push(CHECKOUT_ROUTES.GENERAL.completed(orderId));
     },
   });
+  console.log("????");
 
   // 스크롤
   const scrollToTerms = () => scrollToElement(termsRef.current);
