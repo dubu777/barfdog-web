@@ -114,7 +114,6 @@ export function buildDeploymentMessage(
   const baseInfo: string = [
     `프로젝트: ${deployment.name}`,
     `환경: ${env}`,
-    `배포 ID: ${deployment.id}`,
     `배포 URL: ${url}`,
     `시간: ${timeText}`,
   ].join("\n");
