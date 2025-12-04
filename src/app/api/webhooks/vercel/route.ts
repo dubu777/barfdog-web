@@ -10,6 +10,20 @@ import {
 
 export const runtime = "nodejs";
 
+// 배포 알림 허용 브랜치 목록
+const BRANCHES_TO_NOTIFY = ["develop"];
+
+function getBranchFromDeployment(event: VercelWebhookEvent): string | null {
+  const meta = event.payload.deployment.meta ?? {};
+
+  const branch =
+    (meta["githubCommitRef"] as string | undefined) ??
+    (meta["vercelGitCommitRef"] as string | undefined) ??
+    null;
+
+  return branch;
+}
+
 export async function POST(request: Request): Promise<Response> {
   const webhookSecret: string | undefined = process.env.VERCEL_WEBHOOK_SECRET;
 
@@ -40,6 +54,18 @@ export async function POST(request: Request): Promise<Response> {
     typedEvent.type !== "deployment.error"
   ) {
     return Response.json({ ok: true, skipped: true });
+  }
+
+  const branch = getBranchFromDeployment(typedEvent);
+
+  if (!branch || !BRANCHES_TO_NOTIFY.includes(branch)) {
+    // 브랜치가 리스트에 없으면 알림 보내지 않고 바로 종료
+    console.log(
+      `[VercelWebhook] 브랜치 필터링으로 스킵 - branch: ${branch ?? "unknown"}`
+    );
+
+    // Vercel에게는 200을 돌려줘야 재시도 안 함
+    return Response.json({ ok: true, skipped: true, branch });
   }
 
   // 3. 네이버웍스로 보낼 메시지 생성

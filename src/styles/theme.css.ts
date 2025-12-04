@@ -216,7 +216,7 @@ export const [themeClass, themeVars] = createTheme({
         letterSpacing: "-0.4px",
       },
       caption2: {
-        fontWeight: "500",
+        fontWeight: "400",
         fontSize: "12px",
         lineHeight: "140%",
         letterSpacing: "-0.4px",

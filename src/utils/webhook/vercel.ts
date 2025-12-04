@@ -95,19 +95,14 @@ export async function verifyVercelRequest(
 export function buildDeploymentMessage(
   event: VercelWebhookEvent
 ): string | null {
-  const { type, createdAt, payload } = event;
+  const { type, payload } = event;
   const { deployment, error } = payload;
 
   if (!deployment) return null;
 
-  const timeText: string = new Date(createdAt).toLocaleString("ko-KR", {
-    timeZone: "Asia/Seoul",
-  });
-
   const baseInfo: string = [
     `프로젝트: ${deployment.name}`,
     `배포: ${process.env.DEPLOY_PUBLIC_URL}`,
-    `시간: ${timeText}`,
   ].join("\n");
 
   if (type === "deployment.succeeded") {

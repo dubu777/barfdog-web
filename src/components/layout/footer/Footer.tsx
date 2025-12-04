@@ -1,21 +1,24 @@
 "use client";
 import * as styles from "./Footer.css";
-import Image from "next/image";
 import Link from "next/link";
-import Logo from "/public/images/logo/logo-white.png";
 import Text from "@/components/ui/text/Text";
 import { usePathname } from "next/navigation";
 import { saveEntryPoint } from "@/utils/navigationEntry";
 import useModal from "@/hooks/useModal";
 import PrivacyPolicyModal from "@/components/layout/footer/termsModal/PrivacyPolicyModal";
 import ServicePolicyModal from "@/components/layout/footer/termsModal/ServicePolicyModal";
+import { commonWrapper } from "@/styles/common.css";
+import Divider from "@/components/ui/divider/Divider";
 
 const footerInfo = [
-  "CEO: 임경호 | 사업제안 및 문의: info@freshour.co.kr",
-  "사업자등록번호: 351-87-02455 [사업자정보확인]",
-  "통신판매업신고: 제 2022-충북충주-0578 호",
-  "본사: 충청북도 충주시 번영대로 214, 1층",
-  "연구소: 서울특별시 마포구 백범로31길 21, 305호",
+  "주식회사 프레쉬아워",
+  "CEO : 임경호",
+  "제안 및 문의 : info@freshour.co.kr",
+  "대표번호 : 043-855-4995",
+  "사업자등록번호 : 351-87-02455",
+  "통신판매업신고 : 제 2022-충북충주-0578 호",
+  "본사 : 충청북도 충주시 번영대로 214, 1층",
+  "연구소 : 서울 관악구 봉천로 545, 202호",
 ];
 
 const menuLink = [
@@ -85,50 +88,78 @@ export default function Footer({ showMenu = true }: FooterProps) {
   return (
     <>
       <footer className={styles.footerContainer}>
-        <h1 className={styles.logo}>
-          <Image src={Logo} alt="logo" width={139} height={24} />
-        </h1>
-        {showMenu && (
-          <div className={styles.menuLinkBox}>
-            {menuLink.map((menu) => (
-              <Link
-                key={menu.value}
-                href={menu.value}
-                className={styles.menuLink}
-                onClick={() => handleLinkClick(menu.value)}
-              >
-                <Text type="headline3" color="gray0">
-                  {menu.label}
+        <div
+          className={commonWrapper({
+            direction: "col",
+            gap: 12,
+            align: "start",
+          })}
+        >
+          {showMenu && (
+            <div className={commonWrapper({ gap: 28, justify: "start" })}>
+              {menuLink.map((menu) => (
+                <Link
+                  key={menu.value}
+                  href={menu.value}
+                  onClick={() => handleLinkClick(menu.value)}
+                >
+                  <Text type="headline3" color="gray0">
+                    {menu.label}
+                  </Text>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          <div className={styles.footerInfoBox({ gap: 6 })}>
+            {footerInfo.map((text, idx, array) => (
+              <>
+                <Text
+                  key={text}
+                  type="caption2"
+                  color="gray50"
+                  block
+                  className={styles.footerInfoText}
+                >
+                  {text}
                 </Text>
-              </Link>
+                <div className={styles.footerInfoText}>
+                  {idx < array.length - 1 && (
+                    <Divider direction="vertical" thickness={1} color="gray0" />
+                  )}
+                </div>
+              </>
             ))}
           </div>
-        )}
-        <div className={styles.footerInfo}>
-          {footerInfo.map((text) => (
-            <Text key={text} type="caption2" color="gray50" block>
-              {text}
+
+          <div className={styles.footerInfoBox({ gap: 12 })}>
+            {policyMenuLink.map((policy, idx, array) => (
+              <>
+                <button
+                  className={styles.footerInfoText}
+                  key={policy.value}
+                  onClick={() =>
+                    handlePolicyModalToggle(
+                      policy.value as "privacy" | "service"
+                    )
+                  }
+                >
+                  <Text type="caption2" color="gray0">
+                    {policy.label}
+                  </Text>
+                </button>
+                <div className={styles.footerInfoText}>
+                  {idx < array.length - 1 && (
+                    <Divider direction="vertical" thickness={1} color="gray0" />
+                  )}
+                </div>
+              </>
+            ))}
+            <Text type="caption2" color="gray50">
+              Copyright © 바프독 All Right Reserved.
             </Text>
-          ))}
+          </div>
         </div>
-        <div className={styles.policyMenuLinkBox}>
-          {policyMenuLink.map((policy) => (
-            <button
-              key={policy.value}
-              className={styles.policyMenuLink}
-              onClick={() =>
-                handlePolicyModalToggle(policy.value as "privacy" | "service")
-              }
-            >
-              <Text type="caption2" color="gray0">
-                {policy.label}
-              </Text>
-            </button>
-          ))}
-        </div>
-        <Text type="caption2" color="gray50" className={styles.footerInfo}>
-          Copyright © 바프독 All Right Reserved.
-        </Text>
       </footer>
       {isPrivacyModalOpen && (
         <PrivacyPolicyModal
