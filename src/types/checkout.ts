@@ -489,6 +489,7 @@ interface SuccessSubscriptionRecipeItem {
 interface GeneralMemberInfo {
   id: number;
   availableReward: number;
+  gradeInfo: GradeInfo;
 }
 
 interface GeneralPaymentInfo {
@@ -535,7 +536,7 @@ interface PackageableDelivery {
 interface GetGeneralCheckoutResponse {
   memberInfo: GeneralMemberInfo;
   paymentInfo: GeneralPaymentInfo;
-  defaultAddress: DefaultAddress;
+  defaultAddress: DeliveryAddress | null;
   itemList: GeneralItem[];
   pakageableDeliveryList: PackageableDelivery[];
 }

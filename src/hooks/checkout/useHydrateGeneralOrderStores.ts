@@ -21,36 +21,23 @@ export function useHydrateGeneralOrderStores(
   } = useDeliveryStore();
   const setUserTotalReward = useRewardStore((s) => s.setUserTotalReward);
   const setOriginalPrice = usePaymentStore((s) => s.setOriginalPrice);
-
+  const setRewardPercent = usePaymentStore((s) => s.setRewardPercent);
   useEffect(() => {
     if (!sheet) return;
 
+    const { memberInfo, paymentInfo, defaultAddress, pakageableDeliveryList } =
+      sheet;
+
     // 결제 금액(기준가) 동기화
-    setOriginalPrice(sheet.paymentInfo.originalPrice);
-
-    // 기본 배송지 동기화
-    const deliveryInfo = {
-      isDefault: sheet.defaultAddress.default,
-      id: sheet.defaultAddress.id,
-      deliveryName:
-        sheet.defaultAddress.deliveryName ?? sheet.defaultAddress.recipientName,
-      recipientName: sheet.defaultAddress.recipientName,
-      phoneNumber: sheet.defaultAddress.phoneNumber,
-      zipcode: sheet.defaultAddress.zipcode,
-      city: sheet.defaultAddress.city,
-      street: sheet.defaultAddress.street,
-      detailAddress: sheet.defaultAddress.detailAddress,
-      request: sheet.defaultAddress.request,
-    };
-    setDeliveryDto(deliveryInfo);
-    setBackupDeliveryDto(deliveryInfo);
-
+    setOriginalPrice(paymentInfo.originalPrice);
+    setDeliveryDto(defaultAddress);
+    setRewardPercent(memberInfo.gradeInfo.rewardPercent);
     // 적립금 동기화
-    setUserTotalReward(sheet.memberInfo.availableReward);
+    setUserTotalReward(memberInfo.availableReward);
 
     // 번들 배송 가능 시 동기화
-    if (sheet.pakageableDeliveryList && sheet.pakageableDeliveryList.length > 0) {
-      const first = sheet.pakageableDeliveryList[0];
+    if (pakageableDeliveryList && pakageableDeliveryList.length > 0) {
+      const first = pakageableDeliveryList[0];
       setBundleDeliveryDto({
         id: first.id,
         deliveryName: first.deliveryName,

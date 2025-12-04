@@ -26,7 +26,6 @@ interface PaymentStore {
   setDiscountGrade: (amount: number) => void;
   setOrderId: (id: number) => void;
   setOverDiscount: (amount: number) => void;
-  setSaveReward: (amount: number) => void;
   setRewardPercent: (percent: number) => void;
   calculateSaveReward: () => void;
 }
@@ -58,14 +57,16 @@ export const usePaymentStore = create<PaymentStore>((set, get) => ({
   setDiscountGrade: (amount) => set({ discountGrade: Number(amount) }),
   setOverDiscount: (amount) => set({ overDiscount: Number(amount) }),
   setOrderId: (id) => set({ orderId: id }),
-  setSaveReward: (amount) => set({ saveReward: Number(amount) }),
   setRewardPercent: (percent) => {
     set({ rewardPercent: Number(percent) });
     get().calculateSaveReward();
   },
   calculateSaveReward: () => {
-    const { paymentPrice, rewardPercent } = get();
-    const saveReward = calculateDiscountAmount(paymentPrice, rewardPercent);
+    const { paymentPrice, rewardPercent, deliveryPrice } = get();
+    const saveReward = calculateDiscountAmount(
+      paymentPrice - deliveryPrice,
+      rewardPercent
+    );
     set({ saveReward });
   },
 }));
