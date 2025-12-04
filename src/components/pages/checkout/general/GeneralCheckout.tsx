@@ -135,6 +135,9 @@ export default function GeneralCheckout() {
     onPaymentFailed: () => {
       router.push(CHECKOUT_ROUTES.GENERAL.failed);
     },
+    onPaymentCancel: () => {
+      addToast("결제가 취소되었습니다", "above-button");
+    },
     onPaymentSuccess: (orderId) => {
       router.push(CHECKOUT_ROUTES.GENERAL.completed(orderId));
     },

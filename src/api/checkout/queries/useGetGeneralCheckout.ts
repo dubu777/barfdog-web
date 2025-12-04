@@ -17,6 +17,7 @@ export function useGetGeneralCheckout(
       queryKeys.CHECKOUT.GET_GENERAL_CHECKOUT_SHEET,
       body,
     ],
+    enabled: body.itemList.length > 0,
     queryFn: () => getGeneralCheckout(body),
     ...queryOptions,
   });

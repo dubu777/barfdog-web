@@ -33,6 +33,10 @@ interface CheckoutFlowDeps<Request, Sheet, PayReq, PayRes> {
    */
   onPaymentSuccess?: (orderId: number) => void;
   /**
+   * 결제 취소 시 호출될 콜백 (선택)
+   */
+  onPaymentCancel?: () => void;
+  /**
    * 결제 실패 시 호출될 콜백 (선택)
    */
   onPaymentFailed?: () => void;
@@ -85,6 +89,7 @@ export function useCheckoutFlow<Request, Sheet, PayReq, PayRes>(
           deps.onPaymentSuccess?.(preparePayment.orderId);
         } else if (outcome === "cancel") {
           await deps.strategy.onCancel?.({ preparePayment });
+          deps.onPaymentCancel?.();
         } else {
           await deps.strategy.onFail({
             preparePayment,

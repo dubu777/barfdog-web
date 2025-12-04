@@ -64,7 +64,7 @@ export default function MobileSubscriptionPayment() {
         // 취소 체크: isPortoneUserCancel 함수 사용
         if (isPortoneUserCancel(errorMsg)) {
           await cancelPayment(orderId);
-          addToast("결제를 취소하였습니다.", "above-button");
+          addToast("결제가 취소되었습니다", "above-button");
           if (subscribeId) {
             router.push(CHECKOUT_ROUTES.SUBSCRIPTION.order(subscribeId));
           } else {
@@ -75,8 +75,7 @@ export default function MobileSubscriptionPayment() {
 
         // impSuccess가 false면 빌링키 발급 실패 → 취소로 간주
         if (!impSuccess) {
-          await cancelPayment(orderId);
-          addToast("결제를 취소하였습니다.", "above-button");
+          await failPayment(orderId);
           if (subscribeId) {
             router.push(CHECKOUT_ROUTES.SUBSCRIPTION.order(subscribeId));
           } else {
@@ -108,7 +107,7 @@ export default function MobileSubscriptionPayment() {
           throw new Error(`결제 실패: ${reason}`);
         }
 
-        // 검증 (훅 반환 타입 편차 대비)
+        // 결제 완료된 금액 검증
         const isValid = await validatePayment({
           orderId,
           impUid: final.imp_uid,
@@ -126,7 +125,6 @@ export default function MobileSubscriptionPayment() {
           await successPayment({ orderId, body: finalBody });
           router.push(CHECKOUT_ROUTES.SUBSCRIPTION.completed(orderId));
         } else {
-          // 재 검증 실패
           await failPayment(orderId);
           if (subscribeId) {
             router.push(CHECKOUT_ROUTES.SUBSCRIPTION.failed(subscribeId));
@@ -136,7 +134,6 @@ export default function MobileSubscriptionPayment() {
         }
       } catch (e) {
         console.error("[MobileSubscriptionPaymentRedirect] 처리 실패:", e);
-
         if (params?.subscribeId) {
           router.push(CHECKOUT_ROUTES.SUBSCRIPTION.failed(params.subscribeId));
         } else {

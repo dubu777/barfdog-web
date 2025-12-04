@@ -48,7 +48,7 @@ export default function MobileGeneralPayment() {
 
         if (isPortoneUserCancel(errorMsg)) {
           await cancelPayment(orderId);
-          addToast("결제를 취소하였습니다.", "above-button");
+          addToast("결제가 취소되었습니다", "above-button");
           router.push(CHECKOUT_ROUTES.GENERAL.order);
           return;
         }

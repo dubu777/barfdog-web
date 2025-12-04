@@ -144,6 +144,9 @@ export default function SubscriptionCheckout({
     onPaymentFailed: () => {
       router.push(CHECKOUT_ROUTES.SUBSCRIPTION.failed(subscribeInfo.id));
     },
+    onPaymentCancel: () => {
+      addToast("결제가 취소되었습니다", "above-button");
+    },
   });
 
   // Event Handlers
