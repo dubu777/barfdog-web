@@ -100,8 +100,16 @@ export function buildDeploymentMessage(
 
   if (!deployment) return null;
 
+  const branch =
+    (deployment.meta?.["githubCommitRef"] as string | undefined) ??
+    (deployment.meta?.["vercelGitCommitRef"] as string | undefined) ??
+    "알 수 없음";
+
+  console.log("branch", branch);
+
   const baseInfo: string = [
     `프로젝트: ${deployment.name}`,
+    `브랜치: ${branch}`,
     `배포: ${process.env.DEPLOY_PUBLIC_URL}`,
   ].join("\n");
 
