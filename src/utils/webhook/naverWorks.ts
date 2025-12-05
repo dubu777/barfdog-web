@@ -210,7 +210,7 @@ export async function sendNaverWorksDeploymentMessage(
   if (options.projectDashboardUrl) {
     actions.push({
       type: "uri",
-      label: "Vercel 프로젝트 대시보드",
+      label: "Vercel 대시보드",
       uri: options.projectDashboardUrl,
     });
   }
