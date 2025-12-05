@@ -78,9 +78,8 @@ export default function Footer({ showMenu = true }: FooterProps) {
             })}
           >
             {footerInfo.map((text, idx, array) => (
-              <div className={styles.footerInfoBox({ gap: 6 })}>
+              <div key={text.left} className={styles.footerInfoBox({ gap: 6 })}>
                 <Text
-                  key={text.left}
                   type="caption2"
                   color="gray50"
                   block
@@ -94,7 +93,6 @@ export default function Footer({ showMenu = true }: FooterProps) {
                   )}
                 </div>
                 <Text
-                  key={text.right}
                   type="caption2"
                   color="gray50"
                   block
