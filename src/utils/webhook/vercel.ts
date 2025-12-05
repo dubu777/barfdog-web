@@ -105,12 +105,9 @@ export function buildDeploymentMessage(
     (deployment.meta?.["vercelGitCommitRef"] as string | undefined) ??
     "알 수 없음";
 
-  console.log("branch", branch);
-
   const baseInfo: string = [
-    `프로젝트: ${deployment.name}`,
-    `브랜치: ${branch}`,
-    `배포: ${process.env.DEPLOY_PUBLIC_URL}`,
+    `project: ${deployment.name}`,
+    `branch: ${branch}`,
   ].join("\n");
 
   if (type === "deployment.succeeded") {

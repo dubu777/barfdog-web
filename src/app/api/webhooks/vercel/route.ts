@@ -1,3 +1,4 @@
+// app/api/webhooks/vercel/route.ts
 import {
   verifyVercelRequest,
   buildDeploymentMessage,
@@ -5,13 +6,13 @@ import {
 } from "@/utils/webhook/vercel";
 import {
   getNaverWorksConfigFromEnv,
-  sendNaverWorksMessage,
+  sendNaverWorksDeploymentMessage,
 } from "@/utils/webhook/naverWorks";
 
 export const runtime = "nodejs";
 
 // 배포 알림 허용 브랜치 목록
-const BRANCHES_TO_NOTIFY = ["develop"];
+const BRANCHES_TO_NOTIFY = ["develop", "main"];
 
 function getBranchFromDeployment(event: VercelWebhookEvent): string | null {
   const meta = event.payload.deployment.meta ?? {};
@@ -74,16 +75,28 @@ export async function POST(request: Request): Promise<Response> {
     return Response.json({ ok: true, skipped: true });
   }
 
-  // 4. NAVER WORKS Bot 메시지 전송
+  // 4. NAVER WORKS Bot 메시지 전송 (버튼 템플릿 사용)
   try {
     const config = getNaverWorksConfigFromEnv();
-    await sendNaverWorksMessage(message, config);
+
+    // Vercel에서 넘겨주는 프로젝트/배포 대시보드 링크
+    const projectDashboardUrl: string | undefined =
+      typedEvent.payload.links?.project ??
+      typedEvent.payload.links?.deployment ??
+      undefined;
+
+    await sendNaverWorksDeploymentMessage(
+      message,
+      {
+        projectDashboardUrl,
+      },
+      config
+    );
 
     return Response.json({ ok: true });
   } catch (error) {
     console.error("[VercelWebhook] NAVER WORKS 메시지 전송 실패:", error);
 
-    // 원하면 여기 status: 200 으로 바꿔서 Vercel 재시도 막을 수도 있음
     return Response.json(
       { ok: false, error: "failed_to_send_naver_works" },
       { status: 500 }
