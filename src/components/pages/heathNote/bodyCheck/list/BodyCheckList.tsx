@@ -81,7 +81,7 @@ export default function BodyCheckList({ petId }: BodyCheckMainProps) {
               hasTabContent={false}
               variant='text'
               defaultIndex={activeIndex}
-              className={commonWrapper({ })}
+              fullWidth
             />
           </div>
           {diagnosisList.length > 0

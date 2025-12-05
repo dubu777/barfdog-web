@@ -40,7 +40,7 @@ export default function OrderList () {
         tabs={
           ORDER_TYPE_LIST.map(tab => ({
             ...tab,
-            onInit: async () => {
+            onTabChange: async () => {
               handleFilterChange(tab.value);
             }
           }))

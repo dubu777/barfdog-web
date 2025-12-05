@@ -50,6 +50,11 @@ export const tabBarButtonWrapper = recipe({
       },
       false: {},
     },
+    fullWidth: {
+      true: {
+        width: "100%",
+      },
+    },
   },
 });
 

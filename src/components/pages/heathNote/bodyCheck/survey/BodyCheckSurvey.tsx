@@ -54,6 +54,7 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
   const {
     currentStep,
     currentQuestion,
+    currentValue,
     isFirstStep,
     isLastStep,
     isButtonDisabled,
@@ -206,12 +207,14 @@ export default function BodyCheckSurvey({ petId, part }: BodyCheckSurveyProps) {
           />
         </article>
       </section>
-      <ButtonDocked
-        type="full-button"
-        primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
-        onPrimaryClick={handleClick}
-        isPrimaryDisabled={isButtonDisabled}
-      />
+      {currentValue && (
+        <ButtonDocked
+          type="full-button"
+          primaryButtonLabel={isLastStep ? "결과 보기" : "다음"}
+          onPrimaryClick={handleClick}
+          isPrimaryDisabled={isButtonDisabled}
+        />
+      )}
     </NavigationGuard>
   );
 }
