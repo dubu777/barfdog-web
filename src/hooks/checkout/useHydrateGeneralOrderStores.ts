@@ -31,6 +31,7 @@ export function useHydrateGeneralOrderStores(
     // 결제 금액(기준가) 동기화
     setOriginalPrice(paymentInfo.originalPrice);
     setDeliveryDto(defaultAddress);
+    setBackupDeliveryDto(defaultAddress);
     setRewardPercent(memberInfo.gradeInfo.rewardPercent);
     // 적립금 동기화
     setUserTotalReward(memberInfo.availableReward);
