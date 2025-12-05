@@ -18,7 +18,7 @@ import { useCheckDuplicatePetName } from "@/api/pet/queries/useCheckDuplicatePet
 import { PetFormValues } from "@/utils/validation/petValidation";
 import { useGetPetBreedList } from "@/api/pet/queries/useGetPetBreedList";
 
-interface DogFormProps {
+interface PetFormProps {
   isEdit: boolean;
   form: UseFormReturn<PetFormValues>;
   dogPictureUrl: string | null;
@@ -32,7 +32,7 @@ export default function PetForm({
   dogPictureUrl,
   handleFileChange,
   handleSubmit,
-}: DogFormProps) {
+}: PetFormProps) {
   const {
     control,
     setValue,
@@ -104,12 +104,14 @@ export default function PetForm({
 
   return (
     <>
-      <article className={commonWrapper({
-        direction: 'col',
-        align: 'start',
-        gap: 20,
-        padding: 20,
-      })}>
+      <article
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 20,
+          padding: 20,
+        })}
+      >
         <Text type="title4">반려견 정보</Text>
         <div className={dogProfileImageWrapper}>
           <FileUpload
@@ -124,12 +126,14 @@ export default function PetForm({
           />
         </div>
       </article>
-      <form className={commonWrapper({
-        direction: 'col',
-        align: 'start',
-        gap: 20,
-        padding: 20,
-      })}>
+      <form
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          gap: 20,
+          padding: 20,
+        })}
+      >
         <Controller
           name="name"
           control={control}
@@ -159,9 +163,15 @@ export default function PetForm({
           name="gender"
           control={control}
           render={({ field }) => (
-            <div className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
+            <div
+              className={commonWrapper({
+                direction: "col",
+                align: "start",
+                gap: 8,
+              })}
+            >
               <InputLabel label="성별" labelColor="gray800" isRequired />
-              <div className={commonWrapper({ justify: 'start', gap: 8 })}>
+              <div className={commonWrapper({ justify: "start", gap: 8 })}>
                 <SurveyButton
                   label={PET_GENDER["MALE"]}
                   value="MALE"
@@ -182,7 +192,13 @@ export default function PetForm({
           name="birthDay"
           control={control}
           render={({ field }) => (
-            <div className={commonWrapper({ direction: 'col', align: 'start', gap: 8 })}>
+            <div
+              className={commonWrapper({
+                direction: "col",
+                align: "start",
+                gap: 8,
+              })}
+            >
               <InputLabel label="생년월일" labelColor="gray800" isRequired />
               <CustomDatePicker
                 name={field.name}
@@ -219,7 +235,6 @@ export default function PetForm({
                   onClick={onToggleDogTypeModal}
                 />
                 <PetTypeModal
-                  dogName={petName}
                   breedList={breedList ?? []}
                   value={field.value}
                   isOpen={isOpenDogTypeModal}

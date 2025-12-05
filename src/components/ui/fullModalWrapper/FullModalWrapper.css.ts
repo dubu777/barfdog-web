@@ -8,9 +8,9 @@ export const modalContainer = style({
   alignItems: "center",
   maxWidth: "600px",
   width: "100%",
-  height: "100%",
+  height: "100vh",
   margin: "0 auto",
-  overflow: "auto",
+  // overflow: "auto",
   backgroundColor: themeVars.colors.gray.gray0,
 });
 

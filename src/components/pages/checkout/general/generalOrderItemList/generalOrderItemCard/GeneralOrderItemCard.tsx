@@ -35,9 +35,18 @@ export default function GeneralOrderItemCard({
             <Text type="label2" color="gray700">
               {generalItem.name}
             </Text>
-            <div className={commonWrapper({ gap: 8, justify: "start" })}>
+            <div className={styles.orderItemText}>
               <Text type="body3" color="gray600">
-                구매수량 | {generalItem.amount}개
+                구매수량
+              </Text>
+              <Divider
+                direction="vertical"
+                thickness={1}
+                color="gray300"
+                height={70}
+              />
+              <Text type="body3" color="gray600">
+                {generalItem.amount}개
               </Text>
             </div>
           </div>
@@ -70,7 +79,12 @@ export default function GeneralOrderItemCard({
                 <Text type="body3" color="gray700">
                   {option.name}
                 </Text>
-                <Divider direction="vertical" thickness={1} color="gray300" />
+                <Divider
+                  direction="vertical"
+                  thickness={1}
+                  color="gray300"
+                  height={70}
+                />
                 <Text type="body3" color="gray700">
                   {option.amount}개
                 </Text>

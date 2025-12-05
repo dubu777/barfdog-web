@@ -1,6 +1,6 @@
 import { imageWrapper } from "@/styles/common.css";
 import Image from "next/image";
-import DefaultImage from "public/images/icons/default-profile.png";
+import DefaultImage from "public/images/foodong/default.png";
 
 interface CardImageProps {
   imageUrl: string | null;

@@ -9,47 +9,7 @@ import PrivacyPolicyModal from "@/components/layout/footer/termsModal/PrivacyPol
 import ServicePolicyModal from "@/components/layout/footer/termsModal/ServicePolicyModal";
 import { commonWrapper } from "@/styles/common.css";
 import Divider from "@/components/ui/divider/Divider";
-
-const footerInfo = [
-  "주식회사 프레쉬아워",
-  "CEO : 임경호",
-  "제안 및 문의 : info@freshour.co.kr",
-  "대표번호 : 043-855-4995",
-  "사업자등록번호 : 351-87-02455",
-  "통신판매업신고 : 제 2022-충북충주-0578 호",
-  "본사 : 충청북도 충주시 번영대로 214, 1층",
-  "연구소 : 서울 관악구 봉천로 545, 202호",
-];
-
-const menuLink = [
-  {
-    label: "브랜드 소개",
-    value: "/about",
-  },
-  {
-    label: "공지사항",
-    value: "/community/notice",
-  },
-  {
-    label: "FAQ",
-    value: "/community/faq",
-  },
-  {
-    label: "아티클",
-    value: "/community/article",
-  },
-];
-
-const policyMenuLink = [
-  {
-    label: "Privacy policy",
-    value: "privacy",
-  },
-  {
-    label: "Terms&Conditions",
-    value: "service",
-  },
-];
+import { footerInfo, menuLink, policyMenuLink } from "@/constants/main";
 
 interface FooterProps {
   showMenu?: boolean;
@@ -111,24 +71,38 @@ export default function Footer({ showMenu = true }: FooterProps) {
             </div>
           )}
 
-          <div className={styles.footerInfoBox({ gap: 6 })}>
+          <div
+            className={commonWrapper({
+              direction: "col",
+              align: "start",
+            })}
+          >
             {footerInfo.map((text, idx, array) => (
-              <>
+              <div className={styles.footerInfoBox({ gap: 6 })}>
                 <Text
-                  key={text}
+                  key={text.left}
                   type="caption2"
                   color="gray50"
                   block
                   className={styles.footerInfoText}
                 >
-                  {text}
+                  {text.left}
                 </Text>
                 <div className={styles.footerInfoText}>
                   {idx < array.length - 1 && (
                     <Divider direction="vertical" thickness={1} color="gray0" />
                   )}
                 </div>
-              </>
+                <Text
+                  key={text.right}
+                  type="caption2"
+                  color="gray50"
+                  block
+                  className={styles.footerInfoText}
+                >
+                  {text.right}
+                </Text>
+              </div>
             ))}
           </div>
 

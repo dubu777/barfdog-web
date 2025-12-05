@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import * as styles from "./HealthNoteMainHeader.css";
 import Text from "@/components/ui/text/Text";
-import DogIcon from "/public/images/healthNote/dogIcon.png";
+import DogIcon from "public/images/foodong/default.png";
 import Image from "next/image";
 import { petImage } from "../../common/HealthNoteCommon.css";
 
@@ -26,4 +26,4 @@ export default function HealthNoteGuestHeader() {
       </button>
     </header>
   );
-};
+}

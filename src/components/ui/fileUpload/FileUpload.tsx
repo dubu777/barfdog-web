@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react";
 import * as styles from "./FileUpload.css";
 import Image from "next/image";
 import AddProfileIcon from "/public/images/icons/add_profile.svg";
-import DogIcon from "/public/images/healthNote/dogIcon.png";
+import DogIcon from "public/images/foodong/default.png";
 import Text from "@/components/ui/text/Text";
 
 type ImageFileObjectFit = "cover" | "contain";

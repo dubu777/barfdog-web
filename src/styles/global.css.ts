@@ -10,6 +10,7 @@ globalStyle("html, body", {
   padding: 0,
   width: "100%",
   height: "100%",
+  scrollbarGutter: "stable",
 });
 
 globalStyle("body", {

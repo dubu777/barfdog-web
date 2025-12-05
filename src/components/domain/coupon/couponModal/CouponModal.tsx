@@ -191,12 +191,6 @@ export default function CouponModal({
         isVisible={isOpen}
         headerTitle="쿠폰"
         handleClose={handleModalClose}
-        className={commonWrapper({
-          maxWidth: 600,
-          width: "full",
-          height: "full",
-          backgroundColors: "gray0",
-        })}
       >
         <div className={couponModalWrapper}>
           <CouponCategoryTabs

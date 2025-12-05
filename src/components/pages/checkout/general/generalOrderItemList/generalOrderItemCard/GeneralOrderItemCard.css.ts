@@ -16,20 +16,6 @@ export const orderItemCardImage = style({
   borderRadius: "8px",
 });
 
-export const orderItemContentWrapper = style({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "center",
-  gap: "8px",
-  width: "100%",
-});
-
-export const orderItemInfoWrapper = style({
-  display: "flex",
-  flexDirection: "column",
-});
-
 export const orderOptionWrapper = style({
   display: "flex",
   gap: "8px",
@@ -37,4 +23,11 @@ export const orderOptionWrapper = style({
   width: "100%",
   borderRadius: "8px",
   backgroundColor: themeVars.colors.gray.gray100,
+});
+
+export const orderItemText = style({
+  display: "flex",
+  height: "18px",
+  alignItems: "center",
+  columnGap: "8px",
 });

@@ -10,7 +10,7 @@ import Image from "next/image";
 import ChevronDown from "/public/images/icons/chevron-sort-up.svg";
 import CheckCircle from "public/images/icons/check_circle.svg";
 import PlusIcon from "/public/images/icons/plus.svg";
-import PetIcon from "/public/images/healthNote/dogIcon.png";
+import PetIcon from "public/images/foodong/default.png";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Text from "@/components/ui/text/Text";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
@@ -50,19 +50,18 @@ export default function HealthNoteMainHeader() {
   };
 
   const handleCloseChangePetInfo = () => {
-    const isChangedPet =
-      representativePet?.id !== selectedPet?.id
+    const isChangedPet = representativePet?.id !== selectedPet?.id;
 
     if (isChangedPet && selectedPet) {
       updateRepresentative(selectedPet?.id, {
         onSuccess: async () => {
-          addToast("대표견이 변경되었습니다", 'above-button');
+          addToast("대표견이 변경되었습니다", "above-button");
           await queryClient.invalidateQueries({
             queryKey: [queryKeys.PET.BASE, queryKeys.PET.GET_PET_LIST],
           });
         },
         onError: () => {
-          addToast("대표견 설정에 실패했습니다", 'above-button');
+          addToast("대표견 설정에 실패했습니다", "above-button");
         },
       });
     }
@@ -107,7 +106,9 @@ export default function HealthNoteMainHeader() {
           </div>
           <div className={styles.selectBottomSheetBox}>
             {petList.map((pet, index) => {
-              const active = pet.id === Number(selectedPet?.id ?? representativePet?.id) || false;
+              const active =
+                pet.id === Number(selectedPet?.id ?? representativePet?.id) ||
+                false;
               return (
                 <Fragment key={pet.id}>
                   <button
@@ -128,7 +129,11 @@ export default function HealthNoteMainHeader() {
                       <SvgIcon src={CheckCircle} size={24} color="red" />
                     )}
                   </button>
-                  <ListDivider listLength={petList.length} index={index} color='gray100' />
+                  <ListDivider
+                    listLength={petList.length}
+                    index={index}
+                    color="gray100"
+                  />
                 </Fragment>
               );
             })}
@@ -150,4 +155,4 @@ export default function HealthNoteMainHeader() {
       )}
     </>
   );
-};
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { commonWrapper } from "@/styles/common.css";
-import EmptyImage from "/public/images/healthNote/empty.svg";
+import EmptyImage from "/public/images/foodong/empty.svg";
 import LogoIcon from "public/images/logo/logo.svg";
 import Text from "@/components/ui/text/Text";
 import Button from "@/components/ui/button/Button";

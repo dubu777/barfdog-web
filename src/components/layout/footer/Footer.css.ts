@@ -30,6 +30,7 @@ export const footerInfo = style({
 export const footerInfoText = style({
   display: "flex",
   height: "18px",
+  alignItems: "center",
 });
 
 export const footerInfoBox = recipe({

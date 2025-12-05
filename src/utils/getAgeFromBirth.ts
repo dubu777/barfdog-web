@@ -1,15 +1,17 @@
-export function calculateAge(
-  birth: string | Date
-): { years: number; months: number } {
-  const birthDate: Date = typeof birth === "string"
-    ? (() => {
-        const [yStr, mStr, dStr] = birth.split("-");
-        const year  = Number(yStr);
-        const month = Number(mStr) - 1; // JS Date 월은 0~11
-        const day   = Number(dStr);
-        return new Date(year, month, day);
-      })()
-    : birth;
+export function calculateAge(birth: string | Date): {
+  years: number;
+  months: number;
+} {
+  const birthDate: Date =
+    typeof birth === "string"
+      ? (() => {
+          const [yStr, mStr, dStr] = birth.split("-");
+          const year = Number(yStr);
+          const month = Number(mStr) - 1; // JS Date 월은 0~11
+          const day = Number(dStr);
+          return new Date(year, month, day);
+        })()
+      : birth;
   const now = new Date();
 
   let years = now.getFullYear() - birthDate.getFullYear();
@@ -30,8 +32,8 @@ export function calculateAge(
 export function formatAge(age: { years: number; months: number }): string {
   const { years, months } = age;
   if (years === 0 && months === 0) return `0개월`;
-  if (years > 0 && months > 0) return `${years}년 ${months}개월`;
-  if (years > 0) return `${years}년`;
+  if (years > 0 && months > 0) return `${years}살 ${months}개월`;
+  if (years > 0) return `${years}살`;
   return `${months}개월`;
 }
 

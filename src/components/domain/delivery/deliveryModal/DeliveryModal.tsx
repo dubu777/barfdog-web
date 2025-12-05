@@ -6,6 +6,7 @@ import AddressList from "./addressList/AddressList";
 import AddressForm from "./addressForm/AddressForm";
 import ModalBackground from "@/components/ui/modalBackground/ModalBackground";
 import { AnimatePresence, motion } from "motion/react";
+import FullModalWrapper from "@/components/ui/fullModalWrapper/FullModalWrapper";
 
 interface DeliveryModalProps {
   addressData: DeliveryAddress[];
@@ -86,41 +87,27 @@ export default function DeliveryModal({
   const headerProps = getHeaderProps(viewMode);
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <ModalBackground
-          isVisible={isVisible}
-          onClose={handleClose}
-          closeOnBackgroundClick={false}
-          isDimmed={false}
-        >
-          <motion.div
-            className={styles.modalContainer}
-            onClick={(e) => e.stopPropagation()}
-            initial={{ y: "100%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "100%" }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-          >
-            <Header {...headerProps} />
-            {viewMode === "list" ? (
-              <AddressList
-                addressData={addressData}
-                goToAddAddress={goToAddAddress}
-                goToEditAddress={goToEditAddress}
-                onSelectAddress={handleSelectAddress}
-                showSelectButton={showSelectButton}
-              />
-            ) : (
-              <AddressForm
-                mode={viewMode}
-                address={viewMode === "edit" ? selectedAddress! : undefined}
-                onBack={goToList}
-              />
-            )}
-          </motion.div>
-        </ModalBackground>
+    <FullModalWrapper
+      isVisible={isVisible}
+      handleClose={handleClose}
+      showHeader={false}
+    >
+      <Header {...headerProps} />
+      {viewMode === "list" ? (
+        <AddressList
+          addressData={addressData}
+          goToAddAddress={goToAddAddress}
+          goToEditAddress={goToEditAddress}
+          onSelectAddress={handleSelectAddress}
+          showSelectButton={showSelectButton}
+        />
+      ) : (
+        <AddressForm
+          mode={viewMode}
+          address={viewMode === "edit" ? selectedAddress! : undefined}
+          onBack={goToList}
+        />
       )}
-    </AnimatePresence>
+    </FullModalWrapper>
   );
 }

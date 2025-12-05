@@ -6,7 +6,6 @@ import { PetBreedList } from "@/types/pet";
 import { Option } from "@/types";
 
 interface PetTypeModalProps {
-  dogName: string;
   value: number;
   breedList: PetBreedList;
   isOpen: boolean;
@@ -15,7 +14,6 @@ interface PetTypeModalProps {
 }
 
 export default function PetTypeModal({
-  dogName,
   value,
   breedList,
   isOpen,
@@ -29,25 +27,17 @@ export default function PetTypeModal({
     })) ?? [];
   return (
     <FullModalWrapper isVisible={isOpen} handleClose={onClose}>
-      <div className={commonWrapper({
-        backgroundColors: 'gray50',
-        direction: 'col',
-        align: 'start',
-        gap: 32,
-        padding: 20,
-        paddingTop: 32,
-      })}>
-        <Text type="title3">
-          {dogName 
-          ? (
-            <>
-              {dogName}의<br />
-              견종은 무엇인가요?
-            </>
-          )
-          : "견종을 선택해 주세요"
-        }
-        </Text>
+      <div
+        className={commonWrapper({
+          backgroundColors: "gray50",
+          direction: "col",
+          align: "start",
+          gap: 32,
+          padding: 20,
+          paddingTop: 32,
+        })}
+      >
+        <Text type="title3">우리 아이의 견종을 선택해 주세요</Text>
         <SearchableSelector
           placeholder="견종을 검색해 보세요"
           options={options}
@@ -58,4 +48,4 @@ export default function PetTypeModal({
       </div>
     </FullModalWrapper>
   );
-};
+}

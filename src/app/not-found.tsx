@@ -1,7 +1,7 @@
 import { commonWrapper } from "@/styles/common.css";
 import Link from "next/link";
 import LogoIcon from "public/images/logo/logo.svg";
-import EmptyImage from "public/images/icons/404.svg";
+import EmptyImage from "public/images/foodong/404.svg";
 import Text from "@/components/ui/text/Text";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Header from "@/components/layout/header/Header";

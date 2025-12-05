@@ -11,6 +11,7 @@ interface FullModalWrapperProps {
   isVisible: boolean;
   handleClose?: () => void;
   handleGoBack?: () => void;
+  showHeader?: boolean;
   children: ReactNode;
   headerTitle?: string;
   rightElement?: ReactNode;
@@ -43,6 +44,7 @@ const FullModalWrapper = forwardRef<HTMLDivElement, FullModalWrapperProps>(
       isVisible,
       handleClose,
       handleGoBack,
+      showHeader = true,
       children,
       headerTitle,
       rightElement,
@@ -72,15 +74,17 @@ const FullModalWrapper = forwardRef<HTMLDivElement, FullModalWrapperProps>(
               exit="exit"
               transition={{ duration: 0.2, ease: "easeInOut" }}
             >
-              <Header
-                {...(headerTitle ? { centerTitle: headerTitle } : {})}
-                rightElement={rightElement}
-                showCloseButton={!!handleClose}
-                showBackButton={!!handleGoBack}
-                onClose={handleClose}
-                onBack={handleGoBack}
-                backgroundColor={headerBackgroundColor}
-              />
+              {showHeader && (
+                <Header
+                  {...(headerTitle ? { centerTitle: headerTitle } : {})}
+                  rightElement={rightElement}
+                  showCloseButton={!!handleClose}
+                  showBackButton={!!handleGoBack}
+                  onClose={handleClose}
+                  onBack={handleGoBack}
+                  backgroundColor={headerBackgroundColor}
+                />
+              )}
               <div className={styles.modalContent}>{children}</div>
             </motion.div>
           </ModalBackground>

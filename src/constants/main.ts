@@ -190,3 +190,49 @@ export const MAIN_DATA = {
     ],
   },
 } as const;
+
+export const footerInfo = [
+  { left: "주식회사 프레쉬아워", right: "CEO : 임경호" },
+  {
+    left: "제안 및 문의 : info@freshour.co.kr",
+    right: "대표번호 : 043-855-4995",
+  },
+  {
+    left: "사업자등록번호 : 351-87-02455",
+    right: "통신판매업신고 : 제 2022-충북충주-0578 호",
+  },
+  {
+    left: "본사 : 충청북도 충주시 번영대로 214, 1층",
+    right: "연구소 : 서울 관악구 봉천로 545, 202호",
+  },
+];
+
+export const menuLink = [
+  {
+    label: "브랜드 소개",
+    value: "/about",
+  },
+  {
+    label: "공지사항",
+    value: "/community/notice",
+  },
+  {
+    label: "FAQ",
+    value: "/community/faq",
+  },
+  {
+    label: "아티클",
+    value: "/community/article",
+  },
+];
+
+export const policyMenuLink = [
+  {
+    label: "Privacy policy",
+    value: "privacy",
+  },
+  {
+    label: "Terms&Conditions",
+    value: "service",
+  },
+];
