@@ -91,7 +91,7 @@ export default function TabBar({
           </Swiper>
         ) : (
           <div
-            className={tabBarButtonWrapper({ variant, justify, borderRadius })}
+            className={tabBarButtonWrapper({ variant, justify, borderRadius, fullWidth })}
           >
             {tabs.map((tab, index) => (
               <TabButtonComponent key={index} tab={tab} index={index} />

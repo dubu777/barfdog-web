@@ -54,6 +54,7 @@ export default function PetManager() {
             variant="outline"
             size="sm"
             onClick={() => handleRepresentative(pet.id)}
+            fullWidth
           >
             대표견 설정
           </Button>

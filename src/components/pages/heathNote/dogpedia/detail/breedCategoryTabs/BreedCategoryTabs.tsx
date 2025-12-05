@@ -38,11 +38,12 @@ export default function BreedCategoryTabs({
 				className={commonWrapper({ shadow: 'light' })}
 				tabs={categoryTabs.map(tab => ({
 					...tab,
-					onInit: async () => {
+					onTabChange: async () => {
 						setTab(tab.value as BreedCharacteristicsCategory);
 					}
 				}))}
 				variant='text'
+				fullWidth
 			/>
 			<article className={commonWrapper({
 				direction: 'col',
