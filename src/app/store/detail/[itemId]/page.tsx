@@ -9,6 +9,7 @@ import StoreItemDetail from "@/components/pages/store/detail/StoreItemDetail";
 import Error from "@/components/layout/error/Error";
 import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetStoreItemDetail } from "@/api/store/queries/prefetchGetStoreItemDetail";
+import Header from "@/components/layout/header/Header";
 
 interface StoreItemDetailPageProps {
   params: { itemId: string };
@@ -18,7 +19,6 @@ export default async function StoreItemDetailPage({
   params,
 }: StoreItemDetailPageProps) {
   const itemId = Number(params.itemId);
-
   const queryClient = new QueryClient();
   await prefetchGetStoreItemDetail(queryClient, itemId);
   const dehydrateState = dehydrate(queryClient);
@@ -27,6 +27,7 @@ export default async function StoreItemDetailPage({
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
+          <Header showCartButton showBackButton />
           <StoreItemDetail itemId={itemId} />
         </Suspense>
       </ErrorBoundary>

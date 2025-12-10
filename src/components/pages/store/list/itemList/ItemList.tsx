@@ -36,6 +36,7 @@ export default function ItemList() {
           gap: "32/8",
           align: "start",
           justify: "start",
+          paddingBottom: 85,
         })}
       >
         {itemList.map((item, index) => {

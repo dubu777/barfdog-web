@@ -89,8 +89,11 @@ export async function middleware(req: NextRequest) {
   const { pathname } = new URL(req.url);
 
   // refresh 자체는 통과
-  if (pathname.startsWith("/api/v2/public/accounts/refresh"))
-    return NextResponse.next();
+  if (pathname.startsWith("/api/v2/public/accounts/refresh")) {
+    const res = NextResponse.next();
+    res.headers.set("x-pathname", pathname);
+    return res;
+  }
 
   const token = req.cookies.get(AUTH_CONFIG.ACCESS_TOKEN_COOKIE)?.value;
 
@@ -112,6 +115,7 @@ export async function middleware(req: NextRequest) {
         secure: true,
       });
 
+      res.headers.set("x-pathname", pathname);
       return res;
     }
 
@@ -134,7 +138,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.nextUrl.origin));
   }
 
-  return NextResponse.next();
+  const res = NextResponse.next();
+  res.headers.set("x-pathname", pathname);
+  return res;
 }
 
 export const config = {
@@ -147,5 +153,6 @@ export const config = {
     "/cart",
     "/subscribe/:path*",
     "/pet/:path*",
+    "/store/:path*",
   ],
 };
