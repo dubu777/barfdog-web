@@ -10,11 +10,11 @@ import { useStoreItemStore } from "@/store/useStoreItemStore";
 import { useGetStoreItemDetail } from "@/api/store/queries/useGetStoreItemDetail";
 import { parseItemTags } from "@/utils/store/parseItemTags";
 
-interface ItemDetailProps {
+interface StoreItemDetailProps {
   itemId: number;
 }
 
-export default function ItemDetail({ itemId }: ItemDetailProps) {
+export default function StoreItemDetail({ itemId }: StoreItemDetailProps) {
   const { setItemPrice, setDiscountRate, discountRate } = useStoreItemStore();
   const { data } = useGetStoreItemDetail(itemId);
   const itemInfo = data?.itemInfo;

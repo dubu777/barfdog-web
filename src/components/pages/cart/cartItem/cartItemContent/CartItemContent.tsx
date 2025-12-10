@@ -7,6 +7,7 @@ import Text from "@/components/ui/text/Text";
 import Counter from "@/components/ui/counter/Counter";
 import { CartItemDto } from "@/types/cart";
 import Divider from "@/components/ui/divider/Divider";
+import Link from "next/link";
 
 interface CartItemContentProps {
   item: CartItemDto;
@@ -26,15 +27,17 @@ export default function CartItemContent({
     <div
       className={commonWrapper({ justify: "start", align: "start", gap: 8 })}
     >
-      <Image
-        src={item.displayImageUrl.url}
-        alt={item.name}
-        width={88}
-        height={88}
-        className={styles.cartItemImage({
-          isSoldOut,
-        })}
-      />
+      <Link href={`/store/detail/${item.itemId}`}>
+        <Image
+          src={item.displayImageUrl.url}
+          alt={item.name}
+          width={88}
+          height={88}
+          className={styles.cartItemImage({
+            isSoldOut,
+          })}
+        />
+      </Link>
       <div
         className={commonWrapper({
           direction: "col",
@@ -42,9 +45,11 @@ export default function CartItemContent({
           gap: 4,
         })}
       >
-        <Text type="label2" color="gray700">
-          {item.name}
-        </Text>
+        <Link href={`/store/detail/${item.itemId}`}>
+          <Text type="label2" color="gray700">
+            {item.name}
+          </Text>
+        </Link>
         {isSoldOut ? (
           <Text type="headline1" color="red">
             Sold Out
