@@ -9,7 +9,7 @@ export const modalBackground = recipe({
     left: 0,
     width: "100%",
     height: "100%",
-    overflowY: 'auto',
+    overflowY: "hidden",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -23,14 +23,4 @@ export const modalBackground = recipe({
       false: {},
     },
   },
-});
-
-export const modalContent = style({
-  background: themeVars.colors.gray.gray0,
-  padding: "20px",
-  borderRadius: "10px",
-  width: "100%",
-  maxWidth: "300px",
-  height: "300px",
-  overflowY: "auto",
 });

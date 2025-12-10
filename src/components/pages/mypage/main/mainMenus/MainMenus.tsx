@@ -53,7 +53,7 @@ export default function MainMenus() {
             >
               {category}
             </Text>
-            <Divider thickness={2} color="gray900" />
+            <Divider height={2} color="gray900" />
             <ul className={commonWrapper({ direction: "col" })}>
               {menus.map(({ label, url, action }, index) => (
                 <Fragment key={label}>

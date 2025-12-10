@@ -140,7 +140,7 @@ const KitGuideModal = ({ petId, isOpen, onClose }: KitGuideModalProps) => {
       handleClose={onClose}
       headerTitle="키트 안내"
     >
-      <Divider thickness={2} color="gray100" />
+      <Divider height={2} color="gray100" />
       <article className={styles.kitGuideContainer}>
         <Text type="title3" className={styles.kitGuideHeader}>
           장내 미생물 분석
@@ -191,7 +191,9 @@ const KitGuideModal = ({ petId, isOpen, onClose }: KitGuideModalProps) => {
               {step.buttonText && (
                 <TextButton
                   text="사전 문진 바로가기"
-                  onClick={() => router.push(`/health-note/${petId}/probiome/create`)}
+                  onClick={() =>
+                    router.push(`/health-note/${petId}/probiome/create`)
+                  }
                   className={styles.createButton}
                 />
               )}

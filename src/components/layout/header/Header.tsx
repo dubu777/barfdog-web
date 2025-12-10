@@ -5,11 +5,10 @@ import * as styles from "./Header.css";
 import BackIcon from "/public/images/header/chevron-left.svg";
 import CloseIcon from "/public/images/header/close.svg";
 import MypageIcon from "/public/images/header/mypage.svg";
-import CartIcon from "/public/images/header/cart.svg";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Text from "@/components/ui/text/Text";
 import { useRouter } from "next/navigation";
-import { useGetCartInfo } from "@/api/cart/queries/useGetCartInfo";
+import CartButton from "./cartButton/CartButton";
 import { getCookie } from "@/utils/auth/cookie";
 import { isAuthenticated } from "@/utils/auth/isAuthenticated";
 import { AUTH_CONFIG } from "@/constants/auth";
@@ -51,12 +50,6 @@ export default function Header({
 
   const token = getCookie(AUTH_CONFIG.ACCESS_TOKEN_COOKIE);
   const isAuthed = isAuthenticated(token);
-  const enabled = Boolean(isAuthed && showCartButton);
-
-  const { data: cartInfo } = useGetCartInfo({
-    enabled,
-  });
-  const count = cartInfo?.basketDtoList?.length || 0;
 
   const handleBack = () => {
     if (onBack) return onBack(); // 명시 핸들러가 있으면 우선
@@ -89,12 +82,7 @@ export default function Header({
         </div>
         <div className={styles.rightSlot}>
           {rightElement}
-          {showCartButton && (
-            <Link href="/cart" className={styles.cartButton}>
-              {count !== 0 && <div className={styles.cartCount}>{count}</div>}
-              <SvgIcon src={CartIcon} size={24} color="gray900" />
-            </Link>
-          )}
+          {showCartButton && <CartButton />}
           {showMypageButton && (
             <Link href="/mypage">
               <SvgIcon src={MypageIcon} size={24} color="gray900" />

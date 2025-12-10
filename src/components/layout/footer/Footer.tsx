@@ -10,6 +10,7 @@ import ServicePolicyModal from "@/components/layout/footer/termsModal/ServicePol
 import { commonWrapper } from "@/styles/common.css";
 import Divider from "@/components/ui/divider/Divider";
 import { footerInfo, menuLink, policyMenuLink } from "@/constants/main";
+import { Fragment } from "react";
 
 interface FooterProps {
   showMenu?: boolean;
@@ -89,7 +90,7 @@ export default function Footer({ showMenu = true }: FooterProps) {
                 </Text>
                 <div className={styles.footerInfoText}>
                   {idx < array.length - 1 && (
-                    <Divider direction="vertical" thickness={1} color="gray0" />
+                    <Divider direction="vertical" height={1} color="gray0" />
                   )}
                 </div>
                 <Text
@@ -106,10 +107,9 @@ export default function Footer({ showMenu = true }: FooterProps) {
 
           <div className={styles.footerInfoBox({ gap: 12 })}>
             {policyMenuLink.map((policy, idx, array) => (
-              <>
+              <Fragment key={policy.value}>
                 <button
                   className={styles.footerInfoText}
-                  key={policy.value}
                   onClick={() =>
                     handlePolicyModalToggle(
                       policy.value as "privacy" | "service"
@@ -122,10 +122,10 @@ export default function Footer({ showMenu = true }: FooterProps) {
                 </button>
                 <div className={styles.footerInfoText}>
                   {idx < array.length - 1 && (
-                    <Divider direction="vertical" thickness={1} color="gray0" />
+                    <Divider direction="vertical" height={1} color="gray0" />
                   )}
                 </div>
-              </>
+              </Fragment>
             ))}
             <Text type="caption2" color="gray50">
               Copyright © 바프독 All Right Reserved.

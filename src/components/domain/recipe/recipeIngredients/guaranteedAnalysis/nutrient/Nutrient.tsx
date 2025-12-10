@@ -11,32 +11,49 @@ interface NutrientProps {
 export default function Nutrient({ nutrient, kcalPerGrams }: NutrientProps) {
   const nutrientList = Object.entries(NUTRIENT_MAP);
   return (
-    <div className={commonWrapper({ direction: 'col', gap: 8, align: 'start' })}>
-      <div className={commonWrapper({ gap: 4, align: 'center', justify: 'start' })}>
+    <div
+      className={commonWrapper({ direction: "col", gap: 8, align: "start" })}
+    >
+      <div
+        className={commonWrapper({ gap: 4, align: "center", justify: "start" })}
+      >
         <Text type="headline2">등록 성분량</Text>
-        <Text type="caption" color='gray700'>
+        <Text type="caption" color="gray700">
           (100g당 / {kcalPerGrams}kcal)
         </Text>
       </div>
-      <div className={commonWrapper({ direction: 'col', gap: 4, align: 'center' })}>
-        <Divider thickness={1} color="gray900" />
-        <div className={commonWrapper({ direction: 'row' })}>
+      <div
+        className={commonWrapper({ direction: "col", gap: 4, align: "center" })}
+      >
+        <Divider height={1} color="gray900" />
+        <div className={commonWrapper({ direction: "row" })}>
           {nutrientList.map(([key, value]) => (
-            <Text key={key} type="caption" align='center' style={{ width: `calc(100% / ${nutrientList.length})` }}>
+            <Text
+              key={key}
+              type="caption"
+              align="center"
+              style={{ width: `calc(100% / ${nutrientList.length})` }}
+            >
               {value.label}
             </Text>
           ))}
         </div>
-        <Divider thickness={1} color="gray900" />
-        <div className={commonWrapper({ direction: 'row' })}>
+        <Divider height={1} color="gray900" />
+        <div className={commonWrapper({ direction: "row" })}>
           {nutrientList.map(([key, value]) => (
-            <Text key={key} type="caption2" color='gray700' align='center' style={{ width: `calc(100% / ${nutrientList.length})` }}>
+            <Text
+              key={key}
+              type="caption2"
+              color="gray700"
+              align="center"
+              style={{ width: `calc(100% / ${nutrientList.length})` }}
+            >
               {nutrient[key]}%<br />
               {NUTRIENT_CONDITION[value.condition]}
             </Text>
           ))}
         </div>
-        <Divider thickness={1} color="gray900" />
+        <Divider height={1} color="gray900" />
       </div>
     </div>
   );

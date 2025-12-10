@@ -16,9 +16,7 @@ export default function DietReason({ secondResponse }: DietReasonProps) {
   const { symptom } =
     RECIPE_EFFICACY_DATA_MAP[secondResponse.recipeEfficacyList[0]];
   return (
-    <div
-      className={commonWrapper({ direction: "col", gap: 20, paddingX: 20 })}
-    >
+    <div className={commonWrapper({ direction: "col", gap: 20, paddingX: 20 })}>
       <div className={commonWrapper({ justify: "between" })}>
         <Text type="title3">
           왜 <span className={styles.pointText}>바프독 레시피</span>를
@@ -66,7 +64,7 @@ export default function DietReason({ secondResponse }: DietReasonProps) {
             </div>
           ))}
         </div>
-        <Divider thickness={1} color="gray200" />
+        <Divider height={1} color="gray200" />
         <Text type="headline4" color="gray800">
           바프독은 사료를 만들지 않습니다
           <br />

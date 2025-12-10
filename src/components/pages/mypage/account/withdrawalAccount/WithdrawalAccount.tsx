@@ -109,7 +109,7 @@ export default function WithdrawalAccount() {
             탈퇴 시 바프독 회원 혜택이 사라집니다
           </Text>
         </div>
-        <Divider thickness={2} color="gray900" />
+        <Divider height={2} color="gray900" />
         {guideSteps.map((guide, index) => (
           <div
             key={index}

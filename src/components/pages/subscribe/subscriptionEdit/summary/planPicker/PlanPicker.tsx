@@ -33,7 +33,7 @@ export default function PlanPicker({
           수정
         </Button>
       </div>
-      <Divider thickness={2} color="gray900" />
+      <Divider height={2} color="gray900" />
       <LabelValueItem
         label="식사량"
         value={MEAL_PLAN_LABEL[mealPlan]}
@@ -44,7 +44,7 @@ export default function PlanPicker({
         gap={12}
       />
 
-      <Divider thickness={1} color="gray200" />
+      <Divider height={1} color="gray200" />
       <LabelValueItem
         label="배송 주기"
         value={DELIVERY_PLAN_LABEL[deliveryPlan]}

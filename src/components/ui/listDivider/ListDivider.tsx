@@ -5,14 +5,22 @@ interface ListDividerProps {
   listLength: number;
   index: number;
   color?: TextColor;
-  thickness?: 1 | 2 | 4 | 6 | 8 | 12;
-  direction?: 'horizontal' | 'vertical';
+  height?: 1 | 2 | 4 | 6 | 8 | 12;
+  direction?: "horizontal" | "vertical";
 }
 
-export default function ListDivider({ listLength, index, color = 'gray200', thickness = 1, direction = 'horizontal' }: ListDividerProps) {
+export default function ListDivider({
+  listLength,
+  index,
+  color = "gray200",
+  height = 1,
+  direction = "horizontal",
+}: ListDividerProps) {
   return (
     <>
-      {index !== listLength - 1 && <Divider thickness={thickness} color={color} direction={direction} />}
+      {index !== listLength - 1 && (
+        <Divider height={height} color={color} direction={direction} />
+      )}
     </>
   );
 }

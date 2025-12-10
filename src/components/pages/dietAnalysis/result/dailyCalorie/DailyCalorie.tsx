@@ -19,9 +19,7 @@ export default function DailyCalorie({
   dailyCalorie,
 }: DailyCalorieProps) {
   return (
-    <div
-      className={commonWrapper({ direction: "col", gap: 20, paddingX: 20 })}
-    >
+    <div className={commonWrapper({ direction: "col", gap: 20, paddingX: 20 })}>
       <div className={commonWrapper({ justify: "between" })}>
         <Text type="title3">
           {dogName}의 건강 상태에 <br />
@@ -63,7 +61,7 @@ export default function DailyCalorie({
           </div>
           <ThumbsIcon />
         </div>
-        <Divider thickness={1} color="gray200" />
+        <Divider height={1} color="gray200" />
         <div className={styles.calorieInfoBox}>
           {DAILY_CALORIE_TEXT.map((text, idx) => (
             <div

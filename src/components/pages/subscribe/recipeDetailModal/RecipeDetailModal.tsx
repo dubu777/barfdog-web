@@ -155,11 +155,11 @@ export default function RecipeDetailModal({
               onStageSelection={onStageSelection}
               stagedSelection={stagedSelection}
             />
-            <Divider thickness={8} color="gray50" />
+            <Divider height={8} color="gray50" />
           </>
         )}
         <RecipeEfficacy ref={refs.benefits} recipeId={rawFoodItem.recipeId} />
-        <Divider thickness={8} color="gray50" />
+        <Divider height={8} color="gray50" />
         <RecipeIngredients
           ref={refs.ingredients}
           recipeId={rawFoodItem.recipeId}

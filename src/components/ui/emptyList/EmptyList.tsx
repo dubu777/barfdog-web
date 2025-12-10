@@ -2,16 +2,21 @@ import { commonWrapper } from "@/styles/common.css";
 import EmptyImage from "/public/images/foodong/empty.svg";
 import SvgIcon from "@/components/ui/svgIcon/SvgIcon";
 import Text from "@/components/ui/text/Text";
+import Button from "../button/Button";
 
 interface EmptyListProps {
   characterText?: string;
   title: string;
   padding?: "50/0";
+  primaryButtonText?: string;
+  onPrimaryClick?: () => void;
 }
 
 export default function EmptyList({
   characterText = "멍...",
   title,
+  primaryButtonText,
+  onPrimaryClick,
 }: EmptyListProps) {
   return (
     <div
@@ -26,6 +31,11 @@ export default function EmptyList({
           {title}
         </Text>
       </div>
+      {primaryButtonText && (
+        <Button intent="secondary" size="sm" onClick={onPrimaryClick}>
+          {primaryButtonText}
+        </Button>
+      )}
     </div>
   );
 }

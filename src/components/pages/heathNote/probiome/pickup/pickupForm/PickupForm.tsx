@@ -72,7 +72,7 @@ export default function PickupForm({
             onToggleDeliveryModal={onToggleDeliveryModal}
           />
         </div>
-        <Divider thickness={8} color="gray50" />
+        <Divider height={8} color="gray50" />
         <div className={styles.requestFormBox({ gap: 8 })}>
           <Text type="title4">반려견 대변 사진</Text>
           <Text type="label4" color="gray700">
@@ -86,7 +86,7 @@ export default function PickupForm({
             title="반려견 대변 사진"
           />
         </div>
-        <Divider thickness={8} color="gray50" />
+        <Divider height={8} color="gray50" />
         <div className={styles.requestFormBox({ gap: 20 })}>
           <Text type="title4">아래의 사항을 꼭 확인해 주세요</Text>
           <Card

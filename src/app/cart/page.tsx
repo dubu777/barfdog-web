@@ -1,22 +1,13 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import Cart from "@/components/pages/cart/Cart";
 import Error from "@/components/layout/error/Error";
-import { prefetchGetCartInfo } from "@/api/cart/queries/prefetchGetCartInfo";
+import Header from "@/components/layout/header/Header";
 
 export default async function CartPage() {
-  const queryClient = new QueryClient();
-  await prefetchGetCartInfo(queryClient);
-  const dehydrateState = dehydrate(queryClient);
   return (
-    <HydrationBoundary state={dehydrateState}>
-      <ErrorBoundary fallback={<Error />}>
-        <Cart />
-      </ErrorBoundary>
-    </HydrationBoundary>
+    <ErrorBoundary fallback={<Error />}>
+      <Header showBackButton centerTitle="장바구니" />
+      <Cart />
+    </ErrorBoundary>
   );
 }

@@ -15,12 +15,12 @@ export default function GeneralItemInfo({ itemList }: GeneralItemInfoProps) {
   return (
     <Card gap={12} padding={12} align="start">
       <Text type="headline2">주문 상품</Text>
-      <Divider thickness={2} color="gray900" />
+      <Divider height={2} color="gray900" />
       <div className={commonWrapper({ direction: "col", gap: 16 })}>
         {itemList.map((item, index, array) => (
           <React.Fragment key={item.id}>
             <GeneralOrderItemCard generalItem={item} />
-            {index < array.length - 1 && <Divider thickness={1} />}
+            {index < array.length - 1 && <Divider height={1} />}
           </React.Fragment>
         ))}
       </div>

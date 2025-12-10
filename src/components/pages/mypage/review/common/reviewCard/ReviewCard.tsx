@@ -70,7 +70,9 @@ export default function ReviewCard({
         gap: 12,
       })}
     >
-      <div className={commonWrapper({ direction: "col", gap: 10, align: "start" })}>
+      <div
+        className={commonWrapper({ direction: "col", gap: 10, align: "start" })}
+      >
         <div className={commonWrapper({ align: "center", justify: "between" })}>
           <div
             className={commonWrapper({
@@ -144,7 +146,7 @@ export default function ReviewCard({
                 align: "start",
               })}
             >
-              <Text type='headline2'>{title}</Text>
+              <Text type="headline2">{title}</Text>
               <MetaText
                 textList={[
                   orderedDate
@@ -170,7 +172,7 @@ export default function ReviewCard({
         </div>
       </div>
       {!handleUpdate && !handleStarChange && !isWriteableReview && (
-        <Divider thickness={1} color="gray300" />
+        <Divider height={1} color="gray300" />
       )}
       {!isWriteableReview && contents && (
         <div

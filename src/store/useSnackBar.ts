@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
-import { create } from 'zustand';
+import { ReactNode } from "react";
+import { create } from "zustand";
 
 interface SnackBarItem {
   id: string;
   title: string;
   caption?: string;
   duration?: number;
-  position?: 'bottom' | 'above-button';
+  position?: "bottom" | "above-button";
   /** 우측 버튼에 표시될 텍스트 (예: "이동", "실행취소") */
   actionLabel?: string | ReactNode;
   /** 사용자가 우측 버튼을 눌렀을 때 실행될 콜백 */
@@ -23,11 +23,10 @@ interface SnackBarItem {
 interface SnackBarStore {
   queue: SnackBarItem[];
   currentSnackBar: SnackBarItem | null;
-  addSnackBar: (item: Omit<SnackBarItem, 'id'>) => void;
+  addSnackBar: (item: Omit<SnackBarItem, "id">) => void;
   removeSnackBar: () => void;
   processNextSnackBar: () => void;
 }
-
 
 export const useSnackBarStore = create<SnackBarStore>()((set, get) => ({
   queue: [],
@@ -46,7 +45,6 @@ export const useSnackBarStore = create<SnackBarStore>()((set, get) => ({
       get().processNextSnackBar();
     }
   },
-
 
   removeSnackBar: () => {
     set(() => ({

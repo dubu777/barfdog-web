@@ -106,7 +106,7 @@ export default function RecipeDetailModal({
           onTabClick={handleTabClick}
           className={recipeDetailModalTabBar}
         />
-        <Divider thickness={8} color="gray50" />
+        <Divider height={8} color="gray50" />
         {tabs.map((tab, index) => (
           <div
             key={index}
@@ -115,7 +115,7 @@ export default function RecipeDetailModal({
             }}
           >
             {tab.content}
-            {index === 0 && <Divider thickness={8} color="gray50" />}
+            {index === 0 && <Divider height={8} color="gray50" />}
           </div>
         ))}
       </div>

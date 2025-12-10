@@ -24,7 +24,7 @@ export default function PaymentInfo({
           {paymentPrice}
         </Text>
       </div>
-      <Divider thickness={2} color="gray900" />
+      <Divider height={2} color="gray900" />
       <div className={orderSummaryRowContainer}>
         <Text type="label4" color="gray900">
           결제 금액

@@ -19,7 +19,7 @@ export default function GeneralOrderItemList({
         {itemList.map((item, index, array) => (
           <React.Fragment key={item.id}>
             <GeneralOrderItemCard generalItem={item} />
-            {index < array.length - 1 && <Divider thickness={1} />}
+            {index < array.length - 1 && <Divider height={1} />}
           </React.Fragment>
         ))}
       </div>

@@ -125,7 +125,7 @@ export default function OrderSummary({
           />
           <OrderSummaryRow label="적립금 할인" value={appliedReward} />
           <OrderSummaryRow label="배송비" value={deliveryFee} freeText="무료" />
-          <Divider thickness={2} color="gray300" />
+          <Divider height={2} color="gray300" />
           <OrderSummaryRow
             label="1회차 결제 금액"
             labelColor="gray900"
@@ -165,7 +165,7 @@ export default function OrderSummary({
             plainColor
             plus
           />
-          <Divider thickness={1} color="gray300" />
+          <Divider height={1} color="gray300" />
           <OrderSummaryRow
             label="결제 금액"
             value={finalPaymentAmount}

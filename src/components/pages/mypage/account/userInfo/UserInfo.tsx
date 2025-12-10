@@ -15,8 +15,14 @@ import Notification from "./notification/Notification";
 import useDeviceState from "@/hooks/useDeviceState";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useApiResponseHandler } from "@/hooks/useApiResponseHandler";
-import { updateUserInfoSchema, defaultUpdateUserInfoValues } from "@/utils/validation/accountValidation";
-import { UserInfo as UserInfoType, UpdateUserInfo } from "@/types/mypage/account";
+import {
+  updateUserInfoSchema,
+  defaultUpdateUserInfoValues,
+} from "@/utils/validation/accountValidation";
+import {
+  UserInfo as UserInfoType,
+  UpdateUserInfo,
+} from "@/types/mypage/account";
 import { useGetUserInfo } from "@/api/mypage/account/queries/useGetUserInfo";
 import { useUpdateUserInfo } from "@/api/mypage/account/mutations/useUpdateUserInfo";
 
@@ -77,13 +83,18 @@ export default function UserInfo() {
         handleSuccess("회원 정보가 수정됐습니다", "above-button");
       },
       onError: (error) => {
-        handleError(error, "회원 정보 수정에 실패했습니다.", undefined, "above-button");
+        handleError(
+          error,
+          "회원 정보 수정에 실패했습니다.",
+          undefined,
+          "above-button"
+        );
       },
     });
   };
   return (
     <>
-      <Divider thickness={2} color='gray50' />
+      <Divider height={2} color="gray50" />
       <section
         className={commonWrapper({
           direction: "col",
@@ -91,8 +102,8 @@ export default function UserInfo() {
           padding: 20,
           align: "start",
           justify: "start",
-          minHeight: 'fullWithHeader',
-          backgroundColors: 'gray0',
+          minHeight: "fullWithHeader",
+          backgroundColors: "gray0",
         })}
       >
         <Text type="title4">회원 정보</Text>
@@ -141,7 +152,13 @@ export default function UserInfo() {
             name="gender"
             control={control}
             render={({ field }) => (
-              <div className={commonWrapper({ direction: 'col', align: 'start', gap: 8, })}>
+              <div
+                className={commonWrapper({
+                  direction: "col",
+                  align: "start",
+                  gap: 8,
+                })}
+              >
                 <InputLabel label="성별정보" isRequired />
                 <LabeledRadioButtonGroup
                   optionType="radio"
@@ -160,7 +177,13 @@ export default function UserInfo() {
             name="birthday"
             control={control}
             render={({ field }) => (
-              <div className={commonWrapper({ direction: 'col', align: 'start', gap: 8, })}>
+              <div
+                className={commonWrapper({
+                  direction: "col",
+                  align: "start",
+                  gap: 8,
+                })}
+              >
                 <InputLabel label="생년월일" isRequired />
                 {isMobileDevice ? (
                   <MobileDatePicker
@@ -194,7 +217,7 @@ export default function UserInfo() {
         primaryButtonLabel="저장하기"
         onPrimaryClick={handleSubmit(onSubmit)}
         isPrimaryDisabled={!isValidFormValues}
-        position={isMobileDevice ? 'sticky' : 'fixed'}
+        position={isMobileDevice ? "sticky" : "fixed"}
       />
     </>
   );

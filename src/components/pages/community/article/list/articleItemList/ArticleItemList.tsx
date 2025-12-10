@@ -103,7 +103,7 @@ export default function ArticleItemList({
           defaultIndex={defaultTabIndex}
         />
       </article>
-      <Divider thickness={1} color="gray100" />
+      <Divider height={1} color="gray100" />
       <div className={articleListBox({ isEmpty: articleList.length === 0 })}>
         {articleList.length === 0 ? (
           <EmptyState title="등록된 아티클이 없습니다." />
@@ -181,7 +181,7 @@ export default function ArticleItemList({
                         )}
                       </div>
                     </Link>
-                    {!isGallery && <Divider thickness={2} color="gray50" />}
+                    {!isGallery && <Divider height={2} color="gray50" />}
                   </Fragment>
                 );
               })}

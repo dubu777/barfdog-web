@@ -48,7 +48,7 @@ export default function FindAccountResult({
     <>
       <Card shadow="light" align="start" padding={16} gap={12}>
         <Text type="title4">{title}</Text>
-        <Divider thickness={2} color="gray900" />
+        <Divider height={2} color="gray900" />
         <div
           className={commonWrapper({
             direction: "col",

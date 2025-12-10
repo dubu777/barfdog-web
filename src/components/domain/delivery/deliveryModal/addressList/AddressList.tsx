@@ -33,6 +33,7 @@ export default function AddressList({
         padding: 20,
         paddingBottom: 40,
         gap: 20,
+        backgroundColors: "gray50",
       })}
     >
       <Button

@@ -140,7 +140,7 @@ export default function Recipes() {
                 ))}
               </div>
             </div>
-            {index === 0 && <Divider thickness={8} color="gray100" />}
+            {index === 0 && <Divider height={8} color="gray100" />}
           </Fragment>
         ))}
         <article className={recipesBackground}>

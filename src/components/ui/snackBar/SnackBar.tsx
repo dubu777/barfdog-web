@@ -53,9 +53,11 @@ function SnackBarItem({
           }}
           intent="assistive"
           variant="text"
-          size="lg"
+          size="sm"
         >
-          {actionLabel}
+          <Text type="headline3" color="gray0" underLine>
+            {actionLabel}
+          </Text>
         </Button>
       )}
     </motion.div>

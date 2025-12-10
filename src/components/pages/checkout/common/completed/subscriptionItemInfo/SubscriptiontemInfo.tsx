@@ -26,7 +26,7 @@ export default function SubscriptionItemInfo({
   return (
     <Card shadow="light" padding={12} gap={12} align="start">
       <Text type="headline2">구독 상품</Text>
-      <Divider thickness={2} color="gray900" />
+      <Divider height={2} color="gray900" />
       <div className={commonWrapper({ direction: "col", gap: 16 })}>
         {rawFoodList.map((item, index, array) => (
           <React.Fragment key={item.recipeId}>
@@ -39,7 +39,7 @@ export default function SubscriptionItemInfo({
               displayImageUrl={item?.displayImageUrl.url || ""}
               recipeName={item?.name || ""}
             />
-            {index < array.length - 1 && <Divider thickness={1} />}
+            {index < array.length - 1 && <Divider height={1} />}
           </React.Fragment>
         ))}
       </div>

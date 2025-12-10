@@ -63,7 +63,7 @@ export default function Review() {
 
   return (
     <section>
-      <Divider thickness={2} color="gray50" />
+      <Divider height={2} color="gray50" />
       <article
         className={commonWrapper({
           padding: 20,

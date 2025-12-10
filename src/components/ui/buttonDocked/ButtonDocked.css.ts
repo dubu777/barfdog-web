@@ -4,7 +4,6 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const containerBaseStyle = recipe({
   base: {
-    position: "sticky",
     width: "100%",
     maxWidth: "600px",
     display: "flex",
@@ -36,7 +35,6 @@ export const containerBaseStyle = recipe({
     position: {
       sticky: {
         position: "sticky",
-        zIndex: 299,
       },
       fixed: {
         position: "fixed",

@@ -22,7 +22,7 @@ export default function OrderStatus({
       <Text type="headline2">{ORDER_STATUS[orderStatus]}</Text>
       {plan && (
         <>
-          <Divider direction="vertical" thickness={1} color="gray300" />
+          <Divider direction="vertical" height={1} color="gray300" />
           <Text type="caption" color="gray600">
             {subscriptionPlanInfo[plan as PlanKey]?.label}
           </Text>
@@ -30,7 +30,7 @@ export default function OrderStatus({
       )}
       {orderType && (
         <>
-          <Divider direction="vertical" thickness={1} color="gray300" />
+          <Divider direction="vertical" height={1} color="gray300" />
           <Text type="caption" color="gray600">
             {ORDER_TYPE_LABEL[orderType]}
           </Text>

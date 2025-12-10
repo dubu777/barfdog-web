@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { commonWrapper } from "@/styles/common.css";
 import { useSearchParams } from "next/navigation";
 import RewardFilter from "@/components/pages/mypage/reward/list/rewardFilter/RewardFilter";
@@ -14,37 +14,40 @@ import { useGetInfiniteRewardList } from "@/api/mypage/reward/queries/useGetInfi
 
 export default function RewardList() {
   const searchParams = useSearchParams();
-  const statusFilter = searchParams.get('status') as RewardFilterType;
+  const statusFilter = searchParams.get("status") as RewardFilterType;
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetInfiniteRewardList();
-  const ref = useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetInfiniteRewardList();
+  const ref = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
-  const rewardList = useFlattenedInfiniteData(data, 'rewardList', {
+  const rewardList = useFlattenedInfiniteData(data, "rewardList", {
     filter: (reward) => {
-      if (statusFilter === 'ALL' || !statusFilter) {
+      if (statusFilter === "ALL" || !statusFilter) {
         return true;
       }
       return reward.rewardStatus === statusFilter;
     },
   });
-  
+
   const totalRewardAmount = data?.pages?.[0]?.totalRewardAmount ?? 0;
 
   return (
     <section>
-      <RewardInfo
-        totalRewardAmount={totalRewardAmount}
-      />
+      <RewardInfo totalRewardAmount={totalRewardAmount} />
       <RewardFilter />
-      <Divider thickness={2} color='gray50' />
+      <Divider height={2} color="gray50" />
       <article
         className={commonWrapper({
-          backgroundColors: 'gray50',
+          backgroundColors: "gray50",
           paddingBottom: 40,
-          direction: 'col',
+          direction: "col",
         })}
       >
-        {rewardList.length > 0 ?
+        {rewardList.length > 0 ? (
           <>
             {rewardList?.map((reward, index) => (
               <RewardItem
@@ -59,9 +62,13 @@ export default function RewardList() {
               isFetchingNextPage={isFetchingNextPage}
             />
           </>
-          : <EmptyState title='적립금 내역이 없어요' subTitle='상품 구매하고 적립금 혜택 받아보세요!' />
-        }
+        ) : (
+          <EmptyState
+            title="적립금 내역이 없어요"
+            subTitle="상품 구매하고 적립금 혜택 받아보세요!"
+          />
+        )}
       </article>
     </section>
   );
-};
+}

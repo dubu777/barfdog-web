@@ -1,10 +1,11 @@
-'use client';
+"use client";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
 import Header from "@/components/layout/header/Header";
-import { prefetchGetNoticeDetail, useGetNoticeDetail } from "@/api/community/queries/useGetNoticeDetail";
-
-const DetailSection = dynamic(() => import("@/components/pages/community/common/detailSection/DetailSection"), { ssr: false });
+import {
+  prefetchGetNoticeDetail,
+  useGetNoticeDetail,
+} from "@/api/community/queries/useGetNoticeDetail";
+import DetailSection from "../../common/detailSection/DetailSection";
 
 export default function NoticeDetail({ noticeId }: { noticeId: number }) {
   const router = useRouter();
@@ -13,9 +14,9 @@ export default function NoticeDetail({ noticeId }: { noticeId: number }) {
 
   return (
     <>
-      <Header 
+      <Header
         showCloseButton
-        centerTitle='공지사항'
+        centerTitle="공지사항"
         onClose={() => router.back()}
       />
       <DetailSection
@@ -23,13 +24,13 @@ export default function NoticeDetail({ noticeId }: { noticeId: number }) {
         title={noticeDetail.title}
         createdDate={noticeDetail.createdDate}
         contents={noticeDetail.contents}
-        category='notice'
-        categoryLabel='공지사항'
-        categoryPointLabel='전체'
+        category="notice"
+        categoryLabel="공지사항"
+        categoryPointLabel="전체"
         prevPost={data?.previousNotice || null}
         nextPost={data?.nextNotice || null}
         prefetchFn={prefetchGetNoticeDetail}
       />
     </>
   );
-};
+}

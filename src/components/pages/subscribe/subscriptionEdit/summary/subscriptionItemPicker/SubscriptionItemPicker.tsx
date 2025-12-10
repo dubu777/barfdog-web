@@ -39,7 +39,7 @@ export default function SubscriptionItemPicker({
           수정
         </Button>
       </div>
-      <Divider thickness={2} color="gray900" />
+      <Divider height={2} color="gray900" />
       {calculatedRecipes.map((recipe, idx) => (
         <React.Fragment key={recipe.recipeId}>
           <RecipeItemCard
@@ -52,7 +52,7 @@ export default function SubscriptionItemPicker({
             recipeName={recipeCatalog[recipe.recipeId]?.name || ""}
           />
           {idx < calculatedRecipes.length - 1 && (
-            <Divider color="gray200" thickness={1} />
+            <Divider color="gray200" height={1} />
           )}
         </React.Fragment>
       ))}

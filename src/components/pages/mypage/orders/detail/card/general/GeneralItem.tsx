@@ -11,33 +11,45 @@ interface GeneralItemProps {
   showPrice?: boolean;
 }
 
-export default function GeneralItem({ 
+export default function GeneralItem({
   orderItem,
   showPrice = true,
 }: GeneralItemProps) {
   return (
-    <div className={commonWrapper({ gap: 12, justify: 'start', align: 'start' })}>
-      <CardImage 
-        imageUrl={orderItem.thumbnailUrl ?? ''} 
-        name={orderItem.itemName ?? ''} 
+    <div
+      className={commonWrapper({ gap: 12, justify: "start", align: "start" })}
+    >
+      <CardImage
+        imageUrl={orderItem.thumbnailUrl ?? ""}
+        name={orderItem.itemName ?? ""}
       />
-      <div className={commonWrapper({ direction: 'col', gap: 4, justify: 'start', align: 'start' })}>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          gap: 4,
+          justify: "start",
+          align: "start",
+        })}
+      >
         <Text type="headline3">{orderItem.itemName}</Text>
-        <Text type="body3" color="gray700">{orderItem.amount}개</Text>
-        {orderItem.selectOptionList.length > 0 && orderItem.selectOptionList.map((option) => (
-          <Fragment key={option.optionName}>
-            <Divider thickness={1} color="gray100" />
-            <div className={commonWrapper({ gap: 6, justify: 'between' })}>
-              <Text type="caption2" color="gray600">{option.optionName}</Text>
-              <Text type="caption" color="gray600">{option.optionAmount}개</Text>
-            </div>
-          </Fragment>
-        ))}
-        {showPrice && 
-          <OrderPrice
-            paymentPrice={orderItem.finalPrice}
-          />
-        }
+        <Text type="body3" color="gray700">
+          {orderItem.amount}개
+        </Text>
+        {orderItem.selectOptionList.length > 0 &&
+          orderItem.selectOptionList.map((option) => (
+            <Fragment key={option.optionName}>
+              <Divider height={1} color="gray100" />
+              <div className={commonWrapper({ gap: 6, justify: "between" })}>
+                <Text type="caption2" color="gray600">
+                  {option.optionName}
+                </Text>
+                <Text type="caption" color="gray600">
+                  {option.optionAmount}개
+                </Text>
+              </div>
+            </Fragment>
+          ))}
+        {showPrice && <OrderPrice paymentPrice={orderItem.finalPrice} />}
       </div>
     </div>
   );

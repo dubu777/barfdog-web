@@ -39,12 +39,7 @@ export default function GeneralOrderItemCard({
               <Text type="body3" color="gray600">
                 구매수량
               </Text>
-              <Divider
-                direction="vertical"
-                thickness={1}
-                color="gray300"
-                height={70}
-              />
+              <Divider direction="vertical" color="gray300" height={70} />
               <Text type="body3" color="gray600">
                 {generalItem.amount}개
               </Text>
@@ -79,12 +74,7 @@ export default function GeneralOrderItemCard({
                 <Text type="body3" color="gray700">
                   {option.name}
                 </Text>
-                <Divider
-                  direction="vertical"
-                  thickness={1}
-                  color="gray300"
-                  height={70}
-                />
+                <Divider direction="vertical" color="gray300" height={70} />
                 <Text type="body3" color="gray700">
                   {option.amount}개
                 </Text>

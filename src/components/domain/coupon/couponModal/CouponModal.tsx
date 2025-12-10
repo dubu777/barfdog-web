@@ -200,7 +200,7 @@ export default function CouponModal({
               setCouponCategory(couponCategory);
             }}
           />
-          <Divider thickness={2} color="gray50" />
+          <Divider height={2} color="gray50" />
           <CreateCoupon
             couponCodeError={codeError}
             setCouponCodeError={setCodeError}

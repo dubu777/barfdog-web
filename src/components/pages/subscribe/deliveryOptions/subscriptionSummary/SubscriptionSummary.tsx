@@ -56,7 +56,7 @@ export default function SubscriptionSummary({
           valueType="body2"
         />
       </div>
-      <Divider thickness={1} color="gray200" />
+      <Divider height={1} color="gray200" />
       <OrderSummaryRow
         label="결제 예정 금액"
         value={totalPlanDiscountedPrice}

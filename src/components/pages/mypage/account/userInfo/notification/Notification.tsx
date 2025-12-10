@@ -16,55 +16,76 @@ interface NotificationProps {
   isMobileDevice: boolean;
 }
 
-export default function Notification({ 
-  receiveEmail, 
+export default function Notification({
+  receiveEmail,
   receiveSms,
   control,
   setValue,
-  isMobileDevice = false
+  isMobileDevice = false,
 }: NotificationProps) {
-  const receiveAll = useMemo(() => receiveEmail && receiveSms, [receiveEmail, receiveSms]);
+  const receiveAll = useMemo(
+    () => receiveEmail && receiveSms,
+    [receiveEmail, receiveSms]
+  );
 
-  const handleReceiveAllChange = useCallback((value: boolean) => {
-    setValue("receiveEmail", !value);
-    setValue("receiveSms", !value);
-  }, [setValue]);
+  const handleReceiveAllChange = useCallback(
+    (value: boolean) => {
+      setValue("receiveEmail", !value);
+      setValue("receiveSms", !value);
+    },
+    [setValue]
+  );
 
   return (
     <Card
-      direction='col'
-      align='start'
-      backgroundColor='gray50'
-      shadow='light'
+      direction="col"
+      align="start"
+      backgroundColor="gray50"
+      shadow="light"
       borderRadius={16}
-      border='gray300'
+      border="gray300"
       className={notification({ isMobileDevice })}
     >
-      <div className={commonWrapper({ direction: 'col', align: 'start', padding: 20 })} >
-        <Text type='title4'>이벤트 및 혜택 알림</Text>
-        <Text type='caption2' color='gray700'>
-          특가 및 쿠폰 등 이벤트 정보를 빠르게 알려드려요.<br/>
+      <div
+        className={commonWrapper({
+          direction: "col",
+          align: "start",
+          padding: 20,
+        })}
+      >
+        <Text type="title4">이벤트 및 혜택 알림</Text>
+        <Text type="caption2" color="gray700">
+          특가 및 쿠폰 등 이벤트 정보를 빠르게 알려드려요.
+          <br />
           서비스 알림은 수신설정에 상관없이 발송돼요.
         </Text>
       </div>
-      <div className={commonWrapper({ paddingY: 16, paddingX: 20, justify: 'start' })}>
+      <div
+        className={commonWrapper({
+          paddingY: 16,
+          paddingX: 20,
+          justify: "start",
+        })}
+      >
         <LabeledRadioButton
           value={receiveAll}
           onToggle={handleReceiveAllChange}
           isChecked={receiveAll}
           optionType="selection"
         >
-          마케팅 개인정보 수집 및 이용 동의(선택) 
+          마케팅 개인정보 수집 및 이용 동의(선택)
         </LabeledRadioButton>
       </div>
-      <Divider thickness={1} color='gray300' />
-      <div className={commonWrapper({ 
-        paddingX: 32, 
-        paddingY: 16,
-        direction: 'col', 
-        align: 'start', 
-        gap: 16
-      })}>
+      <Divider height={1} color="gray300" />
+      <div
+        className={commonWrapper({
+          paddingX: 32,
+          paddingY: 16,
+          direction: "col",
+          align: "start",
+          gap: 16,
+        })}
+      >
         <Controller
           name="receiveEmail"
           control={control}
@@ -79,7 +100,7 @@ export default function Notification({
             </LabeledRadioButton>
           )}
         />
-        <Divider thickness={1} color='gray200' />
+        <Divider height={1} color="gray200" />
         <Controller
           name="receiveSms"
           control={control}

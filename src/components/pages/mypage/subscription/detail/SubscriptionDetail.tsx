@@ -112,7 +112,7 @@ export default function SubscriptionDetail({
           status={subscriptionInfo.subscribeStatus}
           onRetryPayment={() => onRetryPayment(subscriptionId)}
         />
-        <Divider thickness={8} color="gray100" />
+        <Divider height={8} color="gray100" />
         <PaymentInfo
           usingMemberCouponId={subscriptionInfo.usingMemberCouponId}
           nextPaymentPrice={subscriptionInfo.nextPaymentPrice}
@@ -129,7 +129,7 @@ export default function SubscriptionDetail({
               : undefined
           }
         />
-        <Divider thickness={8} color="gray100" />
+        <Divider height={8} color="gray100" />
         <SubscriptionInfo
           mealCount={temp.planInfo.mealCount as MealPlan}
           weeks={temp.planInfo.weeks as DeliveryPlan}
@@ -150,7 +150,7 @@ export default function SubscriptionDetail({
               : undefined
           }
         />
-        <Divider thickness={8} color="gray100" />
+        <Divider height={8} color="gray100" />
         <PaymentMethodInfo
           paymentMethod={paymentInfo?.paymentMethod}
           openChangePaymentMethodModal={

@@ -542,11 +542,11 @@ interface GetGeneralCheckoutResponse {
 }
 
 interface GeneralItemRequest {
-  id: number;
-  amount: number;
+  itemId: number;
+  itemAmount: number;
   itemOptionList: {
-    id: number;
-    amount: number;
+    optionId: number;
+    optionAmount: number;
   }[];
 }
 

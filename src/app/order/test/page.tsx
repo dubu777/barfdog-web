@@ -22,9 +22,9 @@ export default function GeneralShopTest() {
 
   const itemList = [
     {
-      id: 12,
-      amount: 1,
-      itemOptionList: [{ id: 18, amount: 1 }],
+      itemId: 12,
+      itemAmount: 1,
+      itemOptionList: [{ optionId: 18, optionAmount: 1 }],
     },
   ];
   const { data: generalOrderData } = useGetGeneralCheckout({ itemList });

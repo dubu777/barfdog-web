@@ -51,16 +51,16 @@ export default function DietAnalysisResult({
             .firstHealthConcerns as HealthConcernType & "NONE"
         }
       />
-      <Divider thickness={8} color="gray100" />
+      <Divider height={8} color="gray100" />
       <DietReason secondResponse={dietAnalysisResult.secondResultResponse} />
-      <Divider thickness={8} color="gray100" />
+      <Divider height={8} color="gray100" />
       <RecommendedRecipeList
         dogName={dietAnalysisResult.secondResultResponse.dogName}
         recommendRecipeList={
           dietAnalysisResult.thirdResultResponse.recommendRecipeRankDtoList
         }
       />
-      <Divider thickness={8} color="gray100" />
+      <Divider height={8} color="gray100" />
       <DailyCalorie
         dogName={dietAnalysisResult.secondResultResponse.dogName}
         dailyCalorie={

@@ -6,12 +6,12 @@ import { queryKeys } from "@/constants";
 export function useUpdateCartInfo(mutationOptions?: UseMutationCustomOptions) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ body }: { body: UpdateCartInfo }) => updateCartInfo(body),
+    mutationFn: updateCartInfo,
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: [queryKeys.CART.BASE, queryKeys.CART.GET_CART_INFO],
       });
     },
     ...mutationOptions,
-  })
+  });
 }

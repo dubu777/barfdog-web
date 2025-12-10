@@ -76,7 +76,7 @@ export default function SubscriptionEditConfirm({
       </div>
       <Card padding={20} gap={12} align="start">
         <Text type="title4">결제 정보</Text>
-        <Divider color="gray900" thickness={2} />
+        <Divider color="gray900" height={2} />
         <LabelValueItem
           label="기존 결제 금액"
           labelColor="gray700"
@@ -86,7 +86,7 @@ export default function SubscriptionEditConfirm({
           className={paddingStyles({ top: 4 })}
           value={currentSubscriptionInfo.paymentPrice.toLocaleString() + "원"}
         />
-        <Divider color="gray200" thickness={1} />
+        <Divider color="gray200" height={1} />
         <LabelValueItem
           label="변경 결제 금액"
           labelColor="gray700"
@@ -128,7 +128,7 @@ export default function SubscriptionEditConfirm({
           <br />
           아래의 상품이 배송돼요
         </Text>
-        <Divider color="gray900" thickness={2} />
+        <Divider color="gray900" height={2} />
         {calculatedRecipes.map((recipe, idx) => (
           <React.Fragment key={recipe.recipeId}>
             <RecipeItemCard
@@ -141,7 +141,7 @@ export default function SubscriptionEditConfirm({
               recipeName={recipeCatalog[recipe.recipeId]?.name || ""}
             />
             {idx < calculatedRecipes.length - 1 && (
-              <Divider color="gray200" thickness={1} />
+              <Divider color="gray200" height={1} />
             )}
           </React.Fragment>
         ))}

@@ -29,7 +29,7 @@ function Item({ item, index }: StoreItemProps) {
   return (
     <div className={storeItem}>
       <Link
-        href={`/store/${item.id}`}
+        href={`/store/detail/${item.id}`}
         className={commonWrapper({
           direction: "col",
           align: "start",

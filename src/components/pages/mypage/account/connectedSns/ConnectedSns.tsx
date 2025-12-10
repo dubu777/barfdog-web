@@ -32,14 +32,19 @@ export default function ConnectedSns() {
       },
       onError: (error) => {
         console.log(error);
-        handleError(error, "연동 해제에 실패했습니다.", undefined, "above-button");
+        handleError(
+          error,
+          "연동 해제에 실패했습니다.",
+          undefined,
+          "above-button"
+        );
       },
     });
   };
 
   return (
     <section>
-      <Divider thickness={2} color="gray50" />
+      <Divider height={2} color="gray50" />
       {!snsProvider ? (
         <EmptyState title="현재 연동된 SNS가 없습니다." />
       ) : (
@@ -56,22 +61,20 @@ export default function ConnectedSns() {
               justify: "between",
             })}
           >
-            <Text type="label1">
-              {OAUTH_CLIENT_CONFIG[snsProvider].name}
-            </Text>
+            <Text type="label1">{OAUTH_CLIENT_CONFIG[snsProvider].name}</Text>
             {snsProvider === "naver" ? <NaverImage /> : <KakaoImage />}
           </div>
-          <Divider thickness={1} color="gray200" />
+          <Divider height={1} color="gray200" />
         </div>
       )}
-      {snsProvider && 
+      {snsProvider && (
         <ButtonDocked
           type="full-button"
           onPrimaryClick={onToggleDisconnectAlert}
           primaryButtonVariant="outline"
           primaryButtonLabel="연동 해제하기"
         />
-      }
+      )}
       {snsProvider && isOpenDisconnectAlert && (
         <AlertModal
           isOpen={isOpenDisconnectAlert}

@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
-import ItemDetail from "@/components/pages/store/detail/ItemDetail";
+import StoreItemDetail from "@/components/pages/store/detail/StoreItemDetail";
 import Error from "@/components/layout/error/Error";
 import Spinner from "@/components/ui/spinner/Spinner";
 import { prefetchGetStoreItemDetail } from "@/api/store/queries/prefetchGetStoreItemDetail";
@@ -27,7 +27,7 @@ export default async function StoreItemDetailPage({
     <HydrationBoundary state={dehydrateState}>
       <ErrorBoundary fallback={<Error />}>
         <Suspense fallback={<Spinner fullscreen />}>
-          <ItemDetail itemId={itemId} />
+          <StoreItemDetail itemId={itemId} />
         </Suspense>
       </ErrorBoundary>
     </HydrationBoundary>

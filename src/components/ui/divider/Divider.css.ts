@@ -10,78 +10,68 @@ export const divider = recipe({
       vertical: {
         marginTop: "auto",
         marginBottom: "auto",
+        borderLeft: `1px solid ${themeVars.colors.gray.gray50}`,
       },
     },
-    thickness: {
+    height: {
       1: {},
       2: {},
       4: {},
       6: {},
       8: {},
       12: {},
-    },
-    height: {
-      40: { height: "40%" },
-      50: { height: "50%" },
-      60: { height: "60%" },
-      70: { height: "70%" },
+      40: {},
+      50: {},
+      60: {},
+      70: {},
     },
   },
   compoundVariants: [
-    // Horizontal thickness variants
+    // Horizontal border thickness variants
     {
-      variants: { direction: "horizontal", thickness: 1 },
+      variants: { direction: "horizontal", height: 1 },
       style: { borderBottom: `1px solid ${themeVars.colors.gray.gray50}` },
     },
     {
-      variants: { direction: "horizontal", thickness: 2 },
+      variants: { direction: "horizontal", height: 2 },
       style: { borderBottom: `2px solid ${themeVars.colors.gray.gray50}` },
     },
     {
-      variants: { direction: "horizontal", thickness: 4 },
+      variants: { direction: "horizontal", height: 4 },
       style: { borderBottom: `4px solid ${themeVars.colors.gray.gray50}` },
     },
     {
-      variants: { direction: "horizontal", thickness: 6 },
+      variants: { direction: "horizontal", height: 6 },
       style: { borderBottom: `6px solid ${themeVars.colors.gray.gray50}` },
     },
     {
-      variants: { direction: "horizontal", thickness: 8 },
+      variants: { direction: "horizontal", height: 8 },
       style: { borderBottom: `8px solid ${themeVars.colors.gray.gray50}` },
     },
     {
-      variants: { direction: "horizontal", thickness: 12 },
+      variants: { direction: "horizontal", height: 12 },
       style: { borderBottom: `12px solid ${themeVars.colors.gray.gray50}` },
     },
-    // Vertical thickness variants
+    // Vertical CSS height percentage variants
     {
-      variants: { direction: "vertical", thickness: 1 },
-      style: { borderLeft: `1px solid ${themeVars.colors.gray.gray50}` },
+      variants: { direction: "vertical", height: 40 },
+      style: { height: "40%" },
     },
     {
-      variants: { direction: "vertical", thickness: 2 },
-      style: { borderLeft: `2px solid ${themeVars.colors.gray.gray50}` },
+      variants: { direction: "vertical", height: 50 },
+      style: { height: "50%" },
     },
     {
-      variants: { direction: "vertical", thickness: 4 },
-      style: { borderLeft: `4px solid ${themeVars.colors.gray.gray50}` },
+      variants: { direction: "vertical", height: 60 },
+      style: { height: "60%" },
     },
     {
-      variants: { direction: "vertical", thickness: 6 },
-      style: { borderLeft: `6px solid ${themeVars.colors.gray.gray50}` },
-    },
-    {
-      variants: { direction: "vertical", thickness: 8 },
-      style: { borderLeft: `8px solid ${themeVars.colors.gray.gray50}` },
-    },
-    {
-      variants: { direction: "vertical", thickness: 12 },
-      style: { borderLeft: `12px solid ${themeVars.colors.gray.gray50}` },
+      variants: { direction: "vertical", height: 70 },
+      style: { height: "70%" },
     },
   ],
   defaultVariants: {
     direction: "horizontal",
-    thickness: 8,
-    height: 40,
+    height: 8,
   },
 });

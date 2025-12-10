@@ -87,7 +87,7 @@ export default function NoticeList() {
             defaultIndex={defaultTabIndex}
           />
         </article>
-        <Divider thickness={1} color="gray50" />
+        <Divider height={1} color="gray50" />
         <ul className={commonWrapper({ direction: "col" })}>
           {noticeList?.map((notice) => (
             <Fragment key={notice.id}>
@@ -107,7 +107,7 @@ export default function NoticeList() {
                   </Text>
                 )}
               </Link>
-              <Divider color="gray50" thickness={2} />
+              <Divider color="gray50" height={2} />
             </Fragment>
           ))}
         </ul>

@@ -40,7 +40,7 @@ export default function ProbiomeDetailCard({
       <Text type="title4" color="gray800">
         {title}
       </Text>
-      <Divider thickness={2} color="gray900" />
+      <Divider height={2} color="gray900" />
       <div
         className={commonWrapper({ direction: "col", gap: 8, paddingTop: 4 })}
       >

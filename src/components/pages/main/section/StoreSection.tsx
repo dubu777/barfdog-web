@@ -51,7 +51,7 @@ export default function StoreSection() {
           return (
             <SwiperSlide key={item.id} className={mainStoreItem}>
               <Link
-                href={`/store/${item.id}`}
+                href={`/store/detail/${item.id}`}
                 className={commonWrapper({ direction: "col", gap: 6 })}
               >
                 <Image

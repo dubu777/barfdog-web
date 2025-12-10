@@ -1,37 +1,37 @@
-import { themeVars } from '@/styles/theme.css';
-import { style } from '@vanilla-extract/css';
+import { themeVars } from "@/styles/theme.css";
+import { style } from "@vanilla-extract/css";
 
 export const snackBarContainer = style({
-  position: 'fixed',
-  left: '50%',
-  transform: 'translateX(-50%)',
+  position: "fixed",
+  left: "50%",
+  transform: "translateX(-50%)",
   zIndex: 1000,
-  width: 'calc(100% - 40px)',
+  width: "calc(100% - 40px)",
   maxWidth: "560px",
 });
 
 export const snackBarPosition = {
-  'bottom': style({
-    bottom: '20px',
+  bottom: style({
+    bottom: "20px",
   }),
-  'above-button': style({
-    bottom: '108px',
-  })
-}
+  "above-button": style({
+    bottom: "108px",
+  }),
+};
 
 export const snackBarItem = style({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   background: themeVars.colors.dimmed.gray80,
   boxShadow: themeVars.shadow.normal,
-  borderRadius: '8px',
-  padding: '14px 12px 14px 20px',
+  borderRadius: "8px",
   opacity: 1,
+  padding: "12px 12px 12px 20px",
 });
 
 export const snackBarContent = style({
-  display: 'flex',
-  flexDirection: 'column',
+  display: "flex",
+  flexDirection: "column",
   gap: "3px",
 });

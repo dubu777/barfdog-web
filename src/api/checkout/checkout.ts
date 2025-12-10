@@ -19,7 +19,7 @@ const getSubscriptionCheckout = async (
   instance: AxiosInstance = axiosInstance
 ): Promise<SubscriptionCheckoutResponse> => {
   const { data } = await instance.get(
-    `/api/v2/user/subscribes/${subscribeId}/order-estimate`
+    `/api/v2/user/subscribe-orders/payment/estimate?subscribeId=${subscribeId}`
   );
   if (data.success) {
     return data.data;

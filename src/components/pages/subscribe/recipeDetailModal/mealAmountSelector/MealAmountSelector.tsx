@@ -170,7 +170,7 @@ const MealAmountSelector = forwardRef<HTMLDivElement, MealAmountSelectorProps>(
           </div>
           {packData.under20g && (
             <>
-              <Divider color="gray800" thickness={1} />
+              <Divider color="gray800" height={1} />
               <div className={commonWrapper({ align: "start", gap: 8 })}>
                 <SvgIcon src={WarningIcon} size={18} />
                 <Text type="body3" color="gray900">

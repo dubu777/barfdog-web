@@ -37,7 +37,7 @@ export default function SubscriptionOrderItemList({
               displayImageUrl={item?.displayImageUrl.url || ""}
               recipeName={item?.name || ""}
             />
-            {index < array.length - 1 && <Divider thickness={1} />}
+            {index < array.length - 1 && <Divider height={1} />}
           </React.Fragment>
         ))}
       </div>

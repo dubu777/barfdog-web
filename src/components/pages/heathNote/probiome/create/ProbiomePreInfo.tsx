@@ -56,7 +56,7 @@ export default function ProbiomePreInfo({
       <div className={commonWrapper({ gap: 16, direction: "col" })}>
         <Card shadow="light" gap={12} padding={16} align="start">
           <Text type="title4">신청인 정보</Text>
-          <Divider thickness={2} color="gray900" />
+          <Divider height={2} color="gray900" />
           <div className={commonWrapper({ gap: 6, direction: "col" })}>
             {memberInfoItems.map((item, index) => (
               <LabelValueItem
@@ -70,7 +70,7 @@ export default function ProbiomePreInfo({
         </Card>
         <Card shadow="light" gap={12} padding={16} align="start">
           <Text type="title4">반려견 정보</Text>
-          <Divider thickness={2} color="gray900" />
+          <Divider height={2} color="gray900" />
           <div className={commonWrapper({ gap: 6, direction: "col" })}>
             {petInfoItems.map((item, index) => (
               <LabelValueItem

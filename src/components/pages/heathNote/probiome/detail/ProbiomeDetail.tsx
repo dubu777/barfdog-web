@@ -60,7 +60,7 @@ export default function ProbiomeDetail({ diagnosisId }: ProbiomeDetailProps) {
               <Text type="title4" color="gray800">
                 회수 신청 정보
               </Text>
-              <Divider thickness={2} color="gray900" />
+              <Divider height={2} color="gray900" />
               <LabelValueItem
                 label="수령인"
                 value={data.selectedDeliveryAddress?.recipientName || "-"}

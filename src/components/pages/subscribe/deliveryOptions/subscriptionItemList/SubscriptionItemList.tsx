@@ -54,7 +54,7 @@ export default function SubscriptionItemList({
               recipeName={rawFoodItem?.recipeNameKorea || ""}
             />
             {idx < calculatedRecipes.length - 1 && (
-              <Divider color="gray200" thickness={1} />
+              <Divider color="gray200" height={1} />
             )}
           </React.Fragment>
         );

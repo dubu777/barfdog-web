@@ -7,10 +7,7 @@ import ItemDetailLayout from "../../layout/ItemDetailLayout";
 import ItemReview from "./itemReview/ItemReview";
 import RefundExchangeGuide from "@/components/pages/store/detail/itemCategoryTab/refundExchangeGuide/RefundExchangeGuide";
 import useStickyTabScroll from "@/hooks/useStickyTabScroll";
-
-const ItemDetail = dynamic(() => import("./itemDetail/ItemDetail"), {
-  ssr: false,
-});
+import StoreItemDetailInfo from "./itemDetail/StoreItemDetailInfo";
 
 interface ItemCategoryTabProps {
   itemId: number;
@@ -34,7 +31,9 @@ export default function ItemCategoryTab({
   const tabs = [
     {
       label: "상세정보",
-      content: <ItemDetail contents={contents} description={description} />,
+      content: (
+        <StoreItemDetailInfo contents={contents} description={description} />
+      ),
     },
     {
       label: `리뷰 ${reviewCountLabel}`,
@@ -71,9 +70,7 @@ export default function ItemCategoryTab({
           <ItemDetailLayout title={tab.title ?? tab.label}>
             {tab.content}
           </ItemDetailLayout>
-          {index !== tabs.length - 1 && (
-            <Divider thickness={8} color="gray100" />
-          )}
+          {index !== tabs.length - 1 && <Divider height={8} color="gray100" />}
         </div>
       ))}
     </div>

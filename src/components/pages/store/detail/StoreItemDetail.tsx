@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect } from "react";
 import Divider from "@/components/ui/divider/Divider";
 import ButtonDocked from "@/components/ui/buttonDocked/ButtonDocked";
@@ -14,9 +14,7 @@ interface ItemDetailProps {
   itemId: number;
 }
 
-export default function ItemDetail({ 
-  itemId 
-}: ItemDetailProps) {
+export default function ItemDetail({ itemId }: ItemDetailProps) {
   const { setItemPrice, setDiscountRate, discountRate } = useStoreItemStore();
   const { data } = useGetStoreItemDetail(itemId);
   const itemInfo = data?.itemInfo;
@@ -29,7 +27,7 @@ export default function ItemDetail({
     setDiscountRate(originalPrice, salePrice);
   }, [originalPrice, salePrice, setItemPrice, setDiscountRate]);
 
-  if(!data) return null;
+  if (!data) return null;
 
   return (
     <section>
@@ -44,21 +42,21 @@ export default function ItemDetail({
         discountRate={discountRate}
         tagList={parseItemTags(itemIcons)}
       />
-      <Divider thickness={8} color='gray100' />
+      <Divider height={8} color="gray100" />
       <ItemCategoryTab
         itemId={itemInfo.id}
         reviewCount={data.reviewSummary.count}
         contents={itemInfo.contents}
         description={itemInfo.description}
       />
-      <ButtonDocked 
-        type='full-button' 
-        primaryButtonLabel={inStock ? '구매하기' : '품절'}
-        position='sticky'
+      <ButtonDocked
+        type="full-button"
+        primaryButtonLabel={inStock ? "구매하기" : "품절"}
+        position="sticky"
         onPrimaryClick={onToggle}
         isPrimaryDisabled={!inStock}
       />
-      {isOpen && 
+      {isOpen && (
         <ItemPurchaseBottomSheet
           id={itemInfo.id}
           name={itemInfo.name}
@@ -68,7 +66,7 @@ export default function ItemDetail({
           isOpen={isOpen}
           onClose={onClose}
         />
-      }
+      )}
     </section>
   );
-};
+}

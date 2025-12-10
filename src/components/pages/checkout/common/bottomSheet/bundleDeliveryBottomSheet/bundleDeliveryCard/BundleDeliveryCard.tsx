@@ -36,7 +36,7 @@ export default function BundleDeliveryCard({
           <SvgIcon src={isSelected ? CheckedIcon : UnCheckedIcon} />
           <Text type="headline2">{delivery.petName}</Text>
         </div>
-        <Divider thickness={1} color="gray200" />
+        <Divider height={1} color="gray200" />
         <DeliveryContent deliveryDto={delivery} />
       </div>
     </Card>

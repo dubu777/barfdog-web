@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { commonWrapper } from "@/styles/common.css";
 import Text from "@/components/ui/text/Text";
 import ImageCarousel from "@/components/ui/imageCarousel/ImageCarousel";
@@ -34,42 +34,46 @@ export default function ReviewDetail({
     defaultImageIndex,
   } = useImageModal();
 
-  const { isOpen: isOpenUpdateModal, onClose: onCloseUpdateModal, onToggle: onToggleUpdateModal } = useModal();
+  const {
+    isOpen: isOpenUpdateModal,
+    onClose: onCloseUpdateModal,
+    onToggle: onToggleUpdateModal,
+  } = useModal();
 
   return (
     <section
       className={commonWrapper({
-        backgroundColors: 'gray0',
-        direction: 'col',
-        justify: 'start',
-        minHeight: 'fullWithHeader',
+        backgroundColors: "gray0",
+        direction: "col",
+        justify: "start",
+        minHeight: "fullWithHeader",
       })}
     >
-      {reviewStatus === 'APPROVAL' || reviewStatus === 'ADMIN'
-        ? <Divider thickness={2} color='gray50' />
-        : (
-          <article
-            className={commonWrapper({
-              backgroundColors: 'gray50',
-              padding: 20,
-            })}
-          >
-            <InfoBox
-              text={
-                reviewStatus === 'REQUEST'
-                  ? '관리자 확인 후 승인되면 적립금이 지급됩니다'
-                  : (
-                    <Text type='label4' color='pastelRed'>
-                      리뷰가 반려됐어요. 수정 시 해당 리뷰는 승인대기 상태로 변경되고 승인되면 적립금이 지급돼요.
-                    </Text>
-                  )
-              }
-              color={reviewStatus === 'RETURN' ? 'red' : 'gray'}
-              fullWidth
-            />
-          </article>
-        )
-      }
+      {reviewStatus === "APPROVAL" || reviewStatus === "ADMIN" ? (
+        <Divider height={2} color="gray50" />
+      ) : (
+        <article
+          className={commonWrapper({
+            backgroundColors: "gray50",
+            padding: 20,
+          })}
+        >
+          <InfoBox
+            text={
+              reviewStatus === "REQUEST" ? (
+                "관리자 확인 후 승인되면 적립금이 지급됩니다"
+              ) : (
+                <Text type="label4" color="pastelRed">
+                  리뷰가 반려됐어요. 수정 시 해당 리뷰는 승인대기 상태로
+                  변경되고 승인되면 적립금이 지급돼요.
+                </Text>
+              )
+            }
+            color={reviewStatus === "RETURN" ? "red" : "gray"}
+            fullWidth
+          />
+        </article>
+      )}
       <ReviewCard
         id={reviewId}
         title={reviewInfo.title}
@@ -80,11 +84,11 @@ export default function ReviewDetail({
         star={reviewInfo?.star}
         handleUpdate={onToggleUpdateModal}
       />
-      <Divider thickness={4} color='gray50' />
-      {data?.reviewImageList?.length > 0 &&
+      <Divider height={4} color="gray50" />
+      {data?.reviewImageList?.length > 0 && (
         <article
           className={commonWrapper({
-            backgroundColors: 'gray0',
+            backgroundColors: "gray0",
             padding: 20,
           })}
         >
@@ -94,32 +98,34 @@ export default function ReviewDetail({
             showRepresentativeLabel
           />
         </article>
-      }
-      <Divider thickness={4} color='gray50' />
+      )}
+      <Divider height={4} color="gray50" />
       <article
         className={commonWrapper({
           padding: 20,
-          justify: 'start',
+          justify: "start",
         })}
       >
-        <Text type='body2' preLine>{reviewInfo.contents}</Text>
+        <Text type="body2" preLine>
+          {reviewInfo.contents}
+        </Text>
       </article>
-      {isOpenReviewImageModal &&
+      {isOpenReviewImageModal && (
         <ImagesModal
           isOpen={isOpenReviewImageModal}
           onClose={onCloseReviewImageModal}
           defaultImageIndex={defaultImageIndex}
           imageList={reviewImageList}
         />
-      }
-      {isOpenUpdateModal &&
+      )}
+      {isOpenUpdateModal && (
         <UpdateReviewModal
           data={data}
           reviewType={reviewType}
           isOpen={isOpenUpdateModal}
           onClose={onCloseUpdateModal}
         />
-      }
+      )}
     </section>
   );
-};
+}

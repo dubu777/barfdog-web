@@ -3,7 +3,7 @@ import { CheckoutStrategy } from "../checkoutStrategies";
 import type {
   SubscriptionIamportRequest,
   IamportCallback,
-  CreateIamportSubscriptionPaymentRequest,
+  BillingAgainPaymentRequest,
   SubscriptionCheckoutResponse,
   PrepareSubscriptionPaymentRequest,
 } from "@/types";
@@ -16,9 +16,7 @@ export function createSubscriptionStrategy(deps: {
   isMobile: boolean;
   isWebView: boolean;
   // API DI
-  billingAgainPayment: (
-    body: CreateIamportSubscriptionPaymentRequest
-  ) => Promise<{
+  billingAgainPayment: (body: BillingAgainPaymentRequest) => Promise<{
     code: number;
     message?: string;
     response?: { status: string; imp_uid: string; fail_reason?: string };
@@ -71,7 +69,7 @@ export function createSubscriptionStrategy(deps: {
       }
 
       // again 결제에 필요한 바디 구성
-      const orderData: CreateIamportSubscriptionPaymentRequest = {
+      const orderData: BillingAgainPaymentRequest = {
         customer_uid: response.customer_uid,
         merchant_uid: preparePayment.merchantUid,
         amount: requestBody.paymentInfo.paymentPrice,

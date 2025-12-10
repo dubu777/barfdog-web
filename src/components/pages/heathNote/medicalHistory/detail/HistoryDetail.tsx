@@ -1,6 +1,6 @@
-'use client';
-import { moreButton } from './HistoryDetail.css';
-import { commonWrapper } from '@/styles/common.css';
+"use client";
+import { moreButton } from "./HistoryDetail.css";
+import { commonWrapper } from "@/styles/common.css";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -17,186 +17,236 @@ import ImageCarousel from "@/components/ui/imageCarousel/ImageCarousel";
 import Divider from "@/components/ui/divider/Divider";
 import ImagesModal from "@/components/ui/modal/imagesModal/ImagesModal";
 import HistoryEditModal from "@/components/pages/heathNote/medicalHistory/detail/historyEditModal/HistoryEditModal";
-import HistoryControlBottomSheet
-	from "@/components/pages/heathNote/medicalHistory/detail/historyControlBottomSheet/HistoryControlBottomSheet";
+import HistoryControlBottomSheet from "@/components/pages/heathNote/medicalHistory/detail/historyControlBottomSheet/HistoryControlBottomSheet";
 import { useToastStore } from "@/store/useToastStore";
 import { DIAGNOSIS_ITEM, queryKeys } from "@/constants";
 import { useGetMedicalHistoryDetail } from "@/api/healthNote/medicalHistory/queries/useGetMedicalHistoryDetail";
 import { useDeleteMedicalHistory } from "@/api/healthNote/medicalHistory/mutations/useDeleteMedicalHistory";
-import { useImageModal } from '@/hooks/useImageModal';
+import { useImageModal } from "@/hooks/useImageModal";
 
 interface HistoryDetailProps {
-	diagnosisId: number;
-	petId: number;
+  diagnosisId: number;
+  petId: number;
 }
 
-export default function HistoryDetail ({
-	diagnosisId,
-	petId,
+export default function HistoryDetail({
+  diagnosisId,
+  petId,
 }: HistoryDetailProps) {
-	const router = useRouter();
-	const queryClient = useQueryClient();
-	const { addToast } = useToastStore();
-	
-	const { data } = useGetMedicalHistoryDetail(diagnosisId);
-	const { mutate } = useDeleteMedicalHistory();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { addToast } = useToastStore();
 
-	const { isOpen: isOpenControlBottomSheet, onClose: onCloseControlBottomSheet, onToggle: onToggleControlBottomSheet } = useModal();
-	const { isOpen: isOpenConfirmDelete, onClose: onCloseConfirmDelete, onToggle: onToggleConfirmDelete  } = useModal();
-	const { isOpen: isOpenEditModal, onClose: onCloseEditModal, onToggle: onToggleEditModal  } = useModal();
+  const { data } = useGetMedicalHistoryDetail(diagnosisId);
+  const { mutate } = useDeleteMedicalHistory();
 
-	const {
+  const {
+    isOpen: isOpenControlBottomSheet,
+    onClose: onCloseControlBottomSheet,
+    onToggle: onToggleControlBottomSheet,
+  } = useModal();
+  const {
+    isOpen: isOpenConfirmDelete,
+    onClose: onCloseConfirmDelete,
+    onToggle: onToggleConfirmDelete,
+  } = useModal();
+  const {
+    isOpen: isOpenEditModal,
+    onClose: onCloseEditModal,
+    onToggle: onToggleEditModal,
+  } = useModal();
+
+  const {
     isOpen: isOpenImageModal,
     onClose: onCloseImageModal,
     handleThumbnailClick,
     defaultImageIndex,
   } = useImageModal();
 
-	const defaultInfo = [
-		{ label: '병원', value: data.diagnosisInfo.hospitalName },
-		{ label: '검사일', value: format(new Date(data.diagnosisInfo.diagnosisDate), 'yyyy.MM.dd (eee)', { locale: ko } )},
-		{ label: '검사항목', value: data.diagnosisInfo.diagnosisItemList.map(tag => DIAGNOSIS_ITEM[tag]).join(', ') },
-	]
+  const defaultInfo = [
+    { label: "병원", value: data.diagnosisInfo.hospitalName },
+    {
+      label: "검사일",
+      value: format(
+        new Date(data.diagnosisInfo.diagnosisDate),
+        "yyyy.MM.dd (eee)",
+        { locale: ko }
+      ),
+    },
+    {
+      label: "검사항목",
+      value: data.diagnosisInfo.diagnosisItemList
+        .map((tag) => DIAGNOSIS_ITEM[tag])
+        .join(", "),
+    },
+  ];
 
-	const infoList = [
-		{
-			title: '건강검진 정보',
-			content: (
-				<ul className={commonWrapper({
-					direction: 'col',
-					gap: 12,
-					align: 'start',
-				})}>
-					{defaultInfo.map(info => (
-						<li key={info.label} className={commonWrapper({ justify: 'between', align: 'start', gap: 20 })}>
-							<Text type='label4' noShrink>{info.label}</Text>
-							<Text type='body3' color='gray800' align='right'>{info.value}</Text>
-						</li>
-					))}
-				</ul>
-			),
-			visible: true,
-		},
-		{
-			title: '검사 및 결과 사진',
-			content: (
-				<ImageCarousel imageList={data.diagnosisFileList} handleThumbnailClick={handleThumbnailClick} />
-			),
-			visible: data.diagnosisFileList.length > 0,
-		},
-		{
-			title: '특이사항',
-			content: (
-				<Text type='body2' preLine>
-					{data.diagnosisInfo.note}
-				</Text>
-			),
-			visible: data.diagnosisInfo.note,
-		},
-	]
+  const infoList = [
+    {
+      title: "건강검진 정보",
+      content: (
+        <ul
+          className={commonWrapper({
+            direction: "col",
+            gap: 12,
+            align: "start",
+          })}
+        >
+          {defaultInfo.map((info) => (
+            <li
+              key={info.label}
+              className={commonWrapper({
+                justify: "between",
+                align: "start",
+                gap: 20,
+              })}
+            >
+              <Text type="label4" noShrink>
+                {info.label}
+              </Text>
+              <Text type="body3" color="gray800" align="right">
+                {info.value}
+              </Text>
+            </li>
+          ))}
+        </ul>
+      ),
+      visible: true,
+    },
+    {
+      title: "검사 및 결과 사진",
+      content: (
+        <ImageCarousel
+          imageList={data.diagnosisFileList}
+          handleThumbnailClick={handleThumbnailClick}
+        />
+      ),
+      visible: data.diagnosisFileList.length > 0,
+    },
+    {
+      title: "특이사항",
+      content: (
+        <Text type="body2" preLine>
+          {data.diagnosisInfo.note}
+        </Text>
+      ),
+      visible: data.diagnosisInfo.note,
+    },
+  ];
 
-	const handleDelete = () => {
-		mutate({
-			diagnosisId,
-		}, {
-			onSuccess: async () => {
-				addToast("병원 진료 기록이 삭제되었습니다.");
-				await queryClient.invalidateQueries({
-					queryKey: [queryKeys.MEDICAL_HISTORY.BASE, queryKeys.MEDICAL_HISTORY.GET_MEDICAL_HISTORY_LIST],
-				})
-				router.push(`/health-note/${petId}/medical-history`)
-			},
-			onError: (error) => {
-				if(axios.isAxiosError(error)) {
-					addToast(error.message, 'above-button');
-				}
-				console.log(error);
-			}
-		})
-	}
+  const handleDelete = () => {
+    mutate(
+      {
+        diagnosisId,
+      },
+      {
+        onSuccess: async () => {
+          addToast("병원 진료 기록이 삭제되었습니다.");
+          await queryClient.invalidateQueries({
+            queryKey: [
+              queryKeys.MEDICAL_HISTORY.BASE,
+              queryKeys.MEDICAL_HISTORY.GET_MEDICAL_HISTORY_LIST,
+            ],
+          });
+          router.push(`/health-note/${petId}/medical-history`);
+        },
+        onError: (error) => {
+          if (axios.isAxiosError(error)) {
+            addToast(error.message, "above-button");
+          }
+          console.log(error);
+        },
+      }
+    );
+  };
 
-	return (
-		<>
-			<Header
-				centerTitle='상세'
-				showBackButton
-				onBack={() => router.push(`/health-note/${petId}/medical-history`)}
-				rightElement={(
-					<button 
-						className={moreButton} 
-						onClick={onToggleControlBottomSheet}
-					>
-						<SvgIcon src={MoreHorizIcon} style={{ transform: 'rotate(90deg)' }} size={24} />
-					</button>
-				)}
-			/>
-			<section className={commonWrapper({
-				minHeight: 'fullWithHeader',
-				direction: 'col',
-				gap: 16,
-				padding: 20,
-				justify: 'start',
-			})}>
-				{infoList.map(info => (
-					info.visible &&
-					<Card
-						key={info.title}
-						shadow='light'
-						padding='20/16'
-						gap={12}
-						borderRadius={16}
-						align='start'
-					>
-						<Text type='headline1'>{info.title}</Text>
-						<Divider thickness={2} color='gray900' />
-						{info.content}
-					</Card>
-				))}
-			</section>
-			{isOpenControlBottomSheet &&
-				<HistoryControlBottomSheet
-					isOpen={isOpenControlBottomSheet}
-					onClose={onCloseControlBottomSheet}
-					handleEdit={onToggleEditModal}
-					handleDelete={onToggleConfirmDelete}
-				/>
-			}
-			{isOpenConfirmDelete &&
-				<AlertModal
-					title='병원 진료 기록을 삭제하시겠어요?'
-					content='삭제한 병원 진료 기록은 복구되지 않아요'
-					isOpen={isOpenConfirmDelete}
-					onClose={onCloseConfirmDelete}
-					cancelText='돌아가기'
-					confirmText='삭제하기'
-					onCancel={onCloseConfirmDelete}
-					onConfirm={handleDelete}
-				/>
-			}
-			{isOpenEditModal &&
-				<HistoryEditModal
-					diagnosisId={diagnosisId}
-					data={{
-						...data.diagnosisInfo,
-						petId: petId,
-						fileChangeInfo: {
-							addFileIdList: [],
-							deleteFileIdList: [],
-						}
-					}}
-					initialFiles={data.diagnosisFileList}
-					isOpen={isOpenEditModal}
-					onClose={onCloseEditModal}
-				/>
-			}
-			{isOpenImageModal &&
-				<ImagesModal
-					isOpen={isOpenImageModal}
-					onClose={onCloseImageModal}
-					defaultImageIndex={defaultImageIndex}
-					imageList={data.diagnosisFileList}
-				/>
-			}
-		</>
-	);
-};
+  return (
+    <>
+      <Header
+        centerTitle="상세"
+        showBackButton
+        onBack={() => router.push(`/health-note/${petId}/medical-history`)}
+        rightElement={
+          <button className={moreButton} onClick={onToggleControlBottomSheet}>
+            <SvgIcon
+              src={MoreHorizIcon}
+              style={{ transform: "rotate(90deg)" }}
+              size={24}
+            />
+          </button>
+        }
+      />
+      <section
+        className={commonWrapper({
+          minHeight: "fullWithHeader",
+          direction: "col",
+          gap: 16,
+          padding: 20,
+          justify: "start",
+        })}
+      >
+        {infoList.map(
+          (info) =>
+            info.visible && (
+              <Card
+                key={info.title}
+                shadow="light"
+                padding="20/16"
+                gap={12}
+                borderRadius={16}
+                align="start"
+              >
+                <Text type="headline1">{info.title}</Text>
+                <Divider height={2} color="gray900" />
+                {info.content}
+              </Card>
+            )
+        )}
+      </section>
+      {isOpenControlBottomSheet && (
+        <HistoryControlBottomSheet
+          isOpen={isOpenControlBottomSheet}
+          onClose={onCloseControlBottomSheet}
+          handleEdit={onToggleEditModal}
+          handleDelete={onToggleConfirmDelete}
+        />
+      )}
+      {isOpenConfirmDelete && (
+        <AlertModal
+          title="병원 진료 기록을 삭제하시겠어요?"
+          content="삭제한 병원 진료 기록은 복구되지 않아요"
+          isOpen={isOpenConfirmDelete}
+          onClose={onCloseConfirmDelete}
+          cancelText="돌아가기"
+          confirmText="삭제하기"
+          onCancel={onCloseConfirmDelete}
+          onConfirm={handleDelete}
+        />
+      )}
+      {isOpenEditModal && (
+        <HistoryEditModal
+          diagnosisId={diagnosisId}
+          data={{
+            ...data.diagnosisInfo,
+            petId: petId,
+            fileChangeInfo: {
+              addFileIdList: [],
+              deleteFileIdList: [],
+            },
+          }}
+          initialFiles={data.diagnosisFileList}
+          isOpen={isOpenEditModal}
+          onClose={onCloseEditModal}
+        />
+      )}
+      {isOpenImageModal && (
+        <ImagesModal
+          isOpen={isOpenImageModal}
+          onClose={onCloseImageModal}
+          defaultImageIndex={defaultImageIndex}
+          imageList={data.diagnosisFileList}
+        />
+      )}
+    </>
+  );
+}

@@ -7,7 +7,7 @@ import {
   GeneralItem,
 } from "./checkout";
 
-interface IamportSubscribeResponse {
+interface BillingAgainPaymentResponse {
   code: number;
   message: string;
   response?: {
@@ -118,7 +118,7 @@ interface PaymentRequestParams<T extends OrderType> {
   callback: (response: IamportResponseMap[T]) => void;
 }
 
-interface CreateIamportSubscriptionPaymentRequest {
+interface BillingAgainPaymentRequest {
   customer_uid: string;
   merchant_uid?: string | null;
   memberCouponId?: number | null;
@@ -170,8 +170,8 @@ export type {
   PaymentRequestParams,
   IamportRequestMap,
   IamportResponseMap,
-  CreateIamportSubscriptionPaymentRequest,
-  IamportSubscribeResponse,
+  BillingAgainPaymentRequest,
+  BillingAgainPaymentResponse,
   GeneralPaymentDataParams,
   SubscriptionPaymentDataParams,
 };
